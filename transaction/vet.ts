@@ -1,9 +1,11 @@
+import {validateOrReject} from 'class-validator';
 import {thorify} from 'thorify';
 import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
 import {TransferVet} from '../model/TransferVet';
 
 export const prepareVetSignedTransaction = async (body: TransferVet) => {
+    await validateOrReject(body);
     const {
         fromPrivateKey,
         to,

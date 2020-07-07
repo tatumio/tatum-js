@@ -1,10 +1,12 @@
 import BigNumber from 'bignumber.js';
+import {validateOrReject} from 'class-validator';
 import {RippleAPI} from 'ripple-lib';
 import {Payment} from 'ripple-lib/dist/npm/transaction/payment';
 import {getXrpAccountInfo, getXrpFee} from '../blockchain';
 import {TransferXrp} from '../model/TransferXrp';
 
 export const prepareXrpSignedTransaction = async (body: TransferXrp) => {
+    await validateOrReject(body);
     const {
         fromAccount,
         fromSecret,

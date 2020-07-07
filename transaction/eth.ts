@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {BigNumber} from 'bignumber.js';
+import {validateOrReject} from 'class-validator';
 import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
 import {getEthTransactionsCount} from '../blockchain';
@@ -15,6 +16,7 @@ const getGasPriceInWei = async (client: Web3) => {
 };
 
 export const prepareStoreDataTransaction = async (body: CreateRecord) => {
+    await validateOrReject(body);
     const {
         fromPrivateKey,
         to,
@@ -47,6 +49,7 @@ export const prepareStoreDataTransaction = async (body: CreateRecord) => {
 };
 
 export const prepareEthOrErc20SignedTransaction = async (body: TransferEthErc20) => {
+    await validateOrReject(body);
     const {
         fromPrivateKey,
         to,
@@ -95,6 +98,7 @@ export const prepareEthOrErc20SignedTransaction = async (body: TransferEthErc20)
 };
 
 export const prepareCustomErc20SignedTransaction = async (body: TransferCustomErc20) => {
+    await validateOrReject(body);
     const {
         fromPrivateKey,
         to,
