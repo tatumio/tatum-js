@@ -1,0 +1,42 @@
+{
+  "name": "tatum",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "prepublish": "tsc",
+    "lint": "tslint -p tsconfig.json -c tslint.json --fix"
+  },
+  "types": "dist/index.d.ts",
+  "keywords": [],
+  "author": "Tatum, hello@tatum.io",
+  "license": "MIT",
+  "dependencies": {
+    "@binance-chain/javascript-sdk": "^4.0.3",
+    "@cityofzion/neon-js": "^4.8.0",
+    "axios": "^0.19.2",
+    "bignumber.js": "^9.0.0",
+    "bip32": "^2.0.5",
+    "bip39": "^3.0.2",
+    "bitbox-sdk": "^8.11.2",
+    "bitcoinjs-lib": "^5.1.10",
+    "class-transformer": "^0.2.3",
+    "class-validator": "^0.12.2",
+    "hdkey": "^2.0.1",
+    "neon": "^2.0.0",
+    "ripple-lib": "^1.7.1",
+    "stellar-sdk": "^5.0.4",
+    "thorify": "^1.5.2",
+    "web3": "^1.2.9"
+  },
+  "devDependencies": {
+    "@types/bip32": "^2.0.0",
+    "@types/bip39": "^3.0.0",
+    "@types/jest": "^26.0.3",
+    "@types/node": "^14.0.14",
+    "jest": "^26.1.0",
+    "ts-node": "^8.10.2",
+    "tslint": "^6.1.2",
+    "typescript": "^3.9.6"
+  }
+}
