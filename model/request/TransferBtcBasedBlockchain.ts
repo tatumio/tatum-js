@@ -1,5 +1,15 @@
 import {Type} from 'class-transformer';
-import {ArrayNotEmpty, IsNotEmpty, IsOptional, Length, Max, Min, ValidateNested} from 'class-validator';
+import {ArrayNotEmpty, IsNotEmpty, Length, Max, Min, ValidateIf, ValidateNested} from 'class-validator';
+
+class FromAddress {
+    @IsNotEmpty()
+    @Length(30, 50)
+    public address: string;
+
+    @IsNotEmpty()
+    @Length(52, 52)
+    public privateKey: string;
+}
 
 export class FromUTXO {
 
@@ -15,10 +25,6 @@ export class FromUTXO {
     @IsNotEmpty()
     @Length(52, 52)
     public privateKey: string;
-
-    // Only Bitcoin Cash
-    @IsOptional()
-    public value?: number;
 }
 
 export class To {
@@ -33,6 +39,13 @@ export class To {
 
 export class TransferBtcBasedBlockchain {
 
+    @ValidateIf(o => (o.fromUTXO && o.fromAddress) || !o.fromUTXO)
+    @IsNotEmpty()
+    @ValidateNested({each: true})
+    @Type(() => FromAddress)
+    public fromAddress: FromAddress[];
+
+    @ValidateIf(o => (o.fromUTXO && o.fromAddress) || !o.fromAddress)
     @IsNotEmpty()
     @ValidateNested({each: true})
     @Type(() => FromUTXO)

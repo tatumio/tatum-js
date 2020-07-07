@@ -16,7 +16,7 @@ import {
     TESTNET_DERIVATION_PATH,
     VET_DERIVATION_PATH
 } from '../constants';
-import {Currency} from '../model/Currency';
+import {Currency} from '../model/request/Currency';
 
 const generateBtcAddress = (testnet: boolean, xpub: string, i: number) => {
     const network = testnet ? networks.testnet : networks.bitcoin;

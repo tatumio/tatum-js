@@ -2,8 +2,12 @@ import {validateOrReject} from 'class-validator';
 import {thorify} from 'thorify';
 import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
-import {TransferVet} from '../model/TransferVet';
+import {vetBroadcast} from '../blockchain';
+import {TransferVet} from '../model/request/TransferVet';
 
+export const sendVetTransaction = async (body: TransferVet) => {
+    return vetBroadcast(await prepareVetSignedTransaction(body));
+};
 export const prepareVetSignedTransaction = async (body: TransferVet) => {
     await validateOrReject(body);
     const {

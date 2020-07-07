@@ -1,15 +1,41 @@
 import axios from 'axios';
+import {TransactionHash} from '../model/response/common/TransactionHash';
 
-export const getXrpFee = async (): Promise<{ drops: { base_fee: number } }> => {
+export const xrpGetFee = async (): Promise<{ drops: { base_fee: number } }> => {
     return (await axios.get('https://api.tatum.io/v3/xrp/fee', {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 
-export const getXrpAccountInfo = async (account: string): Promise<{ ledger_current_index: number, account_data: { Sequence: number } }> => {
+export const xrpGetAccountInfo = async (account: string): Promise<{ ledger_current_index: number, account_data: { Sequence: number } }> => {
     return (await axios.get(`https://api.tatum.io/v3/xrp/account/${account}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 
-export const broadcastXrp = async (txData: string): Promise<{ txId: string }> => {
+export const xrpBroadcast = async (txData: string): Promise<TransactionHash> => {
     return (await axios.post(`https://api.tatum.io/v3/xrp/broadcast`,
         {txData},
         {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+};
+
+
+export const xrpGetCurrentBlock = async (): Promise<number> => {
+    return (await axios.get('https://api.tatum.io/v3/xrp/info', {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+};
+
+export const xrpGetLedger = async (i: number) => {
+    return (await axios.get(`https://api.tatum.io/v3/xrp/ledger/${i}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+};
+
+export const xrpGetAccountBalance = async (address: string) => {
+    return (await axios.get(`https://api.tatum.io/v3/xrp/account/${address}/balance`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+};
+
+export const xrpGetAccount = async (address: string) => {
+    return (await axios.get(`https://api.tatum.io/v3/xrp/account/${address}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+};
+
+export const xrpGetTransaction = async (hash: string) => {
+    return (await axios.get(`https://api.tatum.io/v3/xrp/transaction/${hash}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+};
+
+export const xrpGetAccountTransactions = async (address: string) => {
+    return (await axios.get(`https://api.tatum.io/v3/xrp/account/tx/${address}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };

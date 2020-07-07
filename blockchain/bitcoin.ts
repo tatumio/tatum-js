@@ -1,7 +1,38 @@
 import axios from 'axios';
+import {BtcBlock} from '../model/response/btc/BtcBlock';
+import {BtcInfo} from '../model/response/btc/BtcInfo';
+import {BtcTx} from '../model/response/btc/BtcTx';
+import {BtcUTXO} from '../model/response/btc/BtcUTXO';
+import {BlockHash} from '../model/response/common/BlockHash';
+import {TransactionHash} from '../model/response/common/TransactionHash';
 
-export const broadcastBtc = async (txData: string): Promise<{ txId: string }> => {
+export const btcBroadcast = async (txData: string): Promise<TransactionHash> => {
     return (await axios.post(`https://api.tatum.io/v3/bitcoin/broadcast`,
         {txData},
         {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+};
+
+export const btcGetCurrentBlock = async (): Promise<BtcInfo> => {
+    return (await axios.get('https://api.tatum.io/v3/bitcoin/info', {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+};
+
+export const btcGetBlock = async (hash: string): Promise<BtcBlock> => {
+    return (await axios.get(`https://api.tatum.io/v3/bitcoin/block/${hash}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+};
+
+export const btcGetBlockHash = async (i: number): Promise<BlockHash> => {
+    return (await axios.get(`https://api.tatum.io/v3/bitcoin/block/hash/${i}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+};
+
+export const btcGetUTXO = async (hash: string, i: number): Promise<BtcUTXO> => {
+    return (await axios.get(`https://api.tatum.io/v3/bitcoin/utxo/${hash}/${i}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+};
+
+export const btcGetTxForAccount = async (address: string, pageSize: number = 50, offset: number = 0): Promise<BtcTx[]> => {
+    return (await axios.get(`https://api.tatum.io/v3/bitcoin/transaction/address/${address}?pageSize=${pageSize}&offset=${offset}`,
+        {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+};
+
+export const btcGetTransaction = async (hash: string): Promise<BtcTx> => {
+    return (await axios.get(`https://api.tatum.io/v3/bitcoin/transaction/${hash}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };

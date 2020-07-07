@@ -16,11 +16,11 @@ import {
     ETH_DERIVATION_PATH,
     LTC_DERIVATION_PATH,
     LTC_NETWORK,
-    TEST_LTC_NETWORK,
     TESTNET_DERIVATION_PATH,
+    TEST_LTC_NETWORK,
     VET_DERIVATION_PATH
 } from '../constants';
-import {Currency} from '../model/Currency';
+import {Currency} from '../model/request/Currency';
 
 const generateBnbWallet = async (testnet: boolean, mnem: string) => {
     const hdwallet = fromSeed(await mnemonicToSeed(mnem), testnet ? networks.testnet : undefined);

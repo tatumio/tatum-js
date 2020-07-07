@@ -1,9 +1,14 @@
 import BigNumber from 'bignumber.js';
 import {ECPair, TransactionBuilder} from 'bitbox-sdk';
 import {validateOrReject} from 'class-validator';
-import {TransferBtcBasedBlockchain} from '../model/TransferBtcBasedBlockchain';
+import {bcashBroadcast} from '../blockchain';
+import {TransferBchBlockchain} from '../model/request/TransferBchBlockchain';
 
-export const prepareBitcoinCashSignedTransaction = async (testnet: boolean, body: TransferBtcBasedBlockchain) => {
+export const sendBitcoinCashTransaction = async (testnet: boolean, body: TransferBchBlockchain) => {
+    return bcashBroadcast(await prepareBitcoinCashSignedTransaction(testnet, body));
+};
+
+export const prepareBitcoinCashSignedTransaction = async (testnet: boolean, body: TransferBchBlockchain) => {
     await validateOrReject(body);
     const {fromUTXO, to} = body;
     const networkType = testnet ? 'testnet' : 'mainnet';

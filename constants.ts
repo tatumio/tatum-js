@@ -1,4 +1,4 @@
-import {Currency} from './model/Currency';
+import {Currency} from './model/request/Currency';
 
 export const ETH_DERIVATION_PATH = 'm/44\'/60\'/0\'/0';
 export const VET_DERIVATION_PATH = 'm/44\'/818\'/0\'/0';

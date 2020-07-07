@@ -3,12 +3,15 @@ import {BigNumber} from 'bignumber.js';
 import {validateOrReject} from 'class-validator';
 import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
-import {getEthTransactionsCount} from '../blockchain';
+import {ethBroadcast, ethGetTransactionsCount} from '../blockchain';
 import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TRANSFER_METHOD_ABI} from '../constants';
-import {CreateRecord} from '../model/CreateRecord';
-import {Currency} from '../model/Currency';
-import {TransferCustomErc20} from '../model/TransferCustomErc20';
-import {TransferEthErc20} from '../model/TransferEthErc20';
+import tokenABI from '../contracts/erc20/token_abi';
+import tokenByteCode from '../contracts/erc20/token_bytecode';
+import {CreateRecord} from '../model/request/CreateRecord';
+import {Currency} from '../model/request/Currency';
+import {DeployEthErc20} from '../model/request/DeployEthErc20';
+import {TransferCustomErc20} from '../model/request/TransferCustomErc20';
+import {TransferEthErc20} from '../model/request/TransferEthErc20';
 
 const getGasPriceInWei = async (client: Web3) => {
     const {data} = await axios.get('https://ethgasstation.info/json/ethgasAPI.json');
@@ -29,7 +32,7 @@ export const prepareStoreDataTransaction = async (body: CreateRecord) => {
     client.eth.accounts.wallet.add(fromPrivateKey);
     client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
     const address = to || client.eth.defaultAccount;
-    const addressNonce = nonce ? nonce : await getEthTransactionsCount(address);
+    const addressNonce = nonce ? nonce : await ethGetTransactionsCount(address);
     const customFee = ethFee ? ethFee : {
         gasLimit: `${data.length * 68 + 21000}`,
         gasPrice: client.utils.fromWei(await getGasPriceInWei(client), 'gwei'),
@@ -132,7 +135,65 @@ export const prepareCustomErc20SignedTransaction = async (body: TransferCustomEr
     } else {
         tx.gas = await client.eth.estimateGas(tx) + 5000;
     }
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction;
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
 };
 
-// TODO: add ERC721 support
+export const prepareDeployErc20SignedTransaction = async (body: DeployEthErc20) => {
+    await validateOrReject(body);
+    const {
+        name,
+        address,
+        symbol,
+        supply,
+        digits,
+        fromPrivateKey,
+        nonce,
+        fee,
+    } = body;
+
+    const client = new Web3();
+    client.eth.accounts.wallet.clear();
+    client.eth.accounts.wallet.add(fromPrivateKey);
+    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+
+    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await getGasPriceInWei(client);
+    // @ts-ignore
+    const contract = new client.eth.Contract(tokenABI);
+    const deploy = contract.deploy({
+        data: tokenByteCode,
+        arguments: [
+            name,
+            symbol,
+            address,
+            digits,
+            `0x${new BigNumber(supply).multipliedBy(new BigNumber(10).pow(digits)).toString(16)}`,
+            `0x${new BigNumber(supply).multipliedBy(new BigNumber(10).pow(digits)).toString(16)}`,
+        ],
+    });
+    const tx: TransactionConfig = {
+        from: 0,
+        data: deploy.encodeABI(),
+        gasPrice,
+        nonce,
+    };
+
+    if (fee) {
+        tx.gas = fee.gasLimit;
+    } else {
+        tx.gas = await client.eth.estimateGas(tx) + 5000;
+    }
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+};
+
+export const sendStoreDataTransaction = async (body: CreateRecord) => {
+    return ethBroadcast(await prepareStoreDataTransaction(body));
+};
+export const sendEthOrErc20Transaction = async (body: TransferEthErc20) => {
+    return ethBroadcast(await prepareEthOrErc20SignedTransaction(body));
+};
+export const sendCustomErc20Transaction = async (body: TransferCustomErc20) => {
+    return ethBroadcast(await prepareCustomErc20SignedTransaction(body));
+};
+export const sendDeployErc20Transaction = async (body: DeployEthErc20) => {
+    return ethBroadcast(await prepareDeployErc20SignedTransaction(body));
+};
