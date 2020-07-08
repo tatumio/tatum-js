@@ -9,73 +9,73 @@ export interface VetTx {
      * @type {string}
      * @memberof VetTx
      */
-    id?: string;
+    id: string;
     /**
      *
      * @type {string}
      * @memberof VetTx
      */
-    chainTag?: string;
+    chainTag: string;
     /**
      *
      * @type {string}
      * @memberof VetTx
      */
-    blockRef?: string;
+    blockRef: string;
     /**
      *
      * @type {number}
      * @memberof VetTx
      */
-    expiration?: number;
+    expiration: number;
     /**
      *
      * @type {Array<VetTxClauses>}
      * @memberof VetTx
      */
-    clauses?: VetTxClauses[];
+    clauses: VetTxClauses[];
     /**
      *
      * @type {number}
      * @memberof VetTx
      */
-    gasPriceCoef?: number;
+    gasPriceCoef: number;
     /**
      *
      * @type {number}
      * @memberof VetTx
      */
-    gas?: number;
+    gas: number;
     /**
      *
      * @type {string}
      * @memberof VetTx
      */
-    origin?: string;
+    origin: string;
     /**
      *
      * @type {string}
      * @memberof VetTx
      */
-    nonce?: string;
+    nonce: string;
     /**
      *
      * @type {number}
      * @memberof VetTx
      */
-    size?: number;
+    size: number;
     /**
      *
      * @type {VetTxMeta}
      * @memberof VetTx
      */
-    meta?: VetTxMeta;
+    meta: VetTxMeta;
     /**
      *
      * @type {number}
      * @memberof VetTx
      */
-    blockNumber?: number;
+    blockNumber: number;
 }
 
 /**
@@ -89,19 +89,19 @@ export interface VetTxClauses {
      * @type {string}
      * @memberof VetTxClauses
      */
-    to?: string;
+    to: string;
     /**
      *
      * @type {string}
      * @memberof VetTxClauses
      */
-    value?: string;
+    value: string;
     /**
      *
      * @type {string}
      * @memberof VetTxClauses
      */
-    data?: string;
+    data: string;
 }
 
 /**
@@ -115,17 +115,17 @@ export interface VetTxMeta {
      * @type {string}
      * @memberof VetTxMeta
      */
-    blockID?: string;
+    blockID: string;
     /**
      *
      * @type {number}
      * @memberof VetTxMeta
      */
-    blockNumber?: number;
+    blockNumber: number;
     /**
      *
      * @type {number}
      * @memberof VetTxMeta
      */
-    blockTimestamp?: number;
+    blockTimestamp: number;
 }

@@ -9,97 +9,97 @@ export interface EthTx {
      * @type {string}
      * @memberof EthTx
      */
-    blockHash?: string;
+    blockHash: string;
     /**
      * TRUE if the transaction was successful, FALSE, if the EVM reverted the transaction.
      * @type {boolean}
      * @memberof EthTx
      */
-    status?: boolean;
+    status: boolean;
     /**
      * Block number where this transaction was in.
      * @type {number}
      * @memberof EthTx
      */
-    blockNumber?: number;
+    blockNumber: number;
     /**
      * Address of the sender.
      * @type {string}
      * @memberof EthTx
      */
-    from?: string;
+    from: string;
     /**
      * Gas provided by the sender.
      * @type {number}
      * @memberof EthTx
      */
-    gas?: number;
+    gas: number;
     /**
      * Gas price provided by the sender in wei.
      * @type {string}
      * @memberof EthTx
      */
-    gasPrice?: string;
+    gasPrice: string;
     /**
      * Hash of the transaction.
      * @type {string}
      * @memberof EthTx
      */
-    transactionHash?: string;
+    transactionHash: string;
     /**
      * The data sent along with the transaction.
      * @type {string}
      * @memberof EthTx
      */
-    input?: string;
+    input: string;
     /**
      * The number of transactions made by the sender prior to this one.
      * @type {number}
      * @memberof EthTx
      */
-    nonce?: number;
+    nonce: number;
     /**
      * Address of the receiver. 'null' when its a contract creation transaction.
      * @type {string}
      * @memberof EthTx
      */
-    to?: string;
+    to: string;
     /**
      * Integer of the transactions index position in the block.
      * @type {number}
      * @memberof EthTx
      */
-    transactionIndex?: number;
+    transactionIndex: number;
     /**
      * Value transferred in wei.
      * @type {string}
      * @memberof EthTx
      */
-    value?: string;
+    value: string;
     /**
      * The amount of gas used by this specific transaction alone.
      * @type {number}
      * @memberof EthTx
      */
-    gasUsed?: number;
+    gasUsed: number;
     /**
      * The total amount of gas used when this transaction was executed in the block.
      * @type {number}
      * @memberof EthTx
      */
-    cumulativeGasUsed?: number;
+    cumulativeGasUsed: number;
     /**
      * The contract address created, if the transaction was a contract creation, otherwise null.
      * @type {string}
      * @memberof EthTx
      */
-    contractAddress?: string;
+    contractAddress: string;
     /**
      * Log events, that happened in this transaction.
      * @type {Array<EthTxLogs>}
      * @memberof EthTx
      */
-    logs?: EthTxLogs[];
+    logs: EthTxLogs[];
 }
 
 /**
@@ -113,35 +113,35 @@ export interface EthTxLogs {
      * @type {string}
      * @memberof EthTxLogs
      */
-    address?: string;
+    address: string;
     /**
      * An array with max 4 32 Byte topics, topic 1-3 contains indexed parameters of the log.
      * @type {Array<string>}
      * @memberof EthTxLogs
      */
-    topic?: string[];
+    topic: string[];
     /**
      * The data containing non-indexed log parameter.
      * @type {string}
      * @memberof EthTxLogs
      */
-    data?: string;
+    data: string;
     /**
      * Integer of the event index position in the block.
      * @type {number}
      * @memberof EthTxLogs
      */
-    logIndex?: number;
+    logIndex: number;
     /**
      * Integer of the transaction’s index position, the event was created in.
      * @type {number}
      * @memberof EthTxLogs
      */
-    transactionIndex?: number;
+    transactionIndex: number;
     /**
      * Hash of the transaction this event was created in.
      * @type {string}
      * @memberof EthTxLogs
      */
-    transactionHash?: string;
+    transactionHash: string;
 }

@@ -9,19 +9,19 @@ export interface BchTx {
      * @type {string}
      * @memberof BchTx
      */
-    txid?: string;
+    txid: string;
     /**
      *
      * @type {number}
      * @memberof BchTx
      */
-    version?: number;
+    version: number;
     /**
      *
      * @type {number}
      * @memberof BchTx
      */
-    locktime?: number;
+    locktime: number;
     /**
      *
      * @type {Array<BchTxVin>}
@@ -79,13 +79,13 @@ export interface BchTxScriptSig {
      * @type {string}
      * @memberof BchTxScriptSig
      */
-    hex?: string;
+    hex: string;
     /**
      *
      * @type {string}
      * @memberof BchTxScriptSig
      */
-    asm?: string;
+    asm: string;
 }
 
 /**
@@ -111,13 +111,13 @@ export interface BchTxVin {
      * @type {BchTxScriptSig}
      * @memberof BchTxVin
      */
-    scriptSig?: BchTxScriptSig;
+    scriptSig: BchTxScriptSig;
     /**
      *
      * @type {string}
      * @memberof BchTxVin
      */
-    coinbase?: string;
+    coinbase: string;
     /**
      *
      * @type {number}

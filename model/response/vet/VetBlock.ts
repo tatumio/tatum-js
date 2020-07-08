@@ -9,89 +9,89 @@ export interface VetBlock {
      * @type {number}
      * @memberof VetBlock
      */
-    number?: number;
+    number: number;
     /**
      * block identifier
      * @type {string}
      * @memberof VetBlock
      */
-    id?: string;
+    id: string;
     /**
      * RLP encoded block size in bytes
      * @type {number}
      * @memberof VetBlock
      */
-    size?: number;
+    size: number;
     /**
      * parent block ID
      * @type {string}
      * @memberof VetBlock
      */
-    parentID?: string;
+    parentID: string;
     /**
      * block unix timestamp
      * @type {number}
      * @memberof VetBlock
      */
-    timestamp?: number;
+    timestamp: number;
     /**
      * block gas limit (max allowed accumulative gas usage of transactions)
      * @type {number}
      * @memberof VetBlock
      */
-    gasLimit?: number;
+    gasLimit: number;
     /**
      * Address of account to receive block reward
      * @type {string}
      * @memberof VetBlock
      */
-    beneficiary?: string;
+    beneficiary: string;
     /**
      * accumulative gas usage of transactions
      * @type {number}
      * @memberof VetBlock
      */
-    gasUsed?: number;
+    gasUsed: number;
     /**
      * sum of all ancestral blocks' score
      * @type {number}
      * @memberof VetBlock
      */
-    totalScore?: number;
+    totalScore: number;
     /**
      * root hash of transactions in the block
      * @type {string}
      * @memberof VetBlock
      */
-    txsRoot?: string;
+    txsRoot: string;
     /**
      * supported txs features bitset
      * @type {number}
      * @memberof VetBlock
      */
-    txsFeatures?: number;
+    txsFeatures: number;
     /**
      * root hash of accounts state
      * @type {string}
      * @memberof VetBlock
      */
-    stateRoot?: string;
+    stateRoot: string;
     /**
      * root hash of transaction receipts
      * @type {string}
      * @memberof VetBlock
      */
-    receiptsRoot?: string;
+    receiptsRoot: string;
     /**
      * the one who signed this block
      * @type {string}
      * @memberof VetBlock
      */
-    signer?: string;
+    signer: string;
     /**
      * transactions IDs
      * @type {Array<string>}
      * @memberof VetBlock
      */
-    transactions?: string[];
+    transactions: string[];
 }

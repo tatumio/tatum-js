@@ -27,11 +27,11 @@ export interface VetEstimateGas {
      * @type {string}
      * @memberof VetEstimateGas
      */
-    data?: string;
+    data: string;
     /**
      * Nonce
      * @type {number}
      * @memberof VetEstimateGas
      */
-    nonce?: number;
+    nonce: number;
 }

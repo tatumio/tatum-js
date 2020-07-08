@@ -16,13 +16,13 @@ import {
     ETH_DERIVATION_PATH,
     LTC_DERIVATION_PATH,
     LTC_NETWORK,
-    TESTNET_DERIVATION_PATH,
     TEST_LTC_NETWORK,
+    TESTNET_DERIVATION_PATH,
     VET_DERIVATION_PATH
 } from '../constants';
-import {Currency} from '../model/request/Currency';
+import {Currency} from '../model';
 
-const generateBnbWallet = async (testnet: boolean, mnem: string) => {
+export const generateBnbWallet = async (testnet: boolean, mnem: string) => {
     const hdwallet = fromSeed(await mnemonicToSeed(mnem), testnet ? networks.testnet : undefined);
     const derivePath = hdwallet.derivePath(BNB_DERIVATION_PATH);
     return {
@@ -32,21 +32,21 @@ const generateBnbWallet = async (testnet: boolean, mnem: string) => {
     };
 };
 
-const generateVetWallet = async (testnet: boolean, mnem: string) => {
+export const generateVetWallet = async (testnet: boolean, mnem: string) => {
     const path = testnet ? TESTNET_DERIVATION_PATH : VET_DERIVATION_PATH;
     const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem));
     const derivePath = hdwallet.derivePath(path);
     return {xpub: derivePath.publicExtendedKey(), xpriv: derivePath.privateExtendedKey(), mnemonic: mnem};
 };
 
-const generateEthWallet = async (testnet: boolean, mnem: string) => {
+export const generateEthWallet = async (testnet: boolean, mnem: string) => {
     const path = testnet ? TESTNET_DERIVATION_PATH : ETH_DERIVATION_PATH;
     const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnem));
     const derivePath = hdwallet.derivePath(path);
     return {xpub: derivePath.publicExtendedKey(), xpriv: derivePath.privateExtendedKey(), mnemonic: mnem};
 };
 
-const generateBchWallet = (testnet: boolean, mnem: string) => {
+export const generateBchWallet = (testnet: boolean, mnem: string) => {
     const m = new Mnemonic();
     const node = new HDNode();
     const rootSeedBuffer = m.toSeed(mnem);
@@ -59,27 +59,27 @@ const generateBchWallet = (testnet: boolean, mnem: string) => {
     };
 };
 
-const generateBtcWallet = async (testnet: boolean, mnem: string) => {
+export const generateBtcWallet = async (testnet: boolean, mnem: string): Promise<{ mnemonic: string, xpub: string, xpriv: string }> => {
     const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? networks.testnet.bip32 : networks.bitcoin.bip32);
     return {mnemonic: mnem, ...hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : BTC_DERIVATION_PATH).toJSON()};
 };
 
-const generateLtcWallet = async (testnet: boolean, mnem: string) => {
+export const generateLtcWallet = async (testnet: boolean, mnem: string): Promise<{ mnemonic: string, xpub: string, xpriv: string }> => {
     const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? TEST_LTC_NETWORK.bip32 : LTC_NETWORK.bip32);
     return {mnemonic: mnem, ...hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : LTC_DERIVATION_PATH).toJSON()};
 };
 
-const generateNeoWallet = () => {
+export const generateNeoWallet = () => {
     const privateKey = Neon.create.privateKey();
     return {privateKey, address: new wallet.Account(privateKey).address};
 };
 
-const generateXrpWallet = () => {
+export const generateXrpWallet = () => {
     const {address, secret} = new RippleAPI().generateAddress();
     return {address, secret};
 };
 
-const generateXlmWallet = () => {
+export const generateXlmWallet = () => {
     const keypair = Keypair.random();
     return {address: keypair.publicKey(), secret: keypair.secret()};
 };
@@ -105,5 +105,7 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
             return generateNeoWallet();
         case Currency.BNB:
             return generateBnbWallet(testnet, mnem);
+        default:
+            throw new Error('Unsupported blockchain.');
     }
 };

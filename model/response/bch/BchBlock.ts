@@ -17,7 +17,7 @@ export interface BchBlock {
      * @type {number}
      * @memberof BchBlock
      */
-    size?: number;
+    size: number;
     /**
      * The number of blocks preceding a particular block on a block chain.
      * @type {number}
@@ -29,13 +29,13 @@ export interface BchBlock {
      * @type {number}
      * @memberof BchBlock
      */
-    version?: number;
+    version: number;
     /**
      * The root node of a merkle tree, a descendant of all the hashed pairs in the tree.
      * @type {string}
      * @memberof BchBlock
      */
-    merkleroot?: string;
+    merkleroot: string;
     /**
      * List of transactions present in the block.
      * @type {Array<BchTx>}
@@ -47,25 +47,25 @@ export interface BchBlock {
      * @type {number}
      * @memberof BchBlock
      */
-    time?: number;
+    time: number;
     /**
      * Arbitrary number that is used in Bitcoin's proof of work consensus algorithm.
      * @type {number}
      * @memberof BchBlock
      */
-    nonce?: number;
+    nonce: number;
     /**
      *
      * @type {number}
      * @memberof BchBlock
      */
-    difficulty?: number;
+    difficulty: number;
     /**
      * Number of blocks mined after this block.
      * @type {number}
      * @memberof BchBlock
      */
-    confirmations?: number;
+    confirmations: number;
     /**
      * Hash of the previous block.
      * @type {string}

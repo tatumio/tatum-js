@@ -9,29 +9,29 @@ export interface BtcInfo {
      * @type {string}
      * @memberof BtcInfo
      */
-    chain?: string;
+    chain: string;
     /**
      * Last block.
      * @type {number}
      * @memberof BtcInfo
      */
-    blocks?: number;
+    blocks: number;
     /**
      * Last headers.
      * @type {number}
      * @memberof BtcInfo
      */
-    headers?: number;
+    headers: number;
     /**
      * Hash of the last block.
      * @type {string}
      * @memberof BtcInfo
      */
-    bestblockhash?: string;
+    bestblockhash: string;
     /**
      * Difficulty of the algorithm.
      * @type {number}
      * @memberof BtcInfo
      */
-    difficulty?: number;
+    difficulty: number;
 }

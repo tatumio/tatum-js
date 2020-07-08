@@ -9,29 +9,29 @@ export interface LtcInfo {
      * @type {string}
      * @memberof LtcInfo
      */
-    chain?: string;
+    chain: string;
     /**
      * Last block.
      * @type {number}
      * @memberof LtcInfo
      */
-    blocks?: number;
+    blocks: number;
     /**
      * Last headers.
      * @type {number}
      * @memberof LtcInfo
      */
-    headers?: number;
+    headers: number;
     /**
      * Hash of the last block.
      * @type {string}
      * @memberof LtcInfo
      */
-    bestblockhash?: string;
+    bestblockhash: string;
     /**
      * Difficulty of the PoW algorithm.
      * @type {number}
      * @memberof LtcInfo
      */
-    difficulty?: number;
+    difficulty: number;
 }

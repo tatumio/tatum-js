@@ -15,25 +15,25 @@ export interface LtcTx {
      * @type {string}
      * @memberof LtcTx
      */
-    witnessHash?: string;
+    witnessHash: string;
     /**
      * Fee paid for this transaction, in LTC.
      * @type {string}
      * @memberof LtcTx
      */
-    fee?: string;
+    fee: string;
     /**
      *
      * @type {string}
      * @memberof LtcTx
      */
-    rate?: string;
+    rate: string;
     /**
      *
      * @type {number}
      * @memberof LtcTx
      */
-    ps?: number;
+    ps: number;
     /**
      * Height of the block this transaction belongs to.
      * @type {number}
@@ -51,7 +51,7 @@ export interface LtcTx {
      * @type {number}
      * @memberof LtcTx
      */
-    ts?: number;
+    ts: number;
     /**
      * Index of the transaction in the block.
      * @type {number}
@@ -63,13 +63,13 @@ export interface LtcTx {
      * @type {number}
      * @memberof LtcTx
      */
-    version?: number;
+    version: number;
     /**
      *
      * @type {number}
      * @memberof LtcTx
      */
-    flag?: number;
+    flag: number;
     /**
      *
      * @type {Array<LtcTxInputs>}
@@ -87,7 +87,7 @@ export interface LtcTx {
      * @type {number}
      * @memberof LtcTx
      */
-    locktime?: number;
+    locktime: number;
 }
 
 /**
@@ -101,37 +101,37 @@ export interface LtcTxCoin {
      * @type {number}
      * @memberof LtcTxCoin
      */
-    version?: number;
+    version: number;
     /**
      *
      * @type {number}
      * @memberof LtcTxCoin
      */
-    height?: number;
+    height: number;
     /**
      *
      * @type {string}
      * @memberof LtcTxCoin
      */
-    value?: string;
+    value: string;
     /**
      *
      * @type {string}
      * @memberof LtcTxCoin
      */
-    script?: string;
+    script: string;
     /**
      * Sender address.
      * @type {string}
      * @memberof LtcTxCoin
      */
-    address?: string;
+    address: string;
     /**
      * Coinbase transaction - miner fee.
      * @type {boolean}
      * @memberof LtcTxCoin
      */
-    coinbase?: boolean;
+    coinbase: boolean;
 }
 
 /**
@@ -151,19 +151,19 @@ export interface LtcTxInputs {
      * @type {string}
      * @memberof LtcTxInputs
      */
-    script?: string;
+    script: string;
     /**
      * Transaction witness.
      * @type {string}
      * @memberof LtcTxInputs
      */
-    witness?: string;
+    witness: string;
     /**
      *
      * @type {number}
      * @memberof LtcTxInputs
      */
-    sequence?: number;
+    sequence: number;
     /**
      *
      * @type {LtcTxCoin}
@@ -183,7 +183,7 @@ export interface LtcTxOutputs {
      * @type {string}
      * @memberof LtcTxOutputs
      */
-    value?: string;
+    value: string;
     /**
      * Transaction script.
      * @type {string}

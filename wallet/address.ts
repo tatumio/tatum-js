@@ -16,17 +16,17 @@ import {
     TESTNET_DERIVATION_PATH,
     VET_DERIVATION_PATH
 } from '../constants';
-import {Currency} from '../model/request/Currency';
+import {Currency} from '../model';
 
 const generateBtcAddress = (testnet: boolean, xpub: string, i: number) => {
     const network = testnet ? networks.testnet : networks.bitcoin;
     const w = fromBase58(xpub, network).derivePath(String(i));
-    return payments.p2pkh({pubkey: w.publicKey, network}).address;
+    return payments.p2pkh({pubkey: w.publicKey, network}).address as string;
 };
 const generateLtcAddress = (testnet: boolean, xpub: string, i: number) => {
     const network = testnet ? TEST_LTC_NETWORK : LTC_NETWORK;
     const w = fromBase58(xpub, network).derivePath(String(i));
-    return payments.p2pkh({pubkey: w.publicKey, network}).address;
+    return payments.p2pkh({pubkey: w.publicKey, network}).address as string;
 };
 const generateBchAddress = (testnet: boolean, xpub: string, i: number) => {
     const node = new HDNode();
@@ -69,13 +69,13 @@ const generateBchPrivateKey = async (testnet: boolean, mnemonic: string, i: numb
         .derivePath(`${BCH_DERIVATION_PATH}/${i}`);
     return node.toWIF(hdNode);
 };
-const generateEthPrivateKey = async (testnet: boolean, mnemonic: string, i: number) => {
+const generateEthPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
     const path = testnet ? TESTNET_DERIVATION_PATH : ETH_DERIVATION_PATH;
     const hdwallet = ethHdKey.fromMasterSeed(mnemonicToSeed(mnemonic));
     const derivePath = hdwallet.derivePath(path).deriveChild(i);
     return derivePath.getWallet().getPrivateKeyString();
 };
-const generateVetPrivateKey = async (testnet: boolean, mnemonic: string, i: number) => {
+const generateVetPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
     const path = testnet ? TESTNET_DERIVATION_PATH : VET_DERIVATION_PATH;
     const hdwallet = ethHdKey.fromMasterSeed(mnemonicToSeed(mnemonic));
     const derivePath = hdwallet.derivePath(path).deriveChild(i);
@@ -99,6 +99,8 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xP
             return generateVetAddress(testnet, xPub, i);
         case Currency.BNB:
             return generateBnbAddress(testnet, xPub, i);
+        default:
+            throw new Error('Unsupported blockchain.');
     }
 };
 
@@ -116,5 +118,7 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
             return generateVetPrivateKey(testnet, mnemonic, i);
         case Currency.BNB:
             return generateBnbPrivateKey(mnemonic, i);
+        default:
+            throw new Error('Unsupported blockchain.');
     }
 };

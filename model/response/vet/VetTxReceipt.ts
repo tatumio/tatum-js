@@ -9,67 +9,67 @@ export interface VetTxReceipt {
      * @type {number}
      * @memberof VetTxReceipt
      */
-    gasUsed?: number;
+    gasUsed: number;
     /**
      *
      * @type {string}
      * @memberof VetTxReceipt
      */
-    gasPayer?: string;
+    gasPayer: string;
     /**
      *
      * @type {string}
      * @memberof VetTxReceipt
      */
-    paid?: string;
+    paid: string;
     /**
      *
      * @type {string}
      * @memberof VetTxReceipt
      */
-    reward?: string;
+    reward: string;
     /**
      *
      * @type {boolean}
      * @memberof VetTxReceipt
      */
-    reverted?: boolean;
+    reverted: boolean;
     /**
      *
      * @type {VetTxReceiptMeta}
      * @memberof VetTxReceipt
      */
-    meta?: VetTxReceiptMeta;
+    meta: VetTxReceiptMeta;
     /**
      *
      * @type {Array<VetTxReceiptOutputs>}
      * @memberof VetTxReceipt
      */
-    outputs?: VetTxReceiptOutputs[];
+    outputs: VetTxReceiptOutputs[];
     /**
      *
      * @type {number}
      * @memberof VetTxReceipt
      */
-    blockNumber?: number;
+    blockNumber: number;
     /**
      *
      * @type {string}
      * @memberof VetTxReceipt
      */
-    blockHash?: string;
+    blockHash: string;
     /**
      *
      * @type {string}
      * @memberof VetTxReceipt
      */
-    transactionHash?: string;
+    transactionHash: string;
     /**
      *
      * @type {string}
      * @memberof VetTxReceipt
      */
-    status?: string;
+    status: string;
 }
 
 /**
@@ -83,31 +83,31 @@ export interface VetTxReceiptMeta {
      * @type {string}
      * @memberof VetTxReceiptMeta
      */
-    blockID?: string;
+    blockID: string;
     /**
      *
      * @type {number}
      * @memberof VetTxReceiptMeta
      */
-    blockNumber?: number;
+    blockNumber: number;
     /**
      *
      * @type {number}
      * @memberof VetTxReceiptMeta
      */
-    blockTimestamp?: number;
+    blockTimestamp: number;
     /**
      *
      * @type {string}
      * @memberof VetTxReceiptMeta
      */
-    txID?: string;
+    txID: string;
     /**
      *
      * @type {string}
      * @memberof VetTxReceiptMeta
      */
-    txOrigin?: string;
+    txOrigin: string;
 }
 
 /**
@@ -121,13 +121,13 @@ export interface VetTxReceiptOutputs {
      * @type {Array<any>}
      * @memberof VetTxReceiptOutputs
      */
-    events?: any[];
+    events: any[];
     /**
      *
      * @type {Array<VetTxReceiptTransfers>}
      * @memberof VetTxReceiptOutputs
      */
-    transfers?: VetTxReceiptTransfers[];
+    transfers: VetTxReceiptTransfers[];
 }
 
 /**
@@ -141,17 +141,17 @@ export interface VetTxReceiptTransfers {
      * @type {string}
      * @memberof VetTxReceiptTransfers
      */
-    sender?: string;
+    sender: string;
     /**
      *
      * @type {string}
      * @memberof VetTxReceiptTransfers
      */
-    recipient?: string;
+    recipient: string;
     /**
      *
      * @type {string}
      * @memberof VetTxReceiptTransfers
      */
-    amount?: string;
+    amount: string;
 }
