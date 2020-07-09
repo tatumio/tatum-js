@@ -1,7 +1,5 @@
 import axios from 'axios';
-import {TransactionHash} from '../model/response/common/TransactionHash';
-import {EthBlock} from '../model/response/eth/EthBlock';
-import {EthTx} from '../model/response/eth/EthTx';
+import {EthBlock, EthTx, TransactionHash} from '../model';
 
 export const ethBroadcast = async (txData: string): Promise<TransactionHash> => {
     return (await axios.post(`https://api.tatum.io/v3/ethereum/broadcast`,

@@ -4,7 +4,7 @@ import {validateOrReject} from 'class-validator';
 import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
 import {ethBroadcast, ethGetTransactionsCount} from '../blockchain';
-import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TRANSFER_METHOD_ABI} from '../constants';
+import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, ETH_URL, TEST_ETH_URL, TRANSFER_METHOD_ABI} from '../constants';
 import tokenABI from '../contracts/erc20/token_abi';
 import tokenByteCode from '../contracts/erc20/token_bytecode';
 import {CreateRecord, Currency, DeployEthErc20, TransferCustomErc20, TransferEthErc20} from '../model';
@@ -14,7 +14,7 @@ export const ethGetGasPriceInWei = async (client: Web3) => {
     return client.utils.toWei(new BigNumber(data.fast).dividedBy(10).toString(), 'gwei');
 };
 
-export const prepareStoreDataTransaction = async (body: CreateRecord) => {
+export const prepareStoreDataTransaction = async (testnet: boolean, body: CreateRecord, provider?: string) => {
     await validateOrReject(body);
     const {
         fromPrivateKey,
@@ -23,7 +23,7 @@ export const prepareStoreDataTransaction = async (body: CreateRecord) => {
         data,
         nonce,
     } = body;
-    const client = new Web3();
+    const client = new Web3(provider || (testnet ? TEST_ETH_URL : ETH_URL));
     client.eth.accounts.wallet.clear();
     client.eth.accounts.wallet.add(fromPrivateKey);
     client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
@@ -47,7 +47,7 @@ export const prepareStoreDataTransaction = async (body: CreateRecord) => {
     return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
 };
 
-export const prepareEthOrErc20SignedTransaction = async (body: TransferEthErc20) => {
+export const prepareEthOrErc20SignedTransaction = async (testnet: boolean, body: TransferEthErc20, provider?: string) => {
     await validateOrReject(body);
     const {
         fromPrivateKey,
@@ -59,7 +59,7 @@ export const prepareEthOrErc20SignedTransaction = async (body: TransferEthErc20)
         nonce,
     } = body;
 
-    const client = new Web3();
+    const client = new Web3(provider || (testnet ? TEST_ETH_URL : ETH_URL));
     client.eth.accounts.wallet.clear();
     client.eth.accounts.wallet.add(fromPrivateKey);
     client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
@@ -96,7 +96,7 @@ export const prepareEthOrErc20SignedTransaction = async (body: TransferEthErc20)
     return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
 };
 
-export const prepareCustomErc20SignedTransaction = async (body: TransferCustomErc20) => {
+export const prepareCustomErc20SignedTransaction = async (testnet: boolean, body: TransferCustomErc20, provider?: string) => {
     await validateOrReject(body);
     const {
         fromPrivateKey,
@@ -108,7 +108,7 @@ export const prepareCustomErc20SignedTransaction = async (body: TransferCustomEr
         nonce,
     } = body;
 
-    const client = new Web3();
+    const client = new Web3(provider || (testnet ? TEST_ETH_URL : ETH_URL));
     client.eth.accounts.wallet.clear();
     client.eth.accounts.wallet.add(fromPrivateKey);
     client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
@@ -134,7 +134,7 @@ export const prepareCustomErc20SignedTransaction = async (body: TransferCustomEr
     return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
 };
 
-export const prepareDeployErc20SignedTransaction = async (body: DeployEthErc20) => {
+export const prepareDeployErc20SignedTransaction = async (testnet: boolean, body: DeployEthErc20, provider?: string) => {
     await validateOrReject(body);
     const {
         name,
@@ -147,7 +147,7 @@ export const prepareDeployErc20SignedTransaction = async (body: DeployEthErc20) 
         fee,
     } = body;
 
-    const client = new Web3();
+    const client = new Web3(provider || (testnet ? TEST_ETH_URL : ETH_URL));
     client.eth.accounts.wallet.clear();
     client.eth.accounts.wallet.add(fromPrivateKey);
     client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
@@ -181,15 +181,15 @@ export const prepareDeployErc20SignedTransaction = async (body: DeployEthErc20) 
     return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
 };
 
-export const sendStoreDataTransaction = async (body: CreateRecord) => {
-    return ethBroadcast(await prepareStoreDataTransaction(body));
+export const sendStoreDataTransaction = async (testnet: boolean, body: CreateRecord, provider?: string) => {
+    return ethBroadcast(await prepareStoreDataTransaction(testnet, body, provider));
 };
-export const sendEthOrErc20Transaction = async (body: TransferEthErc20) => {
-    return ethBroadcast(await prepareEthOrErc20SignedTransaction(body));
+export const sendEthOrErc20Transaction = async (testnet: boolean, body: TransferEthErc20, provider?: string) => {
+    return ethBroadcast(await prepareEthOrErc20SignedTransaction(testnet, body, provider));
 };
-export const sendCustomErc20Transaction = async (body: TransferCustomErc20) => {
-    return ethBroadcast(await prepareCustomErc20SignedTransaction(body));
+export const sendCustomErc20Transaction = async (testnet: boolean, body: TransferCustomErc20, provider?: string) => {
+    return ethBroadcast(await prepareCustomErc20SignedTransaction(testnet, body, provider));
 };
-export const sendDeployErc20Transaction = async (body: DeployEthErc20) => {
-    return ethBroadcast(await prepareDeployErc20SignedTransaction(body));
+export const sendDeployErc20Transaction = async (testnet: boolean, body: DeployEthErc20, provider?: string) => {
+    return ethBroadcast(await prepareDeployErc20SignedTransaction(testnet, body, provider));
 };

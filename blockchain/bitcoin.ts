@@ -1,10 +1,5 @@
 import axios from 'axios';
-import {BtcBlock} from '../model/response/btc/BtcBlock';
-import {BtcInfo} from '../model/response/btc/BtcInfo';
-import {BtcTx} from '../model/response/btc/BtcTx';
-import {BtcUTXO} from '../model/response/btc/BtcUTXO';
-import {BlockHash} from '../model/response/common/BlockHash';
-import {TransactionHash} from '../model/response/common/TransactionHash';
+import {BlockHash, BtcBlock, BtcInfo, BtcTx, BtcUTXO, TransactionHash} from '../model';
 
 export const btcBroadcast = async (txData: string): Promise<TransactionHash> => {
     return (await axios.post(`https://api.tatum.io/v3/bitcoin/broadcast`,

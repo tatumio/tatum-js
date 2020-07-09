@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {TransactionHash} from '../model/response/common/TransactionHash';
+import {TransactionHash} from '../model';
 
 export const xlmGetAccountInfo = async (account: string): Promise<{ sequence: string }> => {
     return (await axios.get(`https://api.tatum.io/v3/xlm/account/${account}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;

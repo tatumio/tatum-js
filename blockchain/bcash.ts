@@ -1,9 +1,5 @@
 import axios from 'axios';
-import {BchBlock} from '../model/response/bch/BchBlock';
-import {BchInfo} from '../model/response/bch/BchInfo';
-import {BchTx} from '../model/response/bch/BchTx';
-import {BlockHash} from '../model/response/common/BlockHash';
-import {TransactionHash} from '../model/response/common/TransactionHash';
+import {BchBlock, BchInfo, BchTx, BlockHash, TransactionHash} from '../model';
 
 export const bcashBroadcast = async (txData: string): Promise<TransactionHash> => {
     return (await axios.post(`https://api.tatum.io/v3/bcash/broadcast`,

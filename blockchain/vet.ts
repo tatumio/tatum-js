@@ -1,11 +1,6 @@
 import axios from 'axios';
 import {validateOrReject} from 'class-validator';
-import {EstimateGasVet} from '../model/request/EstimateGasVet';
-import {TransactionHash} from '../model/response/common/TransactionHash';
-import {VetBlock} from '../model/response/vet/VetBlock';
-import {VetEstimateGas} from '../model/response/vet/VetEstimateGas';
-import {VetTx} from '../model/response/vet/VetTx';
-import {VetTxReceipt} from '../model/response/vet/VetTxReceipt';
+import {EstimateGasVet, TransactionHash, VetBlock, VetEstimateGas, VetTx, VetTxReceipt} from '../model';
 
 export const vetBroadcast = async (txData: string): Promise<TransactionHash> => {
     return (await axios.post(`https://api.tatum.io/v3/vet/broadcast`,

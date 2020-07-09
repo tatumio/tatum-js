@@ -1,10 +1,5 @@
 import axios from 'axios';
-import {BlockHash} from '../model/response/common/BlockHash';
-import {TransactionHash} from '../model/response/common/TransactionHash';
-import {LtcBlock} from '../model/response/ltc/LtcBlock';
-import {LtcInfo} from '../model/response/ltc/LtcInfo';
-import {LtcTx} from '../model/response/ltc/LtcTx';
-import {LtcUTXO} from '../model/response/ltc/LtxUTXO';
+import {BlockHash, LtcBlock, LtcInfo, LtcTx, LtcUTXO, TransactionHash} from '../model';
 
 export const ltcBroadcast = async (txData: string): Promise<TransactionHash> => {
     return (await axios.post(`https://api.tatum.io/v3/litecoin/broadcast`,

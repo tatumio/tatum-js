@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {TransactionHash} from '../model/response/common/TransactionHash';
+import {TransactionHash} from '../model';
 
 export const xrpGetFee = async (): Promise<{ drops: { base_fee: number } }> => {
     return (await axios.get('https://api.tatum.io/v3/xrp/fee', {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;

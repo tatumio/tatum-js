@@ -3,12 +3,13 @@ import {thorify} from 'thorify';
 import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
 import {vetBroadcast} from '../blockchain';
-import {TransferVet} from '../model/request/TransferVet';
+import {TEST_VET_URL, VET_URL} from '../constants';
+import {TransferVet} from '../model';
 
-export const sendVetTransaction = async (body: TransferVet) => {
-    return vetBroadcast(await prepareVetSignedTransaction(body));
+export const sendVetTransaction = async (testnet: boolean, body: TransferVet, provider?: string) => {
+    return vetBroadcast(await prepareVetSignedTransaction(testnet, body, provider));
 };
-export const prepareVetSignedTransaction = async (body: TransferVet) => {
+export const prepareVetSignedTransaction = async (testnet: boolean, body: TransferVet, provider?: string) => {
     await validateOrReject(body);
     const {
         fromPrivateKey,
@@ -18,7 +19,7 @@ export const prepareVetSignedTransaction = async (body: TransferVet) => {
         fee,
     } = body;
 
-    const client = thorify(new Web3());
+    const client = thorify(new Web3(), provider || (testnet ? TEST_VET_URL : VET_URL));
     client.eth.accounts.wallet.clear();
     client.eth.accounts.wallet.add(fromPrivateKey);
     client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
