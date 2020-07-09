@@ -1,7 +1,7 @@
 import {validateOrReject} from 'class-validator';
 import {Account, Asset, Keypair, Memo, Networks, Operation, TransactionBuilder} from 'stellar-sdk';
 import {xlmBroadcast, xlmGetAccountInfo} from '../blockchain';
-import {TransferXlm} from '../model/request/TransferXlm';
+import {TransferXlm} from '../model';
 
 export const sendXlmTransaction = async (testnet: boolean, body: TransferXlm) => {
     return xlmBroadcast(await prepareXlmSignedTransaction(testnet, body));

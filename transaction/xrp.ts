@@ -3,7 +3,7 @@ import {validateOrReject} from 'class-validator';
 import {RippleAPI} from 'ripple-lib';
 import {Payment} from 'ripple-lib/dist/npm/transaction/payment';
 import {xrpBroadcast, xrpGetAccountInfo, xrpGetFee} from '../blockchain';
-import {TransferXrp} from '../model/request/TransferXrp';
+import {TransferXrp} from '../model';
 
 export const sendXrpTransaction = async (body: TransferXrp) => {
     return xrpBroadcast(await prepareXrpSignedTransaction(body));
