@@ -4,6 +4,7 @@ import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
 import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS} from '../constants';
 import tokenAbi from '../contracts/erc20/token_abi';
+import {getAccountById, getVirtualCurrencyByName} from '../ledger';
 import {Currency, TransferEthErc20Offchain, TransferEthOffchain} from '../model';
 import {ethGetGasPriceInWei} from '../transaction';
 import {generatePrivateKeyFromMnemonic} from '../wallet';
@@ -14,7 +15,7 @@ export const sendEthOffchainTransaction = async (testnet: boolean, body: Transfe
     const {
         mnemonic, index, privateKey, nonce, ...withdrawal
     } = body;
-    const {amount, address, currency} = withdrawal;
+    const {amount, address} = withdrawal;
 
     let fromPriv;
     if (mnemonic && index !== undefined) {
@@ -32,7 +33,8 @@ export const sendEthOffchainTransaction = async (testnet: boolean, body: Transfe
     withdrawal.senderBlockchainAddress = web3.eth.accounts.wallet[0].address;
     const gasPrice = await ethGetGasPriceInWei(web3);
 
-    const {txData, gasLimit} = await prepareEthSignedOffchainTransaction(amount, fromPriv, address, currency, web3, gasPrice, nonce);
+    const account = await getAccountById(withdrawal.senderAccountId);
+    const {txData, gasLimit} = await prepareEthSignedOffchainTransaction(amount, fromPriv, address, account.currency, web3, gasPrice, nonce);
     const fee = new BigNumber(web3.utils.fromWei(new BigNumber(gasLimit).multipliedBy(gasPrice).toString(), 'ether')).toString();
     // @ts-ignore
     withdrawal.fee = fee;
@@ -49,9 +51,9 @@ export const sendEthOffchainTransaction = async (testnet: boolean, body: Transfe
 export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: TransferEthErc20Offchain) => {
     await validateOrReject(body);
     const {
-        mnemonic, index, tokenAddress, privateKey, nonce, ...withdrawal
+        mnemonic, index, privateKey, nonce, ...withdrawal
     } = body;
-    const {amount, address, currency} = withdrawal;
+    const {amount, address} = withdrawal;
 
     let fromPriv;
     if (mnemonic && index !== undefined) {
@@ -69,7 +71,9 @@ export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: Tr
     withdrawal.senderBlockchainAddress = web3.eth.accounts.wallet[0].address;
     const gasPrice = await ethGetGasPriceInWei(web3);
 
-    const {txData, gasLimit} = await prepareEthErc20SignedOffchainTransaction(amount, fromPriv, address, web3, tokenAddress, gasPrice, nonce);
+    const account = await getAccountById(withdrawal.senderAccountId);
+    const vc = await getVirtualCurrencyByName(account.currency);
+    const {txData, gasLimit} = await prepareEthErc20SignedOffchainTransaction(amount, fromPriv, address, web3, vc.erc20Address as string, gasPrice, nonce);
     const fee = new BigNumber(web3.utils.fromWei(new BigNumber(gasLimit).multipliedBy(gasPrice).toString(), 'ether')).toString();
     // @ts-ignore
     withdrawal.fee = fee;
@@ -84,7 +88,7 @@ export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: Tr
 };
 
 export const prepareEthSignedOffchainTransaction =
-    async (amount: string, privateKey: string, address: string, currency: Currency, web3: Web3, gasPrice: string, nonce?: number) => {
+    async (amount: string, privateKey: string, address: string, currency: string, web3: Web3, gasPrice: string, nonce?: number) => {
         let tx: TransactionConfig;
         if (currency === 'ETH') {
             tx = {

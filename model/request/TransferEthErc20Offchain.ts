@@ -1,6 +1,5 @@
 import {
     IsBoolean,
-    IsIn,
     IsInt,
     IsNotEmpty,
     IsNumberString,
@@ -10,7 +9,6 @@ import {
     Min,
     ValidateIf,
 } from 'class-validator';
-import {Currency, ETH_BASED_CURRENCIES} from './Currency';
 
 export class TransferEthErc20Offchain {
 
@@ -23,10 +21,6 @@ export class TransferEthErc20Offchain {
     public address: string;
 
     @IsNotEmpty()
-    @Length(42, 42)
-    public tokenAddress: string;
-
-    @IsNotEmpty()
     @IsNumberString()
     @Matches(/^[+]?((\d+(\.\d*)?)|(\.\d+))$/)
     public amount: string;
@@ -34,10 +28,6 @@ export class TransferEthErc20Offchain {
     @IsOptional()
     @IsBoolean()
     public compliant?: boolean;
-
-    @IsIn(ETH_BASED_CURRENCIES)
-    @IsNotEmpty()
-    public currency: Currency;
 
     @Length(1, 100)
     @IsOptional()

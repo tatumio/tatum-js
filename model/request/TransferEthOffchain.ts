@@ -1,6 +1,5 @@
 import {
     IsBoolean,
-    IsIn,
     IsInt,
     IsNotEmpty,
     IsNumberString,
@@ -11,7 +10,6 @@ import {
     Min,
     ValidateIf,
 } from 'class-validator';
-import {Currency, ETH_BASED_CURRENCIES} from './Currency';
 
 export class TransferEthOffchain {
 
@@ -27,10 +25,6 @@ export class TransferEthOffchain {
     @IsNumberString()
     @Matches(/^[+]?((\d+(\.\d*)?)|(\.\d+))$/)
     public amount: string;
-
-    @IsNotEmpty()
-    @IsIn(ETH_BASED_CURRENCIES)
-    public currency: Currency;
 
     @IsOptional()
     @IsBoolean()
