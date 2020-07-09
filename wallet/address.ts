@@ -3,8 +3,7 @@ import {fromBase58, fromSeed} from 'bip32';
 import {mnemonicToSeed} from 'bip39';
 import {HDNode, Mnemonic} from 'bitbox-sdk';
 import {networks, payments} from 'bitcoinjs-lib';
-// @ts-ignore
-import ethHdKey from 'ethereumjs-wallet/hdkey';
+import {hdkey as ethHdKey} from 'ethereumjs-wallet';
 // @ts-ignore
 import {
     BCH_DERIVATION_PATH,
@@ -71,13 +70,13 @@ const generateBchPrivateKey = async (testnet: boolean, mnemonic: string, i: numb
 };
 const generateEthPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
     const path = testnet ? TESTNET_DERIVATION_PATH : ETH_DERIVATION_PATH;
-    const hdwallet = ethHdKey.fromMasterSeed(mnemonicToSeed(mnemonic));
+    const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnemonic));
     const derivePath = hdwallet.derivePath(path).deriveChild(i);
     return derivePath.getWallet().getPrivateKeyString();
 };
 const generateVetPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
     const path = testnet ? TESTNET_DERIVATION_PATH : VET_DERIVATION_PATH;
-    const hdwallet = ethHdKey.fromMasterSeed(mnemonicToSeed(mnemonic));
+    const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnemonic));
     const derivePath = hdwallet.derivePath(path).deriveChild(i);
     return derivePath.getWallet().getPrivateKeyString();
 };
@@ -93,7 +92,20 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xP
             return generateLtcAddress(testnet, xPub, i);
         case Currency.BCH:
             return generateBchAddress(testnet, xPub, i);
+        case Currency.USDT:
+        case Currency.LEO:
+        case Currency.LINK:
+        case Currency.FREE:
+        case Currency.MKR:
+        case Currency.USDC:
+        case Currency.BAT:
+        case Currency.TUSD:
+        case Currency.PAX:
+        case Currency.PAXG:
+        case Currency.PLTC:
+        case Currency.XCON:
         case Currency.ETH:
+        case Currency.MMY:
             return generateEthAddress(testnet, xPub, i);
         case Currency.VET:
             return generateVetAddress(testnet, xPub, i);
@@ -112,7 +124,20 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
             return generateLtcPrivateKey(testnet, mnemonic, i);
         case Currency.BCH:
             return generateBchPrivateKey(testnet, mnemonic, i);
+        case Currency.USDT:
+        case Currency.LEO:
+        case Currency.LINK:
+        case Currency.FREE:
+        case Currency.MKR:
+        case Currency.USDC:
+        case Currency.BAT:
+        case Currency.TUSD:
+        case Currency.PAX:
+        case Currency.PAXG:
+        case Currency.PLTC:
+        case Currency.XCON:
         case Currency.ETH:
+        case Currency.MMY:
             return generateEthPrivateKey(testnet, mnemonic, i);
         case Currency.VET:
             return generateVetPrivateKey(testnet, mnemonic, i);

@@ -3,8 +3,7 @@ import {fromSeed} from 'bip32';
 import {generateMnemonic, mnemonicToSeed} from 'bip39';
 import {HDNode, Mnemonic} from 'bitbox-sdk';
 import {networks} from 'bitcoinjs-lib';
-// @ts-ignore
-import ethHdKey from 'ethereumjs-wallet/hdkey';
+import {hdkey as ethHdKey} from 'ethereumjs-wallet';
 // @ts-ignore
 import hdkey from 'hdkey';
 import {RippleAPI} from 'ripple-lib';
@@ -34,7 +33,7 @@ export const generateBnbWallet = async (testnet: boolean, mnem: string) => {
 
 export const generateVetWallet = async (testnet: boolean, mnem: string) => {
     const path = testnet ? TESTNET_DERIVATION_PATH : VET_DERIVATION_PATH;
-    const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem));
+    const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnem));
     const derivePath = hdwallet.derivePath(path);
     return {xpub: derivePath.publicExtendedKey(), xpriv: derivePath.privateExtendedKey(), mnemonic: mnem};
 };
@@ -93,7 +92,20 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
             return generateLtcWallet(testnet, mnem);
         case Currency.BCH:
             return generateBchWallet(testnet, mnem);
+        case Currency.USDT:
+        case Currency.LEO:
+        case Currency.LINK:
+        case Currency.FREE:
+        case Currency.MKR:
+        case Currency.USDC:
+        case Currency.BAT:
+        case Currency.TUSD:
+        case Currency.PAX:
+        case Currency.PAXG:
+        case Currency.PLTC:
+        case Currency.XCON:
         case Currency.ETH:
+        case Currency.MMY:
             return generateEthWallet(testnet, mnem);
         case Currency.XRP:
             return generateXrpWallet();

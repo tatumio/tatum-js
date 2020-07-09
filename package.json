@@ -22,6 +22,7 @@
     "bitcoinjs-lib": "^5.1.10",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.12.2",
+    "ethereumjs-wallet": "^1.0.0",
     "hdkey": "^2.0.1",
     "neon": "^2.0.0",
     "ripple-lib": "^1.7.1",
@@ -32,11 +33,30 @@
   "devDependencies": {
     "@types/bip32": "^2.0.0",
     "@types/bip39": "^3.0.0",
-    "@types/jest": "^26.0.3",
+    "@types/jest": "^26.0.4",
     "@types/node": "^14.0.14",
     "jest": "^26.1.0",
+    "reflect-metadata": "^0.1.13",
+    "ts-jest": "^26.1.1",
     "ts-node": "^8.10.2",
     "tslint": "^6.1.2",
     "typescript": "^3.9.6"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": ".",
+    "testRegex": ".spec.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "setupFiles": [
+      "./jest-setup-file.ts"
+    ],
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
   }
 }
