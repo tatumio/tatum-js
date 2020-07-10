@@ -18,7 +18,6 @@ export const prepareBitcoinCashSignedTransaction = async (testnet: boolean, body
     for (const [i, item] of fromUTXO.entries()) {
         transactionBuilder.addInput(item.txHash, item.index);
         privateKeysToSign.push(item.privateKey);
-        // @ts-ignore
         amountToSign.push(Number(new BigNumber(item.value).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
     }
     for (const item of to) {

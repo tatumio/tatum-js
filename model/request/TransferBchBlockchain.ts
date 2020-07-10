@@ -1,13 +1,20 @@
 import {Type} from 'class-transformer';
-import {ArrayNotEmpty, IsNotEmpty, ValidateNested} from 'class-validator';
+import {ArrayNotEmpty, IsNotEmpty, IsNumberString, Min, ValidateNested} from 'class-validator';
 import {FromUTXO, To} from './TransferBtcBasedBlockchain';
+
+export class FromUTXOBcash extends FromUTXO {
+    @IsNotEmpty()
+    @IsNumberString()
+    @Min(0)
+    public value: string;
+}
 
 export class TransferBchBlockchain {
 
     @IsNotEmpty()
     @ValidateNested({each: true})
-    @Type(() => FromUTXO)
-    public fromUTXO: FromUTXO[];
+    @Type(() => FromUTXOBcash)
+    public fromUTXO: FromUTXOBcash[];
 
     @ArrayNotEmpty()
     @ValidateNested({each: true})

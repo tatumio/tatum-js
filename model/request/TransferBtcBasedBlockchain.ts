@@ -1,5 +1,6 @@
 import {Type} from 'class-transformer';
-import {ArrayNotEmpty, IsNotEmpty, Length, Max, Min, ValidateIf, ValidateNested} from 'class-validator';
+import {ArrayNotEmpty, IsNotEmpty, Length, Max, Min, Validate, ValidateIf, ValidateNested} from 'class-validator';
+import {TransferBtcValidator} from '../validation/TransferBtcValidator';
 
 class FromAddress {
     @IsNotEmpty()
@@ -40,12 +41,14 @@ export class To {
 export class TransferBtcBasedBlockchain {
 
     @ValidateIf(o => (o.fromUTXO && o.fromAddress) || !o.fromUTXO)
+    @Validate(TransferBtcValidator)
     @IsNotEmpty()
     @ValidateNested({each: true})
     @Type(() => FromAddress)
     public fromAddress: FromAddress[];
 
     @ValidateIf(o => (o.fromUTXO && o.fromAddress) || !o.fromAddress)
+    @Validate(TransferBtcValidator)
     @IsNotEmpty()
     @ValidateNested({each: true})
     @Type(() => FromUTXO)
