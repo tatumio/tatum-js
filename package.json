@@ -1,15 +1,29 @@
 {
-  "name": "tatum",
-  "version": "1.0.0",
+  "name": "@tatumio/tatum",
+  "version": "1.0.2",
   "description": "",
   "main": "dist/src/index.js",
+  "repository": "https://github.com/tatumio/tatum-js",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
     "prepublish": "tsc",
     "doc": "typedoc --out docs --excludeExternals --excludePrivate --includeVersion src",
     "lint": "tslint -p tsconfig.json -c tslint.json --fix"
   },
   "types": "dist/src/index.d.ts",
-  "keywords": [],
+  "keywords": [
+    "Tatum",
+    "Blockchain",
+    "Building Blocks",
+    "Bitcoin",
+    "Litecoin",
+    "Stellar",
+    "Tatum API",
+    "XRP",
+    "Ethereum"
+  ],
   "author": "Tatum, hello@tatum.io",
   "license": "MIT",
   "dependencies": {
