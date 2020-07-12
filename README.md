@@ -8,7 +8,7 @@ The Tatum API client allows browsers and Node.js clients to interact with Tatum 
 - **offchain** - set of functions to generate and sign Tatum off-chain transactions locally.
 
 You can find more detailed documentation and examples in Tatum API documentation
-[Documentation](https://tatum.io) pages or read the documentation for the [client](./docs/index.html)
+[Documentation](https://tatum.io) pages or read the documentation for the [client](./docs/index.html).
 
 ## Installation
 
@@ -27,6 +27,8 @@ $ npm run test
 
 ## Configuration and setup
 Provide Tatum API key to process.env.TATUM_API_KEY variable. You can use dotenv or any other way.
+There are modules and functions, that do not have to comunicate with Tatum API, like wallet generation or signing of transactions locally.
+In those cases, there is no need to provide TATUM_API_KEY parameter.
 
 ```process.env.TATUM_API_KEY=${YOUR_API_KEY}```
 
