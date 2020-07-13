@@ -64,12 +64,12 @@ export const prepareBitcoinCashSignedOffchainTransaction =
         });
 
         const lastVin = data.find(d => d.vIn === '-1') as WithdrawalResponseData;
-        tx.addOutput(address, Number(new BigNumber(amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+        tx.addOutput(address, Number(new BigNumber(amount).multipliedBy(100000000).toFixed(0, BigNumber.ROUND_FLOOR)));
         if (mnemonic) {
             const {xpub} = generateBchWallet(testnet, mnemonic);
-            tx.addOutput(generateAddressFromXPub(Currency.BCH, testnet, xpub, 0), Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+            tx.addOutput(generateAddressFromXPub(Currency.BCH, testnet, xpub, 0), Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(0, BigNumber.ROUND_FLOOR)));
         } else if (keyPair && changeAddress) {
-            tx.addOutput(changeAddress, Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+            tx.addOutput(changeAddress, Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(0, BigNumber.ROUND_FLOOR)));
         } else {
             throw new Error('Impossible to prepare transaction. Either mnemonic or keyPair and attr must be present.');
         }
@@ -78,7 +78,7 @@ export const prepareBitcoinCashSignedOffchainTransaction =
             if (input.vIn === '-1') {
                 continue;
             }
-            const value = Number(data[i].amount) * 100000000;
+            const value = Number(new BigNumber(data[i].amount).multipliedBy(100000000).toFixed(0, BigNumber.ROUND_FLOOR));
             if (mnemonic) {
                 const derivationKey = input.address && input.address.derivationKey ? input.address.derivationKey : 0;
                 const privateKey = await generatePrivateKeyFromMnemonic(Currency.BCH, testnet, mnemonic, derivationKey);
