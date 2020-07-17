@@ -1,6 +1,6 @@
 import {Type} from 'class-transformer';
 import {IsBoolean, IsIn, IsNotEmpty, IsOptional, Length, MaxLength, ValidateNested} from 'class-validator';
-import {Fiat} from '..';
+import {Fiat} from '../response';
 import {CustomerUpdate} from './CustomerUpdate';
 
 export class CreateAccount {

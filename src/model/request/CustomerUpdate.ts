@@ -1,5 +1,5 @@
 import {IsIn, IsOptional, Length} from 'class-validator';
-import {Fiat} from '..';
+import {Fiat} from '../response';
 import {Country} from './Country';
 
 export class CustomerUpdate {
