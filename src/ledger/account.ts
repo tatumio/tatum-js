@@ -11,7 +11,7 @@ export const createAccount = async (account: CreateAccount): Promise<Account> =>
     return (await axios.post(`https://api.tatum.io/v3/ledger/account`, account, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 
-export const getBlockedAmountsByAccountId = async (id: string, pageSize: number, offset = 0): Promise<Blockage[]> => {
+export const getBlockedAmountsByAccountId = async (id: string, pageSize: number = 50, offset = 0): Promise<Blockage[]> => {
     return (await axios.get(`https://api.tatum.io/v3/ledger/account/block/${id}?pageSize=${pageSize}&offset=${offset}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 
@@ -44,12 +44,12 @@ export const unfreezeAccount = async (id: string): Promise<void> => {
     await axios.put(`https://api.tatum.io/v3/ledger/account/${id}/unfreeze`, undefined, {headers: {'x-api-key': process.env.TATUM_API_KEY}});
 };
 
-export const getAccountsByCustomerId = async (id: string, pageSize: number, offset = 0): Promise<Account[]> => {
+export const getAccountsByCustomerId = async (id: string, pageSize: number = 50, offset = 0): Promise<Account[]> => {
     return (await axios.get(`https://api.tatum.io/v3/ledger/account/customer/${id}?pageSize=${pageSize}&offset=${offset}`,
         {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 
-export const getAllAccounts = async (pageSize: number, offset = 0): Promise<Account[]> => {
+export const getAllAccounts = async (pageSize: number = 50, offset = 0): Promise<Account[]> => {
     return (await axios.get(`https://api.tatum.io/v3/ledger/account?pageSize=${pageSize}&offset=${offset}`,
         {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };

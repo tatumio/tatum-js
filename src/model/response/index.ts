@@ -8,6 +8,7 @@ export * from './btc/BtcUTXO';
 export * from './common/BlockHash';
 export * from './common/TransactionHash';
 export * from './common/TxHash';
+export * from './kms/TransactionKMS';
 export * from './eth/EthBlock';
 export * from './eth/EthTx';
 export * from './ltc/LtcBlock';

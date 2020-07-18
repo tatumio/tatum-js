@@ -11,17 +11,20 @@ export const storeTransaction = async (transaction: CreateTransaction): Promise<
     return (await axios.post(`https://api.tatum.io/v3/ledger/transaction`, transaction, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 
-export const getTransactionsByAccount = async (filter: TransactionType): Promise<Transaction[]> => {
+export const getTransactionsByAccount = async (filter: TransactionType, pageSize: number = 50, offset: number = 0): Promise<Transaction[]> => {
     await validateOrReject(filter);
-    return (await axios.post(`https://api.tatum.io/v3/ledger/transaction/account`, filter, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+    return (await axios.post(`https://api.tatum.io/v3/ledger/transaction/account?pageSize=${pageSize}&offset=${offset}`,
+        filter, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 
-export const getTransactionsByCustomer = async (filter: TransactionType): Promise<Transaction[]> => {
+export const getTransactionsByCustomer = async (filter: TransactionType, pageSize: number = 50, offset: number = 0): Promise<Transaction[]> => {
     await validateOrReject(filter);
-    return (await axios.post(`https://api.tatum.io/v3/ledger/transaction/account`, filter, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+    return (await axios.post(`https://api.tatum.io/v3/ledger/transaction/customer?pageSize=${pageSize}&offset=${offset}`,
+        filter, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 
-export const getTransactionsByLedger = async (filter: TransactionType): Promise<Transaction[]> => {
+export const getTransactionsByLedger = async (filter: TransactionType, pageSize: number = 50, offset: number = 0): Promise<Transaction[]> => {
     await validateOrReject(filter);
-    return (await axios.post(`https://api.tatum.io/v3/ledger/transaction/account`, filter, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+    return (await axios.post(`https://api.tatum.io/v3/ledger/transaction/ledger?pageSize=${pageSize}&offset=${offset}`,
+        filter, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
