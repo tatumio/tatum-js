@@ -2,7 +2,8 @@ import BigNumber from 'bignumber.js';
 import {ECPair, TransactionBuilder} from 'bitbox-sdk';
 import {validateOrReject} from 'class-validator';
 import {bcashBroadcast} from '../blockchain';
-import {TransferBchBlockchain} from '../model/request/TransferBchBlockchain';
+import {Currency, TransferBchBlockchain} from '../model/request';
+import {TransactionKMS} from '../model/response';
 
 /**
  * Send Bitcoin Cash transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -13,6 +14,29 @@ import {TransferBchBlockchain} from '../model/request/TransferBchBlockchain';
  */
 export const sendBitcoinCashTransaction = async (testnet: boolean, body: TransferBchBlockchain) => {
     return bcashBroadcast(await prepareBitcoinCashSignedTransaction(testnet, body));
+};
+
+/**
+ * Sign Bitcoin Cash pending transaction from Tatum KMS
+ * @param tx pending transaction from KMS
+ * @param privateKeys private keys to sign transaction with.
+ * @param testnet mainnet or testnet version
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const signBitcoinCashKMSTransaction = async (tx: TransactionKMS, privateKeys: string[], testnet: boolean) => {
+    if (tx.chain !== Currency.BCH) {
+        throw Error('Unsupported chain.');
+    }
+    const network = testnet ? 'testnet' : 'mainnet';
+    const [data, amountsToDecode] = tx.serializedTransaction.split(':');
+    const transaction = JSON.parse(data);
+    const amountsToSign = JSON.parse(amountsToDecode);
+    const builder = TransactionBuilder.fromTransaction(transaction, network);
+    for (const [i, privateKey] of privateKeys.entries()) {
+        const ecPair = new ECPair().fromWIF(privateKey);
+        builder.sign(i, ecPair, undefined, builder.hashTypes.SIGHASH_ALL, amountsToSign[i], builder.signatureAlgorithms.SCHNORR);
+    }
+    return builder.build().toHex();
 };
 
 /**
@@ -28,7 +52,7 @@ export const prepareBitcoinCashSignedTransaction = async (testnet: boolean, body
     const transactionBuilder = new TransactionBuilder(networkType);
     const privateKeysToSign: string[] = [];
     const amountToSign: number[] = [];
-    for (const [i, item] of fromUTXO.entries()) {
+    for (const item of fromUTXO) {
         transactionBuilder.addInput(item.txHash, item.index);
         privateKeysToSign.push(item.privateKey);
         amountToSign.push(Number(new BigNumber(item.value).multipliedBy(100000000).toFixed(0, BigNumber.ROUND_FLOOR)));

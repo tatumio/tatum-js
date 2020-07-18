@@ -3,7 +3,7 @@ import {validateOrReject} from 'class-validator';
 import {RippleAPI} from 'ripple-lib';
 import {Payment} from 'ripple-lib/dist/npm/transaction/payment';
 import {xrpBroadcast, xrpGetAccountInfo, xrpGetFee} from '../blockchain';
-import {TransferXrp} from '../model';
+import {Currency, TransactionKMS, TransferXrp} from '../model';
 
 /**
  * Send Xrp transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -13,6 +13,20 @@ import {TransferXrp} from '../model';
  */
 export const sendXrpTransaction = async (body: TransferXrp) => {
     return xrpBroadcast(await prepareXrpSignedTransaction(body));
+};
+
+/**
+ * Sign Xrp pending transaction from Tatum KMS
+ * @param tx pending transaction from KMS
+ * @param secret secret key to sign transaction with.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const signXrpKMSTransaction = async (tx: TransactionKMS, secret: string) => {
+    if (tx.chain !== Currency.XRP) {
+        throw Error('Unsupported chain.');
+    }
+    const rippleAPI = new RippleAPI();
+    return rippleAPI.sign(tx.serializedTransaction, secret).signedTransaction;
 };
 
 /**

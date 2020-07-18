@@ -1,7 +1,7 @@
 import {validateOrReject} from 'class-validator';
 import {Account, Asset, Keypair, Memo, Networks, Operation, TransactionBuilder} from 'stellar-sdk';
 import {xlmBroadcast, xlmGetAccountInfo} from '../blockchain';
-import {TransferXlm} from '../model';
+import {Currency, TransactionKMS, TransferXlm} from '../model';
 
 /**
  * Send Stellar transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -12,6 +12,22 @@ import {TransferXlm} from '../model';
  */
 export const sendXlmTransaction = async (testnet: boolean, body: TransferXlm) => {
     return xlmBroadcast(await prepareXlmSignedTransaction(testnet, body));
+};
+
+/**
+ * Sign Stellar pending transaction from Tatum KMS
+ * @param tx pending transaction from KMS
+ * @param secret secret key to sign transaction with.
+ * @param testnet mainnet or testnet version
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const signXlmKMSTransaction = async (tx: TransactionKMS, secret: string, testnet: boolean) => {
+    if (tx.chain !== Currency.XLM) {
+        throw Error('Unsupported chain.');
+    }
+    const transaction = TransactionBuilder.fromXDR(tx.serializedTransaction, testnet ? Networks.TESTNET : Networks.PUBLIC);
+    transaction.sign(Keypair.fromSecret(secret));
+    return transaction.toEnvelope().toXDR().toString('base64');
 };
 
 /**

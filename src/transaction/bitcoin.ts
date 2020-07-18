@@ -10,8 +10,7 @@ import {
     ltcGetUTXO
 } from '../blockchain';
 import {LTC_NETWORK, LTC_TEST_NETWORK} from '../constants';
-import {Currency, TransferBtcBasedBlockchain} from '../model';
-
+import {Currency, TransactionKMS, TransferBtcBasedBlockchain} from '../model';
 
 const prepareSignedTransaction = async (network: Network, body: TransferBtcBasedBlockchain, curency: Currency) => {
     await validateOrReject(body);
@@ -54,6 +53,46 @@ const prepareSignedTransaction = async (network: Network, body: TransferBtcBased
         tx.sign(i, ecPair);
     }
     return tx.build().toHex();
+};
+
+/**
+ * Sign Bitcoin pending transaction from Tatum KMS
+ * @param tx pending transaction from KMS
+ * @param privateKeys private keys to sign transaction with.
+ * @param testnet mainnet or testnet version
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const signBitcoinKMSTransaction = async (tx: TransactionKMS, privateKeys: string[], testnet: boolean) => {
+    if (tx.chain !== Currency.BTC) {
+        throw Error('Unsupported chain.');
+    }
+    const network = testnet ? networks.testnet : networks.bitcoin;
+    const builder = TransactionBuilder.fromTransaction(JSON.parse(tx.serializedTransaction), network);
+    for (const [i, privateKey] of privateKeys.entries()) {
+        const ecPair = ECPair.fromWIF(privateKey, network);
+        builder.sign(i, ecPair);
+    }
+    return builder.build().toHex();
+};
+
+/**
+ * Sign Litecoin pending transaction from Tatum KMS
+ * @param tx pending transaction from KMS
+ * @param privateKeys private keys to sign transaction with.
+ * @param testnet mainnet or testnet version
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const signLitecoinKMSTransaction = async (tx: TransactionKMS, privateKeys: string[], testnet: boolean) => {
+    if (tx.chain !== Currency.LTC) {
+        throw Error('Unsupported chain.');
+    }
+    const network = testnet ? LTC_TEST_NETWORK : LTC_NETWORK;
+    const builder = TransactionBuilder.fromTransaction(JSON.parse(tx.serializedTransaction), network);
+    for (const [i, privateKey] of privateKeys.entries()) {
+        const ecPair = ECPair.fromWIF(privateKey, network);
+        builder.sign(i, ecPair);
+    }
+    return builder.build().toHex();
 };
 
 /**

@@ -7,7 +7,7 @@ import {ethBroadcast, ethGetTransactionsCount} from '../blockchain';
 import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, ETH_URL, TEST_ETH_URL, TRANSFER_METHOD_ABI} from '../constants';
 import tokenABI from '../contracts/erc20/token_abi';
 import tokenByteCode from '../contracts/erc20/token_bytecode';
-import {CreateRecord, Currency, DeployEthErc20, TransferCustomErc20, TransferEthErc20} from '../model';
+import {CreateRecord, Currency, DeployEthErc20, TransactionKMS, TransferCustomErc20, TransferEthErc20} from '../model';
 
 /**
  * Estimate Gas price for the transaction.
@@ -16,6 +16,25 @@ import {CreateRecord, Currency, DeployEthErc20, TransferCustomErc20, TransferEth
 export const ethGetGasPriceInWei = async (client: Web3) => {
     const {data} = await axios.get('https://ethgasstation.info/json/ethgasAPI.json');
     return client.utils.toWei(new BigNumber(data.fast).dividedBy(10).toString(), 'gwei');
+};
+
+/**
+ * Sign Ethereum pending transaction from Tatum KMS
+ * @param tx pending transaction from KMS
+ * @param fromPrivateKey private key to sign transaction with.
+ * @param testnet mainnet or testnet version
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const signEthKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, testnet: boolean, provider?: string) => {
+    if (tx.chain !== Currency.ETH) {
+        throw Error('Unsupported chain.');
+    }
+    const client = new Web3(provider || (testnet ? TEST_ETH_URL : ETH_URL));
+    client.eth.accounts.wallet.clear();
+    client.eth.accounts.wallet.add(fromPrivateKey);
+    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
 };
 
 /**
