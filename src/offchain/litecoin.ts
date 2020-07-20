@@ -1,8 +1,8 @@
 import BigNumber from 'bignumber.js';
-import {ECPair, TransactionBuilder} from 'bitcoinjs-lib';
+import {ECPair, networks, TransactionBuilder} from 'bitcoinjs-lib';
 import {validateOrReject} from 'class-validator';
 import {LTC_NETWORK, LTC_TEST_NETWORK} from '../constants';
-import {Currency, KeyPair, TransferBtcBasedOffchain, WithdrawalResponseData} from '../model';
+import {Currency, KeyPair, TransactionKMS, TransferBtcBasedOffchain, WithdrawalResponseData} from '../model';
 import {generateAddressFromXPub, generateLtcWallet, generatePrivateKeyFromMnemonic} from '../wallet';
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
 
@@ -40,6 +40,26 @@ export const sendLitecoinOffchainTransaction = async (testnet: boolean, body: Tr
         await offchainCancelWithdrawal(id);
         throw e;
     }
+};
+
+/**
+ * Sign Litecoin pending transaction from Tatum KMS
+ * @param tx pending transaction from KMS
+ * @param mnemonic mnemonic to generate private keys to sign transaction with.
+ * @param testnet mainnet or testnet version
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const signLitecoinOffchainKMSTransaction = async (tx: TransactionKMS, mnemonic: string, testnet: boolean) => {
+    if (tx.chain !== Currency.LTC || !tx.withdrawalResponses) {
+        throw Error('Unsupported chain.');
+    }
+    const network = testnet ? networks.testnet : networks.bitcoin;
+    const builder = TransactionBuilder.fromTransaction(JSON.parse(tx.serializedTransaction), network);
+    for (const response of tx.withdrawalResponses) {
+        const ecPair = ECPair.fromWIF(await generatePrivateKeyFromMnemonic(Currency.LTC, testnet, mnemonic, response.address.derivationKey), network);
+        builder.sign(response.address.derivationKey, ecPair);
+    }
+    return builder.build().toHex();
 };
 
 /**

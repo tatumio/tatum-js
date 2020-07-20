@@ -2,10 +2,10 @@ import BigNumber from 'bignumber.js';
 import {validateOrReject} from 'class-validator';
 import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
-import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS} from '../constants';
+import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, ETH_URL, TEST_ETH_URL} from '../constants';
 import tokenAbi from '../contracts/erc20/token_abi';
 import {getAccountById, getVirtualCurrencyByName} from '../ledger';
-import {Currency, TransferEthErc20Offchain, TransferEthOffchain} from '../model';
+import {Currency, TransactionKMS, TransferEthErc20Offchain, TransferEthOffchain} from '../model';
 import {ethGetGasPriceInWei} from '../transaction';
 import {generatePrivateKeyFromMnemonic} from '../wallet';
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
@@ -99,6 +99,26 @@ export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: Tr
         await offchainCancelWithdrawal(id);
         throw e;
     }
+};
+
+
+/**
+ * Sign Ethereum pending transaction from Tatum KMS
+ * @param tx pending transaction from KMS
+ * @param fromPrivateKey private key to sign transaction with.
+ * @param testnet mainnet or testnet version
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const signEthOffchainKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, testnet: boolean, provider?: string) => {
+    if (tx.chain !== Currency.ETH) {
+        throw Error('Unsupported chain.');
+    }
+    const client = new Web3(provider || (testnet ? TEST_ETH_URL : ETH_URL));
+    client.eth.accounts.wallet.clear();
+    client.eth.accounts.wallet.add(fromPrivateKey);
+    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
 };
 
 /**

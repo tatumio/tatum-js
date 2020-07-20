@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 import {validateOrReject} from 'class-validator';
 import {RippleAPI} from 'ripple-lib';
 import {xrpGetAccount, xrpGetFee} from '../blockchain';
-import {Currency, TransferXrpOffchain} from '../model';
+import {Currency, TransactionKMS, TransferXrpOffchain} from '../model';
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
 
 /**
@@ -41,6 +41,20 @@ export const sendXrpOffchainTransaction = async (testnet: boolean, body: Transfe
         await offchainCancelWithdrawal(id);
         throw e;
     }
+};
+
+/**
+ * Sign Xrp pending transaction from Tatum KMS
+ * @param tx pending transaction from KMS
+ * @param secret secret key to sign transaction with.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const signXrpOffchainKMSTransaction = async (tx: TransactionKMS, secret: string) => {
+    if (tx.chain !== Currency.XRP) {
+        throw Error('Unsupported chain.');
+    }
+    const rippleAPI = new RippleAPI();
+    return rippleAPI.sign(tx.serializedTransaction, secret).signedTransaction;
 };
 
 /**

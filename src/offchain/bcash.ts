@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import {ECPair, TransactionBuilder} from 'bitbox-sdk';
 import {validateOrReject} from 'class-validator';
-import {Currency, KeyPair, TransferBtcBasedOffchain, WithdrawalResponseData} from '../model';
+import {Currency, KeyPair, TransactionKMS, TransferBtcBasedOffchain, WithdrawalResponseData} from '../model';
 import {generateAddressFromXPub, generateBchWallet, generatePrivateKeyFromMnemonic} from '../wallet';
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
 
@@ -39,6 +39,29 @@ export const sendBitcoinCashOffchainTransaction = async (testnet: boolean, body:
         await offchainCancelWithdrawal(id);
         throw e;
     }
+};
+
+/**
+ * Sign Bitcoin Cash pending transaction from Tatum KMS
+ * @param tx pending transaction from KMS
+ * @param mnemonic mnemonic to generate private keys to sign transaction with.
+ * @param testnet mainnet or testnet version
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const signBitcoinCashOffchainKMSTransaction = async (tx: TransactionKMS, mnemonic: string, testnet: boolean) => {
+    if (tx.chain !== Currency.BCH || !tx.withdrawalResponses) {
+        throw Error('Unsupported chain.');
+    }
+    const network = testnet ? 'testnet' : 'mainnet';
+    const [data, amountsToDecode] = tx.serializedTransaction.split(':');
+    const transaction = JSON.parse(data);
+    const amountsToSign = JSON.parse(amountsToDecode) as number[];
+    const builder = TransactionBuilder.fromTransaction(transaction, network);
+    for (const [i, response] of tx.withdrawalResponses.entries()) {
+        const ecPair = new ECPair().fromWIF(await generatePrivateKeyFromMnemonic(Currency.BCH, testnet, mnemonic, response.address.derivationKey));
+        builder.sign(i, ecPair, undefined, builder.hashTypes.SIGHASH_ALL, amountsToSign[i], builder.signatureAlgorithms.SCHNORR);
+    }
+    return builder.build().toHex();
 };
 
 /**

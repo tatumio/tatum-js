@@ -1,7 +1,7 @@
 import {validateOrReject} from 'class-validator';
 import {Account, Asset, Keypair, Memo, Networks, Operation, TransactionBuilder} from 'stellar-sdk';
 import {xlmGetAccount} from '../blockchain';
-import {Currency, TransferXlmOffchain} from '../model';
+import {Currency, TransactionKMS, TransferXlmOffchain} from '../model';
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
 
 /**
@@ -41,6 +41,22 @@ export const sendXlmOffchainTransaction = async (testnet: boolean, body: Transfe
         await offchainCancelWithdrawal(id);
         throw e;
     }
+};
+
+/**
+ * Sign Stellar pending transaction from Tatum KMS
+ * @param tx pending transaction from KMS
+ * @param secret secret key to sign transaction with.
+ * @param testnet mainnet or testnet version
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const signXlmOffchainKMSTransaction = async (tx: TransactionKMS, secret: string, testnet: boolean) => {
+    if (tx.chain !== Currency.XLM) {
+        throw Error('Unsupported chain.');
+    }
+    const transaction = TransactionBuilder.fromXDR(tx.serializedTransaction, testnet ? Networks.TESTNET : Networks.PUBLIC);
+    transaction.sign(Keypair.fromSecret(secret));
+    return transaction.toEnvelope().toXDR().toString('base64');
 };
 
 /**
