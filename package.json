@@ -1,14 +1,14 @@
 {
   "name": "@tatumio/tatum",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "",
   "main": "dist/src/index.js",
   "repository": "https://github.com/tatumio/tatum-js",
   "files": [
-    "dist/"
+    "dist/",
+    "patches/"
   ],
   "scripts": {
-    "prepublish": "tsc",
     "postinstall": "patch-package",
     "doc": "typedoc --out docs --excludeExternals --excludePrivate --includeVersion src",
     "lint": "tslint -p tsconfig.json -c tslint.json --fix"
