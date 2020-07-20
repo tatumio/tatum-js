@@ -1,9 +1,9 @@
 import axios from 'axios';
 import {EthBlock, EthTx, TransactionHash} from '../model';
 
-export const ethBroadcast = async (txData: string): Promise<TransactionHash> => {
+export const ethBroadcast = async (txData: string, signatureId?: string): Promise<TransactionHash> => {
     return (await axios.post(`https://api.tatum.io/v3/ethereum/broadcast`,
-        {txData},
+        {txData, signatureId},
         {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 

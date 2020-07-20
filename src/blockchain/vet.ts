@@ -2,9 +2,9 @@ import axios from 'axios';
 import {validateOrReject} from 'class-validator';
 import {EstimateGasVet, TransactionHash, VetBlock, VetEstimateGas, VetTx, VetTxReceipt} from '../model';
 
-export const vetBroadcast = async (txData: string): Promise<TransactionHash> => {
+export const vetBroadcast = async (txData: string, signatureId?: string): Promise<TransactionHash> => {
     return (await axios.post(`https://api.tatum.io/v3/vet/broadcast`,
-        {txData},
+        {txData, signatureId},
         {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 

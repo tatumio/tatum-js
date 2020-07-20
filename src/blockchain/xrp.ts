@@ -9,9 +9,9 @@ export const xrpGetAccountInfo = async (account: string): Promise<{ ledger_curre
     return (await axios.get(`https://api.tatum.io/v3/xrp/account/${account}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 
-export const xrpBroadcast = async (txData: string): Promise<TransactionHash> => {
+export const xrpBroadcast = async (txData: string, signatureId?: string): Promise<TransactionHash> => {
     return (await axios.post(`https://api.tatum.io/v3/xrp/broadcast`,
-        {txData},
+        {txData, signatureId},
         {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 

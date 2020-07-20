@@ -5,9 +5,9 @@ export const xlmGetAccountInfo = async (account: string): Promise<{ sequence: st
     return (await axios.get(`https://api.tatum.io/v3/xlm/account/${account}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 
-export const xlmBroadcast = async (txData: string): Promise<TransactionHash> => {
+export const xlmBroadcast = async (txData: string, signatureId?: string): Promise<TransactionHash> => {
     return (await axios.post(`https://api.tatum.io/v3/xlm/broadcast`,
-        {txData},
+        {txData, signatureId},
         {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 

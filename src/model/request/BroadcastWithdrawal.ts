@@ -22,4 +22,10 @@ export interface BroadcastWithdrawal {
      * @memberof BroadcastWithdrawal
      */
     withdrawalId?: string;
+    /**
+     * Signature ID to be completed by transaction broadcast
+     * @type {string}
+     * @memberof BroadcastWithdrawal
+     */
+    signatureId?: string;
 }

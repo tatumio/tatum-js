@@ -1,9 +1,9 @@
 import axios from 'axios';
 import {BlockHash, LtcBlock, LtcInfo, LtcTx, LtcUTXO, TransactionHash} from '../model';
 
-export const ltcBroadcast = async (txData: string): Promise<TransactionHash> => {
+export const ltcBroadcast = async (txData: string, signatureId?: string): Promise<TransactionHash> => {
     return (await axios.post(`https://api.tatum.io/v3/litecoin/broadcast`,
-        {txData},
+        {txData, signatureId},
         {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 
