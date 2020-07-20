@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "",
   "main": "dist/src/index.js",
   "repository": "https://github.com/tatumio/tatum-js",
@@ -41,6 +41,7 @@
     "ethereumjs-wallet": "^1.0.0",
     "hdkey": "^2.0.1",
     "neon": "^2.0.0",
+    "patch-package": "^6.2.2",
     "ripple-lib": "^1.7.1",
     "stellar-sdk": "^5.0.4",
     "thorify": "^1.5.2",
@@ -52,7 +53,6 @@
     "@types/jest": "^26.0.4",
     "@types/node": "^14.0.14",
     "jest": "^26.1.0",
-    "patch-package": "^6.2.2",
     "reflect-metadata": "^0.1.13",
     "ts-jest": "^26.1.1",
     "ts-node": "^8.10.2",
