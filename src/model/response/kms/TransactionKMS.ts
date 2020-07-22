@@ -12,7 +12,7 @@ export class TransactionKMS {
 
     public txId?: string;
 
-    public index?: string;
+    public index?: number;
 
     public withdrawalResponses?: WithdrawalResponseData[];
 }
