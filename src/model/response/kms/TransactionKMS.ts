@@ -12,6 +12,8 @@ export class TransactionKMS {
 
     public txId?: string;
 
+    public withdrawalId?: string;
+
     public index?: number;
 
     public withdrawalResponses?: WithdrawalResponseData[];
