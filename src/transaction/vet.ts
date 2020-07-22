@@ -34,7 +34,7 @@ export const signVetKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
     client.eth.accounts.wallet.clear();
     client.eth.accounts.wallet.add(fromPrivateKey);
     client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction;
+    return (await client.eth.accounts.signTransaction(JSON.parse(tx.serializedTransaction), fromPrivateKey)).rawTransaction;
 };
 
 /**
