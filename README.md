@@ -1,10 +1,10 @@
 # Tatum API client
-The Tatum API client allows browsers and Node.js clients to interact with Tatum API. It includes the following core components.
+Tatum API client allows browsers and Node.js clients to interact with Tatum API. It includes the following core components.
 
 - **wallet** - cryptographic functions like generation of wallets, private keys or addresses.
-- **kms** - set of API calls to communicate with Tatum KMS.
-- **blockchain** - set of API calls to communicate with different blockchains via Tatum API.
-- **ledger** - set of API calls to communicate with Tatum Private Ledger.
+- **kms** - set of API calls to communicate with <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a>.
+- **blockchain** - set of API calls to communicate with different blockchains via <a href="https://tatum.io" target="_blank">Tatum API</a>.
+- **ledger** - set of API calls to communicate with Tatum Private Ledger via <a href="https://tatum.io" target="_blank">Tatum API</a>.
 - **transaction** - set of functions to generate and sign blockchain transactions locally.
 - **offchain** - set of functions to generate and sign Tatum off-chain transactions locally.
 
