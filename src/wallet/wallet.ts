@@ -148,9 +148,10 @@ export const generateXrpWallet = () => {
 
 /**
  * Generate Stellar address and secret.
+ * @param secret secret of the account to generate address
  */
-export const generateXlmWallet = () => {
-    const keypair = Keypair.random();
+export const generateXlmWallet = (secret?: string) => {
+    const keypair = secret ? Keypair.fromSecret(secret) : Keypair.random();
     return {address: keypair.publicKey(), secret: keypair.secret()};
 };
 

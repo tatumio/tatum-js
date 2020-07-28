@@ -16,7 +16,11 @@ You can find more detailed documentation and examples in Tatum API documentation
 ```bash
 $ npm i @tatumio/tatum
 ```
- Bitcoin Cash library - BITBOX SDK - needs to be modified a little to expose API, which is not available yet.
+### Node.JS & Browser support
+Library is written in TypeScript with ES2015 as the target JS version. Library should work in all modern browsers with ES2015 support and Node.JS current LTS. 
+
+#### Post Install
+ Bitcoin Cash library - BITBOX SDK - needs to be modified a little to expose API, which is not available yet. Pull request to be tracked [here](https://github.com/Bitcoin-com/bitbox-sdk/pull/188).
  To fix this funcionality, after installation of @tatumio/tatum library, place postinstall script into package.json to apply patches.
 ```
   ...
