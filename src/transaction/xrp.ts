@@ -26,7 +26,7 @@ export const signXrpKMSTransaction = async (tx: TransactionKMS, secret: string) 
         throw Error('Unsupported chain.');
     }
     const rippleAPI = new RippleAPI();
-    return rippleAPI.sign(JSON.parse(tx.serializedTransaction), secret).signedTransaction;
+    return rippleAPI.sign(tx.serializedTransaction, secret).signedTransaction;
 };
 
 /**

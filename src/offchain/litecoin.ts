@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import {ECPair, networks, TransactionBuilder} from 'bitcoinjs-lib';
+import {ECPair, networks, Transaction, TransactionBuilder} from 'bitcoinjs-lib';
 import {validateOrReject} from 'class-validator';
 import {LTC_NETWORK, LTC_TEST_NETWORK} from '../constants';
 import {Currency, KeyPair, TransactionKMS, TransferBtcBasedOffchain, WithdrawalResponseData} from '../model';
@@ -54,7 +54,7 @@ export const signLitecoinOffchainKMSTransaction = async (tx: TransactionKMS, mne
         throw Error('Unsupported chain.');
     }
     const network = testnet ? networks.testnet : networks.bitcoin;
-    const builder = TransactionBuilder.fromTransaction(JSON.parse(tx.serializedTransaction), network);
+    const builder = TransactionBuilder.fromTransaction(Transaction.fromHex(tx.serializedTransaction), network);
     for (const response of tx.withdrawalResponses) {
         const ecPair = ECPair.fromWIF(await generatePrivateKeyFromMnemonic(Currency.LTC, testnet, mnemonic, response.address.derivationKey), network);
         builder.sign(response.address.derivationKey, ecPair);
