@@ -1,12 +1,13 @@
 diff --git a/node_modules/bitbox-sdk/lib/TransactionBuilder.js b/node_modules/bitbox-sdk/lib/TransactionBuilder.js
-index 4590229..c287ac7 100644
+index 4590229..cd75725 100644
 --- a/node_modules/bitbox-sdk/lib/TransactionBuilder.js
 +++ b/node_modules/bitbox-sdk/lib/TransactionBuilder.js
-@@ -79,6 +79,14 @@ var TransactionBuilder = /** @class */ (function () {
+@@ -79,6 +79,15 @@ var TransactionBuilder = /** @class */ (function () {
          var witnessScript;
          this.transaction.sign(vin, keyPair, redeemScript, hashType, value, witnessScript, signatureAlgorithm);
      };
 +    TransactionBuilder.fromTransaction = function(transaction, network) {
++        var bitcoincash
 +        if (network === "bitcoincash" || network === "mainnet")
 +            bitcoincash = coininfo.bitcoincash.main;
 +        else
