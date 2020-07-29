@@ -19,16 +19,6 @@ $ npm i @tatumio/tatum
 ### Node.JS & Browser support
 Library is written in TypeScript with ES2015 as the target JS version. Library should work in all modern browsers with ES2015 support and Node.JS current LTS. 
 
-#### Post Install
- Bitcoin Cash library - BITBOX SDK - needs to be modified a little to expose API, which is not available yet. Pull request to be tracked [here](https://github.com/Bitcoin-com/bitbox-sdk/pull/188).
- To fix this funcionality, after installation of @tatumio/tatum library, place postinstall script into package.json to apply patches.
-```
-  ...
-  "scripts": {
-     "postinstall": "patch-package --patch-dir node_modules/@tatumio/tatum/patches"
-   }
-  ...
-```
 ## Testing
 
 All new code changes should be covered with unit tests. You can run the tests

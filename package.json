@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum",
-  "version": "1.0.30",
+  "version": "1.1.0",
   "description": "",
   "main": "dist/src/index.js",
   "repository": "https://github.com/tatumio/tatum-js",
@@ -12,7 +12,6 @@
     "clean": "rimraf dist/*",
     "build": "tsc",
     "prepublish": "npm run clean && npm run build",
-    "postinstall": "patch-package",
     "doc": "typedoc --out docs --excludeExternals --excludePrivate --includeVersion src",
     "lint": "tslint -p tsconfig.json -c tslint.json --fix"
   },
@@ -42,10 +41,10 @@
     "bitcoinjs-lib": "^5.1.10",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.12.2",
+    "coininfo": "^5.1.0",
     "ethereumjs-wallet": "^1.0.0",
     "hdkey": "^2.0.1",
     "neon": "^2.0.0",
-    "patch-package": "^6.2.2",
     "ripple-lib": "^1.7.1",
     "stellar-sdk": "^5.0.4",
     "thorify": "^1.5.2",

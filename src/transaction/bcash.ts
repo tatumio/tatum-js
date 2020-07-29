@@ -1,8 +1,14 @@
 // @ts-ignore
-import {Transaction} from '@bitcoin-dot-com/bitcoincashjs2-lib';
+import {
+    ECSignature,
+    Transaction,
+    TransactionBuilder as KMSTransactionBuilder
+} from '@bitcoin-dot-com/bitcoincashjs2-lib';
 import BigNumber from 'bignumber.js';
 import {ECPair, TransactionBuilder} from 'bitbox-sdk';
 import {validateOrReject} from 'class-validator';
+// @ts-ignore
+import coininfo from 'coininfo';
 import {bcashBroadcast} from '../blockchain';
 import {Currency, TransferBchBlockchain} from '../model/request';
 import {TransactionKMS} from '../model/response';
@@ -29,14 +35,14 @@ export const signBitcoinCashKMSTransaction = async (tx: TransactionKMS, privateK
     if (tx.chain !== Currency.BCH) {
         throw Error('Unsupported chain.');
     }
-    const network = testnet ? 'testnet' : 'mainnet';
     const [data, amountsToDecode] = tx.serializedTransaction.split(':');
     const transaction = Transaction.fromHex(data);
     const amountsToSign = JSON.parse(amountsToDecode);
-    const builder = TransactionBuilder.fromTransaction(transaction, network);
+    const network = testnet ? coininfo.bitcoincash.test.toBitcoinJS() : coininfo.bitcoincash.main.toBitcoinJS();
+    const builder = KMSTransactionBuilder.fromTransaction(transaction, network);
     for (const [i, privateKey] of privateKeys.entries()) {
         const ecPair = new ECPair().fromWIF(privateKey);
-        builder.sign(i, ecPair, undefined, builder.hashTypes.SIGHASH_ALL, amountsToSign[i], builder.signatureAlgorithms.SCHNORR);
+        builder.sign(i, ecPair, undefined, 0x01, amountsToSign[i], ECSignature.SCHNORR);
     }
     return builder.build().toHex();
 };
