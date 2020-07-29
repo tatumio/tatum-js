@@ -1,3 +1,5 @@
+// @ts-ignore
+import {Transaction} from '@bitcoin-dot-com/bitcoincashjs2-lib';
 import BigNumber from 'bignumber.js';
 import {ECPair, TransactionBuilder} from 'bitbox-sdk';
 import {validateOrReject} from 'class-validator';
@@ -54,7 +56,7 @@ export const signBitcoinCashOffchainKMSTransaction = async (tx: TransactionKMS, 
     }
     const network = testnet ? 'testnet' : 'mainnet';
     const [data, amountsToDecode] = tx.serializedTransaction.split(':');
-    const transaction = JSON.parse(data);
+    const transaction = Transaction.fromHex(data);
     const amountsToSign = JSON.parse(amountsToDecode) as number[];
     const builder = TransactionBuilder.fromTransaction(transaction, network);
     for (const [i, response] of tx.withdrawalResponses.entries()) {

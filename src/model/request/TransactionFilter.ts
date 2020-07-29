@@ -29,6 +29,11 @@ export class TransactionFilter {
     @IsOptional()
     public counterAccount?: string;
 
+    @Length(1, 50)
+    @IsString()
+    @IsOptional()
+    public currency?: string;
+
     @Length(1, 100)
     @IsString()
     @IsOptional()
