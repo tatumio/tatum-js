@@ -58,7 +58,7 @@ export const signBitcoinOffchainKMSTransaction = async (tx: TransactionKMS, mnem
         if (response.vIn === '-1') {
             continue;
         }
-        const ecPair = ECPair.fromWIF(await generatePrivateKeyFromMnemonic(Currency.BTC, testnet, mnemonic, response.address.derivationKey), network);
+        const ecPair = ECPair.fromWIF(await generatePrivateKeyFromMnemonic(Currency.BTC, testnet, mnemonic, response.address ? response.address.derivationKey : 0), network);
         builder.sign(i, ecPair);
     }
     return builder.build().toHex();
