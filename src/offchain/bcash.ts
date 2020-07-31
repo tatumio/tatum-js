@@ -1,4 +1,3 @@
-// @ts-ignore
 import {
     ECSignature,
     Transaction,
@@ -66,6 +65,9 @@ export const signBitcoinCashOffchainKMSTransaction = async (tx: TransactionKMS, 
     const network = testnet ? coininfo.bitcoincash.test.toBitcoinJS() : coininfo.bitcoincash.main.toBitcoinJS();
     const builder = KMSTransactionBuilder.fromTransaction(transaction, network);
     for (const [i, response] of tx.withdrawalResponses.entries()) {
+        if (response.vIn === '-1') {
+            continue;
+        }
         const ecPair = new ECPair().fromWIF(await generatePrivateKeyFromMnemonic(Currency.BCH, testnet, mnemonic, response.address.derivationKey));
         builder.sign(i, ecPair, undefined, 0x01, amountsToSign[i], ECSignature.SCHNORR);
     }
