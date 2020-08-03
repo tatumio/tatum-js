@@ -13,11 +13,46 @@ You can find more detailed documentation and examples in Tatum API documentation
 
 ## Installation
 
-```bash
-$ npm i @tatumio/tatum
-```
+### Node.js
+1. Install module:
+
+   `npm install @tatumio/tatum`
+
+2. `reflect-metadata` shim is required, install it too:
+
+   `npm install reflect-metadata`
+
+   and make sure to import it in a global place, like app.ts:
+
+   ```typescript
+   import 'reflect-metadata';
+   ```
+   
+### Browser
+
+1. Install module:
+
+   `npm install @tatumio/tatum`
+
+2. `reflect-metadata` shim is required, install it too:
+
+   `npm install reflect-metadata --save`
+
+   add `<script>` to reflect-metadata in the head of your `index.html`:
+
+   ```html
+   <html>
+     <head>
+       <!-- ... -->
+       <script src="node_modules/reflect-metadata/Reflect.js"></script>
+     </head>
+     <!-- ... -->
+   </html>
+   ```
+
+   If you are using angular 2 you should already have this shim installed.
 ### Node.JS & Browser support
-Library is written in TypeScript with ES2015 as the target JS version. Library should work in all modern browsers with ES2015 support and Node.JS current LTS. 
+Library is written in TypeScript with ES2017 as the target JS version. Library should work in all modern browsers with ES2017 support and Node.JS current LTS. 
 
 ## Testing
 
@@ -63,7 +98,7 @@ const btcWallet = generateWallet(Currency.BTC, true);
 
 If you are using the types in a `commonjs` module, like in a Node app, you just have to enable `esModuleInterop` and `allowSyntheticDefaultImports` in your `tsconfig` for typesystem compatibility:
 
-```js
+```json
 "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
