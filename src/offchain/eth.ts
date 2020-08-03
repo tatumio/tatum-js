@@ -15,9 +15,10 @@ import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} fr
  * This operation is irreversible.
  * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendEthOffchainTransaction = async (testnet: boolean, body: TransferEthOffchain) => {
+export const sendEthOffchainTransaction = async (testnet: boolean, body: TransferEthOffchain, provider?: string) => {
     await validateOrReject(body);
     const {
         mnemonic, index, privateKey, nonce, ...withdrawal
@@ -33,7 +34,7 @@ export const sendEthOffchainTransaction = async (testnet: boolean, body: Transfe
         throw new Error('No mnemonic or private key is present.');
     }
 
-    const web3 = new Web3();
+    const web3 = new Web3(provider || (testnet ? TEST_ETH_URL : ETH_URL));
     web3.eth.accounts.wallet.add(fromPriv);
     web3.eth.defaultAccount = web3.eth.accounts.wallet[0].address;
     // @ts-ignore
@@ -60,9 +61,10 @@ export const sendEthOffchainTransaction = async (testnet: boolean, body: Transfe
  * This operation is irreversible.
  * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: TransferEthErc20Offchain) => {
+export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: TransferEthErc20Offchain, provider?: string) => {
     await validateOrReject(body);
     const {
         mnemonic, index, privateKey, nonce, ...withdrawal
@@ -78,7 +80,7 @@ export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: Tr
         throw new Error('No mnemonic or private key is present.');
     }
 
-    const web3 = new Web3();
+    const web3 = new Web3(provider || (testnet ? TEST_ETH_URL : ETH_URL));
     web3.eth.accounts.wallet.add(fromPriv);
     web3.eth.defaultAccount = web3.eth.accounts.wallet[0].address;
     // @ts-ignore
