@@ -20,7 +20,7 @@ export const offchainBroadcast = async (data: BroadcastWithdrawal): Promise<TxHa
 };
 
 export const offchainStoreWithdrawal = async (data: any): Promise<WithdrawalResponse> => {
-    return (await axios.post(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/offchain/withdrawal/broadcast`,
+    return (await axios.post(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/offchain/withdrawal`,
         data,
         {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
