@@ -9,7 +9,7 @@ Tatum API client allows browsers and Node.js clients to interact with Tatum API.
 - **offchain** - set of functions to generate and sign Tatum off-chain transactions locally.
 
 You can find more detailed documentation and examples in Tatum API documentation
-[Documentation](https://tatum.io) pages or read the documentation for the [client](./docs/index.html).
+[Documentation](https://tatum.io) pages or read the documentation for the [client](https://tatumio.github.io/tatum-js/).
 
 ## Installation
 

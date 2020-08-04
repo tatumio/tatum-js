@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>&quot;src/ledger/index&quot; | @tatumio/tatum - v1.1.1</title>
-	<meta name="description" content="Documentation for @tatumio/tatum - v1.1.1">
+	<title>&quot;src/ledger/index&quot; | @tatumio/tatum - v1.1.10</title>
+	<meta name="description" content="Documentation for @tatumio/tatum - v1.1.10">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">@tatumio/tatum - v1.1.1</a>
+					<a href="../index.html" class="title">@tatumio/tatum - v1.1.10</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -83,7 +83,12 @@
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="_src_ledger_index_.html#getaccountsbycustomerid" class="tsd-kind-icon">get<wbr>Accounts<wbr>ByCustomer<wbr>Id</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="_src_ledger_index_.html#getallaccounts" class="tsd-kind-icon">get<wbr>All<wbr>Accounts</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="_src_ledger_index_.html#getblockedamountsbyaccountid" class="tsd-kind-icon">get<wbr>Blocked<wbr>Amounts<wbr>ByAccount<wbr>Id</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="_src_ledger_index_.html#gettransactionsbyaccount" class="tsd-kind-icon">get<wbr>Transactions<wbr>ByAccount</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="_src_ledger_index_.html#gettransactionsbycustomer" class="tsd-kind-icon">get<wbr>Transactions<wbr>ByCustomer</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="_src_ledger_index_.html#gettransactionsbyledger" class="tsd-kind-icon">get<wbr>Transactions<wbr>ByLedger</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="_src_ledger_index_.html#gettransactionsbyreference" class="tsd-kind-icon">get<wbr>Transactions<wbr>ByReference</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="_src_ledger_index_.html#getvirtualcurrencybyname" class="tsd-kind-icon">get<wbr>Virtual<wbr>Currency<wbr>ByName</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="_src_ledger_index_.html#storetransaction" class="tsd-kind-icon">store<wbr>Transaction</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="_src_ledger_index_.html#unfreezeaccount" class="tsd-kind-icon">unfreeze<wbr>Account</a></li>
 							</ul>
 						</section>
@@ -153,9 +158,34 @@
 					Re-exports <a href="_src_ledger_account_.html#getblockedamountsbyaccountid">getBlockedAmountsByAccountId</a>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="gettransactionsbyaccount" class="tsd-anchor"></a>
+					<h3>get<wbr>Transactions<wbr>ByAccount</h3>
+					Re-exports <a href="_src_ledger_transaction_.html#gettransactionsbyaccount">getTransactionsByAccount</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="gettransactionsbycustomer" class="tsd-anchor"></a>
+					<h3>get<wbr>Transactions<wbr>ByCustomer</h3>
+					Re-exports <a href="_src_ledger_transaction_.html#gettransactionsbycustomer">getTransactionsByCustomer</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="gettransactionsbyledger" class="tsd-anchor"></a>
+					<h3>get<wbr>Transactions<wbr>ByLedger</h3>
+					Re-exports <a href="_src_ledger_transaction_.html#gettransactionsbyledger">getTransactionsByLedger</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="gettransactionsbyreference" class="tsd-anchor"></a>
+					<h3>get<wbr>Transactions<wbr>ByReference</h3>
+					Re-exports <a href="_src_ledger_transaction_.html#gettransactionsbyreference">getTransactionsByReference</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
 					<a name="getvirtualcurrencybyname" class="tsd-anchor"></a>
 					<h3>get<wbr>Virtual<wbr>Currency<wbr>ByName</h3>
 					Re-exports <a href="_src_ledger_vc_.html#getvirtualcurrencybyname">getVirtualCurrencyByName</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="storetransaction" class="tsd-anchor"></a>
+					<h3>store<wbr>Transaction</h3>
+					Re-exports <a href="_src_ledger_transaction_.html#storetransaction">storeTransaction</a>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
 					<a name="unfreezeaccount" class="tsd-anchor"></a>
@@ -214,7 +244,22 @@
 						<a href="_src_ledger_index_.html#getblockedamountsbyaccountid" class="tsd-kind-icon">get<wbr>Blocked<wbr>Amounts<wbr>ByAccount<wbr>Id</a>
 					</li>
 					<li class=" tsd-kind-reference tsd-parent-kind-module">
+						<a href="_src_ledger_index_.html#gettransactionsbyaccount" class="tsd-kind-icon">get<wbr>Transactions<wbr>ByAccount</a>
+					</li>
+					<li class=" tsd-kind-reference tsd-parent-kind-module">
+						<a href="_src_ledger_index_.html#gettransactionsbycustomer" class="tsd-kind-icon">get<wbr>Transactions<wbr>ByCustomer</a>
+					</li>
+					<li class=" tsd-kind-reference tsd-parent-kind-module">
+						<a href="_src_ledger_index_.html#gettransactionsbyledger" class="tsd-kind-icon">get<wbr>Transactions<wbr>ByLedger</a>
+					</li>
+					<li class=" tsd-kind-reference tsd-parent-kind-module">
+						<a href="_src_ledger_index_.html#gettransactionsbyreference" class="tsd-kind-icon">get<wbr>Transactions<wbr>ByReference</a>
+					</li>
+					<li class=" tsd-kind-reference tsd-parent-kind-module">
 						<a href="_src_ledger_index_.html#getvirtualcurrencybyname" class="tsd-kind-icon">get<wbr>Virtual<wbr>Currency<wbr>ByName</a>
+					</li>
+					<li class=" tsd-kind-reference tsd-parent-kind-module">
+						<a href="_src_ledger_index_.html#storetransaction" class="tsd-kind-icon">store<wbr>Transaction</a>
 					</li>
 					<li class=" tsd-kind-reference tsd-parent-kind-module">
 						<a href="_src_ledger_index_.html#unfreezeaccount" class="tsd-kind-icon">unfreeze<wbr>Account</a>

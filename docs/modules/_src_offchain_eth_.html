@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>&quot;src/offchain/eth&quot; | @tatumio/tatum - v1.1.1</title>
-	<meta name="description" content="Documentation for @tatumio/tatum - v1.1.1">
+	<title>&quot;src/offchain/eth&quot; | @tatumio/tatum - v1.1.10</title>
+	<meta name="description" content="Documentation for @tatumio/tatum - v1.1.10">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">@tatumio/tatum - v1.1.1</a>
+					<a href="../index.html" class="title">@tatumio/tatum - v1.1.10</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -93,7 +93,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/617a0ec/src/offchain/eth.ts#L181">src/offchain/eth.ts:181</a></li>
+									<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/9c3cc9b/src/offchain/eth.ts#L183">src/offchain/eth.ts:183</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -175,7 +175,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/617a0ec/src/offchain/eth.ts#L137">src/offchain/eth.ts:137</a></li>
+									<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/9c3cc9b/src/offchain/eth.ts#L139">src/offchain/eth.ts:139</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -251,13 +251,13 @@
 					<a name="sendetherc20offchaintransaction" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> send<wbr>Eth<wbr>Erc20<wbr>Offchain<wbr>Transaction</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">send<wbr>Eth<wbr>Erc20<wbr>Offchain<wbr>Transaction<span class="tsd-signature-symbol">(</span>testnet<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span>, body<span class="tsd-signature-symbol">: </span><a href="../classes/_src_model_request_transferetherc20offchain_.transferetherc20offchain.html" class="tsd-signature-type">TransferEthErc20Offchain</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_src_model_response_common_txhash_.txhash.html" class="tsd-signature-type">TxHash</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">send<wbr>Eth<wbr>Erc20<wbr>Offchain<wbr>Transaction<span class="tsd-signature-symbol">(</span>testnet<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span>, body<span class="tsd-signature-symbol">: </span><a href="../classes/_src_model_request_transferetherc20offchain_.transferetherc20offchain.html" class="tsd-signature-type">TransferEthErc20Offchain</a>, provider<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_src_model_response_common_txhash_.txhash.html" class="tsd-signature-type">TxHash</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/617a0ec/src/offchain/eth.ts#L65">src/offchain/eth.ts:65</a></li>
+									<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/9c3cc9b/src/offchain/eth.ts#L67">src/offchain/eth.ts:67</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -284,6 +284,14 @@
 										</div>
 									</div>
 								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> provider: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>url of the Ethereum Server to connect to. If not set, default public server will be used.</p>
+										</div>
+									</div>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_src_model_response_common_txhash_.txhash.html" class="tsd-signature-type">TxHash</a><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>transaction id of the transaction in the blockchain</p>
@@ -294,13 +302,13 @@
 					<a name="sendethoffchaintransaction" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> send<wbr>Eth<wbr>Offchain<wbr>Transaction</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">send<wbr>Eth<wbr>Offchain<wbr>Transaction<span class="tsd-signature-symbol">(</span>testnet<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span>, body<span class="tsd-signature-symbol">: </span><a href="../classes/_src_model_request_transferethoffchain_.transferethoffchain.html" class="tsd-signature-type">TransferEthOffchain</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_src_model_response_common_txhash_.txhash.html" class="tsd-signature-type">TxHash</a><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">send<wbr>Eth<wbr>Offchain<wbr>Transaction<span class="tsd-signature-symbol">(</span>testnet<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span>, body<span class="tsd-signature-symbol">: </span><a href="../classes/_src_model_request_transferethoffchain_.transferethoffchain.html" class="tsd-signature-type">TransferEthOffchain</a>, provider<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_src_model_response_common_txhash_.txhash.html" class="tsd-signature-type">TxHash</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/617a0ec/src/offchain/eth.ts#L20">src/offchain/eth.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/9c3cc9b/src/offchain/eth.ts#L21">src/offchain/eth.ts:21</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -327,6 +335,14 @@
 										</div>
 									</div>
 								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> provider: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>url of the Ethereum Server to connect to. If not set, default public server will be used.</p>
+										</div>
+									</div>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_src_model_response_common_txhash_.txhash.html" class="tsd-signature-type">TxHash</a><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>transaction id of the transaction in the blockchain</p>
@@ -343,7 +359,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/617a0ec/src/offchain/eth.ts#L113">src/offchain/eth.ts:113</a></li>
+									<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/9c3cc9b/src/offchain/eth.ts#L115">src/offchain/eth.ts:115</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

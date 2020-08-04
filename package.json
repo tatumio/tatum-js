@@ -11,7 +11,7 @@
   "scripts": {
     "clean": "rimraf dist/*",
     "build": "tsc",
-    "prepublish": "npm run clean && npm run build",
+    "prepublish": "npm run clean && npm run build && npm run doc",
     "doc": "typedoc --out docs --excludeExternals --excludePrivate --includeVersion src",
     "lint": "tslint -p tsconfig.json -c tslint.json --fix"
   },
