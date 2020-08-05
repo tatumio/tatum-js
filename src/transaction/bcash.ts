@@ -42,7 +42,7 @@ export const signBitcoinCashKMSTransaction = async (tx: TransactionKMS, privateK
     const builder = KMSTransactionBuilder.fromTransaction(transaction, network);
     for (const [i, privateKey] of privateKeys.entries()) {
         const ecPair = new ECPair().fromWIF(privateKey);
-        builder.sign(i, ecPair, undefined, 0x01, amountsToSign[i], ECSignature.SCHNORR);
+        builder.sign(i, ecPair, undefined, 0x01, amountsToSign[i], undefined, ECSignature.SCHNORR);
     }
     return builder.build().toHex();
 };

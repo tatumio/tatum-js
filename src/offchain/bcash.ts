@@ -70,7 +70,7 @@ export const signBitcoinCashOffchainKMSTransaction = async (tx: TransactionKMS, 
             continue;
         }
         const ecPair = new ECPair().fromWIF(await generatePrivateKeyFromMnemonic(Currency.BCH, testnet, mnemonic, response.address ? response.address.derivationKey : 0));
-        builder.sign(i, ecPair, undefined, 0x01, amountsToSign[i], ECSignature.SCHNORR);
+        builder.sign(i, ecPair, undefined, 0x01, amountsToSign[i], undefined, ECSignature.SCHNORR);
     }
     return builder.build().toHex();
 };
