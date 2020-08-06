@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum",
-  "version": "1.1.12",
+  "version": "1.1.14",
   "description": "",
   "main": "dist/src/index.js",
   "repository": "https://github.com/tatumio/tatum-js",
@@ -11,7 +11,7 @@
   "scripts": {
     "clean": "rimraf dist/*",
     "build": "tsc",
-    "prepublish": "npm run clean && npm run build && npm run doc",
+    "prepublish": "npm run clean && npm run build",
     "doc": "typedoc --out docs --excludeExternals --excludePrivate --includeVersion src",
     "lint": "tslint -p tsconfig.json -c tslint.json --fix"
   },
