@@ -11,7 +11,7 @@ export class KeyPair {
 
     @IsNotEmpty()
     @Length(52, 52)
-    public private: string;
+    public privateKey: string;
 }
 
 export class TransferBtcBasedOffchain extends CreateWithdrawal {

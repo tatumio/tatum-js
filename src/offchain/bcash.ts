@@ -122,7 +122,7 @@ export const prepareBitcoinCashSignedOffchainTransaction =
                 // @ts-ignore
                 const privateKey = keyPair.find(k => k.address === input.address.address);
                 if (privateKey) {
-                    const ecPair = new ECPair().fromWIF(privateKey.private);
+                    const ecPair = new ECPair().fromWIF(privateKey.privateKey);
                     tx.sign(i, ecPair, undefined, tx.hashTypes.SIGHASH_ALL, value, tx.signatureAlgorithms.SCHNORR);
                 }
             }

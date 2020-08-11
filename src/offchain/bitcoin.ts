@@ -107,7 +107,7 @@ export const prepareBitcoinSignedOffchainTransaction =
                 tx.sign(i, ecPair);
             } else {
                 const privateKey = keyPair.find(k => k.address === input.address.address) as KeyPair;
-                const ecPair = ECPair.fromWIF(privateKey.private, network);
+                const ecPair = ECPair.fromWIF(privateKey.privateKey, network);
                 tx.sign(i, ecPair);
             }
         }
