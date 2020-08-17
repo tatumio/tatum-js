@@ -1,6 +1,6 @@
 import {validateOrReject} from 'class-validator';
 import {Account, Asset, Keypair, Memo, Networks, Operation, TransactionBuilder} from 'stellar-sdk';
-import {xlmGetAccount} from '../blockchain';
+import {xlmGetAccountInfo} from '../blockchain';
 import {Currency, TransactionKMS, TransferXlmOffchain} from '../model';
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
 
@@ -20,7 +20,7 @@ export const sendXlmOffchainTransaction = async (testnet: boolean, body: Transfe
         withdrawal.fee = '0.00001';
     }
     const memo = withdrawal.attr ? withdrawal.attr.length > 28 ? Memo.hash(withdrawal.attr) : Memo.text(withdrawal.attr) : undefined;
-    const account = await xlmGetAccount(Keypair.fromSecret(secret).publicKey());
+    const account = await xlmGetAccountInfo(Keypair.fromSecret(secret).publicKey());
     const {id} = await offchainStoreWithdrawal(withdrawal);
     const {
         amount, address,

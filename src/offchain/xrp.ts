@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import {validateOrReject} from 'class-validator';
 import {RippleAPI} from 'ripple-lib';
-import {xrpGetAccount, xrpGetFee} from '../blockchain';
+import {xrpGetAccountInfo, xrpGetFee} from '../blockchain';
 import {Currency, TransactionKMS, TransferXrpOffchain} from '../model';
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
 
@@ -20,7 +20,7 @@ export const sendXrpOffchainTransaction = async (testnet: boolean, body: Transfe
     if (!withdrawal.fee) {
         withdrawal.fee = new BigNumber((await xrpGetFee()).drops.base_fee).dividedBy(1000000).toString();
     }
-    const acc = await xrpGetAccount(account);
+    const acc = await xrpGetAccountInfo(account);
     const {id} = await offchainStoreWithdrawal(withdrawal);
     const {
         amount, fee, address,
