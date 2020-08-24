@@ -89,7 +89,7 @@ console.log(btcWallet);
 
 We support types within the repo itself. Please open an issue here if you find any wrong types.
 
-You can use `web3.js` as follows:
+You can use `@tatumio/tatum` as follows:
 
 ```typescript
 import {generateWallet, Currency} from '@tatumio/tatum';
