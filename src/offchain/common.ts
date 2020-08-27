@@ -66,7 +66,15 @@ export const offchainStoreWithdrawal = async (data: any): Promise<WithdrawalResp
 /**
  * For more details, see <a href="https://tatum.io/apidoc.html#operation/cancelInProgressWithdrawal" target="_blank">Tatum API documentation</a>
  */
-export const offchainCancelWithdrawal = async (id: string): Promise<WithdrawalResponse> => {
-    return (await axios.delete(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/offchain/withdrawal/${id}`,
-        {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+export const offchainCancelWithdrawal = async (id: string, revert = true): Promise<void> => {
+    await axios.delete(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/offchain/withdrawal/${id}/${revert}`,
+        {headers: {'x-api-key': process.env.TATUM_API_KEY}});
+};
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc.html#operation/completeWithdrawal" target="_blank">Tatum API documentation</a>
+ */
+export const offchainCompleteWithdrawal = async (id: string, txId: string): Promise<void> => {
+    await axios.put(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/offchain/withdrawal/${id}/${txId}`,
+        {headers: {'x-api-key': process.env.TATUM_API_KEY}});
 };

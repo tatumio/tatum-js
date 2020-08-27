@@ -9,9 +9,10 @@ import {ECPair, TransactionBuilder} from 'bitbox-sdk';
 import {validateOrReject} from 'class-validator';
 // @ts-ignore
 import coininfo from 'coininfo';
-import {bcashBroadcast} from '../blockchain';
+import {bcashBroadcast, bcashGetTransaction} from '../blockchain';
 import {Currency, TransferBchBlockchain} from '../model/request';
-import {TransactionKMS} from '../model/response';
+import {BchTx, TransactionKMS} from '../model/response';
+import {TxnDetailsResult} from 'bitcoin-com-rest';
 
 /**
  * Send Bitcoin Cash transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -60,10 +61,11 @@ export const prepareBitcoinCashSignedTransaction = async (testnet: boolean, body
     const transactionBuilder = new TransactionBuilder(networkType);
     const privateKeysToSign: string[] = [];
     const amountToSign: number[] = [];
-    for (const item of fromUTXO) {
+    const txs = await getTransactions(fromUTXO.map(u => u.txHash));
+    for (const [i, item] of fromUTXO.entries()) {
         transactionBuilder.addInput(item.txHash, item.index);
         privateKeysToSign.push(item.privateKey);
-        amountToSign.push(Number(new BigNumber(item.value).multipliedBy(100000000).toFixed(0, BigNumber.ROUND_FLOOR)));
+        amountToSign.push(Number(new BigNumber(txs[i].vout[item.index].value).multipliedBy(100000000).toFixed(0, BigNumber.ROUND_FLOOR)));
     }
     for (const item of to) {
         transactionBuilder.addOutput(item.address, Number(new BigNumber(item.value).multipliedBy(100000000).toFixed(0, BigNumber.ROUND_FLOOR)));
@@ -74,4 +76,12 @@ export const prepareBitcoinCashSignedTransaction = async (testnet: boolean, body
         transactionBuilder.sign(i, ecPair, undefined, transactionBuilder.hashTypes.SIGHASH_ALL, amountToSign[i], transactionBuilder.signatureAlgorithms.SCHNORR);
     }
     return transactionBuilder.build().toHex();
+};
+
+const getTransactions = async (txHash: string[]): Promise<BchTx[]> => {
+    const result = [];
+    for (const tx of txHash) {
+        result.push(bcashGetTransaction(tx));
+    }
+    return await Promise.all(result);
 };
