@@ -7,7 +7,7 @@ import {CreateTransaction, Transaction, TransactionFilter, TransactionType} from
  * For more details, see <a href="https://tatum.io/apidoc.html#operation/getTransactionsByReference" target="_blank">Tatum API documentation</a>
  */
 export const getTransactionsByReference = async (reference: string): Promise<Transaction[]> => {
-    return (await axios.get(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ledger/transaction/${reference}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+    return (await axios.get(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ledger/transaction/reference/${reference}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 
 /**

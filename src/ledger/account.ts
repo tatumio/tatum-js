@@ -22,8 +22,7 @@ export const createAccount = async (account: CreateAccount): Promise<Account> =>
  * For more details, see <a href="https://tatum.io/apidoc.html#operation/getBlockAmount" target="_blank">Tatum API documentation</a>
  */
 export const getBlockedAmountsByAccountId = async (id: string, pageSize: number = 50, offset = 0): Promise<Blockage[]> => {
-    return (await axios.get(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ledger/account/block/${id}
-    ?pageSize=${pageSize}&offset=${offset}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+    return (await axios.get(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ledger/account/block/${id}?pageSize=${pageSize}&offset=${offset}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 
 /**

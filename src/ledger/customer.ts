@@ -15,8 +15,7 @@ export const getCustomer = async (id: string): Promise<Customer> => {
  * For more details, see <a href="https://tatum.io/apidoc.html#operation/findAllCustomers" target="_blank">Tatum API documentation</a>
  */
 export const getAllCustomers = async (pageSize: number = 50, offset = 0): Promise<Customer[]> => {
-    return (await axios.get(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ledger/customer
-    ?pageSize=${pageSize}&offset=${offset}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+    return (await axios.get(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ledger/customer?pageSize=${pageSize}&offset=${offset}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 
 /**
