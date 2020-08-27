@@ -57,6 +57,7 @@ export const xrpGetTransaction = async (hash: string) => {
 /**
  * For more details, see <a href="https://tatum.io/apidoc.html#operation/XrpGetAccountTx" target="_blank">Tatum API documentation</a>
  */
-export const xrpGetAccountTransactions = async (address: string) => {
-    return (await axios.get(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/xrp/account/tx/${address}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+export const xrpGetAccountTransactions = async (address: string, min?: number, marker?: string) => {
+    return (await axios.get(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/xrp/account/tx/${address}?min=${min}&marker=${marker}`,
+        {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };

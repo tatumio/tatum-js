@@ -1,14 +1,40 @@
 import axios from 'axios';
 import {TATUM_API_URL} from '../constants';
-import {Address, BroadcastWithdrawal, TxHash, WithdrawalResponse} from '../model';
+import {Account, Address, BroadcastWithdrawal, TxHash, WithdrawalResponse} from '../model';
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc.html#operation/generateDepositAddress" target="_blank">Tatum API documentation</a>
  */
-export const generateDepositAddress = async (id: string): Promise<Address> => {
-    return (await axios.post(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/offchain/account/${id}/address`,
+export const generateDepositAddress = async (id: string, index?: number): Promise<Address> => {
+    return (await axios.post(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/offchain/account/${id}/address?index=${index}`,
         undefined,
         {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+};
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc.html#operation/addressExists" target="_blank">Tatum API documentation</a>
+ */
+export const checkAddressExists = async (address: string, currency: string, index?: number): Promise<Account> => {
+    return (await axios.post(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/offchain/account/address/${address}/${currency}?index=${index}`,
+        undefined,
+        {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+};
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc.html#operation/assignAddress" target="_blank">Tatum API documentation</a>
+ */
+export const assignDepositAddress = async (id: string, address: string): Promise<Address> => {
+    return (await axios.post(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/offchain/account/${id}/address/${address}`,
+        undefined,
+        {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+};
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc.html#operation/assignAddress" target="_blank">Tatum API documentation</a>
+ */
+export const removeDepositAddress = async (id: string, address: string): Promise<void> => {
+    await axios.delete(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/offchain/account/${id}/address/${address}`,
+        {headers: {'x-api-key': process.env.TATUM_API_KEY}});
 };
 
 /**
