@@ -6,3 +6,4 @@ export * from './kms';
 export * from './offchain';
 export * from './blockchain';
 export * from './transaction';
+export * from './record';
