@@ -23,7 +23,7 @@ export const ethGetTransactionsCount = async (address: string): Promise<number> 
  * For more details, see <a href="https://tatum.io/apidoc.html#operation/EthGetCurrentBlock" target="_blank">Tatum API documentation</a>
  */
 export const ethGetCurrentBlock = async (): Promise<number> => {
-    return (await axios.get(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ethereum/current`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+    return (await axios.get(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ethereum/block/current`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 
 /**
