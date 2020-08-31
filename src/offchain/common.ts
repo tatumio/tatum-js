@@ -6,7 +6,8 @@ import {Account, Address, BroadcastWithdrawal, TxHash, WithdrawalResponse} from 
  * For more details, see <a href="https://tatum.io/apidoc.html#operation/generateDepositAddress" target="_blank">Tatum API documentation</a>
  */
 export const generateDepositAddress = async (id: string, index?: number): Promise<Address> => {
-    return (await axios.post(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/offchain/account/${id}/address?index=${index}`,
+    const url = `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/offchain/account/${id}/address`;
+    return (await axios.post(index === undefined ? url : `${url}?index=${index}`,
         undefined,
         {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
@@ -15,8 +16,8 @@ export const generateDepositAddress = async (id: string, index?: number): Promis
  * For more details, see <a href="https://tatum.io/apidoc.html#operation/addressExists" target="_blank">Tatum API documentation</a>
  */
 export const checkAddressExists = async (address: string, currency: string, index?: number): Promise<Account> => {
-    return (await axios.post(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/offchain/account/address/${address}/${currency}?index=${index}`,
-        undefined,
+    const url = `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/offchain/account/address/${address}/${currency}?index=${index}`;
+    return (await axios.get(index === undefined ? url : `${url}?index=${index}`,
         {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 
@@ -67,7 +68,7 @@ export const offchainStoreWithdrawal = async (data: any): Promise<WithdrawalResp
  * For more details, see <a href="https://tatum.io/apidoc.html#operation/cancelInProgressWithdrawal" target="_blank">Tatum API documentation</a>
  */
 export const offchainCancelWithdrawal = async (id: string, revert = true): Promise<void> => {
-    await axios.delete(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/offchain/withdrawal/${id}/${revert}`,
+    await axios.delete(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/offchain/withdrawal/${id}?revert=${revert}`,
         {headers: {'x-api-key': process.env.TATUM_API_KEY}});
 };
 
