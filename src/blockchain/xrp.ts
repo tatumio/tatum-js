@@ -6,7 +6,7 @@ import {TransactionHash} from '../model';
  * For more details, see <a href="https://tatum.io/apidoc.html#operation/XrpGetFee" target="_blank">Tatum API documentation</a>
  */
 export const xrpGetFee = async (): Promise<{ drops: { base_fee: number } }> => {
-    return (await axios.get('${process.env.TATUM_API_URL || TATUM_API_URL}/v3/xrp/fee', {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+    return (await axios.get(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/xrp/fee`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 
 /**
