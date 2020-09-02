@@ -16,7 +16,7 @@ export const generateDepositAddress = async (id: string, index?: number): Promis
  * For more details, see <a href="https://tatum.io/apidoc.html#operation/addressExists" target="_blank">Tatum API documentation</a>
  */
 export const checkAddressExists = async (address: string, currency: string, index?: number): Promise<Account> => {
-    const url = `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/offchain/account/address/${address}/${currency}?index=${index}`;
+    const url = `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/offchain/account/address/${address}/${currency}`;
     return (await axios.get(index === undefined ? url : `${url}?index=${index}`,
         {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
