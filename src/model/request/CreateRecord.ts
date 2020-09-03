@@ -8,7 +8,7 @@ export class CreateRecord {
     @Length(1, 130000)
     public data: string;
 
-    @IsNotEmpty()
+    @IsOptional()
     @Length(32, 66)
     public fromPrivateKey: string;
 
