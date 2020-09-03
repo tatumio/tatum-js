@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 import {validateOrReject} from 'class-validator';
 import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
-import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, ETH_URL, TEST_ETH_URL} from '../constants';
+import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL} from '../constants';
 import tokenAbi from '../contracts/erc20/token_abi';
 import {getAccountById, getVirtualCurrencyByName} from '../ledger';
 import {Currency, TransactionKMS, TransferEthErc20Offchain, TransferEthOffchain} from '../model';
@@ -34,7 +34,7 @@ export const sendEthOffchainTransaction = async (testnet: boolean, body: Transfe
         throw new Error('No mnemonic or private key is present.');
     }
 
-    const web3 = new Web3(provider || (testnet ? TEST_ETH_URL : ETH_URL));
+    const web3 = new Web3(provider || `${TATUM_API_URL}/v3/ethereum/web3/${process.env.TATUM_API_KEY}`);
     web3.eth.accounts.wallet.add(fromPriv);
     web3.eth.defaultAccount = web3.eth.accounts.wallet[0].address;
     // @ts-ignore
@@ -43,9 +43,8 @@ export const sendEthOffchainTransaction = async (testnet: boolean, body: Transfe
 
     const account = await getAccountById(withdrawal.senderAccountId);
     const {txData, gasLimit} = await prepareEthSignedOffchainTransaction(amount, fromPriv, address, account.currency, web3, gasPrice, nonce);
-    const fee = new BigNumber(web3.utils.fromWei(new BigNumber(gasLimit).multipliedBy(gasPrice).toString(), 'ether')).toString();
     // @ts-ignore
-    withdrawal.fee = fee;
+    withdrawal.fee = new BigNumber(web3.utils.fromWei(new BigNumber(gasLimit).multipliedBy(gasPrice).toString(), 'ether')).toString();
     const {id} = await offchainStoreWithdrawal(withdrawal);
     try {
         return await offchainBroadcast({txData, withdrawalId: id, currency: Currency.ETH});
@@ -80,7 +79,7 @@ export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: Tr
         throw new Error('No mnemonic or private key is present.');
     }
 
-    const web3 = new Web3(provider || (testnet ? TEST_ETH_URL : ETH_URL));
+    const web3 = new Web3(provider || `${TATUM_API_URL}/v3/ethereum/web3/${process.env.TATUM_API_KEY}`);
     web3.eth.accounts.wallet.add(fromPriv);
     web3.eth.defaultAccount = web3.eth.accounts.wallet[0].address;
     // @ts-ignore
@@ -90,9 +89,8 @@ export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: Tr
     const account = await getAccountById(withdrawal.senderAccountId);
     const vc = await getVirtualCurrencyByName(account.currency);
     const {txData, gasLimit} = await prepareEthErc20SignedOffchainTransaction(amount, fromPriv, address, web3, vc.erc20Address as string, gasPrice, nonce);
-    const fee = new BigNumber(web3.utils.fromWei(new BigNumber(gasLimit).multipliedBy(gasPrice).toString(), 'ether')).toString();
     // @ts-ignore
-    withdrawal.fee = fee;
+    withdrawal.fee = new BigNumber(web3.utils.fromWei(new BigNumber(gasLimit).multipliedBy(gasPrice).toString(), 'ether')).toString();
     const {id} = await offchainStoreWithdrawal(withdrawal);
     try {
         return await offchainBroadcast({txData, withdrawalId: id, currency: Currency.ETH});
@@ -116,7 +114,7 @@ export const signEthOffchainKMSTransaction = async (tx: TransactionKMS, fromPriv
     if (tx.chain !== Currency.ETH) {
         throw Error('Unsupported chain.');
     }
-    const client = new Web3(provider || (testnet ? TEST_ETH_URL : ETH_URL));
+    const client = new Web3(provider || `${TATUM_API_URL}/v3/ethereum/web3/${process.env.TATUM_API_KEY}`);
     client.eth.accounts.wallet.clear();
     client.eth.accounts.wallet.add(fromPrivateKey);
     client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
