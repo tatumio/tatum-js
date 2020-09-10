@@ -16,14 +16,14 @@ export interface Address {
      * @type {number}
      * @memberof Address
      */
-    derivationKey: number;
+    derivationKey?: number;
     /**
      * Extended public key to derive address from. In case of XRP, this is account address,
      * since address is defined as DestinationTag, which is address field. In case of XLM, this is account address, since address is defined as message, which is address field.
      * @type {string}
      * @memberof Address
      */
-    xpub: string;
+    xpub?: string;
     /**
      * In case of XRP, destinationTag is the distinguisher of the account.
      * @type {number}

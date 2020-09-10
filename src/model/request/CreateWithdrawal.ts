@@ -33,11 +33,6 @@ export class CreateWithdrawal {
     @IsOptional()
     public senderNote?: string;
 
-    @Length(1, 100)
-    @IsOptional()
-    public senderBlockchainAddress?: string;
-
-    // TODO: unify across different blockchains
     @MaxLength(64)
     @Matches(/^[ -~]{0,64}$/)
     @IsOptional()

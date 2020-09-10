@@ -59,7 +59,7 @@ export const signLitecoinOffchainKMSTransaction = async (tx: TransactionKMS, mne
         if (response.vIn === '-1') {
             continue;
         }
-        const ecPair = ECPair.fromWIF(await generatePrivateKeyFromMnemonic(Currency.LTC, testnet, mnemonic, response.address ? response.address.derivationKey : 0), network);
+        const ecPair = ECPair.fromWIF(await generatePrivateKeyFromMnemonic(Currency.LTC, testnet, mnemonic, response.address?.derivationKey || 0), network);
         builder.sign(i, ecPair);
     }
     return builder.build().toHex();
@@ -103,7 +103,7 @@ export const prepareLitecoinSignedOffchainTransaction =
                 continue;
             }
             if (mnemonic) {
-                const derivationKey = input.address ? input.address.derivationKey : 0;
+                const derivationKey = input.address?.derivationKey || 0;
                 const ecPair = ECPair.fromWIF(await generatePrivateKeyFromMnemonic(Currency.LTC, testnet, mnemonic, derivationKey), network);
                 tx.sign(i, ecPair);
             } else {

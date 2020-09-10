@@ -47,7 +47,6 @@ export interface WithdrawalResponseData {
     /**
      * Last used unprocessed transaction output, that can be used.
      * Bitcoin, Litecoin, Bitcoin Cash only. If -1, it indicates prepared vOut with amount to be transferred to pool address.
-     * For ETH, this is address of Ethereum account to perform withdrawal from as passed in request parameter senderBlockchainAddress.\\n
      * @type {string}
      * @memberof WithdrawalResponseData
      */
