@@ -29,3 +29,4 @@ export * from './ledger/OperationType';
 export * from './ledger/Transaction';
 export * from './ledger/TransactionType';
 export * from './ledger/Blockage';
+export * from './ledger/Subscription';
