@@ -45,14 +45,14 @@ export class TransferBtcBasedBlockchain {
     @IsNotEmpty()
     @ValidateNested({each: true})
     @Type(() => FromAddress)
-    public fromAddress: FromAddress[];
+    public fromAddress?: FromAddress[];
 
     @ValidateIf(o => (o.fromUTXO && o.fromAddress) || !o.fromAddress)
     @Validate(TransferBtcValidator)
     @IsNotEmpty()
     @ValidateNested({each: true})
     @Type(() => FromUTXO)
-    public fromUTXO: FromUTXO[];
+    public fromUTXO?: FromUTXO[];
 
     @ArrayNotEmpty()
     @ValidateNested({each: true})

@@ -25,9 +25,9 @@ export const sendEthOffchainTransaction = async (testnet: boolean, body: Transfe
     } = body;
     const {amount, address} = withdrawal;
 
-    let fromPriv;
+    let fromPriv: string;
     if (mnemonic && index !== undefined) {
-        fromPriv = mnemonic && index ? await generatePrivateKeyFromMnemonic(Currency.ETH, testnet, mnemonic, index) : privateKey;
+        fromPriv = mnemonic && index ? await generatePrivateKeyFromMnemonic(Currency.ETH, testnet, mnemonic, index) : privateKey as string;
     } else if (privateKey) {
         fromPriv = privateKey;
     } else {
@@ -70,7 +70,7 @@ export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: Tr
 
     let fromPriv;
     if (mnemonic && index !== undefined) {
-        fromPriv = mnemonic && index ? await generatePrivateKeyFromMnemonic(Currency.ETH, testnet, mnemonic, index) : privateKey;
+        fromPriv = mnemonic && index ? await generatePrivateKeyFromMnemonic(Currency.ETH, testnet, mnemonic, index) : privateKey as string;
     } else if (privateKey) {
         fromPriv = privateKey;
     } else {

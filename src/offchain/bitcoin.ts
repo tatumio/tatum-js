@@ -76,7 +76,7 @@ export const signBitcoinOffchainKMSTransaction = async (tx: TransactionKMS, mnem
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareBitcoinSignedOffchainTransaction =
-    async (testnet: boolean, data: WithdrawalResponseData[], amount: string, address: string, mnemonic: string, keyPair: KeyPair[], changeAddress?: string) => {
+    async (testnet: boolean, data: WithdrawalResponseData[], amount: string, address: string, mnemonic?: string, keyPair?: KeyPair[], changeAddress?: string) => {
         const network = testnet ? networks.testnet : networks.bitcoin;
         const tx = new TransactionBuilder(network);
 
@@ -105,10 +105,12 @@ export const prepareBitcoinSignedOffchainTransaction =
                 const derivationKey = input.address?.derivationKey || 0;
                 const ecPair = ECPair.fromWIF(await generatePrivateKeyFromMnemonic(Currency.BTC, testnet, mnemonic, derivationKey), network);
                 tx.sign(i, ecPair);
-            } else {
+            } else if (keyPair) {
                 const privateKey = keyPair.find(k => k.address === input.address.address) as KeyPair;
                 const ecPair = ECPair.fromWIF(privateKey.privateKey, network);
                 tx.sign(i, ecPair);
+            } else {
+                throw new Error('Impossible to prepare transaction. Either mnemonic or keyPair and attr must be present.');
             }
         }
 

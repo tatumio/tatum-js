@@ -38,7 +38,7 @@ const prepareSignedTransaction = async (network: Network, body: TransferBtcBased
                 }
             }
         }
-    } else {
+    } else if (fromUTXO) {
         for (const item of fromUTXO) {
             tx.addInput(item.txHash, item.index);
             privateKeysToSign.push(item.privateKey);

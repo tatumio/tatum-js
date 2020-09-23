@@ -77,7 +77,7 @@ export const signLitecoinOffchainKMSTransaction = async (tx: TransactionKMS, mne
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareLitecoinSignedOffchainTransaction =
-    async (testnet: boolean, data: WithdrawalResponseData[], amount: string, address: string, mnemonic: string, keyPair: KeyPair[], changeAddress?: string) => {
+    async (testnet: boolean, data: WithdrawalResponseData[], amount: string, address: string, mnemonic?: string, keyPair?: KeyPair[], changeAddress?: string) => {
         const network = testnet ? LTC_TEST_NETWORK : LTC_NETWORK;
         const tx = new TransactionBuilder(network);
 
@@ -106,10 +106,12 @@ export const prepareLitecoinSignedOffchainTransaction =
                 const derivationKey = input.address?.derivationKey || 0;
                 const ecPair = ECPair.fromWIF(await generatePrivateKeyFromMnemonic(Currency.LTC, testnet, mnemonic, derivationKey), network);
                 tx.sign(i, ecPair);
-            } else {
+            } else if (keyPair) {
                 const privateKey = keyPair.find(k => k.address === input.address.address) as KeyPair;
                 const ecPair = ECPair.fromWIF(privateKey.privateKey, network);
                 tx.sign(i, ecPair);
+            } else {
+                throw new Error('Impossible to prepare transaction. Either mnemonic or keyPair and attr must be present.');
             }
         }
 

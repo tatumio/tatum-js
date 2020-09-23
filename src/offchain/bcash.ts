@@ -87,7 +87,7 @@ export const signBitcoinCashOffchainKMSTransaction = async (tx: TransactionKMS, 
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareBitcoinCashSignedOffchainTransaction =
-    async (testnet: boolean, data: WithdrawalResponseData[], amount: string, address: string, mnemonic: string, keyPair: KeyPair[], changeAddress?: string) => {
+    async (testnet: boolean, data: WithdrawalResponseData[], amount: string, address: string, mnemonic?: string, keyPair?: KeyPair[], changeAddress?: string) => {
         const networkType = testnet ? 'testnet' : 'mainnet';
         const tx = new TransactionBuilder(networkType);
 
