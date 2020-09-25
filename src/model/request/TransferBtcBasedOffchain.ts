@@ -20,12 +20,12 @@ export class TransferBtcBasedOffchain extends CreateWithdrawal {
     @Validate(TransferBtcOffchainValidator)
     @ValidateIf(o => (o.mnemonic && o.keyPair) || !o.keyPair)
     @IsNotEmpty()
-    public mnemonic: string;
+    public mnemonic?: string;
 
     @ValidateIf(o => (o.mnemonic && o.keyPair) || !o.mnemonic)
     @Validate(TransferBtcOffchainValidator)
     @IsNotEmpty()
     @Type(() => KeyPair)
     @ValidateNested({each: true})
-    public keyPair: KeyPair[];
+    public keyPair?: KeyPair[];
 }

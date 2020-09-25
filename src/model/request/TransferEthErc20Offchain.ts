@@ -43,20 +43,20 @@ export class TransferEthErc20Offchain {
     @Validate(TransferEthOffchainValidator)
     @ValidateIf(o => (o.mnemonic && o.index >= 0 && o.privateKey) || o.index >= 0)
     @IsNotEmpty()
-    public mnemonic: string;
+    public mnemonic?: string;
 
     @ValidateIf(o => (o.mnemonic && o.index >= 0 && o.privateKey) || o.mnemonic)
     @Validate(TransferEthOffchainValidator)
     @Min(0)
     @IsNotEmpty()
     @IsInt()
-    public index: number;
+    public index?: number;
 
     @ValidateIf(o => (o.mnemonic && o.index >= 0 && o.privateKey) || (!o.mnemonic && !o.index))
     @Validate(TransferEthOffchainValidator)
     @Length(66, 66)
     @IsNotEmpty()
-    public privateKey: string;
+    public privateKey?: string;
 
     @Min(0)
     @IsOptional()
