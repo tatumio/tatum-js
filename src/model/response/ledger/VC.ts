@@ -165,6 +165,7 @@ export enum BasePairEnum {
     LBP = 'LBP' as any,
     LEO = 'LEO' as any,
     LINK = 'LINK' as any,
+    UNI = 'UNI' as any,
     LKR = 'LKR' as any,
     LRD = 'LRD' as any,
     LSL = 'LSL' as any,
