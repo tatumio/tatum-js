@@ -40,10 +40,10 @@ export interface Transaction {
     currency: string;
     /**
      * Time in UTC of transaction.
-     * @type {string}
+     * @type {number}
      * @memberof Transaction
      */
-    date: string;
+    created: number;
     /**
      * List of market values of given transaction with all supported base pairs.
      * @type {Array<MarketValue>}
