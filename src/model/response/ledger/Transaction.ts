@@ -9,12 +9,6 @@ import {TransactionType} from './TransactionType';
 
 export interface Transaction {
     /**
-     * Time in UTC of transaction
-     * @type {number}
-     * @memberof Transaction
-     */
-    created: number;
-    /**
      * Source account - source of transaction(s)
      * @type {string}
      * @memberof Transaction
