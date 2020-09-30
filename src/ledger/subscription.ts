@@ -6,8 +6,8 @@ import { SubscriptionType } from '../model/response/ledger/SubscriptionType'
 /**
  * For more details, see <a href="https://tatum.io/apidoc.html#operation/createSubscription" target="_blank">Tatum API documentation</a>
  */
-export const createNewSubscription = async (type: SubscriptionType, attr: object): Promise<{ id: string }> => {
-    return (await axios.post(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/subscription`, {type, attr}, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+export const createNewSubscription = async (data: Subscription): Promise<{ id: string }> => {
+    return (await axios.post(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/subscription`, data, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 
 /**
