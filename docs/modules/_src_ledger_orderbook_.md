@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / "src/ledger/orderBook"
 
@@ -22,7 +22,7 @@
 
 ▸ `Const`**deleteAccountTrades**(`id`: string): Promise\<void>
 
-*Defined in [src/ledger/orderBook.ts:64](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/orderBook.ts#L64)*
+*Defined in [src/ledger/orderBook.ts:64](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/ledger/orderBook.ts#L64)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/deleteAccountTrades" target="_blank">Tatum API documentation</a>
 
@@ -40,7 +40,7 @@ ___
 
 ▸ `Const`**deleteTrade**(`id`: string): Promise\<void>
 
-*Defined in [src/ledger/orderBook.ts:55](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/orderBook.ts#L55)*
+*Defined in [src/ledger/orderBook.ts:55](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/ledger/orderBook.ts#L55)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/deleteTrade" target="_blank">Tatum API documentation</a>
 
@@ -58,7 +58,7 @@ ___
 
 ▸ `Const`**getActiveBuyTrades**(`id`: string, `pageSize`: number, `offset`: number): Promise\<[OrderBookResponse](../interfaces/_src_model_response_ledger_orderbook_.orderbookresponse.md)[]>
 
-*Defined in [src/ledger/orderBook.ts:18](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/orderBook.ts#L18)*
+*Defined in [src/ledger/orderBook.ts:18](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/ledger/orderBook.ts#L18)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/getBuyTrades" target="_blank">Tatum API documentation</a>
 
@@ -78,7 +78,7 @@ ___
 
 ▸ `Const`**getActiveSellTrades**(`id`: string, `pageSize`: number, `offset`: number): Promise\<[OrderBookResponse](../interfaces/_src_model_response_ledger_orderbook_.orderbookresponse.md)[]>
 
-*Defined in [src/ledger/orderBook.ts:27](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/orderBook.ts#L27)*
+*Defined in [src/ledger/orderBook.ts:27](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/ledger/orderBook.ts#L27)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/getSellTrades" target="_blank">Tatum API documentation</a>
 
@@ -98,7 +98,7 @@ ___
 
 ▸ `Const`**getHistoricalTrades**(`pageSize`: number, `offset`: number): Promise\<[OrderBookResponse](../interfaces/_src_model_response_ledger_orderbook_.orderbookresponse.md)[]>
 
-*Defined in [src/ledger/orderBook.ts:9](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/orderBook.ts#L9)*
+*Defined in [src/ledger/orderBook.ts:9](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/ledger/orderBook.ts#L9)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/getHistoricalTrades" target="_blank">Tatum API documentation</a>
 
@@ -117,7 +117,7 @@ ___
 
 ▸ `Const`**getTradeById**(`id`: string): Promise\<[OrderBookResponse](../interfaces/_src_model_response_ledger_orderbook_.orderbookresponse.md)>
 
-*Defined in [src/ledger/orderBook.ts:46](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/orderBook.ts#L46)*
+*Defined in [src/ledger/orderBook.ts:46](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/ledger/orderBook.ts#L46)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/getTradeById" target="_blank">Tatum API documentation</a>
 
@@ -135,7 +135,7 @@ ___
 
 ▸ `Const`**storeTrade**(`data`: [OrderBookRequest](../classes/_src_model_request_orderbook_.orderbookrequest.md)): Promise\<{ id: string  }>
 
-*Defined in [src/ledger/orderBook.ts:36](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/orderBook.ts#L36)*
+*Defined in [src/ledger/orderBook.ts:36](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/ledger/orderBook.ts#L36)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/storeTrade" target="_blank">Tatum API documentation</a>
 

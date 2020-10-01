@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/vet/VetTx"](../modules/_src_model_response_vet_vettx_.md) / VetTx
 
@@ -35,7 +35,7 @@
 
 •  **blockNumber**: number
 
-*Defined in [src/model/response/vet/VetTx.ts:78](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/vet/VetTx.ts#L78)*
+*Defined in [src/model/response/vet/VetTx.ts:78](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetTx.ts#L78)*
 
 **`memberof`** VetTx
 
@@ -45,7 +45,7 @@ ___
 
 •  **blockRef**: string
 
-*Defined in [src/model/response/vet/VetTx.ts:24](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/vet/VetTx.ts#L24)*
+*Defined in [src/model/response/vet/VetTx.ts:24](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetTx.ts#L24)*
 
 **`memberof`** VetTx
 
@@ -55,7 +55,7 @@ ___
 
 •  **chainTag**: string
 
-*Defined in [src/model/response/vet/VetTx.ts:18](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/vet/VetTx.ts#L18)*
+*Defined in [src/model/response/vet/VetTx.ts:18](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetTx.ts#L18)*
 
 **`memberof`** VetTx
 
@@ -65,7 +65,7 @@ ___
 
 •  **clauses**: [VetTxClauses](_src_model_response_vet_vettx_.vettxclauses.md)[]
 
-*Defined in [src/model/response/vet/VetTx.ts:36](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/vet/VetTx.ts#L36)*
+*Defined in [src/model/response/vet/VetTx.ts:36](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetTx.ts#L36)*
 
 **`memberof`** VetTx
 
@@ -75,7 +75,7 @@ ___
 
 •  **expiration**: number
 
-*Defined in [src/model/response/vet/VetTx.ts:30](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/vet/VetTx.ts#L30)*
+*Defined in [src/model/response/vet/VetTx.ts:30](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetTx.ts#L30)*
 
 **`memberof`** VetTx
 
@@ -85,7 +85,7 @@ ___
 
 •  **gas**: number
 
-*Defined in [src/model/response/vet/VetTx.ts:48](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/vet/VetTx.ts#L48)*
+*Defined in [src/model/response/vet/VetTx.ts:48](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetTx.ts#L48)*
 
 **`memberof`** VetTx
 
@@ -95,7 +95,7 @@ ___
 
 •  **gasPriceCoef**: number
 
-*Defined in [src/model/response/vet/VetTx.ts:42](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/vet/VetTx.ts#L42)*
+*Defined in [src/model/response/vet/VetTx.ts:42](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetTx.ts#L42)*
 
 **`memberof`** VetTx
 
@@ -105,7 +105,7 @@ ___
 
 •  **id**: string
 
-*Defined in [src/model/response/vet/VetTx.ts:12](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/vet/VetTx.ts#L12)*
+*Defined in [src/model/response/vet/VetTx.ts:12](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetTx.ts#L12)*
 
 **`memberof`** VetTx
 
@@ -115,7 +115,7 @@ ___
 
 •  **meta**: [VetTxMeta](_src_model_response_vet_vettx_.vettxmeta.md)
 
-*Defined in [src/model/response/vet/VetTx.ts:72](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/vet/VetTx.ts#L72)*
+*Defined in [src/model/response/vet/VetTx.ts:72](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetTx.ts#L72)*
 
 **`memberof`** VetTx
 
@@ -125,7 +125,7 @@ ___
 
 •  **nonce**: string
 
-*Defined in [src/model/response/vet/VetTx.ts:60](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/vet/VetTx.ts#L60)*
+*Defined in [src/model/response/vet/VetTx.ts:60](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetTx.ts#L60)*
 
 **`memberof`** VetTx
 
@@ -135,7 +135,7 @@ ___
 
 •  **origin**: string
 
-*Defined in [src/model/response/vet/VetTx.ts:54](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/vet/VetTx.ts#L54)*
+*Defined in [src/model/response/vet/VetTx.ts:54](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetTx.ts#L54)*
 
 **`memberof`** VetTx
 
@@ -145,6 +145,6 @@ ___
 
 •  **size**: number
 
-*Defined in [src/model/response/vet/VetTx.ts:66](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/vet/VetTx.ts#L66)*
+*Defined in [src/model/response/vet/VetTx.ts:66](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetTx.ts#L66)*
 
 **`memberof`** VetTx

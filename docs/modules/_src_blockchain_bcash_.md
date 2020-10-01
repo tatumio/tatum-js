@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / "src/blockchain/bcash"
 
@@ -21,7 +21,7 @@
 
 ▸ `Const`**bcashBroadcast**(`txData`: string, `signatureId?`: undefined \| string): Promise\<[TransactionHash](../interfaces/_src_model_response_common_transactionhash_.transactionhash.md)>
 
-*Defined in [src/blockchain/bcash.ts:8](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/bcash.ts#L8)*
+*Defined in [src/blockchain/bcash.ts:8](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/blockchain/bcash.ts#L8)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/BchBroadcast" target="_blank">Tatum API documentation</a>
 
@@ -40,7 +40,7 @@ ___
 
 ▸ `Const`**bcashGetBlock**(`hash`: string): Promise\<[BchBlock](../interfaces/_src_model_response_bch_bchblock_.bchblock.md)>
 
-*Defined in [src/blockchain/bcash.ts:24](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/bcash.ts#L24)*
+*Defined in [src/blockchain/bcash.ts:24](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/blockchain/bcash.ts#L24)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/BchGetBlock" target="_blank">Tatum API documentation</a>
 
@@ -58,7 +58,7 @@ ___
 
 ▸ `Const`**bcashGetBlockHash**(`i`: number): Promise\<[BlockHash](../interfaces/_src_model_response_common_blockhash_.blockhash.md)>
 
-*Defined in [src/blockchain/bcash.ts:31](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/bcash.ts#L31)*
+*Defined in [src/blockchain/bcash.ts:31](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/blockchain/bcash.ts#L31)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/BchGetBlockHash" target="_blank">Tatum API documentation</a>
 
@@ -76,7 +76,7 @@ ___
 
 ▸ `Const`**bcashGetCurrentBlock**(): Promise\<[BchInfo](../interfaces/_src_model_response_bch_bchinfo_.bchinfo.md)>
 
-*Defined in [src/blockchain/bcash.ts:17](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/bcash.ts#L17)*
+*Defined in [src/blockchain/bcash.ts:17](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/blockchain/bcash.ts#L17)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/BchGetBlockChainInfo" target="_blank">Tatum API documentation</a>
 
@@ -88,7 +88,7 @@ ___
 
 ▸ `Const`**bcashGetTransaction**(`hash`: string): Promise\<[BchTx](../interfaces/_src_model_response_bch_bchtx_.bchtx.md)>
 
-*Defined in [src/blockchain/bcash.ts:46](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/bcash.ts#L46)*
+*Defined in [src/blockchain/bcash.ts:46](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/blockchain/bcash.ts#L46)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/BchGetRawTransaction" target="_blank">Tatum API documentation</a>
 
@@ -106,7 +106,7 @@ ___
 
 ▸ `Const`**bcashGetTxForAccount**(`address`: string, `skip`: number): Promise\<[BchTx](../interfaces/_src_model_response_bch_bchtx_.bchtx.md)[]>
 
-*Defined in [src/blockchain/bcash.ts:38](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/bcash.ts#L38)*
+*Defined in [src/blockchain/bcash.ts:38](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/blockchain/bcash.ts#L38)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/BchGetTxByAddress" target="_blank">Tatum API documentation</a>
 

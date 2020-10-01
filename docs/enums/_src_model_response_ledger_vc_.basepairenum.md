@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/ledger/VC"](../modules/_src_model_response_ledger_vc_.md) / BasePairEnum
 
@@ -202,7 +202,7 @@
 
 •  **AED**: {} = 'AED' as any
 
-*Defined in [src/model/response/ledger/VC.ts:77](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L77)*
+*Defined in [src/model/response/ledger/VC.ts:77](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L77)*
 
 ___
 
@@ -210,7 +210,7 @@ ___
 
 •  **AFN**: {} = 'AFN' as any
 
-*Defined in [src/model/response/ledger/VC.ts:78](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L78)*
+*Defined in [src/model/response/ledger/VC.ts:78](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L78)*
 
 ___
 
@@ -218,7 +218,7 @@ ___
 
 •  **ALL**: {} = 'ALL' as any
 
-*Defined in [src/model/response/ledger/VC.ts:79](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L79)*
+*Defined in [src/model/response/ledger/VC.ts:79](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L79)*
 
 ___
 
@@ -226,7 +226,7 @@ ___
 
 •  **AMD**: {} = 'AMD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:80](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L80)*
+*Defined in [src/model/response/ledger/VC.ts:80](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L80)*
 
 ___
 
@@ -234,7 +234,7 @@ ___
 
 •  **ANG**: {} = 'ANG' as any
 
-*Defined in [src/model/response/ledger/VC.ts:81](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L81)*
+*Defined in [src/model/response/ledger/VC.ts:81](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L81)*
 
 ___
 
@@ -242,7 +242,7 @@ ___
 
 •  **AOA**: {} = 'AOA' as any
 
-*Defined in [src/model/response/ledger/VC.ts:82](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L82)*
+*Defined in [src/model/response/ledger/VC.ts:82](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L82)*
 
 ___
 
@@ -250,7 +250,7 @@ ___
 
 •  **ARS**: {} = 'ARS' as any
 
-*Defined in [src/model/response/ledger/VC.ts:83](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L83)*
+*Defined in [src/model/response/ledger/VC.ts:83](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L83)*
 
 ___
 
@@ -258,7 +258,7 @@ ___
 
 •  **AUD**: {} = 'AUD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:84](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L84)*
+*Defined in [src/model/response/ledger/VC.ts:84](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L84)*
 
 ___
 
@@ -266,7 +266,7 @@ ___
 
 •  **AWG**: {} = 'AWG' as any
 
-*Defined in [src/model/response/ledger/VC.ts:85](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L85)*
+*Defined in [src/model/response/ledger/VC.ts:85](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L85)*
 
 ___
 
@@ -274,7 +274,7 @@ ___
 
 •  **AZN**: {} = 'AZN' as any
 
-*Defined in [src/model/response/ledger/VC.ts:86](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L86)*
+*Defined in [src/model/response/ledger/VC.ts:86](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L86)*
 
 ___
 
@@ -282,7 +282,7 @@ ___
 
 •  **BAM**: {} = 'BAM' as any
 
-*Defined in [src/model/response/ledger/VC.ts:87](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L87)*
+*Defined in [src/model/response/ledger/VC.ts:87](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L87)*
 
 ___
 
@@ -290,7 +290,7 @@ ___
 
 •  **BAT**: {} = 'BAT' as any
 
-*Defined in [src/model/response/ledger/VC.ts:88](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L88)*
+*Defined in [src/model/response/ledger/VC.ts:88](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L88)*
 
 ___
 
@@ -298,7 +298,7 @@ ___
 
 •  **BBD**: {} = 'BBD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:89](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L89)*
+*Defined in [src/model/response/ledger/VC.ts:89](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L89)*
 
 ___
 
@@ -306,7 +306,7 @@ ___
 
 •  **BCH**: {} = 'BCH' as any
 
-*Defined in [src/model/response/ledger/VC.ts:90](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L90)*
+*Defined in [src/model/response/ledger/VC.ts:90](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L90)*
 
 ___
 
@@ -314,7 +314,7 @@ ___
 
 •  **BDT**: {} = 'BDT' as any
 
-*Defined in [src/model/response/ledger/VC.ts:91](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L91)*
+*Defined in [src/model/response/ledger/VC.ts:91](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L91)*
 
 ___
 
@@ -322,7 +322,7 @@ ___
 
 •  **BGN**: {} = 'BGN' as any
 
-*Defined in [src/model/response/ledger/VC.ts:92](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L92)*
+*Defined in [src/model/response/ledger/VC.ts:92](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L92)*
 
 ___
 
@@ -330,7 +330,7 @@ ___
 
 •  **BHD**: {} = 'BHD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:93](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L93)*
+*Defined in [src/model/response/ledger/VC.ts:93](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L93)*
 
 ___
 
@@ -338,7 +338,7 @@ ___
 
 •  **BIF**: {} = 'BIF' as any
 
-*Defined in [src/model/response/ledger/VC.ts:94](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L94)*
+*Defined in [src/model/response/ledger/VC.ts:94](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L94)*
 
 ___
 
@@ -346,7 +346,7 @@ ___
 
 •  **BMD**: {} = 'BMD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:95](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L95)*
+*Defined in [src/model/response/ledger/VC.ts:95](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L95)*
 
 ___
 
@@ -354,7 +354,7 @@ ___
 
 •  **BND**: {} = 'BND' as any
 
-*Defined in [src/model/response/ledger/VC.ts:96](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L96)*
+*Defined in [src/model/response/ledger/VC.ts:96](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L96)*
 
 ___
 
@@ -362,7 +362,7 @@ ___
 
 •  **BOB**: {} = 'BOB' as any
 
-*Defined in [src/model/response/ledger/VC.ts:97](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L97)*
+*Defined in [src/model/response/ledger/VC.ts:97](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L97)*
 
 ___
 
@@ -370,7 +370,7 @@ ___
 
 •  **BRL**: {} = 'BRL' as any
 
-*Defined in [src/model/response/ledger/VC.ts:98](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L98)*
+*Defined in [src/model/response/ledger/VC.ts:98](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L98)*
 
 ___
 
@@ -378,7 +378,7 @@ ___
 
 •  **BSD**: {} = 'BSD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:99](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L99)*
+*Defined in [src/model/response/ledger/VC.ts:99](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L99)*
 
 ___
 
@@ -386,7 +386,7 @@ ___
 
 •  **BTC**: {} = 'BTC' as any
 
-*Defined in [src/model/response/ledger/VC.ts:100](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L100)*
+*Defined in [src/model/response/ledger/VC.ts:100](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L100)*
 
 ___
 
@@ -394,7 +394,7 @@ ___
 
 •  **BTN**: {} = 'BTN' as any
 
-*Defined in [src/model/response/ledger/VC.ts:101](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L101)*
+*Defined in [src/model/response/ledger/VC.ts:101](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L101)*
 
 ___
 
@@ -402,7 +402,7 @@ ___
 
 •  **BWP**: {} = 'BWP' as any
 
-*Defined in [src/model/response/ledger/VC.ts:102](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L102)*
+*Defined in [src/model/response/ledger/VC.ts:102](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L102)*
 
 ___
 
@@ -410,7 +410,7 @@ ___
 
 •  **BYN**: {} = 'BYN' as any
 
-*Defined in [src/model/response/ledger/VC.ts:103](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L103)*
+*Defined in [src/model/response/ledger/VC.ts:103](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L103)*
 
 ___
 
@@ -418,7 +418,7 @@ ___
 
 •  **BYR**: {} = 'BYR' as any
 
-*Defined in [src/model/response/ledger/VC.ts:104](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L104)*
+*Defined in [src/model/response/ledger/VC.ts:104](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L104)*
 
 ___
 
@@ -426,7 +426,7 @@ ___
 
 •  **BZD**: {} = 'BZD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:105](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L105)*
+*Defined in [src/model/response/ledger/VC.ts:105](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L105)*
 
 ___
 
@@ -434,7 +434,7 @@ ___
 
 •  **CAD**: {} = 'CAD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:106](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L106)*
+*Defined in [src/model/response/ledger/VC.ts:106](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L106)*
 
 ___
 
@@ -442,7 +442,7 @@ ___
 
 •  **CDF**: {} = 'CDF' as any
 
-*Defined in [src/model/response/ledger/VC.ts:107](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L107)*
+*Defined in [src/model/response/ledger/VC.ts:107](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L107)*
 
 ___
 
@@ -450,7 +450,7 @@ ___
 
 •  **CHF**: {} = 'CHF' as any
 
-*Defined in [src/model/response/ledger/VC.ts:108](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L108)*
+*Defined in [src/model/response/ledger/VC.ts:108](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L108)*
 
 ___
 
@@ -458,7 +458,7 @@ ___
 
 •  **CLF**: {} = 'CLF' as any
 
-*Defined in [src/model/response/ledger/VC.ts:109](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L109)*
+*Defined in [src/model/response/ledger/VC.ts:109](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L109)*
 
 ___
 
@@ -466,7 +466,7 @@ ___
 
 •  **CLP**: {} = 'CLP' as any
 
-*Defined in [src/model/response/ledger/VC.ts:110](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L110)*
+*Defined in [src/model/response/ledger/VC.ts:110](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L110)*
 
 ___
 
@@ -474,7 +474,7 @@ ___
 
 •  **CNY**: {} = 'CNY' as any
 
-*Defined in [src/model/response/ledger/VC.ts:111](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L111)*
+*Defined in [src/model/response/ledger/VC.ts:111](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L111)*
 
 ___
 
@@ -482,7 +482,7 @@ ___
 
 •  **COP**: {} = 'COP' as any
 
-*Defined in [src/model/response/ledger/VC.ts:112](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L112)*
+*Defined in [src/model/response/ledger/VC.ts:112](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L112)*
 
 ___
 
@@ -490,7 +490,7 @@ ___
 
 •  **CRC**: {} = 'CRC' as any
 
-*Defined in [src/model/response/ledger/VC.ts:113](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L113)*
+*Defined in [src/model/response/ledger/VC.ts:113](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L113)*
 
 ___
 
@@ -498,7 +498,7 @@ ___
 
 •  **CUC**: {} = 'CUC' as any
 
-*Defined in [src/model/response/ledger/VC.ts:114](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L114)*
+*Defined in [src/model/response/ledger/VC.ts:114](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L114)*
 
 ___
 
@@ -506,7 +506,7 @@ ___
 
 •  **CUP**: {} = 'CUP' as any
 
-*Defined in [src/model/response/ledger/VC.ts:115](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L115)*
+*Defined in [src/model/response/ledger/VC.ts:115](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L115)*
 
 ___
 
@@ -514,7 +514,7 @@ ___
 
 •  **CVE**: {} = 'CVE' as any
 
-*Defined in [src/model/response/ledger/VC.ts:116](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L116)*
+*Defined in [src/model/response/ledger/VC.ts:116](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L116)*
 
 ___
 
@@ -522,7 +522,7 @@ ___
 
 •  **CZK**: {} = 'CZK' as any
 
-*Defined in [src/model/response/ledger/VC.ts:117](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L117)*
+*Defined in [src/model/response/ledger/VC.ts:117](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L117)*
 
 ___
 
@@ -530,7 +530,7 @@ ___
 
 •  **DJF**: {} = 'DJF' as any
 
-*Defined in [src/model/response/ledger/VC.ts:118](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L118)*
+*Defined in [src/model/response/ledger/VC.ts:118](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L118)*
 
 ___
 
@@ -538,7 +538,7 @@ ___
 
 •  **DKK**: {} = 'DKK' as any
 
-*Defined in [src/model/response/ledger/VC.ts:119](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L119)*
+*Defined in [src/model/response/ledger/VC.ts:119](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L119)*
 
 ___
 
@@ -546,7 +546,7 @@ ___
 
 •  **DOP**: {} = 'DOP' as any
 
-*Defined in [src/model/response/ledger/VC.ts:120](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L120)*
+*Defined in [src/model/response/ledger/VC.ts:120](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L120)*
 
 ___
 
@@ -554,7 +554,7 @@ ___
 
 •  **DZD**: {} = 'DZD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:121](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L121)*
+*Defined in [src/model/response/ledger/VC.ts:121](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L121)*
 
 ___
 
@@ -562,7 +562,7 @@ ___
 
 •  **EGP**: {} = 'EGP' as any
 
-*Defined in [src/model/response/ledger/VC.ts:122](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L122)*
+*Defined in [src/model/response/ledger/VC.ts:122](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L122)*
 
 ___
 
@@ -570,7 +570,7 @@ ___
 
 •  **ERN**: {} = 'ERN' as any
 
-*Defined in [src/model/response/ledger/VC.ts:123](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L123)*
+*Defined in [src/model/response/ledger/VC.ts:123](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L123)*
 
 ___
 
@@ -578,7 +578,7 @@ ___
 
 •  **ETB**: {} = 'ETB' as any
 
-*Defined in [src/model/response/ledger/VC.ts:124](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L124)*
+*Defined in [src/model/response/ledger/VC.ts:124](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L124)*
 
 ___
 
@@ -586,7 +586,7 @@ ___
 
 •  **ETH**: {} = 'ETH' as any
 
-*Defined in [src/model/response/ledger/VC.ts:125](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L125)*
+*Defined in [src/model/response/ledger/VC.ts:125](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L125)*
 
 ___
 
@@ -594,7 +594,7 @@ ___
 
 •  **EUR**: {} = 'EUR' as any
 
-*Defined in [src/model/response/ledger/VC.ts:126](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L126)*
+*Defined in [src/model/response/ledger/VC.ts:126](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L126)*
 
 ___
 
@@ -602,7 +602,7 @@ ___
 
 •  **FJD**: {} = 'FJD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:127](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L127)*
+*Defined in [src/model/response/ledger/VC.ts:127](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L127)*
 
 ___
 
@@ -610,7 +610,7 @@ ___
 
 •  **FKP**: {} = 'FKP' as any
 
-*Defined in [src/model/response/ledger/VC.ts:128](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L128)*
+*Defined in [src/model/response/ledger/VC.ts:128](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L128)*
 
 ___
 
@@ -618,7 +618,7 @@ ___
 
 •  **FREE**: {} = 'FREE' as any
 
-*Defined in [src/model/response/ledger/VC.ts:129](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L129)*
+*Defined in [src/model/response/ledger/VC.ts:129](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L129)*
 
 ___
 
@@ -626,7 +626,7 @@ ___
 
 •  **GBP**: {} = 'GBP' as any
 
-*Defined in [src/model/response/ledger/VC.ts:130](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L130)*
+*Defined in [src/model/response/ledger/VC.ts:130](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L130)*
 
 ___
 
@@ -634,7 +634,7 @@ ___
 
 •  **GEL**: {} = 'GEL' as any
 
-*Defined in [src/model/response/ledger/VC.ts:131](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L131)*
+*Defined in [src/model/response/ledger/VC.ts:131](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L131)*
 
 ___
 
@@ -642,7 +642,7 @@ ___
 
 •  **GGP**: {} = 'GGP' as any
 
-*Defined in [src/model/response/ledger/VC.ts:132](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L132)*
+*Defined in [src/model/response/ledger/VC.ts:132](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L132)*
 
 ___
 
@@ -650,7 +650,7 @@ ___
 
 •  **GHS**: {} = 'GHS' as any
 
-*Defined in [src/model/response/ledger/VC.ts:133](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L133)*
+*Defined in [src/model/response/ledger/VC.ts:133](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L133)*
 
 ___
 
@@ -658,7 +658,7 @@ ___
 
 •  **GIP**: {} = 'GIP' as any
 
-*Defined in [src/model/response/ledger/VC.ts:134](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L134)*
+*Defined in [src/model/response/ledger/VC.ts:134](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L134)*
 
 ___
 
@@ -666,7 +666,7 @@ ___
 
 •  **GMD**: {} = 'GMD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:135](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L135)*
+*Defined in [src/model/response/ledger/VC.ts:135](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L135)*
 
 ___
 
@@ -674,7 +674,7 @@ ___
 
 •  **GNF**: {} = 'GNF' as any
 
-*Defined in [src/model/response/ledger/VC.ts:136](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L136)*
+*Defined in [src/model/response/ledger/VC.ts:136](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L136)*
 
 ___
 
@@ -682,7 +682,7 @@ ___
 
 •  **GTQ**: {} = 'GTQ' as any
 
-*Defined in [src/model/response/ledger/VC.ts:137](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L137)*
+*Defined in [src/model/response/ledger/VC.ts:137](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L137)*
 
 ___
 
@@ -690,7 +690,7 @@ ___
 
 •  **GYD**: {} = 'GYD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:138](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L138)*
+*Defined in [src/model/response/ledger/VC.ts:138](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L138)*
 
 ___
 
@@ -698,7 +698,7 @@ ___
 
 •  **HKD**: {} = 'HKD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:139](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L139)*
+*Defined in [src/model/response/ledger/VC.ts:139](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L139)*
 
 ___
 
@@ -706,7 +706,7 @@ ___
 
 •  **HNL**: {} = 'HNL' as any
 
-*Defined in [src/model/response/ledger/VC.ts:140](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L140)*
+*Defined in [src/model/response/ledger/VC.ts:140](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L140)*
 
 ___
 
@@ -714,7 +714,7 @@ ___
 
 •  **HRK**: {} = 'HRK' as any
 
-*Defined in [src/model/response/ledger/VC.ts:141](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L141)*
+*Defined in [src/model/response/ledger/VC.ts:141](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L141)*
 
 ___
 
@@ -722,7 +722,7 @@ ___
 
 •  **HTG**: {} = 'HTG' as any
 
-*Defined in [src/model/response/ledger/VC.ts:142](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L142)*
+*Defined in [src/model/response/ledger/VC.ts:142](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L142)*
 
 ___
 
@@ -730,7 +730,7 @@ ___
 
 •  **HUF**: {} = 'HUF' as any
 
-*Defined in [src/model/response/ledger/VC.ts:143](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L143)*
+*Defined in [src/model/response/ledger/VC.ts:143](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L143)*
 
 ___
 
@@ -738,7 +738,7 @@ ___
 
 •  **IDR**: {} = 'IDR' as any
 
-*Defined in [src/model/response/ledger/VC.ts:144](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L144)*
+*Defined in [src/model/response/ledger/VC.ts:144](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L144)*
 
 ___
 
@@ -746,7 +746,7 @@ ___
 
 •  **ILS**: {} = 'ILS' as any
 
-*Defined in [src/model/response/ledger/VC.ts:145](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L145)*
+*Defined in [src/model/response/ledger/VC.ts:145](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L145)*
 
 ___
 
@@ -754,7 +754,7 @@ ___
 
 •  **IMP**: {} = 'IMP' as any
 
-*Defined in [src/model/response/ledger/VC.ts:146](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L146)*
+*Defined in [src/model/response/ledger/VC.ts:146](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L146)*
 
 ___
 
@@ -762,7 +762,7 @@ ___
 
 •  **INR**: {} = 'INR' as any
 
-*Defined in [src/model/response/ledger/VC.ts:147](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L147)*
+*Defined in [src/model/response/ledger/VC.ts:147](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L147)*
 
 ___
 
@@ -770,7 +770,7 @@ ___
 
 •  **IQD**: {} = 'IQD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:148](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L148)*
+*Defined in [src/model/response/ledger/VC.ts:148](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L148)*
 
 ___
 
@@ -778,7 +778,7 @@ ___
 
 •  **IRR**: {} = 'IRR' as any
 
-*Defined in [src/model/response/ledger/VC.ts:149](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L149)*
+*Defined in [src/model/response/ledger/VC.ts:149](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L149)*
 
 ___
 
@@ -786,7 +786,7 @@ ___
 
 •  **ISK**: {} = 'ISK' as any
 
-*Defined in [src/model/response/ledger/VC.ts:150](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L150)*
+*Defined in [src/model/response/ledger/VC.ts:150](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L150)*
 
 ___
 
@@ -794,7 +794,7 @@ ___
 
 •  **JEP**: {} = 'JEP' as any
 
-*Defined in [src/model/response/ledger/VC.ts:151](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L151)*
+*Defined in [src/model/response/ledger/VC.ts:151](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L151)*
 
 ___
 
@@ -802,7 +802,7 @@ ___
 
 •  **JMD**: {} = 'JMD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:152](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L152)*
+*Defined in [src/model/response/ledger/VC.ts:152](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L152)*
 
 ___
 
@@ -810,7 +810,7 @@ ___
 
 •  **JOD**: {} = 'JOD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:153](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L153)*
+*Defined in [src/model/response/ledger/VC.ts:153](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L153)*
 
 ___
 
@@ -818,7 +818,7 @@ ___
 
 •  **JPY**: {} = 'JPY' as any
 
-*Defined in [src/model/response/ledger/VC.ts:154](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L154)*
+*Defined in [src/model/response/ledger/VC.ts:154](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L154)*
 
 ___
 
@@ -826,7 +826,7 @@ ___
 
 •  **KES**: {} = 'KES' as any
 
-*Defined in [src/model/response/ledger/VC.ts:155](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L155)*
+*Defined in [src/model/response/ledger/VC.ts:155](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L155)*
 
 ___
 
@@ -834,7 +834,7 @@ ___
 
 •  **KGS**: {} = 'KGS' as any
 
-*Defined in [src/model/response/ledger/VC.ts:156](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L156)*
+*Defined in [src/model/response/ledger/VC.ts:156](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L156)*
 
 ___
 
@@ -842,7 +842,7 @@ ___
 
 •  **KHR**: {} = 'KHR' as any
 
-*Defined in [src/model/response/ledger/VC.ts:157](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L157)*
+*Defined in [src/model/response/ledger/VC.ts:157](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L157)*
 
 ___
 
@@ -850,7 +850,7 @@ ___
 
 •  **KMF**: {} = 'KMF' as any
 
-*Defined in [src/model/response/ledger/VC.ts:158](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L158)*
+*Defined in [src/model/response/ledger/VC.ts:158](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L158)*
 
 ___
 
@@ -858,7 +858,7 @@ ___
 
 •  **KPW**: {} = 'KPW' as any
 
-*Defined in [src/model/response/ledger/VC.ts:159](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L159)*
+*Defined in [src/model/response/ledger/VC.ts:159](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L159)*
 
 ___
 
@@ -866,7 +866,7 @@ ___
 
 •  **KRW**: {} = 'KRW' as any
 
-*Defined in [src/model/response/ledger/VC.ts:160](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L160)*
+*Defined in [src/model/response/ledger/VC.ts:160](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L160)*
 
 ___
 
@@ -874,7 +874,7 @@ ___
 
 •  **KWD**: {} = 'KWD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:161](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L161)*
+*Defined in [src/model/response/ledger/VC.ts:161](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L161)*
 
 ___
 
@@ -882,7 +882,7 @@ ___
 
 •  **KYD**: {} = 'KYD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:162](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L162)*
+*Defined in [src/model/response/ledger/VC.ts:162](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L162)*
 
 ___
 
@@ -890,7 +890,7 @@ ___
 
 •  **KZT**: {} = 'KZT' as any
 
-*Defined in [src/model/response/ledger/VC.ts:163](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L163)*
+*Defined in [src/model/response/ledger/VC.ts:163](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L163)*
 
 ___
 
@@ -898,7 +898,7 @@ ___
 
 •  **LAK**: {} = 'LAK' as any
 
-*Defined in [src/model/response/ledger/VC.ts:164](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L164)*
+*Defined in [src/model/response/ledger/VC.ts:164](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L164)*
 
 ___
 
@@ -906,7 +906,7 @@ ___
 
 •  **LBP**: {} = 'LBP' as any
 
-*Defined in [src/model/response/ledger/VC.ts:165](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L165)*
+*Defined in [src/model/response/ledger/VC.ts:165](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L165)*
 
 ___
 
@@ -914,7 +914,7 @@ ___
 
 •  **LEO**: {} = 'LEO' as any
 
-*Defined in [src/model/response/ledger/VC.ts:166](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L166)*
+*Defined in [src/model/response/ledger/VC.ts:166](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L166)*
 
 ___
 
@@ -922,7 +922,7 @@ ___
 
 •  **LINK**: {} = 'LINK' as any
 
-*Defined in [src/model/response/ledger/VC.ts:167](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L167)*
+*Defined in [src/model/response/ledger/VC.ts:167](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L167)*
 
 ___
 
@@ -930,7 +930,7 @@ ___
 
 •  **LKR**: {} = 'LKR' as any
 
-*Defined in [src/model/response/ledger/VC.ts:169](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L169)*
+*Defined in [src/model/response/ledger/VC.ts:169](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L169)*
 
 ___
 
@@ -938,7 +938,7 @@ ___
 
 •  **LRD**: {} = 'LRD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:170](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L170)*
+*Defined in [src/model/response/ledger/VC.ts:170](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L170)*
 
 ___
 
@@ -946,7 +946,7 @@ ___
 
 •  **LSL**: {} = 'LSL' as any
 
-*Defined in [src/model/response/ledger/VC.ts:171](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L171)*
+*Defined in [src/model/response/ledger/VC.ts:171](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L171)*
 
 ___
 
@@ -954,7 +954,7 @@ ___
 
 •  **LTC**: {} = 'LTC' as any
 
-*Defined in [src/model/response/ledger/VC.ts:172](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L172)*
+*Defined in [src/model/response/ledger/VC.ts:172](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L172)*
 
 ___
 
@@ -962,7 +962,7 @@ ___
 
 •  **LTL**: {} = 'LTL' as any
 
-*Defined in [src/model/response/ledger/VC.ts:173](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L173)*
+*Defined in [src/model/response/ledger/VC.ts:173](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L173)*
 
 ___
 
@@ -970,7 +970,7 @@ ___
 
 •  **LVL**: {} = 'LVL' as any
 
-*Defined in [src/model/response/ledger/VC.ts:174](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L174)*
+*Defined in [src/model/response/ledger/VC.ts:174](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L174)*
 
 ___
 
@@ -978,7 +978,7 @@ ___
 
 •  **LYD**: {} = 'LYD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:175](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L175)*
+*Defined in [src/model/response/ledger/VC.ts:175](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L175)*
 
 ___
 
@@ -986,7 +986,7 @@ ___
 
 •  **MAD**: {} = 'MAD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:176](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L176)*
+*Defined in [src/model/response/ledger/VC.ts:176](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L176)*
 
 ___
 
@@ -994,7 +994,7 @@ ___
 
 •  **MDL**: {} = 'MDL' as any
 
-*Defined in [src/model/response/ledger/VC.ts:177](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L177)*
+*Defined in [src/model/response/ledger/VC.ts:177](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L177)*
 
 ___
 
@@ -1002,7 +1002,7 @@ ___
 
 •  **MGA**: {} = 'MGA' as any
 
-*Defined in [src/model/response/ledger/VC.ts:178](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L178)*
+*Defined in [src/model/response/ledger/VC.ts:178](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L178)*
 
 ___
 
@@ -1010,7 +1010,7 @@ ___
 
 •  **MKD**: {} = 'MKD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:179](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L179)*
+*Defined in [src/model/response/ledger/VC.ts:179](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L179)*
 
 ___
 
@@ -1018,7 +1018,7 @@ ___
 
 •  **MKR**: {} = 'MKR' as any
 
-*Defined in [src/model/response/ledger/VC.ts:180](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L180)*
+*Defined in [src/model/response/ledger/VC.ts:180](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L180)*
 
 ___
 
@@ -1026,7 +1026,7 @@ ___
 
 •  **MMK**: {} = 'MMK' as any
 
-*Defined in [src/model/response/ledger/VC.ts:181](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L181)*
+*Defined in [src/model/response/ledger/VC.ts:181](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L181)*
 
 ___
 
@@ -1034,7 +1034,7 @@ ___
 
 •  **MMY**: {} = 'MMY' as any
 
-*Defined in [src/model/response/ledger/VC.ts:182](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L182)*
+*Defined in [src/model/response/ledger/VC.ts:182](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L182)*
 
 ___
 
@@ -1042,7 +1042,7 @@ ___
 
 •  **MNT**: {} = 'MNT' as any
 
-*Defined in [src/model/response/ledger/VC.ts:183](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L183)*
+*Defined in [src/model/response/ledger/VC.ts:183](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L183)*
 
 ___
 
@@ -1050,7 +1050,7 @@ ___
 
 •  **MOP**: {} = 'MOP' as any
 
-*Defined in [src/model/response/ledger/VC.ts:184](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L184)*
+*Defined in [src/model/response/ledger/VC.ts:184](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L184)*
 
 ___
 
@@ -1058,7 +1058,7 @@ ___
 
 •  **MRO**: {} = 'MRO' as any
 
-*Defined in [src/model/response/ledger/VC.ts:185](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L185)*
+*Defined in [src/model/response/ledger/VC.ts:185](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L185)*
 
 ___
 
@@ -1066,7 +1066,7 @@ ___
 
 •  **MUR**: {} = 'MUR' as any
 
-*Defined in [src/model/response/ledger/VC.ts:186](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L186)*
+*Defined in [src/model/response/ledger/VC.ts:186](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L186)*
 
 ___
 
@@ -1074,7 +1074,7 @@ ___
 
 •  **MVR**: {} = 'MVR' as any
 
-*Defined in [src/model/response/ledger/VC.ts:187](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L187)*
+*Defined in [src/model/response/ledger/VC.ts:187](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L187)*
 
 ___
 
@@ -1082,7 +1082,7 @@ ___
 
 •  **MWK**: {} = 'MWK' as any
 
-*Defined in [src/model/response/ledger/VC.ts:188](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L188)*
+*Defined in [src/model/response/ledger/VC.ts:188](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L188)*
 
 ___
 
@@ -1090,7 +1090,7 @@ ___
 
 •  **MXN**: {} = 'MXN' as any
 
-*Defined in [src/model/response/ledger/VC.ts:189](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L189)*
+*Defined in [src/model/response/ledger/VC.ts:189](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L189)*
 
 ___
 
@@ -1098,7 +1098,7 @@ ___
 
 •  **MYR**: {} = 'MYR' as any
 
-*Defined in [src/model/response/ledger/VC.ts:190](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L190)*
+*Defined in [src/model/response/ledger/VC.ts:190](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L190)*
 
 ___
 
@@ -1106,7 +1106,7 @@ ___
 
 •  **MZN**: {} = 'MZN' as any
 
-*Defined in [src/model/response/ledger/VC.ts:191](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L191)*
+*Defined in [src/model/response/ledger/VC.ts:191](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L191)*
 
 ___
 
@@ -1114,7 +1114,7 @@ ___
 
 •  **NAD**: {} = 'NAD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:192](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L192)*
+*Defined in [src/model/response/ledger/VC.ts:192](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L192)*
 
 ___
 
@@ -1122,7 +1122,7 @@ ___
 
 •  **NGN**: {} = 'NGN' as any
 
-*Defined in [src/model/response/ledger/VC.ts:193](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L193)*
+*Defined in [src/model/response/ledger/VC.ts:193](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L193)*
 
 ___
 
@@ -1130,7 +1130,7 @@ ___
 
 •  **NIO**: {} = 'NIO' as any
 
-*Defined in [src/model/response/ledger/VC.ts:194](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L194)*
+*Defined in [src/model/response/ledger/VC.ts:194](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L194)*
 
 ___
 
@@ -1138,7 +1138,7 @@ ___
 
 •  **NOK**: {} = 'NOK' as any
 
-*Defined in [src/model/response/ledger/VC.ts:195](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L195)*
+*Defined in [src/model/response/ledger/VC.ts:195](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L195)*
 
 ___
 
@@ -1146,7 +1146,7 @@ ___
 
 •  **NPR**: {} = 'NPR' as any
 
-*Defined in [src/model/response/ledger/VC.ts:196](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L196)*
+*Defined in [src/model/response/ledger/VC.ts:196](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L196)*
 
 ___
 
@@ -1154,7 +1154,7 @@ ___
 
 •  **NZD**: {} = 'NZD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:197](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L197)*
+*Defined in [src/model/response/ledger/VC.ts:197](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L197)*
 
 ___
 
@@ -1162,7 +1162,7 @@ ___
 
 •  **OMR**: {} = 'OMR' as any
 
-*Defined in [src/model/response/ledger/VC.ts:198](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L198)*
+*Defined in [src/model/response/ledger/VC.ts:198](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L198)*
 
 ___
 
@@ -1170,7 +1170,7 @@ ___
 
 •  **PAB**: {} = 'PAB' as any
 
-*Defined in [src/model/response/ledger/VC.ts:199](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L199)*
+*Defined in [src/model/response/ledger/VC.ts:199](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L199)*
 
 ___
 
@@ -1178,7 +1178,7 @@ ___
 
 •  **PAX**: {} = 'PAX' as any
 
-*Defined in [src/model/response/ledger/VC.ts:200](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L200)*
+*Defined in [src/model/response/ledger/VC.ts:200](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L200)*
 
 ___
 
@@ -1186,7 +1186,7 @@ ___
 
 •  **PAXG**: {} = 'PAXG' as any
 
-*Defined in [src/model/response/ledger/VC.ts:201](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L201)*
+*Defined in [src/model/response/ledger/VC.ts:201](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L201)*
 
 ___
 
@@ -1194,7 +1194,7 @@ ___
 
 •  **PEN**: {} = 'PEN' as any
 
-*Defined in [src/model/response/ledger/VC.ts:202](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L202)*
+*Defined in [src/model/response/ledger/VC.ts:202](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L202)*
 
 ___
 
@@ -1202,7 +1202,7 @@ ___
 
 •  **PGK**: {} = 'PGK' as any
 
-*Defined in [src/model/response/ledger/VC.ts:203](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L203)*
+*Defined in [src/model/response/ledger/VC.ts:203](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L203)*
 
 ___
 
@@ -1210,7 +1210,7 @@ ___
 
 •  **PHP**: {} = 'PHP' as any
 
-*Defined in [src/model/response/ledger/VC.ts:204](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L204)*
+*Defined in [src/model/response/ledger/VC.ts:204](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L204)*
 
 ___
 
@@ -1218,7 +1218,7 @@ ___
 
 •  **PKR**: {} = 'PKR' as any
 
-*Defined in [src/model/response/ledger/VC.ts:205](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L205)*
+*Defined in [src/model/response/ledger/VC.ts:205](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L205)*
 
 ___
 
@@ -1226,7 +1226,7 @@ ___
 
 •  **PLN**: {} = 'PLN' as any
 
-*Defined in [src/model/response/ledger/VC.ts:206](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L206)*
+*Defined in [src/model/response/ledger/VC.ts:206](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L206)*
 
 ___
 
@@ -1234,7 +1234,7 @@ ___
 
 •  **PLTC**: {} = 'PLTC' as any
 
-*Defined in [src/model/response/ledger/VC.ts:207](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L207)*
+*Defined in [src/model/response/ledger/VC.ts:207](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L207)*
 
 ___
 
@@ -1242,7 +1242,7 @@ ___
 
 •  **PYG**: {} = 'PYG' as any
 
-*Defined in [src/model/response/ledger/VC.ts:208](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L208)*
+*Defined in [src/model/response/ledger/VC.ts:208](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L208)*
 
 ___
 
@@ -1250,7 +1250,7 @@ ___
 
 •  **QAR**: {} = 'QAR' as any
 
-*Defined in [src/model/response/ledger/VC.ts:209](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L209)*
+*Defined in [src/model/response/ledger/VC.ts:209](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L209)*
 
 ___
 
@@ -1258,7 +1258,7 @@ ___
 
 •  **RON**: {} = 'RON' as any
 
-*Defined in [src/model/response/ledger/VC.ts:210](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L210)*
+*Defined in [src/model/response/ledger/VC.ts:210](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L210)*
 
 ___
 
@@ -1266,7 +1266,7 @@ ___
 
 •  **RSD**: {} = 'RSD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:211](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L211)*
+*Defined in [src/model/response/ledger/VC.ts:211](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L211)*
 
 ___
 
@@ -1274,7 +1274,7 @@ ___
 
 •  **RUB**: {} = 'RUB' as any
 
-*Defined in [src/model/response/ledger/VC.ts:212](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L212)*
+*Defined in [src/model/response/ledger/VC.ts:212](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L212)*
 
 ___
 
@@ -1282,7 +1282,7 @@ ___
 
 •  **RWF**: {} = 'RWF' as any
 
-*Defined in [src/model/response/ledger/VC.ts:213](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L213)*
+*Defined in [src/model/response/ledger/VC.ts:213](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L213)*
 
 ___
 
@@ -1290,7 +1290,7 @@ ___
 
 •  **SAR**: {} = 'SAR' as any
 
-*Defined in [src/model/response/ledger/VC.ts:214](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L214)*
+*Defined in [src/model/response/ledger/VC.ts:214](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L214)*
 
 ___
 
@@ -1298,7 +1298,7 @@ ___
 
 •  **SBD**: {} = 'SBD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:215](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L215)*
+*Defined in [src/model/response/ledger/VC.ts:215](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L215)*
 
 ___
 
@@ -1306,7 +1306,7 @@ ___
 
 •  **SCR**: {} = 'SCR' as any
 
-*Defined in [src/model/response/ledger/VC.ts:216](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L216)*
+*Defined in [src/model/response/ledger/VC.ts:216](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L216)*
 
 ___
 
@@ -1314,7 +1314,7 @@ ___
 
 •  **SDG**: {} = 'SDG' as any
 
-*Defined in [src/model/response/ledger/VC.ts:217](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L217)*
+*Defined in [src/model/response/ledger/VC.ts:217](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L217)*
 
 ___
 
@@ -1322,7 +1322,7 @@ ___
 
 •  **SEK**: {} = 'SEK' as any
 
-*Defined in [src/model/response/ledger/VC.ts:218](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L218)*
+*Defined in [src/model/response/ledger/VC.ts:218](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L218)*
 
 ___
 
@@ -1330,7 +1330,7 @@ ___
 
 •  **SGD**: {} = 'SGD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:219](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L219)*
+*Defined in [src/model/response/ledger/VC.ts:219](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L219)*
 
 ___
 
@@ -1338,7 +1338,7 @@ ___
 
 •  **SHP**: {} = 'SHP' as any
 
-*Defined in [src/model/response/ledger/VC.ts:220](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L220)*
+*Defined in [src/model/response/ledger/VC.ts:220](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L220)*
 
 ___
 
@@ -1346,7 +1346,7 @@ ___
 
 •  **SLL**: {} = 'SLL' as any
 
-*Defined in [src/model/response/ledger/VC.ts:221](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L221)*
+*Defined in [src/model/response/ledger/VC.ts:221](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L221)*
 
 ___
 
@@ -1354,7 +1354,7 @@ ___
 
 •  **SOS**: {} = 'SOS' as any
 
-*Defined in [src/model/response/ledger/VC.ts:222](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L222)*
+*Defined in [src/model/response/ledger/VC.ts:222](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L222)*
 
 ___
 
@@ -1362,7 +1362,7 @@ ___
 
 •  **SRD**: {} = 'SRD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:223](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L223)*
+*Defined in [src/model/response/ledger/VC.ts:223](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L223)*
 
 ___
 
@@ -1370,7 +1370,7 @@ ___
 
 •  **STD**: {} = 'STD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:224](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L224)*
+*Defined in [src/model/response/ledger/VC.ts:224](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L224)*
 
 ___
 
@@ -1378,7 +1378,7 @@ ___
 
 •  **SVC**: {} = 'SVC' as any
 
-*Defined in [src/model/response/ledger/VC.ts:225](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L225)*
+*Defined in [src/model/response/ledger/VC.ts:225](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L225)*
 
 ___
 
@@ -1386,7 +1386,7 @@ ___
 
 •  **SYP**: {} = 'SYP' as any
 
-*Defined in [src/model/response/ledger/VC.ts:226](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L226)*
+*Defined in [src/model/response/ledger/VC.ts:226](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L226)*
 
 ___
 
@@ -1394,7 +1394,7 @@ ___
 
 •  **SZL**: {} = 'SZL' as any
 
-*Defined in [src/model/response/ledger/VC.ts:227](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L227)*
+*Defined in [src/model/response/ledger/VC.ts:227](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L227)*
 
 ___
 
@@ -1402,7 +1402,7 @@ ___
 
 •  **THB**: {} = 'THB' as any
 
-*Defined in [src/model/response/ledger/VC.ts:228](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L228)*
+*Defined in [src/model/response/ledger/VC.ts:228](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L228)*
 
 ___
 
@@ -1410,7 +1410,7 @@ ___
 
 •  **TJS**: {} = 'TJS' as any
 
-*Defined in [src/model/response/ledger/VC.ts:229](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L229)*
+*Defined in [src/model/response/ledger/VC.ts:229](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L229)*
 
 ___
 
@@ -1418,7 +1418,7 @@ ___
 
 •  **TMT**: {} = 'TMT' as any
 
-*Defined in [src/model/response/ledger/VC.ts:230](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L230)*
+*Defined in [src/model/response/ledger/VC.ts:230](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L230)*
 
 ___
 
@@ -1426,7 +1426,7 @@ ___
 
 •  **TND**: {} = 'TND' as any
 
-*Defined in [src/model/response/ledger/VC.ts:231](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L231)*
+*Defined in [src/model/response/ledger/VC.ts:231](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L231)*
 
 ___
 
@@ -1434,7 +1434,7 @@ ___
 
 •  **TOP**: {} = 'TOP' as any
 
-*Defined in [src/model/response/ledger/VC.ts:232](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L232)*
+*Defined in [src/model/response/ledger/VC.ts:232](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L232)*
 
 ___
 
@@ -1442,7 +1442,7 @@ ___
 
 •  **TRY**: {} = 'TRY' as any
 
-*Defined in [src/model/response/ledger/VC.ts:233](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L233)*
+*Defined in [src/model/response/ledger/VC.ts:233](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L233)*
 
 ___
 
@@ -1450,7 +1450,7 @@ ___
 
 •  **TTD**: {} = 'TTD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:234](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L234)*
+*Defined in [src/model/response/ledger/VC.ts:234](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L234)*
 
 ___
 
@@ -1458,7 +1458,7 @@ ___
 
 •  **TUSD**: {} = 'TUSD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:235](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L235)*
+*Defined in [src/model/response/ledger/VC.ts:235](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L235)*
 
 ___
 
@@ -1466,7 +1466,7 @@ ___
 
 •  **TWD**: {} = 'TWD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:236](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L236)*
+*Defined in [src/model/response/ledger/VC.ts:236](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L236)*
 
 ___
 
@@ -1474,7 +1474,7 @@ ___
 
 •  **TZS**: {} = 'TZS' as any
 
-*Defined in [src/model/response/ledger/VC.ts:237](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L237)*
+*Defined in [src/model/response/ledger/VC.ts:237](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L237)*
 
 ___
 
@@ -1482,7 +1482,7 @@ ___
 
 •  **UAH**: {} = 'UAH' as any
 
-*Defined in [src/model/response/ledger/VC.ts:238](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L238)*
+*Defined in [src/model/response/ledger/VC.ts:238](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L238)*
 
 ___
 
@@ -1490,7 +1490,7 @@ ___
 
 •  **UGX**: {} = 'UGX' as any
 
-*Defined in [src/model/response/ledger/VC.ts:239](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L239)*
+*Defined in [src/model/response/ledger/VC.ts:239](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L239)*
 
 ___
 
@@ -1498,7 +1498,7 @@ ___
 
 •  **UNI**: {} = 'UNI' as any
 
-*Defined in [src/model/response/ledger/VC.ts:168](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L168)*
+*Defined in [src/model/response/ledger/VC.ts:168](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L168)*
 
 ___
 
@@ -1506,7 +1506,7 @@ ___
 
 •  **USD**: {} = 'USD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:240](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L240)*
+*Defined in [src/model/response/ledger/VC.ts:240](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L240)*
 
 ___
 
@@ -1514,7 +1514,7 @@ ___
 
 •  **USDC**: {} = 'USDC' as any
 
-*Defined in [src/model/response/ledger/VC.ts:241](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L241)*
+*Defined in [src/model/response/ledger/VC.ts:241](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L241)*
 
 ___
 
@@ -1522,7 +1522,7 @@ ___
 
 •  **USDT**: {} = 'USDT' as any
 
-*Defined in [src/model/response/ledger/VC.ts:242](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L242)*
+*Defined in [src/model/response/ledger/VC.ts:242](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L242)*
 
 ___
 
@@ -1530,7 +1530,7 @@ ___
 
 •  **UYU**: {} = 'UYU' as any
 
-*Defined in [src/model/response/ledger/VC.ts:243](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L243)*
+*Defined in [src/model/response/ledger/VC.ts:243](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L243)*
 
 ___
 
@@ -1538,7 +1538,7 @@ ___
 
 •  **UZS**: {} = 'UZS' as any
 
-*Defined in [src/model/response/ledger/VC.ts:244](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L244)*
+*Defined in [src/model/response/ledger/VC.ts:244](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L244)*
 
 ___
 
@@ -1546,7 +1546,7 @@ ___
 
 •  **VEF**: {} = 'VEF' as any
 
-*Defined in [src/model/response/ledger/VC.ts:245](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L245)*
+*Defined in [src/model/response/ledger/VC.ts:245](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L245)*
 
 ___
 
@@ -1554,7 +1554,7 @@ ___
 
 •  **VND**: {} = 'VND' as any
 
-*Defined in [src/model/response/ledger/VC.ts:246](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L246)*
+*Defined in [src/model/response/ledger/VC.ts:246](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L246)*
 
 ___
 
@@ -1562,7 +1562,7 @@ ___
 
 •  **VUV**: {} = 'VUV' as any
 
-*Defined in [src/model/response/ledger/VC.ts:247](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L247)*
+*Defined in [src/model/response/ledger/VC.ts:247](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L247)*
 
 ___
 
@@ -1570,7 +1570,7 @@ ___
 
 •  **WST**: {} = 'WST' as any
 
-*Defined in [src/model/response/ledger/VC.ts:248](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L248)*
+*Defined in [src/model/response/ledger/VC.ts:248](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L248)*
 
 ___
 
@@ -1578,7 +1578,7 @@ ___
 
 •  **XAF**: {} = 'XAF' as any
 
-*Defined in [src/model/response/ledger/VC.ts:249](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L249)*
+*Defined in [src/model/response/ledger/VC.ts:249](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L249)*
 
 ___
 
@@ -1586,7 +1586,7 @@ ___
 
 •  **XAG**: {} = 'XAG' as any
 
-*Defined in [src/model/response/ledger/VC.ts:250](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L250)*
+*Defined in [src/model/response/ledger/VC.ts:250](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L250)*
 
 ___
 
@@ -1594,7 +1594,7 @@ ___
 
 •  **XAU**: {} = 'XAU' as any
 
-*Defined in [src/model/response/ledger/VC.ts:251](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L251)*
+*Defined in [src/model/response/ledger/VC.ts:251](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L251)*
 
 ___
 
@@ -1602,7 +1602,7 @@ ___
 
 •  **XCD**: {} = 'XCD' as any
 
-*Defined in [src/model/response/ledger/VC.ts:252](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L252)*
+*Defined in [src/model/response/ledger/VC.ts:252](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L252)*
 
 ___
 
@@ -1610,7 +1610,7 @@ ___
 
 •  **XCON**: {} = 'XCON' as any
 
-*Defined in [src/model/response/ledger/VC.ts:253](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L253)*
+*Defined in [src/model/response/ledger/VC.ts:253](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L253)*
 
 ___
 
@@ -1618,7 +1618,7 @@ ___
 
 •  **XDR**: {} = 'XDR' as any
 
-*Defined in [src/model/response/ledger/VC.ts:254](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L254)*
+*Defined in [src/model/response/ledger/VC.ts:254](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L254)*
 
 ___
 
@@ -1626,7 +1626,7 @@ ___
 
 •  **XLM**: {} = 'XLM' as any
 
-*Defined in [src/model/response/ledger/VC.ts:255](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L255)*
+*Defined in [src/model/response/ledger/VC.ts:255](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L255)*
 
 ___
 
@@ -1634,7 +1634,7 @@ ___
 
 •  **XOF**: {} = 'XOF' as any
 
-*Defined in [src/model/response/ledger/VC.ts:256](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L256)*
+*Defined in [src/model/response/ledger/VC.ts:256](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L256)*
 
 ___
 
@@ -1642,7 +1642,7 @@ ___
 
 •  **XPF**: {} = 'XPF' as any
 
-*Defined in [src/model/response/ledger/VC.ts:257](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L257)*
+*Defined in [src/model/response/ledger/VC.ts:257](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L257)*
 
 ___
 
@@ -1650,7 +1650,7 @@ ___
 
 •  **XRP**: {} = 'XRP' as any
 
-*Defined in [src/model/response/ledger/VC.ts:258](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L258)*
+*Defined in [src/model/response/ledger/VC.ts:258](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L258)*
 
 ___
 
@@ -1658,7 +1658,7 @@ ___
 
 •  **YER**: {} = 'YER' as any
 
-*Defined in [src/model/response/ledger/VC.ts:259](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L259)*
+*Defined in [src/model/response/ledger/VC.ts:259](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L259)*
 
 ___
 
@@ -1666,7 +1666,7 @@ ___
 
 •  **ZAR**: {} = 'ZAR' as any
 
-*Defined in [src/model/response/ledger/VC.ts:260](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L260)*
+*Defined in [src/model/response/ledger/VC.ts:260](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L260)*
 
 ___
 
@@ -1674,7 +1674,7 @@ ___
 
 •  **ZMK**: {} = 'ZMK' as any
 
-*Defined in [src/model/response/ledger/VC.ts:261](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L261)*
+*Defined in [src/model/response/ledger/VC.ts:261](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L261)*
 
 ___
 
@@ -1682,7 +1682,7 @@ ___
 
 •  **ZMW**: {} = 'ZMW' as any
 
-*Defined in [src/model/response/ledger/VC.ts:262](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L262)*
+*Defined in [src/model/response/ledger/VC.ts:262](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L262)*
 
 ___
 
@@ -1690,4 +1690,4 @@ ___
 
 •  **ZWL**: {} = 'ZWL' as any
 
-*Defined in [src/model/response/ledger/VC.ts:263](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/VC.ts#L263)*
+*Defined in [src/model/response/ledger/VC.ts:263](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/VC.ts#L263)*

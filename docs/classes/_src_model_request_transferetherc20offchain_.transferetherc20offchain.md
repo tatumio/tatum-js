@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/request/TransferEthErc20Offchain"](../modules/_src_model_request_transferetherc20offchain_.md) / TransferEthErc20Offchain
 
@@ -29,7 +29,7 @@
 
 •  **address**: string
 
-*Defined in [src/model/request/TransferEthErc20Offchain.ts:23](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferEthErc20Offchain.ts#L23)*
+*Defined in [src/model/request/TransferEthErc20Offchain.ts:23](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferEthErc20Offchain.ts#L23)*
 
 ___
 
@@ -37,7 +37,7 @@ ___
 
 •  **amount**: string
 
-*Defined in [src/model/request/TransferEthErc20Offchain.ts:28](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferEthErc20Offchain.ts#L28)*
+*Defined in [src/model/request/TransferEthErc20Offchain.ts:28](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferEthErc20Offchain.ts#L28)*
 
 ___
 
@@ -45,7 +45,7 @@ ___
 
 • `Optional` **compliant**: undefined \| false \| true
 
-*Defined in [src/model/request/TransferEthErc20Offchain.ts:32](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferEthErc20Offchain.ts#L32)*
+*Defined in [src/model/request/TransferEthErc20Offchain.ts:32](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferEthErc20Offchain.ts#L32)*
 
 ___
 
@@ -53,7 +53,7 @@ ___
 
 • `Optional` **index**: undefined \| number
 
-*Defined in [src/model/request/TransferEthErc20Offchain.ts:53](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferEthErc20Offchain.ts#L53)*
+*Defined in [src/model/request/TransferEthErc20Offchain.ts:53](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferEthErc20Offchain.ts#L53)*
 
 ___
 
@@ -61,7 +61,7 @@ ___
 
 • `Optional` **mnemonic**: undefined \| string
 
-*Defined in [src/model/request/TransferEthErc20Offchain.ts:46](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferEthErc20Offchain.ts#L46)*
+*Defined in [src/model/request/TransferEthErc20Offchain.ts:46](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferEthErc20Offchain.ts#L46)*
 
 ___
 
@@ -69,7 +69,7 @@ ___
 
 • `Optional` **nonce**: undefined \| number
 
-*Defined in [src/model/request/TransferEthErc20Offchain.ts:64](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferEthErc20Offchain.ts#L64)*
+*Defined in [src/model/request/TransferEthErc20Offchain.ts:64](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferEthErc20Offchain.ts#L64)*
 
 ___
 
@@ -77,7 +77,7 @@ ___
 
 • `Optional` **paymentId**: undefined \| string
 
-*Defined in [src/model/request/TransferEthErc20Offchain.ts:36](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferEthErc20Offchain.ts#L36)*
+*Defined in [src/model/request/TransferEthErc20Offchain.ts:36](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferEthErc20Offchain.ts#L36)*
 
 ___
 
@@ -85,7 +85,7 @@ ___
 
 • `Optional` **privateKey**: undefined \| string
 
-*Defined in [src/model/request/TransferEthErc20Offchain.ts:59](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferEthErc20Offchain.ts#L59)*
+*Defined in [src/model/request/TransferEthErc20Offchain.ts:59](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferEthErc20Offchain.ts#L59)*
 
 ___
 
@@ -93,7 +93,7 @@ ___
 
 •  **senderAccountId**: string
 
-*Defined in [src/model/request/TransferEthErc20Offchain.ts:19](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferEthErc20Offchain.ts#L19)*
+*Defined in [src/model/request/TransferEthErc20Offchain.ts:19](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferEthErc20Offchain.ts#L19)*
 
 ___
 
@@ -101,4 +101,4 @@ ___
 
 • `Optional` **senderNote**: undefined \| string
 
-*Defined in [src/model/request/TransferEthErc20Offchain.ts:40](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferEthErc20Offchain.ts#L40)*
+*Defined in [src/model/request/TransferEthErc20Offchain.ts:40](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferEthErc20Offchain.ts#L40)*

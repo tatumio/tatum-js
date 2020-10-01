@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/request/CreateAccount"](../modules/_src_model_request_createaccount_.md) / CreateAccount
 
@@ -26,7 +26,7 @@
 
 • `Optional` **accountCode**: undefined \| string
 
-*Defined in [src/model/request/CreateAccount.ts:27](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateAccount.ts#L27)*
+*Defined in [src/model/request/CreateAccount.ts:27](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateAccount.ts#L27)*
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 • `Optional` **accountNumber**: undefined \| string
 
-*Defined in [src/model/request/CreateAccount.ts:31](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateAccount.ts#L31)*
+*Defined in [src/model/request/CreateAccount.ts:31](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateAccount.ts#L31)*
 
 ___
 
@@ -42,7 +42,7 @@ ___
 
 • `Optional` **accountingCurrency**: [Fiat](../enums/_src_model_response_ledger_fiat_.fiat.md)
 
-*Defined in [src/model/request/CreateAccount.ts:23](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateAccount.ts#L23)*
+*Defined in [src/model/request/CreateAccount.ts:23](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateAccount.ts#L23)*
 
 ___
 
@@ -50,7 +50,7 @@ ___
 
 • `Optional` **compliant**: undefined \| false \| true
 
-*Defined in [src/model/request/CreateAccount.ts:18](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateAccount.ts#L18)*
+*Defined in [src/model/request/CreateAccount.ts:18](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateAccount.ts#L18)*
 
 ___
 
@@ -58,7 +58,7 @@ ___
 
 •  **currency**: string
 
-*Defined in [src/model/request/CreateAccount.ts:10](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateAccount.ts#L10)*
+*Defined in [src/model/request/CreateAccount.ts:10](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateAccount.ts#L10)*
 
 ___
 
@@ -66,7 +66,7 @@ ___
 
 • `Optional` **customer**: [CustomerUpdate](_src_model_request_customerupdate_.customerupdate.md)
 
-*Defined in [src/model/request/CreateAccount.ts:36](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateAccount.ts#L36)*
+*Defined in [src/model/request/CreateAccount.ts:36](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateAccount.ts#L36)*
 
 ___
 
@@ -74,4 +74,4 @@ ___
 
 • `Optional` **xpub**: undefined \| string
 
-*Defined in [src/model/request/CreateAccount.ts:14](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateAccount.ts#L14)*
+*Defined in [src/model/request/CreateAccount.ts:14](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateAccount.ts#L14)*

@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/offchain/Address"](../modules/_src_model_response_offchain_address_.md) / Address
 
@@ -25,7 +25,7 @@
 
 •  **address**: string
 
-*Defined in [src/model/response/offchain/Address.ts:7](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/offchain/Address.ts#L7)*
+*Defined in [src/model/response/offchain/Address.ts:7](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/offchain/Address.ts#L7)*
 
 Blockchain address.
 
@@ -37,7 +37,7 @@ ___
 
 •  **currency**: string
 
-*Defined in [src/model/response/offchain/Address.ts:13](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/offchain/Address.ts#L13)*
+*Defined in [src/model/response/offchain/Address.ts:13](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/offchain/Address.ts#L13)*
 
 Currency of generated address. BTC, LTC, BCH, ETH, XRP, ERC20.
 
@@ -49,7 +49,7 @@ ___
 
 • `Optional` **derivationKey**: undefined \| number
 
-*Defined in [src/model/response/offchain/Address.ts:19](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/offchain/Address.ts#L19)*
+*Defined in [src/model/response/offchain/Address.ts:19](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/offchain/Address.ts#L19)*
 
 Derivation key index for given address.
 
@@ -61,7 +61,7 @@ ___
 
 • `Optional` **destinatinTag**: undefined \| number
 
-*Defined in [src/model/response/offchain/Address.ts:32](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/offchain/Address.ts#L32)*
+*Defined in [src/model/response/offchain/Address.ts:32](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/offchain/Address.ts#L32)*
 
 In case of XRP, destinationTag is the distinguisher of the account.
 
@@ -73,7 +73,7 @@ ___
 
 • `Optional` **message**: undefined \| string
 
-*Defined in [src/model/response/offchain/Address.ts:38](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/offchain/Address.ts#L38)*
+*Defined in [src/model/response/offchain/Address.ts:38](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/offchain/Address.ts#L38)*
 
 In case of XLM, message is the distinguisher of the account.
 
@@ -85,7 +85,7 @@ ___
 
 • `Optional` **xpub**: undefined \| string
 
-*Defined in [src/model/response/offchain/Address.ts:26](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/offchain/Address.ts#L26)*
+*Defined in [src/model/response/offchain/Address.ts:26](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/offchain/Address.ts#L26)*
 
 Extended public key to derive address from. In case of XRP, this is account address,
 since address is defined as DestinationTag, which is address field. In case of XLM, this is account address, since address is defined as message, which is address field.

@@ -1,8 +1,8 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](README.md) / Globals
 
-# @tatumio/tatum - v1.3.1
+# @tatumio/tatum - v1.3.2
 
 ## Index
 
@@ -20,7 +20,6 @@
 * ["src/contracts/erc20/token\_abi"](modules/_src_contracts_erc20_token_abi_.md)
 * ["src/contracts/erc20/token\_bytecode"](modules/_src_contracts_erc20_token_bytecode_.md)
 * ["src/index"](modules/_src_index_.md)
-* ["src/kms/index"](modules/_src_kms_index_.md)
 * ["src/ledger/account"](modules/_src_ledger_account_.md)
 * ["src/ledger/customer"](modules/_src_ledger_customer_.md)
 * ["src/ledger/index"](modules/_src_ledger_index_.md)
@@ -110,6 +109,9 @@
 * ["src/offchain/xlm"](modules/_src_offchain_xlm_.md)
 * ["src/offchain/xrp"](modules/_src_offchain_xrp_.md)
 * ["src/record/index"](modules/_src_record_index_.md)
+* ["src/security/address"](modules/_src_security_address_.md)
+* ["src/security/index"](modules/_src_security_index_.md)
+* ["src/security/kms"](modules/_src_security_kms_.md)
 * ["src/tatum/index"](modules/_src_tatum_index_.md)
 * ["src/transaction/bcash"](modules/_src_transaction_bcash_.md)
 * ["src/transaction/bcash.spec"](modules/_src_transaction_bcash_spec_.md)

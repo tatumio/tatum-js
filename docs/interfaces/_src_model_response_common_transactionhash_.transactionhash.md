@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/common/TransactionHash"](../modules/_src_model_response_common_transactionhash_.md) / TransactionHash
 
@@ -24,7 +24,7 @@
 
 •  **txId**: string
 
-*Defined in [src/model/response/common/TransactionHash.ts:12](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/common/TransactionHash.ts#L12)*
+*Defined in [src/model/response/common/TransactionHash.ts:12](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/common/TransactionHash.ts#L12)*
 
 TX hash of successful transaction.
 

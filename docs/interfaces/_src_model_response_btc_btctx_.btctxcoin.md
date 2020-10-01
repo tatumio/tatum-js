@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/btc/BtcTx"](../modules/_src_model_response_btc_btctx_.md) / BtcTxCoin
 
@@ -29,7 +29,7 @@
 
 •  **address**: string
 
-*Defined in [src/model/response/btc/BtcTx.ts:122](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/btc/BtcTx.ts#L122)*
+*Defined in [src/model/response/btc/BtcTx.ts:122](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/btc/BtcTx.ts#L122)*
 
 Sender address.
 
@@ -41,7 +41,7 @@ ___
 
 •  **coinbase**: boolean
 
-*Defined in [src/model/response/btc/BtcTx.ts:128](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/btc/BtcTx.ts#L128)*
+*Defined in [src/model/response/btc/BtcTx.ts:128](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/btc/BtcTx.ts#L128)*
 
 Coinbase transaction - miner fee.
 
@@ -53,7 +53,7 @@ ___
 
 •  **height**: number
 
-*Defined in [src/model/response/btc/BtcTx.ts:104](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/btc/BtcTx.ts#L104)*
+*Defined in [src/model/response/btc/BtcTx.ts:104](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/btc/BtcTx.ts#L104)*
 
 **`memberof`** BtcTxCoin
 
@@ -63,7 +63,7 @@ ___
 
 •  **script**: string
 
-*Defined in [src/model/response/btc/BtcTx.ts:116](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/btc/BtcTx.ts#L116)*
+*Defined in [src/model/response/btc/BtcTx.ts:116](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/btc/BtcTx.ts#L116)*
 
 **`memberof`** BtcTxCoin
 
@@ -73,7 +73,7 @@ ___
 
 •  **value**: number
 
-*Defined in [src/model/response/btc/BtcTx.ts:110](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/btc/BtcTx.ts#L110)*
+*Defined in [src/model/response/btc/BtcTx.ts:110](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/btc/BtcTx.ts#L110)*
 
 **`memberof`** BtcTxCoin
 
@@ -83,6 +83,6 @@ ___
 
 •  **version**: number
 
-*Defined in [src/model/response/btc/BtcTx.ts:98](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/btc/BtcTx.ts#L98)*
+*Defined in [src/model/response/btc/BtcTx.ts:98](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/btc/BtcTx.ts#L98)*
 
 **`memberof`** BtcTxCoin

@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/btc/BtcBlock"](../modules/_src_model_response_btc_btcblock_.md) / BtcBlock
 
@@ -33,7 +33,7 @@
 
 •  **bits**: number
 
-*Defined in [src/model/response/btc/BtcBlock.ts:56](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/btc/BtcBlock.ts#L56)*
+*Defined in [src/model/response/btc/BtcBlock.ts:56](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/btc/BtcBlock.ts#L56)*
 
 **`memberof`** BtcBlock
 
@@ -43,7 +43,7 @@ ___
 
 •  **depth**: number
 
-*Defined in [src/model/response/btc/BtcBlock.ts:26](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/btc/BtcBlock.ts#L26)*
+*Defined in [src/model/response/btc/BtcBlock.ts:26](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/btc/BtcBlock.ts#L26)*
 
 The number of blocks following a particular block on a block chain, including current one.
 
@@ -55,7 +55,7 @@ ___
 
 •  **hash**: string
 
-*Defined in [src/model/response/btc/BtcBlock.ts:14](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/btc/BtcBlock.ts#L14)*
+*Defined in [src/model/response/btc/BtcBlock.ts:14](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/btc/BtcBlock.ts#L14)*
 
 Hash of block.
 
@@ -67,7 +67,7 @@ ___
 
 •  **height**: number
 
-*Defined in [src/model/response/btc/BtcBlock.ts:20](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/btc/BtcBlock.ts#L20)*
+*Defined in [src/model/response/btc/BtcBlock.ts:20](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/btc/BtcBlock.ts#L20)*
 
 The number of blocks preceding a particular block on a block chain.
 
@@ -79,7 +79,7 @@ ___
 
 •  **merkleRoot**: string
 
-*Defined in [src/model/response/btc/BtcBlock.ts:44](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/btc/BtcBlock.ts#L44)*
+*Defined in [src/model/response/btc/BtcBlock.ts:44](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/btc/BtcBlock.ts#L44)*
 
 The root node of a merkle tree, a descendant of all the hashed pairs in the tree.
 
@@ -91,7 +91,7 @@ ___
 
 •  **nonce**: number
 
-*Defined in [src/model/response/btc/BtcBlock.ts:62](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/btc/BtcBlock.ts#L62)*
+*Defined in [src/model/response/btc/BtcBlock.ts:62](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/btc/BtcBlock.ts#L62)*
 
 Arbitrary number that is used in Bitcoin's proof of work consensus algorithm.
 
@@ -103,7 +103,7 @@ ___
 
 •  **prevBlock**: string
 
-*Defined in [src/model/response/btc/BtcBlock.ts:38](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/btc/BtcBlock.ts#L38)*
+*Defined in [src/model/response/btc/BtcBlock.ts:38](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/btc/BtcBlock.ts#L38)*
 
 Hash of the previous block.
 
@@ -115,7 +115,7 @@ ___
 
 •  **time**: number
 
-*Defined in [src/model/response/btc/BtcBlock.ts:50](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/btc/BtcBlock.ts#L50)*
+*Defined in [src/model/response/btc/BtcBlock.ts:50](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/btc/BtcBlock.ts#L50)*
 
 Time of the block.
 
@@ -127,7 +127,7 @@ ___
 
 •  **txs**: [BtcTx](_src_model_response_btc_btctx_.btctx.md)[]
 
-*Defined in [src/model/response/btc/BtcBlock.ts:68](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/btc/BtcBlock.ts#L68)*
+*Defined in [src/model/response/btc/BtcBlock.ts:68](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/btc/BtcBlock.ts#L68)*
 
 **`memberof`** BtcBlock
 
@@ -137,7 +137,7 @@ ___
 
 •  **version**: number
 
-*Defined in [src/model/response/btc/BtcBlock.ts:32](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/btc/BtcBlock.ts#L32)*
+*Defined in [src/model/response/btc/BtcBlock.ts:32](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/btc/BtcBlock.ts#L32)*
 
 Block version.
 

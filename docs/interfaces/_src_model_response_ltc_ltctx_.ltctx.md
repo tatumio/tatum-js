@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/ltc/LtcTx"](../modules/_src_model_response_ltc_ltctx_.md) / LtcTx
 
@@ -37,7 +37,7 @@
 
 •  **block**: string
 
-*Defined in [src/model/response/ltc/LtcTx.ts:48](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ltc/LtcTx.ts#L48)*
+*Defined in [src/model/response/ltc/LtcTx.ts:48](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ltc/LtcTx.ts#L48)*
 
 Hash of the block this transaction belongs to.
 
@@ -49,7 +49,7 @@ ___
 
 •  **fee**: string
 
-*Defined in [src/model/response/ltc/LtcTx.ts:24](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ltc/LtcTx.ts#L24)*
+*Defined in [src/model/response/ltc/LtcTx.ts:24](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ltc/LtcTx.ts#L24)*
 
 Fee paid for this transaction, in LTC.
 
@@ -61,7 +61,7 @@ ___
 
 •  **flag**: number
 
-*Defined in [src/model/response/ltc/LtcTx.ts:72](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ltc/LtcTx.ts#L72)*
+*Defined in [src/model/response/ltc/LtcTx.ts:72](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ltc/LtcTx.ts#L72)*
 
 **`memberof`** LtcTx
 
@@ -71,7 +71,7 @@ ___
 
 •  **hash**: string
 
-*Defined in [src/model/response/ltc/LtcTx.ts:12](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ltc/LtcTx.ts#L12)*
+*Defined in [src/model/response/ltc/LtcTx.ts:12](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ltc/LtcTx.ts#L12)*
 
 Transaction hash.
 
@@ -83,7 +83,7 @@ ___
 
 •  **height**: number
 
-*Defined in [src/model/response/ltc/LtcTx.ts:42](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ltc/LtcTx.ts#L42)*
+*Defined in [src/model/response/ltc/LtcTx.ts:42](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ltc/LtcTx.ts#L42)*
 
 Height of the block this transaction belongs to.
 
@@ -95,7 +95,7 @@ ___
 
 •  **index**: number
 
-*Defined in [src/model/response/ltc/LtcTx.ts:60](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ltc/LtcTx.ts#L60)*
+*Defined in [src/model/response/ltc/LtcTx.ts:60](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ltc/LtcTx.ts#L60)*
 
 Index of the transaction in the block.
 
@@ -107,7 +107,7 @@ ___
 
 •  **inputs**: [LtcTxInputs](_src_model_response_ltc_ltctx_.ltctxinputs.md)[]
 
-*Defined in [src/model/response/ltc/LtcTx.ts:78](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ltc/LtcTx.ts#L78)*
+*Defined in [src/model/response/ltc/LtcTx.ts:78](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ltc/LtcTx.ts#L78)*
 
 **`memberof`** LtcTx
 
@@ -117,7 +117,7 @@ ___
 
 •  **locktime**: number
 
-*Defined in [src/model/response/ltc/LtcTx.ts:90](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ltc/LtcTx.ts#L90)*
+*Defined in [src/model/response/ltc/LtcTx.ts:90](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ltc/LtcTx.ts#L90)*
 
 Block this transaction was included in.
 
@@ -129,7 +129,7 @@ ___
 
 •  **outputs**: [LtcTxOutputs](_src_model_response_ltc_ltctx_.ltctxoutputs.md)[]
 
-*Defined in [src/model/response/ltc/LtcTx.ts:84](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ltc/LtcTx.ts#L84)*
+*Defined in [src/model/response/ltc/LtcTx.ts:84](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ltc/LtcTx.ts#L84)*
 
 **`memberof`** LtcTx
 
@@ -139,7 +139,7 @@ ___
 
 •  **ps**: number
 
-*Defined in [src/model/response/ltc/LtcTx.ts:36](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ltc/LtcTx.ts#L36)*
+*Defined in [src/model/response/ltc/LtcTx.ts:36](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ltc/LtcTx.ts#L36)*
 
 **`memberof`** LtcTx
 
@@ -149,7 +149,7 @@ ___
 
 •  **rate**: string
 
-*Defined in [src/model/response/ltc/LtcTx.ts:30](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ltc/LtcTx.ts#L30)*
+*Defined in [src/model/response/ltc/LtcTx.ts:30](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ltc/LtcTx.ts#L30)*
 
 **`memberof`** LtcTx
 
@@ -159,7 +159,7 @@ ___
 
 •  **ts**: number
 
-*Defined in [src/model/response/ltc/LtcTx.ts:54](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ltc/LtcTx.ts#L54)*
+*Defined in [src/model/response/ltc/LtcTx.ts:54](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ltc/LtcTx.ts#L54)*
 
 Time of the transaction.
 
@@ -171,7 +171,7 @@ ___
 
 •  **version**: number
 
-*Defined in [src/model/response/ltc/LtcTx.ts:66](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ltc/LtcTx.ts#L66)*
+*Defined in [src/model/response/ltc/LtcTx.ts:66](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ltc/LtcTx.ts#L66)*
 
 Index of the transaction.
 
@@ -183,7 +183,7 @@ ___
 
 •  **witnessHash**: string
 
-*Defined in [src/model/response/ltc/LtcTx.ts:18](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ltc/LtcTx.ts#L18)*
+*Defined in [src/model/response/ltc/LtcTx.ts:18](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ltc/LtcTx.ts#L18)*
 
 Witness hash in case of a SegWit transaction.
 

@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/request/TransferEthErc20"](../modules/_src_model_request_transferetherc20_.md) / TransferEthErc20
 
@@ -26,7 +26,7 @@
 
 •  **amount**: string
 
-*Defined in [src/model/request/TransferEthErc20.ts:29](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferEthErc20.ts#L29)*
+*Defined in [src/model/request/TransferEthErc20.ts:29](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferEthErc20.ts#L29)*
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 •  **currency**: [Currency](../enums/_src_model_request_currency_.currency.md)
 
-*Defined in [src/model/request/TransferEthErc20.ts:37](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferEthErc20.ts#L37)*
+*Defined in [src/model/request/TransferEthErc20.ts:37](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferEthErc20.ts#L37)*
 
 ___
 
@@ -42,7 +42,7 @@ ___
 
 • `Optional` **data**: undefined \| string
 
-*Defined in [src/model/request/TransferEthErc20.ts:33](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferEthErc20.ts#L33)*
+*Defined in [src/model/request/TransferEthErc20.ts:33](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferEthErc20.ts#L33)*
 
 ___
 
@@ -50,7 +50,7 @@ ___
 
 • `Optional` **fee**: [Fee](_src_model_request_fee_.fee.md)
 
-*Defined in [src/model/request/TransferEthErc20.ts:42](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferEthErc20.ts#L42)*
+*Defined in [src/model/request/TransferEthErc20.ts:42](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferEthErc20.ts#L42)*
 
 ___
 
@@ -58,7 +58,7 @@ ___
 
 •  **fromPrivateKey**: string
 
-*Defined in [src/model/request/TransferEthErc20.ts:20](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferEthErc20.ts#L20)*
+*Defined in [src/model/request/TransferEthErc20.ts:20](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferEthErc20.ts#L20)*
 
 ___
 
@@ -66,7 +66,7 @@ ___
 
 • `Optional` **nonce**: undefined \| number
 
-*Defined in [src/model/request/TransferEthErc20.ts:46](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferEthErc20.ts#L46)*
+*Defined in [src/model/request/TransferEthErc20.ts:46](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferEthErc20.ts#L46)*
 
 ___
 
@@ -74,4 +74,4 @@ ___
 
 •  **to**: string
 
-*Defined in [src/model/request/TransferEthErc20.ts:24](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferEthErc20.ts#L24)*
+*Defined in [src/model/request/TransferEthErc20.ts:24](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferEthErc20.ts#L24)*

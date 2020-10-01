@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/request/OrderBook"](../modules/_src_model_request_orderbook_.md) / OrderBookRequest
 
@@ -25,7 +25,7 @@
 
 •  **amount**: string
 
-*Defined in [src/model/request/OrderBook.ts:20](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/OrderBook.ts#L20)*
+*Defined in [src/model/request/OrderBook.ts:20](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/OrderBook.ts#L20)*
 
 ___
 
@@ -33,7 +33,7 @@ ___
 
 •  **currency1AccountId**: string
 
-*Defined in [src/model/request/OrderBook.ts:32](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/OrderBook.ts#L32)*
+*Defined in [src/model/request/OrderBook.ts:32](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/OrderBook.ts#L32)*
 
 ___
 
@@ -41,7 +41,7 @@ ___
 
 •  **currency2AccountId**: string
 
-*Defined in [src/model/request/OrderBook.ts:37](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/OrderBook.ts#L37)*
+*Defined in [src/model/request/OrderBook.ts:37](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/OrderBook.ts#L37)*
 
 ___
 
@@ -49,7 +49,7 @@ ___
 
 •  **pair**: string
 
-*Defined in [src/model/request/OrderBook.ts:27](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/OrderBook.ts#L27)*
+*Defined in [src/model/request/OrderBook.ts:27](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/OrderBook.ts#L27)*
 
 ___
 
@@ -57,7 +57,7 @@ ___
 
 •  **price**: string
 
-*Defined in [src/model/request/OrderBook.ts:14](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/OrderBook.ts#L14)*
+*Defined in [src/model/request/OrderBook.ts:14](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/OrderBook.ts#L14)*
 
 ___
 
@@ -65,4 +65,4 @@ ___
 
 •  **type**: [TradeType](../enums/_src_model_request_tradetype_.tradetype.md)
 
-*Defined in [src/model/request/OrderBook.ts:8](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/OrderBook.ts#L8)*
+*Defined in [src/model/request/OrderBook.ts:8](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/OrderBook.ts#L8)*

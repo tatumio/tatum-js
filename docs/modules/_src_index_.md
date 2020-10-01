@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / "src/index"
 
@@ -107,6 +107,7 @@
 * [btcGetUTXO](_src_index_.md#btcgetutxo)
 * [cancelExistingSubscription](_src_index_.md#cancelexistingsubscription)
 * [checkAddressExists](_src_index_.md#checkaddressexists)
+* [checkMaliciousAddress](_src_index_.md#checkmaliciousaddress)
 * [completePendingTransactionKMS](_src_index_.md#completependingtransactionkms)
 * [countTransactionsByAccount](_src_index_.md#counttransactionsbyaccount)
 * [countTransactionsByCustomer](_src_index_.md#counttransactionsbycustomer)
@@ -849,9 +850,15 @@ Re-exports: [checkAddressExists](_src_offchain_common_.md#checkaddressexists)
 
 ___
 
+### checkMaliciousAddress
+
+Re-exports: [checkMaliciousAddress](_src_security_address_.md#checkmaliciousaddress)
+
+___
+
 ### completePendingTransactionKMS
 
-Re-exports: [completePendingTransactionKMS](_src_kms_index_.md#completependingtransactionkms)
+Re-exports: [completePendingTransactionKMS](_src_security_kms_.md#completependingtransactionkms)
 
 ___
 
@@ -917,7 +924,7 @@ ___
 
 ### deleteTransactionKMS
 
-Re-exports: [deleteTransactionKMS](_src_kms_index_.md#deletetransactionkms)
+Re-exports: [deleteTransactionKMS](_src_security_kms_.md#deletetransactionkms)
 
 ___
 
@@ -1133,13 +1140,13 @@ ___
 
 ### getPendingTransactionsKMSByChain
 
-Re-exports: [getPendingTransactionsKMSByChain](_src_kms_index_.md#getpendingtransactionskmsbychain)
+Re-exports: [getPendingTransactionsKMSByChain](_src_security_kms_.md#getpendingtransactionskmsbychain)
 
 ___
 
 ### getTransactionKMS
 
-Re-exports: [getTransactionKMS](_src_kms_index_.md#gettransactionkms)
+Re-exports: [getTransactionKMS](_src_security_kms_.md#gettransactionkms)
 
 ___
 

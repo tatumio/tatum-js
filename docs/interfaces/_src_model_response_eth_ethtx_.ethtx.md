@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/eth/EthTx"](../modules/_src_model_response_eth_ethtx_.md) / EthTx
 
@@ -39,7 +39,7 @@
 
 •  **blockHash**: string
 
-*Defined in [src/model/response/eth/EthTx.ts:12](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthTx.ts#L12)*
+*Defined in [src/model/response/eth/EthTx.ts:12](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/eth/EthTx.ts#L12)*
 
 Hash of the block where this transaction was in.
 
@@ -51,7 +51,7 @@ ___
 
 •  **blockNumber**: number
 
-*Defined in [src/model/response/eth/EthTx.ts:24](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthTx.ts#L24)*
+*Defined in [src/model/response/eth/EthTx.ts:24](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/eth/EthTx.ts#L24)*
 
 Block number where this transaction was in.
 
@@ -63,7 +63,7 @@ ___
 
 •  **contractAddress**: string
 
-*Defined in [src/model/response/eth/EthTx.ts:96](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthTx.ts#L96)*
+*Defined in [src/model/response/eth/EthTx.ts:96](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/eth/EthTx.ts#L96)*
 
 The contract address created, if the transaction was a contract creation, otherwise null.
 
@@ -75,7 +75,7 @@ ___
 
 •  **cumulativeGasUsed**: number
 
-*Defined in [src/model/response/eth/EthTx.ts:90](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthTx.ts#L90)*
+*Defined in [src/model/response/eth/EthTx.ts:90](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/eth/EthTx.ts#L90)*
 
 The total amount of gas used when this transaction was executed in the block.
 
@@ -87,7 +87,7 @@ ___
 
 •  **from**: string
 
-*Defined in [src/model/response/eth/EthTx.ts:30](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthTx.ts#L30)*
+*Defined in [src/model/response/eth/EthTx.ts:30](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/eth/EthTx.ts#L30)*
 
 Address of the sender.
 
@@ -99,7 +99,7 @@ ___
 
 •  **gas**: number
 
-*Defined in [src/model/response/eth/EthTx.ts:36](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthTx.ts#L36)*
+*Defined in [src/model/response/eth/EthTx.ts:36](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/eth/EthTx.ts#L36)*
 
 Gas provided by the sender.
 
@@ -111,7 +111,7 @@ ___
 
 •  **gasPrice**: string
 
-*Defined in [src/model/response/eth/EthTx.ts:42](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthTx.ts#L42)*
+*Defined in [src/model/response/eth/EthTx.ts:42](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/eth/EthTx.ts#L42)*
 
 Gas price provided by the sender in wei.
 
@@ -123,7 +123,7 @@ ___
 
 •  **gasUsed**: number
 
-*Defined in [src/model/response/eth/EthTx.ts:84](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthTx.ts#L84)*
+*Defined in [src/model/response/eth/EthTx.ts:84](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/eth/EthTx.ts#L84)*
 
 The amount of gas used by this specific transaction alone.
 
@@ -135,7 +135,7 @@ ___
 
 •  **input**: string
 
-*Defined in [src/model/response/eth/EthTx.ts:54](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthTx.ts#L54)*
+*Defined in [src/model/response/eth/EthTx.ts:54](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/eth/EthTx.ts#L54)*
 
 The data sent along with the transaction.
 
@@ -147,7 +147,7 @@ ___
 
 •  **logs**: [EthTxLogs](_src_model_response_eth_ethtx_.ethtxlogs.md)[]
 
-*Defined in [src/model/response/eth/EthTx.ts:102](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthTx.ts#L102)*
+*Defined in [src/model/response/eth/EthTx.ts:102](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/eth/EthTx.ts#L102)*
 
 Log events, that happened in this transaction.
 
@@ -159,7 +159,7 @@ ___
 
 •  **nonce**: number
 
-*Defined in [src/model/response/eth/EthTx.ts:60](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthTx.ts#L60)*
+*Defined in [src/model/response/eth/EthTx.ts:60](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/eth/EthTx.ts#L60)*
 
 The number of transactions made by the sender prior to this one.
 
@@ -171,7 +171,7 @@ ___
 
 •  **status**: boolean
 
-*Defined in [src/model/response/eth/EthTx.ts:18](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthTx.ts#L18)*
+*Defined in [src/model/response/eth/EthTx.ts:18](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/eth/EthTx.ts#L18)*
 
 TRUE if the transaction was successful, FALSE, if the EVM reverted the transaction.
 
@@ -183,7 +183,7 @@ ___
 
 •  **to**: string
 
-*Defined in [src/model/response/eth/EthTx.ts:66](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthTx.ts#L66)*
+*Defined in [src/model/response/eth/EthTx.ts:66](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/eth/EthTx.ts#L66)*
 
 Address of the receiver. 'null' when its a contract creation transaction.
 
@@ -195,7 +195,7 @@ ___
 
 •  **transactionHash**: string
 
-*Defined in [src/model/response/eth/EthTx.ts:48](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthTx.ts#L48)*
+*Defined in [src/model/response/eth/EthTx.ts:48](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/eth/EthTx.ts#L48)*
 
 Hash of the transaction.
 
@@ -207,7 +207,7 @@ ___
 
 •  **transactionIndex**: number
 
-*Defined in [src/model/response/eth/EthTx.ts:72](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthTx.ts#L72)*
+*Defined in [src/model/response/eth/EthTx.ts:72](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/eth/EthTx.ts#L72)*
 
 Integer of the transactions index position in the block.
 
@@ -219,7 +219,7 @@ ___
 
 •  **value**: string
 
-*Defined in [src/model/response/eth/EthTx.ts:78](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthTx.ts#L78)*
+*Defined in [src/model/response/eth/EthTx.ts:78](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/eth/EthTx.ts#L78)*
 
 Value transferred in wei.
 

@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/request/TransferXlm"](../modules/_src_model_request_transferxlm_.md) / TransferXlm
 
@@ -24,7 +24,7 @@
 
 •  **amount**: string
 
-*Defined in [src/model/request/TransferXlm.ts:16](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferXlm.ts#L16)*
+*Defined in [src/model/request/TransferXlm.ts:16](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferXlm.ts#L16)*
 
 ___
 
@@ -32,7 +32,7 @@ ___
 
 •  **fromSecret**: string
 
-*Defined in [src/model/request/TransferXlm.ts:7](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferXlm.ts#L7)*
+*Defined in [src/model/request/TransferXlm.ts:7](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferXlm.ts#L7)*
 
 ___
 
@@ -40,7 +40,7 @@ ___
 
 •  **initialize**: boolean
 
-*Defined in [src/model/request/TransferXlm.ts:19](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferXlm.ts#L19)*
+*Defined in [src/model/request/TransferXlm.ts:19](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferXlm.ts#L19)*
 
 ___
 
@@ -48,7 +48,7 @@ ___
 
 • `Optional` **message**: undefined \| string
 
-*Defined in [src/model/request/TransferXlm.ts:24](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferXlm.ts#L24)*
+*Defined in [src/model/request/TransferXlm.ts:24](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferXlm.ts#L24)*
 
 ___
 
@@ -56,4 +56,4 @@ ___
 
 •  **to**: string
 
-*Defined in [src/model/request/TransferXlm.ts:11](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferXlm.ts#L11)*
+*Defined in [src/model/request/TransferXlm.ts:11](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferXlm.ts#L11)*

@@ -1,17 +1,17 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
-> [README](../README.md) / [Globals](../globals.md) / "src/kms/index"
+> [README](../README.md) / [Globals](../globals.md) / "src/security/kms"
 
-# Module: "src/kms/index"
+# Module: "src/security/kms"
 
 ## Index
 
 ### Functions
 
-* [completePendingTransactionKMS](_src_kms_index_.md#completependingtransactionkms)
-* [deleteTransactionKMS](_src_kms_index_.md#deletetransactionkms)
-* [getPendingTransactionsKMSByChain](_src_kms_index_.md#getpendingtransactionskmsbychain)
-* [getTransactionKMS](_src_kms_index_.md#gettransactionkms)
+* [completePendingTransactionKMS](_src_security_kms_.md#completependingtransactionkms)
+* [deleteTransactionKMS](_src_security_kms_.md#deletetransactionkms)
+* [getPendingTransactionsKMSByChain](_src_security_kms_.md#getpendingtransactionskmsbychain)
+* [getTransactionKMS](_src_security_kms_.md#gettransactionkms)
 
 ## Functions
 
@@ -19,7 +19,7 @@
 
 ▸ `Const`**completePendingTransactionKMS**(`id`: string, `txId`: string): Promise\<void>
 
-*Defined in [src/kms/index.ts:23](https://github.com/tatumio/tatum-js/blob/8f0f126/src/kms/index.ts#L23)*
+*Defined in [src/security/kms.ts:23](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/security/kms.ts#L23)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/CompletePendingSignature" target="_blank">Tatum API documentation</a>
 
@@ -38,7 +38,7 @@ ___
 
 ▸ `Const`**deleteTransactionKMS**(`id`: string, `revert`: boolean): Promise\<void>
 
-*Defined in [src/kms/index.ts:16](https://github.com/tatumio/tatum-js/blob/8f0f126/src/kms/index.ts#L16)*
+*Defined in [src/security/kms.ts:16](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/security/kms.ts#L16)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/DeletePendingTransactionToSign" target="_blank">Tatum API documentation</a>
 
@@ -57,7 +57,7 @@ ___
 
 ▸ `Const`**getPendingTransactionsKMSByChain**(`chain`: [Currency](../enums/_src_model_request_currency_.currency.md)): Promise\<[TransactionKMS](../classes/_src_model_response_kms_transactionkms_.transactionkms.md)[]>
 
-*Defined in [src/kms/index.ts:30](https://github.com/tatumio/tatum-js/blob/8f0f126/src/kms/index.ts#L30)*
+*Defined in [src/security/kms.ts:30](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/security/kms.ts#L30)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/GetPendingTransactionsToSign" target="_blank">Tatum API documentation</a>
 
@@ -75,7 +75,7 @@ ___
 
 ▸ `Const`**getTransactionKMS**(`id`: string): Promise\<[TransactionKMS](../classes/_src_model_response_kms_transactionkms_.transactionkms.md)>
 
-*Defined in [src/kms/index.ts:9](https://github.com/tatumio/tatum-js/blob/8f0f126/src/kms/index.ts#L9)*
+*Defined in [src/security/kms.ts:9](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/security/kms.ts#L9)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/GetPendingTransactionToSign" target="_blank">Tatum API documentation</a>
 
