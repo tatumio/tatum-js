@@ -1,3 +1,7 @@
+**@tatumio/tatum - v1.3.1**
+
+> README / [Globals](globals.md)
+
 # Tatum API client
 Tatum API client allows browsers and Node.js clients to interact with Tatum API. It includes the following core components.
 
