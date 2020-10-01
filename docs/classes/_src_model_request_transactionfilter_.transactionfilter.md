@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/request/TransactionFilter"](../modules/_src_model_request_transactionfilter_.md) / TransactionFilter
 
@@ -31,7 +31,7 @@
 
 • `Optional` **account**: undefined \| string
 
-*Defined in [src/model/request/TransactionFilter.ts:25](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransactionFilter.ts#L25)*
+*Defined in [src/model/request/TransactionFilter.ts:25](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransactionFilter.ts#L25)*
 
 ___
 
@@ -39,7 +39,7 @@ ___
 
 • `Optional` **counterAccount**: undefined \| string
 
-*Defined in [src/model/request/TransactionFilter.ts:30](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransactionFilter.ts#L30)*
+*Defined in [src/model/request/TransactionFilter.ts:30](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransactionFilter.ts#L30)*
 
 ___
 
@@ -47,7 +47,7 @@ ___
 
 • `Optional` **currency**: undefined \| string
 
-*Defined in [src/model/request/TransactionFilter.ts:35](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransactionFilter.ts#L35)*
+*Defined in [src/model/request/TransactionFilter.ts:35](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransactionFilter.ts#L35)*
 
 ___
 
@@ -55,7 +55,7 @@ ___
 
 • `Optional` **from**: undefined \| number
 
-*Defined in [src/model/request/TransactionFilter.ts:15](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransactionFilter.ts#L15)*
+*Defined in [src/model/request/TransactionFilter.ts:15](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransactionFilter.ts#L15)*
 
 ___
 
@@ -63,7 +63,7 @@ ___
 
 • `Optional` **id**: undefined \| string
 
-*Defined in [src/model/request/TransactionFilter.ts:10](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransactionFilter.ts#L10)*
+*Defined in [src/model/request/TransactionFilter.ts:10](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransactionFilter.ts#L10)*
 
 ___
 
@@ -71,7 +71,7 @@ ___
 
 • `Optional` **opType**: [OperationType](../enums/_src_model_response_ledger_operationtype_.operationtype.md)
 
-*Defined in [src/model/request/TransactionFilter.ts:61](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransactionFilter.ts#L61)*
+*Defined in [src/model/request/TransactionFilter.ts:61](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransactionFilter.ts#L61)*
 
 ___
 
@@ -79,7 +79,7 @@ ___
 
 • `Optional` **paymentId**: undefined \| string
 
-*Defined in [src/model/request/TransactionFilter.ts:40](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransactionFilter.ts#L40)*
+*Defined in [src/model/request/TransactionFilter.ts:40](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransactionFilter.ts#L40)*
 
 ___
 
@@ -87,7 +87,7 @@ ___
 
 • `Optional` **recipientNote**: undefined \| string
 
-*Defined in [src/model/request/TransactionFilter.ts:55](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransactionFilter.ts#L55)*
+*Defined in [src/model/request/TransactionFilter.ts:55](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransactionFilter.ts#L55)*
 
 ___
 
@@ -95,7 +95,7 @@ ___
 
 • `Optional` **senderNote**: undefined \| string
 
-*Defined in [src/model/request/TransactionFilter.ts:50](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransactionFilter.ts#L50)*
+*Defined in [src/model/request/TransactionFilter.ts:50](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransactionFilter.ts#L50)*
 
 ___
 
@@ -103,7 +103,7 @@ ___
 
 • `Optional` **to**: undefined \| number
 
-*Defined in [src/model/request/TransactionFilter.ts:20](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransactionFilter.ts#L20)*
+*Defined in [src/model/request/TransactionFilter.ts:20](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransactionFilter.ts#L20)*
 
 ___
 
@@ -111,7 +111,7 @@ ___
 
 • `Optional` **transactionCode**: undefined \| string
 
-*Defined in [src/model/request/TransactionFilter.ts:45](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransactionFilter.ts#L45)*
+*Defined in [src/model/request/TransactionFilter.ts:45](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransactionFilter.ts#L45)*
 
 ___
 
@@ -119,4 +119,4 @@ ___
 
 • `Optional` **transactionType**: [TransactionType](../enums/_src_model_response_ledger_transactiontype_.transactiontype.md)
 
-*Defined in [src/model/request/TransactionFilter.ts:67](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransactionFilter.ts#L67)*
+*Defined in [src/model/request/TransactionFilter.ts:67](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransactionFilter.ts#L67)*

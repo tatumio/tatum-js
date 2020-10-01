@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/ledger/Blockage"](../modules/_src_model_response_ledger_blockage_.md) / Blockage
 
@@ -28,7 +28,7 @@
 
 •  **accountId**: string
 
-*Defined in [src/model/response/ledger/Blockage.ts:18](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/Blockage.ts#L18)*
+*Defined in [src/model/response/ledger/Blockage.ts:18](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Blockage.ts#L18)*
 
 ID of the account this blockage is for.
 
@@ -40,7 +40,7 @@ ___
 
 •  **amount**: string
 
-*Defined in [src/model/response/ledger/Blockage.ts:24](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/Blockage.ts#L24)*
+*Defined in [src/model/response/ledger/Blockage.ts:24](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Blockage.ts#L24)*
 
 Amount blocked on account.
 
@@ -52,7 +52,7 @@ ___
 
 • `Optional` **description**: undefined \| string
 
-*Defined in [src/model/response/ledger/Blockage.ts:36](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/Blockage.ts#L36)*
+*Defined in [src/model/response/ledger/Blockage.ts:36](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Blockage.ts#L36)*
 
 Description of blockage.
 
@@ -64,7 +64,7 @@ ___
 
 •  **id**: string
 
-*Defined in [src/model/response/ledger/Blockage.ts:12](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/Blockage.ts#L12)*
+*Defined in [src/model/response/ledger/Blockage.ts:12](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Blockage.ts#L12)*
 
 ID of the blockage.
 
@@ -76,7 +76,7 @@ ___
 
 •  **type**: string
 
-*Defined in [src/model/response/ledger/Blockage.ts:30](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/Blockage.ts#L30)*
+*Defined in [src/model/response/ledger/Blockage.ts:30](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Blockage.ts#L30)*
 
 Type of blockage.
 

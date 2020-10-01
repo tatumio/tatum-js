@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/ledger/Subscription"](../modules/_src_model_response_ledger_subscription_.md) / Subscription
 
@@ -22,7 +22,7 @@
 
 •  **attr**: object
 
-*Defined in [src/model/response/ledger/Subscription.ts:26](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/Subscription.ts#L26)*
+*Defined in [src/model/response/ledger/Subscription.ts:26](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Subscription.ts#L26)*
 
 Additional attributes based on the subscription type.
 
@@ -34,7 +34,7 @@ ___
 
 •  **id**: string
 
-*Defined in [src/model/response/ledger/Subscription.ts:20](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/Subscription.ts#L20)*
+*Defined in [src/model/response/ledger/Subscription.ts:20](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Subscription.ts#L20)*
 
 ID of the subscription.
 
@@ -46,7 +46,7 @@ ___
 
 •  **type**: [SubscriptionType](../enums/_src_model_response_ledger_subscriptiontype_.subscriptiontype.md)
 
-*Defined in [src/model/response/ledger/Subscription.ts:14](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/Subscription.ts#L14)*
+*Defined in [src/model/response/ledger/Subscription.ts:14](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Subscription.ts#L14)*
 
 Type of the subscription.
 

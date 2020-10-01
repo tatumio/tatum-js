@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / "src/wallet/wallet"
 
@@ -29,7 +29,7 @@
 
 ▸ `Const`**generateBchWallet**(`testnet`: boolean, `mnem`: string): [Wallet](../interfaces/_src_wallet_wallet_.wallet.md)
 
-*Defined in [src/wallet/wallet.ts:98](https://github.com/tatumio/tatum-js/blob/8f0f126/src/wallet/wallet.ts#L98)*
+*Defined in [src/wallet/wallet.ts:98](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/wallet/wallet.ts#L98)*
 
 Generate Bitcoin Cash wallet
 
@@ -50,7 +50,7 @@ ___
 
 ▸ `Const`**generateBnbWallet**(`testnet`: boolean, `mnem`: string): Promise\<[Wallet](../interfaces/_src_wallet_wallet_.wallet.md)>
 
-*Defined in [src/wallet/wallet.ts:48](https://github.com/tatumio/tatum-js/blob/8f0f126/src/wallet/wallet.ts#L48)*
+*Defined in [src/wallet/wallet.ts:48](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/wallet/wallet.ts#L48)*
 
 Generate BnB wallet
 
@@ -71,7 +71,7 @@ ___
 
 ▸ `Const`**generateBtcWallet**(`testnet`: boolean, `mnem`: string): Promise\<[Wallet](../interfaces/_src_wallet_wallet_.wallet.md)>
 
-*Defined in [src/wallet/wallet.ts:117](https://github.com/tatumio/tatum-js/blob/8f0f126/src/wallet/wallet.ts#L117)*
+*Defined in [src/wallet/wallet.ts:117](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/wallet/wallet.ts#L117)*
 
 Generate Bitcoin wallet
 
@@ -92,7 +92,7 @@ ___
 
 ▸ `Const`**generateEthWallet**(`testnet`: boolean, `mnem`: string): Promise\<[Wallet](../interfaces/_src_wallet_wallet_.wallet.md)>
 
-*Defined in [src/wallet/wallet.ts:81](https://github.com/tatumio/tatum-js/blob/8f0f126/src/wallet/wallet.ts#L81)*
+*Defined in [src/wallet/wallet.ts:81](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/wallet/wallet.ts#L81)*
 
 Generate Ethereum or any other ERC20 wallet
 
@@ -113,7 +113,7 @@ ___
 
 ▸ `Const`**generateLtcWallet**(`testnet`: boolean, `mnem`: string): Promise\<[Wallet](../interfaces/_src_wallet_wallet_.wallet.md)>
 
-*Defined in [src/wallet/wallet.ts:128](https://github.com/tatumio/tatum-js/blob/8f0f126/src/wallet/wallet.ts#L128)*
+*Defined in [src/wallet/wallet.ts:128](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/wallet/wallet.ts#L128)*
 
 Generate Litecoin wallet
 
@@ -134,7 +134,7 @@ ___
 
 ▸ `Const`**generateNeoWallet**(): object
 
-*Defined in [src/wallet/wallet.ts:136](https://github.com/tatumio/tatum-js/blob/8f0f126/src/wallet/wallet.ts#L136)*
+*Defined in [src/wallet/wallet.ts:136](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/wallet/wallet.ts#L136)*
 
 Generate Neo address and private key.
 
@@ -151,7 +151,7 @@ ___
 
 ▸ `Const`**generateVetWallet**(`testnet`: boolean, `mnem`: string): Promise\<[Wallet](../interfaces/_src_wallet_wallet_.wallet.md)>
 
-*Defined in [src/wallet/wallet.ts:64](https://github.com/tatumio/tatum-js/blob/8f0f126/src/wallet/wallet.ts#L64)*
+*Defined in [src/wallet/wallet.ts:64](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/wallet/wallet.ts#L64)*
 
 Generate VeChain wallet
 
@@ -172,7 +172,7 @@ ___
 
 ▸ `Const`**generateWallet**(`currency`: [Currency](../enums/_src_model_request_currency_.currency.md), `testnet`: boolean, `mnemonic?`: undefined \| string): [Wallet](../interfaces/_src_wallet_wallet_.wallet.md) \| Promise\<[Wallet](../interfaces/_src_wallet_wallet_.wallet.md)> \| { address: string = new wallet.Account(privateKey).address; privateKey: string  } \| { address: undefined \| string ; secret: string  }
 
-*Defined in [src/wallet/wallet.ts:165](https://github.com/tatumio/tatum-js/blob/8f0f126/src/wallet/wallet.ts#L165)*
+*Defined in [src/wallet/wallet.ts:165](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/wallet/wallet.ts#L165)*
 
 Generate wallet
 
@@ -194,7 +194,7 @@ ___
 
 ▸ `Const`**generateXlmWallet**(`secret?`: undefined \| string): object
 
-*Defined in [src/wallet/wallet.ts:153](https://github.com/tatumio/tatum-js/blob/8f0f126/src/wallet/wallet.ts#L153)*
+*Defined in [src/wallet/wallet.ts:153](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/wallet/wallet.ts#L153)*
 
 Generate Stellar address and secret.
 
@@ -217,7 +217,7 @@ ___
 
 ▸ `Const`**generateXrpWallet**(): object
 
-*Defined in [src/wallet/wallet.ts:144](https://github.com/tatumio/tatum-js/blob/8f0f126/src/wallet/wallet.ts#L144)*
+*Defined in [src/wallet/wallet.ts:144](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/wallet/wallet.ts#L144)*
 
 Generate Xrp address and secret.
 

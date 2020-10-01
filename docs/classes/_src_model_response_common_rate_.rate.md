@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/common/Rate"](../modules/_src_model_response_common_rate_.md) / Rate
 
@@ -24,7 +24,7 @@
 
 •  **basePair**: [Fiat](../enums/_src_model_response_ledger_fiat_.fiat.md)
 
-*Defined in [src/model/response/common/Rate.ts:10](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/common/Rate.ts#L10)*
+*Defined in [src/model/response/common/Rate.ts:10](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/common/Rate.ts#L10)*
 
 ___
 
@@ -32,7 +32,7 @@ ___
 
 •  **id**: [Fiat](../enums/_src_model_response_ledger_fiat_.fiat.md) \| [Currency](../enums/_src_model_request_currency_.currency.md)
 
-*Defined in [src/model/response/common/Rate.ts:6](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/common/Rate.ts#L6)*
+*Defined in [src/model/response/common/Rate.ts:6](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/common/Rate.ts#L6)*
 
 ___
 
@@ -40,7 +40,7 @@ ___
 
 •  **source**: string
 
-*Defined in [src/model/response/common/Rate.ts:14](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/common/Rate.ts#L14)*
+*Defined in [src/model/response/common/Rate.ts:14](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/common/Rate.ts#L14)*
 
 ___
 
@@ -48,7 +48,7 @@ ___
 
 •  **timestamp**: number
 
-*Defined in [src/model/response/common/Rate.ts:12](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/common/Rate.ts#L12)*
+*Defined in [src/model/response/common/Rate.ts:12](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/common/Rate.ts#L12)*
 
 ___
 
@@ -56,4 +56,4 @@ ___
 
 •  **value**: string
 
-*Defined in [src/model/response/common/Rate.ts:8](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/common/Rate.ts#L8)*
+*Defined in [src/model/response/common/Rate.ts:8](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/common/Rate.ts#L8)*

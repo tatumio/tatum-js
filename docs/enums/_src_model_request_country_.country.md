@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/request/Country"](../modules/_src_model_request_country_.md) / Country
 
@@ -263,7 +263,7 @@
 
 •  **AD**: {} = "AD"
 
-*Defined in [src/model/request/Country.ts:2](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L2)*
+*Defined in [src/model/request/Country.ts:2](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L2)*
 
 ___
 
@@ -271,7 +271,7 @@ ___
 
 •  **AE**: {} = "AE"
 
-*Defined in [src/model/request/Country.ts:3](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L3)*
+*Defined in [src/model/request/Country.ts:3](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L3)*
 
 ___
 
@@ -279,7 +279,7 @@ ___
 
 •  **AF**: {} = "AF"
 
-*Defined in [src/model/request/Country.ts:4](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L4)*
+*Defined in [src/model/request/Country.ts:4](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L4)*
 
 ___
 
@@ -287,7 +287,7 @@ ___
 
 •  **AG**: {} = "AG"
 
-*Defined in [src/model/request/Country.ts:5](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L5)*
+*Defined in [src/model/request/Country.ts:5](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L5)*
 
 ___
 
@@ -295,7 +295,7 @@ ___
 
 •  **AI**: {} = "AI"
 
-*Defined in [src/model/request/Country.ts:6](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L6)*
+*Defined in [src/model/request/Country.ts:6](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L6)*
 
 ___
 
@@ -303,7 +303,7 @@ ___
 
 •  **AL**: {} = "AL"
 
-*Defined in [src/model/request/Country.ts:7](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L7)*
+*Defined in [src/model/request/Country.ts:7](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L7)*
 
 ___
 
@@ -311,7 +311,7 @@ ___
 
 •  **AM**: {} = "AM"
 
-*Defined in [src/model/request/Country.ts:8](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L8)*
+*Defined in [src/model/request/Country.ts:8](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L8)*
 
 ___
 
@@ -319,7 +319,7 @@ ___
 
 •  **AO**: {} = "AO"
 
-*Defined in [src/model/request/Country.ts:9](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L9)*
+*Defined in [src/model/request/Country.ts:9](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L9)*
 
 ___
 
@@ -327,7 +327,7 @@ ___
 
 •  **AR**: {} = "AR"
 
-*Defined in [src/model/request/Country.ts:10](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L10)*
+*Defined in [src/model/request/Country.ts:10](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L10)*
 
 ___
 
@@ -335,7 +335,7 @@ ___
 
 •  **AS**: {} = "AS"
 
-*Defined in [src/model/request/Country.ts:11](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L11)*
+*Defined in [src/model/request/Country.ts:11](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L11)*
 
 ___
 
@@ -343,7 +343,7 @@ ___
 
 •  **AT**: {} = "AT"
 
-*Defined in [src/model/request/Country.ts:12](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L12)*
+*Defined in [src/model/request/Country.ts:12](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L12)*
 
 ___
 
@@ -351,7 +351,7 @@ ___
 
 •  **AU**: {} = "AU"
 
-*Defined in [src/model/request/Country.ts:13](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L13)*
+*Defined in [src/model/request/Country.ts:13](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L13)*
 
 ___
 
@@ -359,7 +359,7 @@ ___
 
 •  **AW**: {} = "AW"
 
-*Defined in [src/model/request/Country.ts:14](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L14)*
+*Defined in [src/model/request/Country.ts:14](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L14)*
 
 ___
 
@@ -367,7 +367,7 @@ ___
 
 •  **AX**: {} = "AX"
 
-*Defined in [src/model/request/Country.ts:15](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L15)*
+*Defined in [src/model/request/Country.ts:15](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L15)*
 
 ___
 
@@ -375,7 +375,7 @@ ___
 
 •  **AZ**: {} = "AZ"
 
-*Defined in [src/model/request/Country.ts:16](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L16)*
+*Defined in [src/model/request/Country.ts:16](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L16)*
 
 ___
 
@@ -383,7 +383,7 @@ ___
 
 •  **BA**: {} = "BA"
 
-*Defined in [src/model/request/Country.ts:17](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L17)*
+*Defined in [src/model/request/Country.ts:17](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L17)*
 
 ___
 
@@ -391,7 +391,7 @@ ___
 
 •  **BB**: {} = "BB"
 
-*Defined in [src/model/request/Country.ts:18](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L18)*
+*Defined in [src/model/request/Country.ts:18](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L18)*
 
 ___
 
@@ -399,7 +399,7 @@ ___
 
 •  **BD**: {} = "BD"
 
-*Defined in [src/model/request/Country.ts:19](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L19)*
+*Defined in [src/model/request/Country.ts:19](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L19)*
 
 ___
 
@@ -407,7 +407,7 @@ ___
 
 •  **BE**: {} = "BE"
 
-*Defined in [src/model/request/Country.ts:20](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L20)*
+*Defined in [src/model/request/Country.ts:20](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L20)*
 
 ___
 
@@ -415,7 +415,7 @@ ___
 
 •  **BF**: {} = "BF"
 
-*Defined in [src/model/request/Country.ts:21](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L21)*
+*Defined in [src/model/request/Country.ts:21](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L21)*
 
 ___
 
@@ -423,7 +423,7 @@ ___
 
 •  **BG**: {} = "BG"
 
-*Defined in [src/model/request/Country.ts:22](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L22)*
+*Defined in [src/model/request/Country.ts:22](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L22)*
 
 ___
 
@@ -431,7 +431,7 @@ ___
 
 •  **BH**: {} = "BH"
 
-*Defined in [src/model/request/Country.ts:23](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L23)*
+*Defined in [src/model/request/Country.ts:23](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L23)*
 
 ___
 
@@ -439,7 +439,7 @@ ___
 
 •  **BI**: {} = "BI"
 
-*Defined in [src/model/request/Country.ts:24](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L24)*
+*Defined in [src/model/request/Country.ts:24](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L24)*
 
 ___
 
@@ -447,7 +447,7 @@ ___
 
 •  **BJ**: {} = "BJ"
 
-*Defined in [src/model/request/Country.ts:25](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L25)*
+*Defined in [src/model/request/Country.ts:25](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L25)*
 
 ___
 
@@ -455,7 +455,7 @@ ___
 
 •  **BL**: {} = "BL"
 
-*Defined in [src/model/request/Country.ts:26](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L26)*
+*Defined in [src/model/request/Country.ts:26](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L26)*
 
 ___
 
@@ -463,7 +463,7 @@ ___
 
 •  **BM**: {} = "BM"
 
-*Defined in [src/model/request/Country.ts:27](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L27)*
+*Defined in [src/model/request/Country.ts:27](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L27)*
 
 ___
 
@@ -471,7 +471,7 @@ ___
 
 •  **BN**: {} = "BN"
 
-*Defined in [src/model/request/Country.ts:28](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L28)*
+*Defined in [src/model/request/Country.ts:28](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L28)*
 
 ___
 
@@ -479,7 +479,7 @@ ___
 
 •  **BO**: {} = "BO"
 
-*Defined in [src/model/request/Country.ts:29](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L29)*
+*Defined in [src/model/request/Country.ts:29](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L29)*
 
 ___
 
@@ -487,7 +487,7 @@ ___
 
 •  **BQ**: {} = "BQ"
 
-*Defined in [src/model/request/Country.ts:30](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L30)*
+*Defined in [src/model/request/Country.ts:30](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L30)*
 
 ___
 
@@ -495,7 +495,7 @@ ___
 
 •  **BR**: {} = "BR"
 
-*Defined in [src/model/request/Country.ts:31](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L31)*
+*Defined in [src/model/request/Country.ts:31](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L31)*
 
 ___
 
@@ -503,7 +503,7 @@ ___
 
 •  **BS**: {} = "BS"
 
-*Defined in [src/model/request/Country.ts:32](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L32)*
+*Defined in [src/model/request/Country.ts:32](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L32)*
 
 ___
 
@@ -511,7 +511,7 @@ ___
 
 •  **BT**: {} = "BT"
 
-*Defined in [src/model/request/Country.ts:33](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L33)*
+*Defined in [src/model/request/Country.ts:33](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L33)*
 
 ___
 
@@ -519,7 +519,7 @@ ___
 
 •  **BV**: {} = "BV"
 
-*Defined in [src/model/request/Country.ts:34](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L34)*
+*Defined in [src/model/request/Country.ts:34](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L34)*
 
 ___
 
@@ -527,7 +527,7 @@ ___
 
 •  **BW**: {} = "BW"
 
-*Defined in [src/model/request/Country.ts:35](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L35)*
+*Defined in [src/model/request/Country.ts:35](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L35)*
 
 ___
 
@@ -535,7 +535,7 @@ ___
 
 •  **BY**: {} = "BY"
 
-*Defined in [src/model/request/Country.ts:36](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L36)*
+*Defined in [src/model/request/Country.ts:36](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L36)*
 
 ___
 
@@ -543,7 +543,7 @@ ___
 
 •  **BZ**: {} = "BZ"
 
-*Defined in [src/model/request/Country.ts:37](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L37)*
+*Defined in [src/model/request/Country.ts:37](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L37)*
 
 ___
 
@@ -551,7 +551,7 @@ ___
 
 •  **CA**: {} = "CA"
 
-*Defined in [src/model/request/Country.ts:38](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L38)*
+*Defined in [src/model/request/Country.ts:38](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L38)*
 
 ___
 
@@ -559,7 +559,7 @@ ___
 
 •  **CC**: {} = "CC"
 
-*Defined in [src/model/request/Country.ts:39](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L39)*
+*Defined in [src/model/request/Country.ts:39](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L39)*
 
 ___
 
@@ -567,7 +567,7 @@ ___
 
 •  **CD**: {} = "CD"
 
-*Defined in [src/model/request/Country.ts:40](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L40)*
+*Defined in [src/model/request/Country.ts:40](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L40)*
 
 ___
 
@@ -575,7 +575,7 @@ ___
 
 •  **CF**: {} = "CF"
 
-*Defined in [src/model/request/Country.ts:41](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L41)*
+*Defined in [src/model/request/Country.ts:41](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L41)*
 
 ___
 
@@ -583,7 +583,7 @@ ___
 
 •  **CG**: {} = "CG"
 
-*Defined in [src/model/request/Country.ts:42](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L42)*
+*Defined in [src/model/request/Country.ts:42](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L42)*
 
 ___
 
@@ -591,7 +591,7 @@ ___
 
 •  **CH**: {} = "CH"
 
-*Defined in [src/model/request/Country.ts:43](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L43)*
+*Defined in [src/model/request/Country.ts:43](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L43)*
 
 ___
 
@@ -599,7 +599,7 @@ ___
 
 •  **CI**: {} = "CI"
 
-*Defined in [src/model/request/Country.ts:44](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L44)*
+*Defined in [src/model/request/Country.ts:44](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L44)*
 
 ___
 
@@ -607,7 +607,7 @@ ___
 
 •  **CK**: {} = "CK"
 
-*Defined in [src/model/request/Country.ts:45](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L45)*
+*Defined in [src/model/request/Country.ts:45](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L45)*
 
 ___
 
@@ -615,7 +615,7 @@ ___
 
 •  **CL**: {} = "CL"
 
-*Defined in [src/model/request/Country.ts:46](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L46)*
+*Defined in [src/model/request/Country.ts:46](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L46)*
 
 ___
 
@@ -623,7 +623,7 @@ ___
 
 •  **CM**: {} = "CM"
 
-*Defined in [src/model/request/Country.ts:47](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L47)*
+*Defined in [src/model/request/Country.ts:47](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L47)*
 
 ___
 
@@ -631,7 +631,7 @@ ___
 
 •  **CN**: {} = "CN"
 
-*Defined in [src/model/request/Country.ts:48](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L48)*
+*Defined in [src/model/request/Country.ts:48](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L48)*
 
 ___
 
@@ -639,7 +639,7 @@ ___
 
 •  **CO**: {} = "CO"
 
-*Defined in [src/model/request/Country.ts:49](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L49)*
+*Defined in [src/model/request/Country.ts:49](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L49)*
 
 ___
 
@@ -647,7 +647,7 @@ ___
 
 •  **CR**: {} = "CR"
 
-*Defined in [src/model/request/Country.ts:50](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L50)*
+*Defined in [src/model/request/Country.ts:50](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L50)*
 
 ___
 
@@ -655,7 +655,7 @@ ___
 
 •  **CU**: {} = "CU"
 
-*Defined in [src/model/request/Country.ts:51](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L51)*
+*Defined in [src/model/request/Country.ts:51](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L51)*
 
 ___
 
@@ -663,7 +663,7 @@ ___
 
 •  **CV**: {} = "CV"
 
-*Defined in [src/model/request/Country.ts:52](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L52)*
+*Defined in [src/model/request/Country.ts:52](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L52)*
 
 ___
 
@@ -671,7 +671,7 @@ ___
 
 •  **CW**: {} = "CW"
 
-*Defined in [src/model/request/Country.ts:53](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L53)*
+*Defined in [src/model/request/Country.ts:53](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L53)*
 
 ___
 
@@ -679,7 +679,7 @@ ___
 
 •  **CX**: {} = "CX"
 
-*Defined in [src/model/request/Country.ts:54](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L54)*
+*Defined in [src/model/request/Country.ts:54](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L54)*
 
 ___
 
@@ -687,7 +687,7 @@ ___
 
 •  **CY**: {} = "CY"
 
-*Defined in [src/model/request/Country.ts:55](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L55)*
+*Defined in [src/model/request/Country.ts:55](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L55)*
 
 ___
 
@@ -695,7 +695,7 @@ ___
 
 •  **CZ**: {} = "CZ"
 
-*Defined in [src/model/request/Country.ts:56](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L56)*
+*Defined in [src/model/request/Country.ts:56](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L56)*
 
 ___
 
@@ -703,7 +703,7 @@ ___
 
 •  **DE**: {} = "DE"
 
-*Defined in [src/model/request/Country.ts:57](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L57)*
+*Defined in [src/model/request/Country.ts:57](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L57)*
 
 ___
 
@@ -711,7 +711,7 @@ ___
 
 •  **DJ**: {} = "DJ"
 
-*Defined in [src/model/request/Country.ts:58](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L58)*
+*Defined in [src/model/request/Country.ts:58](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L58)*
 
 ___
 
@@ -719,7 +719,7 @@ ___
 
 •  **DK**: {} = "DK"
 
-*Defined in [src/model/request/Country.ts:59](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L59)*
+*Defined in [src/model/request/Country.ts:59](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L59)*
 
 ___
 
@@ -727,7 +727,7 @@ ___
 
 •  **DM**: {} = "DM"
 
-*Defined in [src/model/request/Country.ts:60](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L60)*
+*Defined in [src/model/request/Country.ts:60](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L60)*
 
 ___
 
@@ -735,7 +735,7 @@ ___
 
 •  **DO**: {} = "DO"
 
-*Defined in [src/model/request/Country.ts:61](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L61)*
+*Defined in [src/model/request/Country.ts:61](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L61)*
 
 ___
 
@@ -743,7 +743,7 @@ ___
 
 •  **DZ**: {} = "DZ"
 
-*Defined in [src/model/request/Country.ts:62](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L62)*
+*Defined in [src/model/request/Country.ts:62](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L62)*
 
 ___
 
@@ -751,7 +751,7 @@ ___
 
 •  **EC**: {} = "EC"
 
-*Defined in [src/model/request/Country.ts:63](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L63)*
+*Defined in [src/model/request/Country.ts:63](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L63)*
 
 ___
 
@@ -759,7 +759,7 @@ ___
 
 •  **EE**: {} = "EE"
 
-*Defined in [src/model/request/Country.ts:64](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L64)*
+*Defined in [src/model/request/Country.ts:64](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L64)*
 
 ___
 
@@ -767,7 +767,7 @@ ___
 
 •  **EG**: {} = "EG"
 
-*Defined in [src/model/request/Country.ts:65](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L65)*
+*Defined in [src/model/request/Country.ts:65](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L65)*
 
 ___
 
@@ -775,7 +775,7 @@ ___
 
 •  **EH**: {} = "EH"
 
-*Defined in [src/model/request/Country.ts:66](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L66)*
+*Defined in [src/model/request/Country.ts:66](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L66)*
 
 ___
 
@@ -783,7 +783,7 @@ ___
 
 •  **ER**: {} = "ER"
 
-*Defined in [src/model/request/Country.ts:67](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L67)*
+*Defined in [src/model/request/Country.ts:67](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L67)*
 
 ___
 
@@ -791,7 +791,7 @@ ___
 
 •  **ES**: {} = "ES"
 
-*Defined in [src/model/request/Country.ts:68](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L68)*
+*Defined in [src/model/request/Country.ts:68](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L68)*
 
 ___
 
@@ -799,7 +799,7 @@ ___
 
 •  **ET**: {} = "ET"
 
-*Defined in [src/model/request/Country.ts:69](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L69)*
+*Defined in [src/model/request/Country.ts:69](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L69)*
 
 ___
 
@@ -807,7 +807,7 @@ ___
 
 •  **FI**: {} = "FI"
 
-*Defined in [src/model/request/Country.ts:70](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L70)*
+*Defined in [src/model/request/Country.ts:70](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L70)*
 
 ___
 
@@ -815,7 +815,7 @@ ___
 
 •  **FJ**: {} = "FJ"
 
-*Defined in [src/model/request/Country.ts:71](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L71)*
+*Defined in [src/model/request/Country.ts:71](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L71)*
 
 ___
 
@@ -823,7 +823,7 @@ ___
 
 •  **FK**: {} = "FK"
 
-*Defined in [src/model/request/Country.ts:72](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L72)*
+*Defined in [src/model/request/Country.ts:72](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L72)*
 
 ___
 
@@ -831,7 +831,7 @@ ___
 
 •  **FM**: {} = "FM"
 
-*Defined in [src/model/request/Country.ts:73](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L73)*
+*Defined in [src/model/request/Country.ts:73](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L73)*
 
 ___
 
@@ -839,7 +839,7 @@ ___
 
 •  **FO**: {} = "FO"
 
-*Defined in [src/model/request/Country.ts:74](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L74)*
+*Defined in [src/model/request/Country.ts:74](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L74)*
 
 ___
 
@@ -847,7 +847,7 @@ ___
 
 •  **FR**: {} = "FR"
 
-*Defined in [src/model/request/Country.ts:75](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L75)*
+*Defined in [src/model/request/Country.ts:75](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L75)*
 
 ___
 
@@ -855,7 +855,7 @@ ___
 
 •  **GA**: {} = "GA"
 
-*Defined in [src/model/request/Country.ts:76](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L76)*
+*Defined in [src/model/request/Country.ts:76](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L76)*
 
 ___
 
@@ -863,7 +863,7 @@ ___
 
 •  **GB**: {} = "GB"
 
-*Defined in [src/model/request/Country.ts:77](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L77)*
+*Defined in [src/model/request/Country.ts:77](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L77)*
 
 ___
 
@@ -871,7 +871,7 @@ ___
 
 •  **GD**: {} = "GD"
 
-*Defined in [src/model/request/Country.ts:78](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L78)*
+*Defined in [src/model/request/Country.ts:78](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L78)*
 
 ___
 
@@ -879,7 +879,7 @@ ___
 
 •  **GE**: {} = "GE"
 
-*Defined in [src/model/request/Country.ts:79](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L79)*
+*Defined in [src/model/request/Country.ts:79](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L79)*
 
 ___
 
@@ -887,7 +887,7 @@ ___
 
 •  **GF**: {} = "GF"
 
-*Defined in [src/model/request/Country.ts:80](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L80)*
+*Defined in [src/model/request/Country.ts:80](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L80)*
 
 ___
 
@@ -895,7 +895,7 @@ ___
 
 •  **GG**: {} = "GG"
 
-*Defined in [src/model/request/Country.ts:81](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L81)*
+*Defined in [src/model/request/Country.ts:81](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L81)*
 
 ___
 
@@ -903,7 +903,7 @@ ___
 
 •  **GH**: {} = "GH"
 
-*Defined in [src/model/request/Country.ts:82](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L82)*
+*Defined in [src/model/request/Country.ts:82](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L82)*
 
 ___
 
@@ -911,7 +911,7 @@ ___
 
 •  **GI**: {} = "GI"
 
-*Defined in [src/model/request/Country.ts:83](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L83)*
+*Defined in [src/model/request/Country.ts:83](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L83)*
 
 ___
 
@@ -919,7 +919,7 @@ ___
 
 •  **GL**: {} = "GL"
 
-*Defined in [src/model/request/Country.ts:84](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L84)*
+*Defined in [src/model/request/Country.ts:84](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L84)*
 
 ___
 
@@ -927,7 +927,7 @@ ___
 
 •  **GM**: {} = "GM"
 
-*Defined in [src/model/request/Country.ts:85](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L85)*
+*Defined in [src/model/request/Country.ts:85](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L85)*
 
 ___
 
@@ -935,7 +935,7 @@ ___
 
 •  **GN**: {} = "GN"
 
-*Defined in [src/model/request/Country.ts:86](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L86)*
+*Defined in [src/model/request/Country.ts:86](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L86)*
 
 ___
 
@@ -943,7 +943,7 @@ ___
 
 •  **GP**: {} = "GP"
 
-*Defined in [src/model/request/Country.ts:87](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L87)*
+*Defined in [src/model/request/Country.ts:87](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L87)*
 
 ___
 
@@ -951,7 +951,7 @@ ___
 
 •  **GQ**: {} = "GQ"
 
-*Defined in [src/model/request/Country.ts:88](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L88)*
+*Defined in [src/model/request/Country.ts:88](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L88)*
 
 ___
 
@@ -959,7 +959,7 @@ ___
 
 •  **GR**: {} = "GR"
 
-*Defined in [src/model/request/Country.ts:89](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L89)*
+*Defined in [src/model/request/Country.ts:89](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L89)*
 
 ___
 
@@ -967,7 +967,7 @@ ___
 
 •  **GS**: {} = "GS"
 
-*Defined in [src/model/request/Country.ts:90](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L90)*
+*Defined in [src/model/request/Country.ts:90](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L90)*
 
 ___
 
@@ -975,7 +975,7 @@ ___
 
 •  **GT**: {} = "GT"
 
-*Defined in [src/model/request/Country.ts:91](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L91)*
+*Defined in [src/model/request/Country.ts:91](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L91)*
 
 ___
 
@@ -983,7 +983,7 @@ ___
 
 •  **GU**: {} = "GU"
 
-*Defined in [src/model/request/Country.ts:92](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L92)*
+*Defined in [src/model/request/Country.ts:92](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L92)*
 
 ___
 
@@ -991,7 +991,7 @@ ___
 
 •  **GW**: {} = "GW"
 
-*Defined in [src/model/request/Country.ts:93](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L93)*
+*Defined in [src/model/request/Country.ts:93](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L93)*
 
 ___
 
@@ -999,7 +999,7 @@ ___
 
 •  **GY**: {} = "GY"
 
-*Defined in [src/model/request/Country.ts:94](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L94)*
+*Defined in [src/model/request/Country.ts:94](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L94)*
 
 ___
 
@@ -1007,7 +1007,7 @@ ___
 
 •  **HK**: {} = "HK"
 
-*Defined in [src/model/request/Country.ts:95](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L95)*
+*Defined in [src/model/request/Country.ts:95](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L95)*
 
 ___
 
@@ -1015,7 +1015,7 @@ ___
 
 •  **HM**: {} = "HM"
 
-*Defined in [src/model/request/Country.ts:96](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L96)*
+*Defined in [src/model/request/Country.ts:96](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L96)*
 
 ___
 
@@ -1023,7 +1023,7 @@ ___
 
 •  **HN**: {} = "HN"
 
-*Defined in [src/model/request/Country.ts:97](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L97)*
+*Defined in [src/model/request/Country.ts:97](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L97)*
 
 ___
 
@@ -1031,7 +1031,7 @@ ___
 
 •  **HR**: {} = "HR"
 
-*Defined in [src/model/request/Country.ts:98](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L98)*
+*Defined in [src/model/request/Country.ts:98](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L98)*
 
 ___
 
@@ -1039,7 +1039,7 @@ ___
 
 •  **HT**: {} = "HT"
 
-*Defined in [src/model/request/Country.ts:99](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L99)*
+*Defined in [src/model/request/Country.ts:99](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L99)*
 
 ___
 
@@ -1047,7 +1047,7 @@ ___
 
 •  **HU**: {} = "HU"
 
-*Defined in [src/model/request/Country.ts:100](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L100)*
+*Defined in [src/model/request/Country.ts:100](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L100)*
 
 ___
 
@@ -1055,7 +1055,7 @@ ___
 
 •  **ID**: {} = "ID"
 
-*Defined in [src/model/request/Country.ts:101](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L101)*
+*Defined in [src/model/request/Country.ts:101](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L101)*
 
 ___
 
@@ -1063,7 +1063,7 @@ ___
 
 •  **IE**: {} = "IE"
 
-*Defined in [src/model/request/Country.ts:102](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L102)*
+*Defined in [src/model/request/Country.ts:102](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L102)*
 
 ___
 
@@ -1071,7 +1071,7 @@ ___
 
 •  **IL**: {} = "IL"
 
-*Defined in [src/model/request/Country.ts:103](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L103)*
+*Defined in [src/model/request/Country.ts:103](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L103)*
 
 ___
 
@@ -1079,7 +1079,7 @@ ___
 
 •  **IM**: {} = "IM"
 
-*Defined in [src/model/request/Country.ts:104](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L104)*
+*Defined in [src/model/request/Country.ts:104](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L104)*
 
 ___
 
@@ -1087,7 +1087,7 @@ ___
 
 •  **IN**: {} = "IN"
 
-*Defined in [src/model/request/Country.ts:105](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L105)*
+*Defined in [src/model/request/Country.ts:105](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L105)*
 
 ___
 
@@ -1095,7 +1095,7 @@ ___
 
 •  **IO**: {} = "IO"
 
-*Defined in [src/model/request/Country.ts:106](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L106)*
+*Defined in [src/model/request/Country.ts:106](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L106)*
 
 ___
 
@@ -1103,7 +1103,7 @@ ___
 
 •  **IQ**: {} = "IQ"
 
-*Defined in [src/model/request/Country.ts:107](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L107)*
+*Defined in [src/model/request/Country.ts:107](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L107)*
 
 ___
 
@@ -1111,7 +1111,7 @@ ___
 
 •  **IR**: {} = "IR"
 
-*Defined in [src/model/request/Country.ts:108](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L108)*
+*Defined in [src/model/request/Country.ts:108](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L108)*
 
 ___
 
@@ -1119,7 +1119,7 @@ ___
 
 •  **IS**: {} = "IS"
 
-*Defined in [src/model/request/Country.ts:109](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L109)*
+*Defined in [src/model/request/Country.ts:109](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L109)*
 
 ___
 
@@ -1127,7 +1127,7 @@ ___
 
 •  **IT**: {} = "IT"
 
-*Defined in [src/model/request/Country.ts:110](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L110)*
+*Defined in [src/model/request/Country.ts:110](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L110)*
 
 ___
 
@@ -1135,7 +1135,7 @@ ___
 
 •  **JE**: {} = "JE"
 
-*Defined in [src/model/request/Country.ts:111](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L111)*
+*Defined in [src/model/request/Country.ts:111](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L111)*
 
 ___
 
@@ -1143,7 +1143,7 @@ ___
 
 •  **JM**: {} = "JM"
 
-*Defined in [src/model/request/Country.ts:112](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L112)*
+*Defined in [src/model/request/Country.ts:112](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L112)*
 
 ___
 
@@ -1151,7 +1151,7 @@ ___
 
 •  **JO**: {} = "JO"
 
-*Defined in [src/model/request/Country.ts:113](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L113)*
+*Defined in [src/model/request/Country.ts:113](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L113)*
 
 ___
 
@@ -1159,7 +1159,7 @@ ___
 
 •  **JP**: {} = "JP"
 
-*Defined in [src/model/request/Country.ts:114](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L114)*
+*Defined in [src/model/request/Country.ts:114](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L114)*
 
 ___
 
@@ -1167,7 +1167,7 @@ ___
 
 •  **KE**: {} = "KE"
 
-*Defined in [src/model/request/Country.ts:115](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L115)*
+*Defined in [src/model/request/Country.ts:115](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L115)*
 
 ___
 
@@ -1175,7 +1175,7 @@ ___
 
 •  **KG**: {} = "KG"
 
-*Defined in [src/model/request/Country.ts:116](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L116)*
+*Defined in [src/model/request/Country.ts:116](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L116)*
 
 ___
 
@@ -1183,7 +1183,7 @@ ___
 
 •  **KH**: {} = "KH"
 
-*Defined in [src/model/request/Country.ts:117](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L117)*
+*Defined in [src/model/request/Country.ts:117](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L117)*
 
 ___
 
@@ -1191,7 +1191,7 @@ ___
 
 •  **KI**: {} = "KI"
 
-*Defined in [src/model/request/Country.ts:118](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L118)*
+*Defined in [src/model/request/Country.ts:118](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L118)*
 
 ___
 
@@ -1199,7 +1199,7 @@ ___
 
 •  **KM**: {} = "KM"
 
-*Defined in [src/model/request/Country.ts:119](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L119)*
+*Defined in [src/model/request/Country.ts:119](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L119)*
 
 ___
 
@@ -1207,7 +1207,7 @@ ___
 
 •  **KN**: {} = "KN"
 
-*Defined in [src/model/request/Country.ts:120](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L120)*
+*Defined in [src/model/request/Country.ts:120](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L120)*
 
 ___
 
@@ -1215,7 +1215,7 @@ ___
 
 •  **KP**: {} = "KP"
 
-*Defined in [src/model/request/Country.ts:121](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L121)*
+*Defined in [src/model/request/Country.ts:121](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L121)*
 
 ___
 
@@ -1223,7 +1223,7 @@ ___
 
 •  **KR**: {} = "KR"
 
-*Defined in [src/model/request/Country.ts:122](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L122)*
+*Defined in [src/model/request/Country.ts:122](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L122)*
 
 ___
 
@@ -1231,7 +1231,7 @@ ___
 
 •  **KW**: {} = "KW"
 
-*Defined in [src/model/request/Country.ts:123](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L123)*
+*Defined in [src/model/request/Country.ts:123](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L123)*
 
 ___
 
@@ -1239,7 +1239,7 @@ ___
 
 •  **KY**: {} = "KY"
 
-*Defined in [src/model/request/Country.ts:124](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L124)*
+*Defined in [src/model/request/Country.ts:124](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L124)*
 
 ___
 
@@ -1247,7 +1247,7 @@ ___
 
 •  **KZ**: {} = "KZ"
 
-*Defined in [src/model/request/Country.ts:125](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L125)*
+*Defined in [src/model/request/Country.ts:125](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L125)*
 
 ___
 
@@ -1255,7 +1255,7 @@ ___
 
 •  **LA**: {} = "LA"
 
-*Defined in [src/model/request/Country.ts:126](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L126)*
+*Defined in [src/model/request/Country.ts:126](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L126)*
 
 ___
 
@@ -1263,7 +1263,7 @@ ___
 
 •  **LB**: {} = "LB"
 
-*Defined in [src/model/request/Country.ts:127](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L127)*
+*Defined in [src/model/request/Country.ts:127](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L127)*
 
 ___
 
@@ -1271,7 +1271,7 @@ ___
 
 •  **LC**: {} = "LC"
 
-*Defined in [src/model/request/Country.ts:128](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L128)*
+*Defined in [src/model/request/Country.ts:128](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L128)*
 
 ___
 
@@ -1279,7 +1279,7 @@ ___
 
 •  **LI**: {} = "LI"
 
-*Defined in [src/model/request/Country.ts:129](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L129)*
+*Defined in [src/model/request/Country.ts:129](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L129)*
 
 ___
 
@@ -1287,7 +1287,7 @@ ___
 
 •  **LK**: {} = "LK"
 
-*Defined in [src/model/request/Country.ts:130](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L130)*
+*Defined in [src/model/request/Country.ts:130](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L130)*
 
 ___
 
@@ -1295,7 +1295,7 @@ ___
 
 •  **LR**: {} = "LR"
 
-*Defined in [src/model/request/Country.ts:131](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L131)*
+*Defined in [src/model/request/Country.ts:131](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L131)*
 
 ___
 
@@ -1303,7 +1303,7 @@ ___
 
 •  **LS**: {} = "LS"
 
-*Defined in [src/model/request/Country.ts:132](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L132)*
+*Defined in [src/model/request/Country.ts:132](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L132)*
 
 ___
 
@@ -1311,7 +1311,7 @@ ___
 
 •  **LT**: {} = "LT"
 
-*Defined in [src/model/request/Country.ts:133](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L133)*
+*Defined in [src/model/request/Country.ts:133](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L133)*
 
 ___
 
@@ -1319,7 +1319,7 @@ ___
 
 •  **LU**: {} = "LU"
 
-*Defined in [src/model/request/Country.ts:134](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L134)*
+*Defined in [src/model/request/Country.ts:134](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L134)*
 
 ___
 
@@ -1327,7 +1327,7 @@ ___
 
 •  **LV**: {} = "LV"
 
-*Defined in [src/model/request/Country.ts:135](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L135)*
+*Defined in [src/model/request/Country.ts:135](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L135)*
 
 ___
 
@@ -1335,7 +1335,7 @@ ___
 
 •  **LY**: {} = "LY"
 
-*Defined in [src/model/request/Country.ts:136](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L136)*
+*Defined in [src/model/request/Country.ts:136](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L136)*
 
 ___
 
@@ -1343,7 +1343,7 @@ ___
 
 •  **MA**: {} = "MA"
 
-*Defined in [src/model/request/Country.ts:137](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L137)*
+*Defined in [src/model/request/Country.ts:137](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L137)*
 
 ___
 
@@ -1351,7 +1351,7 @@ ___
 
 •  **MC**: {} = "MC"
 
-*Defined in [src/model/request/Country.ts:138](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L138)*
+*Defined in [src/model/request/Country.ts:138](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L138)*
 
 ___
 
@@ -1359,7 +1359,7 @@ ___
 
 •  **MD**: {} = "MD"
 
-*Defined in [src/model/request/Country.ts:139](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L139)*
+*Defined in [src/model/request/Country.ts:139](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L139)*
 
 ___
 
@@ -1367,7 +1367,7 @@ ___
 
 •  **ME**: {} = "ME"
 
-*Defined in [src/model/request/Country.ts:140](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L140)*
+*Defined in [src/model/request/Country.ts:140](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L140)*
 
 ___
 
@@ -1375,7 +1375,7 @@ ___
 
 •  **MF**: {} = "MF"
 
-*Defined in [src/model/request/Country.ts:141](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L141)*
+*Defined in [src/model/request/Country.ts:141](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L141)*
 
 ___
 
@@ -1383,7 +1383,7 @@ ___
 
 •  **MG**: {} = "MG"
 
-*Defined in [src/model/request/Country.ts:142](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L142)*
+*Defined in [src/model/request/Country.ts:142](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L142)*
 
 ___
 
@@ -1391,7 +1391,7 @@ ___
 
 •  **MH**: {} = "MH"
 
-*Defined in [src/model/request/Country.ts:143](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L143)*
+*Defined in [src/model/request/Country.ts:143](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L143)*
 
 ___
 
@@ -1399,7 +1399,7 @@ ___
 
 •  **MK**: {} = "MK"
 
-*Defined in [src/model/request/Country.ts:144](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L144)*
+*Defined in [src/model/request/Country.ts:144](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L144)*
 
 ___
 
@@ -1407,7 +1407,7 @@ ___
 
 •  **ML**: {} = "ML"
 
-*Defined in [src/model/request/Country.ts:145](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L145)*
+*Defined in [src/model/request/Country.ts:145](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L145)*
 
 ___
 
@@ -1415,7 +1415,7 @@ ___
 
 •  **MM**: {} = "MM"
 
-*Defined in [src/model/request/Country.ts:146](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L146)*
+*Defined in [src/model/request/Country.ts:146](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L146)*
 
 ___
 
@@ -1423,7 +1423,7 @@ ___
 
 •  **MN**: {} = "MN"
 
-*Defined in [src/model/request/Country.ts:147](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L147)*
+*Defined in [src/model/request/Country.ts:147](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L147)*
 
 ___
 
@@ -1431,7 +1431,7 @@ ___
 
 •  **MO**: {} = "MO"
 
-*Defined in [src/model/request/Country.ts:148](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L148)*
+*Defined in [src/model/request/Country.ts:148](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L148)*
 
 ___
 
@@ -1439,7 +1439,7 @@ ___
 
 •  **MP**: {} = "MP"
 
-*Defined in [src/model/request/Country.ts:149](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L149)*
+*Defined in [src/model/request/Country.ts:149](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L149)*
 
 ___
 
@@ -1447,7 +1447,7 @@ ___
 
 •  **MQ**: {} = "MQ"
 
-*Defined in [src/model/request/Country.ts:150](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L150)*
+*Defined in [src/model/request/Country.ts:150](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L150)*
 
 ___
 
@@ -1455,7 +1455,7 @@ ___
 
 •  **MR**: {} = "MR"
 
-*Defined in [src/model/request/Country.ts:151](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L151)*
+*Defined in [src/model/request/Country.ts:151](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L151)*
 
 ___
 
@@ -1463,7 +1463,7 @@ ___
 
 •  **MS**: {} = "MS"
 
-*Defined in [src/model/request/Country.ts:152](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L152)*
+*Defined in [src/model/request/Country.ts:152](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L152)*
 
 ___
 
@@ -1471,7 +1471,7 @@ ___
 
 •  **MT**: {} = "MT"
 
-*Defined in [src/model/request/Country.ts:153](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L153)*
+*Defined in [src/model/request/Country.ts:153](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L153)*
 
 ___
 
@@ -1479,7 +1479,7 @@ ___
 
 •  **MU**: {} = "MU"
 
-*Defined in [src/model/request/Country.ts:154](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L154)*
+*Defined in [src/model/request/Country.ts:154](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L154)*
 
 ___
 
@@ -1487,7 +1487,7 @@ ___
 
 •  **MV**: {} = "MV"
 
-*Defined in [src/model/request/Country.ts:155](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L155)*
+*Defined in [src/model/request/Country.ts:155](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L155)*
 
 ___
 
@@ -1495,7 +1495,7 @@ ___
 
 •  **MW**: {} = "MW"
 
-*Defined in [src/model/request/Country.ts:156](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L156)*
+*Defined in [src/model/request/Country.ts:156](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L156)*
 
 ___
 
@@ -1503,7 +1503,7 @@ ___
 
 •  **MX**: {} = "MX"
 
-*Defined in [src/model/request/Country.ts:157](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L157)*
+*Defined in [src/model/request/Country.ts:157](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L157)*
 
 ___
 
@@ -1511,7 +1511,7 @@ ___
 
 •  **MY**: {} = "MY"
 
-*Defined in [src/model/request/Country.ts:158](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L158)*
+*Defined in [src/model/request/Country.ts:158](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L158)*
 
 ___
 
@@ -1519,7 +1519,7 @@ ___
 
 •  **MZ**: {} = "MZ"
 
-*Defined in [src/model/request/Country.ts:159](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L159)*
+*Defined in [src/model/request/Country.ts:159](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L159)*
 
 ___
 
@@ -1527,7 +1527,7 @@ ___
 
 •  **NA**: {} = "NA"
 
-*Defined in [src/model/request/Country.ts:160](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L160)*
+*Defined in [src/model/request/Country.ts:160](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L160)*
 
 ___
 
@@ -1535,7 +1535,7 @@ ___
 
 •  **NC**: {} = "NC"
 
-*Defined in [src/model/request/Country.ts:161](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L161)*
+*Defined in [src/model/request/Country.ts:161](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L161)*
 
 ___
 
@@ -1543,7 +1543,7 @@ ___
 
 •  **NE**: {} = "NE"
 
-*Defined in [src/model/request/Country.ts:162](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L162)*
+*Defined in [src/model/request/Country.ts:162](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L162)*
 
 ___
 
@@ -1551,7 +1551,7 @@ ___
 
 •  **NF**: {} = "NF"
 
-*Defined in [src/model/request/Country.ts:163](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L163)*
+*Defined in [src/model/request/Country.ts:163](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L163)*
 
 ___
 
@@ -1559,7 +1559,7 @@ ___
 
 •  **NG**: {} = "NG"
 
-*Defined in [src/model/request/Country.ts:164](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L164)*
+*Defined in [src/model/request/Country.ts:164](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L164)*
 
 ___
 
@@ -1567,7 +1567,7 @@ ___
 
 •  **NI**: {} = "NI"
 
-*Defined in [src/model/request/Country.ts:165](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L165)*
+*Defined in [src/model/request/Country.ts:165](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L165)*
 
 ___
 
@@ -1575,7 +1575,7 @@ ___
 
 •  **NL**: {} = "NL"
 
-*Defined in [src/model/request/Country.ts:166](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L166)*
+*Defined in [src/model/request/Country.ts:166](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L166)*
 
 ___
 
@@ -1583,7 +1583,7 @@ ___
 
 •  **NO**: {} = "NO"
 
-*Defined in [src/model/request/Country.ts:167](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L167)*
+*Defined in [src/model/request/Country.ts:167](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L167)*
 
 ___
 
@@ -1591,7 +1591,7 @@ ___
 
 •  **NP**: {} = "NP"
 
-*Defined in [src/model/request/Country.ts:168](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L168)*
+*Defined in [src/model/request/Country.ts:168](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L168)*
 
 ___
 
@@ -1599,7 +1599,7 @@ ___
 
 •  **NR**: {} = "NR"
 
-*Defined in [src/model/request/Country.ts:169](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L169)*
+*Defined in [src/model/request/Country.ts:169](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L169)*
 
 ___
 
@@ -1607,7 +1607,7 @@ ___
 
 •  **NU**: {} = "NU"
 
-*Defined in [src/model/request/Country.ts:170](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L170)*
+*Defined in [src/model/request/Country.ts:170](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L170)*
 
 ___
 
@@ -1615,7 +1615,7 @@ ___
 
 •  **NZ**: {} = "NZ"
 
-*Defined in [src/model/request/Country.ts:171](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L171)*
+*Defined in [src/model/request/Country.ts:171](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L171)*
 
 ___
 
@@ -1623,7 +1623,7 @@ ___
 
 •  **OM**: {} = "OM"
 
-*Defined in [src/model/request/Country.ts:172](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L172)*
+*Defined in [src/model/request/Country.ts:172](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L172)*
 
 ___
 
@@ -1631,7 +1631,7 @@ ___
 
 •  **PA**: {} = "PA"
 
-*Defined in [src/model/request/Country.ts:173](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L173)*
+*Defined in [src/model/request/Country.ts:173](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L173)*
 
 ___
 
@@ -1639,7 +1639,7 @@ ___
 
 •  **PE**: {} = "PE"
 
-*Defined in [src/model/request/Country.ts:174](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L174)*
+*Defined in [src/model/request/Country.ts:174](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L174)*
 
 ___
 
@@ -1647,7 +1647,7 @@ ___
 
 •  **PF**: {} = "PF"
 
-*Defined in [src/model/request/Country.ts:175](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L175)*
+*Defined in [src/model/request/Country.ts:175](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L175)*
 
 ___
 
@@ -1655,7 +1655,7 @@ ___
 
 •  **PG**: {} = "PG"
 
-*Defined in [src/model/request/Country.ts:176](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L176)*
+*Defined in [src/model/request/Country.ts:176](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L176)*
 
 ___
 
@@ -1663,7 +1663,7 @@ ___
 
 •  **PH**: {} = "PH"
 
-*Defined in [src/model/request/Country.ts:177](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L177)*
+*Defined in [src/model/request/Country.ts:177](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L177)*
 
 ___
 
@@ -1671,7 +1671,7 @@ ___
 
 •  **PK**: {} = "PK"
 
-*Defined in [src/model/request/Country.ts:178](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L178)*
+*Defined in [src/model/request/Country.ts:178](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L178)*
 
 ___
 
@@ -1679,7 +1679,7 @@ ___
 
 •  **PL**: {} = "PL"
 
-*Defined in [src/model/request/Country.ts:179](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L179)*
+*Defined in [src/model/request/Country.ts:179](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L179)*
 
 ___
 
@@ -1687,7 +1687,7 @@ ___
 
 •  **PM**: {} = "PM"
 
-*Defined in [src/model/request/Country.ts:180](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L180)*
+*Defined in [src/model/request/Country.ts:180](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L180)*
 
 ___
 
@@ -1695,7 +1695,7 @@ ___
 
 •  **PN**: {} = "PN"
 
-*Defined in [src/model/request/Country.ts:181](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L181)*
+*Defined in [src/model/request/Country.ts:181](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L181)*
 
 ___
 
@@ -1703,7 +1703,7 @@ ___
 
 •  **PR**: {} = "PR"
 
-*Defined in [src/model/request/Country.ts:182](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L182)*
+*Defined in [src/model/request/Country.ts:182](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L182)*
 
 ___
 
@@ -1711,7 +1711,7 @@ ___
 
 •  **PS**: {} = "PS"
 
-*Defined in [src/model/request/Country.ts:183](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L183)*
+*Defined in [src/model/request/Country.ts:183](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L183)*
 
 ___
 
@@ -1719,7 +1719,7 @@ ___
 
 •  **PT**: {} = "PT"
 
-*Defined in [src/model/request/Country.ts:184](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L184)*
+*Defined in [src/model/request/Country.ts:184](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L184)*
 
 ___
 
@@ -1727,7 +1727,7 @@ ___
 
 •  **PW**: {} = "PW"
 
-*Defined in [src/model/request/Country.ts:185](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L185)*
+*Defined in [src/model/request/Country.ts:185](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L185)*
 
 ___
 
@@ -1735,7 +1735,7 @@ ___
 
 •  **PY**: {} = "PY"
 
-*Defined in [src/model/request/Country.ts:186](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L186)*
+*Defined in [src/model/request/Country.ts:186](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L186)*
 
 ___
 
@@ -1743,7 +1743,7 @@ ___
 
 •  **QA**: {} = "QA"
 
-*Defined in [src/model/request/Country.ts:187](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L187)*
+*Defined in [src/model/request/Country.ts:187](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L187)*
 
 ___
 
@@ -1751,7 +1751,7 @@ ___
 
 •  **RE**: {} = "RE"
 
-*Defined in [src/model/request/Country.ts:188](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L188)*
+*Defined in [src/model/request/Country.ts:188](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L188)*
 
 ___
 
@@ -1759,7 +1759,7 @@ ___
 
 •  **RO**: {} = "RO"
 
-*Defined in [src/model/request/Country.ts:189](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L189)*
+*Defined in [src/model/request/Country.ts:189](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L189)*
 
 ___
 
@@ -1767,7 +1767,7 @@ ___
 
 •  **RS**: {} = "RS"
 
-*Defined in [src/model/request/Country.ts:190](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L190)*
+*Defined in [src/model/request/Country.ts:190](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L190)*
 
 ___
 
@@ -1775,7 +1775,7 @@ ___
 
 •  **RU**: {} = "RU"
 
-*Defined in [src/model/request/Country.ts:191](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L191)*
+*Defined in [src/model/request/Country.ts:191](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L191)*
 
 ___
 
@@ -1783,7 +1783,7 @@ ___
 
 •  **RW**: {} = "RW"
 
-*Defined in [src/model/request/Country.ts:192](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L192)*
+*Defined in [src/model/request/Country.ts:192](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L192)*
 
 ___
 
@@ -1791,7 +1791,7 @@ ___
 
 •  **SA**: {} = "SA"
 
-*Defined in [src/model/request/Country.ts:193](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L193)*
+*Defined in [src/model/request/Country.ts:193](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L193)*
 
 ___
 
@@ -1799,7 +1799,7 @@ ___
 
 •  **SB**: {} = "SB"
 
-*Defined in [src/model/request/Country.ts:194](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L194)*
+*Defined in [src/model/request/Country.ts:194](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L194)*
 
 ___
 
@@ -1807,7 +1807,7 @@ ___
 
 •  **SC**: {} = "SC"
 
-*Defined in [src/model/request/Country.ts:195](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L195)*
+*Defined in [src/model/request/Country.ts:195](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L195)*
 
 ___
 
@@ -1815,7 +1815,7 @@ ___
 
 •  **SD**: {} = "SD"
 
-*Defined in [src/model/request/Country.ts:196](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L196)*
+*Defined in [src/model/request/Country.ts:196](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L196)*
 
 ___
 
@@ -1823,7 +1823,7 @@ ___
 
 •  **SE**: {} = "SE"
 
-*Defined in [src/model/request/Country.ts:197](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L197)*
+*Defined in [src/model/request/Country.ts:197](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L197)*
 
 ___
 
@@ -1831,7 +1831,7 @@ ___
 
 •  **SG**: {} = "SG"
 
-*Defined in [src/model/request/Country.ts:198](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L198)*
+*Defined in [src/model/request/Country.ts:198](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L198)*
 
 ___
 
@@ -1839,7 +1839,7 @@ ___
 
 •  **SH**: {} = "SH"
 
-*Defined in [src/model/request/Country.ts:199](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L199)*
+*Defined in [src/model/request/Country.ts:199](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L199)*
 
 ___
 
@@ -1847,7 +1847,7 @@ ___
 
 •  **SI**: {} = "SI"
 
-*Defined in [src/model/request/Country.ts:200](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L200)*
+*Defined in [src/model/request/Country.ts:200](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L200)*
 
 ___
 
@@ -1855,7 +1855,7 @@ ___
 
 •  **SJ**: {} = "SJ"
 
-*Defined in [src/model/request/Country.ts:201](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L201)*
+*Defined in [src/model/request/Country.ts:201](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L201)*
 
 ___
 
@@ -1863,7 +1863,7 @@ ___
 
 •  **SK**: {} = "SK"
 
-*Defined in [src/model/request/Country.ts:202](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L202)*
+*Defined in [src/model/request/Country.ts:202](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L202)*
 
 ___
 
@@ -1871,7 +1871,7 @@ ___
 
 •  **SL**: {} = "SL"
 
-*Defined in [src/model/request/Country.ts:203](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L203)*
+*Defined in [src/model/request/Country.ts:203](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L203)*
 
 ___
 
@@ -1879,7 +1879,7 @@ ___
 
 •  **SM**: {} = "SM"
 
-*Defined in [src/model/request/Country.ts:204](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L204)*
+*Defined in [src/model/request/Country.ts:204](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L204)*
 
 ___
 
@@ -1887,7 +1887,7 @@ ___
 
 •  **SN**: {} = "SN"
 
-*Defined in [src/model/request/Country.ts:205](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L205)*
+*Defined in [src/model/request/Country.ts:205](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L205)*
 
 ___
 
@@ -1895,7 +1895,7 @@ ___
 
 •  **SO**: {} = "SO"
 
-*Defined in [src/model/request/Country.ts:206](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L206)*
+*Defined in [src/model/request/Country.ts:206](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L206)*
 
 ___
 
@@ -1903,7 +1903,7 @@ ___
 
 •  **SR**: {} = "SR"
 
-*Defined in [src/model/request/Country.ts:207](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L207)*
+*Defined in [src/model/request/Country.ts:207](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L207)*
 
 ___
 
@@ -1911,7 +1911,7 @@ ___
 
 •  **SS**: {} = "SS"
 
-*Defined in [src/model/request/Country.ts:208](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L208)*
+*Defined in [src/model/request/Country.ts:208](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L208)*
 
 ___
 
@@ -1919,7 +1919,7 @@ ___
 
 •  **ST**: {} = "ST"
 
-*Defined in [src/model/request/Country.ts:209](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L209)*
+*Defined in [src/model/request/Country.ts:209](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L209)*
 
 ___
 
@@ -1927,7 +1927,7 @@ ___
 
 •  **SV**: {} = "SV"
 
-*Defined in [src/model/request/Country.ts:210](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L210)*
+*Defined in [src/model/request/Country.ts:210](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L210)*
 
 ___
 
@@ -1935,7 +1935,7 @@ ___
 
 •  **SX**: {} = "SX"
 
-*Defined in [src/model/request/Country.ts:211](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L211)*
+*Defined in [src/model/request/Country.ts:211](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L211)*
 
 ___
 
@@ -1943,7 +1943,7 @@ ___
 
 •  **SY**: {} = "SY"
 
-*Defined in [src/model/request/Country.ts:212](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L212)*
+*Defined in [src/model/request/Country.ts:212](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L212)*
 
 ___
 
@@ -1951,7 +1951,7 @@ ___
 
 •  **SZ**: {} = "SZ"
 
-*Defined in [src/model/request/Country.ts:213](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L213)*
+*Defined in [src/model/request/Country.ts:213](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L213)*
 
 ___
 
@@ -1959,7 +1959,7 @@ ___
 
 •  **TC**: {} = "TC"
 
-*Defined in [src/model/request/Country.ts:214](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L214)*
+*Defined in [src/model/request/Country.ts:214](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L214)*
 
 ___
 
@@ -1967,7 +1967,7 @@ ___
 
 •  **TD**: {} = "TD"
 
-*Defined in [src/model/request/Country.ts:215](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L215)*
+*Defined in [src/model/request/Country.ts:215](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L215)*
 
 ___
 
@@ -1975,7 +1975,7 @@ ___
 
 •  **TF**: {} = "TF"
 
-*Defined in [src/model/request/Country.ts:216](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L216)*
+*Defined in [src/model/request/Country.ts:216](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L216)*
 
 ___
 
@@ -1983,7 +1983,7 @@ ___
 
 •  **TG**: {} = "TG"
 
-*Defined in [src/model/request/Country.ts:217](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L217)*
+*Defined in [src/model/request/Country.ts:217](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L217)*
 
 ___
 
@@ -1991,7 +1991,7 @@ ___
 
 •  **TH**: {} = "TH"
 
-*Defined in [src/model/request/Country.ts:218](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L218)*
+*Defined in [src/model/request/Country.ts:218](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L218)*
 
 ___
 
@@ -1999,7 +1999,7 @@ ___
 
 •  **TJ**: {} = "TJ"
 
-*Defined in [src/model/request/Country.ts:219](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L219)*
+*Defined in [src/model/request/Country.ts:219](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L219)*
 
 ___
 
@@ -2007,7 +2007,7 @@ ___
 
 •  **TK**: {} = "TK"
 
-*Defined in [src/model/request/Country.ts:220](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L220)*
+*Defined in [src/model/request/Country.ts:220](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L220)*
 
 ___
 
@@ -2015,7 +2015,7 @@ ___
 
 •  **TL**: {} = "TL"
 
-*Defined in [src/model/request/Country.ts:221](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L221)*
+*Defined in [src/model/request/Country.ts:221](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L221)*
 
 ___
 
@@ -2023,7 +2023,7 @@ ___
 
 •  **TM**: {} = "TM"
 
-*Defined in [src/model/request/Country.ts:222](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L222)*
+*Defined in [src/model/request/Country.ts:222](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L222)*
 
 ___
 
@@ -2031,7 +2031,7 @@ ___
 
 •  **TN**: {} = "TN"
 
-*Defined in [src/model/request/Country.ts:223](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L223)*
+*Defined in [src/model/request/Country.ts:223](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L223)*
 
 ___
 
@@ -2039,7 +2039,7 @@ ___
 
 •  **TO**: {} = "TO"
 
-*Defined in [src/model/request/Country.ts:224](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L224)*
+*Defined in [src/model/request/Country.ts:224](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L224)*
 
 ___
 
@@ -2047,7 +2047,7 @@ ___
 
 •  **TR**: {} = "TR"
 
-*Defined in [src/model/request/Country.ts:225](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L225)*
+*Defined in [src/model/request/Country.ts:225](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L225)*
 
 ___
 
@@ -2055,7 +2055,7 @@ ___
 
 •  **TT**: {} = "TT"
 
-*Defined in [src/model/request/Country.ts:226](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L226)*
+*Defined in [src/model/request/Country.ts:226](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L226)*
 
 ___
 
@@ -2063,7 +2063,7 @@ ___
 
 •  **TV**: {} = "TV"
 
-*Defined in [src/model/request/Country.ts:227](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L227)*
+*Defined in [src/model/request/Country.ts:227](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L227)*
 
 ___
 
@@ -2071,7 +2071,7 @@ ___
 
 •  **TW**: {} = "TW"
 
-*Defined in [src/model/request/Country.ts:228](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L228)*
+*Defined in [src/model/request/Country.ts:228](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L228)*
 
 ___
 
@@ -2079,7 +2079,7 @@ ___
 
 •  **TZ**: {} = "TZ"
 
-*Defined in [src/model/request/Country.ts:229](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L229)*
+*Defined in [src/model/request/Country.ts:229](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L229)*
 
 ___
 
@@ -2087,7 +2087,7 @@ ___
 
 •  **UA**: {} = "UA"
 
-*Defined in [src/model/request/Country.ts:230](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L230)*
+*Defined in [src/model/request/Country.ts:230](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L230)*
 
 ___
 
@@ -2095,7 +2095,7 @@ ___
 
 •  **UG**: {} = "UG"
 
-*Defined in [src/model/request/Country.ts:231](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L231)*
+*Defined in [src/model/request/Country.ts:231](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L231)*
 
 ___
 
@@ -2103,7 +2103,7 @@ ___
 
 •  **UM**: {} = "UM"
 
-*Defined in [src/model/request/Country.ts:232](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L232)*
+*Defined in [src/model/request/Country.ts:232](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L232)*
 
 ___
 
@@ -2111,7 +2111,7 @@ ___
 
 •  **US**: {} = "US"
 
-*Defined in [src/model/request/Country.ts:233](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L233)*
+*Defined in [src/model/request/Country.ts:233](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L233)*
 
 ___
 
@@ -2119,7 +2119,7 @@ ___
 
 •  **UY**: {} = "UY"
 
-*Defined in [src/model/request/Country.ts:234](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L234)*
+*Defined in [src/model/request/Country.ts:234](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L234)*
 
 ___
 
@@ -2127,7 +2127,7 @@ ___
 
 •  **UZ**: {} = "UZ"
 
-*Defined in [src/model/request/Country.ts:235](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L235)*
+*Defined in [src/model/request/Country.ts:235](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L235)*
 
 ___
 
@@ -2135,7 +2135,7 @@ ___
 
 •  **VA**: {} = "VA"
 
-*Defined in [src/model/request/Country.ts:236](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L236)*
+*Defined in [src/model/request/Country.ts:236](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L236)*
 
 ___
 
@@ -2143,7 +2143,7 @@ ___
 
 •  **VC**: {} = "VC"
 
-*Defined in [src/model/request/Country.ts:237](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L237)*
+*Defined in [src/model/request/Country.ts:237](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L237)*
 
 ___
 
@@ -2151,7 +2151,7 @@ ___
 
 •  **VE**: {} = "VE"
 
-*Defined in [src/model/request/Country.ts:238](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L238)*
+*Defined in [src/model/request/Country.ts:238](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L238)*
 
 ___
 
@@ -2159,7 +2159,7 @@ ___
 
 •  **VG**: {} = "VG"
 
-*Defined in [src/model/request/Country.ts:239](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L239)*
+*Defined in [src/model/request/Country.ts:239](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L239)*
 
 ___
 
@@ -2167,7 +2167,7 @@ ___
 
 •  **VI**: {} = "VI"
 
-*Defined in [src/model/request/Country.ts:240](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L240)*
+*Defined in [src/model/request/Country.ts:240](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L240)*
 
 ___
 
@@ -2175,7 +2175,7 @@ ___
 
 •  **VN**: {} = "VN"
 
-*Defined in [src/model/request/Country.ts:241](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L241)*
+*Defined in [src/model/request/Country.ts:241](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L241)*
 
 ___
 
@@ -2183,7 +2183,7 @@ ___
 
 •  **VU**: {} = "VU"
 
-*Defined in [src/model/request/Country.ts:242](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L242)*
+*Defined in [src/model/request/Country.ts:242](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L242)*
 
 ___
 
@@ -2191,7 +2191,7 @@ ___
 
 •  **WF**: {} = "WF"
 
-*Defined in [src/model/request/Country.ts:243](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L243)*
+*Defined in [src/model/request/Country.ts:243](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L243)*
 
 ___
 
@@ -2199,7 +2199,7 @@ ___
 
 •  **WS**: {} = "WS"
 
-*Defined in [src/model/request/Country.ts:244](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L244)*
+*Defined in [src/model/request/Country.ts:244](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L244)*
 
 ___
 
@@ -2207,7 +2207,7 @@ ___
 
 •  **YE**: {} = "YE"
 
-*Defined in [src/model/request/Country.ts:245](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L245)*
+*Defined in [src/model/request/Country.ts:245](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L245)*
 
 ___
 
@@ -2215,7 +2215,7 @@ ___
 
 •  **YT**: {} = "YT"
 
-*Defined in [src/model/request/Country.ts:246](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L246)*
+*Defined in [src/model/request/Country.ts:246](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L246)*
 
 ___
 
@@ -2223,7 +2223,7 @@ ___
 
 •  **ZA**: {} = "ZA"
 
-*Defined in [src/model/request/Country.ts:247](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L247)*
+*Defined in [src/model/request/Country.ts:247](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L247)*
 
 ___
 
@@ -2231,7 +2231,7 @@ ___
 
 •  **ZM**: {} = "ZM"
 
-*Defined in [src/model/request/Country.ts:248](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L248)*
+*Defined in [src/model/request/Country.ts:248](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L248)*
 
 ___
 
@@ -2239,4 +2239,4 @@ ___
 
 •  **ZW**: {} = "ZW"
 
-*Defined in [src/model/request/Country.ts:249](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/Country.ts#L249)*
+*Defined in [src/model/request/Country.ts:249](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Country.ts#L249)*

@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/request/DeployEthErc20"](../modules/_src_model_request_deployetherc20_.md) / DeployEthErc20
 
@@ -27,7 +27,7 @@
 
 •  **address**: string
 
-*Defined in [src/model/request/DeployEthErc20.ts:28](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/DeployEthErc20.ts#L28)*
+*Defined in [src/model/request/DeployEthErc20.ts:28](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/DeployEthErc20.ts#L28)*
 
 ___
 
@@ -35,7 +35,7 @@ ___
 
 •  **digits**: number
 
-*Defined in [src/model/request/DeployEthErc20.ts:38](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/DeployEthErc20.ts#L38)*
+*Defined in [src/model/request/DeployEthErc20.ts:38](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/DeployEthErc20.ts#L38)*
 
 ___
 
@@ -43,7 +43,7 @@ ___
 
 • `Optional` **fee**: [Fee](_src_model_request_fee_.fee.md)
 
-*Defined in [src/model/request/DeployEthErc20.ts:51](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/DeployEthErc20.ts#L51)*
+*Defined in [src/model/request/DeployEthErc20.ts:51](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/DeployEthErc20.ts#L51)*
 
 ___
 
@@ -51,7 +51,7 @@ ___
 
 •  **fromPrivateKey**: string
 
-*Defined in [src/model/request/DeployEthErc20.ts:42](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/DeployEthErc20.ts#L42)*
+*Defined in [src/model/request/DeployEthErc20.ts:42](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/DeployEthErc20.ts#L42)*
 
 ___
 
@@ -59,7 +59,7 @@ ___
 
 •  **name**: string
 
-*Defined in [src/model/request/DeployEthErc20.ts:20](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/DeployEthErc20.ts#L20)*
+*Defined in [src/model/request/DeployEthErc20.ts:20](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/DeployEthErc20.ts#L20)*
 
 ___
 
@@ -67,7 +67,7 @@ ___
 
 • `Optional` **nonce**: undefined \| number
 
-*Defined in [src/model/request/DeployEthErc20.ts:46](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/DeployEthErc20.ts#L46)*
+*Defined in [src/model/request/DeployEthErc20.ts:46](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/DeployEthErc20.ts#L46)*
 
 ___
 
@@ -75,7 +75,7 @@ ___
 
 •  **supply**: string
 
-*Defined in [src/model/request/DeployEthErc20.ts:34](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/DeployEthErc20.ts#L34)*
+*Defined in [src/model/request/DeployEthErc20.ts:34](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/DeployEthErc20.ts#L34)*
 
 ___
 
@@ -83,4 +83,4 @@ ___
 
 •  **symbol**: string
 
-*Defined in [src/model/request/DeployEthErc20.ts:24](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/DeployEthErc20.ts#L24)*
+*Defined in [src/model/request/DeployEthErc20.ts:24](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/DeployEthErc20.ts#L24)*

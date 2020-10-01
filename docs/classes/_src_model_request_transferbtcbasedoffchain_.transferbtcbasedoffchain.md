@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/request/TransferBtcBasedOffchain"](../modules/_src_model_request_transferbtcbasedoffchain_.md) / TransferBtcBasedOffchain
 
@@ -33,7 +33,7 @@
 
 *Inherited from [CreateWithdrawal](_src_model_request_createwithdrawal_.createwithdrawal.md).[address](_src_model_request_createwithdrawal_.createwithdrawal.md#address)*
 
-*Defined in [src/model/request/CreateWithdrawal.ts:11](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateWithdrawal.ts#L11)*
+*Defined in [src/model/request/CreateWithdrawal.ts:11](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateWithdrawal.ts#L11)*
 
 ___
 
@@ -43,7 +43,7 @@ ___
 
 *Inherited from [CreateWithdrawal](_src_model_request_createwithdrawal_.createwithdrawal.md).[amount](_src_model_request_createwithdrawal_.createwithdrawal.md#amount)*
 
-*Defined in [src/model/request/CreateWithdrawal.ts:17](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateWithdrawal.ts#L17)*
+*Defined in [src/model/request/CreateWithdrawal.ts:17](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateWithdrawal.ts#L17)*
 
 ___
 
@@ -53,7 +53,7 @@ ___
 
 *Inherited from [CreateWithdrawal](_src_model_request_createwithdrawal_.createwithdrawal.md).[attr](_src_model_request_createwithdrawal_.createwithdrawal.md#attr)*
 
-*Defined in [src/model/request/CreateWithdrawal.ts:39](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateWithdrawal.ts#L39)*
+*Defined in [src/model/request/CreateWithdrawal.ts:39](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateWithdrawal.ts#L39)*
 
 ___
 
@@ -63,7 +63,7 @@ ___
 
 *Inherited from [CreateWithdrawal](_src_model_request_createwithdrawal_.createwithdrawal.md).[compliant](_src_model_request_createwithdrawal_.createwithdrawal.md#compliant)*
 
-*Defined in [src/model/request/CreateWithdrawal.ts:26](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateWithdrawal.ts#L26)*
+*Defined in [src/model/request/CreateWithdrawal.ts:26](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateWithdrawal.ts#L26)*
 
 ___
 
@@ -73,7 +73,7 @@ ___
 
 *Inherited from [CreateWithdrawal](_src_model_request_createwithdrawal_.createwithdrawal.md).[fee](_src_model_request_createwithdrawal_.createwithdrawal.md#fee)*
 
-*Defined in [src/model/request/CreateWithdrawal.ts:22](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateWithdrawal.ts#L22)*
+*Defined in [src/model/request/CreateWithdrawal.ts:22](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateWithdrawal.ts#L22)*
 
 ___
 
@@ -81,7 +81,7 @@ ___
 
 • `Optional` **keyPair**: [KeyPair](_src_model_request_transferbtcbasedoffchain_.keypair.md)[]
 
-*Defined in [src/model/request/TransferBtcBasedOffchain.ts:30](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferBtcBasedOffchain.ts#L30)*
+*Defined in [src/model/request/TransferBtcBasedOffchain.ts:30](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferBtcBasedOffchain.ts#L30)*
 
 ___
 
@@ -89,7 +89,7 @@ ___
 
 • `Optional` **mnemonic**: undefined \| string
 
-*Defined in [src/model/request/TransferBtcBasedOffchain.ts:23](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferBtcBasedOffchain.ts#L23)*
+*Defined in [src/model/request/TransferBtcBasedOffchain.ts:23](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferBtcBasedOffchain.ts#L23)*
 
 ___
 
@@ -99,7 +99,7 @@ ___
 
 *Inherited from [CreateWithdrawal](_src_model_request_createwithdrawal_.createwithdrawal.md).[paymentId](_src_model_request_createwithdrawal_.createwithdrawal.md#paymentid)*
 
-*Defined in [src/model/request/CreateWithdrawal.ts:30](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateWithdrawal.ts#L30)*
+*Defined in [src/model/request/CreateWithdrawal.ts:30](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateWithdrawal.ts#L30)*
 
 ___
 
@@ -109,7 +109,7 @@ ___
 
 *Inherited from [CreateWithdrawal](_src_model_request_createwithdrawal_.createwithdrawal.md).[senderAccountId](_src_model_request_createwithdrawal_.createwithdrawal.md#senderaccountid)*
 
-*Defined in [src/model/request/CreateWithdrawal.ts:7](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateWithdrawal.ts#L7)*
+*Defined in [src/model/request/CreateWithdrawal.ts:7](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateWithdrawal.ts#L7)*
 
 ___
 
@@ -119,4 +119,4 @@ ___
 
 *Inherited from [CreateWithdrawal](_src_model_request_createwithdrawal_.createwithdrawal.md).[senderNote](_src_model_request_createwithdrawal_.createwithdrawal.md#sendernote)*
 
-*Defined in [src/model/request/CreateWithdrawal.ts:34](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateWithdrawal.ts#L34)*
+*Defined in [src/model/request/CreateWithdrawal.ts:34](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateWithdrawal.ts#L34)*

@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / "src/ledger/subscription"
 
@@ -19,7 +19,7 @@
 
 ▸ `Const`**cancelExistingSubscription**(`id`: string): Promise\<void>
 
-*Defined in [src/ledger/subscription.ts:23](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/subscription.ts#L23)*
+*Defined in [src/ledger/subscription.ts:23](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/ledger/subscription.ts#L23)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/deleteSubscription" target="_blank">Tatum API documentation</a>
 
@@ -37,7 +37,7 @@ ___
 
 ▸ `Const`**createNewSubscription**(`data`: [Subscription](../interfaces/_src_model_response_ledger_subscription_.subscription.md)): Promise\<{ id: string  }>
 
-*Defined in [src/ledger/subscription.ts:9](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/subscription.ts#L9)*
+*Defined in [src/ledger/subscription.ts:9](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/ledger/subscription.ts#L9)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/createSubscription" target="_blank">Tatum API documentation</a>
 
@@ -55,7 +55,7 @@ ___
 
 ▸ `Const`**listActiveSubscriptions**(`pageSize`: number, `offset`: number): Promise\<[Subscription](../interfaces/_src_model_response_ledger_subscription_.subscription.md)[]>
 
-*Defined in [src/ledger/subscription.ts:16](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/subscription.ts#L16)*
+*Defined in [src/ledger/subscription.ts:16](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/ledger/subscription.ts#L16)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/getSubscriptions" target="_blank">Tatum API documentation</a>
 
@@ -74,7 +74,7 @@ ___
 
 ▸ `Const`**obtainReportForSubscription**(`id`: string): Promise\<[Transaction](../interfaces/_src_model_response_ledger_transaction_.transaction.md)[] \| [Account](../interfaces/_src_model_response_ledger_account_.account.md)[]>
 
-*Defined in [src/ledger/subscription.ts:30](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/subscription.ts#L30)*
+*Defined in [src/ledger/subscription.ts:30](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/ledger/subscription.ts#L30)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/getSubscriptionReport" target="_blank">Tatum API documentation</a>
 

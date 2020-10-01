@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/request/EstimateGasVet"](../modules/_src_model_request_estimategasvet_.md) / EstimateGasVet
 
@@ -24,7 +24,7 @@
 
 • `Optional` **data**: undefined \| string
 
-*Defined in [src/model/request/EstimateGasVet.ts:20](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/EstimateGasVet.ts#L20)*
+*Defined in [src/model/request/EstimateGasVet.ts:20](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/EstimateGasVet.ts#L20)*
 
 ___
 
@@ -32,7 +32,7 @@ ___
 
 •  **from**: string
 
-*Defined in [src/model/request/EstimateGasVet.ts:7](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/EstimateGasVet.ts#L7)*
+*Defined in [src/model/request/EstimateGasVet.ts:7](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/EstimateGasVet.ts#L7)*
 
 ___
 
@@ -40,7 +40,7 @@ ___
 
 • `Optional` **nonce**: undefined \| number
 
-*Defined in [src/model/request/EstimateGasVet.ts:25](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/EstimateGasVet.ts#L25)*
+*Defined in [src/model/request/EstimateGasVet.ts:25](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/EstimateGasVet.ts#L25)*
 
 ___
 
@@ -48,7 +48,7 @@ ___
 
 •  **to**: string
 
-*Defined in [src/model/request/EstimateGasVet.ts:11](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/EstimateGasVet.ts#L11)*
+*Defined in [src/model/request/EstimateGasVet.ts:11](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/EstimateGasVet.ts#L11)*
 
 ___
 
@@ -56,4 +56,4 @@ ___
 
 •  **value**: string
 
-*Defined in [src/model/request/EstimateGasVet.ts:16](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/EstimateGasVet.ts#L16)*
+*Defined in [src/model/request/EstimateGasVet.ts:16](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/EstimateGasVet.ts#L16)*

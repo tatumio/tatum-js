@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/request/TransferBtcBasedBlockchain"](../modules/_src_model_request_transferbtcbasedblockchain_.md) / TransferBtcBasedBlockchain
 
@@ -22,7 +22,7 @@
 
 • `Optional` **fromAddress**: [FromAddress](_src_model_request_transferbtcbasedblockchain_.fromaddress.md)[]
 
-*Defined in [src/model/request/TransferBtcBasedBlockchain.ts:48](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferBtcBasedBlockchain.ts#L48)*
+*Defined in [src/model/request/TransferBtcBasedBlockchain.ts:48](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferBtcBasedBlockchain.ts#L48)*
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 • `Optional` **fromUTXO**: [FromUTXO](_src_model_request_transferbtcbasedblockchain_.fromutxo.md)[]
 
-*Defined in [src/model/request/TransferBtcBasedBlockchain.ts:55](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferBtcBasedBlockchain.ts#L55)*
+*Defined in [src/model/request/TransferBtcBasedBlockchain.ts:55](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferBtcBasedBlockchain.ts#L55)*
 
 ___
 
@@ -38,4 +38,4 @@ ___
 
 •  **to**: [To](_src_model_request_transferbtcbasedblockchain_.to.md)[]
 
-*Defined in [src/model/request/TransferBtcBasedBlockchain.ts:60](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferBtcBasedBlockchain.ts#L60)*
+*Defined in [src/model/request/TransferBtcBasedBlockchain.ts:60](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferBtcBasedBlockchain.ts#L60)*

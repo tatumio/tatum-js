@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/request/TransferCustomErc20"](../modules/_src_model_request_transfercustomerc20_.md) / TransferCustomErc20
 
@@ -26,7 +26,7 @@
 
 •  **amount**: string
 
-*Defined in [src/model/request/TransferCustomErc20.ts:18](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferCustomErc20.ts#L18)*
+*Defined in [src/model/request/TransferCustomErc20.ts:18](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferCustomErc20.ts#L18)*
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 •  **contractAddress**: string
 
-*Defined in [src/model/request/TransferCustomErc20.ts:22](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferCustomErc20.ts#L22)*
+*Defined in [src/model/request/TransferCustomErc20.ts:22](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferCustomErc20.ts#L22)*
 
 ___
 
@@ -42,7 +42,7 @@ ___
 
 •  **digits**: number
 
-*Defined in [src/model/request/TransferCustomErc20.ts:31](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferCustomErc20.ts#L31)*
+*Defined in [src/model/request/TransferCustomErc20.ts:31](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferCustomErc20.ts#L31)*
 
 ___
 
@@ -50,7 +50,7 @@ ___
 
 • `Optional` **fee**: [Fee](_src_model_request_fee_.fee.md)
 
-*Defined in [src/model/request/TransferCustomErc20.ts:27](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferCustomErc20.ts#L27)*
+*Defined in [src/model/request/TransferCustomErc20.ts:27](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferCustomErc20.ts#L27)*
 
 ___
 
@@ -58,7 +58,7 @@ ___
 
 •  **fromPrivateKey**: string
 
-*Defined in [src/model/request/TransferCustomErc20.ts:9](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferCustomErc20.ts#L9)*
+*Defined in [src/model/request/TransferCustomErc20.ts:9](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferCustomErc20.ts#L9)*
 
 ___
 
@@ -66,7 +66,7 @@ ___
 
 • `Optional` **nonce**: undefined \| number
 
-*Defined in [src/model/request/TransferCustomErc20.ts:35](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferCustomErc20.ts#L35)*
+*Defined in [src/model/request/TransferCustomErc20.ts:35](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferCustomErc20.ts#L35)*
 
 ___
 
@@ -74,4 +74,4 @@ ___
 
 •  **to**: string
 
-*Defined in [src/model/request/TransferCustomErc20.ts:13](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferCustomErc20.ts#L13)*
+*Defined in [src/model/request/TransferCustomErc20.ts:13](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferCustomErc20.ts#L13)*

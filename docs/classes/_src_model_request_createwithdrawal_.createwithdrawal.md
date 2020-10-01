@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/request/CreateWithdrawal"](../modules/_src_model_request_createwithdrawal_.md) / CreateWithdrawal
 
@@ -33,7 +33,7 @@
 
 •  **address**: string
 
-*Defined in [src/model/request/CreateWithdrawal.ts:11](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateWithdrawal.ts#L11)*
+*Defined in [src/model/request/CreateWithdrawal.ts:11](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateWithdrawal.ts#L11)*
 
 ___
 
@@ -41,7 +41,7 @@ ___
 
 •  **amount**: string
 
-*Defined in [src/model/request/CreateWithdrawal.ts:17](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateWithdrawal.ts#L17)*
+*Defined in [src/model/request/CreateWithdrawal.ts:17](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateWithdrawal.ts#L17)*
 
 ___
 
@@ -49,7 +49,7 @@ ___
 
 • `Optional` **attr**: undefined \| string
 
-*Defined in [src/model/request/CreateWithdrawal.ts:39](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateWithdrawal.ts#L39)*
+*Defined in [src/model/request/CreateWithdrawal.ts:39](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateWithdrawal.ts#L39)*
 
 ___
 
@@ -57,7 +57,7 @@ ___
 
 • `Optional` **compliant**: undefined \| false \| true
 
-*Defined in [src/model/request/CreateWithdrawal.ts:26](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateWithdrawal.ts#L26)*
+*Defined in [src/model/request/CreateWithdrawal.ts:26](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateWithdrawal.ts#L26)*
 
 ___
 
@@ -65,7 +65,7 @@ ___
 
 • `Optional` **fee**: undefined \| string
 
-*Defined in [src/model/request/CreateWithdrawal.ts:22](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateWithdrawal.ts#L22)*
+*Defined in [src/model/request/CreateWithdrawal.ts:22](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateWithdrawal.ts#L22)*
 
 ___
 
@@ -73,7 +73,7 @@ ___
 
 • `Optional` **paymentId**: undefined \| string
 
-*Defined in [src/model/request/CreateWithdrawal.ts:30](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateWithdrawal.ts#L30)*
+*Defined in [src/model/request/CreateWithdrawal.ts:30](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateWithdrawal.ts#L30)*
 
 ___
 
@@ -81,7 +81,7 @@ ___
 
 •  **senderAccountId**: string
 
-*Defined in [src/model/request/CreateWithdrawal.ts:7](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateWithdrawal.ts#L7)*
+*Defined in [src/model/request/CreateWithdrawal.ts:7](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateWithdrawal.ts#L7)*
 
 ___
 
@@ -89,4 +89,4 @@ ___
 
 • `Optional` **senderNote**: undefined \| string
 
-*Defined in [src/model/request/CreateWithdrawal.ts:34](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateWithdrawal.ts#L34)*
+*Defined in [src/model/request/CreateWithdrawal.ts:34](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateWithdrawal.ts#L34)*

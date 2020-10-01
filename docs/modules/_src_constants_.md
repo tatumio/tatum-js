@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / "src/constants"
 
@@ -34,7 +34,7 @@
 
 • `Const` **BCH\_DERIVATION\_PATH**: \"m/44'/145'/0'/0\" = "m/44'/145'/0'/0"
 
-*Defined in [src/constants.ts:13](https://github.com/tatumio/tatum-js/blob/8f0f126/src/constants.ts#L13)*
+*Defined in [src/constants.ts:13](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/constants.ts#L13)*
 
 ___
 
@@ -42,7 +42,7 @@ ___
 
 • `Const` **BNB\_DERIVATION\_PATH**: \"m/44'/714'/0'/0\" = "m/44'/714'/0'/0"
 
-*Defined in [src/constants.ts:10](https://github.com/tatumio/tatum-js/blob/8f0f126/src/constants.ts#L10)*
+*Defined in [src/constants.ts:10](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/constants.ts#L10)*
 
 ___
 
@@ -50,7 +50,7 @@ ___
 
 • `Const` **BTC\_DERIVATION\_PATH**: \"m/44'/0'/0'/0\" = "m/44'/0'/0'/0"
 
-*Defined in [src/constants.ts:11](https://github.com/tatumio/tatum-js/blob/8f0f126/src/constants.ts#L11)*
+*Defined in [src/constants.ts:11](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/constants.ts#L11)*
 
 ___
 
@@ -58,7 +58,7 @@ ___
 
 • `Const` **ETH\_DERIVATION\_PATH**: \"m/44'/60'/0'/0\" = "m/44'/60'/0'/0"
 
-*Defined in [src/constants.ts:8](https://github.com/tatumio/tatum-js/blob/8f0f126/src/constants.ts#L8)*
+*Defined in [src/constants.ts:8](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/constants.ts#L8)*
 
 ___
 
@@ -66,7 +66,7 @@ ___
 
 • `Const` **LTC\_DERIVATION\_PATH**: \"m/44'/2'/0'/0\" = "m/44'/2'/0'/0"
 
-*Defined in [src/constants.ts:12](https://github.com/tatumio/tatum-js/blob/8f0f126/src/constants.ts#L12)*
+*Defined in [src/constants.ts:12](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/constants.ts#L12)*
 
 ___
 
@@ -74,7 +74,7 @@ ___
 
 • `Const` **RIPPLE\_EPOCH**: 946684800 = 946684800
 
-*Defined in [src/constants.ts:39](https://github.com/tatumio/tatum-js/blob/8f0f126/src/constants.ts#L39)*
+*Defined in [src/constants.ts:39](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/constants.ts#L39)*
 
 ___
 
@@ -82,7 +82,7 @@ ___
 
 • `Const` **TATUM\_API\_URL**: \"https://api-eu1.tatum.io\" = "https://api-eu1.tatum.io"
 
-*Defined in [src/constants.ts:3](https://github.com/tatumio/tatum-js/blob/8f0f126/src/constants.ts#L3)*
+*Defined in [src/constants.ts:3](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/constants.ts#L3)*
 
 ___
 
@@ -90,7 +90,7 @@ ___
 
 • `Const` **TESTNET\_DERIVATION\_PATH**: \"m/44'/1'/0'/0\" = "m/44'/1'/0'/0"
 
-*Defined in [src/constants.ts:14](https://github.com/tatumio/tatum-js/blob/8f0f126/src/constants.ts#L14)*
+*Defined in [src/constants.ts:14](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/constants.ts#L14)*
 
 ___
 
@@ -98,7 +98,7 @@ ___
 
 • `Const` **TEST\_VET\_URL**: \"https://sync-testnet.vechain.org/\" = "https://sync-testnet.vechain.org/"
 
-*Defined in [src/constants.ts:5](https://github.com/tatumio/tatum-js/blob/8f0f126/src/constants.ts#L5)*
+*Defined in [src/constants.ts:5](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/constants.ts#L5)*
 
 ___
 
@@ -106,7 +106,7 @@ ___
 
 • `Const` **VET\_DERIVATION\_PATH**: \"m/44'/818'/0'/0\" = "m/44'/818'/0'/0"
 
-*Defined in [src/constants.ts:9](https://github.com/tatumio/tatum-js/blob/8f0f126/src/constants.ts#L9)*
+*Defined in [src/constants.ts:9](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/constants.ts#L9)*
 
 ___
 
@@ -114,7 +114,7 @@ ___
 
 • `Const` **VET\_URL**: \"https://sync-mainnet.vechain.org/\" = "https://sync-mainnet.vechain.org/"
 
-*Defined in [src/constants.ts:6](https://github.com/tatumio/tatum-js/blob/8f0f126/src/constants.ts#L6)*
+*Defined in [src/constants.ts:6](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/constants.ts#L6)*
 
 ## Object literals
 
@@ -122,7 +122,7 @@ ___
 
 ▪ `Const` **CONTRACT\_ADDRESSES**: object
 
-*Defined in [src/constants.ts:41](https://github.com/tatumio/tatum-js/blob/8f0f126/src/constants.ts#L41)*
+*Defined in [src/constants.ts:41](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/constants.ts#L41)*
 
 #### Properties:
 
@@ -149,7 +149,7 @@ ___
 
 ▪ `Const` **CONTRACT\_DECIMALS**: object
 
-*Defined in [src/constants.ts:58](https://github.com/tatumio/tatum-js/blob/8f0f126/src/constants.ts#L58)*
+*Defined in [src/constants.ts:58](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/constants.ts#L58)*
 
 #### Properties:
 
@@ -176,7 +176,7 @@ ___
 
 ▪ `Const` **LTC\_NETWORK**: object
 
-*Defined in [src/constants.ts:27](https://github.com/tatumio/tatum-js/blob/8f0f126/src/constants.ts#L27)*
+*Defined in [src/constants.ts:27](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/constants.ts#L27)*
 
 #### Properties:
 
@@ -195,7 +195,7 @@ ___
 
 ▪ `Const` **LTC\_TEST\_NETWORK**: object
 
-*Defined in [src/constants.ts:16](https://github.com/tatumio/tatum-js/blob/8f0f126/src/constants.ts#L16)*
+*Defined in [src/constants.ts:16](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/constants.ts#L16)*
 
 #### Properties:
 
@@ -214,7 +214,7 @@ ___
 
 ▪ `Const` **TRANSFER\_METHOD\_ABI**: object
 
-*Defined in [src/constants.ts:75](https://github.com/tatumio/tatum-js/blob/8f0f126/src/constants.ts#L75)*
+*Defined in [src/constants.ts:75](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/constants.ts#L75)*
 
 #### Properties:
 

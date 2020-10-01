@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.1**
+**@tatumio/tatum - v1.3.2**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/request/CreateTransaction"](../modules/_src_model_request_createtransaction_.md) / CreateTransaction
 
@@ -29,7 +29,7 @@
 
 •  **amount**: string
 
-*Defined in [src/model/request/CreateTransaction.ts:27](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateTransaction.ts#L27)*
+*Defined in [src/model/request/CreateTransaction.ts:27](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateTransaction.ts#L27)*
 
 ___
 
@@ -37,7 +37,7 @@ ___
 
 • `Optional` **anonymous**: undefined \| false \| true
 
-*Defined in [src/model/request/CreateTransaction.ts:52](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateTransaction.ts#L52)*
+*Defined in [src/model/request/CreateTransaction.ts:52](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateTransaction.ts#L52)*
 
 ___
 
@@ -45,7 +45,7 @@ ___
 
 • `Optional` **baseRate**: undefined \| number
 
-*Defined in [src/model/request/CreateTransaction.ts:48](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateTransaction.ts#L48)*
+*Defined in [src/model/request/CreateTransaction.ts:48](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateTransaction.ts#L48)*
 
 ___
 
@@ -53,7 +53,7 @@ ___
 
 • `Optional` **compliant**: undefined \| false \| true
 
-*Defined in [src/model/request/CreateTransaction.ts:56](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateTransaction.ts#L56)*
+*Defined in [src/model/request/CreateTransaction.ts:56](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateTransaction.ts#L56)*
 
 ___
 
@@ -61,7 +61,7 @@ ___
 
 • `Optional` **paymentId**: undefined \| string
 
-*Defined in [src/model/request/CreateTransaction.ts:31](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateTransaction.ts#L31)*
+*Defined in [src/model/request/CreateTransaction.ts:31](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateTransaction.ts#L31)*
 
 ___
 
@@ -69,7 +69,7 @@ ___
 
 •  **recipientAccountId**: string
 
-*Defined in [src/model/request/CreateTransaction.ts:21](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateTransaction.ts#L21)*
+*Defined in [src/model/request/CreateTransaction.ts:21](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateTransaction.ts#L21)*
 
 ___
 
@@ -77,7 +77,7 @@ ___
 
 • `Optional` **recipientNote**: undefined \| string
 
-*Defined in [src/model/request/CreateTransaction.ts:43](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateTransaction.ts#L43)*
+*Defined in [src/model/request/CreateTransaction.ts:43](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateTransaction.ts#L43)*
 
 ___
 
@@ -85,7 +85,7 @@ ___
 
 •  **senderAccountId**: string
 
-*Defined in [src/model/request/CreateTransaction.ts:17](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateTransaction.ts#L17)*
+*Defined in [src/model/request/CreateTransaction.ts:17](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateTransaction.ts#L17)*
 
 ___
 
@@ -93,7 +93,7 @@ ___
 
 • `Optional` **senderNote**: undefined \| string
 
-*Defined in [src/model/request/CreateTransaction.ts:39](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateTransaction.ts#L39)*
+*Defined in [src/model/request/CreateTransaction.ts:39](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateTransaction.ts#L39)*
 
 ___
 
@@ -101,4 +101,4 @@ ___
 
 • `Optional` **transactionCode**: undefined \| string
 
-*Defined in [src/model/request/CreateTransaction.ts:35](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateTransaction.ts#L35)*
+*Defined in [src/model/request/CreateTransaction.ts:35](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CreateTransaction.ts#L35)*
