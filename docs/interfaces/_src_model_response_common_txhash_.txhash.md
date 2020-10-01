@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.0**
+**@tatumio/tatum - v1.3.1**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/common/TxHash"](../modules/_src_model_response_common_txhash_.md) / TxHash
 
@@ -26,7 +26,7 @@
 
 •  **completed**: boolean
 
-*Defined in [src/model/response/common/TxHash.ts:24](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/common/TxHash.ts#L24)*
+*Defined in [src/model/response/common/TxHash.ts:24](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/common/TxHash.ts#L24)*
 
 Whethet withdrawal was completed in Tatum's internal ledger. If not, it must be done manually.
 
@@ -38,7 +38,7 @@ ___
 
 •  **id**: string
 
-*Defined in [src/model/response/common/TxHash.ts:12](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/common/TxHash.ts#L12)*
+*Defined in [src/model/response/common/TxHash.ts:12](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/common/TxHash.ts#L12)*
 
 ID of withdrawal. If transaction is not valid in blockchain, use this id to cancel withdrawal.
 
@@ -50,7 +50,7 @@ ___
 
 •  **txId**: string
 
-*Defined in [src/model/response/common/TxHash.ts:18](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/common/TxHash.ts#L18)*
+*Defined in [src/model/response/common/TxHash.ts:18](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/common/TxHash.ts#L18)*
 
 TX hash of successful transaction.
 

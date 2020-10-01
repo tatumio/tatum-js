@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.0**
+**@tatumio/tatum - v1.3.1**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/validation/TransferBtcOffchainValidator"](../modules/_src_model_validation_transferbtcoffchainvalidator_.md) / TransferBtcOffchainValidator
 
@@ -25,7 +25,7 @@
 
 ▸ **defaultMessage**(`validationArguments?`: ValidationArguments): string
 
-*Defined in [src/model/validation/TransferBtcOffchainValidator.ts:6](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/validation/TransferBtcOffchainValidator.ts#L6)*
+*Defined in [src/model/validation/TransferBtcOffchainValidator.ts:6](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/validation/TransferBtcOffchainValidator.ts#L6)*
 
 #### Parameters:
 
@@ -41,7 +41,7 @@ ___
 
 ▸ **validate**(`value`: any, `validationArguments?`: ValidationArguments): boolean
 
-*Defined in [src/model/validation/TransferBtcOffchainValidator.ts:10](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/validation/TransferBtcOffchainValidator.ts#L10)*
+*Defined in [src/model/validation/TransferBtcOffchainValidator.ts:10](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/validation/TransferBtcOffchainValidator.ts#L10)*
 
 #### Parameters:
 

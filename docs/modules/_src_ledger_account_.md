@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.0**
+**@tatumio/tatum - v1.3.1**
 
 > [README](../README.md) / [Globals](../globals.md) / "src/ledger/account"
 
@@ -28,7 +28,7 @@
 
 ▸ `Const`**activateAccount**(`id`: string): Promise\<void>
 
-*Defined in [src/ledger/account.ts:53](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/ledger/account.ts#L53)*
+*Defined in [src/ledger/account.ts:53](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/account.ts#L53)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/activateAccount" target="_blank">Tatum API documentation</a>
 
@@ -46,7 +46,7 @@ ___
 
 ▸ `Const`**blockAmount**(`id`: string, `block`: [BlockAmount](../classes/_src_model_request_blockamount_.blockamount.md)): Promise\<{ id: string  }>
 
-*Defined in [src/ledger/account.ts:31](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/ledger/account.ts#L31)*
+*Defined in [src/ledger/account.ts:31](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/account.ts#L31)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/blockAmount" target="_blank">Tatum API documentation</a>
 
@@ -65,7 +65,7 @@ ___
 
 ▸ `Const`**createAccount**(`account`: [CreateAccount](../classes/_src_model_request_createaccount_.createaccount.md)): Promise\<[Account](../interfaces/_src_model_response_ledger_account_.account.md)>
 
-*Defined in [src/ledger/account.ts:16](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/ledger/account.ts#L16)*
+*Defined in [src/ledger/account.ts:16](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/account.ts#L16)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/createAccount" target="_blank">Tatum API documentation</a>
 
@@ -83,7 +83,7 @@ ___
 
 ▸ `Const`**deactivateAccount**(`id`: string): Promise\<void>
 
-*Defined in [src/ledger/account.ts:60](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/ledger/account.ts#L60)*
+*Defined in [src/ledger/account.ts:60](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/account.ts#L60)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/deactivateAccount" target="_blank">Tatum API documentation</a>
 
@@ -101,7 +101,7 @@ ___
 
 ▸ `Const`**deleteBlockedAmount**(`id`: string): Promise\<void>
 
-*Defined in [src/ledger/account.ts:39](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/ledger/account.ts#L39)*
+*Defined in [src/ledger/account.ts:39](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/account.ts#L39)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/deleteBlockAmount" target="_blank">Tatum API documentation</a>
 
@@ -119,7 +119,7 @@ ___
 
 ▸ `Const`**deleteBlockedAmountForAccount**(`id`: string): Promise\<void>
 
-*Defined in [src/ledger/account.ts:46](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/ledger/account.ts#L46)*
+*Defined in [src/ledger/account.ts:46](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/account.ts#L46)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/deleteAllBlockAmount" target="_blank">Tatum API documentation</a>
 
@@ -137,7 +137,7 @@ ___
 
 ▸ `Const`**freezeAccount**(`id`: string): Promise\<void>
 
-*Defined in [src/ledger/account.ts:67](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/ledger/account.ts#L67)*
+*Defined in [src/ledger/account.ts:67](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/account.ts#L67)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/freezeAccount" target="_blank">Tatum API documentation</a>
 
@@ -155,7 +155,7 @@ ___
 
 ▸ `Const`**getAccountBalance**(`id`: string): Promise\<[AccountBalance](../interfaces/_src_model_response_ledger_accountbalance_.accountbalance.md)>
 
-*Defined in [src/ledger/account.ts:97](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/ledger/account.ts#L97)*
+*Defined in [src/ledger/account.ts:97](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/account.ts#L97)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/getAccountBalance" target="_blank">Tatum API documentation</a>
 
@@ -173,7 +173,7 @@ ___
 
 ▸ `Const`**getAccountById**(`id`: string): Promise\<[Account](../interfaces/_src_model_response_ledger_account_.account.md)>
 
-*Defined in [src/ledger/account.ts:9](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/ledger/account.ts#L9)*
+*Defined in [src/ledger/account.ts:9](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/account.ts#L9)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/getAccountByAccountId" target="_blank">Tatum API documentation</a>
 
@@ -191,7 +191,7 @@ ___
 
 ▸ `Const`**getAccountsByCustomerId**(`id`: string, `pageSize`: number, `offset`: number): Promise\<[Account](../interfaces/_src_model_response_ledger_account_.account.md)[]>
 
-*Defined in [src/ledger/account.ts:81](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/ledger/account.ts#L81)*
+*Defined in [src/ledger/account.ts:81](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/account.ts#L81)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/getAccountsByCustomerId" target="_blank">Tatum API documentation</a>
 
@@ -211,7 +211,7 @@ ___
 
 ▸ `Const`**getAllAccounts**(`pageSize`: number, `offset`: number): Promise\<[Account](../interfaces/_src_model_response_ledger_account_.account.md)[]>
 
-*Defined in [src/ledger/account.ts:89](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/ledger/account.ts#L89)*
+*Defined in [src/ledger/account.ts:89](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/account.ts#L89)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/getAllAccounts" target="_blank">Tatum API documentation</a>
 
@@ -230,7 +230,7 @@ ___
 
 ▸ `Const`**getBlockedAmountsByAccountId**(`id`: string, `pageSize`: number, `offset`: number): Promise\<[Blockage](../interfaces/_src_model_response_ledger_blockage_.blockage.md)[]>
 
-*Defined in [src/ledger/account.ts:24](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/ledger/account.ts#L24)*
+*Defined in [src/ledger/account.ts:24](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/account.ts#L24)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/getBlockAmount" target="_blank">Tatum API documentation</a>
 
@@ -250,7 +250,7 @@ ___
 
 ▸ `Const`**unfreezeAccount**(`id`: string): Promise\<void>
 
-*Defined in [src/ledger/account.ts:74](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/ledger/account.ts#L74)*
+*Defined in [src/ledger/account.ts:74](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/account.ts#L74)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/unfreezeAccount" target="_blank">Tatum API documentation</a>
 

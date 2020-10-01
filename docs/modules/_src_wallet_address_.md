@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.0**
+**@tatumio/tatum - v1.3.1**
 
 > [README](../README.md) / [Globals](../globals.md) / "src/wallet/address"
 
@@ -29,7 +29,7 @@
 
 ▸ `Const`**generateAddressFromXPub**(`currency`: [Currency](../enums/_src_model_request_currency_.currency.md), `testnet`: boolean, `xpub`: string, `i`: number): string
 
-*Defined in [src/wallet/address.ts:188](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/wallet/address.ts#L188)*
+*Defined in [src/wallet/address.ts:188](https://github.com/tatumio/tatum-js/blob/8f0f126/src/wallet/address.ts#L188)*
 
 Generate address
 
@@ -52,7 +52,7 @@ ___
 
 ▸ `Const`**generateBchAddress**(`testnet`: boolean, `xpub`: string, `i`: number): string
 
-*Defined in [src/wallet/address.ts:53](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/wallet/address.ts#L53)*
+*Defined in [src/wallet/address.ts:53](https://github.com/tatumio/tatum-js/blob/8f0f126/src/wallet/address.ts#L53)*
 
 Generate Bitcoin Cash address
 
@@ -74,7 +74,7 @@ ___
 
 ▸ `Const`**generateBchPrivateKey**(`testnet`: boolean, `mnemonic`: string, `i`: number): Promise\<string>
 
-*Defined in [src/wallet/address.ts:134](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/wallet/address.ts#L134)*
+*Defined in [src/wallet/address.ts:134](https://github.com/tatumio/tatum-js/blob/8f0f126/src/wallet/address.ts#L134)*
 
 Generate Bitcoin Cash private key from mnemonic seed
 
@@ -96,7 +96,7 @@ ___
 
 ▸ `Const`**generateBnbAddress**(`testnet`: boolean, `xpub`: string, `i`: number): string
 
-*Defined in [src/wallet/address.ts:92](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/wallet/address.ts#L92)*
+*Defined in [src/wallet/address.ts:92](https://github.com/tatumio/tatum-js/blob/8f0f126/src/wallet/address.ts#L92)*
 
 Generate BnB address
 
@@ -118,7 +118,7 @@ ___
 
 ▸ `Const`**generateBnbPrivateKey**(`mnemonic`: string, `i`: number): Promise\<string>
 
-*Defined in [src/wallet/address.ts:176](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/wallet/address.ts#L176)*
+*Defined in [src/wallet/address.ts:176](https://github.com/tatumio/tatum-js/blob/8f0f126/src/wallet/address.ts#L176)*
 
 Generate BnbB private key from mnemonic seed
 
@@ -139,7 +139,7 @@ ___
 
 ▸ `Const`**generateBtcAddress**(`testnet`: boolean, `xpub`: string, `i`: number): string
 
-*Defined in [src/wallet/address.ts:27](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/wallet/address.ts#L27)*
+*Defined in [src/wallet/address.ts:27](https://github.com/tatumio/tatum-js/blob/8f0f126/src/wallet/address.ts#L27)*
 
 Generate Bitcoin address
 
@@ -161,7 +161,7 @@ ___
 
 ▸ `Const`**generateBtcPrivateKey**(`testnet`: boolean, `mnemonic`: string, `i`: number): Promise\<string>
 
-*Defined in [src/wallet/address.ts:104](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/wallet/address.ts#L104)*
+*Defined in [src/wallet/address.ts:104](https://github.com/tatumio/tatum-js/blob/8f0f126/src/wallet/address.ts#L104)*
 
 Generate Bitcoin private key from mnemonic seed
 
@@ -183,7 +183,7 @@ ___
 
 ▸ `Const`**generateEthAddress**(`testnet`: boolean, `xpub`: string, `i`: number): string
 
-*Defined in [src/wallet/address.ts:66](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/wallet/address.ts#L66)*
+*Defined in [src/wallet/address.ts:66](https://github.com/tatumio/tatum-js/blob/8f0f126/src/wallet/address.ts#L66)*
 
 Generate Ethereum or any other ERC20 address
 
@@ -205,7 +205,7 @@ ___
 
 ▸ `Const`**generateEthPrivateKey**(`testnet`: boolean, `mnemonic`: string, `i`: number): Promise\<string>
 
-*Defined in [src/wallet/address.ts:149](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/wallet/address.ts#L149)*
+*Defined in [src/wallet/address.ts:149](https://github.com/tatumio/tatum-js/blob/8f0f126/src/wallet/address.ts#L149)*
 
 Generate Ethereum or any other ERC20 private key from mnemonic seed
 
@@ -227,7 +227,7 @@ ___
 
 ▸ `Const`**generateLtcAddress**(`testnet`: boolean, `xpub`: string, `i`: number): string
 
-*Defined in [src/wallet/address.ts:40](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/wallet/address.ts#L40)*
+*Defined in [src/wallet/address.ts:40](https://github.com/tatumio/tatum-js/blob/8f0f126/src/wallet/address.ts#L40)*
 
 Generate Litecoin address
 
@@ -249,7 +249,7 @@ ___
 
 ▸ `Const`**generateLtcPrivateKey**(`testnet`: boolean, `mnemonic`: string, `i`: number): Promise\<string>
 
-*Defined in [src/wallet/address.ts:119](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/wallet/address.ts#L119)*
+*Defined in [src/wallet/address.ts:119](https://github.com/tatumio/tatum-js/blob/8f0f126/src/wallet/address.ts#L119)*
 
 Generate Litecoin private key from mnemonic seed
 
@@ -271,7 +271,7 @@ ___
 
 ▸ `Const`**generatePrivateKeyFromMnemonic**(`currency`: [Currency](../enums/_src_model_request_currency_.currency.md), `testnet`: boolean, `mnemonic`: string, `i`: number): Promise\<string>
 
-*Defined in [src/wallet/address.ts:229](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/wallet/address.ts#L229)*
+*Defined in [src/wallet/address.ts:229](https://github.com/tatumio/tatum-js/blob/8f0f126/src/wallet/address.ts#L229)*
 
 Generate private key from mnemonic seed
 
@@ -294,7 +294,7 @@ ___
 
 ▸ `Const`**generateVetAddress**(`testnet`: boolean, `xpub`: string, `i`: number): string
 
-*Defined in [src/wallet/address.ts:79](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/wallet/address.ts#L79)*
+*Defined in [src/wallet/address.ts:79](https://github.com/tatumio/tatum-js/blob/8f0f126/src/wallet/address.ts#L79)*
 
 Generate VeChain address
 
@@ -316,7 +316,7 @@ ___
 
 ▸ `Const`**generateVetPrivateKey**(`testnet`: boolean, `mnemonic`: string, `i`: number): Promise\<string>
 
-*Defined in [src/wallet/address.ts:163](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/wallet/address.ts#L163)*
+*Defined in [src/wallet/address.ts:163](https://github.com/tatumio/tatum-js/blob/8f0f126/src/wallet/address.ts#L163)*
 
 Generate VeChain private key from mnemonic seed
 

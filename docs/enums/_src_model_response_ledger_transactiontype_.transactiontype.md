@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.0**
+**@tatumio/tatum - v1.3.1**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/ledger/TransactionType"](../modules/_src_model_response_ledger_transactiontype_.md) / TransactionType
 
@@ -27,7 +27,7 @@
 
 •  **CANCEL\_WITHDRAWAL**: {} = "CANCEL\_WITHDRAWAL"
 
-*Defined in [src/model/response/ledger/TransactionType.ts:11](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/ledger/TransactionType.ts#L11)*
+*Defined in [src/model/response/ledger/TransactionType.ts:11](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/TransactionType.ts#L11)*
 
 ___
 
@@ -35,7 +35,7 @@ ___
 
 •  **CREDIT\_DEPOSIT**: {} = "CREDIT\_DEPOSIT"
 
-*Defined in [src/model/response/ledger/TransactionType.ts:9](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/ledger/TransactionType.ts#L9)*
+*Defined in [src/model/response/ledger/TransactionType.ts:9](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/TransactionType.ts#L9)*
 
 ___
 
@@ -43,7 +43,7 @@ ___
 
 •  **CREDIT\_INCOMING\_PAYMENT**: {} = "CREDIT\_INCOMING\_PAYMENT"
 
-*Defined in [src/model/response/ledger/TransactionType.ts:13](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/ledger/TransactionType.ts#L13)*
+*Defined in [src/model/response/ledger/TransactionType.ts:13](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/TransactionType.ts#L13)*
 
 ___
 
@@ -51,7 +51,7 @@ ___
 
 •  **CREDIT\_PAYMENT**: {} = "CREDIT\_PAYMENT"
 
-*Defined in [src/model/response/ledger/TransactionType.ts:8](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/ledger/TransactionType.ts#L8)*
+*Defined in [src/model/response/ledger/TransactionType.ts:8](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/TransactionType.ts#L8)*
 
 ___
 
@@ -59,7 +59,7 @@ ___
 
 •  **DEBIT\_OUTGOING\_PAYMENT**: {} = "DEBIT\_OUTGOING\_PAYMENT"
 
-*Defined in [src/model/response/ledger/TransactionType.ts:12](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/ledger/TransactionType.ts#L12)*
+*Defined in [src/model/response/ledger/TransactionType.ts:12](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/TransactionType.ts#L12)*
 
 ___
 
@@ -67,7 +67,7 @@ ___
 
 •  **DEBIT\_PAYMENT**: {} = "DEBIT\_PAYMENT"
 
-*Defined in [src/model/response/ledger/TransactionType.ts:7](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/ledger/TransactionType.ts#L7)*
+*Defined in [src/model/response/ledger/TransactionType.ts:7](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/TransactionType.ts#L7)*
 
 ___
 
@@ -75,7 +75,7 @@ ___
 
 •  **DEBIT\_WITHDRAWAL**: {} = "DEBIT\_WITHDRAWAL"
 
-*Defined in [src/model/response/ledger/TransactionType.ts:10](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/ledger/TransactionType.ts#L10)*
+*Defined in [src/model/response/ledger/TransactionType.ts:10](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/TransactionType.ts#L10)*
 
 ___
 
@@ -83,7 +83,7 @@ ___
 
 •  **EXCHANGE\_BUY**: {} = "EXCHANGE\_BUY"
 
-*Defined in [src/model/response/ledger/TransactionType.ts:14](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/ledger/TransactionType.ts#L14)*
+*Defined in [src/model/response/ledger/TransactionType.ts:14](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/TransactionType.ts#L14)*
 
 ___
 
@@ -91,7 +91,7 @@ ___
 
 •  **EXCHANGE\_SELL**: {} = "EXCHANGE\_SELL"
 
-*Defined in [src/model/response/ledger/TransactionType.ts:15](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/ledger/TransactionType.ts#L15)*
+*Defined in [src/model/response/ledger/TransactionType.ts:15](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/TransactionType.ts#L15)*
 
 ___
 
@@ -99,4 +99,4 @@ ___
 
 •  **FAILED**: {} = "FAILED"
 
-*Defined in [src/model/response/ledger/TransactionType.ts:6](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/ledger/TransactionType.ts#L6)*
+*Defined in [src/model/response/ledger/TransactionType.ts:6](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/TransactionType.ts#L6)*

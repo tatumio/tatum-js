@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.0**
+**@tatumio/tatum - v1.3.1**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/bch/BchInfo"](../modules/_src_model_response_bch_bchinfo_.md) / BchInfo
 
@@ -27,7 +27,7 @@
 
 •  **bestblockhash**: string
 
-*Defined in [src/model/response/bch/BchInfo.ts:24](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/bch/BchInfo.ts#L24)*
+*Defined in [src/model/response/bch/BchInfo.ts:24](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/bch/BchInfo.ts#L24)*
 
 Hash of the last block.
 
@@ -39,7 +39,7 @@ ___
 
 •  **blocks**: number
 
-*Defined in [src/model/response/bch/BchInfo.ts:18](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/bch/BchInfo.ts#L18)*
+*Defined in [src/model/response/bch/BchInfo.ts:18](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/bch/BchInfo.ts#L18)*
 
 Last block.
 
@@ -51,7 +51,7 @@ ___
 
 •  **chain**: string
 
-*Defined in [src/model/response/bch/BchInfo.ts:12](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/bch/BchInfo.ts#L12)*
+*Defined in [src/model/response/bch/BchInfo.ts:12](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/bch/BchInfo.ts#L12)*
 
 Chain of the blockchain, main or test.
 
@@ -63,7 +63,7 @@ ___
 
 •  **difficulty**: number
 
-*Defined in [src/model/response/bch/BchInfo.ts:30](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/bch/BchInfo.ts#L30)*
+*Defined in [src/model/response/bch/BchInfo.ts:30](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/bch/BchInfo.ts#L30)*
 
 Difficulty of the PoW algorithm.
 

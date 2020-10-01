@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.0**
+**@tatumio/tatum - v1.3.1**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/request/TransferXrp"](../modules/_src_model_request_transferxrp_.md) / TransferXrp
 
@@ -26,7 +26,7 @@
 
 •  **amount**: string
 
-*Defined in [src/model/request/TransferXrp.ts:20](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/request/TransferXrp.ts#L20)*
+*Defined in [src/model/request/TransferXrp.ts:20](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferXrp.ts#L20)*
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 • `Optional` **destinationTag**: undefined \| number
 
-*Defined in [src/model/request/TransferXrp.ts:35](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/request/TransferXrp.ts#L35)*
+*Defined in [src/model/request/TransferXrp.ts:35](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferXrp.ts#L35)*
 
 ___
 
@@ -42,7 +42,7 @@ ___
 
 • `Optional` **fee**: undefined \| string
 
-*Defined in [src/model/request/TransferXrp.ts:25](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/request/TransferXrp.ts#L25)*
+*Defined in [src/model/request/TransferXrp.ts:25](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferXrp.ts#L25)*
 
 ___
 
@@ -50,7 +50,7 @@ ___
 
 •  **fromAccount**: string
 
-*Defined in [src/model/request/TransferXrp.ts:7](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/request/TransferXrp.ts#L7)*
+*Defined in [src/model/request/TransferXrp.ts:7](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferXrp.ts#L7)*
 
 ___
 
@@ -58,7 +58,7 @@ ___
 
 •  **fromSecret**: string
 
-*Defined in [src/model/request/TransferXrp.ts:11](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/request/TransferXrp.ts#L11)*
+*Defined in [src/model/request/TransferXrp.ts:11](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferXrp.ts#L11)*
 
 ___
 
@@ -66,7 +66,7 @@ ___
 
 • `Optional` **sourceTag**: undefined \| number
 
-*Defined in [src/model/request/TransferXrp.ts:30](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/request/TransferXrp.ts#L30)*
+*Defined in [src/model/request/TransferXrp.ts:30](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferXrp.ts#L30)*
 
 ___
 
@@ -74,4 +74,4 @@ ___
 
 •  **to**: string
 
-*Defined in [src/model/request/TransferXrp.ts:15](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/request/TransferXrp.ts#L15)*
+*Defined in [src/model/request/TransferXrp.ts:15](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferXrp.ts#L15)*

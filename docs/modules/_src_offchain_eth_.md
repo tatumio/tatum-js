@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.0**
+**@tatumio/tatum - v1.3.1**
 
 > [README](../README.md) / [Globals](../globals.md) / "src/offchain/eth"
 
@@ -20,7 +20,7 @@
 
 ▸ `Const`**prepareEthErc20SignedOffchainTransaction**(`amount`: string, `privateKey`: string, `address`: string, `web3`: Web3, `tokenAddress`: string, `gasPrice`: string, `nonce?`: undefined \| number): Promise\<{ gasLimit: number = tx.gas; txData: string = (await web3.eth.accounts.signTransaction(tx, privateKey)).rawTransaction as string }>
 
-*Defined in [src/offchain/eth.ts:177](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/offchain/eth.ts#L177)*
+*Defined in [src/offchain/eth.ts:177](https://github.com/tatumio/tatum-js/blob/8f0f126/src/offchain/eth.ts#L177)*
 
 Sign Ethereum custom ERC20 transaction with private keys locally. Nothing is broadcast to the blockchain.
 
@@ -46,7 +46,7 @@ ___
 
 ▸ `Const`**prepareEthSignedOffchainTransaction**(`amount`: string, `privateKey`: string, `address`: string, `currency`: string, `web3`: Web3, `gasPrice`: string, `nonce?`: undefined \| number): Promise\<{ gasLimit: number = tx.gas; txData: string = (await web3.eth.accounts.signTransaction(tx, privateKey)).rawTransaction as string }>
 
-*Defined in [src/offchain/eth.ts:133](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/offchain/eth.ts#L133)*
+*Defined in [src/offchain/eth.ts:133](https://github.com/tatumio/tatum-js/blob/8f0f126/src/offchain/eth.ts#L133)*
 
 Sign Ethereum transaction with private keys locally. Nothing is broadcast to the blockchain.
 
@@ -72,7 +72,7 @@ ___
 
 ▸ `Const`**sendEthErc20OffchainTransaction**(`testnet`: boolean, `body`: [TransferEthErc20Offchain](../classes/_src_model_request_transferetherc20offchain_.transferetherc20offchain.md), `provider?`: undefined \| string): Promise\<[TxHash](../interfaces/_src_model_response_common_txhash_.txhash.md)>
 
-*Defined in [src/offchain/eth.ts:64](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/offchain/eth.ts#L64)*
+*Defined in [src/offchain/eth.ts:64](https://github.com/tatumio/tatum-js/blob/8f0f126/src/offchain/eth.ts#L64)*
 
 Send Ethereum ERC20 transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
 This operation is irreversible.
@@ -95,7 +95,7 @@ ___
 
 ▸ `Const`**sendEthOffchainTransaction**(`testnet`: boolean, `body`: [TransferEthOffchain](../classes/_src_model_request_transferethoffchain_.transferethoffchain.md), `provider?`: undefined \| string): Promise\<[TxHash](../interfaces/_src_model_response_common_txhash_.txhash.md)>
 
-*Defined in [src/offchain/eth.ts:21](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/offchain/eth.ts#L21)*
+*Defined in [src/offchain/eth.ts:21](https://github.com/tatumio/tatum-js/blob/8f0f126/src/offchain/eth.ts#L21)*
 
 Send Ethereum transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
 This operation is irreversible.
@@ -118,7 +118,7 @@ ___
 
 ▸ `Const`**signEthOffchainKMSTransaction**(`tx`: [TransactionKMS](../classes/_src_model_response_kms_transactionkms_.transactionkms.md), `fromPrivateKey`: string, `testnet`: boolean, `provider?`: undefined \| string): Promise\<string>
 
-*Defined in [src/offchain/eth.ts:109](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/offchain/eth.ts#L109)*
+*Defined in [src/offchain/eth.ts:109](https://github.com/tatumio/tatum-js/blob/8f0f126/src/offchain/eth.ts#L109)*
 
 Sign Ethereum pending transaction from Tatum KMS
 

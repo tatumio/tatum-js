@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.0**
+**@tatumio/tatum - v1.3.1**
 
 > [README](../README.md) / [Globals](../globals.md) / "src/offchain/xlm"
 
@@ -18,7 +18,7 @@
 
 ▸ `Const`**prepareXlmSignedOffchainTransaction**(`testnet`: boolean, `account`: any, `amount`: string, `address`: string, `secret`: string, `memo?`: Memo): Promise\<string>
 
-*Defined in [src/offchain/xlm.ts:72](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/offchain/xlm.ts#L72)*
+*Defined in [src/offchain/xlm.ts:72](https://github.com/tatumio/tatum-js/blob/8f0f126/src/offchain/xlm.ts#L72)*
 
 Sign Stellar transaction with private keys locally. Nothing is broadcast to the blockchain.
 
@@ -43,7 +43,7 @@ ___
 
 ▸ `Const`**sendXlmOffchainTransaction**(`testnet`: boolean, `body`: [TransferXlmOffchain](../classes/_src_model_request_transferxlmoffchain_.transferxlmoffchain.md)): Promise\<[TxHash](../interfaces/_src_model_response_common_txhash_.txhash.md)>
 
-*Defined in [src/offchain/xlm.ts:14](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/offchain/xlm.ts#L14)*
+*Defined in [src/offchain/xlm.ts:14](https://github.com/tatumio/tatum-js/blob/8f0f126/src/offchain/xlm.ts#L14)*
 
 Send Stellar transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
 This operation is irreversible.
@@ -65,7 +65,7 @@ ___
 
 ▸ `Const`**signXlmOffchainKMSTransaction**(`tx`: [TransactionKMS](../classes/_src_model_response_kms_transactionkms_.transactionkms.md), `secret`: string, `testnet`: boolean): Promise\<string>
 
-*Defined in [src/offchain/xlm.ts:53](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/offchain/xlm.ts#L53)*
+*Defined in [src/offchain/xlm.ts:53](https://github.com/tatumio/tatum-js/blob/8f0f126/src/offchain/xlm.ts#L53)*
 
 Sign Stellar pending transaction from Tatum KMS
 

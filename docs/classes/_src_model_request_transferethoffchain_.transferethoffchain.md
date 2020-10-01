@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.0**
+**@tatumio/tatum - v1.3.1**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/request/TransferEthOffchain"](../modules/_src_model_request_transferethoffchain_.md) / TransferEthOffchain
 
@@ -30,7 +30,7 @@
 
 •  **address**: string
 
-*Defined in [src/model/request/TransferEthOffchain.ts:24](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/request/TransferEthOffchain.ts#L24)*
+*Defined in [src/model/request/TransferEthOffchain.ts:24](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferEthOffchain.ts#L24)*
 
 ___
 
@@ -38,7 +38,7 @@ ___
 
 •  **amount**: string
 
-*Defined in [src/model/request/TransferEthOffchain.ts:29](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/request/TransferEthOffchain.ts#L29)*
+*Defined in [src/model/request/TransferEthOffchain.ts:29](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferEthOffchain.ts#L29)*
 
 ___
 
@@ -46,7 +46,7 @@ ___
 
 • `Optional` **compliant**: undefined \| false \| true
 
-*Defined in [src/model/request/TransferEthOffchain.ts:33](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/request/TransferEthOffchain.ts#L33)*
+*Defined in [src/model/request/TransferEthOffchain.ts:33](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferEthOffchain.ts#L33)*
 
 ___
 
@@ -54,7 +54,7 @@ ___
 
 • `Optional` **data**: undefined \| string
 
-*Defined in [src/model/request/TransferEthOffchain.ts:69](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/request/TransferEthOffchain.ts#L69)*
+*Defined in [src/model/request/TransferEthOffchain.ts:69](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferEthOffchain.ts#L69)*
 
 ___
 
@@ -62,7 +62,7 @@ ___
 
 • `Optional` **index**: undefined \| number
 
-*Defined in [src/model/request/TransferEthOffchain.ts:54](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/request/TransferEthOffchain.ts#L54)*
+*Defined in [src/model/request/TransferEthOffchain.ts:54](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferEthOffchain.ts#L54)*
 
 ___
 
@@ -70,7 +70,7 @@ ___
 
 • `Optional` **mnemonic**: undefined \| string
 
-*Defined in [src/model/request/TransferEthOffchain.ts:47](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/request/TransferEthOffchain.ts#L47)*
+*Defined in [src/model/request/TransferEthOffchain.ts:47](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferEthOffchain.ts#L47)*
 
 ___
 
@@ -78,7 +78,7 @@ ___
 
 • `Optional` **nonce**: undefined \| number
 
-*Defined in [src/model/request/TransferEthOffchain.ts:65](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/request/TransferEthOffchain.ts#L65)*
+*Defined in [src/model/request/TransferEthOffchain.ts:65](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferEthOffchain.ts#L65)*
 
 ___
 
@@ -86,7 +86,7 @@ ___
 
 • `Optional` **paymentId**: undefined \| string
 
-*Defined in [src/model/request/TransferEthOffchain.ts:37](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/request/TransferEthOffchain.ts#L37)*
+*Defined in [src/model/request/TransferEthOffchain.ts:37](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferEthOffchain.ts#L37)*
 
 ___
 
@@ -94,7 +94,7 @@ ___
 
 • `Optional` **privateKey**: undefined \| string
 
-*Defined in [src/model/request/TransferEthOffchain.ts:60](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/request/TransferEthOffchain.ts#L60)*
+*Defined in [src/model/request/TransferEthOffchain.ts:60](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferEthOffchain.ts#L60)*
 
 ___
 
@@ -102,7 +102,7 @@ ___
 
 •  **senderAccountId**: string
 
-*Defined in [src/model/request/TransferEthOffchain.ts:20](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/request/TransferEthOffchain.ts#L20)*
+*Defined in [src/model/request/TransferEthOffchain.ts:20](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferEthOffchain.ts#L20)*
 
 ___
 
@@ -110,4 +110,4 @@ ___
 
 • `Optional` **senderNote**: undefined \| string
 
-*Defined in [src/model/request/TransferEthOffchain.ts:41](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/request/TransferEthOffchain.ts#L41)*
+*Defined in [src/model/request/TransferEthOffchain.ts:41](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/TransferEthOffchain.ts#L41)*

@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.0**
+**@tatumio/tatum - v1.3.1**
 
 > [README](../README.md) / [Globals](../globals.md) / "src/blockchain/xlm"
 
@@ -23,7 +23,7 @@
 
 ▸ `Const`**xlmBroadcast**(`txData`: string, `signatureId?`: undefined \| string): Promise\<[TransactionHash](../interfaces/_src_model_response_common_transactionhash_.transactionhash.md)>
 
-*Defined in [src/blockchain/xlm.ts:15](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/blockchain/xlm.ts#L15)*
+*Defined in [src/blockchain/xlm.ts:15](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/xlm.ts#L15)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/XlmBroadcast" target="_blank">Tatum API documentation</a>
 
@@ -42,7 +42,7 @@ ___
 
 ▸ `Const`**xlmGetAccountInfo**(`account`: string): Promise\<{ sequence: string  }>
 
-*Defined in [src/blockchain/xlm.ts:8](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/blockchain/xlm.ts#L8)*
+*Defined in [src/blockchain/xlm.ts:8](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/xlm.ts#L8)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/XlmGetAccountInfo" target="_blank">Tatum API documentation</a>
 
@@ -60,7 +60,7 @@ ___
 
 ▸ `Const`**xlmGetAccountTransactions**(`address`: string): Promise\<any>
 
-*Defined in [src/blockchain/xlm.ts:59](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/blockchain/xlm.ts#L59)*
+*Defined in [src/blockchain/xlm.ts:59](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/xlm.ts#L59)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/XlmGetAccountTx" target="_blank">Tatum API documentation</a>
 
@@ -78,7 +78,7 @@ ___
 
 ▸ `Const`**xlmGetCurrentLedger**(): Promise\<any>
 
-*Defined in [src/blockchain/xlm.ts:24](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/blockchain/xlm.ts#L24)*
+*Defined in [src/blockchain/xlm.ts:24](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/xlm.ts#L24)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/XlmGetLastClosedLedger" target="_blank">Tatum API documentation</a>
 
@@ -90,7 +90,7 @@ ___
 
 ▸ `Const`**xlmGetFee**(): Promise\<any>
 
-*Defined in [src/blockchain/xlm.ts:31](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/blockchain/xlm.ts#L31)*
+*Defined in [src/blockchain/xlm.ts:31](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/xlm.ts#L31)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/XlmGetFee" target="_blank">Tatum API documentation</a>
 
@@ -102,7 +102,7 @@ ___
 
 ▸ `Const`**xlmGetLedger**(`i`: number): Promise\<any>
 
-*Defined in [src/blockchain/xlm.ts:38](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/blockchain/xlm.ts#L38)*
+*Defined in [src/blockchain/xlm.ts:38](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/xlm.ts#L38)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/XlmGetLedger" target="_blank">Tatum API documentation</a>
 
@@ -120,7 +120,7 @@ ___
 
 ▸ `Const`**xlmGetLedgerTx**(`i`: number): Promise\<any>
 
-*Defined in [src/blockchain/xlm.ts:45](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/blockchain/xlm.ts#L45)*
+*Defined in [src/blockchain/xlm.ts:45](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/xlm.ts#L45)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/XlmGetLedgerTx" target="_blank">Tatum API documentation</a>
 
@@ -138,7 +138,7 @@ ___
 
 ▸ `Const`**xlmGetTransaction**(`hash`: string): Promise\<any>
 
-*Defined in [src/blockchain/xlm.ts:52](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/blockchain/xlm.ts#L52)*
+*Defined in [src/blockchain/xlm.ts:52](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/xlm.ts#L52)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/XlmGetTransaction" target="_blank">Tatum API documentation</a>
 

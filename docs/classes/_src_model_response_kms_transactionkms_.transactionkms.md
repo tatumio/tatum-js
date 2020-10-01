@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.0**
+**@tatumio/tatum - v1.3.1**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/kms/TransactionKMS"](../modules/_src_model_response_kms_transactionkms_.md) / TransactionKMS
 
@@ -27,7 +27,7 @@
 
 •  **chain**: [Currency](../enums/_src_model_request_currency_.currency.md)
 
-*Defined in [src/model/response/kms/TransactionKMS.ts:7](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/kms/TransactionKMS.ts#L7)*
+*Defined in [src/model/response/kms/TransactionKMS.ts:7](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/kms/TransactionKMS.ts#L7)*
 
 ___
 
@@ -35,7 +35,7 @@ ___
 
 •  **hashes**: string[]
 
-*Defined in [src/model/response/kms/TransactionKMS.ts:11](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/kms/TransactionKMS.ts#L11)*
+*Defined in [src/model/response/kms/TransactionKMS.ts:11](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/kms/TransactionKMS.ts#L11)*
 
 ___
 
@@ -43,7 +43,7 @@ ___
 
 •  **id**: string
 
-*Defined in [src/model/response/kms/TransactionKMS.ts:5](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/kms/TransactionKMS.ts#L5)*
+*Defined in [src/model/response/kms/TransactionKMS.ts:5](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/kms/TransactionKMS.ts#L5)*
 
 ___
 
@@ -51,7 +51,7 @@ ___
 
 • `Optional` **index**: undefined \| number
 
-*Defined in [src/model/response/kms/TransactionKMS.ts:17](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/kms/TransactionKMS.ts#L17)*
+*Defined in [src/model/response/kms/TransactionKMS.ts:17](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/kms/TransactionKMS.ts#L17)*
 
 ___
 
@@ -59,7 +59,7 @@ ___
 
 •  **serializedTransaction**: string
 
-*Defined in [src/model/response/kms/TransactionKMS.ts:9](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/kms/TransactionKMS.ts#L9)*
+*Defined in [src/model/response/kms/TransactionKMS.ts:9](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/kms/TransactionKMS.ts#L9)*
 
 ___
 
@@ -67,7 +67,7 @@ ___
 
 • `Optional` **txId**: undefined \| string
 
-*Defined in [src/model/response/kms/TransactionKMS.ts:13](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/kms/TransactionKMS.ts#L13)*
+*Defined in [src/model/response/kms/TransactionKMS.ts:13](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/kms/TransactionKMS.ts#L13)*
 
 ___
 
@@ -75,7 +75,7 @@ ___
 
 • `Optional` **withdrawalId**: undefined \| string
 
-*Defined in [src/model/response/kms/TransactionKMS.ts:15](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/kms/TransactionKMS.ts#L15)*
+*Defined in [src/model/response/kms/TransactionKMS.ts:15](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/kms/TransactionKMS.ts#L15)*
 
 ___
 
@@ -83,4 +83,4 @@ ___
 
 • `Optional` **withdrawalResponses**: [WithdrawalResponseData](../interfaces/_src_model_response_offchain_withdrawalresponse_.withdrawalresponsedata.md)[]
 
-*Defined in [src/model/response/kms/TransactionKMS.ts:19](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/kms/TransactionKMS.ts#L19)*
+*Defined in [src/model/response/kms/TransactionKMS.ts:19](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/kms/TransactionKMS.ts#L19)*

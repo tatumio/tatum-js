@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.0**
+**@tatumio/tatum - v1.3.1**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/bch/BchTx"](../modules/_src_model_response_bch_bchtx_.md) / BchTxVout
 
@@ -26,7 +26,7 @@
 
 •  **n**: number
 
-*Defined in [src/model/response/bch/BchTx.ts:146](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/bch/BchTx.ts#L146)*
+*Defined in [src/model/response/bch/BchTx.ts:146](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/bch/BchTx.ts#L146)*
 
 **`memberof`** BchTxVout
 
@@ -36,7 +36,7 @@ ___
 
 •  **scriptPubKey**: [BchTxScriptPubKey](_src_model_response_bch_bchtx_.bchtxscriptpubkey.md)
 
-*Defined in [src/model/response/bch/BchTx.ts:152](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/bch/BchTx.ts#L152)*
+*Defined in [src/model/response/bch/BchTx.ts:152](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/bch/BchTx.ts#L152)*
 
 **`memberof`** BchTxVout
 
@@ -46,6 +46,6 @@ ___
 
 •  **value**: string
 
-*Defined in [src/model/response/bch/BchTx.ts:140](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/bch/BchTx.ts#L140)*
+*Defined in [src/model/response/bch/BchTx.ts:140](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/bch/BchTx.ts#L140)*
 
 **`memberof`** BchTxVout

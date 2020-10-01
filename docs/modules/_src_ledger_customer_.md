@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.0**
+**@tatumio/tatum - v1.3.1**
 
 > [README](../README.md) / [Globals](../globals.md) / "src/ledger/customer"
 
@@ -22,7 +22,7 @@
 
 ▸ `Const`**activateCustomer**(`id`: string): Promise\<void>
 
-*Defined in [src/ledger/customer.ts:32](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/ledger/customer.ts#L32)*
+*Defined in [src/ledger/customer.ts:32](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/customer.ts#L32)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/activateAccount" target="_blank">Tatum API documentation</a>
 
@@ -40,7 +40,7 @@ ___
 
 ▸ `Const`**deactivateCustomer**(`id`: string): Promise\<void>
 
-*Defined in [src/ledger/customer.ts:39](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/ledger/customer.ts#L39)*
+*Defined in [src/ledger/customer.ts:39](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/customer.ts#L39)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/deactivateCustomer" target="_blank">Tatum API documentation</a>
 
@@ -58,7 +58,7 @@ ___
 
 ▸ `Const`**disableCustomer**(`id`: string): Promise\<void>
 
-*Defined in [src/ledger/customer.ts:53](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/ledger/customer.ts#L53)*
+*Defined in [src/ledger/customer.ts:53](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/customer.ts#L53)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/disableCustomer" target="_blank">Tatum API documentation</a>
 
@@ -76,7 +76,7 @@ ___
 
 ▸ `Const`**enableCustomer**(`id`: string): Promise\<void>
 
-*Defined in [src/ledger/customer.ts:46](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/ledger/customer.ts#L46)*
+*Defined in [src/ledger/customer.ts:46](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/customer.ts#L46)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/enableCustomer" target="_blank">Tatum API documentation</a>
 
@@ -94,7 +94,7 @@ ___
 
 ▸ `Const`**getAllCustomers**(`pageSize`: number, `offset`: number): Promise\<[Customer](../classes/_src_model_response_ledger_customer_.customer.md)[]>
 
-*Defined in [src/ledger/customer.ts:17](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/ledger/customer.ts#L17)*
+*Defined in [src/ledger/customer.ts:17](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/customer.ts#L17)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/findAllCustomers" target="_blank">Tatum API documentation</a>
 
@@ -113,7 +113,7 @@ ___
 
 ▸ `Const`**getCustomer**(`id`: string): Promise\<[Customer](../classes/_src_model_response_ledger_customer_.customer.md)>
 
-*Defined in [src/ledger/customer.ts:10](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/ledger/customer.ts#L10)*
+*Defined in [src/ledger/customer.ts:10](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/customer.ts#L10)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/getCustomerByExternalId" target="_blank">Tatum API documentation</a>
 
@@ -131,7 +131,7 @@ ___
 
 ▸ `Const`**updateCustomer**(`id`: string, `data`: [CustomerUpdate](../classes/_src_model_request_customerupdate_.customerupdate.md)): Promise\<{ id: string  }>
 
-*Defined in [src/ledger/customer.ts:24](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/ledger/customer.ts#L24)*
+*Defined in [src/ledger/customer.ts:24](https://github.com/tatumio/tatum-js/blob/8f0f126/src/ledger/customer.ts#L24)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/updateCustomer" target="_blank">Tatum API documentation</a>
 

@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.0**
+**@tatumio/tatum - v1.3.1**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/bch/BchTx"](../modules/_src_model_response_bch_bchtx_.md) / BchTx
 
@@ -28,7 +28,7 @@
 
 •  **locktime**: number
 
-*Defined in [src/model/response/bch/BchTx.ts:24](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/bch/BchTx.ts#L24)*
+*Defined in [src/model/response/bch/BchTx.ts:24](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/bch/BchTx.ts#L24)*
 
 **`memberof`** BchTx
 
@@ -38,7 +38,7 @@ ___
 
 •  **txid**: string
 
-*Defined in [src/model/response/bch/BchTx.ts:12](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/bch/BchTx.ts#L12)*
+*Defined in [src/model/response/bch/BchTx.ts:12](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/bch/BchTx.ts#L12)*
 
 **`memberof`** BchTx
 
@@ -48,7 +48,7 @@ ___
 
 •  **version**: number
 
-*Defined in [src/model/response/bch/BchTx.ts:18](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/bch/BchTx.ts#L18)*
+*Defined in [src/model/response/bch/BchTx.ts:18](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/bch/BchTx.ts#L18)*
 
 **`memberof`** BchTx
 
@@ -58,7 +58,7 @@ ___
 
 •  **vin**: [BchTxVin](_src_model_response_bch_bchtx_.bchtxvin.md)[]
 
-*Defined in [src/model/response/bch/BchTx.ts:30](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/bch/BchTx.ts#L30)*
+*Defined in [src/model/response/bch/BchTx.ts:30](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/bch/BchTx.ts#L30)*
 
 **`memberof`** BchTx
 
@@ -68,6 +68,6 @@ ___
 
 •  **vout**: [BchTxVout](_src_model_response_bch_bchtx_.bchtxvout.md)[]
 
-*Defined in [src/model/response/bch/BchTx.ts:36](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/bch/BchTx.ts#L36)*
+*Defined in [src/model/response/bch/BchTx.ts:36](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/bch/BchTx.ts#L36)*
 
 **`memberof`** BchTx

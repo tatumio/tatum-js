@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.0**
+**@tatumio/tatum - v1.3.1**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/btc/BtcTx"](../modules/_src_model_response_btc_btctx_.md) / BtcTxPrevout
 
@@ -25,7 +25,7 @@
 
 •  **hash**: string
 
-*Defined in [src/model/response/btc/BtcTx.ts:206](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/btc/BtcTx.ts#L206)*
+*Defined in [src/model/response/btc/BtcTx.ts:206](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/btc/BtcTx.ts#L206)*
 
 Transaction hash of the input.
 
@@ -37,7 +37,7 @@ ___
 
 •  **index**: number
 
-*Defined in [src/model/response/btc/BtcTx.ts:212](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/btc/BtcTx.ts#L212)*
+*Defined in [src/model/response/btc/BtcTx.ts:212](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/btc/BtcTx.ts#L212)*
 
 Transaction index of the input.
 

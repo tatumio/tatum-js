@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.0**
+**@tatumio/tatum - v1.3.1**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/validation/TransferEthOffchainValidator"](../modules/_src_model_validation_transferethoffchainvalidator_.md) / TransferEthOffchainValidator
 
@@ -25,7 +25,7 @@
 
 ▸ **defaultMessage**(`validationArguments?`: ValidationArguments): string
 
-*Defined in [src/model/validation/TransferEthOffchainValidator.ts:5](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/validation/TransferEthOffchainValidator.ts#L5)*
+*Defined in [src/model/validation/TransferEthOffchainValidator.ts:5](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/validation/TransferEthOffchainValidator.ts#L5)*
 
 #### Parameters:
 
@@ -41,7 +41,7 @@ ___
 
 ▸ **validate**(`value`: any, `validationArguments?`: ValidationArguments): boolean
 
-*Defined in [src/model/validation/TransferEthOffchainValidator.ts:9](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/validation/TransferEthOffchainValidator.ts#L9)*
+*Defined in [src/model/validation/TransferEthOffchainValidator.ts:9](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/validation/TransferEthOffchainValidator.ts#L9)*
 
 #### Parameters:
 

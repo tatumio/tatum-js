@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.0**
+**@tatumio/tatum - v1.3.1**
 
 > [README](../README.md) / [Globals](../globals.md) / "src/blockchain/litecoin"
 
@@ -22,7 +22,7 @@
 
 ▸ `Const`**ltcBroadcast**(`txData`: string, `signatureId?`: undefined \| string): Promise\<[TransactionHash](../interfaces/_src_model_response_common_transactionhash_.transactionhash.md)>
 
-*Defined in [src/blockchain/litecoin.ts:8](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/blockchain/litecoin.ts#L8)*
+*Defined in [src/blockchain/litecoin.ts:8](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/litecoin.ts#L8)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/LtcBroadcast" target="_blank">Tatum API documentation</a>
 
@@ -41,7 +41,7 @@ ___
 
 ▸ `Const`**ltcGetBlock**(`hash`: string): Promise\<[LtcBlock](../interfaces/_src_model_response_ltc_ltcblock_.ltcblock.md)>
 
-*Defined in [src/blockchain/litecoin.ts:24](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/blockchain/litecoin.ts#L24)*
+*Defined in [src/blockchain/litecoin.ts:24](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/litecoin.ts#L24)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/LtcGetBlock" target="_blank">Tatum API documentation</a>
 
@@ -59,7 +59,7 @@ ___
 
 ▸ `Const`**ltcGetBlockHash**(`i`: number): Promise\<[BlockHash](../interfaces/_src_model_response_common_blockhash_.blockhash.md)>
 
-*Defined in [src/blockchain/litecoin.ts:31](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/blockchain/litecoin.ts#L31)*
+*Defined in [src/blockchain/litecoin.ts:31](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/litecoin.ts#L31)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/LtcGetBlockHash" target="_blank">Tatum API documentation</a>
 
@@ -77,7 +77,7 @@ ___
 
 ▸ `Const`**ltcGetCurrentBlock**(): Promise\<[LtcInfo](../interfaces/_src_model_response_ltc_ltcinfo_.ltcinfo.md)>
 
-*Defined in [src/blockchain/litecoin.ts:17](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/blockchain/litecoin.ts#L17)*
+*Defined in [src/blockchain/litecoin.ts:17](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/litecoin.ts#L17)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/LtcGetBlockChainInfo" target="_blank">Tatum API documentation</a>
 
@@ -89,7 +89,7 @@ ___
 
 ▸ `Const`**ltcGetTransaction**(`hash`: string): Promise\<[LtcTx](../interfaces/_src_model_response_ltc_ltctx_.ltctx.md)>
 
-*Defined in [src/blockchain/litecoin.ts:53](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/blockchain/litecoin.ts#L53)*
+*Defined in [src/blockchain/litecoin.ts:53](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/litecoin.ts#L53)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/LtcGetRawTransaction" target="_blank">Tatum API documentation</a>
 
@@ -107,7 +107,7 @@ ___
 
 ▸ `Const`**ltcGetTxForAccount**(`address`: string, `pageSize`: number, `offset`: number): Promise\<[LtcTx](../interfaces/_src_model_response_ltc_ltctx_.ltctx.md)[]>
 
-*Defined in [src/blockchain/litecoin.ts:45](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/blockchain/litecoin.ts#L45)*
+*Defined in [src/blockchain/litecoin.ts:45](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/litecoin.ts#L45)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/LtcGetTxByAddress" target="_blank">Tatum API documentation</a>
 
@@ -127,7 +127,7 @@ ___
 
 ▸ `Const`**ltcGetUTXO**(`hash`: string, `i`: number): Promise\<[LtcUTXO](../interfaces/_src_model_response_ltc_ltxutxo_.ltcutxo.md)>
 
-*Defined in [src/blockchain/litecoin.ts:38](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/blockchain/litecoin.ts#L38)*
+*Defined in [src/blockchain/litecoin.ts:38](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/litecoin.ts#L38)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/LtcGetUTXO" target="_blank">Tatum API documentation</a>
 

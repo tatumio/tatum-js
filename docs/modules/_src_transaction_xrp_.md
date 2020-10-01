@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.0**
+**@tatumio/tatum - v1.3.1**
 
 > [README](../README.md) / [Globals](../globals.md) / "src/transaction/xrp"
 
@@ -18,7 +18,7 @@
 
 ▸ `Const`**prepareXrpSignedTransaction**(`body`: [TransferXrp](../classes/_src_model_request_transferxrp_.transferxrp.md)): Promise\<string>
 
-*Defined in [src/transaction/xrp.ts:37](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/transaction/xrp.ts#L37)*
+*Defined in [src/transaction/xrp.ts:37](https://github.com/tatumio/tatum-js/blob/8f0f126/src/transaction/xrp.ts#L37)*
 
 Sign Xrp transaction with private keys locally. Nothing is broadcast to the blockchain.
 
@@ -38,7 +38,7 @@ ___
 
 ▸ `Const`**sendXrpTransaction**(`body`: [TransferXrp](../classes/_src_model_request_transferxrp_.transferxrp.md)): Promise\<[TransactionHash](../interfaces/_src_model_response_common_transactionhash_.transactionhash.md)>
 
-*Defined in [src/transaction/xrp.ts:14](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/transaction/xrp.ts#L14)*
+*Defined in [src/transaction/xrp.ts:14](https://github.com/tatumio/tatum-js/blob/8f0f126/src/transaction/xrp.ts#L14)*
 
 Send Xrp transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
 This operation is irreversible.
@@ -59,7 +59,7 @@ ___
 
 ▸ `Const`**signXrpKMSTransaction**(`tx`: [TransactionKMS](../classes/_src_model_response_kms_transactionkms_.transactionkms.md), `secret`: string): Promise\<string>
 
-*Defined in [src/transaction/xrp.ts:24](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/transaction/xrp.ts#L24)*
+*Defined in [src/transaction/xrp.ts:24](https://github.com/tatumio/tatum-js/blob/8f0f126/src/transaction/xrp.ts#L24)*
 
 Sign Xrp pending transaction from Tatum KMS
 

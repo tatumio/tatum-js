@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.0**
+**@tatumio/tatum - v1.3.1**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/request/CreateCurrency"](../modules/_src_model_request_createcurrency_.md) / CreateCurrency
 
@@ -27,7 +27,7 @@
 
 • `Optional` **accountCode**: undefined \| string
 
-*Defined in [src/model/request/CreateCurrency.ts:25](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/request/CreateCurrency.ts#L25)*
+*Defined in [src/model/request/CreateCurrency.ts:25](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateCurrency.ts#L25)*
 
 ___
 
@@ -35,7 +35,7 @@ ___
 
 • `Optional` **accountingCurrency**: [Fiat](../enums/_src_model_response_ledger_fiat_.fiat.md)
 
-*Defined in [src/model/request/CreateCurrency.ts:39](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/request/CreateCurrency.ts#L39)*
+*Defined in [src/model/request/CreateCurrency.ts:39](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateCurrency.ts#L39)*
 
 ___
 
@@ -43,7 +43,7 @@ ___
 
 •  **basePair**: [Currency](../enums/_src_model_request_currency_.currency.md) \| [Fiat](../enums/_src_model_response_ledger_fiat_.fiat.md)
 
-*Defined in [src/model/request/CreateCurrency.ts:30](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/request/CreateCurrency.ts#L30)*
+*Defined in [src/model/request/CreateCurrency.ts:30](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateCurrency.ts#L30)*
 
 ___
 
@@ -51,7 +51,7 @@ ___
 
 • `Optional` **baseRate**: undefined \| number
 
-*Defined in [src/model/request/CreateCurrency.ts:34](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/request/CreateCurrency.ts#L34)*
+*Defined in [src/model/request/CreateCurrency.ts:34](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateCurrency.ts#L34)*
 
 ___
 
@@ -59,7 +59,7 @@ ___
 
 • `Optional` **customer**: [CustomerUpdate](_src_model_request_customerupdate_.customerupdate.md)
 
-*Defined in [src/model/request/CreateCurrency.ts:42](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/request/CreateCurrency.ts#L42)*
+*Defined in [src/model/request/CreateCurrency.ts:42](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateCurrency.ts#L42)*
 
 ___
 
@@ -67,7 +67,7 @@ ___
 
 • `Optional` **description**: undefined \| string
 
-*Defined in [src/model/request/CreateCurrency.ts:21](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/request/CreateCurrency.ts#L21)*
+*Defined in [src/model/request/CreateCurrency.ts:21](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateCurrency.ts#L21)*
 
 ___
 
@@ -75,7 +75,7 @@ ___
 
 •  **name**: string
 
-*Defined in [src/model/request/CreateCurrency.ts:11](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/request/CreateCurrency.ts#L11)*
+*Defined in [src/model/request/CreateCurrency.ts:11](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateCurrency.ts#L11)*
 
 ___
 
@@ -83,4 +83,4 @@ ___
 
 •  **supply**: string
 
-*Defined in [src/model/request/CreateCurrency.ts:17](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/request/CreateCurrency.ts#L17)*
+*Defined in [src/model/request/CreateCurrency.ts:17](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/request/CreateCurrency.ts#L17)*

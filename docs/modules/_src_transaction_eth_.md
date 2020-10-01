@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.0**
+**@tatumio/tatum - v1.3.1**
 
 > [README](../README.md) / [Globals](../globals.md) / "src/transaction/eth"
 
@@ -25,7 +25,7 @@
 
 ▸ `Const`**ethGetGasPriceInWei**(`client`: Web3): Promise\<string>
 
-*Defined in [src/transaction/eth.ts:21](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/transaction/eth.ts#L21)*
+*Defined in [src/transaction/eth.ts:21](https://github.com/tatumio/tatum-js/blob/8f0f126/src/transaction/eth.ts#L21)*
 
 Estimate Gas price for the transaction.
 
@@ -43,7 +43,7 @@ ___
 
 ▸ `Const`**prepareCustomErc20SignedTransaction**(`testnet`: boolean, `body`: [TransferCustomErc20](../classes/_src_model_request_transfercustomerc20_.transfercustomerc20.md), `provider?`: undefined \| string): Promise\<string>
 
-*Defined in [src/transaction/eth.ts:150](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/transaction/eth.ts#L150)*
+*Defined in [src/transaction/eth.ts:150](https://github.com/tatumio/tatum-js/blob/8f0f126/src/transaction/eth.ts#L150)*
 
 Sign Ethereum custom ERC20 transaction with private keys locally. Nothing is broadcast to the blockchain.
 
@@ -65,7 +65,7 @@ ___
 
 ▸ `Const`**prepareDeployErc20SignedTransaction**(`testnet`: boolean, `body`: [DeployEthErc20](../classes/_src_model_request_deployetherc20_.deployetherc20.md), `provider?`: undefined \| string): Promise\<string>
 
-*Defined in [src/transaction/eth.ts:195](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/transaction/eth.ts#L195)*
+*Defined in [src/transaction/eth.ts:195](https://github.com/tatumio/tatum-js/blob/8f0f126/src/transaction/eth.ts#L195)*
 
 Sign Ethereum deploy ERC20 transaction with private keys locally. Nothing is broadcast to the blockchain.
 
@@ -87,7 +87,7 @@ ___
 
 ▸ `Const`**prepareEthOrErc20SignedTransaction**(`testnet`: boolean, `body`: [TransferEthErc20](../classes/_src_model_request_transferetherc20_.transferetherc20.md), `provider?`: undefined \| string): Promise\<string>
 
-*Defined in [src/transaction/eth.ts:94](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/transaction/eth.ts#L94)*
+*Defined in [src/transaction/eth.ts:94](https://github.com/tatumio/tatum-js/blob/8f0f126/src/transaction/eth.ts#L94)*
 
 Sign Ethereum or supported ERC20 transaction with private keys locally. Nothing is broadcast to the blockchain.
 
@@ -109,7 +109,7 @@ ___
 
 ▸ `Const`**prepareStoreDataTransaction**(`testnet`: boolean, `body`: [CreateRecord](../classes/_src_model_request_createrecord_.createrecord.md), `provider?`: undefined \| string): Promise\<string>
 
-*Defined in [src/transaction/eth.ts:54](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/transaction/eth.ts#L54)*
+*Defined in [src/transaction/eth.ts:54](https://github.com/tatumio/tatum-js/blob/8f0f126/src/transaction/eth.ts#L54)*
 
 Sign Ethereum Store data transaction with private keys locally. Nothing is broadcast to the blockchain.
 
@@ -131,7 +131,7 @@ ___
 
 ▸ `Const`**sendCustomErc20Transaction**(`testnet`: boolean, `body`: [TransferCustomErc20](../classes/_src_model_request_transfercustomerc20_.transfercustomerc20.md), `provider?`: undefined \| string): Promise\<[TransactionHash](../interfaces/_src_model_response_common_transactionhash_.transactionhash.md)>
 
-*Defined in [src/transaction/eth.ts:274](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/transaction/eth.ts#L274)*
+*Defined in [src/transaction/eth.ts:274](https://github.com/tatumio/tatum-js/blob/8f0f126/src/transaction/eth.ts#L274)*
 
 Send Ethereum custom ERC20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
 This operation is irreversible.
@@ -154,7 +154,7 @@ ___
 
 ▸ `Const`**sendDeployErc20Transaction**(`testnet`: boolean, `body`: [DeployEthErc20](../classes/_src_model_request_deployetherc20_.deployetherc20.md), `provider?`: undefined \| string): Promise\<[TransactionHash](../interfaces/_src_model_response_common_transactionhash_.transactionhash.md)>
 
-*Defined in [src/transaction/eth.ts:286](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/transaction/eth.ts#L286)*
+*Defined in [src/transaction/eth.ts:286](https://github.com/tatumio/tatum-js/blob/8f0f126/src/transaction/eth.ts#L286)*
 
 Send Ethereum deploy ERC20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
 This operation is irreversible.
@@ -177,7 +177,7 @@ ___
 
 ▸ `Const`**sendEthOrErc20Transaction**(`testnet`: boolean, `body`: [TransferEthErc20](../classes/_src_model_request_transferetherc20_.transferetherc20.md), `provider?`: undefined \| string): Promise\<[TransactionHash](../interfaces/_src_model_response_common_transactionhash_.transactionhash.md)>
 
-*Defined in [src/transaction/eth.ts:262](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/transaction/eth.ts#L262)*
+*Defined in [src/transaction/eth.ts:262](https://github.com/tatumio/tatum-js/blob/8f0f126/src/transaction/eth.ts#L262)*
 
 Send Ethereum or supported ERC20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
 This operation is irreversible.
@@ -200,7 +200,7 @@ ___
 
 ▸ `Const`**sendStoreDataTransaction**(`testnet`: boolean, `body`: [CreateRecord](../classes/_src_model_request_createrecord_.createrecord.md), `provider?`: undefined \| string): Promise\<[TransactionHash](../interfaces/_src_model_response_common_transactionhash_.transactionhash.md)>
 
-*Defined in [src/transaction/eth.ts:250](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/transaction/eth.ts#L250)*
+*Defined in [src/transaction/eth.ts:250](https://github.com/tatumio/tatum-js/blob/8f0f126/src/transaction/eth.ts#L250)*
 
 Send Ethereum store data transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
 This operation is irreversible.
@@ -223,7 +223,7 @@ ___
 
 ▸ `Const`**signEthKMSTransaction**(`tx`: [TransactionKMS](../classes/_src_model_response_kms_transactionkms_.transactionkms.md), `fromPrivateKey`: string, `testnet`: boolean, `provider?`: undefined \| string): Promise\<string>
 
-*Defined in [src/transaction/eth.ts:34](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/transaction/eth.ts#L34)*
+*Defined in [src/transaction/eth.ts:34](https://github.com/tatumio/tatum-js/blob/8f0f126/src/transaction/eth.ts#L34)*
 
 Sign Ethereum pending transaction from Tatum KMS
 

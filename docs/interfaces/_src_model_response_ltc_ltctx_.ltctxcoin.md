@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.0**
+**@tatumio/tatum - v1.3.1**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/ltc/LtcTx"](../modules/_src_model_response_ltc_ltctx_.md) / LtcTxCoin
 
@@ -29,7 +29,7 @@
 
 •  **address**: string
 
-*Defined in [src/model/response/ltc/LtcTx.ts:128](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/ltc/LtcTx.ts#L128)*
+*Defined in [src/model/response/ltc/LtcTx.ts:128](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ltc/LtcTx.ts#L128)*
 
 Sender address.
 
@@ -41,7 +41,7 @@ ___
 
 •  **coinbase**: boolean
 
-*Defined in [src/model/response/ltc/LtcTx.ts:134](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/ltc/LtcTx.ts#L134)*
+*Defined in [src/model/response/ltc/LtcTx.ts:134](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ltc/LtcTx.ts#L134)*
 
 Coinbase transaction - miner fee.
 
@@ -53,7 +53,7 @@ ___
 
 •  **height**: number
 
-*Defined in [src/model/response/ltc/LtcTx.ts:110](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/ltc/LtcTx.ts#L110)*
+*Defined in [src/model/response/ltc/LtcTx.ts:110](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ltc/LtcTx.ts#L110)*
 
 **`memberof`** LtcTxCoin
 
@@ -63,7 +63,7 @@ ___
 
 •  **script**: string
 
-*Defined in [src/model/response/ltc/LtcTx.ts:122](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/ltc/LtcTx.ts#L122)*
+*Defined in [src/model/response/ltc/LtcTx.ts:122](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ltc/LtcTx.ts#L122)*
 
 **`memberof`** LtcTxCoin
 
@@ -73,7 +73,7 @@ ___
 
 •  **value**: string
 
-*Defined in [src/model/response/ltc/LtcTx.ts:116](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/ltc/LtcTx.ts#L116)*
+*Defined in [src/model/response/ltc/LtcTx.ts:116](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ltc/LtcTx.ts#L116)*
 
 **`memberof`** LtcTxCoin
 
@@ -83,6 +83,6 @@ ___
 
 •  **version**: number
 
-*Defined in [src/model/response/ltc/LtcTx.ts:104](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/ltc/LtcTx.ts#L104)*
+*Defined in [src/model/response/ltc/LtcTx.ts:104](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ltc/LtcTx.ts#L104)*
 
 **`memberof`** LtcTxCoin

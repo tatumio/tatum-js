@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.0**
+**@tatumio/tatum - v1.3.1**
 
 > [README](../README.md) / [Globals](../globals.md) / "src/transaction/vet"
 
@@ -18,7 +18,7 @@
 
 ▸ `Const`**prepareVetSignedTransaction**(`testnet`: boolean, `body`: [TransferVet](../classes/_src_model_request_transfervet_.transfervet.md), `provider?`: undefined \| string): Promise\<any>
 
-*Defined in [src/transaction/vet.ts:49](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/transaction/vet.ts#L49)*
+*Defined in [src/transaction/vet.ts:49](https://github.com/tatumio/tatum-js/blob/8f0f126/src/transaction/vet.ts#L49)*
 
 Sign VeChain transaction with private keys locally. Nothing is broadcast to the blockchain.
 
@@ -40,7 +40,7 @@ ___
 
 ▸ `Const`**sendVetTransaction**(`testnet`: boolean, `body`: [TransferVet](../classes/_src_model_request_transfervet_.transfervet.md), `provider?`: undefined \| string): Promise\<[TransactionHash](../interfaces/_src_model_response_common_transactionhash_.transactionhash.md)>
 
-*Defined in [src/transaction/vet.ts:17](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/transaction/vet.ts#L17)*
+*Defined in [src/transaction/vet.ts:17](https://github.com/tatumio/tatum-js/blob/8f0f126/src/transaction/vet.ts#L17)*
 
 Send VeChain transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
 This operation is irreversible.
@@ -63,7 +63,7 @@ ___
 
 ▸ `Const`**signVetKMSTransaction**(`tx`: [TransactionKMS](../classes/_src_model_response_kms_transactionkms_.transactionkms.md), `fromPrivateKey`: string, `testnet`: boolean, `provider?`: undefined \| string): Promise\<any>
 
-*Defined in [src/transaction/vet.ts:29](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/transaction/vet.ts#L29)*
+*Defined in [src/transaction/vet.ts:29](https://github.com/tatumio/tatum-js/blob/8f0f126/src/transaction/vet.ts#L29)*
 
 Sign VeChain pending transaction from Tatum KMS
 

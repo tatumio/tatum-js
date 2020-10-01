@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.0**
+**@tatumio/tatum - v1.3.1**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/ledger/MarketValue"](../modules/_src_model_response_ledger_marketvalue_.md) / MarketValue
 
@@ -23,7 +23,7 @@
 
 • `Optional` **amount**: undefined \| string
 
-*Defined in [src/model/response/ledger/MarketValue.ts:14](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/ledger/MarketValue.ts#L14)*
+*Defined in [src/model/response/ledger/MarketValue.ts:14](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/MarketValue.ts#L14)*
 
 Value of transaction in given base pair.
 
@@ -35,7 +35,7 @@ ___
 
 • `Optional` **currency**: [Fiat](../enums/_src_model_response_ledger_fiat_.fiat.md)
 
-*Defined in [src/model/response/ledger/MarketValue.ts:20](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/ledger/MarketValue.ts#L20)*
+*Defined in [src/model/response/ledger/MarketValue.ts:20](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/MarketValue.ts#L20)*
 
 Base pair.
 
@@ -47,7 +47,7 @@ ___
 
 • `Optional` **source**: undefined \| string
 
-*Defined in [src/model/response/ledger/MarketValue.ts:32](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/ledger/MarketValue.ts#L32)*
+*Defined in [src/model/response/ledger/MarketValue.ts:32](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/MarketValue.ts#L32)*
 
 Source of base pair.
 
@@ -59,7 +59,7 @@ ___
 
 • `Optional` **sourceDate**: undefined \| number
 
-*Defined in [src/model/response/ledger/MarketValue.ts:26](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/ledger/MarketValue.ts#L26)*
+*Defined in [src/model/response/ledger/MarketValue.ts:26](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/ledger/MarketValue.ts#L26)*
 
 Date of validity of rate in UTC.
 

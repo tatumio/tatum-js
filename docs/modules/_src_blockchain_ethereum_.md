@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.0**
+**@tatumio/tatum - v1.3.1**
 
 > [README](../README.md) / [Globals](../globals.md) / "src/blockchain/ethereum"
 
@@ -23,7 +23,7 @@
 
 ▸ `Const`**ethBroadcast**(`txData`: string, `signatureId?`: undefined \| string): Promise\<[TransactionHash](../interfaces/_src_model_response_common_transactionhash_.transactionhash.md)>
 
-*Defined in [src/blockchain/ethereum.ts:8](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/blockchain/ethereum.ts#L8)*
+*Defined in [src/blockchain/ethereum.ts:8](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/ethereum.ts#L8)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/EthBroadcast" target="_blank">Tatum API documentation</a>
 
@@ -42,7 +42,7 @@ ___
 
 ▸ `Const`**ethGetAccountBalance**(`address`: string): Promise\<number>
 
-*Defined in [src/blockchain/ethereum.ts:39](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/blockchain/ethereum.ts#L39)*
+*Defined in [src/blockchain/ethereum.ts:39](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/ethereum.ts#L39)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/EthGetBalance" target="_blank">Tatum API documentation</a>
 
@@ -60,7 +60,7 @@ ___
 
 ▸ `Const`**ethGetAccountErc20Address**(`address`: string, `contractAddress`: string): Promise\<number>
 
-*Defined in [src/blockchain/ethereum.ts:46](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/blockchain/ethereum.ts#L46)*
+*Defined in [src/blockchain/ethereum.ts:46](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/ethereum.ts#L46)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/EthErc20GetBalance" target="_blank">Tatum API documentation</a>
 
@@ -79,7 +79,7 @@ ___
 
 ▸ `Const`**ethGetAccountTransactions**(`address`: string, `pageSize`: number, `offset`: number): Promise\<[EthTx](../interfaces/_src_model_response_eth_ethtx_.ethtx.md)[]>
 
-*Defined in [src/blockchain/ethereum.ts:61](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/blockchain/ethereum.ts#L61)*
+*Defined in [src/blockchain/ethereum.ts:61](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/ethereum.ts#L61)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/EthGetTransactionByAddress" target="_blank">Tatum API documentation</a>
 
@@ -99,7 +99,7 @@ ___
 
 ▸ `Const`**ethGetBlock**(`hash`: string): Promise\<[EthBlock](../interfaces/_src_model_response_eth_ethblock_.ethblock.md)>
 
-*Defined in [src/blockchain/ethereum.ts:32](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/blockchain/ethereum.ts#L32)*
+*Defined in [src/blockchain/ethereum.ts:32](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/ethereum.ts#L32)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/EthGetBlock" target="_blank">Tatum API documentation</a>
 
@@ -117,7 +117,7 @@ ___
 
 ▸ `Const`**ethGetCurrentBlock**(): Promise\<number>
 
-*Defined in [src/blockchain/ethereum.ts:25](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/blockchain/ethereum.ts#L25)*
+*Defined in [src/blockchain/ethereum.ts:25](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/ethereum.ts#L25)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/EthGetCurrentBlock" target="_blank">Tatum API documentation</a>
 
@@ -129,7 +129,7 @@ ___
 
 ▸ `Const`**ethGetTransaction**(`hash`: string): Promise\<[EthTx](../interfaces/_src_model_response_eth_ethtx_.ethtx.md)>
 
-*Defined in [src/blockchain/ethereum.ts:54](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/blockchain/ethereum.ts#L54)*
+*Defined in [src/blockchain/ethereum.ts:54](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/ethereum.ts#L54)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/EthGetTransaction" target="_blank">Tatum API documentation</a>
 
@@ -147,7 +147,7 @@ ___
 
 ▸ `Const`**ethGetTransactionsCount**(`address`: string): Promise\<number>
 
-*Defined in [src/blockchain/ethereum.ts:17](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/blockchain/ethereum.ts#L17)*
+*Defined in [src/blockchain/ethereum.ts:17](https://github.com/tatumio/tatum-js/blob/8f0f126/src/blockchain/ethereum.ts#L17)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/EthGetTransactionCount" target="_blank">Tatum API documentation</a>
 

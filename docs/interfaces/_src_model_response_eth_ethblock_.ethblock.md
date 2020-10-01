@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.0**
+**@tatumio/tatum - v1.3.1**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/eth/EthBlock"](../modules/_src_model_response_eth_ethblock_.md) / EthBlock
 
@@ -38,7 +38,7 @@
 
 •  **difficulty**: string
 
-*Defined in [src/model/response/eth/EthBlock.ts:14](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/eth/EthBlock.ts#L14)*
+*Defined in [src/model/response/eth/EthBlock.ts:14](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthBlock.ts#L14)*
 
 Difficulty for this block.
 
@@ -50,7 +50,7 @@ ___
 
 •  **extraData**: string
 
-*Defined in [src/model/response/eth/EthBlock.ts:20](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/eth/EthBlock.ts#L20)*
+*Defined in [src/model/response/eth/EthBlock.ts:20](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthBlock.ts#L20)*
 
 The 'extra data' field of this block.
 
@@ -62,7 +62,7 @@ ___
 
 •  **gasLimit**: number
 
-*Defined in [src/model/response/eth/EthBlock.ts:26](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/eth/EthBlock.ts#L26)*
+*Defined in [src/model/response/eth/EthBlock.ts:26](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthBlock.ts#L26)*
 
 The maximum gas allowed in this block.
 
@@ -74,7 +74,7 @@ ___
 
 •  **gasUsed**: number
 
-*Defined in [src/model/response/eth/EthBlock.ts:32](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/eth/EthBlock.ts#L32)*
+*Defined in [src/model/response/eth/EthBlock.ts:32](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthBlock.ts#L32)*
 
 The total used gas by all transactions in this block.
 
@@ -86,7 +86,7 @@ ___
 
 •  **hash**: string
 
-*Defined in [src/model/response/eth/EthBlock.ts:38](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/eth/EthBlock.ts#L38)*
+*Defined in [src/model/response/eth/EthBlock.ts:38](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthBlock.ts#L38)*
 
 Hash of the block. 'null' when its pending block.
 
@@ -98,7 +98,7 @@ ___
 
 •  **logsBloom**: string
 
-*Defined in [src/model/response/eth/EthBlock.ts:44](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/eth/EthBlock.ts#L44)*
+*Defined in [src/model/response/eth/EthBlock.ts:44](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthBlock.ts#L44)*
 
 The bloom filter for the logs of the block. 'null' when its pending block.
 
@@ -110,7 +110,7 @@ ___
 
 •  **miner**: string
 
-*Defined in [src/model/response/eth/EthBlock.ts:50](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/eth/EthBlock.ts#L50)*
+*Defined in [src/model/response/eth/EthBlock.ts:50](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthBlock.ts#L50)*
 
 The address of the beneficiary to whom the mining rewards were given.
 
@@ -122,7 +122,7 @@ ___
 
 •  **mixHash**: string
 
-*Defined in [src/model/response/eth/EthBlock.ts:56](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/eth/EthBlock.ts#L56)*
+*Defined in [src/model/response/eth/EthBlock.ts:56](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthBlock.ts#L56)*
 
 **`memberof`** EthBlock
 
@@ -132,7 +132,7 @@ ___
 
 •  **nonce**: string
 
-*Defined in [src/model/response/eth/EthBlock.ts:62](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/eth/EthBlock.ts#L62)*
+*Defined in [src/model/response/eth/EthBlock.ts:62](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthBlock.ts#L62)*
 
 Hash of the generated proof-of-work. 'null' when its pending block.
 
@@ -144,7 +144,7 @@ ___
 
 •  **number**: number
 
-*Defined in [src/model/response/eth/EthBlock.ts:68](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/eth/EthBlock.ts#L68)*
+*Defined in [src/model/response/eth/EthBlock.ts:68](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthBlock.ts#L68)*
 
 The block number. 'null' when its pending block.
 
@@ -156,7 +156,7 @@ ___
 
 •  **parentHash**: string
 
-*Defined in [src/model/response/eth/EthBlock.ts:74](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/eth/EthBlock.ts#L74)*
+*Defined in [src/model/response/eth/EthBlock.ts:74](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthBlock.ts#L74)*
 
 Hash of the parent block.
 
@@ -168,7 +168,7 @@ ___
 
 •  **receiptsRoot**: string
 
-*Defined in [src/model/response/eth/EthBlock.ts:80](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/eth/EthBlock.ts#L80)*
+*Defined in [src/model/response/eth/EthBlock.ts:80](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthBlock.ts#L80)*
 
 **`memberof`** EthBlock
 
@@ -178,7 +178,7 @@ ___
 
 •  **sha3Uncles**: string
 
-*Defined in [src/model/response/eth/EthBlock.ts:86](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/eth/EthBlock.ts#L86)*
+*Defined in [src/model/response/eth/EthBlock.ts:86](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthBlock.ts#L86)*
 
 SHA3 of the uncles data in the block.
 
@@ -190,7 +190,7 @@ ___
 
 •  **size**: number
 
-*Defined in [src/model/response/eth/EthBlock.ts:92](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/eth/EthBlock.ts#L92)*
+*Defined in [src/model/response/eth/EthBlock.ts:92](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthBlock.ts#L92)*
 
 The size of this block in bytes.
 
@@ -202,7 +202,7 @@ ___
 
 •  **stateRoot**: string
 
-*Defined in [src/model/response/eth/EthBlock.ts:98](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/eth/EthBlock.ts#L98)*
+*Defined in [src/model/response/eth/EthBlock.ts:98](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthBlock.ts#L98)*
 
 The root of the final state trie of the block.
 
@@ -214,7 +214,7 @@ ___
 
 •  **timestamp**: number
 
-*Defined in [src/model/response/eth/EthBlock.ts:104](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/eth/EthBlock.ts#L104)*
+*Defined in [src/model/response/eth/EthBlock.ts:104](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthBlock.ts#L104)*
 
 The unix timestamp for when the block was collated.
 
@@ -226,7 +226,7 @@ ___
 
 •  **totalDifficulty**: string
 
-*Defined in [src/model/response/eth/EthBlock.ts:110](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/eth/EthBlock.ts#L110)*
+*Defined in [src/model/response/eth/EthBlock.ts:110](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthBlock.ts#L110)*
 
 Total difficulty of the chain until this block.
 
@@ -238,7 +238,7 @@ ___
 
 •  **transactions**: [EthTx](_src_model_response_eth_ethtx_.ethtx.md)[]
 
-*Defined in [src/model/response/eth/EthBlock.ts:116](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/eth/EthBlock.ts#L116)*
+*Defined in [src/model/response/eth/EthBlock.ts:116](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthBlock.ts#L116)*
 
 Array of transactions.
 
@@ -250,7 +250,7 @@ ___
 
 •  **transactionsRoot**: string
 
-*Defined in [src/model/response/eth/EthBlock.ts:122](https://github.com/tatumio/tatum-js/blob/31bb1b4/src/model/response/eth/EthBlock.ts#L122)*
+*Defined in [src/model/response/eth/EthBlock.ts:122](https://github.com/tatumio/tatum-js/blob/8f0f126/src/model/response/eth/EthBlock.ts#L122)*
 
 The root of the transaction trie of the block.
 
