@@ -1,3 +1,7 @@
+**@tatumio/tatum - v1.3.0**
+
+> README / [Globals](globals.md)
+
 # Tatum API client
 Tatum API client allows browsers and Node.js clients to interact with Tatum API. It includes the following core components.
 
@@ -9,7 +13,7 @@ Tatum API client allows browsers and Node.js clients to interact with Tatum API.
 - **offchain** - set of functions to generate and sign Tatum off-chain transactions locally.
 
 You can find more detailed documentation and examples in Tatum API documentation
-[Documentation](https://tatum.io) pages or read the documentation for the [client](./docs/globals.md).
+[Documentation](https://tatum.io) pages or read the documentation for the [client](./globals.md).
 
 ## Installation
 
