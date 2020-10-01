@@ -6,7 +6,7 @@ import {OrderBookResponse} from '../model/response/ledger/OrderBook'
 /**
  * For more details, see <a href="https://tatum.io/apidoc.html#operation/getHistoricalTrades" target="_blank">Tatum API documentation</a>
  */
-export const getHistoricalTrades = async (pageSize: number = 50, offset: number = 0): Promise<OrderBookResponse> => {
+export const getHistoricalTrades = async (pageSize: number = 50, offset: number = 0): Promise<OrderBookResponse[]> => {
     return (await axios.get(
         `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/trade/history?pageSize=${pageSize}&offset=${offset}`,
         {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data
@@ -15,7 +15,7 @@ export const getHistoricalTrades = async (pageSize: number = 50, offset: number 
 /**
  * For more details, see <a href="https://tatum.io/apidoc.html#operation/getBuyTrades" target="_blank">Tatum API documentation</a>
  */
-export const getActiveBuyTrades = async (id: string, pageSize: number = 50, offset: number = 0): Promise<OrderBookResponse> => {
+export const getActiveBuyTrades = async (id: string, pageSize: number = 50, offset: number = 0): Promise<OrderBookResponse[]> => {
     return (await axios.get(
         `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/trade/buy?id=${id}&pageSize=${pageSize}&offset=${offset}`,
         {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data
@@ -24,7 +24,7 @@ export const getActiveBuyTrades = async (id: string, pageSize: number = 50, offs
 /**
  * For more details, see <a href="https://tatum.io/apidoc.html#operation/getSellTrades" target="_blank">Tatum API documentation</a>
  */
-export const getActiveSellTrades = async (id: string, pageSize: number = 50, offset: number = 0): Promise<OrderBookResponse> => {
+export const getActiveSellTrades = async (id: string, pageSize: number = 50, offset: number = 0): Promise<OrderBookResponse[]> => {
     return (await axios.get(
         `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/trade/sell?id=${id}&pageSize=${pageSize}&offset=${offset}`,
         {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data
