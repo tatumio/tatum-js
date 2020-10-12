@@ -32,11 +32,6 @@ export interface Wallet {
      * extended public key to derive addresses from
      */
     xpub: string;
-
-    /**
-     * extended private key to derive private keys from
-     */
-    xpriv: string;
 }
 
 /**
@@ -50,7 +45,6 @@ export const generateBnbWallet = async (testnet: boolean, mnem: string): Promise
     const derivePath = hdwallet.derivePath(BNB_DERIVATION_PATH);
     return {
         xpub: derivePath.neutered().toBase58(),
-        xpriv: (derivePath.privateKey as Buffer).toString('hex'),
         mnemonic: mnem,
     };
 };
@@ -67,7 +61,6 @@ export const generateVetWallet = async (testnet: boolean, mnem: string): Promise
     const derivePath = hdwallet.derivePath(path);
     return {
         xpub: derivePath.publicExtendedKey().toString(),
-        xpriv: derivePath.privateExtendedKey().toString(),
         mnemonic: mnem
     };
 };
@@ -84,7 +77,6 @@ export const generateEthWallet = async (testnet: boolean, mnem: string): Promise
     const derivePath = hdwallet.derivePath(path);
     return {
         xpub: derivePath.publicExtendedKey().toString(),
-        xpriv: derivePath.privateExtendedKey().toString(),
         mnemonic: mnem
     };
 };
@@ -104,7 +96,6 @@ export const generateBchWallet = (testnet: boolean, mnem: string): Wallet => {
     return {
         mnemonic: mnem,
         xpub: node.toXPub(path),
-        xpriv: node.toXPriv(path),
     };
 };
 
@@ -116,7 +107,7 @@ export const generateBchWallet = (testnet: boolean, mnem: string): Wallet => {
  */
 export const generateBtcWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
     const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? networks.testnet.bip32 : networks.bitcoin.bip32);
-    return {mnemonic: mnem, ...hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : BTC_DERIVATION_PATH).toJSON()};
+    return {mnemonic: mnem, xpub: hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : BTC_DERIVATION_PATH).toJSON().xpub};
 };
 
 /**
@@ -127,7 +118,7 @@ export const generateBtcWallet = async (testnet: boolean, mnem: string): Promise
  */
 export const generateLtcWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
     const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? LTC_TEST_NETWORK.bip32 : LTC_NETWORK.bip32);
-    return {mnemonic: mnem, ...hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : LTC_DERIVATION_PATH).toJSON()};
+    return {mnemonic: mnem, xpub: hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : LTC_DERIVATION_PATH).toJSON().xpub};
 };
 
 /**

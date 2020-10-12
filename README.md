@@ -53,8 +53,7 @@ const btcWallet = Tatum.generateWallet(Tatum.Currency.BTC, true);
 console.log(btcWallet);
 > {
     mnemonic: ... ,
-    xpub: ... ,
-    xprv: ...
+    xpub: ... 
 }
 ```
 
