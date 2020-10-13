@@ -73,15 +73,15 @@ describe('Address tests', () => {
     });
 
     it('should generate wallet for BNB mainnet', async () => {
-        const wallet = await generateBnbWallet(false, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten');
-        expect(wallet.mnemonic).toBe('quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten');
-        expect(wallet.xpub).toBe('xpub6EGRttvAUHfDHnwPfrQC9NdHuVpkYmrNGyRVBq5XTQyaCB4GaKgo9xNe4A1iP2uCTpDFnfH9PP5xeCnZC2Baqe88pbR2JJ1ofZ5efp7Xz8d');
+        const wallet = await generateBnbWallet(false);
+        expect(wallet.address).not.toBe('');
+        expect(wallet.privateKey).not.toBe('');
     });
 
     it('should generate wallet for BNB testnet', async () => {
-        const wallet = await generateBnbWallet(true, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten');
-        expect(wallet.mnemonic).toBe('quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten');
-        expect(wallet.xpub).toBe('tpubDEe4R8jrBZcfZb8F83PHMHxfEcvQYAMRpc1nYP8foKjTwTiyeYXtJQ3UJC6VuXrSFikAQEo1vUv1LPHAat2pj5aRtCAKypg3FWg4RqpqrJj');
+        const wallet = await generateBnbWallet(true);
+        expect(wallet.address).not.toBe('');
+        expect(wallet.privateKey).not.toBe('');
     });
 
     it('should generate wallet for XLM', async () => {

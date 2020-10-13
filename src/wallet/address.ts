@@ -1,4 +1,3 @@
-import {getAddressFromPublicKey, getPrivateKeyFromMnemonic} from '@binance-chain/javascript-sdk/lib/crypto';
 import {fromBase58, fromSeed} from 'bip32';
 import {mnemonicToSeed} from 'bip39';
 import {HDNode, Mnemonic} from 'bitbox-sdk';
@@ -83,18 +82,6 @@ const generateVetAddress = (testnet: boolean, xpub: string, i: number) => {
 };
 
 /**
- * Generate BnB address
- * @param testnet testnet or mainnet version of address
- * @param xpub extended public key to generate address from
- * @param i derivation index of address to generate. Up to 2^32 addresses can be generated.
- * @returns blockchain address
- */
-const generateBnbAddress = (testnet: boolean, xpub: string, i: number) => {
-    const w = fromBase58(xpub, testnet ? networks.testnet : undefined).derive(i);
-    return getAddressFromPublicKey(w.publicKey.toString('hex'), testnet ? 'tbnb' : 'bnb');
-};
-
-/**
  * Generate Bitcoin private key from mnemonic seed
  * @param testnet testnet or mainnet version of address
  * @param mnemonic mnemonic to generate private key from
@@ -168,16 +155,6 @@ const generateVetPrivateKey = async (testnet: boolean, mnemonic: string, i: numb
 };
 
 /**
- * Generate BnbB private key from mnemonic seed
- * @param mnemonic mnemonic to generate private key from
- * @param i derivation index of private key to generate.
- * @returns blockchain private key to the address
- */
-const generateBnbPrivateKey = async (mnemonic: string, i: number) => {
-    return getPrivateKeyFromMnemonic(mnemonic, true, i);
-};
-
-/**
  * Generate address
  * @param currency type of blockchain
  * @param testnet testnet or mainnet version of address
@@ -211,8 +188,6 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
             return generateEthAddress(testnet, xpub, i);
         case Currency.VET:
             return generateVetAddress(testnet, xpub, i);
-        case Currency.BNB:
-            return generateBnbAddress(testnet, xpub, i);
         default:
             throw new Error('Unsupported blockchain.');
     }
@@ -252,8 +227,6 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
             return generateEthPrivateKey(testnet, mnemonic, i);
         case Currency.VET:
             return generateVetPrivateKey(testnet, mnemonic, i);
-        case Currency.BNB:
-            return generateBnbPrivateKey(mnemonic, i);
         default:
             throw new Error('Unsupported blockchain.');
     }

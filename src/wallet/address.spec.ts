@@ -43,16 +43,6 @@ describe('Address tests', () => {
         expect(address).toBe('0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea');
     });
 
-    it('should generate address 1 for BNB mainnet', () => {
-        const address = generateAddressFromXPub(Currency.BNB, false, 'xpub6EGRttvAUHfDHnwPfrQC9NdHuVpkYmrNGyRVBq5XTQyaCB4GaKgo9xNe4A1iP2uCTpDFnfH9PP5xeCnZC2Baqe88pbR2JJ1ofZ5efp7Xz8d', 1);
-        expect(address).toBe('bnb1z38sye63xarml0apean45llye4g0mrl35xtey3');
-    });
-
-    it('should generate address 1 for BNB testnet', () => {
-        const address = generateAddressFromXPub(Currency.BNB, true, 'tpubDEe4R8jrBZcfZb8F83PHMHxfEcvQYAMRpc1nYP8foKjTwTiyeYXtJQ3UJC6VuXrSFikAQEo1vUv1LPHAat2pj5aRtCAKypg3FWg4RqpqrJj', 1);
-        expect(address).toBe('tbnb1z38sye63xarml0apean45llye4g0mrl36nzayq');
-    });
-
     it('should generate address 1 for VET mainnet', () => {
         const address = generateAddressFromXPub(Currency.VET, false, 'xpub6EzJLu3Hi5hEFAkiZAxCTaXqXoS95seTnG1tdYdF8fBcVZCfR8GQP8UGvfF52szpwZqiiGHJw5694emxSpYBE5qDxAZUgiHLzbVhb5ErRMa', 1);
         expect(address).toBe('0x5b70c58cb71712e2d4d3519e065bbe196546877d');
@@ -101,16 +91,6 @@ describe('Address tests', () => {
     it('should generate private key 1 for ETH testnet', async () => {
         const privateKey = await generatePrivateKeyFromMnemonic(Currency.ETH, true, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1);
         expect(privateKey).toBe('0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb');
-    });
-
-    it('should generate private key 1 for BNB mainnet', async () => {
-        const privateKey = await generatePrivateKeyFromMnemonic(Currency.BNB, false, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1);
-        expect(privateKey).toBe('d4bd093533c72c2032ab01476efa15e856df7b69aed977947f452e51944ec57c');
-    });
-
-    it('should generate private key 1 for BNB testnet', async () => {
-        const privateKey = await generatePrivateKeyFromMnemonic(Currency.BNB, true, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1);
-        expect(privateKey).toBe('d4bd093533c72c2032ab01476efa15e856df7b69aed977947f452e51944ec57c');
     });
 
     it('should generate private key 1 for VET mainnet', async () => {

@@ -1,5 +1,5 @@
+import {generatePrivateKey, getAddressFromPrivateKey} from '@binance-chain/javascript-sdk/lib/crypto';
 import Neon, {wallet} from '@cityofzion/neon-js';
-import {fromSeed} from 'bip32';
 import {generateMnemonic, mnemonicToSeed} from 'bip39';
 import {HDNode, Mnemonic} from 'bitbox-sdk';
 import {networks} from 'bitcoinjs-lib';
@@ -10,7 +10,6 @@ import {RippleAPI} from 'ripple-lib';
 import {Keypair} from 'stellar-sdk';
 import {
     BCH_DERIVATION_PATH,
-    BNB_DERIVATION_PATH,
     BTC_DERIVATION_PATH,
     ETH_DERIVATION_PATH,
     LTC_DERIVATION_PATH,
@@ -37,15 +36,14 @@ export interface Wallet {
 /**
  * Generate BnB wallet
  * @param testnet testnet or mainnet version of address
- * @param mnem mnemonic seed to use
  * @returns wallet
  */
-export const generateBnbWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
-    const hdwallet = fromSeed(await mnemonicToSeed(mnem), testnet ? networks.testnet : undefined);
-    const derivePath = hdwallet.derivePath(BNB_DERIVATION_PATH);
+export const generateBnbWallet = async (testnet: boolean) => {
+    const privateKey = generatePrivateKey();
+    const prefix = testnet ? 'tbnb' : 'bnb';
     return {
-        xpub: derivePath.neutered().toBase58(),
-        mnemonic: mnem,
+        address: getAddressFromPrivateKey(privateKey, prefix),
+        privateKey,
     };
 };
 
@@ -187,7 +185,7 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
         case Currency.NEO:
             return generateNeoWallet();
         case Currency.BNB:
-            return generateBnbWallet(testnet, mnem);
+            return generateBnbWallet(testnet);
         default:
             throw new Error('Unsupported blockchain.');
     }
