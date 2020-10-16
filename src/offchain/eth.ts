@@ -45,7 +45,7 @@ export const sendEthOffchainTransaction = async (testnet: boolean, body: Transfe
     withdrawal.fee = new BigNumber(web3.utils.fromWei(new BigNumber(gasLimit).multipliedBy(gasPrice).toString(), 'ether')).toString();
     const {id} = await offchainStoreWithdrawal(withdrawal);
     try {
-        return await offchainBroadcast({txData, withdrawalId: id, currency: Currency.ETH});
+        return {withdrawalId: id, ...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.ETH})};
     } catch (e) {
         console.error(e);
         await offchainCancelWithdrawal(id);
@@ -89,7 +89,7 @@ export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: Tr
     withdrawal.fee = new BigNumber(web3.utils.fromWei(new BigNumber(gasLimit).multipliedBy(gasPrice).toString(), 'ether')).toString();
     const {id} = await offchainStoreWithdrawal(withdrawal);
     try {
-        return await offchainBroadcast({txData, withdrawalId: id, currency: Currency.ETH});
+        return {withdrawalId: id, ...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.ETH})};
     } catch (e) {
         console.error(e);
         await offchainCancelWithdrawal(id);

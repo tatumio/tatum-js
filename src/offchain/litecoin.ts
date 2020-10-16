@@ -34,7 +34,7 @@ export const sendLitecoinOffchainTransaction = async (testnet: boolean, body: Tr
         throw e;
     }
     try {
-        return await offchainBroadcast({txData, withdrawalId: id, currency: Currency.LTC});
+        return {withdrawalId: id, ...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.LTC})};
     } catch (e) {
         console.error(e);
         await offchainCancelWithdrawal(id);
