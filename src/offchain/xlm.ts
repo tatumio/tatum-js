@@ -35,7 +35,7 @@ export const sendXlmOffchainTransaction = async (testnet: boolean, body: Transfe
         throw e;
     }
     try {
-        return {withdrawalId: id, ...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.XLM})};
+        return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.XLM}), id};
     } catch (e) {
         console.error(e);
         await offchainCancelWithdrawal(id);

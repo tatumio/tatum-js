@@ -35,7 +35,7 @@ export const sendXrpOffchainTransaction = async (testnet: boolean, body: Transfe
         throw e;
     }
     try {
-        return {withdrawalId: id, ...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.XRP})};
+        return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.XRP}), id};
     } catch (e) {
         console.error(e);
         await offchainCancelWithdrawal(id);

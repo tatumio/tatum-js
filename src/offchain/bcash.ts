@@ -41,7 +41,7 @@ export const sendBitcoinCashOffchainTransaction = async (testnet: boolean, body:
         throw e;
     }
     try {
-        return {withdrawalId: id, ...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.BCH})};
+        return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.BCH}), id};
     } catch (e) {
         console.error(e);
         await offchainCancelWithdrawal(id);

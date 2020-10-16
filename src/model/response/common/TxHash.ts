@@ -5,12 +5,6 @@
  */
 export interface TxHash {
     /**
-     * ID of withdrawal. If transaction is not valid in blockchain, use this id to cancel withdrawal.
-     * @type {string}
-     * @memberof TxHash
-     */
-    id: string;
-    /**
      * TX hash of successful transaction.
      * @type {string}
      * @memberof TxHash
