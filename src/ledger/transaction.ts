@@ -48,7 +48,7 @@ export const getTransactionsByLedger = async (filter: TransactionFilter, pageSiz
 /**
  * For more details, see <a href="https://tatum.io/apidoc.html#operation/getTransactionsByAccountId" target="_blank">Tatum API documentation</a>
  */
-export const countTransactionsByAccount = async (filter: TransactionFilter): Promise<Transaction[]> => {
+export const countTransactionsByAccount = async (filter: TransactionFilter): Promise<number> => {
     await validateOrReject(filter);
     return (await axios.post(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ledger/transaction/account?count=true`,
         filter, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
@@ -57,7 +57,7 @@ export const countTransactionsByAccount = async (filter: TransactionFilter): Pro
 /**
  * For more details, see <a href="https://tatum.io/apidoc.html#operation/getTransactionsByCustomerId" target="_blank">Tatum API documentation</a>
  */
-export const countTransactionsByCustomer = async (filter: TransactionFilter): Promise<Transaction[]> => {
+export const countTransactionsByCustomer = async (filter: TransactionFilter): Promise<number> => {
     await validateOrReject(filter);
     return (await axios.post(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ledger/transaction/customer?count=true`,
         filter, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
@@ -66,7 +66,7 @@ export const countTransactionsByCustomer = async (filter: TransactionFilter): Pr
 /**
  * For more details, see <a href="https://tatum.io/apidoc.html#operation/getTransactions" target="_blank">Tatum API documentation</a>
  */
-export const countTransactionsByLedger = async (filter: TransactionFilter): Promise<Transaction[]> => {
+export const countTransactionsByLedger = async (filter: TransactionFilter): Promise<number> => {
     await validateOrReject(filter);
     return (await axios.post(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ledger/transaction/ledger?count=true`,
         filter, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
