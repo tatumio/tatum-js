@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / "src/offchain/bcash"
 
@@ -18,7 +18,7 @@
 
 ▸ `Const`**prepareBitcoinCashSignedOffchainTransaction**(`testnet`: boolean, `data`: [WithdrawalResponseData](../interfaces/_src_model_response_offchain_withdrawalresponse_.withdrawalresponsedata.md)[], `amount`: string, `address`: string, `mnemonic?`: undefined \| string, `keyPair?`: [KeyPair](../classes/_src_model_request_transferbtcbasedoffchain_.keypair.md)[], `changeAddress?`: undefined \| string): Promise\<any>
 
-*Defined in [src/offchain/bcash.ts:89](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/offchain/bcash.ts#L89)*
+*Defined in [src/offchain/bcash.ts:89](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/offchain/bcash.ts#L89)*
 
 Sign Bitcoin Cash transaction with private keys locally. Nothing is broadcast to the blockchain.
 
@@ -42,9 +42,9 @@ ___
 
 ### sendBitcoinCashOffchainTransaction
 
-▸ `Const`**sendBitcoinCashOffchainTransaction**(`testnet`: boolean, `body`: [TransferBtcBasedOffchain](../classes/_src_model_request_transferbtcbasedoffchain_.transferbtcbasedoffchain.md)): Promise\<[TxHash](../interfaces/_src_model_response_common_txhash_.txhash.md)>
+▸ `Const`**sendBitcoinCashOffchainTransaction**(`testnet`: boolean, `body`: [TransferBtcBasedOffchain](../classes/_src_model_request_transferbtcbasedoffchain_.transferbtcbasedoffchain.md)): Promise\<{ id: string  }>
 
-*Defined in [src/offchain/bcash.ts:23](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/offchain/bcash.ts#L23)*
+*Defined in [src/offchain/bcash.ts:23](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/offchain/bcash.ts#L23)*
 
 Send Bitcoin Cash transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
 This operation is irreversible.
@@ -56,7 +56,7 @@ Name | Type | Description |
 `testnet` | boolean | mainnet or testnet version |
 `body` | [TransferBtcBasedOffchain](../classes/_src_model_request_transferbtcbasedoffchain_.transferbtcbasedoffchain.md) | content of the transaction to broadcast |
 
-**Returns:** Promise\<[TxHash](../interfaces/_src_model_response_common_txhash_.txhash.md)>
+**Returns:** Promise\<{ id: string  }>
 
 transaction id of the transaction in the blockchain
 
@@ -66,7 +66,7 @@ ___
 
 ▸ `Const`**signBitcoinCashOffchainKMSTransaction**(`tx`: [TransactionKMS](../classes/_src_model_response_kms_transactionkms_.transactionkms.md), `mnemonic`: string, `testnet`: boolean): Promise\<any>
 
-*Defined in [src/offchain/bcash.ts:59](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/offchain/bcash.ts#L59)*
+*Defined in [src/offchain/bcash.ts:59](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/offchain/bcash.ts#L59)*
 
 Sign Bitcoin Cash pending transaction from Tatum KMS
 

@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/request/TransferVet"](../modules/_src_model_request_transfervet_.md) / TransferVet
 
@@ -24,7 +24,7 @@
 
 •  **amount**: string
 
-*Defined in [src/model/request/TransferVet.ts:23](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferVet.ts#L23)*
+*Defined in [src/model/request/TransferVet.ts:23](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/TransferVet.ts#L23)*
 
 ___
 
@@ -32,7 +32,7 @@ ___
 
 • `Optional` **data**: undefined \| string
 
-*Defined in [src/model/request/TransferVet.ts:27](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferVet.ts#L27)*
+*Defined in [src/model/request/TransferVet.ts:27](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/TransferVet.ts#L27)*
 
 ___
 
@@ -40,7 +40,7 @@ ___
 
 • `Optional` **fee**: [VetFee](_src_model_request_transfervet_.vetfee.md)
 
-*Defined in [src/model/request/TransferVet.ts:30](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferVet.ts#L30)*
+*Defined in [src/model/request/TransferVet.ts:30](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/TransferVet.ts#L30)*
 
 ___
 
@@ -48,7 +48,7 @@ ___
 
 •  **fromPrivateKey**: string
 
-*Defined in [src/model/request/TransferVet.ts:14](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferVet.ts#L14)*
+*Defined in [src/model/request/TransferVet.ts:14](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/TransferVet.ts#L14)*
 
 ___
 
@@ -56,4 +56,4 @@ ___
 
 •  **to**: string
 
-*Defined in [src/model/request/TransferVet.ts:18](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferVet.ts#L18)*
+*Defined in [src/model/request/TransferVet.ts:18](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/TransferVet.ts#L18)*

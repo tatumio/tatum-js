@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / "src/offchain/xrp"
 
@@ -18,7 +18,7 @@
 
 ▸ `Const`**prepareXrpSignedOffchainTransaction**(`testnet`: boolean, `amount`: string, `address`: string, `secret`: string, `account`: any, `fee`: string, `sourceTag?`: undefined \| number, `destinationTag?`: undefined \| string): Promise\<string>
 
-*Defined in [src/offchain/xrp.ts:72](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/offchain/xrp.ts#L72)*
+*Defined in [src/offchain/xrp.ts:72](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/offchain/xrp.ts#L72)*
 
 Sign Xrp transaction with private keys locally. Nothing is broadcast to the blockchain.
 
@@ -43,9 +43,9 @@ ___
 
 ### sendXrpOffchainTransaction
 
-▸ `Const`**sendXrpOffchainTransaction**(`testnet`: boolean, `body`: [TransferXrpOffchain](../classes/_src_model_request_transferxrpoffchain_.transferxrpoffchain.md)): Promise\<[TxHash](../interfaces/_src_model_response_common_txhash_.txhash.md)>
+▸ `Const`**sendXrpOffchainTransaction**(`testnet`: boolean, `body`: [TransferXrpOffchain](../classes/_src_model_request_transferxrpoffchain_.transferxrpoffchain.md)): Promise\<{ id: string  }>
 
-*Defined in [src/offchain/xrp.ts:15](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/offchain/xrp.ts#L15)*
+*Defined in [src/offchain/xrp.ts:15](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/offchain/xrp.ts#L15)*
 
 Send Xrp transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
 This operation is irreversible.
@@ -57,7 +57,7 @@ Name | Type | Description |
 `testnet` | boolean | mainnet or testnet version |
 `body` | [TransferXrpOffchain](../classes/_src_model_request_transferxrpoffchain_.transferxrpoffchain.md) | content of the transaction to broadcast |
 
-**Returns:** Promise\<[TxHash](../interfaces/_src_model_response_common_txhash_.txhash.md)>
+**Returns:** Promise\<{ id: string  }>
 
 transaction id of the transaction in the blockchain
 
@@ -67,7 +67,7 @@ ___
 
 ▸ `Const`**signXrpOffchainKMSTransaction**(`tx`: [TransactionKMS](../classes/_src_model_response_kms_transactionkms_.transactionkms.md), `secret`: string): Promise\<string>
 
-*Defined in [src/offchain/xrp.ts:52](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/offchain/xrp.ts#L52)*
+*Defined in [src/offchain/xrp.ts:52](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/offchain/xrp.ts#L52)*
 
 Sign Xrp pending transaction from Tatum KMS
 

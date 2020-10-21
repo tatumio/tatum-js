@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/ledger/Customer"](../modules/_src_model_response_ledger_customer_.md) / Customer
 
@@ -26,7 +26,7 @@
 
 • `Optional` **accountingCurrency**: [Fiat](../enums/_src_model_response_ledger_fiat_.fiat.md)
 
-*Defined in [src/model/response/ledger/Customer.ts:12](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Customer.ts#L12)*
+*Defined in [src/model/response/ledger/Customer.ts:12](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Customer.ts#L12)*
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 •  **active**: boolean
 
-*Defined in [src/model/response/ledger/Customer.ts:16](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Customer.ts#L16)*
+*Defined in [src/model/response/ledger/Customer.ts:16](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Customer.ts#L16)*
 
 ___
 
@@ -42,7 +42,7 @@ ___
 
 • `Optional` **customerCountry**: [Country](../enums/_src_model_request_country_.country.md)
 
-*Defined in [src/model/response/ledger/Customer.ts:10](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Customer.ts#L10)*
+*Defined in [src/model/response/ledger/Customer.ts:10](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Customer.ts#L10)*
 
 ___
 
@@ -50,7 +50,7 @@ ___
 
 •  **enabled**: boolean
 
-*Defined in [src/model/response/ledger/Customer.ts:18](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Customer.ts#L18)*
+*Defined in [src/model/response/ledger/Customer.ts:18](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Customer.ts#L18)*
 
 ___
 
@@ -58,7 +58,7 @@ ___
 
 •  **externalId**: string
 
-*Defined in [src/model/response/ledger/Customer.ts:8](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Customer.ts#L8)*
+*Defined in [src/model/response/ledger/Customer.ts:8](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Customer.ts#L8)*
 
 ___
 
@@ -66,7 +66,7 @@ ___
 
 •  **id**: string
 
-*Defined in [src/model/response/ledger/Customer.ts:6](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Customer.ts#L6)*
+*Defined in [src/model/response/ledger/Customer.ts:6](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Customer.ts#L6)*
 
 ___
 
@@ -74,4 +74,4 @@ ___
 
 • `Optional` **providerCountry**: [Country](../enums/_src_model_request_country_.country.md)
 
-*Defined in [src/model/response/ledger/Customer.ts:14](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Customer.ts#L14)*
+*Defined in [src/model/response/ledger/Customer.ts:14](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Customer.ts#L14)*

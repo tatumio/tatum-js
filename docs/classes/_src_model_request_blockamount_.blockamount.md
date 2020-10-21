@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/request/BlockAmount"](../modules/_src_model_request_blockamount_.md) / BlockAmount
 
@@ -22,7 +22,7 @@
 
 •  **amount**: string
 
-*Defined in [src/model/request/BlockAmount.ts:9](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/BlockAmount.ts#L9)*
+*Defined in [src/model/request/BlockAmount.ts:9](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/BlockAmount.ts#L9)*
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 • `Optional` **description**: undefined \| string
 
-*Defined in [src/model/request/BlockAmount.ts:17](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/BlockAmount.ts#L17)*
+*Defined in [src/model/request/BlockAmount.ts:17](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/BlockAmount.ts#L17)*
 
 ___
 
@@ -38,4 +38,4 @@ ___
 
 •  **type**: string
 
-*Defined in [src/model/request/BlockAmount.ts:13](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/BlockAmount.ts#L13)*
+*Defined in [src/model/request/BlockAmount.ts:13](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/BlockAmount.ts#L13)*

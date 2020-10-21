@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/request/CustomerUpdate"](../modules/_src_model_request_customerupdate_.md) / CustomerUpdate
 
@@ -23,7 +23,7 @@
 
 • `Optional` **accountingCurrency**: [Fiat](../enums/_src_model_response_ledger_fiat_.fiat.md)
 
-*Defined in [src/model/request/CustomerUpdate.ts:15](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CustomerUpdate.ts#L15)*
+*Defined in [src/model/request/CustomerUpdate.ts:15](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/CustomerUpdate.ts#L15)*
 
 ___
 
@@ -31,7 +31,7 @@ ___
 
 • `Optional` **customerCountry**: [Country](../enums/_src_model_request_country_.country.md)
 
-*Defined in [src/model/request/CustomerUpdate.ts:10](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CustomerUpdate.ts#L10)*
+*Defined in [src/model/request/CustomerUpdate.ts:10](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/CustomerUpdate.ts#L10)*
 
 ___
 
@@ -39,7 +39,7 @@ ___
 
 •  **externalId**: string
 
-*Defined in [src/model/request/CustomerUpdate.ts:23](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CustomerUpdate.ts#L23)*
+*Defined in [src/model/request/CustomerUpdate.ts:23](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/CustomerUpdate.ts#L23)*
 
 ___
 
@@ -47,4 +47,4 @@ ___
 
 • `Optional` **providerCountry**: [Country](../enums/_src_model_request_country_.country.md)
 
-*Defined in [src/model/request/CustomerUpdate.ts:20](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CustomerUpdate.ts#L20)*
+*Defined in [src/model/request/CustomerUpdate.ts:20](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/CustomerUpdate.ts#L20)*

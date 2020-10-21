@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/ledger/OperationType"](../modules/_src_model_response_ledger_operationtype_.md) / OperationType
 
@@ -25,7 +25,7 @@
 
 •  **BLOCKCHAIN\_TRANSACTION**: {} = "BLOCKCHAIN\_TRANSACTION"
 
-*Defined in [src/model/response/ledger/OperationType.ts:8](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/OperationType.ts#L8)*
+*Defined in [src/model/response/ledger/OperationType.ts:8](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/OperationType.ts#L8)*
 
 ___
 
@@ -33,7 +33,7 @@ ___
 
 •  **DEPOSIT**: {} = "DEPOSIT"
 
-*Defined in [src/model/response/ledger/OperationType.ts:11](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/OperationType.ts#L11)*
+*Defined in [src/model/response/ledger/OperationType.ts:11](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/OperationType.ts#L11)*
 
 ___
 
@@ -41,7 +41,7 @@ ___
 
 •  **EXCHANGE**: {} = "EXCHANGE"
 
-*Defined in [src/model/response/ledger/OperationType.ts:9](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/OperationType.ts#L9)*
+*Defined in [src/model/response/ledger/OperationType.ts:9](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/OperationType.ts#L9)*
 
 ___
 
@@ -49,7 +49,7 @@ ___
 
 •  **FAILED**: {} = "FAILED"
 
-*Defined in [src/model/response/ledger/OperationType.ts:10](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/OperationType.ts#L10)*
+*Defined in [src/model/response/ledger/OperationType.ts:10](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/OperationType.ts#L10)*
 
 ___
 
@@ -57,7 +57,7 @@ ___
 
 •  **MINT**: {} = "MINT"
 
-*Defined in [src/model/response/ledger/OperationType.ts:12](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/OperationType.ts#L12)*
+*Defined in [src/model/response/ledger/OperationType.ts:12](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/OperationType.ts#L12)*
 
 ___
 
@@ -65,7 +65,7 @@ ___
 
 •  **PAYMENT**: {} = "PAYMENT"
 
-*Defined in [src/model/response/ledger/OperationType.ts:6](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/OperationType.ts#L6)*
+*Defined in [src/model/response/ledger/OperationType.ts:6](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/OperationType.ts#L6)*
 
 ___
 
@@ -73,7 +73,7 @@ ___
 
 •  **REVOKE**: {} = "REVOKE"
 
-*Defined in [src/model/response/ledger/OperationType.ts:13](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/OperationType.ts#L13)*
+*Defined in [src/model/response/ledger/OperationType.ts:13](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/OperationType.ts#L13)*
 
 ___
 
@@ -81,4 +81,4 @@ ___
 
 •  **WITHDRAWAL**: {} = "WITHDRAWAL"
 
-*Defined in [src/model/response/ledger/OperationType.ts:7](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/OperationType.ts#L7)*
+*Defined in [src/model/response/ledger/OperationType.ts:7](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/OperationType.ts#L7)*

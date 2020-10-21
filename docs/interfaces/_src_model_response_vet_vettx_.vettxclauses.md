@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/vet/VetTx"](../modules/_src_model_response_vet_vettx_.md) / VetTxClauses
 
@@ -26,7 +26,7 @@
 
 •  **data**: string
 
-*Defined in [src/model/response/vet/VetTx.ts:104](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetTx.ts#L104)*
+*Defined in [src/model/response/vet/VetTx.ts:104](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/vet/VetTx.ts#L104)*
 
 **`memberof`** VetTxClauses
 
@@ -36,7 +36,7 @@ ___
 
 •  **to**: string
 
-*Defined in [src/model/response/vet/VetTx.ts:92](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetTx.ts#L92)*
+*Defined in [src/model/response/vet/VetTx.ts:92](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/vet/VetTx.ts#L92)*
 
 **`memberof`** VetTxClauses
 
@@ -46,6 +46,6 @@ ___
 
 •  **value**: string
 
-*Defined in [src/model/response/vet/VetTx.ts:98](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetTx.ts#L98)*
+*Defined in [src/model/response/vet/VetTx.ts:98](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/vet/VetTx.ts#L98)*
 
 **`memberof`** VetTxClauses

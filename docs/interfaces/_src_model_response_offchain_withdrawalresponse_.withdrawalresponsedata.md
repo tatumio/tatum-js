@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/offchain/WithdrawalResponse"](../modules/_src_model_response_offchain_withdrawalresponse_.md) / WithdrawalResponseData
 
@@ -28,7 +28,7 @@
 
 •  **address**: [Address](_src_model_response_offchain_address_.address.md)
 
-*Defined in [src/model/response/offchain/WithdrawalResponse.ts:40](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/offchain/WithdrawalResponse.ts#L40)*
+*Defined in [src/model/response/offchain/WithdrawalResponse.ts:40](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/offchain/WithdrawalResponse.ts#L40)*
 
 **`memberof`** WithdrawalResponseData
 
@@ -38,7 +38,7 @@ ___
 
 •  **amount**: number
 
-*Defined in [src/model/response/offchain/WithdrawalResponse.ts:46](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/offchain/WithdrawalResponse.ts#L46)*
+*Defined in [src/model/response/offchain/WithdrawalResponse.ts:46](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/offchain/WithdrawalResponse.ts#L46)*
 
 Amount of unprocessed transaction outputs, that can be used for withdrawal. Bitcoin, Litecoin, Bitcoin Cash only.
 
@@ -50,7 +50,7 @@ ___
 
 •  **scriptPubKey**: string
 
-*Defined in [src/model/response/offchain/WithdrawalResponse.ts:65](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/offchain/WithdrawalResponse.ts#L65)*
+*Defined in [src/model/response/offchain/WithdrawalResponse.ts:65](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/offchain/WithdrawalResponse.ts#L65)*
 
 Script of last unprocessed UTXO. Bitcoin SV only.
 
@@ -62,7 +62,7 @@ ___
 
 •  **vIn**: string
 
-*Defined in [src/model/response/offchain/WithdrawalResponse.ts:53](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/offchain/WithdrawalResponse.ts#L53)*
+*Defined in [src/model/response/offchain/WithdrawalResponse.ts:53](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/offchain/WithdrawalResponse.ts#L53)*
 
 Last used unprocessed transaction output, that can be used.
 Bitcoin, Litecoin, Bitcoin Cash only. If -1, it indicates prepared vOut with amount to be transferred to pool address.
@@ -75,7 +75,7 @@ ___
 
 •  **vInIndex**: number
 
-*Defined in [src/model/response/offchain/WithdrawalResponse.ts:59](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/offchain/WithdrawalResponse.ts#L59)*
+*Defined in [src/model/response/offchain/WithdrawalResponse.ts:59](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/offchain/WithdrawalResponse.ts#L59)*
 
 Index of last used unprocessed transaction output in raw transaction, that can be used. Bitcoin, Litecoin, Bitcoin Cash only.
 

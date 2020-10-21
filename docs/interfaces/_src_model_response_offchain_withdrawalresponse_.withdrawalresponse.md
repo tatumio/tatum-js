@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/offchain/WithdrawalResponse"](../modules/_src_model_response_offchain_withdrawalresponse_.md) / WithdrawalResponse
 
@@ -22,7 +22,7 @@
 
 •  **data**: [WithdrawalResponseData](_src_model_response_offchain_withdrawalresponse_.withdrawalresponsedata.md)[]
 
-*Defined in [src/model/response/offchain/WithdrawalResponse.ts:20](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/offchain/WithdrawalResponse.ts#L20)*
+*Defined in [src/model/response/offchain/WithdrawalResponse.ts:20](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/offchain/WithdrawalResponse.ts#L20)*
 
 **`memberof`** WithdrawalResponse
 
@@ -32,7 +32,7 @@ ___
 
 •  **id**: string
 
-*Defined in [src/model/response/offchain/WithdrawalResponse.ts:26](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/offchain/WithdrawalResponse.ts#L26)*
+*Defined in [src/model/response/offchain/WithdrawalResponse.ts:26](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/offchain/WithdrawalResponse.ts#L26)*
 
 ID of withdrawal
 
@@ -44,7 +44,7 @@ ___
 
 •  **reference**: string
 
-*Defined in [src/model/response/offchain/WithdrawalResponse.ts:14](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/offchain/WithdrawalResponse.ts#L14)*
+*Defined in [src/model/response/offchain/WithdrawalResponse.ts:14](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/offchain/WithdrawalResponse.ts#L14)*
 
 Transaction reference of the transaction connected to this withdrawal.
 

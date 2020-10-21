@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/vet/VetEstimateGas"](../modules/_src_model_response_vet_vetestimategas_.md) / VetEstimateGas
 
@@ -28,7 +28,7 @@
 
 •  **data**: string
 
-*Defined in [src/model/response/vet/VetEstimateGas.ts:30](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetEstimateGas.ts#L30)*
+*Defined in [src/model/response/vet/VetEstimateGas.ts:30](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/vet/VetEstimateGas.ts#L30)*
 
 Data to send to Smart Contract
 
@@ -40,7 +40,7 @@ ___
 
 •  **from**: string
 
-*Defined in [src/model/response/vet/VetEstimateGas.ts:12](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetEstimateGas.ts#L12)*
+*Defined in [src/model/response/vet/VetEstimateGas.ts:12](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/vet/VetEstimateGas.ts#L12)*
 
 Sender
 
@@ -52,7 +52,7 @@ ___
 
 •  **nonce**: number
 
-*Defined in [src/model/response/vet/VetEstimateGas.ts:36](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetEstimateGas.ts#L36)*
+*Defined in [src/model/response/vet/VetEstimateGas.ts:36](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/vet/VetEstimateGas.ts#L36)*
 
 Nonce
 
@@ -64,7 +64,7 @@ ___
 
 •  **to**: string
 
-*Defined in [src/model/response/vet/VetEstimateGas.ts:18](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetEstimateGas.ts#L18)*
+*Defined in [src/model/response/vet/VetEstimateGas.ts:18](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/vet/VetEstimateGas.ts#L18)*
 
 Recipient
 
@@ -76,7 +76,7 @@ ___
 
 •  **value**: string
 
-*Defined in [src/model/response/vet/VetEstimateGas.ts:24](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetEstimateGas.ts#L24)*
+*Defined in [src/model/response/vet/VetEstimateGas.ts:24](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/vet/VetEstimateGas.ts#L24)*
 
 Amount to send
 

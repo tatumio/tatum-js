@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / "src/transaction/bitcoin"
 
@@ -22,7 +22,7 @@
 
 ▸ `Const`**prepareBitcoinSignedTransaction**(`testnet`: boolean, `body`: [TransferBtcBasedBlockchain](../classes/_src_model_request_transferbtcbasedblockchain_.transferbtcbasedblockchain.md)): Promise\<string>
 
-*Defined in [src/transaction/bitcoin.ts:104](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/transaction/bitcoin.ts#L104)*
+*Defined in [src/transaction/bitcoin.ts:104](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/transaction/bitcoin.ts#L104)*
 
 Sign Bitcoin transaction with private keys locally. Nothing is broadcast to the blockchain.
 
@@ -43,7 +43,7 @@ ___
 
 ▸ `Const`**prepareLitecoinSignedTransaction**(`testnet`: boolean, `body`: [TransferBtcBasedBlockchain](../classes/_src_model_request_transferbtcbasedblockchain_.transferbtcbasedblockchain.md)): Promise\<string>
 
-*Defined in [src/transaction/bitcoin.ts:114](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/transaction/bitcoin.ts#L114)*
+*Defined in [src/transaction/bitcoin.ts:114](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/transaction/bitcoin.ts#L114)*
 
 Sign Litcoin transaction with private keys locally. Nothing is broadcast to the blockchain.
 
@@ -64,7 +64,7 @@ ___
 
 ▸ `Const`**prepareSignedTransaction**(`network`: Network, `body`: [TransferBtcBasedBlockchain](../classes/_src_model_request_transferbtcbasedblockchain_.transferbtcbasedblockchain.md), `curency`: [Currency](../enums/_src_model_request_currency_.currency.md)): Promise\<string>
 
-*Defined in [src/transaction/bitcoin.ts:15](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/transaction/bitcoin.ts#L15)*
+*Defined in [src/transaction/bitcoin.ts:15](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/transaction/bitcoin.ts#L15)*
 
 #### Parameters:
 
@@ -82,7 +82,7 @@ ___
 
 ▸ `Const`**sendBitcoinTransaction**(`testnet`: boolean, `body`: [TransferBtcBasedBlockchain](../classes/_src_model_request_transferbtcbasedblockchain_.transferbtcbasedblockchain.md)): Promise\<[TransactionHash](../interfaces/_src_model_response_common_transactionhash_.transactionhash.md)>
 
-*Defined in [src/transaction/bitcoin.ts:125](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/transaction/bitcoin.ts#L125)*
+*Defined in [src/transaction/bitcoin.ts:125](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/transaction/bitcoin.ts#L125)*
 
 Send Bitcoin transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
 This operation is irreversible.
@@ -104,7 +104,7 @@ ___
 
 ▸ `Const`**sendLitecoinTransaction**(`testnet`: boolean, `body`: [TransferBtcBasedBlockchain](../classes/_src_model_request_transferbtcbasedblockchain_.transferbtcbasedblockchain.md)): Promise\<[TransactionHash](../interfaces/_src_model_response_common_transactionhash_.transactionhash.md)>
 
-*Defined in [src/transaction/bitcoin.ts:136](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/transaction/bitcoin.ts#L136)*
+*Defined in [src/transaction/bitcoin.ts:136](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/transaction/bitcoin.ts#L136)*
 
 Send Litecoin transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
 This operation is irreversible.
@@ -126,7 +126,7 @@ ___
 
 ▸ `Const`**signBitcoinKMSTransaction**(`tx`: [TransactionKMS](../classes/_src_model_response_kms_transactionkms_.transactionkms.md), `privateKeys`: string[], `testnet`: boolean): Promise\<string>
 
-*Defined in [src/transaction/bitcoin.ts:65](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/transaction/bitcoin.ts#L65)*
+*Defined in [src/transaction/bitcoin.ts:65](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/transaction/bitcoin.ts#L65)*
 
 Sign Bitcoin pending transaction from Tatum KMS
 
@@ -148,7 +148,7 @@ ___
 
 ▸ `Const`**signLitecoinKMSTransaction**(`tx`: [TransactionKMS](../classes/_src_model_response_kms_transactionkms_.transactionkms.md), `privateKeys`: string[], `testnet`: boolean): Promise\<string>
 
-*Defined in [src/transaction/bitcoin.ts:85](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/transaction/bitcoin.ts#L85)*
+*Defined in [src/transaction/bitcoin.ts:85](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/transaction/bitcoin.ts#L85)*
 
 Sign Litecoin pending transaction from Tatum KMS
 

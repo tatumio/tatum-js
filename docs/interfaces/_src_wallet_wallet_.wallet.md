@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/wallet/wallet"](../modules/_src_wallet_wallet_.md) / Wallet
 
@@ -13,7 +13,6 @@
 ### Properties
 
 * [mnemonic](_src_wallet_wallet_.wallet.md#mnemonic)
-* [xpriv](_src_wallet_wallet_.wallet.md#xpriv)
 * [xpub](_src_wallet_wallet_.wallet.md#xpub)
 
 ## Properties
@@ -22,19 +21,9 @@
 
 •  **mnemonic**: string
 
-*Defined in [src/wallet/wallet.ts:29](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/wallet/wallet.ts#L29)*
+*Defined in [src/wallet/wallet.ts:28](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/wallet/wallet.ts#L28)*
 
 mnemonic seed
-
-___
-
-### xpriv
-
-•  **xpriv**: string
-
-*Defined in [src/wallet/wallet.ts:39](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/wallet/wallet.ts#L39)*
-
-extended private key to derive private keys from
 
 ___
 
@@ -42,6 +31,6 @@ ___
 
 •  **xpub**: string
 
-*Defined in [src/wallet/wallet.ts:34](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/wallet/wallet.ts#L34)*
+*Defined in [src/wallet/wallet.ts:33](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/wallet/wallet.ts#L33)*
 
 extended public key to derive addresses from
