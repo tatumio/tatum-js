@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/ledger/Transaction"](../modules/_src_model_response_ledger_transaction_.md) / Transaction
 
@@ -36,7 +36,7 @@
 
 •  **accountId**: string
 
-*Defined in [src/model/response/ledger/Transaction.ts:16](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Transaction.ts#L16)*
+*Defined in [src/model/response/ledger/Transaction.ts:16](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Transaction.ts#L16)*
 
 Source account - source of transaction(s)
 
@@ -48,7 +48,7 @@ ___
 
 • `Optional` **address**: undefined \| string
 
-*Defined in [src/model/response/ledger/Transaction.ts:76](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Transaction.ts#L76)*
+*Defined in [src/model/response/ledger/Transaction.ts:76](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Transaction.ts#L76)*
 
 For operationType DEPOSIT it represents address, on which was deposit credited for the account.
 
@@ -60,7 +60,7 @@ ___
 
 •  **amount**: string
 
-*Defined in [src/model/response/ledger/Transaction.ts:22](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Transaction.ts#L22)*
+*Defined in [src/model/response/ledger/Transaction.ts:22](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Transaction.ts#L22)*
 
 Amount in account's currency
 
@@ -72,7 +72,7 @@ ___
 
 •  **anonymous**: boolean
 
-*Defined in [src/model/response/ledger/Transaction.ts:28](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Transaction.ts#L28)*
+*Defined in [src/model/response/ledger/Transaction.ts:28](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Transaction.ts#L28)*
 
 Whether the transaction is anonymous. If true, counter account owner does not see source account.
 
@@ -84,7 +84,7 @@ ___
 
 • `Optional` **attr**: undefined \| string
 
-*Defined in [src/model/response/ledger/Transaction.ts:70](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Transaction.ts#L70)*
+*Defined in [src/model/response/ledger/Transaction.ts:70](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Transaction.ts#L70)*
 
 Present only for operationType WITHDRAWAL and XLM / XRP based accounts it represents message or destinationTag of the recipient, if present.
 
@@ -96,7 +96,7 @@ ___
 
 • `Optional` **counterAccountId**: undefined \| string
 
-*Defined in [src/model/response/ledger/Transaction.ts:34](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Transaction.ts#L34)*
+*Defined in [src/model/response/ledger/Transaction.ts:34](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Transaction.ts#L34)*
 
 Counter account - transaction(s) destination account. In case of blockchain recipient, this is addess of blockchain account.
 
@@ -108,7 +108,7 @@ ___
 
 •  **created**: number
 
-*Defined in [src/model/response/ledger/Transaction.ts:46](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Transaction.ts#L46)*
+*Defined in [src/model/response/ledger/Transaction.ts:46](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Transaction.ts#L46)*
 
 Time in UTC of transaction.
 
@@ -120,7 +120,7 @@ ___
 
 •  **currency**: string
 
-*Defined in [src/model/response/ledger/Transaction.ts:40](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Transaction.ts#L40)*
+*Defined in [src/model/response/ledger/Transaction.ts:40](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Transaction.ts#L40)*
 
 Transaction currency
 
@@ -132,7 +132,7 @@ ___
 
 •  **marketValue**: [MarketValue](_src_model_response_ledger_marketvalue_.marketvalue.md)[]
 
-*Defined in [src/model/response/ledger/Transaction.ts:52](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Transaction.ts#L52)*
+*Defined in [src/model/response/ledger/Transaction.ts:52](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Transaction.ts#L52)*
 
 List of market values of given transaction with all supported base pairs.
 
@@ -144,7 +144,7 @@ ___
 
 •  **operationType**: [OperationType](../enums/_src_model_response_ledger_operationtype_.operationtype.md)
 
-*Defined in [src/model/response/ledger/Transaction.ts:58](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Transaction.ts#L58)*
+*Defined in [src/model/response/ledger/Transaction.ts:58](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Transaction.ts#L58)*
 
 Type of operation.
 
@@ -156,7 +156,7 @@ ___
 
 • `Optional` **paymentId**: undefined \| string
 
-*Defined in [src/model/response/ledger/Transaction.ts:64](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Transaction.ts#L64)*
+*Defined in [src/model/response/ledger/Transaction.ts:64](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Transaction.ts#L64)*
 
 Payment ID defined in payment order by sender.
 
@@ -168,7 +168,7 @@ ___
 
 • `Optional` **recipientNote**: undefined \| string
 
-*Defined in [src/model/response/ledger/Transaction.ts:82](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Transaction.ts#L82)*
+*Defined in [src/model/response/ledger/Transaction.ts:82](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Transaction.ts#L82)*
 
 Note visible for both sender and recipient.
 
@@ -180,7 +180,7 @@ ___
 
 •  **reference**: string
 
-*Defined in [src/model/response/ledger/Transaction.ts:88](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Transaction.ts#L88)*
+*Defined in [src/model/response/ledger/Transaction.ts:88](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Transaction.ts#L88)*
 
 Transaction internal reference - unique identifier within Tatum ledger. In order of failure, use this value to search for problems.
 
@@ -192,7 +192,7 @@ ___
 
 • `Optional` **senderNote**: undefined \| string
 
-*Defined in [src/model/response/ledger/Transaction.ts:100](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Transaction.ts#L100)*
+*Defined in [src/model/response/ledger/Transaction.ts:100](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Transaction.ts#L100)*
 
 Note visible for sender.
 
@@ -204,7 +204,7 @@ ___
 
 • `Optional` **transactionCode**: undefined \| string
 
-*Defined in [src/model/response/ledger/Transaction.ts:106](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Transaction.ts#L106)*
+*Defined in [src/model/response/ledger/Transaction.ts:106](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Transaction.ts#L106)*
 
 For bookkeeping to distinct transaction purpose.
 
@@ -216,7 +216,7 @@ ___
 
 •  **transactionType**: [TransactionType](../enums/_src_model_response_ledger_transactiontype_.transactiontype.md)
 
-*Defined in [src/model/response/ledger/Transaction.ts:112](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Transaction.ts#L112)*
+*Defined in [src/model/response/ledger/Transaction.ts:112](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Transaction.ts#L112)*
 
 Type of payment.
 
@@ -228,7 +228,7 @@ ___
 
 • `Optional` **txId**: undefined \| string
 
-*Defined in [src/model/response/ledger/Transaction.ts:94](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Transaction.ts#L94)*
+*Defined in [src/model/response/ledger/Transaction.ts:94](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Transaction.ts#L94)*
 
 For operationType DEPOSIT, BLOCKCHAIN_TRANSACTION it represents transaction id, for which deposit occured.
 

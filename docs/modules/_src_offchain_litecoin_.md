@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / "src/offchain/litecoin"
 
@@ -18,7 +18,7 @@
 
 ▸ `Const`**prepareLitecoinSignedOffchainTransaction**(`testnet`: boolean, `data`: [WithdrawalResponseData](../interfaces/_src_model_response_offchain_withdrawalresponse_.withdrawalresponsedata.md)[], `amount`: string, `address`: string, `mnemonic?`: undefined \| string, `keyPair?`: [KeyPair](../classes/_src_model_request_transferbtcbasedoffchain_.keypair.md)[], `changeAddress?`: undefined \| string): Promise\<string>
 
-*Defined in [src/offchain/litecoin.ts:79](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/offchain/litecoin.ts#L79)*
+*Defined in [src/offchain/litecoin.ts:79](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/offchain/litecoin.ts#L79)*
 
 Sign Litecoin transaction with private keys locally. Nothing is broadcast to the blockchain.
 
@@ -42,9 +42,9 @@ ___
 
 ### sendLitecoinOffchainTransaction
 
-▸ `Const`**sendLitecoinOffchainTransaction**(`testnet`: boolean, `body`: [TransferBtcBasedOffchain](../classes/_src_model_request_transferbtcbasedoffchain_.transferbtcbasedoffchain.md)): Promise\<[TxHash](../interfaces/_src_model_response_common_txhash_.txhash.md)>
+▸ `Const`**sendLitecoinOffchainTransaction**(`testnet`: boolean, `body`: [TransferBtcBasedOffchain](../classes/_src_model_request_transferbtcbasedoffchain_.transferbtcbasedoffchain.md)): Promise\<{ id: string  }>
 
-*Defined in [src/offchain/litecoin.ts:16](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/offchain/litecoin.ts#L16)*
+*Defined in [src/offchain/litecoin.ts:16](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/offchain/litecoin.ts#L16)*
 
 Send Litecoin transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
 This operation is irreversible.
@@ -56,7 +56,7 @@ Name | Type | Description |
 `testnet` | boolean | mainnet or testnet version |
 `body` | [TransferBtcBasedOffchain](../classes/_src_model_request_transferbtcbasedoffchain_.transferbtcbasedoffchain.md) | content of the transaction to broadcast |
 
-**Returns:** Promise\<[TxHash](../interfaces/_src_model_response_common_txhash_.txhash.md)>
+**Returns:** Promise\<{ id: string  }>
 
 transaction id of the transaction in the blockchain
 
@@ -66,7 +66,7 @@ ___
 
 ▸ `Const`**signLitecoinOffchainKMSTransaction**(`tx`: [TransactionKMS](../classes/_src_model_response_kms_transactionkms_.transactionkms.md), `mnemonic`: string, `testnet`: boolean): Promise\<string>
 
-*Defined in [src/offchain/litecoin.ts:52](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/offchain/litecoin.ts#L52)*
+*Defined in [src/offchain/litecoin.ts:52](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/offchain/litecoin.ts#L52)*
 
 Sign Litecoin pending transaction from Tatum KMS
 

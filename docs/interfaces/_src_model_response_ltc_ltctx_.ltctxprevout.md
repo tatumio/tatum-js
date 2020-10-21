@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/ltc/LtcTx"](../modules/_src_model_response_ltc_ltctx_.md) / LtcTxPrevout
 
@@ -25,7 +25,7 @@
 
 •  **hash**: string
 
-*Defined in [src/model/response/ltc/LtcTx.ts:212](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ltc/LtcTx.ts#L212)*
+*Defined in [src/model/response/ltc/LtcTx.ts:212](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ltc/LtcTx.ts#L212)*
 
 Transaction hash of the input.
 
@@ -37,7 +37,7 @@ ___
 
 •  **index**: number
 
-*Defined in [src/model/response/ltc/LtcTx.ts:218](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ltc/LtcTx.ts#L218)*
+*Defined in [src/model/response/ltc/LtcTx.ts:218](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ltc/LtcTx.ts#L218)*
 
 Transaction index of the input.
 

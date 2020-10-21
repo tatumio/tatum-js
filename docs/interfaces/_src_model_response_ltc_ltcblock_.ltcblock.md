@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/ltc/LtcBlock"](../modules/_src_model_response_ltc_ltcblock_.md) / LtcBlock
 
@@ -28,7 +28,7 @@
 
 •  **bits**: number
 
-*Defined in [src/model/response/ltc/LtcBlock.ts:50](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ltc/LtcBlock.ts#L50)*
+*Defined in [src/model/response/ltc/LtcBlock.ts:50](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ltc/LtcBlock.ts#L50)*
 
 **`memberof`** LtcBlock
 
@@ -38,7 +38,7 @@ ___
 
 •  **hash**: string
 
-*Defined in [src/model/response/ltc/LtcBlock.ts:14](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ltc/LtcBlock.ts#L14)*
+*Defined in [src/model/response/ltc/LtcBlock.ts:14](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ltc/LtcBlock.ts#L14)*
 
 Hash of block.
 
@@ -50,7 +50,7 @@ ___
 
 •  **height**: number
 
-*Defined in [src/model/response/ltc/LtcBlock.ts:20](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ltc/LtcBlock.ts#L20)*
+*Defined in [src/model/response/ltc/LtcBlock.ts:20](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ltc/LtcBlock.ts#L20)*
 
 The number of blocks preceding a particular block on a block chain.
 
@@ -62,7 +62,7 @@ ___
 
 •  **merkleRoot**: string
 
-*Defined in [src/model/response/ltc/LtcBlock.ts:38](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ltc/LtcBlock.ts#L38)*
+*Defined in [src/model/response/ltc/LtcBlock.ts:38](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ltc/LtcBlock.ts#L38)*
 
 The root node of a merkle tree, a descendant of all the hashed pairs in the tree.
 
@@ -74,7 +74,7 @@ ___
 
 •  **nonce**: number
 
-*Defined in [src/model/response/ltc/LtcBlock.ts:56](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ltc/LtcBlock.ts#L56)*
+*Defined in [src/model/response/ltc/LtcBlock.ts:56](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ltc/LtcBlock.ts#L56)*
 
 Arbitrary number that is used in Litecoin's proof of work consensus algorithm.
 
@@ -86,7 +86,7 @@ ___
 
 •  **prevBlock**: string
 
-*Defined in [src/model/response/ltc/LtcBlock.ts:32](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ltc/LtcBlock.ts#L32)*
+*Defined in [src/model/response/ltc/LtcBlock.ts:32](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ltc/LtcBlock.ts#L32)*
 
 Hash of the previous block.
 
@@ -98,7 +98,7 @@ ___
 
 •  **ts**: number
 
-*Defined in [src/model/response/ltc/LtcBlock.ts:44](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ltc/LtcBlock.ts#L44)*
+*Defined in [src/model/response/ltc/LtcBlock.ts:44](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ltc/LtcBlock.ts#L44)*
 
 Time of the block.
 
@@ -110,7 +110,7 @@ ___
 
 •  **txs**: [LtcTx](_src_model_response_ltc_ltctx_.ltctx.md)[]
 
-*Defined in [src/model/response/ltc/LtcBlock.ts:62](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ltc/LtcBlock.ts#L62)*
+*Defined in [src/model/response/ltc/LtcBlock.ts:62](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ltc/LtcBlock.ts#L62)*
 
 **`memberof`** LtcBlock
 
@@ -120,7 +120,7 @@ ___
 
 •  **version**: number
 
-*Defined in [src/model/response/ltc/LtcBlock.ts:26](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ltc/LtcBlock.ts#L26)*
+*Defined in [src/model/response/ltc/LtcBlock.ts:26](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ltc/LtcBlock.ts#L26)*
 
 Block version.
 

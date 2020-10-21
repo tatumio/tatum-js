@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > README / [Globals](globals.md)
 
@@ -57,8 +57,7 @@ const btcWallet = Tatum.generateWallet(Tatum.Currency.BTC, true);
 console.log(btcWallet);
 > {
     mnemonic: ... ,
-    xpub: ... ,
-    xprv: ...
+    xpub: ... 
 }
 ```
 

@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/vet/VetBlock"](../modules/_src_model_response_vet_vetblock_.md) / VetBlock
 
@@ -38,7 +38,7 @@
 
 •  **beneficiary**: string
 
-*Defined in [src/model/response/vet/VetBlock.ts:48](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetBlock.ts#L48)*
+*Defined in [src/model/response/vet/VetBlock.ts:48](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/vet/VetBlock.ts#L48)*
 
 Address of account to receive block reward
 
@@ -50,7 +50,7 @@ ___
 
 •  **gasLimit**: number
 
-*Defined in [src/model/response/vet/VetBlock.ts:42](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetBlock.ts#L42)*
+*Defined in [src/model/response/vet/VetBlock.ts:42](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/vet/VetBlock.ts#L42)*
 
 block gas limit (max allowed accumulative gas usage of transactions)
 
@@ -62,7 +62,7 @@ ___
 
 •  **gasUsed**: number
 
-*Defined in [src/model/response/vet/VetBlock.ts:54](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetBlock.ts#L54)*
+*Defined in [src/model/response/vet/VetBlock.ts:54](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/vet/VetBlock.ts#L54)*
 
 accumulative gas usage of transactions
 
@@ -74,7 +74,7 @@ ___
 
 •  **id**: string
 
-*Defined in [src/model/response/vet/VetBlock.ts:18](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetBlock.ts#L18)*
+*Defined in [src/model/response/vet/VetBlock.ts:18](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/vet/VetBlock.ts#L18)*
 
 block identifier
 
@@ -86,7 +86,7 @@ ___
 
 •  **number**: number
 
-*Defined in [src/model/response/vet/VetBlock.ts:12](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetBlock.ts#L12)*
+*Defined in [src/model/response/vet/VetBlock.ts:12](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/vet/VetBlock.ts#L12)*
 
 block number (height)
 
@@ -98,7 +98,7 @@ ___
 
 •  **parentID**: string
 
-*Defined in [src/model/response/vet/VetBlock.ts:30](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetBlock.ts#L30)*
+*Defined in [src/model/response/vet/VetBlock.ts:30](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/vet/VetBlock.ts#L30)*
 
 parent block ID
 
@@ -110,7 +110,7 @@ ___
 
 •  **receiptsRoot**: string
 
-*Defined in [src/model/response/vet/VetBlock.ts:84](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetBlock.ts#L84)*
+*Defined in [src/model/response/vet/VetBlock.ts:84](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/vet/VetBlock.ts#L84)*
 
 root hash of transaction receipts
 
@@ -122,7 +122,7 @@ ___
 
 •  **signer**: string
 
-*Defined in [src/model/response/vet/VetBlock.ts:90](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetBlock.ts#L90)*
+*Defined in [src/model/response/vet/VetBlock.ts:90](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/vet/VetBlock.ts#L90)*
 
 the one who signed this block
 
@@ -134,7 +134,7 @@ ___
 
 •  **size**: number
 
-*Defined in [src/model/response/vet/VetBlock.ts:24](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetBlock.ts#L24)*
+*Defined in [src/model/response/vet/VetBlock.ts:24](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/vet/VetBlock.ts#L24)*
 
 RLP encoded block size in bytes
 
@@ -146,7 +146,7 @@ ___
 
 •  **stateRoot**: string
 
-*Defined in [src/model/response/vet/VetBlock.ts:78](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetBlock.ts#L78)*
+*Defined in [src/model/response/vet/VetBlock.ts:78](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/vet/VetBlock.ts#L78)*
 
 root hash of accounts state
 
@@ -158,7 +158,7 @@ ___
 
 •  **timestamp**: number
 
-*Defined in [src/model/response/vet/VetBlock.ts:36](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetBlock.ts#L36)*
+*Defined in [src/model/response/vet/VetBlock.ts:36](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/vet/VetBlock.ts#L36)*
 
 block unix timestamp
 
@@ -170,7 +170,7 @@ ___
 
 •  **totalScore**: number
 
-*Defined in [src/model/response/vet/VetBlock.ts:60](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetBlock.ts#L60)*
+*Defined in [src/model/response/vet/VetBlock.ts:60](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/vet/VetBlock.ts#L60)*
 
 sum of all ancestral blocks' score
 
@@ -182,7 +182,7 @@ ___
 
 •  **transactions**: string[]
 
-*Defined in [src/model/response/vet/VetBlock.ts:96](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetBlock.ts#L96)*
+*Defined in [src/model/response/vet/VetBlock.ts:96](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/vet/VetBlock.ts#L96)*
 
 transactions IDs
 
@@ -194,7 +194,7 @@ ___
 
 •  **txsFeatures**: number
 
-*Defined in [src/model/response/vet/VetBlock.ts:72](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetBlock.ts#L72)*
+*Defined in [src/model/response/vet/VetBlock.ts:72](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/vet/VetBlock.ts#L72)*
 
 supported txs features bitset
 
@@ -206,7 +206,7 @@ ___
 
 •  **txsRoot**: string
 
-*Defined in [src/model/response/vet/VetBlock.ts:66](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetBlock.ts#L66)*
+*Defined in [src/model/response/vet/VetBlock.ts:66](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/vet/VetBlock.ts#L66)*
 
 root hash of transactions in the block
 

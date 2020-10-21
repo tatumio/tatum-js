@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/bch/BchBlock"](../modules/_src_model_response_bch_bchblock_.md) / BchBlock
 
@@ -31,7 +31,7 @@
 
 •  **confirmations**: number
 
-*Defined in [src/model/response/bch/BchBlock.ts:68](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/bch/BchBlock.ts#L68)*
+*Defined in [src/model/response/bch/BchBlock.ts:68](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/bch/BchBlock.ts#L68)*
 
 Number of blocks mined after this block.
 
@@ -43,7 +43,7 @@ ___
 
 •  **difficulty**: number
 
-*Defined in [src/model/response/bch/BchBlock.ts:62](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/bch/BchBlock.ts#L62)*
+*Defined in [src/model/response/bch/BchBlock.ts:62](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/bch/BchBlock.ts#L62)*
 
 **`memberof`** BchBlock
 
@@ -53,7 +53,7 @@ ___
 
 •  **hash**: string
 
-*Defined in [src/model/response/bch/BchBlock.ts:14](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/bch/BchBlock.ts#L14)*
+*Defined in [src/model/response/bch/BchBlock.ts:14](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/bch/BchBlock.ts#L14)*
 
 Hash of block.
 
@@ -65,7 +65,7 @@ ___
 
 •  **height**: number
 
-*Defined in [src/model/response/bch/BchBlock.ts:26](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/bch/BchBlock.ts#L26)*
+*Defined in [src/model/response/bch/BchBlock.ts:26](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/bch/BchBlock.ts#L26)*
 
 The number of blocks preceding a particular block on a block chain.
 
@@ -77,7 +77,7 @@ ___
 
 •  **merkleroot**: string
 
-*Defined in [src/model/response/bch/BchBlock.ts:38](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/bch/BchBlock.ts#L38)*
+*Defined in [src/model/response/bch/BchBlock.ts:38](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/bch/BchBlock.ts#L38)*
 
 The root node of a merkle tree, a descendant of all the hashed pairs in the tree.
 
@@ -89,7 +89,7 @@ ___
 
 •  **nextblockhash**: string
 
-*Defined in [src/model/response/bch/BchBlock.ts:80](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/bch/BchBlock.ts#L80)*
+*Defined in [src/model/response/bch/BchBlock.ts:80](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/bch/BchBlock.ts#L80)*
 
 Hash of the next block.
 
@@ -101,7 +101,7 @@ ___
 
 •  **nonce**: number
 
-*Defined in [src/model/response/bch/BchBlock.ts:56](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/bch/BchBlock.ts#L56)*
+*Defined in [src/model/response/bch/BchBlock.ts:56](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/bch/BchBlock.ts#L56)*
 
 Arbitrary number that is used in Bitcoin's proof of work consensus algorithm.
 
@@ -113,7 +113,7 @@ ___
 
 •  **previousblockhash**: string
 
-*Defined in [src/model/response/bch/BchBlock.ts:74](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/bch/BchBlock.ts#L74)*
+*Defined in [src/model/response/bch/BchBlock.ts:74](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/bch/BchBlock.ts#L74)*
 
 Hash of the previous block.
 
@@ -125,7 +125,7 @@ ___
 
 •  **size**: number
 
-*Defined in [src/model/response/bch/BchBlock.ts:20](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/bch/BchBlock.ts#L20)*
+*Defined in [src/model/response/bch/BchBlock.ts:20](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/bch/BchBlock.ts#L20)*
 
 Block size.
 
@@ -137,7 +137,7 @@ ___
 
 •  **time**: number
 
-*Defined in [src/model/response/bch/BchBlock.ts:50](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/bch/BchBlock.ts#L50)*
+*Defined in [src/model/response/bch/BchBlock.ts:50](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/bch/BchBlock.ts#L50)*
 
 Time of the block.
 
@@ -149,7 +149,7 @@ ___
 
 •  **tx**: [BchTx](_src_model_response_bch_bchtx_.bchtx.md)[]
 
-*Defined in [src/model/response/bch/BchBlock.ts:44](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/bch/BchBlock.ts#L44)*
+*Defined in [src/model/response/bch/BchBlock.ts:44](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/bch/BchBlock.ts#L44)*
 
 List of transactions present in the block.
 
@@ -161,7 +161,7 @@ ___
 
 •  **version**: number
 
-*Defined in [src/model/response/bch/BchBlock.ts:32](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/bch/BchBlock.ts#L32)*
+*Defined in [src/model/response/bch/BchBlock.ts:32](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/bch/BchBlock.ts#L32)*
 
 Block version.
 

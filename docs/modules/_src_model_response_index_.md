@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / "src/model/response/index"
 
@@ -28,6 +28,7 @@
 * [BtcTxOutputs](_src_model_response_index_.md#btctxoutputs)
 * [BtcTxPrevout](_src_model_response_index_.md#btctxprevout)
 * [BtcUTXO](_src_model_response_index_.md#btcutxo)
+* [CreateSubscription](_src_model_response_index_.md#createsubscription)
 * [EthBlock](_src_model_response_index_.md#ethblock)
 * [EthTx](_src_model_response_index_.md#ethtx)
 * [EthTxLogs](_src_model_response_index_.md#ethtxlogs)
@@ -179,6 +180,12 @@ ___
 ### BtcUTXO
 
 Re-exports: [BtcUTXO](../interfaces/_src_model_response_btc_btcutxo_.btcutxo.md)
+
+___
+
+### CreateSubscription
+
+Re-exports: [CreateSubscription](../interfaces/_src_model_response_ledger_subscription_.createsubscription.md)
 
 ___
 

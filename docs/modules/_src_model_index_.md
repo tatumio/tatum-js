@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / "src/model/index"
 
@@ -32,6 +32,7 @@
 * [BtcUTXO](_src_model_index_.md#btcutxo)
 * [CreateAccount](_src_model_index_.md#createaccount)
 * [CreateRecord](_src_model_index_.md#createrecord)
+* [CreateSubscription](_src_model_index_.md#createsubscription)
 * [CreateTransaction](_src_model_index_.md#createtransaction)
 * [CreateWithdrawal](_src_model_index_.md#createwithdrawal)
 * [Currency](_src_model_index_.md#currency)
@@ -231,6 +232,12 @@ ___
 ### CreateRecord
 
 Re-exports: [CreateRecord](../classes/_src_model_request_createrecord_.createrecord.md)
+
+___
+
+### CreateSubscription
+
+Re-exports: [CreateSubscription](../interfaces/_src_model_response_ledger_subscription_.createsubscription.md)
 
 ___
 

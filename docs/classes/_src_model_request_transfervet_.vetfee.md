@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/request/TransferVet"](../modules/_src_model_request_transfervet_.md) / VetFee
 
@@ -20,4 +20,4 @@
 
 •  **gasLimit**: string
 
-*Defined in [src/model/request/TransferVet.ts:7](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TransferVet.ts#L7)*
+*Defined in [src/model/request/TransferVet.ts:7](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/TransferVet.ts#L7)*

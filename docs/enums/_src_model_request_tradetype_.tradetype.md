@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/request/TradeType"](../modules/_src_model_request_tradetype_.md) / TradeType
 
@@ -19,7 +19,7 @@
 
 •  **BUY**: {} = "BUY"
 
-*Defined in [src/model/request/TradeType.ts:6](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TradeType.ts#L6)*
+*Defined in [src/model/request/TradeType.ts:6](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/TradeType.ts#L6)*
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 •  **SELL**: {} = "SELL"
 
-*Defined in [src/model/request/TradeType.ts:7](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/TradeType.ts#L7)*
+*Defined in [src/model/request/TradeType.ts:7](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/TradeType.ts#L7)*

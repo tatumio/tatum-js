@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / "src/blockchain/xrp"
 
@@ -23,7 +23,7 @@
 
 ▸ `Const`**xrpBroadcast**(`txData`: string, `signatureId?`: undefined \| string): Promise\<[TransactionHash](../interfaces/_src_model_response_common_transactionhash_.transactionhash.md)>
 
-*Defined in [src/blockchain/xrp.ts:22](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/blockchain/xrp.ts#L22)*
+*Defined in [src/blockchain/xrp.ts:22](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/blockchain/xrp.ts#L22)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/XrpBroadcast" target="_blank">Tatum API documentation</a>
 
@@ -42,7 +42,7 @@ ___
 
 ▸ `Const`**xrpGetAccountBalance**(`address`: string): Promise\<any>
 
-*Defined in [src/blockchain/xrp.ts:46](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/blockchain/xrp.ts#L46)*
+*Defined in [src/blockchain/xrp.ts:46](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/blockchain/xrp.ts#L46)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/XrpGetAccountBalance" target="_blank">Tatum API documentation</a>
 
@@ -60,7 +60,7 @@ ___
 
 ▸ `Const`**xrpGetAccountInfo**(`account`: string): Promise\<{ account_data: { Sequence: number  } ; ledger_current_index: number  }>
 
-*Defined in [src/blockchain/xrp.ts:15](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/blockchain/xrp.ts#L15)*
+*Defined in [src/blockchain/xrp.ts:15](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/blockchain/xrp.ts#L15)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/XrpGetAccountInfo" target="_blank">Tatum API documentation</a>
 
@@ -78,7 +78,7 @@ ___
 
 ▸ `Const`**xrpGetAccountTransactions**(`address`: string, `min?`: undefined \| number, `marker?`: undefined \| string): Promise\<any>
 
-*Defined in [src/blockchain/xrp.ts:60](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/blockchain/xrp.ts#L60)*
+*Defined in [src/blockchain/xrp.ts:60](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/blockchain/xrp.ts#L60)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/XrpGetAccountTx" target="_blank">Tatum API documentation</a>
 
@@ -98,7 +98,7 @@ ___
 
 ▸ `Const`**xrpGetCurrentLedger**(): Promise\<number>
 
-*Defined in [src/blockchain/xrp.ts:32](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/blockchain/xrp.ts#L32)*
+*Defined in [src/blockchain/xrp.ts:32](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/blockchain/xrp.ts#L32)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/XrpGetLastClosedLedger" target="_blank">Tatum API documentation</a>
 
@@ -110,7 +110,7 @@ ___
 
 ▸ `Const`**xrpGetFee**(): Promise\<{ drops: { base_fee: number  }  }>
 
-*Defined in [src/blockchain/xrp.ts:8](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/blockchain/xrp.ts#L8)*
+*Defined in [src/blockchain/xrp.ts:8](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/blockchain/xrp.ts#L8)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/XrpGetFee" target="_blank">Tatum API documentation</a>
 
@@ -122,7 +122,7 @@ ___
 
 ▸ `Const`**xrpGetLedger**(`i`: number): Promise\<any>
 
-*Defined in [src/blockchain/xrp.ts:39](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/blockchain/xrp.ts#L39)*
+*Defined in [src/blockchain/xrp.ts:39](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/blockchain/xrp.ts#L39)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/XrpGetLedger" target="_blank">Tatum API documentation</a>
 
@@ -140,7 +140,7 @@ ___
 
 ▸ `Const`**xrpGetTransaction**(`hash`: string): Promise\<any>
 
-*Defined in [src/blockchain/xrp.ts:53](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/blockchain/xrp.ts#L53)*
+*Defined in [src/blockchain/xrp.ts:53](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/blockchain/xrp.ts#L53)*
 
 For more details, see <a href="https://tatum.io/apidoc.html#operation/XrpGetTransaction" target="_blank">Tatum API documentation</a>
 

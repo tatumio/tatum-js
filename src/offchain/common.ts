@@ -31,7 +31,7 @@ export const assignDepositAddress = async (id: string, address: string): Promise
 };
 
 /**
- * For more details, see <a href="https://tatum.io/apidoc.html#operation/assignAddress" target="_blank">Tatum API documentation</a>
+ * For more details, see <a href="https://tatum.io/apidoc.html#operation/removeAddress" target="_blank">Tatum API documentation</a>
  */
 export const removeDepositAddress = async (id: string, address: string): Promise<void> => {
     await axios.delete(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/offchain/account/${id}/address/${address}`,

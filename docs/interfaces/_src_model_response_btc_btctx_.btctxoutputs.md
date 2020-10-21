@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/btc/BtcTx"](../modules/_src_model_response_btc_btctx_.md) / BtcTxOutputs
 
@@ -26,7 +26,7 @@
 
 •  **address**: string
 
-*Defined in [src/model/response/btc/BtcTx.ts:192](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/btc/BtcTx.ts#L192)*
+*Defined in [src/model/response/btc/BtcTx.ts:192](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/btc/BtcTx.ts#L192)*
 
 Recipient address.
 
@@ -38,7 +38,7 @@ ___
 
 •  **script**: string
 
-*Defined in [src/model/response/btc/BtcTx.ts:186](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/btc/BtcTx.ts#L186)*
+*Defined in [src/model/response/btc/BtcTx.ts:186](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/btc/BtcTx.ts#L186)*
 
 Transaction script.
 
@@ -50,7 +50,7 @@ ___
 
 •  **value**: number
 
-*Defined in [src/model/response/btc/BtcTx.ts:180](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/btc/BtcTx.ts#L180)*
+*Defined in [src/model/response/btc/BtcTx.ts:180](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/btc/BtcTx.ts#L180)*
 
 Sent amount in satoshis.
 

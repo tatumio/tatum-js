@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/validation/TransferBtcValidator"](../modules/_src_model_validation_transferbtcvalidator_.md) / TransferBtcValidator
 
@@ -25,7 +25,7 @@
 
 ▸ **defaultMessage**(`validationArguments?`: ValidationArguments): string
 
-*Defined in [src/model/validation/TransferBtcValidator.ts:6](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/validation/TransferBtcValidator.ts#L6)*
+*Defined in [src/model/validation/TransferBtcValidator.ts:6](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/validation/TransferBtcValidator.ts#L6)*
 
 #### Parameters:
 
@@ -41,7 +41,7 @@ ___
 
 ▸ **validate**(`value`: any, `validationArguments?`: ValidationArguments): boolean
 
-*Defined in [src/model/validation/TransferBtcValidator.ts:10](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/validation/TransferBtcValidator.ts#L10)*
+*Defined in [src/model/validation/TransferBtcValidator.ts:10](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/validation/TransferBtcValidator.ts#L10)*
 
 #### Parameters:
 

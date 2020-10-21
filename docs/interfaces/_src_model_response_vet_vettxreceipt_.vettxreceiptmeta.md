@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/vet/VetTxReceipt"](../modules/_src_model_response_vet_vettxreceipt_.md) / VetTxReceiptMeta
 
@@ -28,7 +28,7 @@
 
 •  **blockID**: string
 
-*Defined in [src/model/response/vet/VetTxReceipt.ts:86](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetTxReceipt.ts#L86)*
+*Defined in [src/model/response/vet/VetTxReceipt.ts:86](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/vet/VetTxReceipt.ts#L86)*
 
 **`memberof`** VetTxReceiptMeta
 
@@ -38,7 +38,7 @@ ___
 
 •  **blockNumber**: number
 
-*Defined in [src/model/response/vet/VetTxReceipt.ts:92](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetTxReceipt.ts#L92)*
+*Defined in [src/model/response/vet/VetTxReceipt.ts:92](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/vet/VetTxReceipt.ts#L92)*
 
 **`memberof`** VetTxReceiptMeta
 
@@ -48,7 +48,7 @@ ___
 
 •  **blockTimestamp**: number
 
-*Defined in [src/model/response/vet/VetTxReceipt.ts:98](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetTxReceipt.ts#L98)*
+*Defined in [src/model/response/vet/VetTxReceipt.ts:98](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/vet/VetTxReceipt.ts#L98)*
 
 **`memberof`** VetTxReceiptMeta
 
@@ -58,7 +58,7 @@ ___
 
 •  **txID**: string
 
-*Defined in [src/model/response/vet/VetTxReceipt.ts:104](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetTxReceipt.ts#L104)*
+*Defined in [src/model/response/vet/VetTxReceipt.ts:104](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/vet/VetTxReceipt.ts#L104)*
 
 **`memberof`** VetTxReceiptMeta
 
@@ -68,6 +68,6 @@ ___
 
 •  **txOrigin**: string
 
-*Defined in [src/model/response/vet/VetTxReceipt.ts:110](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/vet/VetTxReceipt.ts#L110)*
+*Defined in [src/model/response/vet/VetTxReceipt.ts:110](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/vet/VetTxReceipt.ts#L110)*
 
 **`memberof`** VetTxReceiptMeta

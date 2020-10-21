@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/request/Currency"](../modules/_src_model_request_currency_.md) / Currency
 
@@ -38,7 +38,7 @@
 
 •  **BAT**: {} = "BAT"
 
-*Defined in [src/model/request/Currency.ts:18](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Currency.ts#L18)*
+*Defined in [src/model/request/Currency.ts:18](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/Currency.ts#L18)*
 
 ___
 
@@ -46,7 +46,7 @@ ___
 
 •  **BCH**: {} = "BCH"
 
-*Defined in [src/model/request/Currency.ts:3](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Currency.ts#L3)*
+*Defined in [src/model/request/Currency.ts:3](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/Currency.ts#L3)*
 
 ___
 
@@ -54,7 +54,7 @@ ___
 
 •  **BNB**: {} = "BNB"
 
-*Defined in [src/model/request/Currency.ts:10](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Currency.ts#L10)*
+*Defined in [src/model/request/Currency.ts:10](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/Currency.ts#L10)*
 
 ___
 
@@ -62,7 +62,7 @@ ___
 
 •  **BTC**: {} = "BTC"
 
-*Defined in [src/model/request/Currency.ts:2](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Currency.ts#L2)*
+*Defined in [src/model/request/Currency.ts:2](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/Currency.ts#L2)*
 
 ___
 
@@ -70,7 +70,7 @@ ___
 
 •  **ETH**: {} = "ETH"
 
-*Defined in [src/model/request/Currency.ts:5](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Currency.ts#L5)*
+*Defined in [src/model/request/Currency.ts:5](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/Currency.ts#L5)*
 
 ___
 
@@ -78,7 +78,7 @@ ___
 
 •  **FREE**: {} = "FREE"
 
-*Defined in [src/model/request/Currency.ts:15](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Currency.ts#L15)*
+*Defined in [src/model/request/Currency.ts:15](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/Currency.ts#L15)*
 
 ___
 
@@ -86,7 +86,7 @@ ___
 
 •  **LEO**: {} = "LEO"
 
-*Defined in [src/model/request/Currency.ts:12](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Currency.ts#L12)*
+*Defined in [src/model/request/Currency.ts:12](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/Currency.ts#L12)*
 
 ___
 
@@ -94,7 +94,7 @@ ___
 
 •  **LINK**: {} = "LINK"
 
-*Defined in [src/model/request/Currency.ts:13](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Currency.ts#L13)*
+*Defined in [src/model/request/Currency.ts:13](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/Currency.ts#L13)*
 
 ___
 
@@ -102,7 +102,7 @@ ___
 
 •  **LTC**: {} = "LTC"
 
-*Defined in [src/model/request/Currency.ts:4](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Currency.ts#L4)*
+*Defined in [src/model/request/Currency.ts:4](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/Currency.ts#L4)*
 
 ___
 
@@ -110,7 +110,7 @@ ___
 
 •  **MKR**: {} = "MKR"
 
-*Defined in [src/model/request/Currency.ts:16](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Currency.ts#L16)*
+*Defined in [src/model/request/Currency.ts:16](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/Currency.ts#L16)*
 
 ___
 
@@ -118,7 +118,7 @@ ___
 
 •  **MMY**: {} = "MMY"
 
-*Defined in [src/model/request/Currency.ts:23](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Currency.ts#L23)*
+*Defined in [src/model/request/Currency.ts:23](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/Currency.ts#L23)*
 
 ___
 
@@ -126,7 +126,7 @@ ___
 
 •  **NEO**: {} = "NEO"
 
-*Defined in [src/model/request/Currency.ts:9](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Currency.ts#L9)*
+*Defined in [src/model/request/Currency.ts:9](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/Currency.ts#L9)*
 
 ___
 
@@ -134,7 +134,7 @@ ___
 
 •  **PAX**: {} = "PAX"
 
-*Defined in [src/model/request/Currency.ts:20](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Currency.ts#L20)*
+*Defined in [src/model/request/Currency.ts:20](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/Currency.ts#L20)*
 
 ___
 
@@ -142,7 +142,7 @@ ___
 
 •  **PAXG**: {} = "PAXG"
 
-*Defined in [src/model/request/Currency.ts:24](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Currency.ts#L24)*
+*Defined in [src/model/request/Currency.ts:24](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/Currency.ts#L24)*
 
 ___
 
@@ -150,7 +150,7 @@ ___
 
 •  **PLTC**: {} = "PLTC"
 
-*Defined in [src/model/request/Currency.ts:21](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Currency.ts#L21)*
+*Defined in [src/model/request/Currency.ts:21](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/Currency.ts#L21)*
 
 ___
 
@@ -158,7 +158,7 @@ ___
 
 •  **TUSD**: {} = "TUSD"
 
-*Defined in [src/model/request/Currency.ts:19](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Currency.ts#L19)*
+*Defined in [src/model/request/Currency.ts:19](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/Currency.ts#L19)*
 
 ___
 
@@ -166,7 +166,7 @@ ___
 
 •  **UNI**: {} = "UNI"
 
-*Defined in [src/model/request/Currency.ts:14](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Currency.ts#L14)*
+*Defined in [src/model/request/Currency.ts:14](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/Currency.ts#L14)*
 
 ___
 
@@ -174,7 +174,7 @@ ___
 
 •  **USDC**: {} = "USDC"
 
-*Defined in [src/model/request/Currency.ts:17](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Currency.ts#L17)*
+*Defined in [src/model/request/Currency.ts:17](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/Currency.ts#L17)*
 
 ___
 
@@ -182,7 +182,7 @@ ___
 
 •  **USDT**: {} = "USDT"
 
-*Defined in [src/model/request/Currency.ts:11](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Currency.ts#L11)*
+*Defined in [src/model/request/Currency.ts:11](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/Currency.ts#L11)*
 
 ___
 
@@ -190,7 +190,7 @@ ___
 
 •  **VET**: {} = "VET"
 
-*Defined in [src/model/request/Currency.ts:8](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Currency.ts#L8)*
+*Defined in [src/model/request/Currency.ts:8](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/Currency.ts#L8)*
 
 ___
 
@@ -198,7 +198,7 @@ ___
 
 •  **XCON**: {} = "XCON"
 
-*Defined in [src/model/request/Currency.ts:22](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Currency.ts#L22)*
+*Defined in [src/model/request/Currency.ts:22](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/Currency.ts#L22)*
 
 ___
 
@@ -206,7 +206,7 @@ ___
 
 •  **XLM**: {} = "XLM"
 
-*Defined in [src/model/request/Currency.ts:7](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Currency.ts#L7)*
+*Defined in [src/model/request/Currency.ts:7](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/Currency.ts#L7)*
 
 ___
 
@@ -214,4 +214,4 @@ ___
 
 •  **XRP**: {} = "XRP"
 
-*Defined in [src/model/request/Currency.ts:6](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/Currency.ts#L6)*
+*Defined in [src/model/request/Currency.ts:6](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/Currency.ts#L6)*

@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/request/CurrencyOperation"](../modules/_src_model_request_currencyoperation_.md) / CurrencyOperation
 
@@ -27,7 +27,7 @@
 
 •  **accountId**: string
 
-*Defined in [src/model/request/CurrencyOperation.ts:7](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CurrencyOperation.ts#L7)*
+*Defined in [src/model/request/CurrencyOperation.ts:7](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/CurrencyOperation.ts#L7)*
 
 ___
 
@@ -35,7 +35,7 @@ ___
 
 •  **amount**: string
 
-*Defined in [src/model/request/CurrencyOperation.ts:13](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CurrencyOperation.ts#L13)*
+*Defined in [src/model/request/CurrencyOperation.ts:13](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/CurrencyOperation.ts#L13)*
 
 ___
 
@@ -43,7 +43,7 @@ ___
 
 • `Optional` **counterAccount**: undefined \| string
 
-*Defined in [src/model/request/CurrencyOperation.ts:33](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CurrencyOperation.ts#L33)*
+*Defined in [src/model/request/CurrencyOperation.ts:33](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/CurrencyOperation.ts#L33)*
 
 ___
 
@@ -51,7 +51,7 @@ ___
 
 • `Optional` **paymentId**: undefined \| string
 
-*Defined in [src/model/request/CurrencyOperation.ts:17](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CurrencyOperation.ts#L17)*
+*Defined in [src/model/request/CurrencyOperation.ts:17](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/CurrencyOperation.ts#L17)*
 
 ___
 
@@ -59,7 +59,7 @@ ___
 
 • `Optional` **recipientNote**: undefined \| string
 
-*Defined in [src/model/request/CurrencyOperation.ts:29](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CurrencyOperation.ts#L29)*
+*Defined in [src/model/request/CurrencyOperation.ts:29](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/CurrencyOperation.ts#L29)*
 
 ___
 
@@ -67,7 +67,7 @@ ___
 
 • `Optional` **reference**: undefined \| string
 
-*Defined in [src/model/request/CurrencyOperation.ts:37](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CurrencyOperation.ts#L37)*
+*Defined in [src/model/request/CurrencyOperation.ts:37](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/CurrencyOperation.ts#L37)*
 
 ___
 
@@ -75,7 +75,7 @@ ___
 
 • `Optional` **senderNote**: undefined \| string
 
-*Defined in [src/model/request/CurrencyOperation.ts:25](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CurrencyOperation.ts#L25)*
+*Defined in [src/model/request/CurrencyOperation.ts:25](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/CurrencyOperation.ts#L25)*
 
 ___
 
@@ -83,4 +83,4 @@ ___
 
 • `Optional` **transactionCode**: undefined \| string
 
-*Defined in [src/model/request/CurrencyOperation.ts:21](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/request/CurrencyOperation.ts#L21)*
+*Defined in [src/model/request/CurrencyOperation.ts:21](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/request/CurrencyOperation.ts#L21)*

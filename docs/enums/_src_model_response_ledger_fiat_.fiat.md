@@ -1,4 +1,4 @@
-**@tatumio/tatum - v1.3.2**
+**@tatumio/tatum - v1.4.4**
 
 > [README](../README.md) / [Globals](../globals.md) / ["src/model/response/ledger/Fiat"](../modules/_src_model_response_ledger_fiat_.md) / Fiat
 
@@ -182,7 +182,7 @@
 
 •  **AED**: {} = "AED"
 
-*Defined in [src/model/response/ledger/Fiat.ts:2](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L2)*
+*Defined in [src/model/response/ledger/Fiat.ts:2](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L2)*
 
 ___
 
@@ -190,7 +190,7 @@ ___
 
 •  **AFN**: {} = "AFN"
 
-*Defined in [src/model/response/ledger/Fiat.ts:3](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L3)*
+*Defined in [src/model/response/ledger/Fiat.ts:3](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L3)*
 
 ___
 
@@ -198,7 +198,7 @@ ___
 
 •  **ALL**: {} = "ALL"
 
-*Defined in [src/model/response/ledger/Fiat.ts:4](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L4)*
+*Defined in [src/model/response/ledger/Fiat.ts:4](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L4)*
 
 ___
 
@@ -206,7 +206,7 @@ ___
 
 •  **AMD**: {} = "AMD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:5](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L5)*
+*Defined in [src/model/response/ledger/Fiat.ts:5](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L5)*
 
 ___
 
@@ -214,7 +214,7 @@ ___
 
 •  **ANG**: {} = "ANG"
 
-*Defined in [src/model/response/ledger/Fiat.ts:6](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L6)*
+*Defined in [src/model/response/ledger/Fiat.ts:6](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L6)*
 
 ___
 
@@ -222,7 +222,7 @@ ___
 
 •  **AOA**: {} = "AOA"
 
-*Defined in [src/model/response/ledger/Fiat.ts:7](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L7)*
+*Defined in [src/model/response/ledger/Fiat.ts:7](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L7)*
 
 ___
 
@@ -230,7 +230,7 @@ ___
 
 •  **ARS**: {} = "ARS"
 
-*Defined in [src/model/response/ledger/Fiat.ts:8](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L8)*
+*Defined in [src/model/response/ledger/Fiat.ts:8](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L8)*
 
 ___
 
@@ -238,7 +238,7 @@ ___
 
 •  **AUD**: {} = "AUD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:9](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L9)*
+*Defined in [src/model/response/ledger/Fiat.ts:9](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L9)*
 
 ___
 
@@ -246,7 +246,7 @@ ___
 
 •  **AWG**: {} = "AWG"
 
-*Defined in [src/model/response/ledger/Fiat.ts:10](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L10)*
+*Defined in [src/model/response/ledger/Fiat.ts:10](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L10)*
 
 ___
 
@@ -254,7 +254,7 @@ ___
 
 •  **AZN**: {} = "AZN"
 
-*Defined in [src/model/response/ledger/Fiat.ts:11](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L11)*
+*Defined in [src/model/response/ledger/Fiat.ts:11](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L11)*
 
 ___
 
@@ -262,7 +262,7 @@ ___
 
 •  **BAM**: {} = "BAM"
 
-*Defined in [src/model/response/ledger/Fiat.ts:12](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L12)*
+*Defined in [src/model/response/ledger/Fiat.ts:12](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L12)*
 
 ___
 
@@ -270,7 +270,7 @@ ___
 
 •  **BBD**: {} = "BBD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:13](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L13)*
+*Defined in [src/model/response/ledger/Fiat.ts:13](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L13)*
 
 ___
 
@@ -278,7 +278,7 @@ ___
 
 •  **BDT**: {} = "BDT"
 
-*Defined in [src/model/response/ledger/Fiat.ts:14](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L14)*
+*Defined in [src/model/response/ledger/Fiat.ts:14](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L14)*
 
 ___
 
@@ -286,7 +286,7 @@ ___
 
 •  **BGN**: {} = "BGN"
 
-*Defined in [src/model/response/ledger/Fiat.ts:15](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L15)*
+*Defined in [src/model/response/ledger/Fiat.ts:15](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L15)*
 
 ___
 
@@ -294,7 +294,7 @@ ___
 
 •  **BHD**: {} = "BHD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:16](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L16)*
+*Defined in [src/model/response/ledger/Fiat.ts:16](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L16)*
 
 ___
 
@@ -302,7 +302,7 @@ ___
 
 •  **BIF**: {} = "BIF"
 
-*Defined in [src/model/response/ledger/Fiat.ts:17](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L17)*
+*Defined in [src/model/response/ledger/Fiat.ts:17](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L17)*
 
 ___
 
@@ -310,7 +310,7 @@ ___
 
 •  **BMD**: {} = "BMD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:18](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L18)*
+*Defined in [src/model/response/ledger/Fiat.ts:18](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L18)*
 
 ___
 
@@ -318,7 +318,7 @@ ___
 
 •  **BND**: {} = "BND"
 
-*Defined in [src/model/response/ledger/Fiat.ts:19](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L19)*
+*Defined in [src/model/response/ledger/Fiat.ts:19](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L19)*
 
 ___
 
@@ -326,7 +326,7 @@ ___
 
 •  **BOB**: {} = "BOB"
 
-*Defined in [src/model/response/ledger/Fiat.ts:20](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L20)*
+*Defined in [src/model/response/ledger/Fiat.ts:20](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L20)*
 
 ___
 
@@ -334,7 +334,7 @@ ___
 
 •  **BRL**: {} = "BRL"
 
-*Defined in [src/model/response/ledger/Fiat.ts:21](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L21)*
+*Defined in [src/model/response/ledger/Fiat.ts:21](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L21)*
 
 ___
 
@@ -342,7 +342,7 @@ ___
 
 •  **BSD**: {} = "BSD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:22](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L22)*
+*Defined in [src/model/response/ledger/Fiat.ts:22](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L22)*
 
 ___
 
@@ -350,7 +350,7 @@ ___
 
 •  **BTN**: {} = "BTN"
 
-*Defined in [src/model/response/ledger/Fiat.ts:23](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L23)*
+*Defined in [src/model/response/ledger/Fiat.ts:23](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L23)*
 
 ___
 
@@ -358,7 +358,7 @@ ___
 
 •  **BWP**: {} = "BWP"
 
-*Defined in [src/model/response/ledger/Fiat.ts:24](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L24)*
+*Defined in [src/model/response/ledger/Fiat.ts:24](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L24)*
 
 ___
 
@@ -366,7 +366,7 @@ ___
 
 •  **BYN**: {} = "BYN"
 
-*Defined in [src/model/response/ledger/Fiat.ts:25](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L25)*
+*Defined in [src/model/response/ledger/Fiat.ts:25](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L25)*
 
 ___
 
@@ -374,7 +374,7 @@ ___
 
 •  **BYR**: {} = "BYR"
 
-*Defined in [src/model/response/ledger/Fiat.ts:26](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L26)*
+*Defined in [src/model/response/ledger/Fiat.ts:26](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L26)*
 
 ___
 
@@ -382,7 +382,7 @@ ___
 
 •  **BZD**: {} = "BZD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:27](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L27)*
+*Defined in [src/model/response/ledger/Fiat.ts:27](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L27)*
 
 ___
 
@@ -390,7 +390,7 @@ ___
 
 •  **CAD**: {} = "CAD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:28](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L28)*
+*Defined in [src/model/response/ledger/Fiat.ts:28](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L28)*
 
 ___
 
@@ -398,7 +398,7 @@ ___
 
 •  **CDF**: {} = "CDF"
 
-*Defined in [src/model/response/ledger/Fiat.ts:29](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L29)*
+*Defined in [src/model/response/ledger/Fiat.ts:29](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L29)*
 
 ___
 
@@ -406,7 +406,7 @@ ___
 
 •  **CHF**: {} = "CHF"
 
-*Defined in [src/model/response/ledger/Fiat.ts:30](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L30)*
+*Defined in [src/model/response/ledger/Fiat.ts:30](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L30)*
 
 ___
 
@@ -414,7 +414,7 @@ ___
 
 •  **CLF**: {} = "CLF"
 
-*Defined in [src/model/response/ledger/Fiat.ts:31](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L31)*
+*Defined in [src/model/response/ledger/Fiat.ts:31](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L31)*
 
 ___
 
@@ -422,7 +422,7 @@ ___
 
 •  **CLP**: {} = "CLP"
 
-*Defined in [src/model/response/ledger/Fiat.ts:32](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L32)*
+*Defined in [src/model/response/ledger/Fiat.ts:32](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L32)*
 
 ___
 
@@ -430,7 +430,7 @@ ___
 
 •  **CNY**: {} = "CNY"
 
-*Defined in [src/model/response/ledger/Fiat.ts:33](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L33)*
+*Defined in [src/model/response/ledger/Fiat.ts:33](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L33)*
 
 ___
 
@@ -438,7 +438,7 @@ ___
 
 •  **COP**: {} = "COP"
 
-*Defined in [src/model/response/ledger/Fiat.ts:34](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L34)*
+*Defined in [src/model/response/ledger/Fiat.ts:34](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L34)*
 
 ___
 
@@ -446,7 +446,7 @@ ___
 
 •  **CRC**: {} = "CRC"
 
-*Defined in [src/model/response/ledger/Fiat.ts:35](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L35)*
+*Defined in [src/model/response/ledger/Fiat.ts:35](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L35)*
 
 ___
 
@@ -454,7 +454,7 @@ ___
 
 •  **CUC**: {} = "CUC"
 
-*Defined in [src/model/response/ledger/Fiat.ts:36](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L36)*
+*Defined in [src/model/response/ledger/Fiat.ts:36](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L36)*
 
 ___
 
@@ -462,7 +462,7 @@ ___
 
 •  **CUP**: {} = "CUP"
 
-*Defined in [src/model/response/ledger/Fiat.ts:37](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L37)*
+*Defined in [src/model/response/ledger/Fiat.ts:37](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L37)*
 
 ___
 
@@ -470,7 +470,7 @@ ___
 
 •  **CVE**: {} = "CVE"
 
-*Defined in [src/model/response/ledger/Fiat.ts:38](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L38)*
+*Defined in [src/model/response/ledger/Fiat.ts:38](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L38)*
 
 ___
 
@@ -478,7 +478,7 @@ ___
 
 •  **CZK**: {} = "CZK"
 
-*Defined in [src/model/response/ledger/Fiat.ts:39](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L39)*
+*Defined in [src/model/response/ledger/Fiat.ts:39](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L39)*
 
 ___
 
@@ -486,7 +486,7 @@ ___
 
 •  **DJF**: {} = "DJF"
 
-*Defined in [src/model/response/ledger/Fiat.ts:40](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L40)*
+*Defined in [src/model/response/ledger/Fiat.ts:40](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L40)*
 
 ___
 
@@ -494,7 +494,7 @@ ___
 
 •  **DKK**: {} = "DKK"
 
-*Defined in [src/model/response/ledger/Fiat.ts:41](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L41)*
+*Defined in [src/model/response/ledger/Fiat.ts:41](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L41)*
 
 ___
 
@@ -502,7 +502,7 @@ ___
 
 •  **DOP**: {} = "DOP"
 
-*Defined in [src/model/response/ledger/Fiat.ts:42](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L42)*
+*Defined in [src/model/response/ledger/Fiat.ts:42](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L42)*
 
 ___
 
@@ -510,7 +510,7 @@ ___
 
 •  **DZD**: {} = "DZD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:43](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L43)*
+*Defined in [src/model/response/ledger/Fiat.ts:43](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L43)*
 
 ___
 
@@ -518,7 +518,7 @@ ___
 
 •  **EGP**: {} = "EGP"
 
-*Defined in [src/model/response/ledger/Fiat.ts:44](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L44)*
+*Defined in [src/model/response/ledger/Fiat.ts:44](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L44)*
 
 ___
 
@@ -526,7 +526,7 @@ ___
 
 •  **ERN**: {} = "ERN"
 
-*Defined in [src/model/response/ledger/Fiat.ts:45](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L45)*
+*Defined in [src/model/response/ledger/Fiat.ts:45](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L45)*
 
 ___
 
@@ -534,7 +534,7 @@ ___
 
 •  **ETB**: {} = "ETB"
 
-*Defined in [src/model/response/ledger/Fiat.ts:46](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L46)*
+*Defined in [src/model/response/ledger/Fiat.ts:46](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L46)*
 
 ___
 
@@ -542,7 +542,7 @@ ___
 
 •  **EUR**: {} = "EUR"
 
-*Defined in [src/model/response/ledger/Fiat.ts:47](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L47)*
+*Defined in [src/model/response/ledger/Fiat.ts:47](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L47)*
 
 ___
 
@@ -550,7 +550,7 @@ ___
 
 •  **FJD**: {} = "FJD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:48](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L48)*
+*Defined in [src/model/response/ledger/Fiat.ts:48](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L48)*
 
 ___
 
@@ -558,7 +558,7 @@ ___
 
 •  **FKP**: {} = "FKP"
 
-*Defined in [src/model/response/ledger/Fiat.ts:49](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L49)*
+*Defined in [src/model/response/ledger/Fiat.ts:49](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L49)*
 
 ___
 
@@ -566,7 +566,7 @@ ___
 
 •  **GBP**: {} = "GBP"
 
-*Defined in [src/model/response/ledger/Fiat.ts:50](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L50)*
+*Defined in [src/model/response/ledger/Fiat.ts:50](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L50)*
 
 ___
 
@@ -574,7 +574,7 @@ ___
 
 •  **GEL**: {} = "GEL"
 
-*Defined in [src/model/response/ledger/Fiat.ts:51](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L51)*
+*Defined in [src/model/response/ledger/Fiat.ts:51](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L51)*
 
 ___
 
@@ -582,7 +582,7 @@ ___
 
 •  **GGP**: {} = "GGP"
 
-*Defined in [src/model/response/ledger/Fiat.ts:52](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L52)*
+*Defined in [src/model/response/ledger/Fiat.ts:52](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L52)*
 
 ___
 
@@ -590,7 +590,7 @@ ___
 
 •  **GHS**: {} = "GHS"
 
-*Defined in [src/model/response/ledger/Fiat.ts:53](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L53)*
+*Defined in [src/model/response/ledger/Fiat.ts:53](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L53)*
 
 ___
 
@@ -598,7 +598,7 @@ ___
 
 •  **GIP**: {} = "GIP"
 
-*Defined in [src/model/response/ledger/Fiat.ts:54](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L54)*
+*Defined in [src/model/response/ledger/Fiat.ts:54](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L54)*
 
 ___
 
@@ -606,7 +606,7 @@ ___
 
 •  **GMD**: {} = "GMD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:55](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L55)*
+*Defined in [src/model/response/ledger/Fiat.ts:55](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L55)*
 
 ___
 
@@ -614,7 +614,7 @@ ___
 
 •  **GNF**: {} = "GNF"
 
-*Defined in [src/model/response/ledger/Fiat.ts:56](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L56)*
+*Defined in [src/model/response/ledger/Fiat.ts:56](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L56)*
 
 ___
 
@@ -622,7 +622,7 @@ ___
 
 •  **GTQ**: {} = "GTQ"
 
-*Defined in [src/model/response/ledger/Fiat.ts:57](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L57)*
+*Defined in [src/model/response/ledger/Fiat.ts:57](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L57)*
 
 ___
 
@@ -630,7 +630,7 @@ ___
 
 •  **GYD**: {} = "GYD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:58](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L58)*
+*Defined in [src/model/response/ledger/Fiat.ts:58](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L58)*
 
 ___
 
@@ -638,7 +638,7 @@ ___
 
 •  **HKD**: {} = "HKD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:59](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L59)*
+*Defined in [src/model/response/ledger/Fiat.ts:59](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L59)*
 
 ___
 
@@ -646,7 +646,7 @@ ___
 
 •  **HNL**: {} = "HNL"
 
-*Defined in [src/model/response/ledger/Fiat.ts:60](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L60)*
+*Defined in [src/model/response/ledger/Fiat.ts:60](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L60)*
 
 ___
 
@@ -654,7 +654,7 @@ ___
 
 •  **HRK**: {} = "HRK"
 
-*Defined in [src/model/response/ledger/Fiat.ts:61](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L61)*
+*Defined in [src/model/response/ledger/Fiat.ts:61](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L61)*
 
 ___
 
@@ -662,7 +662,7 @@ ___
 
 •  **HTG**: {} = "HTG"
 
-*Defined in [src/model/response/ledger/Fiat.ts:62](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L62)*
+*Defined in [src/model/response/ledger/Fiat.ts:62](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L62)*
 
 ___
 
@@ -670,7 +670,7 @@ ___
 
 •  **HUF**: {} = "HUF"
 
-*Defined in [src/model/response/ledger/Fiat.ts:63](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L63)*
+*Defined in [src/model/response/ledger/Fiat.ts:63](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L63)*
 
 ___
 
@@ -678,7 +678,7 @@ ___
 
 •  **IDR**: {} = "IDR"
 
-*Defined in [src/model/response/ledger/Fiat.ts:64](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L64)*
+*Defined in [src/model/response/ledger/Fiat.ts:64](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L64)*
 
 ___
 
@@ -686,7 +686,7 @@ ___
 
 •  **ILS**: {} = "ILS"
 
-*Defined in [src/model/response/ledger/Fiat.ts:65](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L65)*
+*Defined in [src/model/response/ledger/Fiat.ts:65](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L65)*
 
 ___
 
@@ -694,7 +694,7 @@ ___
 
 •  **IMP**: {} = "IMP"
 
-*Defined in [src/model/response/ledger/Fiat.ts:66](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L66)*
+*Defined in [src/model/response/ledger/Fiat.ts:66](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L66)*
 
 ___
 
@@ -702,7 +702,7 @@ ___
 
 •  **INR**: {} = "INR"
 
-*Defined in [src/model/response/ledger/Fiat.ts:67](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L67)*
+*Defined in [src/model/response/ledger/Fiat.ts:67](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L67)*
 
 ___
 
@@ -710,7 +710,7 @@ ___
 
 •  **IQD**: {} = "IQD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:68](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L68)*
+*Defined in [src/model/response/ledger/Fiat.ts:68](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L68)*
 
 ___
 
@@ -718,7 +718,7 @@ ___
 
 •  **IRR**: {} = "IRR"
 
-*Defined in [src/model/response/ledger/Fiat.ts:69](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L69)*
+*Defined in [src/model/response/ledger/Fiat.ts:69](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L69)*
 
 ___
 
@@ -726,7 +726,7 @@ ___
 
 •  **ISK**: {} = "ISK"
 
-*Defined in [src/model/response/ledger/Fiat.ts:70](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L70)*
+*Defined in [src/model/response/ledger/Fiat.ts:70](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L70)*
 
 ___
 
@@ -734,7 +734,7 @@ ___
 
 •  **JEP**: {} = "JEP"
 
-*Defined in [src/model/response/ledger/Fiat.ts:71](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L71)*
+*Defined in [src/model/response/ledger/Fiat.ts:71](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L71)*
 
 ___
 
@@ -742,7 +742,7 @@ ___
 
 •  **JMD**: {} = "JMD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:72](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L72)*
+*Defined in [src/model/response/ledger/Fiat.ts:72](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L72)*
 
 ___
 
@@ -750,7 +750,7 @@ ___
 
 •  **JOD**: {} = "JOD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:73](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L73)*
+*Defined in [src/model/response/ledger/Fiat.ts:73](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L73)*
 
 ___
 
@@ -758,7 +758,7 @@ ___
 
 •  **JPY**: {} = "JPY"
 
-*Defined in [src/model/response/ledger/Fiat.ts:74](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L74)*
+*Defined in [src/model/response/ledger/Fiat.ts:74](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L74)*
 
 ___
 
@@ -766,7 +766,7 @@ ___
 
 •  **KES**: {} = "KES"
 
-*Defined in [src/model/response/ledger/Fiat.ts:75](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L75)*
+*Defined in [src/model/response/ledger/Fiat.ts:75](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L75)*
 
 ___
 
@@ -774,7 +774,7 @@ ___
 
 •  **KGS**: {} = "KGS"
 
-*Defined in [src/model/response/ledger/Fiat.ts:76](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L76)*
+*Defined in [src/model/response/ledger/Fiat.ts:76](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L76)*
 
 ___
 
@@ -782,7 +782,7 @@ ___
 
 •  **KHR**: {} = "KHR"
 
-*Defined in [src/model/response/ledger/Fiat.ts:77](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L77)*
+*Defined in [src/model/response/ledger/Fiat.ts:77](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L77)*
 
 ___
 
@@ -790,7 +790,7 @@ ___
 
 •  **KMF**: {} = "KMF"
 
-*Defined in [src/model/response/ledger/Fiat.ts:78](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L78)*
+*Defined in [src/model/response/ledger/Fiat.ts:78](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L78)*
 
 ___
 
@@ -798,7 +798,7 @@ ___
 
 •  **KPW**: {} = "KPW"
 
-*Defined in [src/model/response/ledger/Fiat.ts:79](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L79)*
+*Defined in [src/model/response/ledger/Fiat.ts:79](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L79)*
 
 ___
 
@@ -806,7 +806,7 @@ ___
 
 •  **KRW**: {} = "KRW"
 
-*Defined in [src/model/response/ledger/Fiat.ts:80](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L80)*
+*Defined in [src/model/response/ledger/Fiat.ts:80](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L80)*
 
 ___
 
@@ -814,7 +814,7 @@ ___
 
 •  **KWD**: {} = "KWD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:81](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L81)*
+*Defined in [src/model/response/ledger/Fiat.ts:81](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L81)*
 
 ___
 
@@ -822,7 +822,7 @@ ___
 
 •  **KYD**: {} = "KYD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:82](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L82)*
+*Defined in [src/model/response/ledger/Fiat.ts:82](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L82)*
 
 ___
 
@@ -830,7 +830,7 @@ ___
 
 •  **KZT**: {} = "KZT"
 
-*Defined in [src/model/response/ledger/Fiat.ts:83](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L83)*
+*Defined in [src/model/response/ledger/Fiat.ts:83](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L83)*
 
 ___
 
@@ -838,7 +838,7 @@ ___
 
 •  **LAK**: {} = "LAK"
 
-*Defined in [src/model/response/ledger/Fiat.ts:84](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L84)*
+*Defined in [src/model/response/ledger/Fiat.ts:84](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L84)*
 
 ___
 
@@ -846,7 +846,7 @@ ___
 
 •  **LBP**: {} = "LBP"
 
-*Defined in [src/model/response/ledger/Fiat.ts:85](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L85)*
+*Defined in [src/model/response/ledger/Fiat.ts:85](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L85)*
 
 ___
 
@@ -854,7 +854,7 @@ ___
 
 •  **LKR**: {} = "LKR"
 
-*Defined in [src/model/response/ledger/Fiat.ts:86](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L86)*
+*Defined in [src/model/response/ledger/Fiat.ts:86](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L86)*
 
 ___
 
@@ -862,7 +862,7 @@ ___
 
 •  **LRD**: {} = "LRD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:87](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L87)*
+*Defined in [src/model/response/ledger/Fiat.ts:87](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L87)*
 
 ___
 
@@ -870,7 +870,7 @@ ___
 
 •  **LSL**: {} = "LSL"
 
-*Defined in [src/model/response/ledger/Fiat.ts:88](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L88)*
+*Defined in [src/model/response/ledger/Fiat.ts:88](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L88)*
 
 ___
 
@@ -878,7 +878,7 @@ ___
 
 •  **LTL**: {} = "LTL"
 
-*Defined in [src/model/response/ledger/Fiat.ts:89](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L89)*
+*Defined in [src/model/response/ledger/Fiat.ts:89](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L89)*
 
 ___
 
@@ -886,7 +886,7 @@ ___
 
 •  **LVL**: {} = "LVL"
 
-*Defined in [src/model/response/ledger/Fiat.ts:90](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L90)*
+*Defined in [src/model/response/ledger/Fiat.ts:90](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L90)*
 
 ___
 
@@ -894,7 +894,7 @@ ___
 
 •  **LYD**: {} = "LYD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:91](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L91)*
+*Defined in [src/model/response/ledger/Fiat.ts:91](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L91)*
 
 ___
 
@@ -902,7 +902,7 @@ ___
 
 •  **MAD**: {} = "MAD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:92](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L92)*
+*Defined in [src/model/response/ledger/Fiat.ts:92](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L92)*
 
 ___
 
@@ -910,7 +910,7 @@ ___
 
 •  **MDL**: {} = "MDL"
 
-*Defined in [src/model/response/ledger/Fiat.ts:93](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L93)*
+*Defined in [src/model/response/ledger/Fiat.ts:93](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L93)*
 
 ___
 
@@ -918,7 +918,7 @@ ___
 
 •  **MGA**: {} = "MGA"
 
-*Defined in [src/model/response/ledger/Fiat.ts:94](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L94)*
+*Defined in [src/model/response/ledger/Fiat.ts:94](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L94)*
 
 ___
 
@@ -926,7 +926,7 @@ ___
 
 •  **MKD**: {} = "MKD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:95](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L95)*
+*Defined in [src/model/response/ledger/Fiat.ts:95](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L95)*
 
 ___
 
@@ -934,7 +934,7 @@ ___
 
 •  **MMK**: {} = "MMK"
 
-*Defined in [src/model/response/ledger/Fiat.ts:96](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L96)*
+*Defined in [src/model/response/ledger/Fiat.ts:96](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L96)*
 
 ___
 
@@ -942,7 +942,7 @@ ___
 
 •  **MNT**: {} = "MNT"
 
-*Defined in [src/model/response/ledger/Fiat.ts:97](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L97)*
+*Defined in [src/model/response/ledger/Fiat.ts:97](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L97)*
 
 ___
 
@@ -950,7 +950,7 @@ ___
 
 •  **MOP**: {} = "MOP"
 
-*Defined in [src/model/response/ledger/Fiat.ts:98](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L98)*
+*Defined in [src/model/response/ledger/Fiat.ts:98](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L98)*
 
 ___
 
@@ -958,7 +958,7 @@ ___
 
 •  **MRO**: {} = "MRO"
 
-*Defined in [src/model/response/ledger/Fiat.ts:99](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L99)*
+*Defined in [src/model/response/ledger/Fiat.ts:99](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L99)*
 
 ___
 
@@ -966,7 +966,7 @@ ___
 
 •  **MUR**: {} = "MUR"
 
-*Defined in [src/model/response/ledger/Fiat.ts:100](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L100)*
+*Defined in [src/model/response/ledger/Fiat.ts:100](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L100)*
 
 ___
 
@@ -974,7 +974,7 @@ ___
 
 •  **MVR**: {} = "MVR"
 
-*Defined in [src/model/response/ledger/Fiat.ts:101](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L101)*
+*Defined in [src/model/response/ledger/Fiat.ts:101](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L101)*
 
 ___
 
@@ -982,7 +982,7 @@ ___
 
 •  **MWK**: {} = "MWK"
 
-*Defined in [src/model/response/ledger/Fiat.ts:102](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L102)*
+*Defined in [src/model/response/ledger/Fiat.ts:102](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L102)*
 
 ___
 
@@ -990,7 +990,7 @@ ___
 
 •  **MXN**: {} = "MXN"
 
-*Defined in [src/model/response/ledger/Fiat.ts:103](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L103)*
+*Defined in [src/model/response/ledger/Fiat.ts:103](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L103)*
 
 ___
 
@@ -998,7 +998,7 @@ ___
 
 •  **MYR**: {} = "MYR"
 
-*Defined in [src/model/response/ledger/Fiat.ts:104](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L104)*
+*Defined in [src/model/response/ledger/Fiat.ts:104](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L104)*
 
 ___
 
@@ -1006,7 +1006,7 @@ ___
 
 •  **MZN**: {} = "MZN"
 
-*Defined in [src/model/response/ledger/Fiat.ts:105](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L105)*
+*Defined in [src/model/response/ledger/Fiat.ts:105](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L105)*
 
 ___
 
@@ -1014,7 +1014,7 @@ ___
 
 •  **NAD**: {} = "NAD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:106](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L106)*
+*Defined in [src/model/response/ledger/Fiat.ts:106](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L106)*
 
 ___
 
@@ -1022,7 +1022,7 @@ ___
 
 •  **NGN**: {} = "NGN"
 
-*Defined in [src/model/response/ledger/Fiat.ts:107](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L107)*
+*Defined in [src/model/response/ledger/Fiat.ts:107](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L107)*
 
 ___
 
@@ -1030,7 +1030,7 @@ ___
 
 •  **NIO**: {} = "NIO"
 
-*Defined in [src/model/response/ledger/Fiat.ts:108](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L108)*
+*Defined in [src/model/response/ledger/Fiat.ts:108](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L108)*
 
 ___
 
@@ -1038,7 +1038,7 @@ ___
 
 •  **NOK**: {} = "NOK"
 
-*Defined in [src/model/response/ledger/Fiat.ts:109](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L109)*
+*Defined in [src/model/response/ledger/Fiat.ts:109](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L109)*
 
 ___
 
@@ -1046,7 +1046,7 @@ ___
 
 •  **NPR**: {} = "NPR"
 
-*Defined in [src/model/response/ledger/Fiat.ts:110](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L110)*
+*Defined in [src/model/response/ledger/Fiat.ts:110](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L110)*
 
 ___
 
@@ -1054,7 +1054,7 @@ ___
 
 •  **NZD**: {} = "NZD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:111](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L111)*
+*Defined in [src/model/response/ledger/Fiat.ts:111](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L111)*
 
 ___
 
@@ -1062,7 +1062,7 @@ ___
 
 •  **OMR**: {} = "OMR"
 
-*Defined in [src/model/response/ledger/Fiat.ts:112](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L112)*
+*Defined in [src/model/response/ledger/Fiat.ts:112](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L112)*
 
 ___
 
@@ -1070,7 +1070,7 @@ ___
 
 •  **PAB**: {} = "PAB"
 
-*Defined in [src/model/response/ledger/Fiat.ts:113](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L113)*
+*Defined in [src/model/response/ledger/Fiat.ts:113](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L113)*
 
 ___
 
@@ -1078,7 +1078,7 @@ ___
 
 •  **PEN**: {} = "PEN"
 
-*Defined in [src/model/response/ledger/Fiat.ts:114](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L114)*
+*Defined in [src/model/response/ledger/Fiat.ts:114](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L114)*
 
 ___
 
@@ -1086,7 +1086,7 @@ ___
 
 •  **PGK**: {} = "PGK"
 
-*Defined in [src/model/response/ledger/Fiat.ts:115](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L115)*
+*Defined in [src/model/response/ledger/Fiat.ts:115](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L115)*
 
 ___
 
@@ -1094,7 +1094,7 @@ ___
 
 •  **PHP**: {} = "PHP"
 
-*Defined in [src/model/response/ledger/Fiat.ts:116](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L116)*
+*Defined in [src/model/response/ledger/Fiat.ts:116](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L116)*
 
 ___
 
@@ -1102,7 +1102,7 @@ ___
 
 •  **PKR**: {} = "PKR"
 
-*Defined in [src/model/response/ledger/Fiat.ts:117](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L117)*
+*Defined in [src/model/response/ledger/Fiat.ts:117](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L117)*
 
 ___
 
@@ -1110,7 +1110,7 @@ ___
 
 •  **PLN**: {} = "PLN"
 
-*Defined in [src/model/response/ledger/Fiat.ts:118](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L118)*
+*Defined in [src/model/response/ledger/Fiat.ts:118](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L118)*
 
 ___
 
@@ -1118,7 +1118,7 @@ ___
 
 •  **PYG**: {} = "PYG"
 
-*Defined in [src/model/response/ledger/Fiat.ts:119](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L119)*
+*Defined in [src/model/response/ledger/Fiat.ts:119](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L119)*
 
 ___
 
@@ -1126,7 +1126,7 @@ ___
 
 •  **QAR**: {} = "QAR"
 
-*Defined in [src/model/response/ledger/Fiat.ts:120](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L120)*
+*Defined in [src/model/response/ledger/Fiat.ts:120](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L120)*
 
 ___
 
@@ -1134,7 +1134,7 @@ ___
 
 •  **RON**: {} = "RON"
 
-*Defined in [src/model/response/ledger/Fiat.ts:121](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L121)*
+*Defined in [src/model/response/ledger/Fiat.ts:121](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L121)*
 
 ___
 
@@ -1142,7 +1142,7 @@ ___
 
 •  **RSD**: {} = "RSD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:122](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L122)*
+*Defined in [src/model/response/ledger/Fiat.ts:122](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L122)*
 
 ___
 
@@ -1150,7 +1150,7 @@ ___
 
 •  **RUB**: {} = "RUB"
 
-*Defined in [src/model/response/ledger/Fiat.ts:123](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L123)*
+*Defined in [src/model/response/ledger/Fiat.ts:123](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L123)*
 
 ___
 
@@ -1158,7 +1158,7 @@ ___
 
 •  **RWF**: {} = "RWF"
 
-*Defined in [src/model/response/ledger/Fiat.ts:124](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L124)*
+*Defined in [src/model/response/ledger/Fiat.ts:124](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L124)*
 
 ___
 
@@ -1166,7 +1166,7 @@ ___
 
 •  **SAR**: {} = "SAR"
 
-*Defined in [src/model/response/ledger/Fiat.ts:125](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L125)*
+*Defined in [src/model/response/ledger/Fiat.ts:125](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L125)*
 
 ___
 
@@ -1174,7 +1174,7 @@ ___
 
 •  **SBD**: {} = "SBD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:126](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L126)*
+*Defined in [src/model/response/ledger/Fiat.ts:126](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L126)*
 
 ___
 
@@ -1182,7 +1182,7 @@ ___
 
 •  **SCR**: {} = "SCR"
 
-*Defined in [src/model/response/ledger/Fiat.ts:127](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L127)*
+*Defined in [src/model/response/ledger/Fiat.ts:127](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L127)*
 
 ___
 
@@ -1190,7 +1190,7 @@ ___
 
 •  **SDG**: {} = "SDG"
 
-*Defined in [src/model/response/ledger/Fiat.ts:128](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L128)*
+*Defined in [src/model/response/ledger/Fiat.ts:128](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L128)*
 
 ___
 
@@ -1198,7 +1198,7 @@ ___
 
 •  **SEK**: {} = "SEK"
 
-*Defined in [src/model/response/ledger/Fiat.ts:129](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L129)*
+*Defined in [src/model/response/ledger/Fiat.ts:129](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L129)*
 
 ___
 
@@ -1206,7 +1206,7 @@ ___
 
 •  **SGD**: {} = "SGD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:130](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L130)*
+*Defined in [src/model/response/ledger/Fiat.ts:130](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L130)*
 
 ___
 
@@ -1214,7 +1214,7 @@ ___
 
 •  **SHP**: {} = "SHP"
 
-*Defined in [src/model/response/ledger/Fiat.ts:131](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L131)*
+*Defined in [src/model/response/ledger/Fiat.ts:131](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L131)*
 
 ___
 
@@ -1222,7 +1222,7 @@ ___
 
 •  **SLL**: {} = "SLL"
 
-*Defined in [src/model/response/ledger/Fiat.ts:132](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L132)*
+*Defined in [src/model/response/ledger/Fiat.ts:132](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L132)*
 
 ___
 
@@ -1230,7 +1230,7 @@ ___
 
 •  **SOS**: {} = "SOS"
 
-*Defined in [src/model/response/ledger/Fiat.ts:133](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L133)*
+*Defined in [src/model/response/ledger/Fiat.ts:133](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L133)*
 
 ___
 
@@ -1238,7 +1238,7 @@ ___
 
 •  **SRD**: {} = "SRD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:134](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L134)*
+*Defined in [src/model/response/ledger/Fiat.ts:134](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L134)*
 
 ___
 
@@ -1246,7 +1246,7 @@ ___
 
 •  **STD**: {} = "STD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:135](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L135)*
+*Defined in [src/model/response/ledger/Fiat.ts:135](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L135)*
 
 ___
 
@@ -1254,7 +1254,7 @@ ___
 
 •  **SVC**: {} = "SVC"
 
-*Defined in [src/model/response/ledger/Fiat.ts:136](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L136)*
+*Defined in [src/model/response/ledger/Fiat.ts:136](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L136)*
 
 ___
 
@@ -1262,7 +1262,7 @@ ___
 
 •  **SYP**: {} = "SYP"
 
-*Defined in [src/model/response/ledger/Fiat.ts:137](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L137)*
+*Defined in [src/model/response/ledger/Fiat.ts:137](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L137)*
 
 ___
 
@@ -1270,7 +1270,7 @@ ___
 
 •  **SZL**: {} = "SZL"
 
-*Defined in [src/model/response/ledger/Fiat.ts:138](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L138)*
+*Defined in [src/model/response/ledger/Fiat.ts:138](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L138)*
 
 ___
 
@@ -1278,7 +1278,7 @@ ___
 
 •  **THB**: {} = "THB"
 
-*Defined in [src/model/response/ledger/Fiat.ts:139](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L139)*
+*Defined in [src/model/response/ledger/Fiat.ts:139](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L139)*
 
 ___
 
@@ -1286,7 +1286,7 @@ ___
 
 •  **TJS**: {} = "TJS"
 
-*Defined in [src/model/response/ledger/Fiat.ts:140](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L140)*
+*Defined in [src/model/response/ledger/Fiat.ts:140](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L140)*
 
 ___
 
@@ -1294,7 +1294,7 @@ ___
 
 •  **TMT**: {} = "TMT"
 
-*Defined in [src/model/response/ledger/Fiat.ts:141](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L141)*
+*Defined in [src/model/response/ledger/Fiat.ts:141](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L141)*
 
 ___
 
@@ -1302,7 +1302,7 @@ ___
 
 •  **TND**: {} = "TND"
 
-*Defined in [src/model/response/ledger/Fiat.ts:142](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L142)*
+*Defined in [src/model/response/ledger/Fiat.ts:142](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L142)*
 
 ___
 
@@ -1310,7 +1310,7 @@ ___
 
 •  **TOP**: {} = "TOP"
 
-*Defined in [src/model/response/ledger/Fiat.ts:143](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L143)*
+*Defined in [src/model/response/ledger/Fiat.ts:143](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L143)*
 
 ___
 
@@ -1318,7 +1318,7 @@ ___
 
 •  **TRY**: {} = "TRY"
 
-*Defined in [src/model/response/ledger/Fiat.ts:144](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L144)*
+*Defined in [src/model/response/ledger/Fiat.ts:144](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L144)*
 
 ___
 
@@ -1326,7 +1326,7 @@ ___
 
 •  **TTD**: {} = "TTD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:145](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L145)*
+*Defined in [src/model/response/ledger/Fiat.ts:145](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L145)*
 
 ___
 
@@ -1334,7 +1334,7 @@ ___
 
 •  **TWD**: {} = "TWD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:146](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L146)*
+*Defined in [src/model/response/ledger/Fiat.ts:146](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L146)*
 
 ___
 
@@ -1342,7 +1342,7 @@ ___
 
 •  **TZS**: {} = "TZS"
 
-*Defined in [src/model/response/ledger/Fiat.ts:147](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L147)*
+*Defined in [src/model/response/ledger/Fiat.ts:147](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L147)*
 
 ___
 
@@ -1350,7 +1350,7 @@ ___
 
 •  **UAH**: {} = "UAH"
 
-*Defined in [src/model/response/ledger/Fiat.ts:148](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L148)*
+*Defined in [src/model/response/ledger/Fiat.ts:148](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L148)*
 
 ___
 
@@ -1358,7 +1358,7 @@ ___
 
 •  **UGX**: {} = "UGX"
 
-*Defined in [src/model/response/ledger/Fiat.ts:149](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L149)*
+*Defined in [src/model/response/ledger/Fiat.ts:149](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L149)*
 
 ___
 
@@ -1366,7 +1366,7 @@ ___
 
 •  **USD**: {} = "USD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:150](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L150)*
+*Defined in [src/model/response/ledger/Fiat.ts:150](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L150)*
 
 ___
 
@@ -1374,7 +1374,7 @@ ___
 
 •  **UYU**: {} = "UYU"
 
-*Defined in [src/model/response/ledger/Fiat.ts:151](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L151)*
+*Defined in [src/model/response/ledger/Fiat.ts:151](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L151)*
 
 ___
 
@@ -1382,7 +1382,7 @@ ___
 
 •  **UZS**: {} = "UZS"
 
-*Defined in [src/model/response/ledger/Fiat.ts:152](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L152)*
+*Defined in [src/model/response/ledger/Fiat.ts:152](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L152)*
 
 ___
 
@@ -1390,7 +1390,7 @@ ___
 
 •  **VEF**: {} = "VEF"
 
-*Defined in [src/model/response/ledger/Fiat.ts:153](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L153)*
+*Defined in [src/model/response/ledger/Fiat.ts:153](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L153)*
 
 ___
 
@@ -1398,7 +1398,7 @@ ___
 
 •  **VND**: {} = "VND"
 
-*Defined in [src/model/response/ledger/Fiat.ts:154](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L154)*
+*Defined in [src/model/response/ledger/Fiat.ts:154](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L154)*
 
 ___
 
@@ -1406,7 +1406,7 @@ ___
 
 •  **VUV**: {} = "VUV"
 
-*Defined in [src/model/response/ledger/Fiat.ts:155](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L155)*
+*Defined in [src/model/response/ledger/Fiat.ts:155](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L155)*
 
 ___
 
@@ -1414,7 +1414,7 @@ ___
 
 •  **WST**: {} = "WST"
 
-*Defined in [src/model/response/ledger/Fiat.ts:156](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L156)*
+*Defined in [src/model/response/ledger/Fiat.ts:156](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L156)*
 
 ___
 
@@ -1422,7 +1422,7 @@ ___
 
 •  **XAF**: {} = "XAF"
 
-*Defined in [src/model/response/ledger/Fiat.ts:157](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L157)*
+*Defined in [src/model/response/ledger/Fiat.ts:157](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L157)*
 
 ___
 
@@ -1430,7 +1430,7 @@ ___
 
 •  **XAG**: {} = "XAG"
 
-*Defined in [src/model/response/ledger/Fiat.ts:158](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L158)*
+*Defined in [src/model/response/ledger/Fiat.ts:158](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L158)*
 
 ___
 
@@ -1438,7 +1438,7 @@ ___
 
 •  **XAU**: {} = "XAU"
 
-*Defined in [src/model/response/ledger/Fiat.ts:159](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L159)*
+*Defined in [src/model/response/ledger/Fiat.ts:159](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L159)*
 
 ___
 
@@ -1446,7 +1446,7 @@ ___
 
 •  **XCD**: {} = "XCD"
 
-*Defined in [src/model/response/ledger/Fiat.ts:160](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L160)*
+*Defined in [src/model/response/ledger/Fiat.ts:160](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L160)*
 
 ___
 
@@ -1454,7 +1454,7 @@ ___
 
 •  **XDR**: {} = "XDR"
 
-*Defined in [src/model/response/ledger/Fiat.ts:161](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L161)*
+*Defined in [src/model/response/ledger/Fiat.ts:161](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L161)*
 
 ___
 
@@ -1462,7 +1462,7 @@ ___
 
 •  **XOF**: {} = "XOF"
 
-*Defined in [src/model/response/ledger/Fiat.ts:162](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L162)*
+*Defined in [src/model/response/ledger/Fiat.ts:162](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L162)*
 
 ___
 
@@ -1470,7 +1470,7 @@ ___
 
 •  **XPF**: {} = "XPF"
 
-*Defined in [src/model/response/ledger/Fiat.ts:163](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L163)*
+*Defined in [src/model/response/ledger/Fiat.ts:163](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L163)*
 
 ___
 
@@ -1478,7 +1478,7 @@ ___
 
 •  **YER**: {} = "YER"
 
-*Defined in [src/model/response/ledger/Fiat.ts:164](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L164)*
+*Defined in [src/model/response/ledger/Fiat.ts:164](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L164)*
 
 ___
 
@@ -1486,7 +1486,7 @@ ___
 
 •  **ZAR**: {} = "ZAR"
 
-*Defined in [src/model/response/ledger/Fiat.ts:165](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L165)*
+*Defined in [src/model/response/ledger/Fiat.ts:165](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L165)*
 
 ___
 
@@ -1494,7 +1494,7 @@ ___
 
 •  **ZMK**: {} = "ZMK"
 
-*Defined in [src/model/response/ledger/Fiat.ts:166](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L166)*
+*Defined in [src/model/response/ledger/Fiat.ts:166](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L166)*
 
 ___
 
@@ -1502,7 +1502,7 @@ ___
 
 •  **ZMW**: {} = "ZMW"
 
-*Defined in [src/model/response/ledger/Fiat.ts:167](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L167)*
+*Defined in [src/model/response/ledger/Fiat.ts:167](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L167)*
 
 ___
 
@@ -1510,4 +1510,4 @@ ___
 
 •  **ZWL**: {} = "ZWL"
 
-*Defined in [src/model/response/ledger/Fiat.ts:168](https://github.com/tatumio/tatum-js/blob/b9ab1e4/src/model/response/ledger/Fiat.ts#L168)*
+*Defined in [src/model/response/ledger/Fiat.ts:168](https://github.com/tatumio/tatum-js/blob/c5d1e16/src/model/response/ledger/Fiat.ts#L168)*
