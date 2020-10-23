@@ -2,6 +2,7 @@ import axios from 'axios';
 import {validateOrReject} from 'class-validator';
 import {TATUM_API_URL} from '../constants';
 import {Account, AccountBalance, Blockage, BlockAmount, CreateAccount} from '../model';
+import {CreateAccountsBatch} from '../model/request/CreateAccountsBatch';
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/getAccountByAccountId" target="_blank">Tatum API documentation</a>
@@ -16,6 +17,14 @@ export const getAccountById = async (id: string): Promise<Account> => {
 export const createAccount = async (account: CreateAccount): Promise<Account> => {
     await validateOrReject(account);
     return (await axios.post(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ledger/account`, account, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+};
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/createAccountBatch" target="_blank">Tatum API documentation</a>
+ */
+export const createAccounts = async (accounts: CreateAccountsBatch): Promise<Account[]> => {
+    await validateOrReject(accounts);
+    return (await axios.post(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ledger/account/batch`, accounts, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 
 /**
