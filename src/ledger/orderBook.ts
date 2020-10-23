@@ -4,7 +4,7 @@ import {OrderBookRequest} from '../model/request/OrderBook';
 import {OrderBookResponse} from '../model/response/ledger/OrderBook'
 
 /**
- * For more details, see <a href="https://tatum.io/apidoc.html#operation/getHistoricalTrades" target="_blank">Tatum API documentation</a>
+ * For more details, see <a href="https://tatum.io/apidoc#operation/getHistoricalTrades" target="_blank">Tatum API documentation</a>
  */
 export const getHistoricalTrades = async (pageSize: number = 50, offset: number = 0): Promise<OrderBookResponse[]> => {
     return (await axios.get(
@@ -13,7 +13,7 @@ export const getHistoricalTrades = async (pageSize: number = 50, offset: number 
 }
 
 /**
- * For more details, see <a href="https://tatum.io/apidoc.html#operation/getBuyTrades" target="_blank">Tatum API documentation</a>
+ * For more details, see <a href="https://tatum.io/apidoc#operation/getBuyTrades" target="_blank">Tatum API documentation</a>
  */
 export const getActiveBuyTrades = async (id: string, pageSize: number = 50, offset: number = 0): Promise<OrderBookResponse[]> => {
     return (await axios.get(
@@ -22,7 +22,7 @@ export const getActiveBuyTrades = async (id: string, pageSize: number = 50, offs
 }
 
 /**
- * For more details, see <a href="https://tatum.io/apidoc.html#operation/getSellTrades" target="_blank">Tatum API documentation</a>
+ * For more details, see <a href="https://tatum.io/apidoc#operation/getSellTrades" target="_blank">Tatum API documentation</a>
  */
 export const getActiveSellTrades = async (id: string, pageSize: number = 50, offset: number = 0): Promise<OrderBookResponse[]> => {
     return (await axios.get(
@@ -31,7 +31,7 @@ export const getActiveSellTrades = async (id: string, pageSize: number = 50, off
 }
 
 /**
- * For more details, see <a href="https://tatum.io/apidoc.html#operation/storeTrade" target="_blank">Tatum API documentation</a>
+ * For more details, see <a href="https://tatum.io/apidoc#operation/storeTrade" target="_blank">Tatum API documentation</a>
  */
 export const storeTrade = async (data: OrderBookRequest): Promise<{ id: string }> => {
     return (await axios.post(
@@ -41,7 +41,7 @@ export const storeTrade = async (data: OrderBookRequest): Promise<{ id: string }
 }
 
 /**
- * For more details, see <a href="https://tatum.io/apidoc.html#operation/getTradeById" target="_blank">Tatum API documentation</a>
+ * For more details, see <a href="https://tatum.io/apidoc#operation/getTradeById" target="_blank">Tatum API documentation</a>
  */
 export const getTradeById = async (id: string): Promise<OrderBookResponse> => {
     return (await axios.get(
@@ -50,7 +50,7 @@ export const getTradeById = async (id: string): Promise<OrderBookResponse> => {
 }
 
 /**
- * For more details, see <a href="https://tatum.io/apidoc.html#operation/deleteTrade" target="_blank">Tatum API documentation</a>
+ * For more details, see <a href="https://tatum.io/apidoc#operation/deleteTrade" target="_blank">Tatum API documentation</a>
  */
 export const deleteTrade = async (id: string): Promise<void> => {
     return (await axios.delete(
@@ -59,7 +59,7 @@ export const deleteTrade = async (id: string): Promise<void> => {
 }
 
 /**
- * For more details, see <a href="https://tatum.io/apidoc.html#operation/deleteAccountTrades" target="_blank">Tatum API documentation</a>
+ * For more details, see <a href="https://tatum.io/apidoc#operation/deleteAccountTrades" target="_blank">Tatum API documentation</a>
  */
 export const deleteAccountTrades = async (id: string): Promise<void> => {
     return (await axios.delete(

@@ -19,6 +19,7 @@ export enum Currency {
     TUSD = 'TUSD',
     PAX = 'PAX',
     PLTC = 'PLTC',
+    ADA = 'ADA',
     XCON = 'XCON',
     MMY = 'MMY',
     PAXG = 'PAXG',

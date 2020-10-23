@@ -1,4 +1,14 @@
-import {IsIn, IsNotEmpty, IsNumberString, IsString, Length, Matches, MaxLength, MinLength} from 'class-validator';
+import {
+    IsIn,
+    IsNotEmpty, IsNumber,
+    IsNumberString,
+    IsString,
+    Length,
+    Matches, Max,
+    MaxLength, Min,
+    MinLength,
+    ValidateIf
+} from 'class-validator';
 import {TradeType} from './TradeType';
 
 export class OrderBookRequest {
@@ -35,4 +45,16 @@ export class OrderBookRequest {
     @IsString()
     @Length(24, 24)
     public currency2AccountId: string;
+
+    @IsNotEmpty()
+    @ValidateIf(o => o.feeAccountId)
+    @IsNumber()
+    @Min(0)
+    @Max(100)
+    public fee?: number;
+
+    @IsNotEmpty()
+    @ValidateIf(o => o.fee)
+    @Length(24, 24)
+    public feeAccountId?: string;
 }

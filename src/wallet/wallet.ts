@@ -19,6 +19,7 @@ import {
     VET_DERIVATION_PATH
 } from '../constants';
 import {Currency} from '../model';
+import {AccountIndex, Bip44RootPrivateKey, Entropy} from 'cardano-wallet';
 
 export interface Wallet {
 
@@ -109,6 +110,22 @@ export const generateBtcWallet = async (testnet: boolean, mnem: string): Promise
 };
 
 /**
+ * Generate Cardano wallet
+ * @param testnet testnet or mainnet version of address
+ * @param mnem mnemonic seed to use
+ * @returns wallet
+ */
+export const generateAdaWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
+    const mnemonic = mnem ? mnem : generateMnemonic(256);
+    const entropy = Entropy.from_english_mnemonics(mnemonic);
+    const hdwallet = Bip44RootPrivateKey.recover(entropy, '');
+    return {
+        mnemonic,
+        xpub: hdwallet.bip44_account(AccountIndex.new(0x80000000)).bip44_chain(false).public().key().to_hex(),
+    };
+};
+
+/**
  * Generate Litecoin wallet
  * @param testnet testnet or mainnet version of address
  * @param mnem mnemonic seed to use
@@ -156,6 +173,8 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
     switch (currency) {
         case Currency.BTC:
             return generateBtcWallet(testnet, mnem);
+        case Currency.ADA:
+            return generateAdaWallet(testnet, mnem);
         case Currency.LTC:
             return generateLtcWallet(testnet, mnem);
         case Currency.BCH:

@@ -9,7 +9,7 @@ export class CreateAccount {
     @Length(2, 40)
     public currency: string;
 
-    @MaxLength(150)
+    @MaxLength(192)
     @IsOptional()
     public xpub?: string;
 

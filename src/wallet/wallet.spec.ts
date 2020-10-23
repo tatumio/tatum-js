@@ -1,4 +1,5 @@
 import {
+    generateAdaWallet,
     generateBchWallet,
     generateBnbWallet,
     generateBtcWallet,
@@ -16,6 +17,12 @@ describe('Address tests', () => {
         const wallet = await generateBtcWallet(false, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten');
         expect(wallet.mnemonic).toBe('quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten');
         expect(wallet.xpub).toBe('xpub6DtevPxud8AJUCqddtVqpqxAJvjFrYYvtt4co2kZF7ifPW3d5FJ3B9i5x7xL4CZirb2eNDEVqCtBgiGZR6Kkee5RdHsDoJVbtxi946axjXJ');
+    });
+
+    it('should generate wallet for ADA', async () => {
+        const wallet = await generateAdaWallet(false, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten');
+        expect(wallet.mnemonic).toBe('quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten');
+        expect(wallet.xpub).toBe('abdaffa9c626a49652b94aa7d26fbad0b04354bb7e8f37021d89034314b10637a97a31003cba4617b75d65f72ac8cfa07edb80a4d38270a0c27f80125c70c337');
     });
 
     it('should generate wallet for BTC testnet', async () => {
