@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {TATUM_API_URL} from '../constants';
 import {Account, Address, BroadcastWithdrawal, TxHash, WithdrawalResponse} from '../model';
+import {AddressBatch} from '../model/request/CreateOffchainAddressesBatch';
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/generateDepositAddress" target="_blank">Tatum API documentation</a>
@@ -8,6 +9,15 @@ import {Account, Address, BroadcastWithdrawal, TxHash, WithdrawalResponse} from 
 export const generateDepositAddress = async (id: string, index?: number): Promise<Address> => {
     const url = `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/offchain/account/${id}/address`;
     return (await axios.post(index === undefined ? url : `${url}?index=${index}`,
+        undefined,
+        {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+};
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/generateDepositAddressesBatch" target="_blank">Tatum API documentation</a>
+ */
+export const generateDepositAddresses = async (batch: AddressBatch): Promise<Address[]> => {
+    return (await axios.post(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/offchain/account/address/batch`,
         undefined,
         {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
