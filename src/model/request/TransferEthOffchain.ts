@@ -1,44 +1,8 @@
-import {
-    IsBoolean,
-    IsInt,
-    IsNotEmpty,
-    IsNumberString,
-    IsOptional,
-    Length,
-    Matches,
-    MaxLength,
-    Min,
-    Validate,
-    ValidateIf,
-} from 'class-validator';
+import {IsInt, IsNotEmpty, IsOptional, Length, MaxLength, Min, Validate, ValidateIf,} from 'class-validator';
 import {TransferEthOffchainValidator} from '../validation/TransferEthOffchainValidator';
+import {BaseTransferEthErc20Offchain} from './BaseTransferEthErc20Offchain';
 
-export class TransferEthOffchain {
-
-    @IsNotEmpty()
-    @Length(24, 24)
-    public senderAccountId: string;
-
-    @IsNotEmpty()
-    @Length(42, 42)
-    public address: string;
-
-    @IsNotEmpty()
-    @IsNumberString()
-    @Matches(/^[+]?((\d+(\.\d*)?)|(\.\d+))$/)
-    public amount: string;
-
-    @IsOptional()
-    @IsBoolean()
-    public compliant?: boolean;
-
-    @Length(1, 100)
-    @IsOptional()
-    public paymentId?: string;
-
-    @Length(1, 500)
-    @IsOptional()
-    public senderNote?: string;
+export class TransferEthOffchain extends BaseTransferEthErc20Offchain {
 
     @Length(1, 500)
     @Validate(TransferEthOffchainValidator)
@@ -58,11 +22,6 @@ export class TransferEthOffchain {
     @Length(66, 66)
     @IsNotEmpty()
     public privateKey?: string;
-
-    @Min(0)
-    @IsOptional()
-    @IsInt()
-    public nonce?: number;
 
     @MaxLength(50000)
     @IsOptional()
