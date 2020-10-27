@@ -24,7 +24,7 @@ export const offchainTransferLtcKMS = async (body: TransferBtcBasedOffchainKMS):
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/BchTransfer" target="_blank">Tatum API documentation</a>
  */
-export const offchainTransferBchashKMS = async (body: TransferBtcBasedOffchainKMS): Promise<SignatureId> => {
+export const offchainTransferBcashKMS = async (body: TransferBtcBasedOffchainKMS): Promise<SignatureId> => {
     return (await axios.post(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/offchain/bcash/transfer`, body,
         {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
