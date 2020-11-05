@@ -3,47 +3,63 @@ import {
     IsIn,
     IsNotEmpty,
     IsNotEmptyObject,
-    IsOptional,
+    IsNumber,
     IsUrl,
     Length,
     Matches,
     Max,
     MaxLength,
     Min,
-    ValidateIf,
     ValidateNested,
 } from 'class-validator';
 import {SubscriptionType} from '../response/ledger/SubscriptionType';
 
-export class SubscriptionAttr {
-
-    @IsOptional()
-    @Length(1, 30)
-    @Matches(/^BTC|ADA|BNB|LTC|BCH|ETH|USDT|LEO|LINK|UNI|FREE|MKR|USDC|BAT|TUSD|PAX|PAXG|PLTC|XCON|MMY|[a-zA-Z0-9_]+$/)
-    public currency?: string;
+export class SubscriptionAttrAccountBalanceLimit {
 
     @MaxLength(38)
-    @ValidateIf(o => o.typeOfBalance)
+    @IsNotEmpty()
     @Matches(/^[+]?((\d+(\.\d*)?)|(\.\d+))$/)
-    public limit?: string;
+    public limit: string;
 
-    @ValidateIf(o => o.limit)
+    @IsNotEmpty()
     @IsIn(['account', 'available'])
-    public typeOfBalance?: string;
+    public typeOfBalance: string;
+}
 
-    @Length(24, 24)
-    @ValidateIf(o => o.url)
-    public id?: string;
+export class SubscriptionAttrOffchainWithdrawal {
 
-    @IsUrl()
-    @ValidateIf(o => o.id)
-    @MaxLength(500)
-    public url?: string;
+    @IsNotEmpty()
+    @Length(1, 30)
+    @Matches(/^BTC|BNB|LTC|BCH|ETH|USDT|LEO|LINK|UNI|FREE|MKR|USDC|BAT|TUSD|PAX|PAXG|PLTC|XCON|MMY|[a-zA-Z0-9_]+$/)
+    public currency: string;
+}
 
-    @IsOptional()
+export class SubscriptionAttrTxHistoryReport {
+    @IsNotEmpty()
+    @IsNumber()
     @Min(1)
     @Max(720)
-    public interval?: number;
+    public interval: number;
+}
+
+export class SubscriptionAttrIncomingBlockchainTx {
+
+    @Length(24, 24)
+    @IsNotEmpty()
+    public id: string;
+
+    @IsUrl()
+    @IsNotEmpty()
+    @MaxLength(500)
+    public url: string;
+}
+
+export class SubscriptionAttrCompleteBlockchainTx {
+
+    @IsNotEmpty()
+    @Length(1, 30)
+    @Matches(/^BTC|BNB|LTC|BCH|ETH|USDT|LEO|LINK|UNI|FREE|MKR|USDC|BAT|TUSD|PAX|PAXG|PLTC|XCON|MMY|[a-zA-Z0-9_]+$/)
+    public currency: string;
 }
 
 export class CreateSubscription {
@@ -54,6 +70,8 @@ export class CreateSubscription {
 
     @IsNotEmptyObject()
     @ValidateNested()
-    @Type(() => SubscriptionAttr)
-    public attr: SubscriptionAttr;
+    @Type(() => SubscriptionAttrAccountBalanceLimit || SubscriptionAttrCompleteBlockchainTx
+        || SubscriptionAttrOffchainWithdrawal || SubscriptionAttrTxHistoryReport || SubscriptionAttrIncomingBlockchainTx)
+    public attr: SubscriptionAttrAccountBalanceLimit | SubscriptionAttrOffchainWithdrawal | SubscriptionAttrTxHistoryReport
+        | SubscriptionAttrIncomingBlockchainTx | SubscriptionAttrCompleteBlockchainTx;
 }
