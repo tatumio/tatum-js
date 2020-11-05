@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { TATUM_API_URL } from '../constants'
-import {Account, CreateSubscription, Subscription, Transaction} from '../model/response'
+import {TATUM_API_URL} from '../constants';
+import {CreateSubscription} from '../model/request';
+import {Account, Subscription, Transaction} from '../model/response';
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/createSubscription" target="_blank">Tatum API documentation</a>
