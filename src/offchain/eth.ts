@@ -151,7 +151,7 @@ export const prepareEthSignedOffchainTransaction =
             tx = {
                 from: 0,
                 to: CONTRACT_ADDRESSES[currency],
-                data: contract.methods.transfer(address.trim(), new BigNumber(amount).multipliedBy(new BigNumber(10).pow(CONTRACT_DECIMALS[currency])).toString(16)).encodeABI(),
+                data: contract.methods.transfer(address.trim(), `0x${new BigNumber(amount).multipliedBy(new BigNumber(10).pow(CONTRACT_DECIMALS[currency])).toString(16)}`).encodeABI(),
                 gasPrice,
                 nonce,
             };
@@ -182,7 +182,7 @@ export const prepareEthErc20SignedOffchainTransaction =
         tx = {
             from: 0,
             to: tokenAddress.trim(),
-            data: contract.methods.transfer(address.trim(), new BigNumber(amount).multipliedBy(new BigNumber(10).pow(18)).toString(16)).encodeABI(),
+            data: contract.methods.transfer(address.trim(), `0x${new BigNumber(amount).multipliedBy(new BigNumber(10).pow(18)).toString(16)}`).encodeABI(),
             gasPrice,
             nonce,
         };
