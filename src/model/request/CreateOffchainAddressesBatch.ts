@@ -10,7 +10,7 @@ export class AddressQuery {
     @IsOptional()
     @Min(0)
     @Max(2147483647)
-    public derivationKey: number;
+    public derivationKey?: number;
 }
 
 export class AddressBatch {
