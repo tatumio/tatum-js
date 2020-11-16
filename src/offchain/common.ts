@@ -18,7 +18,7 @@ export const generateDepositAddress = async (id: string, index?: number): Promis
  */
 export const generateDepositAddresses = async (batch: AddressBatch): Promise<Address[]> => {
     return (await axios.post(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/offchain/account/address/batch`,
-        undefined,
+        batch,
         {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 
