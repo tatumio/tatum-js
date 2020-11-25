@@ -5,7 +5,7 @@ import {TransactionConfig} from 'web3-core';
 import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL} from '../constants';
 import tokenAbi from '../contracts/erc20/token_abi';
 import {getAccountById, getVirtualCurrencyByName} from '../ledger';
-import {Currency, TransactionKMS, TransferEthErc20Offchain, TransferEthOffchain} from '../model';
+import {Currency, ETH_BASED_CURRENCIES, TransactionKMS, TransferEthErc20Offchain, TransferEthOffchain} from '../model';
 import {ethGetGasPriceInWei} from '../transaction';
 import {generatePrivateKeyFromMnemonic} from '../wallet';
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
@@ -83,6 +83,11 @@ export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: Tr
     const gasPrice = await ethGetGasPriceInWei(web3);
 
     const account = await getAccountById(withdrawal.senderAccountId);
+
+    if (ETH_BASED_CURRENCIES.includes(account.currency)) {
+        return sendEthOffchainTransaction(testnet, body, provider);
+    }
+
     const vc = await getVirtualCurrencyByName(account.currency);
     const {txData, gasLimit} = await prepareEthErc20SignedOffchainTransaction(amount, fromPriv, address, web3, vc.erc20Address as string, gasPrice, nonce);
     // @ts-ignore
