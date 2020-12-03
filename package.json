@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum",
-  "version": "1.4.16",
+  "version": "1.4.17",
   "description": "",
   "main": "dist/src/index.js",
   "repository": "https://github.com/tatumio/tatum-js",
@@ -47,7 +47,7 @@
     "neon": "^2.0.0",
     "reflect-metadata": "^0.1.13",
     "ripple-lib": "^1.7.1",
-    "stellar-sdk": "^5.0.4",
+    "stellar-sdk": "^7.0.0",
     "thorify": "^1.5.2",
     "web3": "^1.2.9"
   },
