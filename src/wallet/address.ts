@@ -234,6 +234,18 @@ const convertBtcPrivateKey = (testnet: boolean, privkey: string) => {
 };
 
 /**
+ * Convert Scrypta Private Key to Address
+ * @param testnet testnet or mainnet version of address
+ * @param privkey private key to use
+ * @returns blockchain address
+ */
+const convertLyraPrivateKey = (testnet: boolean, privkey: string) => {
+    const network = testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK;
+    const keyPair = ECPair.fromWIF(privkey, network);
+    return payments.p2pkh({ pubkey: keyPair.publicKey, network }).address as string;
+};
+
+/**
  * Generate address
  * @param currency type of blockchain
  * @param testnet testnet or mainnet version of address
@@ -331,6 +343,8 @@ export const generateAddressFromPrivatekey = (currency: Currency, testnet: boole
     switch (currency) {
         case Currency.BTC:
             return convertBtcPrivateKey(testnet, privatekey);
+        case Currency.LYRA:
+                return convertLyraPrivateKey(testnet, privatekey);
         default:
             throw new Error('Unsupported blockchain.');
     }

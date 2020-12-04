@@ -123,4 +123,10 @@ describe('Address tests', () => {
         console.log(address)
         expect(address).toBe('18w9N93bAn13wDnEXFKLGTGeYN9CQoJAqV');
     });
+
+    it('should generate an address from a testnet BTC private key', async () => {
+        const address = await generateAddressFromPrivatekey(Currency.BTC, true, 'cNvyq4JM4DnPyXNNkkxf47baCuyVesCrw5AtkALKy7ELTrBLrGBK');
+        console.log(address)
+        expect(address).toBe('n4EUn9z1zXK1824mTHj9hEV91L3KdNPnpY');
+    });
 });
