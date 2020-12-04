@@ -172,7 +172,7 @@ export const generateXlmWallet = (secret?: string) => {
  */
 export const generateLyraWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
     const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? LYRA_TEST_NETWORK.bip32 :LYRA_NETWORK.bip32);
-    return {mnemonic: mnem, xpub: hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : LYRA_DERIVATION_PATH).toJSON().xpub};
+    return {mnemonic: mnem, xpub: hdwallet.derive(LYRA_DERIVATION_PATH).toJSON().xpub};
 };
 
 /**
