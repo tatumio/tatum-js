@@ -23,6 +23,7 @@ export enum Currency {
     XCON = 'XCON',
     MMY = 'MMY',
     PAXG = 'PAXG',
+    LYRA = 'LYRA'
 }
 
 export const ETH_BASED_CURRENCIES = [

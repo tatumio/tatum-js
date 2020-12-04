@@ -10,6 +10,7 @@ export const VET_DERIVATION_PATH = 'm/44\'/818\'/0\'/0';
 export const BTC_DERIVATION_PATH = 'm/44\'/0\'/0\'/0';
 export const LTC_DERIVATION_PATH = 'm/44\'/2\'/0\'/0';
 export const BCH_DERIVATION_PATH = 'm/44\'/145\'/0\'/0';
+export const LYRA_DERIVATION_PATH = 'm/44\'/497\'/0\'/0';
 export const TESTNET_DERIVATION_PATH = 'm/44\'/1\'/0\'/0';
 
 export const LTC_TEST_NETWORK = {
@@ -33,6 +34,29 @@ export const LTC_NETWORK = {
     pubKeyHash: 0x30,
     scriptHash: 0x32,
     wif: 0xb0,
+};
+
+export const LYRA_TEST_NETWORK = {
+    messagePrefix: '\x18DarkNet Signed Message:\n',
+    bech32: '',
+    bip32: {
+        public: 0x043587cf,
+        private: 0x04358394,
+    },
+    pubKeyHash: 0x7f,
+    scriptHash: 0x13,
+    wif: 0xae,
+};
+export const LYRA_NETWORK = {
+    messagePrefix: '\x18DarkNet Signed Message:\n',
+    bech32: '',
+    bip32: {
+        public: 0x0488b21e,
+        private: 0x0488ade4,
+    },
+    pubKeyHash: 0x30,
+    scriptHash: 0x0d,
+    wif: 0xae,
 };
 
 export const RIPPLE_EPOCH = 946684800;

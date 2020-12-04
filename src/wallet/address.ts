@@ -20,7 +20,10 @@ import {
     LTC_NETWORK,
     LTC_TEST_NETWORK,
     TESTNET_DERIVATION_PATH,
-    VET_DERIVATION_PATH
+    VET_DERIVATION_PATH,
+    LYRA_DERIVATION_PATH,
+    LYRA_NETWORK,
+    LYRA_TEST_NETWORK
 } from '../constants';
 import {Currency} from '../model';
 
@@ -102,6 +105,19 @@ const generateVetAddress = (testnet: boolean, xpub: string, i: number) => {
     const w = ethHdKey.fromExtendedKey(xpub);
     const wallet = w.deriveChild(i).getWallet();
     return '0x' + wallet.getAddress().toString('hex').toLowerCase();
+};
+
+/**
+ * Generate Bitcoin address
+ * @param testnet testnet or mainnet version of address
+ * @param xpub extended public key to generate address from
+ * @param i derivation index of address to generate. Up to 2^32 addresses can be generated.
+ * @returns blockchain address
+ */
+const generateLyraAddress = (testnet: boolean, xpub: string, i: number) => {
+    const network = testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK;
+    const w = fromBase58(xpub, network).derivePath(String(i));
+    return payments.p2pkh({pubkey: w.publicKey, network}).address as string;
 };
 
 /**
@@ -191,6 +207,21 @@ const generateVetPrivateKey = async (testnet: boolean, mnemonic: string, i: numb
 };
 
 /**
+ * Generate Scrypta private key from mnemonic seed
+ * @param testnet testnet or mainnet version of address
+ * @param mnemonic mnemonic to generate private key from
+ * @param i derivation index of private key to generate.
+ * @returns blockchain private key to the address
+ */
+const generateLyraPrivateKey = async (testnet: boolean, mnemonic: string, i: number) => {
+    const network = testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK;
+    return fromSeed(await mnemonicToSeed(mnemonic), network)
+        .derivePath(LYRA_DERIVATION_PATH)
+        .derive(i)
+        .toWIF();
+};
+
+/**
  * Generate address
  * @param currency type of blockchain
  * @param testnet testnet or mainnet version of address
@@ -226,6 +257,8 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
             return generateEthAddress(testnet, xpub, i);
         case Currency.VET:
             return generateVetAddress(testnet, xpub, i);
+        case Currency.LYRA:
+            return generateLyraAddress(testnet, xpub, i);
         default:
             throw new Error('Unsupported blockchain.');
     }
@@ -267,6 +300,8 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
             return generateEthPrivateKey(testnet, mnemonic, i);
         case Currency.VET:
             return generateVetPrivateKey(testnet, mnemonic, i);
+        case Currency.LYRA:
+            return generateLyraPrivateKey(testnet, mnemonic, i);
         default:
             throw new Error('Unsupported blockchain.');
     }
