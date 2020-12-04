@@ -84,10 +84,11 @@ export declare const generateXlmWallet: (secret?: string | undefined) => {
 };
 /**
  * Generate Scrypta wallet
+ * @param testnet testnet or mainnet version of address
  * @param mnem mnemonic seed to use
  * @returns wallet
  */
-export declare const generateLyraWallet: (mnem: string) => Promise<Wallet>;
+export declare const generateLyraWallet: (testnet: boolean, mnem: string) => Promise<Wallet>;
 /**
  * Generate wallet
  * @param currency blockchain to generate wallet for
