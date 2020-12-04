@@ -1,0 +1,28 @@
+export declare enum Currency {
+    BTC = "BTC",
+    BCH = "BCH",
+    LTC = "LTC",
+    ETH = "ETH",
+    XRP = "XRP",
+    XLM = "XLM",
+    VET = "VET",
+    NEO = "NEO",
+    BNB = "BNB",
+    USDT = "USDT",
+    LEO = "LEO",
+    LINK = "LINK",
+    UNI = "UNI",
+    FREE = "FREE",
+    MKR = "MKR",
+    USDC = "USDC",
+    BAT = "BAT",
+    TUSD = "TUSD",
+    PAX = "PAX",
+    PLTC = "PLTC",
+    ADA = "ADA",
+    XCON = "XCON",
+    MMY = "MMY",
+    PAXG = "PAXG",
+    LYRA = "LYRA"
+}
+export declare const ETH_BASED_CURRENCIES: string[];

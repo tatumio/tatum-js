@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SubscriptionType = void 0;
+var SubscriptionType;
+(function (SubscriptionType) {
+    SubscriptionType["ACCOUNT_BALANCE_LIMIT"] = "ACCOUNT_BALANCE_LIMIT";
+    SubscriptionType["OFFCHAIN_WITHDRAWAL"] = "OFFCHAIN_WITHDRAWAL";
+    SubscriptionType["TRANSACTION_HISTORY_REPORT"] = "TRANSACTION_HISTORY_REPORT";
+    SubscriptionType["ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION"] = "ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION";
+    SubscriptionType["COMPLETE_BLOCKCHAIN_TRANSACTION"] = "COMPLETE_BLOCKCHAIN_TRANSACTION";
+})(SubscriptionType = exports.SubscriptionType || (exports.SubscriptionType = {}));
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiU3Vic2NyaXB0aW9uVHlwZS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uL3NyYy9tb2RlbC9yZXNwb25zZS9sZWRnZXIvU3Vic2NyaXB0aW9uVHlwZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7QUFBQSxJQUFZLGdCQU1YO0FBTkQsV0FBWSxnQkFBZ0I7SUFDMUIsbUVBQStDLENBQUE7SUFDL0MsK0RBQTJDLENBQUE7SUFDM0MsNkVBQXlELENBQUE7SUFDekQsdUdBQW1GLENBQUE7SUFDbkYsdUZBQW1FLENBQUE7QUFDckUsQ0FBQyxFQU5XLGdCQUFnQixHQUFoQix3QkFBZ0IsS0FBaEIsd0JBQWdCLFFBTTNCIn0=
