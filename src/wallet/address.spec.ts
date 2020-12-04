@@ -1,5 +1,5 @@
 import {Currency} from '../model';
-import {generateAddressFromXPub, generatePrivateKeyFromMnemonic} from './address';
+import {generateAddressFromPrivatekey, generateAddressFromXPub, generatePrivateKeyFromMnemonic} from './address';
 
 describe('Address tests', () => {
 
@@ -116,5 +116,11 @@ describe('Address tests', () => {
     it('should generate private key 1 for VET testnet', async () => {
         const privateKey = await generatePrivateKeyFromMnemonic(Currency.VET, true, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1);
         expect(privateKey).toBe('0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb');
+    });
+
+    it('should generate an address from a mainnet BTC private key', async () => {
+        const address = await generateAddressFromPrivatekey(Currency.BTC, false, 'KwREvx76g7QAp5dow1ab2Mg8K6Ta4SH5kR5ASjhwoDcNj2bPvgG3');
+        console.log(address)
+        expect(address).toBe('18w9N93bAn13wDnEXFKLGTGeYN9CQoJAqV');
     });
 });

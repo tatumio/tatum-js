@@ -229,7 +229,7 @@ const generateLyraPrivateKey = async (testnet: boolean, mnemonic: string, i: num
  */
 const convertBtcPrivateKey = (testnet: boolean, privkey: string) => {
     const network = testnet ? networks.testnet : networks.bitcoin;
-    const keyPair = ECPair.fromWIF(privkey);
+    const keyPair = ECPair.fromWIF(privkey, network);
     return payments.p2pkh({ pubkey: keyPair.publicKey, network }).address as string;
 };
 
