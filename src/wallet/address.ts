@@ -253,7 +253,7 @@ const convertLyraPrivateKey = (testnet: boolean, privkey: string) => {
  * @returns blockchain address
  */
 const convertEthPrivateKey = (testnet: boolean, privkey: string) => {
-    const wallet = ethWallet.fromPrivateKey(Buffer.from(privkey))
+    const wallet = ethWallet.fromPrivateKey(Buffer.from(privkey.replace('0x',''), 'hex'))
     return wallet.getAddressString() as string;
 };
 
