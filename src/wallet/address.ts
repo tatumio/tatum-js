@@ -11,6 +11,7 @@ import {
     PublicKey
 } from 'cardano-wallet';
 import {hdkey as ethHdKey} from 'ethereumjs-wallet';
+import ethWallet from 'ethereumjs-wallet';
 // @ts-ignore
 import {
     BCH_DERIVATION_PATH,
@@ -246,6 +247,17 @@ const convertLyraPrivateKey = (testnet: boolean, privkey: string) => {
 };
 
 /**
+ * Convert Ethereum Private Key to Address
+ * @param testnet testnet or mainnet version of address
+ * @param privkey private key to use
+ * @returns blockchain address
+ */
+const convertEthPrivateKey = (testnet: boolean, privkey: string) => {
+    const wallet = ethWallet.fromPrivateKey(Buffer.from(privkey))
+    return wallet.getAddressString() as string;
+};
+
+/**
  * Generate address
  * @param currency type of blockchain
  * @param testnet testnet or mainnet version of address
@@ -345,6 +357,8 @@ export const generateAddressFromPrivatekey = (currency: Currency, testnet: boole
             return convertBtcPrivateKey(testnet, privatekey);
         case Currency.LYRA:
                 return convertLyraPrivateKey(testnet, privatekey);
+        case Currency.ETH:
+                return convertEthPrivateKey(testnet, privatekey);
         default:
             throw new Error('Unsupported blockchain.');
     }
