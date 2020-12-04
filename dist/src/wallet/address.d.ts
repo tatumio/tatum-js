@@ -17,3 +17,12 @@ export declare const generateAddressFromXPub: (currency: Currency, testnet: bool
  * @returns blockchain private key to the address
  */
 export declare const generatePrivateKeyFromMnemonic: (currency: Currency, testnet: boolean, mnemonic: string, i: number) => Promise<string>;
+/**
+ * Generate address from private key
+ * @param currency type of blockchain
+ * @param testnet testnet or mainnet version of address
+ * @param privkey private key to use
+ * @param i derivation index of private key to generate.
+ * @returns blockchain private key to the address
+ */
+export declare const generateAddressFromPrivatekey: (currency: Currency, testnet: boolean, privatekey: string) => string;
