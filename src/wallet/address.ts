@@ -1,7 +1,7 @@
 import {fromBase58, fromSeed} from 'bip32';
 import {mnemonicToSeed} from 'bip39';
 import {HDNode, Mnemonic} from 'bitbox-sdk';
-import {networks, payments} from 'bitcoinjs-lib';
+import {networks, payments, ECPair} from 'bitcoinjs-lib';
 import {
     AccountIndex,
     AddressKeyIndex,
@@ -222,6 +222,18 @@ const generateLyraPrivateKey = async (testnet: boolean, mnemonic: string, i: num
 };
 
 /**
+ * Convert Bitcoin Private Key to Address
+ * @param testnet testnet or mainnet version of address
+ * @param privkey private key to use
+ * @returns blockchain address
+ */
+const convertBtcPrivateKey = (testnet: boolean, privkey: string) => {
+    const network = testnet ? networks.testnet : networks.bitcoin;
+    const keyPair = ECPair.fromWIF(privkey);
+    return payments.p2pkh({ pubkey: keyPair.publicKey, network }).address as string;
+};
+
+/**
  * Generate address
  * @param currency type of blockchain
  * @param testnet testnet or mainnet version of address
@@ -302,6 +314,23 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
             return generateVetPrivateKey(testnet, mnemonic, i);
         case Currency.LYRA:
             return generateLyraPrivateKey(testnet, mnemonic, i);
+        default:
+            throw new Error('Unsupported blockchain.');
+    }
+};
+
+/**
+ * Generate address from private key
+ * @param currency type of blockchain
+ * @param testnet testnet or mainnet version of address
+ * @param privkey private key to use
+ * @param i derivation index of private key to generate.
+ * @returns blockchain private key to the address
+ */
+export const generateAddressFromPrivatekey = (currency: Currency, testnet: boolean, privatekey: string) => {
+    switch (currency) {
+        case Currency.BTC:
+            return convertBtcPrivateKey(testnet, privatekey);
         default:
             throw new Error('Unsupported blockchain.');
     }
