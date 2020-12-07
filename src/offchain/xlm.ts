@@ -75,7 +75,7 @@ export const prepareXlmSignedOffchainTransaction =
             fee: '100',
             networkPassphrase: testnet ? Networks.TESTNET : Networks.PUBLIC,
             memo,
-        }).setTimeout(30);
+        }).setTimeout(300);
 
         const tx = builder.addOperation(Operation.payment({
             destination: address,
