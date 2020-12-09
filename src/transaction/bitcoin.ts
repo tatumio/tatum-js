@@ -147,7 +147,7 @@ export const prepareLitecoinSignedTransaction = async (testnet: boolean, body: T
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareScryptaSignedTransaction = async (testnet: boolean, body: TransferBtcBasedBlockchain) => {
-    return prepareSignedTransaction(testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK, body, Currency.LTC);
+    return prepareSignedTransaction(testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK, body, Currency.LYRA);
 };
 
 /**
