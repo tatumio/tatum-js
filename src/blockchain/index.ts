@@ -5,4 +5,3 @@ export * from './litecoin';
 export * from './vet';
 export * from './ethereum';
 export * from './bcash';
-export * from './scrypta';

@@ -30,7 +30,3 @@ export * from './ledger/Transaction';
 export * from './ledger/TransactionType';
 export * from './ledger/Blockage';
 export * from './ledger/Subscription';
-export * from './lyra/ScryptaBlock';
-export * from './lyra/ScryptaInfo';
-export * from './lyra/ScryptaTx';
-export * from './lyra/ScryptaUTXO';

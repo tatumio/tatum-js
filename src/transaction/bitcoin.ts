@@ -7,12 +7,9 @@ import {
     btcGetUTXO,
     ltcBroadcast,
     ltcGetTxForAccount,
-    ltcGetUTXO,
-    scryptaBroadcast,
-    scryptaGetTxForAccount,
-    scryptaGetUTXO
+    ltcGetUTXO
 } from '../blockchain';
-import {LTC_NETWORK, LTC_TEST_NETWORK, LYRA_NETWORK, LYRA_TEST_NETWORK} from '../constants';
+import {LTC_NETWORK, LTC_TEST_NETWORK} from '../constants';
 import {Currency, TransactionKMS, TransferBtcBasedBlockchain} from '../model';
 
 const prepareSignedTransaction = async (network: Network, body: TransferBtcBasedBlockchain, currency: Currency) => {
@@ -22,7 +19,7 @@ const prepareSignedTransaction = async (network: Network, body: TransferBtcBased
     const privateKeysToSign: string[] = [];
     if (fromAddress) {
         for (const item of fromAddress) {
-            const txs = currency === Currency.BTC ? await btcGetTxForAccount(item.address) : Currency.LYRA ? await scryptaGetTxForAccount(item.address) : await ltcGetTxForAccount(item.address);
+            const txs = currency === Currency.BTC ? await btcGetTxForAccount(item.address) : await ltcGetTxForAccount(item.address);
             for (const t of txs) {
                 for (const [i, o] of t.outputs.entries()) {
                     if (o.address !== item.address) {
@@ -33,8 +30,6 @@ const prepareSignedTransaction = async (network: Network, body: TransferBtcBased
                             await btcGetUTXO(t.hash, i);
                         } else if (currency === Currency.LTC) {
                             await ltcGetUTXO(t.hash, i);
-                        } else if (currency === Currency.LYRA){
-                            await scryptaGetUTXO(t.hash, i);
                         }
                         tx.addInput(t.hash, i);
                         privateKeysToSign.push(item.privateKey);
@@ -101,26 +96,6 @@ export const signLitecoinKMSTransaction = async (tx: TransactionKMS, privateKeys
 };
 
 /**
- * Sign Scrypta pending transaction from Tatum KMS
- * @param tx pending transaction from KMS
- * @param privateKeys private keys to sign transaction with.
- * @param testnet mainnet or testnet version
- * @returns transaction data to be broadcast to blockchain.
- */
-export const signScryptaKMSTransaction = async (tx: TransactionKMS, privateKeys: string[], testnet: boolean) => {
-    if (tx.chain !== Currency.LTC) {
-        throw Error('Unsupported chain.');
-    }
-    const network = testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK;
-    const builder = TransactionBuilder.fromTransaction(Transaction.fromHex(tx.serializedTransaction), network);
-    for (const [i, privateKey] of privateKeys.entries()) {
-        const ecPair = ECPair.fromWIF(privateKey, network);
-        builder.sign(i, ecPair);
-    }
-    return builder.build().toHex();
-};
-
-/**
  * Sign Bitcoin transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
@@ -138,16 +113,6 @@ export const prepareBitcoinSignedTransaction = async (testnet: boolean, body: Tr
  */
 export const prepareLitecoinSignedTransaction = async (testnet: boolean, body: TransferBtcBasedBlockchain) => {
     return prepareSignedTransaction(testnet ? LTC_TEST_NETWORK : LTC_NETWORK, body, Currency.LTC);
-};
-
-/**
- * Sign Scrypta transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
- * @param body content of the transaction to broadcast
- * @returns transaction data to be broadcast to blockchain.
- */
-export const prepareScryptaSignedTransaction = async (testnet: boolean, body: TransferBtcBasedBlockchain) => {
-    return prepareSignedTransaction(testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK, body, Currency.LYRA);
 };
 
 /**
@@ -170,15 +135,4 @@ export const sendBitcoinTransaction = async (testnet: boolean, body: TransferBtc
  */
 export const sendLitecoinTransaction = async (testnet: boolean, body: TransferBtcBasedBlockchain) => {
     return ltcBroadcast(await prepareLitecoinSignedTransaction(testnet, body));
-};
-
-/**
- * Send Scrypta transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
- * This operation is irreversible.
- * @param testnet mainnet or testnet version
- * @param body content of the transaction to broadcast
- * @returns transaction id of the transaction in the blockchain
- */
-export const sendScryptaTransaction = async (testnet: boolean, body: TransferBtcBasedBlockchain) => {
-    return scryptaBroadcast(await prepareScryptaSignedTransaction(testnet, body));
 };
