@@ -1,5 +1,5 @@
 import {Currency} from '../model';
-import {generateAddressFromXPub, generatePrivateKeyFromMnemonic} from './address';
+import {generateAddressFromPrivatekey, generateAddressFromXPub, generatePrivateKeyFromMnemonic} from './address';
 
 describe('Address tests', () => {
 
@@ -116,5 +116,35 @@ describe('Address tests', () => {
     it('should generate private key 1 for VET testnet', async () => {
         const privateKey = await generatePrivateKeyFromMnemonic(Currency.VET, true, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1);
         expect(privateKey).toBe('0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb');
+    });
+
+    it('should generate an address from a mainnet BTC private key', async () => {
+        const address = await generateAddressFromPrivatekey(Currency.BTC, false, 'KwREvx76g7QAp5dow1ab2Mg8K6Ta4SH5kR5ASjhwoDcNj2bPvgG3');
+        expect(address).toBe('18w9N93bAn13wDnEXFKLGTGeYN9CQoJAqV');
+    });
+
+    it('should generate an address from a testnet BTC private key', async () => {
+        const address = await generateAddressFromPrivatekey(Currency.BTC, true, 'cNvyq4JM4DnPyXNNkkxf47baCuyVesCrw5AtkALKy7ELTrBLrGBK');
+        expect(address).toBe('n4EUn9z1zXK1824mTHj9hEV91L3KdNPnpY');
+    });
+
+    it('should generate an address from a mainnet LYRA private key', async () => {
+        const address = await generateAddressFromPrivatekey(Currency.BTC, false, 'SqhJUqY2quSoBBittiKB6U9kSeUccGTBGHsj2jQuh3Uk7AH9H5u7');
+        expect(address).toBe('LNrkvwa8RGCyaeh733K4p7hnFm4p5NWDkq');
+    });
+
+    it('should generate an address from a testnet LYRA private key', async () => {
+        const address = await generateAddressFromPrivatekey(Currency.BTC, true, 'Snb6yv7H3YJ5jzbHZNFRTj3YQ1a6GjDFwPxuPbFEhUg6eniQyopJ');
+        expect(address).toBe('tJJKy2c3mqXjpWDKdBADQJY6p5pBr5qvpn');
+    });
+
+    it('should generate an address from a mainnet ETH private key', async () => {
+        const address = await generateAddressFromPrivatekey(Currency.ETH, false, '0xac12f9a2d0d1f06c7dc33a3e9c18f60fe1ca65c592d1e9345c994740f9e1971e');
+        expect(address).toBe('0xefc395c295a90023d3e9afacb4399da3d332947b');
+    });
+
+    it('should generate an address from a testnet ETH private key', async () => {
+        const address = await generateAddressFromPrivatekey(Currency.ETH, true, '0x4cda6d2c33b0f9a041e46474a638ac59aee0734cf208aa9aa2f05ef887bd09e1');
+        expect(address).toBe('0x8acbcfbc8ce37f6f674f4b9861d3efe89288d89f');
     });
 });

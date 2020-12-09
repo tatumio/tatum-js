@@ -1,7 +1,7 @@
 import {fromBase58, fromSeed} from 'bip32';
 import {mnemonicToSeed} from 'bip39';
 import {HDNode, Mnemonic} from 'bitbox-sdk';
-import {networks, payments} from 'bitcoinjs-lib';
+import {networks, payments, ECPair} from 'bitcoinjs-lib';
 import {
     AccountIndex,
     AddressKeyIndex,
@@ -11,6 +11,7 @@ import {
     PublicKey
 } from 'cardano-wallet';
 import {hdkey as ethHdKey} from 'ethereumjs-wallet';
+import ethWallet from 'ethereumjs-wallet';
 // @ts-ignore
 import {
     BCH_DERIVATION_PATH,
@@ -20,7 +21,10 @@ import {
     LTC_NETWORK,
     LTC_TEST_NETWORK,
     TESTNET_DERIVATION_PATH,
-    VET_DERIVATION_PATH
+    VET_DERIVATION_PATH,
+    LYRA_DERIVATION_PATH,
+    LYRA_NETWORK,
+    LYRA_TEST_NETWORK
 } from '../constants';
 import {Currency} from '../model';
 
@@ -102,6 +106,19 @@ const generateVetAddress = (testnet: boolean, xpub: string, i: number) => {
     const w = ethHdKey.fromExtendedKey(xpub);
     const wallet = w.deriveChild(i).getWallet();
     return '0x' + wallet.getAddress().toString('hex').toLowerCase();
+};
+
+/**
+ * Generate Bitcoin address
+ * @param testnet testnet or mainnet version of address
+ * @param xpub extended public key to generate address from
+ * @param i derivation index of address to generate. Up to 2^32 addresses can be generated.
+ * @returns blockchain address
+ */
+const generateLyraAddress = (testnet: boolean, xpub: string, i: number) => {
+    const network = testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK;
+    const w = fromBase58(xpub, network).derivePath(String(i));
+    return payments.p2pkh({pubkey: w.publicKey, network}).address as string;
 };
 
 /**
@@ -191,6 +208,56 @@ const generateVetPrivateKey = async (testnet: boolean, mnemonic: string, i: numb
 };
 
 /**
+ * Generate Scrypta private key from mnemonic seed
+ * @param testnet testnet or mainnet version of address
+ * @param mnemonic mnemonic to generate private key from
+ * @param i derivation index of private key to generate.
+ * @returns blockchain private key to the address
+ */
+const generateLyraPrivateKey = async (testnet: boolean, mnemonic: string, i: number) => {
+    const network = testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK;
+    return fromSeed(await mnemonicToSeed(mnemonic), network)
+        .derivePath(LYRA_DERIVATION_PATH)
+        .derive(i)
+        .toWIF();
+};
+
+/**
+ * Convert Bitcoin Private Key to Address
+ * @param testnet testnet or mainnet version of address
+ * @param privkey private key to use
+ * @returns blockchain address
+ */
+const convertBtcPrivateKey = (testnet: boolean, privkey: string) => {
+    const network = testnet ? networks.testnet : networks.bitcoin;
+    const keyPair = ECPair.fromWIF(privkey, network);
+    return payments.p2pkh({ pubkey: keyPair.publicKey, network }).address as string;
+};
+
+/**
+ * Convert Scrypta Private Key to Address
+ * @param testnet testnet or mainnet version of address
+ * @param privkey private key to use
+ * @returns blockchain address
+ */
+const convertLyraPrivateKey = (testnet: boolean, privkey: string) => {
+    const network = testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK;
+    const keyPair = ECPair.fromWIF(privkey, network);
+    return payments.p2pkh({ pubkey: keyPair.publicKey, network }).address as string;
+};
+
+/**
+ * Convert Ethereum Private Key to Address
+ * @param testnet testnet or mainnet version of address
+ * @param privkey private key to use
+ * @returns blockchain address
+ */
+const convertEthPrivateKey = (testnet: boolean, privkey: string) => {
+    const wallet = ethWallet.fromPrivateKey(Buffer.from(privkey.replace('0x',''), 'hex'))
+    return wallet.getAddressString() as string;
+};
+
+/**
  * Generate address
  * @param currency type of blockchain
  * @param testnet testnet or mainnet version of address
@@ -226,6 +293,8 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
             return generateEthAddress(testnet, xpub, i);
         case Currency.VET:
             return generateVetAddress(testnet, xpub, i);
+        case Currency.LYRA:
+            return generateLyraAddress(testnet, xpub, i);
         default:
             throw new Error('Unsupported blockchain.');
     }
@@ -267,6 +336,29 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
             return generateEthPrivateKey(testnet, mnemonic, i);
         case Currency.VET:
             return generateVetPrivateKey(testnet, mnemonic, i);
+        case Currency.LYRA:
+            return generateLyraPrivateKey(testnet, mnemonic, i);
+        default:
+            throw new Error('Unsupported blockchain.');
+    }
+};
+
+/**
+ * Generate address from private key
+ * @param currency type of blockchain
+ * @param testnet testnet or mainnet version of address
+ * @param privkey private key to use
+ * @param i derivation index of private key to generate.
+ * @returns blockchain private key to the address
+ */
+export const generateAddressFromPrivatekey = (currency: Currency, testnet: boolean, privatekey: string) => {
+    switch (currency) {
+        case Currency.BTC:
+            return convertBtcPrivateKey(testnet, privatekey);
+        case Currency.LYRA:
+                return convertLyraPrivateKey(testnet, privatekey);
+        case Currency.ETH:
+                return convertEthPrivateKey(testnet, privatekey);
         default:
             throw new Error('Unsupported blockchain.');
     }

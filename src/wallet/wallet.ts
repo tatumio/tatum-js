@@ -16,7 +16,10 @@ import {
     LTC_NETWORK,
     LTC_TEST_NETWORK,
     TESTNET_DERIVATION_PATH,
-    VET_DERIVATION_PATH
+    VET_DERIVATION_PATH,
+    LYRA_DERIVATION_PATH,
+    LYRA_TEST_NETWORK,
+    LYRA_NETWORK
 } from '../constants';
 import {Currency} from '../model';
 import {AccountIndex, Bip44RootPrivateKey, Entropy} from 'cardano-wallet';
@@ -162,6 +165,17 @@ export const generateXlmWallet = (secret?: string) => {
 };
 
 /**
+ * Generate Scrypta wallet
+ * @param testnet testnet or mainnet version of address
+ * @param mnem mnemonic seed to use
+ * @returns wallet
+ */
+export const generateLyraWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
+    const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? LYRA_TEST_NETWORK.bip32 :LYRA_NETWORK.bip32);
+    return {mnemonic: mnem, xpub: hdwallet.derive(LYRA_DERIVATION_PATH).toJSON().xpub};
+};
+
+/**
  * Generate wallet
  * @param currency blockchain to generate wallet for
  * @param testnet testnet or mainnet version of address
@@ -205,6 +219,8 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
             return generateNeoWallet();
         case Currency.BNB:
             return generateBnbWallet(testnet);
+        case Currency.LYRA:
+            return generateLyraWallet(testnet, mnem);
         default:
             throw new Error('Unsupported blockchain.');
     }

@@ -12,23 +12,23 @@ import {
 import {LTC_NETWORK, LTC_TEST_NETWORK} from '../constants';
 import {Currency, TransactionKMS, TransferBtcBasedBlockchain} from '../model';
 
-const prepareSignedTransaction = async (network: Network, body: TransferBtcBasedBlockchain, curency: Currency) => {
+const prepareSignedTransaction = async (network: Network, body: TransferBtcBasedBlockchain, currency: Currency) => {
     await validateOrReject(body);
     const {fromUTXO, fromAddress, to} = body;
     const tx = new TransactionBuilder(network);
     const privateKeysToSign: string[] = [];
     if (fromAddress) {
         for (const item of fromAddress) {
-            const txs = curency === Currency.BTC ? await btcGetTxForAccount(item.address) : await ltcGetTxForAccount(item.address);
+            const txs = currency === Currency.BTC ? await btcGetTxForAccount(item.address) : await ltcGetTxForAccount(item.address);
             for (const t of txs) {
                 for (const [i, o] of t.outputs.entries()) {
                     if (o.address !== item.address) {
                         continue;
                     }
                     try {
-                        if (curency === Currency.BTC) {
+                        if (currency === Currency.BTC) {
                             await btcGetUTXO(t.hash, i);
-                        } else {
+                        } else if (currency === Currency.LTC) {
                             await ltcGetUTXO(t.hash, i);
                         }
                         tx.addInput(t.hash, i);
