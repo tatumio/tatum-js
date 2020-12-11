@@ -2,10 +2,11 @@ import BigNumber from 'bignumber.js';
 import {ECPair, Network, networks, Transaction, TransactionBuilder} from 'bitcoinjs-lib';
 import {validateOrReject} from 'class-validator';
 import {
-    btcBroadcast,
-    btcGetTxForAccount,
-    btcGetUTXO,
+    scryptaBroadcast,
+    scryptaGetTxForAccount,
+    scryptaGetUTXO
 } from '../blockchain';
+import {LYRA_NETWORK, LYRA_TEST_NETWORK} from '../constants';
 import {Currency, TransactionKMS, TransferBtcBasedBlockchain} from '../model';
 
 const prepareSignedTransaction = async (network: Network, body: TransferBtcBasedBlockchain, currency: Currency) => {
@@ -15,14 +16,14 @@ const prepareSignedTransaction = async (network: Network, body: TransferBtcBased
     const privateKeysToSign: string[] = [];
     if (fromAddress) {
         for (const item of fromAddress) {
-            const txs = await btcGetTxForAccount(item.address);
+            const txs = await scryptaGetTxForAccount(item.address);
             for (const t of txs) {
                 for (const [i, o] of t.outputs.entries()) {
                     if (o.address !== item.address) {
                         continue;
                     }
                     try {
-                        await btcGetUTXO(t.hash, i);
+                        await scryptaGetUTXO(t.hash, i);
                         tx.addInput(t.hash, i);
                         privateKeysToSign.push(item.privateKey);
                     } catch (e) {
@@ -48,17 +49,17 @@ const prepareSignedTransaction = async (network: Network, body: TransferBtcBased
 };
 
 /**
- * Sign Bitcoin pending transaction from Tatum KMS
+ * Sign Scrypta pending transaction from Tatum KMS
  * @param tx pending transaction from KMS
  * @param privateKeys private keys to sign transaction with.
  * @param testnet mainnet or testnet version
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signBitcoinKMSTransaction = async (tx: TransactionKMS, privateKeys: string[], testnet: boolean) => {
-    if (tx.chain !== Currency.BTC) {
+export const signScryptaKMSTransaction = async (tx: TransactionKMS, privateKeys: string[], testnet: boolean) => {
+    if (tx.chain !== Currency.LTC) {
         throw Error('Unsupported chain.');
     }
-    const network = testnet ? networks.testnet : networks.bitcoin;
+    const network = testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK;
     const builder = TransactionBuilder.fromTransaction(Transaction.fromHex(tx.serializedTransaction), network);
     for (const [i, privateKey] of privateKeys.entries()) {
         const ecPair = ECPair.fromWIF(privateKey, network);
@@ -68,22 +69,23 @@ export const signBitcoinKMSTransaction = async (tx: TransactionKMS, privateKeys:
 };
 
 /**
- * Sign Bitcoin transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * Sign Scrypta transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareBitcoinSignedTransaction = async (testnet: boolean, body: TransferBtcBasedBlockchain) => {
-    return prepareSignedTransaction(testnet ? networks.testnet : networks.bitcoin, body, Currency.BTC);
+export const prepareScryptaSignedTransaction = async (testnet: boolean, body: TransferBtcBasedBlockchain) => {
+    return prepareSignedTransaction(testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK, body, Currency.LYRA);
 };
 
+
 /**
- * Send Bitcoin transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * Send Scrypta transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
  * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendBitcoinTransaction = async (testnet: boolean, body: TransferBtcBasedBlockchain) => {
-    return btcBroadcast(await prepareBitcoinSignedTransaction(testnet, body));
+export const sendScryptaTransaction = async (testnet: boolean, body: TransferBtcBasedBlockchain) => {
+    return scryptaBroadcast(await prepareScryptaSignedTransaction(testnet, body));
 };

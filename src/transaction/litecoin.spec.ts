@@ -1,5 +1,5 @@
 import {TransferBtcBasedBlockchain} from '../model';
-import {prepareLitecoinSignedTransaction} from './bitcoin';
+import {prepareLitecoinSignedTransaction} from './litecoin';
 
 describe('LTC transactions', () => {
     it('should test LTC transaction data', async () => {
