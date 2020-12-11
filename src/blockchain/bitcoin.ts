@@ -19,6 +19,13 @@ export const btcGetCurrentBlock = async (): Promise<BtcInfo> => {
 };
 
 /**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/BtcGetBalanceOfAddress" target="_blank">Tatum API documentation</a>
+ */
+export const btcGetBalance = async (address: string): Promise<{ incoming: string, outgoing: string }> => {
+    return (await axios.get(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/bitcoin/address/balance/${address}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+};
+
+/**
  * For more details, see <a href="https://tatum.io/apidoc#operation/BtcGetBlock" target="_blank">Tatum API documentation</a>
  */
 export const btcGetBlock = async (hash: string): Promise<BtcBlock> => {

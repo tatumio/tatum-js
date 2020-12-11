@@ -12,6 +12,13 @@ export const ltcBroadcast = async (txData: string, signatureId?: string): Promis
 };
 
 /**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/LtcGetBalanceOfAddress" target="_blank">Tatum API documentation</a>
+ */
+export const ltcGetBalance = async (address: string): Promise<{ incoming: string, outgoing: string }> => {
+    return (await axios.get(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/litecoin/address/balance/${address}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+};
+
+/**
  * For more details, see <a href="https://tatum.io/apidoc#operation/LtcGetBlockChainInfo" target="_blank">Tatum API documentation</a>
  */
 export const ltcGetCurrentBlock = async (): Promise<LtcInfo> => {
