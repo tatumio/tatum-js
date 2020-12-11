@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {TATUM_API_URL} from '../constants';
 import {EthBlock, EthTx, TransactionHash} from '../model';
+import BigNumber from "bignumber.js";
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/EthBroadcast" target="_blank">Tatum API documentation</a>
@@ -36,8 +37,9 @@ export const ethGetBlock = async (hash: string): Promise<EthBlock> => {
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/EthGetBalance" target="_blank">Tatum API documentation</a>
  */
-export const ethGetAccountBalance = async (address: string): Promise<number> => {
-    return (await axios.get(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ethereum/account/balance/${address}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+export const ethGetAccountBalance = async (address: string): Promise<BigNumber> => {
+    const { data } = (await axios.get(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ethereum/account/balance/${address}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}}));
+    return new BigNumber(data.balance);
 };
 
 /**
