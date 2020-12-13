@@ -1,7 +1,14 @@
-# Run Scrypta Docker
+# Run Scrypta with Docker
 
-Run bash script to run mainnet idanode:
+First clone main repository from GitHub:
+
 ```
+git clone https://github.com/scryptachain/scrypta-idanodejs
+```
+
+Then enter on it and run bash script:
+```
+cd scrypta-idanodejs
 bash docker/docker.sh
 ```
 
