@@ -13,7 +13,7 @@ bash docker/docker.sh -testnet
 If you want to rebuild the docker image pass `-rebuild` flag:
 ```
 bash docker/docker.sh -rebuild
-``
+```
 
 # Bootstrap blockchain and idanode (only for mainnet)
 
