@@ -1,0 +1,80 @@
+{
+  "name": "@scrypta/tatum",
+  "version": "1.0.1",
+  "description": "Scrypta Connector for Tatum API",
+  "author": "Sebastiano Cataudo <sebastiano.c@scrypta.foundation>",
+  "license": "MIT",
+  "main": "npm/scrypta.js",
+  "files": [
+    "npm/**/*",
+    "*.md"
+  ],
+  "scripts": {
+    "start:dev": "tsc -w",
+    "build": "tsc",
+    "prepare": "npm run build",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "tslint -p tsconfig.json -c tslint.json",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:e2e": "jest --config ./test/jest-e2e.json"
+  },
+  "keywords": [
+    "nestjs",
+    "tatum",
+    "tatumio",
+    "scrypta",
+    "blockchain"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/turinglabsorg/tatum-blockchain-connector/scrypta-connector"
+  },
+  "bugs": "https://github.com/turinglabsorg/tatum-blockchain-connector/scrypta-connector",
+  "peerDependencies": {
+    "@nestjs/common": "^7.6.1"
+  },
+  "dependencies": {
+    "@scrypta/core": "^2.9.1",
+    "@tatumio/tatum": "^1.4.19",
+    "nestjs-pino": "^1.3.0",
+    "rxjs": "^6.6.3"
+  },
+  "devDependencies": {
+    "@nestjs/common": "^7.6.1",
+    "@nestjs/core": "^7.6.1",
+    "@nestjs/platform-express": "^7.6.1",
+    "@nestjs/testing": "7.6.1",
+    "@types/express": "4.17.9",
+    "@types/jest": "26.0.18",
+    "@types/node": "14.14.12",
+    "@types/supertest": "2.0.10",
+    "jest": "26.6.3",
+    "prettier": "2.2.1",
+    "supertest": "6.0.1",
+    "ts-jest": "26.4.4",
+    "ts-node": "9.1.1",
+    "tsc-watch": "4.2.9",
+    "tsconfig-paths": "3.9.0",
+    "tslint": "5.20.1",
+    "typescript": "4.1.2"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".spec.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
+  }
+}
