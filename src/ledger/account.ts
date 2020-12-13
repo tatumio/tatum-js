@@ -53,8 +53,8 @@ export const deleteBlockedAmount = async (id: string): Promise<void> => {
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/unblockAmountWithTransaction" target="_blank">Tatum API documentation</a>
  */
-export const deleteBlockedAmountWithTransaction = async (id: string, txData: BlockageTransaction): Promise<void> => {
-    await axios.put(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ledger/account/block/${id}`, txData, {headers: {'x-api-key': process.env.TATUM_API_KEY}});
+export const deleteBlockedAmountWithTransaction = async (id: string, txData: BlockageTransaction): Promise<{ reference: string }> => {
+    return (await axios.put(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ledger/account/block/${id}`, txData, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 
 /**
