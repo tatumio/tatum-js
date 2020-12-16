@@ -71,6 +71,9 @@ Some of the Schemas do not have to be integrated, but might be reused from the p
 
 If everything is done from your side please create your pull requests and send them. Add your coin and your ticker to both pull requests and join the conversation into GitHub for further requirements.
 
+##
+Publish your connector to NPM registry, so it's available for use. Tatum Integration team will then be able to use it.
+
 ## Support
 
 If you need support please enter [Telegram group](https://t.me/tatumio) and ask for support to Tatum Integration Team.
