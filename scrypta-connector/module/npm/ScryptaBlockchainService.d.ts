@@ -6,9 +6,9 @@ export declare abstract class ScryptaBlockchainService {
     protected readonly logger: PinoLogger;
     protected scrypta: ScryptaCore;
     protected constructor(logger: PinoLogger);
-    protected abstract isTestnet(): boolean;
+    protected abstract isTestnet(): Promise<boolean>;
     protected abstract getNodesUrl(): Promise<string[]>;
-    getNetwork(): {
+    getNetwork(): Promise<{
         messagePrefix: string;
         bech32: string;
         bip32: {
@@ -18,22 +18,22 @@ export declare abstract class ScryptaBlockchainService {
         pubKeyHash: number;
         scriptHash: number;
         wif: number;
-    };
+    }>;
     getBlockChainInfo(): Promise<any>;
     getCurrentBlock(): Promise<number>;
     getBlockHash(i: number): Promise<string>;
     getBlock(hash: string): Promise<ScryptaBlock>;
     generateAddress(xpub: string, derivationIndex: number): Promise<string>;
-    generateWallet(mnem?: string): Tatum.Wallet | Promise<Tatum.Wallet> | Promise<{
+    generateWallet(mnem?: string): Promise<Tatum.Wallet | {
         address: string;
         privateKey: string;
-    }> | {
+    } | {
         privateKey: string;
         address: string;
     } | {
         address: string;
         secret: string;
-    };
+    }>;
     generateAddressPrivateKey(derivationIndex: number, mnemonic: string): Promise<{
         key: string;
     }>;

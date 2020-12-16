@@ -1,1 +1,13 @@
-# tatum-blockchain-connector
+# Tatum Blockchain Connector
+This repository is used as a place to find all connectors to the blockchains, which are integrated inside Tatum API.
+
+## Structure
+There is a `blueprint` folder, where there is an example connector prepared for you. You should extend `*Controller.ts` and `*Service.ts` files and implement the required methods, you would like to expose via Tatum API to the developers.
+On top of that, there are `<blockchain>-connector` directories, where custom integrations are being created. Feel free to fork the repo, create your connector and open a PR.
+
+## Integration to Tatum API
+Before the integration itself, please read [Integration guide](./INTEGRATION_GUIDE.md).
+As soon as you finish and test your connector, please reach out to the Tatum team on [Telegram](https://t.me/tatumio). They will then integrate your blockchain inside the Tatum API.
+
+## Support
+If you need support please enter [Telegram group](https://t.me/tatumio) and ask for support to Tatum Integration Team.

@@ -42,8 +42,8 @@ export interface ScryptaTx {
 }
 export interface ScryptaParsedTx {
     hash: string;
-    from: Array<string>;
-    to: Array<string>;
+    from: string[];
+    to: string[];
     type: string;
     time: number;
     blockhash: string;

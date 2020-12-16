@@ -1,0 +1,82 @@
+openapi: 3.0.0
+servers:
+  - url: 'https://api-eu1.tatum.io'
+info:
+  version: 1.0.1
+  title: Tatum Blueprint API
+tags:
+  - description: |
+      <p>This is info section about your blockchain.</p>
+    name: Blockchain | Blueprint
+paths:
+  /v3/blueprint/wallet:
+    get:
+      summary: Generate Blueprint wallet
+      description: |
+        <h4>1 credit per API call.</h4><br/><p>Tatum supports BIP44 HD wallets. It is very convenient and secure, since it can generate 2^31 addresses from 1 mnemonic phrase. Mnemonic phrase consists of 24 special words in defined order and can restore access to all generated addresses and private keys.<br/>Each address is identified by 3 main values:<ul><li>Private Key - your secret value, which should never be revealed</li><li>Public Key - public address to be published</li><li>Derivation index - index of generated address</li></ul></p><p>Tatum follows BIP44 specification and generates for Blueprint wallet with derivation path m'/44'/0'/0'/0. More about BIP44 HD wallets can be found here - <a target="_blank" href="https://github.com/scrypta/bips/blob/master/bip-0044.mediawiki">https://github.com/scrypta/bips/blob/master/bip-0044.mediawiki</a>.
+        Generate BIP44 compatible Blueprint wallet.</p>
+      operationId: GenerateBlueprintwallet
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BlueprintWallet"
+          description: OK
+        400: &API400
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+          description: Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.
+        401: &API401
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error401NotActive"
+                  - $ref: "#/components/schemas/Error401Invalid"
+          description: Unauthorized. Not valid or inactive subscription key present in the HTTP Header.
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403"
+        500: &API500
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error500"
+          description: Internal server error. There was an error on the server during the processing of the request.
+      security:
+        - X-Api-Key: []
+      x-code-samples:
+      tags:
+        - Blockchain / Blueprint
+components:
+  securitySchemes:
+    X-Api-Key:
+      description: |
+        To maintain the highest security level, Tatum requires X-API-Key HTTP header.
+        This X-API-Key represents identification of the plan and can be used by 1 developer or per environment.
+        Each X-API-Key is bound to the test or production blockchains.
+      in: header
+      name: x-api-key
+      type: apiKey
+  schemas:
+    BlueprintWallet:
+      type: object
+      required:
+        - mnemonic
+        - xpub
+      properties:
+        mnemonic:
+          type: string
+          description: Mnemonic seed for the generated wallet
+          example: plunge setup measure permit junior cheese tortoise olive fly asset merit steak flight paper layer glass sure march confirm rhythm enroll kitchen future ridge
+        xpub:
+          type: string
+          description: Extended public key to generate addresses from the wallet.
+          example: xpub6FL6yNcaXSaJaLoe2e5a1AGWUARpC5bTLKrGLHqN3qFGeBQBYdCFsdYzgoWHMruUcBJrQ1jCpoXvqduqchuHGEvuGm9gC4JR5ZttscVxa3y

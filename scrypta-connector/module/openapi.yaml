@@ -1,0 +1,877 @@
+openapi: 3.0.0
+servers:
+  - url: 'https://api-eu1.tatum.io'
+info:
+  version: 1.0.1
+  title: Tatum Scrypta API
+tags:
+  - description: |
+      <p>Scrypta Blockchain enables access to most commonly used Bitcoin methods. These methods bring small level of abstraction,
+      and are used for the type of applications that want to communicate with blockchain directly. Some of the methods are used alongside Tatum Private Ledger
+      to connect blockchain and private ledger together, like wallet generation or getting information about transactions.<br/>
+      Tatum supports 2 chains:
+      <ul><li>Mainnet - is regular live chain</li>
+      <li>Testnet - test chain used for testing purposes. Coins on test chain have no value.</li></ul><br/>
+      Tatum supports BIP44 HD wallets. It is very convenient and secure, since it can generate 2^31 addresses from 1 mnemonic phrase. It is possible to generate this type of wallet with 1 simple API call.</p>
+    name: Blockchain | Scrypta
+paths:
+  /v3/scrypta/wallet:
+    get:
+      summary: Generate Scrypta wallet
+      description: |
+        <h4>1 credit per API call.</h4><br/><p>Tatum supports BIP44 HD wallets. It is very convenient and secure, since it can generate 2^31 addresses from 1 mnemonic phrase. Mnemonic phrase consists of 24 special words in defined order and can restore access to all generated addresses and private keys.<br/>Each address is identified by 3 main values:<ul><li>Private Key - your secret value, which should never be revealed</li><li>Public Key - public address to be published</li><li>Derivation index - index of generated address</li></ul></p><p>Tatum follows BIP44 specification and generates for Scrypta wallet with derivation path m'/44'/0'/0'/0. More about BIP44 HD wallets can be found here - <a target="_blank" href="https://github.com/scrypta/bips/blob/master/bip-0044.mediawiki">https://github.com/scrypta/bips/blob/master/bip-0044.mediawiki</a>.
+        Generate BIP44 compatible Scrypta wallet.</p>
+      operationId: GenerateScryptawallet
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ScryptaWallet"
+          description: OK
+        400: &API400
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+          description: Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.
+        401: &API401
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error401NotActive"
+                  - $ref: "#/components/schemas/Error401Invalid"
+          description: Unauthorized. Not valid or inactive subscription key present in the HTTP Header.
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403"
+        500: &API500
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error500"
+          description: Internal server error. There was an error on the server during the processing of the request.
+      security:
+        - X-Api-Key: []
+      x-code-samples:
+      tags:
+        - Blockchain / Scrypta
+  /v3/scrypta/wallet/priv:
+    post:
+      summary: Generate Scrypta private key
+      description: |
+        <h4>1 credit per API call.</h4><br/>
+        <p>Generate private key for address from mnemonic for given derivation path index. Private key is generated for the concrete index - each mnemonic
+        can generate up to 2^32 private keys starting from index 0 until 2^31.</p>
+      operationId: GenerateScryptaprivatekey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PrivKeyRequest"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PrivKeyScrypta"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403BlockchainPrivateFailed"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: []
+      x-code-samples:
+      tags:
+        - Blockchain / Scrypta
+  '/v3/scrypta/block/hash/{i}':
+    get:
+      summary: Get Block hash
+      description: <h4>1 credit per API call.</h4><br/><p>Get Scrypta Block hash. Returns hash of the block to get the block detail.</p>
+      operationId: GetScryptaBlockhash
+      parameters:
+        - name: i
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: 1
+          description: The number of blocks preceding a particular block on a block chain.
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  hash:
+                    type: string
+                    description: Block hash
+                    example: 0000000053f225e202cf27fe3046e06719efd3b31b5ab75fc5ef7f853c8b246f
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: []
+      x-code-samples:
+      tags:
+        - Blockchain / Scrypta
+  '/v3/scrypta/block/{hash}':
+    get:
+      summary: Get Block by hash or height
+      description: <h4>1 credit per API call.</h4><br/><p>Get Scrypta Block detail by block hash or height.</p>
+      operationId: GetScryptaBlockbyhashorheight
+      parameters:
+        - name: hash
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+          description: Block hash or height.
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScryptaBlock'
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: []
+      x-code-samples:
+      tags:
+        - Blockchain / Scrypta
+  /v3/scrypta/transaction:
+    post:
+      summary: Send LYRA to blockchain addresses
+      description: |
+        <h4>2 credits per API call.</h4><br/>
+        <p>Send Scrypta to blockchain addresses. It is possible to build a blockchain transaction in 2 ways:
+        <ul>
+        <li><b>fromAddress</b> - assets will be sent from the list of addresses. For each of the addresses last 100 transactions will be scanned for any unspent UTXO and will be included in the transaction.</li>
+        <li><b>fromUTXO</b> - assets will be sent from the list of unspent UTXOs. Each of the UTXO will be included in the transaction.</li>
+        </ul>
+        In scrypta-like blockchains, the transaction is created from the list of previously not spent UTXO. Every UTXO contains the number of funds, which can be spent.
+        When the UTXO enters into the transaction, the whole amount is included and must be spent. For example, address A receives 2 transactions, T1 with 1 LYRA and T2 with 2 LYRA.
+        The transaction, which will consume UTXOs for T1 and T2, will have available amount to spent 3 LYRA = 1 LYRA (T1) + 2 LYRA(T2).<br/><br/>
+        There can be multiple recipients of the transactions, not only one. In the <b>to</b> section, every recipient address has it's corresponding amount.
+        When the amount of funds, that should receive the recipient is lower than the number of funds from the UTXOs, the difference is used as a transaction fee.<br/><br/>
+        This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+        No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and losing funds. In this method, it is possible to enter privateKey
+        or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+        <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
+        Alternatively, using the Tatum client library for supported languages or Tatum Middleware with a custom key management system is possible.
+        </p>
+      operationId: SendLYRAtoblockchainaddresses
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/TransactionHashKMS"
+                  - $ref: "#/components/schemas/SignatureId"
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403"
+        500:
+          <<: *API500
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ScryptaTransaction"
+        required: true
+      security:
+        - X-Api-Key: []
+      x-code-samples:
+      tags:
+        - Blockchain / Scrypta
+  '/v3/scrypta/transaction/{hash}':
+    get:
+      summary: Get Scrypta Transaction by hash
+      description: <h4>1 credit per API call.</h4><br/><p>Get Scrypta Transaction detail by transaction hash.</p>
+      operationId: GetScryptaTransactionbyhash
+      parameters:
+        - name: hash
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: 980fa9cb468f93c6cb6b672e1b062a16507a1a9a7903a83bf3f10e1059b25341
+          description:  Transaction hash
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScryptaTx'
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: []
+      x-code-samples:
+      tags:
+        - Blockchain / Scrypta
+  '/v3/scrypta/transaction/address/{address}':
+    get:
+      summary: Get Transactions by address
+      description: <h4>1 credit per API call.</h4><br/><p>Get Scrypta Transactions by address.</p>
+      operationId: GetScryptaTransactionsbyaddress
+      parameters:
+        - name: pageSize
+          in: query
+          required: true
+          style: form
+          schema:
+            type: string
+            example: 50
+          description: Max number of items per page is 50.
+        - name: offset
+          in: query
+          required: true
+          style: form
+          schema:
+            type: string
+            example: 100
+          description: Offset to obtain next page of the data.
+        - name: address
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: LPcLKgbdwmDkdNFYfv1VX1k3gUuQgS7Au6
+          description: Address
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ScryptaTx'
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: []
+      x-code-samples:
+      tags:
+        - Blockchain / Scrypta
+  '/v3/scrypta/utxo/{address}':
+    get:
+      summary: Get Scrypta spendable UTXO
+      description: <h4>1 credit per API call.</h4><br/><p>Get Scrypta spendable UTXO.</p>
+      operationId: GetScryptaspendableUTXO
+      parameters:
+        - name: pageSize
+          in: query
+          required: true
+          style: form
+          schema:
+            type: string
+            example: 50
+          description: Max number of items per page is 50.
+        - name: offset
+          in: query
+          required: true
+          style: form
+          schema:
+            type: string
+            example: 100
+          description: Offset to obtain next page of the data.
+        - name: address
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: 2ac9175db66a9e646034a9663870743d177175ceff6c25231528cb7690900a78
+          description: Address
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ScryptaUTXO'
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: []
+      x-code-samples:
+      tags:
+        - Blockchain / Scrypta
+  '/v3/scrypta/utxo/{hash}/{index}':
+    get:
+      summary: Get UTXO of Transaction
+      description: |
+        <h4>1 credit per API call.</h4><br/>
+        <p>Get UTXO of given transaction and output index. UTXO means Unspent Transaction Output, which is in blockchain terminology assets, that user
+        received on the concrete address and does not spend it yet.<br/>
+        In scrypta-like blockchains (LYRA, LTC, BCH), every transaction is built from the list of previously
+        not spent transactions connected to the address. If user owns address A, receives in transaciont T1 10 LYRA, he can spend in the next transaction
+        UTXO T1 of total value 10 LYRA. User can spend multiple UTXOs from different addresses in 1 transaction.<br/>
+        If UTXO is not spent, data are returned, otherwise 404 error code.</p>
+      operationId: GetScryptaUTXOofTransaction
+      parameters:
+        - name: hash
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: 980fa9cb468f93c6cb6b672e1b062a16507a1a9a7903a83bf3f10e1059b25341
+          description: TX Hash
+        - name: index
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: 0>
+          description: Index of tx output to check if spent or not
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScryptaUTXO'
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: []
+      x-code-samples:
+      tags:
+        - Blockchain / Scrypta
+  '/v3/scrypta/address/{xpub}/{index}':
+    get:
+      summary: Generate Scrypta deposit address from Extended public key
+      description: |
+        <h4>1 credit per API call.</h4><br/>
+        <p>Generate Scrypta deposit address from Extended public key. Deposit address is generated for the concrete index - each extended public key can generate
+        up to 2^32 addresses starting from index 0 until 2^31.</p>
+      operationId: GenerateScryptadepositaddressfromExtendedpublickey
+      parameters:
+        - name: xpub
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: xpub6FL6yNcaXSaJaLoe2e5a1AGWUARpC5bTLKrGLHqN3qFGeBQBYdCFsdYzgoWHMruUcBJrQ1jCpoXvqduqchuHGEvuGm9gC4JR5ZttscVxa3y
+          description: Extended public key of wallet.
+        - name: index
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: 0
+          description: Derivation index of desired address to be generated.
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  address:
+                    type: string
+                    example: LebwFwyEaPhnsvv7my8drgU9myev6DpdPV
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: []
+      x-code-samples:
+      tags:
+        - Blockchain / Scrypta
+  /v3/scrypta/info:
+    get:
+      summary: Get Blockchain Information
+      description: '<h4>1 credit per API call.</h4><br/><p>Get Scrypta Blockchain Information. Obtain basic info like testnet / mainent version of the chain, current block number and it''s hash.</p>'
+      operationId: GetScryptaBlockchainInformation
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScryptaInfo'
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: []
+      x-code-samples:
+      tags:
+        - Blockchain / Scrypta
+  /v3/scrypta/broadcast:
+    post:
+      summary: Broadcast signed Scrypta transaction
+      description: |
+        <h4>2 credits per API call.</h4><br/>
+        <p>Broadcast signed transaction to Scrypta blockchain. This method is used internally from Tatum KMS, Tatum Middleware or Tatum client libraries.
+        It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
+      operationId: BroadcastsignedScryptatransaction
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionHashKMS"
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403"
+        500:
+          <<: *API500
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BroadcastKMS"
+        required: true
+      security:
+        - X-Api-Key: []
+      x-code-samples:
+      tags:
+        - Blockchain / Scrypta
+components:
+  securitySchemes:
+    X-Api-Key:
+      description: |
+        To maintain the highest security level, Tatum requires X-API-Key HTTP header.
+        This X-API-Key represents identification of the plan and can be used by 1 developer or per environment.
+        Each X-API-Key is bound to the test or production blockchains.
+      in: header
+      name: x-api-key
+      type: apiKey
+  schemas:
+    PrivKeyScrypta:
+      type: object
+      properties:
+        key:
+          description: Generated private key.
+          example: cTmS2jBWXgFaXZ2xG9jhn67TiyTshnMp3UedamzEhGm6BZV1vLgQ
+          type: string
+    ScryptaTx:
+      type: object
+      properties:
+        hash:
+          type: string
+          example: 1151f9cf33b677a5dd21343af657fc5aa5c9139fd62c59fc13da2a774d98f154
+        inputs:
+          type: array
+          items:
+            type: object
+            properties:
+              txid:
+                type: string
+                example: b7fcc06374f6982f4ddecaef522c96402e2d10179ad33942019cbbad4b0209bd
+              vout:
+                type: number
+                example: 1
+              scriptSig:
+                type: object
+                properties:
+                  asm:
+                    type: string
+                    example: 304402207c9fbe24e5dbb54450a7e207adcafe0ee2f3ec81ad2e33d3a8cc70404835060b02207c1e7788c3f5c907932e28b3ae34cd02d2e1f95d8e2f1eb3bbb0b5c706293e0401
+                  hex:
+                    type: string
+                    example: 47304402207c9fbe24e5dbb54450a7e207adcafe0ee2f3ec81ad2e33d3a8cc70404835060b02207c1e7788c3f5c907932e28b3ae34cd02d2e1f95d8e2f1eb3bbb0b5c706293e0401
+              sequence:
+                type: number
+                example: 4294967295
+        outputs:
+          type: array
+          items:
+            type: object
+            properties:
+              value:
+                type: number
+                example: 8.5
+              n:
+                type: number
+                example: 2
+              scriptPubKey:
+                type: object
+                properties:
+                  asm:
+                    type: string
+                    example: OP_DUP OP_HASH160 c7684a5c941825336e45a9276c05de1d34929f6b OP_EQUALVERIFY OP_CHECKSIG
+                  hex:
+                    type: string
+                    example: 76a914c7684a5c941825336e45a9276c05de1d34929f6b88ac
+                  reqSigs:
+                    type: number
+                    example: 1
+                  type:
+                    type: string
+                    example: pubkeyhash
+                  addresses:
+                    type: array
+                    items:
+                      type: string
+                      example: LdQKfciCwd2rPsPCfggErpD6GMvRhB2Eak
+        time:
+          type: number
+          example: 1545994896
+        blockhash:
+          type: string
+          example: 3f18205d5884fdcbf95f2adc7a933b28fd6ec4a474b7dffb41c7a2733d0c4c2d
+    ScryptaUTXO:
+      type: object
+      properties:
+        txid:
+          type: string
+          example: 8f227111c1f807b0bd3b05c0fe9d722f75571b3a80c873f1573f976c63eddcf4
+        vout:
+          type: number
+          example: 2
+        amount:
+          type: number
+          example: 5.265
+        scriptPubKey:
+          type: string
+          example: 76a91489d3d564f322dee485e3f38a332fa3f63cb641a588ac
+        block:
+          type: number
+          example: 1025140
+    ScryptaTransaction:
+      type: object
+      required:
+        - to
+      properties:
+        fromAddress:
+          description: Array of addresses and corresponding private keys. Tatum will automatically scan last 100 transactions for each address and will use all of the unspent values. We advise to use this option if you have 1 address per 1 transaction only.
+          type: array
+          items:
+            type: object
+            required:
+              - address
+            properties:
+              signatureId:
+                type: string
+                minimum: 36
+                maximum: 36
+                format: uuid
+                example: 1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6
+                description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+              address:
+                description: Address to send assets from.
+                type: string
+                example: 2N9bBiH2qrTDrPCzrNhaFGdkNKS86PJAAAS
+                minimum: 30
+                maximum: 50
+              privateKey:
+                description: Private key of the address to send assets from. Private key, or signature Id must be present.
+                type: string
+                minimum: 52
+                maximum: 52
+                example: cVX7YtgL5muLTPncHFhP95oitV1mqUUA5VeSn8HeCRJbPqipzobf
+        fromUTXO:
+          description: Array of transaction hashes, index of UTXO in it and corresponding private keys. Use this option if you want to calculate amount to send manually. Either fromUTXO or fromAddress must be present.
+          type: array
+          items:
+            type: object
+            required:
+              - txHash
+              - index
+            properties:
+              txHash:
+                description: Transaction hash of the UTXO to be spent.
+                type: string
+                example: 53faa103e8217e1520f5149a4e8c84aeb58e55bdab11164a95e69a8ca50f8fcc
+                minLength: 64
+                maxLength: 64
+              index:
+                description: Index of the UTXO to be spent.
+                type: number
+                example: 0
+                minimum: 0
+                maximum: 2147483647
+              privateKey:
+                description: Private key of the UTXO to be spent.
+                type: string
+                example: cVX7YtgL5muLTPncHFhP95oitV1mqUUA5VeSn8HeCRJbPqipzobf
+                minLength: 52
+                maxLength: 52
+              signatureId:
+                type: string
+                minimum: 36
+                maximum: 36
+                format: uuid
+                example: 1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6
+                description: Identifier of the private key associated in signing application.
+        to:
+          description: Array of addresses and values to send bitcoins to. Values must be set in BTC. Difference between from and to is transaction fee.
+          type: array
+          items:
+            type: object
+            required:
+              - address
+              - value
+            properties:
+              address:
+                description: Destination address.
+                type: string
+                example: 2MzNGwuKvMEvKMQogtgzSqJcH2UW3Tc5oc7
+                minimum: 30
+                maximum: 60
+              value:
+                description: Amount to be sent, in BTC.
+                type: number
+                minimum: 0
+                example: 0.02969944
+    ScryptaBlock:
+      type: object
+      properties:
+        hash:
+          type: string
+          example: 3f18205d5884fdcbf95f2adc7a933b28fd6ec4a474b7dffb41c7a2733d0c4c2d
+        confirmations:
+          type: number
+          example: 1015465
+        size:
+          type: number
+          example: 428
+        height:
+          type: number
+          example: 10000
+        version:
+          type: number
+          example: 3
+        merkleroot:
+          type: string
+          example: bcb013dc62d59f01baca55f1d264e7b0574ce45821e44dbd1b52758657a09947
+        tx:
+          type: array
+          items:
+            type: string
+            example: 705e9918f8cb302b9c498396b89f61ce111830512a2809ef2febc315797f777f
+        time:
+          type: number
+          example: 1545994896
+        nonce:
+          type: number
+          example: 0
+        bits:
+          type: number
+          example: 1c051271
+        difficulty:
+          type: number
+          example: 50.47205032
+        chainwork:
+          type: string
+          example: 00000000000000000000000000000000000000000000000000055d4cc172571a
+        previousblockhash:
+          type: string
+          example: 8614cb01c9c97c7424e2ada9ca726700804feedb80e7a730676752e8ea1e7be2
+        nextblockhash:
+          type: string
+          example: fefd0d4201cf42624ccab4b2a385f8aa6921ce41ec11c17f971708ee497b52b6
+        txs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScryptaTx'
+    ScryptaInfo:
+      type: object
+      properties:
+        version:
+          type: string
+          example: 2.8.0
+        protocolversion:
+          type: number
+          example: 70920
+        walletversion:
+          type: number
+          example: 61000
+        balance:
+          type: number
+          example: 0.03838996
+        obfuscation_balance:
+          type: number
+          example: 0
+        blocks:
+          type: number
+          example: 1025447
+        timeoffset:
+          type: number
+          example: 0
+        connections:
+          type: number
+          example: 26
+        proxy:
+          type: string
+          example: ''
+        difficulty:
+          type: number
+          example: 28341.14251401
+        testnet:
+          type: boolean
+          example: false
+        keypoololdest:
+          type: number
+          example: 1569837461
+        keypoolsize:
+          type: number
+          example: 1001
+        paytxfee:
+          type: number
+          example: 0
+        relayfee:
+          type: number
+          example: 0.0001
+        'staking status':
+          type: string
+          example: Staking Active
+        errors:
+          type: string
+          example: ''
+        indexed:
+          type: number
+          example: 1025447
+        toindex:
+          type: number
+          example: 0
+        checksum:
+          type: string
+          example: 19cf8c6af570a7bef7f01b5295bc0bebb659b2a3d6666c41e551be5502621313
+        node:
+          type: string
+          example: 'https://idanodejs04.scryptachain.org'
+    ScryptaWallet:
+      type: object
+      required:
+        - mnemonic
+        - xpub
+      properties:
+        mnemonic:
+          type: string
+          description: Mnemonic seed for the generated wallet
+          example: plunge setup measure permit junior cheese tortoise olive fly asset merit steak flight paper layer glass sure march confirm rhythm enroll kitchen future ridge
+        xpub:
+          type: string
+          description: Extended public key to generate addresses from the wallet.
+          example: xpub6FL6yNcaXSaJaLoe2e5a1AGWUARpC5bTLKrGLHqN3qFGeBQBYdCFsdYzgoWHMruUcBJrQ1jCpoXvqduqchuHGEvuGm9gC4JR5ZttscVxa3y

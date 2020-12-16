@@ -6,6 +6,7 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+.idea
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
@@ -82,6 +83,7 @@ typings/
 # Nuxt.js build / generate output
 .nuxt
 dist
+**/dist/**
 
 # Gatsby files
 .cache/
