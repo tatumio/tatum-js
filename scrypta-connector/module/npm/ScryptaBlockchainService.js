@@ -30,14 +30,14 @@ const tatum_1 = require("@tatumio/tatum");
 class ScryptaBlockchainService {
     constructor(logger) {
         this.logger = logger;
-        this.scrypta = new core_1.default();
+        this.scrypta = new core_1.default(false);
         this.scrypta.staticnodes = true;
     }
     async getNetwork() {
         return (await this.isTestnet()) ? constants_1.LYRA_TEST_NETWORK : constants_1.LYRA_NETWORK;
     }
     async getBlockChainInfo() {
-        this.scrypta.testnet = (await this.isTestnet());
+        this.scrypta.testnet = await this.isTestnet();
         this.scrypta.nodes = await this.getNodesUrl();
         this.scrypta.staticnodes = true;
         try {
@@ -50,7 +50,7 @@ class ScryptaBlockchainService {
         }
     }
     async getCurrentBlock() {
-        this.scrypta.testnet = (await this.isTestnet());
+        this.scrypta.testnet = await this.isTestnet();
         this.scrypta.nodes = await this.getNodesUrl();
         this.scrypta.staticnodes = true;
         try {
@@ -63,7 +63,7 @@ class ScryptaBlockchainService {
         }
     }
     async getBlockHash(i) {
-        this.scrypta.testnet = (await this.isTestnet());
+        this.scrypta.testnet = await this.isTestnet();
         this.scrypta.nodes = await this.getNodesUrl();
         this.scrypta.staticnodes = true;
         try {
@@ -76,7 +76,7 @@ class ScryptaBlockchainService {
         }
     }
     async getBlock(hash) {
-        this.scrypta.testnet = (await this.isTestnet());
+        this.scrypta.testnet = await this.isTestnet();
         this.scrypta.nodes = await this.getNodesUrl();
         this.scrypta.staticnodes = true;
         try {
@@ -96,7 +96,7 @@ class ScryptaBlockchainService {
     }
     async generateAddress(xpub, derivationIndex) {
         try {
-            return await Tatum.generateAddressFromXPub(tatum_1.Currency.LYRA, (await this.isTestnet()), xpub, derivationIndex);
+            return await Tatum.generateAddressFromXPub(tatum_1.Currency.LYRA, await this.isTestnet(), xpub, derivationIndex);
         }
         catch (e) {
             this.logger.error(e);
@@ -104,11 +104,11 @@ class ScryptaBlockchainService {
         }
     }
     async generateWallet(mnem) {
-        return Tatum.generateWallet(tatum_1.Currency.LYRA, (await this.isTestnet()), mnem);
+        return Tatum.generateWallet(tatum_1.Currency.LYRA, await this.isTestnet(), mnem);
     }
     async generateAddressPrivateKey(derivationIndex, mnemonic) {
         try {
-            const privateKey = await Tatum.generatePrivateKeyFromMnemonic(tatum_1.Currency.LYRA, (await this.isTestnet()), mnemonic, derivationIndex);
+            const privateKey = await Tatum.generatePrivateKeyFromMnemonic(tatum_1.Currency.LYRA, await this.isTestnet(), mnemonic, derivationIndex);
             return { key: privateKey };
         }
         catch (e) {
@@ -117,7 +117,7 @@ class ScryptaBlockchainService {
         }
     }
     async getTransactionsByAddress(address, pagination) {
-        this.scrypta.testnet = (await this.isTestnet());
+        this.scrypta.testnet = await this.isTestnet();
         this.scrypta.nodes = await this.getNodesUrl();
         this.scrypta.staticnodes = true;
         try {
@@ -143,7 +143,7 @@ class ScryptaBlockchainService {
         }
     }
     async getUnspentsByAddress(address, pagination) {
-        this.scrypta.testnet = (await this.isTestnet());
+        this.scrypta.testnet = await this.isTestnet();
         this.scrypta.nodes = await this.getNodesUrl();
         this.scrypta.staticnodes = true;
         try {
@@ -168,7 +168,7 @@ class ScryptaBlockchainService {
         }
     }
     async getUTXO(hash, index) {
-        this.scrypta.testnet = (await this.isTestnet());
+        this.scrypta.testnet = await this.isTestnet();
         this.scrypta.nodes = await this.getNodesUrl();
         this.scrypta.staticnodes = true;
         try {
@@ -191,7 +191,7 @@ class ScryptaBlockchainService {
         }
     }
     async getRawTransaction(txHash) {
-        this.scrypta.testnet = (await this.isTestnet());
+        this.scrypta.testnet = await this.isTestnet();
         this.scrypta.nodes = await this.getNodesUrl();
         this.scrypta.staticnodes = true;
         try {
@@ -207,7 +207,7 @@ class ScryptaBlockchainService {
         }
     }
     async broadcast(txData) {
-        this.scrypta.testnet = (await this.isTestnet());
+        this.scrypta.testnet = await this.isTestnet();
         this.scrypta.nodes = await this.getNodesUrl();
         this.scrypta.staticnodes = true;
         try {
@@ -222,7 +222,7 @@ class ScryptaBlockchainService {
         }
         catch (e) {
             this.logger.error(e);
-            throw new Error('Can\'t send transaction.');
+            throw new Error("Can't send transaction.");
         }
     }
 }

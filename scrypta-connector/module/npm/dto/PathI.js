@@ -15,7 +15,7 @@ const class_validator_1 = require("class-validator");
 class PathI {
 }
 __decorate([
-    class_transformer_1.Transform((v) => v.match(/^\d+$/) ? parseInt(v) : v),
+    class_transformer_1.Transform((v) => (v.match(/^\d+$/) ? parseInt(v, 10) : v)),
     class_validator_1.Min(0),
     __metadata("design:type", Number)
 ], PathI.prototype, "i", void 0);

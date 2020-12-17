@@ -14,7 +14,7 @@ export abstract class ScryptaBlockchainService {
   protected scrypta: ScryptaCore;
 
   protected constructor(protected readonly logger: PinoLogger) {
-    this.scrypta = new ScryptaCore();
+    this.scrypta = new ScryptaCore(false);
     this.scrypta.staticnodes = true;
   }
 

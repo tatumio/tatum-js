@@ -23,4 +23,4 @@ exports.LYRA_NETWORK = {
     scriptHash: 0x0d,
     wif: 0xae,
 };
-exports.LYRA_DERIVATION_PATH = 'm/44\'/497\'/0\'/0';
+exports.LYRA_DERIVATION_PATH = "m/44'/497'/0'/0";
