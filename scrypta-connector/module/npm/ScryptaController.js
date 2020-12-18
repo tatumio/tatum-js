@@ -62,68 +62,68 @@ class ScryptaController {
     }
 }
 __decorate([
-    common_1.Get('/v3/scrypta/info'),
+    common_1.Get('/info'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ScryptaController.prototype, "getInfo", null);
 __decorate([
-    common_1.Get('/v3/scrypta/wallet'),
+    common_1.Get('/wallet'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ScryptaController.prototype, "generateWallet", null);
 __decorate([
-    common_1.Post('/v3/scrypta/wallet/priv'),
+    common_1.Post('/wallet/priv'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [GeneratePrivateKey_1.GeneratePrivateKey]),
     __metadata("design:returntype", Promise)
 ], ScryptaController.prototype, "generateWalletPrivKey", null);
 __decorate([
-    common_1.Get('/v3/scrypta/address/:xpub/:i'),
+    common_1.Get('/address/:xpub/:i'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [PathXpubI_1.PathXpubI]),
     __metadata("design:returntype", Promise)
 ], ScryptaController.prototype, "generateAddress", null);
 __decorate([
-    common_1.Get('/v3/scrypta/block/hash/:i'),
+    common_1.Get('/block/hash/:i'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [PathI_1.PathI]),
     __metadata("design:returntype", Promise)
 ], ScryptaController.prototype, "getBlockHash", null);
 __decorate([
-    common_1.Get('/v3/scrypta/block/:hash'),
+    common_1.Get('/block/:hash'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [PathHash_1.PathHash]),
     __metadata("design:returntype", Promise)
 ], ScryptaController.prototype, "getBlock", null);
 __decorate([
-    common_1.Get('/v3/scrypta/transaction/:hash'),
+    common_1.Get('/transaction/:hash'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [PathHash_1.PathHash]),
     __metadata("design:returntype", Promise)
 ], ScryptaController.prototype, "getTransactionbyHash", null);
 __decorate([
-    common_1.Get('/v3/scrypta/transaction/address/:address'),
+    common_1.Get('/transaction/address/:address'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [PathAddress_1.PathAddress]),
     __metadata("design:returntype", Promise)
 ], ScryptaController.prototype, "getTransactionsByAddress", null);
 __decorate([
-    common_1.Get('/v3/scrypta/utxo/:address'),
+    common_1.Get('/utxo/:address'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [PathAddress_1.PathAddress]),
     __metadata("design:returntype", Promise)
 ], ScryptaController.prototype, "getUnspentsByAddress", null);
 __decorate([
-    common_1.Get('/v3/scrypta/utxo/:hash/:i'),
+    common_1.Get('/utxo/:hash/:i'),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [PathHashI_1.PathHashI]),
