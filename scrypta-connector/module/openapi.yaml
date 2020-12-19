@@ -14,7 +14,7 @@ tags:
       Tatum supports 2 chains:
       <ul><li>Mainnet - is regular live chain</li>
       <li>Testnet - test chain used for testing purposes.</li></ul></p>
-    name: Blockchain | Scrypta
+    name: Blockchain / Scrypta
 paths:
   /v3/scrypta/wallet:
     get:
