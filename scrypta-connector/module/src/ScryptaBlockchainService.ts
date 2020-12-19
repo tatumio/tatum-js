@@ -11,7 +11,7 @@ import * as Tatum from '@tatumio/tatum';
 import { Currency } from '@tatumio/tatum';
 
 export abstract class ScryptaBlockchainService {
-  protected scrypta: ScryptaCore;
+  protected scrypta: any;
 
   protected constructor(protected readonly logger: PinoLogger) {
     this.scrypta = new ScryptaCore(false);

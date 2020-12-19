@@ -64,14 +64,15 @@ Insert all the required methods and test everything with `example` or `test` fol
 
 ## OpenAPI YAML file
 
-This file describes your endpoints, parameters and request / response objects for youw connector. It will be automatically imported into [Tatum API OpenAPI](blob:https://tatum.io/bec661f6-69e1-426b-a70c-65ddf32f3b85).
+This file describes your endpoints, parameters and request / response objects for your connector. It will be automatically imported into [Tatum API OpenAPI](blob:https://tatum.io/bec661f6-69e1-426b-a70c-65ddf32f3b85).
 Some of the Schemas do not have to be integrated, but might be reused from the parent Tatum API OpenAPI file.
 
 ## Open pull requests
 
 If everything is done from your side please create your pull requests and send them. Add your coin and your ticker to both pull requests and join the conversation into GitHub for further requirements.
 
-##
+## Publish your package to NPM
+
 Publish your connector to NPM registry, so it's available for use. Tatum Integration team will then be able to use it.
 
 ## Support

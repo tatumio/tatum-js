@@ -1,10 +1,9 @@
-import ScryptaCore from '@scrypta/core';
 import { ScryptaBlock, ScryptaParsedTx, ScryptaUnspent } from './constants';
 import { PinoLogger } from 'nestjs-pino';
 import * as Tatum from '@tatumio/tatum';
 export declare abstract class ScryptaBlockchainService {
     protected readonly logger: PinoLogger;
-    protected scrypta: ScryptaCore;
+    protected scrypta: any;
     protected constructor(logger: PinoLogger);
     protected abstract isTestnet(): Promise<boolean>;
     protected abstract getNodesUrl(): Promise<string[]>;
