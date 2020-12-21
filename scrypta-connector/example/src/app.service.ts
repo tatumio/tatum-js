@@ -9,10 +9,10 @@ export class AppService extends ScryptaBlockchainService {
     super(logger);
   }
   protected getNodesUrl(): Promise<string[]> {
-    return Promise.resolve(['https://testnet.scryptachain.org']);
+    return Promise.resolve(['https://idanodejs01.scryptachain.org']);
   }
 
   protected isTestnet(): Promise<boolean> {
-    return Promise.resolve(true);
+    return Promise.resolve(false);
   }
 }

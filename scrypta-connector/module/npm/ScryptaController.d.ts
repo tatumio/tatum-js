@@ -32,5 +32,8 @@ export declare abstract class ScryptaController {
     broadcast(body: any): Promise<{
         txId: string;
         failed?: boolean;
+    } | {
+        message: string;
+        failed: boolean;
     }>;
 }

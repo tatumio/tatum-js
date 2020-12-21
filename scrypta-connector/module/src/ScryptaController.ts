@@ -78,7 +78,11 @@ export abstract class ScryptaController {
 
   @Post('/broadcast')
   async broadcast(@Body() body) {
-    return await this.scrypta.broadcast(body);
+    if(body.txData !== undefined){
+      return await this.scrypta.broadcast(body.txData);
+    }else{
+      return { message: "txData parameter can't be empty", failed: true }
+    }
   }
 
   // (WIP) SERVER SIDE TRANSACTION SIGNING
