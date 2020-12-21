@@ -3,17 +3,17 @@ import {ECPair, Network, networks, Transaction, TransactionBuilder} from 'bitcoi
 import {validateOrReject} from 'class-validator';
 import {
     scryptaBroadcast,
-    scryptaGetUnspentForAccount,
-    scryptaGetUTXO
+    scryptaGetUnspentForAccount
 } from '../blockchain';
 import {LYRA_NETWORK, LYRA_TEST_NETWORK} from '../constants';
 import {Currency, TransactionKMS, TransferBtcBasedBlockchain} from '../model';
 
-const prepareSignedTransaction = async (network: Network, body: TransferBtcBasedBlockchain, currency: Currency) => {
+const prepareSignedTransaction = async (network: Network, body: TransferBtcBasedBlockchain) => {
     await validateOrReject(body);
     const {fromUTXO, fromAddress, to} = body;
     const tx = new TransactionBuilder(network);
     const privateKeysToSign: string[] = [];
+    tx.setVersion(1)
     if (fromAddress) {
         for (const item of fromAddress) {
             const txs = await scryptaGetUnspentForAccount(item.address);
@@ -34,7 +34,6 @@ const prepareSignedTransaction = async (network: Network, body: TransferBtcBased
     for (const item of to) {
         tx.addOutput(item.address, Number(new BigNumber(item.value).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
     }
-
     for (let i = 0; i < privateKeysToSign.length; i++) {
         const ecPair = ECPair.fromWIF(privateKeysToSign[i], network);
         tx.sign(i, ecPair);
@@ -69,7 +68,7 @@ export const signScryptaKMSTransaction = async (tx: TransactionKMS, privateKeys:
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareScryptaSignedTransaction = async (testnet: boolean, body: TransferBtcBasedBlockchain) => {
-    return prepareSignedTransaction(testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK, body, Currency.LYRA);
+    return prepareSignedTransaction(testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK, body);
 };
 
 
