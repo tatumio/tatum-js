@@ -3,7 +3,7 @@ import {ECPair, Network, networks, Transaction, TransactionBuilder} from 'bitcoi
 import {validateOrReject} from 'class-validator';
 import {
     scryptaBroadcast,
-    scryptaGetTxForAccount,
+    scryptaGetUnspentForAccount,
     scryptaGetUTXO
 } from '../blockchain';
 import {LYRA_NETWORK, LYRA_TEST_NETWORK} from '../constants';
@@ -16,18 +16,12 @@ const prepareSignedTransaction = async (network: Network, body: TransferBtcBased
     const privateKeysToSign: string[] = [];
     if (fromAddress) {
         for (const item of fromAddress) {
-            const txs = await scryptaGetTxForAccount(item.address);
+            const txs = await scryptaGetUnspentForAccount(item.address);
             for (const t of txs) {
-                for (const [i, o] of t.outputs.entries()) {
-                    if (o.address !== item.address) {
-                        continue;
-                    }
-                    try {
-                        await scryptaGetUTXO(t.hash, i);
-                        tx.addInput(t.hash, i);
-                        privateKeysToSign.push(item.privateKey);
-                    } catch (e) {
-                    }
+                try {
+                    tx.addInput(t.txid, t.vout);
+                    privateKeysToSign.push(item.privateKey);
+                } catch (e) {
                 }
             }
         }

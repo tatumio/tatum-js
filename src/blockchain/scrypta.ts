@@ -3,7 +3,7 @@ import {TATUM_API_URL} from '../constants';
 import {BlockHash, ScryptaBlock, ScryptaInfo, ScryptaTx, ScryptaUTXO, TransactionHash} from '../model';
 
 /**
- * For more details, see <a href="https://tatum.io/apidoc#operation/ScryptaBroadcast" target="_blank">Tatum API documentation</a>
+ * For more details, see <a href="https://tatum.io/apidoc#operation/BroadcastsignedScryptatransaction" target="_blank">Tatum API documentation</a>
  */
 export const scryptaBroadcast = async (txData: string, signatureId?: string): Promise<TransactionHash> => {
     return (await axios.post(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/scrypta/broadcast`,
@@ -44,6 +44,14 @@ export const scryptaGetUTXO = async (hash: string, i: number): Promise<ScryptaUT
  */
 export const scryptaGetTxForAccount = async (address: string, pageSize: number = 50, offset: number = 0): Promise<ScryptaTx[]> => {
     return (await axios.get(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/scrypta/transaction/address/${address}?pageSize=${pageSize}&offset=${offset}`,
+        {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+};
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/ScryptaGetTxByAddress" target="_blank">Tatum API documentation</a>
+ */
+export const scryptaGetUnspentForAccount = async (address: string, pageSize: number = 50, offset: number = 0): Promise<ScryptaUTXO[]> => {
+    return (await axios.get(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/scrypta/utxo/${address}?pageSize=${pageSize}&offset=${offset}`,
         {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 
