@@ -29,4 +29,8 @@ export declare abstract class ScryptaController {
     getTransactionsByAddress(param: PathAddress): Promise<import("./constants").ScryptaParsedTx[]>;
     getUnspentsByAddress(param: PathAddress): Promise<import("./constants").ScryptaUnspent[]>;
     getUTXO(param: PathHashI): Promise<import("./constants").ScryptaUnspent>;
+    broadcast(body: any): Promise<{
+        txId: string;
+        failed?: boolean;
+    }>;
 }

@@ -60,6 +60,9 @@ class ScryptaController {
     async getUTXO(param) {
         return await this.scrypta.getUTXO(param.hash, param.i);
     }
+    async broadcast(body) {
+        return await this.scrypta.broadcast(body);
+    }
 }
 __decorate([
     common_1.Get('/info'),
@@ -129,4 +132,11 @@ __decorate([
     __metadata("design:paramtypes", [PathHashI_1.PathHashI]),
     __metadata("design:returntype", Promise)
 ], ScryptaController.prototype, "getUTXO", null);
+__decorate([
+    common_1.Post('/broadcast'),
+    __param(0, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ScryptaController.prototype, "broadcast", null);
 exports.ScryptaController = ScryptaController;

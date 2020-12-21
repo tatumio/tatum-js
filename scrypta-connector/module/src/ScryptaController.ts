@@ -76,5 +76,11 @@ export abstract class ScryptaController {
     return await this.scrypta.getUTXO(param.hash, param.i);
   }
 
-  // TRANSACTION SIGNING AND BROADCASTING (WIP)
+  @Post('/broadcast')
+  async broadcast(@Body() body) {
+    return await this.scrypta.broadcast(body);
+  }
+
+  // (WIP) SERVER SIDE TRANSACTION SIGNING
+
 }
