@@ -15,7 +15,7 @@ const prepareSignedTransaction = async (network: Network, body: TransferBtcBased
     const privateKeysToSign: string[] = [];
     if (fromAddress) {
         for (const item of fromAddress) {
-            const txs = await btcGetTxForAccount(item.address);
+          const txs = await btcGetTxForAccount(item.address);
             for (const t of txs) {
                 for (const [i, o] of t.outputs.entries()) {
                     if (o.address !== item.address) {

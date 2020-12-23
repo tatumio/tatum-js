@@ -37,12 +37,12 @@ export const sendEthOffchainTransaction = async (testnet: boolean, body: Transfe
     const web3 = new Web3(provider || `${TATUM_API_URL}/v3/ethereum/web3/${process.env.TATUM_API_KEY}`);
     web3.eth.accounts.wallet.add(fromPriv);
     web3.eth.defaultAccount = web3.eth.accounts.wallet[0].address;
-    const gasPrice = await ethGetGasPriceInWei(web3);
+    const gasPrice = body.gasPrice ? web3.utils.toWei(body.gasPrice, 'gwei') : await ethGetGasPriceInWei(web3);
 
     const account = await getAccountById(withdrawal.senderAccountId);
     const {txData, gasLimit} = await prepareEthSignedOffchainTransaction(amount, fromPriv, address, account.currency, web3, gasPrice, nonce);
     // @ts-ignore
-    withdrawal.fee = new BigNumber(web3.utils.fromWei(new BigNumber(gasLimit).multipliedBy(gasPrice).toString(), 'ether')).toString();
+    withdrawal.fee = new BigNumber(web3.utils.fromWei(new BigNumber(body.gasLimit || gasLimit).multipliedBy(gasPrice).toString(), 'ether')).toString();
     const {id} = await offchainStoreWithdrawal(withdrawal);
     try {
         return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.ETH}), id};
@@ -80,7 +80,7 @@ export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: Tr
     const web3 = new Web3(provider || `${TATUM_API_URL}/v3/ethereum/web3/${process.env.TATUM_API_KEY}`);
     web3.eth.accounts.wallet.add(fromPriv);
     web3.eth.defaultAccount = web3.eth.accounts.wallet[0].address;
-    const gasPrice = await ethGetGasPriceInWei(web3);
+    const gasPrice = body.gasPrice ? web3.utils.toWei(body.gasPrice, 'gwei') : await ethGetGasPriceInWei(web3);
 
     const account = await getAccountById(withdrawal.senderAccountId);
 
@@ -91,7 +91,7 @@ export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: Tr
     const vc = await getVirtualCurrencyByName(account.currency);
     const {txData, gasLimit} = await prepareEthErc20SignedOffchainTransaction(amount, fromPriv, address, web3, vc.erc20Address as string, gasPrice, nonce);
     // @ts-ignore
-    withdrawal.fee = new BigNumber(web3.utils.fromWei(new BigNumber(gasLimit).multipliedBy(gasPrice).toString(), 'ether')).toString();
+    withdrawal.fee = new BigNumber(web3.utils.fromWei(new BigNumber(body.gasLimit || gasLimit).multipliedBy(gasPrice).toString(), 'ether')).toString();
     const {id} = await offchainStoreWithdrawal(withdrawal);
     try {
         return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.ETH}), id};

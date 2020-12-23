@@ -31,4 +31,14 @@ export abstract class BaseTransferEthErc20Offchain {
     @IsOptional()
     @IsInt()
     public nonce?: number;
+
+    @IsOptional()
+    @IsNumberString()
+    @Matches(/^[+]?((\d+(\.\d*)?)|(\.\d+))$/)
+    public gasPrice?: string;
+
+    @IsOptional()
+    @IsNumberString()
+    @Matches(/^[+]?((\d+(\.\d*)?)|(\.\d+))$/)
+    public gasLimit?: string;
 }

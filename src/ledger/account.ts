@@ -2,6 +2,7 @@ import axios from 'axios';
 import {validateOrReject} from 'class-validator';
 import {TATUM_API_URL} from '../constants';
 import {Account, AccountBalance, Blockage, BlockAmount, CreateAccount} from '../model';
+import {BlockageTransaction} from '../model/request/BlockageTransaction';
 import {CreateAccountsBatch} from '../model/request/CreateAccountsBatch';
 
 /**
@@ -47,6 +48,13 @@ export const blockAmount = async (id: string, block: BlockAmount): Promise<{ id:
  */
 export const deleteBlockedAmount = async (id: string): Promise<void> => {
     await axios.delete(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ledger/account/block/${id}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}});
+};
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/unblockAmountWithTransaction" target="_blank">Tatum API documentation</a>
+ */
+export const deleteBlockedAmountWithTransaction = async (id: string, txData: BlockageTransaction): Promise<{ reference: string }> => {
+    return (await axios.put(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ledger/account/block/${id}`, txData, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 
 /**

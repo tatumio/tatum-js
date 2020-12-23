@@ -53,7 +53,7 @@ export const prepareXlmSignedTransaction = async (testnet: boolean, body: Transf
         fee: '100',
         networkPassphrase: testnet ? Networks.TESTNET : Networks.PUBLIC,
         memo,
-    }).setTimeout(30);
+    }).setTimeout(300);
     const tx = initialize
         ? builder.addOperation(Operation.createAccount({
             destination: to.trim(),
