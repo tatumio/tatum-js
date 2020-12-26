@@ -88,10 +88,10 @@ export const prepareBitcoinSignedOffchainTransaction =
 
         const lastVin = data.find(d => d.vIn === '-1') as WithdrawalResponseData;
         tx.addOutput(address, Number(new BigNumber(amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
-        if (mnemonic) {
+        if (mnemonic && !changeAddress) {
             const {xpub} = await generateBtcWallet(testnet, mnemonic);
             tx.addOutput(generateAddressFromXPub(Currency.BTC, testnet, xpub, 0), Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
-        } else if (keyPair && changeAddress) {
+        } else if (changeAddress) {
             tx.addOutput(changeAddress, Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
         } else {
             throw new Error('Impossible to prepare transaction. Either mnemonic or keyPair and attr must be present.');

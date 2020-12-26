@@ -2,7 +2,6 @@ import {
     ECSignature,
     Transaction,
     TransactionBuilder as KMSTransactionBuilder
-// @ts-ignore
 } from '@bitcoin-dot-com/bitcoincashjs2-lib';
 import BigNumber from 'bignumber.js';
 import {ECPair, TransactionBuilder} from 'bitbox-sdk';
@@ -99,10 +98,10 @@ export const prepareBitcoinCashSignedOffchainTransaction =
 
         const lastVin = data.find(d => d.vIn === '-1') as WithdrawalResponseData;
         tx.addOutput(address, Number(new BigNumber(amount).multipliedBy(100000000).toFixed(0, BigNumber.ROUND_FLOOR)));
-        if (mnemonic) {
+        if (mnemonic && !changeAddress) {
             const {xpub} = generateBchWallet(testnet, mnemonic);
             tx.addOutput(generateAddressFromXPub(Currency.BCH, testnet, xpub, 0), Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(0, BigNumber.ROUND_FLOOR)));
-        } else if (keyPair && changeAddress) {
+        } else if (changeAddress) {
             tx.addOutput(changeAddress, Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(0, BigNumber.ROUND_FLOOR)));
         } else {
             throw new Error('Impossible to prepare transaction. Either mnemonic or keyPair and attr must be present.');
