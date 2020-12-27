@@ -85,6 +85,15 @@ export abstract class ScryptaController {
     }
   }
 
-  // (WIP) SERVER SIDE TRANSACTION SIGNING
+  @Post('/transaction')
+  async sendTransactionByAddressOrUtxo(@Body() body) {
+    if(body.fromAddress !== undefined && body.to !== undefined){
+      return await this.scrypta.sendTransactionByAddressOrUtxo({fromAddress: body.fromAddress, to: body.to});
+    }else if(body.fromUTXO !== undefined && body.to !== undefined){
+      return await this.scrypta.sendTransactionByAddressOrUtxo({fromUTXO: body.fromUTXO, to: body.to});
+    }else{
+      return { message: "Please send all required parameter", failed: true }
+    }
+  }
 
 }

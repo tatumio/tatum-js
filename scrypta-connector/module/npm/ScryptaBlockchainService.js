@@ -27,6 +27,8 @@ const core_1 = __importDefault(require("@scrypta/core"));
 const constants_1 = require("./constants");
 const Tatum = __importStar(require("@tatumio/tatum"));
 const tatum_1 = require("@tatumio/tatum");
+const bitcoinjs_lib_1 = require("bitcoinjs-lib");
+const bignumber_js_1 = __importDefault(require("bignumber.js"));
 class ScryptaBlockchainService {
     constructor(logger) {
         this.logger = logger;
@@ -224,6 +226,63 @@ class ScryptaBlockchainService {
             this.logger.error(e);
             throw new Error("Can't send transaction.");
         }
+    }
+    async sendTransactionByAddressOrUtxo(body) {
+        this.scrypta.testnet = await this.isTestnet();
+        this.scrypta.nodes = await this.getNodesUrl();
+        this.scrypta.staticnodes = true;
+        try {
+            const rawtransaction = await this.createRawTransaction(body);
+            const sendrawtransaction = await this.scrypta.post('/sendrawtransaction', { rawtransaction: rawtransaction });
+            if (sendrawtransaction.data === null) {
+                throw new Error('Transaction not accepted by network.');
+            }
+            else {
+                const txid = sendrawtransaction.data;
+                return { txId: txid, failed: false };
+            }
+        }
+        catch (e) {
+            this.logger.error(e);
+            throw new Error("Can't send transaction.");
+        }
+    }
+    async createRawTransaction(body) {
+        const { fromUTXO, fromAddress, to } = body;
+        this.scrypta.testnet = await this.isTestnet();
+        this.scrypta.nodes = await this.getNodesUrl();
+        this.scrypta.staticnodes = true;
+        const network = this.scrypta.testnet ? constants_1.LYRA_TEST_NETWORK : constants_1.LYRA_NETWORK;
+        const tx = new bitcoinjs_lib_1.TransactionBuilder(network);
+        const privateKeysToSign = [];
+        tx.setVersion(1);
+        if (fromAddress) {
+            for (const item of fromAddress) {
+                const txs = await this.scrypta.listUnspent(item.address);
+                for (const t of txs) {
+                    try {
+                        tx.addInput(t.txid, t.vout);
+                        privateKeysToSign.push(item.privateKey);
+                    }
+                    catch (e) {
+                    }
+                }
+            }
+        }
+        else if (fromUTXO) {
+            for (const item of fromUTXO) {
+                tx.addInput(item.txHash, item.index);
+                privateKeysToSign.push(item.privateKey);
+            }
+        }
+        for (const item of to) {
+            tx.addOutput(item.address, Number(new bignumber_js_1.default(item.value).multipliedBy(100000000).toFixed(8, bignumber_js_1.default.ROUND_FLOOR)));
+        }
+        for (let i = 0; i < privateKeysToSign.length; i++) {
+            const ecPair = bitcoinjs_lib_1.ECPair.fromWIF(privateKeysToSign[i], network);
+            tx.sign(i, ecPair);
+        }
+        return tx.build().toHex();
     }
 }
 exports.ScryptaBlockchainService = ScryptaBlockchainService;

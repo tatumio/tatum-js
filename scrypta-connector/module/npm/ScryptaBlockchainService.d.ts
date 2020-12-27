@@ -1,6 +1,7 @@
 import { ScryptaBlock, ScryptaParsedTx, ScryptaUnspent } from './constants';
 import { PinoLogger } from 'nestjs-pino';
 import * as Tatum from '@tatumio/tatum';
+import { TransferBtcBasedBlockchain } from '@tatumio/tatum';
 export declare abstract class ScryptaBlockchainService {
     protected readonly logger: PinoLogger;
     protected scrypta: any;
@@ -44,4 +45,9 @@ export declare abstract class ScryptaBlockchainService {
         txId: string;
         failed?: boolean;
     }>;
+    sendTransactionByAddressOrUtxo(body: TransferBtcBasedBlockchain): Promise<{
+        txId: string;
+        failed?: boolean;
+    }>;
+    private createRawTransaction;
 }

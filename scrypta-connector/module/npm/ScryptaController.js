@@ -68,6 +68,17 @@ class ScryptaController {
             return { message: "txData parameter can't be empty", failed: true };
         }
     }
+    async sendTransactionByAddressOrUtxo(body) {
+        if (body.fromAddress !== undefined && body.to !== undefined) {
+            return await this.scrypta.sendTransactionByAddressOrUtxo({ fromAddress: body.fromAddress, to: body.to });
+        }
+        else if (body.fromUTXO !== undefined && body.to !== undefined) {
+            return await this.scrypta.sendTransactionByAddressOrUtxo({ fromUTXO: body.fromUTXO, to: body.to });
+        }
+        else {
+            return { message: "Please send all required parameter", failed: true };
+        }
+    }
 }
 __decorate([
     common_1.Get('/info'),
@@ -144,4 +155,11 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], ScryptaController.prototype, "broadcast", null);
+__decorate([
+    common_1.Post('/transaction'),
+    __param(0, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ScryptaController.prototype, "sendTransactionByAddressOrUtxo", null);
 exports.ScryptaController = ScryptaController;

@@ -1,6 +1,6 @@
 {
   "name": "@scrypta/tatum",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Scrypta Connector for Tatum API",
   "author": "Sebastiano Cataudo <sebastiano.c@scrypta.foundation>",
   "license": "MIT",
@@ -35,18 +35,20 @@
   },
   "bugs": "https://github.com/turinglabsorg/tatum-blockchain-connector/scrypta-connector",
   "peerDependencies": {
-    "@nestjs/common": "^7.6.3"
+    "@nestjs/common": "^7.6.4"
   },
   "dependencies": {
-    "@nestjs/common": "^7.6.3",
-    "@scrypta/core": "^2.9.9",
-    "@tatumio/tatum": "^1.4.26",
+    "@nestjs/common": "^7.6.4",
+    "@scrypta/core": "^3.0.1",
+    "@tatumio/tatum": "^1.4.28",
+    "bignumber.js": "^9.0.1",
+    "bitcoinjs-lib": "^5.2.0",
     "nestjs-pino": "^1.3.0"
   },
   "devDependencies": {
     "@types/express": "4.17.9",
     "@types/jest": "26.0.19",
-    "@types/node": "14.14.14",
+    "@types/node": "14.14.16",
     "@types/supertest": "2.0.10",
     "jest": "26.6.3",
     "prettier": "2.2.1",

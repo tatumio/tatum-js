@@ -8,7 +8,9 @@ import {
 } from './constants';
 import { PinoLogger } from 'nestjs-pino';
 import * as Tatum from '@tatumio/tatum';
-import { Currency } from '@tatumio/tatum';
+import { Currency, TransferBtcBasedBlockchain } from '@tatumio/tatum';
+import {ECPair, TransactionBuilder} from 'bitcoinjs-lib';
+import BigNumber from 'bignumber.js';
 
 export abstract class ScryptaBlockchainService {
   protected scrypta: any;
@@ -297,5 +299,69 @@ export abstract class ScryptaBlockchainService {
       this.logger.error(e);
       throw new Error("Can't send transaction.");
     }
+  }
+
+  /**
+   * Send a transaction selecting utxo by address or sending them directly
+   * @param fromAddress
+   * @param fromUTXO
+   * @param to
+   */
+  public async sendTransactionByAddressOrUtxo(body: TransferBtcBasedBlockchain): Promise<{ txId: string; failed?: boolean }> {
+    this.scrypta.testnet = await this.isTestnet();
+    this.scrypta.nodes = await this.getNodesUrl();
+    this.scrypta.staticnodes = true;
+    try {
+      const rawtransaction = await this.createRawTransaction(body)
+      const sendrawtransaction = await this.scrypta.post(
+        '/sendrawtransaction',
+        { rawtransaction: rawtransaction },
+      );
+      if (sendrawtransaction.data === null) {
+        throw new Error('Transaction not accepted by network.');
+      } else {
+        const txid = sendrawtransaction.data as string;
+        return { txId: txid, failed: false };
+      }
+    } catch (e) {
+      this.logger.error(e);
+      throw new Error("Can't send transaction.");
+    }
+  }
+
+  private async createRawTransaction(body: TransferBtcBasedBlockchain): Promise<string> {
+    const {fromUTXO, fromAddress, to} = body;
+    this.scrypta.testnet = await this.isTestnet();
+    this.scrypta.nodes = await this.getNodesUrl();
+    this.scrypta.staticnodes = true;
+    const network = this.scrypta.testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK
+    const tx = new TransactionBuilder(network);
+    const privateKeysToSign: string[] = [];
+    tx.setVersion(1)
+    if (fromAddress) {
+        for (const item of fromAddress) {
+            const txs = await this.scrypta.listUnspent(item.address);
+            for (const t of txs) {
+                try {
+                    tx.addInput(t.txid, t.vout);
+                    privateKeysToSign.push(item.privateKey);
+                } catch (e) {
+                }
+            }
+        }
+    } else if (fromUTXO) {
+        for (const item of fromUTXO) {
+            tx.addInput(item.txHash, item.index);
+            privateKeysToSign.push(item.privateKey);
+        }
+    }
+    for (const item of to) {
+        tx.addOutput(item.address, Number(new BigNumber(item.value).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+    }
+    for (let i = 0; i < privateKeysToSign.length; i++) {
+        const ecPair = ECPair.fromWIF(privateKeysToSign[i], network);
+        tx.sign(i, ecPair);
+    }
+    return tx.build().toHex();
   }
 }
