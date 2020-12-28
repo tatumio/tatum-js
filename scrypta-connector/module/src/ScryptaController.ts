@@ -1,4 +1,4 @@
-import { Body, Get, Param, Post, Request } from '@nestjs/common';
+import { Body, Get, Param, Post, Headers } from '@nestjs/common';
 import { ScryptaBlockchainService } from './ScryptaBlockchainService';
 import { GeneratePrivateKey } from './dto/GeneratePrivateKey';
 import { PathXpubI } from './dto/PathXpubI';
@@ -86,8 +86,9 @@ export abstract class ScryptaController {
   }
 
   @Post('/transaction')
-  async sendTransactionByAddressOrUtxo(@Body() body) {
-    if(body.fromAddress !== undefined && body.to !== undefined){
+  async sendTransactionByAddressOrUtxo(@Body() body, @Headers() headers) {
+    if(body.fromAddress !== undefined && body.to !== undefined && headers['x-api-key'] !== undefined){
+      process.env.TATUM_API_KEY = headers['x-api-key']
       return await this.scrypta.sendTransactionByAddressOrUtxo({fromAddress: body.fromAddress, to: body.to});
     }else if(body.fromUTXO !== undefined && body.to !== undefined){
       return await this.scrypta.sendTransactionByAddressOrUtxo({fromUTXO: body.fromUTXO, to: body.to});

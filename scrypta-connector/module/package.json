@@ -1,6 +1,6 @@
 {
   "name": "@scrypta/tatum",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "Scrypta Connector for Tatum API",
   "author": "Sebastiano Cataudo <sebastiano.c@scrypta.foundation>",
   "license": "MIT",

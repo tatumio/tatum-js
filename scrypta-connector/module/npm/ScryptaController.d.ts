@@ -36,7 +36,7 @@ export declare abstract class ScryptaController {
         message: string;
         failed: boolean;
     }>;
-    sendTransactionByAddressOrUtxo(body: any): Promise<{
+    sendTransactionByAddressOrUtxo(body: any, headers: any): Promise<{
         txId: string;
         failed?: boolean;
     } | {

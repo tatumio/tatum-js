@@ -49,5 +49,4 @@ export declare abstract class ScryptaBlockchainService {
         txId: string;
         failed?: boolean;
     }>;
-    private createRawTransaction;
 }

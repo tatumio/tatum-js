@@ -68,8 +68,9 @@ class ScryptaController {
             return { message: "txData parameter can't be empty", failed: true };
         }
     }
-    async sendTransactionByAddressOrUtxo(body) {
-        if (body.fromAddress !== undefined && body.to !== undefined) {
+    async sendTransactionByAddressOrUtxo(body, headers) {
+        if (body.fromAddress !== undefined && body.to !== undefined && headers['x-api-key'] !== undefined) {
+            process.env.TATUM_API_KEY = headers['x-api-key'];
             return await this.scrypta.sendTransactionByAddressOrUtxo({ fromAddress: body.fromAddress, to: body.to });
         }
         else if (body.fromUTXO !== undefined && body.to !== undefined) {
@@ -157,9 +158,9 @@ __decorate([
 ], ScryptaController.prototype, "broadcast", null);
 __decorate([
     common_1.Post('/transaction'),
-    __param(0, common_1.Body()),
+    __param(0, common_1.Body()), __param(1, common_1.Headers()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], ScryptaController.prototype, "sendTransactionByAddressOrUtxo", null);
 exports.ScryptaController = ScryptaController;
