@@ -26,7 +26,7 @@ export class CreateAccount {
     @IsOptional()
     public accountCode?: string;
 
-    @Length(1, 30)
+    @Length(1, 50)
     @IsOptional()
     public accountNumber?: string;
 

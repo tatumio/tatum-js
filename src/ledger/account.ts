@@ -4,6 +4,7 @@ import {TATUM_API_URL} from '../constants';
 import {Account, AccountBalance, Blockage, BlockAmount, CreateAccount} from '../model';
 import {BlockageTransaction} from '../model/request/BlockageTransaction';
 import {CreateAccountsBatch} from '../model/request/CreateAccountsBatch';
+import {UpdateAccount} from '../model/request/UpdateAccount';
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/getAccountByAccountId" target="_blank">Tatum API documentation</a>
@@ -18,6 +19,14 @@ export const getAccountById = async (id: string): Promise<Account> => {
 export const createAccount = async (account: CreateAccount): Promise<Account> => {
     await validateOrReject(account);
     return (await axios.post(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ledger/account`, account, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+};
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/updateAccountByAccountId" target="_blank">Tatum API documentation</a>
+ */
+export const updateAccount = async (id: string, account: UpdateAccount): Promise<Account> => {
+    await validateOrReject(account);
+    return (await axios.put(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ledger/account/${id}`, account, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 
 /**
