@@ -2,6 +2,7 @@ import {
     ECSignature,
     Transaction,
     TransactionBuilder as KMSTransactionBuilder
+    // @ts-ignore
 } from '@bitcoin-dot-com/bitcoincashjs2-lib';
 import BigNumber from 'bignumber.js';
 import {ECPair, TransactionBuilder} from 'bitbox-sdk';
