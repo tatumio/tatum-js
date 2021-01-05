@@ -64,4 +64,18 @@ export interface OrderBookResponse {
      * @memberof OrderBook
      */
     created: number,
+
+    /**
+     * fee to be paid, as percentage.
+     * @type {number}
+     * @memberof OrderBook
+     */
+    fee?: number,
+
+    /**
+     * ID of the fee account of the currency 1 trade currency.
+     * @type {string}
+     * @memberof OrderBook
+     */
+    feeAccountId?: string,
 }
