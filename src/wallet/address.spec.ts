@@ -38,16 +38,6 @@ describe('Address tests', () => {
         expect(address).toBe('0xaac8c73348f1f92b2f9647e1e4f3cf14e2a8b3cb');
     });
 
-    it('should generate address 1 for ADA mainnet', () => {
-        const address = generateAddressFromXPub(Currency.ADA, false, 'abdaffa9c626a49652b94aa7d26fbad0b04354bb7e8f37021d89034314b10637a97a31003cba4617b75d65f72ac8cfa07edb80a4d38270a0c27f80125c70c337', 1);
-        expect(address).toBe('Ae2tdPwUPEZCRLFAmiVB3wye4P6BYeSRSETEFxE87HeCjxuqneYiiD9AGaB');
-    });
-
-    it('should generate address 1 for ADA testnet', () => {
-        const address = generateAddressFromXPub(Currency.ADA, true, 'abdaffa9c626a49652b94aa7d26fbad0b04354bb7e8f37021d89034314b10637a97a31003cba4617b75d65f72ac8cfa07edb80a4d38270a0c27f80125c70c337', 1);
-        expect(address).toBe('2cWKMJemoBakgWvdiKj1b2dXRvdpPWt1qNAEaGEvhQwqRa9LG6hiR2vrSYmx5WbvTPNHJ');
-    });
-
     it('should generate address 1 for ETH testnet', () => {
         const address = generateAddressFromXPub(Currency.ETH, true, 'xpub6FMiQpA54nciqs52guGVdWQ5TonZt5XtGsFpurgtttL7H3mSfaJDXv5aBdThjX6tW9HYaJSQ8wZVnLm1ixaQUu1MRQCwvwZ6U2cX6mwWT25', 1);
         expect(address).toBe('0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea');
@@ -81,11 +71,6 @@ describe('Address tests', () => {
     it('should generate private key 1 for LTC testnet', async () => {
         const privateKey = await generatePrivateKeyFromMnemonic(Currency.LTC, true, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1);
         expect(privateKey).toBe('cQ1YZMep3CiAnMTA9y62ha6BjGaaTFsTvtDuGmucGvpAVmS89khV');
-    });
-
-    it('should generate private key 1 for ADA', async () => {
-        const privateKey = await generatePrivateKeyFromMnemonic(Currency.ADA, true, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1);
-        expect(privateKey).toBe('e005602357a4265f6fc58745344c86a0260064f51712ea23e4dbf3f3795e564b83c29f3e4f84ea23a3868cd215bfe68954a6369d59bf2999b0e0e3f601778ca3c958ff0de05b645c8192022caaf6d2ae49668708a0cbc3d7e9f6f6b59fb9c4aa');
     });
 
     it('should generate private key 1 for BCH mainnet', async () => {

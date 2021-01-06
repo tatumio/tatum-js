@@ -7,7 +7,7 @@ export class CreateWithdrawal {
     public senderAccountId: string;
 
     @IsNotEmpty()
-    @Length(1, 100)
+    @Length(1, 10000)
     public address: string;
 
     @IsNotEmpty()
@@ -33,8 +33,11 @@ export class CreateWithdrawal {
     @IsOptional()
     public senderNote?: string;
 
+    @IsOptional()
+    public multipleAmounts?: string[];
+
     @MaxLength(64)
-    @Matches(/^[ -~]{0,64}$/)
+    @Matches(/^[ -~]{1,64}$/)
     @IsOptional()
     public attr?: string;
 }

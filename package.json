@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum",
-  "version": "1.4.30",
+  "version": "1.4.31",
   "description": "",
   "main": "dist/src/index.js",
   "repository": "https://github.com/tatumio/tatum-js",
@@ -38,7 +38,6 @@
     "bip39": "^3.0.2",
     "bitbox-sdk": "^8.11.2",
     "bitcoinjs-lib": "^5.1.10",
-    "cardano-wallet": "^1.2.2",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.12.2",
     "coininfo": "^5.1.0",

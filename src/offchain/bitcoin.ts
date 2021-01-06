@@ -26,7 +26,7 @@ export const sendBitcoinOffchainTransaction = async (testnet: boolean, body: Tra
     } = withdrawal;
     let txData;
     try {
-        txData = await prepareBitcoinSignedOffchainTransaction(testnet, data, amount, address, mnemonic, keyPair, changeAddress);
+        txData = await prepareBitcoinSignedOffchainTransaction(testnet, data, amount, address, mnemonic, keyPair, changeAddress, withdrawal.multipleAmounts);
     } catch (e) {
         console.error(e);
         await offchainCancelWithdrawal(id);
@@ -69,14 +69,16 @@ export const signBitcoinOffchainKMSTransaction = async (tx: TransactionKMS, mnem
  * @param testnet mainnet or testnet version
  * @param data data from Tatum system to prepare transaction from
  * @param amount amount to send
- * @param address recipient address
+ * @param address recipient address, if multiple recipients are present, it should be string separated by ','
  * @param mnemonic mnemonic to sign transaction from. mnemonic or keyPair must be present
  * @param keyPair keyPair to sign transaction from. keyPair or mnemonic must be present
  * @param changeAddress address to send the rest of the unused coins
+ * @param multipleAmounts if multiple recipients are present in the address separated by ',', this should be list of amounts to send
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareBitcoinSignedOffchainTransaction =
-    async (testnet: boolean, data: WithdrawalResponseData[], amount: string, address: string, mnemonic?: string, keyPair?: KeyPair[], changeAddress?: string) => {
+    async (testnet: boolean, data: WithdrawalResponseData[], amount: string, address: string, mnemonic?: string, keyPair?: KeyPair[],
+           changeAddress?: string, multipleAmounts?: string[]) => {
         const network = testnet ? networks.testnet : networks.bitcoin;
         const tx = new TransactionBuilder(network);
 
@@ -87,7 +89,13 @@ export const prepareBitcoinSignedOffchainTransaction =
         });
 
         const lastVin = data.find(d => d.vIn === '-1') as WithdrawalResponseData;
-        tx.addOutput(address, Number(new BigNumber(amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+        if (multipleAmounts?.length) {
+            for (const [i, multipleAmount] of multipleAmounts.entries()) {
+                tx.addOutput(address.split(',')[i], Number(new BigNumber(multipleAmount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+            }
+        } else {
+            tx.addOutput(address, Number(new BigNumber(amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+        }
         if (mnemonic && !changeAddress) {
             const {xpub} = await generateBtcWallet(testnet, mnemonic);
             tx.addOutput(generateAddressFromXPub(Currency.BTC, testnet, xpub, 0), Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));

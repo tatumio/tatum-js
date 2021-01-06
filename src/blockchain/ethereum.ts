@@ -1,7 +1,7 @@
 import axios from 'axios';
+import BigNumber from 'bignumber.js';
 import {TATUM_API_URL} from '../constants';
 import {EthBlock, EthTx, TransactionHash} from '../model';
-import BigNumber from "bignumber.js";
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/EthBroadcast" target="_blank">Tatum API documentation</a>

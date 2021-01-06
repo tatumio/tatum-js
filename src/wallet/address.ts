@@ -1,17 +1,8 @@
 import {fromBase58, fromSeed} from 'bip32';
 import {mnemonicToSeed} from 'bip39';
 import {HDNode, Mnemonic} from 'bitbox-sdk';
-import {networks, payments, ECPair} from 'bitcoinjs-lib';
-import {
-    AccountIndex,
-    AddressKeyIndex,
-    Bip44ChainPublic, Bip44RootPrivateKey,
-    BlockchainSettings,
-    DerivationScheme, Entropy,
-    PublicKey
-} from 'cardano-wallet';
-import {hdkey as ethHdKey} from 'ethereumjs-wallet';
-import ethWallet from 'ethereumjs-wallet';
+import {ECPair, networks, payments} from 'bitcoinjs-lib';
+import ethWallet, {hdkey as ethHdKey} from 'ethereumjs-wallet';
 // @ts-ignore
 import {
     BCH_DERIVATION_PATH,
@@ -20,11 +11,11 @@ import {
     LTC_DERIVATION_PATH,
     LTC_NETWORK,
     LTC_TEST_NETWORK,
-    TESTNET_DERIVATION_PATH,
-    VET_DERIVATION_PATH,
     LYRA_DERIVATION_PATH,
     LYRA_NETWORK,
-    LYRA_TEST_NETWORK
+    LYRA_TEST_NETWORK,
+    TESTNET_DERIVATION_PATH,
+    VET_DERIVATION_PATH
 } from '../constants';
 import {Currency} from '../model';
 
@@ -39,21 +30,6 @@ const generateBtcAddress = (testnet: boolean, xpub: string, i: number) => {
     const network = testnet ? networks.testnet : networks.bitcoin;
     const w = fromBase58(xpub, network).derivePath(String(i));
     return payments.p2pkh({pubkey: w.publicKey, network}).address as string;
-};
-
-/**
- * Generate Cardano address
- * @param testnet testnet or mainnet version of address
- * @param xpub extended public key to generate address from
- * @param i derivation index of address to generate. Up to 2^32 addresses can be generated.
- * @returns blockchain address
- */
-const generateAdaAddress = (testnet: boolean, xpub: string, i: number) => {
-    const network = testnet ? BlockchainSettings.from_json({protocol_magic: 1097911063}) : BlockchainSettings.mainnet();
-    return Bip44ChainPublic.new(PublicKey.from_hex(xpub), DerivationScheme.v2())
-            .address_key(AddressKeyIndex.new(i))
-            .bootstrap_era_address(network)
-            .to_base58();
 };
 
 /**
@@ -149,19 +125,6 @@ const generateLtcPrivateKey = async (testnet: boolean, mnemonic: string, i: numb
         .derivePath(testnet ? TESTNET_DERIVATION_PATH : LTC_DERIVATION_PATH)
         .derive(i)
         .toWIF();
-};
-
-/**
- * Generate Cardano private key from mnemonic seed
- * @param testnet testnet or mainnet version of address
- * @param mnemonic mnemonic to generate private key from
- * @param i derivation index of private key to generate.
- * @returns blockchain private key to the address
- */
-const generateAdaPrivateKey = async (testnet: boolean, mnemonic: string, i: number) => {
-    const entropy = Entropy.from_english_mnemonics(mnemonic);
-    const hdwallet = Bip44RootPrivateKey.recover(entropy, '');
-    return hdwallet.bip44_account(AccountIndex.new(0x80000000)).bip44_chain(false).address_key(AddressKeyIndex.new(i)).to_hex();
 };
 
 /**
@@ -269,8 +232,6 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
     switch (currency) {
         case Currency.BTC:
             return generateBtcAddress(testnet, xpub, i);
-        case Currency.ADA:
-            return generateAdaAddress(testnet, xpub, i);
         case Currency.LTC:
             return generateLtcAddress(testnet, xpub, i);
         case Currency.BCH:
@@ -312,8 +273,6 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
     switch (currency) {
         case Currency.BTC:
             return generateBtcPrivateKey(testnet, mnemonic, i);
-        case Currency.ADA:
-            return generateAdaPrivateKey(testnet, mnemonic, i);
         case Currency.LTC:
             return generateLtcPrivateKey(testnet, mnemonic, i);
         case Currency.BCH:
@@ -347,18 +306,17 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
  * Generate address from private key
  * @param currency type of blockchain
  * @param testnet testnet or mainnet version of address
- * @param privkey private key to use
- * @param i derivation index of private key to generate.
+ * @param privateKey private key to use
  * @returns blockchain private key to the address
  */
-export const generateAddressFromPrivatekey = (currency: Currency, testnet: boolean, privatekey: string) => {
+export const generateAddressFromPrivatekey = (currency: Currency, testnet: boolean, privateKey: string) => {
     switch (currency) {
         case Currency.BTC:
-            return convertBtcPrivateKey(testnet, privatekey);
+            return convertBtcPrivateKey(testnet, privateKey);
         case Currency.LYRA:
-                return convertLyraPrivateKey(testnet, privatekey);
+            return convertLyraPrivateKey(testnet, privateKey);
         case Currency.ETH:
-                return convertEthPrivateKey(testnet, privatekey);
+            return convertEthPrivateKey(testnet, privateKey);
         default:
             throw new Error('Unsupported blockchain.');
     }

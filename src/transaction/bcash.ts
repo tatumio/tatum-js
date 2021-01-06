@@ -2,7 +2,6 @@ import {
     ECSignature,
     Transaction,
     TransactionBuilder as KMSTransactionBuilder
-// @ts-ignore
 } from '@bitcoin-dot-com/bitcoincashjs2-lib';
 import BigNumber from 'bignumber.js';
 import {ECPair, TransactionBuilder} from 'bitbox-sdk';
@@ -12,7 +11,6 @@ import coininfo from 'coininfo';
 import {bcashBroadcast, bcashGetTransaction} from '../blockchain';
 import {Currency, TransferBchBlockchain} from '../model/request';
 import {BchTx, TransactionKMS} from '../model/response';
-import {TxnDetailsResult} from 'bitcoin-com-rest';
 
 /**
  * Send Bitcoin Cash transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
