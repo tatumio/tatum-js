@@ -32,7 +32,7 @@
     "@binance-chain/javascript-sdk": "^4.0.3",
     "@bitcoin-dot-com/bitcoincashjs2-lib": "^4.1.0",
     "@cityofzion/neon-js": "^4.8.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bignumber.js": "^9.0.0",
     "bip32": "^2.0.5",
     "bip39": "^3.0.2",
