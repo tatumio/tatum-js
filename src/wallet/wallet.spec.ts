@@ -4,7 +4,7 @@ import {
     generateBtcWallet,
     generateEthWallet,
     generateLtcWallet,
-    generateNeoWallet,
+    generateNeoWallet, generateTronWallet,
     generateVetWallet,
     generateXlmWallet,
     generateXrpWallet
@@ -28,6 +28,12 @@ describe('Address tests', () => {
         const wallet = await generateLtcWallet(false, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten');
         expect(wallet.mnemonic).toBe('quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten');
         expect(wallet.xpub).toBe('Ltub2aXe9g8RPgAcY6jb6FftNJfQXHMV6UNBeZwrWH1K3vjpua9u8uj95xkZyCC4utdEbfYeh9TwxcUiFy2mGzBCJVBwW3ezHmLX2fHxv7HUt8J');
+    });
+
+    it('should generate wallet for TRON', async () => {
+        const wallet = await generateTronWallet();
+        expect(wallet.privateKey).not.toBeUndefined();
+        expect(wallet.address).not.toBeUndefined();
     });
 
     it('should generate wallet for LTC testnet', async () => {

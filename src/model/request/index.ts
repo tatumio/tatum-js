@@ -10,6 +10,7 @@ export * from './TransferEthErc20';
 export * from './TransferVet';
 export * from './TransferXlm';
 export * from './TransferXrp';
+export * from './TransferTron';
 export * from './TransferBtcBasedOffchain';
 export * from './CreateWithdrawal';
 export * from './BroadcastWithdrawal';

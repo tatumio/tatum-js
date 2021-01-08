@@ -8,6 +8,8 @@ import {hdkey as ethHdKey} from 'ethereumjs-wallet';
 import hdkey from 'hdkey';
 import {RippleAPI} from 'ripple-lib';
 import {Keypair} from 'stellar-sdk';
+// tslint:disable-next-line:no-var-requires
+const TronWeb = require('tronweb');
 import {
     BCH_DERIVATION_PATH,
     BTC_DERIVATION_PATH,
@@ -109,6 +111,15 @@ export const generateBchWallet = (testnet: boolean, mnem: string): Wallet => {
 export const generateBtcWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
     const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? networks.testnet.bip32 : networks.bitcoin.bip32);
     return {mnemonic: mnem, xpub: hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : BTC_DERIVATION_PATH).toJSON().xpub};
+};
+
+/**
+ * Generate Tron wallet
+ * @returns mnemonic for the wallet
+ */
+export const generateTronWallet = async () => {
+    const wallet = await TronWeb.createAccount();
+    return {address: wallet.address.base58, privateKey: wallet.privateKey};
 };
 
 /**

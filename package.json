@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum",
-  "version": "1.4.32",
+  "version": "1.4.33",
   "description": "",
   "main": "dist/src/index.js",
   "repository": "https://github.com/tatumio/tatum-js",
@@ -48,6 +48,7 @@
     "ripple-lib": "^1.7.1",
     "stellar-sdk": "^7.0.0",
     "thorify": "^1.5.2",
+    "tronweb": "^3.2.2",
     "web3": "^1.2.9"
   },
   "devDependencies": {
