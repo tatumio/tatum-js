@@ -1,5 +1,5 @@
 export interface TronTransaction {
-    ret: { contractRet: string }[];
+    ret: { contractRet: string, fee:number }[];
     signature: string[];
     txID: string;
     netFee?: number;
