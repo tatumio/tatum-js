@@ -36,14 +36,14 @@ export const tronGetTransaction = async (hash: string): Promise<TronTransaction>
  * For more details, see <a href="https://tatum.io/apidoc#operation/TronGetTransactionsInBlock" target="_blank">Tatum API documentation</a>
  */
 export const tronGetTransactionsInBlock = async (block: number): Promise<TronTransactionInBlock[]> => {
-    return (await axios.get(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/tron/transaction/${block}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+    return (await axios.get(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/tron/transaction/block/${block}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/TronGetTransactionsInBlock" target="_blank">Tatum API documentation</a>
  */
 export const tronGetTransactionsByAccount = async (address: string, next?: string): Promise<{ transactions: TronTransaction[], next?: string }> => {
-    let url = `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/tron/transaction/${address}`;
+    let url = `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/tron/transaction/account/${address}`;
     if (next) {
         url += `?next=${next}`;
     }
