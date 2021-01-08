@@ -2,6 +2,12 @@ export interface TronTransaction {
     ret: { contractRet: string }[];
     signature: string[];
     txID: string;
+    netFee?: number;
+    netUsage?: number;
+    energyFee?: number;
+    energyUsage?: number;
+    energyUsageTotal?: number;
+    internalTransactions?: any[];
     rawData: {
         contract: {
             parameter: {
@@ -18,6 +24,6 @@ export interface TronTransaction {
         refBlockHash: string;
         expiration: number;
         feeLimit: number;
-        timestamp: number
+        timestamp: number;
     };
 }
