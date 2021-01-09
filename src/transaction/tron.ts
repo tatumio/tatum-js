@@ -60,5 +60,5 @@ export const prepareTronSignedTransaction = async (testnet: boolean, body: Trans
         to,
         new BigNumber(amount).multipliedBy(1000000).toFixed(0)
         , tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(fromPrivateKey)));
-    return await tronWeb.trx.sign(tx, fromPrivateKey);
+    return JSON.stringify(await tronWeb.trx.sign(tx, fromPrivateKey));
 };

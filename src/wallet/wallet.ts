@@ -185,6 +185,8 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
             return generateLtcWallet(testnet, mnem);
         case Currency.BCH:
             return generateBchWallet(testnet, mnem);
+        case Currency.TRON:
+            return generateTronWallet();
         case Currency.USDT:
         case Currency.LEO:
         case Currency.LINK:

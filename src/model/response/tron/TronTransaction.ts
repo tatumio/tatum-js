@@ -11,19 +11,15 @@ export interface TronTransaction {
     rawData: {
         contract: {
             parameter: {
-                value: {
-                    data: string;
-                    ownerAddress: string;
-                    contractAddress: string
-                };
-                typeUrl: string
+                value: any;
+                type_url: string
             };
             type: string
         }[];
-        refBlockBytes: string;
-        refBlockHash: string;
+        ref_block_bytes: string;
+        ref_block_hash: string;
         expiration: number;
-        feeLimit: number;
+        fee_limit: number;
         timestamp: number;
     };
 }

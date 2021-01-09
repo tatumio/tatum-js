@@ -34,7 +34,6 @@ export * from './lyra/ScryptaBlock';
 export * from './lyra/ScryptaInfo';
 export * from './lyra/ScryptaTx';
 export * from './lyra/ScryptaUTXO';
-export * from './tron/TronTransactionInBlock';
 export * from './tron/TronTransaction';
 export * from './tron/TronBlock';
 export * from './tron/TronAccount';

@@ -3,12 +3,12 @@ import {prepareTronSignedTransaction} from './tron';
 
 describe('Tron transactions', () => {
     it('should test valid transaction data', async () => {
-        // const body = new TransferTron();
-        // body.fromPrivateKey = 'BAB093C310CD3CCE98D873A5AAA41540FF9028780548D55A34A3E51F637D3123'; // address TJtK8wLAEdJqcfHhk8MhuhpwQqfdTwLqVZ
-        // body.amount = '100';
-        // body.to = 'TFnpwE8jCgtq3QpAhFfF2QpXzdBGmKvKMe';
-        // const txData = await prepareTronSignedTransaction(true, body);
-        // expect(txData).toContain('0x');
+        const body = new TransferTron();
+        body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701';
+        body.amount = '0.000001';
+        body.to = 'TVAEYCmc15awaDRAjUZ1kvcHwQQaoPw2CW';
+        const txData = await prepareTronSignedTransaction(true, body);
+        expect(JSON.parse(txData).raw_data.contract[0].parameter.value.amount).toBe(1);
     });
 
     it('should not test valid transaction data, to private key assigned', async () => {
