@@ -321,6 +321,30 @@ components:
       name: x-api-key
       type: apiKey
   schemas:
+    TransferTronBlockchain:
+      type: object
+      properties:
+        fromPrivateKey:
+          type: string
+          minLength: 64
+          maxLength: 64
+          description: Private key of the address, from which the TRX will be sent.
+          example: 842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701
+        to:
+          type: string
+          minLength: 34
+          maxLength: 34
+          description: Recipient address of TRON account in Base58 format.
+          example: TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh
+        amount:
+          description: Amount to be sent in TRX.
+          example: "100000"
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+          type: string
+      required:
+        - fromPrivateKey
+        - to
+        - amount
     Error403Tron:
       properties:
         errorCode:
