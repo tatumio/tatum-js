@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tron-connector",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Tron Connector for Tatum API",
   "license": "MIT",
   "files": [
@@ -9,6 +9,7 @@
     "*.md",
     "openapi.yaml"
   ],
+  "main": "npm/index.js",
   "scripts": {
     "build": "tsc",
     "prepare": "npm run build",
