@@ -1,10 +1,10 @@
 {
   "name": "@tatumio/tron-connector",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Tron Connector for Tatum API",
   "license": "MIT",
   "files": [
-    "dist/**/*",
+    "npm/**/*",
     "src/**/*",
     "*.md",
     "openapi.yaml"
