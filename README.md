@@ -11,3 +11,7 @@ As soon as you finish and test your connector, please reach out to the Tatum tea
 
 ## Support
 If you need support please enter [Telegram group](https://t.me/tatumio) and ask for support to Tatum Integration Team.
+
+## Existing connectors
+* Scrypta connector - connector to the [Scrypta Blockchain](https://scrypta.foundation/) maintained by [turinglabs](https://github.com/turinglabsorg)
+* Tron connector - connector to the [TRON Network](https://tron.network/) maintained by [Tatum Team](https://github.com/tatumio)

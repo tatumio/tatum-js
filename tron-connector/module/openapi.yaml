@@ -1,0 +1,510 @@
+openapi: 3.0.0
+servers:
+  - url: 'https://api-eu1.tatum.io'
+info:
+  version: 1.0.0
+  title: Tatum Tron API
+tags:
+  - description: |
+      <p>Tron Blockchain enables access to most commonly used Tron methods. Tatum does not support offchain capabilities for the TRON blockchain.
+      Tatum KMS is not supported for TRON transactions.
+      <br/>
+      Tatum supports 2 chains:
+      <ul><li>Mainnet - regular live chain
+      <li>Shasta Testnet - test chain used for testing purposes. Coins on test chain have no value and can be obtained from
+      Faucet, e.g. <a target="_blank" href="https://www.trongrid.io/shasta/">https://www.trongrid.io/shasta/</a></li></ul>
+    name: Blockchain / Tron
+paths:
+  /v3/tron/account:
+    get:
+      summary: Generate Tron wallet
+      description: |
+        <h4>5 credit per API call.</h4><br/><p>Generate TRON address and private key.</p>
+      operationId: GenerateTronwallet
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TronWallet"
+          description: OK
+        400: &API400
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+          description: Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.
+        401: &API401
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error401NotActive"
+                  - $ref: "#/components/schemas/Error401Invalid"
+          description: Unauthorized. Not valid or inactive subscription key present in the HTTP Header.
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403"
+        500: &API500
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error500"
+          description: Internal server error. There was an error on the server during the processing of the request.
+      security:
+        - X-Api-Key: []
+      x-code-samples:
+      tags:
+        - Blockchain / Tron
+  /v3/tron/info:
+    get:
+      tags:
+        - Blockchain / Tron
+      summary: Get current Tron block
+      description: <h4>5 credits per API call.</h4><br/><p>Get current Tron block.</p>
+      operationId: TronGetCurrentBlock
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  blockNumber:
+                    description: Block height.
+                    type: number
+                    example: 26585295
+                  hash:
+                    description: Block hash.
+                    type: string
+                    example: 000000000195a8cfe2ea4ca60ce921b30e95980a96c6bb1da4a35aa03da9c5a8
+                  testnet:
+                    description: Wether the block is from mainnet of Shasta testnet
+                    type: boolean
+                    example: false
+          description: OK
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403Tron"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+  /v3/tron/block/{hash}:
+    get:
+      tags:
+        - Blockchain / Tron
+      summary: Get Tron block
+      description: <h4>5 credits per API call.</h4><br/><p>Get Tron block by hash or height.</p>
+      operationId: TronGetBlock
+      parameters:
+        - in: path
+          name: hash
+          required: true
+          description: Block hash or height.
+          schema:
+            type: string
+            example: "000000000195a8cfe2ea4ca60ce921b30e95980a96c6bb1da4a35aa03da9c5a8"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TronBlock"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403Tron"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+  /v3/tron/transaction/account/{address}:
+    get:
+      tags:
+        - Blockchain / Tron
+      summary: Get Tron Account transactions
+      description: <h4>5 credits per API call.</h4><br/><p>Get Tron Account transactions. Default page size is 200 transactions per request.</p>
+      operationId: TronAccountTx
+      parameters:
+        - in: path
+          name: address
+          description: Address to get transactions for.
+          required: true
+          schema:
+            type: string
+            example: 41a8bf62780c7bebc539610228e153c90eb249ef38
+        - in: query
+          name: next
+          description: If
+          required: false
+          schema:
+            type: string
+            example: 81d0524acf5967f3b361e03fd7d141ab511791cd7aad7ae406c4c8d408290991
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - transactions
+                properties:
+                  next:
+                    type: string
+                    description: If present, there are more transactions for address.
+                    example: 81d0524acf5967f3b361e03fd7d141ab511791cd7aad7ae406c4c8d408290991
+                  transactions:
+                    type: array
+                    description: List of transactions.
+                    items:
+                      $ref: "#/components/schemas/TronTx"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403Tron"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+  /v3/tron/transaction/{hash}:
+    get:
+      tags:
+        - Blockchain / Tron
+      summary: Get Tron transaction by hash
+      description: <h4>5 credits per API call.</h4><br/><p>Get Tron transaction by hash.</p>
+      operationId: TronGetTransaction
+      parameters:
+        - in: path
+          name: hash
+          required: true
+          description: Transaction hash.
+          schema:
+            type: string
+            example: "81d0524acf5967f3b361e03fd7d141ab511791cd7aad7ae406c4c8d408290991"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TronTx"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403Tron"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+  /v3/tron/transaction:
+    post:
+      tags:
+        - Blockchain / Tron
+      summary: Send Tron transaction
+      description: |
+        <h4>10 credits per API call.</h4><br/>
+        <p>Send Tron transaction from address to address.<br/><br/>
+        This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+        No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey.
+        PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+        it is possible to use the Tatum client library for supported languages or Tatum Middleware with a custom key management system.
+        </p>
+      operationId: TronTransfer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransferTronBlockchain"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionHash"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403Tron"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+  /v3/tron/broadcast:
+    post:
+      tags:
+        - Blockchain / Tron
+      summary: Broadcast Tron transaction
+      description: |
+        <h4>5 credits per API call.</h4><br/>
+        <p>Broadcast Tron transaction. This method is used internally from Tatum Middleware or Tatum client libraries.
+        It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
+      operationId: TronBroadcast
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Broadcast"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionHash"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403Tron"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+components:
+  securitySchemes:
+    X-Api-Key:
+      description: |
+        To maintain the highest security level, Tatum requires X-API-Key HTTP header.
+        This X-API-Key represents identification of the plan and can be used by 1 developer or per environment.
+        Each X-API-Key is bound to the test or production blockchains.
+      in: header
+      name: x-api-key
+      type: apiKey
+  schemas:
+    Error403Tron:
+      properties:
+        errorCode:
+          description: tron.failed
+          example: tron.failed
+          type: string
+        message:
+          description: Unable to communicate to blockchain. ${error}
+          example: Unable to communicate to blockchain. ${error}
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    TronWallet:
+      type: object
+      required:
+        - address
+        - privateKey
+      properties:
+        address:
+          type: string
+          description: Public address on the TRON network. You can receive assets on this address.
+          example: TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh
+        privateKey:
+          type: string
+          description: Private key to the address.
+          example: 842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701
+    TronBlock:
+      type: object
+      properties:
+        hash:
+          type: string
+          description: Block hash
+          example: 000000000195a8cfe2ea4ca60ce921b30e95980a96c6bb1da4a35aa03da9c5a8
+        blockNumber:
+          type: number
+          description: Block number.
+          example: 26585295
+        timestamp:
+          type: number
+          description: Time of the block in UTC millis.
+          example: 1610134209000
+        parentHash:
+          type: string
+          description: Hash of the parent block.
+          example: 000000000195a8ce6003aa8b6443c52734b80aefdcd079bf40e7f165b046370e
+        witnessAddress:
+          type: string
+          description: Witness address.
+          example: 4118e2e1c6cdf4b74b7c1eb84682e503213a174955
+        witnessSignature:
+          type: string
+          description: Witness signature.
+          example: e20cb7a1f01d279ebe9c20baa0d747bea160042639ba0be63460cbb21ae63f072520e7766cb7aa1bd4e74bebbdea64be431ecf52c2aa2123ca0b1d7495bd581d00
+        transactions:
+          type: array
+          description: Transactions that occurs in this block.
+          items:
+            $ref: "#/components/schemas/TronTx"
+    TronTx:
+      type: object
+      required:
+        - txID
+        - signature
+        - ret
+        - rawData
+      properties:
+        ret:
+          type: object
+          description: Result of the smart contract invocation.
+          properties:
+            contractRet:
+              type: string
+              description: Return value of the smart contract invocation.
+              example: SUCCESS
+            fee:
+              type: number
+              description: Fee of the blockchain transaction. Not present every time, depends on the type of the smart contract, which was invoked.
+              example:
+          required:
+            - contractRet
+        signature:
+          type: array
+          description: List of signatures of the transaction.
+          items:
+            type: string
+            example: 91fa5d81f9578970d21fdcde4ebb849674d437b62774f34e8d9e4cb50960c0031362cbcb649553b1f5f9daf19495ae46e517d4401172b5e53bb06bfe6896e2e300
+        txID:
+          type: string
+          description: Transaction ID.
+          example: 24dd2f121a24516f22df78adf1ccc32119e3edb7760297f76a925b879f2baa98
+        netFee:
+          type: number
+          description: Fee paid for the transaction.
+          example: 13800
+        netUsage:
+          type: number
+          description: Usage of the network.
+          example: 0
+        energyFee:
+          type: number
+          description: Fee paid for the energy.
+          example: 1157080
+        energyUsage:
+          type: number
+          description: Usage of the energy.
+          example: 2
+        energyUsageTotal:
+          type: number
+          description: Total energy used.
+          example: 28929
+        internalTransactions:
+          type: array
+          items:
+            type: object
+            properties:
+              internal_tx_id:
+                type: string
+                description: Internal TX ID.
+                example: e1543ab5ac85e8fbf2397f30f19dc5b7a32abd508a57ff0c13642c9963d9f312
+              to_address:
+                type: string
+                description: Recipient address.
+                example: 41a614f803b6fd780986a42c78ec9c7f77e6ded13c
+              from_address:
+                type: string
+                description: Sender address.
+                example: 41a2726afbecbd8e936000ed684cef5e2f5cf43008
+          description: List of internal smart contract transactions.
+        rawData:
+          type: object
+          description: Raw data of the transaction.
+          properties:
+            expiration:
+              description: Expiration of the transaction.
+              type: number
+              example: 1610067216000
+            timestamp:
+              description: Time of the transaction.
+              type: number
+              example: 1609980816000
+            fee_limit:
+              description: Max limit of the fee.
+              type: number
+              example: 100000000
+            contract:
+              type: array
+              description: Smart contract invocations details.
+              items:
+                type: object
+                properties:
+                  type:
+                    example: TriggerSmartContract
+                    type: string
+                    description: Type of the Smart contract.
+                  parameter:
+                    type: object
+                    properties:
+                      type_url:
+                        type: string
+                        example: type.googleapis.com/protocol.TriggerSmartContract
+                        description: Type of the smart contract event.
+                      value:
+                        type: object
+                        properties:
+                          data:
+                            type: string
+                            description: Data of the contract method.
+                            example: a9059cbb0000000000000000000000418bea410241bc77c1da7fc8bc13929c4035596c5f0000000000000000000000000000000000000000000000022571499fd43aec00
+                          owner_address:
+                            type: string
+                            example: 418632237fd33f62c549ee044dd3da779aba947dcc
+                            description: Address of the sender.
+                          contract_address:
+                            type: string
+                            example: 41af2c205a7e44f79f680d149d339b733f6d34b6d5
+                            description: Address of the recipient.
+          required:
+            - contract
+            - timestamp
+            - expiration

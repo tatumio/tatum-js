@@ -7,7 +7,7 @@ info:
 tags:
   - description: |
       <p>This is info section about your blockchain.</p>
-    name: Blockchain | Blueprint
+    name: Blockchain / Blueprint
 paths:
   /v3/blueprint/wallet:
     get:
