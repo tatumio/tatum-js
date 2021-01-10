@@ -57,7 +57,7 @@ export abstract class TronBlockchainService {
             timestamp: block.block_header.raw_data.timestamp,
             witnessAddress: block.block_header.raw_data.witness_address,
             witnessSignature: block.block_header.witness_signature,
-            transactions: block.transactions.map(TronBlockchainService.mapTransaction),
+            transactions: block.transactions?.map(TronBlockchainService.mapTransaction) || [],
         };
     }
 

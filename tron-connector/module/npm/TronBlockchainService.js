@@ -39,6 +39,7 @@ class TronBlockchainService {
         return { testnet, hash: block.blockID, blockNumber: block.block_header.raw_data.number };
     }
     async getBlock(hashOrHeight) {
+        var _a;
         const url = (await this.getNodesUrl())[0];
         let block;
         if (hashOrHeight.length > 32) {
@@ -54,7 +55,7 @@ class TronBlockchainService {
             timestamp: block.block_header.raw_data.timestamp,
             witnessAddress: block.block_header.raw_data.witness_address,
             witnessSignature: block.block_header.witness_signature,
-            transactions: block.transactions.map(TronBlockchainService.mapTransaction),
+            transactions: ((_a = block.transactions) === null || _a === void 0 ? void 0 : _a.map(TronBlockchainService.mapTransaction)) || [],
         };
     }
     async getTransaction(txId) {
