@@ -28,6 +28,8 @@
     "pino": "^6.8.0",
     "pino-logger": "^1.0.0",
     "reflect-metadata": "^0.1.13",
+    "class-validator": "~0.13.0",
+    "class-transformer": "~0.2.3",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.3"
   },

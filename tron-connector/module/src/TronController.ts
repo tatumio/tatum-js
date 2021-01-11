@@ -1,4 +1,4 @@
-import {Body, Get, Param, Post, Query} from '@nestjs/common';
+import {Body, Get, HttpCode, HttpStatus, Param, Post, Query} from '@nestjs/common';
 import {TronBlockchainService} from './TronBlockchainService';
 import {BroadcastTx, TransferTron} from '@tatumio/tatum';
 import {PathAddress} from './dto/PathAddress';
@@ -8,6 +8,7 @@ export abstract class TronController {
   protected constructor(protected readonly service: TronBlockchainService) {}
 
   @Post('/v3/tron/broadcast')
+  @HttpCode(HttpStatus.OK)
   async broadcast(@Body() body: BroadcastTx) {
     return await this.service.broadcast(body.txData, body.signatureId);
   }
@@ -43,6 +44,7 @@ export abstract class TronController {
   }
 
   @Post('/v3/tron/transaction')
+  @HttpCode(HttpStatus.OK)
   async sendTransaction(@Body() body: TransferTron) {
     return this.service.sendTransaction(body);
   }
