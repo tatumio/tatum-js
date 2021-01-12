@@ -6,5 +6,6 @@ export * from './eth';
 export * from './xrp';
 export * from './xlm';
 export * from './scrypta';
+export * from './tron';
 
 // TODO: add support for BNB / NEO transactions
