@@ -9,7 +9,7 @@ import {
 import {LTC_NETWORK, LTC_TEST_NETWORK} from '../constants';
 import {Currency, TransactionKMS, TransferBtcBasedBlockchain} from '../model';
 
-const prepareSignedTransaction = async (network: Network, body: TransferBtcBasedBlockchain, currency: Currency) => {
+const prepareSignedTransaction = async (network: Network, body: TransferBtcBasedBlockchain, testnet: boolean) => {
     await validateOrReject(body);
     const {fromUTXO, fromAddress, to} = body;
     const tx = new TransactionBuilder(network);
@@ -38,7 +38,14 @@ const prepareSignedTransaction = async (network: Network, body: TransferBtcBased
         }
     }
     for (const item of to) {
-        tx.addOutput(item.address, Number(new BigNumber(item.value).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+        try {
+            tx.addOutput(item.address, Number(new BigNumber(item.value).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+        } catch (e) {
+            if (!testnet) {
+                throw new Error('Wrong output address. Supported LTC address should start with M or L.');
+            }
+            throw e;
+        }
     }
 
     for (let i = 0; i < privateKeysToSign.length; i++) {
@@ -75,7 +82,7 @@ export const signLitecoinKMSTransaction = async (tx: TransactionKMS, privateKeys
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareLitecoinSignedTransaction = async (testnet: boolean, body: TransferBtcBasedBlockchain) => {
-    return prepareSignedTransaction(testnet ? LTC_TEST_NETWORK : LTC_NETWORK, body, Currency.LTC);
+    return prepareSignedTransaction(testnet ? LTC_TEST_NETWORK : LTC_NETWORK, body, testnet);
 };
 
 /**

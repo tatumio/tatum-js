@@ -90,12 +90,19 @@ export const prepareLitecoinSignedOffchainTransaction =
         });
 
         const lastVin = data.find(d => d.vIn === '-1') as WithdrawalResponseData;
-        if (multipleAmounts?.length) {
-            for (const [i, multipleAmount] of multipleAmounts.entries()) {
-                tx.addOutput(address.split(',')[i], Number(new BigNumber(multipleAmount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+        try {
+            if (multipleAmounts?.length) {
+                for (const [i, multipleAmount] of multipleAmounts.entries()) {
+                    tx.addOutput(address.split(',')[i], Number(new BigNumber(multipleAmount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+                }
+            } else {
+                tx.addOutput(address, Number(new BigNumber(amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
             }
-        } else {
-            tx.addOutput(address, Number(new BigNumber(amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+        } catch (e) {
+            if (!testnet) {
+                throw new Error('Wrong output address. Supported LTC address should start with M or L.');
+            }
+            throw e;
         }
         if (mnemonic && !changeAddress) {
             const {xpub} = await generateLtcWallet(testnet, mnemonic);
