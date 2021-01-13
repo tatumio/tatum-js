@@ -399,7 +399,7 @@ paths:
         - X-Api-Key: [ ]
       x-code-samples:
   /v3/tron/trc10/detail/{id}:
-    post:
+    get:
       tags:
         - Blockchain / Tron
       summary: Get Tron TRC10 token detail
