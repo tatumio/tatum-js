@@ -123,7 +123,7 @@ export const prepareTronSignedTransaction = async (testnet: boolean, body: Trans
     const tronWeb = prepareTronWeb(testnet);
     const tx = await tronWeb.transactionBuilder.sendTrx(
         to,
-        new BigNumber(amount).multipliedBy(1000000).toFixed(0),
+        tronWeb.toSun(amount),
         tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(fromPrivateKey)));
     return JSON.stringify(await tronWeb.trx.sign(tx, fromPrivateKey));
 };
@@ -173,7 +173,7 @@ export const prepareTronTrc10SignedTransaction = async (testnet: boolean, body: 
     const tronWeb = prepareTronWeb(testnet);
     const tx = await tronWeb.transactionBuilder.sendToken(
         to,
-        new BigNumber(amount).multipliedBy(1000000).toFixed(0),
+        tronWeb.toSun(amount),
         tokenId,
         tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(fromPrivateKey)));
     return JSON.stringify(await tronWeb.trx.sign(tx, fromPrivateKey));
@@ -202,7 +202,7 @@ export const prepareTronTrc20SignedTransaction = async (testnet: boolean, body: 
     const {transaction} = await tronWeb.transactionBuilder.triggerSmartContract(
         tronWeb.address.toHex(tokenAddress),
         'transfer(address,uint256)',
-        {feeLimit, from: tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(fromPrivateKey))},
+        {feeLimit: tronWeb.toSun(feeLimit), from: tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(fromPrivateKey))},
         [{type: 'address', value: tronWeb.address.toHex(to)}, {
             type: 'uint256',
             value: `0x${new BigNumber(amount).multipliedBy(new BigNumber(10).pow(decimals)).toString(16)}`
