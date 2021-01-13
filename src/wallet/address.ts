@@ -237,6 +237,7 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
         case Currency.BCH:
             return generateBchAddress(testnet, xpub, i);
         case Currency.USDT:
+        case Currency.WBTC:
         case Currency.LEO:
         case Currency.LINK:
         case Currency.UNI:
@@ -278,6 +279,7 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
         case Currency.BCH:
             return generateBchPrivateKey(testnet, mnemonic, i);
         case Currency.USDT:
+        case Currency.WBTC:
         case Currency.LEO:
         case Currency.LINK:
         case Currency.UNI:

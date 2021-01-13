@@ -66,6 +66,7 @@ export const CONTRACT_ADDRESSES = {
     [Currency.LEO.toString()]: '0x2af5d2ad76741191d15dfe7bf6ac92d4bd912ca3',
     [Currency.UNI.toString()]: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
     [Currency.LINK.toString()]: '0x514910771af9ca656af840dff83e8264ecf986ca',
+    [Currency.WBTC.toString()]: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
     [Currency.FREE.toString()]: '0x2f141ce366a2462f02cea3d12cf93e4dca49e4fd',
     [Currency.MKR.toString()]: '0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2',
     [Currency.USDC.toString()]: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
@@ -80,6 +81,7 @@ export const CONTRACT_ADDRESSES = {
 
 export const CONTRACT_DECIMALS = {
     [Currency.USDT.toString()]: 6,
+    [Currency.WBTC.toString()]: 8,
     [Currency.LEO.toString()]: 18,
     [Currency.LINK.toString()]: 18,
     [Currency.UNI.toString()]: 18,

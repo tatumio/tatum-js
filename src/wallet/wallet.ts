@@ -188,6 +188,7 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
         case Currency.TRON:
             return generateTronWallet();
         case Currency.USDT:
+        case Currency.WBTC:
         case Currency.LEO:
         case Currency.LINK:
         case Currency.UNI:
