@@ -6,9 +6,8 @@ info:
   title: Tatum Tron API
 tags:
   - description: |
-      <p>Tron Blockchain enables access to most commonly used Tron methods. Tatum does not support offchain capabilities for the TRON blockchain.
-      Tatum KMS is not supported for TRON transactions.
-      <br/>
+      <p>Tron Blockchain enables access to most commonly used Tron methods. It's possible to generate TRON account, send TRX, TRC10 and TRC20 assets. It's also possible to generate custom TRC10 or TRC20 tokens using API.<br/>
+      Tatum does not support offchain capabilities for the TRON blockchain. Tatum KMS is not supported for TRON transactions.<br/>
       Tatum supports 2 chains:
       <ul><li>Mainnet - regular live chain
       <li>Shasta Testnet - test chain used for testing purposes. Coins on test chain have no value and can be obtained from
