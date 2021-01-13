@@ -25,8 +25,8 @@ export declare abstract class ScryptaBlockchainService {
     getBlock(hash: string): Promise<ScryptaBlock>;
     generateAddress(xpub: string, derivationIndex: number): Promise<string>;
     generateWallet(mnem?: string): Promise<Tatum.Wallet | {
-        address: string;
-        privateKey: string;
+        address: any;
+        privateKey: any;
     } | {
         privateKey: string;
         address: string;

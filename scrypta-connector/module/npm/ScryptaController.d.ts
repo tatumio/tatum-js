@@ -9,9 +9,9 @@ export declare abstract class ScryptaController {
     protected readonly scrypta: ScryptaBlockchainService;
     protected constructor(scrypta: ScryptaBlockchainService);
     getInfo(): Promise<any>;
-    generateWallet(): Promise<import("@tatumio/tatum").Wallet | {
-        address: string;
-        privateKey: string;
+    generateWallet(): Promise<import('@tatumio/tatum').Wallet | {
+        address: any;
+        privateKey: any;
     } | {
         privateKey: string;
         address: string;
@@ -24,11 +24,11 @@ export declare abstract class ScryptaController {
     }>;
     generateAddress(param: PathXpubI): Promise<string>;
     getBlockHash(param: PathI): Promise<string>;
-    getBlock(param: PathHash): Promise<import("./constants").ScryptaBlock>;
+    getBlock(param: PathHash): Promise<import('./constants').ScryptaBlock>;
     getTransactionbyHash(param: PathHash): Promise<any>;
-    getTransactionsByAddress(param: PathAddress): Promise<import("./constants").ScryptaParsedTx[]>;
-    getUnspentsByAddress(param: PathAddress): Promise<import("./constants").ScryptaUnspent[]>;
-    getUTXO(param: PathHashI): Promise<import("./constants").ScryptaUnspent>;
+    getTransactionsByAddress(param: PathAddress): Promise<Array<import('./constants').ScryptaParsedTx>>;
+    getUnspentsByAddress(param: PathAddress): Promise<Array<import('./constants').ScryptaUnspent>>;
+    getUTXO(param: PathHashI): Promise<import('./constants').ScryptaUnspent>;
     broadcast(body: any): Promise<{
         txId: string;
         failed?: boolean;
