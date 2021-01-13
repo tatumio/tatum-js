@@ -1,12 +1,13 @@
 import BigNumber from 'bignumber.js';
 import {validateOrReject} from 'class-validator';
-import {tronBroadcast, tronGetTrc10Detail} from '../blockchain';
+import {tronBroadcast} from '../blockchain';
 import abi from '../contracts/trc20/token_abi';
 import bytecode from '../contracts/trc20/token_bytecode';
 import {
     CreateTronTrc10,
     CreateTronTrc20,
-    Currency, FreezeTron,
+    Currency,
+    FreezeTron,
     TransactionKMS,
     TransferTron,
     TransferTronTrc10,
@@ -151,7 +152,7 @@ export const prepareTronFreezeTransaction = async (testnet: boolean, body: Freez
         resource,
         tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(fromPrivateKey)),
         receiver,
-        );
+    );
     return JSON.stringify(await tronWeb.trx.sign(tx, fromPrivateKey));
 };
 
@@ -171,10 +172,9 @@ export const prepareTronTrc10SignedTransaction = async (testnet: boolean, body: 
     } = body;
 
     const tronWeb = prepareTronWeb(testnet);
-    const {precision} = await tronGetTrc10Detail(tokenId);
     const tx = await tronWeb.transactionBuilder.sendToken(
         to,
-        new BigNumber(amount).multipliedBy(new BigNumber(10).pow(precision)),
+        new BigNumber(amount).multipliedBy(new BigNumber(10).pow(await getTrc10Precision(tronWeb, tokenId))),
         tokenId,
         tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(fromPrivateKey)));
     return JSON.stringify(await tronWeb.trx.sign(tx, fromPrivateKey));
@@ -199,11 +199,14 @@ export const prepareTronTrc20SignedTransaction = async (testnet: boolean, body: 
     const tronWeb = prepareTronWeb(testnet);
     tronWeb.setAddress(tokenAddress);
     const contractInstance = await tronWeb.contract().at(tokenAddress);
-    const decimals = await contractInstance.decimals().call()
+    const decimals = await contractInstance.decimals().call();
     const {transaction} = await tronWeb.transactionBuilder.triggerSmartContract(
         tronWeb.address.toHex(tokenAddress),
         'transfer(address,uint256)',
-        {feeLimit: tronWeb.toSun(feeLimit), from: tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(fromPrivateKey))},
+        {
+            feeLimit: tronWeb.toSun(feeLimit),
+            from: tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(fromPrivateKey))
+        },
         [{type: 'address', value: tronWeb.address.toHex(to)}, {
             type: 'uint256',
             value: `0x${new BigNumber(amount).multipliedBy(new BigNumber(10).pow(decimals)).toString(16)}`
@@ -286,4 +289,12 @@ export const prepareTronCreateTrc20SignedTransaction = async (testnet: boolean, 
         name,
     }, tronWeb.address.fromPrivateKey(fromPrivateKey));
     return JSON.stringify(await tronWeb.trx.sign(tx, fromPrivateKey));
+};
+
+const getTrc10Precision = async (tronWeb: any, tokenId: string): Promise<number> => {
+    const {data} = (await tronWeb.fullNode.request(`/v1/assets/${tokenId}`));
+    if (!data?.length) {
+        throw new Error('No such asset.');
+    }
+    return data[0].precision;
 };
