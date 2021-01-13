@@ -2,7 +2,7 @@ openapi: 3.0.0
 servers:
   - url: 'https://api-eu1.tatum.io'
 info:
-  version: 1.0.0
+  version: 1.1.0
   title: Tatum Tron API
 tags:
   - description: |
@@ -272,6 +272,255 @@ paths:
       security:
         - X-Api-Key: [ ]
       x-code-samples:
+  /v3/tron/freezeBalance:
+    post:
+      tags:
+        - Blockchain / Tron
+      summary: Freeze Tron balance
+      description: |
+        <h4>10 credits per API call.</h4><br/>
+        <p>Freeze Tron assets on the address. By freezing assets, you can obtain energy or bandwith to perform transactions.<br/><br/>
+        This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+        No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey.
+        PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+        it is possible to use the Tatum client library for supported languages or Tatum Middleware with a custom key management system.
+        </p>
+      operationId: TronFreeze
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FreezeTron"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionHash"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403Tron"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+  /v3/tron/trc10/transaction:
+    post:
+      tags:
+        - Blockchain / Tron
+      summary: Send Tron TRC10 transaction
+      description: |
+        <h4>10 credits per API call.</h4><br/>
+        <p>Send Tron TRC10 transaction from address to address.<br/><br/>
+        This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+        No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey.
+        PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+        it is possible to use the Tatum client library for supported languages or Tatum Middleware with a custom key management system.
+        </p>
+      operationId: TronTransferTrc10
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransferTronTrc10Blockchain"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionHash"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403Tron"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+  /v3/tron/trc10/deploy:
+    post:
+      tags:
+        - Blockchain / Tron
+      summary: Create Tron TRC10 token
+      description: |
+        <h4>10 credits per API call.</h4><br/>
+        <p>Create Tron TRC10 token. 1 account can create only 1 token. All supply of the tokens are transfered to the issuer account 100 seconds after the creation.<br/><br/>
+        This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+        No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey.
+        PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+        it is possible to use the Tatum client library for supported languages or Tatum Middleware with a custom key management system.
+        </p>
+      operationId: TronCreateTrc10
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTronTrc10Blockchain"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionHash"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403Tron"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+  /v3/tron/trc10/detail/{id}:
+    post:
+      tags:
+        - Blockchain / Tron
+      summary: Get Tron TRC10 token detail
+      description: |
+        <h4>5 credits per API call.</h4><br/>
+        <p>Get Tron TRC10 token details.</p>
+      operationId: TronTrc10Detail
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: TRC10 token ID
+          schema:
+            type: number
+            example: 1000540
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TronTrc10Detail"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403Tron"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+  /v3/tron/trc20/transaction:
+    post:
+      tags:
+        - Blockchain / Tron
+      summary: Send Tron TRC20 transaction
+      description: |
+        <h4>10 credits per API call.</h4><br/>
+        <p>Send Tron TRC20 transaction from address to address.<br/><br/>
+        This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+        No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey.
+        PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+        it is possible to use the Tatum client library for supported languages or Tatum Middleware with a custom key management system.
+        </p>
+      operationId: TronTransferTrc20
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransferTronTrc20Blockchain"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionHash"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403Tron"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+  /v3/tron/trc20/deploy:
+    post:
+      tags:
+        - Blockchain / Tron
+      summary: Create Tron TRC20 token
+      description: |
+        <h4>10 credits per API call.</h4><br/>
+        <p>Create Tron TRC20 token. 1 account can create only 1 token. All supply of the tokens are transfered to the issuer account 100 seconds after the creation.<br/><br/>
+        This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+        No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey.
+        PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+        it is possible to use the Tatum client library for supported languages or Tatum Middleware with a custom key management system.
+        </p>
+      operationId: TronCreateTrc20
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTronTrc20Blockchain"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionHash"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403Tron"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
   /v3/tron/broadcast:
     post:
       tags:
@@ -344,6 +593,260 @@ components:
       required:
         - fromPrivateKey
         - to
+        - amount
+    TransferTronTrc10Blockchain:
+      type: object
+      properties:
+        fromPrivateKey:
+          type: string
+          minLength: 64
+          maxLength: 64
+          description: Private key of the address, from which the TRX will be sent.
+          example: 842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701
+        to:
+          type: string
+          minLength: 34
+          maxLength: 34
+          description: Recipient address of TRON account in Base58 format.
+          example: TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh
+        tokenId:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: ID of the token to transfer.
+          example: "1000538"
+        amount:
+          description: Amount to be sent in TRX.
+          example: "100000"
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+          type: string
+      required:
+        - fromPrivateKey
+        - tokenId
+        - to
+        - amount
+    TransferTronTrc20Blockchain:
+      type: object
+      properties:
+        fromPrivateKey:
+          type: string
+          minLength: 64
+          maxLength: 64
+          description: Private key of the address, from which the TRX will be sent.
+          example: 842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701
+        to:
+          type: string
+          minLength: 34
+          maxLength: 34
+          description: Recipient address of TRON account in Base58 format.
+          example: TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh
+        tokenAddress:
+          type: string
+          minLength: 34
+          maxLength: 34
+          description: Address of the TRC20 token to transfer.
+          example: "TVAEYCmc15awaDRAjUZ1kvcHwQQaoPw2CW"
+        feeLimit:
+          type: number
+          minimum: 0
+          description: Fee in TRX to be paid.
+          example: 0.01
+        amount:
+          description: Amount to be sent in TRX.
+          example: "100000"
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+          type: string
+      required:
+        - fromPrivateKey
+        - tokenAddress
+        - to
+        - amount
+        - feeLimit
+    CreateTronTrc20Blockchain:
+      type: object
+      properties:
+        fromPrivateKey:
+          type: string
+          minLength: 64
+          maxLength: 64
+          description: Private key of the address, from which the TRX will be sent.
+          example: 842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701
+        recipient:
+          type: string
+          minLength: 34
+          maxLength: 34
+          description: Recipient address of created TRC20 tokens.
+          example: TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Name of the token.
+          example: My token
+        symbol:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Symbol of the token.
+          example: SYM
+        totalSupply:
+          type: number
+          minimum: 0
+          description: Total supply of the tokens.
+          example: 100000
+        decimals:
+          type: number
+          minimum: 0
+          maximum: 30
+          description: Number of decimal places of the token.
+          example: 10
+      required:
+        - fromPrivateKey
+        - name
+        - recipient
+        - symbol
+        - totalSupply
+        - decimals
+    CreateTronTrc10Blockchain:
+      type: object
+      properties:
+        fromPrivateKey:
+          type: string
+          minLength: 64
+          maxLength: 64
+          description: Private key of the address, from which the TRX will be sent.
+          example: 842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701
+        recipient:
+          type: string
+          minLength: 34
+          maxLength: 34
+          description: Recipient address of created TRC20 tokens.
+          example: TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Name of the token.
+          example: My token
+        abbreviation:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Abbreviation of the token.
+          example: SYM
+        description:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Description of the token.
+          example: My short description
+        url:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: URL of the token.
+          example: https://mytoken.com
+        totalSupply:
+          type: number
+          minimum: 0
+          description: Total supply of the tokens.
+          example: 100000
+        decimals:
+          type: number
+          minimum: 0
+          maximum: 5
+          description: Number of decimal places of the token.
+          example: 10
+      required:
+        - fromPrivateKey
+        - recipient
+        - name
+        - abbreviation
+        - description
+        - url
+        - totalSupply
+        - decimals
+    TronTrc10Detail:
+      type: object
+      properties:
+        ownerAddress:
+          type: string
+          minLength: 34
+          maxLength: 34
+          description: Address of the owner of the token, in hex.
+          example: '41d2803f9c22aa429d71554c9427e97ffedcec17c7'
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Name of the token.
+          example: My token
+        abbr:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Abbreviation of the token.
+          example: SYM
+        description:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Description of the token.
+          example: My short description
+        url:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: URL of the token.
+          example: https://mytoken.com
+        totalSupply:
+          type: number
+          minimum: 0
+          description: Total supply of the tokens.
+          example: 100000
+        precision:
+          type: number
+          minimum: 0
+          maximum: 5
+          description: Number of decimal places of the token.
+          example: 10
+    FreezeTron:
+      type: object
+      properties:
+        fromPrivateKey:
+          type: string
+          minLength: 64
+          maxLength: 64
+          description: Private key of the address, from which the TRX will be sent.
+          example: 842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701
+        receiver:
+          type: string
+          minLength: 34
+          maxLength: 34
+          description: Recipient address of frozen BANDWIDTH or ENERGY.
+          example: TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh
+        duration:
+          type: number
+          description: Duration of frozen funds, in days.
+          example: 3
+          minimum: 3
+        resource:
+          type: string
+          description: Resource to obtain, BANDWIDTH or ENERGY.
+          example: ENERGY
+          enum:
+            - BANDWIDTH
+            - ENERGY
+        amount:
+          description: Amount to be frozen in TRX.
+          example: "100000"
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+          type: string
+      required:
+        - fromPrivateKey
+        - receiver
+        - resource
+        - duration
         - amount
     Error403Tron:
       properties:

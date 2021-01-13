@@ -1,7 +1,24 @@
 import {PinoLogger} from 'nestjs-pino';
 import axios from 'axios';
-import {generateTronWallet, TransferTron, TronAccount, TronBlock, TronTransaction} from '@tatumio/tatum';
-import {prepareTronSignedTransaction} from '@tatumio/tatum/dist/src/transaction/tron';
+import {
+    CreateTronTrc10,
+    CreateTronTrc20,
+    FreezeTron,
+    prepareTronSignedTransaction,
+    prepareTronFreezeTransaction,
+    prepareTronTrc10SignedTransaction,
+    prepareTronTrc20SignedTransaction,
+    prepareTronCreateTrc10SignedTransaction,
+    prepareTronCreateTrc20SignedTransaction,
+    generateTronWallet,
+    TransferTron,
+    TransferTronTrc10,
+    TransferTronTrc20,
+    TronAccount,
+    TronBlock,
+    TronTransaction,
+    TronTrc10
+} from '@tatumio/tatum';
 
 export abstract class TronBlockchainService {
 
@@ -106,5 +123,43 @@ export abstract class TronBlockchainService {
 
     public async sendTransaction(body: TransferTron) {
         return this.broadcast(await prepareTronSignedTransaction(await this.isTestnet(), body));
+    }
+
+    public async sendTrc10Transaction(body: TransferTronTrc10) {
+        return this.broadcast(await prepareTronTrc10SignedTransaction(await this.isTestnet(), body));
+    }
+
+    public async sendTrc20Transaction(body: TransferTronTrc20) {
+        return this.broadcast(await prepareTronTrc20SignedTransaction(await this.isTestnet(), body));
+    }
+
+    public async createTrc10Transaction(body: CreateTronTrc10) {
+        return this.broadcast(await prepareTronCreateTrc10SignedTransaction(await this.isTestnet(), body));
+    }
+
+    public async createTrc20Transaction(body: CreateTronTrc20) {
+        return this.broadcast(await prepareTronCreateTrc20SignedTransaction(await this.isTestnet(), body));
+    }
+
+    public async freezeBalance(body: FreezeTron) {
+        return this.broadcast(await prepareTronFreezeTransaction(await this.isTestnet(), body));
+    }
+
+    public async getTrc10Detail(id: string): Promise<TronTrc10> {
+        const url = `${(await this.getNodesUrl())[0]}/v1/assets/${id}`;
+        const {data} = (await axios.get(url)).data;
+        if (!data?.length) {
+            throw new Error('No such asset.');
+        }
+        return {
+            abbr: data[0].abbr,
+            description: data[0].description,
+            id: data[0].id,
+            name: data[0].name,
+            ownerAddress: data[0].owner_address,
+            precision: data[0].precision,
+            totalSupply: data[0].total_supply,
+            url: data[0].url,
+        };
     }
 }
