@@ -1,4 +1,4 @@
-import {IsNotEmpty, Length, Min} from 'class-validator';
+import {IsNotEmpty, Length, Max, Min} from 'class-validator';
 
 export class CreateTronTrc10 {
 
@@ -23,12 +23,11 @@ export class CreateTronTrc10 {
     public url: string;
 
     @IsNotEmpty()
-    public trxRatio: number;
-
-    @IsNotEmpty()
-    public tokenRatio: number;
+    @Min(0)
+    public totalSupply: number;
 
     @IsNotEmpty()
     @Min(0)
-    public totalSupply: number;
+    @Max(5)
+    public decimals: number;
 }

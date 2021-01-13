@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {TATUM_API_URL} from '../constants';
-import {TransactionHash, TronAccount, TronBlock, TronTransaction} from '../model';
+import {TransactionHash, TronAccount, TronBlock, TronTransaction, TronTrc10} from '../model';
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/TronBroadcast" target="_blank">Tatum API documentation</a>
@@ -23,6 +23,13 @@ export const tronGetCurrentBlock = async (): Promise<{ testnet: boolean, hash: s
  */
 export const tronGetBlock = async (hash: string): Promise<TronBlock> => {
     return (await axios.get(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/tron/block/${hash}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+};
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/TronTrc10Detail" target="_blank">Tatum API documentation</a>
+ */
+export const tronGetTrc10Detail = async (id: string): Promise<TronTrc10> => {
+    return (await axios.get(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/tron/trc10/detail/${id}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 
 /**

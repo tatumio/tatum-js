@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import {validateOrReject} from 'class-validator';
-import {tronBroadcast} from '../blockchain';
+import {tronBroadcast, tronGetTrc10Detail} from '../blockchain';
 import abi from '../contracts/trc20/token_abi';
 import bytecode from '../contracts/trc20/token_bytecode';
 import {
@@ -171,9 +171,10 @@ export const prepareTronTrc10SignedTransaction = async (testnet: boolean, body: 
     } = body;
 
     const tronWeb = prepareTronWeb(testnet);
+    const {precision} = await tronGetTrc10Detail(tokenId);
     const tx = await tronWeb.transactionBuilder.sendToken(
         to,
-        tronWeb.toSun(amount),
+        new BigNumber(amount).multipliedBy(new BigNumber(10).pow(precision)),
         tokenId,
         tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(fromPrivateKey)));
     return JSON.stringify(await tronWeb.trx.sign(tx, fromPrivateKey));
@@ -226,9 +227,8 @@ export const prepareTronCreateTrc10SignedTransaction = async (testnet: boolean, 
         abbreviation,
         description,
         url,
-        trxRatio,
-        tokenRatio,
         totalSupply,
+        decimals,
     } = body;
 
     const tronWeb = prepareTronWeb(testnet);
@@ -237,15 +237,16 @@ export const prepareTronCreateTrc10SignedTransaction = async (testnet: boolean, 
         abbreviation,
         description,
         url,
-        totalSupply,
-        trxRatio,
-        tokenRatio,
+        totalSupply: new BigNumber(totalSupply).multipliedBy(new BigNumber(10).pow(decimals)),
+        trxRatio: 1,
+        tokenRatio: 1,
+        saleStart: Date.now() + 10000,
         saleEnd: Date.now() + 100000,
         freeBandwidth: 0,
         freeBandwidthLimit: 0,
         frozenAmount: 0,
         frozenDuration: 0,
-        precision: 6
+        precision: decimals,
     }, tronWeb.address.fromPrivateKey(fromPrivateKey));
     return JSON.stringify(await tronWeb.trx.sign(tx, fromPrivateKey));
 };

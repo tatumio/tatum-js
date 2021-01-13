@@ -80,8 +80,7 @@ describe('Tron transactions', () => {
         body.url = 'TTM';
         body.name = 'TTM';
         body.description = 'TTM';
-        body.tokenRatio = 1;
-        body.trxRatio = 1;
+        body.decimals = 5;
         const txData = await prepareTronCreateTrc10SignedTransaction(true, body);
         expect(JSON.parse(txData).raw_data.contract[0].parameter.value.amount).toBe(1);
     });
