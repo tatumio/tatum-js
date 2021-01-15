@@ -291,6 +291,8 @@ export const prepareTronCreateTrc20SignedTransaction = async (testnet: boolean, 
     return JSON.stringify(await tronWeb.trx.sign(tx, fromPrivateKey));
 };
 
+export const transferHexToBase58Address = (address: string) => prepareTronWeb(true).address.fromHex(address);
+
 const getTrc10Precision = async (tronWeb: any, tokenId: string): Promise<number> => {
     const {data} = (await tronWeb.fullNode.request(`/v1/assets/${tokenId}`));
     if (!data?.length) {
