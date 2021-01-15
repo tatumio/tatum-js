@@ -20,7 +20,7 @@ import {
     TronTrc10
 } from '@tatumio/tatum';
 
-export abstract class TronBlockchainService {
+export abstract class TronService {
 
     private static mapTransaction(t: any): TronTransaction {
         return {
@@ -34,7 +34,7 @@ export abstract class TronBlockchainService {
             energyUsageTotal: t.energy_usage_total,
             internalTransactions: t.internal_transactions,
             rawData: t.raw_data,
-        }
+        };
     }
 
     protected constructor(protected readonly logger: PinoLogger) {
@@ -42,10 +42,10 @@ export abstract class TronBlockchainService {
 
     protected abstract isTestnet(): Promise<boolean>;
 
-    protected abstract getNodesUrl(): Promise<string[]>;
+    protected abstract getNodesUrl(testnet: boolean): Promise<string[]>;
 
     public async broadcast(txData: string, signatureId?: string) {
-        const url = (await this.getNodesUrl())[0];
+        const url = (await this.getNodesUrl(await this.isTestnet()))[0];
         const broadcast = (await axios.post(`${url}/wallet/broadcasttransaction`, JSON.parse(txData))).data;
         if (broadcast.result) {
             return {txId: broadcast.txid};
@@ -53,14 +53,15 @@ export abstract class TronBlockchainService {
         throw new Error(`Broadcast failed due to ${broadcast.message}`);
     }
 
-    public async getBlockChainInfo(): Promise<{ testnet: boolean, hash: string, blockNumber: number }> {
-        const [urls, testnet] = await Promise.all([this.getNodesUrl(), this.isTestnet()]);
+    public async getBlockChainInfo(testnet?: boolean): Promise<{ testnet: boolean, hash: string, blockNumber: number }> {
+        const t = testnet !== undefined ? testnet : await this.isTestnet();
+        const urls = await this.getNodesUrl(t);
         const block = (await axios.post(urls[0] + '/wallet/getnowblock')).data;
-        return {testnet, hash: block.blockID, blockNumber: block.block_header.raw_data.number};
+        return {testnet: t, hash: block.blockID, blockNumber: block.block_header.raw_data.number};
     }
 
-    public async getBlock(hashOrHeight: string): Promise<TronBlock> {
-        const url = (await this.getNodesUrl())[0];
+    public async getBlock(hashOrHeight: string, testnet?: boolean): Promise<TronBlock> {
+        const url = (await this.getNodesUrl(testnet !== undefined ? testnet : await this.isTestnet()))[0];
         let block;
         if (hashOrHeight.length > 32) {
             block = (await axios.post(`${url}/wallet/getblockbyid`, {value: hashOrHeight})).data;
@@ -74,19 +75,19 @@ export abstract class TronBlockchainService {
             timestamp: block.block_header.raw_data.timestamp,
             witnessAddress: block.block_header.raw_data.witness_address,
             witnessSignature: block.block_header.witness_signature,
-            transactions: block.transactions?.map(TronBlockchainService.mapTransaction) || [],
+            transactions: block.transactions?.map(TronService.mapTransaction) || [],
         };
     }
 
-    public async getTransaction(txId: string): Promise<TronTransaction> {
-        const url = (await this.getNodesUrl())[0];
+    public async getTransaction(txId: string, testnet?: boolean): Promise<TronTransaction> {
+        const url = (await this.getNodesUrl(testnet !== undefined ? testnet : await this.isTestnet()))[0];
         const [{data: tx}, {data: info}] = await Promise.all([axios.post(`${url}/wallet/gettransactionbyid`, {value: txId}),
-            axios.post(`${url}/wallet/gettransactioninfobyid`, {value: txId})])
-        return TronBlockchainService.mapTransaction({...tx, ...info.receipt});
+            axios.post(`${url}/wallet/gettransactioninfobyid`, {value: txId})]);
+        return TronService.mapTransaction({...tx, ...info.receipt});
     }
 
     public async getAccount(address: string): Promise<TronAccount> {
-        const url = (await this.getNodesUrl())[0];
+        const url = (await this.getNodesUrl(await this.isTestnet()))[0];
         const accounts = (await axios.post(`${url}/wallet/getaccount`, {address, visible: address.length === 34})).data;
         if (!accounts.data?.length) {
             throw new Error('No such account.');
@@ -105,14 +106,14 @@ export abstract class TronBlockchainService {
     }
 
     public async getTransactionsByAccount(address: string, next?: string): Promise<{ transactions: TronTransaction[], next?: string }> {
-        const url = (await this.getNodesUrl())[0];
+        const url = (await this.getNodesUrl(await this.isTestnet()))[0];
         let u = `${url}/v1/accounts/${address}/transactions?limit=200`;
         if (next) {
             u += '&fingerprint=' + next;
         }
         const result = (await axios.get(u)).data;
         return {
-            transactions: result.data.map(TronBlockchainService.mapTransaction),
+            transactions: result.data.map(TronService.mapTransaction),
             next: result.meta?.fingerprint
         };
     }
@@ -146,7 +147,7 @@ export abstract class TronBlockchainService {
     }
 
     public async getTrc10Detail(id: string): Promise<TronTrc10> {
-        const url = `${(await this.getNodesUrl())[0]}/v1/assets/${id}`;
+        const url = `${(await this.getNodesUrl(await this.isTestnet()))[0]}/v1/assets/${id}`;
         const {data} = (await axios.get(url)).data;
         if (!data?.length) {
             throw new Error('No such asset.');

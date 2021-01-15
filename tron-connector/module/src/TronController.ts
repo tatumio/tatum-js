@@ -1,5 +1,5 @@
 import {Body, Get, HttpCode, HttpStatus, Param, Post, Query} from '@nestjs/common';
-import {TronBlockchainService} from './TronBlockchainService';
+import {TronService} from './TronService';
 import {BroadcastTx, TransferTron, FreezeTron, TransferTronTrc10,TransferTronTrc20, CreateTronTrc10, CreateTronTrc20} from '@tatumio/tatum';
 import {PathAddress} from './dto/PathAddress';
 import {PathTxId} from './dto/PathTxId';
@@ -7,7 +7,7 @@ import {TronError} from './TronError';
 import {PathTokenId} from './dto/PathTokenId';
 
 export abstract class TronController {
-    protected constructor(protected readonly service: TronBlockchainService) {
+    protected constructor(protected readonly service: TronService) {
     }
 
     @Post('/v3/tron/broadcast')

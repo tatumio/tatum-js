@@ -1,2 +1,2 @@
-export * from './TronBlockchainService';
+export * from './TronService';
 export * from './TronController';

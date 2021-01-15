@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { PinoLogger } from 'pino-logger';
 import { InjectPinoLogger } from 'nestjs-pino';
-import { TronBlockchainService } from '../../module/npm';
+import { TronService } from '../../module/npm';
 
 @Injectable()
-export class AppService extends TronBlockchainService {
+export class AppService extends TronService {
   constructor(@InjectPinoLogger(AppService.name) logger: PinoLogger) {
     super(logger);
   }
-  protected getNodesUrl(): Promise<string[]> {
+  protected getNodesUrl(testnet: boolean): Promise<string[]> {
     return Promise.resolve(['https://api.shasta.trongrid.io']);
   }
 
