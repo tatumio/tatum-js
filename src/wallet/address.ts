@@ -1,7 +1,7 @@
 import {fromBase58, fromSeed} from 'bip32';
 import {mnemonicToSeed} from 'bip39';
 import {HDNode, Mnemonic} from 'bitbox-sdk';
-import {ECPair, networks, payments} from 'bitcoinjs-lib';
+import {bip32, ECPair, networks, payments} from 'bitcoinjs-lib';
 import ethWallet, {hdkey as ethHdKey} from 'ethereumjs-wallet';
 // @ts-ignore
 import {
@@ -15,15 +15,19 @@ import {
     LYRA_NETWORK,
     LYRA_TEST_NETWORK,
     TESTNET_DERIVATION_PATH,
+    TRON_DERIVATION_PATH,
     VET_DERIVATION_PATH
 } from '../constants';
 import {Currency} from '../model';
+import {generateAddress} from './tron.crypto';
+// tslint:disable-next-line:no-var-requires
+const TronWeb = require('tronweb');
 
 /**
  * Generate Bitcoin address
  * @param testnet testnet or mainnet version of address
  * @param xpub extended public key to generate address from
- * @param i derivation index of address to generate. Up to 2^32 addresses can be generated.
+ * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
 const generateBtcAddress = (testnet: boolean, xpub: string, i: number) => {
@@ -33,10 +37,21 @@ const generateBtcAddress = (testnet: boolean, xpub: string, i: number) => {
 };
 
 /**
+ * Generate Tron address
+ * @param xpub extended public key to generate address from
+ * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
+ * @returns blockchain address
+ */
+const generateTronAddress = (xpub: string, i: number) => {
+    const w = bip32.fromPublicKey(Buffer.from(xpub.slice(0, 66), 'hex'), Buffer.from(xpub.slice(-64), 'hex'));
+    return TronWeb.address.fromHex(generateAddress(w.derive(i).publicKey.toString('hex')));
+};
+
+/**
  * Generate Litecoin address
  * @param testnet testnet or mainnet version of address
  * @param xpub extended public key to generate address from
- * @param i derivation index of address to generate. Up to 2^32 addresses can be generated.
+ * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
 const generateLtcAddress = (testnet: boolean, xpub: string, i: number) => {
@@ -49,7 +64,7 @@ const generateLtcAddress = (testnet: boolean, xpub: string, i: number) => {
  * Generate Bitcoin Cash address
  * @param testnet testnet or mainnet version of address
  * @param xpub extended public key to generate address from
- * @param i derivation index of address to generate. Up to 2^32 addresses can be generated.
+ * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
 const generateBchAddress = (testnet: boolean, xpub: string, i: number) => {
@@ -62,7 +77,7 @@ const generateBchAddress = (testnet: boolean, xpub: string, i: number) => {
  * Generate Ethereum or any other ERC20 address
  * @param testnet testnet or mainnet version of address
  * @param xpub extended public key to generate address from
- * @param i derivation index of address to generate. Up to 2^32 addresses can be generated.
+ * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
 const generateEthAddress = (testnet: boolean, xpub: string, i: number) => {
@@ -75,7 +90,7 @@ const generateEthAddress = (testnet: boolean, xpub: string, i: number) => {
  * Generate VeChain address
  * @param testnet testnet or mainnet version of address
  * @param xpub extended public key to generate address from
- * @param i derivation index of address to generate. Up to 2^32 addresses can be generated.
+ * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
 const generateVetAddress = (testnet: boolean, xpub: string, i: number) => {
@@ -88,7 +103,7 @@ const generateVetAddress = (testnet: boolean, xpub: string, i: number) => {
  * Generate Bitcoin address
  * @param testnet testnet or mainnet version of address
  * @param xpub extended public key to generate address from
- * @param i derivation index of address to generate. Up to 2^32 addresses can be generated.
+ * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
 const generateLyraAddress = (testnet: boolean, xpub: string, i: number) => {
@@ -110,6 +125,19 @@ const generateBtcPrivateKey = async (testnet: boolean, mnemonic: string, i: numb
         .derivePath(testnet ? TESTNET_DERIVATION_PATH : BTC_DERIVATION_PATH)
         .derive(i)
         .toWIF();
+};
+
+/**
+ * Generate Tron private key from mnemonic seed
+ * @param mnemonic mnemonic to generate private key from
+ * @param i derivation index of private key to generate.
+ * @returns blockchain private key to the address
+ */
+const generateTronPrivateKey = async (mnemonic: string, i: number) => {
+    return fromSeed(await mnemonicToSeed(mnemonic))
+        .derivePath(TRON_DERIVATION_PATH)
+        .derive(i)
+        .privateKey?.toString('hex') ?? '';
 };
 
 /**
@@ -194,7 +222,7 @@ const generateLyraPrivateKey = async (testnet: boolean, mnemonic: string, i: num
 const convertBtcPrivateKey = (testnet: boolean, privkey: string) => {
     const network = testnet ? networks.testnet : networks.bitcoin;
     const keyPair = ECPair.fromWIF(privkey, network);
-    return payments.p2pkh({ pubkey: keyPair.publicKey, network }).address as string;
+    return payments.p2pkh({pubkey: keyPair.publicKey, network}).address as string;
 };
 
 /**
@@ -206,7 +234,7 @@ const convertBtcPrivateKey = (testnet: boolean, privkey: string) => {
 const convertLyraPrivateKey = (testnet: boolean, privkey: string) => {
     const network = testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK;
     const keyPair = ECPair.fromWIF(privkey, network);
-    return payments.p2pkh({ pubkey: keyPair.publicKey, network }).address as string;
+    return payments.p2pkh({pubkey: keyPair.publicKey, network}).address as string;
 };
 
 /**
@@ -216,7 +244,7 @@ const convertLyraPrivateKey = (testnet: boolean, privkey: string) => {
  * @returns blockchain address
  */
 const convertEthPrivateKey = (testnet: boolean, privkey: string) => {
-    const wallet = ethWallet.fromPrivateKey(Buffer.from(privkey.replace('0x',''), 'hex'))
+    const wallet = ethWallet.fromPrivateKey(Buffer.from(privkey.replace('0x', ''), 'hex'));
     return wallet.getAddressString() as string;
 };
 
@@ -225,13 +253,15 @@ const convertEthPrivateKey = (testnet: boolean, privkey: string) => {
  * @param currency type of blockchain
  * @param testnet testnet or mainnet version of address
  * @param xpub extended public key to generate address from
- * @param i derivation index of address to generate. Up to 2^32 addresses can be generated.
+ * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
 export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xpub: string, i: number) => {
     switch (currency) {
         case Currency.BTC:
             return generateBtcAddress(testnet, xpub, i);
+        case Currency.TRON:
+            return generateTronAddress(xpub, i);
         case Currency.LTC:
             return generateLtcAddress(testnet, xpub, i);
         case Currency.BCH:
@@ -278,6 +308,8 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
             return generateLtcPrivateKey(testnet, mnemonic, i);
         case Currency.BCH:
             return generateBchPrivateKey(testnet, mnemonic, i);
+        case Currency.TRON:
+            return generateTronPrivateKey(mnemonic, i);
         case Currency.USDT:
         case Currency.WBTC:
         case Currency.LEO:

@@ -8,6 +8,7 @@ export const VET_URL = 'https://sync-mainnet.vechain.org/';
 export const ETH_DERIVATION_PATH = 'm/44\'/60\'/0\'/0';
 export const VET_DERIVATION_PATH = 'm/44\'/818\'/0\'/0';
 export const BTC_DERIVATION_PATH = 'm/44\'/0\'/0\'/0';
+export const TRON_DERIVATION_PATH = 'm/44\'/195\'/0\'/0';
 export const LTC_DERIVATION_PATH = 'm/44\'/2\'/0\'/0';
 export const BCH_DERIVATION_PATH = 'm/44\'/145\'/0\'/0';
 export const LYRA_DERIVATION_PATH = 'm/44\'/497\'/0\'/0';

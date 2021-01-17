@@ -2,14 +2,12 @@ import {generatePrivateKey, getAddressFromPrivateKey} from '@binance-chain/javas
 import Neon, {wallet} from '@cityofzion/neon-js';
 import {generateMnemonic, mnemonicToSeed} from 'bip39';
 import {HDNode, Mnemonic} from 'bitbox-sdk';
-import {networks} from 'bitcoinjs-lib';
+import {bip32, networks} from 'bitcoinjs-lib';
 import {hdkey as ethHdKey} from 'ethereumjs-wallet';
 // @ts-ignore
 import hdkey from 'hdkey';
 import {RippleAPI} from 'ripple-lib';
 import {Keypair} from 'stellar-sdk';
-// tslint:disable-next-line:no-var-requires
-const TronWeb = require('tronweb');
 import {
     BCH_DERIVATION_PATH,
     BTC_DERIVATION_PATH,
@@ -21,9 +19,12 @@ import {
     LYRA_NETWORK,
     LYRA_TEST_NETWORK,
     TESTNET_DERIVATION_PATH,
+    TRON_DERIVATION_PATH,
     VET_DERIVATION_PATH
 } from '../constants';
 import {Currency} from '../model';
+// tslint:disable-next-line:no-var-requires
+const TronWeb = require('tronweb');
 
 export interface Wallet {
 
@@ -110,16 +111,23 @@ export const generateBchWallet = (testnet: boolean, mnem: string): Wallet => {
  */
 export const generateBtcWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
     const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? networks.testnet.bip32 : networks.bitcoin.bip32);
-    return {mnemonic: mnem, xpub: hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : BTC_DERIVATION_PATH).toJSON().xpub};
+    return {
+        mnemonic: mnem,
+        xpub: hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : BTC_DERIVATION_PATH).toJSON().xpub
+    };
 };
 
 /**
  * Generate Tron wallet
  * @returns mnemonic for the wallet
  */
-export const generateTronWallet = async () => {
-    const wallet = await TronWeb.createAccount();
-    return {address: wallet.address.base58, privateKey: wallet.privateKey};
+export const generateTronWallet = async (mnem: string) => {
+    const w = bip32.fromSeed(await mnemonicToSeed(mnem));
+    const bip32Interface = w.derivePath(TRON_DERIVATION_PATH);
+    return {
+        mnemonic: mnem,
+        xpub: bip32Interface.publicKey.toString('hex') + bip32Interface.chainCode.toString('hex')
+    };
 };
 
 /**
@@ -130,7 +138,10 @@ export const generateTronWallet = async () => {
  */
 export const generateLtcWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
     const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? LTC_TEST_NETWORK.bip32 : LTC_NETWORK.bip32);
-    return {mnemonic: mnem, xpub: hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : LTC_DERIVATION_PATH).toJSON().xpub};
+    return {
+        mnemonic: mnem,
+        xpub: hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : LTC_DERIVATION_PATH).toJSON().xpub
+    };
 };
 
 /**
@@ -165,7 +176,7 @@ export const generateXlmWallet = (secret?: string) => {
  * @returns wallet
  */
 export const generateLyraWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
-    const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? LYRA_TEST_NETWORK.bip32 :LYRA_NETWORK.bip32);
+    const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? LYRA_TEST_NETWORK.bip32 : LYRA_NETWORK.bip32);
     return {mnemonic: mnem, xpub: hdwallet.derive(LYRA_DERIVATION_PATH).toJSON().xpub};
 };
 
@@ -186,7 +197,7 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
         case Currency.BCH:
             return generateBchWallet(testnet, mnem);
         case Currency.TRON:
-            return generateTronWallet();
+            return generateTronWallet(mnem);
         case Currency.USDT:
         case Currency.WBTC:
         case Currency.LEO:
