@@ -3,14 +3,17 @@ import axios from 'axios';
 import {
     CreateTronTrc10,
     CreateTronTrc20,
+    Currency,
     FreezeTron,
-    prepareTronSignedTransaction,
-    prepareTronFreezeTransaction,
-    prepareTronTrc10SignedTransaction,
-    prepareTronTrc20SignedTransaction,
+    generateAddressFromXPub,
+    generatePrivateKeyFromMnemonic,
+    generateTronWallet,
     prepareTronCreateTrc10SignedTransaction,
     prepareTronCreateTrc20SignedTransaction,
-    generateTronWallet,
+    prepareTronFreezeTransaction,
+    prepareTronSignedTransaction,
+    prepareTronTrc10SignedTransaction,
+    prepareTronTrc20SignedTransaction,
     TransferTron,
     TransferTronTrc10,
     TransferTronTrc20,
@@ -118,8 +121,16 @@ export abstract class TronService {
         };
     }
 
-    public generateWallet() {
-        return generateTronWallet();
+    public generateWallet(mnem?: string) {
+        return generateTronWallet(mnem);
+    }
+
+    public async generateAddress(xpub: string, i: number) {
+        return generateAddressFromXPub(Currency.TRON, await this.isTestnet(), xpub, i);
+    }
+
+    public async generatePrivateKey(mnemonic: string, i: number) {
+        return generatePrivateKeyFromMnemonic(Currency.TRON, await this.isTestnet(), mnemonic, i);
     }
 
     public async sendTransaction(body: TransferTron) {

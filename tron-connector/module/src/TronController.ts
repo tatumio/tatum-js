@@ -5,6 +5,9 @@ import {PathAddress} from './dto/PathAddress';
 import {PathTxId} from './dto/PathTxId';
 import {TronError} from './TronError';
 import {PathTokenId} from './dto/PathTokenId';
+import {QueryMnemonic} from './dto/QueryMnemonic';
+import {GeneratePrivateKey} from './dto/GeneratePrivateKey';
+import {PathXpubI} from './dto/PathXpubI';
 
 export abstract class TronController {
     protected constructor(protected readonly service: TronService) {
@@ -20,10 +23,28 @@ export abstract class TronController {
         }
     }
 
-    @Get('v3/tron/account')
-    async generateAccount() {
+    @Get('v3/tron/wallet')
+    async generateWallet(@Query() query: QueryMnemonic) {
         try {
-            return await this.service.generateWallet();
+            return await this.service.generateWallet(query.mnemonic);
+        } catch (e) {
+            throw new TronError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'tron.error');
+        }
+    }
+
+    @Post('v3/tron/wallet/priv')
+    async generatePrivKey(@Body() body: GeneratePrivateKey) {
+        try {
+            return await this.service.generatePrivateKey(body.mnemonic, body.index);
+        } catch (e) {
+            throw new TronError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'tron.error');
+        }
+    }
+
+    @Get('v3/tron/address/:xpub/:i')
+    async generateAccount(@Param() params: PathXpubI) {
+        try {
+            return await this.service.generateAddress(params.xpub, params.i);
         } catch (e) {
             throw new TronError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'tron.error');
         }

@@ -7,19 +7,27 @@ info:
 tags:
   - description: |
       <p>Tron Blockchain enables access to most commonly used Tron methods. It's possible to generate TRON account, send TRX, TRC10 and TRC20 assets. It's also possible to generate custom TRC10 or TRC20 tokens using API.<br/>
-      Tatum does not support offchain capabilities for the TRON blockchain. Tatum KMS is not supported for TRON transactions.<br/>
       Tatum supports 2 chains:
       <ul><li>Mainnet - regular live chain
       <li>Shasta Testnet - test chain used for testing purposes. Coins on test chain have no value and can be obtained from
       Faucet, e.g. <a target="_blank" href="https://www.trongrid.io/shasta/">https://www.trongrid.io/shasta/</a></li></ul>
     name: Blockchain / Tron
 paths:
-  /v3/tron/account:
+  /v3/tron/wallet:
     get:
       summary: Generate Tron wallet
       description: |
-        <h4>5 credit per API call.</h4><br/><p>Generate TRON address and private key.</p>
+        <h4>1 credit per API call.</h4><br/><p>Tatum supports BIP44 HD wallets. It is very convenient and secure, since it can generate 2^31 addresses from 1 mnemonic phrase. Mnemonic phrase consists of 24 special words in defined order and can restore access to all generated addresses and private keys.<br/>Each address is identified by 3 main values:<ul><li>Private Key - your secret value, which should never be revealed</li><li>Public Key - public address to be published</li><li>Derivation index - index of generated address</li></ul></p><p>Tatum follows BIP44 specification and generates for Bitcoin wallet with derivation path m'/44'/195'/0'/0. More about BIP44 HD wallets can be found here - <a target="_blank" href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki">https://github.com/tron/bips/blob/master/bip-0044.mediawiki</a>.
+                Generate BIP44 compatible Tron wallet.</p>
       operationId: GenerateTronwallet
+      parameters:
+        - description: "Mnemonic to use for generation of extended public and private keys."
+          in: query
+          name: mnemonic
+          required: false
+          schema:
+            type: string
+            maxLength: 500
       responses:
         200:
           content:
@@ -57,6 +65,98 @@ paths:
       security:
         - X-Api-Key: []
       x-code-samples:
+      tags:
+        - Blockchain / Tron
+  /v3/tron/address/{xpub}/{index}:
+    get:
+      description: |
+        <h4>5 credit per API call.</h4><br/>
+        <p>Generate Tron deposit address from Extended public key. Deposit address is generated for the specific index - each extended public key can generate
+        up to 2^32 addresses starting from index 0 until 2^31.</p>
+      operationId: TronGenerateAddress
+      parameters:
+        - description: "Extended public key of wallet."
+          in: path
+          name: xpub
+          required: true
+          example: xpub6EsCk1uU6cJzqvP9CdsTiJwT2rF748YkPnhv5Qo8q44DG7nn2vbyt48YRsNSUYS44jFCW9gwvD9kLQu9AuqXpTpM1c5hgg9PsuBLdeNncid
+          schema:
+            type: string
+        - description: "Derivation index of desired address to be generated."
+          in: path
+          name: index
+          required: true
+          example: 1
+          schema:
+            type: number
+            minimum: 0
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  address:
+                    type: string
+                    description: Tron address
+                    example: TFFBpkRNro4Pe4154ayGWx7C6Ev7BvQZ6t
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403AccountAddressGeneral"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Generate Tron deposit address from Extended public key
+      tags:
+        - Blockchain / Tron
+  /v3/tron/wallet/priv:
+    post:
+      description: |
+        <h4>10 credit per API call.</h4><br/>
+        <p>Generate private key for address from mnemonic for given derivation path index. Private key is generated for the specific index - each mnemonic
+        can generate up to 2^31 private keys starting from index 0 until 2^31.</p>
+      operationId: TronGenerateAddressPrivateKey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PrivKeyRequest"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PrivKey"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403BlockchainPrivateFailed"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Generate Tron private key
       tags:
         - Blockchain / Tron
   /v3/tron/info:
@@ -869,17 +969,17 @@ components:
     TronWallet:
       type: object
       required:
-        - address
-        - privateKey
+        - mnemonic
+        - xpub
       properties:
-        address:
+        mnemonic:
+          description: Generated mnemonic for wallet.
+          example: "urge pulp usage sister evidence arrest palm math please chief egg abuse"
           type: string
-          description: Public address on the TRON network. You can receive assets on this address.
-          example: TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh
-        privateKey:
+        xpub:
+          description: Generated Extended public key for wallet with derivation path according to BIP44. This key can be used to generate addresses.
+          example: 0244b3f40c6e570ae0032f6d7be87737a6c4e5314a4a1a82e22d0460a0d0cd794936c61f0c80dc74ace4cd04690d4eeb1aa6555883be006e1748306faa7ed3a26a
           type: string
-          description: Private key to the address.
-          example: 842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701
     TronBlock:
       type: object
       properties:
