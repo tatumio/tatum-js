@@ -11,6 +11,7 @@ export * from './TransferVet';
 export * from './TransferXlm';
 export * from './TransferXrp';
 export * from './TransferTron';
+export * from './CreateErc20Offchain';
 export * from './TransferTronTrc10';
 export * from './TransferTronTrc20';
 export * from './CreateTronTrc10';

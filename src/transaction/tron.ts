@@ -13,6 +13,8 @@ import {
     TransferTronTrc10,
     TransferTronTrc20
 } from '../model';
+import Web3 from 'web3';
+import {TATUM_API_URL} from '../constants';
 // tslint:disable-next-line:no-var-requires
 const TronWeb = require('tronweb');
 
@@ -289,6 +291,23 @@ export const prepareTronCreateTrc20SignedTransaction = async (testnet: boolean, 
         name,
     }, tronWeb.address.fromPrivateKey(fromPrivateKey));
     return JSON.stringify(await tronWeb.trx.sign(tx, fromPrivateKey));
+};
+
+/**
+ * Sign Ethereum pending transaction from Tatum KMS
+ * @param tx pending transaction from KMS
+ * @param fromPrivateKey private key to sign transaction with.
+ * @param testnet mainnet or testnet version
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const signTrxKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, testnet: boolean) => {
+    if (tx.chain !== Currency.TRON) {
+        throw Error('Unsupported chain.');
+    }
+    const transactionConfig = JSON.parse(tx.serializedTransaction);
+    const tronWeb = prepareTronWeb(testnet);
+    return JSON.stringify(await tronWeb.trx.sign(transactionConfig, fromPrivateKey));
 };
 
 export const transferHexToBase58Address = (address: string) => prepareTronWeb(true).address.fromHex(address);
