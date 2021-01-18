@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tron-connector",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Tron Connector for Tatum API",
   "license": "MIT",
   "files": [
@@ -35,7 +35,7 @@
   "bugs": "https://github.com/tatumio/tatum-blockchain-connector/",
   "dependencies": {
     "@nestjs/common": "^7.6.1",
-    "@tatumio/tatum": "^1.4.53",
+    "@tatumio/tatum": "^1.5.3",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.12.2",
     "axios": "^0.21.1",

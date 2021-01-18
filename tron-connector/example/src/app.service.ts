@@ -15,4 +15,9 @@ export class AppService extends TronService {
   protected isTestnet(): Promise<boolean> {
     return Promise.resolve(true);
   }
+
+  protected async storeKMSTransaction(txData: string, currency: string, signatureId: string[]): Promise<string> {
+    this.logger.info(txData);
+    return txData;
+  }
 }

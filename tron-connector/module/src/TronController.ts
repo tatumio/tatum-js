@@ -1,6 +1,14 @@
 import {Body, Get, HttpCode, HttpStatus, Param, Post, Query} from '@nestjs/common';
 import {TronService} from './TronService';
-import {BroadcastTx, TransferTron, FreezeTron, TransferTronTrc10,TransferTronTrc20, CreateTronTrc10, CreateTronTrc20} from '@tatumio/tatum';
+import {
+    BroadcastTx,
+    TransferTron,
+    FreezeTron,
+    TransferTronTrc10,
+    TransferTronTrc20,
+    CreateTronTrc10,
+    CreateTronTrc20,
+} from '@tatumio/tatum';
 import {PathAddress} from './dto/PathAddress';
 import {PathTxId} from './dto/PathTxId';
 import {TronError} from './TronError';
