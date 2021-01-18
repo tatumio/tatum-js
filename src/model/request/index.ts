@@ -10,6 +10,8 @@ export * from './TransferEthErc20';
 export * from './TransferVet';
 export * from './TransferXlm';
 export * from './TransferXrp';
+export * from './TransferTrxOffchainKMS';
+export * from './TransferTrxOffchain';
 export * from './TransferTron';
 export * from './TransferTronKMS';
 export * from './CreateErc20Offchain';
