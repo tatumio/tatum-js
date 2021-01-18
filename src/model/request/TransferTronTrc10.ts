@@ -1,10 +1,22 @@
-import {IsNotEmpty, IsNumberString, Length, Matches} from 'class-validator';
+import {IsNotEmpty, IsNumberString, IsUUID, Length, Matches, ValidateIf} from 'class-validator';
 
 export class TransferTronTrc10 {
 
+    @ValidateIf(o => !(o.from || o.signatureId))
     @IsNotEmpty()
     @Length(64, 64)
-    public fromPrivateKey: string;
+    public fromPrivateKey?: string;
+
+    @ValidateIf(o => !o.fromPrivateKey)
+    @IsNotEmpty()
+    @Length(34, 34)
+    public from?: string;
+
+    @ValidateIf(o => !o.fromPrivateKey)
+    @Length(36, 36)
+    @IsUUID('4')
+    @IsNotEmpty()
+    public signatureId?: string;
 
     @IsNotEmpty()
     @Length(34, 34)

@@ -1,22 +1,32 @@
-import {IsInt, IsNotEmpty, Length, Max, Min, ValidateIf} from 'class-validator';
+import {IsInt, IsNotEmpty, IsUUID, Length, Max, Min, ValidateIf} from 'class-validator';
 import {CreateWithdrawal} from './CreateWithdrawal';
 
 export class TransferTrxOffchain extends CreateWithdrawal {
     @Length(1, 500)
     @ValidateIf(o => (o.mnemonic && o.index >= 0 && o.fromPrivateKey) || (o.index >= 0 && o.fromPrivateKey))
     @IsNotEmpty()
-    public mnemonic: string;
+    public mnemonic?: string;
 
     @ValidateIf(o => (o.mnemonic && o.index >= 0 && o.fromPrivateKey) || o.mnemonic)
     @Min(0)
     @IsNotEmpty()
     @IsInt()
     @Max(2147483647)
-    public index: number;
+    public index?: number;
 
     @ValidateIf(o => (o.mnemonic && o.index >= 0 && o.fromPrivateKey) || (!o.mnemonic && !o.index))
     @Length(66, 66)
     @IsNotEmpty()
-    public fromPrivateKey: string;
+    public fromPrivateKey?: string;
 
+    @ValidateIf(o => o.signatureId)
+    @Length(34, 34)
+    @IsNotEmpty()
+    public from?: string;
+
+    @ValidateIf(o => !o.mnemonic && !o.fromPrivateKey)
+    @Length(36, 36)
+    @IsUUID('4')
+    @IsNotEmpty()
+    public signatureId?: string;
 }

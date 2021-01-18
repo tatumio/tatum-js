@@ -5,19 +5,13 @@ import abi from '../contracts/trc20/token_abi';
 import bytecode from '../contracts/trc20/token_bytecode';
 import {
     CreateTronTrc10,
-    CreateTronTrc10KMS,
     CreateTronTrc20,
-    CreateTronTrc20KMS,
     Currency,
     FreezeTron,
-    FreezeTronKMS,
     TransactionKMS,
     TransferTron,
-    TransferTronKMS,
     TransferTronTrc10,
-    TransferTronTrc10KMS,
     TransferTronTrc20,
-    TransferTronTrc20KMS,
 } from '../model';
 // tslint:disable-next-line:no-var-requires
 const TronWeb = require('tronweb');
@@ -303,7 +297,7 @@ export const prepareTronCreateTrc20SignedTransaction = async (testnet: boolean, 
  * @param body content of the transaction to broadcast
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronSignedKMSTransaction = async (testnet: boolean, body: TransferTronKMS) => {
+export const prepareTronSignedKMSTransaction = async (testnet: boolean, body: TransferTron) => {
     await validateOrReject(body);
     const {
         from,
@@ -325,7 +319,7 @@ export const prepareTronSignedKMSTransaction = async (testnet: boolean, body: Tr
  * @param body content of the transaction to broadcast
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronFreezeKMSTransaction = async (testnet: boolean, body: FreezeTronKMS) => {
+export const prepareTronFreezeKMSTransaction = async (testnet: boolean, body: FreezeTron) => {
     await validateOrReject(body);
     const {
         from,
@@ -352,7 +346,7 @@ export const prepareTronFreezeKMSTransaction = async (testnet: boolean, body: Fr
  * @param body content of the transaction to broadcast
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronTrc10SignedKMSTransaction = async (testnet: boolean, body: TransferTronTrc10KMS) => {
+export const prepareTronTrc10SignedKMSTransaction = async (testnet: boolean, body: TransferTronTrc10) => {
     await validateOrReject(body);
     const {
         from,
@@ -376,7 +370,7 @@ export const prepareTronTrc10SignedKMSTransaction = async (testnet: boolean, bod
  * @param body content of the transaction to broadcast
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronTrc20SignedKMSTransaction = async (testnet: boolean, body: TransferTronTrc20KMS) => {
+export const prepareTronTrc20SignedKMSTransaction = async (testnet: boolean, body: TransferTronTrc20) => {
     await validateOrReject(body);
     const {
         from,
@@ -412,7 +406,7 @@ export const prepareTronTrc20SignedKMSTransaction = async (testnet: boolean, bod
  * @param body content of the transaction to broadcast
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronCreateTrc10SignedKMSTransaction = async (testnet: boolean, body: CreateTronTrc10KMS) => {
+export const prepareTronCreateTrc10SignedKMSTransaction = async (testnet: boolean, body: CreateTronTrc10) => {
     await validateOrReject(body);
     const {
         from,
@@ -450,7 +444,7 @@ export const prepareTronCreateTrc10SignedKMSTransaction = async (testnet: boolea
  * @param body content of the transaction to broadcast
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronCreateTrc20SignedKMSTransaction = async (testnet: boolean, body: CreateTronTrc20KMS) => {
+export const prepareTronCreateTrc20SignedKMSTransaction = async (testnet: boolean, body: CreateTronTrc20) => {
     await validateOrReject(body);
     const {
         from,
