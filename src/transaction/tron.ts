@@ -5,16 +5,20 @@ import abi from '../contracts/trc20/token_abi';
 import bytecode from '../contracts/trc20/token_bytecode';
 import {
     CreateTronTrc10,
+    CreateTronTrc10KMS,
     CreateTronTrc20,
+    CreateTronTrc20KMS,
     Currency,
     FreezeTron,
+    FreezeTronKMS,
     TransactionKMS,
     TransferTron,
+    TransferTronKMS,
     TransferTronTrc10,
-    TransferTronTrc20
+    TransferTronTrc10KMS,
+    TransferTronTrc20,
+    TransferTronTrc20KMS,
 } from '../model';
-import Web3 from 'web3';
-import {TATUM_API_URL} from '../constants';
 // tslint:disable-next-line:no-var-requires
 const TronWeb = require('tronweb');
 
@@ -294,11 +298,194 @@ export const prepareTronCreateTrc20SignedTransaction = async (testnet: boolean, 
 };
 
 /**
- * Sign Ethereum pending transaction from Tatum KMS
+ * Prepare Tron transaction for KMS. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareTronSignedKMSTransaction = async (testnet: boolean, body: TransferTronKMS) => {
+    await validateOrReject(body);
+    const {
+        from,
+        to,
+        amount,
+    } = body;
+
+    const tronWeb = prepareTronWeb(testnet);
+    const tx = await tronWeb.transactionBuilder.sendTrx(
+        to,
+        tronWeb.toSun(amount),
+        from);
+    return JSON.stringify(tx);
+};
+
+/**
+ * Prepare Tron Freeze balance transaction for KMS. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareTronFreezeKMSTransaction = async (testnet: boolean, body: FreezeTronKMS) => {
+    await validateOrReject(body);
+    const {
+        from,
+        receiver,
+        amount,
+        resource,
+        duration,
+    } = body;
+
+    const tronWeb = prepareTronWeb(testnet);
+    const tx = await tronWeb.transactionBuilder.freezeBalance(
+        tronWeb.toSun(parseFloat(amount)),
+        duration,
+        resource,
+        from,
+        receiver,
+    );
+    return JSON.stringify(tx);
+};
+
+/**
+ * Prepare Tron TRC10 transaction for KMS. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareTronTrc10SignedKMSTransaction = async (testnet: boolean, body: TransferTronTrc10KMS) => {
+    await validateOrReject(body);
+    const {
+        from,
+        to,
+        tokenId,
+        amount,
+    } = body;
+
+    const tronWeb = prepareTronWeb(testnet);
+    const tx = await tronWeb.transactionBuilder.sendToken(
+        to,
+        new BigNumber(amount).multipliedBy(new BigNumber(10).pow(await getTrc10Precision(tronWeb, tokenId))),
+        tokenId,
+        from);
+    return JSON.stringify(tx);
+};
+
+/**
+ * Prepare Tron TRC20 transaction for KMS. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareTronTrc20SignedKMSTransaction = async (testnet: boolean, body: TransferTronTrc20KMS) => {
+    await validateOrReject(body);
+    const {
+        from,
+        to,
+        tokenAddress,
+        amount,
+        feeLimit,
+    } = body;
+
+    const tronWeb = prepareTronWeb(testnet);
+    tronWeb.setAddress(tokenAddress);
+    const contractInstance = await tronWeb.contract().at(tokenAddress);
+    const decimals = await contractInstance.decimals().call();
+    const {transaction} = await tronWeb.transactionBuilder.triggerSmartContract(
+        tronWeb.address.toHex(tokenAddress),
+        'transfer(address,uint256)',
+        {
+            feeLimit: tronWeb.toSun(feeLimit),
+            from
+        },
+        [{type: 'address', value: tronWeb.address.toHex(to)}, {
+            type: 'uint256',
+            value: `0x${new BigNumber(amount).multipliedBy(new BigNumber(10).pow(decimals)).toString(16)}`
+        }],
+        from
+    );
+    return JSON.stringify(transaction);
+};
+
+/**
+ * Prepare create Tron TRC10 transaction for KMS. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareTronCreateTrc10SignedKMSTransaction = async (testnet: boolean, body: CreateTronTrc10KMS) => {
+    await validateOrReject(body);
+    const {
+        from,
+        name,
+        abbreviation,
+        description,
+        url,
+        totalSupply,
+        decimals,
+    } = body;
+
+    const tronWeb = prepareTronWeb(testnet);
+    const tx = await tronWeb.transactionBuilder.createToken({
+        name,
+        abbreviation,
+        description,
+        url,
+        totalSupply: new BigNumber(totalSupply).multipliedBy(new BigNumber(10).pow(decimals)),
+        trxRatio: 1,
+        tokenRatio: 1,
+        saleStart: Date.now() + 60000,
+        saleEnd: Date.now() + 100000,
+        freeBandwidth: 0,
+        freeBandwidthLimit: 0,
+        frozenAmount: 0,
+        frozenDuration: 0,
+        precision: decimals,
+    }, from);
+    return JSON.stringify(tx);
+};
+
+/**
+ * Prepare create Tron TRC20 transaction for KMS. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareTronCreateTrc20SignedKMSTransaction = async (testnet: boolean, body: CreateTronTrc20KMS) => {
+    await validateOrReject(body);
+    const {
+        from,
+        name,
+        decimals,
+        recipient,
+        symbol,
+        totalSupply,
+    } = body;
+
+    const tronWeb = prepareTronWeb(testnet);
+    const tx = await tronWeb.transactionBuilder.createSmartContract({
+        feeLimit: 1000000000,
+        callValue: 0,
+        userFeePercentage: 100,
+        originEnergyLimit: 1,
+        abi: JSON.stringify(abi),
+        bytecode,
+        parameters: [
+            name,
+            symbol,
+            decimals,
+            tronWeb.address.toHex(recipient),
+            totalSupply,
+        ],
+        name,
+    }, from);
+    return JSON.stringify(tx);
+};
+
+/**
+ * Sign Tron pending transaction from Tatum KMS
  * @param tx pending transaction from KMS
  * @param fromPrivateKey private key to sign transaction with.
  * @param testnet mainnet or testnet version
- * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
 export const signTrxKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, testnet: boolean) => {

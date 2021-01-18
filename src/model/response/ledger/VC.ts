@@ -3,6 +3,8 @@
  * @export
  * @interface VC
  */
+import {TrcType} from '../../request/TrcType';
+
 export interface VC {
     /**
      * Exchange rate of the base pair. Each unit of the created curency will represent value of baseRate*1 basePair.
@@ -64,6 +66,18 @@ export interface VC {
      * @memberof VC
      */
     chain?: string;
+    /**
+     * Number of decimal places for Tron based assets
+     * @type {number}
+     * @memberof VC
+     */
+    precision?: number;
+    /**
+     * In ase of Tron based VC, this is type of TRC token.
+     * @type {string}
+     * @memberOf VC
+     */
+    trcType?: TrcType;
     /**
      * Ethereum address, where initial supply was minted.
      * @type {string}

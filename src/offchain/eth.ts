@@ -102,7 +102,6 @@ export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: Tr
     }
 };
 
-
 /**
  * Sign Ethereum pending transaction from Tatum KMS
  * @param tx pending transaction from KMS
