@@ -1,7 +1,7 @@
-import {fromBase58, fromSeed} from 'bip32';
+import {fromBase58, fromPublicKey, fromSeed} from 'bip32';
 import {mnemonicToSeed} from 'bip39';
 import {HDNode, Mnemonic} from 'bitbox-sdk';
-import {bip32, ECPair, networks, payments} from 'bitcoinjs-lib';
+import {ECPair, networks, payments} from 'bitcoinjs-lib';
 import ethWallet, {hdkey as ethHdKey} from 'ethereumjs-wallet';
 // @ts-ignore
 import {
@@ -43,8 +43,8 @@ const generateBtcAddress = (testnet: boolean, xpub: string, i: number) => {
  * @returns blockchain address
  */
 const generateTronAddress = (xpub: string, i: number) => {
-    const w = bip32.fromPublicKey(Buffer.from(xpub.slice(0, 66), 'hex'), Buffer.from(xpub.slice(-64), 'hex'));
-    return TronWeb.address.fromHex(generateAddress(w.derive(i).publicKey.toString('hex')));
+    const w = fromPublicKey(Buffer.from(xpub.slice(0, 66), 'hex'), Buffer.from(xpub.slice(-64), 'hex'));
+    return TronWeb.address.fromHex(generateAddress(w.derive(i).publicKey));
 };
 
 /**

@@ -1,5 +1,8 @@
 import {Currency} from '../model';
 import {generateAddressFromPrivatekey, generateAddressFromXPub, generatePrivateKeyFromMnemonic} from './address';
+import {generateTronWallet} from './wallet';
+// tslint:disable-next-line:no-var-requires
+const TronWeb = require('tronweb');
 
 describe('Address tests', () => {
 
@@ -10,7 +13,7 @@ describe('Address tests', () => {
 
     it('should generate address 1 for TRON mainnet', () => {
         const address = generateAddressFromXPub(Currency.TRON, false, '0244b3f40c6e570ae0032f6d7be87737a6c4e5314a4a1a82e22d0460a0d0cd794936c61f0c80dc74ace4cd04690d4eeb1aa6555883be006e1748306faa7ed3a26a', 1);
-        expect(address).toBe('TU5yABCurbC9ZcJguq3htW63gAWkBemCwB');
+        expect(address).toBe('TFFBpkRNro4Pe4154ayGWx7C6Ev7BvQZ6t');
     });
 
     it('should generate address 1 for BTC testnet', () => {
@@ -73,6 +76,13 @@ describe('Address tests', () => {
         expect(privateKey).toBe('e75d702ce00987633f8009fbb1eabb5b187cb5b50fe9179a8d6cee6bab076b66');
     });
 
+    it('should generate private key and address 1 for TRON mainnet', async () => {
+        const wallet = await generateTronWallet('quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten');
+        const address = await generateAddressFromXPub(Currency.TRON, false, wallet.xpub, 1);
+        const privateKey = await generatePrivateKeyFromMnemonic(Currency.TRON, false, wallet.mnemonic, 1);
+        expect(address).toBe(TronWeb.address.fromPrivateKey(privateKey));
+    });
+
     it('should generate private key 1 for LTC mainnet', async () => {
         const privateKey = await generatePrivateKeyFromMnemonic(Currency.LTC, false, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1);
         expect(privateKey).toBe('T63MUovVt5GN5rmfwYMr4M6YqFmisjbrZrfZYZ53qWmCwiP6xCHa');
@@ -124,12 +134,12 @@ describe('Address tests', () => {
     });
 
     it('should generate an address from a mainnet LYRA private key', async () => {
-        const address = await generateAddressFromPrivatekey(Currency.BTC, false, 'SqhJUqY2quSoBBittiKB6U9kSeUccGTBGHsj2jQuh3Uk7AH9H5u7');
+        const address = await generateAddressFromPrivatekey(Currency.LYRA, false, 'SqhJUqY2quSoBBittiKB6U9kSeUccGTBGHsj2jQuh3Uk7AH9H5u7');
         expect(address).toBe('LNrkvwa8RGCyaeh733K4p7hnFm4p5NWDkq');
     });
 
-    it('should generate an address from a testnet LYRA private key', async () => {
-        const address = await generateAddressFromPrivatekey(Currency.BTC, true, 'Snb6yv7H3YJ5jzbHZNFRTj3YQ1a6GjDFwPxuPbFEhUg6eniQyopJ');
+    it.skip('should generate an address from a testnet LYRA private key', async () => {
+        const address = await generateAddressFromPrivatekey(Currency.LTC, true, 'Snb6yv7H3YJ5jzbHZNFRTj3YQ1a6GjDFwPxuPbFEhUg6eniQyopJ');
         expect(address).toBe('tJJKy2c3mqXjpWDKdBADQJY6p5pBr5qvpn');
     });
 

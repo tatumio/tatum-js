@@ -1,4 +1,5 @@
 /* tslint:disable:no-bitwise */
+import {ec as EC} from 'elliptic';
 import {keccak_256} from 'js-sha3';
 
 const hexChar2byte = (c: string) => {
@@ -24,7 +25,7 @@ const isHexChar = (c: string) => {
     return 0;
 };
 
-const hexStr2byteArray = (str: string) => {
+export const hexStr2byteArray = (str: string) => {
     const byteArray = Array();
     let d = 0;
     let j = 0;
@@ -60,8 +61,7 @@ const byte2hexStr = byte => {
 };
 
 
-// @ts-ignore
-const byteArray2hexStr = byteArray => {
+const byteArray2hexStr = (byteArray: Uint8Array) => {
     let str = '';
 
     for (let i = 0; i < (byteArray.length); i++)
@@ -70,8 +70,7 @@ const byteArray2hexStr = byteArray => {
     return str;
 };
 
-// @ts-ignore
-const computeAddress = pubBytes => {
+const computeAddress = (pubBytes: Uint8Array) => {
     if (pubBytes.length === 65)
         pubBytes = pubBytes.slice(1);
 
@@ -81,5 +80,22 @@ const computeAddress = pubBytes => {
     return hexStr2byteArray(addressHex);
 };
 
+export const generatePubKey = (bytes: Buffer) => {
+    const ec = new EC('secp256k1');
+    const key = ec.keyFromPublic(bytes, 'bytes');
+    const pubkey = key.getPublic();
+    const x = pubkey.getX();
+    const y = pubkey.getY();
+    let xHex = x.toString('hex');
+    while (xHex.length < 64) {
+        xHex = '0' + xHex;
+    }
+    let yHex = y.toString('hex');
+    while (yHex.length < 64) {
+        yHex = '0' + yHex;
+    }
+    return '04' + xHex + yHex;
+};
+
 // @ts-ignore
-export const generateAddress = (publicKey) => byteArray2hexStr(computeAddress(publicKey));
+export const generateAddress = (publicKey) => byteArray2hexStr(computeAddress(hexStr2byteArray(generatePubKey(publicKey))));
