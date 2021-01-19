@@ -63,7 +63,7 @@ paths:
                 $ref: "#/components/schemas/Error500"
           description: Internal server error. There was an error on the server during the processing of the request.
       security:
-        - X-Api-Key: []
+        - X-Api-Key: [ ]
       x-code-samples:
       tags:
         - Blockchain / Tron
@@ -347,7 +347,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/TransferTronBlockchain"
+              oneOf:
+                - $ref: "#/components/schemas/TransferTronBlockchain"
+                - $ref: "#/components/schemas/TransferTronBlockchainKMS"
         required: true
       responses:
         200:
@@ -389,7 +391,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/FreezeTron"
+              oneOf:
+                - $ref: "#/components/schemas/FreezeTron"
+                - $ref: "#/components/schemas/FreezeTronKMS"
         required: true
       responses:
         200:
@@ -431,7 +435,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/TransferTronTrc10Blockchain"
+              oneOf:
+                - $ref: "#/components/schemas/TransferTronTrc10Blockchain"
+                - $ref: "#/components/schemas/TransferTronTrc10BlockchainKMS"
         required: true
       responses:
         200:
@@ -473,7 +479,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateTronTrc10Blockchain"
+              oneOf:
+                - $ref: "#/components/schemas/CreateTronTrc10Blockchain"
+                - $ref: "#/components/schemas/CreateTronTrc10BlockchainKMS"
         required: true
       responses:
         200:
@@ -554,7 +562,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/TransferTronTrc20Blockchain"
+              oneOf:
+                - $ref: "#/components/schemas/TransferTronTrc20Blockchain"
+                - $ref: "#/components/schemas/TransferTronTrc20BlockchainKMS"
         required: true
       responses:
         200:
@@ -596,7 +606,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateTronTrc20Blockchain"
+              oneOf:
+                - $ref: "#/components/schemas/CreateTronTrc20Blockchain"
+                - $ref: "#/components/schemas/CreateTronTrc20BlockchainKMS"
         required: true
       responses:
         200:
@@ -693,6 +705,38 @@ components:
         - fromPrivateKey
         - to
         - amount
+    TransferTronBlockchainKMS:
+      type: object
+      properties:
+        from:
+          type: string
+          minLength: 34
+          maxLength: 34
+          description: Sender address of TRON account in Base58 format.
+          example: TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh
+        signatureId:
+          type: string
+          minimum: 36
+          maximum: 36
+          format: uuid
+          example: 1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        to:
+          type: string
+          minLength: 34
+          maxLength: 34
+          description: Recipient address of TRON account in Base58 format.
+          example: TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh
+        amount:
+          description: Amount to be sent in TRX.
+          example: "100000"
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+          type: string
+      required:
+        - from
+        - signatureId
+        - to
+        - amount
     TransferTronTrc10Blockchain:
       type: object
       properties:
@@ -721,6 +765,45 @@ components:
           type: string
       required:
         - fromPrivateKey
+        - tokenId
+        - to
+        - amount
+    TransferTronTrc10BlockchainKMS:
+      type: object
+      properties:
+        from:
+          type: string
+          minLength: 34
+          maxLength: 34
+          description: Sender address of TRON account in Base58 format.
+          example: TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh
+        signatureId:
+          type: string
+          minimum: 36
+          maximum: 36
+          format: uuid
+          example: 1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        to:
+          type: string
+          minLength: 34
+          maxLength: 34
+          description: Recipient address of TRON account in Base58 format.
+          example: TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh
+        tokenId:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: ID of the token to transfer.
+          example: "1000538"
+        amount:
+          description: Amount to be sent in TRX.
+          example: "100000"
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+          type: string
+      required:
+        - from
+        - signatureId
         - tokenId
         - to
         - amount
@@ -757,6 +840,51 @@ components:
           type: string
       required:
         - fromPrivateKey
+        - tokenAddress
+        - to
+        - amount
+        - feeLimit
+    TransferTronTrc20BlockchainKMS:
+      type: object
+      properties:
+        from:
+          type: string
+          minLength: 34
+          maxLength: 34
+          description: Sender address of TRON account in Base58 format.
+          example: TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh
+        signatureId:
+          type: string
+          minimum: 36
+          maximum: 36
+          format: uuid
+          example: 1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        to:
+          type: string
+          minLength: 34
+          maxLength: 34
+          description: Recipient address of TRON account in Base58 format.
+          example: TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh
+        tokenAddress:
+          type: string
+          minLength: 34
+          maxLength: 34
+          description: Address of the TRC20 token to transfer.
+          example: "TVAEYCmc15awaDRAjUZ1kvcHwQQaoPw2CW"
+        feeLimit:
+          type: number
+          minimum: 0
+          description: Fee in TRX to be paid.
+          example: 0.01
+        amount:
+          description: Amount to be sent in TRX.
+          example: "100000"
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+          type: string
+      required:
+        - from
+        - signatureId
         - tokenAddress
         - to
         - amount
@@ -801,6 +929,59 @@ components:
           example: 10
       required:
         - fromPrivateKey
+        - name
+        - recipient
+        - symbol
+        - totalSupply
+        - decimals
+    CreateTronTrc20BlockchainKMS:
+      type: object
+      properties:
+        from:
+          type: string
+          minLength: 34
+          maxLength: 34
+          description: Sender address of TRON account in Base58 format.
+          example: TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh
+        signatureId:
+          type: string
+          minimum: 36
+          maximum: 36
+          format: uuid
+          example: 1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        recipient:
+          type: string
+          minLength: 34
+          maxLength: 34
+          description: Recipient address of created TRC20 tokens.
+          example: TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Name of the token.
+          example: My token
+        symbol:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Symbol of the token.
+          example: SYM
+        totalSupply:
+          type: number
+          minimum: 0
+          description: Total supply of the tokens.
+          example: 100000
+        decimals:
+          type: number
+          minimum: 0
+          maximum: 30
+          description: Number of decimal places of the token.
+          example: 10
+      required:
+        - from
+        - signatureId
         - name
         - recipient
         - symbol
@@ -858,6 +1039,73 @@ components:
           example: 10
       required:
         - fromPrivateKey
+        - recipient
+        - name
+        - abbreviation
+        - description
+        - url
+        - totalSupply
+        - decimals
+    CreateTronTrc10BlockchainKMS:
+      type: object
+      properties:
+        from:
+          type: string
+          minLength: 34
+          maxLength: 34
+          description: Sender address of TRON account in Base58 format.
+          example: TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh
+        signatureId:
+          type: string
+          minimum: 36
+          maximum: 36
+          format: uuid
+          example: 1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        recipient:
+          type: string
+          minLength: 34
+          maxLength: 34
+          description: Recipient address of created TRC20 tokens.
+          example: TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Name of the token.
+          example: My token
+        abbreviation:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Abbreviation of the token.
+          example: SYM
+        description:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Description of the token.
+          example: My short description
+        url:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: URL of the token.
+          example: https://mytoken.com
+        totalSupply:
+          type: number
+          minimum: 0
+          description: Total supply of the tokens.
+          example: 100000
+        decimals:
+          type: number
+          minimum: 0
+          maximum: 5
+          description: Number of decimal places of the token.
+          example: 10
+      required:
+        - from
+        - signatureId
         - recipient
         - name
         - abbreviation
@@ -943,6 +1191,52 @@ components:
           type: string
       required:
         - fromPrivateKey
+        - receiver
+        - resource
+        - duration
+        - amount
+    FreezeTronKMS:
+      type: object
+      properties:
+        from:
+          type: string
+          minLength: 34
+          maxLength: 34
+          description: Sender address of TRON account in Base58 format.
+          example: TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh
+        signatureId:
+          type: string
+          minimum: 36
+          maximum: 36
+          format: uuid
+          example: 1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        receiver:
+          type: string
+          minLength: 34
+          maxLength: 34
+          description: Recipient address of frozen BANDWIDTH or ENERGY.
+          example: TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh
+        duration:
+          type: number
+          description: Duration of frozen funds, in days.
+          example: 3
+          minimum: 3
+        resource:
+          type: string
+          description: Resource to obtain, BANDWIDTH or ENERGY.
+          example: ENERGY
+          enum:
+            - BANDWIDTH
+            - ENERGY
+        amount:
+          description: Amount to be frozen in TRX.
+          example: "100000"
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+          type: string
+      required:
+        - from
+        - signatureId
         - receiver
         - resource
         - duration
