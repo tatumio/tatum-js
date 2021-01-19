@@ -134,11 +134,11 @@ export abstract class TronService {
     }
 
     public async generateAddress(xpub: string, i: number) {
-        return generateAddressFromXPub(Currency.TRON, await this.isTestnet(), xpub, i);
+        return {address: await generateAddressFromXPub(Currency.TRON, await this.isTestnet(), xpub, i)};
     }
 
     public async generatePrivateKey(mnemonic: string, i: number) {
-        return generatePrivateKeyFromMnemonic(Currency.TRON, await this.isTestnet(), mnemonic, i);
+        return {key: await generatePrivateKeyFromMnemonic(Currency.TRON, await this.isTestnet(), mnemonic, i)};
     }
 
     public async sendTransaction(body: TransferTron) {
