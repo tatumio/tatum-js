@@ -7,12 +7,18 @@ import {
     FreezeTron,
     generateAddressFromXPub,
     generatePrivateKeyFromMnemonic,
-    generateTronWallet, prepareTronCreateTrc10SignedKMSTransaction,
-    prepareTronCreateTrc10SignedTransaction, prepareTronCreateTrc20SignedKMSTransaction,
-    prepareTronCreateTrc20SignedTransaction, prepareTronFreezeKMSTransaction,
-    prepareTronFreezeTransaction, prepareTronSignedKMSTransaction,
-    prepareTronSignedTransaction, prepareTronTrc10SignedKMSTransaction,
-    prepareTronTrc10SignedTransaction, prepareTronTrc20SignedKMSTransaction,
+    generateWallet,
+    prepareTronCreateTrc10SignedKMSTransaction,
+    prepareTronCreateTrc10SignedTransaction,
+    prepareTronCreateTrc20SignedKMSTransaction,
+    prepareTronCreateTrc20SignedTransaction,
+    prepareTronFreezeKMSTransaction,
+    prepareTronFreezeTransaction,
+    prepareTronSignedKMSTransaction,
+    prepareTronSignedTransaction,
+    prepareTronTrc10SignedKMSTransaction,
+    prepareTronTrc10SignedTransaction,
+    prepareTronTrc20SignedKMSTransaction,
     prepareTronTrc20SignedTransaction,
     TransferTron,
     TransferTronTrc10,
@@ -123,8 +129,8 @@ export abstract class TronService {
         };
     }
 
-    public generateWallet(mnem?: string) {
-        return generateTronWallet(mnem);
+    public async generateWallet(mnem?: string) {
+        return generateWallet(Currency.TRON, await this.isTestnet(), mnem);
     }
 
     public async generateAddress(xpub: string, i: number) {
