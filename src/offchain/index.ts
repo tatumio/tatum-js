@@ -6,3 +6,4 @@ export * from './bcash';
 export * from './eth';
 export * from './xrp';
 export * from './xlm';
+export * from './tron';
