@@ -11,7 +11,7 @@ import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} fr
  * This operation is irreversible.
  * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
- * @returns transaction id of the transaction in the blockchain
+ * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendLitecoinOffchainTransaction = async (testnet: boolean, body: TransferBtcBasedOffchain) => {
     await validateOrReject(body);
@@ -37,7 +37,12 @@ export const sendLitecoinOffchainTransaction = async (testnet: boolean, body: Tr
         return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.LTC}), id};
     } catch (e) {
         console.error(e);
-        await offchainCancelWithdrawal(id);
+        try {
+            await offchainCancelWithdrawal(id);
+        } catch (e1) {
+            console.log(e);
+            return {id};
+        }
         throw e;
     }
 };

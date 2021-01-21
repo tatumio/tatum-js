@@ -19,6 +19,7 @@ export * from './CreateTronTrc10';
 export * from './CreateTronTrc20';
 export * from './FreezeTron';
 export * from './BroadcastTx';
+export * from './TrcType';
 export * from './TransferBtcBasedOffchain';
 export * from './CreateWithdrawal';
 export * from './BroadcastWithdrawal';

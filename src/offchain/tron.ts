@@ -1,8 +1,6 @@
 import {validateOrReject} from 'class-validator';
 import {getAccountById, getVirtualCurrencyByName} from '../ledger';
-import {Currency} from '../model/request';
-import {TransferTrxOffchain} from '../model/request/TransferTrxOffchain';
-import {TrcType} from '../model/request/TrcType';
+import {Currency, TransferTrxOffchain, TrcType} from '../model/request';
 import {
     prepareTronSignedTransaction,
     prepareTronTrc10SignedTransaction,
@@ -17,7 +15,7 @@ import {CONTRACT_ADDRESSES} from '../constants';
  * This operation is irreversible.
  * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
- * @returns transaction id of the transaction in the blockchain
+ * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendTronOffchainTransaction = async (testnet: boolean, body: TransferTrxOffchain) => {
     await validateOrReject(body);
@@ -75,7 +73,11 @@ export const sendTronOffchainTransaction = async (testnet: boolean, body: Transf
         return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.TRON}), id};
     } catch (e) {
         console.error(e);
-        await offchainCancelWithdrawal(id);
-        throw e;
+        try {
+            await offchainCancelWithdrawal(id);
+        } catch (e1) {
+            console.log(e);
+            return {id};
+        }
     }
 };

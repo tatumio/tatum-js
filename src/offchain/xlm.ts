@@ -9,7 +9,7 @@ import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} fr
  * This operation is irreversible.
  * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
- * @returns transaction id of the transaction in the blockchain
+ * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendXlmOffchainTransaction = async (testnet: boolean, body: TransferXlmOffchain) => {
     await validateOrReject(body);
@@ -38,7 +38,12 @@ export const sendXlmOffchainTransaction = async (testnet: boolean, body: Transfe
         return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.XLM}), id};
     } catch (e) {
         console.error(e);
-        await offchainCancelWithdrawal(id);
+        try {
+            await offchainCancelWithdrawal(id);
+        } catch (e1) {
+            console.log(e);
+            return {id};
+        }
         throw e;
     }
 };

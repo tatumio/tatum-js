@@ -16,7 +16,7 @@ import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} fr
  * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
- * @returns transaction id of the transaction in the blockchain
+ * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendEthOffchainTransaction = async (testnet: boolean, body: TransferEthOffchain, provider?: string) => {
     await validateOrReject(body);
@@ -48,7 +48,12 @@ export const sendEthOffchainTransaction = async (testnet: boolean, body: Transfe
         return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.ETH}), id};
     } catch (e) {
         console.error(e);
-        await offchainCancelWithdrawal(id);
+        try {
+            await offchainCancelWithdrawal(id);
+        } catch (e1) {
+            console.log(e);
+            return {id};
+        }
         throw e;
     }
 };
@@ -59,7 +64,7 @@ export const sendEthOffchainTransaction = async (testnet: boolean, body: Transfe
  * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
- * @returns transaction id of the transaction in the blockchain
+ * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: TransferEthErc20Offchain, provider?: string) => {
     await validateOrReject(body);
@@ -97,7 +102,12 @@ export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: Tr
         return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.ETH}), id};
     } catch (e) {
         console.error(e);
-        await offchainCancelWithdrawal(id);
+        try {
+            await offchainCancelWithdrawal(id);
+        } catch (e1) {
+            console.log(e);
+            return {id};
+        }
         throw e;
     }
 };
