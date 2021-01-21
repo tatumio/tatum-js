@@ -78,10 +78,12 @@ export const CONTRACT_ADDRESSES = {
     [Currency.PLTC.toString()]: '0x429d83bb0dcb8cdd5311e34680adc8b12070a07f',
     [Currency.MMY.toString()]: '0x385ddf50c3de724f6b8ecb41745c29f9dd3c6d75',
     [Currency.XCON.toString()]: '0x0f237d5ea7876e0e2906034d98fdb20d43666ad4',
+    [Currency.USDT_TRON.toString()]: 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t',
 };
 
 export const CONTRACT_DECIMALS = {
     [Currency.USDT.toString()]: 6,
+    [Currency.USDT_TRON.toString()]: 6,
     [Currency.WBTC.toString()]: 8,
     [Currency.LEO.toString()]: 18,
     [Currency.LINK.toString()]: 18,

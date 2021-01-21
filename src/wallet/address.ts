@@ -261,6 +261,7 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
         case Currency.BTC:
             return generateBtcAddress(testnet, xpub, i);
         case Currency.TRON:
+        case Currency.USDT_TRON:
             return generateTronAddress(xpub, i);
         case Currency.LTC:
             return generateLtcAddress(testnet, xpub, i);
@@ -309,6 +310,7 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
         case Currency.BCH:
             return generateBchPrivateKey(testnet, mnemonic, i);
         case Currency.TRON:
+        case Currency.USDT_TRON:
             return generateTronPrivateKey(mnemonic, i);
         case Currency.USDT:
         case Currency.WBTC:

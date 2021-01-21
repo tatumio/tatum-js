@@ -10,6 +10,7 @@ import {
 } from '../transaction';
 import {generatePrivateKeyFromMnemonic} from '../wallet';
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
+import {CONTRACT_ADDRESSES} from '../constants';
 
 /**
  * Send Tron transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -34,32 +35,41 @@ export const sendTronOffchainTransaction = async (testnet: boolean, body: Transf
         throw new Error('No mnemonic or private key is present.');
     }
 
+    withdrawal.fee = withdrawal.fee || '1.5';
     const account = await getAccountById(withdrawal.senderAccountId);
     let txData;
     if (account.currency === Currency.TRON) {
         txData = await prepareTronSignedTransaction(testnet, {amount, fromPrivateKey: fromPriv, to: address});
+    }
+    if (account.currency === Currency.USDT_TRON) {
+        txData = await prepareTronTrc20SignedTransaction(testnet, {
+            amount,
+            fromPrivateKey: fromPriv,
+            to: address,
+            tokenAddress: CONTRACT_ADDRESSES[Currency.USDT],
+            feeLimit: parseFloat(withdrawal.fee),
+        });
     } else {
         const vc = await getVirtualCurrencyByName(account.currency);
         if (vc.trcType === TrcType.TRC10) {
             txData = await prepareTronTrc10SignedTransaction(testnet, {
                 amount,
                 fromPrivateKey: fromPriv,
-                to: withdrawal.address,
+                to: address,
                 tokenId: vc.erc20Address as string,
             });
         } else if (vc.trcType === TrcType.TRC20) {
             txData = await prepareTronTrc20SignedTransaction(testnet, {
                 amount,
-                feeLimit: 1,
+                feeLimit: parseFloat(withdrawal.fee),
                 fromPrivateKey: fromPriv,
-                to: withdrawal.address,
+                to: address,
                 tokenAddress: vc.erc20Address as string
             });
         } else {
             throw new Error('Unsupported account.');
         }
     }
-    withdrawal.fee = '1';
     const {id} = await offchainStoreWithdrawal(withdrawal);
     try {
         return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.TRON}), id};

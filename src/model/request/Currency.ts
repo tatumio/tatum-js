@@ -9,6 +9,7 @@ export enum Currency {
     NEO = 'NEO',
     BNB = 'BNB',
     USDT = 'USDT',
+    USDT_TRON = 'USDT_TRON',
     TRON = 'TRON',
     LEO = 'LEO',
     LINK = 'LINK',
