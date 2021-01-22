@@ -104,7 +104,7 @@ export const signTronKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
     }
     const tronWeb = prepareTronWeb(testnet);
     const transactionConfig = JSON.parse(tx.serializedTransaction);
-    return await tronWeb.trx.sign(transactionConfig, fromPrivateKey);
+    return JSON.stringify(await tronWeb.trx.sign(transactionConfig, fromPrivateKey));
 };
 
 /**
