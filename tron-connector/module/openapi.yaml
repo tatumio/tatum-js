@@ -1000,7 +1000,7 @@ components:
           type: string
           minLength: 34
           maxLength: 34
-          description: Recipient address of created TRC20 tokens.
+          description: Recipient address of created TRC 10 tokens.
           example: TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh
         name:
           type: string
@@ -1066,7 +1066,7 @@ components:
           type: string
           minLength: 34
           maxLength: 34
-          description: Recipient address of created TRC20 tokens.
+          description: Recipient address of created TRC 10 tokens.
           example: TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh
         name:
           type: string
