@@ -16,8 +16,20 @@ export class AppService extends TronService {
     return Promise.resolve(true);
   }
 
-  protected async storeKMSTransaction(txData: string, currency: string, signatureId: string[]): Promise<string> {
+  protected async storeKMSTransaction(
+    txData: string,
+    currency: string,
+    signatureId: string[],
+  ): Promise<string> {
     this.logger.info(txData);
     return txData;
+  }
+
+  protected completeKMSTransaction(
+    txId: string,
+    signatureId: string,
+  ): Promise<void> {
+    this.logger.info(txId);
+    return Promise.resolve();
   }
 }

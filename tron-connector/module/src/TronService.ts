@@ -55,10 +55,20 @@ export abstract class TronService {
 
     protected abstract storeKMSTransaction(txData: string, currency: string, signatureId: string[]): Promise<string>;
 
+    protected abstract completeKMSTransaction(txId: string, signatureId: string): Promise<void>;
+
     public async broadcast(txData: string, signatureId?: string) {
         const url = (await this.getNodesUrl(await this.isTestnet()))[0];
         const broadcast = (await axios.post(`${url}/wallet/broadcasttransaction`, JSON.parse(txData))).data;
         if (broadcast.result) {
+            if (signatureId) {
+                try {
+                    await this.completeKMSTransaction(broadcast.txid, signatureId);
+                } catch (e) {
+                    this.logger.error(e);
+                    return {txId: broadcast.txid, failed: true};
+                }
+            }
             return {txId: broadcast.txid};
         }
         throw new Error(`Broadcast failed due to ${broadcast.message}`);
