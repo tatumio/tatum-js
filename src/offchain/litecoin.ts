@@ -102,13 +102,16 @@ export const prepareLitecoinSignedOffchainTransaction =
         } else {
             tx.addOutput(address, Number(new BigNumber(amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
         }
-        if (mnemonic && !changeAddress) {
-            const {xpub} = await generateLtcWallet(testnet, mnemonic);
-            tx.addOutput(generateAddressFromXPub(Currency.LTC, testnet, xpub, 0), Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
-        } else if (changeAddress) {
-            tx.addOutput(changeAddress, Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
-        } else {
-            throw new Error('Impossible to prepare transaction. Either mnemonic or keyPair and attr must be present.');
+        if (new BigNumber(lastVin.amount).isGreaterThan(0)) {
+            if (mnemonic && !changeAddress) {
+                const {xpub} = await generateLtcWallet(testnet, mnemonic);
+                tx.addOutput(generateAddressFromXPub(Currency.LTC, testnet, xpub, 0),
+                    Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+            } else if (changeAddress) {
+                tx.addOutput(changeAddress, Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+            } else {
+                throw new Error('Impossible to prepare transaction. Either mnemonic or keyPair and attr must be present.');
+            }
         }
         for (const [i, input] of data.entries()) {
             // when there is no address field present, input is pool transfer to 0
