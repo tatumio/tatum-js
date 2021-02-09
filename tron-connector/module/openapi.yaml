@@ -250,7 +250,7 @@ paths:
           required: true
           schema:
             type: string
-            example: 41a8bf62780c7bebc539610228e153c90eb249ef38
+            example: TGDqQAP5bduoPKVgdbk7fGyW4DwEt3RRn8
         - in: query
           name: next
           description: If
@@ -276,6 +276,43 @@ paths:
                     description: List of transactions.
                     items:
                       $ref: "#/components/schemas/TronTx"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403Tron"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+  /v3/tron/account/{address}:
+    get:
+      tags:
+        - Blockchain / Tron
+      summary: Get Tron Account by address
+      description: <h4>5 credits per API call.</h4><br/><p>Get Tron account by address.</p>
+      operationId: TronGetAccount
+      parameters:
+        - in: path
+          name: address
+          required: true
+          description: Account address.
+          schema:
+            type: string
+            example: TGDqQAP5bduoPKVgdbk7fGyW4DwEt3RRn8
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TronAccount"
           description: OK
         400:
           <<: *API400
@@ -1428,3 +1465,62 @@ components:
             - contract
             - timestamp
             - expiration
+    TronAccount:
+      type: object
+      required:
+        - address
+        - freeNetUsage
+        - balance
+        - trc10
+        - trc20
+        - createTime
+      properties:
+        address:
+          type: string
+          description: Account address
+          example: TGDqQAP5bduoPKVgdbk7fGyW4DwEt3RRn8
+        freeNetUsage:
+          type: number
+          description: Free usage of the network
+          example: 1900
+        balance:
+          type: number
+          description: Balance of the TRX, in SUN. SUN is 1/1000000 TRX.
+          example: 2342342
+        trc10:
+          type: array
+          items:
+            type: object
+            description: Balance of the TRC10 assets.
+            properties:
+              key:
+                type: string
+                description: Name of the TRC10 asset.
+                example: TEST_TRC_10
+              value:
+                type: number
+                description: Balance of the TRC10 asset.
+                example: 123
+            required:
+              - key
+              - value
+        trc20:
+          type: array
+          items:
+            type: object
+            description: Balance of the TRC20 assets. It is structured as key value array, where key is the address of the TRC20 and value is the balance.
+            example:
+              TRkuKAxmWZ4G74MvZnFpoosQZsfvtNpmwH: "30958"
+              TVKXY8DJ9aVTcg3wwVrRRs2FbTUwi4UZWR: "70000"
+        createTime:
+          type: number
+          description: Date of creation of the account in UTC millis.
+          example: 1602848895000
+        assetIssuedId:
+          type: string
+          description: ID of the issued TRC10 token, if any.
+          example: "1003475"
+        assetIssuedName:
+          type: number
+          description: Balance of the issued TRC10 token, if any.
+          example: 100

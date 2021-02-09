@@ -109,20 +109,20 @@ export abstract class TronService {
 
     public async getAccount(address: string): Promise<TronAccount> {
         const url = (await this.getNodesUrl(await this.isTestnet()))[0];
-        const accounts = (await axios.post(`${url}/wallet/getaccount`, {address, visible: address.length === 34})).data;
-        if (!accounts.data?.length) {
-            throw new Error('No such account.');
+        const {data} = (await axios.get(`${url}/v1/accounts/${address}`)).data;
+        if (!data?.length) {
+            throw new Error('no such account.');
         }
-        const acc = accounts.data[0];
+        const account = data[0];
         return {
-            address: acc.add,
-            assetIssuedId: acc.asset_issued_ID,
-            assetIssuedName: acc.asset_issued_name,
-            balance: acc.balance,
-            createTime: acc.create_time,
-            freeNetUsage: acc.free_net_usage,
-            trc10: acc.assetV2,
-            trc20: acc.trc20,
+            address: account.add,
+            assetIssuedId: account.asset_issued_ID,
+            assetIssuedName: account.asset_issued_name,
+            balance: account.balance,
+            createTime: account.create_time,
+            freeNetUsage: account.free_net_usage,
+            trc10: account.assetV2,
+            trc20: account.trc20,
         };
     }
 
