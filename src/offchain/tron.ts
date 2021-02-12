@@ -55,7 +55,7 @@ export const sendTronOffchainTransaction = async (testnet: boolean, body: Transf
                 fromPrivateKey: fromPriv,
                 to: address,
                 tokenId: vc.erc20Address as string,
-            });
+            }, vc.precision);
         } else if (vc.trcType === TrcType.TRC20) {
             txData = await prepareTronTrc20SignedTransaction(testnet, {
                 amount,

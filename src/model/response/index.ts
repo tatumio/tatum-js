@@ -21,6 +21,7 @@ export * from './vet/VetTx';
 export * from './vet/VetTxReceipt';
 export * from './offchain/Address';
 export * from './offchain/WithdrawalResponse';
+export * from './offchain/Withdrawal';
 export * from './ledger/AccountBalance';
 export * from './ledger/Account';
 export * from './ledger/Fiat';

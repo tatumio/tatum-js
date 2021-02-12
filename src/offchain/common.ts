@@ -1,6 +1,14 @@
 import axios from 'axios';
 import {TATUM_API_URL} from '../constants';
-import {Account, Address, BroadcastWithdrawal, CreateErc20Offchain, TxHash, WithdrawalResponse} from '../model';
+import {
+    Account,
+    Address,
+    BroadcastWithdrawal,
+    CreateErc20Offchain,
+    TxHash,
+    Withdrawal,
+    WithdrawalResponse
+} from '../model';
 import {AddressBatch} from '../model/request/CreateOffchainAddressesBatch';
 import {CreateTrcOffchain} from '../model/request/CreateTrcOffchain';
 
@@ -30,6 +38,20 @@ export const checkAddressExists = async (address: string, currency: string, inde
     const url = `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/offchain/account/address/${address}/${currency}`;
     return (await axios.get(index === undefined ? url : `${url}?index=${index}`,
         {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
+};
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/GetWithdrawals" target="_blank">Tatum API documentation</a>
+ */
+export const getWithdrawals = async (status?: string, currency?: string, pageSize = 50, offset = 0): Promise<Withdrawal[]> => {
+    let url = `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/offchain/withdrawal?pageSize=${pageSize}&offset=${offset}`;
+    if (status) {
+        url += `&status=${status}`;
+    }
+    if (currency) {
+        url += `&currency=${currency}`;
+    }
+    return (await axios.get(url, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
 };
 
 /**

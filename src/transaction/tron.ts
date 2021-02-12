@@ -160,9 +160,10 @@ export const prepareTronFreezeTransaction = async (testnet: boolean, body: Freez
  * Sign Tron TRC10 transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
+ * @param precision
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronTrc10SignedTransaction = async (testnet: boolean, body: TransferTronTrc10) => {
+export const prepareTronTrc10SignedTransaction = async (testnet: boolean, body: TransferTronTrc10, precision?: number) => {
     await validateOrReject(body);
     const {
         fromPrivateKey,
@@ -174,7 +175,7 @@ export const prepareTronTrc10SignedTransaction = async (testnet: boolean, body: 
     const tronWeb = prepareTronWeb(testnet);
     const tx = await tronWeb.transactionBuilder.sendToken(
         to,
-        new BigNumber(amount).multipliedBy(new BigNumber(10).pow(await getTrc10Precision(tronWeb, tokenId))),
+        new BigNumber(amount).multipliedBy(new BigNumber(10).pow(precision || await getTrc10Precision(tronWeb, tokenId))),
         tokenId,
         tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(fromPrivateKey)));
     return JSON.stringify(await tronWeb.trx.sign(tx, fromPrivateKey));
@@ -344,9 +345,10 @@ export const prepareTronFreezeKMSTransaction = async (testnet: boolean, body: Fr
  * Prepare Tron TRC10 transaction for KMS. Nothing is broadcast to the blockchain.
  * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
+ * @param precision
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronTrc10SignedKMSTransaction = async (testnet: boolean, body: TransferTronTrc10) => {
+export const prepareTronTrc10SignedKMSTransaction = async (testnet: boolean, body: TransferTronTrc10, precision?: number) => {
     await validateOrReject(body);
     const {
         from,
@@ -358,7 +360,7 @@ export const prepareTronTrc10SignedKMSTransaction = async (testnet: boolean, bod
     const tronWeb = prepareTronWeb(testnet);
     const tx = await tronWeb.transactionBuilder.sendToken(
         to,
-        new BigNumber(amount).multipliedBy(new BigNumber(10).pow(await getTrc10Precision(tronWeb, tokenId))),
+        new BigNumber(amount).multipliedBy(new BigNumber(10).pow(precision || await getTrc10Precision(tronWeb, tokenId))),
         tokenId,
         from);
     return JSON.stringify(tx);
