@@ -1,0 +1,650 @@
+openapi: 3.0.0
+servers:
+  - url: 'https://api-eu1.tatum.io'
+info:
+  version: 1.0.0
+  title: Tatum Quorum API
+tags:
+  - description: |
+      <p>Quorum is a private permissioned blockchain compatible with Quorumereum. Quorum network is not run by Tatum, developers should connect to their own private instance.</p>
+    name: Blockchain / Quorum
+paths:
+  /v3/quorum/account:
+    post:
+      description: |
+        <h4>2 credit per API call.</h4><br/>
+        <p>Generate address account. Account must be protected with the password. To start using account, it must be unlocked via <a href="#operation/QuorumUnlockAccount" target="_blank">Unlock Quorum Account method</a>.</p>
+      operationId: QuorumGenerateAccount
+      parameters:
+        - in: header
+          name: x-quorum-endpoint
+          required: true
+          description: URL of the Quorum network
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - password
+              properties:
+                password:
+                  description: Password to protect new account.
+                  example: ksjdfhu98q34fi
+                  type: string
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  address:
+                    example: '0x73fda64d9feaaada90cd0de8df6b520ae0fe65da'
+                    type: string
+                    description: Address of the account.
+                required:
+                  - address
+          description: OK
+        400: &API400
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+          description: Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.
+        401: &API401
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error401NotActive"
+                  - $ref: "#/components/schemas/Error401Invalid"
+          description: Unauthorized. Not valid or inactive subscription key present in the HTTP Header.
+        403: &API403
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403"
+        500: &API500
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error500"
+          description: Internal server error. There was an error on the server during the processing of the request.
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Generate Quorum Account
+      tags:
+        - Blockchain / Quorum
+  /v3/quorum/account/{address}/unlock:
+    post:
+      description: |
+        <h4>2 credit per API call.</h4><br/>
+        <p>Unlock account.</p>
+      operationId: QuorumUnlockAccount
+      parameters:
+        - in: header
+          name: x-quorum-endpoint
+          required: true
+          description: URL of the Quorum network
+          schema:
+            type: string
+        - description: "Account address"
+          in: path
+          name: address
+          required: true
+          schema:
+            type: string
+            example: "0x3223AEB8404C7525FcAA6C512f91e287AE9FfE7B"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - password
+              properties:
+                password:
+                  description: Password to protect new account.
+                  example: ksjdfhu98q34fi
+                  type: string
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    example: true
+                    type: boolean
+                    description: Status flag of the operation.
+                required:
+                  - address
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          <<: *API403
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Generate Quorum Account
+      tags:
+        - Blockchain / Quorum
+  /v3/quorum/web3/{xApiKey}:
+      post:
+        description: |
+          <h4>2 credits per API call.</h4><br/>
+          <p>Use this endpoint URL as a http-based web3 driver to connect directly to the Quorum node.
+          To learn more about Quorum Web3, please visit <a href="https://ethereum.org/en/developers/" target="_blank">Ethereum developer's guide.</a></p>
+        operationId: QuorumWeb3Driver
+        parameters:
+          - in: header
+            name: x-quorum-endpoint
+            required: true
+            description: URL of the Quorum network
+            schema:
+              type: string
+          - description: "Tatum X-API-Key used for authorization."
+            in: path
+            name: xApiKey
+            required: true
+            schema:
+              type: string
+              example: asdlkfjnqunalkwjfnq2oi303294857k
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Any valid Web3 method content body.
+                example: { "jsonrpc": "2.0","method": "web3_clientVersion","params": [ ],"id": 2 }
+          required: true
+        responses:
+          200:
+            content:
+              application/json:
+                schema:
+                  type: object
+                  description: Any valid Web3 response.
+                  example: { "jsonrpc": "2.0","id": 2,"result": "Geth/v1.9.9-omnibus-e320ae4c-20191206/linux-amd64/go1.13.4" }
+            description: OK
+          400:
+            <<: *API400
+          401:
+            <<: *API401
+          500:
+            <<: *API500
+        x-code-samples:
+        summary: Web3 HTTP driver
+        tags:
+          - Blockchain / Quorum
+  /v3/quorum/block/current:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get Quorum current block number. This is the number of the latest block in the blockchain.</p>"
+      operationId: QuorumGetCurrentBlock
+      parameters:
+        - in: header
+          name: x-quorum-endpoint
+          required: true
+          description: URL of the Quorum network
+          schema:
+            type: string
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: number
+                description: Current block number
+                example: 6491272
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          <<: *API403
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get current block number
+      tags:
+        - Blockchain / Quorum
+  /v3/quorum/block/{hash}:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get Quorum block by block hash or block number.</p>"
+      operationId: QuorumGetBlock
+      parameters:
+        - in: header
+          name: x-quorum-endpoint
+          required: true
+          description: URL of the Quorum network
+          schema:
+            type: string
+        - description: "Block hash or block number"
+          in: path
+          name: hash
+          required: true
+          schema:
+            type: string
+            example: 6470657
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuorumBlock"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          <<: *API403
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get Quorum block by hash
+      tags:
+        - Blockchain / Quorum
+  /v3/quorum/transaction/{hash}:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get Quorum transaction by transaction hash.</p>"
+      operationId: QuorumGetTransaction
+      parameters:
+        - in: header
+          name: x-quorum-endpoint
+          required: true
+          description: URL of the Quorum network
+          schema:
+            type: string
+        - description: "Transaction hash"
+          in: path
+          name: hash
+          required: true
+          schema:
+            type: string
+            example: "0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuorumTx"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403TxNotFound"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get Quorum Transaction
+      tags:
+        - Blockchain / Quorum
+  /v3/quorum/transaction/{hash}/receipt:
+    get:
+      description: |
+        <h4>1 credit per API call.</h4><br/>
+        <p>Get Quorum Transaction Receipt by transaction hash. Transaction receipt is available only after transaction is included in the block and contains information about paid fee or created contract address and much more.</p>
+      operationId: QuorumGetTransactionReceipt
+      parameters:
+        - in: header
+          name: x-quorum-endpoint
+          required: true
+          description: URL of the Quorum network
+          schema:
+            type: string
+        - description: "Transaction hash"
+          in: path
+          name: hash
+          required: true
+          schema:
+            type: string
+            example: "0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuorumTx"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          <<: *API403
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get Quorum transaction receipt
+      tags:
+        - Blockchain / Quorum
+  /v3/quorum/transaction:
+    post:
+      description: |
+        <h4>2 credits per API call.</h4><br/>
+        <p>Send Quorum transaction account to account.<br/><br/>
+        This operation can be used to send native assets between two accounts or to store data into the blockchain.</p>
+      operationId: QuorumBlockchainTransfer
+      parameters:
+        - in: header
+          name: x-quorum-endpoint
+          required: true
+          description: URL of the Quorum network
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransferQuorum"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionHash"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          <<: *API403
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Send Quorum transaction
+      tags:
+        - Blockchain / Quorum
+components:
+  securitySchemes:
+    X-Api-Key:
+      description: |
+        To maintain the highest security level, Tatum requires X-API-Key HTTP header.
+        This X-API-Key represents identification of the plan and can be used by 1 developer or per environment.
+        Each X-API-Key is bound to the test or production blockchains.
+      in: header
+      name: x-api-key
+      type: apiKey
+  schemas:
+    QuorumBlock:
+      type: object
+      properties:
+        difficulty:
+          description: Difficulty for this block.
+          type: string
+          example: "3296820833"
+        extraData:
+          description: The 'extra data' field of this block.
+          type: string
+          example: "0x"
+        gasLimit:
+          description: The maximum gas allowed in this block.
+          type: number
+          example: 8000000
+        gasUsed:
+          description: The total used gas by all transactions in this block.
+          type: number
+          example: 7985124
+        hash:
+          description: Hash of the block. 'null' when its pending block.
+          type: string
+          example: "0x5d40698ee1b1ec589035f2a39c6162287e9056868cc79d66cfb248ba9f66c3fc"
+        logsBloom:
+          description: The bloom filter for the logs of the block. 'null' when its pending block.
+          type: string
+          example: "0x042080004210492080800001610060ad9600005bc81502020800000043e302020381a404000100409102040240300641108004000400007000008000c049558055a800000a0001800748900806502004200400108205005418c0218802281a0408060000533210462021050470810a010140102809011814018281115020090201068401847000a04010000c00084062000485640d00020220181150020008589105a41c0880001112034100010882545410240011402a3480050104004c310204000002009490d0012022a040c20c20011020401020140250805100410060008280200008181a220114102800001648640828200c00a94c1003a2060e001000"
+        miner:
+          description: The address of the beneficiary to whom the mining rewards were given.
+          type: string
+          example: "0xD8869d9E3d497323561Fbca2319a9FC3F6f10c4B"
+        mixHash:
+          description: ''
+          type: string
+          example: "0x7a44a1f56f12ae825fdc04550d7c3af2344daab987691771c06235f25fafcaa6"
+        nonce:
+          description: Hash of the generated proof-of-work. 'null' when its pending block.
+          type: string
+          example: "0xfa1692f52a7ac672"
+        number:
+          description: The block number. 'null' when its pending block.
+          type: number
+          example: 6470657
+        parentHash:
+          description: Hash of the parent block.
+          type: string
+          example: "0xd34aab8a455027086ac54034e68608c84d984401a883b7b5d91f9ae0bbefda15"
+        receiptsRoot:
+          description: ''
+          type: string
+          example: "0x4a496b6b7f2a1c5850bf9eebbea7193807be0067b1c06f17b9dde4eef7b2f960"
+        sha3Uncles:
+          description: SHA3 of the uncles data in the block.
+          type: string
+          example: "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+        size:
+          description: The size of this block in bytes.
+          type: number
+          example: 15296
+        stateRoot:
+          description: The root of the final state trie of the block.
+          type: string
+          example: "0x32757c92f10c6c5a106c6fb4b9ca3ff301e413a59ca3d0513b4bf98c72efddba"
+        timestamp:
+          description: The unix timestamp for when the block was collated.
+          type: number
+          example: 1569600592
+        totalDifficulty:
+          description: Total difficulty of the chain until this block.
+          type: string
+          example: "23329673338013873"
+        transactions:
+          description: Array of transactions.
+          type: array
+          items:
+            $ref: "#/components/schemas/QuorumTx"
+        transactionsRoot:
+          description: The root of the transaction trie of the block.
+          type: string
+          example: "0x5990081ef8515d561b50255af03c5d505f7725ddef27405dc67d23bfd0f47704"
+        uncles:
+            description: Array of uncles.
+            type: array
+            items:
+              type: object
+    TransferQuorum:
+      type: object
+      properties:
+        from:
+          description: Blockchain address to send transaction from
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          pattern: ^0[xX][0-9a-fA-F]+$
+          maxLength: 42
+          minLength: 42
+          type: string
+        to:
+          description: Blockchain address to send transaction to
+          example: "0x938516ad9dc6d8d4dc8b2aa7cd7791125302fc95"
+          pattern: ^0[xX][0-9a-fA-F]+$
+          maxLength: 42
+          minLength: 42
+          type: string
+        data:
+          type: string
+          maxLength: 1e12
+          description: Additinal data, that can be passed to blockchain transaction as data property.
+          pattern: ^0[xX][0-9a-fA-F]+$
+          example: "0x234958719045871984571934519035710938457190385719038457190457190385719034751903745092134857"
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to transaction. If not present, last known nonce will be used.
+        amount:
+          description: Amount to be sent in native asset in HEX.
+          example: "0xcee3"
+          pattern: ^0[xX][0-9a-fA-F]+$
+          type: string
+      required:
+        - to
+        - from
+    QuorumTx:
+        type: object
+        properties:
+          blockHash:
+            description: Hash of the block where this transaction was in.
+            type: string
+            example: "0xcf2c40f475e78c7c19778e1ae999a0e371c9319b38182ea15dc94536f13f9137"
+          blockNumber:
+            type: number
+            description: Block number where this transaction was in.
+            example: 6470854
+          from:
+            type: string
+            description: Address of the sender.
+            example: "0x81b7E08F65Bdf5648606c89998A9CC8164397647"
+          gas:
+            type: number
+            description: Gas provided by the sender.
+            example: 21000
+          gasPrice:
+            type: string
+            description: Gas price provided by the sender in wei.
+            example: "1000000000"
+          hash:
+            type: string
+            description: Hash of the transaction.
+            example: "0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7"
+          input:
+            type: string
+            description: The data sent along with the transaction.
+            example: "0x"
+          nonce:
+            type: number
+            description: The number of transactions made by the sender prior to this one.
+            example: 26836405
+          to:
+            type: string
+            description: Address of the receiver. 'null' when its a contract creation transaction.
+            example: "0xbC546fa1716Ed886967cf73f40e8F2F5e623a92d"
+          transactionIndex:
+            type: number
+            description: Integer of the transactions index position in the block.
+            example: 3
+          value:
+            type: string
+            description: Value transferred in wei.
+            example: "0x0"
+    QuorumTxReceipt:
+        type: object
+        properties:
+          blockHash:
+            description: Hash of the block where this transaction was in.
+            type: string
+            example: "0xcf2c40f475e78c7c19778e1ae999a0e371c9319b38182ea15dc94536f13f9137"
+          status:
+            type: boolean
+            example: true
+            description: TRUE if the transaction was successful, FALSE, if the EVM reverted the transaction.
+          blockNumber:
+            type: number
+            description: Block number where this transaction was in.
+            example: 6470854
+          from:
+            type: string
+            description: Address of the sender.
+            example: "0x81b7E08F65Bdf5648606c89998A9CC8164397647"
+          transactionHash:
+            type: string
+            description: Hash of the transaction.
+            example: "0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7"
+          to:
+            type: string
+            description: Address of the receiver. 'null' when its a contract creation transaction.
+            example: "0xbC546fa1716Ed886967cf73f40e8F2F5e623a92d"
+          transactionIndex:
+            type: number
+            description: Integer of the transactions index position in the block.
+            example: 3
+          value:
+            type: string
+            description: Value transferred in wei.
+            example: "1000000000000000000"
+          gasUsed:
+            type: number
+            description: The amount of gas used by this specific transaction alone.
+            example: 21000
+          cumulativeGasUsed:
+            type: number
+            description: The total amount of gas used when this transaction was executed in the block.
+            example: 314159
+          contractAddress:
+            type: string
+            description: The contract address created, if the transaction was a contract creation, otherwise null.
+            example: "0x81b7E08F65Bdf5648606c89998A9CC8164397647"
+          logsBloom:
+            type: string
+            description: The bloom filter for the logs of the transaction. 'null' when its pending transaction.
+            example: "0x81b7E08F65Bdf5648606c89998A9CC8164397647"
+          logs:
+            type: array
+            description: Log events, that happened in this transaction.
+            items:
+              type: object
+              properties:
+                address:
+                  type: string
+                  description: From which this event originated from.
+                  example: "0x81b7E08F65Bdf5648606c89998A9CC8164397647"
+                topics:
+                  type: array
+                  description: An array with max 4 32 Byte topics, topic 1-3 contains indexed parameters of the log.
+                  items:
+                    type: string
+                    example: "0x033456732123ffff2342342dd12342434324234234fd234fd23fd4f23d4234"
+                data:
+                  type: string
+                  description: The data containing non-indexed log parameter.
+                logIndex:
+                  type: number
+                  description: Integer of the event index position in the block.
+                transactionIndex:
+                  type: number
+                  description: Integer of the transaction’s index position, the event was created in.
+                transactionHash:
+                  type: string
+                  description: Hash of the transaction this event was created in.
+                  example: "0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7"
