@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/quorum-connector",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Quorum Connector for Tatum API",
   "license": "MIT",
   "files": [

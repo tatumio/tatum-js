@@ -6,7 +6,8 @@ info:
   title: Tatum Quorum API
 tags:
   - description: |
-      <p>Quorum is an open-source, private-permissioned blockchain compatible with Ethereum. It provides enhanced enterprise functionality with multiple pluggable consensus mechanisms, enterprise-grade permissions management, and transaction privacy features. Developed by J.P. Morgan, and later acquired by ConsenSys, the blockchain is used to run the Interbank Information Network, a payments network that involves more than 300 banks.<br/>The Quorum network is not run by Tatum, developers should connect to their own private instance.</p>
+      <p>Quorum is an open-source, private-permissioned blockchain compatible with Ethereum. It provides enhanced enterprise functionality with multiple pluggable consensus mechanisms, enterprise-grade permissions management, and transaction privacy features. Developed by J.P. Morgan, and later acquired by ConsenSys, the blockchain is used to run the Interbank Information Network, a payments network that involves more than 300 banks.<br/>
+      The Quorum network is not run by Tatum, developers should connect to their own private instance. For testing purposes, there is a playground Quorum implementation available at <b>https://tatum.blockchain.azure.com:3200/21O-VGUJSqOz9xw7JSFhNyvk</b>.</p>
     name: Blockchain / Quorum
 paths:
   /v3/quorum/account:
@@ -22,6 +23,7 @@ paths:
           description: URL of the Quorum network
           schema:
             type: string
+            example: https://tatum.blockchain.azure.com:3200/21O-VGUJSqOz9xw7JSFhNyvk
       requestBody:
         content:
           application/json:
@@ -95,6 +97,7 @@ paths:
           description: URL of the Quorum network
           schema:
             type: string
+            example: https://tatum.blockchain.azure.com:3200/21O-VGUJSqOz9xw7JSFhNyvk
         - description: "Account address"
           in: path
           name: address
@@ -202,6 +205,7 @@ paths:
           description: URL of the Quorum network
           schema:
             type: string
+            example: https://tatum.blockchain.azure.com:3200/21O-VGUJSqOz9xw7JSFhNyvk
       responses:
         200:
           content:
@@ -236,6 +240,7 @@ paths:
           description: URL of the Quorum network
           schema:
             type: string
+            example: https://tatum.blockchain.azure.com:3200/21O-VGUJSqOz9xw7JSFhNyvk
         - description: "Block hash or block number"
           in: path
           name: hash
@@ -275,6 +280,7 @@ paths:
           description: URL of the Quorum network
           schema:
             type: string
+            example: https://tatum.blockchain.azure.com:3200/21O-VGUJSqOz9xw7JSFhNyvk
         - description: "Transaction hash"
           in: path
           name: hash
@@ -321,6 +327,7 @@ paths:
           description: URL of the Quorum network
           schema:
             type: string
+            example: https://tatum.blockchain.azure.com:3200/21O-VGUJSqOz9xw7JSFhNyvk
         - description: "Transaction hash"
           in: path
           name: hash
@@ -363,6 +370,7 @@ paths:
           description: URL of the Quorum network
           schema:
             type: string
+            example: https://tatum.blockchain.azure.com:3200/21O-VGUJSqOz9xw7JSFhNyvk
       requestBody:
         content:
           application/json:
