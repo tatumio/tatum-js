@@ -25,6 +25,7 @@ export const sendStoreDataQuorumTransaction = async (body: CreateRecord, provide
     if (data.result) {
         return {txId: data.result};
     }
+    throw new Error(data.error.message);
 };
 
 /**
@@ -44,4 +45,5 @@ export const sendQuorumTransaction = async (body: TransferQuorum, provider: stri
     if (data.result) {
         return {txId: data.result};
     }
+    throw new Error(data.error.message);
 };
