@@ -49,12 +49,6 @@ export interface QuorumBlock {
      */
     miner: string;
     /**
-     *
-     * @type {string}
-     * @memberof QuorumBlock
-     */
-    mixHash: string;
-    /**
      * Hash of the generated proof-of-work. 'null' when its pending block.
      * @type {string}
      * @memberof QuorumBlock
