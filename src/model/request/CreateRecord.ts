@@ -11,7 +11,7 @@ export class CreateRecord {
 
     @IsNotEmpty()
     @IsIn([Currency.ETH, Currency.QUORUM])
-    public chain: Currency;
+    public chain: string;
 
     @IsOptional()
     @Length(32, 66)
