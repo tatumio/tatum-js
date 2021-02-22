@@ -3,6 +3,7 @@ export enum Currency {
     BCH = 'BCH',
     LTC = 'LTC',
     ETH = 'ETH',
+    QUORUM = 'QUORUM',
     XRP = 'XRP',
     XLM = 'XLM',
     VET = 'VET',

@@ -1,5 +1,6 @@
 import {Type} from 'class-transformer';
-import {IsNotEmpty, IsOptional, Length, Min, ValidateNested} from 'class-validator';
+import {IsIn, IsNotEmpty, IsOptional, Length, Min, ValidateIf, ValidateNested} from 'class-validator';
+import {Currency} from './Currency';
 import {Fee} from './Fee';
 
 export class CreateRecord {
@@ -9,10 +10,19 @@ export class CreateRecord {
     public data: string;
 
     @IsNotEmpty()
-    @Length(32, 66)
-    public fromPrivateKey: string;
+    @IsIn([Currency.ETH, Currency.QUORUM])
+    public chain: Currency;
 
     @IsOptional()
+    @Length(32, 66)
+    public fromPrivateKey?: string;
+
+    @IsNotEmpty()
+    @ValidateIf(o => o.chain === Currency.QUORUM)
+    @Length(42, 42)
+    public from: string;
+
+    @ValidateIf(o => o.chain === Currency.QUORUM)
     @Length(42, 42)
     public to?: string;
 

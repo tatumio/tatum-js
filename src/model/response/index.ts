@@ -5,6 +5,7 @@ export * from './btc/BtcBlock';
 export * from './btc/BtcInfo';
 export * from './btc/BtcTx';
 export * from './btc/BtcUTXO';
+export * from './quorum';
 export * from './common/BlockHash';
 export * from './common/TransactionHash';
 export * from './common/TxHash';

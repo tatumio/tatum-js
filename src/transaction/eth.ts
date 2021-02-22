@@ -4,12 +4,7 @@ import {validateOrReject} from 'class-validator';
 import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
 import {ethBroadcast, ethGetTransactionsCount} from '../blockchain';
-import {
-    CONTRACT_ADDRESSES,
-    CONTRACT_DECIMALS,
-    TATUM_API_URL,
-    TRANSFER_METHOD_ABI
-} from '../constants';
+import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
 import tokenABI from '../contracts/erc20/token_abi';
 import tokenByteCode from '../contracts/erc20/token_bytecode';
 import {CreateRecord, Currency, DeployEthErc20, TransactionKMS, TransferCustomErc20, TransferEthErc20} from '../model';
@@ -62,7 +57,7 @@ export const prepareStoreDataTransaction = async (testnet: boolean, body: Create
     } = body;
     const client = new Web3(provider || `${TATUM_API_URL}/v3/ethereum/web3/${process.env.TATUM_API_KEY}`);
     client.eth.accounts.wallet.clear();
-    client.eth.accounts.wallet.add(fromPrivateKey);
+    client.eth.accounts.wallet.add(fromPrivateKey as string);
     client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
     const address = to || client.eth.defaultAccount;
     const addressNonce = nonce ? nonce : await ethGetTransactionsCount(address);
@@ -81,7 +76,7 @@ export const prepareStoreDataTransaction = async (testnet: boolean, body: Create
         nonce: addressNonce,
     };
 
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
 };
 
 /**
