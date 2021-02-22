@@ -1,7 +1,14 @@
 import {PinoLogger} from 'nestjs-pino';
 import axios from 'axios';
 import {QuorumError} from './QuorumError';
-import {QuorumBlock, QuorumTx, QuorumTxReceipt, TransferQuorum} from '@tatumio/tatum';
+import {
+    CreateRecord,
+    QuorumBlock,
+    QuorumTx,
+    QuorumTxReceipt,
+    sendStoreDataQuorumTransaction,
+    TransferQuorum
+} from '@tatumio/tatum';
 
 export abstract class QuorumService {
 
@@ -152,6 +159,15 @@ export abstract class QuorumService {
         throw new QuorumError(`Error occurred. ${data.error.message}`, 'quorum.error');
     }
 
+    public async storeData(body: CreateRecord, url: string): Promise<{ txId: string }> {
+        try {
+            return await sendStoreDataQuorumTransaction(body, url);
+        } catch (e) {
+            this.logger.error(e);
+            throw new QuorumError(`Error occurred. ${e}`, 'quorum.error');
+        }
+    }
+
     public async web3Method(body: any, url: string) {
         return (await axios.post(url, body)).data;
     }
@@ -188,7 +204,7 @@ export abstract class QuorumService {
             })).data;
             if (data.result) {
                 return {
-                    address: data.result
+                    success: data.result
                 };
             }
         } catch (e) {
