@@ -9,6 +9,8 @@ export * from './TransferCustomErc20';
 export * from './TransferEthErc20';
 export * from './TransferVet';
 export * from './TransferXlm';
+export * from './TransferQuorum';
+export * from './AccountPassword';
 export * from './TransferXrp';
 export * from './TransferTrxOffchain';
 export * from './TransferTron';
