@@ -143,7 +143,7 @@ paths:
       security:
         - X-Api-Key: [ ]
       x-code-samples:
-      summary: Generate Quorum Account
+      summary: Unlock Quorum Account
       tags:
         - Blockchain / Quorum
   /v3/quorum/web3/{xApiKey}:
