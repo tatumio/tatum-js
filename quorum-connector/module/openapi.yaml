@@ -414,8 +414,8 @@ components:
       properties:
         difficulty:
           description: Difficulty for this block.
-          type: string
-          example: "3296820833"
+          type: number
+          example: 3296820833
         extraData:
           description: The 'extra data' field of this block.
           type: string
@@ -456,10 +456,6 @@ components:
           description: Hash of the parent block.
           type: string
           example: "0xd34aab8a455027086ac54034e68608c84d984401a883b7b5d91f9ae0bbefda15"
-        receiptsRoot:
-          description: ''
-          type: string
-          example: "0x4a496b6b7f2a1c5850bf9eebbea7193807be0067b1c06f17b9dde4eef7b2f960"
         sha3Uncles:
           description: SHA3 of the uncles data in the block.
           type: string
@@ -478,17 +474,13 @@ components:
           example: 1569600592
         totalDifficulty:
           description: Total difficulty of the chain until this block.
-          type: string
-          example: "23329673338013873"
+          type: number
+          example: 23329673338013873
         transactions:
           description: Array of transactions.
           type: array
           items:
             $ref: "#/components/schemas/QuorumTx"
-        transactionsRoot:
-          description: The root of the transaction trie of the block.
-          type: string
-          example: "0x5990081ef8515d561b50255af03c5d505f7725ddef27405dc67d23bfd0f47704"
         uncles:
             description: Array of uncles.
             type: array

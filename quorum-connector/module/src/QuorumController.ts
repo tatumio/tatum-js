@@ -3,10 +3,9 @@ import {QuorumService} from './QuorumService';
 import {PathAddress} from './dto/PathAddress';
 import {PathTxId} from './dto/PathTxId';
 import {QuorumError} from './QuorumError';
-import {GenerateAccount} from './dto/GenerateAccount';
-import {TransferQuorum} from './dto/TransferQuorum';
 import {EndpointGuard} from './EndpointGuard';
 import {HEADER_ENDPOINT} from './index';
+import { AccountPassword, TransferQuorum } from '@tatumio/tatum';
 
 @UseGuards(EndpointGuard)
 export abstract class QuorumController {
@@ -20,7 +19,7 @@ export abstract class QuorumController {
     }
 
     @Post('v3/quorum/account')
-    async generateAccount(@Body() body: GenerateAccount, @Headers() url: object) {
+    async generateAccount(@Body() body: AccountPassword, @Headers() url: object) {
         try {
             return await this.service.generateAccount(body.password, url[HEADER_ENDPOINT]);
         } catch (e) {
@@ -47,7 +46,7 @@ export abstract class QuorumController {
     }
 
     @Post('v3/quorum/account/:address/unlock')
-    async unlockAccount(@Body() body: GenerateAccount, @Param() path: PathAddress, @Headers() url: object) {
+    async unlockAccount(@Body() body: AccountPassword, @Param() path: PathAddress, @Headers() url: object) {
         try {
             return await this.service.unlockAccount(path.address, body.password, url[HEADER_ENDPOINT]);
         } catch (e) {
