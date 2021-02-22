@@ -30,10 +30,10 @@ export interface QuorumTx {
     gas: number;
     /**
      * Gas price provided by the sender in wei.
-     * @type {string}
+     * @type {number}
      * @memberof QuorumTx
      */
-    gasPrice: string;
+    gasPrice: number;
     /**
      * Hash of the transaction.
      * @type {string}

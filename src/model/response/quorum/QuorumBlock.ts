@@ -8,10 +8,10 @@ import {QuorumTx} from './QuorumTx';
 export interface QuorumBlock {
     /**
      * Difficulty for this block.
-     * @type {string}
+     * @type {number}
      * @memberof QuorumBlock
      */
-    difficulty: string;
+    difficulty: number;
     /**
      * The 'extra data' field of this block.
      * @type {string}
@@ -73,12 +73,6 @@ export interface QuorumBlock {
      */
     parentHash: string;
     /**
-     *
-     * @type {string}
-     * @memberof QuorumBlock
-     */
-    receiptsRoot: string;
-    /**
      * SHA3 of the uncles data in the block.
      * @type {string}
      * @memberof QuorumBlock
@@ -104,10 +98,10 @@ export interface QuorumBlock {
     timestamp: number;
     /**
      * Total difficulty of the chain until this block.
-     * @type {string}
+     * @type {number}
      * @memberof QuorumBlock
      */
-    totalDifficulty: string;
+    totalDifficulty: number;
     /**
      * Array of transactions.
      * @type {Array<EthTx>}
@@ -115,9 +109,9 @@ export interface QuorumBlock {
      */
     transactions: QuorumTx[];
     /**
-     * The root of the transaction trie of the block.
-     * @type {string}
+     * The uncles of the block.
+     * @type {Array<any>}
      * @memberof QuorumBlock
      */
-    transactionsRoot: string;
+    uncles: any[];
 }

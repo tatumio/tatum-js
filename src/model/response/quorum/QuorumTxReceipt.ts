@@ -70,6 +70,12 @@ export interface QuorumTxReceipt {
      * @memberof QuorumTxReceipt
      */
     logs: QuorumTxLogs[];
+    /**
+     * The bloom filter for the logs of the block. 'null' when its pending transaction.
+     * @type {string}
+     * @memberof QuorumTxReceipt
+     */
+    logsBloom: string;
 }
 
 /**
