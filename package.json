@@ -10,6 +10,8 @@
   "scripts": {
     "clean": "rimraf dist/*",
     "build": "tsc",
+    "test": "jest",
+    "test:rachit": "jest -i src/ledger/ledger.account.spec.ts -t \"ledger tests\"",
     "prepublish": "npm run clean && npm run build",
     "doc": "typedoc --plugin typedoc-plugin-markdown --out docs --excludeExternals --excludePrivate --includeVersion src",
     "lint": "tslint -p tsconfig.json -c tslint.json --fix"
@@ -56,7 +58,7 @@
     "@types/bip39": "^3.0.0",
     "@types/jest": "^26.0.4",
     "@types/node": "^14.0.14",
-    "jest": "^26.1.0",
+    "jest": "^26.6.3",
     "rimraf": "^3.0.2",
     "ts-jest": "^26.1.1",
     "ts-node": "^8.10.2",
