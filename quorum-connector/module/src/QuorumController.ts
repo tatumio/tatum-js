@@ -23,7 +23,7 @@ export abstract class QuorumController {
         try {
             return await this.service.generateAccount(body.password, url[HEADER_ENDPOINT]);
         } catch (e) {
-            throw new QuorumError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'tron.error');
+            throw new QuorumError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'quorum.error');
         }
     }
 
@@ -32,7 +32,7 @@ export abstract class QuorumController {
         try {
             return await this.service.getBlockChainInfo(url[HEADER_ENDPOINT]);
         } catch (e) {
-            throw new QuorumError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'tron.error');
+            throw new QuorumError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'quorum.error');
         }
     }
 
@@ -41,7 +41,7 @@ export abstract class QuorumController {
         try {
             return await this.service.getBlock(hashOrHeight, url[HEADER_ENDPOINT]);
         } catch (e) {
-            throw new QuorumError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'tron.error');
+            throw new QuorumError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'quorum.error');
         }
     }
 
@@ -50,7 +50,7 @@ export abstract class QuorumController {
         try {
             return await this.service.unlockAccount(path.address, body.password, url[HEADER_ENDPOINT]);
         } catch (e) {
-            throw new QuorumError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'tron.error');
+            throw new QuorumError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'quorum.error');
         }
     }
 
@@ -59,7 +59,7 @@ export abstract class QuorumController {
         try {
             return await this.service.getTransaction(path.txId, url[HEADER_ENDPOINT]);
         } catch (e) {
-            throw new QuorumError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'tron.error');
+            throw new QuorumError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'quorum.error');
         }
     }
 
@@ -68,7 +68,7 @@ export abstract class QuorumController {
         try {
             return await this.service.getTransactionReceipt(path.txId, url[HEADER_ENDPOINT]);
         } catch (e) {
-            throw new QuorumError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'tron.error');
+            throw new QuorumError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'quorum.error');
         }
     }
 
@@ -78,7 +78,7 @@ export abstract class QuorumController {
         try {
             return await this.service.sendTransaction(body, url[HEADER_ENDPOINT]);
         } catch (e) {
-            throw new QuorumError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'tron.error');
+            throw new QuorumError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'quorum.error');
         }
     }
 }
