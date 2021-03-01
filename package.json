@@ -11,7 +11,10 @@
     "clean": "rimraf dist/*",
     "build": "tsc",
     "test": "jest",
-    "test:rachit": "jest -i src/ledger/ledger.account.spec.ts -t \"ledger tests\"",
+    "test:order": "jest -i src/ledger/ledger.orderBook.spec.ts -t \"ledger tests\"",
+    "test:vc": "jest -i src/ledger/ledger.vc.spec.ts -t \"ledger tests\"",
+    "test:account": "jest -i src/ledger/ledger.account.spec.ts -t \"ledger tests\"",
+    "test:ledger": "jest -i src/ledger/ledger.vc.spec.ts -i src/ledger/ledger.account.spec.ts -i src/ledger/ledger.transaction.spec.ts -t \"ledger tests\"",
     "prepublish": "npm run clean && npm run build",
     "doc": "typedoc --plugin typedoc-plugin-markdown --out docs --excludeExternals --excludePrivate --includeVersion src",
     "lint": "tslint -p tsconfig.json -c tslint.json --fix"
