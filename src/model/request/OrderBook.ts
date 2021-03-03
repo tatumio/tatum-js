@@ -31,7 +31,7 @@ export class OrderBookRequest {
 
     @IsNotEmpty()
     @IsString()
-    @Matches(/^[A-a-zZ0-9_\-]+\/[A-Za-z0-9_\-]+$/)
+    @Matches(/^[A-Za-z0-9_\-]+\/[A-Za-z0-9_\-]+$/)
     @MinLength(3)
     @MaxLength(30)
     public pair: string;
