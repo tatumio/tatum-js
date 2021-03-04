@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import {ECPair, networks, Transaction, TransactionBuilder} from 'bitcoinjs-lib';
-import {validateOrReject} from 'class-validator';
+import { validateBody } from '../connector/tatum'
 import {LTC_NETWORK, LTC_TEST_NETWORK} from '../constants';
 import {Currency, KeyPair, TransactionKMS, TransferBtcBasedOffchain, WithdrawalResponseData} from '../model';
 import {generateAddressFromXPub, generateLtcWallet, generatePrivateKeyFromMnemonic} from '../wallet';
@@ -14,7 +14,7 @@ import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} fr
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendLitecoinOffchainTransaction = async (testnet: boolean, body: TransferBtcBasedOffchain) => {
-    await validateOrReject(body);
+    await validateBody(body, TransferBtcBasedOffchain);
     const {
         mnemonic, keyPair, attr: changeAddress, ...withdrawal
     } = body;

@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
-import {validateOrReject} from 'class-validator';
 import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
+import { validateBody } from '../connector/tatum'
 import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL} from '../constants';
 import tokenAbi from '../contracts/erc20/token_abi';
 import {getAccountById, getVirtualCurrencyByName} from '../ledger';
@@ -19,7 +19,7 @@ import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} fr
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendEthOffchainTransaction = async (testnet: boolean, body: TransferEthOffchain, provider?: string) => {
-    await validateOrReject(body);
+    await validateBody(body, TransferEthOffchain);
     const {
         mnemonic, index, privateKey, nonce, ...withdrawal
     } = body;
@@ -67,7 +67,7 @@ export const sendEthOffchainTransaction = async (testnet: boolean, body: Transfe
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: TransferEthErc20Offchain, provider?: string) => {
-    await validateOrReject(body);
+    await validateBody(body, TransferEthErc20Offchain);
     const {
         mnemonic, index, privateKey, nonce, ...withdrawal
     } = body;

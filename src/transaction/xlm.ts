@@ -1,6 +1,6 @@
-import {validateOrReject} from 'class-validator';
 import {Account, Asset, Keypair, Memo, Networks, Operation, TransactionBuilder} from 'stellar-sdk';
 import {xlmBroadcast, xlmGetAccountInfo} from '../blockchain';
+import { validateBody } from '../connector/tatum'
 import {Currency, TransactionKMS, TransferXlm} from '../model';
 
 /**
@@ -37,7 +37,7 @@ export const signXlmKMSTransaction = async (tx: TransactionKMS, secret: string, 
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareXlmSignedTransaction = async (testnet: boolean, body: TransferXlm) => {
-    await validateOrReject(body);
+    await validateBody(body, TransferXlm)
     const {
         fromSecret,
         to,

@@ -1,16 +1,16 @@
 import BigNumber from 'bignumber.js';
 import {ECPair, Network, networks, Transaction, TransactionBuilder} from 'bitcoinjs-lib';
-import {validateOrReject} from 'class-validator';
 import {
     ltcBroadcast,
     ltcGetTxForAccount,
     ltcGetUTXO
 } from '../blockchain';
+import { validateBody } from '../connector/tatum'
 import {LTC_NETWORK, LTC_TEST_NETWORK} from '../constants';
 import {Currency, TransactionKMS, TransferBtcBasedBlockchain} from '../model';
 
 const prepareSignedTransaction = async (network: Network, body: TransferBtcBasedBlockchain, currency: Currency) => {
-    await validateOrReject(body);
+    await validateBody(body, TransferBtcBasedBlockchain);
     const {fromUTXO, fromAddress, to} = body;
     const tx = new TransactionBuilder(network);
     const privateKeysToSign: string[] = [];

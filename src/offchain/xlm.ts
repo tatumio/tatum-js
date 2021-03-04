@@ -1,6 +1,6 @@
-import {validateOrReject} from 'class-validator';
 import {Account, Asset, Keypair, Memo, Networks, Operation, TransactionBuilder} from 'stellar-sdk';
 import {xlmGetAccountInfo} from '../blockchain';
+import { validateBody } from '../connector/tatum'
 import {Currency, TransactionKMS, TransferXlmOffchain} from '../model';
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
 
@@ -12,7 +12,7 @@ import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} fr
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendXlmOffchainTransaction = async (testnet: boolean, body: TransferXlmOffchain) => {
-    await validateOrReject(body);
+    await validateBody(body, TransferXlmOffchain)
     const {
         secret, ...withdrawal
     } = body;

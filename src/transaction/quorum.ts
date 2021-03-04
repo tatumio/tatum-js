@@ -1,7 +1,8 @@
 import axios from 'axios';
 import {isHex, stringToHex, toHex} from 'web3-utils';
-import {CreateRecord} from '../model/request';
-import {TransferQuorum} from '../model/request/TransferQuorum';
+import { validateBody } from '../connector/tatum'
+import {CreateRecord} from '../model';
+import {TransferQuorum} from '../model';
 
 /**
  * Send Quorum store data transaction to the blockchain.
@@ -11,6 +12,7 @@ import {TransferQuorum} from '../model/request/TransferQuorum';
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendStoreDataQuorumTransaction = async (body: CreateRecord, provider: string) => {
+  await validateBody(body, CreateRecord)
     const data = (await axios.post(provider, {
         'jsonrpc': '2.0',
         'method': 'eth_sendTransaction',
@@ -36,6 +38,7 @@ export const sendStoreDataQuorumTransaction = async (body: CreateRecord, provide
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendQuorumTransaction = async (body: TransferQuorum, provider: string) => {
+    await validateBody(body, TransferQuorum)
     const data = (await axios.post(provider, {
         'jsonrpc': '2.0',
         'method': 'eth_sendTransaction',

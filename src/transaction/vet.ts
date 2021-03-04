@@ -1,8 +1,8 @@
-import {validateOrReject} from 'class-validator';
 import {thorify} from 'thorify';
 import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
 import {vetBroadcast} from '../blockchain';
+import { validateBody } from '../connector/tatum'
 import {TEST_VET_URL, VET_URL} from '../constants';
 import {Currency, TransactionKMS, TransferVet} from '../model';
 
@@ -47,7 +47,7 @@ export const signVetKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareVetSignedTransaction = async (testnet: boolean, body: TransferVet, provider?: string) => {
-    await validateOrReject(body);
+    await validateBody(body, TransferVet);
     const {
         fromPrivateKey,
         to,

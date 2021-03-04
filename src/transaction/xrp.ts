@@ -1,8 +1,8 @@
 import BigNumber from 'bignumber.js';
-import {validateOrReject} from 'class-validator';
 import {RippleAPI} from 'ripple-lib';
 import {Payment} from 'ripple-lib/dist/npm/transaction/payment';
 import {xrpBroadcast, xrpGetAccountInfo, xrpGetFee} from '../blockchain';
+import { validateBody } from '../connector/tatum'
 import {Currency, TransactionKMS, TransferXrp} from '../model';
 
 /**
@@ -35,7 +35,7 @@ export const signXrpKMSTransaction = async (tx: TransactionKMS, secret: string) 
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareXrpSignedTransaction = async (body: TransferXrp) => {
-    await validateOrReject(body);
+    await validateBody(body, TransferXrp);
     const {
         fromAccount,
         fromSecret,
