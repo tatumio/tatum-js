@@ -56,6 +56,11 @@ Default value is 5.
 
 ```process.env.TATUM_RETRIES=5```
 
+In the library, there are functions for estimating the Ethereum transaction fee. For the estimation of the transaction fee, we are using https://ethgasstation.info.
+If you have your API key from https://ethgasstation.info you can use it via env variable process.env.TATUM_GAS_STATION_API_KEY.
+
+```process.env.TATUM_GAS_STATION_API_KEY=${YOUR_GAS_STATION_API_KEY}```
+
 ## Usage
 
 ```js

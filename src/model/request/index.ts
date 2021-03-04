@@ -40,3 +40,4 @@ export * from './TransactionFilter';
 export * from './CreateAccount';
 export * from './BlockAmount';
 export * from './CreateSubscription';
+export * from './EstimateGasEth';
