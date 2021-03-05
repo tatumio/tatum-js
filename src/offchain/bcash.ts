@@ -1,8 +1,8 @@
+import { validateBody } from '../connector/tatum'
 // tslint:disable-next-line:no-var-requires
 const bcash = require('@bitcoin-dot-com/bitcoincashjs2-lib');
 import BigNumber from 'bignumber.js';
 import {ECPair, TransactionBuilder} from 'bitbox-sdk';
-import {validateOrReject} from 'class-validator';
 // @ts-ignore
 import coininfo from 'coininfo';
 import {Currency, KeyPair, TransactionKMS, TransferBtcBasedOffchain, WithdrawalResponseData} from '../model';
@@ -17,7 +17,7 @@ import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} fr
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendBitcoinCashOffchainTransaction = async (testnet: boolean, body: TransferBtcBasedOffchain) => {
-    await validateOrReject(body);
+    await validateBody(body, TransferBtcBasedOffchain);
     const {
         mnemonic, keyPair, attr: changeAddress, ...withdrawal
     } = body;

@@ -1,35 +1,26 @@
-import axios from 'axios';
-import {TATUM_API_URL} from '../constants';
-import {CreateSubscription} from '../model/request';
-import {Account, Subscription, Transaction} from '../model/response';
+import { get, httpDelete, post } from '../connector/tatum'
+import {CreateSubscription} from '../model';
+import {Account, Subscription, Transaction} from '../model';
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/createSubscription" target="_blank">Tatum API documentation</a>
  */
-export const createNewSubscription = async (data: CreateSubscription): Promise<{ id: string }> => {
-    return (await axios.post(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/subscription`, data, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
-};
+export const createNewSubscription = async (data: CreateSubscription): Promise<{ id: string }> => post(`/v3/subscription`, data, CreateSubscription);
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/getSubscriptions" target="_blank">Tatum API documentation</a>
  */
-export const listActiveSubscriptions = async (pageSize: number = 50, offset: number = 0): Promise<Subscription[]> => {
-    return (await axios.get(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/subscription?pageSize=${pageSize}&offset=${offset}`, { headers: { 'x-api-key': process.env.TATUM_API_KEY } })).data
-}
+export const listActiveSubscriptions = async (pageSize: number = 50, offset: number = 0): Promise<Subscription[]> => get(`/v3/subscription?pageSize=${pageSize}&offset=${offset}`)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/deleteSubscription" target="_blank">Tatum API documentation</a>
  */
-export const cancelExistingSubscription = async (id: string): Promise<void> => {
-    await axios.delete(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/subscription/${id}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}});
-};
+export const cancelExistingSubscription = async (id: string): Promise<void> => httpDelete(`/v3/subscription/${id}`);
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/getSubscriptionReport" target="_blank">Tatum API documentation</a>
  */
-export const obtainReportForSubscription = async (id: string): Promise<Transaction[] | Account[]> => {
-    return (await axios.get(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/subscription/report/${id}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data
-};
+export const obtainReportForSubscription = async (id: string): Promise<Transaction[] | Account[]> => get(`/v3/subscription/report/${id}`);
 
 
 

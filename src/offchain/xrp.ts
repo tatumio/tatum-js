@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
-import {validateOrReject} from 'class-validator';
 import {RippleAPI} from 'ripple-lib';
 import {xrpGetAccountInfo, xrpGetFee} from '../blockchain';
+import { validateBody } from '../connector/tatum'
 import {Currency, TransactionKMS, TransferXrpOffchain} from '../model';
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
 
@@ -13,7 +13,7 @@ import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} fr
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendXrpOffchainTransaction = async (testnet: boolean, body: TransferXrpOffchain) => {
-    await validateOrReject(body);
+    await validateBody(body, TransferXrpOffchain);
     const {
         account, secret, ...withdrawal
     } = body;

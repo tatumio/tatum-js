@@ -1,4 +1,5 @@
-import {validateOrReject} from 'class-validator';
+import { validateBody } from '../connector/tatum'
+import {CONTRACT_ADDRESSES} from '../constants';
 import {getAccountById, getVirtualCurrencyByName} from '../ledger';
 import {Currency, TransferTrxOffchain, TrcType} from '../model/request';
 import {
@@ -8,7 +9,6 @@ import {
 } from '../transaction';
 import {generatePrivateKeyFromMnemonic} from '../wallet';
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
-import {CONTRACT_ADDRESSES} from '../constants';
 
 /**
  * Send Tron transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -18,7 +18,7 @@ import {CONTRACT_ADDRESSES} from '../constants';
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendTronOffchainTransaction = async (testnet: boolean, body: TransferTrxOffchain) => {
-    await validateOrReject(body);
+    await validateBody(body, TransferTrxOffchain);
     const {
         mnemonic, index, fromPrivateKey, ...withdrawal
     } = body;

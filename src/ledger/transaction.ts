@@ -1,73 +1,49 @@
-import axios from 'axios';
-import {validateOrReject} from 'class-validator';
-import {TATUM_API_URL} from '../constants';
-import {CreateTransaction, Transaction, TransactionFilter, TransactionType} from '../model';
+import { get, post } from '../connector/tatum'
+import {CreateTransaction, Transaction, TransactionFilter} from '../model';
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/getTransactionsByReference" target="_blank">Tatum API documentation</a>
  */
-export const getTransactionsByReference = async (reference: string): Promise<Transaction[]> => {
-    return (await axios.get(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ledger/transaction/reference/${reference}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
-};
+export const getTransactionsByReference = async (reference: string): Promise<Transaction[]> => get(`/v3/ledger/transaction/reference/${reference}`);
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/sendTransaction" target="_blank">Tatum API documentation</a>
  */
-export const storeTransaction = async (transaction: CreateTransaction): Promise<{ reference: string }> => {
-    await validateOrReject(transaction);
-    return (await axios.post(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ledger/transaction`, transaction, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
-};
+export const storeTransaction = async (transaction: CreateTransaction): Promise<{ reference: string }> =>
+  post(`/v3/ledger/transaction`, transaction, CreateTransaction);
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/getTransactionsByAccountId" target="_blank">Tatum API documentation</a>
  */
-export const getTransactionsByAccount = async (filter: TransactionFilter, pageSize: number = 50, offset: number = 0): Promise<Transaction[]> => {
-    await validateOrReject(filter);
-    return (await axios.post(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ledger/transaction/account?pageSize=${pageSize}&offset=${offset}`,
-        filter, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
-};
+export const getTransactionsByAccount = async (filter: TransactionFilter, pageSize: number = 50, offset: number = 0): Promise<Transaction[]> =>
+  post(`/v3/ledger/transaction/account?pageSize=${pageSize}&offset=${offset}`, filter, TransactionFilter);
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/getTransactionsByCustomerId" target="_blank">Tatum API documentation</a>
  */
-export const getTransactionsByCustomer = async (filter: TransactionFilter, pageSize: number = 50, offset: number = 0): Promise<Transaction[]> => {
-    await validateOrReject(filter);
-    return (await axios.post(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ledger/transaction/customer?pageSize=${pageSize}&offset=${offset}`,
-        filter, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
-};
+export const getTransactionsByCustomer = async (filter: TransactionFilter, pageSize: number = 50, offset: number = 0): Promise<Transaction[]> =>
+  post(`/v3/ledger/transaction/customer?pageSize=${pageSize}&offset=${offset}`, filter, TransactionFilter);
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/getTransactions" target="_blank">Tatum API documentation</a>
  */
-export const getTransactionsByLedger = async (filter: TransactionFilter, pageSize: number = 50, offset: number = 0): Promise<Transaction[]> => {
-    await validateOrReject(filter);
-    return (await axios.post(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ledger/transaction/ledger?pageSize=${pageSize}&offset=${offset}`,
-        filter, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
-};
+export const getTransactionsByLedger = async (filter: TransactionFilter, pageSize: number = 50, offset: number = 0): Promise<Transaction[]> =>
+  post(`/v3/ledger/transaction/ledger?pageSize=${pageSize}&offset=${offset}`, filter, TransactionFilter);
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/getTransactionsByAccountId" target="_blank">Tatum API documentation</a>
  */
-export const countTransactionsByAccount = async (filter: TransactionFilter): Promise<number> => {
-    await validateOrReject(filter);
-    return (await axios.post(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ledger/transaction/account?count=true`,
-        filter, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
-};
+export const countTransactionsByAccount = async (filter: TransactionFilter): Promise<number> =>
+  post(`/v3/ledger/transaction/account?count=true`, filter, TransactionFilter);
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/getTransactionsByCustomerId" target="_blank">Tatum API documentation</a>
  */
-export const countTransactionsByCustomer = async (filter: TransactionFilter): Promise<number> => {
-    await validateOrReject(filter);
-    return (await axios.post(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ledger/transaction/customer?count=true`,
-        filter, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
-};
+export const countTransactionsByCustomer = async (filter: TransactionFilter): Promise<number> =>
+  post(`/v3/ledger/transaction/customer?count=true`, filter, TransactionFilter);
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/getTransactions" target="_blank">Tatum API documentation</a>
  */
-export const countTransactionsByLedger = async (filter: TransactionFilter): Promise<number> => {
-    await validateOrReject(filter);
-    return (await axios.post(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ledger/transaction/ledger?count=true`,
-        filter, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
-};
+export const countTransactionsByLedger = async (filter: TransactionFilter): Promise<number> =>
+  post(`/v3/ledger/transaction/ledger?count=true`, filter, TransactionFilter);

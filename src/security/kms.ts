@@ -1,32 +1,23 @@
-import axios from 'axios';
-import {TATUM_API_URL} from '../constants';
+import { get, httpDelete, put } from '../connector/tatum'
 import {Currency} from '../model';
-import {TransactionKMS} from '../model/response';
+import {TransactionKMS} from '../model';
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/GetPendingTransactionToSign" target="_blank">Tatum API documentation</a>
  */
-export const getTransactionKMS = async (id: string): Promise<TransactionKMS> => {
-    return (await axios.get(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/kms/${id}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
-};
+export const getTransactionKMS = async (id: string): Promise<TransactionKMS> => get(`/v3/kms/${id}`);
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/DeletePendingTransactionToSign" target="_blank">Tatum API documentation</a>
  */
-export const deleteTransactionKMS = async (id: string, revert = true): Promise<void> => {
-    await axios.delete(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/kms/${id}/${revert}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}});
-};
+export const deleteTransactionKMS = async (id: string, revert = true): Promise<void> => httpDelete(`/v3/kms/${id}/${revert}`)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/CompletePendingSignature" target="_blank">Tatum API documentation</a>
  */
-export const completePendingTransactionKMS = async (id: string, txId: string): Promise<void> => {
-    await axios.put(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/kms/${id}/${txId}`, undefined, {headers: {'x-api-key': process.env.TATUM_API_KEY}});
-};
+export const completePendingTransactionKMS = async (id: string, txId: string): Promise<void> => put(`/v3/kms/${id}/${txId}`);
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/GetPendingTransactionsToSign" target="_blank">Tatum API documentation</a>
  */
-export const getPendingTransactionsKMSByChain = async (chain: Currency): Promise<TransactionKMS[]> => {
-    return (await axios.get(`${process.env.TATUM_API_URL || TATUM_API_URL}/v3/kms/pending/${chain}`, {headers: {'x-api-key': process.env.TATUM_API_KEY}})).data;
-};
+export const getPendingTransactionsKMSByChain = async (chain: Currency): Promise<TransactionKMS[]> => get(`/v3/kms/pending/${chain}`);

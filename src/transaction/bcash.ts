@@ -6,10 +6,10 @@ import {
 } from '@bitcoin-dot-com/bitcoincashjs2-lib';
 import BigNumber from 'bignumber.js';
 import {ECPair, TransactionBuilder} from 'bitbox-sdk';
-import {validateOrReject} from 'class-validator';
 // @ts-ignore
 import coininfo from 'coininfo';
 import {bcashBroadcast, bcashGetTransaction} from '../blockchain';
+import { validateBody } from '../connector/tatum'
 import {Currency, TransferBchBlockchain} from '../model/request';
 import {BchTx, TransactionKMS} from '../model/response';
 
@@ -54,7 +54,7 @@ export const signBitcoinCashKMSTransaction = async (tx: TransactionKMS, privateK
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareBitcoinCashSignedTransaction = async (testnet: boolean, body: TransferBchBlockchain) => {
-    await validateOrReject(body);
+    await validateBody(body, TransferBchBlockchain)
     const {fromUTXO, to} = body;
     const networkType = testnet ? 'testnet' : 'mainnet';
     const transactionBuilder = new TransactionBuilder(networkType);

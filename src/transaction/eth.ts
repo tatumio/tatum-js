@@ -1,9 +1,9 @@
 import axios from 'axios';
 import {BigNumber} from 'bignumber.js';
-import {validateOrReject} from 'class-validator';
 import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
 import {ethBroadcast, ethGetTransactionsCount} from '../blockchain';
+import { validateBody } from '../connector/tatum'
 import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
 import tokenABI from '../contracts/erc20/token_abi';
 import tokenByteCode from '../contracts/erc20/token_bytecode';
@@ -47,7 +47,7 @@ export const signEthKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareStoreDataTransaction = async (testnet: boolean, body: CreateRecord, provider?: string) => {
-    await validateOrReject(body);
+    await validateBody(body, CreateRecord);
     const {
         fromPrivateKey,
         to,
@@ -87,7 +87,7 @@ export const prepareStoreDataTransaction = async (testnet: boolean, body: Create
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareEthOrErc20SignedTransaction = async (testnet: boolean, body: TransferEthErc20, provider?: string) => {
-    await validateOrReject(body);
+    await validateBody(body, TransferEthErc20);
     const {
         fromPrivateKey,
         to,
@@ -143,7 +143,7 @@ export const prepareEthOrErc20SignedTransaction = async (testnet: boolean, body:
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareCustomErc20SignedTransaction = async (testnet: boolean, body: TransferCustomErc20, provider?: string) => {
-    await validateOrReject(body);
+    await validateBody(body, TransferCustomErc20);
     const {
         fromPrivateKey,
         to,
@@ -188,7 +188,7 @@ export const prepareCustomErc20SignedTransaction = async (testnet: boolean, body
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareDeployErc20SignedTransaction = async (testnet: boolean, body: DeployEthErc20, provider?: string) => {
-    await validateOrReject(body);
+    await validateBody(body, DeployEthErc20);
     const {
         name,
         address,

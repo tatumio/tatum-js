@@ -1,6 +1,8 @@
 import {Currency} from './model';
 
 export const TATUM_API_URL = 'https://api-eu1.tatum.io';
+export const TATUM_RETRY_DELAY = 1000;
+export const TATUM_RETRIES = 5;
 
 export const TEST_VET_URL = 'https://sync-testnet.vechain.org/';
 export const VET_URL = 'https://sync-mainnet.vechain.org/';
