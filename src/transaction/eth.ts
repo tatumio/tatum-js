@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {BigNumber} from 'bignumber.js';
+import { URL } from 'url'
 import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
 import {ethBroadcast, ethGetTransactionsCount} from '../blockchain';
@@ -11,11 +12,17 @@ import {CreateRecord, Currency, DeployEthErc20, TransactionKMS, TransferCustomEr
 
 /**
  * Estimate Gas price for the transaction.
- * @param client
  */
-export const ethGetGasPriceInWei = async (client: Web3) => {
-    const {data} = await axios.get('https://ethgasstation.info/json/ethgasAPI.json');
-    return client.utils.toWei(new BigNumber(data.fast).dividedBy(10).toString(), 'gwei');
+export const ethGetGasPriceInWei = async () => {
+  const gasStationUrl = new URL('https://ethgasstation.info/json/ethgasAPI.json')
+  if (process.env.TATUM_GAS_STATION_API_KEY) {
+    gasStationUrl.searchParams.set('apiKey', process.env.TATUM_GAS_STATION_API_KEY)
+  }
+  const { data } = await Promise.race([
+    axios.get(gasStationUrl.toString()),
+    axios.get('https://www.etherchain.org/api/gasPriceOracle'),
+  ]);
+  return Web3.utils.toWei(new BigNumber(data.fast).dividedBy(10).toString(), 'gwei');
 };
 
 /**
@@ -63,7 +70,7 @@ export const prepareStoreDataTransaction = async (testnet: boolean, body: Create
     const addressNonce = nonce ? nonce : await ethGetTransactionsCount(address);
     const customFee = ethFee ? ethFee : {
         gasLimit: `${data.length * 68 + 21000}`,
-        gasPrice: client.utils.fromWei(await ethGetGasPriceInWei(client), 'gwei'),
+        gasPrice: client.utils.fromWei(await ethGetGasPriceInWei(), 'gwei'),
     };
 
     const tx: TransactionConfig = {
@@ -104,7 +111,7 @@ export const prepareEthOrErc20SignedTransaction = async (testnet: boolean, body:
     client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
 
     let tx: TransactionConfig;
-    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei(client);
+    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei();
     if (currency === Currency.ETH) {
         tx = {
             from: 0,
@@ -160,7 +167,7 @@ export const prepareCustomErc20SignedTransaction = async (testnet: boolean, body
     client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
 
     let tx: TransactionConfig;
-    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei(client);
+    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei();
     // @ts-ignore
     const contract = new client.eth.Contract([TRANSFER_METHOD_ABI], contractAddress);
     const decimals = new BigNumber(10).pow(digits);
@@ -205,7 +212,7 @@ export const prepareDeployErc20SignedTransaction = async (testnet: boolean, body
     client.eth.accounts.wallet.add(fromPrivateKey);
     client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
 
-    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei(client);
+    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei();
     // @ts-ignore
     const contract = new client.eth.Contract(tokenABI);
     const deploy = contract.deploy({

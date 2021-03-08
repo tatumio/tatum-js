@@ -37,7 +37,7 @@ export const sendEthOffchainTransaction = async (testnet: boolean, body: Transfe
     const web3 = new Web3(provider || `${TATUM_API_URL}/v3/ethereum/web3/${process.env.TATUM_API_KEY}`);
     web3.eth.accounts.wallet.add(fromPriv);
     web3.eth.defaultAccount = web3.eth.accounts.wallet[0].address;
-    const gasPrice = body.gasPrice ? web3.utils.toWei(body.gasPrice, 'gwei') : await ethGetGasPriceInWei(web3);
+    const gasPrice = body.gasPrice ? web3.utils.toWei(body.gasPrice, 'gwei') : await ethGetGasPriceInWei();
 
     const account = await getAccountById(withdrawal.senderAccountId);
     const {txData, gasLimit} = await prepareEthSignedOffchainTransaction(amount, fromPriv, address, account.currency, web3, gasPrice, nonce);
@@ -85,7 +85,7 @@ export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: Tr
     const web3 = new Web3(provider || `${TATUM_API_URL}/v3/ethereum/web3/${process.env.TATUM_API_KEY}`);
     web3.eth.accounts.wallet.add(fromPriv);
     web3.eth.defaultAccount = web3.eth.accounts.wallet[0].address;
-    const gasPrice = body.gasPrice ? web3.utils.toWei(body.gasPrice, 'gwei') : await ethGetGasPriceInWei(web3);
+    const gasPrice = body.gasPrice ? web3.utils.toWei(body.gasPrice, 'gwei') : await ethGetGasPriceInWei();
 
     const account = await getAccountById(withdrawal.senderAccountId);
 
