@@ -16,3 +16,4 @@ If you need support please enter [Telegram group](https://t.me/tatumio) and ask 
 * Scrypta connector - connector to the [Scrypta Blockchain](https://scrypta.foundation/) maintained by [turinglabs](https://github.com/turinglabsorg)
 * Tron connector - connector to the [TRON Network](https://tron.network/) maintained by [Tatum Team](https://github.com/tatumio)
 * Quorum connector - connector to the [Quorum](https://consensys.net/quorum/) maintained by [Tatum Team](https://github.com/tatumio)
+* Celo connector - connector to the [Celo](https://celo.org/) maintained by [Tatum Team](https://github.com/tatumio)

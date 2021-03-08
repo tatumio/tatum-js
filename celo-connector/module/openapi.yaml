@@ -1,0 +1,1662 @@
+openapi: 3.0.0
+servers:
+  - url: 'https://api-eu1.tatum.io'
+info:
+  version: 1.0.0
+  title: Tatum Celo API
+tags:
+  - description: |
+      <p>Celo is fork of Celo with more then 1000 tps and possibility to pay for
+      transactions in it's own stable coin, cUSD. Celo Blockchain enables access to most commonly used Celo methods.
+      These methods bring small level of abstraction,
+             and are used for the type of applications that want to communicate with blockchain directly. Some of the methods are used alongside Tatum Private Ledger
+             to connect blockchain and private ledger together, like wallet generation or getting information about transactions.<br/>
+            Tatum supports 2 chains:
+            <ul><li>Mainnet - regular live chain
+            <li>Alfajorec - test chain used for testing purposes. Coins on test chain have no value and can be obtained from
+            Faucet, e.g. <a target="_blank" href="https://celo.org/developers/faucet">https://celo.org/developers/faucet</a></li></ul><br/>
+            Tatum supports BIP44 HD wallets. It is very convenient and secure, since it can generate 2^31 addresses from 1 mnemonic phrase. It is possible to generate this type of wallet with 1 simple API call.</p>
+    name: Blockchain / Celo
+paths:
+  /v3/celo/wallet:
+    get:
+      description: |
+        <h4>1 credit per API call.</h4><br/><p>Tatum supports BIP44 HD wallets. It is very convenient and secure, since it can generate 2^31 addresses from 1 mnemonic phrase. Mnemonic phrase consists of 24 special words in defined order and can restore access to all generated addresses and private keys.<br/>Each address is identified by 3 main values:<ul><li>Private Key - your secret value, which should never be revealed</li><li>Public Key - public address to be published</li><li>Derivation index - index of generated address</li></ul></p><p>Tatum follows BIP44 specification and generates for Celo wallet with derivation path m'/44'/60'/0'/0. More about BIP44 HD wallets can be found here - <a target="_blank" href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki">https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki</a>.
+        Generate BIP44 compatible Celo wallet.</p>
+      operationId: CeloGenerateWallet
+      parameters:
+        - description: "Mnemonic to use for generation of extended public and private keys."
+          in: query
+          name: mnemonic
+          required: false
+          schema:
+            type: string
+            maxLength: 500
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Wallet"
+          description: OK
+        400: &API400
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+          description: Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.
+        401: &API401
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error401NotActive"
+                  - $ref: "#/components/schemas/Error401Invalid"
+          description: Unauthorized. Not valid or inactive subscription key present in the HTTP Header.
+        403: &API403
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403Celo"
+        500: &API500
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error500"
+          description: Internal server error. There was an error on the server during the processing of the request.
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Generate Celo wallet
+      tags:
+        - Blockchain / Celo
+  /v3/celo/address/{xpub}/{index}:
+    get:
+      description: |
+        <h4>1 credit per API call.</h4><br/>
+        <p>Generate Celo account deposit address from Extended public key. Deposit address is generated for the specific index - each extended public key can generate
+        up to 2^31 addresses starting from index 0 until 2^31.</p>
+      operationId: CeloGenerateAddress
+      parameters:
+        - description: "Extended public key of wallet."
+          in: path
+          name: xpub
+          required: true
+          schema:
+            type: string
+            example: xpub6EsCk1uU6cJzqvP9CdsTiJwT2rF748YkPnhv5Qo8q44DG7nn2vbyt48YRsNSUYS44jFCW9gwvD9kLQu9AuqXpTpM1c5hgg9PsuBLdeNncid
+        - description: "Derivation index of desired address to be generated."
+          in: path
+          name: index
+          required: true
+          schema:
+            type: number
+            example: 0
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  address:
+                    type: string
+                    description: Celo addres
+                    example: "0xa7673161CbfE0116A4De9E341f8465940c2211d4"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Generate Celo account address from Extended public key
+      tags:
+        - Blockchain / Celo
+  /v3/celo/wallet/priv:
+    post:
+      description: |
+        <h4>1 credit per API call.</h4><br/>
+        <p>Generate private key of address from mnemonic for given derivation path index. Private key is generated for the specific index - each mnemonic
+        can generate up to 2^31 private keys starting from index 0 until 2^31.</p>
+      operationId: CeloGenerateAddressPrivateKey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PrivKeyRequest"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PrivKey"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Generate Celo private key
+      tags:
+        - Blockchain / Celo
+  /v3/celo/web3/{xApiKey}:
+    post:
+      description: |
+        <h4>2 credits per API call.</h4><br/>
+        <p>Use this endpoint URL as a http-based web3 driver to connect directly to the Celo node provided by Tatum.
+        To learn more about Celo Web3, please visit <a href="https://ethereum.org/en/developers/" target="_blank">Celo developer's guide.</a></p>
+      operationId: CeloWeb3Driver
+      parameters:
+        - description: "Tatum X-API-Key used for authorization."
+          in: path
+          name: xApiKey
+          required: true
+          schema:
+            type: string
+            example: asdlkfjnqunalkwjfnq2oi303294857k
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Any valid Web3 method content body.
+              example: { "jsonrpc": "2.0","method": "web3_clientVersion","params": [ ],"id": 2 }
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Any valid Web3 response.
+                example: { "jsonrpc": "2.0","id": 2,"result": "Geth/v1.9.9-omnibus-e320ae4c-20191206/linux-amd64/go1.13.4" }
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        500:
+          <<: *API500
+      x-code-samples:
+      summary: Web3 HTTP driver
+      tags:
+        - Blockchain / Celo
+  /v3/celo/block/current:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get Celo current block number. This is the number of the latest block in the blockchain.</p>"
+      operationId: CeloGetCurrentBlock
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: number
+                description: Current block number
+                example: 6491272
+          description: OK
+        401:
+          <<: *API401
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get current block number
+      tags:
+        - Blockchain / Celo
+  /v3/celo/block/{hash}:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get Celo block by block hash or block number.</p>"
+      operationId: CeloGetBlock
+      parameters:
+        - description: "Block hash or block number"
+          in: path
+          name: hash
+          required: true
+          schema:
+            type: string
+            example: 6470657
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CeloBlock"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get Celo block by hash
+      tags:
+        - Blockchain / Celo
+  /v3/celo/account/balance/{address}:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get Celo account balance in ETH. This method does not prints any balance of the ERC20 or ERC721 tokens on the account.</p>"
+      operationId: CeloGetBalance
+      parameters:
+        - description: "Account address"
+          in: path
+          name: address
+          required: true
+          schema:
+            type: string
+            example: "0x3223AEB8404C7525FcAA6C512f91e287AE9FfE7B"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  celo:
+                    type: string
+                    description: Balance of Celo
+                    example: "10.52"
+                  cUsd:
+                    type: string
+                    description: Balance of cUSD
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get Celo Account balance
+      tags:
+        - Blockchain / Celo
+  /v3/celo/transaction/{hash}:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get Celo transaction by transaction hash.</p>"
+      operationId: CeloGetTransaction
+      parameters:
+        - description: "Transaction hash"
+          in: path
+          name: hash
+          required: true
+          schema:
+            type: string
+            example: "0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CeloTx"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403TxNotFound"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get Celo Transaction
+      tags:
+        - Blockchain / Celo
+  /v3/celo/transaction/count/{address}:
+    get:
+      description: |
+        <h4>1 credit per API call.</h4><br/>
+        <p>Get a number of outgoing Celo transactions for the address. When a transaction is sent, there can be multiple outgoing transactions,
+        which are not yet processed by the blockchain. To distinguish between them, there is a counter called a nonce, which represents
+        the order of the transaction in the list of outgoing transactions.</p>
+      operationId: CeloGetTransactionCount
+      parameters:
+        - description: "address"
+          in: path
+          name: address
+          required: true
+          schema:
+            type: string
+            maxLength: 42
+            minLength: 42
+            example: "0xdac17f958d2ee523a2206206994597c13d831ec7"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: number
+                example: 5
+                description: Number of transactions, that were made from this address. Can be used as a nonce parameter in send transaction calls.
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get count of outgoing Celo transactions
+      tags:
+        - Blockchain / Celo
+  /v3/celo/transaction:
+    post:
+      description: |
+        <h4>2 credits per API call.</h4><br/>
+        <p>Send Celo, cUSD or Tatum supported ERC20 token from account to account.<br/><br/>
+        This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+        No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
+        or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+        <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
+        Alternatively, using the Tatum client library for supported languages or Tatum Middleware with a custom key management system is possible.
+        </p>
+      operationId: CeloBlockchainTransfer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/TransferCeloBlockchain"
+                - $ref: "#/components/schemas/TransferCeloBlockchainKMS"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/TransactionHashKMS"
+                  - $ref: "#/components/schemas/SignatureId"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403Celo"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Send Celo / ERC20 from account to account
+      tags:
+        - Blockchain / Celo
+  /v3/celo/erc721/deploy:
+    post:
+      description: |
+        <p>Deploy Celo ERC721 Smart Contract. This method creates new ERC721 Smart Contract (Non-Fungible Tokens) on the blockchain. Smart contract is standardized and audited.
+        It is possible to mint, burn and transfer tokens. It is also possible to mint multiple tokens at once.
+        It is possible to see the code of the deployed contract <a href="https://github.com/tatumio/tatum-middleware/blob/master/src/contracts/erc721/ERC721Full.sol" target="_blank">here</a>.<br/><br/>
+        This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+        No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
+        or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+        <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
+        Alternatively, using the Tatum client library for supported languages or Tatum Middleware with a custom key management system is possible.
+        </p>
+      operationId: CeloDeployErc721
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/DeployErc721"
+                - $ref: "#/components/schemas/DeployErc721KMS"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/TransactionHashKMS"
+                  - $ref: "#/components/schemas/SignatureId"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403Celo"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Deploy Celo ERC721 Smart Contract.
+      tags:
+        - Blockchain / Celo
+  /v3/celo/erc721/mint:
+    post:
+      description: |
+        <h4>2 credits per API call.</h4><br/>
+        <p>Create one Celo ERC721 Smart Contract Token and transfer it to destination account. Create and transfer any ERC721 token from smart contract defined in contractAddress.
+        It is possible to add URL to the created token with a more detailed information about it.<br/><br/>
+        This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+        No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
+        or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+        <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
+        Alternatively, using the Tatum client library for supported languages or Tatum Middleware with a custom key management system is possible.
+        </p>
+      operationId: CeloMintErc721
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/MintErc721"
+                - $ref: "#/components/schemas/MintErc721KMS"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/TransactionHashKMS"
+                  - $ref: "#/components/schemas/SignatureId"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403Celo"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Mint Celo ERC721
+      tags:
+        - Blockchain / Celo
+  /v3/celo/erc721/transaction:
+    post:
+      description: |
+        <h4>2 credits per API call.</h4><br/>
+        <p>Transfer Celo ERC721 Smart Contract Tokens from account to account. Transfer any ERC721 token from smart contract defined in contractAddress.
+        Only 1 specific token with specified tokenId can be transfered. This method invokes ERC721 method safeTransfer() to transfer the token.<br/><br/>
+        This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+        No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
+        or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+        <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
+        Alternatively, using the Tatum client library for supported languages or Tatum Middleware with a custom key management system is possible.
+        </p>
+      operationId: CeloTransferErc721
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/TransferErc721"
+                - $ref: "#/components/schemas/TransferErc721KMS"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/TransactionHashKMS"
+                  - $ref: "#/components/schemas/SignatureId"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403Celo"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Transfer Celo ERC721 Token
+      tags:
+        - Blockchain / Celo
+  /v3/celo/erc721/mint/batch:
+    post:
+      description: |
+        <h4>2 credits per API call.</h4><br/>
+        <p>Create multiple Celo ERC721 Smart Contract Tokens and transfer them to destination account. Create and transfer any ERC721 tokens from smart contract defined in contractAddress.<br/><br/>
+        This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+        No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
+        or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+        <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
+        Alternatively, using the Tatum client library for supported languages or Tatum Middleware with a custom key management system is possible.
+        </p>
+      operationId: CeloMintMultipleErc721
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/MintMultipleErc721"
+                - $ref: "#/components/schemas/MintMultipleErc721KMS"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/TransactionHashKMS"
+                  - $ref: "#/components/schemas/SignatureId"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403Celo"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Mint Celo ERC721 Multiple Tokens
+      tags:
+        - Blockchain / Celo
+  /v3/celo/erc721/burn:
+    post:
+      description: |
+        <h4>2 credits per API call.</h4><br/>
+        <p>Burn one Celo ERC721 Smart Contract Token. This method destroys any ERC721 token from smart contract defined in contractAddress.<br/><br/>
+        This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+        No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
+        or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+        <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
+        Alternatively, using the Tatum client library for supported languages or Tatum Middleware with a custom key management system is possible.
+        </p>
+      operationId: CeloBurnErc20
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/BurnErc721"
+                - $ref: "#/components/schemas/BurnErc721KMS"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/TransactionHashKMS"
+                  - $ref: "#/components/schemas/SignatureId"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403Celo"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Burn Celo ERC721
+      tags:
+        - Blockchain / Celo
+  /v3/celo/erc721/balance/{address}/{contractAddress}:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get Celo ERC721 Account balance. Returns number of tokens Account holds.</p>"
+      operationId: CeloGetBalanceErc721
+      parameters:
+        - description: "Account address"
+          in: path
+          name: address
+          required: true
+          schema:
+            type: string
+            example: "0x3223AEB8404C7525FcAA6C512f91e287AE9FfE7B"
+        - description: "ERC721 contract address"
+          in: path
+          name: contractAddress
+          required: true
+          schema:
+            type: string
+            example: "0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+                    description: Number of ERC721 tokens.
+                    example: "10"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403Celo"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get Celo ERC721 Account balance
+      tags:
+        - Blockchain / Celo
+  /v3/celo/erc721/token/{address}/{index}/{contractAddress}:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get Celo ERC721 token at given index of Account. Total number of tokens can be obtained from Get Balance operation.</p>"
+      operationId: CeloGetTokenErc721
+      parameters:
+        - description: "Account address"
+          in: path
+          name: address
+          required: true
+          schema:
+            type: string
+            example: "0x3223AEB8404C7525FcAA6C512f91e287AE9FfE7B"
+        - description: "Token index"
+          in: path
+          name: index
+          required: true
+          schema:
+            type: number
+            example: 1
+        - description: "ERC721 contract address"
+          in: path
+          name: contractAddress
+          required: true
+          schema:
+            type: string
+            example: "0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+                    description: Token ID
+                    example: "1"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403Celo"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get Celo ERC721 Token
+      tags:
+        - Blockchain / Celo
+  /v3/celo/erc721/token/{address}/{contractAddress}:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get Celo ERC721 tokens of Account.</p>"
+      operationId: CeloGetTokensByAddressErc721
+      parameters:
+        - description: "Account address"
+          in: path
+          name: address
+          required: true
+          schema:
+            type: string
+            example: "0x3223AEB8404C7525FcAA6C512f91e287AE9FfE7B"
+        - description: "ERC721 contract address"
+          in: path
+          name: contractAddress
+          required: true
+          schema:
+            type: string
+            example: "0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: string
+                      description: Token ID
+                      example: "1"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403Celo"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get Celo ERC721 Tokens By Address
+      tags:
+        - Blockchain / Celo
+  /v3/celo/erc721/metadata/{token}/{contractAddress}:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get Celo ERC721 token metadata.</p>"
+      operationId: CeloGetMetadataErc721
+      parameters:
+        - description: "Token ID"
+          in: path
+          name: token
+          required: true
+          schema:
+            type: string
+            example: "1"
+            maxLength: 32
+        - description: "ERC721 contract address"
+          in: path
+          name: contractAddress
+          required: true
+          schema:
+            type: string
+            example: "0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+                    description: Metadata associated with token.
+                    example: "https://my_token_data.com"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403Celo"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get Celo ERC721 Token Metadata
+      tags:
+        - Blockchain / Celo
+  /v3/celo/erc721/owner/{token}/{contractAddress}:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get Celo ERC721 token owner.</p>"
+      operationId: CeloGetOwnerErc721
+      parameters:
+        - description: "Token ID"
+          in: path
+          name: token
+          required: true
+          schema:
+            type: string
+            example: "1"
+            maxLength: 32
+        - description: "ERC721 contract address"
+          in: path
+          name: contractAddress
+          required: true
+          schema:
+            type: string
+            example: "0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+                    description: Token owner addres
+                    example: "0x77F77bb1e1132fb52B738e0B28F57EF152eAf3B1"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403Celo"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get Celo ERC721 Token owner
+      tags:
+        - Blockchain / Celo
+  /v3/celo/broadcast:
+    post:
+      description: |
+        <h4>2 credits per API call.</h4><br/>
+        <p>Broadcast signed transaction to Celo blockchain. This method is used internally from Tatum KMS, Tatum Middleware or Tatum client libraries.
+        It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
+      operationId: CeloBroadcast
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BroadcastKMS"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionHashKMS"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403Celo"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Broadcast signed Celo transaction
+      tags:
+        - Blockchain / Celo
+components:
+  securitySchemes:
+    X-Api-Key:
+      description: |
+        To maintain the highest security level, Tatum requires X-API-Key HTTP header.
+        This X-API-Key represents identification of the plan and can be used by 1 developer or per environment.
+        Each X-API-Key is bound to the test or production blockchains.
+      in: header
+      name: x-api-key
+      type: apiKey
+  schemas:
+    Error403Celo:
+      properties:
+        errorCode:
+          description: celo.error
+          example: celo.error
+          type: string
+        message:
+          description: "Unexpected error occurred. Reason: ${reason}"
+          example: "Unexpected error occurred. Reason: ${reason}"
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    TransferErc721:
+      type: object
+      properties:
+        to:
+          maxLength: 42
+          minLength: 42
+          description: Blockchain address to send ERC721 token to
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        tokenId:
+          description: ID of token.
+          example: "100000"
+          type: string
+          maxLength: 256
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        fromPrivateKey:
+          type: string
+          maxLength: 66
+          example: "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2"
+          minLength: 66
+          description: Private key of sender address. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          example: 1
+          description: Nonce to be set to Celo transaction. If not present, last known nonce will be used.
+        feeCurrency:
+          type: string
+          description: Currency to pay for transaction gas
+          enum:
+            - CELO
+            - CUSD
+      required:
+        - to
+        - contractAddress
+        - tokenId
+        - fromPrivateKey
+    TransferErc721KMS:
+      type: object
+      properties:
+        to:
+          maxLength: 42
+          minLength: 42
+          description: Blockchain address to send ERC721 token to
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        tokenId:
+          description: ID of token.
+          example: "100000"
+          type: string
+          maxLength: 256
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          example: 1
+          description: Nonce to be set to Celo transaction. If not present, last known nonce will be used.
+        feeCurrency:
+          type: string
+          description: Currency to pay for transaction gas
+          enum:
+            - CELO
+            - CUSD
+      required:
+        - to
+        - contractAddress
+        - feeCurrency
+        - signatureId
+        - tokenId
+    MintErc721:
+      type: object
+      properties:
+        tokenId:
+          description: ID of token to be created.
+          example: "100000"
+          type: string
+          maxLength: 32
+        to:
+          maxLength: 42
+          minLength: 42
+          description: Blockchain address to send ERC721 token to
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        url:
+          description: Metadata of the token, usually as URL.
+          example: "https://my_token_data.com"
+          type: string
+          maxLength: 256
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Celo transaction. If not present, last known nonce will be used.
+        feeCurrency:
+          type: string
+          description: Currency to pay for transaction gas
+          enum:
+            - CELO
+            - CUSD
+      required:
+        - to
+        - url
+        - feeCurrency
+        - contractAddress
+        - fromPrivateKey
+        - tokenId
+    MintErc721KMS:
+      type: object
+      properties:
+        tokenId:
+          description: ID of token to be created.
+          example: "100000"
+          type: string
+          maxLength: 32
+        to:
+          maxLength: 42
+          minLength: 42
+          description: Blockchain address to send ERC721 token to
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        url:
+          description: Metadata of the token, usually as URL.
+          example: "https://my_token_data.com"
+          type: string
+          maxLength: 256
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Celo transaction. If not present, last known nonce will be used.
+        feeCurrency:
+          type: string
+          description: Currency to pay for transaction gas
+          enum:
+            - CELO
+            - CUSD
+      required:
+        - to
+        - url
+        - feeCurrency
+        - contractAddress
+        - signatureId
+        - tokenId
+    MintMultipleErc721:
+      type: object
+      properties:
+        to:
+          type: array
+          description: Blockchain address to send ERC721 token to.
+          example: [ "0x687422eEA2cB73B5d3e242bA5456b782919AFc85" ]
+          items:
+            maxLength: 42
+            minLength: 42
+            type: string
+        tokenId:
+          type: array
+          description: ID of token to be created.
+          example: [ "100000" ]
+          items:
+            type: string
+            maxLength: 32
+        url:
+          description: Metadata of the token, usually as URL.
+          type: array
+          example:
+            - "https://my_token_data.com"
+          items:
+            type: string
+            maxLength: 256
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        fromPrivateKey:
+          type: string
+          maxLength: 66
+          example: "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2"
+          minLength: 66
+          description: Private key of sender address. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Celo transaction. If not present, last known nonce will be used.
+        feeCurrency:
+          type: string
+          description: Currency to pay for transaction gas
+          enum:
+            - CELO
+            - CUSD
+      required:
+        - to
+        - contractAddress
+        - fromPrivateKey
+        - feeCurrency
+        - tokenId
+    MintMultipleErc721KMS:
+      type: object
+      properties:
+        to:
+          type: array
+          description: Blockchain address to send ERC721 token to.
+          example: [ "0x687422eEA2cB73B5d3e242bA5456b782919AFc85" ]
+          items:
+            maxLength: 42
+            minLength: 42
+            type: string
+        tokenId:
+          type: array
+          description: ID of token to be created.
+          example: [ "100000" ]
+          items:
+            type: string
+            maxLength: 32
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Celo transaction. If not present, last known nonce will be used.
+        feeCurrency:
+          type: string
+          description: Currency to pay for transaction gas
+          enum:
+            - CELO
+            - CUSD
+      required:
+        - to
+        - contractAddress
+        - feeCurrency
+        - tokenId
+        - signatureId
+    BurnErc721:
+      type: object
+      properties:
+        tokenId:
+          description: ID of token to be destroyed.
+          example: "100000"
+          type: string
+          maxLength: 32
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        fromPrivateKey:
+          type: string
+          maxLength: 66
+          example: "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2"
+          minLength: 66
+          description: Private key of sender address. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Celo transaction. If not present, last known nonce will be used.
+        feeCurrency:
+          type: string
+          description: Currency to pay for transaction gas
+          enum:
+            - CELO
+            - CUSD
+      required:
+        - to
+        - url
+        - contractAddress
+        - feeCurrency
+        - fromPrivateKey
+        - tokenId
+    BurnErc721KMS:
+      type: object
+      properties:
+        tokenId:
+          description: ID of token to be destroyed.
+          example: "100000"
+          type: string
+          maxLength: 32
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Celo transaction. If not present, last known nonce will be used.
+        feeCurrency:
+          type: string
+          description: Currency to pay for transaction gas
+          enum:
+            - CELO
+            - CUSD
+      required:
+        - to
+        - url
+        - feeCurrency
+        - contractAddress
+        - tokenId
+        - signatureId
+    TransferCeloBlockchain:
+      type: object
+      properties:
+        data:
+          type: string
+          maxLength: 50000
+          description: Additinal data, that can be passed to blockchain transaction as data property. Only for ETH transactions.
+          example: My note to recipient.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Celo transaction. If not present, last known nonce will be used.
+        to:
+          description: Blockchain address to send assets
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          maxLength: 42
+          minLength: 42
+          type: string
+        feeCurrency:
+          type: string
+          description: Currency to pay for transaction gas
+          enum:
+            - CELO
+            - CUSD
+        amount:
+          description: Amount to be sent in Celoer.
+          example: "100000"
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+          type: string
+        fromPrivateKey:
+          type: string
+          maxLength: 66
+          example: "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2"
+          minLength: 66
+          description: Private key of sender address. Private key, or signature Id must be present.
+      required:
+        - to
+        - amount
+        - fromPrivateKey
+        - feeCurrency
+    TransferCeloBlockchainKMS:
+      type: object
+      properties:
+        data:
+          type: string
+          maxLength: 50000
+          description: Additinal data, that can be passed to blockchain transaction as data property. Only for ETH transactions.
+          example: My note to recipient.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Celo transaction. If not present, last known nonce will be used.
+        to:
+          description: Blockchain address to send assets
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          maxLength: 42
+          minLength: 42
+          type: string
+        feeCurrency:
+          type: string
+          description: Currency to pay for transaction gas
+          enum:
+            - CELO
+            - CUSD
+        amount:
+          description: Amount to be sent in Celoer.
+          example: "100000"
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+          type: string
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+      required:
+        - to
+        - feeCurrency
+        - amount
+        - signatureId
+    CeloBlock:
+      type: object
+      properties:
+        difficulty:
+          description: Difficulty for this block.
+          type: string
+          example: "3296820833"
+        extraData:
+          description: The 'extra data' field of this block.
+          type: string
+          example: "0x"
+        gasLimit:
+          description: The maximum gas allowed in this block.
+          type: number
+          example: 8000000
+        gasUsed:
+          description: The total used gas by all transactions in this block.
+          type: number
+          example: 7985124
+        hash:
+          description: Hash of the block. 'null' when its pending block.
+          type: string
+          example: "0x5d40698ee1b1ec589035f2a39c6162287e9056868cc79d66cfb248ba9f66c3fc"
+        logsBloom:
+          description: The bloom filter for the logs of the block. 'null' when its pending block.
+          type: string
+          example: "0x042080004210492080800001610060ad9600005bc81502020800000043e302020381a404000100409102040240300641108004000400007000008000c049558055a800000a0001800748900806502004200400108205005418c0218802281a0408060000533210462021050470810a010140102809011814018281115020090201068401847000a04010000c00084062000485640d00020220181150020008589105a41c0880001112034100010882545410240011402a3480050104004c310204000002009490d0012022a040c20c20011020401020140250805100410060008280200008181a220114102800001648640828200c00a94c1003a2060e001000"
+        miner:
+          description: The address of the beneficiary to whom the mining rewards were given.
+          type: string
+          example: "0xD8869d9E3d497323561Fbca2319a9FC3F6f10c4B"
+        mixHash:
+          description: ''
+          type: string
+          example: "0x7a44a1f56f12ae825fdc04550d7c3af2344daab987691771c06235f25fafcaa6"
+        nonce:
+          description: Hash of the generated proof-of-work. 'null' when its pending block.
+          type: string
+          example: "0xfa1692f52a7ac672"
+        number:
+          description: The block number. 'null' when its pending block.
+          type: number
+          example: 6470657
+        parentHash:
+          description: Hash of the parent block.
+          type: string
+          example: "0xd34aab8a455027086ac54034e68608c84d984401a883b7b5d91f9ae0bbefda15"
+        receiptsRoot:
+          description: ''
+          type: string
+          example: "0x4a496b6b7f2a1c5850bf9eebbea7193807be0067b1c06f17b9dde4eef7b2f960"
+        sha3Uncles:
+          description: SHA3 of the uncles data in the block.
+          type: string
+          example: "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+        size:
+          description: The size of this block in bytes.
+          type: number
+          example: 15296
+        stateRoot:
+          description: The root of the final state trie of the block.
+          type: string
+          example: "0x32757c92f10c6c5a106c6fb4b9ca3ff301e413a59ca3d0513b4bf98c72efddba"
+        timestamp:
+          description: The unix timestamp for when the block was collated.
+          type: number
+          example: 1569600592
+        totalDifficulty:
+          description: Total difficulty of the chain until this block.
+          type: string
+          example: "23329673338013873"
+        transactions:
+          description: Array of transactions.
+          type: array
+          items:
+            $ref: "#/components/schemas/CeloTx"
+        transactionsRoot:
+          description: The root of the transaction trie of the block.
+          type: string
+          example: "0x5990081ef8515d561b50255af03c5d505f7725ddef27405dc67d23bfd0f47704"
+    CeloTx:
+      type: object
+      properties:
+        blockHash:
+          description: Hash of the block where this transaction was in.
+          type: string
+          example: "0xcf2c40f475e78c7c19778e1ae999a0e371c9319b38182ea15dc94536f13f9137"
+        status:
+          type: boolean
+          example: true
+          description: TRUE if the transaction was successful, FALSE, if the EVM reverted the transaction.
+        blockNumber:
+          type: number
+          description: Block number where this transaction was in.
+          example: 6470854
+        from:
+          type: string
+          description: Address of the sender.
+          example: "0x81b7E08F65Bdf5648606c89998A9CC8164397647"
+        gas:
+          type: number
+          description: Gas provided by the sender.
+          example: 21000
+        gasPrice:
+          type: string
+          description: Gas price provided by the sender in wei.
+          example: "1000000000"
+        transactionHash:
+          type: string
+          description: Hash of the transaction.
+          example: "0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7"
+        input:
+          type: string
+          description: The data sent along with the transaction.
+          example: "0x"
+        nonce:
+          type: number
+          description: The number of transactions made by the sender prior to this one.
+          example: 26836405
+        to:
+          type: string
+          description: Address of the receiver. 'null' when its a contract creation transaction.
+          example: "0xbC546fa1716Ed886967cf73f40e8F2F5e623a92d"
+        transactionIndex:
+          type: number
+          description: Integer of the transactions index position in the block.
+          example: 3
+        value:
+          type: string
+          description: Value transferred in wei.
+          example: "1000000000000000000"
+        gasUsed:
+          type: number
+          description: The amount of gas used by this specific transaction alone.
+          example: 21000
+        cumulativeGasUsed:
+          type: number
+          description: The total amount of gas used when this transaction was executed in the block.
+          example: 314159
+        contractAddress:
+          type: string
+          description: The contract address created, if the transaction was a contract creation, otherwise null.
+          example: "0x81b7E08F65Bdf5648606c89998A9CC8164397647"
+        logs:
+          type: array
+          description: Log events, that happened in this transaction.
+          items:
+            type: object
+            properties:
+              address:
+                type: string
+                description: From which this event originated from.
+                example: "0x81b7E08F65Bdf5648606c89998A9CC8164397647"
+              topics:
+                type: array
+                description: An array with max 4 32 Byte topics, topic 1-3 contains indexed parameters of the log.
+                items:
+                  type: string
+                  example: "0x033456732123ffff2342342dd12342434324234234fd234fd23fd4f23d4234"
+              data:
+                type: string
+                description: The data containing non-indexed log parameter.
+              logIndex:
+                type: number
+                description: Integer of the event index position in the block.
+              transactionIndex:
+                type: number
+                description: Integer of the transaction’s index position, the event was created in.
+              transactionHash:
+                type: string
+                description: Hash of the transaction this event was created in.
+                example: "0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7"
+    DeployErc721:
+      type: object
+      properties:
+        name:
+          description: Name of the ERC721 token
+          example: My ERC721
+          maxLength: 100
+          minLength: 1
+          type: string
+        symbol:
+          description: Symbol of the ERC721 token
+          example: ERC_SYMBOL
+          maxLength: 30
+          minLength: 1
+          type: string
+        fromPrivateKey:
+          description: Private key of Ethereum account address, from which gas for deployment of ERC721 will be paid. Private key, or signature Id must be present.
+          type: string
+          maxLength: 66
+          example: "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2"
+          minLength: 66
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        feeCurrency:
+          type: string
+          description: Currency to pay for transaction gas
+          enum:
+            - CELO
+            - CUSD
+      required:
+        - name
+        - symbol
+        - feeCurrency
+        - fromPrivateKey
+    DeployErc721KMS:
+      type: object
+      properties:
+        name:
+          description: Name of the ERC721 token
+          example: My ERC721
+          maxLength: 100
+          minLength: 1
+          type: string
+        symbol:
+          description: Symbol of the ERC721 token
+          example: ERC_SYMBOL
+          maxLength: 30
+          minLength: 1
+          type: string
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+        feeCurrency:
+          type: string
+          description: Currency to pay for transaction gas
+          enum:
+            - CELO
+            - CUSD
+      required:
+        - name
+        - symbol
+        - feeCurrency
+        - signatureId
