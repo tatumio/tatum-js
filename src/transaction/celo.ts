@@ -33,9 +33,7 @@ export const signCeloKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
     await p.ready;
     const wallet = new CeloWallet(fromPrivateKey, p);
     const transaction = JSON.parse(tx.serializedTransaction);
-    const feeCurrencyContractAddress = (transaction.feeCurrency === Currency.CELO) ? undefined : (testnet ? CUSD_ADDRESS_TESTNET : CUSD_ADDRESS_MAINNET);
-    transaction.gasLimit = (await wallet.estimateGas(transaction)).add(transaction.feeCurrency === Currency.CUSD ? 100000 : 0).toHexString();
-    transaction.gasPrice = await wallet.getGasPrice(feeCurrencyContractAddress);
+    transaction.gasPrice = await wallet.getGasPrice(transaction.feeCurrency);
     return wallet.signTransaction(transaction);
 };
 
@@ -72,6 +70,9 @@ export const prepareCeloDeployErc721SignedTransaction = async (testnet: boolean,
         from: await wallet.getAddress(),
     };
     transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CUSD ? 100000 : 0).toHexString();
+    if (body.signatureId) {
+        return JSON.stringify(transaction);
+    }
     return wallet.signTransaction(transaction);
 };
 
@@ -106,6 +107,9 @@ export const prepareCeloMintErc721SignedTransaction = async (testnet: boolean, b
         from: await wallet.getAddress(),
     };
     transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CUSD ? 100000 : 0).toHexString();
+    if (body.signatureId) {
+        return JSON.stringify(transaction);
+    }
     return wallet.signTransaction(transaction);
 };
 
@@ -140,6 +144,9 @@ export const prepareCeloTransferErc721SignedTransaction = async (testnet: boolea
         from: await wallet.getAddress(),
     };
     transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CUSD ? 100000 : 0).toHexString();
+    if (body.signatureId) {
+        return JSON.stringify(transaction);
+    }
     return wallet.signTransaction(transaction);
 };
 
@@ -173,6 +180,9 @@ export const prepareCeloBurnErc721SignedTransaction = async (testnet: boolean, b
         from: await wallet.getAddress(),
     };
     transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CUSD ? 100000 : 0).toHexString();
+    if (body.signatureId) {
+        return JSON.stringify(transaction);
+    }
     return wallet.signTransaction(transaction);
 };
 
@@ -208,6 +218,9 @@ export const prepareCeloMintMultipleErc721SignedTransaction = async (testnet: bo
         from: await wallet.getAddress(),
     };
     transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CUSD ? 100000 : 0).toHexString();
+    if (body.signatureId) {
+        return JSON.stringify(transaction);
+    }
     return wallet.signTransaction(transaction);
 };
 
@@ -252,6 +265,9 @@ export const prepareCeloOrCUsdSignedTransaction = async (testnet: boolean, body:
         from: await wallet.getAddress(),
     };
     transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CUSD ? 100000 : 0).toHexString();
+    if (body.signatureId) {
+        return JSON.stringify(transaction);
+    }
     return wallet.signTransaction(transaction);
 };
 
