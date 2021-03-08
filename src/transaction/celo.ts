@@ -12,9 +12,32 @@ import {
     DeployErc721,
     MintErc721,
     MintMultipleErc721,
+    TransactionKMS,
     TransferCeloOrCeloErc20Token,
     TransferErc721,
 } from '../model';
+
+/**
+ * Sign Celo pending transaction from Tatum KMS
+ * @param tx pending transaction from KMS
+ * @param fromPrivateKey private key to sign transaction with.
+ * @param testnet mainnet or testnet version
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const signEthKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, testnet: boolean, provider?: string) => {
+    if (tx.chain !== Currency.CELO) {
+        throw Error('Unsupported chain.');
+    }
+    const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
+    await p.ready;
+    const wallet = new CeloWallet(fromPrivateKey, p);
+    const transaction = JSON.parse(tx.serializedTransaction);
+    const feeCurrencyContractAddress = (transaction.feeCurrency === Currency.CELO) ? undefined : (testnet ? CUSD_ADDRESS_TESTNET : CUSD_ADDRESS_MAINNET);
+    transaction.gasLimit = (await wallet.estimateGas(transaction)).add(transaction.feeCurrency === Currency.CUSD ? 100000 : 0).toHexString();
+    transaction.gasPrice = await wallet.getGasPrice(feeCurrencyContractAddress);
+    return wallet.signTransaction(transaction);
+};
 
 export const prepareCeloDeployErc721SignedTransaction = async (testnet: boolean, body: DeployErc721, provider?: string) => {
     await validateOrReject(body);
