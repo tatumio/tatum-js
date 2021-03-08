@@ -7,6 +7,7 @@ import ethWallet, {hdkey as ethHdKey} from 'ethereumjs-wallet';
 import {
     BCH_DERIVATION_PATH,
     BTC_DERIVATION_PATH,
+    CELO_DERIVATION_PATH,
     ETH_DERIVATION_PATH,
     LTC_DERIVATION_PATH,
     LTC_NETWORK,
@@ -81,6 +82,19 @@ const generateBchAddress = (testnet: boolean, xpub: string, i: number) => {
  * @returns blockchain address
  */
 const generateEthAddress = (testnet: boolean, xpub: string, i: number) => {
+    const w = ethHdKey.fromExtendedKey(xpub);
+    const wallet = w.deriveChild(i).getWallet();
+    return '0x' + wallet.getAddress().toString('hex').toLowerCase();
+};
+
+/**
+ * Generate Celo or any other ERC20 address
+ * @param testnet testnet or mainnet version of address
+ * @param xpub extended public key to generate address from
+ * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
+ * @returns blockchain address
+ */
+const generateCeloAddress = (testnet: boolean, xpub: string, i: number) => {
     const w = ethHdKey.fromExtendedKey(xpub);
     const wallet = w.deriveChild(i).getWallet();
     return '0x' + wallet.getAddress().toString('hex').toLowerCase();
@@ -184,6 +198,21 @@ const generateEthPrivateKey = async (testnet: boolean, mnemonic: string, i: numb
     return derivePath.getWallet().getPrivateKeyString();
 };
 
+
+/**
+ * Generate Celo or any other ERC20 private key from mnemonic seed
+ * @param testnet testnet or mainnet version of address
+ * @param mnemonic mnemonic to generate private key from
+ * @param i derivation index of private key to generate.
+ * @returns blockchain private key to the address
+ */
+const generateCeloPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
+    const path = testnet ? TESTNET_DERIVATION_PATH : CELO_DERIVATION_PATH;
+    const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnemonic));
+    const derivePath = hdwallet.derivePath(path).deriveChild(i);
+    return derivePath.getWallet().getPrivateKeyString();
+};
+
 /**
  * Generate VeChain private key from mnemonic seed
  * @param testnet testnet or mainnet version of address
@@ -265,6 +294,8 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
             return generateTronAddress(xpub, i);
         case Currency.LTC:
             return generateLtcAddress(testnet, xpub, i);
+        case Currency.CELO:
+            return generateCeloAddress(testnet, xpub, i);
         case Currency.BCH:
             return generateBchAddress(testnet, xpub, i);
         case Currency.USDT:
@@ -312,6 +343,8 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
         case Currency.TRON:
         case Currency.USDT_TRON:
             return generateTronPrivateKey(mnemonic, i);
+        case Currency.CELO:
+            return generateCeloPrivateKey(testnet, mnemonic, i);
         case Currency.USDT:
         case Currency.WBTC:
         case Currency.LEO:

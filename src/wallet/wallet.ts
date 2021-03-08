@@ -11,6 +11,7 @@ import {Keypair} from 'stellar-sdk';
 import {
     BCH_DERIVATION_PATH,
     BTC_DERIVATION_PATH,
+    CELO_DERIVATION_PATH,
     ETH_DERIVATION_PATH,
     LTC_DERIVATION_PATH,
     LTC_NETWORK,
@@ -77,6 +78,22 @@ export const generateVetWallet = async (testnet: boolean, mnem: string): Promise
  */
 export const generateEthWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
     const path = testnet ? TESTNET_DERIVATION_PATH : ETH_DERIVATION_PATH;
+    const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnem));
+    const derivePath = hdwallet.derivePath(path);
+    return {
+        xpub: derivePath.publicExtendedKey().toString(),
+        mnemonic: mnem
+    };
+};
+
+/**
+ * Generate Celo or any other ERC20 wallet
+ * @param testnet testnet or mainnet version of address
+ * @param mnem mnemonic seed to use
+ * @returns wallet
+ */
+export const generateCeloWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
+    const path = testnet ? TESTNET_DERIVATION_PATH : CELO_DERIVATION_PATH;
     const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnem));
     const derivePath = hdwallet.derivePath(path);
     return {
@@ -199,6 +216,8 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
         case Currency.TRON:
         case Currency.USDT_TRON:
             return generateTronWallet(mnem);
+        case Currency.CELO:
+            return generateCeloWallet(testnet, mnem);
         case Currency.USDT:
         case Currency.WBTC:
         case Currency.LEO:

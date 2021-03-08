@@ -8,6 +8,7 @@ export const TEST_VET_URL = 'https://sync-testnet.vechain.org/';
 export const VET_URL = 'https://sync-mainnet.vechain.org/';
 
 export const ETH_DERIVATION_PATH = 'm/44\'/60\'/0\'/0';
+export const CELO_DERIVATION_PATH = 'm/44\'/52752\'/0\'/0';
 export const VET_DERIVATION_PATH = 'm/44\'/818\'/0\'/0';
 export const BTC_DERIVATION_PATH = 'm/44\'/0\'/0\'/0';
 export const TRON_DERIVATION_PATH = 'm/44\'/195\'/0\'/0';
@@ -63,6 +64,9 @@ export const LYRA_NETWORK = {
 };
 
 export const RIPPLE_EPOCH = 946684800;
+
+export const CUSD_ADDRESS_MAINNET = '0x765de816845861e75a25fca122bb6898b8b1282a';
+export const CUSD_ADDRESS_TESTNET = '0x874069fa1eb16d44d622f2e0ca25eea172369bc1';
 
 export const CONTRACT_ADDRESSES = {
     [Currency.USDT.toString()]: '0xdac17f958d2ee523a2206206994597c13d831ec7',
