@@ -406,7 +406,7 @@ export default [
                 'type': 'string[]'
             }
         ],
-        'name': 'mintMultipleWithoutTokenURI',
+        'name': 'mintMultiple',
         'outputs': [
             {
                 'internalType': 'bool',
@@ -750,4 +750,4 @@ export default [
         'stateMutability': 'nonpayable',
         'type': 'function'
     }
-];
+]

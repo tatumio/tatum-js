@@ -214,7 +214,7 @@ export const prepareCeloMintMultipleErc721SignedTransaction = async (testnet: bo
         gasLimit: '0',
         to: contractAddress.trim(),
         gasPrice: await wallet.getGasPrice(feeCurrencyContractAddress),
-        data: contract.methods.mintMultipleWithoutTokenURI(to.map(t => t.trim()), tokenId, url).encodeABI(),
+        data: contract.methods.mintMultiple(to.map(t => t.trim()), tokenId, url).encodeABI(),
         from: await wallet.getAddress(),
     };
     transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CUSD ? 100000 : 0).toHexString();
