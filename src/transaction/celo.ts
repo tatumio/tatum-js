@@ -3,7 +3,7 @@ import {BigNumber} from 'bignumber.js';
 import {validateOrReject} from 'class-validator';
 import Web3 from 'web3';
 import {celoBroadcast} from '../blockchain';
-import {CUSD_ADDRESS_MAINNET, CUSD_ADDRESS_TESTNET, TATUM_API_URL} from '../constants';
+import {CUSD_ADDRESS_MAINNET, CUSD_ADDRESS_TESTNET, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
 import erc721_abi from '../contracts/erc721/erc721_abi';
 import erc721_bytecode from '../contracts/erc721/erc721_bytecode';
 import {
@@ -238,6 +238,7 @@ export const prepareCeloOrCUsdSignedTransaction = async (testnet: boolean, body:
         to,
         feeCurrency,
         nonce,
+        data,
         amount,
         currency,
     } = body;
@@ -246,7 +247,8 @@ export const prepareCeloOrCUsdSignedTransaction = async (testnet: boolean, body:
     const network = await p.ready;
     const wallet = new CeloWallet(fromPrivateKey, p);
 
-    const feeCurrencyContractAddress = (feeCurrency === Currency.CELO) ? undefined : (testnet ? CUSD_ADDRESS_TESTNET : CUSD_ADDRESS_MAINNET);
+    const cUsdAddress = testnet ? CUSD_ADDRESS_TESTNET : CUSD_ADDRESS_MAINNET;
+    const feeCurrencyContractAddress = (feeCurrency === Currency.CELO) ? undefined : cUsdAddress;
     let value;
     if (currency === Currency.CELO) {
         value = `0x${new BigNumber(amount).multipliedBy(10).pow(18).toString(16)}`;
@@ -254,14 +256,18 @@ export const prepareCeloOrCUsdSignedTransaction = async (testnet: boolean, body:
         value = `0x${new BigNumber(amount).multipliedBy(10).pow(18).toString(16)}`;
     }
 
+    // @ts-ignore
+    const contract = new (new Web3()).eth.Contract([TRANSFER_METHOD_ABI], cUsdAddress.trim());
+
     const transaction = {
         chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
         nonce: nonce || await wallet.getTransactionCount(),
-        to,
+        to: currency === Currency.CELO ? to.trim() : cUsdAddress,
+        data: currency === Currency.CELO ? data : contract.methods.transfer(to.trim(), value).encodeABI(),
         gasLimit: '0',
         gasPrice: await wallet.getGasPrice(feeCurrencyContractAddress),
-        value,
+        value: currency === Currency.CELO ? value : undefined,
         from: await wallet.getAddress(),
     };
     transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CUSD ? 100000 : 0).toHexString();

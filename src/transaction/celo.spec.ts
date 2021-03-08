@@ -25,7 +25,22 @@ describe('CELO transactions', () => {
         body.amount = '1';
         body.currency = Currency.CELO;
         body.feeCurrency = Currency.CUSD;
-        body.to = '0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea';
+        body.to = '0x10168acf3231ccc7b16ba53f17dd4d8bdecf4e1a';
+        const txData = await prepareCeloOrCUsdSignedTransaction(true, body, 'https://alfajores-forno.celo-testnet.org');
+        expect(txData).toContain('0x');
+
+        // const provider = new CeloProvider('https://alfajores-forno.celo-testnet.org');
+        // await provider.ready;
+        // console.log(await provider.sendTransaction(txData));
+    });
+
+    it('should test valid transaction CUSD', async () => {
+        const body = new TransferCeloOrCeloErc20Token();
+        body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
+        body.amount = '1';
+        body.currency = Currency.CUSD;
+        body.feeCurrency = Currency.CUSD;
+        body.to = '0x10168acf3231ccc7b16ba53f17dd4d8bdecf4e1a';
         const txData = await prepareCeloOrCUsdSignedTransaction(true, body, 'https://alfajores-forno.celo-testnet.org');
         expect(txData).toContain('0x');
 
