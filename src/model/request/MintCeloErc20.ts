@@ -5,8 +5,6 @@ import {
     IsOptional,
     IsUUID,
     Length,
-    Matches,
-    MaxLength,
     Min,
     Validate,
     ValidateIf,
@@ -14,7 +12,7 @@ import {
 import {SignatureIdValidator} from '../validation/SignatureIdValidator';
 import {Currency} from './Currency';
 
-export class TransferCeloOrCeloErc20Token {
+export class MintCeloErc20 {
 
     @ValidateIf(o => (o.fromPrivateKey && o.signatureId) || !o.signatureId)
     @Validate(SignatureIdValidator)
@@ -28,30 +26,19 @@ export class TransferCeloOrCeloErc20Token {
 
     @IsNotEmpty()
     @IsNumberString()
-    @Matches(/^[+]?((\d+(\.\d*)?)|(\.\d+))$/)
     public amount: string;
 
-    @MaxLength(130000)
-    @IsOptional()
-    public data?: string;
-
-    @ValidateIf(o => !o.contractAddress)
-    @IsNotEmpty()
-    @IsIn([Currency.CELO, Currency.CUSD])
-    public currency: Currency;
-
-    @ValidateIf(o => !o.currency)
     @IsNotEmpty()
     @Length(42, 42)
     public contractAddress: string;
 
-    @IsNotEmpty()
-    @IsIn([Currency.CELO, Currency.CUSD])
-    public feeCurrency: Currency;
-
     @Min(0)
     @IsOptional()
     public nonce?: number;
+
+    @IsNotEmpty()
+    @IsIn([Currency.CELO, Currency.CUSD])
+    public feeCurrency: Currency;
 
     @ValidateIf(o => (o.fromPrivateKey && o.signatureId) || !o.fromPrivateKey)
     @Validate(SignatureIdValidator)

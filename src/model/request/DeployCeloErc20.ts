@@ -6,6 +6,7 @@ import {
     IsUUID,
     Length,
     Matches,
+    Max,
     MaxLength,
     Min,
     Validate,
@@ -14,7 +15,30 @@ import {
 import {SignatureIdValidator} from '../validation/SignatureIdValidator';
 import {Currency} from './Currency';
 
-export class TransferCeloOrCeloErc20Token {
+export class DeployCeloErc20 {
+
+    @IsNotEmpty()
+    @Length(1, 100)
+    @Matches(/^[a-zA-Z0-9_]+$/)
+    public name: string;
+
+    @IsNotEmpty()
+    @Length(1, 30)
+    public symbol: string;
+
+    @IsNotEmpty()
+    @Length(42, 42)
+    public address: string;
+
+    @IsNotEmpty()
+    @IsNumberString()
+    @MaxLength(38)
+    @Matches(/^[+]?((\d+(\.\d*)?)|(\.\d+))$/)
+    public supply: string;
+
+    @Min(1)
+    @Max(30)
+    public digits: number;
 
     @ValidateIf(o => (o.fromPrivateKey && o.signatureId) || !o.signatureId)
     @Validate(SignatureIdValidator)
@@ -22,36 +46,13 @@ export class TransferCeloOrCeloErc20Token {
     @Length(66, 66)
     public fromPrivateKey: string;
 
-    @IsNotEmpty()
-    @Length(42, 42)
-    public to: string;
-
-    @IsNotEmpty()
-    @IsNumberString()
-    @Matches(/^[+]?((\d+(\.\d*)?)|(\.\d+))$/)
-    public amount: string;
-
-    @MaxLength(130000)
     @IsOptional()
-    public data?: string;
-
-    @ValidateIf(o => !o.contractAddress)
-    @IsNotEmpty()
-    @IsIn([Currency.CELO, Currency.CUSD])
-    public currency: Currency;
-
-    @ValidateIf(o => !o.currency)
-    @IsNotEmpty()
-    @Length(42, 42)
-    public contractAddress: string;
+    @Min(0)
+    public nonce?: number;
 
     @IsNotEmpty()
     @IsIn([Currency.CELO, Currency.CUSD])
     public feeCurrency: Currency;
-
-    @Min(0)
-    @IsOptional()
-    public nonce?: number;
 
     @ValidateIf(o => (o.fromPrivateKey && o.signatureId) || !o.fromPrivateKey)
     @Validate(SignatureIdValidator)
