@@ -272,6 +272,7 @@ paths:
                   cUsd:
                     type: string
                     description: Balance of cUSD
+                    example: "11.53"
           description: OK
         400:
           <<: *API400
@@ -1353,6 +1354,12 @@ components:
           maxLength: 42
           minLength: 42
           type: string
+        currency:
+          type: string
+          description: Currency of the transaction
+          enum:
+            - CELO
+            - CUSD
         feeCurrency:
           type: string
           description: Currency to pay for transaction gas
@@ -1374,6 +1381,7 @@ components:
         - to
         - amount
         - fromPrivateKey
+        - currency
         - feeCurrency
     TransferCeloBlockchainKMS:
       type: object
@@ -1387,6 +1395,12 @@ components:
           type: number
           minimum: 0
           description: Nonce to be set to Celo transaction. If not present, last known nonce will be used.
+        currency:
+          type: string
+          description: Currency of the transaction
+          enum:
+            - CELO
+            - CUSD
         to:
           description: Blockchain address to send assets
           example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
@@ -1414,6 +1428,7 @@ components:
       required:
         - to
         - feeCurrency
+        - currency
         - amount
         - signatureId
     CeloBlock:
