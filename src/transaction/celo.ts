@@ -251,9 +251,9 @@ export const prepareCeloOrCUsdSignedTransaction = async (testnet: boolean, body:
     const feeCurrencyContractAddress = (feeCurrency === Currency.CELO) ? undefined : cUsdAddress;
     let value;
     if (currency === Currency.CELO) {
-        value = `0x${new BigNumber(amount).multipliedBy(10).pow(18).toString(16)}`;
+        value = `0x${new BigNumber(amount).multipliedBy(1e18).toString(16)}`;
     } else {
-        value = `0x${new BigNumber(amount).multipliedBy(10).pow(18).toString(16)}`;
+        value = `0x${new BigNumber(amount).multipliedBy(1e18).toString(16)}`;
     }
 
     // @ts-ignore
