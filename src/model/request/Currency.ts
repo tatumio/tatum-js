@@ -31,21 +31,25 @@ export enum Currency {
     LYRA = 'LYRA'
 }
 
+export const ERC20_CURRENCIES = [
+  Currency.USDT.toString(),
+  Currency.LEO.toString(),
+  Currency.LINK.toString(),
+  Currency.UNI.toString(),
+  Currency.FREE.toString(),
+  Currency.MKR.toString(),
+  Currency.USDC.toString(),
+  Currency.BAT.toString(),
+  Currency.WBTC.toString(),
+  Currency.TUSD.toString(),
+  Currency.PAX.toString(),
+  Currency.PAXG.toString(),
+  Currency.PLTC.toString(),
+  Currency.XCON.toString(),
+  Currency.MMY.toString(),
+]
+
 export const ETH_BASED_CURRENCIES = [
-    Currency.USDT.toString(),
-    Currency.LEO.toString(),
-    Currency.LINK.toString(),
-    Currency.UNI.toString(),
-    Currency.FREE.toString(),
-    Currency.MKR.toString(),
-    Currency.USDC.toString(),
-    Currency.BAT.toString(),
-    Currency.WBTC.toString(),
-    Currency.TUSD.toString(),
-    Currency.PAX.toString(),
-    Currency.PAXG.toString(),
-    Currency.PLTC.toString(),
-    Currency.XCON.toString(),
-    Currency.ETH.toString(),
-    Currency.MMY.toString(),
+  Currency.ETH.toString(),
+  ...ERC20_CURRENCIES,
 ];
