@@ -3,14 +3,27 @@ import axios from 'axios';
 import {CeloProvider} from '@celo-tools/celo-ethers-wrapper';
 import {CeloError} from './CeloError';
 import {
+    BurnCeloErc20,
     BurnErc721,
     Currency,
+    DeployCeloErc20,
     DeployErc721,
     generateAddressFromXPub,
     generatePrivateKeyFromMnemonic,
     generateWallet,
+    MintCeloErc20,
     MintErc721,
     MintMultipleErc721,
+    prepareCeloBurnErc721SignedTransaction,
+    prepareCeloDeployErc721SignedTransaction,
+    prepareCeloMintErc721SignedTransaction,
+    prepareCeloMintMultipleErc721SignedTransaction,
+    prepareCeloOrCUsdSignedTransaction,
+    prepareCeloTransferErc721SignedTransaction,
+    prepareCeloBurnErc20SignedTransaction,
+    prepareCeloDeployErc20SignedTransaction,
+    prepareCeloMintErc20SignedTransaction,
+    prepareCeloTransferErc20SignedTransaction,
     TransactionHash,
     TransferCeloOrCeloErc20Token,
     TransferErc721
@@ -20,14 +33,6 @@ import token_abi from '@tatumio/tatum/dist/src/contracts/erc20/token_abi';
 import {fromWei} from 'web3-utils';
 import {Block, Transaction, TransactionReceipt} from 'web3-eth';
 import Web3 from 'web3';
-import {
-    prepareCeloBurnErc721SignedTransaction,
-    prepareCeloDeployErc721SignedTransaction,
-    prepareCeloMintErc721SignedTransaction,
-    prepareCeloMintMultipleErc721SignedTransaction,
-    prepareCeloOrCUsdSignedTransaction,
-    prepareCeloTransferErc721SignedTransaction
-} from '@tatumio/tatum/dist/src/transaction/celo';
 import {CUSD_ADDRESS_MAINNET, CUSD_ADDRESS_TESTNET} from '@tatumio/tatum/dist/src/constants';
 
 export abstract class CeloService {
@@ -113,9 +118,54 @@ export abstract class CeloService {
         }
     }
 
+    public async transferErc20(body: TransferCeloOrCeloErc20Token): Promise<TransactionHash | { signatureId: string }> {
+        const testnet = await this.isTestnet();
+        const txData = await prepareCeloTransferErc20SignedTransaction(testnet, body, (await this.getNodesUrl(testnet))[0]);
+        if (body.signatureId) {
+            return {signatureId: await this.storeKMSTransaction(txData, Currency.CELO, [body.signatureId])};
+        } else {
+            return this.broadcast(txData);
+        }
+    }
+
+    public async mintErc20(body: MintCeloErc20): Promise<TransactionHash | { signatureId: string }> {
+        const testnet = await this.isTestnet();
+        const txData = await prepareCeloMintErc20SignedTransaction(testnet, body, (await this.getNodesUrl(testnet))[0]);
+        if (body.signatureId) {
+            return {signatureId: await this.storeKMSTransaction(txData, Currency.CELO, [body.signatureId])};
+        } else {
+            return this.broadcast(txData);
+        }
+    }
+
+    public async burnErc20(body: BurnCeloErc20): Promise<TransactionHash | { signatureId: string }> {
+        const testnet = await this.isTestnet();
+        const txData = await prepareCeloBurnErc20SignedTransaction(testnet, body, (await this.getNodesUrl(testnet))[0]);
+        if (body.signatureId) {
+            return {signatureId: await this.storeKMSTransaction(txData, Currency.CELO, [body.signatureId])};
+        } else {
+            return this.broadcast(txData);
+        }
+    }
+
+    public async deployErc20(body: DeployCeloErc20): Promise<TransactionHash | { signatureId: string }> {
+        const testnet = await this.isTestnet();
+        const txData = await prepareCeloDeployErc20SignedTransaction(testnet, body, (await this.getNodesUrl(testnet))[0]);
+        if (body.signatureId) {
+            return {signatureId: await this.storeKMSTransaction(txData, Currency.CELO, [body.signatureId])};
+        } else {
+            return this.broadcast(txData);
+        }
+    }
+
+    public async getErc20Balance(address: string, contractAddress: string) {
+        // @ts-ignore
+        const c = new ((await this.getClient(await this.isTestnet()))).eth.Contract(token_abi, contractAddress);
+        return {balance: await c.methods.balanceOf(address).call()};
+    }
+
     // TODO: call any SC method
     // TODO: store data / get data
-    // TODO: ERC20 deploy + transfer + mint + burn
     // TODO: estimate gas
 
     public async getTransactionCount(address: string, c?: Web3) {
@@ -125,7 +175,7 @@ export abstract class CeloService {
 
     public async getBalanceErc721(address: string, contractAddress: string): Promise<{ data: string }> {
         // @ts-ignore
-        const c = new (await this.getClient()).eth.Contract(erc721_abi, contractAddress);
+        const c = new (await this.getClient(await this.isTestnet())).eth.Contract(erc721_abi, contractAddress);
         try {
             return {data: await c.methods.balanceOf(address).call()};
         } catch (e) {
@@ -136,7 +186,7 @@ export abstract class CeloService {
 
     public async getTokenErc721(address: string, index: number, contractAddress: string): Promise<{ data: string }> {
         // @ts-ignore
-        const c = new (await this.getClient()).eth.Contract(erc721_abi, contractAddress);
+        const c = new (await this.getClient(await this.isTestnet())).eth.Contract(erc721_abi, contractAddress);
         try {
             return {data: await c.methods.tokenOfOwnerByIndex(address, index).call()};
         } catch (e) {
@@ -147,7 +197,7 @@ export abstract class CeloService {
 
     public async getMetadataErc721(token: string, contractAddress: string): Promise<{ data: string }> {
         // @ts-ignore
-        const c = new (await this.getClient()).eth.Contract(erc721_abi, contractAddress);
+        const c = new (await this.getClient(await this.isTestnet())).eth.Contract(erc721_abi, contractAddress);
         try {
             return {data: await c.methods.tokenURI(token).call()};
         } catch (e) {
@@ -158,7 +208,7 @@ export abstract class CeloService {
 
     public async getOwnerErc721(token: string, contractAddress: string): Promise<{ data: string }> {
         // @ts-ignore
-        const c = new (await this.getClient()).eth.Contract(erc721_abi, contractAddress);
+        const c = new (await this.getClient(await this.isTestnet())).eth.Contract(erc721_abi, contractAddress);
         try {
             return {data: await c.methods.ownerOf(token).call()};
         } catch (e) {
@@ -169,9 +219,8 @@ export abstract class CeloService {
 
     public async getTokensOfOwner(address: string, contractAddress: string): Promise<{ data: string }> {
         // @ts-ignore
-        const c = new (await this.getClient()).eth.Contract(erc721_abi, contractAddress);
+        const c = new (await this.getClient(await this.isTestnet())).eth.Contract(erc721_abi, contractAddress);
         try {
-            // TODO: not working
             return {data: await c.methods.tokensOfOwner(address).call()};
         } catch (e) {
             this.logger.error(e);

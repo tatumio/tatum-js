@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/celo-connector",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Celo Connector for Tatum API",
   "license": "MIT",
   "files": [
@@ -35,7 +35,7 @@
   "bugs": "https://github.com/tatumio/tatum-blockchain-connector/",
   "dependencies": {
     "@nestjs/common": "^7.6.1",
-    "@tatumio/tatum": "^1.6.8",
+    "@tatumio/tatum": "^1.6.11",
     "axios": "^0.21.1",
     "class-transformer": "^0.2.3",
     "class-validator": "0.13.0",

@@ -6,8 +6,11 @@ import {PathHash} from './dto/PathHash';
 import {PathXpubI} from './dto/PathXpubI';
 import {
     BroadcastTx,
+    BurnCeloErc20,
     BurnErc721,
+    DeployCeloErc20,
     DeployErc721,
+    MintCeloErc20,
     MintErc721,
     MintMultipleErc721,
     TransferCeloOrCeloErc20Token,
@@ -163,6 +166,51 @@ export abstract class CeloController {
         } catch (e) {
             throw new CeloError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'celo.error');
         }
+    }
+
+    @Post('/v3/celo/erc20/transaction')
+    @HttpCode(HttpStatus.OK)
+    public async transactionErc20(@Body() body: TransferCeloOrCeloErc20Token) {
+        try {
+            return await this.service.transferErc20(body);
+        } catch (e) {
+            throw new CeloError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'celo.error');
+        }
+    }
+
+    @Post('/v3/celo/erc20/mint')
+    @HttpCode(HttpStatus.OK)
+    public async mintErc20(@Body() body: MintCeloErc20) {
+        try {
+            return await this.service.mintErc20(body);
+        } catch (e) {
+            throw new CeloError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'celo.error');
+        }
+    }
+
+    @Post('/v3/celo/erc20/burn')
+    @HttpCode(HttpStatus.OK)
+    public async burnErc20(@Body() body: BurnCeloErc20) {
+        try {
+            return await this.service.burnErc20(body);
+        } catch (e) {
+            throw new CeloError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'celo.error');
+        }
+    }
+
+    @Post('/v3/celo/erc20/deploy')
+    @HttpCode(HttpStatus.OK)
+    public async deployErc20(@Body() body: DeployCeloErc20) {
+        try {
+            return await this.service.deployErc20(body);
+        } catch (e) {
+            throw new CeloError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'celo.error');
+        }
+    }
+
+    @Get('/v3/celo/account/balance/erc20/:address/:contractAddress')
+    public async getAccountErc20Balance(@Param() path: PathAddressContractAddress) {
+        return this.service.getErc20Balance(path.address, path.contractAddress);
     }
 
     @Post('/v3/celo/broadcast')
