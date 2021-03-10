@@ -4,7 +4,7 @@ import {
   ethGetGasPriceInWei,
   prepareCustomErc20SignedTransaction,
   prepareDeployErc20SignedTransaction,
-  prepareEthOrErc20SignedTransaction,
+  prepareEthOrErc20SignedTransaction, sendSmartContractMethodInvocationTransaction,
 } from './eth';
 
 describe('ETH transactions', () => {
@@ -105,5 +105,74 @@ describe('ETH transactions', () => {
       amount: '10',
     })
     expect(ethGas).not.toBeNull()
+  })
+
+  it('should test read smart contract method invocation', async () => {
+    const result = await sendSmartContractMethodInvocationTransaction(true, {
+      fromPrivateKey: '0x192afdb39073e202f200117b609e8d40c1c8f50c3baebe1bda4773db48df81a0',
+      contractAddress: '0x595bad1621784e9b0161d909be0117f17a5d37ca',
+      methodName: 'balanceOf',
+      methodABI: {
+        constant: true,
+        inputs: [
+          {
+            name: 'owner',
+            type: 'address',
+          },
+        ],
+        name: 'balanceOf',
+        outputs: [
+          {
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        payable: false,
+        stateMutability: 'view',
+        type: 'function',
+      },
+      params: ['0x8c76887d2e738371bd750362fb55887343472346'],
+    })
+    console.log(result)
+    expect(result).not.toBeNull()
+  })
+
+  it('should test write smart contract method invocation', async () => {
+    const result = await sendSmartContractMethodInvocationTransaction(true, {
+      fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+      contractAddress: '0xd7d3e5e2174b530fdfb6d680c07c8b34495e2195',
+      fee: { gasLimit: '40000', gasPrice: '200' },
+      methodName: 'transferFrom',
+      methodABI: {
+        constant: false,
+        inputs: [
+          {
+            name: 'from',
+            type: 'address',
+          },
+          {
+            name: 'to',
+            type: 'address',
+          },
+          {
+            name: 'value',
+            type: 'uint256',
+          },
+        ],
+        name: 'transferFrom',
+        outputs: [
+          {
+            name: '',
+            type: 'bool',
+          },
+        ],
+        payable: false,
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      params: ['0x811dfbff13adfbc3cf653dcc373c03616d3471c9', '0x8c76887d2e738371bd750362fb55887343472346', '1'],
+    })
+    console.log(result)
+    expect(result).not.toBeNull()
   })
 });
