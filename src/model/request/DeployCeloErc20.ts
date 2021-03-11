@@ -14,8 +14,9 @@ import {
 } from 'class-validator';
 import {SignatureIdValidator} from '../validation/SignatureIdValidator';
 import {Currency} from './Currency';
+import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 
-export class DeployCeloErc20 {
+export class DeployCeloErc20 extends PrivateKeyOrSignatureId {
 
     @IsNotEmpty()
     @Length(1, 100)
@@ -40,12 +41,6 @@ export class DeployCeloErc20 {
     @Max(30)
     public digits: number;
 
-    @ValidateIf(o => (o.fromPrivateKey && o.signatureId) || !o.signatureId)
-    @Validate(SignatureIdValidator)
-    @IsNotEmpty()
-    @Length(66, 66)
-    public fromPrivateKey: string;
-
     @IsOptional()
     @Min(0)
     public nonce?: number;
@@ -53,11 +48,4 @@ export class DeployCeloErc20 {
     @IsNotEmpty()
     @IsIn([Currency.CELO, Currency.CUSD])
     public feeCurrency: Currency;
-
-    @ValidateIf(o => (o.fromPrivateKey && o.signatureId) || !o.fromPrivateKey)
-    @Validate(SignatureIdValidator)
-    @Length(36, 36)
-    @IsUUID('4')
-    @IsNotEmpty()
-    public signatureId?: string;
 }

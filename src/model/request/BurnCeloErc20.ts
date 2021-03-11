@@ -4,23 +4,13 @@ import {
     IsNotEmpty,
     IsNumberString,
     IsOptional,
-    IsUUID,
     Length,
     Min,
-    Validate,
-    ValidateIf,
 } from 'class-validator';
-import {SignatureIdValidator} from '../validation/SignatureIdValidator';
 import {Currency} from './Currency';
+import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 
-export class BurnCeloErc20 {
-
-    @ValidateIf(o => (o.fromPrivateKey && o.signatureId) || !o.signatureId)
-    @Validate(SignatureIdValidator)
-    @IsNotEmpty()
-    @Length(66, 66)
-    public fromPrivateKey: string;
-
+export class BurnCeloErc20 extends PrivateKeyOrSignatureId {
     @IsNotEmpty()
     @IsNumberString()
     public amount: string;
@@ -37,11 +27,4 @@ export class BurnCeloErc20 {
     @IsNotEmpty()
     @IsIn([Currency.CELO, Currency.CUSD])
     public feeCurrency: Currency;
-
-    @ValidateIf(o => (o.fromPrivateKey && o.signatureId) || !o.fromPrivateKey)
-    @Validate(SignatureIdValidator)
-    @Length(36, 36)
-    @IsUUID('4')
-    @IsNotEmpty()
-    public signatureId?: string;
 }

@@ -1,9 +1,18 @@
-import {Type} from 'class-transformer';
-import {IsIn, IsNotEmpty, IsOptional, Length, Min, ValidateIf, ValidateNested} from 'class-validator';
-import {Currency} from './Currency';
-import {Fee} from './Fee';
+import { Type } from 'class-transformer';
+import {
+  IsIn,
+  IsNotEmpty,
+  IsOptional,
+  Length,
+  Min,
+  ValidateIf,
+  ValidateNested,
+} from 'class-validator';
+import { Currency } from './Currency';
+import { Fee } from './Fee';
+import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 
-export class CreateRecord {
+export class CreateRecord extends PrivateKeyOrSignatureId {
 
     @IsNotEmpty()
     @Length(1, 130000)
@@ -12,10 +21,6 @@ export class CreateRecord {
     @IsNotEmpty()
     @IsIn([Currency.ETH, Currency.QUORUM, Currency.FABRIC])
     public chain: string;
-
-    @IsOptional()
-    @Length(32, 66)
-    public fromPrivateKey?: string;
 
     @IsNotEmpty()
     @ValidateIf(o => o.chain === Currency.QUORUM)

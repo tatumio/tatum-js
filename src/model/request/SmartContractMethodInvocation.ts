@@ -12,14 +12,9 @@ import {
 } from 'class-validator';
 import { SignatureIdValidator } from '../validation/SignatureIdValidator'
 import { Fee } from './Fee';
+import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 
-export class SmartContractMethodInvocation {
-
-  @ValidateIf(o => (o.fromPrivateKey && o.signatureId) || !o.signatureId)
-  @IsNotEmpty()
-  @Validate(SignatureIdValidator)
-  @Length(66, 66)
-  public fromPrivateKey: string;
+export class SmartContractMethodInvocation extends PrivateKeyOrSignatureId {
 
   @IsNotEmpty()
   @Length(42, 42)
@@ -43,11 +38,4 @@ export class SmartContractMethodInvocation {
   @Min(0)
   @IsOptional()
   public nonce?: number;
-
-  @ValidateIf(o => (o.fromPrivateKey && o.signatureId) || !o.fromPrivateKey)
-  @Length(36, 36)
-  @IsUUID('4')
-  @IsNotEmpty()
-  @Validate(SignatureIdValidator)
-  public signatureId?: string;
 }

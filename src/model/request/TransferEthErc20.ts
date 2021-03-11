@@ -12,12 +12,9 @@ import {
 } from 'class-validator';
 import {Currency, ETH_BASED_CURRENCIES} from './Currency';
 import {Fee} from './Fee';
+import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 
-export class TransferEthErc20 {
-
-    @IsNotEmpty()
-    @Length(66, 66)
-    public fromPrivateKey: string;
+export class TransferEthErc20 extends PrivateKeyOrSignatureId {
 
     @IsNotEmpty()
     @Length(42, 42)

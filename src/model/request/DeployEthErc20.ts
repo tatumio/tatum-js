@@ -2,18 +2,18 @@ import {Type} from 'class-transformer';
 import {
   IsNotEmpty,
   IsNumberString,
-  IsOptional, IsUUID,
+  IsOptional,
   Length,
   Matches,
   Max,
   MaxLength,
-  Min, Validate, ValidateIf,
+  Min,
   ValidateNested,
 } from 'class-validator';
-import { SignatureIdValidator } from '../validation/SignatureIdValidator'
 import {Fee} from './Fee';
+import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 
-export class DeployEthErc20 {
+export class DeployEthErc20 extends PrivateKeyOrSignatureId {
 
     @IsNotEmpty()
     @Length(1, 100)
@@ -38,12 +38,6 @@ export class DeployEthErc20 {
     @Max(30)
     public digits: number;
 
-    @ValidateIf(o => (o.fromPrivateKey && o.signatureId) || !o.signatureId)
-    @Validate(SignatureIdValidator)
-    @IsNotEmpty()
-    @Length(66, 66)
-    public fromPrivateKey: string;
-
     @IsOptional()
     @Min(0)
     public nonce?: number;
@@ -52,11 +46,4 @@ export class DeployEthErc20 {
     @ValidateNested()
     @Type(() => Fee)
     public fee?: Fee;
-
-   @ValidateIf(o => (o.fromPrivateKey && o.signatureId) || !o.fromPrivateKey)
-   @Validate(SignatureIdValidator)
-   @Length(36, 36)
-   @IsUUID('4')
-   @IsNotEmpty()
-   public signatureId?: string;
 }

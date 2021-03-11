@@ -3,24 +3,16 @@ import {
     IsNotEmpty,
     IsNumberString,
     IsOptional,
-    IsUUID,
     Length,
     Matches,
     MaxLength,
     Min,
-    Validate,
     ValidateIf,
 } from 'class-validator';
-import {SignatureIdValidator} from '../validation/SignatureIdValidator';
 import {Currency} from './Currency';
+import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 
-export class TransferCeloOrCeloErc20Token {
-
-    @ValidateIf(o => (o.fromPrivateKey && o.signatureId) || !o.signatureId)
-    @Validate(SignatureIdValidator)
-    @IsNotEmpty()
-    @Length(66, 66)
-    public fromPrivateKey: string;
+export class TransferCeloOrCeloErc20Token extends PrivateKeyOrSignatureId {
 
     @IsNotEmpty()
     @Length(42, 42)
@@ -52,11 +44,4 @@ export class TransferCeloOrCeloErc20Token {
     @Min(0)
     @IsOptional()
     public nonce?: number;
-
-    @ValidateIf(o => (o.fromPrivateKey && o.signatureId) || !o.fromPrivateKey)
-    @Validate(SignatureIdValidator)
-    @Length(36, 36)
-    @IsUUID('4')
-    @IsNotEmpty()
-    public signatureId?: string;
 }

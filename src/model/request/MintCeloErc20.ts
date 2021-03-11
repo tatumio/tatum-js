@@ -3,23 +3,13 @@ import {
     IsNotEmpty,
     IsNumberString,
     IsOptional,
-    IsUUID,
     Length,
     Min,
-    Validate,
-    ValidateIf,
 } from 'class-validator';
-import {SignatureIdValidator} from '../validation/SignatureIdValidator';
 import {Currency} from './Currency';
+import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 
-export class MintCeloErc20 {
-
-    @ValidateIf(o => (o.fromPrivateKey && o.signatureId) || !o.signatureId)
-    @Validate(SignatureIdValidator)
-    @IsNotEmpty()
-    @Length(66, 66)
-    public fromPrivateKey: string;
-
+export class MintCeloErc20 extends PrivateKeyOrSignatureId {
     @IsNotEmpty()
     @Length(42, 42)
     public to: string;
@@ -39,11 +29,4 @@ export class MintCeloErc20 {
     @IsNotEmpty()
     @IsIn([Currency.CELO, Currency.CUSD])
     public feeCurrency: Currency;
-
-    @ValidateIf(o => (o.fromPrivateKey && o.signatureId) || !o.fromPrivateKey)
-    @Validate(SignatureIdValidator)
-    @Length(36, 36)
-    @IsUUID('4')
-    @IsNotEmpty()
-    public signatureId?: string;
 }

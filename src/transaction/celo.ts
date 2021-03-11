@@ -1,25 +1,22 @@
 import {CeloProvider, CeloWallet} from '@celo-tools/celo-ethers-wrapper';
 import {BigNumber} from 'bignumber.js';
-import {validateOrReject} from 'class-validator';
 import Web3 from 'web3';
 import {celoBroadcast} from '../blockchain';
+import { validateBody } from '../connector/tatum'
 import {CUSD_ADDRESS_MAINNET, CUSD_ADDRESS_TESTNET, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
 import erc20_abi from '../contracts/erc20/token_abi';
 import erc20_bytecode from '../contracts/erc20/token_bytecode';
 import erc721_abi from '../contracts/erc721/erc721_abi';
 import erc721_bytecode from '../contracts/erc721/erc721_bytecode';
 import {
-    BurnCeloErc20,
-    BurnErc721,
-    Currency,
-    DeployCeloErc20,
-    DeployErc721,
-    MintCeloErc20,
-    MintErc721,
-    MintMultipleErc721,
-    TransactionKMS,
-    TransferCeloOrCeloErc20Token,
-    TransferErc721,
+  BurnCeloErc20,
+  CeloBurnErc721, CeloDeployErc721,
+  CeloMintErc721,
+  CeloMintMultipleErc721,
+  CeloTransferErc721,
+  Currency,
+  DeployCeloErc20,
+  MintCeloErc20, TransactionKMS, TransferCeloOrCeloErc20Token,
 } from '../model';
 
 const obtainWalletInformation = async (wallet: CeloWallet, feeCurrencyContractAddress?: string) => {
@@ -55,8 +52,8 @@ export const signCeloKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
     return wallet.signTransaction(transaction);
 };
 
-export const prepareCeloDeployErc721SignedTransaction = async (testnet: boolean, body: DeployErc721, provider?: string) => {
-    await validateOrReject(body);
+export const prepareCeloDeployErc721SignedTransaction = async (testnet: boolean, body: CeloDeployErc721, provider?: string) => {
+    await validateBody(body, CeloDeployErc721);
     const {
         fromPrivateKey,
         name,
@@ -102,8 +99,8 @@ export const prepareCeloDeployErc721SignedTransaction = async (testnet: boolean,
     return wallet.signTransaction(transaction);
 };
 
-export const prepareCeloMintErc721SignedTransaction = async (testnet: boolean, body: MintErc721, provider?: string) => {
-    await validateOrReject(body);
+export const prepareCeloMintErc721SignedTransaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) => {
+    await validateBody(body, CeloMintErc721);
     const {
         fromPrivateKey,
         url,
@@ -148,8 +145,8 @@ export const prepareCeloMintErc721SignedTransaction = async (testnet: boolean, b
     return wallet.signTransaction(transaction);
 };
 
-export const prepareCeloTransferErc721SignedTransaction = async (testnet: boolean, body: TransferErc721, provider?: string) => {
-    await validateOrReject(body);
+export const prepareCeloTransferErc721SignedTransaction = async (testnet: boolean, body: CeloTransferErc721, provider?: string) => {
+    await validateBody(body, CeloTransferErc721);
     const {
         fromPrivateKey,
         to,
@@ -194,8 +191,8 @@ export const prepareCeloTransferErc721SignedTransaction = async (testnet: boolea
     return wallet.signTransaction(transaction);
 };
 
-export const prepareCeloBurnErc721SignedTransaction = async (testnet: boolean, body: BurnErc721, provider?: string) => {
-    await validateOrReject(body);
+export const prepareCeloBurnErc721SignedTransaction = async (testnet: boolean, body: CeloBurnErc721, provider?: string) => {
+    await validateBody(body, CeloBurnErc721);
     const {
         fromPrivateKey,
         tokenId,
@@ -240,7 +237,7 @@ export const prepareCeloBurnErc721SignedTransaction = async (testnet: boolean, b
 };
 
 export const prepareCeloDeployErc20SignedTransaction = async (testnet: boolean, body: DeployCeloErc20, provider?: string) => {
-    await validateOrReject(body);
+    await validateBody(body, DeployCeloErc20);
     const {
         fromPrivateKey,
         name,
@@ -297,7 +294,7 @@ export const prepareCeloDeployErc20SignedTransaction = async (testnet: boolean, 
 };
 
 export const prepareCeloMintErc20SignedTransaction = async (testnet: boolean, body: MintCeloErc20, provider?: string) => {
-    await validateOrReject(body);
+    await validateBody(body, MintCeloErc20);
     const {
         fromPrivateKey,
         amount,
@@ -344,7 +341,7 @@ export const prepareCeloMintErc20SignedTransaction = async (testnet: boolean, bo
 };
 
 export const prepareCeloTransferErc20SignedTransaction = async (testnet: boolean, body: TransferCeloOrCeloErc20Token, provider?: string) => {
-    await validateOrReject(body);
+    await validateBody(body, TransferCeloOrCeloErc20Token);
     const {
         fromPrivateKey,
         to,
@@ -392,7 +389,7 @@ export const prepareCeloTransferErc20SignedTransaction = async (testnet: boolean
 };
 
 export const prepareCeloBurnErc20SignedTransaction = async (testnet: boolean, body: BurnCeloErc20, provider?: string) => {
-    await validateOrReject(body);
+    await validateBody(body, BurnCeloErc20);
     const {
         fromPrivateKey,
         amount,
@@ -438,8 +435,8 @@ export const prepareCeloBurnErc20SignedTransaction = async (testnet: boolean, bo
     return wallet.signTransaction(transaction);
 };
 
-export const prepareCeloMintMultipleErc721SignedTransaction = async (testnet: boolean, body: MintMultipleErc721, provider?: string) => {
-    await validateOrReject(body);
+export const prepareCeloMintMultipleErc721SignedTransaction = async (testnet: boolean, body: CeloMintMultipleErc721, provider?: string) => {
+    await validateBody(body, CeloMintMultipleErc721);
     const {
         fromPrivateKey,
         to,
@@ -493,7 +490,7 @@ export const prepareCeloMintMultipleErc721SignedTransaction = async (testnet: bo
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareCeloOrCUsdSignedTransaction = async (testnet: boolean, body: TransferCeloOrCeloErc20Token, provider?: string) => {
-    await validateOrReject(body);
+    await validateBody(body, TransferCeloOrCeloErc20Token);
     const {
         fromPrivateKey,
         to,
