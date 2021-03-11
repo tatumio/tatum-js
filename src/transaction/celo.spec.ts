@@ -21,7 +21,8 @@ import {
     prepareCeloMintMultipleErc721SignedTransaction,
     prepareCeloOrCUsdSignedTransaction,
     prepareCeloTransferErc20SignedTransaction,
-    prepareCeloTransferErc721SignedTransaction
+    prepareCeloTransferErc721SignedTransaction,
+    signCeloKMSTransaction
 } from './celo';
 
 describe('CELO transactions', () => {
@@ -233,6 +234,23 @@ describe('CELO transactions', () => {
         body.amount = '5';
         body.feeCurrency = Currency.CUSD;
         const txData = await prepareCeloTransferErc20SignedTransaction(true, body, 'https://alfajores-forno.celo-testnet.org');
+        expect(txData).toContain('0x');
+
+        // const provider = new CeloProvider('https://alfajores-forno.celo-testnet.org');
+        // await provider.ready;
+        // console.log(await provider.sendTransaction(txData));
+    });
+
+    it('should test valid transfer 20 transaction to sign from KMS', async () => {
+        const tx = {
+            chain: Currency.CELO,
+            serializedTransaction: '{"chainId":44787,"feeCurrency":"0x874069fa1eb16d44d622f2e0ca25eea172369bc1","to":"0x10168acf3231ccc7b16ba53f17dd4d8bdecf4e1a","gasLimit":"0","value":"0x13fbe85edc90000"}',
+            hashes: [
+                '98efa59a-8f44-49d7-a6df-5d7fcc556c51'
+            ],
+            id: '604a1ebc70760dadfdeb7f42'
+        };
+        const txData = await signCeloKMSTransaction(tx, '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb', true, 'https://alfajores-forno.celo-testnet.org');
         expect(txData).toContain('0x');
 
         // const provider = new CeloProvider('https://alfajores-forno.celo-testnet.org');
