@@ -151,6 +151,17 @@ describe('CELO transactions', () => {
         // console.log(await provider.sendTransaction(txData));
     });
 
+    it('should test valid deploy 721 transaction KMS', async () => {
+        const body = new DeployErc721();
+        body.signatureId = '98efa59a-8f44-49d7-a6df-5d7fcc556c51';
+        body.name = 'Tatum';
+        body.symbol = 'TTM';
+        body.chain = Currency.CELO;
+        body.feeCurrency = Currency.CUSD;
+        const txData = await prepareCeloDeployErc721SignedTransaction(true, body, 'https://alfajores-forno.celo-testnet.org');
+        expect(txData).toContain('0x');
+    });
+
     it('should test valid transfer 721 transaction', async () => {
         const body = new TransferErc721();
         body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
