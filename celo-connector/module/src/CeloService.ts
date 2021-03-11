@@ -52,15 +52,15 @@ export abstract class CeloService {
         txId: string,
         failed?: boolean,
     }> {
-        this.logger.info(`Broadcast tx for ETH with data '${txData}'`);
+        this.logger.info(`Broadcast tx for CELO with data '${txData}'`);
         const result: { txId: string } = await new Promise((async (resolve, reject) => {
             (await this.getClient(await this.isTestnet())).eth.sendSignedTransaction(txData)
                 .once('transactionHash', txId => resolve({txId}))
-                .on('error', e => reject(new CeloError(`Unable to broadcast transaction due to ${e.message}.`, 'ethereum.broadcast.failed')));
+                .on('error', e => reject(new CeloError(`Unable to broadcast transaction due to ${e.message}.`, 'celo.broadcast.failed')));
         }));
         if (signatureId) {
             try {
-                await this.completeKMSTransaction(signatureId, result.txId);
+                await this.completeKMSTransaction(result.txId, signatureId);
             } catch (e) {
                 this.logger.error(e);
                 return {txId: result.txId, failed: true};
