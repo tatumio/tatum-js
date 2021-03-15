@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/hyperledger-fabric-connector",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Hyperledger Fabric Connector for Tatum API",
   "license": "MIT",
   "files": [
