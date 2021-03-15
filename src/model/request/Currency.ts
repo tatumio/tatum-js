@@ -5,6 +5,7 @@ export enum Currency {
     CELO = 'CELO',
     CUSD = 'CUSD',
     ETH = 'ETH',
+    FABRIC = 'FABRIC',
     QUORUM = 'QUORUM',
     XRP = 'XRP',
     XLM = 'XLM',

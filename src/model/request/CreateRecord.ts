@@ -10,7 +10,7 @@ export class CreateRecord {
     public data: string;
 
     @IsNotEmpty()
-    @IsIn([Currency.ETH, Currency.QUORUM])
+    @IsIn([Currency.ETH, Currency.QUORUM, Currency.FABRIC])
     public chain: string;
 
     @IsOptional()
@@ -25,6 +25,10 @@ export class CreateRecord {
     @ValidateIf(o => o.chain === Currency.QUORUM)
     @Length(42, 42)
     public to?: string;
+
+    @ValidateIf(o => o.chain === Currency.FABRIC)
+    @IsNotEmpty()
+    public key: string;
 
     @Min(0)
     @IsOptional()
