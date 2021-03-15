@@ -1,0 +1,156 @@
+openapi: 3.0.0
+servers:
+  - url: 'https://api-eu1.tatum.io'
+info:
+  version: 1.0.0
+  title: Tatum Hyperledger Fabric API
+tags:
+  - description: |
+      <p>Hyperledger FAbric is an open-source, private-permissioned blockchain. It provides enhanced enterprise functionality with multiple pluggable consensus mechanisms, enterprise-grade permissions management, and transaction privacy features. <br/>
+      The Hyperledger Fabric network is not run by Tatum, developers should connect to their own private instance. For testing purposes, there is a playground Fabric implementation available at <b>http://ec2-35-159-31-167.eu-central-1.compute.amazonaws.com:8080/</b>.</p>
+    name: Blockchain / Fabric
+paths:
+  /v3/fabric/data:
+    post:
+      description: |
+        <h4>2 credit per API call.</h4><br/>
+        <p>Store data on the Hyperledger under the key.</p>
+      operationId: FabricGenerateAccount
+      parameters:
+        - in: header
+          name: x-fabric-endpoint
+          required: true
+          description: URL of the Fabric network
+          schema:
+            type: string
+            example: http://ec2-35-159-31-167.eu-central-1.compute.amazonaws.com:8080/
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - key
+                - data
+                - chain
+              properties:
+                key:
+                  description: Key, under which the data will be stored.
+                  example: key_1
+                  type: string
+                data:
+                  description: Data, which will be stored under the key.
+                  maxLength: 130000
+                  type: string
+                  example: Data to store.
+                chain:
+                  type: string
+                  description: Chain to store data on.
+                  enum:
+                    - FABRIC
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  txId:
+                    example: 'key_1'
+                    type: string
+                    description: Key, under which the data was stored.
+                required:
+                  - txId
+          description: OK
+        400: &API400
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+          description: Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.
+        401: &API401
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error401"
+          description: Unauthorized. Not valid or inactive subscription key present in the HTTP Header.
+        403: &API403
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403"
+        500: &API500
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error500"
+          description: Internal server error. There was an error on the server during the processing of the request.
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Store data
+      tags:
+        - Blockchain / Fabric
+  /v3/fabric/data/{key}:
+    get:
+      description: |
+        <h4>1 credit per API call.</h4><br/>
+        <p>Get data from Fabroc</p>
+      operationId: FabricGetData
+      parameters:
+        - in: header
+          name: x-fabric-endpoint
+          required: true
+          description: URL of the Fabric network
+          schema:
+            type: string
+            example: http://ec2-35-159-31-167.eu-central-1.compute.amazonaws.com:8080/
+        - description: Key to obtain data.
+          in: path
+          name: key
+          required: true
+          schema:
+            type: string
+            example: "key_1"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    example: My data.
+                    type: string
+                    description: Stored data.
+                required:
+                  - data
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          <<: *API403
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Gat data
+      tags:
+        - Blockchain / Fabric
+components:
+  securitySchemes:
+    X-Api-Key:
+      description: |
+        To maintain the highest security level, Tatum requires X-API-Key HTTP header.
+        This X-API-Key represents identification of the plan and can be used by 1 developer or per environment.
+        Each X-API-Key is bound to the test or production blockchains.
+      in: header
+      name: x-api-key
+      type: apiKey
