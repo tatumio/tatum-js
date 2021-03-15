@@ -1,7 +1,8 @@
 export interface TronTransaction {
-    ret: { contractRet: string, fee:number }[];
+    ret: { contractRet: string, fee: number }[];
     signature: string[];
     txID: string;
+    blockNumber: number;
     netFee?: number;
     netUsage?: number;
     energyFee?: number;
