@@ -1352,6 +1352,10 @@ components:
         - ret
         - rawData
       properties:
+        blockNumber:
+          type: number
+          description: Block, where which the transactio nwas included.
+          example: 11223344
         ret:
           type: object
           description: Result of the smart contract invocation.
