@@ -1348,6 +1348,7 @@ components:
       required:
         - txID
         - signature
+        - blockNumber
         - ret
         - rawData
       properties:

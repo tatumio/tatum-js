@@ -35,6 +35,7 @@ export abstract class TronService {
         return {
             ret: t.ret,
             signature: t.signature,
+            blockNumber: t.blockNumber,
             txID: t.txID,
             netFee: t.net_fee,
             netUsage: t.net_usage,
@@ -104,7 +105,7 @@ export abstract class TronService {
         const url = (await this.getNodesUrl(testnet !== undefined ? testnet : await this.isTestnet()))[0];
         const [{data: tx}, {data: info}] = await Promise.all([axios.post(`${url}/wallet/gettransactionbyid`, {value: txId}),
             axios.post(`${url}/wallet/gettransactioninfobyid`, {value: txId})]);
-        return TronService.mapTransaction({...tx, ...info.receipt});
+        return TronService.mapTransaction({...tx, ...info.receipt, blockNumber: info.blockNumber});
     }
 
     public async getAccount(address: string): Promise<TronAccount> {
