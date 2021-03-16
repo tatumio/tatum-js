@@ -860,7 +860,7 @@ paths:
         <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
         Alternatively, using the Tatum client library for supported languages or Tatum Middleware with a custom key management system is possible.
         </p>
-      operationId: CeloBurnErc20
+      operationId: CeloBurnErc721
       requestBody:
         content:
           application/json:

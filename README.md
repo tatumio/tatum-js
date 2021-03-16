@@ -14,6 +14,7 @@ If you need support please enter [Telegram group](https://t.me/tatumio) and ask 
 
 ## Existing connectors
 * Scrypta connector - connector to the [Scrypta Blockchain](https://scrypta.foundation/) maintained by [turinglabs](https://github.com/turinglabsorg)
+* NFT connector - abstraction for working with NFTs on different blockchains maintained by [Tatum Team](https://github.com/tatumio)
 * Tron connector - connector to the [TRON Network](https://tron.network/) maintained by [Tatum Team](https://github.com/tatumio)
 * Quorum connector - connector to the [Quorum](https://consensys.net/quorum/) maintained by [Tatum Team](https://github.com/tatumio)
 * Hyperledger Fabric connector - connector to the [Hyperledger Fabric v2](https://www.hyperledger.org/use/fabric) maintained by [Tatum Team](https://github.com/tatumio)

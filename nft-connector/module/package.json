@@ -1,7 +1,7 @@
 {
-  "name": "@tatumio/celo-connector",
-  "version": "1.0.5",
-  "description": "Celo Connector for Tatum API",
+  "name": "@tatumio/nft-connector",
+  "version": "1.0.0",
+  "description": "NFT Connector for Tatum API",
   "license": "MIT",
   "files": [
     "npm/**/*",
@@ -30,12 +30,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tatumio/tatum-blockchain-connector/celo-connector"
+    "url": "https://github.com/tatumio/tatum-blockchain-connector/tron-connector"
   },
   "bugs": "https://github.com/tatumio/tatum-blockchain-connector/",
   "dependencies": {
     "@nestjs/common": "^7.6.1",
-    "@tatumio/tatum": "^1.6.15",
+    "@tatumio/tatum": "^1.7.5",
     "axios": "^0.21.1",
     "class-transformer": "^0.2.3",
     "class-validator": "0.13.0",
