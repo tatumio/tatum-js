@@ -1,0 +1,82 @@
+import {get} from '../connector/tatum';
+import {
+    CeloBurnErc721,
+    CeloDeployErc721,
+    CeloMintErc721,
+    CeloMintMultipleErc721,
+    CeloTransferErc721,
+    Currency,
+    EthBurnErc721,
+    EthDeployErc721,
+    EthMintErc721,
+    EthMintMultipleErc721,
+    EthTransferErc721
+} from '../model';
+import {Rate} from '../model/response/common/Rate';
+import {
+    sendBurnErc721Transaction,
+    sendCeloBurnErc721Transaction,
+    sendCeloDeployErc721Transaction,
+    sendCeloMinErc721Transaction,
+    sendCeloMintMultipleErc721Transaction,
+    sendCeloTransferErc721Transaction,
+    sendDeployErc721Transaction,
+    sendErc721Transaction,
+    sendMintErc721Transaction,
+    sendMintMultipleErc721Transaction
+} from '../transaction';
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetByAddress" target="_blank">Tatum API documentation</a>
+ */
+export const getNFTsByAddress = async (chain: Currency, contractAddress: string, address: string): Promise<Rate> => get(`/v3/nft/balance/${chain}/${contractAddress}/${address}`);
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetURI" target="_blank">Tatum API documentation</a>
+ */
+export const getNFTMetadataURI = async (chain: Currency, contractAddress: string, tokenId: string): Promise<Rate> => get(`/v3/nft/metadata/${chain}/${contractAddress}/${tokenId}`);
+
+export const deployNFT = async (testnet: boolean, chain: Currency, body: CeloDeployErc721 | EthDeployErc721, provider?: string) => {
+    switch (chain) {
+        case Currency.CELO:
+            return sendCeloDeployErc721Transaction(testnet, body as CeloDeployErc721, provider);
+        case Currency.ETH:
+            return sendDeployErc721Transaction(body, provider);
+    }
+};
+
+export const mintNFTWithUri = async (testnet: boolean, chain: Currency, body: CeloMintErc721 | EthMintErc721, provider?: string) => {
+    switch (chain) {
+        case Currency.CELO:
+            return sendCeloMinErc721Transaction(testnet, body as CeloMintErc721, provider);
+        case Currency.ETH:
+            return sendMintErc721Transaction(body, provider);
+    }
+};
+
+export const mintMultipleNFTWithUri = async (testnet: boolean, chain: Currency, body: CeloMintMultipleErc721 | EthMintMultipleErc721, provider?: string) => {
+    switch (chain) {
+        case Currency.CELO:
+            return sendCeloMintMultipleErc721Transaction(testnet, body as CeloMintMultipleErc721, provider);
+        case Currency.ETH:
+            return sendMintMultipleErc721Transaction(body, provider);
+    }
+};
+
+export const burnNFT = async (testnet: boolean, chain: Currency, body: CeloBurnErc721 | EthBurnErc721, provider?: string) => {
+    switch (chain) {
+        case Currency.CELO:
+            return sendCeloBurnErc721Transaction(testnet, body as CeloBurnErc721, provider);
+        case Currency.ETH:
+            return sendBurnErc721Transaction(body, provider);
+    }
+};
+
+export const transferNFT = async (testnet: boolean, chain: Currency, body: CeloTransferErc721 | EthTransferErc721, provider?: string) => {
+    switch (chain) {
+        case Currency.CELO:
+            return sendCeloTransferErc721Transaction(testnet, body as CeloTransferErc721, provider);
+        case Currency.ETH:
+            return sendErc721Transaction(body, provider);
+    }
+};

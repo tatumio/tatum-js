@@ -2,21 +2,24 @@ import {CeloProvider, CeloWallet} from '@celo-tools/celo-ethers-wrapper';
 import {BigNumber} from 'bignumber.js';
 import Web3 from 'web3';
 import {celoBroadcast} from '../blockchain';
-import { validateBody } from '../connector/tatum'
+import {validateBody} from '../connector/tatum';
 import {CUSD_ADDRESS_MAINNET, CUSD_ADDRESS_TESTNET, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
 import erc20_abi from '../contracts/erc20/token_abi';
 import erc20_bytecode from '../contracts/erc20/token_bytecode';
 import erc721_abi from '../contracts/erc721/erc721_abi';
 import erc721_bytecode from '../contracts/erc721/erc721_bytecode';
 import {
-  BurnCeloErc20,
-  CeloBurnErc721, CeloDeployErc721,
-  CeloMintErc721,
-  CeloMintMultipleErc721,
-  CeloTransferErc721,
-  Currency,
-  DeployCeloErc20,
-  MintCeloErc20, TransactionKMS, TransferCeloOrCeloErc20Token,
+    BurnCeloErc20,
+    CeloBurnErc721,
+    CeloDeployErc721,
+    CeloMintErc721,
+    CeloMintMultipleErc721,
+    CeloTransferErc721,
+    Currency,
+    DeployCeloErc20,
+    MintCeloErc20,
+    TransactionKMS,
+    TransferCeloOrCeloErc20Token,
 } from '../model';
 
 const obtainWalletInformation = async (wallet: CeloWallet, feeCurrencyContractAddress?: string) => {
@@ -553,6 +556,20 @@ export const prepareCeloOrCUsdSignedTransaction = async (testnet: boolean, body:
  * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendCeloOrcUsdTransaction = async (testnet: boolean, body: TransferCeloOrCeloErc20Token, provider?: string) => {
-    return celoBroadcast(await prepareCeloOrCUsdSignedTransaction(testnet, body, provider));
-};
+export const sendCeloOrcUsdTransaction = async (testnet: boolean, body: TransferCeloOrCeloErc20Token, provider?: string) =>
+    celoBroadcast(await prepareCeloOrCUsdSignedTransaction(testnet, body, provider));
+
+export const sendCeloMinErc721Transaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) =>
+    celoBroadcast(await prepareCeloMintErc721SignedTransaction(testnet, body, provider));
+
+export const sendCeloMintMultipleErc721Transaction = async (testnet: boolean, body: CeloMintMultipleErc721, provider?: string) =>
+    celoBroadcast(await prepareCeloMintMultipleErc721SignedTransaction(testnet, body, provider));
+
+export const sendCeloBurnErc721Transaction = async (testnet: boolean, body: CeloBurnErc721, provider?: string) =>
+    celoBroadcast(await prepareCeloBurnErc721SignedTransaction(testnet, body, provider));
+
+export const sendCeloTransferErc721Transaction = async (testnet: boolean, body: CeloTransferErc721, provider?: string) =>
+    celoBroadcast(await prepareCeloTransferErc721SignedTransaction(testnet, body, provider));
+
+export const sendCeloDeployErc721Transaction = async (testnet: boolean, body: CeloDeployErc721, provider?: string) =>
+    celoBroadcast(await prepareCeloDeployErc721SignedTransaction(testnet, body, provider));
