@@ -67,7 +67,7 @@ export abstract class NftService {
         let txData;
         switch (chain) {
             case Currency.ETH:
-                txData = await prepareEthTransferErc721SignedTransaction(body);
+                txData = await prepareEthTransferErc721SignedTransaction(body, (await this.getNodesUrl(chain, testnet))[0]);
                 break;
             case Currency.CELO:
                 txData = await prepareCeloTransferErc721SignedTransaction(testnet, body as CeloTransferErc721, (await this.getNodesUrl(chain, testnet))[0]);
@@ -85,7 +85,7 @@ export abstract class NftService {
         let txData;
         switch (chain) {
             case Currency.ETH:
-                txData = await prepareEthMintErc721SignedTransaction(body);
+                txData = await prepareEthMintErc721SignedTransaction(body, (await this.getNodesUrl(chain, testnet))[0]);
                 break;
             case Currency.CELO:
                 txData = await prepareCeloMintErc721SignedTransaction(testnet, body as CeloMintErc721, (await this.getNodesUrl(chain, testnet))[0]);
@@ -103,7 +103,7 @@ export abstract class NftService {
         let txData;
         switch (chain) {
             case Currency.ETH:
-                txData = await prepareEthMintMultipleErc721SignedTransaction(body);
+                txData = await prepareEthMintMultipleErc721SignedTransaction(body, (await this.getNodesUrl(chain, testnet))[0]);
                 break;
             case Currency.CELO:
                 txData = await prepareCeloMintMultipleErc721SignedTransaction(testnet, body as CeloMintMultipleErc721, (await this.getNodesUrl(chain, testnet))[0]);
@@ -121,7 +121,7 @@ export abstract class NftService {
         let txData;
         switch (chain) {
             case Currency.ETH:
-                txData = await prepareEthBurnErc721SignedTransaction(body);
+                txData = await prepareEthBurnErc721SignedTransaction(body, (await this.getNodesUrl(chain, testnet))[0]);
                 break;
             case Currency.CELO:
                 txData = await prepareCeloBurnErc721SignedTransaction(testnet, body as CeloBurnErc721, (await this.getNodesUrl(chain, testnet))[0]);
@@ -139,7 +139,7 @@ export abstract class NftService {
         let txData;
         switch (chain) {
             case Currency.ETH:
-                txData = await prepareEthDeployErc721SignedTransaction(body);
+                txData = await prepareEthDeployErc721SignedTransaction(body, (await this.getNodesUrl(chain, testnet))[0]);
                 break;
             case Currency.CELO:
                 txData = await prepareCeloDeployErc721SignedTransaction(testnet, body as CeloDeployErc721, (await this.getNodesUrl(chain, testnet))[0]);
