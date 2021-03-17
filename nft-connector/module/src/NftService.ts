@@ -26,6 +26,7 @@ import {
 } from '@tatumio/tatum';
 import erc721_abi from '@tatumio/tatum/dist/src/contracts/erc721/erc721_abi';
 import Web3 from 'web3';
+import {Transaction, TransactionReceipt} from 'web3-eth';
 
 export abstract class NftService {
 
@@ -47,7 +48,7 @@ export abstract class NftService {
             return {data: await c.methods.tokenURI(token).call()};
         } catch (e) {
             this.logger.error(e);
-            throw new NftError(`Unable to obtain information for token. ${e}`, 'celo.erc721.failed');
+            throw new NftError(`Unable to obtain information for token. ${e}`, 'nft.erc721.failed');
         }
     }
 
@@ -58,7 +59,24 @@ export abstract class NftService {
             return {data: await c.methods.tokensOfOwner(address).call()};
         } catch (e) {
             this.logger.error(e);
-            throw new NftError(`Unable to obtain information for token. ${e}`, 'celo.erc721.failed');
+            throw new NftError(`Unable to obtain information for token. ${e}`, 'nft.erc721.failed');
+        }
+    }
+
+    public async getTransaction(chain: Currency, txId: string): Promise<Transaction & TransactionReceipt> {
+        try {
+            const web3 = await this.getClient(chain, await this.isTestnet());
+            const {r, s, v, hash, ...transaction} = (await web3.eth.getTransaction(txId)) as any;
+            let receipt: TransactionReceipt = undefined;
+            try {
+                receipt = await web3.eth.getTransactionReceipt(hash);
+            } catch (_) {
+                transaction.transactionHash = hash;
+            }
+            return {...transaction, ...receipt};
+        } catch (e) {
+            this.logger.error(e);
+            throw new NftError('Transaction not found. Possible not exists or is still pending.', 'tx.not.found');
         }
     }
 

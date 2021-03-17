@@ -333,6 +333,55 @@ paths:
       summary: Burn NFT
       tags:
         - Blockchain / NFT
+  /v3/nft/transaction/{chain}/{hash}:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get NFT transaction by transaction hash.</p>"
+      operationId: CNftGetTransaction
+      parameters:
+        - description: Blockchain to work with
+          in: path
+          name: chain
+          required: true
+          schema:
+            type: string
+            enum:
+              - CELO
+              - ETH
+        - description: "Transaction hash"
+          in: path
+          name: hash
+          required: true
+          schema:
+            type: string
+            example: "0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/CeloTx"
+                  - $ref: "#/components/schemas/EthTx"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403TxNotFound"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get Transaction
+      tags:
+        - Blockchain / NFT
   /v3/nft/balance/{chain}/{contractAddress}/{address}:
     get:
       description: "<h4>1 credit per API call.</h4><br/><p>Get NFTs on Account. Returns tokenIDs of tokens Account holds.</p>"

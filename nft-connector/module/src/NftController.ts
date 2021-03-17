@@ -16,6 +16,7 @@ import {
 import {PathAddressContractAddressChain} from './dto/PathAddressContractAddressChain';
 import {PathTokenIdContractAddressChain} from './dto/PathTokenIdContractAddressChain';
 import {PathChain} from './dto/PathChain';
+import {PathChainTxId} from './dto/PathChainTxId';
 
 export abstract class NftController {
     protected constructor(protected readonly service: NftService) {
@@ -25,6 +26,15 @@ export abstract class NftController {
     public async getBalanceErc721(@Param() path: PathAddressContractAddressChain) {
         try {
             return await this.service.getTokensOfOwner(path.chain, path.address, path.contractAddress);
+        } catch (e) {
+            throw new NftError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'nft.error');
+        }
+    }
+
+    @Get('/v3/nft/transaction/:chain/:txId')
+    public async getTransaction(@Param() path: PathChainTxId) {
+        try {
+            return await this.service.getTransaction(path.chain, path.txId);
         } catch (e) {
             throw new NftError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'nft.error');
         }
