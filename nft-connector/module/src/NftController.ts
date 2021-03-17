@@ -1,4 +1,4 @@
-import {Body, Get, HttpCode, HttpStatus, Param, Post} from '@nestjs/common';
+import {BadRequestException, Body, Get, HttpCode, HttpStatus, Param, Post} from '@nestjs/common';
 import {NftService} from './NftService';
 import {NftError} from './NftError';
 import {
@@ -55,6 +55,9 @@ export abstract class NftController {
         try {
             return await this.service.transferErc721(path.chain, body);
         } catch (e) {
+            if (e.constructor.name === 'Array' || e.constructor.name === 'ValidationError') {
+                throw new BadRequestException(e);
+            }
             throw new NftError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'nft.error');
         }
     }
@@ -65,6 +68,9 @@ export abstract class NftController {
         try {
             return await this.service.mintErc721(path.chain, body);
         } catch (e) {
+            if (e.constructor.name === 'Array' || e.constructor.name === 'ValidationError') {
+                throw new BadRequestException(e);
+            }
             throw new NftError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'nft.error');
         }
     }
@@ -75,6 +81,9 @@ export abstract class NftController {
         try {
             return await this.service.mintMultipleErc721(path.chain, body);
         } catch (e) {
+            if (e.constructor.name === 'Array' || e.constructor.name === 'ValidationError') {
+                throw new BadRequestException(e);
+            }
             throw new NftError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'nft.error');
         }
     }
@@ -85,6 +94,9 @@ export abstract class NftController {
         try {
             return await this.service.burnErc721(path.chain, body);
         } catch (e) {
+            if (e.constructor.name === 'Array' || e.constructor.name === 'ValidationError') {
+                throw new BadRequestException(e);
+            }
             throw new NftError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'nft.error');
         }
     }
@@ -95,6 +107,9 @@ export abstract class NftController {
         try {
             return await this.service.deployErc721(path.chain, body);
         } catch (e) {
+            if (e.constructor.name === 'Array' || e.constructor.name === 'ValidationError') {
+                throw new BadRequestException(e);
+            }
             throw new NftError(`Unexpected error occurred. Reason: ${e.message || e.response?.data || e}`, 'nft.error');
         }
     }
