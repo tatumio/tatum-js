@@ -163,8 +163,6 @@ export abstract class EthereumService {
 
   public async sendEthOrErc20Transaction(transferEthErc20: TransferEthErc20): Promise<TransactionHash | SignatureId> {
     const transactionData = await prepareEthOrErc20SignedTransaction(transferEthErc20, await this.getFirstNodeUrl())
-    console.log(transactionData)
-    throw new Error()
     return this.broadcastOrStoreKMSTransaction({ transactionData, signatureId: transferEthErc20.signatureId })
   }
 
