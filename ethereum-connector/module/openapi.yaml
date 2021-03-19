@@ -1,0 +1,3788 @@
+openapi: 3.0.0
+servers:
+  - url: 'https://api-eu1.tatum.io'
+info:
+  version: 1.1.0
+  title: Tatum Ethereum API
+tags:
+  - description: |
+  <p>Ethereum Blockchain enables access to most commonly used Ethereum methods. These methods bring small level of abstraction,
+  and are used for the type of applications that want to communicate with blockchain directly. Some of the methods are used alongside Tatum Private Ledger
+  to connect blockchain and private ledger together, like wallet generation or getting information about transactions.<br/>
+  Tatum supports 2 chains:
+  <ul><li>Mainnet - regular live chain
+  <li>Ropsten - test chain used for testing purposes. Coins on test chain have no value and can be obtained from
+  Faucet, e.g. <a target="_blank" href="https://faucet.ropsten.be/">https://faucet.ropsten.be/</a></li></ul><br/>
+  Tatum supports BIP44 HD wallets. It is very convenient and secure, since it can generate 2^31 addresses from 1 mnemonic phrase. It is possible to generate this type of wallet with 1 simple API call.</p>
+  name: Blockchain / Ethereum
+paths:
+  /v3/ethereum/wallet:
+    get:
+      description: |
+        <h4>1 credit per API call.</h4><br/><p>Tatum supports BIP44 HD wallets. It is very convenient and secure, since it can generate 2^31 addresses from 1 mnemonic phrase. Mnemonic phrase consists of 24 special words in defined order and can restore access to all generated addresses and private keys.<br/>Each address is identified by 3 main values:<ul><li>Private Key - your secret value, which should never be revealed</li><li>Public Key - public address to be published</li><li>Derivation index - index of generated address</li></ul></p><p>Tatum follows BIP44 specification and generates for Ethereum wallet with derivation path m'/44'/60'/0'/0. More about BIP44 HD wallets can be found here - <a target="_blank" href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki">https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki</a>.
+        Generate BIP44 compatible Ethereum wallet.</p>
+      operationId: EthGenerateWallet
+      parameters:
+        - description: "Mnemonic to use for generation of extended public and private keys."
+          in: query
+          name: mnemonic
+          required: false
+          schema:
+            type: string
+            maxLength: 500
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Wallet"
+          description: OK
+        400: &API400
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+          description: Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.
+        401: &API401
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error401NotActive"
+                  - $ref: "#/components/schemas/Error401Invalid"
+          description: Unauthorized. Not valid or inactive subscription key present in the HTTP Header.
+        500: &API500
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error500"
+            description: Internal server error. There was an error on the server during the processing of the request.
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Generate Ethereum wallet
+      tags:
+        - Blockchain / Ethereum
+  /v3/ethereum/address/{xpub}/{index}:
+    get:
+      description: |
+        <h4>1 credit per API call.</h4><br/>
+        <p>Generate Ethereum account deposit address from Extended public key. Deposit address is generated for the specific index - each extended public key can generate
+        up to 2^32 addresses starting from index 0 until 2^31.</p>
+      operationId: EthGenerateAddress
+      parameters:
+        - description: "Extended public key of wallet."
+          in: path
+          name: xpub
+          required: true
+          schema:
+            type: string
+            example: xpub6EsCk1uU6cJzqvP9CdsTiJwT2rF748YkPnhv5Qo8q44DG7nn2vbyt48YRsNSUYS44jFCW9gwvD9kLQu9AuqXpTpM1c5hgg9PsuBLdeNncid
+        - description: "Derivation index of desired address to be generated."
+          in: path
+          name: index
+          required: true
+          schema:
+            type: number
+            example: 0
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  address:
+                    type: string
+                    description: Ethereum addres
+                    example: "0xa7673161CbfE0116A4De9E341f8465940c2211d4"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Generate Ethereum account address from Extended public key
+      tags:
+        - Blockchain / Ethereum
+  /v3/ethereum/wallet/priv:
+    post:
+      description: |
+        <h4>1 credit per API call.</h4><br/>
+        <p>Generate private key of address from mnemonic for given derivation path index. Private key is generated for the specific index - each mnemonic
+        can generate up to 2^32 private keys starting from index 0 until 2^31.</p>
+      operationId: EthGenerateAddressPrivateKey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PrivKeyRequest"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PrivKey"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Generate Ethereum private key
+      tags:
+        - Blockchain / Ethereum
+  /v3/ethereum/web3/{xApiKey}:
+    post:
+      description: |
+        <h4>2 credits per API call.</h4><br/>
+        <p>Use this endpoint URL as a http-based web3 driver to connect directly to the Ethereum node provided by Tatum.
+        To learn more about Ethereum Web3, please visit <a href="https://ethereum.org/en/developers/" target="_blank">Ethereum developer's guide.</a></p>
+      operationId: EthWeb3Driver
+      parameters:
+        - description: "Tatum X-API-Key used for authorization."
+          in: path
+          name: xApiKey
+          required: true
+          schema:
+            type: string
+            example: asdlkfjnqunalkwjfnq2oi303294857k
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Any valid Web3 method content body.
+              example: { "jsonrpc": "2.0","method": "web3_clientVersion","params": [ ],"id": 2 }
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Any valid Web3 response.
+                example: { "jsonrpc": "2.0","id": 2,"result": "Geth/v1.9.9-omnibus-e320ae4c-20191206/linux-amd64/go1.13.4" }
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        500:
+          <<: *API500
+      x-code-samples:
+      summary: Web3 HTTP driver
+      tags:
+        - Blockchain / Ethereum
+  /v3/ethereum/block/current:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get Ethereum current block number. This is the number of the latest block in the blockchain.</p>"
+      operationId: EthGetCurrentBlock
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: number
+                description: Current block number
+                example: 6491272
+          description: OK
+        401:
+          <<: *API401
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get current block number
+      tags:
+        - Blockchain / Ethereum
+  /v3/ethereum/block/{hash}:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get Ethereum block by block hash or block number.</p>"
+      operationId: EthGetBlock
+      parameters:
+        - description: "Block hash or block number"
+          in: path
+          name: hash
+          required: true
+          schema:
+            type: string
+            example: 6470657
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/<EthBlock>"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get Ethereum block by hash
+      tags:
+        - Blockchain / Ethereum
+  /v3/ethereum/account/balance/{address}:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get Ethereum account balance in ETH. This method does not prints any balance of the ERC20 or ERC721 tokens on the account.</p>"
+      operationId: EthGetBalance
+      parameters:
+        - description: "Account address"
+          in: path
+          name: address
+          required: true
+          schema:
+            type: string
+            example: "0x3223AEB8404C7525FcAA6C512f91e287AE9FfE7B"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  balance:
+                    type: string
+                    description: Balance in ETH
+                    example: "10.52"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get Ethereum Account balance
+      tags:
+        - Blockchain / Ethereum
+  /v3/ethereum/account/balance/erc20/{address}:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get Ethereum ERC20 Account balance in the smallest ERC20 unit. Result value is balance * 10^decimals. It is possible to obtain the balance of any ERC20 token, either supported by Tatum natively or via the address of the ERC20 token.</p>"
+      operationId: EthErc20GetBalance
+      parameters:
+        - description: "Account address"
+          in: path
+          name: address
+          required: true
+          schema:
+            type: string
+            example: "0x3223AEB8404C7525FcAA6C512f91e287AE9FfE7B"
+        - description: Tatum supported ERC20 currency. Either currency, or contractAddress must be present.
+          in: query
+          name: currency
+          schema:
+            type: string
+            example: USDT
+            enum:
+              - USDT
+              - LEO
+              - LINK
+              - UNI
+              - FREE
+              - MKR
+              - USDC
+              - BAT
+              - TUSD
+              - PAX
+              - PAXG
+              - PLTC
+              - MMY
+              - WBTC
+              - XCON
+        - description: ERC20 contract address to get balance of. Either contractAddress, or currency must be present.
+          in: query
+          name: contractAddress
+          schema:
+            type: string
+            maxLength: 42
+            minLength: 42
+            example: "0xdac17f958d2ee523a2206206994597c13d831ec7"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                properties:
+                  balance:
+                    type: string
+                    description: Balance in ERC20 smallest unit
+                    example: "1000000"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get Ethereum ERC20 Account balance
+      tags:
+        - Blockchain / Ethereum
+  /v3/ethereum/transaction/{hash}:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get Ethereum transaction by transaction hash.</p>"
+      operationId: EthGetTransaction
+      parameters:
+        - description: "Transaction hash"
+          in: path
+          name: hash
+          required: true
+          schema:
+            type: string
+            example: "0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EthTx"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403TxNotFound"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get Ethereum Transaction
+      tags:
+        - Blockchain / Ethereum
+  /v3/ethereum/transaction/count/{address}:
+    get:
+      description: |
+        <h4>1 credit per API call.</h4><br/>
+        <p>Get a number of outgoing Ethereum transactions for the address. When a transaction is sent, there can be multiple outgoing transactions,
+        which are not yet processed by the blockchain. To distinguish between them, there is a counter called a nonce, which represents
+        the order of the transaction in the list of outgoing transactions.</p>
+      operationId: EthGetTransactionCount
+      parameters:
+        - description: "address"
+          in: path
+          name: address
+          required: true
+          schema:
+            type: string
+            maxLength: 42
+            minLength: 42
+            example: "0xdac17f958d2ee523a2206206994597c13d831ec7"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: number
+                example: 5
+                description: Number of transactions, that were made from this address. Can be used as a nonce parameter in send transaction calls.
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get count of outgoing Ethereum transactions
+      tags:
+        - Blockchain / Ethereum
+  /v3/ethereum/account/transaction/{address}:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get Ethereum transactions by address. This includes incoming and outgoing transactions for the address.</p>"
+      operationId: EthGetTransactionByAddress
+      parameters:
+        - description: "Account address"
+          in: path
+          name: address
+          required: true
+          schema:
+            type: string
+            example: "0x8ce4e40889a13971681391aad29e88efaf91f784"
+        - description: Max number of items per page is 50.
+          in: query
+          name: pageSize
+          schema:
+            type: number
+            example: 10
+            maximum: 50
+            minimum: 1
+          required: true
+        - description: Offset to obtain next page of the data.
+          in: query
+          name: offset
+          schema:
+            type: number
+            example: 0
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/EthTx"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get Ethereum transactions by address
+      tags:
+        - Blockchain / Ethereum
+  /v3/ethereum/transaction:
+    post:
+      description: |
+        <h4>2 credits per API call.</h4><br/>
+        <p>Send Ethereum or Tatum supported ERC20 token from account to account.<br/><br/>
+        This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+        No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
+        or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+        <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
+        Alternatively, using the Tatum client library for supported languages or Tatum Middleware with a custom key management system is possible.
+        </p>
+      operationId: EthBlockchainTransfer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/TransferEthBlockchain"
+                - $ref: "#/components/schemas/TransferEthBlockchainKMS"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/TransactionHashKMS"
+                  - $ref: "#/components/schemas/SignatureId"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403EthBroadcast"
+                  - $ref: "#/components/schemas/Error403EthGasPrice"
+                  - $ref: "#/components/schemas/Error403EthTxBody"
+                  - $ref: "#/components/schemas/Error403EthGasCalculation"
+                  - $ref: "#/components/schemas/Error403EthTxHash"
+                  - $ref: "#/components/schemas/Error403EthTxSign"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Send Ethereum / ERC20 from account to account
+      tags:
+        - Blockchain / Ethereum
+  /v3/ethereum/gas:
+    post:
+      description: |
+        <h4>2 credits per API call.</h4><br/>
+        <p>Estimate gasLimit and gasPrice of the Ethereum transaction. Gas price is obtained from <a href="https://ethgasstation.info/" target="_blank">https://ethgasstation.info/</a>
+        and <a href="https://www.etherchain.org/tools/gasPriceOracle" target="_blank">https://www.etherchain.org/tools/gasPriceOracle</a>, the <b>fast</b> one by default.
+        </p>
+      operationId: EthEstimateGas
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EthEstimateGas"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - gasLimit
+                  - gasPrice
+                properties:
+                  gasLimit:
+                    type: string
+                    description: Gas limit for transaction in gas price.
+                    example: "40000"
+                  gasPrice:
+                    type: string
+                    description: Gas price in wei.
+                    example: "20"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403EthTxBody"
+                  - $ref: "#/components/schemas/Error403EthGasCalculation"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Estimate ethereum transaction fees
+      tags:
+        - Blockchain / Ethereum
+  /v3/ethereum/smartcontract:
+    post:
+      description: |
+        <h4>2 credits per API call.</h4><br/>
+        <p>Invoke any method on an existing Smart Contract. It is possibleto call read or write method on the Smsrt Contract defined via contractAddress.
+        For read operations, data is returned, for write operations, transaction Id of the associated transaction is returned.<br/>
+        This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+        No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
+        or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+        <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
+        Alternatively, using the Tatum client library for supported languages or Tatum Middleware with a custom key management system is possible.</p>
+      operationId: EthBlockchainSmartContractInvocation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/CallSmartContractMethod"
+                - $ref: "#/components/schemas/CallSmartContractMethodKMS"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/TransactionHashKMS"
+                  - $ref: "#/components/schemas/SignatureId"
+                  - $ref: "#/components/schemas/Data"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403EthBroadcast"
+                  - $ref: "#/components/schemas/Error403EthGasPrice"
+                  - $ref: "#/components/schemas/Error403EthScBody"
+                  - $ref: "#/components/schemas/Error403EthGasCalculation"
+                  - $ref: "#/components/schemas/Error403EthTxHash"
+                  - $ref: "#/components/schemas/Error403EthTxSign"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Invoke Smart Contract method
+      tags:
+        - Blockchain / Ethereum
+  /v3/ethereum/account/transaction/erc20/internal/{address}:
+    get:
+      description: |
+        <h4>1 credit per API call.</h4><br/>
+        <p>Get Ethereum ERC20 internal transactions by address.<br/></p>
+      operationId: EthGetErc20InternalTransactionByAddress
+      parameters:
+        - description: "Account address"
+          in: path
+          name: address
+          required: true
+          schema:
+            type: string
+            example: "0x8ce4e40889a13971681391aad29e88efaf91f784"
+        - description: Max number of items per page is 50.
+          in: query
+          name: pageSize
+          schema:
+            type: number
+            example: 10
+            maximum: 50
+            minimum: 1
+          required: true
+        - description: Offset to obtain next page of the data.
+          in: query
+          name: offset
+          schema:
+            type: number
+            example: 0
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/EthTxInternal"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get Ethereum ERC20 internal transactions by address
+      tags:
+        - Blockchain / Ethereum
+  /v3/ethereum/erc20/deploy:
+    post:
+      description: |
+        <h4>2 credits per API call.</h4><br/>
+        <p>Deploy Ethereum ERC20 Smart Contract. This method creates new ERC20 (Fungible Tokens) Smart Contract on the blockchain. Smart contract is standardized and audited. It is possible to mint and burn tokens.
+        It is possible to see the code of the deployed contract <a href="https://github.com/tatumio/tatum-middleware/blob/master/src/contracts/token.sol" target="_blank">here</a>.
+        Whole predefined supply of the tokens will be transferred to the chosen address.<br/><br/>
+        This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+        No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
+        or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+        <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
+        Alternatively, using the Tatum client library for supported languages or Tatum Middleware with a custom key management system is possible.
+        </p>
+      operationId: EthDeployErc20Blockchain
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/DeployErc20"
+                - $ref: "#/components/schemas/DeployErc20KMS"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/TransactionHashKMS"
+                  - $ref: "#/components/schemas/SignatureId"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403EthBroadcast"
+                  - $ref: "#/components/schemas/Error403EthGasPrice"
+                  - $ref: "#/components/schemas/Error403EthTxBody"
+                  - $ref: "#/components/schemas/Error403EthGasCalculation"
+                  - $ref: "#/components/schemas/Error403EthErc20TxSign"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Deploy Ethereum ERC20 Smart Contract.
+      tags:
+        - Blockchain / Ethereum
+  /v3/ethereum/erc20/transaction:
+    post:
+      description: |
+        <h4>2 credits per API call.</h4><br/>
+        <p>Transfer Ethereum ERC20 Smart Contract Tokens from account to account. Transfer any ERC20 tokens from smart contract defined in contractAddress. This method invokes ERC20 method transfer() to transfer tokens.<br/><br/>
+        This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+        No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
+        or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+        <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
+        Alternatively, using the Tatum client library for supported languages or Tatum Middleware with a custom key management system is possible.
+        </p>
+      operationId: EthBlockchainTransferErc20
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/TransferErc20Blockchain"
+                - $ref: "#/components/schemas/TransferErc20BlockchainKMS"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/TransactionHashKMS"
+                  - $ref: "#/components/schemas/SignatureId"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403EthBroadcast"
+                  - $ref: "#/components/schemas/Error403EthGasPrice"
+                  - $ref: "#/components/schemas/Error403EthTxBody"
+                  - $ref: "#/components/schemas/Error403EthGasCalculation"
+                  - $ref: "#/components/schemas/Error403EthTxHash"
+                  - $ref: "#/components/schemas/Error403EthTxSign"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Transfer Ethereum ERC20
+      tags:
+        - Blockchain / Ethereum
+  /v3/ethereum/erc721/deploy:
+    post:
+      description: |
+        <p>Deploy Ethereum ERC721 Smart Contract. This method creates new ERC721 Smart Contract (Non-Fungible Tokens) on the blockchain. Smart contract is standardized and audited.
+        It is possible to mint, burn and transfer tokens. It is also possible to mint multiple tokens at once.
+        It is possible to see the code of the deployed contract <a href="https://github.com/tatumio/tatum-middleware/blob/master/src/contracts/erc721/ERC721Full.sol" target="_blank">here</a>.<br/><br/>
+        This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+        No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
+        or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+        <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
+        Alternatively, using the Tatum client library for supported languages or Tatum Middleware with a custom key management system is possible.
+        </p>
+      operationId: EthDeployErc721
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/DeployErc721"
+                - $ref: "#/components/schemas/DeployErc721KMS"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/TransactionHashKMS"
+                  - $ref: "#/components/schemas/SignatureId"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403EthBroadcast"
+                  - $ref: "#/components/schemas/Error403EthGasPrice"
+                  - $ref: "#/components/schemas/Error403EthTxBody"
+                  - $ref: "#/components/schemas/Error403EthGasCalculation"
+                  - $ref: "#/components/schemas/Error403EthErc721TxSign"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Deploy Ethereum ERC721 Smart Contract.
+      tags:
+        - Blockchain / Ethereum
+  /v3/ethereum/erc721/mint:
+    post:
+      description: |
+        <h4>2 credits per API call.</h4><br/>
+        <p>Create one Ethereum ERC721 Smart Contract Token and transfer it to destination account. Create and transfer any ERC721 token from smart contract defined in contractAddress.
+        It is possible to add URL to the created token with a more detailed information about it.<br/><br/>
+        This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+        No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
+        or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+        <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
+        Alternatively, using the Tatum client library for supported languages or Tatum Middleware with a custom key management system is possible.
+        </p>
+      operationId: EthMintErc721
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/MintErc721"
+                - $ref: "#/components/schemas/MintErc721KMS"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/TransactionHashKMS"
+                  - $ref: "#/components/schemas/SignatureId"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403EthBroadcast"
+                  - $ref: "#/components/schemas/Error403EthGasPrice"
+                  - $ref: "#/components/schemas/Error403EthTxBody"
+                  - $ref: "#/components/schemas/Error403EthGasCalculation"
+                  - $ref: "#/components/schemas/Error403EthTxHash"
+                  - $ref: "#/components/schemas/Error403EthTxSign"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Mint Ethereum ERC721
+      tags:
+        - Blockchain / Ethereum
+  /v3/ethereum/erc721/transaction:
+    post:
+      description: |
+        <h4>2 credits per API call.</h4><br/>
+        <p>Transfer Ethereum ERC721 Smart Contract Tokens from account to account. Transfer any ERC721 token from smart contract defined in contractAddress.
+        Only 1 specific token with specified tokenId can be transfered. This method invokes ERC721 method safeTransfer() to transfer the token.<br/><br/>
+        This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+        No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
+        or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+        <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
+        Alternatively, using the Tatum client library for supported languages or Tatum Middleware with a custom key management system is possible.
+        </p>
+      operationId: EthTransferErc721
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/TransferErc721"
+                - $ref: "#/components/schemas/TransferErc721KMS"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/TransactionHashKMS"
+                  - $ref: "#/components/schemas/SignatureId"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403EthBroadcast"
+                  - $ref: "#/components/schemas/Error403EthGasPrice"
+                  - $ref: "#/components/schemas/Error403EthTxBody"
+                  - $ref: "#/components/schemas/Error403EthGasCalculation"
+                  - $ref: "#/components/schemas/Error403EthTxHash"
+                  - $ref: "#/components/schemas/Error403EthTxSign"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Transfer Ethereum ERC721 Token
+      tags:
+        - Blockchain / Ethereum
+  /v3/ethereum/erc721/mint/batch:
+    post:
+      description: |
+        <h4>2 credits per API call.</h4><br/>
+        <p>Create multiple Ethereum ERC721 Smart Contract Tokens and transfer them to destination account. Create and transfer any ERC721 tokens from smart contract defined in contractAddress.<br/><br/>
+        This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+        No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
+        or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+        <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
+        Alternatively, using the Tatum client library for supported languages or Tatum Middleware with a custom key management system is possible.
+        </p>
+      operationId: EthMintMultipleErc721
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/MintMultipleErc721"
+                - $ref: "#/components/schemas/MintMultipleErc721KMS"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/TransactionHashKMS"
+                  - $ref: "#/components/schemas/SignatureId"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403EthBroadcast"
+                  - $ref: "#/components/schemas/Error403EthGasPrice"
+                  - $ref: "#/components/schemas/Error403EthTxBody"
+                  - $ref: "#/components/schemas/Error403EthGasCalculation"
+                  - $ref: "#/components/schemas/Error403EthTxHash"
+                  - $ref: "#/components/schemas/Error403EthTxSign"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Mint Ethereum ERC721 Multiple Tokens
+      tags:
+        - Blockchain / Ethereum
+  /v3/ethereum/erc721/burn:
+    post:
+      description: |
+        <h4>2 credits per API call.</h4><br/>
+        <p>Burn one Ethereum ERC721 Smart Contract Token. This method destroys any ERC721 token from smart contract defined in contractAddress.<br/><br/>
+        This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+        No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
+        or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+        <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
+        Alternatively, using the Tatum client library for supported languages or Tatum Middleware with a custom key management system is possible.
+        </p>
+      operationId: EthBurnErc20
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/BurnErc721"
+                - $ref: "#/components/schemas/BurnErc721KMS"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/TransactionHashKMS"
+                  - $ref: "#/components/schemas/SignatureId"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403EthBroadcast"
+                  - $ref: "#/components/schemas/Error403EthGasPrice"
+                  - $ref: "#/components/schemas/Error403EthTxBody"
+                  - $ref: "#/components/schemas/Error403EthGasCalculation"
+                  - $ref: "#/components/schemas/Error403EthTxHash"
+                  - $ref: "#/components/schemas/Error403EthTxSign"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Burn Ethereum ERC721
+      tags:
+        - Blockchain / Ethereum
+  /v3/ethereum/erc721/balance/{address}/{contractAddress}:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get Ethereum ERC721 Account balance. Returns number of tokens Account holds.</p>"
+      operationId: EthGetBalanceErc721
+      parameters:
+        - description: "Account address"
+          in: path
+          name: address
+          required: true
+          schema:
+            type: string
+            example: "0x3223AEB8404C7525FcAA6C512f91e287AE9FfE7B"
+        - description: "ERC721 contract address"
+          in: path
+          name: contractAddress
+          required: true
+          schema:
+            type: string
+            example: "0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+                    description: Number of ERC721 tokens.
+                    example: "10"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403EthErc721Call"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get Ethereum ERC721 Account balance
+      tags:
+        - Blockchain / Ethereum
+  /v3/ethereum/erc721/token/{address}/{index}/{contractAddress}:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get Ethereum ERC721 token ID at given index of Account. Total number of tokens can be obtained from Get Balance operation.</p>"
+      operationId: EthGetTokenErc721
+      parameters:
+        - description: "Account address"
+          in: path
+          name: address
+          required: true
+          schema:
+            type: string
+            example: "0x3223AEB8404C7525FcAA6C512f91e287AE9FfE7B"
+        - description: "Token index"
+          in: path
+          name: index
+          required: true
+          schema:
+            type: number
+            example: 1
+        - description: "ERC721 contract address"
+          in: path
+          name: contractAddress
+          required: true
+          schema:
+            type: string
+            example: "0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+                    description: Token ID
+                    example: "1"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403EthErc721Call"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get Ethereum ERC721 Token ID
+      tags:
+        - Blockchain / Ethereum
+  /v3/ethereum/erc721/token/{address}/{contractAddress}:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get Ethereum ERC721 tokens of Account.</p>"
+      operationId: EthGetTokensByAddressErc721
+      parameters:
+        - description: "Account address"
+          in: path
+          name: address
+          required: true
+          schema:
+            type: string
+            example: "0x3223AEB8404C7525FcAA6C512f91e287AE9FfE7B"
+        - description: "ERC721 contract address"
+          in: path
+          name: contractAddress
+          required: true
+          schema:
+            type: string
+            example: "0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: string
+                      description: Token ID
+                      example: "1"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403EthErc721Call"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get Ethereum ERC721 Tokens By Address
+      tags:
+        - Blockchain / Ethereum
+  /v3/ethereum/erc721/metadata/{token}/{contractAddress}:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get Ethereum ERC721 token metadata.</p>"
+      operationId: EthGetMetadataErc721
+      parameters:
+        - description: "Token ID"
+          in: path
+          name: token
+          required: true
+          schema:
+            type: string
+            example: "1"
+            maxLength: 32
+        - description: "ERC721 contract address"
+          in: path
+          name: contractAddress
+          required: true
+          schema:
+            type: string
+            example: "0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+                    description: Metadata associated with token.
+                    example: "https://my_token_data.com"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403EthErc721Call"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get Ethereum ERC721 Token Metadata
+      tags:
+        - Blockchain / Ethereum
+  /v3/ethereum/erc721/owner/{token}/{contractAddress}:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get Ethereum ERC721 token owner.</p>"
+      operationId: EthGetOwnerErc721
+      parameters:
+        - description: "Token ID"
+          in: path
+          name: token
+          required: true
+          schema:
+            type: string
+            example: "1"
+            maxLength: 32
+        - description: "ERC721 contract address"
+          in: path
+          name: contractAddress
+          required: true
+          schema:
+            type: string
+            example: "0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+                    description: Token owner addres
+                    example: "0x77F77bb1e1132fb52B738e0B28F57EF152eAf3B1"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403EthErc721Call"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get Ethereum ERC721 Token owner
+      tags:
+        - Blockchain / Ethereum
+  /v3/ethereum/broadcast:
+    post:
+      description: |
+        <h4>2 credits per API call.</h4><br/>
+        <p>Broadcast signed transaction to Ethereum blockchain. This method is used internally from Tatum KMS, Tatum Middleware or Tatum client libraries.
+        It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
+      operationId: EthBroadcast
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BroadcastKMS"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionHashKMS"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403EthBroadcast"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Broadcast signed Ethereum transaction
+      tags:
+        - Blockchain / Ethereum
+components:
+  securitySchemes:
+    X-Api-Key:
+      description: |
+        To maintain the highest security level, Tatum requires X-API-Key HTTP header.
+        This X-API-Key represents identification of the plan and can be used by 1 developer or per environment.
+        Each X-API-Key is bound to the test or production blockchains.
+      in: header
+      name: x-api-key
+      type: apiKey
+  schemas:
+    EthBlock:
+      type: object
+      properties:
+        difficulty:
+          description: Difficulty for this block.
+          type: string
+          example: "3296820833"
+        extraData:
+          description: The 'extra data' field of this block.
+          type: string
+          example: "0x"
+        gasLimit:
+          description: The maximum gas allowed in this block.
+          type: number
+          example: 8000000
+        gasUsed:
+          description: The total used gas by all transactions in this block.
+          type: number
+          example: 7985124
+        hash:
+          description: Hash of the block. 'null' when its pending block.
+          type: string
+          example: "0x5d40698ee1b1ec589035f2a39c6162287e9056868cc79d66cfb248ba9f66c3fc"
+        logsBloom:
+          description: The bloom filter for the logs of the block. 'null' when its pending block.
+          type: string
+          example: "0x042080004210492080800001610060ad9600005bc81502020800000043e302020381a404000100409102040240300641108004000400007000008000c049558055a800000a0001800748900806502004200400108205005418c0218802281a0408060000533210462021050470810a010140102809011814018281115020090201068401847000a04010000c00084062000485640d00020220181150020008589105a41c0880001112034100010882545410240011402a3480050104004c310204000002009490d0012022a040c20c20011020401020140250805100410060008280200008181a220114102800001648640828200c00a94c1003a2060e001000"
+        miner:
+          description: The address of the beneficiary to whom the mining rewards were given.
+          type: string
+          example: "0xD8869d9E3d497323561Fbca2319a9FC3F6f10c4B"
+        mixHash:
+          description: ''
+          type: string
+          example: "0x7a44a1f56f12ae825fdc04550d7c3af2344daab987691771c06235f25fafcaa6"
+        nonce:
+          description: Hash of the generated proof-of-work. 'null' when its pending block.
+          type: string
+          example: "0xfa1692f52a7ac672"
+        number:
+          description: The block number. 'null' when its pending block.
+          type: number
+          example: 6470657
+        parentHash:
+          description: Hash of the parent block.
+          type: string
+          example: "0xd34aab8a455027086ac54034e68608c84d984401a883b7b5d91f9ae0bbefda15"
+        receiptsRoot:
+          description: ''
+          type: string
+          example: "0x4a496b6b7f2a1c5850bf9eebbea7193807be0067b1c06f17b9dde4eef7b2f960"
+        sha3Uncles:
+          description: SHA3 of the uncles data in the block.
+          type: string
+          example: "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+        size:
+          description: The size of this block in bytes.
+          type: number
+          example: 15296
+        stateRoot:
+          description: The root of the final state trie of the block.
+          type: string
+          example: "0x32757c92f10c6c5a106c6fb4b9ca3ff301e413a59ca3d0513b4bf98c72efddba"
+        timestamp:
+          description: The unix timestamp for when the block was collated.
+          type: number
+          example: 1569600592
+        totalDifficulty:
+          description: Total difficulty of the chain until this block.
+          type: string
+          example: "23329673338013873"
+        transactions:
+          description: Array of transactions.
+          type: array
+          items:
+            $ref: "#/components/schemas/EthTx"
+        transactionsRoot:
+          description: The root of the transaction trie of the block.
+          type: string
+          example: "0x5990081ef8515d561b50255af03c5d505f7725ddef27405dc67d23bfd0f47704"
+    EthTx:
+      type: object
+      properties:
+        blockHash:
+          description: Hash of the block where this transaction was in.
+          type: string
+          example: "0xcf2c40f475e78c7c19778e1ae999a0e371c9319b38182ea15dc94536f13f9137"
+        status:
+          type: boolean
+          example: true
+          description: TRUE if the transaction was successful, FALSE, if the EVM reverted the transaction.
+        blockNumber:
+          type: number
+          description: Block number where this transaction was in.
+          example: 6470854
+        from:
+          type: string
+          description: Address of the sender.
+          example: "0x81b7E08F65Bdf5648606c89998A9CC8164397647"
+        gas:
+          type: number
+          description: Gas provided by the sender.
+          example: 21000
+        gasPrice:
+          type: string
+          description: Gas price provided by the sender in wei.
+          example: "1000000000"
+        transactionHash:
+          type: string
+          description: Hash of the transaction.
+          example: "0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7"
+        input:
+          type: string
+          description: The data sent along with the transaction.
+          example: "0x"
+        nonce:
+          type: number
+          description: The number of transactions made by the sender prior to this one.
+          example: 26836405
+        to:
+          type: string
+          description: Address of the receiver. 'null' when its a contract creation transaction.
+          example: "0xbC546fa1716Ed886967cf73f40e8F2F5e623a92d"
+        transactionIndex:
+          type: number
+          description: Integer of the transactions index position in the block.
+          example: 3
+        value:
+          type: string
+          description: Value transferred in wei.
+          example: "1000000000000000000"
+        gasUsed:
+          type: number
+          description: The amount of gas used by this specific transaction alone.
+          example: 21000
+        cumulativeGasUsed:
+          type: number
+          description: The total amount of gas used when this transaction was executed in the block.
+          example: 314159
+        contractAddress:
+          type: string
+          description: The contract address created, if the transaction was a contract creation, otherwise null.
+          example: "0x81b7E08F65Bdf5648606c89998A9CC8164397647"
+        logs:
+          type: array
+          description: Log events, that happened in this transaction.
+          items:
+            type: object
+            properties:
+              address:
+                type: string
+                description: From which this event originated from.
+                example: "0x81b7E08F65Bdf5648606c89998A9CC8164397647"
+              topics:
+                type: array
+                description: An array with max 4 32 Byte topics, topic 1-3 contains indexed parameters of the log.
+                items:
+                  type: string
+                  example: "0x033456732123ffff2342342dd12342434324234234fd234fd23fd4f23d4234"
+              data:
+                type: string
+                description: The data containing non-indexed log parameter.
+              logIndex:
+                type: number
+                description: Integer of the event index position in the block.
+              transactionIndex:
+                type: number
+                description: Integer of the transaction’s index position, the event was created in.
+              transactionHash:
+                type: string
+                description: Hash of the transaction this event was created in.
+                example: "0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7"
+    EthTxInternal:
+      type: object
+      properties:
+        from:
+          type: string
+          description: Address of the sender.
+          example: "0x81b7E08F65Bdf5648606c89998A9CC8164397647"
+        to:
+          type: string
+          description: Address of the receiver. 'null' when its a contract creation transaction.
+          example: "0xbC546fa1716Ed886967cf73f40e8F2F5e623a92d"
+        value:
+          type: string
+          description: Value transferred in wei.
+          example: "1000000000000000000"
+        blockNumber:
+          type: number
+          description: Block number where this transaction was in.
+          example: 6470854
+        timeStamp:
+          type: string
+          description: Time of the transaction in seconds.
+          example: "1477837690"
+        hash:
+          type: string
+          description: Hash of the transaction.
+          example: "0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7"
+        input:
+          type: string
+          description: The data sent along with the transaction.
+          example: ""
+        traceId:
+          type: string
+          description: Trace ID.
+          example: "0"
+        type:
+          type: string
+          description: Type of the transaction.
+          example: "create"
+        errCode:
+          type: string
+          description: Error code.
+          example: "Bad jump destination"
+        gas:
+          type: number
+          description: Gas provided by the sender.
+          example: 21000
+        isError:
+          type: string
+          example: "0"
+          description: 1 if the transaction was not successful, 0 otherwise.
+        gasUsed:
+          type: number
+          description: The amount of gas used by this specific transaction alone.
+          example: 21000
+        contractAddress:
+          type: string
+          description: The contract address created, if the transaction was a contract creation, otherwise null.
+          example: "0x81b7E08F65Bdf5648606c89998A9CC8164397647"
+    Erc20:
+      properties:
+        symbol:
+          description: ERC20 token name. Used as a identifier within Tatum system and also in blockchain as a currency symbol.
+          example: MY_TOKEN
+          maxLength: 30
+          minLength: 1
+          pattern: "^[a-zA-Z0-9_]+$"
+          type: string
+        supply:
+          description: Supply of ERC20 token.
+          maxLength: 38
+          example: "1000000.0"
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+          type: string
+        description:
+          description: Used as a description within Tatum system and in blockchain as a currency name.
+          example: "My Public Token"
+          maxLength: 100
+          minLength: 1
+          type: string
+        basePair:
+          description: Base pair for ERC20 token. Transaction value will be calculated according to this base pair.
+          enum:
+            - AED
+            - AFN
+            - ALL
+            - AMD
+            - ANG
+            - AOA
+            - ARS
+            - AUD
+            - AWG
+            - AZN
+            - BAM
+            - BAT
+            - BBD
+            - BCH
+            - BDT
+            - BGN
+            - BHD
+            - BIF
+            - BMD
+            - BND
+            - BOB
+            - BRL
+            - BSD
+            - BTC
+            - BTN
+            - BWP
+            - BYN
+            - BYR
+            - BZD
+            - CAD
+            - CDF
+            - CHF
+            - CLF
+            - CLP
+            - CNY
+            - COP
+            - CRC
+            - CUC
+            - CUP
+            - CVE
+            - CZK
+            - DJF
+            - DKK
+            - DOP
+            - DZD
+            - EGP
+            - ERN
+            - ETB
+            - ETH
+            - EUR
+            - FJD
+            - FKP
+            - FREE
+            - GBP
+            - GEL
+            - GGP
+            - GHS
+            - GIP
+            - GMD
+            - GNF
+            - GTQ
+            - GYD
+            - HKD
+            - HNL
+            - HRK
+            - HTG
+            - HUF
+            - IDR
+            - ILS
+            - IMP
+            - INR
+            - IQD
+            - IRR
+            - ISK
+            - JEP
+            - JMD
+            - JOD
+            - JPY
+            - KES
+            - KGS
+            - KHR
+            - KMF
+            - KPW
+            - KRW
+            - KWD
+            - KYD
+            - KZT
+            - LAK
+            - LBP
+            - LEO
+            - LINK
+            - LKR
+            - LRD
+            - LSL
+            - LTC
+            - LTL
+            - LVL
+            - LYD
+            - MAD
+            - MDL
+            - MGA
+            - MKD
+            - MKR
+            - MMK
+            - MMY
+            - MNT
+            - MOP
+            - MRO
+            - MUR
+            - MVR
+            - MWK
+            - MXN
+            - MYR
+            - MZN
+            - NAD
+            - NGN
+            - NIO
+            - NOK
+            - NPR
+            - NZD
+            - OMR
+            - PAB
+            - PAX
+            - PAXG
+            - PEN
+            - PGK
+            - PHP
+            - PKR
+            - PLN
+            - PLTC
+            - PYG
+            - QAR
+            - RON
+            - RSD
+            - RUB
+            - RWF
+            - SAR
+            - SBD
+            - SCR
+            - SDG
+            - SEK
+            - SGD
+            - SHP
+            - SLL
+            - SOS
+            - SRD
+            - STD
+            - SVC
+            - SYP
+            - SZL
+            - THB
+            - TJS
+            - TMT
+            - TND
+            - TOP
+            - TRY
+            - TTD
+            - TRON
+            - TUSD
+            - TWD
+            - TZS
+            - UAH
+            - UGX
+            - UNI
+            - USD
+            - USDC
+            - USDT
+            - USDT_TRON
+            - UYU
+            - UZS
+            - VEF
+            - VND
+            - VUV
+            - WBTC
+            - WST
+            - XAF
+            - XAG
+            - XAU
+            - XCD
+            - XCON
+            - XDR
+            - XLM
+            - XOF
+            - XPF
+            - XRP
+            - YER
+            - ZAR
+            - ZMK
+            - ZMW
+            - ZWL
+          example: EUR
+          maxLength: 5
+          minLength: 3
+          type: string
+        baseRate:
+          type: number
+          example: 1
+          default: 1
+          minimum: 0
+          description: Exchange rate of the base pair. Each unit of the created curency will represent value of baseRate*1 basePair.
+        customer:
+          $ref: "#/components/schemas/CustomerRegistration"
+        accountingCurrency:
+          description: All transaction will be billed in this currency for created account associated with this currency. If not set, EUR is used. ISO-4217
+          enum:
+            - AED
+            - AFN
+            - ALL
+            - AMD
+            - ANG
+            - AOA
+            - ARS
+            - AUD
+            - AWG
+            - AZN
+            - BAM
+            - BBD
+            - BDT
+            - BGN
+            - BHD
+            - BIF
+            - BMD
+            - BND
+            - BOB
+            - BRL
+            - BSD
+            - BTN
+            - BWP
+            - BYN
+            - BYR
+            - BZD
+            - CAD
+            - CDF
+            - CHF
+            - CLF
+            - CLP
+            - CNY
+            - COP
+            - CRC
+            - CUC
+            - CUP
+            - CVE
+            - CZK
+            - DJF
+            - DKK
+            - DOP
+            - DZD
+            - EGP
+            - ERN
+            - ETB
+            - EUR
+            - FJD
+            - FKP
+            - GBP
+            - GEL
+            - GGP
+            - GHS
+            - GIP
+            - GMD
+            - GNF
+            - GTQ
+            - GYD
+            - HKD
+            - HNL
+            - HRK
+            - HTG
+            - HUF
+            - IDR
+            - ILS
+            - IMP
+            - INR
+            - IQD
+            - IRR
+            - ISK
+            - JEP
+            - JMD
+            - JOD
+            - JPY
+            - KES
+            - KGS
+            - KHR
+            - KMF
+            - KPW
+            - KRW
+            - KWD
+            - KYD
+            - KZT
+            - LAK
+            - LBP
+            - LKR
+            - LRD
+            - LSL
+            - LTL
+            - LVL
+            - LYD
+            - MAD
+            - MDL
+            - MGA
+            - MKD
+            - MMK
+            - MNT
+            - MOP
+            - MRO
+            - MUR
+            - MVR
+            - MWK
+            - MXN
+            - MYR
+            - MZN
+            - NAD
+            - NGN
+            - NIO
+            - NOK
+            - NPR
+            - NZD
+            - OMR
+            - PAB
+            - PEN
+            - PGK
+            - PHP
+            - PKR
+            - PLN
+            - PYG
+            - QAR
+            - RON
+            - RSD
+            - RUB
+            - RWF
+            - SAR
+            - SBD
+            - SCR
+            - SDG
+            - SEK
+            - SGD
+            - SHP
+            - SLL
+            - SOS
+            - SRD
+            - STD
+            - SVC
+            - SYP
+            - SZL
+            - THB
+            - TJS
+            - TMT
+            - TND
+            - TOP
+            - TRY
+            - TTD
+            - TWD
+            - TZS
+            - UAH
+            - UGX
+            - USD
+            - UYU
+            - UZS
+            - VEF
+            - VND
+            - VUV
+            - WST
+            - XAF
+            - XAG
+            - XAU
+            - XCD
+            - XDR
+            - XOF
+            - XPF
+            - YER
+            - ZAR
+            - ZMK
+            - ZMW
+            - ZWL
+          example: USD
+          maxLength: 3
+          minLength: 3
+          type: string
+        derivationIndex:
+          description: Derivation index for xpub to generate specific deposit address.
+          format: int32
+          example: 0
+          type: integer
+          maximum: 2147483647
+        xpub:
+          description: Extended public key (xpub), from which address, where all initial supply will be stored, will be generated. Either xpub and derivationIndex, or address must be present, not both.
+          maxLength: 150
+          minLength: 1
+          example: xpub6EsCk1uU6cJzqvP9CdsTiJwT2rF748YkPnhv5Qo8q44DG7nn2vbyt48YRsNSUYS44jFCW9gwvD9kLQu9AuqXpTpM1c5hgg9PsuBLdeNncid
+          type: string
+        address:
+          description: Address on Ethereum blockchain, where all initial supply will be stored. Either xpub and derivationIndex, or address must be present, not both.
+          maxLength: 42
+          minLength: 42
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+      required:
+        - symbol
+        - supply
+        - description
+        - basePair
+      type: object
+    Erc20Response:
+      properties:
+        accountId:
+          description: Account ID with the type of currency as created ERC20 token symbol. Supply of ERC20 token will be credited as soon as ERC20 token is deployed to the Ethereum blockchain.
+          type: string
+          example: 5e68c66581f2ee32bc354087
+        address:
+          description: Initial address of new created ERC20 token. On this address, all tokens will be minted.
+          example: "0xa7673161CbfE0116A4De9E341f8465940c2211d4"
+          type: string
+      type: object
+    DeployErc20Response:
+      properties:
+        accountId:
+          description: Account ID with the type of currency as created ERC20 token symbol. Account will be unfrozen when ERC20 contract address will be set.
+          type: string
+          example: 5e68c66581f2ee32bc354087
+        txId:
+          description: TX hash of successful transaction. From this transaction receipt contract address can be obtained.
+          example: c83f8818db43d9ba4accfe454aa44fc33123d47a4f89d47b314d6748eb0e9bc9
+          type: string
+      type: object
+      required:
+        - accountId
+        - txId
+    DeployErc20SignatureResponse:
+      properties:
+        accountId:
+          description: Account ID with the type of currency as created ERC20 token symbol. Account will be unfrozen when ERC20 contract address will be set.
+          type: string
+          example: 5e68c66581f2ee32bc354087
+        signatureId:
+          description: ID of prepared payment template to sign. This is should be stored on a client side to retrieve ID of the blockchain transaction, when signing application signs the transaction and broadcasts it to the blockchain.
+          format: uuid
+          example: 1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6
+          type: string
+      type: object
+      required:
+        - accountId
+        - signatureId
+    Error403EthBroadcast:
+      properties:
+        errorCode:
+          description: ethereum.broadcast.failed
+          example: ethereum.broadcast.failed
+          type: string
+        message:
+          description: Unable to broadcast transaction due to ${error}.
+          example: Unable to broadcast transaction due to ${error}.
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403EthErc20NotFound:
+      properties:
+        errorCode:
+          description: erc20.token.notFound
+          example: erc20.token.notFound
+          type: string
+        message:
+          description: No such ERC20 currency ${name}.
+          example: No such ERC20 currency ${name}.
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403TxNotFound:
+      properties:
+        errorCode:
+          description: tx.missing
+          example: tx.missing
+          type: string
+        message:
+          description: No such tx.
+          example: No such tx.
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403EthErc20Set:
+      properties:
+        errorCode:
+          description: erc20.address.set
+          example: erc20.address.set
+          type: string
+        message:
+          description: ERC20 address was already set.
+          example: ERC20 address was already set.
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403EthMnemonicPrivateKey:
+      properties:
+        errorCode:
+          description: private.mnemonic.missing
+          example: private.mnemonic.missing
+          type: string
+        message:
+          description: Either mnemonic and index or private key must be present.
+          example: Either mnemonic and index or private key must be present.
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403EthErc20Unsupported:
+      properties:
+        errorCode:
+          description: eth.erc20.unsupported
+          example: eth.erc20.unsupported
+          type: string
+        message:
+          description: Unsupported ETH ERC20 blockchain.
+          example: Unsupported ETH ERC20 blockchain.
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403EthTxHash:
+      properties:
+        errorCode:
+          description: eth.transaction.hash
+          example: eth.transaction.hash
+          type: string
+        message:
+          description: Unable to calculate transaction hash. ${error}
+          example: Unable to calculate transaction hash. ${error}
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403EthTxSign:
+      properties:
+        errorCode:
+          description: eth.transaction.sign
+          example: eth.transaction.sign
+          type: string
+        message:
+          description: Unable to sign transaction. ${error}
+          example: Unable to sign transaction. ${error}
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403EthErc20TxSign:
+      properties:
+        errorCode:
+          description: eth.erc20.sign
+          example: eth.erc20.sign
+          type: string
+        message:
+          description: Unable to sign transaction for contract creation. ${error}
+          example: Unable to sign transaction for contract creation. ${error}
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403EthErc721TxSign:
+      properties:
+        errorCode:
+          description: eth.erc721.sign
+          example: eth.erc721.sign
+          type: string
+        message:
+          description: Unable to sign transaction for contract creation. ${error}
+          example: Unable to sign transaction for contract creation. ${error}
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403EthErc721Call:
+      properties:
+        errorCode:
+          description: eth.erc721.failed
+          example: eth.erc721.failed
+          type: string
+        message:
+          description: Unable to obtain information for token. ${error}
+          example: Unable to obtain information for token. ${error}
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403EthGasCalculation:
+      properties:
+        errorCode:
+          description: eth.transaction.gas
+          example: eth.transaction.gas
+          type: string
+        message:
+          description: Unable to calculate gas limit for transaction. ${error}
+          example: Unable to calculate gas limit for transaction. ${error}
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403EthTxBody:
+      properties:
+        errorCode:
+          description: ethereum.transaction.body
+          example: ethereum.transaction.body
+          type: string
+        message:
+          description: Either currency, or tokenAddress must be defined.
+          example: Either currency, or tokenAddress must be defined.
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403EthScBody:
+      properties:
+        errorCode:
+          description: ethereum.sc.invalid
+          example: ethereum.sc.invalid
+          type: string
+        message:
+          description: Invalid parameters for smart contract invocation.
+          example: Invalid parameters for smart contract invocation.
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403EthGasPrice:
+      properties:
+        errorCode:
+          description: gas.price.failed
+          example: gas.price.failed
+          type: string
+        message:
+          description: Unable to obtain current GAS price.
+          example: Unable to obtain current GAS price.
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403ComplianceEth:
+      properties:
+        errorCode:
+          description: compliance.country.eth.not.supported
+          example: compliance.country.eth.not.supported
+          type: string
+        message:
+          description: Customer country not supported for ETH.
+          example: Customer country not supported for ETH.
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403TxAmountEth:
+      properties:
+        errorCode:
+          description: amount.eth
+          example: amount.eth
+          type: string
+        message:
+          description: ETH payment amount must be at least 0.000000000001, not ${transaction.amount}.
+          example: ETH payment amount must be at least 0.000000000001, not ${transaction.amount}.
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403TxAmountEthOffchain:
+      properties:
+        errorCode:
+          description: transaction.amount.eth
+          example: transaction.amount.eth
+          type: string
+        message:
+          description: ETH payment amount must be at least 0.000000000000000001, not ${transaction.amount}.
+          example: ETH payment amount must be at least 0.000000000000000001, not ${transaction.amount}.
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403Erc20Prefix:
+      properties:
+        errorCode:
+          description: erc20.symbol.prefix
+          example: erc20.symbol.prefix
+          type: string
+        message:
+          description: ERC20 token cannot start with VC_.
+          example: ERC20 token cannot start with VC_.
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403Erc20XpubBoth:
+      properties:
+        errorCode:
+          description: erc20.address.xpub.both
+          example: erc20.address.xpub.both
+          type: string
+        message:
+          description: Either xpub or address must be present, not both.
+          example: Either xpub or address must be present, not both.
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403Erc20XpubMissing:
+      properties:
+        errorCode:
+          description: erc20.address.xpub.missing
+          example: erc20.address.xpub.missing
+          type: string
+        message:
+          description: Either xpub or address must be present.
+          example: Either xpub or address must be present.
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403Erc20NameDuplicate:
+      properties:
+        errorCode:
+          description: erc20.duplicate.name
+          example: erc20.duplicate.name
+          type: string
+        message:
+          description: ERC20 token with given name already exists.
+          example: ERC20 token with given name already exists.
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    TransferErc20Blockchain:
+      type: object
+      properties:
+        to:
+          maxLength: 50
+          minLength: 1
+          description: Blockchain address to send ERC20 token to
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        amount:
+          description: Amount to be sent.
+          example: "100000"
+          type: string
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC20 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        digits:
+          description: Number of decimal points that ERC20 token has.
+          example: 18
+          maximum: 30
+          minimum: 1
+          type: number
+        fromPrivateKey:
+          type: string
+          maxLength: 66
+          example: "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2"
+          minLength: 66
+          description: Private key of sender address. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - to
+        - contractAddress
+        - digits
+        - fromPrivateKey
+        - amount
+    TransferErc20BlockchainKMS:
+      type: object
+      properties:
+        to:
+          maxLength: 50
+          minLength: 1
+          description: Blockchain address to send ERC20 token to
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        amount:
+          description: Amount to be sent.
+          example: "100000"
+          type: string
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC20 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        digits:
+          description: Number of decimal points that ERC20 token has.
+          example: 18
+          maximum: 30
+          minimum: 1
+          type: number
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - to
+        - contractAddress
+        - signatureId
+        - digits
+        - amount
+    CallSmartContractMethod:
+      type: object
+      properties:
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC20 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        methodName:
+          minLength: 1
+          maxLength: 500
+          description: Name of the method to invoke on smart contract.
+          type: string
+          example: transfer
+        methodABI:
+          type: object
+          description: ABI of the method to invoke.
+        params:
+          type: array
+          items:
+            type: object
+          description: Parameters of the method to be invoked.
+        fromPrivateKey:
+          type: string
+          maxLength: 66
+          example: "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2"
+          minLength: 66
+          description: Private key of sender address. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - contractAddress
+        - params
+        - methodABI
+        - fromPrivateKey
+        - methodName
+    CallSmartContractMethodKMS:
+      type: object
+      properties:
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC20 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        methodName:
+          minLength: 1
+          maxLength: 500
+          description: Name of the method to invoke on smart contract.
+          type: string
+          example: transfer
+        methodABI:
+          type: object
+          description: ABI of the method to invoke.
+        params:
+          type: array
+          items:
+            type: object
+          description: Parameters of the method to be invoked.
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - contractAddress
+        - params
+        - methodABI
+        - signatureId
+        - methodName
+    TransferErc721:
+      type: object
+      properties:
+        to:
+          maxLength: 42
+          minLength: 42
+          description: Blockchain address to send ERC721 token to
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        tokenId:
+          description: ID of token.
+          example: "100000"
+          type: string
+          maxLength: 256
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        fromPrivateKey:
+          type: string
+          maxLength: 66
+          example: "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2"
+          minLength: 66
+          description: Private key of sender address. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          example: 1
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - to
+        - contractAddress
+        - tokenId
+        - fromPrivateKey
+    TransferErc721KMS:
+      type: object
+      properties:
+        to:
+          maxLength: 42
+          minLength: 42
+          description: Blockchain address to send ERC721 token to
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        tokenId:
+          description: ID of token.
+          example: "100000"
+          type: string
+          maxLength: 256
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          example: 1
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - to
+        - contractAddress
+        - signatureId
+        - tokenId
+    PendingTransaction:
+      type: object
+      properties:
+        id:
+          description: ID of the pending transaction
+          example: 5e6645712b55823de7ea82f1
+          type: string
+        chain:
+          type: string
+          example: ETH
+          description: Blockchain of the transaction
+          enum:
+            - BNB
+            - BTC
+            - ETH
+            - XLM
+            - XRP
+            - BCH
+            - LTC
+            - VET
+        hashes:
+          type: array
+          description: List of the signature Ids to be used to sign transaction. Those hashes should be in order of signing for the BTC, LTC or BCH blockchains.
+          items:
+            type: string
+            description: Signature hash representing wallet or private key managed in the Tatum KMS instance.
+            example: 1234987askdjfb1o2873ryskajfb1234987askdjfb1o2873ryskajfb1234987askdjfb1o2873ryskajfb
+        serializedTransaction:
+          type: string
+          example: alskdjfq8o27fbkasljfbq8o7b4fqo83f7bqejhafbo8q4f
+          description: Serialized data of the transaction to be signed. It can be JSON, HEX or any other representation based on the blockchain.
+        withdrawalId:
+          description: ID of the pending off-chain withdrawal connected to this transaction
+          example: 5e6645712b55823de7ea82f1
+          type: string
+        index:
+          type: number
+          description: In case of mnemonic type of signature Id, this is the index to the specific account that should be used for signature.
+          example: 1
+          minimum: 0
+        txId:
+          description: TX hash of successful transaction.
+          example: c83f8818db43d9ba4accfe454aa44fc33123d47a4f89d47b314d6748eb0e9bc9
+          type: string
+        withdrawalResponses:
+          items:
+            $ref: "#/components/schemas/ResponseData"
+          type: array
+          description: Additional information used for BTC, LTC and BCH off-chain to blockchain transactions.
+      required:
+        - id
+        - chain
+        - serializedTransaction
+        - hashes
+    MintErc721:
+      type: object
+      properties:
+        tokenId:
+          description: ID of token to be created.
+          example: "100000"
+          type: string
+          maxLength: 32
+        to:
+          maxLength: 42
+          minLength: 42
+          description: Blockchain address to send ERC721 token to
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        url:
+          description: Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
+          example: "https://my_token_data.com"
+          type: string
+          maxLength: 256
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - to
+        - url
+        - contractAddress
+        - fromPrivateKey
+        - tokenId
+    MintErc721KMS:
+      type: object
+      properties:
+        tokenId:
+          description: ID of token to be created.
+          example: "100000"
+          type: string
+          maxLength: 32
+        to:
+          maxLength: 42
+          minLength: 42
+          description: Blockchain address to send ERC721 token to
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        url:
+          description: Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
+          example: "https://my_token_data.com"
+          type: string
+          maxLength: 256
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - to
+        - url
+        - contractAddress
+        - signatureId
+        - tokenId
+    MintMultipleErc721:
+      type: object
+      properties:
+        to:
+          type: array
+          description: Blockchain address to send ERC721 token to.
+          example: [ "0x687422eEA2cB73B5d3e242bA5456b782919AFc85" ]
+          items:
+            maxLength: 42
+            minLength: 42
+            type: string
+        tokenId:
+          type: array
+          description: ID of token to be created.
+          example: [ "100000" ]
+          items:
+            type: string
+            maxLength: 32
+        url:
+          type: array
+          description: Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
+          example: [ "https://my_token_data.com" ]
+          items:
+            type: string
+            maxLength: 256
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        fromPrivateKey:
+          type: string
+          maxLength: 66
+          example: "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2"
+          minLength: 66
+          description: Private key of sender address. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - to
+        - url
+        - contractAddress
+        - fromPrivateKey
+        - tokenId
+    MintMultipleErc721KMS:
+      type: object
+      properties:
+        to:
+          type: array
+          description: Blockchain address to send ERC721 token to.
+          example: [ "0x687422eEA2cB73B5d3e242bA5456b782919AFc85" ]
+          items:
+            maxLength: 42
+            minLength: 42
+            type: string
+        tokenId:
+          type: array
+          description: ID of token to be created.
+          example: [ "100000" ]
+          items:
+            type: string
+            maxLength: 32
+        url:
+          type: array
+          description: Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
+          example: [ "https://my_token_data.com" ]
+          items:
+            type: string
+            maxLength: 256
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - to
+        - contractAddress
+        - tokenId
+        - url
+        - signatureId
+    BurnErc721:
+      type: object
+      properties:
+        tokenId:
+          description: ID of token to be destroyed.
+          example: "100000"
+          type: string
+          maxLength: 32
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        fromPrivateKey:
+          type: string
+          maxLength: 66
+          example: "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2"
+          minLength: 66
+          description: Private key of sender address. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - to
+        - url
+        - contractAddress
+        - fromPrivateKey
+        - tokenId
+    BurnErc721KMS:
+      type: object
+      properties:
+        tokenId:
+          description: ID of token to be destroyed.
+          example: "100000"
+          type: string
+          maxLength: 32
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - to
+        - url
+        - contractAddress
+        - tokenId
+        - signatureId
+    TransferEthBlockchain:
+      type: object
+      properties:
+        data:
+          type: string
+          maxLength: 50000
+          description: Additinal data, that can be passed to blockchain transaction as data property. Only for ETH transactions.
+          example: My note to recipient.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        to:
+          description: Blockchain address to send assets
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          maxLength: 42
+          minLength: 42
+          type: string
+        currency:
+          description: Currency to transfer from Ethereum Blockchain Account.
+          enum:
+            - USDT
+            - LEO
+            - LINK
+            - UNI
+            - FREE
+            - MKR
+            - USDC
+            - BAT
+            - TUSD
+            - PAX
+            - PAXG
+            - PLTC
+            - MMY
+            - WBTC
+            - XCON
+            - ETH
+          example: ETH
+          type: string
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              example: "40000"
+              pattern: ^[+]?\d+$
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              example: "20"
+              pattern: ^[+]?\d+$
+        amount:
+          description: Amount to be sent in Ether.
+          example: "100000"
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+          type: string
+        fromPrivateKey:
+          type: string
+          maxLength: 66
+          example: "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2"
+          minLength: 66
+          description: Private key of sender address. Private key, or signature Id must be present.
+      required:
+        - to
+        - amount
+        - currency
+        - fromPrivateKey
+    EthEstimateGas:
+      type: object
+      properties:
+        from:
+          type: string
+          maxLength: 66
+          example: "0xfb99f8ae9b70a0c8cd96ae665bbaf85a7e01a2ef"
+          minLength: 66
+          description: Sender address.
+        to:
+          description: Blockchain address to send assets
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          maxLength: 42
+          minLength: 42
+          type: string
+        amount:
+          description: Amount to be sent in Ether.
+          example: "100000"
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+          type: string
+        data:
+          type: string
+          maxLength: 50000
+          description: Additinal data, that can be passed to blockchain transaction as data property. Only for ETH transactions.
+          example: My note to recipient.
+          pattern: ^(0x|0h)?[0-9A-F]+$
+      required:
+        - to
+        - amount
+        - from
+    TransferEthBlockchainKMS:
+      type: object
+      properties:
+        data:
+          type: string
+          maxLength: 50000
+          description: Additinal data, that can be passed to blockchain transaction as data property. Only for ETH transactions.
+          example: My note to recipient.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        to:
+          description: Blockchain address to send assets
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          maxLength: 42
+          minLength: 42
+          type: string
+        currency:
+          description: Currency to transfer from Ethereum Blockchain Account.
+          enum:
+            - USDT
+            - LEO
+            - LINK
+            - UNI
+            - FREE
+            - MKR
+            - USDC
+            - BAT
+            - TUSD
+            - PAX
+            - PAXG
+            - PLTC
+            - MMY
+            - WBTC
+            - XCON
+            - ETH
+          example: ETH
+          type: string
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              example: "40000"
+              pattern: ^[+]?\d+$
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              example: "20"
+              pattern: ^[+]?\d+$
+        amount:
+          description: Amount to be sent in Ether.
+          example: "100000"
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+          type: string
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+      required:
+        - to
+        - amount
+        - currency
+        - signatureId
+    TransferErc20:
+      type: object
+      properties:
+        senderAccountId:
+          maxLength: 24
+          minLength: 24
+          description: Sender account ID
+          example: 5e68c66581f2ee32bc354087
+          type: string
+        address:
+          maxLength: 42
+          minLength: 42
+          description: Blockchain address to send ERC20 token to
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        amount:
+          description: Amount to be sent.
+          maxLength: 38
+          example: "100000"
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+          type: string
+        compliant:
+          description: Compliance check, if withdrawal is not compliant, it will not be processed.
+          example: false
+          type: boolean
+        currency:
+          description: ERC20 symbol. Required only for calls from Tatum Middleware.
+          example: MY_SYMBOL
+          maxLength: 30
+          minLength: 1
+          type: string
+        privateKey:
+          type: string
+          maxLength: 66
+          minLength: 66
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          description: Private key of sender address. Either mnemonic and index, privateKey or signature Id must be present - depends on the type of account and xpub.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        paymentId:
+          description: Identifier of the payment, shown for created Transaction within Tatum sender account.
+          example: "1234"
+          maxLength: 100
+          minLength: 1
+          type: string
+        senderNote:
+          maxLength: 500
+          minLength: 1
+          description: Note visible to owner of withdrawing account
+          example: "Sender note"
+          type: string
+      required:
+        - senderAccountId
+        - address
+        - privateKey
+        - amount
+    TransferErc20Mnemonic:
+      type: object
+      properties:
+        senderAccountId:
+          maxLength: 24
+          minLength: 24
+          description: Sender account ID
+          example: 5e68c66581f2ee32bc354087
+          type: string
+        address:
+          maxLength: 42
+          minLength: 42
+          description: Blockchain address to send ERC20 token to
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        amount:
+          description: Amount to be sent.
+          maxLength: 38
+          example: "100000"
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+          type: string
+        compliant:
+          description: Compliance check, if withdrawal is not compliant, it will not be processed.
+          example: false
+          type: boolean
+        currency:
+          description: ERC20 symbol. Required only for calls from Tatum Middleware.
+          example: MY_SYMBOL
+          maxLength: 30
+          minLength: 1
+          type: string
+        mnemonic:
+          maxLength: 500
+          minLength: 1
+          description: Mnemonic to generate private key for sender address. Either mnemonic and index, or privateKey must be present - depends on the type of account and xpub.
+          example: "urge pulp usage sister evidence arrest palm math please chief egg abuse"
+          type: string
+        index:
+          description: Derivation index of sender address.
+          maximum: 2147483647
+          example: 0
+          type: integer
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        paymentId:
+          description: Identifier of the payment, shown for created Transaction within Tatum sender account.
+          example: "1234"
+          maxLength: 100
+          minLength: 1
+          type: string
+        senderNote:
+          maxLength: 500
+          minLength: 1
+          description: Note visible to owner of withdrawing account
+          example: "Sender note"
+          type: string
+      required:
+        - senderAccountId
+        - address
+        - amount
+        - mnemonic
+        - index
+    TransferErc20KMS:
+      type: object
+      properties:
+        senderAccountId:
+          maxLength: 24
+          minLength: 24
+          description: Sender account ID
+          example: 5e68c66581f2ee32bc354087
+          type: string
+        address:
+          maxLength: 42
+          minLength: 42
+          description: Blockchain address to send ERC20 token to
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        amount:
+          description: Amount to be sent.
+          maxLength: 38
+          example: "100000"
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+          type: string
+        compliant:
+          description: Compliance check, if withdrawal is not compliant, it will not be processed.
+          example: false
+          type: boolean
+        currency:
+          description: ERC20 symbol. Required only for calls from Tatum Middleware.
+          example: MY_SYMBOL
+          maxLength: 30
+          minLength: 1
+          type: string
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: |
+            Identifier of the mnemonic / private key associated in signing application.
+            When hash identifies mnemonic, index must be present to represent specific account to pay from.
+            Private key, mnemonic or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        paymentId:
+          description: Identifier of the payment, shown for created Transaction within Tatum sender account.
+          example: "1234"
+          maxLength: 100
+          minLength: 1
+          type: string
+        senderNote:
+          maxLength: 500
+          minLength: 1
+          description: Note visible to owner of withdrawing account
+          example: "Sender note"
+          type: string
+      required:
+        - senderAccountId
+        - address
+        - amount
+        - signatureId
+    TransferEth:
+      type: object
+      properties:
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        address:
+          description: Blockchain address to send assets
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          maxLength: 42
+          minLength: 42
+          type: string
+        amount:
+          description: Amount to be sent in Ether.
+          maxLength: 38
+          example: "100000"
+          type: string
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+        currency:
+          description: Currency to transfer from Ethereum Blockchain Account. Required only for calls from Tatum Middleware.
+          enum:
+            - USDT
+            - LEO
+            - LINK
+            - UNI
+            - FREE
+            - MKR
+            - USDC
+            - BAT
+            - TUSD
+            - PAX
+            - PAXG
+            - PLTC
+            - MMY
+            - WBTC
+            - XCON
+            - ETH
+          example: ETH
+          type: string
+        compliant:
+          description: Compliance check, if withdrawal is not compliant, it will not be processed.
+          example: false
+          type: boolean
+        privateKey:
+          type: string
+          maxLength: 66
+          minLength: 66
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          description: Private key of sender address. Either mnemonic and index, privateKey or signature Id must be present - depends on the type of account and xpub.
+        paymentId:
+          description: Identifier of the payment, shown for created Transaction within Tatum sender account.
+          example: "1234"
+          maxLength: 100
+          minLength: 1
+          type: string
+        senderAccountId:
+          maxLength: 24
+          minLength: 24
+          description: Sender account ID
+          example: 5e68c66581f2ee32bc354087
+          type: string
+        senderNote:
+          maxLength: 500
+          minLength: 1
+          description: Note visible to owner of withdrawing account
+          example: "Sender note"
+          type: string
+      required:
+        - senderAccountId
+        - address
+        - amount
+        - privateKey
+    TransferEthMnemonic:
+      type: object
+      properties:
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        address:
+          description: Blockchain address to send assets
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          maxLength: 42
+          minLength: 42
+          type: string
+        amount:
+          description: Amount to be sent in Ether.
+          maxLength: 38
+          example: "100000"
+          type: string
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+        currency:
+          description: Currency to transfer from Ethereum Blockchain Account. Required only for calls from Tatum Middleware.
+          enum:
+            - USDT
+            - LEO
+            - LINK
+            - UNI
+            - FREE
+            - MKR
+            - USDC
+            - BAT
+            - TUSD
+            - PAX
+            - PAXG
+            - PLTC
+            - MMY
+            - WBTC
+            - XCON
+            - ETH
+          example: ETH
+          type: string
+        compliant:
+          description: Compliance check, if withdrawal is not compliant, it will not be processed.
+          example: false
+          type: boolean
+        index:
+          description: Derivation index of sender address.
+          maximum: 2147483647
+          example: 0
+          type: integer
+        mnemonic:
+          maxLength: 500
+          minLength: 1
+          description: Mnemonic to generate private key for sender address. Either mnemonic and index, privateKey or signature Id must be present - depends on the type of account and xpub.
+          example: "urge pulp usage sister evidence arrest palm math please chief egg abuse"
+          type: string
+        paymentId:
+          description: Identifier of the payment, shown for created Transaction within Tatum sender account.
+          example: "1234"
+          maxLength: 100
+          minLength: 1
+          type: string
+        senderAccountId:
+          maxLength: 24
+          minLength: 24
+          description: Sender account ID
+          example: 5e68c66581f2ee32bc354087
+          type: string
+        senderNote:
+          maxLength: 500
+          minLength: 1
+          description: Note visible to owner of withdrawing account
+          example: "Sender note"
+          type: string
+      required:
+        - senderAccountId
+        - address
+        - amount
+        - mnemonic
+        - index
+    TransferEthKMS:
+      type: object
+      properties:
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        address:
+          description: Blockchain address to send assets
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          maxLength: 42
+          minLength: 42
+          type: string
+        amount:
+          description: Amount to be sent in Ether.
+          maxLength: 38
+          example: "100000"
+          type: string
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+        currency:
+          description: Currency to transfer from Ethereum Blockchain Account. Required only for calls from Tatum Middleware.
+          enum:
+            - USDT
+            - LEO
+            - LINK
+            - UNI
+            - FREE
+            - MKR
+            - USDC
+            - BAT
+            - TUSD
+            - PAX
+            - PAXG
+            - PLTC
+            - MMY
+            - WBTC
+            - XCON
+            - ETH
+          example: ETH
+          type: string
+        compliant:
+          description: Compliance check, if withdrawal is not compliant, it will not be processed.
+          example: false
+          type: boolean
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: |
+            Identifier of the mnemonic / private key associated in signing application.
+            When hash identifies mnemonic, index must be present to represent specific account to pay from.
+            Private key, mnemonic or signature Id must be present.
+        paymentId:
+          description: Identifier of the payment, shown for created Transaction within Tatum sender account.
+          example: "1234"
+          maxLength: 100
+          minLength: 1
+          type: string
+        senderAccountId:
+          maxLength: 24
+          minLength: 24
+          description: Sender account ID
+          example: 5e68c66581f2ee32bc354087
+          type: string
+        senderNote:
+          maxLength: 500
+          minLength: 1
+          description: Note visible to owner of withdrawing account
+          example: "Sender note"
+          type: string
+      required:
+        - senderAccountId
+        - address
+        - signatureId
+        - amount
