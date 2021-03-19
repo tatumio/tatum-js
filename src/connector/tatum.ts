@@ -34,7 +34,7 @@ export const put = async <T extends object, U, V>(url: string, body?: U, classTy
 }
 
 export const httpDelete = async (url: string): Promise<void> => {
-  await axios.delete(url, headers())
+  await axios.delete(`${baseUrl()}${url}`, headers())
 }
 
 export const validateBody = async <T extends object, U>(body: U, classType?: ClassType<T>): Promise<void> => {
