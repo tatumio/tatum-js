@@ -20,6 +20,7 @@ export * from './TransferErc721';
 export * from './DeployCeloErc20';
 export * from './BurnCeloErc20';
 export * from './MintCeloErc20';
+export * from './TransferBscBep20';
 export * from './TransferCeloOrCeloErc20Token';
 export * from './TransferTrxOffchain';
 export * from './TransferTron';

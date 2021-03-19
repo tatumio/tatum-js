@@ -1,0 +1,656 @@
+import axios from 'axios';
+import {BigNumber} from 'bignumber.js';
+import Web3 from 'web3';
+import {TransactionConfig} from 'web3-core';
+import {bscBroadcast, bscGetTransactionsCount} from '../blockchain';
+import {validateBody} from '../connector/tatum';
+import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
+import erc20TokenABI from '../contracts/erc20/token_abi';
+import erc20TokenBytecode from '../contracts/erc20/token_bytecode';
+import erc721TokenABI from '../contracts/erc721/erc721_abi';
+import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
+import {
+    CreateRecord,
+    Currency,
+    DeployEthErc20,
+    EthBurnErc721,
+    EthDeployErc721,
+    EthMintErc721,
+    EthMintMultipleErc721,
+    EthTransferErc721,
+    SmartContractMethodInvocation,
+    TransactionKMS,
+    TransferBscBep20,
+    TransferCustomErc20,
+} from '../model';
+
+/**
+ * Estimate Gas price for the transaction.
+ */
+export const bscGetGasPriceInWei = async () => {
+    const {data} = await axios.post('https://graphql.bitquery.io', {
+        'query': 'query ($network: BSCNetwork!, $dateFormat: String!, $from: ISO8601DateTime, $till: ISO8601DateTime) {\n  ethereum(network: $network) {\n    transactions(options: {asc: "date.date"}, date: {since: $from, till: $till}) {\n      date: date {\n        date(format: $dateFormat)\n      }\n      gasPrice\n      gasValue\n      average: gasValue(calculate: average)\n      maxGasPrice: gasPrice(calculate: maximum)\n      medianGasPrice: gasPrice(calculate: median)\n    }\n  }\n}\n',
+        'variables': {
+            'limit': 10,
+            'offset': 0,
+            'network': 'bsc',
+            'from': new Date().toISOString(),
+            'till': null,
+            'dateFormat': '%Y-%m-%d'
+        }
+    });
+    return Web3.utils.toWei(new BigNumber(data.ethereum.transactions[0].gasPrice).dividedBy(10).toString(), 'gwei');
+};
+
+/**
+ * Returns BSC server to connect to.
+ *
+ * @param provider url of the BSC Server to connect to. If not set, default public server will be used.
+ */
+export const getBscClient = (provider?: string) => new Web3(provider || `${TATUM_API_URL}/v3/bsc/web3/${process.env.TATUM_API_KEY}`);
+
+/**
+ * Sign BSC pending transaction from Tatum KMS
+ * @param tx pending transaction from KMS
+ * @param fromPrivateKey private key to sign transaction with.
+ * @param provider url of the BSC Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const signBscKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, provider?: string) => {
+    if (tx.chain !== Currency.BSC) {
+        throw Error('Unsupported chain.');
+    }
+    const client = getBscClient(provider);
+    client.eth.accounts.wallet.clear();
+    client.eth.accounts.wallet.add(fromPrivateKey);
+    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+    const transactionConfig = JSON.parse(tx.serializedTransaction);
+    transactionConfig.gas = await client.eth.estimateGas(transactionConfig);
+    return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey)).rawTransaction as string;
+};
+
+/**
+ * Sign Bsc Store data transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareBscStoreDataTransaction = async (body: CreateRecord, provider?: string) => {
+    await validateBody(body, CreateRecord);
+    const {
+        fromPrivateKey,
+        to,
+        ethFee,
+        data,
+        nonce,
+        signatureId
+    } = body;
+    const client = getBscClient(provider);
+    client.eth.accounts.wallet.clear();
+    client.eth.accounts.wallet.add(fromPrivateKey as string);
+    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+    const address = to || client.eth.defaultAccount;
+    const addressNonce = nonce ? nonce : await bscGetTransactionsCount(address);
+    const customFee = ethFee ? ethFee : {
+        gasLimit: `${data.length * 68 + 21000}`,
+        gasPrice: client.utils.fromWei(await bscGetGasPriceInWei(), 'gwei'),
+    };
+
+    const tx: TransactionConfig = {
+        from: 0,
+        to: address.trim(),
+        value: '0',
+        gasPrice: customFee.gasPrice,
+        gas: customFee.gasLimit,
+        data: data ? (client.utils.isHex(data) ? client.utils.stringToHex(data) : client.utils.toHex(data)) : undefined,
+        nonce: addressNonce,
+    };
+
+    if (signatureId) {
+        return JSON.stringify(tx);
+    }
+
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+};
+
+/**
+ * Sign Bsc or supported BEP20 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareBscOrBep20SignedTransaction = async (body: TransferBscBep20, provider?: string) => {
+    await validateBody(body, TransferBscBep20);
+    const {
+        fromPrivateKey,
+        to,
+        amount,
+        currency,
+        fee,
+        data,
+        nonce,
+        signatureId
+    } = body;
+
+    const client = getBscClient(provider);
+    client.eth.accounts.wallet.clear();
+    client.eth.accounts.wallet.add(fromPrivateKey);
+    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+
+    let tx: TransactionConfig;
+    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await bscGetGasPriceInWei();
+    if (currency === Currency.ETH) {
+        tx = {
+            from: 0,
+            to: to.trim(),
+            value: client.utils.toWei(`${amount}`, 'ether'),
+            gasPrice,
+            data: data ? (client.utils.isHex(data) ? client.utils.stringToHex(data) : client.utils.toHex(data)) : undefined,
+            nonce,
+        };
+    } else {
+        // @ts-ignore
+        const contract = new client.eth.Contract([TRANSFER_METHOD_ABI], CONTRACT_ADDRESSES[currency]);
+        const digits = new BigNumber(10).pow(CONTRACT_DECIMALS[currency]);
+        tx = {
+            from: 0,
+            to: CONTRACT_ADDRESSES[currency],
+            data: contract.methods.transfer(to.trim(), `0x${new BigNumber(amount).multipliedBy(digits).toString(16)}`).encodeABI(),
+            gasPrice,
+            nonce,
+        };
+    }
+
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
+    if (signatureId) {
+        return JSON.stringify(tx);
+    }
+
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+};
+
+/**
+ * Sign Bsc custom BEP20 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareCustomBep20SignedTransaction = async (body: TransferCustomErc20, provider?: string) => {
+    await validateBody(body, TransferCustomErc20);
+    const {
+        fromPrivateKey,
+        to,
+        amount,
+        contractAddress,
+        digits,
+        fee,
+        nonce,
+        signatureId
+    } = body;
+
+    const client = getBscClient(provider);
+    client.eth.accounts.wallet.clear();
+    client.eth.accounts.wallet.add(fromPrivateKey);
+    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+
+    let tx: TransactionConfig;
+    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await bscGetGasPriceInWei();
+    // @ts-ignore
+    const contract = new client.eth.Contract([TRANSFER_METHOD_ABI], contractAddress);
+    const decimals = new BigNumber(10).pow(digits);
+    tx = {
+        from: 0,
+        to: contractAddress,
+        data: contract.methods.transfer(to.trim(), `0x${new BigNumber(amount).multipliedBy(decimals).toString(16)}`).encodeABI(),
+        gasPrice,
+        nonce,
+    };
+
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
+
+    if (signatureId) {
+        return JSON.stringify(tx);
+    }
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+};
+
+/**
+ * Sign Bsc deploy BEP20 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareDeployBep20SignedTransaction = async (body: DeployEthErc20, provider?: string) => {
+    await validateBody(body, DeployEthErc20);
+    const {
+        name,
+        address,
+        symbol,
+        supply,
+        digits,
+        fromPrivateKey,
+        nonce,
+        fee,
+        signatureId,
+    } = body;
+
+    const client = getBscClient(provider);
+    client.eth.accounts.wallet.clear();
+    client.eth.accounts.wallet.add(fromPrivateKey);
+    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+
+    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await bscGetGasPriceInWei();
+    // @ts-ignore
+    const contract = new client.eth.Contract(erc20TokenABI);
+    const deploy = contract.deploy({
+        data: erc20TokenBytecode,
+        arguments: [
+            name,
+            symbol,
+            address,
+            digits,
+            `0x${new BigNumber(supply).multipliedBy(new BigNumber(10).pow(digits)).toString(16)}`,
+            `0x${new BigNumber(supply).multipliedBy(new BigNumber(10).pow(digits)).toString(16)}`,
+        ],
+    });
+    const tx: TransactionConfig = {
+        from: 0,
+        data: deploy.encodeABI(),
+        gasPrice,
+        nonce,
+    };
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
+
+    if (signatureId) {
+        return JSON.stringify(tx);
+    }
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+};
+
+/**
+ * Sign Bsc invoke smart contract transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareBscSmartContractWriteMethodInvocation = async (body: SmartContractMethodInvocation, provider?: string) => {
+    await validateBody(body, SmartContractMethodInvocation);
+    const {
+        fromPrivateKey,
+        fee,
+        params,
+        methodName,
+        methodABI,
+        contractAddress,
+        nonce,
+        signatureId,
+    } = body;
+    const client = getBscClient(provider);
+
+    client.eth.accounts.wallet.clear();
+    client.eth.accounts.wallet.add(fromPrivateKey);
+    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+
+    const contract = new client.eth.Contract([methodABI]);
+    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await bscGetGasPriceInWei();
+
+    const tx: TransactionConfig = {
+        from: 0,
+        to: contractAddress.trim(),
+        data: contract.methods[methodName as string](...params).encodeABI(),
+        gasPrice,
+        nonce,
+    };
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
+
+    if (signatureId) {
+        return JSON.stringify(tx);
+    }
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+};
+
+/**
+ * Sign Bsc mint ERC 721 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareBscMintBep721SignedTransaction = async (body: EthMintErc721, provider?: string) => {
+    await validateBody(body, EthMintErc721);
+    const {
+        fromPrivateKey,
+        to,
+        tokenId,
+        contractAddress,
+        nonce,
+        fee,
+        url,
+        signatureId
+    } = body;
+
+    const client = getBscClient(provider);
+    client.eth.accounts.wallet.clear();
+    client.eth.accounts.wallet.add(fromPrivateKey);
+    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+
+    // @ts-ignore
+    const contract = new (client).eth.Contract(erc721TokenABI, contractAddress);
+    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await bscGetGasPriceInWei();
+    const tx: TransactionConfig = {
+        from: 0,
+        to: contractAddress.trim(),
+        data: contract.methods.mintWithTokenURI(to.trim(), tokenId, url).encodeABI(),
+        gasPrice,
+        nonce,
+    };
+
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
+
+    if (signatureId) {
+        return JSON.stringify(tx);
+    }
+
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+};
+
+/**
+ * Sign Bsc mint multiple ERC 721 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareBscMintMultipleBep721SignedTransaction = async (body: EthMintMultipleErc721, provider?: string) => {
+    await validateBody(body, EthMintMultipleErc721);
+    const {
+        fromPrivateKey,
+        to,
+        tokenId,
+        contractAddress,
+        url,
+        nonce,
+        signatureId,
+        fee
+    } = body;
+
+    const client = await getBscClient(provider);
+    client.eth.accounts.wallet.clear();
+    client.eth.accounts.wallet.add(fromPrivateKey);
+    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+
+    // @ts-ignore
+    const contract = new (client).eth.Contract(erc721TokenABI, contractAddress);
+
+    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await bscGetGasPriceInWei();
+    const tx: TransactionConfig = {
+        from: 0,
+        to: contractAddress.trim(),
+        data: contract.methods.mintMultiple(to.map(t => t.trim()), tokenId, url).encodeABI(),
+        gasPrice,
+        nonce,
+    };
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
+
+    if (signatureId) {
+        return JSON.stringify(tx);
+    }
+
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+};
+
+/**
+ * Sign Bsc burn ERC 721 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareBscBurnBep721SignedTransaction = async (body: EthBurnErc721, provider?: string) => {
+    await validateBody(body, EthBurnErc721);
+    const {
+        fromPrivateKey,
+        tokenId,
+        fee,
+        contractAddress,
+        nonce,
+        signatureId
+    } = body;
+
+    const client = getBscClient(provider);
+    client.eth.accounts.wallet.clear();
+    client.eth.accounts.wallet.add(fromPrivateKey);
+    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+
+    // @ts-ignore
+    const contract = new (client).eth.Contract(erc721TokenABI, contractAddress);
+    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await bscGetGasPriceInWei();
+    const tx: TransactionConfig = {
+        from: 0,
+        to: contractAddress.trim(),
+        data: contract.methods.burn(tokenId).encodeABI(),
+        gasPrice,
+        nonce,
+    };
+
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
+
+    if (signatureId) {
+        return JSON.stringify(tx);
+    }
+
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+};
+
+/**
+ * Sign Bsc transfer ERC 721 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareBscTransferBep721SignedTransaction = async (body: EthTransferErc721, provider?: string) => {
+    await validateBody(body, EthTransferErc721);
+    const {
+        fromPrivateKey,
+        to,
+        tokenId,
+        fee,
+        contractAddress,
+        nonce,
+        signatureId,
+    } = body;
+
+    const client = await getBscClient(provider);
+    client.eth.accounts.wallet.clear();
+    client.eth.accounts.wallet.add(fromPrivateKey);
+    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+
+    // @ts-ignore
+    const contract = new (client).eth.Contract(erc721TokenABI, contractAddress);
+    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await bscGetGasPriceInWei();
+
+    const tx: TransactionConfig = {
+        from: 0,
+        to: contractAddress.trim(),
+        data: contract.methods.safeTransfer(to.trim(), tokenId).encodeABI(),
+        gasPrice,
+        nonce,
+    };
+
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
+
+    if (signatureId) {
+        return JSON.stringify(tx);
+    }
+
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+};
+
+/**
+ * Sign Bsc deploy ERC 721 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareBscDeployBep721SignedTransaction = async (body: EthDeployErc721, provider?: string) => {
+    await validateBody(body, EthDeployErc721);
+    const {
+        fromPrivateKey,
+        fee,
+        name,
+        symbol,
+        nonce,
+        signatureId,
+    } = body;
+
+    const client = await getBscClient(provider);
+    client.eth.accounts.wallet.clear();
+    client.eth.accounts.wallet.add(fromPrivateKey);
+    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+
+
+    // @ts-ignore
+    const contract = new client.eth.Contract(erc721TokenABI, null, {
+        data: erc721TokenBytecode,
+    });
+
+    // @ts-ignore
+    const deploy = contract.deploy({
+        arguments: [name, symbol]
+    });
+
+    const tx: TransactionConfig = {
+        from: 0,
+        data: deploy.encodeABI(),
+        gasPrice: fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await bscGetGasPriceInWei(),
+        nonce,
+        gas: fee ? fee.gasLimit : 4500000
+    };
+
+    if (signatureId) {
+        return JSON.stringify(tx);
+    }
+
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+};
+
+/**
+ * Send Bsc invoke smart contract transaction to the blockchain.
+ * Invoked method only reads from blockchain the data and returns them back.
+ *
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ */
+export const sendBscSmartContractReadMethodInvocationTransaction = async (body: SmartContractMethodInvocation, provider?: string) => {
+    await validateBody(body, SmartContractMethodInvocation);
+    const {
+        params,
+        methodName,
+        methodABI,
+        contractAddress,
+    } = body;
+    const client = getBscClient(provider);
+    const contract = new client.eth.Contract([methodABI], contractAddress);
+    return {data: await contract.methods[methodName as string](...params).call()};
+};
+
+/**
+ * Send Bsc store data transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
+export const sendBscStoreDataTransaction = async (body: CreateRecord, provider?: string) =>
+    bscBroadcast(await prepareBscStoreDataTransaction(body, provider), body.signatureId);
+
+/**
+ * Send Bsc or supported BEP20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
+export const sendBscOrBep20Transaction = async (body: TransferBscBep20, provider?: string) =>
+    bscBroadcast(await prepareBscOrBep20SignedTransaction(body, provider), body.signatureId);
+
+/**
+ * Send Bsc custom BEP20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
+export const sendCustomBep20Transaction = async (body: TransferCustomErc20, provider?: string) =>
+    bscBroadcast(await prepareCustomBep20SignedTransaction(body, provider), body.signatureId);
+
+/**
+ * Send Bsc deploy BEP20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
+export const sendDeployBep20Transaction = async (body: DeployEthErc20, provider?: string) =>
+    bscBroadcast(await prepareDeployBep20SignedTransaction(body, provider), body.signatureId);
+
+/**
+ * Send Bsc invoke smart contract transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
+export const sendBscSmartContractMethodInvocationTransaction = async (body: SmartContractMethodInvocation, provider?: string) => {
+    if (body.methodABI.stateMutability === 'view') {
+        return sendBscSmartContractReadMethodInvocationTransaction(body, provider);
+    }
+    return bscBroadcast(await prepareBscSmartContractWriteMethodInvocation(body, provider), body.signatureId);
+};
+
+/**
+ * Send Bsc BEP721 mint transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
+export const sendMintBep721Transaction = async (body: EthMintErc721, provider?: string) =>
+    bscBroadcast(await prepareBscMintBep721SignedTransaction(body, provider), body.signatureId);
+
+/**
+ * Send Bsc BEP721 mint multiple transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
+export const sendMintMultipleBep721Transaction = async (body: EthMintMultipleErc721, provider?: string) =>
+    bscBroadcast(await prepareBscMintMultipleBep721SignedTransaction(body, provider), body.signatureId);
+
+/**
+ * Send Bsc BEP721 burn transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
+export const sendBurnBep721Transaction = async (body: EthBurnErc721, provider?: string) =>
+    bscBroadcast(await prepareBscBurnBep721SignedTransaction(body, provider), body.signatureId);
+
+/**
+ * Send Bsc BEP721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
+export const sendBep721Transaction = async (body: EthTransferErc721, provider?: string) =>
+    bscBroadcast(await prepareBscTransferBep721SignedTransaction(body, provider), body.signatureId);
+
+/**
+ * Send Bsc BEP721 deploy to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
+export const sendDeployBep721Transaction = async (body: EthDeployErc721, provider?: string) =>
+    bscBroadcast(await prepareBscDeployBep721SignedTransaction(body, provider), body.signatureId);

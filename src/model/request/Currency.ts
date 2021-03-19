@@ -12,6 +12,15 @@ export enum Currency {
     VET = 'VET',
     NEO = 'NEO',
     BNB = 'BNB',
+    BSC = 'BSC',
+    BETH = 'BETH',
+    BBTC = 'BBTC',
+    BADA = 'BADA',
+    WBNB = 'WBNB',
+    BDOT = 'BDOT',
+    BXRP = 'BXRP',
+    BLTC = 'BLTC',
+    BBCH = 'BBCH',
     USDT = 'USDT',
     USDT_TRON = 'USDT_TRON',
     TRON = 'TRON',
@@ -33,24 +42,40 @@ export enum Currency {
 }
 
 export const ERC20_CURRENCIES = [
-  Currency.USDT.toString(),
-  Currency.LEO.toString(),
-  Currency.LINK.toString(),
-  Currency.UNI.toString(),
-  Currency.FREE.toString(),
-  Currency.MKR.toString(),
-  Currency.USDC.toString(),
-  Currency.BAT.toString(),
-  Currency.WBTC.toString(),
-  Currency.TUSD.toString(),
-  Currency.PAX.toString(),
-  Currency.PAXG.toString(),
-  Currency.PLTC.toString(),
-  Currency.XCON.toString(),
-  Currency.MMY.toString(),
+    Currency.USDT.toString(),
+    Currency.LEO.toString(),
+    Currency.LINK.toString(),
+    Currency.UNI.toString(),
+    Currency.FREE.toString(),
+    Currency.MKR.toString(),
+    Currency.USDC.toString(),
+    Currency.BAT.toString(),
+    Currency.WBTC.toString(),
+    Currency.TUSD.toString(),
+    Currency.PAX.toString(),
+    Currency.PAXG.toString(),
+    Currency.PLTC.toString(),
+    Currency.XCON.toString(),
+    Currency.MMY.toString(),
 ]
 
+export const BEP20_CURRENCIES = [
+    Currency.BETH.toString(),
+    Currency.BBTC.toString(),
+    Currency.BADA.toString(),
+    Currency.WBNB.toString(),
+    Currency.BDOT.toString(),
+    Currency.BXRP.toString(),
+    Currency.BLTC.toString(),
+    Currency.BBCH.toString(),
+];
+
 export const ETH_BASED_CURRENCIES = [
-  Currency.ETH.toString(),
-  ...ERC20_CURRENCIES,
+    Currency.ETH.toString(),
+    ...ERC20_CURRENCIES,
+];
+
+export const BSC_BASED_CURRENCIES = [
+    Currency.BSC.toString(),
+    ...BEP20_CURRENCIES,
 ];

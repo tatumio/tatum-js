@@ -87,6 +87,16 @@ export const generateEthWallet = async (testnet: boolean, mnem: string): Promise
 };
 
 /**
+ * Generate BSC or any other BEP-20 or BEP-721 wallet
+ * @param testnet testnet or mainnet version of address
+ * @param mnem mnemonic seed to use
+ * @returns wallet
+ */
+export const generateBscWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
+    return generateEthWallet(testnet, mnem);
+};
+
+/**
  * Generate Celo or any other ERC20 wallet
  * @param testnet testnet or mainnet version of address
  * @param mnem mnemonic seed to use
@@ -233,6 +243,15 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
         case Currency.PLTC:
         case Currency.XCON:
         case Currency.ETH:
+        case Currency.BSC:
+        case Currency.BETH:
+        case Currency.BBTC:
+        case Currency.BADA:
+        case Currency.WBNB:
+        case Currency.BDOT:
+        case Currency.BXRP:
+        case Currency.BLTC:
+        case Currency.BBCH:
         case Currency.MMY:
             return generateEthWallet(testnet, mnem);
         case Currency.XRP:

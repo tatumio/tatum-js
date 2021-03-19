@@ -85,6 +85,14 @@ export const CONTRACT_ADDRESSES = {
     [Currency.MMY.toString()]: '0x385ddf50c3de724f6b8ecb41745c29f9dd3c6d75',
     [Currency.XCON.toString()]: '0x0f237d5ea7876e0e2906034d98fdb20d43666ad4',
     [Currency.USDT_TRON.toString()]: 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t',
+    [Currency.BETH.toString()]: '0x2170ed0880ac9a755fd29b2688956bd959f933f8',
+    [Currency.BBTC.toString()]: '0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c',
+    [Currency.BADA.toString()]: '0x3ee2200efb3400fabb9aacf31297cbdd1d435d47',
+    [Currency.WBNB.toString()]: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
+    [Currency.BDOT.toString()]: '0x7083609fce4d1d8dc0c979aab8c869ea2c873402',
+    [Currency.BXRP.toString()]: '0x1d2f0da169ceb9fc7b3144628db156f3f6c60dbe',
+    [Currency.BLTC.toString()]: '0x4338665cbb7b2485a8855a139b75d5e34ab0db94',
+    [Currency.BBCH.toString()]: '0x8ff795a6f4d97e7887c79bea79aba5cc76444adf',
 };
 
 export const CONTRACT_DECIMALS = {
@@ -104,6 +112,14 @@ export const CONTRACT_DECIMALS = {
     [Currency.PLTC.toString()]: 18,
     [Currency.MMY.toString()]: 18,
     [Currency.XCON.toString()]: 18,
+    [Currency.BETH.toString()]: 18,
+    [Currency.BBTC.toString()]: 18,
+    [Currency.BADA.toString()]: 18,
+    [Currency.WBNB.toString()]: 18,
+    [Currency.BDOT.toString()]: 18,
+    [Currency.BXRP.toString()]: 18,
+    [Currency.BLTC.toString()]: 18,
+    [Currency.BBCH.toString()]: 18,
 };
 
 export const TRANSFER_METHOD_ABI = {

@@ -88,6 +88,17 @@ const generateEthAddress = (testnet: boolean, xpub: string, i: number) => {
 };
 
 /**
+ * Generate BSC or any other BEP-20 / BEP-721 address
+ * @param testnet testnet or mainnet version of address
+ * @param xpub extended public key to generate address from
+ * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
+ * @returns blockchain address
+ */
+const generateBscAddress = (testnet: boolean, xpub: string, i: number) => {
+    return generateEthAddress(testnet, xpub, i);
+};
+
+/**
  * Generate Celo or any other ERC20 address
  * @param testnet testnet or mainnet version of address
  * @param xpub extended public key to generate address from
@@ -198,6 +209,16 @@ const generateEthPrivateKey = async (testnet: boolean, mnemonic: string, i: numb
     return derivePath.getWallet().getPrivateKeyString();
 };
 
+/**
+ * Generate BSC or any other BEP-20 or BEP721 private key from mnemonic seed
+ * @param testnet testnet or mainnet version of address
+ * @param mnemonic mnemonic to generate private key from
+ * @param i derivation index of private key to generate.
+ * @returns blockchain private key to the address
+ */
+const generateBscPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
+    return generateEthPrivateKey(testnet, mnemonic, i);
+};
 
 /**
  * Generate Celo or any other ERC20 private key from mnemonic seed
@@ -313,6 +334,15 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
         case Currency.PLTC:
         case Currency.XCON:
         case Currency.ETH:
+        case Currency.BSC:
+        case Currency.BETH:
+        case Currency.BBTC:
+        case Currency.BADA:
+        case Currency.WBNB:
+        case Currency.BDOT:
+        case Currency.BXRP:
+        case Currency.BLTC:
+        case Currency.BBCH:
         case Currency.MMY:
             return generateEthAddress(testnet, xpub, i);
         case Currency.VET:
@@ -360,6 +390,15 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
         case Currency.PLTC:
         case Currency.XCON:
         case Currency.ETH:
+        case Currency.BSC:
+        case Currency.BETH:
+        case Currency.BBTC:
+        case Currency.BADA:
+        case Currency.WBNB:
+        case Currency.BDOT:
+        case Currency.BXRP:
+        case Currency.BLTC:
+        case Currency.BBCH:
         case Currency.MMY:
             return generateEthPrivateKey(testnet, mnemonic, i);
         case Currency.VET:
@@ -385,6 +424,22 @@ export const generateAddressFromPrivatekey = (currency: Currency, testnet: boole
         case Currency.LYRA:
             return convertLyraPrivateKey(testnet, privateKey);
         case Currency.ETH:
+        case Currency.USDT:
+        case Currency.WBTC:
+        case Currency.LEO:
+        case Currency.LINK:
+        case Currency.UNI:
+        case Currency.FREE:
+        case Currency.MKR:
+        case Currency.USDC:
+        case Currency.BAT:
+        case Currency.TUSD:
+        case Currency.PAX:
+        case Currency.PAXG:
+        case Currency.PLTC:
+        case Currency.XCON:
+        case Currency.BSC:
+        case Currency.MMY:
             return convertEthPrivateKey(testnet, privateKey);
         default:
             throw new Error('Unsupported blockchain.');

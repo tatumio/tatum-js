@@ -3,6 +3,7 @@ export * from './litecoin';
 export * from './bcash';
 export * from './vet';
 export * from './celo';
+export * from './bsc';
 export * from './eth';
 export * from './quorum';
 export * from './xrp';

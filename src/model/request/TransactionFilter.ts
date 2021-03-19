@@ -1,6 +1,27 @@
-import {IsIn, IsNumber, IsOptional, IsString, Length, Min} from 'class-validator';
-import {OperationType} from '../response/ledger/OperationType';
-import {TransactionType} from '../response/ledger/TransactionType';
+import {Type} from 'class-transformer';
+import {
+    IsArray,
+    IsIn,
+    IsNotEmpty,
+    IsNumber,
+    IsNumberString,
+    IsOptional,
+    IsString,
+    Length,
+    Min,
+    ValidateNested,
+} from 'class-validator';
+import {OperationType, TransactionType} from '../response';
+
+class AmountFilter {
+    @IsNotEmpty()
+    @IsIn(['lt', 'gt', 'gte', 'lte', 'eq', 'neq'])
+    public op: string;
+
+    @IsNotEmpty()
+    @IsNumberString()
+    public value: string;
+}
 
 export class TransactionFilter {
 
@@ -13,6 +34,12 @@ export class TransactionFilter {
     @IsNumber()
     @IsOptional()
     public from?: number;
+
+    @IsOptional()
+    @IsArray()
+    @ValidateNested()
+    @Type(() => AmountFilter)
+    public amount?: AmountFilter[];
 
     @Min(0)
     @IsNumber()
@@ -33,6 +60,15 @@ export class TransactionFilter {
     @IsString()
     @IsOptional()
     public currency?: string;
+
+    @IsOptional()
+    @IsArray()
+    public currencies?: string[];
+
+    @IsOptional()
+    @IsArray()
+    @IsIn(Object.values(TransactionType), {each: true})
+    public transactionTypes?: TransactionType[];
 
     @Length(1, 100)
     @IsString()
