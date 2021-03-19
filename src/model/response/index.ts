@@ -7,6 +7,8 @@ export * from './btc/BtcTx';
 export * from './btc/BtcUTXO';
 export * from './quorum';
 export * from './common/BlockHash';
+export * from './common/Rate';
+export * from './common/SignatureId';
 export * from './common/TransactionHash';
 export * from './common/TxHash';
 export * from './kms/TransactionKMS';
