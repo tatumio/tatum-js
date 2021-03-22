@@ -1,0 +1,1545 @@
+openapi: 3.0.0
+servers:
+  - url: 'https://api-eu1.tatum.io'
+info:
+  version: 1.0.0
+  title: Tatum Binance Smart Chain API
+tags:
+  - description: |
+      <p>BSC Blockchain enables access to most commonly used BSC methods. These methods bring small level of abstraction,
+      and are used for the type of applications that want to communicate with blockchain directly. Some of the methods are used alongside Tatum Private Ledger
+      to connect blockchain and private ledger together, like wallet generation or getting information about transactions.<br/>
+      Tatum supports 2 chains:
+      <ul><li>Mainnet - regular live chain
+      <li>Testnet - test chain used for testing purposes. Coins on test chain have no value and can be obtained from
+      Faucet, e.g. <a target="_blank" href="https://testnet.binance.org/faucet-smart">https://testnet.binance.org/faucet-smart</a></li></ul><br/>
+      Tatum supports BIP44 HD wallets. It is very convenient and secure, since it can generate 2^31 addresses from 1 mnemonic phrase. It is possible to generate this type of wallet with 1 simple API call.</p>
+    name: Blockchain / BSC
+paths:
+  /v3/bsc/wallet:
+    get:
+      description: |
+        <h4>1 credit per API call.</h4><br/><p>Tatum supports BIP44 HD wallets. It is very convenient and secure, since it can generate 2^31 addresses from 1 mnemonic phrase. Mnemonic phrase consists of 24 special words in defined order and can restore access to all generated addresses and private keys.<br/>Each address is identified by 3 main values:<ul><li>Private Key - your secret value, which should never be revealed</li><li>Public Key - public address to be published</li><li>Derivation index - index of generated address</li></ul></p><p>Tatum follows BIP44 specification and generates for BSC wallet with derivation path m'/44'/60'/0'/0. More about BIP44 HD wallets can be found here - <a target="_blank" href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki">https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki</a>.
+        Generate BIP44 compatible BSC wallet.</p>
+      operationId: BscGenerateWallet
+      parameters:
+        - description: "Mnemonic to use for generation of extended public and private keys."
+          in: query
+          name: mnemonic
+          required: false
+          schema:
+            type: string
+            maxLength: 500
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Wallet"
+          description: OK
+        400: &API400
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error400"
+          description: Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.
+        401: &API401
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error401NotActive"
+                  - $ref: "#/components/schemas/Error401Invalid"
+          description: Unauthorized. Not valid or inactive subscription key present in the HTTP Header.
+        500: &API500
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error500"
+          description: Internal server error. There was an error on the server during the processing of the request.
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Generate BSC wallet
+      tags:
+        - Blockchain / BSC
+  /v3/bsc/address/{xpub}/{index}:
+    get:
+      description: |
+        <h4>1 credit per API call.</h4><br/>
+        <p>Generate BSC account deposit address from Extended public key. Deposit address is generated for the specific index - each extended public key can generate
+        up to 2^31 addresses starting from index 0 until 2^31.</p>
+      operationId: BscGenerateAddress
+      parameters:
+        - description: "Extended public key of wallet."
+          in: path
+          name: xpub
+          required: true
+          schema:
+            type: string
+            example: xpub6EsCk1uU6cJzqvP9CdsTiJwT2rF748YkPnhv5Qo8q44DG7nn2vbyt48YRsNSUYS44jFCW9gwvD9kLQu9AuqXpTpM1c5hgg9PsuBLdeNncid
+        - description: "Derivation index of desired address to be generated."
+          in: path
+          name: index
+          required: true
+          schema:
+            type: number
+            example: 0
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  address:
+                    type: string
+                    description: BSC addres
+                    example: "0xa7673161CbfE0116A4De9E341f8465940c2211d4"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Generate BSC account address from Extended public key
+      tags:
+        - Blockchain / BSC
+  /v3/bsc/wallet/priv:
+    post:
+      description: |
+        <h4>1 credit per API call.</h4><br/>
+        <p>Generate private key of address from mnemonic for given derivation path index. Private key is generated for the specific index - each mnemonic
+        can generate up to 2^31 private keys starting from index 0 until 2^31.</p>
+      operationId: BscGenerateAddressPrivateKey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PrivKeyRequest"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PrivKey"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Generate BSC private key
+      tags:
+        - Blockchain / BSC
+  /v3/bsc/web3/{xApiKey}:
+    post:
+      description: |
+        <h4>2 credits per API call.</h4><br/>
+        <p>Use this endpoint URL as a http-based web3 driver to connect directly to the BSC node provided by Tatum.
+        To learn more about BSC Web3, please visit <a href="https://bsc.org/en/developers/" target="_blank">BSC developer's guide.</a></p>
+      operationId: BscWeb3Driver
+      parameters:
+        - description: "Tatum X-API-Key used for authorization."
+          in: path
+          name: xApiKey
+          required: true
+          schema:
+            type: string
+            example: asdlkfjnqunalkwjfnq2oi303294857k
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Any valid Web3 method content body.
+              example: { "jsonrpc": "2.0","method": "web3_clientVersion","params": [ ],"id": 2 }
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Any valid Web3 response.
+                example: { "jsonrpc": "2.0","id": 2,"result": "Geth/v1.9.9-omnibus-e320ae4c-20191206/linux-amd64/go1.13.4" }
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        500:
+          <<: *API500
+      x-code-samples:
+      summary: Web3 HTTP driver
+      tags:
+        - Blockchain / BSC
+  /v3/bsc/block/current:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get BSC current block number. This is the number of the latest block in the blockchain.</p>"
+      operationId: BscGetCurrentBlock
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: number
+                description: Current block number
+                example: 6491272
+          description: OK
+        401:
+          <<: *API401
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get current block number
+      tags:
+        - Blockchain / BSC
+  /v3/bsc/block/{hash}:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get BSC block by block hash or block number.</p>"
+      operationId: BscGetBlock
+      parameters:
+        - description: "Block hash or block number"
+          in: path
+          name: hash
+          required: true
+          schema:
+            type: string
+            example: 6470657
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/<EthBlock>"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get BSC block by hash
+      tags:
+        - Blockchain / BSC
+  /v3/bsc/account/balance/{address}:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get BSC account balance in BNB. This method does not prints any balance of the BEP20 or BEP721 tokens on the account.</p>"
+      operationId: BscGetBalance
+      parameters:
+        - description: "Account address"
+          in: path
+          name: address
+          required: true
+          schema:
+            type: string
+            example: "0x3223AEB8404C7525FcAA6C512f91e287AE9FfE7B"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  balance:
+                    type: string
+                    description: Balance in BNB
+                    example: "10.52"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get BSC Account balance
+      tags:
+        - Blockchain / BSC
+  /v3/bsc/account/balance/bep20/{address}:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get BSC BEP20 Account balance in the smallest BEP20 unit. Result value is balance * 10^decimals. It is possible to obtain the balance of any BEP20 token, either supported by Tatum natively or via the address of the BEP20 token.</p>"
+      operationId: BscErc20GetBalance
+      parameters:
+        - description: "Account address"
+          in: path
+          name: address
+          required: true
+          schema:
+            type: string
+            example: "0x3223AEB8404C7525FcAA6C512f91e287AE9FfE7B"
+        - description: Tatum supported BEP20 currency. Either currency, or contractAddress must be present.
+          in: query
+          name: currency
+          schema:
+            type: string
+            example: BETH
+            enum:
+              - BETH
+              - BBTC
+              - BADA
+              - WBNB
+              - BDOT
+              - BXRP
+              - BLTC
+              - BBCH
+        - description: BEP20 contract address to get balance of. Either contractAddress, or currency must be present.
+          in: query
+          name: contractAddress
+          schema:
+            type: string
+            maxLength: 42
+            minLength: 42
+            example: "0xdac17f958d2ee523a2206206994597c13d831ec7"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                properties:
+                  balance:
+                    type: string
+                    description: Balance in BEP20 smallest unit
+                    example: "1000000"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get BSC BEP20 Account balance
+      tags:
+        - Blockchain / BSC
+  /v3/bsc/transaction/{hash}:
+    get:
+      description: "<h4>1 credit per API call.</h4><br/><p>Get BSC transaction by transaction hash.</p>"
+      operationId: BscGetTransaction
+      parameters:
+        - description: "Transaction hash"
+          in: path
+          name: hash
+          required: true
+          schema:
+            type: string
+            example: "0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BscTx"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403TxNotFound"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get BSC Transaction
+      tags:
+        - Blockchain / BSC
+  /v3/bsc/transaction/count/{address}:
+    get:
+      description: |
+        <h4>1 credit per API call.</h4><br/>
+        <p>Get a number of outgoing BSC transactions for the address. When a transaction is sent, there can be multiple outgoing transactions,
+        which are not yet processed by the blockchain. To distinguish between them, there is a counter called a nonce, which represents
+        the order of the transaction in the list of outgoing transactions.</p>
+      operationId: BscGetTransactionCount
+      parameters:
+        - description: "address"
+          in: path
+          name: address
+          required: true
+          schema:
+            type: string
+            maxLength: 42
+            minLength: 42
+            example: "0xdac17f958d2ee523a2206206994597c13d831ec7"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: number
+                example: 5
+                description: Number of transactions, that were made from this address. Can be used as a nonce parameter in send transaction calls.
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Get count of outgoing BSC transactions
+      tags:
+        - Blockchain / BSC
+  /v3/bsc/transaction:
+    post:
+      description: |
+        <h4>2 credits per API call.</h4><br/>
+        <p>Send BNB or Tatum supported BEP20 token from account to account.<br/><br/>
+        This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+        No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
+        or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+        <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
+        Alternatively, using the Tatum client library for supported languages or Tatum Middleware with a custom key management system is possible.
+        </p>
+      operationId: BscBlockchainTransfer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/TransferBscBlockchain"
+                - $ref: "#/components/schemas/TransferBscBlockchainKMS"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/TransactionHashKMS"
+                  - $ref: "#/components/schemas/SignatureId"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403BscBroadcast"
+                  - $ref: "#/components/schemas/Error403BscGasPrice"
+                  - $ref: "#/components/schemas/Error403BscTxBody"
+                  - $ref: "#/components/schemas/Error403BscGasCalculation"
+                  - $ref: "#/components/schemas/Error403BscTxHash"
+                  - $ref: "#/components/schemas/Error403BscTxSign"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Send BSC / BEP20 from account to account
+      tags:
+        - Blockchain / BSC
+  /v3/bsc/gas:
+    post:
+      description: |
+        <h4>2 credits per API call.</h4><br/>
+        <p>Estimate gasLimit and gasPrice of the BSC transaction. Gas price is obtained from <a href="https://explorer.bitquery.io/bsc/gas" target="_blank">https://explorer.bitquery.io/bsc/gas</a>.
+        </p>
+      operationId: BscEstimateGas
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BscEstimateGas"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - gasLimit
+                  - gasPrice
+                properties:
+                  gasLimit:
+                    type: string
+                    description: Gas limit for transaction in gas price.
+                    example: "40000"
+                  gasPrice:
+                    type: string
+                    description: Gas price in wei.
+                    example: "20"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403BscTxBody"
+                  - $ref: "#/components/schemas/Error403BscGasCalculation"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Estimate BSC transaction fees
+      tags:
+        - Blockchain / BSC
+  /v3/bsc/smartcontract:
+    post:
+      description: |
+        <h4>2 credits per API call.</h4><br/>
+        <p>Invoke any method on an existing Smart Contract. It is possibleto call read or write method on the Smsrt Contract defined via contractAddress.
+        For read operations, data is returned, for write operations, transaction Id of the associated transaction is returned.<br/>
+        This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+        No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
+        or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+        <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
+        Alternatively, using the Tatum client library for supported languages or Tatum Middleware with a custom key management system is possible.</p>
+      operationId: BscBlockchainSmartContractInvocation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/CallBscSmartContractMethod"
+                - $ref: "#/components/schemas/CallBscSmartContractMethodKMS"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/TransactionHashKMS"
+                  - $ref: "#/components/schemas/SignatureId"
+                  - $ref: "#/components/schemas/Data"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403BscBroadcast"
+                  - $ref: "#/components/schemas/Error403BscGasPrice"
+                  - $ref: "#/components/schemas/Error403BscScBody"
+                  - $ref: "#/components/schemas/Error403BscGasCalculation"
+                  - $ref: "#/components/schemas/Error403BscTxHash"
+                  - $ref: "#/components/schemas/Error403BscTxSign"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Invoke Smart Contract method
+      tags:
+        - Blockchain / BSC
+  /v3/bsc/bep20/deploy:
+    post:
+      description: |
+        <h4>2 credits per API call.</h4><br/>
+        <p>Deploy BSC BEP20 Smart Contract. This method creates new BEP20 (Fungible Tokens) Smart Contract on the blockchain. Smart contract is standardized and audited. It is possible to mint and burn tokens.
+        It is possible to see the code of the deployed contract <a href="https://github.com/tatumio/tatum-middleware/blob/master/src/contracts/token.sol" target="_blank">here</a>.
+        Whole predefined supply of the tokens will be transferred to the chosen address.<br/><br/>
+        This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+        No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
+        or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+        <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
+        Alternatively, using the Tatum client library for supported languages or Tatum Middleware with a custom key management system is possible.
+        </p>
+      operationId: BscDeployErc20Blockchain
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/DeployBep20"
+                - $ref: "#/components/schemas/DeployBep20KMS"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/TransactionHashKMS"
+                  - $ref: "#/components/schemas/SignatureId"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403BscBroadcast"
+                  - $ref: "#/components/schemas/Error403BscGasPrice"
+                  - $ref: "#/components/schemas/Error403BscTxBody"
+                  - $ref: "#/components/schemas/Error403BscGasCalculation"
+                  - $ref: "#/components/schemas/Error403BscErc20TxSign"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Deploy BSC BEP20 Smart Contract.
+      tags:
+        - Blockchain / BSC
+  /v3/bsc/bep20/transaction:
+    post:
+      description: |
+        <h4>2 credits per API call.</h4><br/>
+        <p>Transfer BSC BEP20 Smart Contract Tokens from account to account. Transfer any BEP20 tokens from smart contract defined in contractAddress. This method invokes BEP20 method transfer() to transfer tokens.<br/><br/>
+        This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+        No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
+        or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+        <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
+        Alternatively, using the Tatum client library for supported languages or Tatum Middleware with a custom key management system is possible.
+        </p>
+      operationId: BscBlockchainTransferErc20
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/TransferBep20Blockchain"
+                - $ref: "#/components/schemas/TransferBep20BlockchainKMS"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/TransactionHashKMS"
+                  - $ref: "#/components/schemas/SignatureId"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Error403BscBroadcast"
+                  - $ref: "#/components/schemas/Error403BscGasPrice"
+                  - $ref: "#/components/schemas/Error403BscTxBody"
+                  - $ref: "#/components/schemas/Error403BscGasCalculation"
+                  - $ref: "#/components/schemas/Error403BscTxHash"
+                  - $ref: "#/components/schemas/Error403BscTxSign"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Transfer BSC BEP20
+      tags:
+        - Blockchain / BSC
+  /v3/bsc/broadcast:
+    post:
+      description: |
+        <h4>2 credits per API call.</h4><br/>
+        <p>Broadcast signed transaction to BSC blockchain. This method is used internally from Tatum KMS, Tatum Middleware or Tatum client libraries.
+        It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
+      operationId: BscBroadcast
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BroadcastKMS"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransactionHashKMS"
+          description: OK
+        400:
+          <<: *API400
+        401:
+          <<: *API401
+        403:
+          description: Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error403BscBroadcast"
+        500:
+          <<: *API500
+      security:
+        - X-Api-Key: [ ]
+      x-code-samples:
+      summary: Broadcast signed BSC transaction
+      tags:
+        - Blockchain / BSC
+components:
+  securitySchemes:
+    X-Api-Key:
+      description: |
+        To maintain the highest security level, Tatum requires X-API-Key HTTP header.
+        This X-API-Key represents identification of the plan and can be used by 1 developer or per environment.
+        Each X-API-Key is bound to the test or production blockchains.
+      in: header
+      name: x-api-key
+      type: apiKey
+  schemas:
+    BscBlock:
+      type: object
+      properties:
+        difficulty:
+          description: Difficulty for this block.
+          type: string
+          example: "3296820833"
+        extraData:
+          description: The 'extra data' field of this block.
+          type: string
+          example: "0x"
+        gasLimit:
+          description: The maximum gas allowed in this block.
+          type: number
+          example: 8000000
+        gasUsed:
+          description: The total used gas by all transactions in this block.
+          type: number
+          example: 7985124
+        hash:
+          description: Hash of the block. 'null' when its pending block.
+          type: string
+          example: "0x5d40698ee1b1ec589035f2a39c6162287e9056868cc79d66cfb248ba9f66c3fc"
+        logsBloom:
+          description: The bloom filter for the logs of the block. 'null' when its pending block.
+          type: string
+          example: "0x042080004210492080800001610060ad9600005bc81502020800000043e302020381a404000100409102040240300641108004000400007000008000c049558055a800000a0001800748900806502004200400108205005418c0218802281a0408060000533210462021050470810a010140102809011814018281115020090201068401847000a04010000c00084062000485640d00020220181150020008589105a41c0880001112034100010882545410240011402a3480050104004c310204000002009490d0012022a040c20c20011020401020140250805100410060008280200008181a220114102800001648640828200c00a94c1003a2060e001000"
+        miner:
+          description: The address of the beneficiary to whom the mining rewards were given.
+          type: string
+          example: "0xD8869d9E3d497323561Fbca2319a9FC3F6f10c4B"
+        mixHash:
+          description: ''
+          type: string
+          example: "0x7a44a1f56f12ae825fdc04550d7c3af2344daab987691771c06235f25fafcaa6"
+        nonce:
+          description: Hash of the generated proof-of-work. 'null' when its pending block.
+          type: string
+          example: "0xfa1692f52a7ac672"
+        number:
+          description: The block number. 'null' when its pending block.
+          type: number
+          example: 6470657
+        parentHash:
+          description: Hash of the parent block.
+          type: string
+          example: "0xd34aab8a455027086ac54034e68608c84d984401a883b7b5d91f9ae0bbefda15"
+        receiptsRoot:
+          description: ''
+          type: string
+          example: "0x4a496b6b7f2a1c5850bf9eebbea7193807be0067b1c06f17b9dde4eef7b2f960"
+        sha3Uncles:
+          description: SHA3 of the uncles data in the block.
+          type: string
+          example: "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+        size:
+          description: The size of this block in bytes.
+          type: number
+          example: 15296
+        stateRoot:
+          description: The root of the final state trie of the block.
+          type: string
+          example: "0x32757c92f10c6c5a106c6fb4b9ca3ff301e413a59ca3d0513b4bf98c72efddba"
+        timestamp:
+          description: The unix timestamp for when the block was collated.
+          type: number
+          example: 1569600592
+        totalDifficulty:
+          description: Total difficulty of the chain until this block.
+          type: string
+          example: "23329673338013873"
+        transactions:
+          description: Array of transactions.
+          type: array
+          items:
+            $ref: "#/components/schemas/BscTx"
+        transactionsRoot:
+          description: The root of the transaction trie of the block.
+          type: string
+          example: "0x5990081ef8515d561b50255af03c5d505f7725ddef27405dc67d23bfd0f47704"
+    BscTx:
+      type: object
+      properties:
+        blockHash:
+          description: Hash of the block where this transaction was in.
+          type: string
+          example: "0xcf2c40f475e78c7c19778e1ae999a0e371c9319b38182ea15dc94536f13f9137"
+        status:
+          type: boolean
+          example: true
+          description: TRUE if the transaction was successful, FALSE, if the EVM reverted the transaction.
+        blockNumber:
+          type: number
+          description: Block number where this transaction was in.
+          example: 6470854
+        from:
+          type: string
+          description: Address of the sender.
+          example: "0x81b7E08F65Bdf5648606c89998A9CC8164397647"
+        gas:
+          type: number
+          description: Gas provided by the sender.
+          example: 21000
+        gasPrice:
+          type: string
+          description: Gas price provided by the sender in wei.
+          example: "1000000000"
+        transactionHash:
+          type: string
+          description: Hash of the transaction.
+          example: "0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7"
+        input:
+          type: string
+          description: The data sent along with the transaction.
+          example: "0x"
+        nonce:
+          type: number
+          description: The number of transactions made by the sender prior to this one.
+          example: 26836405
+        to:
+          type: string
+          description: Address of the receiver. 'null' when its a contract creation transaction.
+          example: "0xbC546fa1716Ed886967cf73f40e8F2F5e623a92d"
+        transactionIndex:
+          type: number
+          description: Integer of the transactions index position in the block.
+          example: 3
+        value:
+          type: string
+          description: Value transferred in wei.
+          example: "1000000000000000000"
+        gasUsed:
+          type: number
+          description: The amount of gas used by this specific transaction alone.
+          example: 21000
+        cumulativeGasUsed:
+          type: number
+          description: The total amount of gas used when this transaction was executed in the block.
+          example: 314159
+        contractAddress:
+          type: string
+          description: The contract address created, if the transaction was a contract creation, otherwise null.
+          example: "0x81b7E08F65Bdf5648606c89998A9CC8164397647"
+        logs:
+          type: array
+          description: Log events, that happened in this transaction.
+          items:
+            type: object
+            properties:
+              address:
+                type: string
+                description: From which this event originated from.
+                example: "0x81b7E08F65Bdf5648606c89998A9CC8164397647"
+              topics:
+                type: array
+                description: An array with max 4 32 Byte topics, topic 1-3 contains indexed parameters of the log.
+                items:
+                  type: string
+                  example: "0x033456732123ffff2342342dd12342434324234234fd234fd23fd4f23d4234"
+              data:
+                type: string
+                description: The data containing non-indexed log parameter.
+              logIndex:
+                type: number
+                description: Integer of the event index position in the block.
+              blockNumber:
+                type: number
+                description: Block number where this transaction was in.
+                example: 6470854
+              blockHash:
+                description: Hash of the block.
+                type: string
+                example: "0x5d40698ee1b1ec589035f2a39c6162287e9056868cc79d66cfb248ba9f66c3fc"
+              transactionIndex:
+                type: number
+                description: Integer of the transaction’s index position, the event was created in.
+              transactionHash:
+                type: string
+                description: Hash of the transaction this event was created in.
+                example: "0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7"
+    Error403BscBroadcast:
+      properties:
+        errorCode:
+          description: bsc.broadcast.failed
+          example: bsc.broadcast.failed
+          type: string
+        message:
+          description: Unable to broadcast transaction due to ${error}.
+          example: Unable to broadcast transaction due to ${error}.
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403BscBep20NotFound:
+      properties:
+        errorCode:
+          description: erc20.token.notFound
+          example: erc20.token.notFound
+          type: string
+        message:
+          description: No such BEP20 currency ${name}.
+          example: No such BEP20 currency ${name}.
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403TxNotFound:
+      properties:
+        errorCode:
+          description: tx.missing
+          example: tx.missing
+          type: string
+        message:
+          description: No such tx.
+          example: No such tx.
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403BscBep20Set:
+      properties:
+        errorCode:
+          description: erc20.address.set
+          example: erc20.address.set
+          type: string
+        message:
+          description: BEP20 address was already set.
+          example: BEP20 address was already set.
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403BscMnemonicPrivateKey:
+      properties:
+        errorCode:
+          description: private.mnemonic.missing
+          example: private.mnemonic.missing
+          type: string
+        message:
+          description: Either mnemonic and index or private key must be present.
+          example: Either mnemonic and index or private key must be present.
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403BscBep20Unsupported:
+      properties:
+        errorCode:
+          description: bsc.bep20.unsupported
+          example: bsc.bep20.unsupported
+          type: string
+        message:
+          description: Unsupported ETH BEP20 blockchain.
+          example: Unsupported ETH BEP20 blockchain.
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403BscTxHash:
+      properties:
+        errorCode:
+          description: bsc.transaction.hash
+          example: bsc.transaction.hash
+          type: string
+        message:
+          description: Unable to calculate transaction hash. ${error}
+          example: Unable to calculate transaction hash. ${error}
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403BscTxSign:
+      properties:
+        errorCode:
+          description: bsc.transaction.sign
+          example: bsc.transaction.sign
+          type: string
+        message:
+          description: Unable to sign transaction. ${error}
+          example: Unable to sign transaction. ${error}
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403BscErc20TxSign:
+      properties:
+        errorCode:
+          description: bsc.bep20.sign
+          example: bsc.bep20.sign
+          type: string
+        message:
+          description: Unable to sign transaction for contract creation. ${error}
+          example: Unable to sign transaction for contract creation. ${error}
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403BscGasCalculation:
+      properties:
+        errorCode:
+          description: bsc.transaction.gas
+          example: bsc.transaction.gas
+          type: string
+        message:
+          description: Unable to calculate gas limit for transaction. ${error}
+          example: Unable to calculate gas limit for transaction. ${error}
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403BscTxBody:
+      properties:
+        errorCode:
+          description: bsc.transaction.body
+          example: bsc.transaction.body
+          type: string
+        message:
+          description: Either currency, or tokenAddress must be defined.
+          example: Either currency, or tokenAddress must be defined.
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403BscScBody:
+      properties:
+        errorCode:
+          description: bsc.sc.invalid
+          example: bsc.sc.invalid
+          type: string
+        message:
+          description: Invalid parameters for smart contract invocation.
+          example: Invalid parameters for smart contract invocation.
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    Error403BscGasPrice:
+      properties:
+        errorCode:
+          description: gas.price.failed
+          example: gas.price.failed
+          type: string
+        message:
+          description: Unable to obtain current GAS price.
+          example: Unable to obtain current GAS price.
+          type: string
+        statusCode:
+          description: "403"
+          example: 403
+          type: number
+      required:
+        - errorCode
+        - message
+        - statusCode
+      type: object
+    TransferBep20Blockchain:
+      type: object
+      properties:
+        to:
+          maxLength: 50
+          minLength: 1
+          description: Blockchain address to send BEP20 token to
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        amount:
+          description: Amount to be sent.
+          example: "100000"
+          type: string
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of BEP20 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        digits:
+          description: Number of decimal points that BEP20 token has.
+          example: 18
+          maximum: 30
+          minimum: 1
+          type: number
+        fromPrivateKey:
+          type: string
+          maxLength: 66
+          example: "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2"
+          minLength: 66
+          description: Private key of sender address. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to BSC transaction. If not present, last known nonce will be used.
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - to
+        - contractAddress
+        - digits
+        - fromPrivateKey
+        - amount
+    TransferBep20BlockchainKMS:
+      type: object
+      properties:
+        to:
+          maxLength: 50
+          minLength: 1
+          description: Blockchain address to send BEP20 token to
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        amount:
+          description: Amount to be sent.
+          example: "100000"
+          type: string
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of BEP20 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        digits:
+          description: Number of decimal points that BEP20 token has.
+          example: 18
+          maximum: 30
+          minimum: 1
+          type: number
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to BSC transaction. If not present, last known nonce will be used.
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - to
+        - contractAddress
+        - signatureId
+        - digits
+        - amount
+    CallBscSmartContractMethod:
+      type: object
+      properties:
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of BEP20 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        methodName:
+          minLength: 1
+          maxLength: 500
+          description: Name of the method to invoke on smart contract.
+          type: string
+          example: transfer
+        methodABI:
+          type: object
+          description: ABI of the method to invoke.
+        params:
+          type: array
+          items:
+            type: object
+          description: Parameters of the method to be invoked.
+        fromPrivateKey:
+          type: string
+          maxLength: 66
+          example: "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2"
+          minLength: 66
+          description: Private key of sender address. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to BSC transaction. If not present, last known nonce will be used.
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - contractAddress
+        - params
+        - methodABI
+        - fromPrivateKey
+        - methodName
+    CallBscSmartContractMethodKMS:
+      type: object
+      properties:
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of BEP20 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        methodName:
+          minLength: 1
+          maxLength: 500
+          description: Name of the method to invoke on smart contract.
+          type: string
+          example: transfer
+        methodABI:
+          type: object
+          description: ABI of the method to invoke.
+        params:
+          type: array
+          items:
+            type: object
+          description: Parameters of the method to be invoked.
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to BSC transaction. If not present, last known nonce will be used.
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - contractAddress
+        - params
+        - methodABI
+        - signatureId
+        - methodName
+    TransferBscBlockchain:
+      type: object
+      properties:
+        data:
+          type: string
+          maxLength: 50000
+          description: Additinal data, that can be passed to blockchain transaction as data property. Only for ETH transactions.
+          example: My note to recipient.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to BSC transaction. If not present, last known nonce will be used.
+        to:
+          description: Blockchain address to send assets
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          maxLength: 42
+          minLength: 42
+          type: string
+        currency:
+          description: Currency to transfer from BSC Blockchain Account.
+          enum:
+            - BETH
+            - BBTC
+            - BADA
+            - WBNB
+            - BDOT
+            - BXRP
+            - BLTC
+            - BBCH
+            - BSC
+          example: BSC
+          type: string
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              example: "40000"
+              pattern: ^[+]?\d+$
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              example: "20"
+              pattern: ^[+]?\d+$
+        amount:
+          description: Amount to be sent in Ether.
+          example: "100000"
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+          type: string
+        fromPrivateKey:
+          type: string
+          maxLength: 66
+          example: "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2"
+          minLength: 66
+          description: Private key of sender address. Private key, or signature Id must be present.
+      required:
+        - to
+        - amount
+        - currency
+        - fromPrivateKey
+    BscEstimateGas:
+      type: object
+      properties:
+        from:
+          type: string
+          maxLength: 66
+          example: "0xfb99f8ae9b70a0c8cd96ae665bbaf85a7e01a2ef"
+          minLength: 66
+          description: Sender address.
+        to:
+          description: Blockchain address to send assets
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          maxLength: 42
+          minLength: 42
+          type: string
+        amount:
+          description: Amount to be sent in Ether.
+          example: "100000"
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+          type: string
+        data:
+          type: string
+          maxLength: 50000
+          description: Additinal data, that can be passed to blockchain transaction as data property. Only for ETH transactions.
+          example: My note to recipient.
+          pattern: ^(0x|0h)?[0-9A-F]+$
+      required:
+        - to
+        - amount
+        - from
+    TransferBscBlockchainKMS:
+      type: object
+      properties:
+        data:
+          type: string
+          maxLength: 50000
+          description: Additinal data, that can be passed to blockchain transaction as data property. Only for ETH transactions.
+          example: My note to recipient.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to BSC transaction. If not present, last known nonce will be used.
+        to:
+          description: Blockchain address to send assets
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          maxLength: 42
+          minLength: 42
+          type: string
+        currency:
+          description: Currency to transfer from BSC Blockchain Account.
+          enum:
+            - BETH
+            - BBTC
+            - BADA
+            - WBNB
+            - BDOT
+            - BXRP
+            - BLTC
+            - BBCH
+            - BSC
+          example: BSC
+          type: string
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              example: "40000"
+              pattern: ^[+]?\d+$
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              example: "20"
+              pattern: ^[+]?\d+$
+        amount:
+          description: Amount to be sent in Ether.
+          example: "100000"
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+          type: string
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+      required:
+        - to
+        - amount
+        - currency
+        - signatureId
