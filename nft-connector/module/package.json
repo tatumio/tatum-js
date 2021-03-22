@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/nft-connector",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "NFT Connector for Tatum API",
   "license": "MIT",
   "files": [

@@ -85,9 +85,10 @@ export abstract class NftService {
         }
     }
 
-    public async transferErc721(chain: Currency, body: CeloTransferErc721 | EthTransferErc721): Promise<TransactionHash | { signatureId: string }> {
+    public async transferErc721(body: CeloTransferErc721 | EthTransferErc721): Promise<TransactionHash | { signatureId: string }> {
         const testnet = await this.isTestnet();
         let txData;
+        const {chain} = body;
         switch (chain) {
             case Currency.ETH:
                 txData = await prepareEthTransferErc721SignedTransaction(body, (await this.getNodesUrl(chain, testnet))[0]);
@@ -106,9 +107,10 @@ export abstract class NftService {
         }
     }
 
-    public async mintErc721(chain: Currency, body: CeloMintErc721 | EthMintErc721): Promise<TransactionHash | { signatureId: string }> {
+    public async mintErc721(body: CeloMintErc721 | EthMintErc721): Promise<TransactionHash | { signatureId: string }> {
         const testnet = await this.isTestnet();
         let txData;
+        const {chain} = body;
         switch (chain) {
             case Currency.ETH:
                 txData = await prepareEthMintErc721SignedTransaction(body, (await this.getNodesUrl(chain, testnet))[0]);
@@ -127,9 +129,10 @@ export abstract class NftService {
         }
     }
 
-    public async mintMultipleErc721(chain: Currency, body: CeloMintMultipleErc721 | EthMintMultipleErc721): Promise<TransactionHash | { signatureId: string }> {
+    public async mintMultipleErc721(body: CeloMintMultipleErc721 | EthMintMultipleErc721): Promise<TransactionHash | { signatureId: string }> {
         const testnet = await this.isTestnet();
         let txData;
+        const {chain} = body;
         switch (chain) {
             case Currency.ETH:
                 txData = await prepareEthMintMultipleErc721SignedTransaction(body, (await this.getNodesUrl(chain, testnet))[0]);
@@ -148,9 +151,10 @@ export abstract class NftService {
         }
     }
 
-    public async burnErc721(chain: Currency, body: CeloBurnErc721 | EthBurnErc721): Promise<TransactionHash | { signatureId: string }> {
+    public async burnErc721(body: CeloBurnErc721 | EthBurnErc721): Promise<TransactionHash | { signatureId: string }> {
         const testnet = await this.isTestnet();
         let txData;
+        const {chain} = body;
         switch (chain) {
             case Currency.ETH:
                 txData = await prepareEthBurnErc721SignedTransaction(body, (await this.getNodesUrl(chain, testnet))[0]);
@@ -169,9 +173,10 @@ export abstract class NftService {
         }
     }
 
-    public async deployErc721(chain: Currency, body: CeloDeployErc721 | EthDeployErc721): Promise<TransactionHash | { signatureId: string }> {
+    public async deployErc721(body: CeloDeployErc721 | EthDeployErc721): Promise<TransactionHash | { signatureId: string }> {
         const testnet = await this.isTestnet();
         let txData;
+        const {chain} = body;
         switch (chain) {
             case Currency.ETH:
                 txData = await prepareEthDeployErc721SignedTransaction(body, (await this.getNodesUrl(chain, testnet))[0]);

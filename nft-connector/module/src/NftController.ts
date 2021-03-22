@@ -51,9 +51,9 @@ export abstract class NftController {
 
     @Post('/v3/nft/transaction')
     @HttpCode(HttpStatus.OK)
-    public async transactionErc721(@Param() path: PathChain, @Body() body: CeloTransferErc721 | EthTransferErc721) {
+    public async transactionErc721(@Body() body: CeloTransferErc721 | EthTransferErc721) {
         try {
-            return await this.service.transferErc721(path.chain, body);
+            return await this.service.transferErc721(body);
         } catch (e) {
             if (e.constructor.name === 'Array' || e.constructor.name === 'ValidationError') {
                 throw new BadRequestException(e);
@@ -64,9 +64,9 @@ export abstract class NftController {
 
     @Post('/v3/nft/mint')
     @HttpCode(HttpStatus.OK)
-    public async mintErc721(@Param() path: PathChain, @Body() body: CeloMintErc721 | EthMintErc721) {
+    public async mintErc721(@Body() body: CeloMintErc721 | EthMintErc721) {
         try {
-            return await this.service.mintErc721(path.chain, body);
+            return await this.service.mintErc721(body);
         } catch (e) {
             if (e.constructor.name === 'Array' || e.constructor.name === 'ValidationError') {
                 throw new BadRequestException(e);
@@ -77,9 +77,9 @@ export abstract class NftController {
 
     @Post('/v3/nft/mint/batch')
     @HttpCode(HttpStatus.OK)
-    public async mintMultipleErc721(@Param() path: PathChain, @Body() body: CeloMintMultipleErc721 | EthMintMultipleErc721) {
+    public async mintMultipleErc721(@Body() body: CeloMintMultipleErc721 | EthMintMultipleErc721) {
         try {
-            return await this.service.mintMultipleErc721(path.chain, body);
+            return await this.service.mintMultipleErc721(body);
         } catch (e) {
             if (e.constructor.name === 'Array' || e.constructor.name === 'ValidationError') {
                 throw new BadRequestException(e);
@@ -90,9 +90,9 @@ export abstract class NftController {
 
     @Post('/v3/nft/burn')
     @HttpCode(HttpStatus.OK)
-    public async burnErc721(@Param() path: PathChain, @Body() body: CeloBurnErc721 | EthBurnErc721) {
+    public async burnErc721(@Body() body: CeloBurnErc721 | EthBurnErc721) {
         try {
-            return await this.service.burnErc721(path.chain, body);
+            return await this.service.burnErc721(body);
         } catch (e) {
             if (e.constructor.name === 'Array' || e.constructor.name === 'ValidationError') {
                 throw new BadRequestException(e);
@@ -103,9 +103,9 @@ export abstract class NftController {
 
     @Post('/v3/nft/deploy')
     @HttpCode(HttpStatus.OK)
-    public async deployErc721(@Param() path: PathChain, @Body() body: CeloDeployErc721 | EthDeployErc721) {
+    public async deployErc721(@Body() body: CeloDeployErc721 | EthDeployErc721) {
         try {
-            return await this.service.deployErc721(path.chain, body);
+            return await this.service.deployErc721(body);
         } catch (e) {
             if (e.constructor.name === 'Array' || e.constructor.name === 'ValidationError') {
                 throw new BadRequestException(e);
