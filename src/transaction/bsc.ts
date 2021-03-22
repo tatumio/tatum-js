@@ -29,7 +29,7 @@ import {
  */
 export const bscGetGasPriceInWei = async () => {
     const {data} = await axios.post('https://graphql.bitquery.io', {
-        'query': 'query ($network: BSCNetwork!, $dateFormat: String!, $from: ISO8601DateTime, $till: ISO8601DateTime) {\n  ethereum(network: $network) {\n    transactions(options: {asc: "date.date"}, date: {since: $from, till: $till}) {\n      date: date {\n        date(format: $dateFormat)\n      }\n      gasPrice\n      gasValue\n      average: gasValue(calculate: average)\n      maxGasPrice: gasPrice(calculate: maximum)\n      medianGasPrice: gasPrice(calculate: median)\n    }\n  }\n}\n',
+        'query': 'query ($network: EthereumNetwork!, $dateFormat: String!, $from: ISO8601DateTime, $till: ISO8601DateTime) {\n  ethereum(network: $network) {\n    transactions(options: {asc: "date.date"}, date: {since: $from, till: $till}) {\n      date: date {\n        date(format: $dateFormat)\n      }\n      gasPrice\n      gasValue\n      average: gasValue(calculate: average)\n      maxGasPrice: gasPrice(calculate: maximum)\n      medianGasPrice: gasPrice(calculate: median)\n    }\n  }\n}\n',
         'variables': {
             'limit': 10,
             'offset': 0,
@@ -39,7 +39,7 @@ export const bscGetGasPriceInWei = async () => {
             'dateFormat': '%Y-%m-%d'
         }
     });
-    return Web3.utils.toWei(new BigNumber(data.ethereum.transactions[0].gasPrice).dividedBy(10).toString(), 'gwei');
+    return Web3.utils.toWei(new BigNumber(data.data.ethereum.transactions[0].gasPrice).toFormat(9), 'gwei');
 };
 
 /**
@@ -139,7 +139,7 @@ export const prepareBscOrBep20SignedTransaction = async (body: TransferBscBep20,
 
     let tx: TransactionConfig;
     const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await bscGetGasPriceInWei();
-    if (currency === Currency.ETH) {
+    if (currency === Currency.BSC) {
         tx = {
             from: 0,
             to: to.trim(),
