@@ -49,7 +49,7 @@ export abstract class NftController {
         }
     }
 
-    @Post('/v3/nft/transaction/:chain')
+    @Post('/v3/nft/transaction')
     @HttpCode(HttpStatus.OK)
     public async transactionErc721(@Param() path: PathChain, @Body() body: CeloTransferErc721 | EthTransferErc721) {
         try {
@@ -62,7 +62,7 @@ export abstract class NftController {
         }
     }
 
-    @Post('/v3/nft/mint/:chain')
+    @Post('/v3/nft/mint')
     @HttpCode(HttpStatus.OK)
     public async mintErc721(@Param() path: PathChain, @Body() body: CeloMintErc721 | EthMintErc721) {
         try {
@@ -75,7 +75,7 @@ export abstract class NftController {
         }
     }
 
-    @Post('/v3/nft/mint/:chain/batch')
+    @Post('/v3/nft/mint/batch')
     @HttpCode(HttpStatus.OK)
     public async mintMultipleErc721(@Param() path: PathChain, @Body() body: CeloMintMultipleErc721 | EthMintMultipleErc721) {
         try {
@@ -88,7 +88,7 @@ export abstract class NftController {
         }
     }
 
-    @Post('/v3/nft/burn/:chain')
+    @Post('/v3/nft/burn')
     @HttpCode(HttpStatus.OK)
     public async burnErc721(@Param() path: PathChain, @Body() body: CeloBurnErc721 | EthBurnErc721) {
         try {
@@ -101,7 +101,7 @@ export abstract class NftController {
         }
     }
 
-    @Post('/v3/nft/deploy/:chain')
+    @Post('/v3/nft/deploy')
     @HttpCode(HttpStatus.OK)
     public async deployErc721(@Param() path: PathChain, @Body() body: CeloDeployErc721 | EthDeployErc721) {
         try {
