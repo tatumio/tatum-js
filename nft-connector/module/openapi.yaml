@@ -18,7 +18,7 @@ tags:
       </p>
     name: Blockchain / NFT
 paths:
-  /v3/nft/deploy/{chain}:
+  /v3/nft/deploy:
     post:
       description: |
         <p>Deploy NFT Smart Contract. This method creates new ERC721 Smart Contract (Non-Fungible Tokens) on the blockchain. Smart contract is standardized and audited.
@@ -31,25 +31,15 @@ paths:
         Alternatively, using the Tatum client library for supported languages or Tatum Middleware with a custom key management system is possible.
         </p>
       operationId: NftDeployErc721
-      parameters:
-        - description: Blockchain to work with
-          in: path
-          name: chain
-          required: true
-          schema:
-            type: string
-            enum:
-              - CELO
-              - ETH
       requestBody:
         content:
           application/json:
             schema:
               oneOf:
-                - $ref: "#/components/schemas/DeployErc721Celo"
-                - $ref: "#/components/schemas/DeployErc721CeloKMS"
-                - $ref: "#/components/schemas/DeployErc721"
-                - $ref: "#/components/schemas/DeployErc721KMS"
+                - $ref: "#/components/schemas/DeployNftCelo"
+                - $ref: "#/components/schemas/DeployNftCeloKMS"
+                - $ref: "#/components/schemas/DeployNft"
+                - $ref: "#/components/schemas/DeployNftKMS"
         required: true
       responses:
         200:
@@ -93,7 +83,7 @@ paths:
       summary: Deploy NFT Smart Contract.
       tags:
         - Blockchain / NFT
-  /v3/nft/mint/{chain}:
+  /v3/nft/mint:
     post:
       description: |
         <h4>2 credits per API call.</h4><br/>
@@ -106,25 +96,15 @@ paths:
         Alternatively, using the Tatum client library for supported languages or Tatum Middleware with a custom key management system is possible.
         </p>
       operationId: NftMintErc721
-      parameters:
-        - description: Blockchain to work with
-          in: path
-          name: chain
-          required: true
-          schema:
-            type: string
-            enum:
-              - CELO
-              - ETH
       requestBody:
         content:
           application/json:
             schema:
               oneOf:
-                - $ref: "#/components/schemas/MintErc721Celo"
-                - $ref: "#/components/schemas/MintErc721KMSCelo"
-                - $ref: "#/components/schemas/MintErc721"
-                - $ref: "#/components/schemas/MintErc721KMS"
+                - $ref: "#/components/schemas/MintNftCelo"
+                - $ref: "#/components/schemas/MintNftKMSCelo"
+                - $ref: "#/components/schemas/MintNft"
+                - $ref: "#/components/schemas/MintNftKMS"
         required: true
       responses:
         200:
@@ -154,7 +134,7 @@ paths:
       summary: Mint NFT
       tags:
         - Blockchain / NFT
-  /v3/nft/transaction/{chain}:
+  /v3/nft/transaction:
     post:
       description: |
         <h4>2 credits per API call.</h4><br/>
@@ -167,23 +147,13 @@ paths:
         Alternatively, using the Tatum client library for supported languages or Tatum Middleware with a custom key management system is possible.
         </p>
       operationId: NftTransferErc721
-      parameters:
-        - description: Blockchain to work with
-          in: path
-          name: chain
-          required: true
-          schema:
-            type: string
-            enum:
-              - CELO
-              - ETH
       requestBody:
         content:
           application/json:
             schema:
               oneOf:
-                - $ref: "#/components/schemas/TransferErc721Celo"
-                - $ref: "#/components/schemas/TransferErc721KMSCelo"
+                - $ref: "#/components/schemas/TransferNftCelo"
+                - $ref: "#/components/schemas/TransferNftKMSCelo"
         required: true
       responses:
         200:
@@ -213,7 +183,7 @@ paths:
       summary: Transfer NFT Token
       tags:
         - Blockchain / NFT
-  /v3/nft/mint/{chain}/batch:
+  /v3/nft/mint/batch:
     post:
       description: |
         <h4>2 credits per API call.</h4><br/>
@@ -225,25 +195,15 @@ paths:
         Alternatively, using the Tatum client library for supported languages or Tatum Middleware with a custom key management system is possible.
         </p>
       operationId: NftMintMultipleErc721
-      parameters:
-        - description: Blockchain to work with
-          in: path
-          name: chain
-          required: true
-          schema:
-            type: string
-            enum:
-              - CELO
-              - ETH
       requestBody:
         content:
           application/json:
             schema:
               oneOf:
-                - $ref: "#/components/schemas/MintMultipleErc721Celo"
-                - $ref: "#/components/schemas/MintMultipleErc721KMSCelo"
-                - $ref: "#/components/schemas/MintMultipleErc721"
-                - $ref: "#/components/schemas/MintMultipleErc721KMS"
+                - $ref: "#/components/schemas/MintMultipleNftCelo"
+                - $ref: "#/components/schemas/MintMultipleNftKMSCelo"
+                - $ref: "#/components/schemas/MintMultipleNft"
+                - $ref: "#/components/schemas/MintMultipleNftKMS"
         required: true
       responses:
         200:
@@ -273,7 +233,7 @@ paths:
       summary: Mint NFT Multiple Tokens
       tags:
         - Blockchain / NFT
-  /v3/nft/burn/{chain}:
+  /v3/nft/burn:
     post:
       description: |
         <h4>2 credits per API call.</h4><br/>
@@ -285,25 +245,15 @@ paths:
         Alternatively, using the Tatum client library for supported languages or Tatum Middleware with a custom key management system is possible.
         </p>
       operationId: NftBurnErc721
-      parameters:
-        - description: Blockchain to work with
-          in: path
-          name: chain
-          required: true
-          schema:
-            type: string
-            enum:
-              - CELO
-              - ETH
       requestBody:
         content:
           application/json:
             schema:
               oneOf:
-                - $ref: "#/components/schemas/BurnErc721Celo"
-                - $ref: "#/components/schemas/BurnErc721KMSCelo"
-                - $ref: "#/components/schemas/BurnErc721"
-                - $ref: "#/components/schemas/BurnErc721KMS"
+                - $ref: "#/components/schemas/BurnNftCelo"
+                - $ref: "#/components/schemas/BurnNftKMSCelo"
+                - $ref: "#/components/schemas/BurnNft"
+                - $ref: "#/components/schemas/BurnNftKMS"
         required: true
       responses:
         200:
@@ -336,7 +286,7 @@ paths:
   /v3/nft/transaction/{chain}/{hash}:
     get:
       description: "<h4>1 credit per API call.</h4><br/><p>Get NFT transaction by transaction hash.</p>"
-      operationId: CNftGetTransaction
+      operationId: CNftGetTransactErc721
       parameters:
         - description: Blockchain to work with
           in: path
@@ -347,6 +297,7 @@ paths:
             enum:
               - CELO
               - ETH
+              - BSC
         - description: "Transaction hash"
           in: path
           name: hash
@@ -396,6 +347,7 @@ paths:
             enum:
               - CELO
               - ETH
+              - BSC
         - description: "Account address"
           in: path
           name: address
@@ -453,6 +405,7 @@ paths:
             enum:
               - CELO
               - ETH
+              - BSC
         - description: "Token ID"
           in: path
           name: token
@@ -508,3 +461,1130 @@ components:
       in: header
       name: x-api-key
       type: apiKey
+  schemas:
+    TransferNftCelo:
+      type: object
+      properties:
+        chain:
+          type: string
+          example: CELO
+          description: Chain to work with.
+          enum:
+            - CELO
+        to:
+          maxLength: 42
+          minLength: 42
+          description: Blockchain address to send ERC721 token to
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        tokenId:
+          description: ID of token.
+          example: "100000"
+          type: string
+          maxLength: 256
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        fromPrivateKey:
+          type: string
+          maxLength: 66
+          example: "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2"
+          minLength: 66
+          description: Private key of sender address. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          example: 1
+          description: Nonce to be set to Celo transaction. If not present, last known nonce will be used.
+        feeCurrency:
+          type: string
+          description: Currency to pay for transaction gas
+          enum:
+            - CELO
+            - CUSD
+      required:
+        - chain
+        - to
+        - contractAddress
+        - tokenId
+        - fromPrivateKey
+    MintMultipleNftCelo:
+      type: object
+      properties:
+        chain:
+          type: string
+          example: CELO
+          description: Chain to work with.
+          enum:
+            - CELO
+        to:
+          type: array
+          description: Blockchain address to send ERC721 token to.
+          example: [ "0x687422eEA2cB73B5d3e242bA5456b782919AFc85" ]
+          items:
+            maxLength: 42
+            minLength: 42
+            type: string
+        tokenId:
+          type: array
+          description: ID of token to be created.
+          example: [ "100000" ]
+          items:
+            type: string
+            maxLength: 32
+        url:
+          description: Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
+          type: array
+          example:
+            - "https://my_token_data.com"
+          items:
+            type: string
+            maxLength: 256
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        fromPrivateKey:
+          type: string
+          maxLength: 66
+          example: "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2"
+          minLength: 66
+          description: Private key of sender address. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Celo transaction. If not present, last known nonce will be used.
+        feeCurrency:
+          type: string
+          description: Currency to pay for transaction gas
+          enum:
+            - CELO
+            - CUSD
+      required:
+        - chain
+        - to
+        - contractAddress
+        - url
+        - fromPrivateKey
+        - feeCurrency
+        - tokenId
+    DeployNftCelo:
+      type: object
+      properties:
+        chain:
+          type: string
+          example: CELO
+          description: Chain to work with.
+          enum:
+            - CELO
+        name:
+          description: Name of the ERC721 token
+          example: My ERC721
+          maxLength: 100
+          minLength: 1
+          type: string
+        symbol:
+          description: Symbol of the ERC721 token
+          example: ERC_SYMBOL
+          maxLength: 30
+          minLength: 1
+          type: string
+        fromPrivateKey:
+          description: Private key of Ethereum account address, from which gas for deployment of ERC721 will be paid. Private key, or signature Id must be present.
+          type: string
+          maxLength: 66
+          example: "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2"
+          minLength: 66
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        feeCurrency:
+          type: string
+          description: Currency to pay for transaction gas
+          enum:
+            - CELO
+            - CUSD
+      required:
+        - chain
+        - name
+        - symbol
+        - feeCurrency
+        - fromPrivateKey
+    DeployNftCeloKMS:
+      type: object
+      properties:
+        chain:
+          type: string
+          example: CELO
+          description: Chain to work with.
+          enum:
+            - CELO
+        name:
+          description: Name of the ERC721 token
+          example: My ERC721
+          maxLength: 100
+          minLength: 1
+          type: string
+        symbol:
+          description: Symbol of the ERC721 token
+          example: ERC_SYMBOL
+          maxLength: 30
+          minLength: 1
+          type: string
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+        feeCurrency:
+          type: string
+          description: Currency to pay for transaction gas
+          enum:
+            - CELO
+            - CUSD
+      required:
+        - chain
+        - name
+        - symbol
+        - feeCurrency
+        - signatureId
+    MintMultipleNftKMSCelo:
+      type: object
+      properties:
+        chain:
+          type: string
+          example: CELO
+          description: Chain to work with.
+          enum:
+            - CELO
+        to:
+          type: array
+          description: Blockchain address to send ERC721 token to.
+          example: [ "0x687422eEA2cB73B5d3e242bA5456b782919AFc85" ]
+          items:
+            maxLength: 42
+            minLength: 42
+            type: string
+        tokenId:
+          type: array
+          description: ID of token to be created.
+          example: [ "100000" ]
+          items:
+            type: string
+            maxLength: 32
+        url:
+          description: Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
+          type: array
+          example:
+            - "https://my_token_data.com"
+          items:
+            type: string
+            maxLength: 256
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Celo transaction. If not present, last known nonce will be used.
+        feeCurrency:
+          type: string
+          description: Currency to pay for transaction gas
+          enum:
+            - CELO
+            - CUSD
+      required:
+        - chain
+        - to
+        - contractAddress
+        - feeCurrency
+        - tokenId
+        - url
+        - signatureId
+    BurnNftCelo:
+      type: object
+      properties:
+        chain:
+          type: string
+          example: CELO
+          description: Chain to work with.
+          enum:
+            - CELO
+        tokenId:
+          description: ID of token to be destroyed.
+          example: "100000"
+          type: string
+          maxLength: 32
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        fromPrivateKey:
+          type: string
+          maxLength: 66
+          example: "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2"
+          minLength: 66
+          description: Private key of sender address. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Celo transaction. If not present, last known nonce will be used.
+        feeCurrency:
+          type: string
+          description: Currency to pay for transaction gas
+          enum:
+            - CELO
+            - CUSD
+      required:
+        - chain
+        - contractAddress
+        - feeCurrency
+        - fromPrivateKey
+        - tokenId
+    BurnNftKMSCelo:
+      type: object
+      properties:
+        chain:
+          type: string
+          example: CELO
+          description: Chain to work with.
+          enum:
+            - CELO
+        tokenId:
+          description: ID of token to be destroyed.
+          example: "100000"
+          type: string
+          maxLength: 32
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Celo transaction. If not present, last known nonce will be used.
+        feeCurrency:
+          type: string
+          description: Currency to pay for transaction gas
+          enum:
+            - CELO
+            - CUSD
+      required:
+        - chain
+        - feeCurrency
+        - contractAddress
+        - tokenId
+        - signatureId
+    TransferNftKMSCelo:
+      type: object
+      properties:
+        chain:
+          type: string
+          example: CELO
+          description: Chain to work with.
+          enum:
+            - CELO
+        to:
+          maxLength: 42
+          minLength: 42
+          description: Blockchain address to send ERC721 token to
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        tokenId:
+          description: ID of token.
+          example: "100000"
+          type: string
+          maxLength: 256
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          example: 1
+          description: Nonce to be set to Celo transaction. If not present, last known nonce will be used.
+        feeCurrency:
+          type: string
+          description: Currency to pay for transaction gas
+          enum:
+            - CELO
+            - CUSD
+      required:
+        - chain
+        - to
+        - contractAddress
+        - feeCurrency
+        - signatureId
+        - tokenId
+    MintNftCelo:
+      type: object
+      properties:
+        chain:
+          type: string
+          example: CELO
+          description: Chain to work with.
+          enum:
+            - CELO
+        tokenId:
+          description: ID of token to be created.
+          example: "100000"
+          type: string
+          maxLength: 32
+        to:
+          maxLength: 42
+          minLength: 42
+          description: Blockchain address to send ERC721 token to
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        url:
+          description: Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
+          example: "https://my_token_data.com"
+          type: string
+          maxLength: 256
+        fromPrivateKey:
+          type: string
+          maxLength: 66
+          example: "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2"
+          minLength: 66
+          description: Private key of sender address. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Celo transaction. If not present, last known nonce will be used.
+        feeCurrency:
+          type: string
+          description: Currency to pay for transaction gas
+          enum:
+            - CELO
+            - CUSD
+      required:
+        - chain
+        - to
+        - url
+        - feeCurrency
+        - contractAddress
+        - fromPrivateKey
+        - tokenId
+    MintNftKMSCelo:
+      type: object
+      properties:
+        chain:
+          type: string
+          example: CELO
+          description: Chain to work with.
+          enum:
+            - CELO
+        tokenId:
+          description: ID of token to be created.
+          example: "100000"
+          type: string
+          maxLength: 32
+        to:
+          maxLength: 42
+          minLength: 42
+          description: Blockchain address to send ERC721 token to
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        url:
+          description: Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
+          example: "https://my_token_data.com"
+          type: string
+          maxLength: 256
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Celo transaction. If not present, last known nonce will be used.
+        feeCurrency:
+          type: string
+          description: Currency to pay for transaction gas
+          enum:
+            - CELO
+            - CUSD
+      required:
+        - chain
+        - to
+        - url
+        - feeCurrency
+        - contractAddress
+        - signatureId
+        - tokenId
+    TransferNft:
+      type: object
+      properties:
+        chain:
+          type: string
+          example: ETH
+          description: Chain to work with.
+          enum:
+            - ETH
+            - BSC
+        to:
+          maxLength: 42
+          minLength: 42
+          description: Blockchain address to send ERC721 token to
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        tokenId:
+          description: ID of token.
+          example: "100000"
+          type: string
+          maxLength: 256
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        fromPrivateKey:
+          type: string
+          maxLength: 66
+          example: "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2"
+          minLength: 66
+          description: Private key of sender address. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          example: 1
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - to
+        - chain
+        - contractAddress
+        - tokenId
+        - fromPrivateKey
+    DeployNft:
+      type: object
+      properties:
+        chain:
+          type: string
+          example: ETH
+          description: Chain to work with.
+          enum:
+            - ETH
+            - BSC
+        name:
+          description: Name of the ERC721 token
+          example: My ERC721
+          maxLength: 100
+          minLength: 1
+          type: string
+        symbol:
+          description: Symbol of the ERC721 token
+          example: ERC_SYMBOL
+          maxLength: 30
+          minLength: 1
+          type: string
+        fromPrivateKey:
+          description: Private key of Ethereum account address, from which gas for deployment of ERC721 will be paid. Private key, or signature Id must be present.
+          type: string
+          maxLength: 66
+          example: "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2"
+          minLength: 66
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - name
+        - chain
+        - symbol
+        - fromPrivateKey
+    DeployNftKMS:
+      type: object
+      properties:
+        chain:
+          type: string
+          example: ETH
+          description: Chain to work with.
+          enum:
+            - ETH
+            - BSC
+        name:
+          description: Name of the ERC721 token
+          example: My ERC721
+          maxLength: 100
+          minLength: 1
+          type: string
+        symbol:
+          description: Symbol of the ERC721 token
+          example: ERC_SYMBOL
+          maxLength: 30
+          minLength: 1
+          type: string
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - name
+        - chain
+        - symbol
+        - signatureId
+    TransferNftKMS:
+      type: object
+      properties:
+        chain:
+          type: string
+          example: ETH
+          description: Chain to work with.
+          enum:
+            - ETH
+            - BSC
+        to:
+          maxLength: 42
+          minLength: 42
+          description: Blockchain address to send ERC721 token to
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        tokenId:
+          description: ID of token.
+          example: "100000"
+          type: string
+          maxLength: 256
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          example: 1
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - to
+        - chain
+        - contractAddress
+        - signatureId
+        - tokenId
+    MintNft:
+      type: object
+      properties:
+        chain:
+          type: string
+          example: ETH
+          description: Chain to work with.
+          enum:
+            - ETH
+            - BSC
+        tokenId:
+          description: ID of token to be created.
+          example: "100000"
+          type: string
+          maxLength: 32
+        to:
+          maxLength: 42
+          minLength: 42
+          description: Blockchain address to send ERC721 token to
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        url:
+          description: Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
+          example: "https://my_token_data.com"
+          type: string
+          maxLength: 256
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - to
+        - chain
+        - url
+        - contractAddress
+        - fromPrivateKey
+        - tokenId
+    MintNftKMS:
+      type: object
+      properties:
+        chain:
+          type: string
+          example: ETH
+          description: Chain to work with.
+          enum:
+            - ETH
+            - BSC
+        tokenId:
+          description: ID of token to be created.
+          example: "100000"
+          type: string
+          maxLength: 32
+        to:
+          maxLength: 42
+          minLength: 42
+          description: Blockchain address to send ERC721 token to
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        url:
+          description: Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
+          example: "https://my_token_data.com"
+          type: string
+          maxLength: 256
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - to
+        - chain
+        - url
+        - contractAddress
+        - signatureId
+        - tokenId
+    MintMultipleNft:
+      type: object
+      properties:
+        chain:
+          type: string
+          example: ETH
+          description: Chain to work with.
+          enum:
+            - ETH
+            - BSC
+        to:
+          type: array
+          description: Blockchain address to send ERC721 token to.
+          example: [ "0x687422eEA2cB73B5d3e242bA5456b782919AFc85" ]
+          items:
+            maxLength: 42
+            minLength: 42
+            type: string
+        tokenId:
+          type: array
+          description: ID of token to be created.
+          example: [ "100000" ]
+          items:
+            type: string
+            maxLength: 32
+        url:
+          type: array
+          description: Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
+          example: [ "https://my_token_data.com" ]
+          items:
+            type: string
+            maxLength: 256
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        fromPrivateKey:
+          type: string
+          maxLength: 66
+          example: "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2"
+          minLength: 66
+          description: Private key of sender address. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - to
+        - chain
+        - url
+        - contractAddress
+        - fromPrivateKey
+        - tokenId
+    MintMultipleNftKMS:
+      type: object
+      properties:
+        chain:
+          type: string
+          example: ETH
+          description: Chain to work with.
+          enum:
+            - ETH
+            - BSC
+        to:
+          type: array
+          description: Blockchain address to send ERC721 token to.
+          example: [ "0x687422eEA2cB73B5d3e242bA5456b782919AFc85" ]
+          items:
+            maxLength: 42
+            minLength: 42
+            type: string
+        tokenId:
+          type: array
+          description: ID of token to be created.
+          example: [ "100000" ]
+          items:
+            type: string
+            maxLength: 32
+        url:
+          type: array
+          description: Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
+          example: [ "https://my_token_data.com" ]
+          items:
+            type: string
+            maxLength: 256
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - to
+        - chain
+        - contractAddress
+        - tokenId
+        - url
+        - signatureId
+    BurnNft:
+      type: object
+      properties:
+        chain:
+          type: string
+          example: ETH
+          description: Chain to work with.
+          enum:
+            - ETH
+            - BSC
+        tokenId:
+          description: ID of token to be destroyed.
+          example: "100000"
+          type: string
+          maxLength: 32
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        fromPrivateKey:
+          type: string
+          maxLength: 66
+          example: "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2"
+          minLength: 66
+          description: Private key of sender address. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - to
+        - chain
+        - url
+        - contractAddress
+        - fromPrivateKey
+        - tokenId
+    BurnNftKMS:
+      type: object
+      properties:
+        chain:
+          type: string
+          example: ETH
+          description: Chain to work with.
+          enum:
+            - ETH
+            - BSC
+        tokenId:
+          description: ID of token to be destroyed.
+          example: "100000"
+          type: string
+          maxLength: 32
+        contractAddress:
+          maxLength: 42
+          minLength: 42
+          description: Address of ERC721 token
+          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
+          type: string
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - to
+        - chain
+        - url
+        - contractAddress
+        - tokenId
+        - signatureId
+
