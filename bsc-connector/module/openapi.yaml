@@ -223,7 +223,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/<EthBlock>"
+                $ref: "#/components/schemas/EthBlock"
           description: OK
         400:
           <<: *API400
@@ -1543,3 +1543,140 @@ components:
         - amount
         - currency
         - signatureId
+    DeployBep20:
+      type: object
+      properties:
+        symbol:
+          description: Symbol of the BEP20 token
+          example: ERC_SYMBOL
+          maxLength: 30
+          minLength: 1
+          type: string
+        name:
+          description: Name of the BEP20 token
+          example: My BEP20
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_]+$
+          type: string
+        supply:
+          description: Max supply of BEP20 token.
+          maxLength: 38
+          example: "10000000"
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+          type: string
+        digits:
+          description: Number of decimal points
+          example: 18
+          maximum: 30
+          minimum: 1
+          type: number
+        address:
+          description: Address on BSC blockchain, where all created BEP20 tokens will be transferred.
+          maxLength: 42
+          minLength: 42
+          example: "0xa0Ca9FF38Bad06eBe64f0fDfF279cAE35129F5C6"
+          type: string
+        fromPrivateKey:
+          description: Private key of BSC account address, from which the fee for the deployment of BEP20 will be paid. Private key, or signature Id must be present.
+          type: string
+          example: "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2"
+          maxLength: 66
+          minLength: 66
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to BSC transaction. If not present, last known nonce will be used.
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - name
+        - symbol
+        - address
+        - supply
+        - fromPrivateKey
+        - digits
+    DeployBep20KMS:
+      type: object
+      properties:
+        symbol:
+          description: Symbol of the BEP20 token
+          example: ERC_SYMBOL
+          maxLength: 30
+          minLength: 1
+          type: string
+        name:
+          description: Name of the BEP20 token
+          example: My BEP20
+          maxLength: 100
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_]+$
+          type: string
+        supply:
+          description: Max supply of BEP20 token.
+          maxLength: 38
+          example: "10000000"
+          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
+          type: string
+        digits:
+          description: Number of decimal points
+          example: 18
+          maximum: 30
+          minimum: 1
+          type: number
+        address:
+          description: Address on BSC blockchain, where all created BEP20 tokens will be transferred.
+          maxLength: 42
+          minLength: 42
+          example: "0xa0Ca9FF38Bad06eBe64f0fDfF279cAE35129F5C6"
+          type: string
+        signatureId:
+          type: string
+          minLength: 36
+          maxLength: 36
+          format: uuid
+          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+        nonce:
+          type: number
+          minimum: 0
+          description: Nonce to be set to BSC transaction. If not present, last known nonce will be used.
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - name
+        - symbol
+        - address
+        - supply
+        - signatureId
+        - digits
