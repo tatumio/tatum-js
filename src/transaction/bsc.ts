@@ -39,7 +39,8 @@ export const bscGetGasPriceInWei = async () => {
             'dateFormat': '%Y-%m-%d'
         }
     });
-    return Web3.utils.toWei(new BigNumber(data.data.ethereum.transactions[0].gasPrice).toFormat(9), 'gwei');
+    const gasPrice = new BigNumber(data.data.ethereum.transactions[0].gasPrice);
+    return Web3.utils.toWei(gasPrice.isGreaterThan(20) ? gasPrice.toFormat(9) : '20', 'gwei');
 };
 
 /**
