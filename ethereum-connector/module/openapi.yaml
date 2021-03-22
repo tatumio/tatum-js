@@ -6,15 +6,15 @@ info:
   title: Tatum Ethereum API
 tags:
   - description: |
-  <p>Ethereum Blockchain enables access to most commonly used Ethereum methods. These methods bring small level of abstraction,
-  and are used for the type of applications that want to communicate with blockchain directly. Some of the methods are used alongside Tatum Private Ledger
-  to connect blockchain and private ledger together, like wallet generation or getting information about transactions.<br/>
-  Tatum supports 2 chains:
-  <ul><li>Mainnet - regular live chain
-  <li>Ropsten - test chain used for testing purposes. Coins on test chain have no value and can be obtained from
-  Faucet, e.g. <a target="_blank" href="https://faucet.ropsten.be/">https://faucet.ropsten.be/</a></li></ul><br/>
-  Tatum supports BIP44 HD wallets. It is very convenient and secure, since it can generate 2^31 addresses from 1 mnemonic phrase. It is possible to generate this type of wallet with 1 simple API call.</p>
-  name: Blockchain / Ethereum
+      <p>Ethereum Blockchain enables access to most commonly used Ethereum methods. These methods bring small level of abstraction,
+      and are used for the type of applications that want to communicate with blockchain directly. Some of the methods are used alongside Tatum Private Ledger
+      to connect blockchain and private ledger together, like wallet generation or getting information about transactions.<br/>
+      Tatum supports 2 chains:
+      <ul><li>Mainnet - regular live chain
+      <li>Ropsten - test chain used for testing purposes. Coins on test chain have no value and can be obtained from
+      Faucet, e.g. <a target="_blank" href="https://faucet.ropsten.be/">https://faucet.ropsten.be/</a></li></ul><br/>
+      Tatum supports BIP44 HD wallets. It is very convenient and secure, since it can generate 2^31 addresses from 1 mnemonic phrase. It is possible to generate this type of wallet with 1 simple API call.</p>
+    name: Blockchain / Ethereum
 paths:
   /v3/ethereum/wallet:
     get:
@@ -68,7 +68,7 @@ paths:
       description: |
         <h4>1 credit per API call.</h4><br/>
         <p>Generate Ethereum account deposit address from Extended public key. Deposit address is generated for the specific index - each extended public key can generate
-        up to 2^32 addresses starting from index 0 until 2^31.</p>
+        up to 2^31 addresses starting from index 0 until 2^31.</p>
       operationId: EthGenerateAddress
       parameters:
         - description: "Extended public key of wallet."
@@ -114,7 +114,7 @@ paths:
       description: |
         <h4>1 credit per API call.</h4><br/>
         <p>Generate private key of address from mnemonic for given derivation path index. Private key is generated for the specific index - each mnemonic
-        can generate up to 2^32 private keys starting from index 0 until 2^31.</p>
+        can generate up to 2^31 private keys starting from index 0 until 2^31.</p>
       operationId: EthGenerateAddressPrivateKey
       requestBody:
         content:
@@ -1583,470 +1583,6 @@ components:
           type: string
           description: The contract address created, if the transaction was a contract creation, otherwise null.
           example: "0x81b7E08F65Bdf5648606c89998A9CC8164397647"
-    Erc20:
-      properties:
-        symbol:
-          description: ERC20 token name. Used as a identifier within Tatum system and also in blockchain as a currency symbol.
-          example: MY_TOKEN
-          maxLength: 30
-          minLength: 1
-          pattern: "^[a-zA-Z0-9_]+$"
-          type: string
-        supply:
-          description: Supply of ERC20 token.
-          maxLength: 38
-          example: "1000000.0"
-          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
-          type: string
-        description:
-          description: Used as a description within Tatum system and in blockchain as a currency name.
-          example: "My Public Token"
-          maxLength: 100
-          minLength: 1
-          type: string
-        basePair:
-          description: Base pair for ERC20 token. Transaction value will be calculated according to this base pair.
-          enum:
-            - AED
-            - AFN
-            - ALL
-            - AMD
-            - ANG
-            - AOA
-            - ARS
-            - AUD
-            - AWG
-            - AZN
-            - BAM
-            - BAT
-            - BBD
-            - BCH
-            - BDT
-            - BGN
-            - BHD
-            - BIF
-            - BMD
-            - BND
-            - BOB
-            - BRL
-            - BSD
-            - BTC
-            - BTN
-            - BWP
-            - BYN
-            - BYR
-            - BZD
-            - CAD
-            - CDF
-            - CHF
-            - CLF
-            - CLP
-            - CNY
-            - COP
-            - CRC
-            - CUC
-            - CUP
-            - CVE
-            - CZK
-            - DJF
-            - DKK
-            - DOP
-            - DZD
-            - EGP
-            - ERN
-            - ETB
-            - ETH
-            - EUR
-            - FJD
-            - FKP
-            - FREE
-            - GBP
-            - GEL
-            - GGP
-            - GHS
-            - GIP
-            - GMD
-            - GNF
-            - GTQ
-            - GYD
-            - HKD
-            - HNL
-            - HRK
-            - HTG
-            - HUF
-            - IDR
-            - ILS
-            - IMP
-            - INR
-            - IQD
-            - IRR
-            - ISK
-            - JEP
-            - JMD
-            - JOD
-            - JPY
-            - KES
-            - KGS
-            - KHR
-            - KMF
-            - KPW
-            - KRW
-            - KWD
-            - KYD
-            - KZT
-            - LAK
-            - LBP
-            - LEO
-            - LINK
-            - LKR
-            - LRD
-            - LSL
-            - LTC
-            - LTL
-            - LVL
-            - LYD
-            - MAD
-            - MDL
-            - MGA
-            - MKD
-            - MKR
-            - MMK
-            - MMY
-            - MNT
-            - MOP
-            - MRO
-            - MUR
-            - MVR
-            - MWK
-            - MXN
-            - MYR
-            - MZN
-            - NAD
-            - NGN
-            - NIO
-            - NOK
-            - NPR
-            - NZD
-            - OMR
-            - PAB
-            - PAX
-            - PAXG
-            - PEN
-            - PGK
-            - PHP
-            - PKR
-            - PLN
-            - PLTC
-            - PYG
-            - QAR
-            - RON
-            - RSD
-            - RUB
-            - RWF
-            - SAR
-            - SBD
-            - SCR
-            - SDG
-            - SEK
-            - SGD
-            - SHP
-            - SLL
-            - SOS
-            - SRD
-            - STD
-            - SVC
-            - SYP
-            - SZL
-            - THB
-            - TJS
-            - TMT
-            - TND
-            - TOP
-            - TRY
-            - TTD
-            - TRON
-            - TUSD
-            - TWD
-            - TZS
-            - UAH
-            - UGX
-            - UNI
-            - USD
-            - USDC
-            - USDT
-            - USDT_TRON
-            - UYU
-            - UZS
-            - VEF
-            - VND
-            - VUV
-            - WBTC
-            - WST
-            - XAF
-            - XAG
-            - XAU
-            - XCD
-            - XCON
-            - XDR
-            - XLM
-            - XOF
-            - XPF
-            - XRP
-            - YER
-            - ZAR
-            - ZMK
-            - ZMW
-            - ZWL
-          example: EUR
-          maxLength: 5
-          minLength: 3
-          type: string
-        baseRate:
-          type: number
-          example: 1
-          default: 1
-          minimum: 0
-          description: Exchange rate of the base pair. Each unit of the created curency will represent value of baseRate*1 basePair.
-        customer:
-          $ref: "#/components/schemas/CustomerRegistration"
-        accountingCurrency:
-          description: All transaction will be billed in this currency for created account associated with this currency. If not set, EUR is used. ISO-4217
-          enum:
-            - AED
-            - AFN
-            - ALL
-            - AMD
-            - ANG
-            - AOA
-            - ARS
-            - AUD
-            - AWG
-            - AZN
-            - BAM
-            - BBD
-            - BDT
-            - BGN
-            - BHD
-            - BIF
-            - BMD
-            - BND
-            - BOB
-            - BRL
-            - BSD
-            - BTN
-            - BWP
-            - BYN
-            - BYR
-            - BZD
-            - CAD
-            - CDF
-            - CHF
-            - CLF
-            - CLP
-            - CNY
-            - COP
-            - CRC
-            - CUC
-            - CUP
-            - CVE
-            - CZK
-            - DJF
-            - DKK
-            - DOP
-            - DZD
-            - EGP
-            - ERN
-            - ETB
-            - EUR
-            - FJD
-            - FKP
-            - GBP
-            - GEL
-            - GGP
-            - GHS
-            - GIP
-            - GMD
-            - GNF
-            - GTQ
-            - GYD
-            - HKD
-            - HNL
-            - HRK
-            - HTG
-            - HUF
-            - IDR
-            - ILS
-            - IMP
-            - INR
-            - IQD
-            - IRR
-            - ISK
-            - JEP
-            - JMD
-            - JOD
-            - JPY
-            - KES
-            - KGS
-            - KHR
-            - KMF
-            - KPW
-            - KRW
-            - KWD
-            - KYD
-            - KZT
-            - LAK
-            - LBP
-            - LKR
-            - LRD
-            - LSL
-            - LTL
-            - LVL
-            - LYD
-            - MAD
-            - MDL
-            - MGA
-            - MKD
-            - MMK
-            - MNT
-            - MOP
-            - MRO
-            - MUR
-            - MVR
-            - MWK
-            - MXN
-            - MYR
-            - MZN
-            - NAD
-            - NGN
-            - NIO
-            - NOK
-            - NPR
-            - NZD
-            - OMR
-            - PAB
-            - PEN
-            - PGK
-            - PHP
-            - PKR
-            - PLN
-            - PYG
-            - QAR
-            - RON
-            - RSD
-            - RUB
-            - RWF
-            - SAR
-            - SBD
-            - SCR
-            - SDG
-            - SEK
-            - SGD
-            - SHP
-            - SLL
-            - SOS
-            - SRD
-            - STD
-            - SVC
-            - SYP
-            - SZL
-            - THB
-            - TJS
-            - TMT
-            - TND
-            - TOP
-            - TRY
-            - TTD
-            - TWD
-            - TZS
-            - UAH
-            - UGX
-            - USD
-            - UYU
-            - UZS
-            - VEF
-            - VND
-            - VUV
-            - WST
-            - XAF
-            - XAG
-            - XAU
-            - XCD
-            - XDR
-            - XOF
-            - XPF
-            - YER
-            - ZAR
-            - ZMK
-            - ZMW
-            - ZWL
-          example: USD
-          maxLength: 3
-          minLength: 3
-          type: string
-        derivationIndex:
-          description: Derivation index for xpub to generate specific deposit address.
-          format: int32
-          example: 0
-          type: integer
-          maximum: 2147483647
-        xpub:
-          description: Extended public key (xpub), from which address, where all initial supply will be stored, will be generated. Either xpub and derivationIndex, or address must be present, not both.
-          maxLength: 150
-          minLength: 1
-          example: xpub6EsCk1uU6cJzqvP9CdsTiJwT2rF748YkPnhv5Qo8q44DG7nn2vbyt48YRsNSUYS44jFCW9gwvD9kLQu9AuqXpTpM1c5hgg9PsuBLdeNncid
-          type: string
-        address:
-          description: Address on Ethereum blockchain, where all initial supply will be stored. Either xpub and derivationIndex, or address must be present, not both.
-          maxLength: 42
-          minLength: 42
-          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
-          type: string
-      required:
-        - symbol
-        - supply
-        - description
-        - basePair
-      type: object
-    Erc20Response:
-      properties:
-        accountId:
-          description: Account ID with the type of currency as created ERC20 token symbol. Supply of ERC20 token will be credited as soon as ERC20 token is deployed to the Ethereum blockchain.
-          type: string
-          example: 5e68c66581f2ee32bc354087
-        address:
-          description: Initial address of new created ERC20 token. On this address, all tokens will be minted.
-          example: "0xa7673161CbfE0116A4De9E341f8465940c2211d4"
-          type: string
-      type: object
-    DeployErc20Response:
-      properties:
-        accountId:
-          description: Account ID with the type of currency as created ERC20 token symbol. Account will be unfrozen when ERC20 contract address will be set.
-          type: string
-          example: 5e68c66581f2ee32bc354087
-        txId:
-          description: TX hash of successful transaction. From this transaction receipt contract address can be obtained.
-          example: c83f8818db43d9ba4accfe454aa44fc33123d47a4f89d47b314d6748eb0e9bc9
-          type: string
-      type: object
-      required:
-        - accountId
-        - txId
-    DeployErc20SignatureResponse:
-      properties:
-        accountId:
-          description: Account ID with the type of currency as created ERC20 token symbol. Account will be unfrozen when ERC20 contract address will be set.
-          type: string
-          example: 5e68c66581f2ee32bc354087
-        signatureId:
-          description: ID of prepared payment template to sign. This is should be stored on a client side to retrieve ID of the blockchain transaction, when signing application signs the transaction and broadcasts it to the blockchain.
-          format: uuid
-          example: 1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6
-          type: string
-      type: object
-      required:
-        - accountId
-        - signatureId
     Error403EthBroadcast:
       properties:
         errorCode:
@@ -2322,139 +1858,6 @@ components:
         message:
           description: Unable to obtain current GAS price.
           example: Unable to obtain current GAS price.
-          type: string
-        statusCode:
-          description: "403"
-          example: 403
-          type: number
-      required:
-        - errorCode
-        - message
-        - statusCode
-      type: object
-    Error403ComplianceEth:
-      properties:
-        errorCode:
-          description: compliance.country.eth.not.supported
-          example: compliance.country.eth.not.supported
-          type: string
-        message:
-          description: Customer country not supported for ETH.
-          example: Customer country not supported for ETH.
-          type: string
-        statusCode:
-          description: "403"
-          example: 403
-          type: number
-      required:
-        - errorCode
-        - message
-        - statusCode
-      type: object
-    Error403TxAmountEth:
-      properties:
-        errorCode:
-          description: amount.eth
-          example: amount.eth
-          type: string
-        message:
-          description: ETH payment amount must be at least 0.000000000001, not ${transaction.amount}.
-          example: ETH payment amount must be at least 0.000000000001, not ${transaction.amount}.
-          type: string
-        statusCode:
-          description: "403"
-          example: 403
-          type: number
-      required:
-        - errorCode
-        - message
-        - statusCode
-      type: object
-    Error403TxAmountEthOffchain:
-      properties:
-        errorCode:
-          description: transaction.amount.eth
-          example: transaction.amount.eth
-          type: string
-        message:
-          description: ETH payment amount must be at least 0.000000000000000001, not ${transaction.amount}.
-          example: ETH payment amount must be at least 0.000000000000000001, not ${transaction.amount}.
-          type: string
-        statusCode:
-          description: "403"
-          example: 403
-          type: number
-      required:
-        - errorCode
-        - message
-        - statusCode
-      type: object
-    Error403Erc20Prefix:
-      properties:
-        errorCode:
-          description: erc20.symbol.prefix
-          example: erc20.symbol.prefix
-          type: string
-        message:
-          description: ERC20 token cannot start with VC_.
-          example: ERC20 token cannot start with VC_.
-          type: string
-        statusCode:
-          description: "403"
-          example: 403
-          type: number
-      required:
-        - errorCode
-        - message
-        - statusCode
-      type: object
-    Error403Erc20XpubBoth:
-      properties:
-        errorCode:
-          description: erc20.address.xpub.both
-          example: erc20.address.xpub.both
-          type: string
-        message:
-          description: Either xpub or address must be present, not both.
-          example: Either xpub or address must be present, not both.
-          type: string
-        statusCode:
-          description: "403"
-          example: 403
-          type: number
-      required:
-        - errorCode
-        - message
-        - statusCode
-      type: object
-    Error403Erc20XpubMissing:
-      properties:
-        errorCode:
-          description: erc20.address.xpub.missing
-          example: erc20.address.xpub.missing
-          type: string
-        message:
-          description: Either xpub or address must be present.
-          example: Either xpub or address must be present.
-          type: string
-        statusCode:
-          description: "403"
-          example: 403
-          type: number
-      required:
-        - errorCode
-        - message
-        - statusCode
-      type: object
-    Error403Erc20NameDuplicate:
-      properties:
-        errorCode:
-          description: erc20.duplicate.name
-          example: erc20.duplicate.name
-          type: string
-        message:
-          description: ERC20 token with given name already exists.
-          example: ERC20 token with given name already exists.
           type: string
         statusCode:
           description: "403"
@@ -2802,60 +2205,6 @@ components:
         - contractAddress
         - signatureId
         - tokenId
-    PendingTransaction:
-      type: object
-      properties:
-        id:
-          description: ID of the pending transaction
-          example: 5e6645712b55823de7ea82f1
-          type: string
-        chain:
-          type: string
-          example: ETH
-          description: Blockchain of the transaction
-          enum:
-            - BNB
-            - BTC
-            - ETH
-            - XLM
-            - XRP
-            - BCH
-            - LTC
-            - VET
-        hashes:
-          type: array
-          description: List of the signature Ids to be used to sign transaction. Those hashes should be in order of signing for the BTC, LTC or BCH blockchains.
-          items:
-            type: string
-            description: Signature hash representing wallet or private key managed in the Tatum KMS instance.
-            example: 1234987askdjfb1o2873ryskajfb1234987askdjfb1o2873ryskajfb1234987askdjfb1o2873ryskajfb
-        serializedTransaction:
-          type: string
-          example: alskdjfq8o27fbkasljfbq8o7b4fqo83f7bqejhafbo8q4f
-          description: Serialized data of the transaction to be signed. It can be JSON, HEX or any other representation based on the blockchain.
-        withdrawalId:
-          description: ID of the pending off-chain withdrawal connected to this transaction
-          example: 5e6645712b55823de7ea82f1
-          type: string
-        index:
-          type: number
-          description: In case of mnemonic type of signature Id, this is the index to the specific account that should be used for signature.
-          example: 1
-          minimum: 0
-        txId:
-          description: TX hash of successful transaction.
-          example: c83f8818db43d9ba4accfe454aa44fc33123d47a4f89d47b314d6748eb0e9bc9
-          type: string
-        withdrawalResponses:
-          items:
-            $ref: "#/components/schemas/ResponseData"
-          type: array
-          description: Additional information used for BTC, LTC and BCH off-chain to blockchain transactions.
-      required:
-        - id
-        - chain
-        - serializedTransaction
-        - hashes
     MintErc721:
       type: object
       properties:
@@ -3373,156 +2722,64 @@ components:
         - amount
         - currency
         - signatureId
-    TransferErc20:
+    DeployErc721:
       type: object
       properties:
-        senderAccountId:
-          maxLength: 24
-          minLength: 24
-          description: Sender account ID
-          example: 5e68c66581f2ee32bc354087
+        name:
+          description: Name of the ERC721 token
+          example: My ERC721
+          maxLength: 100
+          minLength: 1
           type: string
-        address:
-          maxLength: 42
-          minLength: 42
-          description: Blockchain address to send ERC20 token to
-          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
-          type: string
-        amount:
-          description: Amount to be sent.
-          maxLength: 38
-          example: "100000"
-          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
-          type: string
-        compliant:
-          description: Compliance check, if withdrawal is not compliant, it will not be processed.
-          example: false
-          type: boolean
-        currency:
-          description: ERC20 symbol. Required only for calls from Tatum Middleware.
-          example: MY_SYMBOL
+        symbol:
+          description: Symbol of the ERC721 token
+          example: ERC_SYMBOL
           maxLength: 30
           minLength: 1
           type: string
-        privateKey:
+        fromPrivateKey:
+          description: Private key of Ethereum account address, from which gas for deployment of ERC721 will be paid. Private key, or signature Id must be present.
           type: string
           maxLength: 66
+          example: "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2"
           minLength: 66
-          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
-          description: Private key of sender address. Either mnemonic and index, privateKey or signature Id must be present - depends on the type of account and xpub.
         nonce:
           type: number
           minimum: 0
           description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
-        paymentId:
-          description: Identifier of the payment, shown for created Transaction within Tatum sender account.
-          example: "1234"
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
+      required:
+        - name
+        - symbol
+        - fromPrivateKey
+    DeployErc721KMS:
+      type: object
+      properties:
+        name:
+          description: Name of the ERC721 token
+          example: My ERC721
           maxLength: 100
           minLength: 1
           type: string
-        senderNote:
-          maxLength: 500
-          minLength: 1
-          description: Note visible to owner of withdrawing account
-          example: "Sender note"
-          type: string
-      required:
-        - senderAccountId
-        - address
-        - privateKey
-        - amount
-    TransferErc20Mnemonic:
-      type: object
-      properties:
-        senderAccountId:
-          maxLength: 24
-          minLength: 24
-          description: Sender account ID
-          example: 5e68c66581f2ee32bc354087
-          type: string
-        address:
-          maxLength: 42
-          minLength: 42
-          description: Blockchain address to send ERC20 token to
-          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
-          type: string
-        amount:
-          description: Amount to be sent.
-          maxLength: 38
-          example: "100000"
-          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
-          type: string
-        compliant:
-          description: Compliance check, if withdrawal is not compliant, it will not be processed.
-          example: false
-          type: boolean
-        currency:
-          description: ERC20 symbol. Required only for calls from Tatum Middleware.
-          example: MY_SYMBOL
-          maxLength: 30
-          minLength: 1
-          type: string
-        mnemonic:
-          maxLength: 500
-          minLength: 1
-          description: Mnemonic to generate private key for sender address. Either mnemonic and index, or privateKey must be present - depends on the type of account and xpub.
-          example: "urge pulp usage sister evidence arrest palm math please chief egg abuse"
-          type: string
-        index:
-          description: Derivation index of sender address.
-          maximum: 2147483647
-          example: 0
-          type: integer
-        nonce:
-          type: number
-          minimum: 0
-          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
-        paymentId:
-          description: Identifier of the payment, shown for created Transaction within Tatum sender account.
-          example: "1234"
-          maxLength: 100
-          minLength: 1
-          type: string
-        senderNote:
-          maxLength: 500
-          minLength: 1
-          description: Note visible to owner of withdrawing account
-          example: "Sender note"
-          type: string
-      required:
-        - senderAccountId
-        - address
-        - amount
-        - mnemonic
-        - index
-    TransferErc20KMS:
-      type: object
-      properties:
-        senderAccountId:
-          maxLength: 24
-          minLength: 24
-          description: Sender account ID
-          example: 5e68c66581f2ee32bc354087
-          type: string
-        address:
-          maxLength: 42
-          minLength: 42
-          description: Blockchain address to send ERC20 token to
-          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
-          type: string
-        amount:
-          description: Amount to be sent.
-          maxLength: 38
-          example: "100000"
-          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
-          type: string
-        compliant:
-          description: Compliance check, if withdrawal is not compliant, it will not be processed.
-          example: false
-          type: boolean
-        currency:
-          description: ERC20 symbol. Required only for calls from Tatum Middleware.
-          example: MY_SYMBOL
+        symbol:
+          description: Symbol of the ERC721 token
+          example: ERC_SYMBOL
           maxLength: 30
           minLength: 1
           type: string
@@ -3532,257 +2789,29 @@ components:
           maxLength: 36
           format: uuid
           example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
-          description: |
-            Identifier of the mnemonic / private key associated in signing application.
-            When hash identifies mnemonic, index must be present to represent specific account to pay from.
-            Private key, mnemonic or signature Id must be present.
+          description: Identifier of the private key associated in signing application. Private key, or signature Id must be present.
         nonce:
           type: number
           minimum: 0
           description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
-        paymentId:
-          description: Identifier of the payment, shown for created Transaction within Tatum sender account.
-          example: "1234"
-          maxLength: 100
-          minLength: 1
-          type: string
-        senderNote:
-          maxLength: 500
-          minLength: 1
-          description: Note visible to owner of withdrawing account
-          example: "Sender note"
-          type: string
+        fee:
+          description: Custom defined fee. If not present, it will be calculated automatically.
+          type: object
+          required:
+            - gasLimit
+            - gasPrice
+          properties:
+            gasLimit:
+              type: string
+              description: Gas limit for transaction in gas price.
+              pattern: ^[+]?\d+$
+              example: "40000"
+            gasPrice:
+              type: string
+              description: Gas price in Gwei.
+              pattern: ^[+]?\d+$
+              example: "20"
       required:
-        - senderAccountId
-        - address
-        - amount
+        - name
+        - symbol
         - signatureId
-    TransferEth:
-      type: object
-      properties:
-        nonce:
-          type: number
-          minimum: 0
-          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
-        address:
-          description: Blockchain address to send assets
-          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
-          maxLength: 42
-          minLength: 42
-          type: string
-        amount:
-          description: Amount to be sent in Ether.
-          maxLength: 38
-          example: "100000"
-          type: string
-          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
-        currency:
-          description: Currency to transfer from Ethereum Blockchain Account. Required only for calls from Tatum Middleware.
-          enum:
-            - USDT
-            - LEO
-            - LINK
-            - UNI
-            - FREE
-            - MKR
-            - USDC
-            - BAT
-            - TUSD
-            - PAX
-            - PAXG
-            - PLTC
-            - MMY
-            - WBTC
-            - XCON
-            - ETH
-          example: ETH
-          type: string
-        compliant:
-          description: Compliance check, if withdrawal is not compliant, it will not be processed.
-          example: false
-          type: boolean
-        privateKey:
-          type: string
-          maxLength: 66
-          minLength: 66
-          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
-          description: Private key of sender address. Either mnemonic and index, privateKey or signature Id must be present - depends on the type of account and xpub.
-        paymentId:
-          description: Identifier of the payment, shown for created Transaction within Tatum sender account.
-          example: "1234"
-          maxLength: 100
-          minLength: 1
-          type: string
-        senderAccountId:
-          maxLength: 24
-          minLength: 24
-          description: Sender account ID
-          example: 5e68c66581f2ee32bc354087
-          type: string
-        senderNote:
-          maxLength: 500
-          minLength: 1
-          description: Note visible to owner of withdrawing account
-          example: "Sender note"
-          type: string
-      required:
-        - senderAccountId
-        - address
-        - amount
-        - privateKey
-    TransferEthMnemonic:
-      type: object
-      properties:
-        nonce:
-          type: number
-          minimum: 0
-          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
-        address:
-          description: Blockchain address to send assets
-          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
-          maxLength: 42
-          minLength: 42
-          type: string
-        amount:
-          description: Amount to be sent in Ether.
-          maxLength: 38
-          example: "100000"
-          type: string
-          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
-        currency:
-          description: Currency to transfer from Ethereum Blockchain Account. Required only for calls from Tatum Middleware.
-          enum:
-            - USDT
-            - LEO
-            - LINK
-            - UNI
-            - FREE
-            - MKR
-            - USDC
-            - BAT
-            - TUSD
-            - PAX
-            - PAXG
-            - PLTC
-            - MMY
-            - WBTC
-            - XCON
-            - ETH
-          example: ETH
-          type: string
-        compliant:
-          description: Compliance check, if withdrawal is not compliant, it will not be processed.
-          example: false
-          type: boolean
-        index:
-          description: Derivation index of sender address.
-          maximum: 2147483647
-          example: 0
-          type: integer
-        mnemonic:
-          maxLength: 500
-          minLength: 1
-          description: Mnemonic to generate private key for sender address. Either mnemonic and index, privateKey or signature Id must be present - depends on the type of account and xpub.
-          example: "urge pulp usage sister evidence arrest palm math please chief egg abuse"
-          type: string
-        paymentId:
-          description: Identifier of the payment, shown for created Transaction within Tatum sender account.
-          example: "1234"
-          maxLength: 100
-          minLength: 1
-          type: string
-        senderAccountId:
-          maxLength: 24
-          minLength: 24
-          description: Sender account ID
-          example: 5e68c66581f2ee32bc354087
-          type: string
-        senderNote:
-          maxLength: 500
-          minLength: 1
-          description: Note visible to owner of withdrawing account
-          example: "Sender note"
-          type: string
-      required:
-        - senderAccountId
-        - address
-        - amount
-        - mnemonic
-        - index
-    TransferEthKMS:
-      type: object
-      properties:
-        nonce:
-          type: number
-          minimum: 0
-          description: Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
-        address:
-          description: Blockchain address to send assets
-          example: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
-          maxLength: 42
-          minLength: 42
-          type: string
-        amount:
-          description: Amount to be sent in Ether.
-          maxLength: 38
-          example: "100000"
-          type: string
-          pattern: ^[+]?((\d+(\.\d*)?)|(\.\d+))$
-        currency:
-          description: Currency to transfer from Ethereum Blockchain Account. Required only for calls from Tatum Middleware.
-          enum:
-            - USDT
-            - LEO
-            - LINK
-            - UNI
-            - FREE
-            - MKR
-            - USDC
-            - BAT
-            - TUSD
-            - PAX
-            - PAXG
-            - PLTC
-            - MMY
-            - WBTC
-            - XCON
-            - ETH
-          example: ETH
-          type: string
-        compliant:
-          description: Compliance check, if withdrawal is not compliant, it will not be processed.
-          example: false
-          type: boolean
-        signatureId:
-          type: string
-          minLength: 36
-          maxLength: 36
-          format: uuid
-          example: 26d3883e-4e17-48b3-a0ee-09a3e484ac83
-          description: |
-            Identifier of the mnemonic / private key associated in signing application.
-            When hash identifies mnemonic, index must be present to represent specific account to pay from.
-            Private key, mnemonic or signature Id must be present.
-        paymentId:
-          description: Identifier of the payment, shown for created Transaction within Tatum sender account.
-          example: "1234"
-          maxLength: 100
-          minLength: 1
-          type: string
-        senderAccountId:
-          maxLength: 24
-          minLength: 24
-          description: Sender account ID
-          example: 5e68c66581f2ee32bc354087
-          type: string
-        senderNote:
-          maxLength: 500
-          minLength: 1
-          description: Note visible to owner of withdrawing account
-          example: "Sender note"
-          type: string
-      required:
-        - senderAccountId
-        - address
-        - signatureId
-        - amount

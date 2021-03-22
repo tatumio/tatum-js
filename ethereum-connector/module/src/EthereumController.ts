@@ -189,7 +189,6 @@ export abstract class EthereumController {
     }
   }
 
-  // Fails with return awaited error: execution reverted
   @Post('v3/ethereum/erc721/mint/batch')
   @HttpCode(HttpStatus.OK)
   public async mintMultipleErc721(@Body() body: EthMintMultipleErc721) {
