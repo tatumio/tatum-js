@@ -18,7 +18,8 @@ describe('NFT tests', () => {
             body.name = 'Tatum';
             body.symbol = 'TTM';
             body.feeCurrency = Currency.CUSD;
-            expect(await deployNFT(true, Currency.CELO, body, 'https://alfajores-forno.celo-testnet.org')).toBeDefined();
+            body.chain = Currency.CELO;
+            expect(await deployNFT(true, body, 'https://alfajores-forno.celo-testnet.org')).toBeDefined();
         });
 
         it('should test valid mint 721 transaction', async () => {
@@ -29,7 +30,8 @@ describe('NFT tests', () => {
             body.tokenId = '3';
             body.url = 'https://google.com';
             body.feeCurrency = Currency.CUSD;
-            expect(await mintNFTWithUri(true, Currency.CELO, body, 'https://alfajores-forno.celo-testnet.org')).toBeDefined();
+            body.chain = Currency.CELO;
+            expect(await mintNFTWithUri(true, body, 'https://alfajores-forno.celo-testnet.org')).toBeDefined();
         });
 
         it('should test valid mint multiple 721 transaction', async () => {
@@ -40,7 +42,8 @@ describe('NFT tests', () => {
             body.tokenId = ['4', '5'];
             body.url = ['https://google.com', 'https://google.com'];
             body.feeCurrency = Currency.CUSD;
-            expect(await mintMultipleNFTWithUri(true, Currency.CELO, body, 'https://alfajores-forno.celo-testnet.org')).toBeDefined();
+            body.chain = Currency.CELO;
+            expect(await mintMultipleNFTWithUri(true, body, 'https://alfajores-forno.celo-testnet.org')).toBeDefined();
         });
 
         it('should test valid burn 721 transaction', async () => {
@@ -49,7 +52,8 @@ describe('NFT tests', () => {
             body.contractAddress = '0x3e1a302DA9345ae6f8188607C017d342A4CCf22e';
             body.tokenId = '3';
             body.feeCurrency = Currency.CUSD;
-            expect(await burnNFT(true, Currency.CELO, body, 'https://alfajores-forno.celo-testnet.org')).toBeDefined();
+            body.chain = Currency.CELO;
+            expect(await burnNFT(true, body, 'https://alfajores-forno.celo-testnet.org')).toBeDefined();
         });
 
         it('should test valid transfer 721 transaction', async () => {
@@ -59,15 +63,17 @@ describe('NFT tests', () => {
             body.to = '0x10168acf3231ccc7b16ba53f17dd4d8bdecf4e1a';
             body.tokenId = '5';
             body.feeCurrency = Currency.CUSD;
-            expect(await transferNFT(true, Currency.CELO, body, 'https://alfajores-forno.celo-testnet.org')).toBeDefined();
+            body.chain = Currency.CELO;
+            expect(await transferNFT(true, body, 'https://alfajores-forno.celo-testnet.org')).toBeDefined();
         });
     });
 
     describe('NFT ETH transactions', () => {
 
         it('should test eth 721 deploy transaction', async () => {
-            const deployErc721Token = await deployNFT(true, Currency.ETH, {
+            const deployErc721Token = await deployNFT(true, {
                 symbol: '1oido3id3',
+                chain: Currency.ETH,
                 fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
                 name: '2123kd',
             });
@@ -77,8 +83,9 @@ describe('NFT tests', () => {
 
         it('should test eth 721 mint transaction', async () => {
             const tokenId = new Date().getTime().toString();
-            const mintedToken = await mintNFTWithUri(true, Currency.ETH, {
+            const mintedToken = await mintNFTWithUri(true, {
                 to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+                chain: Currency.ETH,
                 tokenId,
                 url: 'https://www.seznam.cz',
                 fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
@@ -95,8 +102,9 @@ describe('NFT tests', () => {
         it('should test eth 721 mint multiple transaction', async () => {
             const firstTokenId = new Date().getTime();
             const secondTokenId = firstTokenId + 1;
-            const mintedTokens = await mintMultipleNFTWithUri(true, Currency.ETH, {
+            const mintedTokens = await mintMultipleNFTWithUri(true, {
                 to: ['0x811dfbff13adfbc3cf653dcc373c03616d3471c9', '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'],
+                chain: Currency.ETH,
                 tokenId: [firstTokenId.toString(), secondTokenId.toString()],
                 url: ['https://www.seznam.cz', 'https://www.seznam.cz'],
                 fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
@@ -111,8 +119,9 @@ describe('NFT tests', () => {
         });
 
         it('should test eth 721 burn transaction', async () => {
-            const burnErc721Token = await burnNFT(true, Currency.ETH, {
+            const burnErc721Token = await burnNFT(true, {
                 tokenId: '1615884747446',
+                chain: Currency.ETH,
                 fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
                 contractAddress: '0xab12c6c926cc3c9547aad71d6082fa724152a442',
                 fee: {
@@ -124,8 +133,9 @@ describe('NFT tests', () => {
         });
 
         it('should test eth 721 send transaction', async () => {
-            const sendErc721Token = await transferNFT(true, Currency.ETH, {
+            const sendErc721Token = await transferNFT(true, {
                 to: '0x811dfbff13adfbc3cf653dcc373c03616d3471c9',
+                chain: Currency.ETH,
                 tokenId: '1615884907854',
                 fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
                 contractAddress: '0xab12c6c926cc3c9547aad71d6082fa724152a442',

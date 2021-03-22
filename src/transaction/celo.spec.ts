@@ -1,11 +1,15 @@
 // import {CeloProvider} from '@celo-tools/celo-ethers-wrapper';
 import {
-  BurnCeloErc20,
-  CeloBurnErc721, CeloDeployErc721, CeloMintErc721, CeloMintMultipleErc721, CeloTransferErc721,
-  Currency,
-  DeployCeloErc20,
-  MintCeloErc20,
-  TransferCeloOrCeloErc20Token,
+    BurnCeloErc20,
+    CeloBurnErc721,
+    CeloDeployErc721,
+    CeloMintErc721,
+    CeloMintMultipleErc721,
+    CeloTransferErc721,
+    Currency,
+    DeployCeloErc20,
+    MintCeloErc20,
+    TransferCeloOrCeloErc20Token,
 } from '../model';
 import {
     prepareCeloBurnErc20SignedTransaction,
@@ -87,6 +91,7 @@ describe('CELO transactions', () => {
     it('should test valid deploy 721 transaction', async () => {
         const body = new CeloDeployErc721();
         body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
+        body.chain = Currency.CELO;
         body.name = 'Tatum';
         body.symbol = 'TTM';
         body.feeCurrency = Currency.CUSD;
@@ -101,6 +106,7 @@ describe('CELO transactions', () => {
     it('should test valid mint 721 transaction', async () => {
         const body = new CeloMintErc721();
         body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
+        body.chain = Currency.CELO;
         body.to = '0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea';
         body.contractAddress = '0xD0E0eF0C388ef42B4cD17De41431232ACF3b5b79';
         body.tokenId = '3';
@@ -117,6 +123,7 @@ describe('CELO transactions', () => {
     it('should test valid mint multiple 721 transaction', async () => {
         const body = new CeloMintMultipleErc721();
         body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
+        body.chain = Currency.CELO;
         body.to = ['0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea', '0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea'];
         body.contractAddress = '0xD0E0eF0C388ef42B4cD17De41431232ACF3b5b79';
         body.tokenId = ['4', '5'];
@@ -133,6 +140,7 @@ describe('CELO transactions', () => {
     it('should test valid burn 721 transaction', async () => {
         const body = new CeloBurnErc721();
         body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
+        body.chain = Currency.CELO;
         body.contractAddress = '0xD0E0eF0C388ef42B4cD17De41431232ACF3b5b79';
         body.tokenId = '3';
         body.feeCurrency = Currency.CUSD;
@@ -157,6 +165,7 @@ describe('CELO transactions', () => {
     it('should test valid transfer 721 transaction', async () => {
         const body = new CeloTransferErc721();
         body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
+        body.chain = Currency.CELO;
         body.contractAddress = '0xD0E0eF0C388ef42B4cD17De41431232ACF3b5b79';
         body.to = '0x10168acf3231ccc7b16ba53f17dd4d8bdecf4e1a';
         body.tokenId = '5';

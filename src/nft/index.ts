@@ -41,8 +41,8 @@ export const getNFTsByAddress = async (chain: Currency, contractAddress: string,
  */
 export const getNFTMetadataURI = async (chain: Currency, contractAddress: string, tokenId: string): Promise<Rate> => get(`/v3/nft/metadata/${chain}/${contractAddress}/${tokenId}`);
 
-export const deployNFT = async (testnet: boolean, chain: Currency, body: CeloDeployErc721 | EthDeployErc721, provider?: string) => {
-    switch (chain) {
+export const deployNFT = async (testnet: boolean, body: CeloDeployErc721 | EthDeployErc721, provider?: string) => {
+    switch (body.chain) {
         case Currency.CELO:
             return sendCeloDeployErc721Transaction(testnet, body as CeloDeployErc721, provider);
         case Currency.ETH:
@@ -52,8 +52,8 @@ export const deployNFT = async (testnet: boolean, chain: Currency, body: CeloDep
     }
 };
 
-export const mintNFTWithUri = async (testnet: boolean, chain: Currency, body: CeloMintErc721 | EthMintErc721, provider?: string) => {
-    switch (chain) {
+export const mintNFTWithUri = async (testnet: boolean, body: CeloMintErc721 | EthMintErc721, provider?: string) => {
+    switch (body.chain) {
         case Currency.CELO:
             return sendCeloMinErc721Transaction(testnet, body as CeloMintErc721, provider);
         case Currency.ETH:
@@ -63,8 +63,8 @@ export const mintNFTWithUri = async (testnet: boolean, chain: Currency, body: Ce
     }
 };
 
-export const mintMultipleNFTWithUri = async (testnet: boolean, chain: Currency, body: CeloMintMultipleErc721 | EthMintMultipleErc721, provider?: string) => {
-    switch (chain) {
+export const mintMultipleNFTWithUri = async (testnet: boolean, body: CeloMintMultipleErc721 | EthMintMultipleErc721, provider?: string) => {
+    switch (body.chain) {
         case Currency.CELO:
             return sendCeloMintMultipleErc721Transaction(testnet, body as CeloMintMultipleErc721, provider);
         case Currency.ETH:
@@ -74,8 +74,8 @@ export const mintMultipleNFTWithUri = async (testnet: boolean, chain: Currency, 
     }
 };
 
-export const burnNFT = async (testnet: boolean, chain: Currency, body: CeloBurnErc721 | EthBurnErc721, provider?: string) => {
-    switch (chain) {
+export const burnNFT = async (testnet: boolean, body: CeloBurnErc721 | EthBurnErc721, provider?: string) => {
+    switch (body.chain) {
         case Currency.CELO:
             return sendCeloBurnErc721Transaction(testnet, body as CeloBurnErc721, provider);
         case Currency.ETH:
@@ -85,8 +85,8 @@ export const burnNFT = async (testnet: boolean, chain: Currency, body: CeloBurnE
     }
 };
 
-export const transferNFT = async (testnet: boolean, chain: Currency, body: CeloTransferErc721 | EthTransferErc721, provider?: string) => {
-    switch (chain) {
+export const transferNFT = async (testnet: boolean, body: CeloTransferErc721 | EthTransferErc721, provider?: string) => {
+    switch (body.chain) {
         case Currency.CELO:
             return sendCeloTransferErc721Transaction(testnet, body as CeloTransferErc721, provider);
         case Currency.ETH:

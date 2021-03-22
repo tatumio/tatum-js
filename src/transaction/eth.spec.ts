@@ -1,11 +1,15 @@
-import { ethEstimateGas } from '../blockchain'
-import { Currency, DeployEthErc20, TransferCustomErc20, TransferEthErc20 } from '../model';
+import {ethEstimateGas} from '../blockchain';
+import {Currency, DeployEthErc20, TransferCustomErc20, TransferEthErc20} from '../model';
 import {
   ethGetGasPriceInWei,
   prepareCustomErc20SignedTransaction,
   prepareDeployErc20SignedTransaction,
-  prepareEthOrErc20SignedTransaction, sendBurnErc721Transaction, sendDeployErc721Transaction, sendErc721Transaction,
-  sendMintErc721Transaction, sendMintMultipleErc721Transaction,
+  prepareEthOrErc20SignedTransaction,
+  sendBurnErc721Transaction,
+  sendDeployErc721Transaction,
+  sendErc721Transaction,
+  sendMintErc721Transaction,
+  sendMintMultipleErc721Transaction,
   sendSmartContractMethodInvocationTransaction,
 } from './eth';
 
@@ -185,6 +189,7 @@ describe('ETH transactions', () => {
       tokenId,
       url: 'https://www.seznam.cz',
       fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+      chain: Currency.ETH,
       contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
       fee: {
         gasLimit: '50000',
@@ -206,6 +211,7 @@ describe('ETH transactions', () => {
       tokenId: [firstTokenId.toString(), secondTokenId.toString()],
       url: ['https://www.seznam.cz', 'https://www.seznam.cz'],
       fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+      chain: Currency.ETH,
       contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
       fee: {
         gasLimit: '50000',
@@ -219,6 +225,7 @@ describe('ETH transactions', () => {
     const burnErc721Token = await sendBurnErc721Transaction({
       tokenId: '1615552558810',
       fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+      chain: Currency.ETH,
       contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
       fee: {
         gasLimit: '5000000',
@@ -233,6 +240,7 @@ describe('ETH transactions', () => {
         to: '0x811dfbff13adfbc3cf653dcc373c03616d3471c9',
         tokenId: '1615546122766',
         fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+        chain: Currency.ETH,
         contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
         fee: {
           gasLimit: '5000000',
@@ -246,6 +254,7 @@ describe('ETH transactions', () => {
     const deployErc721Token = await sendDeployErc721Transaction({
       symbol: '1oido3id3',
       fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+      chain: Currency.ETH,
       name: '2123kd',
     })
     expect(deployErc721Token).not.toBeNull()
