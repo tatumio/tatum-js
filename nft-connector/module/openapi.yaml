@@ -13,8 +13,13 @@ tags:
       <li><b>Music and other digital media</b> - NFTs can be used to create rare and unique collectible digital releases. Similarly, NFTs can be used to sell videos, art, or any other type of digital media. Collectors can own digital originals of their favorite songs, movies, or virtually anything else you can imagine.</li>
       <li><b>Digital sports merch</b> - Trading cards, memorabilia, classic moments in sports history, and one-of-a-kind experiences can also be sold as NFTs, opening up a world of possibilities for sports leagues and teams worldwide. The NBA Top Shot website sells collectible “moments” from the league’s history, and at the time of writing, the website is completely sold out and closed for new sign-ups.</li>
       <br/>
-      These endpoints wraps up standard NFT implementation and operations, which can be done with them. Endpoints are blockchain agnostic, the only differentatior is the <b>chain</b> parameter in the URL path.<br/>
-      Tatum now supports NFT on Etherem and Celo blockchains.
+      These endpoints wraps up standard NFT implementation and operations, which can be done with them. Endpoints are blockchain agnostic, the only differentatior is the <b>chain</b> parameter in the URL path.<br/><br/>
+      Tatum now supports NFT these blockchains:<br/>
+      <ul>
+      <li><b>Ethereum</b></li>
+      <li><b>Celo</b></li>
+      <li><b>Binance Smart Chain</b></li>
+      </ul>
       </p>
     name: Blockchain / NFT
 paths:
@@ -22,7 +27,13 @@ paths:
     post:
       description: |
         <p>Deploy NFT Smart Contract. This method creates new ERC721 Smart Contract (Non-Fungible Tokens) on the blockchain. Smart contract is standardized and audited.
-        It is possible to mint, burn and transfer tokens. It is also possible to mint multiple tokens at once.
+        It is possible to mint, burn and transfer tokens. It is also possible to mint multiple tokens at once.<br/>
+        Tatum now supports NFT these blockchains:<br/>
+        <ul>
+        <li><b>Ethereum</b></li>
+        <li><b>Celo</b></li>
+        <li><b>Binance Smart Chain</b></li>
+        </ul>
         It is possible to see the code of the deployed contract <a href="https://github.com/tatumio/tatum-middleware/blob/master/src/contracts/erc721/ERC721Full.sol" target="_blank">here</a>.<br/><br/>
         This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
         No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
@@ -89,6 +100,12 @@ paths:
         <h4>2 credits per API call.</h4><br/>
         <p>Create one NFT Smart Contract Token and transfer it to destination account. Create and transfer any ERC721 token from smart contract defined in contractAddress.
         It is possible to add URL to the created token with a more detailed information about it.<br/><br/>
+        Tatum now supports NFT these blockchains:<br/>
+        <ul>
+        <li><b>Ethereum</b></li>
+        <li><b>Celo</b></li>
+        <li><b>Binance Smart Chain</b></li>
+        </ul>
         This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
         No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
         or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
@@ -140,6 +157,12 @@ paths:
         <h4>2 credits per API call.</h4><br/>
         <p>Transfer NFT Smart Contract Tokens from account to account. Transfer any ERC721 token from smart contract defined in contractAddress.
         Only 1 specific token with specified tokenId can be transfered. This method invokes ERC721 method safeTransfer() to transfer the token.<br/><br/>
+        Tatum now supports NFT these blockchains:<br/>
+        <ul>
+        <li><b>Ethereum</b></li>
+        <li><b>Celo</b></li>
+        <li><b>Binance Smart Chain</b></li>
+        </ul>
         This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
         No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
         or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
@@ -188,6 +211,12 @@ paths:
       description: |
         <h4>2 credits per API call.</h4><br/>
         <p>Create multiple NFT Smart Contract Tokens and transfer them to destination account. Create and transfer any ERC721 tokens from smart contract defined in contractAddress.<br/><br/>
+        Tatum now supports NFT these blockchains:<br/>
+        <ul>
+        <li><b>Ethereum</b></li>
+        <li><b>Celo</b></li>
+        <li><b>Binance Smart Chain</b></li>
+        </ul>
         This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
         No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
         or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
@@ -238,6 +267,12 @@ paths:
       description: |
         <h4>2 credits per API call.</h4><br/>
         <p>Burn one NFT Smart Contract Token. This method destroys any ERC721 token from smart contract defined in contractAddress.<br/><br/>
+        Tatum now supports NFT these blockchains:<br/>
+        <ul>
+        <li><b>Ethereum</b></li>
+        <li><b>Celo</b></li>
+        <li><b>Binance Smart Chain</b></li>
+        </ul>
         This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
         No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
         or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
@@ -286,7 +321,7 @@ paths:
   /v3/nft/transaction/{chain}/{hash}:
     get:
       description: "<h4>1 credit per API call.</h4><br/><p>Get NFT transaction by transaction hash.</p>"
-      operationId: CNftGetTransactErc721
+      operationId: NftGetTransactErc721
       parameters:
         - description: Blockchain to work with
           in: path

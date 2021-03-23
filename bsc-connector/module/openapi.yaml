@@ -275,7 +275,10 @@ paths:
         - Blockchain / BSC
   /v3/bsc/account/balance/bep20/{address}:
     get:
-      description: "<h4>1 credit per API call.</h4><br/><p>Get BSC BEP20 Account balance in the smallest BEP20 unit. Result value is balance * 10^decimals. It is possible to obtain the balance of any BEP20 token, either supported by Tatum natively or via the address of the BEP20 token.</p>"
+      description: |
+        <h4>1 credit per API call.</h4><br/><p>Get BSC BEP20 Account balance in the smallest BEP20 unit. Result value is balance * 10^decimals.
+        It is possible to obtain the balance of any BEP20 token, either supported by Tatum natively or via the address of the BEP20 token.<br/>
+        BEP20 tokens BETH, BBTC, BADA, WBNB, BDOT, BXRP, BLTC, BBCH are available only for mainnet use.</p>
       operationId: BscErc20GetBalance
       parameters:
         - description: "Account address"
@@ -285,7 +288,7 @@ paths:
           schema:
             type: string
             example: "0x3223AEB8404C7525FcAA6C512f91e287AE9FfE7B"
-        - description: Tatum supported BEP20 currency. Either currency, or contractAddress must be present.
+        - description: Tatum supported BEP20 currency for mainnet. Either currency, or contractAddress must be present.
           in: query
           name: currency
           schema:
@@ -1401,7 +1404,7 @@ components:
           minLength: 42
           type: string
         currency:
-          description: Currency to transfer from BSC Blockchain Account.
+          description: Currency to transfer from BSC Blockchain Account. BEP20 tokens BETH, BBTC, BADA, WBNB, BDOT, BXRP, BLTC, BBCH are available only for mainnet use.
           enum:
             - BETH
             - BBTC
@@ -1496,7 +1499,7 @@ components:
           minLength: 42
           type: string
         currency:
-          description: Currency to transfer from BSC Blockchain Account.
+          description: Currency to transfer from BSC Blockchain Account. BEP20 tokens BETH, BBTC, BADA, WBNB, BDOT, BXRP, BLTC, BBCH are available only for mainnet use.
           enum:
             - BETH
             - BBTC
