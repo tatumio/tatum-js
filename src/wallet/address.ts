@@ -23,6 +23,7 @@ import {
 } from '../constants';
 import {Currency} from '../model';
 import {generateAddress} from './tron.crypto';
+import cardano from './cardano.crypto';
 // tslint:disable:no-var-requires
 const bcash = require('@tatumio/bitcoincashjs2-lib');
 const cashaddr = require('cashaddrjs');
@@ -480,6 +481,8 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
             return generateVetAddress(testnet, xpub, i);
         case Currency.LYRA:
             return generateLyraAddress(testnet, xpub, i);
+        case Currency.ADA:
+            return cardano.generateAddress(testnet, xpub, i);
         default:
             throw new Error('Unsupported blockchain.');
     }
@@ -538,6 +541,8 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
             return generateVetPrivateKey(testnet, mnemonic, i);
         case Currency.LYRA:
             return generateLyraPrivateKey(testnet, mnemonic, i);
+        case Currency.ADA:
+            return cardano.generatePrivateKey(mnemonic, i);
         default:
             throw new Error('Unsupported blockchain.');
     }

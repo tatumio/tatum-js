@@ -28,6 +28,7 @@ import {
     VET_DERIVATION_PATH
 } from '../constants';
 import {Currency} from '../model';
+import cardano from './cardano.crypto';
 // tslint:disable-next-line:no-var-requires
 const TronWeb = require('tronweb');
 
@@ -222,6 +223,15 @@ export const generateLyraWallet = async (testnet: boolean, mnem: string): Promis
 };
 
 /**
+ * Generate ADA wallet
+ * @param mnemonic mnemonic seed to use
+ * @returns wallet
+ */
+ export const generateAdaWallet = async (mnemonic: string): Promise<Wallet> => {
+    return { mnemonic, xpub: await cardano.generateXPublicKey(mnemonic) };
+};
+
+/**
  * Generate wallet
  * @param currency blockchain to generate wallet for
  * @param testnet testnet or mainnet version of address
@@ -282,6 +292,8 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
             return generateBnbWallet(testnet);
         case Currency.LYRA:
             return generateLyraWallet(testnet, mnem);
+        case Currency.ADA:
+            return generateAdaWallet(mnem);
         default:
             throw new Error('Unsupported blockchain.');
     }

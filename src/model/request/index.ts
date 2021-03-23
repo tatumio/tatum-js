@@ -59,3 +59,5 @@ export * from './EthDeployErc721';
 export * from './CeloDeployErc721';
 export * from './PrepareEthErc20SignedOffchainTransaction'
 export * from './PrepareEthSignedOffchainTransaction'
+export * from './TransferAda';
+export * from './AdaUTxo';

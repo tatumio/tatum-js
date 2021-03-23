@@ -7,6 +7,8 @@ export const TATUM_RETRIES = 5;
 export const TEST_VET_URL = 'https://sync-testnet.vechain.org/';
 export const VET_URL = 'https://sync-mainnet.vechain.org/';
 
+export const HARDENED_THRESHOLD = 0x80000000;
+
 export const ETH_DERIVATION_PATH = 'm/44\'/60\'/0\'/0';
 export const CELO_DERIVATION_PATH = 'm/44\'/52752\'/0\'/0';
 export const VET_DERIVATION_PATH = 'm/44\'/818\'/0\'/0';
@@ -16,7 +18,10 @@ export const LTC_DERIVATION_PATH = 'm/44\'/2\'/0\'/0';
 export const DOGE_DERIVATION_PATH = 'm/44\'/3\'/0\'/0';
 export const BCH_DERIVATION_PATH = 'm/44\'/145\'/0\'/0';
 export const LYRA_DERIVATION_PATH = 'm/44\'/497\'/0\'/0';
+export const ADA_DERIVATION_PATH = 'm/1852\'/1815\'/0\'';
 export const TESTNET_DERIVATION_PATH = 'm/44\'/1\'/0\'/0';
+
+export const ADA_DERIVATION_SCHEME = 2;
 
 export const LTC_TEST_NETWORK = {
     messagePrefix: '\x18Litecoin Signed Message:\n',
