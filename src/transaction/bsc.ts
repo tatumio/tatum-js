@@ -165,11 +165,11 @@ export const prepareBscOrBep20SignedTransaction = async (body: TransferBscBep20,
         };
     }
 
-    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
     if (signatureId) {
         return JSON.stringify(tx);
     }
 
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
     return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
 };
 
@@ -207,11 +207,10 @@ export const prepareCustomBep20SignedTransaction = async (body: TransferCustomEr
         nonce,
     };
 
-    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
-
     if (signatureId) {
         return JSON.stringify(tx);
     }
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
     return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
 };
 
@@ -257,11 +256,10 @@ export const prepareDeployBep20SignedTransaction = async (body: DeployEthErc20, 
         gasPrice,
         nonce,
     };
-    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
-
     if (signatureId) {
         return JSON.stringify(tx);
     }
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
     return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
 };
 
@@ -295,11 +293,10 @@ export const prepareBscSmartContractWriteMethodInvocation = async (body: SmartCo
         gasPrice,
         nonce,
     };
-    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
-
     if (signatureId) {
         return JSON.stringify(tx);
     }
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
     return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
 };
 
@@ -335,11 +332,10 @@ export const prepareBscMintBep721SignedTransaction = async (body: EthMintErc721,
         nonce,
     };
 
-    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
-
     if (signatureId) {
         return JSON.stringify(tx);
     }
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
 
     return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
 };
@@ -376,11 +372,10 @@ export const prepareBscMintMultipleBep721SignedTransaction = async (body: EthMin
         gasPrice,
         nonce,
     };
-    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
-
     if (signatureId) {
         return JSON.stringify(tx);
     }
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
 
     return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
 };
@@ -415,11 +410,10 @@ export const prepareBscBurnBep721SignedTransaction = async (body: EthBurnErc721,
         nonce,
     };
 
-    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
-
     if (signatureId) {
         return JSON.stringify(tx);
     }
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
 
     return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
 };
@@ -456,11 +450,10 @@ export const prepareBscTransferBep721SignedTransaction = async (body: EthTransfe
         nonce,
     };
 
-    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
-
     if (signatureId) {
         return JSON.stringify(tx);
     }
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
 
     return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
 };
