@@ -47,8 +47,17 @@ export const bscGetGasPriceInWei = async () => {
  * Returns BSC server to connect to.
  *
  * @param provider url of the BSC Server to connect to. If not set, default public server will be used.
+ * @param fromPrivateKey optional private key of sender account
  */
-export const getBscClient = (provider?: string) => new Web3(provider || `${TATUM_API_URL}/v3/bsc/web3/${process.env.TATUM_API_KEY}`);
+export const getBscClient = (provider?: string, fromPrivateKey?: string) => {
+    const client = new Web3(provider || `${TATUM_API_URL}/v3/bsc/web3/${process.env.TATUM_API_KEY}`);
+    if (fromPrivateKey) {
+        client.eth.accounts.wallet.clear();
+        client.eth.accounts.wallet.add(fromPrivateKey);
+        client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+    }
+    return client;
+};
 
 /**
  * Sign BSC pending transaction from Tatum KMS
@@ -61,10 +70,7 @@ export const signBscKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
     if (tx.chain !== Currency.BSC) {
         throw Error('Unsupported chain.');
     }
-    const client = getBscClient(provider);
-    client.eth.accounts.wallet.clear();
-    client.eth.accounts.wallet.add(fromPrivateKey);
-    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+    const client = getBscClient(provider, fromPrivateKey);
     const transactionConfig = JSON.parse(tx.serializedTransaction);
     transactionConfig.gas = await client.eth.estimateGas(transactionConfig);
     return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey)).rawTransaction as string;
@@ -86,11 +92,11 @@ export const prepareBscStoreDataTransaction = async (body: CreateRecord, provide
         nonce,
         signatureId
     } = body;
-    const client = getBscClient(provider);
-    client.eth.accounts.wallet.clear();
-    client.eth.accounts.wallet.add(fromPrivateKey as string);
-    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+    const client = getBscClient(provider, fromPrivateKey);
     const address = to || client.eth.defaultAccount;
+    if (!address) {
+        throw new Error('Recipient must be provided.');
+    }
     const addressNonce = nonce ? nonce : await bscGetTransactionsCount(address);
     const customFee = ethFee ? ethFee : {
         gasLimit: `${data.length * 68 + 21000}`,
@@ -133,10 +139,7 @@ export const prepareBscOrBep20SignedTransaction = async (body: TransferBscBep20,
         signatureId
     } = body;
 
-    const client = getBscClient(provider);
-    client.eth.accounts.wallet.clear();
-    client.eth.accounts.wallet.add(fromPrivateKey);
-    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+    const client = getBscClient(provider, fromPrivateKey);
 
     let tx: TransactionConfig;
     const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await bscGetGasPriceInWei();
@@ -189,10 +192,7 @@ export const prepareCustomBep20SignedTransaction = async (body: TransferCustomEr
         signatureId
     } = body;
 
-    const client = getBscClient(provider);
-    client.eth.accounts.wallet.clear();
-    client.eth.accounts.wallet.add(fromPrivateKey);
-    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+    const client = getBscClient(provider, fromPrivateKey);
 
     let tx: TransactionConfig;
     const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await bscGetGasPriceInWei();
@@ -235,10 +235,7 @@ export const prepareDeployBep20SignedTransaction = async (body: DeployEthErc20, 
         signatureId,
     } = body;
 
-    const client = getBscClient(provider);
-    client.eth.accounts.wallet.clear();
-    client.eth.accounts.wallet.add(fromPrivateKey);
-    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+    const client = getBscClient(provider, fromPrivateKey);
 
     const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await bscGetGasPriceInWei();
     // @ts-ignore
@@ -286,11 +283,7 @@ export const prepareBscSmartContractWriteMethodInvocation = async (body: SmartCo
         nonce,
         signatureId,
     } = body;
-    const client = getBscClient(provider);
-
-    client.eth.accounts.wallet.clear();
-    client.eth.accounts.wallet.add(fromPrivateKey);
-    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+    const client = getBscClient(provider, fromPrivateKey);
 
     const contract = new client.eth.Contract([methodABI]);
     const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await bscGetGasPriceInWei();
@@ -329,10 +322,7 @@ export const prepareBscMintBep721SignedTransaction = async (body: EthMintErc721,
         signatureId
     } = body;
 
-    const client = getBscClient(provider);
-    client.eth.accounts.wallet.clear();
-    client.eth.accounts.wallet.add(fromPrivateKey);
-    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+    const client = getBscClient(provider, fromPrivateKey);
 
     // @ts-ignore
     const contract = new (client).eth.Contract(erc721TokenABI, contractAddress);
@@ -373,10 +363,7 @@ export const prepareBscMintMultipleBep721SignedTransaction = async (body: EthMin
         fee
     } = body;
 
-    const client = await getBscClient(provider);
-    client.eth.accounts.wallet.clear();
-    client.eth.accounts.wallet.add(fromPrivateKey);
-    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+    const client = await getBscClient(provider, fromPrivateKey);
 
     // @ts-ignore
     const contract = new (client).eth.Contract(erc721TokenABI, contractAddress);
@@ -415,10 +402,7 @@ export const prepareBscBurnBep721SignedTransaction = async (body: EthBurnErc721,
         signatureId
     } = body;
 
-    const client = getBscClient(provider);
-    client.eth.accounts.wallet.clear();
-    client.eth.accounts.wallet.add(fromPrivateKey);
-    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+    const client = getBscClient(provider, fromPrivateKey);
 
     // @ts-ignore
     const contract = new (client).eth.Contract(erc721TokenABI, contractAddress);
@@ -458,10 +442,7 @@ export const prepareBscTransferBep721SignedTransaction = async (body: EthTransfe
         signatureId,
     } = body;
 
-    const client = await getBscClient(provider);
-    client.eth.accounts.wallet.clear();
-    client.eth.accounts.wallet.add(fromPrivateKey);
-    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+    const client = await getBscClient(provider, fromPrivateKey);
 
     // @ts-ignore
     const contract = new (client).eth.Contract(erc721TokenABI, contractAddress);
@@ -501,11 +482,7 @@ export const prepareBscDeployBep721SignedTransaction = async (body: EthDeployErc
         signatureId,
     } = body;
 
-    const client = await getBscClient(provider);
-    client.eth.accounts.wallet.clear();
-    client.eth.accounts.wallet.add(fromPrivateKey);
-    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
-
+    const client = await getBscClient(provider, fromPrivateKey);
 
     // @ts-ignore
     const contract = new client.eth.Contract(erc721TokenABI, null, {
