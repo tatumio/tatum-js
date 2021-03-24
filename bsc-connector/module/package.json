@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/bsc-connector",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "BSC Connector for Tatum API",
   "license": "MIT",
   "files": [
@@ -36,7 +36,7 @@
   "bugs": "https://github.com/tatumio/tatum-blockchain-connector/",
   "dependencies": {
     "@nestjs/common": "^7.6.1",
-    "@tatumio/tatum": "^1.8.2",
+    "@tatumio/tatum": "^1.8.3",
     "axios": "^0.21.1",
     "bignumber.js": "^9.0.1",
     "class-transformer": "^0.2.3",
