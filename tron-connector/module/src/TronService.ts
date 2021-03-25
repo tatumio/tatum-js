@@ -54,13 +54,15 @@ export abstract class TronService {
 
     protected abstract getNodesUrl(testnet: boolean): Promise<string[]>;
 
+    protected abstract getApiKey(): string;
+
     protected abstract storeKMSTransaction(txData: string, currency: string, signatureId: string[]): Promise<string>;
 
     protected abstract completeKMSTransaction(txId: string, signatureId: string): Promise<void>;
 
     public async broadcast(txData: string, signatureId?: string) {
         const url = (await this.getNodesUrl(await this.isTestnet()))[0];
-        const broadcast = (await axios.post(`${url}/wallet/broadcasttransaction`, JSON.parse(txData))).data;
+        const broadcast = (await axios.post(`${url}/wallet/broadcasttransaction`, JSON.parse(txData), {headers: {'TRON-PRO-API-KEY': this.getApiKey()}})).data;
         if (broadcast.result) {
             if (signatureId) {
                 try {
@@ -78,7 +80,7 @@ export abstract class TronService {
     public async getBlockChainInfo(testnet?: boolean): Promise<{ testnet: boolean, hash: string, blockNumber: number }> {
         const t = testnet !== undefined ? testnet : await this.isTestnet();
         const urls = await this.getNodesUrl(t);
-        const block = (await axios.post(urls[0] + '/wallet/getnowblock')).data;
+        const block = (await axios.post(urls[0] + '/wallet/getnowblock', undefined, {headers: {'TRON-PRO-API-KEY': this.getApiKey()}})).data;
         return {testnet: t, hash: block.blockID, blockNumber: block.block_header.raw_data.number};
     }
 
@@ -86,9 +88,9 @@ export abstract class TronService {
         const url = (await this.getNodesUrl(testnet !== undefined ? testnet : await this.isTestnet()))[0];
         let block;
         if (hashOrHeight.length > 32) {
-            block = (await axios.post(`${url}/wallet/getblockbyid`, {value: hashOrHeight})).data;
+            block = (await axios.post(`${url}/wallet/getblockbyid`, {value: hashOrHeight}, {headers: {'TRON-PRO-API-KEY': this.getApiKey()}})).data;
         } else {
-            block = (await axios.post(`${url}/wallet/getblockbynum`, {num: parseInt(hashOrHeight)})).data;
+            block = (await axios.post(`${url}/wallet/getblockbynum`, {num: parseInt(hashOrHeight)}, {headers: {'TRON-PRO-API-KEY': this.getApiKey()}})).data;
         }
         return {
             blockNumber: block.block_header.raw_data.number,
@@ -103,14 +105,14 @@ export abstract class TronService {
 
     public async getTransaction(txId: string, testnet?: boolean): Promise<TronTransaction> {
         const url = (await this.getNodesUrl(testnet !== undefined ? testnet : await this.isTestnet()))[0];
-        const [{data: tx}, {data: info}] = await Promise.all([axios.post(`${url}/wallet/gettransactionbyid`, {value: txId}),
-            axios.post(`${url}/wallet/gettransactioninfobyid`, {value: txId})]);
+        const [{data: tx}, {data: info}] = await Promise.all([axios.post(`${url}/wallet/gettransactionbyid`, {value: txId}, {headers: {'TRON-PRO-API-KEY': this.getApiKey()}}),
+            axios.post(`${url}/wallet/gettransactioninfobyid`, {value: txId}, {headers: {'TRON-PRO-API-KEY': this.getApiKey()}})]);
         return TronService.mapTransaction({...tx, ...info.receipt, blockNumber: info.blockNumber});
     }
 
     public async getAccount(address: string): Promise<TronAccount> {
         const url = (await this.getNodesUrl(await this.isTestnet()))[0];
-        const {data} = (await axios.get(`${url}/v1/accounts/${address}`)).data;
+        const {data} = (await axios.get(`${url}/v1/accounts/${address}`, {headers: {'TRON-PRO-API-KEY': this.getApiKey()}})).data;
         if (!data?.length) {
             throw new Error('no such account.');
         }
@@ -133,7 +135,7 @@ export abstract class TronService {
         if (next) {
             u += '&fingerprint=' + next;
         }
-        const result = (await axios.get(u)).data;
+        const result = (await axios.get(u, {headers: {'TRON-PRO-API-KEY': this.getApiKey()}})).data;
         return {
             transactions: result.data.map(TronService.mapTransaction),
             next: result.meta?.fingerprint
@@ -208,7 +210,7 @@ export abstract class TronService {
 
     public async getTrc10Detail(id: string): Promise<TronTrc10> {
         const url = `${(await this.getNodesUrl(await this.isTestnet()))[0]}/v1/assets/${id}`;
-        const {data} = (await axios.get(url)).data;
+        const {data} = (await axios.get(url, {headers: {'TRON-PRO-API-KEY': this.getApiKey()}})).data;
         if (!data?.length) {
             throw new Error('No such asset.');
         }
