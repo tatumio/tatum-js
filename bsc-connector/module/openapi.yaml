@@ -6,14 +6,11 @@ info:
   title: Tatum Binance Smart Chain API
 tags:
   - description: |
-      <p>BSC Blockchain enables access to most commonly used BSC methods. These methods bring small level of abstraction,
-      and are used for the type of applications that want to communicate with blockchain directly. Some of the methods are used alongside Tatum Private Ledger
-      to connect blockchain and private ledger together, like wallet generation or getting information about transactions.<br/>
+      <p>Binance Smart Chain is an Ethereum EVM 100% compatible blockchain, and is very good for decentralized application (Dapp) development within many possible verticals including DeFi, NFT, Gaming, and many others.<br/>
       Tatum supports 2 chains:
-      <ul><li>Mainnet - regular live chain
-      <li>Testnet - test chain used for testing purposes. Coins on test chain have no value and can be obtained from
-      Faucet, e.g. <a target="_blank" href="https://testnet.binance.org/faucet-smart">https://testnet.binance.org/faucet-smart</a></li></ul><br/>
-      Tatum supports BIP44 HD wallets. It is very convenient and secure, since it can generate 2^31 addresses from 1 mnemonic phrase. It is possible to generate this type of wallet with 1 simple API call.</p>
+      <ul><li>Mainnet - a regular live chain
+      <li>Testnet - a chain used for testing purposes. Coins on the test chain have no value and can be obtained from
+      a faucet, e.g. <a target="_blank" href="https://testnet.binance.org/faucet-smart">https://testnet.binance.org/faucet-smart</a></li></ul></p>
     name: Blockchain / BSC
 paths:
   /v3/bsc/wallet:
