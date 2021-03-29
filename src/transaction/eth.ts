@@ -65,6 +65,9 @@ export const signEthKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
     client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
     const transactionConfig = JSON.parse(tx.serializedTransaction);
     transactionConfig.gas = await client.eth.estimateGas(transactionConfig);
+    if (!transactionConfig.nonce) {
+        transactionConfig.nonce = await ethGetTransactionsCount(client.eth.defaultAccount);
+    }
     return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey)).rawTransaction as string;
 };
 

@@ -73,6 +73,9 @@ export const signBscKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
     const client = getBscClient(provider, fromPrivateKey);
     const transactionConfig = JSON.parse(tx.serializedTransaction);
     transactionConfig.gas = await client.eth.estimateGas(transactionConfig);
+    if (!transactionConfig.nonce) {
+        transactionConfig.nonce = await bscGetTransactionsCount(client.eth.defaultAccount as string);
+    }
     return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey)).rawTransaction as string;
 };
 

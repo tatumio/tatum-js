@@ -1,7 +1,8 @@
 import BigNumber from 'bignumber.js';
 import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
-import { validateBody } from '../connector/tatum'
+import {ethGetTransactionsCount} from '../blockchain';
+import {validateBody} from '../connector/tatum';
 import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL} from '../constants';
 import tokenAbi from '../contracts/erc20/token_abi';
 import {getAccountById, getVirtualCurrencyByName} from '../ledger';
@@ -130,6 +131,9 @@ export const signEthOffchainKMSTransaction = async (tx: TransactionKMS, fromPriv
     client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
     const transactionConfig = JSON.parse(tx.serializedTransaction);
     transactionConfig.gas = await client.eth.estimateGas(transactionConfig);
+    if (!transactionConfig.nonce) {
+        transactionConfig.nonce = await ethGetTransactionsCount(client.eth.defaultAccount);
+    }
     return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey)).rawTransaction as string;
 };
 
@@ -165,7 +169,8 @@ export const prepareEthSignedOffchainTransaction =
             tx = {
                 from: 0,
                 to: CONTRACT_ADDRESSES[currency],
-                data: contract.methods.transfer(address.trim(), `0x${new BigNumber(amount).multipliedBy(new BigNumber(10).pow(CONTRACT_DECIMALS[currency])).toString(16)}`).encodeABI(),
+                data: contract.methods.transfer(address.trim(),
+                    `0x${new BigNumber(amount).multipliedBy(new BigNumber(10).pow(CONTRACT_DECIMALS[currency])).toString(16)}`).encodeABI(),
                 gasPrice,
                 nonce,
             };
