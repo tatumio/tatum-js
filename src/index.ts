@@ -9,3 +9,4 @@ export * from './blockchain';
 export * from './transaction';
 export * from './record';
 export * from './constants';
+export * from './nft';
