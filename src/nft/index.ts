@@ -10,8 +10,7 @@ import {
     EthDeployErc721,
     EthMintErc721,
     EthMintMultipleErc721,
-    EthTransferErc721,
-    Rate
+    EthTransferErc721
 } from '../model';
 import {
     sendBep721Transaction,
@@ -32,14 +31,14 @@ import {
 } from '../transaction';
 
 /**
- * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetByAddress" target="_blank">Tatum API documentation</a>
+ * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetBalanceErc721" target="_blank">Tatum API documentation</a>
  */
-export const getNFTsByAddress = async (chain: Currency, contractAddress: string, address: string): Promise<Rate> => get(`/v3/nft/balance/${chain}/${contractAddress}/${address}`);
+export const getNFTsByAddress = async (chain: Currency, contractAddress: string, address: string): Promise<string[]> => get(`/v3/nft/balance/${chain}/${contractAddress}/${address}`);
 
 /**
- * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetURI" target="_blank">Tatum API documentation</a>
+ * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetMetadataErc721" target="_blank">Tatum API documentation</a>
  */
-export const getNFTMetadataURI = async (chain: Currency, contractAddress: string, tokenId: string): Promise<Rate> => get(`/v3/nft/metadata/${chain}/${contractAddress}/${tokenId}`);
+export const getNFTMetadataURI = async (chain: Currency, contractAddress: string, tokenId: string): Promise<{ data: string }> => get(`/v3/nft/metadata/${chain}/${contractAddress}/${tokenId}`);
 
 export const deployNFT = async (testnet: boolean, body: CeloDeployErc721 | EthDeployErc721, provider?: string) => {
     switch (body.chain) {
