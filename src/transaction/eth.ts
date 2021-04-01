@@ -29,9 +29,9 @@ import {
  * Estimate Gas price for the transaction.
  */
 export const ethGetGasPriceInWei = async () => {
-    const gasStationUrl = new URL('https://ethgasstation.info/json/ethgasAPI.json');
+    let gasStationUrl = 'https://ethgasstation.info/json/ethgasAPI.json'
     if (process.env.TATUM_GAS_STATION_API_KEY) {
-        gasStationUrl.searchParams.set('apiKey', process.env.TATUM_GAS_STATION_API_KEY);
+        gasStationUrl = `${gasStationUrl}?apiKey=${process.env.TATUM_GAS_STATION_API_KEY}`
     }
     const data = await Promise.race([
         axios.get(gasStationUrl.toString())
