@@ -1,5 +1,5 @@
 import {Type} from 'class-transformer';
-import {IsNotEmpty, Length, Validate, ValidateIf, ValidateNested} from 'class-validator';
+import {IsNotEmpty, IsUUID, Length, Validate, ValidateIf, ValidateNested} from 'class-validator';
 import {TransferBtcOffchainValidator} from '../validation/TransferBtcOffchainValidator';
 import {CreateWithdrawal} from './CreateWithdrawal';
 
@@ -14,18 +14,61 @@ export class KeyPair {
     public privateKey: string;
 }
 
+const m = (o: TransferBtcBasedOffchain) => {
+    if (o.mnemonic) {
+        return true;
+    }
+    if (!o.signatureId && !o.keyPair) {
+        return true;
+    }
+    if (o.xpub && !o.signatureId) {
+        return true;
+    }
+    if (!o.keyPair && !o.signatureId) {
+        return true;
+    }
+    return false;
+};
+
+const k = (o: TransferBtcBasedOffchain) => {
+    if (o.keyPair) {
+        return true;
+    }
+    if (!o.signatureId && !o.mnemonic) {
+        return true;
+    }
+    if (o.xpub && !(o.signatureId || o.mnemonic)) {
+        return true;
+    }
+    if (!o.mnemonic && !o.signatureId) {
+        return true;
+    }
+    return false;
+};
+
 export class TransferBtcBasedOffchain extends CreateWithdrawal {
 
     @Length(1, 500)
+    @ValidateIf(m)
     @Validate(TransferBtcOffchainValidator)
-    @ValidateIf(o => (o.mnemonic && o.keyPair) || !o.keyPair)
     @IsNotEmpty()
-    public mnemonic?: string;
+    public mnemonic: string;
 
-    @ValidateIf(o => (o.mnemonic && o.keyPair) || !o.mnemonic)
+    @Length(1, 150)
+    @ValidateIf(o => (o.mnemonic || o.signatureId) && !o.attr)
+    @IsNotEmpty()
+    public xpub?: string;
+
+    @ValidateIf(k)
     @Validate(TransferBtcOffchainValidator)
     @IsNotEmpty()
     @Type(() => KeyPair)
     @ValidateNested({each: true})
-    public keyPair?: KeyPair[];
+    public keyPair: KeyPair[];
+
+    @ValidateIf(o => !o.mnemonic && !o.keyPair)
+    @Validate(TransferBtcOffchainValidator)
+    @IsUUID('4')
+    @IsNotEmpty()
+    public signatureId?: string;
 }

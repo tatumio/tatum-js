@@ -4,12 +4,24 @@ import {TransferBtcBasedOffchain} from '../index';
 @ValidatorConstraint({name: 'mnemonicKeypair', async: false})
 export class TransferBtcOffchainValidator implements ValidatorConstraintInterface {
     public defaultMessage(validationArguments?: ValidationArguments) {
-        return 'Either mnemonic, or keyPair must be present.';
+        return 'Either mnemonic, keyPair or signatureId must be present.';
     }
 
     public validate(value: any, validationArguments?: ValidationArguments) {
-        const data = validationArguments?.object as TransferBtcBasedOffchain;
-        return !(data.mnemonic && data.keyPair);
+        const {mnemonic, keyPair, signatureId, xpub} = validationArguments?.object as TransferBtcBasedOffchain;
+        if (mnemonic && keyPair) {
+            return false;
+        }
+        if (mnemonic && signatureId) {
+            return false;
+        }
+        if (signatureId && keyPair) {
+            return false;
+        }
+        if (xpub && keyPair) {
+            return false;
+        }
+        return true;
     }
 
 }

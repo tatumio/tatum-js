@@ -1,6 +1,17 @@
 import {Type} from 'class-transformer';
-import {ArrayNotEmpty, IsNotEmpty, Length, Max, Min, Validate, ValidateIf, ValidateNested} from 'class-validator';
+import {
+    ArrayNotEmpty,
+    IsNotEmpty,
+    IsUUID,
+    Length,
+    Max,
+    Min,
+    Validate,
+    ValidateIf,
+    ValidateNested
+} from 'class-validator';
 import {TransferBtcValidator} from '../validation/TransferBtcValidator';
+import {SignatureIdValidator} from '../validation/SignatureIdValidator';
 
 class FromAddress {
     @IsNotEmpty()
@@ -23,9 +34,18 @@ export class FromUTXO {
     @Max(4294967295)
     public index: number;
 
+    @ValidateIf(o => (o.privateKey && o.signatureId) || !o.signatureId)
+    @Validate(SignatureIdValidator)
     @IsNotEmpty()
     @Length(52, 52)
     public privateKey: string;
+
+    @ValidateIf(o => (o.privateKey && o.signatureId) || !o.privateKey)
+    @Validate(SignatureIdValidator)
+    @IsNotEmpty()
+    @Length(36, 36)
+    @IsUUID('4')
+    public signatureId?: string;
 }
 
 export class To {
