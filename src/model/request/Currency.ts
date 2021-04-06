@@ -9,6 +9,7 @@ export enum Currency {
     QUORUM = 'QUORUM',
     XRP = 'XRP',
     XLM = 'XLM',
+    DOGE = 'DOGE',
     VET = 'VET',
     NEO = 'NEO',
     BNB = 'BNB',

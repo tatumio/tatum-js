@@ -1,15 +1,11 @@
 import BigNumber from 'bignumber.js';
-import {ECPair, Network, networks, Transaction, TransactionBuilder} from 'bitcoinjs-lib';
-import {
-    ltcBroadcast,
-    ltcGetTxForAccount,
-    ltcGetUTXO
-} from '../blockchain';
-import { validateBody } from '../connector/tatum'
+import {ECPair, Network, Transaction, TransactionBuilder} from 'bitcoinjs-lib';
+import {ltcBroadcast, ltcGetTxForAccount, ltcGetUTXO} from '../blockchain';
+import {validateBody} from '../connector/tatum';
 import {LTC_NETWORK, LTC_TEST_NETWORK} from '../constants';
 import {Currency, TransactionKMS, TransferBtcBasedBlockchain} from '../model';
 
-const prepareSignedTransaction = async (network: Network, body: TransferBtcBasedBlockchain, currency: Currency) => {
+const prepareSignedTransaction = async (network: Network, body: TransferBtcBasedBlockchain) => {
     await validateBody(body, TransferBtcBasedBlockchain);
     const {fromUTXO, fromAddress, to} = body;
     const tx = new TransactionBuilder(network);
@@ -75,7 +71,7 @@ export const signLitecoinKMSTransaction = async (tx: TransactionKMS, privateKeys
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareLitecoinSignedTransaction = async (testnet: boolean, body: TransferBtcBasedBlockchain) => {
-    return prepareSignedTransaction(testnet ? LTC_TEST_NETWORK : LTC_NETWORK, body, Currency.LTC);
+    return prepareSignedTransaction(testnet ? LTC_TEST_NETWORK : LTC_NETWORK, body);
 };
 
 /**

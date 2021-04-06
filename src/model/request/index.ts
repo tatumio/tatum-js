@@ -8,6 +8,7 @@ export * from './TransferBtcBasedBlockchain';
 export * from './TransferCustomErc20';
 export * from './TransferEthErc20';
 export * from './TransferVet';
+export * from './TransferDogeBlockchain';
 export * from './TransferXlm';
 export * from './TransferQuorum';
 export * from './AccountPassword';

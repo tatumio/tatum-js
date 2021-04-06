@@ -3,6 +3,8 @@ import Neon, {wallet} from '@cityofzion/neon-js';
 import {generateMnemonic, mnemonicToSeed} from 'bip39';
 import {HDNode, Mnemonic} from 'bitbox-sdk';
 import {bip32, networks} from 'bitcoinjs-lib';
+// @ts-ignore
+import {Networks} from 'bitcore-lib-doge';
 import {hdkey as ethHdKey} from 'ethereumjs-wallet';
 // @ts-ignore
 import hdkey from 'hdkey';
@@ -12,6 +14,9 @@ import {
     BCH_DERIVATION_PATH,
     BTC_DERIVATION_PATH,
     CELO_DERIVATION_PATH,
+    DOGE_DERIVATION_PATH,
+    DOGE_NETWORK,
+    DOGE_TEST_NETWORK,
     ETH_DERIVATION_PATH,
     LTC_DERIVATION_PATH,
     LTC_NETWORK,
@@ -145,6 +150,20 @@ export const generateBtcWallet = async (testnet: boolean, mnem: string): Promise
 };
 
 /**
+ * Generate Doge wallet
+ * @param testnet testnet or mainnet version of address
+ * @param mnem mnemonic seed to use
+ * @returns wallet
+ */
+export const generateDogeWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
+    const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? DOGE_TEST_NETWORK.bip32 : DOGE_NETWORK.bip32);
+    return {
+        mnemonic: mnem,
+        xpub: hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : DOGE_DERIVATION_PATH).toJSON().xpub
+    };
+};
+
+/**
  * Generate Tron wallet
  * @returns mnemonic for the wallet
  */
@@ -219,6 +238,8 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
     switch (currency) {
         case Currency.BTC:
             return generateBtcWallet(testnet, mnem);
+        case Currency.DOGE:
+            return generateDogeWallet(testnet, mnem);
         case Currency.LTC:
             return generateLtcWallet(testnet, mnem);
         case Currency.BCH:

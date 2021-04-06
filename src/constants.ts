@@ -13,6 +13,7 @@ export const VET_DERIVATION_PATH = 'm/44\'/818\'/0\'/0';
 export const BTC_DERIVATION_PATH = 'm/44\'/0\'/0\'/0';
 export const TRON_DERIVATION_PATH = 'm/44\'/195\'/0\'/0';
 export const LTC_DERIVATION_PATH = 'm/44\'/2\'/0\'/0';
+export const DOGE_DERIVATION_PATH = 'm/44\'/3\'/0\'/0';
 export const BCH_DERIVATION_PATH = 'm/44\'/145\'/0\'/0';
 export const LYRA_DERIVATION_PATH = 'm/44\'/497\'/0\'/0';
 export const TESTNET_DERIVATION_PATH = 'm/44\'/1\'/0\'/0';
@@ -38,6 +39,29 @@ export const LTC_NETWORK = {
     pubKeyHash: 0x30,
     scriptHash: 0x32,
     wif: 0xb0,
+};
+
+export const DOGE_TEST_NETWORK = {
+    messagePrefix: '\x18Dogecoin Signed Message:\n',
+    bech32: '',
+    bip32: {
+        public: 0x043587cf,
+        private: 0x04358394,
+    },
+    pubKeyHash: 0x71,
+    scriptHash: 0xc4,
+    wif: 0xf1,
+};
+export const DOGE_NETWORK = {
+    messagePrefix: '\x18Dogecoin Signed Message:\n',
+    bech32: '',
+    bip32: {
+        public: 0x0488b21e,
+        private: 0x0488ade4,
+    },
+    pubKeyHash: 0x1e,
+    scriptHash: 0x16,
+    wif: 0x9e,
 };
 
 export const LYRA_TEST_NETWORK = {

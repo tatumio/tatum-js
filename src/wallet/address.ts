@@ -8,6 +8,9 @@ import {
     BCH_DERIVATION_PATH,
     BTC_DERIVATION_PATH,
     CELO_DERIVATION_PATH,
+    DOGE_DERIVATION_PATH,
+    DOGE_NETWORK,
+    DOGE_TEST_NETWORK,
     ETH_DERIVATION_PATH,
     LTC_DERIVATION_PATH,
     LTC_NETWORK,
@@ -33,6 +36,19 @@ const TronWeb = require('tronweb');
  */
 const generateBtcAddress = (testnet: boolean, xpub: string, i: number) => {
     const network = testnet ? networks.testnet : networks.bitcoin;
+    const w = fromBase58(xpub, network).derivePath(String(i));
+    return payments.p2pkh({pubkey: w.publicKey, network}).address as string;
+};
+
+/**
+ * Generate Dogecoin address
+ * @param testnet testnet or mainnet version of address
+ * @param xpub extended public key to generate address from
+ * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
+ * @returns blockchain address
+ */
+const generateDogeAddress = (testnet: boolean, xpub: string, i: number) => {
+    const network = testnet ? DOGE_TEST_NETWORK : DOGE_NETWORK;
     const w = fromBase58(xpub, network).derivePath(String(i));
     return payments.p2pkh({pubkey: w.publicKey, network}).address as string;
 };
@@ -181,6 +197,21 @@ const generateLtcPrivateKey = async (testnet: boolean, mnemonic: string, i: numb
 };
 
 /**
+ * Generate Dogecoin private key from mnemonic seed
+ * @param testnet testnet or mainnet version of address
+ * @param mnemonic mnemonic to generate private key from
+ * @param i derivation index of private key to generate.
+ * @returns blockchain private key to the address
+ */
+const generateDogePrivateKey = async (testnet: boolean, mnemonic: string, i: number) => {
+    const network = testnet ? DOGE_TEST_NETWORK : DOGE_NETWORK;
+    return fromSeed(await mnemonicToSeed(mnemonic), network)
+        .derivePath(testnet ? TESTNET_DERIVATION_PATH : DOGE_DERIVATION_PATH)
+        .derive(i)
+        .toWIF();
+};
+
+/**
  * Generate Bitcoin Cash private key from mnemonic seed
  * @param testnet testnet or mainnet version of address
  * @param mnemonic mnemonic to generate private key from
@@ -315,6 +346,8 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
             return generateTronAddress(xpub, i);
         case Currency.LTC:
             return generateLtcAddress(testnet, xpub, i);
+        case Currency.DOGE:
+            return generateDogeAddress(testnet, xpub, i);
         case Currency.CELO:
             return generateCeloAddress(testnet, xpub, i);
         case Currency.BCH:
@@ -368,6 +401,8 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
             return generateBtcPrivateKey(testnet, mnemonic, i);
         case Currency.LTC:
             return generateLtcPrivateKey(testnet, mnemonic, i);
+        case Currency.DOGE:
+            return generateDogePrivateKey(testnet, mnemonic, i);
         case Currency.BCH:
             return generateBchPrivateKey(testnet, mnemonic, i);
         case Currency.TRON:
