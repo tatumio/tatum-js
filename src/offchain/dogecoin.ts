@@ -84,7 +84,7 @@ export const signDogecoinOffchainKMSTransaction = async (tx: TransactionKMS, mne
  */
 export const prepareDogecoinSignedOffchainTransaction =
     async (testnet: boolean, data: WithdrawalResponseData[], amount: string, address: string, mnemonic?: string, keyPair?: KeyPair[],
-           changeAddress?: string, multipleAmounts?: string[]) => {
+           changeAddress?: string, multipleAmounts?: string[], signatureId?: string) => {
         const network = testnet ? DOGE_TEST_NETWORK : DOGE_NETWORK;
         const tx = new TransactionBuilder(network);
 
@@ -113,6 +113,11 @@ export const prepareDogecoinSignedOffchainTransaction =
                 throw new Error('Impossible to prepare transaction. Either mnemonic or keyPair and attr must be present.');
             }
         }
+
+        if (signatureId) {
+            return tx.buildIncomplete().toHex();
+        }
+
         for (const [i, input] of data.entries()) {
             // when there is no address field present, input is pool transfer to 0
             if (input.vIn === '-1') {

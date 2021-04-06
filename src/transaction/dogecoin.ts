@@ -12,12 +12,15 @@ const prepareSignedTransaction = async (network: Network, body: TransferDogeBloc
     const privateKeysToSign: string[] = [];
     for (const item of fromUTXO) {
         tx.addInput(item.txHash, item.index);
-        privateKeysToSign.push(item.privateKey);
+        privateKeysToSign.push(item.signatureId || item.privateKey);
     }
     for (const item of to) {
         tx.addOutput(item.address, Number(new BigNumber(item.value).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
     }
 
+    if (fromUTXO[0].signatureId) {
+        return JSON.stringify({txData: tx.buildIncomplete().toHex(), privateKeysToSign});
+    }
     for (let i = 0; i < privateKeysToSign.length; i++) {
         const ecPair = ECPair.fromWIF(privateKeysToSign[i], network);
         tx.sign(i, ecPair);
