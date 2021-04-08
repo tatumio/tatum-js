@@ -1,4 +1,4 @@
-import { validateBody } from '../connector/tatum'
+import {validateBody} from '../connector/tatum';
 import {CONTRACT_ADDRESSES} from '../constants';
 import {getAccountById, getVirtualCurrencyByName} from '../ledger';
 import {Currency, TransferTrxOffchain, TrcType} from '../model/request';
@@ -33,7 +33,7 @@ export const sendTronOffchainTransaction = async (testnet: boolean, body: Transf
         throw new Error('No mnemonic or private key is present.');
     }
 
-    withdrawal.fee = withdrawal.fee || '1.5';
+    withdrawal.fee = withdrawal.fee || '2.5';
     const account = await getAccountById(withdrawal.senderAccountId);
     let txData;
     if (account.currency === Currency.TRON) {
