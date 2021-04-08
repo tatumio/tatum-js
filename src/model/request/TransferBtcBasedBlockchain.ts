@@ -10,8 +10,8 @@ import {
     ValidateIf,
     ValidateNested
 } from 'class-validator';
-import {TransferBtcValidator} from '../validation/TransferBtcValidator';
 import {SignatureIdValidator} from '../validation/SignatureIdValidator';
+import {TransferBtcValidator} from '../validation/TransferBtcValidator';
 
 class FromAddress {
     @IsNotEmpty()

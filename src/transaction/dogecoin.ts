@@ -1,31 +1,37 @@
 import BigNumber from 'bignumber.js';
-import {ECPair, Network, Transaction, TransactionBuilder} from 'bitcoinjs-lib';
+// @ts-ignore
+import {PrivateKey, Script, Transaction} from 'bitcore-lib-doge';
 import {dogeBroadcast} from '../blockchain';
 import {validateBody} from '../connector/tatum';
-import {DOGE_NETWORK, DOGE_TEST_NETWORK} from '../constants';
 import {Currency, TransactionKMS, TransferDogeBlockchain} from '../model';
 
-const prepareSignedTransaction = async (network: Network, body: TransferDogeBlockchain) => {
+const prepareSignedTransaction = async (body: TransferDogeBlockchain) => {
     await validateBody(body, TransferDogeBlockchain);
-    const {fromUTXO, to} = body;
-    const tx = new TransactionBuilder(network);
+    const {fromUTXO, to, fee, changeAddress} = body;
+    const tx = new Transaction()
+        .fee(Number(new BigNumber(fee).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)))
+        .change(changeAddress);
     const privateKeysToSign: string[] = [];
     for (const item of fromUTXO) {
-        tx.addInput(item.txHash, item.index);
+        tx.from({
+            txId: item.txHash,
+            outputIndex: item.index,
+            script: Script.buildPublicKeyHashOut(item.address).toString(),
+            satoshis: Number(new BigNumber(item.value).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR))
+        });
         privateKeysToSign.push(item.signatureId || item.privateKey);
     }
     for (const item of to) {
-        tx.addOutput(item.address, Number(new BigNumber(item.value).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+        tx.to(item.address, Number(new BigNumber(item.value).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
     }
 
     if (fromUTXO[0].signatureId) {
-        return JSON.stringify({txData: tx.buildIncomplete().toHex(), privateKeysToSign});
+        return JSON.stringify({txData: JSON.stringify(tx), privateKeysToSign});
     }
-    for (let i = 0; i < privateKeysToSign.length; i++) {
-        const ecPair = ECPair.fromWIF(privateKeysToSign[i], network);
-        tx.sign(i, ecPair);
+    for (const pk of privateKeysToSign) {
+        tx.sign(PrivateKey.fromWIF(pk));
     }
-    return tx.build().toHex();
+    return tx.serialize();
 };
 
 /**
@@ -39,32 +45,28 @@ export const signDogecoinKMSTransaction = async (tx: TransactionKMS, privateKeys
     if (tx.chain !== Currency.DOGE) {
         throw Error('Unsupported chain.');
     }
-    const network = testnet ? DOGE_TEST_NETWORK : DOGE_NETWORK;
-    const builder = TransactionBuilder.fromTransaction(Transaction.fromHex(tx.serializedTransaction), network);
-    for (const [i, privateKey] of privateKeys.entries()) {
-        const ecPair = ECPair.fromWIF(privateKey, network);
-        builder.sign(i, ecPair);
+    const builder = new Transaction(JSON.parse(tx.serializedTransaction));
+    for (const privateKey of privateKeys) {
+        builder.sign(PrivateKey.fromWIF(privateKey));
     }
-    return builder.build().toHex();
+    return builder.serialize();
 };
 
 /**
  * Sign Dogecoin transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareDogecoinSignedTransaction = async (testnet: boolean, body: TransferDogeBlockchain) => {
-    return prepareSignedTransaction(testnet ? DOGE_TEST_NETWORK : DOGE_NETWORK, body);
+export const prepareDogecoinSignedTransaction = async (body: TransferDogeBlockchain) => {
+    return prepareSignedTransaction(body);
 };
 
 /**
  * Send Dogecoin transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendDogecoinTransaction = async (testnet: boolean, body: TransferDogeBlockchain) => {
-    return dogeBroadcast(await prepareDogecoinSignedTransaction(testnet, body));
+export const sendDogecoinTransaction = async (body: TransferDogeBlockchain) => {
+    return dogeBroadcast(await prepareDogecoinSignedTransaction(body));
 };

@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
-import {ECPair, Transaction, TransactionBuilder} from 'bitcoinjs-lib';
+// @ts-ignore
+import {PrivateKey, Script, Transaction} from 'bitcore-lib-doge';
 import {validateBody} from '../connector/tatum';
-import {DOGE_NETWORK, DOGE_TEST_NETWORK} from '../constants';
 import {Currency, KeyPair, TransactionKMS, TransferBtcBasedOffchain, WithdrawalResponseData} from '../model';
 import {generateAddressFromXPub, generateDogeWallet, generatePrivateKeyFromMnemonic} from '../wallet';
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
@@ -58,16 +58,14 @@ export const signDogecoinOffchainKMSTransaction = async (tx: TransactionKMS, mne
     if (tx.chain !== Currency.DOGE || !tx.withdrawalResponses) {
         throw Error('Unsupported chain.');
     }
-    const network = testnet ? DOGE_TEST_NETWORK : DOGE_NETWORK;
-    const builder = TransactionBuilder.fromTransaction(Transaction.fromHex(tx.serializedTransaction), network);
+    const builder = new Transaction(JSON.parse(tx.serializedTransaction));
     for (const [i, response] of tx.withdrawalResponses.entries()) {
         if (response.vIn === '-1') {
             continue;
         }
-        const ecPair = ECPair.fromWIF(await generatePrivateKeyFromMnemonic(Currency.DOGE, testnet, mnemonic, response.address?.derivationKey || 0), network);
-        builder.sign(i, ecPair);
+        builder.sign(PrivateKey.fromWIF(await generatePrivateKeyFromMnemonic(Currency.DOGE, testnet, mnemonic, response.address?.derivationKey || 0)));
     }
-    return builder.build().toHex();
+    return builder.serialize();
 };
 
 /**
@@ -85,37 +83,41 @@ export const signDogecoinOffchainKMSTransaction = async (tx: TransactionKMS, mne
 export const prepareDogecoinSignedOffchainTransaction =
     async (testnet: boolean, data: WithdrawalResponseData[], amount: string, address: string, mnemonic?: string, keyPair?: KeyPair[],
            changeAddress?: string, multipleAmounts?: string[], signatureId?: string) => {
-        const network = testnet ? DOGE_TEST_NETWORK : DOGE_NETWORK;
-        const tx = new TransactionBuilder(network);
+        const tx = new Transaction();
 
         data.forEach((input) => {
             if (input.vIn !== '-1') {
-                tx.addInput(input.vIn, input.vInIndex);
+                tx.from({
+                    txId: input.vIn,
+                    outputIndex: input.vInIndex,
+                    script: Script.buildPublicKeyHashOut(input.address.address).toString(),
+                    satoshis: Number(new BigNumber(input.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR))
+                });
             }
         });
 
         const lastVin = data.find(d => d.vIn === '-1') as WithdrawalResponseData;
         if (multipleAmounts?.length) {
             for (const [i, multipleAmount] of multipleAmounts.entries()) {
-                tx.addOutput(address.split(',')[i], Number(new BigNumber(multipleAmount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+                tx.to(address.split(',')[i], Number(new BigNumber(multipleAmount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
             }
         } else {
-            tx.addOutput(address, Number(new BigNumber(amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+            tx.to(address, Number(new BigNumber(amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
         }
         if (new BigNumber(lastVin.amount).isGreaterThan(0)) {
             if (mnemonic && !changeAddress) {
                 const {xpub} = await generateDogeWallet(testnet, mnemonic);
-                tx.addOutput(generateAddressFromXPub(Currency.DOGE, testnet, xpub, 0),
+                tx.to(generateAddressFromXPub(Currency.DOGE, testnet, xpub, 0),
                     Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
             } else if (changeAddress) {
-                tx.addOutput(changeAddress, Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+                tx.to(changeAddress, Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
             } else {
                 throw new Error('Impossible to prepare transaction. Either mnemonic or keyPair and attr must be present.');
             }
         }
 
         if (signatureId) {
-            return tx.buildIncomplete().toHex();
+            return JSON.stringify(tx);
         }
 
         for (const [i, input] of data.entries()) {
@@ -125,16 +127,14 @@ export const prepareDogecoinSignedOffchainTransaction =
             }
             if (mnemonic) {
                 const derivationKey = input.address?.derivationKey || 0;
-                const ecPair = ECPair.fromWIF(await generatePrivateKeyFromMnemonic(Currency.DOGE, testnet, mnemonic, derivationKey), network);
-                tx.sign(i, ecPair);
+                tx.sign(PrivateKey.fromWIF(await generatePrivateKeyFromMnemonic(Currency.DOGE, testnet, mnemonic, derivationKey)));
             } else if (keyPair) {
                 const privateKey = keyPair.find(k => k.address === input.address.address) as KeyPair;
-                const ecPair = ECPair.fromWIF(privateKey.privateKey, network);
-                tx.sign(i, ecPair);
+                tx.sign(PrivateKey.fromWIF(privateKey));
             } else {
                 throw new Error('Impossible to prepare transaction. Either mnemonic or keyPair and attr must be present.');
             }
         }
 
-        return tx.build().toHex();
+        return tx.serialize();
     };
