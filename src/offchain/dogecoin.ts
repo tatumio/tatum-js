@@ -78,6 +78,7 @@ export const signDogecoinOffchainKMSTransaction = async (tx: TransactionKMS, mne
  * @param keyPair keyPair to sign transaction from. keyPair or mnemonic must be present
  * @param changeAddress address to send the rest of the unused coins
  * @param multipleAmounts if multiple recipients are present in the address separated by ',', this should be list of amounts to send
+ * @param signatureId if using KMS, this is signatureId of the wallet representing mnemonic
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareDogecoinSignedOffchainTransaction =
@@ -129,7 +130,7 @@ export const prepareDogecoinSignedOffchainTransaction =
                 const derivationKey = input.address?.derivationKey || 0;
                 tx.sign(PrivateKey.fromWIF(await generatePrivateKeyFromMnemonic(Currency.DOGE, testnet, mnemonic, derivationKey)));
             } else if (keyPair) {
-                const privateKey = keyPair.find(k => k.address === input.address.address) as KeyPair;
+                const {privateKey} = keyPair.find(k => k.address === input.address.address) as KeyPair;
                 tx.sign(PrivateKey.fromWIF(privateKey));
             } else {
                 throw new Error('Impossible to prepare transaction. Either mnemonic or keyPair and attr must be present.');
