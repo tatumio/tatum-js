@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum",
-  "version": "1.9.6",
+  "version": "1.9.7",
   "description": "",
   "main": "dist/src/index.js",
   "repository": "https://github.com/tatumio/tatum-js",
@@ -32,7 +32,7 @@
     "@binance-chain/javascript-sdk": "^4.0.3",
     "@celo-tools/celo-ethers-wrapper": "0.0.5",
     "@cityofzion/neon-js": "^4.8.0",
-    "@tatumio/bitcoincashjs2-lib": "4.1.0",
+    "@tatumio/bitcoincashjs2-lib": "4.1.1",
     "axios": "^0.21.1",
     "axios-retry": "^3.1.9",
     "bignumber.js": "^9.0.0",
