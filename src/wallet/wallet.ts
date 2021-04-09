@@ -1,7 +1,6 @@
 import {generatePrivateKey, getAddressFromPrivateKey} from '@binance-chain/javascript-sdk/lib/crypto';
 import Neon, {wallet} from '@cityofzion/neon-js';
 import {generateMnemonic, mnemonicToSeed} from 'bip39';
-import {HDNode, Mnemonic} from 'bitbox-sdk';
 import {bip32, networks} from 'bitcoinjs-lib';
 // @ts-ignore
 import {Networks} from 'bitcore-lib-doge';
@@ -123,15 +122,11 @@ export const generateCeloWallet = async (testnet: boolean, mnem: string): Promis
  * @param mnem mnemonic seed to use
  * @returns wallet
  */
-export const generateBchWallet = (testnet: boolean, mnem: string): Wallet => {
-    const m = new Mnemonic();
-    const node = new HDNode();
-    const rootSeedBuffer = m.toSeed(mnem);
-    const hdNode = node.fromSeed(rootSeedBuffer, testnet ? 'testnet' : 'mainnet');
-    const path = node.derivePath(hdNode, BCH_DERIVATION_PATH);
+export const generateBchWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
+    const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? networks.testnet.bip32 : networks.bitcoin.bip32);
     return {
         mnemonic: mnem,
-        xpub: node.toXPub(path),
+        xpub: hdwallet.derive(BCH_DERIVATION_PATH).toJSON().xpub
     };
 };
 
