@@ -1,4 +1,4 @@
-# Complete flow towards creating BTC wallet and making transactions
+# Complete flow towards creating ETH transactions
 
 # Get your key from Tatum and use the key as 
 ## Import required libraries
