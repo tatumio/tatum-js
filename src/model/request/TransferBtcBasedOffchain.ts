@@ -64,7 +64,7 @@ export class TransferBtcBasedOffchain extends CreateWithdrawal {
     @IsNotEmpty()
     @Type(() => KeyPair)
     @ValidateNested({each: true})
-    public keyPair: KeyPair[];
+    public keyPair?: KeyPair[];
 
     @ValidateIf(o => !o.mnemonic && !o.keyPair)
     @Validate(TransferBtcOffchainValidator)
