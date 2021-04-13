@@ -42,35 +42,30 @@ describe('LEDGER TESTS: Account test suite', () => {
     });
 
     it('should create multiple new accounts', async () => {
-        await createAccounts({
+        const accountsObj = await createAccounts({
             'accounts': [{ 'currency': 'BTC', 'accountNumber': '123', 'accountCode': accountCode }, { 'currency': 'BTC', 'accountNumber': '456', 'accountCode': accountCode }]
-        }).then(accountsObj => {
-            console.log(accountsObj)
-            expect(accountsObj.length).toBe(2)
-            accountsObj.forEach((o) => {
-                expect(o.active).toBe(true) // checking a condition for a specific key in each element
-            })
+        })
+        console.log(accountsObj)
+        expect(accountsObj.length).toBe(2)
+        accountsObj.forEach((o) => {
+            expect(o.active).toBe(true) // checking a condition for a specific key in each element
         })
     });
     it('should get the blocked amounts via id', async () => {
-        await getBlockedAmountsByAccountId(id).then(fetchAccount => {
-            expect(fetchAccount.length).toBe(0)  // block amounts should be zero in a new account
-        })
+        const fetchAccount = await getBlockedAmountsByAccountId(id)
+        expect(fetchAccount.length).toBe(0)  // block amounts should be zero in a new account
     })
     it('should block amount for an account', async () => {
-        await blockAmount(id, { 'amount': '50000', 'type': 'DEBIT_CARD_OP', 'description': 'Card payment in the shop.' }).then(fetchAccount => {
-            blockID = fetchAccount.id
-            expect(fetchAccount.id).not.toBe(null)  // returns id of the block amt
-        })
+        const fetchAccount = await blockAmount(id, { 'amount': '50000', 'type': 'DEBIT_CARD_OP', 'description': 'Card payment in the shop.' })
+        blockID = fetchAccount.id
+        expect(fetchAccount.id).not.toBe(null)  // returns id of the block amt
     });
     it('should delete block amount for an account', async () => {
-        await deleteBlockedAmount(blockID).then(fetchedAccount => {
-            expect(fetchedAccount).toBeUndefined() // deletes the blocked amount
-        })
+        const fetchedAccount = await deleteBlockedAmount(blockID)
+        expect(fetchedAccount).toBeUndefined() // deletes the blocked amount
     });
     it('should return empty list again', async () => {
-        await getBlockedAmountsByAccountId(id).then(fetchAccount => {
-            expect(fetchAccount.length).toBe(0)  // block amounts should be zero again as delete is called
-        })
+        const fetchAccount = await getBlockedAmountsByAccountId(id)
+        expect(fetchAccount.length).toBe(0)  // block amounts should be zero again as delete is called
     });
 });
