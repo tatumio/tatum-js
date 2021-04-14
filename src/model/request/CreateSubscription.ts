@@ -14,7 +14,11 @@ import {
 } from 'class-validator';
 import {SubscriptionType} from '../response/ledger/SubscriptionType';
 
-export class SubscriptionAttrAccountBalanceLimit {
+abstract class Subscription {
+    public __type?: string
+}
+
+export class SubscriptionAttrAccountBalanceLimit extends Subscription {
 
     @MaxLength(38)
     @IsNotEmpty()
@@ -26,7 +30,7 @@ export class SubscriptionAttrAccountBalanceLimit {
     public typeOfBalance: string;
 }
 
-export class SubscriptionAttrOffchainWithdrawal {
+export class SubscriptionAttrOffchainWithdrawal extends Subscription{
 
     @IsNotEmpty()
     @Length(1, 30)
@@ -34,7 +38,7 @@ export class SubscriptionAttrOffchainWithdrawal {
     public currency: string;
 }
 
-export class SubscriptionAttrTxHistoryReport {
+export class SubscriptionAttrTxHistoryReport extends Subscription {
     @IsNotEmpty()
     @IsNumber()
     @Min(1)
@@ -42,7 +46,7 @@ export class SubscriptionAttrTxHistoryReport {
     public interval: number;
 }
 
-export class SubscriptionAttrIncomingBlockchainTx {
+export class SubscriptionAttrIncomingBlockchainTx extends Subscription {
 
     @Length(24, 24)
     @IsNotEmpty()
@@ -54,7 +58,7 @@ export class SubscriptionAttrIncomingBlockchainTx {
     public url: string;
 }
 
-export class SubscriptionAttrCompleteBlockchainTx {
+export class SubscriptionAttrCompleteBlockchainTx extends Subscription {
 
     @IsNotEmpty()
     @Length(1, 30)
@@ -70,8 +74,19 @@ export class CreateSubscription {
 
     @IsNotEmptyObject()
     @ValidateNested()
-    @Type(() => SubscriptionAttrAccountBalanceLimit || SubscriptionAttrCompleteBlockchainTx
-        || SubscriptionAttrOffchainWithdrawal || SubscriptionAttrTxHistoryReport || SubscriptionAttrIncomingBlockchainTx)
+    @Type(() => Subscription, {
+        discriminator: {
+            property: '__type',
+            subTypes: [
+                { value: SubscriptionAttrAccountBalanceLimit, name: 'ACCOUNT_BALANCE_LIMIT' },
+                { value: SubscriptionAttrOffchainWithdrawal, name: 'OFFCHAIN_WITHDRAWAL' },
+                { value: SubscriptionAttrTxHistoryReport, name: 'TRANSACTION_HISTORY_REPORT' },
+                { value: SubscriptionAttrIncomingBlockchainTx, name: 'ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION' },
+                { value: SubscriptionAttrCompleteBlockchainTx, name: 'COMPLETE_BLOCKCHAIN_TRANSACTION' },
+                { value: SubscriptionAttrIncomingBlockchainTx, name: 'ACCOUNT_PENDING_BLOCKCHAIN_TRANSACTION' },
+            ],
+        },
+    })
     public attr: SubscriptionAttrAccountBalanceLimit | SubscriptionAttrOffchainWithdrawal | SubscriptionAttrTxHistoryReport
         | SubscriptionAttrIncomingBlockchainTx | SubscriptionAttrCompleteBlockchainTx;
 }
