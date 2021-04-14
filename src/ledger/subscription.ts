@@ -5,7 +5,10 @@ import {Account, Subscription, Transaction} from '../model';
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/createSubscription" target="_blank">Tatum API documentation</a>
  */
-export const createNewSubscription = async (data: CreateSubscription): Promise<{ id: string }> => post(`/v3/subscription`, data, CreateSubscription);
+export const createNewSubscription = async (data: CreateSubscription): Promise<{ id: string }> => {
+    data.attr.__type = data.type
+    return post(`/v3/subscription`, data, CreateSubscription)
+};
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/getSubscriptions" target="_blank">Tatum API documentation</a>
