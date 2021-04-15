@@ -21,6 +21,13 @@ class FromAddress {
     @IsNotEmpty()
     @Length(52, 52)
     public privateKey: string;
+
+    @ValidateIf(o => (o.privateKey && o.signatureId) || !o.privateKey)
+    @Validate(SignatureIdValidator)
+    @IsNotEmpty()
+    @Length(36, 36)
+    @IsUUID('4')
+    public signatureId?: string;
 }
 
 export class FromUTXO {

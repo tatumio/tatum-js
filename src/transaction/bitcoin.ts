@@ -26,7 +26,7 @@ const prepareSignedTransaction = async (body: TransferBtcBasedBlockchain, curren
                             script: Script.fromAddress(item.address).toString(),
                             satoshis: o.value,
                         });
-                        privateKeysToSign.push(item.privateKey);
+                        privateKeysToSign.push(item.signatureId || item.privateKey);
                     } catch (e) {
                     }
                 }
@@ -44,11 +44,15 @@ const prepareSignedTransaction = async (body: TransferBtcBasedBlockchain, curren
                 script: Script.fromAddress(address).toString(),
                 satoshis: value,
             });
-            privateKeysToSign.push(item.privateKey);
+            privateKeysToSign.push(item.signatureId || item.privateKey);
         }
     }
     for (const item of to) {
         tx.to(item.address, Number(new BigNumber(item.value).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+    }
+
+    if ((fromAddress && fromAddress[0].signatureId) || (fromUTXO && fromUTXO[0].signatureId)) {
+        return JSON.stringify({txData: JSON.stringify(tx), privateKeysToSign});
     }
 
     for (const item of privateKeysToSign) {
