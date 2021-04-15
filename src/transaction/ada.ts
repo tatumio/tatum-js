@@ -1,6 +1,6 @@
 import CardanoWasm from '@emurgo/cardano-serialization-lib-nodejs';
-import { get } from '../connector/tatum';
-import { TransferAda, AdaUTxo } from '../model';
+import {get} from '../connector/tatum';
+import {AdaUTxo, TransferAda} from '../model';
 
 /**
  * Prepare a signed ADA transaction with the private key locally. Nothing is broadcasted to the blockchain.

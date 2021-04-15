@@ -6,16 +6,19 @@ import {
     IsNumberString,
     IsOptional,
     Length,
-    Matches, Max,
+    Matches,
+    Max,
     MaxLength,
-    Min, Validate, ValidateIf,
+    Min,
+    Validate,
+    ValidateIf,
     ValidateNested,
 } from 'class-validator';
-import {TrcType} from './TrcType';
-import {Currency} from './Currency';
 import {Fiat} from '../response';
 import {CreateErc20Validator} from './CreateErc20Validator';
+import {Currency} from './Currency';
 import {CustomerUpdate} from './CustomerUpdate';
+import {TrcType} from './TrcType';
 
 export class CreateTrcOffchain {
 

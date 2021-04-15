@@ -1,6 +1,6 @@
-import {get, post} from '../connector/tatum';
 import BigNumber from 'bignumber.js';
 import {Block, Transaction} from 'web3-eth';
+import {get, post} from '../connector/tatum';
 import {TransactionHash} from '../model';
 
 /**

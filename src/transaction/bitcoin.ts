@@ -1,29 +1,31 @@
 import BigNumber from 'bignumber.js';
-import {ECPair, Network, networks, Transaction, TransactionBuilder} from 'bitcoinjs-lib';
-import {
-    btcBroadcast,
-    btcGetTxForAccount,
-    btcGetUTXO,
-} from '../blockchain';
-import { validateBody } from '../connector/tatum'
-import {Currency, TransactionKMS, TransferBtcBasedBlockchain} from '../model';
+// @ts-ignore
+import {PrivateKey, Script, Transaction} from 'bitcore-lib';
+import {btcBroadcast, btcGetTransaction, btcGetTxForAccount, btcGetUTXO,} from '../blockchain';
+import {validateBody} from '../connector/tatum';
+import {BtcTxOutputs, Currency, TransactionKMS, TransferBtcBasedBlockchain} from '../model';
 
-const prepareSignedTransaction = async (network: Network, body: TransferBtcBasedBlockchain, currency: Currency) => {
+const prepareSignedTransaction = async (body: TransferBtcBasedBlockchain, currency: Currency) => {
     await validateBody(body, TransferBtcBasedBlockchain);
     const {fromUTXO, fromAddress, to} = body;
-    const tx = new TransactionBuilder(network);
+    const tx = new Transaction();
     const privateKeysToSign: string[] = [];
     if (fromAddress) {
         for (const item of fromAddress) {
-          const txs = await btcGetTxForAccount(item.address);
+            const txs = await btcGetTxForAccount(item.address);
             for (const t of txs) {
-                for (const [i, o] of t.outputs.entries()) {
+                for (const [i, o] of (t.outputs as BtcTxOutputs[]).entries()) {
                     if (o.address !== item.address) {
                         continue;
                     }
                     try {
                         await btcGetUTXO(t.hash, i);
-                        tx.addInput(t.hash, i);
+                        tx.from({
+                            txId: t.hash,
+                            outputIndex: i,
+                            script: Script.fromAddress(item.address).toString(),
+                            satoshis: o.value,
+                        });
                         privateKeysToSign.push(item.privateKey);
                     } catch (e) {
                     }
@@ -32,19 +34,27 @@ const prepareSignedTransaction = async (network: Network, body: TransferBtcBased
         }
     } else if (fromUTXO) {
         for (const item of fromUTXO) {
-            tx.addInput(item.txHash, item.index);
+            const t = await btcGetTransaction(item.txHash);
+            const address = t.outputs ? t.outputs[item.index].address : t.vout?.[item.index].scriptPubKey.addresses[0];
+            const value = t.outputs ? t.outputs[item.index].value :
+                Number(new BigNumber(t.vout?.[item.index].value || 0).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR));
+            tx.from({
+                txId: item.txHash,
+                outputIndex: item.index,
+                script: Script.fromAddress(address).toString(),
+                satoshis: value,
+            });
             privateKeysToSign.push(item.privateKey);
         }
     }
     for (const item of to) {
-        tx.addOutput(item.address, Number(new BigNumber(item.value).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+        tx.to(item.address, Number(new BigNumber(item.value).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
     }
 
-    for (let i = 0; i < privateKeysToSign.length; i++) {
-        const ecPair = ECPair.fromWIF(privateKeysToSign[i], network);
-        tx.sign(i, ecPair);
+    for (const item of privateKeysToSign) {
+        tx.sign(PrivateKey.fromWIF(item));
     }
-    return tx.build().toHex();
+    return tx.serialize(true);
 };
 
 /**
@@ -54,17 +64,15 @@ const prepareSignedTransaction = async (network: Network, body: TransferBtcBased
  * @param testnet mainnet or testnet version
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signBitcoinKMSTransaction = async (tx: TransactionKMS, privateKeys: string[], testnet: boolean) => {
+export const signBitcoinKMSTransaction = async (tx: TransactionKMS, privateKeys: string[]) => {
     if (tx.chain !== Currency.BTC) {
         throw Error('Unsupported chain.');
     }
-    const network = testnet ? networks.testnet : networks.bitcoin;
-    const builder = TransactionBuilder.fromTransaction(Transaction.fromHex(tx.serializedTransaction), network);
-    for (const [i, privateKey] of privateKeys.entries()) {
-        const ecPair = ECPair.fromWIF(privateKey, network);
-        builder.sign(i, ecPair);
+    const builder = new Transaction(JSON.parse(tx.serializedTransaction));
+    for (const privateKey of privateKeys) {
+        builder.sign(PrivateKey.fromWIF(privateKey));
     }
-    return builder.build().toHex();
+    return builder.serialize(true);
 };
 
 /**
@@ -74,7 +82,7 @@ export const signBitcoinKMSTransaction = async (tx: TransactionKMS, privateKeys:
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareBitcoinSignedTransaction = async (testnet: boolean, body: TransferBtcBasedBlockchain) => {
-    return prepareSignedTransaction(testnet ? networks.testnet : networks.bitcoin, body, Currency.BTC);
+    return prepareSignedTransaction(body, Currency.BTC);
 };
 
 /**

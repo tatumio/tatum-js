@@ -1,7 +1,7 @@
-import {validateBody} from '../connector/tatum';
 import BigNumber from 'bignumber.js';
 // @ts-ignore
 import coininfo from 'coininfo';
+import {validateBody} from '../connector/tatum';
 import {Currency, KeyPair, TransactionKMS, TransferBtcBasedOffchain, WithdrawalResponseData} from '../model';
 import {generateAddressFromXPub, generateBchWallet, generatePrivateKeyFromMnemonic, toLegacyAddress} from '../wallet';
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';

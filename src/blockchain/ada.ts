@@ -1,11 +1,18 @@
-import { get, post } from '../connector/tatum';
-import { CardanoBlockChainInfo, TransactionHash, CardanoAccount, CardanoBlock, CardanoTransaction, AdaUTxo } from '../model';
+import {get, post} from '../connector/tatum';
+import {
+    AdaUTxo,
+    CardanoAccount,
+    CardanoBlock,
+    CardanoBlockChainInfo,
+    CardanoTransaction,
+    TransactionHash
+} from '../model';
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/CardanoBroadcast" target="_blank">Tatum API documentation</a>
  */
 export const cardanoBroadcast = async (txData: string): Promise<TransactionHash> =>
-  post(`/v3/cardano/broadcast`, { txData });
+    post(`/v3/cardano/broadcast`, {txData});
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/CardanoGetBlockChainInfo" target="_blank">Tatum API documentation</a>

@@ -16,7 +16,7 @@ const prepareSignedTransaction = async (body: TransferDogeBlockchain) => {
         tx.from({
             txId: item.txHash,
             outputIndex: item.index,
-            script: Script.buildPublicKeyHashOut(item.address).toString(),
+            script: Script.fromAddress(item.address).toString(),
             satoshis: Number(new BigNumber(item.value).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR))
         });
         privateKeysToSign.push(item.signatureId || item.privateKey);

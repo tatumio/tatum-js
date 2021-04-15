@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js';
-import {ECPair, networks, Transaction, TransactionBuilder} from 'bitcoinjs-lib';
-import { validateBody } from '../connector/tatum'
+// @ts-ignore
+import {PrivateKey, Script, Transaction} from 'bitcore-lib';
+import {validateBody} from '../connector/tatum';
 import {Currency, KeyPair, TransactionKMS, TransferBtcBasedOffchain, WithdrawalResponseData} from '../model';
 import {generateAddressFromXPub, generateBtcWallet, generatePrivateKeyFromMnemonic} from '../wallet';
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
@@ -57,16 +58,14 @@ export const signBitcoinOffchainKMSTransaction = async (tx: TransactionKMS, mnem
     if (tx.chain !== Currency.BTC || !tx.withdrawalResponses) {
         throw Error('Unsupported chain.');
     }
-    const network = testnet ? networks.testnet : networks.bitcoin;
-    const builder = TransactionBuilder.fromTransaction(Transaction.fromHex(tx.serializedTransaction), network);
-    for (const [i, response] of tx.withdrawalResponses.entries()) {
+    const builder = new Transaction(JSON.parse(tx.serializedTransaction));
+    for (const response of tx.withdrawalResponses) {
         if (response.vIn === '-1') {
             continue;
         }
-        const ecPair = ECPair.fromWIF(await generatePrivateKeyFromMnemonic(Currency.BTC, testnet, mnemonic, response.address?.derivationKey || 0), network);
-        builder.sign(i, ecPair);
+        builder.sign(PrivateKey.fromWIF(await generatePrivateKeyFromMnemonic(Currency.BTC, testnet, mnemonic, response.address?.derivationKey || 0)));
     }
-    return builder.build().toHex();
+    return builder.serialize(true);
 };
 
 /**
@@ -79,56 +78,64 @@ export const signBitcoinOffchainKMSTransaction = async (tx: TransactionKMS, mnem
  * @param keyPair keyPair to sign transaction from. keyPair or mnemonic must be present
  * @param changeAddress address to send the rest of the unused coins
  * @param multipleAmounts if multiple recipients are present in the address separated by ',', this should be list of amounts to send
+ * @param signatureId if using KMS, this is signatureId of the wallet representing mnemonic
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareBitcoinSignedOffchainTransaction =
     async (testnet: boolean, data: WithdrawalResponseData[], amount: string, address: string, mnemonic?: string, keyPair?: KeyPair[],
-           changeAddress?: string, multipleAmounts?: string[]) => {
-        const network = testnet ? networks.testnet : networks.bitcoin;
-        const tx = new TransactionBuilder(network);
+           changeAddress?: string, multipleAmounts?: string[], signatureId?: string) => {
+        const tx = new Transaction();
 
         data.forEach((input) => {
             if (input.vIn !== '-1') {
-                tx.addInput(input.vIn, input.vInIndex);
+                tx.from({
+                    txId: input.vIn,
+                    outputIndex: input.vInIndex,
+                    script: Script.fromAddress(input.address.address).toString(),
+                    satoshis: Number(new BigNumber(input.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR))
+                });
             }
         });
 
         const lastVin = data.find(d => d.vIn === '-1') as WithdrawalResponseData;
         if (multipleAmounts?.length) {
             for (const [i, multipleAmount] of multipleAmounts.entries()) {
-                tx.addOutput(address.split(',')[i], Number(new BigNumber(multipleAmount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+                tx.to(address.split(',')[i], Number(new BigNumber(multipleAmount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
             }
         } else {
-            tx.addOutput(address, Number(new BigNumber(amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+            tx.to(address, Number(new BigNumber(amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
         }
         if (new BigNumber(lastVin.amount).isGreaterThan(0)) {
             if (mnemonic && !changeAddress) {
                 const {xpub} = await generateBtcWallet(testnet, mnemonic);
-                tx.addOutput(generateAddressFromXPub(Currency.BTC, testnet, xpub, 0),
+                tx.to(generateAddressFromXPub(Currency.BTC, testnet, xpub, 0),
                     Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
             } else if (changeAddress) {
-                tx.addOutput(changeAddress, Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+                tx.to(changeAddress, Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
             } else {
                 throw new Error('Impossible to prepare transaction. Either mnemonic or keyPair and attr must be present.');
             }
         }
-        for (const [i, input] of data.entries()) {
+
+        if (signatureId) {
+            return JSON.stringify(tx);
+        }
+
+        for (const input of data) {
             // when there is no address field present, input is pool transfer to 0
             if (input.vIn === '-1') {
                 continue;
             }
             if (mnemonic) {
                 const derivationKey = input.address?.derivationKey || 0;
-                const ecPair = ECPair.fromWIF(await generatePrivateKeyFromMnemonic(Currency.BTC, testnet, mnemonic, derivationKey), network);
-                tx.sign(i, ecPair);
+                tx.sign(PrivateKey.fromWIF(await generatePrivateKeyFromMnemonic(Currency.BTC, testnet, mnemonic, derivationKey)));
             } else if (keyPair) {
-                const privateKey = keyPair.find(k => k.address === input.address.address) as KeyPair;
-                const ecPair = ECPair.fromWIF(privateKey.privateKey, network);
-                tx.sign(i, ecPair);
+                const {privateKey} = keyPair.find(k => k.address === input.address.address) as KeyPair;
+                tx.sign(PrivateKey.fromWIF(privateKey));
             } else {
                 throw new Error('Impossible to prepare transaction. Either mnemonic or keyPair and attr must be present.');
             }
         }
 
-        return tx.build().toHex();
+        return tx.serialize(true);
     };

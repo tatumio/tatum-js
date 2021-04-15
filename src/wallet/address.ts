@@ -22,8 +22,8 @@ import {
     VET_DERIVATION_PATH
 } from '../constants';
 import {Currency} from '../model';
-import {generateAddress} from './tron.crypto';
 import cardano from './cardano.crypto';
+import {generateAddress} from './tron.crypto';
 // tslint:disable:no-var-requires
 const bcash = require('@tatumio/bitcoincashjs2-lib');
 const cashaddr = require('cashaddrjs');

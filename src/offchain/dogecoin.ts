@@ -59,13 +59,13 @@ export const signDogecoinOffchainKMSTransaction = async (tx: TransactionKMS, mne
         throw Error('Unsupported chain.');
     }
     const builder = new Transaction(JSON.parse(tx.serializedTransaction));
-    for (const [i, response] of tx.withdrawalResponses.entries()) {
+    for (const response of tx.withdrawalResponses) {
         if (response.vIn === '-1') {
             continue;
         }
         builder.sign(PrivateKey.fromWIF(await generatePrivateKeyFromMnemonic(Currency.DOGE, testnet, mnemonic, response.address?.derivationKey || 0)));
     }
-    return builder.serialize();
+    return builder.serialize(true);
 };
 
 /**
@@ -91,7 +91,7 @@ export const prepareDogecoinSignedOffchainTransaction =
                 tx.from({
                     txId: input.vIn,
                     outputIndex: input.vInIndex,
-                    script: Script.buildPublicKeyHashOut(input.address.address).toString(),
+                    script: Script.fromAddress(input.address.address).toString(),
                     satoshis: Number(new BigNumber(input.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR))
                 });
             }
@@ -137,5 +137,5 @@ export const prepareDogecoinSignedOffchainTransaction =
             }
         }
 
-        return tx.serialize();
+        return tx.serialize(true);
     };

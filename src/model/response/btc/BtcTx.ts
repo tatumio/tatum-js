@@ -69,13 +69,26 @@ export interface BtcTx {
      * @type {Array<BtcTxInputs>}
      * @memberof BtcTx
      */
-    inputs: BtcTxInputs[];
+    inputs?: BtcTxInputs[];
     /**
      *
      * @type {Array<BtcTxOutputs>}
      * @memberof BtcTx
      */
-    outputs: BtcTxOutputs[];
+    outputs?: BtcTxOutputs[];
+
+    vin?: {
+        txid: string,
+        vout: number,
+    }[];
+
+    vout?: {
+        value: number,
+        n: number,
+        scriptPubKey: {
+            addresses: string[]
+        }
+    }[];
     /**
      * Block this transaction was included in.
      * @type {number}

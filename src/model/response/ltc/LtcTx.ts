@@ -81,7 +81,20 @@ export interface LtcTx {
      * @type {Array<LtcTxOutputs>}
      * @memberof LtcTx
      */
-    outputs: LtcTxOutputs[];
+    outputs?: LtcTxOutputs[];
+
+    vin?: {
+        txid: string,
+        vout: number,
+    }[];
+
+    vout?: {
+        value: number,
+        n: number,
+        scriptPubKey: {
+            addresses: string[]
+        }
+    }[];
     /**
      * Block this transaction was included in.
      * @type {number}

@@ -1,10 +1,10 @@
-import {toLegacyAddress} from '../wallet';
 import BigNumber from 'bignumber.js';
 // @ts-ignore
 import coininfo from 'coininfo';
 import {bcashBroadcast, bcashGetTransaction} from '../blockchain';
 import {validateBody} from '../connector/tatum';
 import {BchTx, Currency, TransactionKMS, TransferBchBlockchain} from '../model';
+import {toLegacyAddress} from '../wallet';
 
 const {
     ECSignature,
