@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 import {PrivateKey, Script, Transaction} from 'bitcore-lib';
 import {validateBody} from '../connector/tatum';
 import {Currency, KeyPair, TransactionKMS, TransferBtcBasedOffchain, WithdrawalResponseData} from '../model';
-import {generateAddressFromXPub, generateBtcWallet, generatePrivateKeyFromMnemonic} from '../wallet';
+import {generateAddressFromXPub, generatePrivateKeyFromMnemonic} from '../wallet';
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
 
 /**
@@ -16,7 +16,7 @@ import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} fr
 export const sendBitcoinOffchainTransaction = async (testnet: boolean, body: TransferBtcBasedOffchain) => {
     await validateBody(body, TransferBtcBasedOffchain);
     const {
-        mnemonic, keyPair, attr: changeAddress, ...withdrawal
+        mnemonic, keyPair, xpub, attr: changeAddress, ...withdrawal
     } = body;
     if (!withdrawal.fee) {
         withdrawal.fee = '0.0005';
@@ -27,7 +27,7 @@ export const sendBitcoinOffchainTransaction = async (testnet: boolean, body: Tra
     } = withdrawal;
     let txData;
     try {
-        txData = await prepareBitcoinSignedOffchainTransaction(testnet, data, amount, address, mnemonic, keyPair, changeAddress, withdrawal.multipleAmounts);
+        txData = await prepareBitcoinSignedOffchainTransaction(testnet, data, amount, address, mnemonic, keyPair, changeAddress, xpub, withdrawal.multipleAmounts);
     } catch (e) {
         console.error(e);
         await offchainCancelWithdrawal(id);
@@ -77,13 +77,14 @@ export const signBitcoinOffchainKMSTransaction = async (tx: TransactionKMS, mnem
  * @param mnemonic mnemonic to sign transaction from. mnemonic or keyPair must be present
  * @param keyPair keyPair to sign transaction from. keyPair or mnemonic must be present
  * @param changeAddress address to send the rest of the unused coins
+ * @param xpub xpub of the wallet
  * @param multipleAmounts if multiple recipients are present in the address separated by ',', this should be list of amounts to send
  * @param signatureId if using KMS, this is signatureId of the wallet representing mnemonic
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareBitcoinSignedOffchainTransaction =
     async (testnet: boolean, data: WithdrawalResponseData[], amount: string, address: string, mnemonic?: string, keyPair?: KeyPair[],
-           changeAddress?: string, multipleAmounts?: string[], signatureId?: string) => {
+           changeAddress?: string, xpub?: string, multipleAmounts?: string[], signatureId?: string) => {
         const tx = new Transaction();
 
         data.forEach((input) => {
@@ -106,8 +107,7 @@ export const prepareBitcoinSignedOffchainTransaction =
             tx.to(address, Number(new BigNumber(amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
         }
         if (new BigNumber(lastVin.amount).isGreaterThan(0)) {
-            if (mnemonic && !changeAddress) {
-                const {xpub} = await generateBtcWallet(testnet, mnemonic);
+            if (xpub) {
                 tx.to(generateAddressFromXPub(Currency.BTC, testnet, xpub, 0),
                     Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
             } else if (changeAddress) {
