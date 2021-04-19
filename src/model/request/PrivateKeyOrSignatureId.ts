@@ -1,5 +1,5 @@
-import { IsNotEmpty, IsUUID, Length, Validate, ValidateIf } from 'class-validator'
-import { SignatureIdValidator } from '../validation/SignatureIdValidator'
+import {IsNotEmpty, IsOptional, IsUUID, Length, Min, Validate, ValidateIf} from 'class-validator';
+import {SignatureIdValidator} from '../validation/SignatureIdValidator';
 
 export class PrivateKeyOrSignatureId {
   @ValidateIf(o => (o.fromPrivateKey && o.signatureId) || !o.signatureId)
@@ -14,4 +14,9 @@ export class PrivateKeyOrSignatureId {
   @IsUUID('4')
   @IsNotEmpty()
   public signatureId?: string;
+
+  @ValidateIf(o => o.signatureId)
+  @IsOptional()
+  @Min(0)
+  public index?: number;
 }
