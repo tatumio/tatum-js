@@ -1,4 +1,3 @@
-import axios from 'axios';
 import {BigNumber} from 'bignumber.js';
 import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
@@ -28,19 +27,7 @@ import {
  * Estimate Gas price for the transaction.
  */
 export const bscGetGasPriceInWei = async () => {
-    const {data} = await axios.post('https://graphql.bitquery.io', {
-        'query': 'query ($network: EthereumNetwork!, $dateFormat: String!, $from: ISO8601DateTime, $till: ISO8601DateTime) {\n  ethereum(network: $network) {\n    transactions(options: {asc: "date.date"}, date: {since: $from, till: $till}) {\n      date: date {\n        date(format: $dateFormat)\n      }\n      gasPrice\n      gasValue\n      average: gasValue(calculate: average)\n      maxGasPrice: gasPrice(calculate: maximum)\n      medianGasPrice: gasPrice(calculate: median)\n    }\n  }\n}\n',
-        'variables': {
-            'limit': 10,
-            'offset': 0,
-            'network': 'bsc',
-            'from': new Date().toISOString(),
-            'till': null,
-            'dateFormat': '%Y-%m-%d'
-        }
-    });
-    const gasPrice = new BigNumber(data.data.ethereum.transactions[0].gasPrice);
-    return Web3.utils.toWei(gasPrice.isGreaterThan(20) ? gasPrice.toFormat(9) : '20', 'gwei');
+    return Web3.utils.toWei('20', 'gwei');
 };
 
 /**
