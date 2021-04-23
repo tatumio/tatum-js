@@ -69,7 +69,7 @@ export class SubscriptionAttrCompleteBlockchainTx extends Subscription {
 export class CreateSubscription {
 
     @IsNotEmpty()
-    @IsIn(Object.keys(SubscriptionType))
+    @IsIn(Object.values(SubscriptionType))
     public type: SubscriptionType;
 
     @IsNotEmptyObject()
