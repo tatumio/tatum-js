@@ -52,3 +52,7 @@ export * from './ada/CardanoAccount';
 export * from './ada/CardanoBlock';
 export * from './ada/CardanoTransaction';
 export * from './ada/CardanoGenerateWallet';
+export * from './xtz/TezosBlockChainInfo';
+export * from './xtz/TezosAccount';
+export * from './xtz/TezosBlock';
+export * from './xtz/TezosTransaction';

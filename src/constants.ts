@@ -20,6 +20,8 @@ export const BCH_DERIVATION_PATH = 'm/44\'/145\'/0\'/0';
 export const LYRA_DERIVATION_PATH = 'm/44\'/497\'/0\'/0';
 export const ADA_DERIVATION_PATH = 'm/1852\'/1815\'/0\'';
 export const TESTNET_DERIVATION_PATH = 'm/44\'/1\'/0\'/0';
+export const XTZ_DERIVATION_PATH = `m/44'/1729'/0'/0'`;
+export const XTZ_DEFAULT_FEE = 1420;
 
 export const ADA_DERIVATION_SCHEME = 2;
 

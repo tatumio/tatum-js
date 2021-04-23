@@ -12,5 +12,6 @@ export * from './xlm';
 export * from './scrypta';
 export * from './tron';
 export * from './ada';
+export * from './xtz';
 
 // TODO: add support for BNB / NEO transactions

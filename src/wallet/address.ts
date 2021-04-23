@@ -2,6 +2,10 @@ import {fromBase58, fromPublicKey, fromSeed} from 'bip32';
 import {mnemonicToSeed} from 'bip39';
 import {ECPair, networks, payments} from 'bitcoinjs-lib';
 import ethWallet, {hdkey as ethHdKey} from 'ethereumjs-wallet';
+import { b58cencode, prefix } from "@taquito/utils";
+import { InMemorySigner } from "@taquito/signer";
+import { mnemonicToSeedSync} from "bip39";
+import { derivePath } from "ed25519-hd-key";
 // @ts-ignore
 import {
     BCH_DERIVATION_PATH,
@@ -19,7 +23,8 @@ import {
     LYRA_TEST_NETWORK,
     TESTNET_DERIVATION_PATH,
     TRON_DERIVATION_PATH,
-    VET_DERIVATION_PATH
+    VET_DERIVATION_PATH,
+    XTZ_DERIVATION_PATH,
 } from '../constants';
 import {Currency} from '../model';
 import cardano from './cardano.crypto';
@@ -177,6 +182,19 @@ const generateLyraAddress = (testnet: boolean, xpub: string, i: number) => {
     const network = testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK;
     const w = fromBase58(xpub, network).derivePath(String(i));
     return payments.p2pkh({pubkey: w.publicKey, network}).address as string;
+};
+
+/**
+ * Generate Tezos address
+ * @param xpub extended public key to generate address from
+ * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
+ * @returns blockchain address
+ */
+ const generateXtzAddress = async (xpub: string, i: number) => {
+    const { key } = derivePath(`${XTZ_DERIVATION_PATH}/${i}'`, xpub);
+    const privateKey = await b58cencode(key, prefix.edsk2);
+    const signer = await InMemorySigner.fromSecretKey(privateKey);
+    return signer.publicKeyHash();
 };
 
 /**
@@ -394,6 +412,20 @@ const generateLyraPrivateKey = async (testnet: boolean, mnemonic: string, i: num
 };
 
 /**
+ * Generate Tezos private key from mnemonic seed
+ * @param mnemonic mnemonic to generate private key from
+ * @param i derivation index of private key to generate.
+ * @returns blockchain private key to the address
+ */
+ const generateXtzPrivateKey = async (mnemonic: string, i: number): Promise<string> => {
+    const seed = mnemonicToSeedSync(mnemonic);
+    const { key } = derivePath(`${XTZ_DERIVATION_PATH}/${i}'`, seed.toString('hex'));
+    const privateKey = await b58cencode(key, prefix.edsk2);
+    return privateKey;
+};
+
+
+/**
  * Convert Bitcoin Private Key to Address
  * @param testnet testnet or mainnet version of address
  * @param privkey private key to use
@@ -483,6 +515,8 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
             return generateLyraAddress(testnet, xpub, i);
         case Currency.ADA:
             return cardano.generateAddress(testnet, xpub, i);
+        case Currency.XTZ:
+            return generateXtzAddress(xpub, i);
         default:
             throw new Error('Unsupported blockchain.');
     }
@@ -543,6 +577,8 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
             return generateLyraPrivateKey(testnet, mnemonic, i);
         case Currency.ADA:
             return cardano.generatePrivateKey(mnemonic, i);
+        case Currency.XTZ:
+            return generateXtzPrivateKey(mnemonic, i);
         default:
             throw new Error('Unsupported blockchain.');
     }

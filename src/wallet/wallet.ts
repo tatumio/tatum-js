@@ -5,6 +5,7 @@ import {bip32, networks} from 'bitcoinjs-lib';
 // @ts-ignore
 import {Networks} from 'bitcore-lib-doge';
 import {hdkey as ethHdKey} from 'ethereumjs-wallet';
+import { mnemonicToSeedSync } from 'bip39';
 // @ts-ignore
 import hdkey from 'hdkey';
 import {RippleAPI} from 'ripple-lib';
@@ -81,7 +82,7 @@ export const generateVetWallet = async (testnet: boolean, mnem: string): Promise
  * @param mnem mnemonic seed to use
  * @returns wallet
  */
-export const generateEthWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
+ export const generateEthWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
     const path = testnet ? TESTNET_DERIVATION_PATH : ETH_DERIVATION_PATH;
     const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnem));
     const derivePath = hdwallet.derivePath(path);
@@ -229,6 +230,16 @@ export const generateLyraWallet = async (testnet: boolean, mnem: string): Promis
  */
  export const generateAdaWallet = async (mnemonic: string): Promise<Wallet> => {
     return { mnemonic, xpub: await cardano.generateXPublicKey(mnemonic) };
+ }
+
+ /**
+ * Generate Xtz wallet
+ * @param mnem mnemonic seed to use
+ * @returns wallet
+ */
+ export const generateXtzWallet = async (mnem: string): Promise<Wallet> => {
+    const seed = mnemonicToSeedSync(mnem);
+    return { xpub: seed.toString('hex'), mnemonic: mnem };
 };
 
 /**
@@ -294,6 +305,8 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
             return generateLyraWallet(testnet, mnem);
         case Currency.ADA:
             return generateAdaWallet(mnem);
+        case Currency.XTZ:
+            return generateXtzWallet(mnem);
         default:
             throw new Error('Unsupported blockchain.');
     }

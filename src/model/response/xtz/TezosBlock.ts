@@ -1,0 +1,21 @@
+export interface TezosBlock {
+  blockHash: string,
+  blockLevel: number,
+  confirmations: number,
+  consumedGas: number,
+  counter: number,
+  cycle: number,
+  destination: string,
+  doubleOperationDetails: object,
+  fee: number,
+  gasLimit: number,
+  kind: string,
+  operationGroupHash: string,
+  operationId: number,
+  parameters: string,
+  source: string,
+  status: string,
+  storageLimit: number,
+  storageSize: number,
+  timestamp: number
+}
