@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import {tronBroadcast} from '../blockchain';
-import { validateBody } from '../connector/tatum'
+import {validateBody} from '../connector/tatum';
 import abi from '../contracts/trc20/token_abi';
 import bytecode from '../contracts/trc20/token_bytecode';
 import {
@@ -22,7 +22,9 @@ const prepareTronWeb = (testnet: boolean) => {
     const fullNode = new HttpProvider(url);
     const solidityNode = new HttpProvider(url);
     const eventServer = new HttpProvider(url);
-    return new TronWeb(fullNode, solidityNode, eventServer);
+    const tronWeb = new TronWeb(fullNode, solidityNode, eventServer);
+    tronWeb.setHeader({'TRON-PRO-API-KEY': process.env.TRON_PRO_API_KEY});
+    return tronWeb;
 };
 
 /**
