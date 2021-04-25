@@ -25,6 +25,7 @@ import {
     sendDeployErc721Transaction,
     sendErc721Transaction,
     sendMintBep721Transaction,
+    sendMintCashbackErc721Transaction,
     sendMintErc721Transaction,
     sendMintMultipleBep721Transaction,
     sendMintMultipleErc721Transaction
@@ -33,6 +34,7 @@ import {
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetBalanceErc721" target="_blank">Tatum API documentation</a>
  */
+// tslint:disable-next-line: max-line-length
 export const getNFTsByAddress = async (chain: Currency, contractAddress: string, address: string): Promise<string[]> => get(`/v3/nft/balance/${chain}/${contractAddress}/${address}`);
 
 /**
@@ -56,7 +58,11 @@ export const mintNFTWithUri = async (testnet: boolean, body: CeloMintErc721 | Et
         case Currency.CELO:
             return sendCeloMinErc721Transaction(testnet, body as CeloMintErc721, provider);
         case Currency.ETH:
-            return sendMintErc721Transaction(body, provider);
+            if (body.hasOwnProperty('authorAddresses')){
+                return sendMintCashbackErc721Transaction(body,provider)
+            }else{
+                return sendMintErc721Transaction(body, provider);
+            }
         case Currency.BSC:
             return sendMintBep721Transaction(body, provider);
     }
