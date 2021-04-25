@@ -387,6 +387,44 @@ export default [
         ],
         'stateMutability': 'view',
         'type': 'function'
+    },{
+        'inputs': [
+            {
+                'internalType': 'address',
+                'name': 'to',
+                'type': 'address'
+            },
+            {
+                'internalType': 'uint256',
+                'name': 'tokenId',
+                'type': 'uint256'
+            },
+            {
+                'internalType': 'string',
+                'name': 'tokenURI',
+                'type': 'string'
+            },
+            {
+                'internalType': 'address[]',
+                'name': 'authorAddresses',
+                'type': 'address[]'
+            },
+            {
+                'internalType': 'uint256[]',
+                'name': 'cashbackValues',
+                'type': 'uint256[]'
+            }
+        ],
+        'name': 'mintWithCashback',
+        'outputs': [
+            {
+                'internalType': 'bool',
+                'name': '',
+                'type': 'bool'
+            }
+        ],
+        'stateMutability': 'nonpayable',
+        'type': 'function'
     },
     {
         'inputs': [
@@ -529,7 +567,7 @@ export default [
         ],
         'name': 'safeTransfer',
         'outputs': [],
-        'stateMutability': 'nonpayable',
+        'stateMutability': 'payable',
         'type': 'function'
     },
     {

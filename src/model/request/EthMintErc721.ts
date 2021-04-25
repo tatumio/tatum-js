@@ -1,5 +1,6 @@
 import { Type } from 'class-transformer'
 import {
+  IsNotEmpty,
   IsOptional,
   ValidateNested,
 } from 'class-validator';
@@ -11,4 +12,6 @@ export class EthMintErc721 extends MintErc721 {
     @Type(() => Fee)
     @ValidateNested()
     public fee?: Fee;
+    public authorAddresses?: string[];
+    public cashbackValues?: string[];
 }

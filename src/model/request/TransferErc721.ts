@@ -23,4 +23,6 @@ export class TransferErc721 extends PrivateKeyOrSignatureId {
     @Min(0)
     @IsOptional()
     public nonce?: number;
+
+    public value: string;
 }

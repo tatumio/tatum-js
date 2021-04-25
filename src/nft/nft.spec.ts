@@ -5,9 +5,9 @@ import {
     CeloMintMultipleErc721,
     CeloTransferErc721,
     Currency,
+    Fee
 } from '../model';
 import {burnNFT, deployNFT, mintMultipleNFTWithUri, mintNFTWithUri, transferNFT} from './index';
-
 describe('NFT tests', () => {
     jest.setTimeout(19999);
     describe('NFT CELO transactions', () => {
@@ -72,13 +72,14 @@ describe('NFT tests', () => {
 
         it('should test eth 721 deploy transaction', async () => {
             const deployErc721Token = await deployNFT(true, {
-                symbol: '1oido3id3',
+                symbol: 'TatumToken',
                 chain: Currency.ETH,
                 fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
-                name: '2123kd',
+                name: 'TatumToken',
+                fee: { gasLimit: '6000000', gasPrice: '100' }
             });
             expect(deployErc721Token).not.toBeNull();
-            console.log(deployErc721Token);
+            console.log('response::',deployErc721Token);
         });
 
         it('should test eth 721 mint transaction', async () => {
@@ -89,16 +90,30 @@ describe('NFT tests', () => {
                 tokenId,
                 url: 'https://www.seznam.cz',
                 fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
-                contractAddress: '0xAB12C6c926Cc3c9547aad71d6082fA724152A442',
+                contractAddress: '0x2d8deac4918e51b2a5361560042465ecd38740c4',
                 fee: {
-                    gasLimit: '500000',
-                    gasPrice: '110'
+                    gasLimit: '600000',
+                    gasPrice: '100'
                 }
             });
             console.log(tokenId);
             expect(mintedToken).not.toBeNull();
         });
-
+        it('should test eth 721 mint transaction with cashback', async () => {
+            const tokenId = new Date().getTime().toString();
+            const mintedToken = await mintNFTWithUri(true, {
+                to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+                chain: Currency.ETH,
+                tokenId:'1',
+                url: 'test.com',
+                fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+                contractAddress: '0xee024650b583c69d50d5e917a712a1198127753f',
+                authorAddresses:['0x6c4A48886b77D1197eCFBDaA3D3f35d81d584342'],
+                cashbackValues:['0.25']
+            });
+            console.log(mintedToken);
+            expect(mintedToken).not.toBeNull();
+        });
         it('should test eth 721 mint multiple transaction', async () => {
             const firstTokenId = new Date().getTime();
             const secondTokenId = firstTokenId + 1;
@@ -134,6 +149,17 @@ describe('NFT tests', () => {
 
         it('should test eth 721 send transaction', async () => {
             const sendErc721Token = await transferNFT(true, {
+                to: '0x6c4A48886b77D1197eCFBDaA3D3f35d81d584342',
+                chain: Currency.ETH,
+                tokenId: '1',
+                fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+                contractAddress: '0xee024650b583c69d50d5e917a712a1198127753f',
+                value:'1'
+            });
+            expect(sendErc721Token).not.toBeNull();
+        });
+        it('should test eth 721 send transaction', async () => {
+            const sendErc721Token = await transferNFT(true, {
                 to: '0x811dfbff13adfbc3cf653dcc373c03616d3471c9',
                 chain: Currency.ETH,
                 tokenId: '1615884907854',
@@ -143,6 +169,7 @@ describe('NFT tests', () => {
                     gasLimit: '5000000',
                     gasPrice: '100'
                 },
+                value:'1'
             });
             expect(sendErc721Token).not.toBeNull();
         });
