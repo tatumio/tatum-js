@@ -7,12 +7,12 @@ import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL} from '../constants
 import tokenAbi from '../contracts/erc20/token_abi';
 import {getAccountById, getVirtualCurrencyByName} from '../ledger';
 import {
-  Currency,
-  ETH_BASED_CURRENCIES,
-  PrepareEthErc20SignedOffchainTransaction, PrepareEthSignedOffchainTransaction,
-  TransactionKMS,
-  TransferEthErc20Offchain,
-  TransferEthOffchain,
+    Currency,
+    ETH_BASED_CURRENCIES,
+    PrepareEthErc20SignedOffchainTransaction,
+    PrepareEthSignedOffchainTransaction,
+    TransactionKMS,
+    TransferEthOffchain,
 } from '../model';
 import {ethGetGasPriceInWei} from '../transaction';
 import {generatePrivateKeyFromMnemonic} from '../wallet';
@@ -83,8 +83,8 @@ export const sendEthOffchainTransaction = async (testnet: boolean, body: Transfe
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
-export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: TransferEthErc20Offchain, provider?: string) => {
-    await validateBody(body, TransferEthErc20Offchain);
+export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: TransferEthOffchain, provider?: string) => {
+    await validateBody(body, TransferEthOffchain);
     const {
         mnemonic, index, privateKey, nonce, ...withdrawal
     } = body;
@@ -165,33 +165,32 @@ export const signEthOffchainKMSTransaction = async (tx: TransactionKMS, fromPriv
 /**
  * Sign Ethereum transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @returns transaction data to be broadcast to blockchain.
- * @param prepareEthSignedOffchainTransaction
+ * @param body
  */
-export const prepareEthSignedOffchainTransaction =
-    async (prepareEthSignedOffchainTransaction: PrepareEthSignedOffchainTransaction) => {
-        await validateBody(prepareEthSignedOffchainTransaction, PrepareEthSignedOffchainTransaction)
-        const {
-            currency,
-            address,
-            amount,
-            gasLimit,
+export const prepareEthSignedOffchainTransaction = async (body: PrepareEthSignedOffchainTransaction) => {
+    await validateBody(body, PrepareEthSignedOffchainTransaction);
+    const {
+        currency,
+        address,
+        amount,
+        gasLimit,
+        gasPrice,
+        nonce,
+        privateKey,
+        web3,
+    } = body;
+        let tx: TransactionConfig;
+    if (currency === Currency.ETH) {
+        tx = {
+            from: 0,
+            to: address.trim(),
+            value: web3.utils.toWei(amount, 'ether'),
             gasPrice,
             nonce,
-            privateKey,
-            web3,
-        } = prepareEthSignedOffchainTransaction
-        let tx: TransactionConfig;
-        if (currency === 'ETH') {
-            tx = {
-                from: 0,
-                to: address.trim(),
-                value: web3.utils.toWei(amount, 'ether'),
-                gasPrice,
-                nonce,
-            };
-        } else {
-            if (!Object.keys(CONTRACT_ADDRESSES).includes(currency)) {
-                throw new Error('Unsupported ETH ERC20 blockchain.');
+        };
+    } else {
+        if (!Object.keys(CONTRACT_ADDRESSES).includes(currency)) {
+            throw new Error('Unsupported ETH ERC20 blockchain.');
             }
             // @ts-ignore
             const contract = new web3.eth.Contract(tokenAbi, CONTRACT_ADDRESSES[currency]);
@@ -215,22 +214,21 @@ export const prepareEthSignedOffchainTransaction =
 /**
  * Sign Ethereum custom ERC20 transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @returns transaction data to be broadcast to blockchain.
- * @param prepareEthErc20SignedOffchainTransaction
+ * @param body
  */
-export const prepareEthErc20SignedOffchainTransaction =
-    async (prepareEthErc20SignedOffchainTransaction: PrepareEthErc20SignedOffchainTransaction) => {
-        await validateBody(prepareEthErc20SignedOffchainTransaction, PrepareEthErc20SignedOffchainTransaction)
+export const prepareEthErc20SignedOffchainTransaction = async (body: PrepareEthErc20SignedOffchainTransaction) => {
+    await validateBody(body, PrepareEthErc20SignedOffchainTransaction);
 
-        const {
-            amount,
-            privateKey,
-            address,
-            gasPrice,
-            nonce,
-            tokenAddress,
-            web3,
-            gasLimit,
-        } = prepareEthErc20SignedOffchainTransaction
+    const {
+        amount,
+        privateKey,
+        address,
+        gasPrice,
+        nonce,
+        tokenAddress,
+        web3,
+        gasLimit,
+    } = body;
         // @ts-ignore
         const contract = new web3.eth.Contract(tokenAbi, tokenAddress);
         let tx: TransactionConfig;
