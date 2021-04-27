@@ -42,6 +42,7 @@ export enum Currency {
     XCON = 'XCON',
     MMY = 'MMY',
     PAXG = 'PAXG',
+    HAG = 'HAG',
     LYRA = 'LYRA',
     ADA = 'ADA',
 }
@@ -74,6 +75,7 @@ export const BEP20_CURRENCIES = [
     Currency.BXRP.toString(),
     Currency.BLTC.toString(),
     Currency.BBCH.toString(),
+    Currency.HAG.toString(),
     Currency.CAKE.toString(),
     Currency.BUSD_BSC.toString(),
 ];
