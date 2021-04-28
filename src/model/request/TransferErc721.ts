@@ -1,4 +1,4 @@
-import {IsIn, IsNotEmpty, IsOptional, Length, MaxLength, Min,} from 'class-validator';
+import {IsIn, IsNotEmpty, IsNumberString, IsOptional, Length, MaxLength, Min} from 'class-validator';
 import {Currency} from './Currency';
 import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
 
@@ -24,5 +24,7 @@ export class TransferErc721 extends PrivateKeyOrSignatureId {
     @IsOptional()
     public nonce?: number;
 
-    public value: string;
+    @IsOptional()
+    @IsNumberString()
+    public value?: string;
 }
