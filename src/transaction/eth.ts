@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {BigNumber} from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import Web3 from 'web3';
 import { TransactionConfig } from 'web3-core';
 import { ethBroadcast, ethGetTransactionsCount } from '../blockchain';
@@ -360,10 +360,7 @@ export const prepareEthMintCashbackErc721SignedTransaction = async (body: EthMin
         fee
     } = body;
 
-    const client = await getClient(provider);
-    client.eth.accounts.wallet.clear();
-    client.eth.accounts.wallet.add(fromPrivateKey);
-    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+    const client = await getClient(provider, fromPrivateKey);
 
     // @ts-ignore
     const contract = new (client).eth.Contract(erc721TokenABI, contractAddress);
@@ -372,8 +369,8 @@ export const prepareEthMintCashbackErc721SignedTransaction = async (body: EthMin
     const cb: string[] = [];
     const cashbacks: string[] = cashbackValues!;
     // tslint:disable-next-line: prefer-for-of
-    for (const c of cashbacks){
-        cb.push(`0x${new BigNumber(client.utils.toWei(c,'ether')).toString(16)}`)
+    for (const c of cashbacks) {
+        cb.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
     }
     const tx: TransactionConfig = {
         from: 0,
@@ -502,11 +499,9 @@ export const prepareEthTransferErc721SignedTransaction = async (body: EthTransfe
         nonce,
     };
 
-    if(value){
-        tx.value=client.utils.toWei(value, 'ether');
-    }
-    console.log('tx obj:::::::::::::::::',tx)
+    value ? tx.value = `0x${new BigNumber(value).multipliedBy(1e18).toString(16)}` : null;
     tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
+    
     if (signatureId) {
         return JSON.stringify(tx);
     }

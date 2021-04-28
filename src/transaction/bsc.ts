@@ -1,9 +1,9 @@
-import {BigNumber} from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import Web3 from 'web3';
-import {TransactionConfig} from 'web3-core';
-import {bscBroadcast, bscGetTransactionsCount} from '../blockchain';
-import {validateBody} from '../connector/tatum';
-import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
+import { TransactionConfig } from 'web3-core';
+import { bscBroadcast, bscGetTransactionsCount } from '../blockchain';
+import { validateBody } from '../connector/tatum';
+import { CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI } from '../constants';
 import erc20TokenABI from '../contracts/erc20/token_abi';
 import erc20TokenBytecode from '../contracts/erc20/token_bytecode';
 import erc721TokenABI from '../contracts/erc721/erc721_abi';
@@ -335,7 +335,7 @@ export const prepareBscMintBep721SignedTransaction = async (body: EthMintErc721,
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
- export const prepareBscMintBepCashback721SignedTransaction = async (body: EthMintErc721, provider?: string) => {
+export const prepareBscMintBepCashback721SignedTransaction = async (body: EthMintErc721, provider?: string) => {
     await validateBody(body, EthMintErc721);
     const {
         fromPrivateKey,
@@ -357,13 +357,13 @@ export const prepareBscMintBep721SignedTransaction = async (body: EthMintErc721,
     const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await bscGetGasPriceInWei();
     const cb: string[] = [];
     const cashbacks: string[] = cashbackValues!;
-    for (const c of cashbacks){
-        cb.push(`0x${new BigNumber(client.utils.toWei(c,'ether')).toString(16)}`)
+    for (const c of cashbacks) {
+        cb.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
     }
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
-        data: contract.methods.mintWithCashback(to.trim(), tokenId, url,authorAddresses,cb).encodeABI(),
+        data: contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb).encodeABI(),
         gasPrice,
         nonce,
     };
@@ -487,7 +487,8 @@ export const prepareBscTransferBep721SignedTransaction = async (body: EthTransfe
         nonce,
     };
 
-    value? tx.value=client.utils.toWei(value, 'ether'):null;
+    value ? tx.value = `0x${new BigNumber(value).multipliedBy(1e18).toString(16)}` : null;
+    
     if (signatureId) {
         return JSON.stringify(tx);
     }
@@ -557,7 +558,7 @@ export const sendBscSmartContractReadMethodInvocationTransaction = async (body: 
     } = body;
     const client = getBscClient(provider);
     const contract = new client.eth.Contract([methodABI], contractAddress);
-    return {data: await contract.methods[methodName as string](...params).call()};
+    return { data: await contract.methods[methodName as string](...params).call() };
 };
 
 /**
@@ -631,8 +632,8 @@ export const sendMintBep721Transaction = async (body: EthMintErc721, provider?: 
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
- export const sendMintBepCashback721Transaction = async (body: EthMintErc721, provider?: string) =>
- bscBroadcast(await prepareBscMintBepCashback721SignedTransaction(body, provider), body.signatureId);
+export const sendMintBepCashback721Transaction = async (body: EthMintErc721, provider?: string) =>
+    bscBroadcast(await prepareBscMintBepCashback721SignedTransaction(body, provider), body.signatureId);
 
 /**
  * Send Bsc BEP721 mint multiple transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
