@@ -245,8 +245,7 @@ describe('ETH transactions', () => {
         fee: {
           gasLimit: '5000000',
           gasPrice: '100'
-        },
-        value:'1'
+        }
       })
       expect(sendErc721Token).not.toBeNull()
   })

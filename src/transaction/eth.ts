@@ -386,9 +386,8 @@ export const prepareEthMintCashbackErc721SignedTransaction = async (body: EthMin
     const cb: string[] = [];
     const cashbacks: string[] = cashbackValues!;
     // tslint:disable-next-line: prefer-for-of
-    for (let i = 0; i < cashbacks.length; i++) {
-        const digits = new BigNumber(10).pow(CONTRACT_DECIMALS['BETH']);
-        cb.push(`0x${new BigNumber(cashbacks[i]).multipliedBy(digits).toString(16)}`)
+    for (const c of cashbacks){
+        cb.push(`0x${new BigNumber(client.utils.toWei(c,'ether')).toString(16)}`)
     }
     const tx: TransactionConfig = {
         from: 0,
@@ -522,13 +521,15 @@ export const prepareEthTransferErc721SignedTransaction = async (body: EthTransfe
         from: 0,
         to: contractAddress.trim(),
         data: contract.methods.safeTransfer(to.trim(), tokenId).encodeABI(),
-        value: client.utils.toWei(value, 'ether'),
         gasPrice,
         nonce,
     };
 
+    if(value){
+        tx.value=client.utils.toWei(value, 'ether');
+    }
+    console.log('tx obj:::::::::::::::::',tx)
     tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
-
     if (signatureId) {
         return JSON.stringify(tx);
     }

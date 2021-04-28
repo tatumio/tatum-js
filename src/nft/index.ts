@@ -1,3 +1,4 @@
+import { builtinModules } from 'node:module';
 import {get} from '../connector/tatum';
 import {
     CeloBurnErc721,
@@ -18,6 +19,7 @@ import {
     sendBurnErc721Transaction,
     sendCeloBurnErc721Transaction,
     sendCeloDeployErc721Transaction,
+    sendCeloMinCashbackErc721Transaction,
     sendCeloMinErc721Transaction,
     sendCeloMintMultipleErc721Transaction,
     sendCeloTransferErc721Transaction,
@@ -25,6 +27,7 @@ import {
     sendDeployErc721Transaction,
     sendErc721Transaction,
     sendMintBep721Transaction,
+    sendMintBepCashback721Transaction,
     sendMintCashbackErc721Transaction,
     sendMintErc721Transaction,
     sendMintMultipleBep721Transaction,
@@ -56,14 +59,21 @@ export const deployNFT = async (testnet: boolean, body: CeloDeployErc721 | EthDe
 export const mintNFTWithUri = async (testnet: boolean, body: CeloMintErc721 | EthMintErc721, provider?: string) => {
     switch (body.chain) {
         case Currency.CELO:
-            return sendCeloMinErc721Transaction(testnet, body as CeloMintErc721, provider);
+            if (body.authorAddresses){
+                return sendCeloMinCashbackErc721Transaction(testnet, body as CeloMintErc721, provider);
+            }else{
+                return sendCeloMinErc721Transaction(testnet, body as CeloMintErc721, provider);
+            }
         case Currency.ETH:
-            if (body.hasOwnProperty('authorAddresses')){
+            if (body.authorAddresses){
                 return sendMintCashbackErc721Transaction(body,provider)
             }else{
                 return sendMintErc721Transaction(body, provider);
             }
         case Currency.BSC:
+            if (body.authorAddresses){
+                return sendMintBepCashback721Transaction(body,provider);
+            }
             return sendMintBep721Transaction(body, provider);
     }
 };
