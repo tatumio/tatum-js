@@ -38,7 +38,6 @@ export * from './CreateWithdrawal';
 export * from './BroadcastWithdrawal';
 export * from './TransferXlmOffchain';
 export * from './TransferXrpOffchain';
-export * from './TransferEthErc20Offchain';
 export * from './TransferEthOffchain';
 export * from './CreateTransaction';
 export * from './TransactionFilter';

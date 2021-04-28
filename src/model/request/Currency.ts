@@ -14,6 +14,8 @@ export enum Currency {
     NEO = 'NEO',
     BNB = 'BNB',
     BSC = 'BSC',
+    CAKE = 'CAKE',
+    BUSD_BSC = 'BUSD_BSC',
     BETH = 'BETH',
     BBTC = 'BBTC',
     BADA = 'BADA',
@@ -34,11 +36,13 @@ export enum Currency {
     USDC = 'USDC',
     BAT = 'BAT',
     TUSD = 'TUSD',
+    BUSD = 'BUSD',
     PAX = 'PAX',
     PLTC = 'PLTC',
     XCON = 'XCON',
     MMY = 'MMY',
     PAXG = 'PAXG',
+    HAG = 'HAG',
     LYRA = 'LYRA',
     ADA = 'ADA',
 }
@@ -50,6 +54,7 @@ export const ERC20_CURRENCIES = [
     Currency.UNI.toString(),
     Currency.FREE.toString(),
     Currency.MKR.toString(),
+    Currency.BUSD.toString(),
     Currency.USDC.toString(),
     Currency.BAT.toString(),
     Currency.WBTC.toString(),
@@ -70,6 +75,9 @@ export const BEP20_CURRENCIES = [
     Currency.BXRP.toString(),
     Currency.BLTC.toString(),
     Currency.BBCH.toString(),
+    Currency.HAG.toString(),
+    Currency.CAKE.toString(),
+    Currency.BUSD_BSC.toString(),
 ];
 
 export const ETH_BASED_CURRENCIES = [

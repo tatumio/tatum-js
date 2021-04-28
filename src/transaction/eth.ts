@@ -44,8 +44,16 @@ export const ethGetGasPriceInWei = async () => {
  * Returns Ethereum server to connect to.
  *
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @param privateKey
  */
-export const getClient = (provider?: string) => new Web3(provider || `${TATUM_API_URL}/v3/ethereum/web3/${process.env.TATUM_API_KEY}`);
+export const getClient = (provider?: string, privateKey?: string) => {
+    const web3 = new Web3(provider || `${TATUM_API_URL}/v3/ethereum/web3/${process.env.TATUM_API_KEY}`);
+    if (privateKey) {
+        web3.eth.accounts.wallet.add(privateKey);
+        web3.eth.defaultAccount = web3.eth.accounts.wallet[0].address;
+    }
+    return web3;
+};
 
 /**
  * Sign Ethereum pending transaction from Tatum KMS
@@ -58,14 +66,11 @@ export const signEthKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
     if (tx.chain !== Currency.ETH) {
         throw Error('Unsupported chain.');
     }
-    const client = getClient(provider);
-    client.eth.accounts.wallet.clear();
-    client.eth.accounts.wallet.add(fromPrivateKey);
-    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+    const client = getClient(provider, fromPrivateKey);
     const transactionConfig = JSON.parse(tx.serializedTransaction);
     transactionConfig.gas = await client.eth.estimateGas(transactionConfig);
     if (!transactionConfig.nonce) {
-        transactionConfig.nonce = await ethGetTransactionsCount(client.eth.defaultAccount);
+        transactionConfig.nonce = await ethGetTransactionsCount(client.eth.defaultAccount as string);
     }
     return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey)).rawTransaction as string;
 };
@@ -86,11 +91,8 @@ export const prepareStoreDataTransaction = async (body: CreateRecord, provider?:
         nonce,
         signatureId
     } = body;
-    const client = getClient(provider);
-    client.eth.accounts.wallet.clear();
-    client.eth.accounts.wallet.add(fromPrivateKey as string);
-    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
-    const address = to || client.eth.defaultAccount;
+    const client = getClient(provider, fromPrivateKey);
+    const address = (to || client.eth.defaultAccount) as string;
     const addressNonce = nonce ? nonce : await ethGetTransactionsCount(address);
     const customFee = ethFee ? ethFee : {
         gasLimit: `${data.length * 68 + 21000}`,
@@ -133,10 +135,7 @@ export const prepareEthOrErc20SignedTransaction = async (body: TransferEthErc20,
         signatureId
     } = body;
 
-    const client = getClient(provider);
-    client.eth.accounts.wallet.clear();
-    client.eth.accounts.wallet.add(fromPrivateKey);
-    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+    const client = getClient(provider, fromPrivateKey);
 
     let tx: TransactionConfig;
     const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei();
@@ -189,10 +188,7 @@ export const prepareCustomErc20SignedTransaction = async (body: TransferCustomEr
         signatureId
     } = body;
 
-    const client = getClient(provider);
-    client.eth.accounts.wallet.clear();
-    client.eth.accounts.wallet.add(fromPrivateKey);
-    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+    const client = getClient(provider, fromPrivateKey);
 
     let tx: TransactionConfig;
     const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei();
@@ -235,10 +231,7 @@ export const prepareDeployErc20SignedTransaction = async (body: DeployEthErc20, 
         signatureId,
     } = body;
 
-    const client = getClient(provider);
-    client.eth.accounts.wallet.clear();
-    client.eth.accounts.wallet.add(fromPrivateKey);
-    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+    const client = getClient(provider, fromPrivateKey);
 
     const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei();
     // @ts-ignore
@@ -286,11 +279,7 @@ export const prepareSmartContractWriteMethodInvocation = async (body: SmartContr
         nonce,
         signatureId,
     } = body;
-    const client = getClient(provider);
-
-    client.eth.accounts.wallet.clear();
-    client.eth.accounts.wallet.add(fromPrivateKey);
-    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+    const client = getClient(provider, fromPrivateKey);
 
     const contract = new client.eth.Contract([methodABI]);
     const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei();
@@ -329,10 +318,7 @@ export const prepareEthMintErc721SignedTransaction = async (body: EthMintErc721,
         signatureId
     } = body;
 
-    const client = getClient(provider);
-    client.eth.accounts.wallet.clear();
-    client.eth.accounts.wallet.add(fromPrivateKey);
-    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+    const client = getClient(provider, fromPrivateKey);
 
     // @ts-ignore
     const contract = new (client).eth.Contract(erc721TokenABI, contractAddress);
@@ -423,10 +409,7 @@ export const prepareEthMintMultipleErc721SignedTransaction = async (body: EthMin
         fee
     } = body;
 
-    const client = await getClient(provider);
-    client.eth.accounts.wallet.clear();
-    client.eth.accounts.wallet.add(fromPrivateKey);
-    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+    const client = await getClient(provider, fromPrivateKey);
 
     // @ts-ignore
     const contract = new (client).eth.Contract(erc721TokenABI, contractAddress);
@@ -465,10 +448,7 @@ export const prepareEthBurnErc721SignedTransaction = async (body: EthBurnErc721,
         signatureId
     } = body;
 
-    const client = getClient(provider);
-    client.eth.accounts.wallet.clear();
-    client.eth.accounts.wallet.add(fromPrivateKey);
-    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+    const client = getClient(provider, fromPrivateKey);
 
     // @ts-ignore
     const contract = new (client).eth.Contract(erc721TokenABI, contractAddress);
@@ -509,10 +489,7 @@ export const prepareEthTransferErc721SignedTransaction = async (body: EthTransfe
         value
     } = body;
 
-    const client = await getClient(provider);
-    client.eth.accounts.wallet.clear();
-    client.eth.accounts.wallet.add(fromPrivateKey);
-    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+    const client = await getClient(provider, fromPrivateKey);
 
     // @ts-ignore
     const contract = new (client).eth.Contract(erc721TokenABI, contractAddress);
@@ -554,11 +531,7 @@ export const prepareEthDeployErc721SignedTransaction = async (body: EthDeployErc
         signatureId,
     } = body;
 
-    const client = await getClient(provider);
-    client.eth.accounts.wallet.clear();
-    client.eth.accounts.wallet.add(fromPrivateKey);
-    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
-
+    const client = await getClient(provider, fromPrivateKey);
 
     // @ts-ignore
     const contract = new client.eth.Contract(erc721TokenABI, null, {

@@ -1,20 +1,19 @@
 import BigNumber from 'bignumber.js';
-import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
 import {ethGetTransactionsCount} from '../blockchain';
 import {validateBody} from '../connector/tatum';
-import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL} from '../constants';
+import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS} from '../constants';
 import tokenAbi from '../contracts/erc20/token_abi';
 import {getAccountById, getVirtualCurrencyByName} from '../ledger';
 import {
-  Currency,
-  ETH_BASED_CURRENCIES,
-  PrepareEthErc20SignedOffchainTransaction, PrepareEthSignedOffchainTransaction,
-  TransactionKMS,
-  TransferEthErc20Offchain,
-  TransferEthOffchain,
+    Currency,
+    ETH_BASED_CURRENCIES,
+    PrepareEthErc20SignedOffchainTransaction,
+    PrepareEthSignedOffchainTransaction,
+    TransactionKMS,
+    TransferEthOffchain,
 } from '../model';
-import {ethGetGasPriceInWei} from '../transaction';
+import {ethGetGasPriceInWei, getClient} from '../transaction';
 import {generatePrivateKeyFromMnemonic} from '../wallet';
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
 
@@ -42,9 +41,7 @@ export const sendEthOffchainTransaction = async (testnet: boolean, body: Transfe
         throw new Error('No mnemonic or private key is present.');
     }
 
-    const web3 = new Web3(provider || `${TATUM_API_URL}/v3/ethereum/web3/${process.env.TATUM_API_KEY}`);
-    web3.eth.accounts.wallet.add(fromPriv);
-    web3.eth.defaultAccount = web3.eth.accounts.wallet[0].address;
+    const web3 = await getClient(provider, fromPriv);
     const gasPrice = body.gasPrice ? web3.utils.toWei(body.gasPrice, 'gwei') : await ethGetGasPriceInWei();
 
     const account = await getAccountById(withdrawal.senderAccountId);
@@ -83,8 +80,8 @@ export const sendEthOffchainTransaction = async (testnet: boolean, body: Transfe
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
-export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: TransferEthErc20Offchain, provider?: string) => {
-    await validateBody(body, TransferEthErc20Offchain);
+export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: TransferEthOffchain, provider?: string) => {
+    await validateBody(body, TransferEthOffchain);
     const {
         mnemonic, index, privateKey, nonce, ...withdrawal
     } = body;
@@ -99,9 +96,7 @@ export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: Tr
         throw new Error('No mnemonic or private key is present.');
     }
 
-    const web3 = new Web3(provider || `${TATUM_API_URL}/v3/ethereum/web3/${process.env.TATUM_API_KEY}`);
-    web3.eth.accounts.wallet.add(fromPriv);
-    web3.eth.defaultAccount = web3.eth.accounts.wallet[0].address;
+    const web3 = await getClient(provider, fromPriv);
     const gasPrice = body.gasPrice ? web3.utils.toWei(body.gasPrice, 'gwei') : await ethGetGasPriceInWei();
 
     const account = await getAccountById(withdrawal.senderAccountId);
@@ -150,14 +145,11 @@ export const signEthOffchainKMSTransaction = async (tx: TransactionKMS, fromPriv
     if (tx.chain !== Currency.ETH) {
         throw Error('Unsupported chain.');
     }
-    const client = new Web3(provider || `${TATUM_API_URL}/v3/ethereum/web3/${process.env.TATUM_API_KEY}`);
-    client.eth.accounts.wallet.clear();
-    client.eth.accounts.wallet.add(fromPrivateKey);
-    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+    const client = await getClient(provider, fromPrivateKey);
     const transactionConfig = JSON.parse(tx.serializedTransaction);
     transactionConfig.gas = await client.eth.estimateGas(transactionConfig);
     if (!transactionConfig.nonce) {
-        transactionConfig.nonce = await ethGetTransactionsCount(client.eth.defaultAccount);
+        transactionConfig.nonce = await ethGetTransactionsCount(client.eth.defaultAccount as string);
     }
     return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey)).rawTransaction as string;
 };
@@ -165,33 +157,32 @@ export const signEthOffchainKMSTransaction = async (tx: TransactionKMS, fromPriv
 /**
  * Sign Ethereum transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @returns transaction data to be broadcast to blockchain.
- * @param prepareEthSignedOffchainTransaction
+ * @param body
  */
-export const prepareEthSignedOffchainTransaction =
-    async (prepareEthSignedOffchainTransaction: PrepareEthSignedOffchainTransaction) => {
-        await validateBody(prepareEthSignedOffchainTransaction, PrepareEthSignedOffchainTransaction)
-        const {
-            currency,
-            address,
-            amount,
-            gasLimit,
+export const prepareEthSignedOffchainTransaction = async (body: PrepareEthSignedOffchainTransaction) => {
+    await validateBody(body, PrepareEthSignedOffchainTransaction);
+    const {
+        currency,
+        address,
+        amount,
+        gasLimit,
+        gasPrice,
+        nonce,
+        privateKey,
+        web3,
+    } = body;
+        let tx: TransactionConfig;
+    if (currency === Currency.ETH) {
+        tx = {
+            from: 0,
+            to: address.trim(),
+            value: web3.utils.toWei(amount, 'ether'),
             gasPrice,
             nonce,
-            privateKey,
-            web3,
-        } = prepareEthSignedOffchainTransaction
-        let tx: TransactionConfig;
-        if (currency === 'ETH') {
-            tx = {
-                from: 0,
-                to: address.trim(),
-                value: web3.utils.toWei(amount, 'ether'),
-                gasPrice,
-                nonce,
-            };
-        } else {
-            if (!Object.keys(CONTRACT_ADDRESSES).includes(currency)) {
-                throw new Error('Unsupported ETH ERC20 blockchain.');
+        };
+    } else {
+        if (!Object.keys(CONTRACT_ADDRESSES).includes(currency)) {
+            throw new Error('Unsupported ETH ERC20 blockchain.');
             }
             // @ts-ignore
             const contract = new web3.eth.Contract(tokenAbi, CONTRACT_ADDRESSES[currency]);
@@ -215,22 +206,21 @@ export const prepareEthSignedOffchainTransaction =
 /**
  * Sign Ethereum custom ERC20 transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @returns transaction data to be broadcast to blockchain.
- * @param prepareEthErc20SignedOffchainTransaction
+ * @param body
  */
-export const prepareEthErc20SignedOffchainTransaction =
-    async (prepareEthErc20SignedOffchainTransaction: PrepareEthErc20SignedOffchainTransaction) => {
-        await validateBody(prepareEthErc20SignedOffchainTransaction, PrepareEthErc20SignedOffchainTransaction)
+export const prepareEthErc20SignedOffchainTransaction = async (body: PrepareEthErc20SignedOffchainTransaction) => {
+    await validateBody(body, PrepareEthErc20SignedOffchainTransaction);
 
-        const {
-            amount,
-            privateKey,
-            address,
-            gasPrice,
-            nonce,
-            tokenAddress,
-            web3,
-            gasLimit,
-        } = prepareEthErc20SignedOffchainTransaction
+    const {
+        amount,
+        privateKey,
+        address,
+        gasPrice,
+        nonce,
+        tokenAddress,
+        web3,
+        gasLimit,
+    } = body;
         // @ts-ignore
         const contract = new web3.eth.Contract(tokenAbi, tokenAddress);
         let tx: TransactionConfig;

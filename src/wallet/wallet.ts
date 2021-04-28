@@ -264,6 +264,7 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
         case Currency.USDC:
         case Currency.BAT:
         case Currency.TUSD:
+        case Currency.BUSD:
         case Currency.PAX:
         case Currency.PAXG:
         case Currency.PLTC:
@@ -271,6 +272,9 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
         case Currency.ETH:
         case Currency.BSC:
         case Currency.BETH:
+        case Currency.CAKE:
+        case Currency.HAG:
+        case Currency.BUSD_BSC:
         case Currency.BBTC:
         case Currency.BADA:
         case Currency.WBNB:
