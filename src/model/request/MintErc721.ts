@@ -1,6 +1,6 @@
-import {IsIn, IsNotEmpty, IsOptional, Length, MaxLength, Min,} from 'class-validator';
-import {Currency} from './Currency';
-import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
+import { IsIn, IsNotEmpty, IsOptional, Length, MaxLength, Min, ValidateIf } from 'class-validator';
+import { Currency } from './Currency';
+import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId';
 
 export class MintErc721 extends PrivateKeyOrSignatureId {
 
@@ -27,4 +27,13 @@ export class MintErc721 extends PrivateKeyOrSignatureId {
     @Min(0)
     @IsOptional()
     public nonce?: number;
+
+    @IsNotEmpty()
+    @ValidateIf(o => (o.authorAddresses && o.cashbackValues) || !o.cashbackValues)
+    public authorAddresses?: string[];
+
+    @IsNotEmpty()
+    @ValidateIf(o => (o.authorAddresses && o.cashbackValues) || !o.authorAddresses)
+    public cashbackValues?: string[];
+
 }
