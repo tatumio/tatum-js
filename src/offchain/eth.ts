@@ -1,9 +1,8 @@
 import BigNumber from 'bignumber.js';
-import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
 import {ethGetTransactionsCount} from '../blockchain';
 import {validateBody} from '../connector/tatum';
-import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL} from '../constants';
+import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS} from '../constants';
 import tokenAbi from '../contracts/erc20/token_abi';
 import {getAccountById, getVirtualCurrencyByName} from '../ledger';
 import {
@@ -14,7 +13,7 @@ import {
     TransactionKMS,
     TransferEthOffchain,
 } from '../model';
-import {ethGetGasPriceInWei} from '../transaction';
+import {ethGetGasPriceInWei, getClient} from '../transaction';
 import {generatePrivateKeyFromMnemonic} from '../wallet';
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
 
@@ -42,9 +41,7 @@ export const sendEthOffchainTransaction = async (testnet: boolean, body: Transfe
         throw new Error('No mnemonic or private key is present.');
     }
 
-    const web3 = new Web3(provider || `${TATUM_API_URL}/v3/ethereum/web3/${process.env.TATUM_API_KEY}`);
-    web3.eth.accounts.wallet.add(fromPriv);
-    web3.eth.defaultAccount = web3.eth.accounts.wallet[0].address;
+    const web3 = await getClient(provider, fromPriv);
     const gasPrice = body.gasPrice ? web3.utils.toWei(body.gasPrice, 'gwei') : await ethGetGasPriceInWei();
 
     const account = await getAccountById(withdrawal.senderAccountId);
@@ -99,9 +96,7 @@ export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: Tr
         throw new Error('No mnemonic or private key is present.');
     }
 
-    const web3 = new Web3(provider || `${TATUM_API_URL}/v3/ethereum/web3/${process.env.TATUM_API_KEY}`);
-    web3.eth.accounts.wallet.add(fromPriv);
-    web3.eth.defaultAccount = web3.eth.accounts.wallet[0].address;
+    const web3 = await getClient(provider, fromPriv);
     const gasPrice = body.gasPrice ? web3.utils.toWei(body.gasPrice, 'gwei') : await ethGetGasPriceInWei();
 
     const account = await getAccountById(withdrawal.senderAccountId);
@@ -150,14 +145,11 @@ export const signEthOffchainKMSTransaction = async (tx: TransactionKMS, fromPriv
     if (tx.chain !== Currency.ETH) {
         throw Error('Unsupported chain.');
     }
-    const client = new Web3(provider || `${TATUM_API_URL}/v3/ethereum/web3/${process.env.TATUM_API_KEY}`);
-    client.eth.accounts.wallet.clear();
-    client.eth.accounts.wallet.add(fromPrivateKey);
-    client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+    const client = await getClient(provider, fromPrivateKey);
     const transactionConfig = JSON.parse(tx.serializedTransaction);
     transactionConfig.gas = await client.eth.estimateGas(transactionConfig);
     if (!transactionConfig.nonce) {
-        transactionConfig.nonce = await ethGetTransactionsCount(client.eth.defaultAccount);
+        transactionConfig.nonce = await ethGetTransactionsCount(client.eth.defaultAccount as string);
     }
     return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey)).rawTransaction as string;
 };
