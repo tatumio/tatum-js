@@ -256,7 +256,7 @@ describe('BSC transactions', () => {
             fee: {
                 gasLimit: '5000000',
                 gasPrice: '100'
-            },
+            }
         });
         expect(sendBep721Token).not.toBeNull();
     });

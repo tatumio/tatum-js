@@ -28,9 +28,9 @@ import {
  * Estimate Gas price for the transaction.
  */
 export const ethGetGasPriceInWei = async () => {
-    let gasStationUrl = 'https://ethgasstation.info/json/ethgasAPI.json'
+    let gasStationUrl = 'https://ethgasstation.info/json/ethgasAPI.json';
     if (process.env.TATUM_GAS_STATION_API_KEY) {
-        gasStationUrl = `${gasStationUrl}?apiKey=${process.env.TATUM_GAS_STATION_API_KEY}`
+        gasStationUrl = `${gasStationUrl}?apiKey=${process.env.TATUM_GAS_STATION_API_KEY}`;
     }
     const data = await Promise.race([
         axios.get(gasStationUrl.toString())
@@ -339,6 +339,53 @@ export const prepareEthMintErc721SignedTransaction = async (body: EthMintErc721,
 
     return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
 };
+/**
+ * Sign Ethereum mint multiple ERC 721 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareEthMintCashbackErc721SignedTransaction = async (body: EthMintErc721, provider?: string) => {
+    await validateBody(body, EthMintErc721);
+    const {
+        fromPrivateKey,
+        to,
+        tokenId,
+        contractAddress,
+        authorAddresses,
+        cashbackValues,
+        url,
+        nonce,
+        signatureId,
+        fee
+    } = body;
+
+    const client = await getClient(provider, fromPrivateKey);
+
+    // @ts-ignore
+    const contract = new (client).eth.Contract(erc721TokenABI, contractAddress);
+
+    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei();
+    const cb: string[] = [];
+    const cashbacks: string[] = cashbackValues!;
+    // tslint:disable-next-line: prefer-for-of
+    for (const c of cashbacks) {
+        cb.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`);
+    }
+    const tx: TransactionConfig = {
+        from: 0,
+        to: contractAddress.trim(),
+        data: contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb).encodeABI(),
+        gasPrice,
+        nonce,
+    };
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
+
+    if (signatureId) {
+        return JSON.stringify(tx);
+    }
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+};
 
 /**
  * Sign Ethereum mint multiple ERC 721 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -436,6 +483,7 @@ export const prepareEthTransferErc721SignedTransaction = async (body: EthTransfe
         contractAddress,
         nonce,
         signatureId,
+        value,
     } = body;
 
     const client = await getClient(provider, fromPrivateKey);
@@ -443,17 +491,16 @@ export const prepareEthTransferErc721SignedTransaction = async (body: EthTransfe
     // @ts-ignore
     const contract = new (client).eth.Contract(erc721TokenABI, contractAddress);
     const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei();
-
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
         data: contract.methods.safeTransfer(to.trim(), tokenId).encodeABI(),
         gasPrice,
         nonce,
+        value: value ? `0x${new BigNumber(value).multipliedBy(1e18).toString(16)}` : undefined,
     };
 
     tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
-
     if (signatureId) {
         return JSON.stringify(tx);
     }
@@ -590,6 +637,15 @@ export const sendMintErc721Transaction = async (body: EthMintErc721, provider?: 
     ethBroadcast(await prepareEthMintErc721SignedTransaction(body, provider), body.signatureId);
 
 /**
+ * Send Ethereum ERC721 mint with cashback transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
+export const sendMintCashbackErc721Transaction = async (body: EthMintErc721, provider?: string) =>
+    ethBroadcast(await prepareEthMintCashbackErc721SignedTransaction(body, provider), body.signatureId);
+/**
  * Send Ethereum ERC721 mint multiple transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
  * @param body content of the transaction to broadcast
@@ -598,7 +654,6 @@ export const sendMintErc721Transaction = async (body: EthMintErc721, provider?: 
  */
 export const sendMintMultipleErc721Transaction = async (body: EthMintMultipleErc721, provider?: string) =>
     ethBroadcast(await prepareEthMintMultipleErc721SignedTransaction(body, provider), body.signatureId);
-
 /**
  * Send Ethereum ERC721 burn transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
