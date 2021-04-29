@@ -386,7 +386,57 @@ export const prepareEthMintCashbackErc721SignedTransaction = async (body: EthMin
     }
     return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
 };
+/**
+ * Sign Ethereum mint multiple ERC 721 Cashback transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareEthMintMultipleCashbackErc721SignedTransaction = async (body: EthMintMultipleErc721, provider?: string) => {
+    await validateBody(body, EthMintMultipleErc721);
+    const {
+        fromPrivateKey,
+        to,
+        tokenId,
+        contractAddress,
+        url,
+        nonce,
+        signatureId,
+        authorAddresses,
+        cashbackValues,
+        fee
+    } = body;
 
+    const client = await getClient(provider, fromPrivateKey);
+
+    // @ts-ignore
+    const contract = new (client).eth.Contract(erc721TokenABI, contractAddress);
+    const cashbacks: string[][] = cashbackValues!;
+    const cb: string[][] = [];
+
+    for (const c of cashbacks) {
+        const cb2: string[] = [];
+        for (const c2 of c) {
+            cb2.push(`0x${new BigNumber(client.utils.toWei(c2, 'ether')).toString(16)}`)
+        }
+        cb.push(cb2)
+    }
+    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei();
+    const tx: TransactionConfig = {
+        from: 0,
+        to: contractAddress.trim(),
+        data: contract.methods.mintMultipleCashback(to.map(t => t.trim()), tokenId, url, authorAddresses, cb).encodeABI(),
+        gasPrice,
+        nonce,
+    };
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
+
+    if (signatureId) {
+        return JSON.stringify(tx);
+    }
+
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+};
 /**
  * Sign Ethereum mint multiple ERC 721 transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
@@ -501,7 +551,7 @@ export const prepareEthTransferErc721SignedTransaction = async (body: EthTransfe
 
     value ? tx.value = `0x${new BigNumber(value).multipliedBy(1e18).toString(16)}` : null;
     tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
-    
+
     if (signatureId) {
         return JSON.stringify(tx);
     }
@@ -646,6 +696,17 @@ export const sendMintErc721Transaction = async (body: EthMintErc721, provider?: 
  */
 export const sendMintCashbackErc721Transaction = async (body: EthMintErc721, provider?: string) =>
     ethBroadcast(await prepareEthMintCashbackErc721SignedTransaction(body, provider), body.signatureId);
+
+/**
+ * Send Ethereum ERC721 mint multiple cashback transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
+export const sendEthMintMultipleCashbackErc721SignedTransaction = async (body: EthMintMultipleErc721, provider?: string) =>
+    ethBroadcast(await prepareEthMintMultipleCashbackErc721SignedTransaction(body, provider), body.signatureId);
+
 /**
  * Send Ethereum ERC721 mint multiple transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
@@ -655,6 +716,7 @@ export const sendMintCashbackErc721Transaction = async (body: EthMintErc721, pro
  */
 export const sendMintMultipleErc721Transaction = async (body: EthMintMultipleErc721, provider?: string) =>
     ethBroadcast(await prepareEthMintMultipleErc721SignedTransaction(body, provider), body.signatureId);
+
 /**
  * Send Ethereum ERC721 burn transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
