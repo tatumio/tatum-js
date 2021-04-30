@@ -4,6 +4,7 @@ export enum Currency {
     LTC = 'LTC',
     CELO = 'CELO',
     CUSD = 'CUSD',
+    CEUR = 'CEUR',
     ETH = 'ETH',
     FABRIC = 'FABRIC',
     QUORUM = 'QUORUM',

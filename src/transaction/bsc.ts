@@ -534,9 +534,8 @@ export const prepareBscTransferBep721SignedTransaction = async (body: EthTransfe
         data: contract.methods.safeTransfer(to.trim(), tokenId).encodeABI(),
         gasPrice,
         nonce,
+        value: value ? `0x${new BigNumber(value).multipliedBy(1e18).toString(16)}` : undefined,
     };
-
-    value ? tx.value = `0x${new BigNumber(value).multipliedBy(1e18).toString(16)}` : null;
 
     if (signatureId) {
         return JSON.stringify(tx);

@@ -1,14 +1,6 @@
-import {
-    IsIn,
-    IsInt,
-    IsNotEmpty,
-    IsNumberString,
-    IsOptional,
-    Length,
-    Min,
-} from 'class-validator';
+import {IsIn, IsInt, IsNotEmpty, IsNumberString, IsOptional, Length, Min,} from 'class-validator';
 import {Currency} from './Currency';
-import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
+import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
 
 export class BurnCeloErc20 extends PrivateKeyOrSignatureId {
     @IsNotEmpty()
@@ -25,6 +17,6 @@ export class BurnCeloErc20 extends PrivateKeyOrSignatureId {
     public nonce?: number;
 
     @IsNotEmpty()
-    @IsIn([Currency.CELO, Currency.CUSD])
+    @IsIn([Currency.CELO, Currency.CUSD, Currency.CEUR])
     public feeCurrency: Currency;
 }

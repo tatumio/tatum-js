@@ -1,16 +1,6 @@
-import {
-    IsIn,
-    IsNotEmpty,
-    IsNumberString,
-    IsOptional,
-    Length,
-    Matches,
-    MaxLength,
-    Min,
-    ValidateIf,
-} from 'class-validator';
+import {IsIn, IsNotEmpty, IsNumberString, IsOptional, Length, Matches, MaxLength, Min, ValidateIf,} from 'class-validator';
 import {Currency} from './Currency';
-import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
+import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
 
 export class TransferCeloOrCeloErc20Token extends PrivateKeyOrSignatureId {
 
@@ -29,16 +19,16 @@ export class TransferCeloOrCeloErc20Token extends PrivateKeyOrSignatureId {
 
     @ValidateIf(o => !o.contractAddress)
     @IsNotEmpty()
-    @IsIn([Currency.CELO, Currency.CUSD])
-    public currency: Currency;
+    @IsIn([Currency.CELO, Currency.CUSD, Currency.CEUR])
+    public currency?: Currency;
 
     @ValidateIf(o => !o.currency)
     @IsNotEmpty()
     @Length(42, 42)
-    public contractAddress: string;
+    public contractAddress?: string;
 
     @IsNotEmpty()
-    @IsIn([Currency.CELO, Currency.CUSD])
+    @IsIn([Currency.CELO, Currency.CUSD, Currency.CEUR])
     public feeCurrency: Currency;
 
     @Min(0)

@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 import {RippleAPI} from 'ripple-lib';
 import {Payment} from 'ripple-lib/dist/npm/transaction/payment';
 import {xrpBroadcast, xrpGetAccountInfo, xrpGetFee} from '../blockchain';
-import { validateBody } from '../connector/tatum'
+import {validateBody} from '../connector/tatum';
 import {Currency, TransactionKMS, TransferXrp} from '../model';
 
 /**
@@ -67,7 +67,7 @@ export const prepareXrpSignedTransaction = async (body: TransferXrp) => {
     };
     const accountInfo = await xrpGetAccountInfo(fromAccount);
     const sequence = accountInfo.account_data.Sequence;
-    const maxLedgerVersion = accountInfo.ledger_current_index + 5;
+    const maxLedgerVersion = accountInfo.ledger_current_index + 500;
     const rippleAPI = new RippleAPI();
     const prepared = await rippleAPI.preparePayment(fromAccount, payment, {
         fee: f,

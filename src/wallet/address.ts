@@ -448,6 +448,8 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
         case Currency.DOGE:
             return generateDogeAddress(testnet, xpub, i);
         case Currency.CELO:
+        case Currency.CEUR:
+        case Currency.CUSD:
             return generateCeloAddress(testnet, xpub, i);
         case Currency.BCH:
             return generateBchAddress(testnet, xpub, i);
@@ -514,6 +516,8 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
         case Currency.USDT_TRON:
             return generateTronPrivateKey(mnemonic, i);
         case Currency.CELO:
+        case Currency.CEUR:
+        case Currency.CUSD:
             return generateCeloPrivateKey(testnet, mnemonic, i);
         case Currency.USDT:
         case Currency.WBTC:

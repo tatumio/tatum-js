@@ -112,7 +112,7 @@ describe('NFT tests', () => {
                 fee: { gasLimit: '6000000', gasPrice: '100' }
             });
             expect(deployErc721Token).not.toBeNull();
-            console.log(deployErc721Token);
+            console.log('response::',deployErc721Token);
         });
 
         it('should test eth 721 mint transaction', async () => {

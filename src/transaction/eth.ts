@@ -28,9 +28,9 @@ import {
  * Estimate Gas price for the transaction.
  */
 export const ethGetGasPriceInWei = async () => {
-    let gasStationUrl = 'https://ethgasstation.info/json/ethgasAPI.json'
+    let gasStationUrl = 'https://ethgasstation.info/json/ethgasAPI.json';
     if (process.env.TATUM_GAS_STATION_API_KEY) {
-        gasStationUrl = `${gasStationUrl}?apiKey=${process.env.TATUM_GAS_STATION_API_KEY}`
+        gasStationUrl = `${gasStationUrl}?apiKey=${process.env.TATUM_GAS_STATION_API_KEY}`;
     }
     const data = await Promise.race([
         axios.get(gasStationUrl.toString())
@@ -547,11 +547,10 @@ export const prepareEthTransferErc721SignedTransaction = async (body: EthTransfe
         data: contract.methods.safeTransfer(to.trim(), tokenId).encodeABI(),
         gasPrice,
         nonce,
+        value: value ? `0x${new BigNumber(value).multipliedBy(1e18).toString(16)}` : undefined,
     };
 
-    value ? tx.value = `0x${new BigNumber(value).multipliedBy(1e18).toString(16)}` : null;
     tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
-
     if (signatureId) {
         return JSON.stringify(tx);
     }
@@ -716,7 +715,6 @@ export const sendEthMintMultipleCashbackErc721SignedTransaction = async (body: E
  */
 export const sendMintMultipleErc721Transaction = async (body: EthMintMultipleErc721, provider?: string) =>
     ethBroadcast(await prepareEthMintMultipleErc721SignedTransaction(body, provider), body.signatureId);
-
 /**
  * Send Ethereum ERC721 burn transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
