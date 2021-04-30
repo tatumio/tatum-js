@@ -387,45 +387,8 @@ export default [
         ],
         'stateMutability': 'view',
         'type': 'function'
-    },{
-        'inputs': [
-            {
-                'internalType': 'address',
-                'name': 'to',
-                'type': 'address'
-            },
-            {
-                'internalType': 'uint256',
-                'name': 'tokenId',
-                'type': 'uint256'
-            },
-            {
-                'internalType': 'string',
-                'name': 'tokenURI',
-                'type': 'string'
-            },
-            {
-                'internalType': 'address[]',
-                'name': 'authorAddresses',
-                'type': 'address[]'
-            },
-            {
-                'internalType': 'uint256[]',
-                'name': 'cashbackValues',
-                'type': 'uint256[]'
-            }
-        ],
-        'name': 'mintWithCashback',
-        'outputs': [
-            {
-                'internalType': 'bool',
-                'name': '',
-                'type': 'bool'
-            }
-        ],
-        'stateMutability': 'nonpayable',
-        'type': 'function'
-    },{
+    },
+    {
         'inputs': [
             {
                 'internalType': 'address[]',
@@ -441,19 +404,9 @@ export default [
                 'internalType': 'string[]',
                 'name': 'tokenURI',
                 'type': 'string[]'
-            },
-            {
-                'internalType': 'address[][]',
-                'name': 'authorAddresses',
-                'type': 'address[][]'
-            },
-            {
-                'internalType': 'uint256[]',
-                'name': 'cashbackValues',
-                'type': 'uint256[][]'
             }
         ],
-        'name': 'mintMultipleCashback',
+        'name': 'mintMultiple',
         'outputs': [
             {
                 'internalType': 'bool',
@@ -480,9 +433,58 @@ export default [
                 'internalType': 'string[]',
                 'name': 'tokenURI',
                 'type': 'string[]'
+            },
+            {
+                'internalType': 'address[][]',
+                'name': 'recipientAddresses',
+                'type': 'address[][]'
+            },
+            {
+                'internalType': 'uint256[][]',
+                'name': 'cashbackValues',
+                'type': 'uint256[][]'
             }
         ],
-        'name': 'mintMultiple',
+        'name': 'mintMultipleCashback',
+        'outputs': [
+            {
+                'internalType': 'bool',
+                'name': '',
+                'type': 'bool'
+            }
+        ],
+        'stateMutability': 'nonpayable',
+        'type': 'function'
+    },
+    {
+        'inputs': [
+            {
+                'internalType': 'address',
+                'name': 'to',
+                'type': 'address'
+            },
+            {
+                'internalType': 'uint256',
+                'name': 'tokenId',
+                'type': 'uint256'
+            },
+            {
+                'internalType': 'string',
+                'name': 'tokenURI',
+                'type': 'string'
+            },
+            {
+                'internalType': 'address[]',
+                'name': 'recipientAddresses',
+                'type': 'address[]'
+            },
+            {
+                'internalType': 'uint256[]',
+                'name': 'cashbackValues',
+                'type': 'uint256[]'
+            }
+        ],
+        'name': 'mintWithCashback',
         'outputs': [
             {
                 'internalType': 'bool',
@@ -823,6 +825,35 @@ export default [
         ],
         'name': 'transferFrom',
         'outputs': [],
+        'stateMutability': 'nonpayable',
+        'type': 'function'
+    },
+    {
+        'inputs': [
+            {
+                'internalType': 'uint256',
+                'name': 'tokenId',
+                'type': 'uint256'
+            },
+            {
+                'internalType': 'address',
+                'name': 'author',
+                'type': 'address'
+            },
+            {
+                'internalType': 'uint256',
+                'name': 'cashbackValue',
+                'type': 'uint256'
+            }
+        ],
+        'name': 'updateCashbackForAuthor',
+        'outputs': [
+            {
+                'internalType': 'bool',
+                'name': '',
+                'type': 'bool'
+            }
+        ],
         'stateMutability': 'nonpayable',
         'type': 'function'
     }

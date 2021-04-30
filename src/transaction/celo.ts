@@ -1,5 +1,5 @@
-import { CeloProvider, CeloWallet } from '@celo-tools/celo-ethers-wrapper';
-import { BigNumber } from 'bignumber.js';
+import {CeloProvider, CeloWallet} from '@celo-tools/celo-ethers-wrapper';
+import {BigNumber} from 'bignumber.js';
 import Web3 from 'web3';
 import {toWei} from 'web3-utils';
 import {celoBroadcast} from '../blockchain';
@@ -22,6 +22,7 @@ import {
     TransactionKMS,
     TransferCeloOrCeloErc20Token,
 } from '../model';
+import {CeloUpdateCashbackErc721} from '../model/request/CeloUpdateCashbackErc721';
 
 const obtainWalletInformation = async (wallet: CeloWallet, feeCurrencyContractAddress?: string) => {
     const [txCount, gasPrice, from] = await Promise.all([
@@ -523,7 +524,7 @@ export const prepareCeloMintMultipleCashbackErc721SignedTransaction = async (tes
     const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
     const network = await p.ready;
 
-    const feeCurrencyContractAddress = (feeCurrency === Currency.CELO) ? undefined : (testnet ? CUSD_ADDRESS_TESTNET : CUSD_ADDRESS_MAINNET);
+    const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet);
 
     // @ts-ignore
     const contract = new (new Web3()).eth.Contract(erc721_abi, contractAddress.trim());
@@ -559,7 +560,7 @@ export const prepareCeloMintMultipleCashbackErc721SignedTransaction = async (tes
         data: contract.methods.mintMultipleCashback(to.map(t => t.trim()), tokenId, url, authorAddresses, cb).encodeABI(),
         from,
     };
-    transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CUSD ? 100000 : 0).toHexString();
+    transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();
     return wallet.signTransaction(transaction);
 };
 
@@ -604,6 +605,53 @@ export const prepareCeloMintMultipleErc721SignedTransaction = async (testnet: bo
         to: contractAddress.trim(),
         gasPrice,
         data: contract.methods.mintMultiple(to.map(t => t.trim()), tokenId, url).encodeABI(),
+        from,
+    };
+    transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();
+    return wallet.signTransaction(transaction);
+};
+
+export const prepareCeloUpdateCashbackForAuthorErc721SignedTransaction = async (testnet: boolean, body: CeloUpdateCashbackErc721, provider?: string) => {
+    await validateBody(body, CeloUpdateCashbackErc721);
+    const {
+        fromPrivateKey,
+        author,
+        cashbackValue,
+        tokenId,
+        contractAddress,
+        feeCurrency,
+        nonce,
+        signatureId,
+    } = body;
+
+    const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
+    const network = await p.ready;
+
+    const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet);
+
+    // @ts-ignore
+    const contract = new (new Web3()).eth.Contract(erc721_abi, contractAddress.trim());
+
+    if (signatureId) {
+        return JSON.stringify({
+            chainId: network.chainId,
+            feeCurrency: feeCurrencyContractAddress,
+            nonce,
+            gasLimit: '0',
+            to: contractAddress.trim(),
+            data: contract.methods.updateCashbackForAuthor(tokenId, author, `0x${new BigNumber(toWei(cashbackValue, 'ether')).toString(16)}`).encodeABI(),
+        });
+    }
+    const wallet = new CeloWallet(fromPrivateKey, p);
+    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress);
+    const transaction = {
+        chainId: network.chainId,
+        feeCurrency: feeCurrencyContractAddress,
+        nonce: nonce || txCount,
+        gasLimit: '0',
+        to: contractAddress.trim(),
+        gasPrice,
+        data: contract.methods.updateCashbackForAuthor(tokenId, author, `0x${new BigNumber(toWei(cashbackValue, 'ether')).toString(16)}`).encodeABI(),
         from,
     };
     transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();

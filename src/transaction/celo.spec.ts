@@ -11,6 +11,7 @@ import {
     MintCeloErc20,
     TransferCeloOrCeloErc20Token,
 } from '../model';
+import {CeloUpdateCashbackErc721} from '../model/request/CeloUpdateCashbackErc721';
 import {
     prepareCeloBurnErc20SignedTransaction,
     prepareCeloBurnErc721SignedTransaction,
@@ -18,10 +19,12 @@ import {
     prepareCeloDeployErc721SignedTransaction,
     prepareCeloMintErc20SignedTransaction,
     prepareCeloMintErc721SignedTransaction,
+    prepareCeloMintMultipleCashbackErc721SignedTransaction,
     prepareCeloMintMultipleErc721SignedTransaction,
     prepareCeloOrCUsdSignedTransaction,
     prepareCeloTransferErc20SignedTransaction,
     prepareCeloTransferErc721SignedTransaction,
+    prepareCeloUpdateCashbackForAuthorErc721SignedTransaction,
     signCeloKMSTransaction
 } from './celo';
 
@@ -137,6 +140,42 @@ describe('CELO transactions', () => {
         // console.log(await provider.sendTransaction(txData));
     });
 
+    it('should test valid mint multiple 721 transaction with cashback', async () => {
+        const body = new CeloMintMultipleErc721();
+        body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
+        body.chain = Currency.CELO;
+        body.to = ['0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea'];
+        body.contractAddress = '0x8e6e6fc994d18F8A9B1A38f93469E1F9252d605E';
+        body.tokenId = ['11'];
+        body.url = ['https://google.com'];
+        body.cashbackValues = [['3']];
+        body.authorAddresses = [['0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea']];
+        body.feeCurrency = Currency.CUSD;
+        const txData = await prepareCeloMintMultipleCashbackErc721SignedTransaction(true, body, 'https://alfajores-forno.celo-testnet.org');
+        expect(txData).toContain('0x');
+
+        // const provider = new CeloProvider('https://alfajores-forno.celo-testnet.org');
+        // await provider.ready;
+        // console.log(await provider.sendTransaction(txData));
+    });
+
+    it('should test valid update 721 cashback transaction', async () => {
+        const body = new CeloUpdateCashbackErc721();
+        body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
+        body.chain = Currency.CELO;
+        body.contractAddress = '0x8e6e6fc994d18F8A9B1A38f93469E1F9252d605E';
+        body.author = '0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea';
+        body.cashbackValue = '0';
+        body.tokenId = '11';
+        body.feeCurrency = Currency.CUSD;
+        const txData = await prepareCeloUpdateCashbackForAuthorErc721SignedTransaction(true, body, 'https://alfajores-forno.celo-testnet.org');
+        expect(txData).toContain('0x');
+
+        // const provider = new CeloProvider('https://alfajores-forno.celo-testnet.org');
+        // await provider.ready;
+        // console.log(await provider.sendTransaction(txData));
+    });
+
     it('should test valid burn 721 transaction', async () => {
         const body = new CeloBurnErc721();
         body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
@@ -166,9 +205,10 @@ describe('CELO transactions', () => {
         const body = new CeloTransferErc721();
         body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
         body.chain = Currency.CELO;
-        body.contractAddress = '0xD0E0eF0C388ef42B4cD17De41431232ACF3b5b79';
+        body.contractAddress = '0x8e6e6fc994d18F8A9B1A38f93469E1F9252d605E';
         body.to = '0x10168acf3231ccc7b16ba53f17dd4d8bdecf4e1a';
-        body.tokenId = '5';
+        body.tokenId = '11';
+        body.value = '0';
         body.feeCurrency = Currency.CUSD;
         const txData = await prepareCeloTransferErc721SignedTransaction(true, body, 'https://alfajores-forno.celo-testnet.org');
         expect(txData).toContain('0x');

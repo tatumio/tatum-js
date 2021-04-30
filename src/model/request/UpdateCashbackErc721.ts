@@ -1,16 +1,14 @@
-import {IsIn, IsNotEmpty, IsOptional, Length, MaxLength, Min} from 'class-validator';
+import {Type} from 'class-transformer';
+import {IsIn, IsNotEmpty, IsNumberString, IsOptional, Length, MaxLength, Min, ValidateNested} from 'class-validator';
 import {Currency} from './Currency';
+import {Fee} from './Fee';
 import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
 
-export class MintErc721 extends PrivateKeyOrSignatureId {
+export class UpdateCashbackErc721 extends PrivateKeyOrSignatureId {
 
     @IsNotEmpty()
     @Length(42, 42)
-    public to: string;
-
-    @IsNotEmpty()
-    @MaxLength(256)
-    public url: string;
+    public author: string;
 
     @IsNotEmpty()
     @MaxLength(256)
@@ -28,8 +26,13 @@ export class MintErc721 extends PrivateKeyOrSignatureId {
     @IsOptional()
     public nonce?: number;
 
-    public authorAddresses?: string[];
+    @IsNotEmpty()
+    @IsNumberString()
+    public cashbackValue: string;
 
-    public cashbackValues?: string[];
+    @IsOptional()
+    @Type(() => Fee)
+    @ValidateNested()
+    public fee?: Fee;
 
 }

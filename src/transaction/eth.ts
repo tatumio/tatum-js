@@ -1,10 +1,11 @@
 import axios from 'axios';
-import { BigNumber } from 'bignumber.js';
+import {BigNumber} from 'bignumber.js';
 import Web3 from 'web3';
-import { TransactionConfig } from 'web3-core';
-import { ethBroadcast, ethGetTransactionsCount } from '../blockchain';
-import { validateBody } from '../connector/tatum';
-import { CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI } from '../constants';
+import {TransactionConfig} from 'web3-core';
+import {toWei} from 'web3-utils';
+import {ethBroadcast, ethGetTransactionsCount} from '../blockchain';
+import {validateBody} from '../connector/tatum';
+import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
 import erc20TokenABI from '../contracts/erc20/token_abi';
 import erc20TokenBytecode from '../contracts/erc20/token_bytecode';
 import erc721TokenABI from '../contracts/erc721/erc721_abi';
@@ -23,6 +24,7 @@ import {
     TransferCustomErc20,
     TransferEthErc20,
 } from '../model';
+import {UpdateCashbackErc721} from '../model/request/UpdateCashbackErc721';
 
 /**
  * Estimate Gas price for the transaction.
@@ -504,6 +506,47 @@ export const prepareEthBurnErc721SignedTransaction = async (body: EthBurnErc721,
         from: 0,
         to: contractAddress.trim(),
         data: contract.methods.burn(tokenId).encodeABI(),
+        gasPrice,
+        nonce,
+    };
+
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
+
+    if (signatureId) {
+        return JSON.stringify(tx);
+    }
+
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+};
+
+/**
+ * Sign Ethereum update cashback ERC 721 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareEthUpdateCashbackForAuthorErc721SignedTransaction = async (body: UpdateCashbackErc721, provider?: string) => {
+    await validateBody(body, EthBurnErc721);
+    const {
+        fromPrivateKey,
+        author,
+        cashbackValue,
+        tokenId,
+        fee,
+        contractAddress,
+        nonce,
+        signatureId,
+    } = body;
+
+    const client = getClient(provider, fromPrivateKey);
+
+    // @ts-ignore
+    const contract = new (client).eth.Contract(erc721TokenABI, contractAddress);
+    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei();
+    const tx: TransactionConfig = {
+        from: 0,
+        to: contractAddress.trim(),
+        data: contract.methods.updateCashbackForAuthor(tokenId, author, `0x${new BigNumber(toWei(cashbackValue, 'ether')).toString(16)}`).encodeABI(),
         gasPrice,
         nonce,
     };
