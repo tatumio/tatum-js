@@ -622,7 +622,7 @@ export const prepareBscDeployBep721SignedTransaction = async (body: EthDeployErc
         data: deploy.encodeABI(),
         gasPrice: fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await bscGetGasPriceInWei(),
         nonce,
-        gas: fee ? fee.gasLimit : 6000000
+        gas: fee ? fee.gasLimit : 7000000
     };
 
     if (signatureId) {
