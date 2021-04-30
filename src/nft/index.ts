@@ -53,6 +53,11 @@ export const getNFTsByAddress = async (chain: Currency, contractAddress: string,
  */
 export const getNFTMetadataURI = async (chain: Currency, contractAddress: string, tokenId: string): Promise<{ data: string }> => get(`/v3/nft/metadata/${chain}/${contractAddress}/${tokenId}`);
 
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetRoyaltyErc721" target="_blank">Tatum API documentation</a>
+ */
+export const getNFTRoyalty = async (chain: Currency, contractAddress: string, tokenId: string): Promise<{ data: string }> => get(`/v3/nft/royalty/${chain}/${contractAddress}/${tokenId}`);
+
 export const deployNFT = async (testnet: boolean, body: CeloDeployErc721 | EthDeployErc721, provider?: string) => {
     switch (body.chain) {
         case Currency.CELO:
