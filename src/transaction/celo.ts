@@ -639,7 +639,7 @@ export const prepareCeloUpdateCashbackForAuthorErc721SignedTransaction = async (
             nonce,
             gasLimit: '0',
             to: contractAddress.trim(),
-            data: contract.methods.updateCashbackForAuthor(tokenId, author, `0x${new BigNumber(toWei(cashbackValue, 'ether')).toString(16)}`).encodeABI(),
+            data: contract.methods.updateCashbackForAuthor(tokenId, `0x${new BigNumber(toWei(cashbackValue, 'ether')).toString(16)}`).encodeABI(),
         });
     }
     const wallet = new CeloWallet(fromPrivateKey, p);
@@ -651,7 +651,7 @@ export const prepareCeloUpdateCashbackForAuthorErc721SignedTransaction = async (
         gasLimit: '0',
         to: contractAddress.trim(),
         gasPrice,
-        data: contract.methods.updateCashbackForAuthor(tokenId, author, `0x${new BigNumber(toWei(cashbackValue, 'ether')).toString(16)}`).encodeABI(),
+        data: contract.methods.updateCashbackForAuthor(tokenId, `0x${new BigNumber(toWei(cashbackValue, 'ether')).toString(16)}`).encodeABI(),
         from,
     };
     transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();

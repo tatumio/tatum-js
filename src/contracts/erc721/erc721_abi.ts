@@ -402,7 +402,7 @@ export default [
             },
             {
                 'internalType': 'string[]',
-                'name': 'tokenURI',
+                'name': 'uri',
                 'type': 'string[]'
             }
         ],
@@ -431,7 +431,7 @@ export default [
             },
             {
                 'internalType': 'string[]',
-                'name': 'tokenURI',
+                'name': 'uri',
                 'type': 'string[]'
             },
             {
@@ -470,7 +470,7 @@ export default [
             },
             {
                 'internalType': 'string',
-                'name': 'tokenURI',
+                'name': 'uri',
                 'type': 'string'
             },
             {
@@ -509,7 +509,7 @@ export default [
             },
             {
                 'internalType': 'string',
-                'name': 'tokenURI',
+                'name': 'uri',
                 'type': 'string'
             }
         ],
@@ -872,11 +872,6 @@ export default [
                 'internalType': 'uint256',
                 'name': 'tokenId',
                 'type': 'uint256'
-            },
-            {
-                'internalType': 'address',
-                'name': 'author',
-                'type': 'address'
             },
             {
                 'internalType': 'uint256',
