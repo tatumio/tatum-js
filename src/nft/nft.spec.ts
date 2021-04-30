@@ -6,7 +6,7 @@ import {
     CeloTransferErc721,
     Currency,
 } from '../model';
-import {burnNFT, deployNFT, mintMultipleNFTWithUri, mintNFTWithUri, transferNFT} from './index';
+import { burnNFT, deployNFT, mintMultipleNFTWithUri, mintNFTWithUri, transferNFT } from './index';
 describe('NFT tests', () => {
     jest.setTimeout(99999);
     describe('NFT CELO transactions', () => {
@@ -17,24 +17,41 @@ describe('NFT tests', () => {
             body.symbol = 'TTM';
             body.feeCurrency = Currency.CUSD;
             body.chain = Currency.CELO;
-            const test=await deployNFT(true, body, 'https://alfajores-forno.celo-testnet.org')
+            const test = await deployNFT(true, body, 'https://alfajores-forno.celo-testnet.org')
             console.log(test)
             expect(test).toBeDefined();
         });
-
+        it('should test celo 721 mint multiple transaction with cashback', async () => {
+            const firstTokenId = new Date().getTime();
+            const secondTokenId = firstTokenId + 1;
+            const mintedTokens = await mintMultipleNFTWithUri(true, {
+                to: ['0x811dfbff13adfbc3cf653dcc373c03616d3471c9', '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'],
+                chain: Currency.CELO,
+                tokenId: [firstTokenId.toString(), secondTokenId.toString()],
+                url: ['https://www.seznam.cz', 'https://www.seznam.cz'],
+                fromPrivateKey: '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb',
+                contractAddress: '0x69aBb0b2d0fEd5f1Be31b007689181CeE0ed909B',
+                authorAddresses: [['0x6c4A48886b77D1197eCFBDaA3D3f35d81d584342', '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'], ['0x6c4A48886b77D1197eCFBDaA3D3f35d81d584342', '0x811dfbff13adfbc3cf653dcc373c03616d3471c9']],
+                cashbackValues: [['0.25', '0.25'], ['0.25', '0.25']],
+                fee: { gasLimit: '6000000', gasPrice: '100' },
+                feeCurrency: Currency.CUSD
+            });
+            console.log(mintedTokens);
+            expect(mintedTokens).not.toBeNull();
+        });
         it('should test valid mint cashback 721 transaction', async () => {
             const body = new CeloMintErc721();
             body.fromPrivateKey = '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236';
             body.to = '0x48d4bA7B2698A4b89635b9a2E391152350DB740f';
             body.contractAddress = '0x28980D12Ce9E7Bf6C20f568Db998E9A4d8F13271';
-            body.authorAddresses =['0x7100f8FF8AF3F5e527141039A1ceE9D244f39862']
+            body.authorAddresses = ['0x7100f8FF8AF3F5e527141039A1ceE9D244f39862']
             body.cashbackValues = ['0.25']
             body.tokenId = '1';
             body.url = 'https://google.com';
             body.feeCurrency = Currency.CUSD;
             body.chain = Currency.CELO;
-            const test= await mintNFTWithUri(true, body, 'https://alfajores-forno.celo-testnet.org')
-            console.log('test results',test)
+            const test = await mintNFTWithUri(true, body, 'https://alfajores-forno.celo-testnet.org')
+            console.log('test results', test)
             expect(test).toBeDefined();
         });
 
@@ -116,15 +133,31 @@ describe('NFT tests', () => {
             const mintedToken = await mintNFTWithUri(true, {
                 to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
                 chain: Currency.ETH,
-                tokenId:'2',
+                tokenId: '2',
                 url: 'test.com',
                 fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
                 contractAddress: '0xE4966098662cF4c8e9BB63D643336b163cB9FFE1',
-                authorAddresses:['0x6c4A48886b77D1197eCFBDaA3D3f35d81d584342'],
-                cashbackValues:['0.25']
+                authorAddresses: ['0x6c4A48886b77D1197eCFBDaA3D3f35d81d584342'],
+                cashbackValues: ['0.25']
             });
             console.log(mintedToken);
             expect(mintedToken).not.toBeNull();
+        });
+        it('should test eth 721 mint multiple transaction with cashback', async () => {
+            const firstTokenId = new Date().getTime();
+            const secondTokenId = firstTokenId + 1;
+            const mintedTokens = await mintMultipleNFTWithUri(true, {
+                to: ['0x811dfbff13adfbc3cf653dcc373c03616d3471c9', '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'],
+                chain: Currency.ETH,
+                tokenId: [firstTokenId.toString(), secondTokenId.toString()],
+                url: ['https://www.seznam.cz', 'https://www.seznam.cz'],
+                fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+                contractAddress: '0x17683adfe031d13caca13fc234f222fa3837d4aa',
+                authorAddresses: [['0x6c4A48886b77D1197eCFBDaA3D3f35d81d584342', '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'], ['0x6c4A48886b77D1197eCFBDaA3D3f35d81d584342', '0x811dfbff13adfbc3cf653dcc373c03616d3471c9']],
+                cashbackValues: [['0.25', '0.25'], ['0.25', '0.25']]
+            });
+            console.log(mintedTokens);
+            expect(mintedTokens).not.toBeNull();
         });
         it('should test eth 721 mint multiple transaction', async () => {
             const firstTokenId = new Date().getTime();
@@ -166,7 +199,7 @@ describe('NFT tests', () => {
                 tokenId: '2',
                 fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
                 contractAddress: '0xE4966098662cF4c8e9BB63D643336b163cB9FFE1',
-                value:'1'
+                value: '1'
             });
             expect(sendErc721Token).not.toBeNull();
         });
@@ -181,7 +214,7 @@ describe('NFT tests', () => {
                     gasLimit: '5000000',
                     gasPrice: '100'
                 },
-                value:'1'
+                value: '1'
             });
             expect(sendErc721Token).not.toBeNull();
         });
@@ -197,21 +230,38 @@ describe('NFT tests', () => {
                 fee: { gasLimit: '6000000', gasPrice: '100' }
             });
             expect(deployErc721Token).not.toBeNull();
-            console.log('response::',deployErc721Token);
+            console.log(deployErc721Token);
+        });
+        it('should test bep 721 mint multiple transaction with cashback', async () => {
+            const firstTokenId = new Date().getTime();
+            const secondTokenId = firstTokenId + 1;
+            const mintedTokens = await mintMultipleNFTWithUri(true, {
+                to: ['0x811dfbff13adfbc3cf653dcc373c03616d3471c9', '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'],
+                chain: Currency.BSC,
+                tokenId: [firstTokenId.toString(), secondTokenId.toString()],
+                url: ['https://www.seznam.cz', 'https://www.seznam.cz'],
+                fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+                contractAddress: '0xf59d331098f721fd4f6d4651c27e32daae5c1fdd',
+                authorAddresses: [['0x6c4A48886b77D1197eCFBDaA3D3f35d81d584342', '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'], ['0x6c4A48886b77D1197eCFBDaA3D3f35d81d584342', '0x811dfbff13adfbc3cf653dcc373c03616d3471c9']],
+                cashbackValues: [['0.25', '0.25'], ['0.25', '0.25']],
+                fee: { gasLimit: '6000000', gasPrice: '100' }
+            });
+            console.log(mintedTokens);
+            expect(mintedTokens).not.toBeNull();
         });
         it('should test bep 721 mint transaction', async () => {
             try {
                 const mintedToken = await mintNFTWithUri(true, {
-                to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-                chain: Currency.BSC,
-                tokenId:'1',
-                url: 'test.com',
-                fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
-                contractAddress: '0xdf82c2f74aa7b629bda65b1cfd258248c9c2b7d3',
-                authorAddresses:['0x6c4A48886b77D1197eCFBDaA3D3f35d81d584342'],
-                cashbackValues:['0.25']
+                    to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+                    chain: Currency.BSC,
+                    tokenId: '1',
+                    url: 'test.com',
+                    fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+                    contractAddress: '0xdf82c2f74aa7b629bda65b1cfd258248c9c2b7d3',
+                    authorAddresses: ['0x6c4A48886b77D1197eCFBDaA3D3f35d81d584342'],
+                    cashbackValues: ['0.25']
                 });
-                console.log('mintedToken',mintedToken);
+                console.log('mintedToken', mintedToken);
                 expect(mintedToken).not.toBeNull();
             } catch (e) {
                 console.log(e);
@@ -222,11 +272,11 @@ describe('NFT tests', () => {
                 to: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
                 chain: Currency.BSC,
                 tokenId: '1',
-                fromPrivateKey: '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236',
+                fromPrivateKey: '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb',
                 contractAddress: '0xdf82c2f74aa7b629bda65b1cfd258248c9c2b7d3',
-                value:'1'
+                value: '1'
             });
-            console.log('transactionresponse',sendErc721Token)
+            console.log('transactionresponse', sendErc721Token)
             expect(sendErc721Token).not.toBeNull();
         });
     });

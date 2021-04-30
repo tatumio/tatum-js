@@ -21,16 +21,19 @@ import {
     sendCeloDeployErc721Transaction,
     sendCeloMinCashbackErc721Transaction,
     sendCeloMinErc721Transaction,
+    sendCeloMintMultipleCashbackErc721Transaction,
     sendCeloMintMultipleErc721Transaction,
     sendCeloTransferErc721Transaction,
     sendDeployBep721Transaction,
     sendDeployErc721Transaction,
     sendErc721Transaction,
+    sendEthMintMultipleCashbackErc721SignedTransaction,
     sendMintBep721Transaction,
     sendMintBepCashback721Transaction,
     sendMintCashbackErc721Transaction,
     sendMintErc721Transaction,
     sendMintMultipleBep721Transaction,
+    sendMintMultipleCashbackBep721Transaction,
     sendMintMultipleErc721Transaction
 } from '../transaction';
 
@@ -38,7 +41,8 @@ import {
  * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetBalanceErc721" target="_blank">Tatum API documentation</a>
  */
 
-export const getNFTsByAddress = async (chain: Currency, contractAddress: string, address: string): Promise<string[]> => get(`/v3/nft/balance/${chain}/${contractAddress}/${address}`);
+export const getNFTsByAddress = async (chain: Currency, contractAddress: string, address: string): Promise<string[]> =>
+    get(`/v3/nft/balance/${chain}/${contractAddress}/${address}`);
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetMetadataErc721" target="_blank">Tatum API documentation</a>
@@ -81,11 +85,23 @@ export const mintNFTWithUri = async (testnet: boolean, body: CeloMintErc721 | Et
 export const mintMultipleNFTWithUri = async (testnet: boolean, body: CeloMintMultipleErc721 | EthMintMultipleErc721, provider?: string) => {
     switch (body.chain) {
         case Currency.CELO:
-            return sendCeloMintMultipleErc721Transaction(testnet, body as CeloMintMultipleErc721, provider);
+            if (body.authorAddresses) {
+                return sendCeloMintMultipleCashbackErc721Transaction(testnet, body as CeloMintMultipleErc721, provider);
+            } else {
+                return sendCeloMintMultipleErc721Transaction(testnet, body as CeloMintMultipleErc721, provider);
+            }
         case Currency.ETH:
-            return sendMintMultipleErc721Transaction(body, provider);
+            if (body.authorAddresses) {
+                return sendEthMintMultipleCashbackErc721SignedTransaction(body, provider);
+            } else {
+                return sendMintMultipleErc721Transaction(body, provider);
+            }
         case Currency.BSC:
-            return sendMintMultipleBep721Transaction(body, provider);
+            if (body.authorAddresses) {
+                return sendMintMultipleCashbackBep721Transaction(body, provider);
+            } else {
+                return sendMintMultipleBep721Transaction(body, provider);
+            }
     }
 };
 

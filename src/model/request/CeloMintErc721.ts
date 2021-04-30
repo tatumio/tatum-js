@@ -1,6 +1,9 @@
-import {IsIn, IsNotEmpty,} from 'class-validator';
-import {Currency} from './Currency';
-import {MintErc721} from './MintErc721';
+import {
+  IsIn,
+  IsNotEmpty,
+} from 'class-validator';
+import { Currency } from './Currency';
+import { MintErc721 } from './MintErc721';
 
 export class CeloMintErc721 extends MintErc721 {
 
