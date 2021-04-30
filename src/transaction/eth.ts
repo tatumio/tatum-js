@@ -768,6 +768,9 @@ export const sendMintMultipleErc721Transaction = async (body: EthMintMultipleErc
 export const sendBurnErc721Transaction = async (body: EthBurnErc721, provider?: string) =>
     ethBroadcast(await prepareEthBurnErc721SignedTransaction(body, provider), body.signatureId);
 
+export const sendUpdateCashbackForAuthorErc721Transaction = async (body: UpdateCashbackErc721, provider?: string) =>
+    ethBroadcast(await prepareEthUpdateCashbackForAuthorErc721SignedTransaction(body, provider), body.signatureId);
+
 /**
  * Send Ethereum ERC721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.

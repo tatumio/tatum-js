@@ -755,6 +755,9 @@ export const sendMintMultipleBep721Transaction = async (body: EthMintMultipleErc
 export const sendBurnBep721Transaction = async (body: EthBurnErc721, provider?: string) =>
     bscBroadcast(await prepareBscBurnBep721SignedTransaction(body, provider), body.signatureId);
 
+export const sendUpdateCashbackForAuthorBep721Transaction = async (body: UpdateCashbackErc721, provider?: string) =>
+    bscBroadcast(await prepareBscUpdateCashbackForAuthorErc721SignedTransaction(body, provider), body.signatureId);
+
 /**
  * Send Bsc BEP721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.

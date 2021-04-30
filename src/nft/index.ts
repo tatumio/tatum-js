@@ -1,5 +1,4 @@
-import { builtinModules } from 'node:module';
-import { get } from '../connector/tatum';
+import {get} from '../connector/tatum';
 import {
     CeloBurnErc721,
     CeloDeployErc721,
@@ -13,6 +12,8 @@ import {
     EthMintMultipleErc721,
     EthTransferErc721
 } from '../model';
+import {CeloUpdateCashbackErc721} from '../model/request/CeloUpdateCashbackErc721';
+import {UpdateCashbackErc721} from '../model/request/UpdateCashbackErc721';
 import {
     sendBep721Transaction,
     sendBurnBep721Transaction,
@@ -24,6 +25,7 @@ import {
     sendCeloMintMultipleCashbackErc721Transaction,
     sendCeloMintMultipleErc721Transaction,
     sendCeloTransferErc721Transaction,
+    sendCeloUpdateCashbackForAuthorErc721Transaction,
     sendDeployBep721Transaction,
     sendDeployErc721Transaction,
     sendErc721Transaction,
@@ -34,7 +36,9 @@ import {
     sendMintErc721Transaction,
     sendMintMultipleBep721Transaction,
     sendMintMultipleCashbackBep721Transaction,
-    sendMintMultipleErc721Transaction
+    sendMintMultipleErc721Transaction,
+    sendUpdateCashbackForAuthorBep721Transaction,
+    sendUpdateCashbackForAuthorErc721Transaction
 } from '../transaction';
 
 /**
@@ -113,6 +117,17 @@ export const burnNFT = async (testnet: boolean, body: CeloBurnErc721 | EthBurnEr
             return sendBurnErc721Transaction(body, provider);
         case Currency.BSC:
             return sendBurnBep721Transaction(body, provider);
+    }
+};
+
+export const updateCashbackForAuthorNFT = async (testnet: boolean, body: UpdateCashbackErc721 | CeloUpdateCashbackErc721, provider?: string) => {
+    switch (body.chain) {
+        case Currency.CELO:
+            return sendCeloUpdateCashbackForAuthorErc721Transaction(testnet, body as CeloUpdateCashbackErc721, provider);
+        case Currency.ETH:
+            return sendUpdateCashbackForAuthorErc721Transaction(body, provider);
+        case Currency.BSC:
+            return sendUpdateCashbackForAuthorBep721Transaction(body, provider);
     }
 };
 
