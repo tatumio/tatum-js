@@ -5,7 +5,7 @@ import {CELO_BASED_CURRENCIES} from '../constants';
 import {getAccountById, getVirtualCurrencyByName} from '../ledger';
 import {Currency} from '../model';
 import {TransferCeloOffchain} from '../model/request/TransferCeloOffchain';
-import {prepareCeloTransferErc20SignedTransaction} from '../transaction';
+import {prepareCeloOrCUsdSignedTransaction, prepareCeloTransferErc20SignedTransaction} from '../transaction';
 import {generatePrivateKeyFromMnemonic} from '../wallet';
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
 
@@ -33,7 +33,7 @@ export const sendCeloOffchainTransaction = async (testnet: boolean, body: Transf
         gasPrice: gasPrice || '0.5',
     };
     if (CELO_BASED_CURRENCIES.includes(account.currency)) {
-        txData = await prepareCeloTransferErc20SignedTransaction(testnet, {
+        txData = await prepareCeloOrCUsdSignedTransaction(testnet, {
             amount,
             fromPrivateKey: fromPriv,
             currency: account.currency as Currency,
