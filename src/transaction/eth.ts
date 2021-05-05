@@ -74,7 +74,7 @@ export const signEthKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
     if (!transactionConfig.nonce) {
         transactionConfig.nonce = await ethGetTransactionsCount(client.eth.defaultAccount as string);
     }
-    return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey)).rawTransaction as string;
+    return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey as string)).rawTransaction as string;
 };
 
 /**
@@ -168,7 +168,7 @@ export const prepareEthOrErc20SignedTransaction = async (body: TransferEthErc20,
     }
     tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
 
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
 };
 
 /**
@@ -210,7 +210,7 @@ export const prepareCustomErc20SignedTransaction = async (body: TransferCustomEr
     }
 
     tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
 };
 
 /**
@@ -259,7 +259,7 @@ export const prepareDeployErc20SignedTransaction = async (body: DeployEthErc20, 
         return JSON.stringify(tx);
     }
     tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
 };
 
 /**
@@ -296,7 +296,7 @@ export const prepareSmartContractWriteMethodInvocation = async (body: SmartContr
         return JSON.stringify(tx);
     }
     tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
 };
 
 /**
@@ -336,7 +336,7 @@ export const prepareEthMintErc721SignedTransaction = async (body: EthMintErc721,
     }
     tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
 
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
 };
 /**
  * Sign Ethereum mint multiple ERC 721 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -382,7 +382,7 @@ export const prepareEthMintCashbackErc721SignedTransaction = async (body: EthMin
         return JSON.stringify(tx);
     }
     tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
 };
 /**
  * Sign Ethereum mint multiple ERC 721 Cashback transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -432,7 +432,7 @@ export const prepareEthMintMultipleCashbackErc721SignedTransaction = async (body
     }
     tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
 
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
 };
 /**
  * Sign Ethereum mint multiple ERC 721 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -471,7 +471,7 @@ export const prepareEthMintMultipleErc721SignedTransaction = async (body: EthMin
     }
     tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
 
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
 };
 
 /**
@@ -509,7 +509,7 @@ export const prepareEthBurnErc721SignedTransaction = async (body: EthBurnErc721,
     }
     tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
 
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
 };
 
 /**
@@ -549,7 +549,7 @@ export const prepareEthUpdateCashbackForAuthorErc721SignedTransaction = async (b
     }
     tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
 
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
 };
 
 /**
@@ -590,7 +590,7 @@ export const prepareEthTransferErc721SignedTransaction = async (body: EthTransfe
     }
     tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
 
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
 };
 
 /**
@@ -634,7 +634,7 @@ export const prepareEthDeployErc721SignedTransaction = async (body: EthDeployErc
         return JSON.stringify(tx);
     }
 
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
 };
 
 /**
