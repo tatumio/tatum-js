@@ -24,6 +24,17 @@ import {
 } from '../model';
 import {CeloUpdateCashbackErc721} from '../model/request/CeloUpdateCashbackErc721';
 
+/**
+ * Returns server to connect to.
+ *
+ * @param provider url of the Server to connect to. If not set, default public server will be used.
+ * @param fromPrivateKey optional private key of sender account
+ */
+ export const getCeloClient = (provider?: string, fromPrivateKey?: string): CeloProvider => {
+  const client = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
+  return client;
+};
+
 const obtainWalletInformation = async (wallet: CeloWallet, feeCurrencyContractAddress?: string) => {
     const [txCount, gasPrice, from] = await Promise.all([
         wallet.getTransactionCount(),
@@ -316,6 +327,7 @@ export const prepareCeloDeployErc20SignedTransaction = async (testnet: boolean, 
         feeCurrency,
         nonce,
         signatureId,
+        totalCap,
     } = body;
 
     const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
@@ -332,7 +344,7 @@ export const prepareCeloDeployErc20SignedTransaction = async (testnet: boolean, 
             symbol,
             address,
             digits,
-            `0x${new BigNumber(supply).multipliedBy(new BigNumber(10).pow(digits)).toString(16)}`,
+            `0x${new BigNumber(totalCap || supply).multipliedBy(new BigNumber(10).pow(digits)).toString(16)}`,
             `0x${new BigNumber(supply).multipliedBy(new BigNumber(10).pow(digits)).toString(16)}`,
         ],
     });
