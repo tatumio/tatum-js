@@ -157,7 +157,7 @@ export const prepareEthMintErc20SignedTransaction = async (body: MintErc20, prov
     return JSON.stringify(tx);
   }
 
-  return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+  return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
 };
 
 /**
@@ -196,7 +196,7 @@ export const prepareEthBurnErc20SignedTransaction = async (body: BurnErc20, prov
     return JSON.stringify(tx);
   }
 
-  return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+  return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
 };
 
 /**

@@ -151,7 +151,7 @@ export const prepareBscStoreDataTransaction = async (body: CreateRecord, provide
   }
 
   tx.gas = await client.eth.estimateGas(tx);
-  return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+  return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
 };
 
 /**
@@ -190,7 +190,7 @@ export const prepareBscStoreDataTransaction = async (body: CreateRecord, provide
   }
 
   tx.gas = await client.eth.estimateGas(tx);
-  return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction as string;
+  return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
 };
 
 /**
