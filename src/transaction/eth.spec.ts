@@ -1,5 +1,5 @@
 import {ethEstimateGas} from '../blockchain';
-import {Currency, DeployEthErc20, TransferCustomErc20, TransferEthErc20} from '../model';
+import {Currency, DeployErc20, TransferCustomErc20, TransferEthErc20} from '../model';
 import {
   ethGetGasPriceInWei,
   prepareCustomErc20SignedTransaction,
@@ -46,7 +46,7 @@ describe('ETH transactions', () => {
   });
 
   it('should test valid custom deployment ERC20', async () => {
-    const body = new DeployEthErc20();
+    const body = new DeployErc20();
     body.fromPrivateKey = '0x2dedb85f2a87f17e143dbd5e51a589f27b4c6acf6bf29ebff8eb5c32b5e9de05';
     body.symbol = 'SYMBOL';
     body.name = 'Test_ERC20';
@@ -58,7 +58,7 @@ describe('ETH transactions', () => {
   });
 
   it('should test invalid custom deployment ERC20, missing supply', async () => {
-    const body = new DeployEthErc20();
+    const body = new DeployErc20();
     body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
     body.symbol = 'SYMBOL';
     body.name = 'Test_ERC20';

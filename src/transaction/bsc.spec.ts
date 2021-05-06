@@ -1,5 +1,5 @@
 import Web3 from 'web3';
-import {Currency, DeployEthErc20, TransferBscBep20, TransferCustomErc20} from '../model';
+import {Currency, DeployErc20, TransferBscBep20, TransferCustomErc20} from '../model';
 import {
     bscGetGasPriceInWei,
     prepareBscOrBep20SignedTransaction,
@@ -64,7 +64,7 @@ describe('BSC transactions', () => {
     });
 
     it('should test valid custom deployment ERC20', async () => {
-        const body = new DeployEthErc20();
+        const body = new DeployErc20();
         body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29';
         body.symbol = 'SYMBOL';
         body.name = 'Test_ERC20';
@@ -78,7 +78,7 @@ describe('BSC transactions', () => {
     });
 
     it('should test invalid custom deployment ERC20, missing supply', async () => {
-        const body = new DeployEthErc20();
+        const body = new DeployErc20();
         body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29';
         body.symbol = 'SYMBOL';
         body.name = 'Test_ERC20';

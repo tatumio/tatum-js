@@ -13,7 +13,7 @@ import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
 import {
     CreateRecord,
     Currency,
-    DeployEthErc20,
+    DeployErc20,
     MintErc20,
     BurnErc20,
     EthBurnErc721,
@@ -300,8 +300,8 @@ export const prepareCustomErc20SignedTransaction = async (body: TransferCustomEr
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareDeployErc20SignedTransaction = async (body: DeployEthErc20, provider?: string) => {
-    await validateBody(body, DeployEthErc20);
+export const prepareDeployErc20SignedTransaction = async (body: DeployErc20, provider?: string) => {
+    await validateBody(body, DeployErc20);
     const {
         name,
         address,
@@ -776,7 +776,7 @@ export const sendCustomErc20Transaction = async (body: TransferCustomErc20, prov
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendDeployErc20Transaction = async (body: DeployEthErc20, provider?: string) =>
+export const sendDeployErc20Transaction = async (body: DeployErc20, provider?: string) =>
     ethBroadcast(await prepareDeployErc20SignedTransaction(body, provider), body.signatureId);
 
 /**
