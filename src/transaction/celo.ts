@@ -439,8 +439,8 @@ export const prepareCeloTransferErc20SignedTransaction = async (testnet: boolean
             chainId: network.chainId,
             feeCurrency: feeCurrencyContractAddress,
             nonce,
-            gasLimit: fee?.gasLimit,
-            gasPrice: fee?.gasPrice,
+            gasLimit: fee?.gasLimit ? '0x' + new BigNumber(fee.gasLimit).toString(16) : undefined,
+            gasPrice: fee?.gasPrice ? '0x' + new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16) : undefined,
             to: contractAddress.trim(),
             data: contract.methods.transfer(to.trim(), '0x' + new BigNumber(amount).multipliedBy(10 ** decimals).toString(16)).encodeABI(),
         });
@@ -452,9 +452,9 @@ export const prepareCeloTransferErc20SignedTransaction = async (testnet: boolean
         chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
         nonce: nonce || txCount,
-        gasLimit: fee?.gasLimit || '0',
+        gasLimit: fee?.gasLimit ? '0x' + new BigNumber(fee.gasLimit).toString(16) : undefined,
         to: contractAddress.trim(),
-        gasPrice: fee?.gasPrice || gasPrice,
+        gasPrice: fee?.gasPrice ? '0x' + new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16) : gasPrice,
         data: contract.methods.transfer(to.trim(), '0x' + new BigNumber(amount).multipliedBy(10 ** decimals).toString(16)).encodeABI(),
         from,
     };
@@ -711,8 +711,8 @@ export const prepareCeloOrCUsdSignedTransaction = async (testnet: boolean, body:
             nonce,
             to: recipient,
             data: currency === Currency.CELO ? data : contract.methods.transfer(to.trim(), value).encodeABI(),
-            gasLimit: fee?.gasLimit,
-            gasPrice: fee?.gasPrice,
+            gasLimit: fee?.gasLimit ? '0x' + new BigNumber(fee.gasLimit).toString(16) : undefined,
+            gasPrice: fee?.gasPrice ? '0x' + new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16) : undefined,
             value: currency === Currency.CELO ? value : undefined,
         });
     }
@@ -724,8 +724,8 @@ export const prepareCeloOrCUsdSignedTransaction = async (testnet: boolean, body:
         nonce: nonce || txCount,
         to: recipient,
         data: currency === Currency.CELO ? data : contract.methods.transfer(to.trim(), value).encodeABI(),
-        gasLimit: fee?.gasLimit,
-        gasPrice: fee?.gasPrice || gasPrice,
+        gasLimit: fee?.gasLimit ? '0x' + new BigNumber(fee.gasLimit).toString(16) : undefined,
+        gasPrice: fee?.gasPrice ? '0x' + new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16) : gasPrice,
         value: currency === Currency.CELO ? value : undefined,
         from,
     };
