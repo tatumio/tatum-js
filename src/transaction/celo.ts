@@ -316,6 +316,7 @@ export const prepareCeloDeployErc20SignedTransaction = async (testnet: boolean, 
         feeCurrency,
         nonce,
         signatureId,
+        totalCap,
     } = body;
 
     const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
@@ -332,7 +333,7 @@ export const prepareCeloDeployErc20SignedTransaction = async (testnet: boolean, 
             symbol,
             address,
             digits,
-            `0x${new BigNumber(supply).multipliedBy(new BigNumber(10).pow(digits)).toString(16)}`,
+            `0x${new BigNumber(totalCap || supply).multipliedBy(new BigNumber(10).pow(digits)).toString(16)}`,
             `0x${new BigNumber(supply).multipliedBy(new BigNumber(10).pow(digits)).toString(16)}`,
         ],
     });

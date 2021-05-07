@@ -13,7 +13,9 @@ import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
 import {
     CreateRecord,
     Currency,
-    DeployEthErc20,
+    DeployErc20,
+    MintErc20,
+    BurnErc20,
     EthBurnErc721,
     EthDeployErc721,
     EthMintErc721,
@@ -119,56 +121,133 @@ export const prepareStoreDataTransaction = async (body: CreateRecord, provider?:
 };
 
 /**
+ * Sign Ethereum mint ERC 20 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareEthMintErc20SignedTransaction = async (body: MintErc20, provider?: string) => {
+  await validateBody(body, MintErc20);
+  const {
+    fromPrivateKey,
+    amount,
+    to,
+    contractAddress,
+    nonce,
+    signatureId,
+  } = body;
+
+  const client = getClient(provider, fromPrivateKey);
+
+  const gasPrice = await ethGetGasPriceInWei();
+  // @ts-ignore
+  const contract = new client.eth.Contract(erc20TokenABI, contractAddress.trim());
+  const digits = new BigNumber(10).pow(await contract.methods.decimals().call());
+  const tx: TransactionConfig = {
+    from: 0,
+    to: contractAddress.trim(),
+    data: contract.methods.mint(to.trim(), `0x${new BigNumber(amount).multipliedBy(digits).toString(16)}`).encodeABI(),
+    gasPrice,
+    nonce,
+  };
+
+  if (signatureId) {
+    return JSON.stringify(tx);
+  }
+
+  tx.gas = await client.eth.estimateGas(tx);
+  return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+};
+
+/**
+ * Sign Ethereum burn ERC 721 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareEthBurnErc20SignedTransaction = async (body: BurnErc20, provider?: string) => {
+  await validateBody(body, BurnErc20);
+  const {
+    fromPrivateKey,
+    amount,
+    contractAddress,
+    nonce,
+    signatureId,
+  } = body;
+
+  const client = getClient(provider, fromPrivateKey);
+
+  const gasPrice = await ethGetGasPriceInWei();
+  // @ts-ignore
+  const contract = new client.eth.Contract(erc20TokenABI, contractAddress.trim());
+  const digits = new BigNumber(10).pow(await contract.methods.decimals().call());
+  const tx: TransactionConfig = {
+    from: 0,
+    to: contractAddress.trim(),
+    data: contract.methods.burn(`0x${new BigNumber(amount).multipliedBy(digits).toString(16)}`).encodeABI(),
+    gasPrice,
+    nonce,
+  };
+
+  if (signatureId) {
+    return JSON.stringify(tx);
+  }
+
+  tx.gas = await client.eth.estimateGas(tx);
+  return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+};
+
+/**
  * Sign Ethereum or supported ERC20 transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEthOrErc20SignedTransaction = async (body: TransferEthErc20, provider?: string) => {
-    await validateBody(body, TransferEthErc20);
-    const {
-        fromPrivateKey,
-        to,
-        amount,
-        currency,
-        fee,
-        data,
-        nonce,
-        signatureId
-    } = body;
+ export const prepareEthOrErc20SignedTransaction = async (body: TransferEthErc20, provider?: string) => {
+  await validateBody(body, TransferEthErc20);
+  const {
+      fromPrivateKey,
+      to,
+      amount,
+      currency,
+      fee,
+      data,
+      nonce,
+      signatureId
+  } = body;
 
-    const client = getClient(provider, fromPrivateKey);
+  const client = getClient(provider, fromPrivateKey);
 
-    let tx: TransactionConfig;
-    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei();
-    if (currency === Currency.ETH) {
-        tx = {
-            from: 0,
-            to: to.trim(),
-            value: client.utils.toWei(`${amount}`, 'ether'),
-            gasPrice,
-            data: data ? (client.utils.isHex(data) ? client.utils.stringToHex(data) : client.utils.toHex(data)) : undefined,
-            nonce,
-        };
-    } else {
-        // @ts-ignore
-        const contract = new client.eth.Contract([TRANSFER_METHOD_ABI], CONTRACT_ADDRESSES[currency]);
-        const digits = new BigNumber(10).pow(CONTRACT_DECIMALS[currency]);
-        tx = {
-            from: 0,
-            to: CONTRACT_ADDRESSES[currency],
-            data: contract.methods.transfer(to.trim(), `0x${new BigNumber(amount).multipliedBy(digits).toString(16)}`).encodeABI(),
-            gasPrice,
-            nonce,
-        };
-    }
+  let tx: TransactionConfig;
+  const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei();
+  if (currency === Currency.ETH) {
+      tx = {
+          from: 0,
+          to: to.trim(),
+          value: client.utils.toWei(`${amount}`, 'ether'),
+          gasPrice,
+          data: data ? (client.utils.isHex(data) ? client.utils.stringToHex(data) : client.utils.toHex(data)) : undefined,
+          nonce,
+      };
+  } else {
+      // @ts-ignore
+      const contract = new client.eth.Contract([TRANSFER_METHOD_ABI], CONTRACT_ADDRESSES[currency]);
+      const digits = new BigNumber(10).pow(CONTRACT_DECIMALS[currency]);
+      tx = {
+          from: 0,
+          to: CONTRACT_ADDRESSES[currency],
+          data: contract.methods.transfer(to.trim(), `0x${new BigNumber(amount).multipliedBy(digits).toString(16)}`).encodeABI(),
+          gasPrice,
+          nonce,
+      };
+  }
 
-    if (signatureId) {
-        return JSON.stringify(tx);
-    }
-    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
+  if (signatureId) {
+      return JSON.stringify(tx);
+  }
+  tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
 
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+  return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
 };
 
 /**
@@ -219,8 +298,8 @@ export const prepareCustomErc20SignedTransaction = async (body: TransferCustomEr
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareDeployErc20SignedTransaction = async (body: DeployEthErc20, provider?: string) => {
-    await validateBody(body, DeployEthErc20);
+export const prepareDeployErc20SignedTransaction = async (body: DeployErc20, provider?: string) => {
+    await validateBody(body, DeployErc20);
     const {
         name,
         address,
@@ -231,6 +310,7 @@ export const prepareDeployErc20SignedTransaction = async (body: DeployEthErc20, 
         nonce,
         fee,
         signatureId,
+        totalCap,
     } = body;
 
     const client = getClient(provider, fromPrivateKey);
@@ -245,7 +325,7 @@ export const prepareDeployErc20SignedTransaction = async (body: DeployEthErc20, 
             symbol,
             address,
             digits,
-            `0x${new BigNumber(supply).multipliedBy(new BigNumber(10).pow(digits)).toString(16)}`,
+            `0x${new BigNumber(totalCap || supply).multipliedBy(new BigNumber(10).pow(digits)).toString(16)}`,
             `0x${new BigNumber(supply).multipliedBy(new BigNumber(10).pow(digits)).toString(16)}`,
         ],
     });
@@ -694,7 +774,7 @@ export const sendCustomErc20Transaction = async (body: TransferCustomErc20, prov
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendDeployErc20Transaction = async (body: DeployEthErc20, provider?: string) =>
+export const sendDeployErc20Transaction = async (body: DeployErc20, provider?: string) =>
     ethBroadcast(await prepareDeployErc20SignedTransaction(body, provider), body.signatureId);
 
 /**

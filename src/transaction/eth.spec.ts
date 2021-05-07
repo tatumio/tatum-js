@@ -1,9 +1,13 @@
 import {ethEstimateGas} from '../blockchain';
-import {Currency, DeployEthErc20, TransferCustomErc20, TransferEthErc20} from '../model';
+import {
+  Currency, DeployErc20, MintErc20, BurnErc20, TransferCustomErc20, TransferEthErc20
+} from '../model';
 import {
   ethGetGasPriceInWei,
   prepareCustomErc20SignedTransaction,
   prepareDeployErc20SignedTransaction,
+  prepareEthMintErc20SignedTransaction,
+  prepareEthBurnErc20SignedTransaction,
   prepareEthOrErc20SignedTransaction,
   sendBurnErc721Transaction,
   sendDeployErc721Transaction,
@@ -46,19 +50,39 @@ describe('ETH transactions', () => {
   });
 
   it('should test valid custom deployment ERC20', async () => {
-    const body = new DeployEthErc20();
+    const body = new DeployErc20();
     body.fromPrivateKey = '0x2dedb85f2a87f17e143dbd5e51a589f27b4c6acf6bf29ebff8eb5c32b5e9de05';
     body.symbol = 'SYMBOL';
     body.name = 'Test_ERC20';
     body.supply = '100';
+    body.totalCap = '1000';
     body.address = '0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea';
     body.digits = 10;
     const txData = await prepareDeployErc20SignedTransaction(body);
     expect(txData).toContain('0x');
   });
 
+  it('should test valid mint ERC20', async () => {
+    const body = new MintErc20();
+    body.fromPrivateKey = '0x2dedb85f2a87f17e143dbd5e51a589f27b4c6acf6bf29ebff8eb5c32b5e9de05';
+    body.amount = '0';
+    body.contractAddress = '0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea';
+    body.to = '0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea';
+    const txData = await prepareEthMintErc20SignedTransaction(body);
+    expect(txData).toContain('0x');
+  });
+
+  it('should test valid burn ERC20', async () => {
+    const body = new BurnErc20();
+    body.fromPrivateKey = '0x2dedb85f2a87f17e143dbd5e51a589f27b4c6acf6bf29ebff8eb5c32b5e9de05';
+    body.amount = '0';
+    body.contractAddress = '0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea';
+    const txData = await prepareEthBurnErc20SignedTransaction(body);
+    expect(txData).toContain('0x');
+  });
+
   it('should test invalid custom deployment ERC20, missing supply', async () => {
-    const body = new DeployEthErc20();
+    const body = new DeployErc20();
     body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
     body.symbol = 'SYMBOL';
     body.name = 'Test_ERC20';

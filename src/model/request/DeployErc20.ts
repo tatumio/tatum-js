@@ -13,7 +13,7 @@ import {
 import {Fee} from './Fee';
 import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 
-export class DeployEthErc20 extends PrivateKeyOrSignatureId {
+export class DeployErc20 extends PrivateKeyOrSignatureId {
 
     @IsNotEmpty()
     @Length(1, 100)
@@ -33,6 +33,12 @@ export class DeployEthErc20 extends PrivateKeyOrSignatureId {
     @MaxLength(38)
     @Matches(/^[+]?((\d+(\.\d*)?)|(\.\d+))$/)
     public supply: string;
+
+    @IsOptional()
+    @IsNumberString()
+    @MaxLength(38)
+    @Matches(/^[+]?((\d+(\.\d*)?)|(\.\d+))$/)
+    public totalCap?: string;
 
     @Min(1)
     @Max(30)
