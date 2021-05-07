@@ -139,12 +139,11 @@ export const prepareEthMintErc20SignedTransaction = async (body: MintErc20, prov
 
   const client = getClient(provider, fromPrivateKey);
 
-  let tx: TransactionConfig;
   const gasPrice = await ethGetGasPriceInWei();
   // @ts-ignore
   const contract = new client.eth.Contract(erc20TokenABI, contractAddress.trim());
   const digits = new BigNumber(10).pow(await contract.methods.decimals().call());
-  tx = {
+  const tx: TransactionConfig = {
     from: 0,
     to: contractAddress.trim(),
     data: contract.methods.mint(to.trim(), `0x${new BigNumber(amount).multipliedBy(digits).toString(16)}`).encodeABI(),
@@ -152,11 +151,11 @@ export const prepareEthMintErc20SignedTransaction = async (body: MintErc20, prov
     nonce,
   };
 
-  tx.gas = await client.eth.estimateGas(tx);
   if (signatureId) {
     return JSON.stringify(tx);
   }
 
+  tx.gas = await client.eth.estimateGas(tx);
   return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
 };
 
@@ -178,12 +177,11 @@ export const prepareEthBurnErc20SignedTransaction = async (body: BurnErc20, prov
 
   const client = getClient(provider, fromPrivateKey);
 
-  let tx: TransactionConfig;
   const gasPrice = await ethGetGasPriceInWei();
   // @ts-ignore
   const contract = new client.eth.Contract(erc20TokenABI, contractAddress.trim());
   const digits = new BigNumber(10).pow(await contract.methods.decimals().call());
-  tx = {
+  const tx: TransactionConfig = {
     from: 0,
     to: contractAddress.trim(),
     data: contract.methods.burn(`0x${new BigNumber(amount).multipliedBy(digits).toString(16)}`).encodeABI(),
@@ -191,11 +189,11 @@ export const prepareEthBurnErc20SignedTransaction = async (body: BurnErc20, prov
     nonce,
   };
 
-  tx.gas = await client.eth.estimateGas(tx);
   if (signatureId) {
     return JSON.stringify(tx);
   }
 
+  tx.gas = await client.eth.estimateGas(tx);
   return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
 };
 
