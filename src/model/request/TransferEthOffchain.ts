@@ -24,7 +24,7 @@ export class TransferEthOffchain extends BaseTransferEthErc20Offchain {
     @IsNotEmpty()
     public privateKey?: string;
 
-    @ValidateIf(o => !o.mnemonic && !o.fromPrivateKey)
+    @ValidateIf(o => !o.mnemonic && !o.privateKey)
     @Validate(SignatureIdValidator)
     @Length(36, 36)
     @IsUUID('4')
