@@ -1,5 +1,7 @@
-import {IsIn, IsNotEmpty, IsNumberString, IsOptional, Length, Matches, MaxLength, Min, ValidateIf,} from 'class-validator';
+import {Type} from 'class-transformer';
+import {IsIn, IsNotEmpty, IsNumberString, IsOptional, Length, Matches, MaxLength, Min, ValidateIf, ValidateNested,} from 'class-validator';
 import {Currency} from './Currency';
+import {Fee} from './Fee';
 import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
 
 export class TransferCeloOrCeloErc20Token extends PrivateKeyOrSignatureId {
@@ -34,4 +36,9 @@ export class TransferCeloOrCeloErc20Token extends PrivateKeyOrSignatureId {
     @Min(0)
     @IsOptional()
     public nonce?: number;
+
+    @IsOptional()
+    @Type(() => Fee)
+    @ValidateNested()
+    public fee?: Fee;
 }

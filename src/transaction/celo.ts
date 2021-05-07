@@ -30,7 +30,7 @@ const obtainWalletInformation = async (wallet: CeloWallet, feeCurrencyContractAd
         wallet.getGasPrice(feeCurrencyContractAddress),
         wallet.getAddress(),
     ]);
-    return { txCount, gasPrice, from };
+    return {txCount, gasPrice, from};
 };
 
 const getFeeCurrency = (feeCurrency: Currency, testnet: boolean) => {
@@ -60,11 +60,11 @@ export const signCeloKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
     await p.ready;
     const wallet = new CeloWallet(fromPrivateKey as string, p);
     const transaction = JSON.parse(tx.serializedTransaction);
-    const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, transaction.feeCurrencyContractAddress);
+    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, transaction.feeCurrencyContractAddress);
     transaction.nonce = transaction.nonce || txCount;
-    transaction.gasPrice = gasPrice;
+    transaction.gasPrice = transaction.gasPrice || gasPrice;
     transaction.from = from;
-    transaction.gasLimit = (await wallet.estimateGas(transaction)).add(100000).toHexString();
+    transaction.gasLimit = transaction.gasLimit || (await wallet.estimateGas(transaction)).add(100000).toHexString();
     return wallet.signTransaction(transaction);
 };
 
@@ -418,6 +418,7 @@ export const prepareCeloTransferErc20SignedTransaction = async (testnet: boolean
         feeCurrency,
         nonce,
         signatureId,
+        fee,
     } = body;
 
     if (!contractAddress) {
@@ -437,7 +438,8 @@ export const prepareCeloTransferErc20SignedTransaction = async (testnet: boolean
             chainId: network.chainId,
             feeCurrency: feeCurrencyContractAddress,
             nonce,
-            gasLimit: '0',
+            gasLimit: fee?.gasLimit,
+            gasPrice: fee?.gasPrice,
             to: contractAddress.trim(),
             data: contract.methods.transfer(to.trim(), '0x' + new BigNumber(amount).multipliedBy(10 ** decimals).toString(16)).encodeABI(),
         });
@@ -449,13 +451,13 @@ export const prepareCeloTransferErc20SignedTransaction = async (testnet: boolean
         chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
         nonce: nonce || txCount,
-        gasLimit: '0',
+        gasLimit: fee?.gasLimit || '0',
         to: contractAddress.trim(),
-        gasPrice,
+        gasPrice: fee?.gasPrice || gasPrice,
         data: contract.methods.transfer(to.trim(), '0x' + new BigNumber(amount).multipliedBy(10 ** decimals).toString(16)).encodeABI(),
         from,
     };
-    transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();
+    transaction.gasLimit = transaction.gasLimit || (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();
     return wallet.signTransaction(transaction);
 };
 
@@ -534,9 +536,9 @@ export const prepareCeloMintMultipleCashbackErc721SignedTransaction = async (tes
     for (const c of cashbacks) {
         const cb2: string[] = [];
         for (const c2 of c) {
-            cb2.push(`0x${new BigNumber(toWei(c2, 'ether')).toString(16)}`)
+            cb2.push(`0x${new BigNumber(toWei(c2, 'ether')).toString(16)}`);
         }
-        cb.push(cb2)
+        cb.push(cb2);
     }
     if (signatureId) {
         return JSON.stringify({
@@ -659,7 +661,7 @@ export const prepareCeloUpdateCashbackForAuthorErc721SignedTransaction = async (
 };
 
 /**
- * Sign Celo or cUsd transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * Sign Celo, cUsd or cEur transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
@@ -675,6 +677,7 @@ export const prepareCeloOrCUsdSignedTransaction = async (testnet: boolean, body:
         data,
         amount,
         currency,
+        fee,
         signatureId,
     } = body;
 
@@ -707,7 +710,8 @@ export const prepareCeloOrCUsdSignedTransaction = async (testnet: boolean, body:
             nonce,
             to: recipient,
             data: currency === Currency.CELO ? data : contract.methods.transfer(to.trim(), value).encodeABI(),
-            gasLimit: '0',
+            gasLimit: fee?.gasLimit,
+            gasPrice: fee?.gasPrice,
             value: currency === Currency.CELO ? value : undefined,
         });
     }
@@ -719,12 +723,12 @@ export const prepareCeloOrCUsdSignedTransaction = async (testnet: boolean, body:
         nonce: nonce || txCount,
         to: recipient,
         data: currency === Currency.CELO ? data : contract.methods.transfer(to.trim(), value).encodeABI(),
-        gasLimit: '0',
-        gasPrice,
+        gasLimit: fee?.gasLimit,
+        gasPrice: fee?.gasPrice || gasPrice,
         value: currency === Currency.CELO ? value : undefined,
         from,
     };
-    transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();
+    transaction.gasLimit = transaction.gasLimit || (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();
     return wallet.signTransaction(transaction);
 };
 
@@ -741,6 +745,7 @@ export const sendCeloOrcUsdTransaction = async (testnet: boolean, body: Transfer
 
 export const sendCeloMinErc721Transaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) =>
     celoBroadcast(await prepareCeloMintErc721SignedTransaction(testnet, body, provider));
+
 export const sendCeloMinCashbackErc721Transaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) =>
     celoBroadcast(await prepareCeloMintCashbackErc721SignedTransaction(testnet, body, provider));
 
