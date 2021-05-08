@@ -1,31 +1,26 @@
-import {IsInt, IsNotEmpty, IsOptional, IsUUID, Length, MaxLength, Min, Validate, ValidateIf,} from 'class-validator';
-import {SignatureIdValidator} from '../validation/SignatureIdValidator';
-import {TransferEthOffchainValidator} from '../validation/TransferEthOffchainValidator';
+import {IsInt, IsNotEmpty, IsOptional, IsUUID, Length, Max, MaxLength, Min, ValidateIf,} from 'class-validator';
 import {BaseTransferEthErc20Offchain} from './BaseTransferEthErc20Offchain';
 
 export class TransferEthOffchain extends BaseTransferEthErc20Offchain {
 
     @Length(1, 500)
-    @Validate(TransferEthOffchainValidator)
-    @ValidateIf(o => (o.mnemonic && o.index >= 0 && o.privateKey) || o.index >= 0)
+    @ValidateIf(o => (o.mnemonic && o.index >= 0 && o.privateKey) || (o.index >= 0 && o.privateKey))
     @IsNotEmpty()
-    public mnemonic?: string;
+    public mnemonic: string;
 
     @ValidateIf(o => (o.mnemonic && o.index >= 0 && o.privateKey) || o.mnemonic)
-    @Validate(TransferEthOffchainValidator)
     @Min(0)
     @IsNotEmpty()
     @IsInt()
-    public index?: number;
+    @Max(2147483647)
+    public index: number;
 
-    @ValidateIf(o => (o.mnemonic && o.index >= 0 && o.privateKey) || (!o.mnemonic && !o.index))
-    @Validate(TransferEthOffchainValidator)
+    @ValidateIf(o => (o.mnemonic && o.index >= 0 && o.privateKey) || (!o.mnemonic && !o.signatureId && !o.index))
     @Length(66, 66)
     @IsNotEmpty()
-    public privateKey?: string;
+    public privateKey: string;
 
     @ValidateIf(o => !o.mnemonic && !o.privateKey)
-    @Validate(SignatureIdValidator)
     @Length(36, 36)
     @IsUUID('4')
     @IsNotEmpty()
