@@ -64,7 +64,7 @@ export const signCeloKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
     transaction.nonce = transaction.nonce || txCount;
     transaction.gasPrice = transaction.gasPrice || gasPrice;
     transaction.from = from;
-    transaction.gasLimit = transaction.gasLimit || (await wallet.estimateGas(transaction)).add(100000).toHexString();
+    transaction.gasLimit = transaction.gasLimit === '0' || !transaction.gasLimit ? (await wallet.estimateGas(transaction)).add(100000).toHexString() : transaction.gasLimit;
     return wallet.signTransaction(transaction);
 };
 
