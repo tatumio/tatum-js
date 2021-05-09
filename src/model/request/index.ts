@@ -62,3 +62,4 @@ export * from './PrepareEthErc20SignedOffchainTransaction'
 export * from './PrepareEthSignedOffchainTransaction'
 export * from './TransferAda';
 export * from './AdaUTxo';
+export * from './TransferXtz';
