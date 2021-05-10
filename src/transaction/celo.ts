@@ -66,7 +66,7 @@ export const signCeloKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
     await p.ready;
     const wallet = new CeloWallet(fromPrivateKey as string, p);
     const transaction = JSON.parse(tx.serializedTransaction);
-    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, transaction.feeCurrencyContractAddress);
+    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, transaction.feeCurrency);
     transaction.nonce = transaction.nonce || txCount;
     transaction.gasPrice = transaction.gasPrice || gasPrice;
     transaction.from = from;
