@@ -1,4 +1,5 @@
 import {CeloProvider, CeloWallet} from '@celo-tools/celo-ethers-wrapper';
+import {BigNumber as BN} from '@ethersproject/bignumber';
 import {BigNumber} from 'bignumber.js';
 import Web3 from 'web3';
 import {toWei} from 'web3-utils';
@@ -30,7 +31,12 @@ const obtainWalletInformation = async (wallet: CeloWallet, feeCurrencyContractAd
         wallet.getGasPrice(feeCurrencyContractAddress),
         wallet.getAddress(),
     ]);
-    return {txCount, gasPrice, from};
+    return {
+        txCount,
+        gasPrice: [CUSD_ADDRESS_MAINNET, CUSD_ADDRESS_TESTNET].includes(feeCurrencyContractAddress || '') && gasPrice.lte(0x1dcd6500)
+            ? BN.from(0x3B9ACA00)
+            : gasPrice, from
+    };
 };
 
 const getFeeCurrency = (feeCurrency: Currency, testnet: boolean) => {
