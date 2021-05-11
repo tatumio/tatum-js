@@ -1,5 +1,5 @@
 import {Currency} from '../model';
-import {generateAddressFromPrivatekey, generateAddressFromXPub, generatePrivateKeyFromMnemonic} from './address';
+import {generateAddressFromPrivatekey, generateAddressFromXPub, generateFlowPublicKeyFromPrivateKey, generatePrivateKeyFromMnemonic} from './address';
 import {generateTronWallet} from './wallet';
 // tslint:disable-next-line:no-var-requires
 const TronWeb = require('tronweb');
@@ -14,6 +14,11 @@ describe('Address tests', () => {
     it('should generate address 1 for TRON mainnet', () => {
         const address = generateAddressFromXPub(Currency.TRON, false, '0244b3f40c6e570ae0032f6d7be87737a6c4e5314a4a1a82e22d0460a0d0cd794936c61f0c80dc74ace4cd04690d4eeb1aa6555883be006e1748306faa7ed3a26a', 1);
         expect(address).toBe('TFFBpkRNro4Pe4154ayGWx7C6Ev7BvQZ6t');
+    });
+
+    it('should generate public key 1 for FLOW mainnet', () => {
+        const address = generateAddressFromXPub(Currency.FLOW, false, 'xpub6EVKqCYcoa9DXpjAACsdyQTUZ5tgx3DUyt5Yy8xx9kmVKMCsn3vtLictDQMjdEtpo5CpwVwipVxThFKwh49xNJ5Fy752ifnM5mwYy28AtVv', 1);
+        expect(address).toBe('968c3ce11e871cb2b7161b282655ee5fcb051f3c04894705d771bf11c6fbebfc6556ab8a0c04f45ea56281312336d0668529077c9d66891a6cad3db877acbe90');
     });
 
     it('should generate address 1 for BTC testnet', () => {
@@ -126,6 +131,17 @@ describe('Address tests', () => {
     it('should generate private key 1 for BCH mainnet', async () => {
         const privateKey = await generatePrivateKeyFromMnemonic(Currency.BCH, false, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1);
         expect(privateKey).toBe('KzqM77kK7zqZGockuB2Tov1FXoH6BTMaT3ixeqTPXLAYp838W3KT');
+    });
+
+    it('should generate private key 1 for FLOW mainnet', async () => {
+        const privateKey = await generatePrivateKeyFromMnemonic(Currency.FLOW, false, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1);
+        expect(privateKey).toBe('37afa218d41d9cd6a2c6f2b96d9eaa3ad96c598252bc50e4d45d62f9356a51f8');
+    });
+
+    it('should generate public key from private key for FLOW mainnet', async () => {
+        const privateKey = await generatePrivateKeyFromMnemonic(Currency.FLOW, false, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1);
+        expect(privateKey).toBe('37afa218d41d9cd6a2c6f2b96d9eaa3ad96c598252bc50e4d45d62f9356a51f8');
+        expect(generateFlowPublicKeyFromPrivateKey('37afa218d41d9cd6a2c6f2b96d9eaa3ad96c598252bc50e4d45d62f9356a51f8')).toBe(generateAddressFromXPub(Currency.FLOW, false, 'xpub6EVKqCYcoa9DXpjAACsdyQTUZ5tgx3DUyt5Yy8xx9kmVKMCsn3vtLictDQMjdEtpo5CpwVwipVxThFKwh49xNJ5Fy752ifnM5mwYy28AtVv', 1));
     });
 
     it('should generate private key 1 for BCH testnet', async () => {

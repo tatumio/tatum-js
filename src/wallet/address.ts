@@ -1,6 +1,9 @@
+// @ts-ignore
+import {ECDSA_secp256k1, encodeKey, SHA3_256} from '@onflow/util-encode-key';
 import {fromBase58, fromPublicKey, fromSeed} from 'bip32';
 import {mnemonicToSeed} from 'bip39';
 import {ECPair, networks, payments} from 'bitcoinjs-lib';
+import * as elliptic from 'elliptic';
 import ethWallet, {hdkey as ethHdKey} from 'ethereumjs-wallet';
 // @ts-ignore
 import {
@@ -11,6 +14,7 @@ import {
     DOGE_NETWORK,
     DOGE_TEST_NETWORK,
     ETH_DERIVATION_PATH,
+    FLOW_DERIVATION_PATH,
     LTC_DERIVATION_PATH,
     LTC_NETWORK,
     LTC_TEST_NETWORK,
@@ -30,6 +34,7 @@ const cashaddr = require('cashaddrjs');
 const coininfo = require('coininfo');
 // tslint:disable-next-line:no-var-requires
 const TronWeb = require('tronweb');
+
 
 interface Hash {
     hash: Buffer
@@ -154,6 +159,27 @@ const generateCeloAddress = (testnet: boolean, xpub: string, i: number) => {
 };
 
 /**
+ * Generate FLOW or FUSD public key
+ * @param xpub extended public key to generate address from
+ * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
+ * @returns blockchain address
+ */
+const generateFlowPublicKey = (xpub: string, i: number) => {
+    const w = fromBase58(xpub).derivePath(String(i));
+    const s = new elliptic.ec('secp256k1').keyFromPublic(w.publicKey).getPublic().encode('hex', false);
+    return s.slice(2);
+};
+
+/**
+ * Generate FLOW or FUSD public key from private key
+ * @returns blockchain address
+ */
+export const generateFlowPublicKeyFromPrivateKey = (pk: string) => {
+    const s = new elliptic.ec('secp256k1').keyFromPrivate(pk).getPublic().encode('hex', false);
+    return s.slice(2);
+};
+
+/**
  * Generate VeChain address
  * @param testnet testnet or mainnet version of address
  * @param xpub extended public key to generate address from
@@ -205,6 +231,18 @@ const generateTronPrivateKey = async (mnemonic: string, i: number) => {
         .derivePath(TRON_DERIVATION_PATH)
         .derive(i)
         .privateKey?.toString('hex') ?? '';
+};
+
+/**
+ * Generate Flow private key from mnemonic seed
+ * @returns blockchain private key to the address
+ */
+const generateFlowPrivateKey = async (mnemonic: string, i: number, alg = 'secp256k1') => {
+    const key = fromSeed(await mnemonicToSeed(mnemonic))
+        .derivePath(FLOW_DERIVATION_PATH)
+        .derive(i)
+        .privateKey as Buffer;
+    return new elliptic.ec(alg).keyFromPrivate(key).getPrivate().toString(16);
 };
 
 /**
@@ -443,6 +481,9 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
         case Currency.TRON:
         case Currency.USDT_TRON:
             return generateTronAddress(xpub, i);
+        case Currency.FLOW:
+        case Currency.FUSD:
+            return generateFlowPublicKey(xpub, i);
         case Currency.LTC:
             return generateLtcAddress(testnet, xpub, i);
         case Currency.DOGE:
@@ -515,6 +556,9 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
         case Currency.TRON:
         case Currency.USDT_TRON:
             return generateTronPrivateKey(mnemonic, i);
+        case Currency.FLOW:
+        case Currency.FUSD:
+            return generateFlowPrivateKey(mnemonic, i);
         case Currency.CELO:
         case Currency.CEUR:
         case Currency.CUSD:

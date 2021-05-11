@@ -10,6 +10,7 @@ export const VET_URL = 'https://sync-mainnet.vechain.org/';
 export const HARDENED_THRESHOLD = 0x80000000;
 
 export const ETH_DERIVATION_PATH = 'm/44\'/60\'/0\'/0';
+export const FLOW_DERIVATION_PATH = 'm/44\'/539\'/0\'/0';
 export const CELO_DERIVATION_PATH = 'm/44\'/52752\'/0\'/0';
 export const VET_DERIVATION_PATH = 'm/44\'/818\'/0\'/0';
 export const BTC_DERIVATION_PATH = 'm/44\'/0\'/0\'/0';
@@ -98,6 +99,21 @@ export const CUSD_ADDRESS_MAINNET = '0x765de816845861e75a25fca122bb6898b8b1282a'
 export const CUSD_ADDRESS_TESTNET = '0x874069fa1eb16d44d622f2e0ca25eea172369bc1';
 export const CEUR_ADDRESS_MAINNET = '0xd8763cba276a3738e6de85b4b3bf5fded6d6ca73';
 export const CEUR_ADDRESS_TESTNET = '0x10c892a6ec43a53e45d0b916b4b7d383b1b78c0f';
+
+export const FLOW_TESTNET_ADDRESSES = {
+    FlowToken: '0x7e60df042a9c0868',
+    FungibleToken: '0x9a0766d93b6608b7',
+    FUSD: '0xe223d8a629e49c68',
+};
+
+export const FLOW_MAINNET_ADDRESSES = {
+    FlowToken: '0x1654653399040a61',
+    FungibleToken: '0xf233dcee88fe0abe',
+    FUSD: '0xe223d8a629e49c68',// TODO: after launch
+};
+
+export const FUSD_ADDRESS_MAINNET = '';
+export const FUSD_ADDRESS_TESTNET = '0xe223d8a629e49c68';
 
 export const CONTRACT_ADDRESSES = {
     [Currency.USDT.toString()]: '0xdac17f958d2ee523a2206206994597c13d831ec7',
