@@ -23,8 +23,8 @@ describe('Flow tests', () => {
         const body = new TransferFlow();
         body.to = '0x21cbd745a4df66f1';
         body.amount = '1';
-        body.fromAccount = '0x955cd3f17b2fd8ad';
-        body.fromSecret = '37afa218d41d9cd6a2c6f2b96d9eaa3ad96c598252bc50e4d45d62f9356a51f8';
+        body.account = '0x955cd3f17b2fd8ad';
+        body.privateKey = '37afa218d41d9cd6a2c6f2b96d9eaa3ad96c598252bc50e4d45d62f9356a51f8';
         body.currency = Currency.FLOW;
         const result = await flowSendTransaction(true, body);
         expect(result.txId).toBeDefined();

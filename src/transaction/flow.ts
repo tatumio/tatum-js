@@ -12,6 +12,7 @@ import {SHA3} from 'sha3';
 import {validateBody} from '../connector/tatum';
 import {FLOW_MAINNET_ADDRESSES, FLOW_TESTNET_ADDRESSES} from '../constants';
 import {Currency, TransactionKMS, TransferFlow} from '../model';
+import {generatePrivateKeyFromMnemonic} from '../wallet';
 
 
 export enum FlowTxType {
@@ -182,11 +183,11 @@ export const flowSignKMSTransaction = async (tx: TransactionKMS, privateKeys: st
     const {type, body}: { type: FlowTxType, body: any } = JSON.parse(tx.serializedTransaction);
     switch (type) {
         case FlowTxType.CREATE_ACCOUNT:
-            return await flowCreateAccountFromPublicKey(testnet, body.publicKey, body.signerAddress, privateKeys[0]);
+            return await flowCreateAccountFromPublicKey(testnet, body.publicKey, body.account, privateKeys[0]);
         case FlowTxType.ADD_PK_TO_ACCOUNT:
-            return await flowAddPublicKeyToAccount(testnet, body.publicKey, body.signerAddress, privateKeys[0]);
+            return await flowAddPublicKeyToAccount(testnet, body.publicKey, body.account, privateKeys[0]);
         case FlowTxType.TRANSFER:
-            return await flowSendTransaction(testnet, {...body, fromSecret: privateKeys[0]});
+            return await flowSendTransaction(testnet, {...body, privateKey: privateKeys[0]});
     }
 };
 
@@ -243,7 +244,8 @@ export const flowSendTransaction = async (testnet: boolean, body: TransferFlow):
     }
     const code = prepareTransferFlow(testnet, tokenAddress, tokenName, tokenStorage);
     const args = [{value: parseFloat(body.amount).toFixed(8), type: 'UFix64'}, {value: body.to, type: 'Address'}];
-    const auth = getSigner(body.fromSecret, body.fromAccount);
+    const pk = body.privateKey || await generatePrivateKeyFromMnemonic(Currency.FLOW, testnet, body.mnemonic as string, body.index as number);
+    const auth = getSigner(pk, body.account);
     const result = await sendTransaction(testnet, {code, args, proposer: auth, authorizations: [auth], payer: auth});
     if (result.error) {
         throw new Error(result.error);
