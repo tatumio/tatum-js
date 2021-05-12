@@ -112,9 +112,6 @@ export const FLOW_MAINNET_ADDRESSES = {
     FUSD: '0xe223d8a629e49c68',// TODO: after launch
 };
 
-export const FUSD_ADDRESS_MAINNET = '';
-export const FUSD_ADDRESS_TESTNET = '0xe223d8a629e49c68';
-
 export const CONTRACT_ADDRESSES = {
     [Currency.USDT.toString()]: '0xdac17f958d2ee523a2206206994597c13d831ec7',
     [Currency.LEO.toString()]: '0x2af5d2ad76741191d15dfe7bf6ac92d4bd912ca3',
