@@ -97,7 +97,7 @@ const sendTransaction = async (testnet: boolean, {
     authorizations,
     payer,
 }: Transaction): Promise<TransactionResult> => {
-    fcl.config().put('accessNode.api', testnet ? 'https://access-testnet.onflow.org' : 'access.mainnet.nodes.onflow.org:9000');
+    fcl.config().put('accessNode.api', testnet ? 'https://access-testnet.onflow.org' : 'https://access-mainnet-beta.onflow.org');
     const response = await fcl.send([
         fcl.transaction(code),
         fcl.args(args.map(arg => fcl.arg(arg.value, types[arg.type]))),
