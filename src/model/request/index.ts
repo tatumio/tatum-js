@@ -48,6 +48,7 @@ export * from './CreateAccount';
 export * from './BlockAmount';
 export * from './CreateSubscription';
 export * from './EstimateGasEth';
+export * from './CeloSmartContractMethodInvocation'
 export * from './CeloBurnErc721';
 export * from './CeloMintErc721';
 export * from './CeloMintMultipleErc721';
