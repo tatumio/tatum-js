@@ -437,7 +437,7 @@ export const prepareCeloSmartContractWriteMethodInvocation = async (testnet: boo
   const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet);
 
   // @ts-ignore
-  const contract = new (new Web3(url)).eth.Contract(erc20_abi, contractAddress.trim());
+  const contract = new (new Web3(url)).eth.Contract(methodABI || erc20_abi, contractAddress.trim());
   // const decimals = await contract.methods.decimals().call();
 
   const transaction = {
@@ -475,7 +475,7 @@ export const sendCeloSmartContractReadMethodInvocationTransaction = async (testn
   const url = provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`;
 
   // @ts-ignore
-  const contract = new (new Web3(url)).eth.Contract(methodABI, contractAddress.trim());
+  const contract = new (new Web3(url)).eth.Contract(methodABI || erc20_abi, contractAddress.trim());
   return { data: await contract.methods[methodName as string](...params).call() };
 };
 
