@@ -22,7 +22,6 @@ export class SmartContractMethodInvocation extends PrivateKeyOrSignatureId {
   public params: any[];
 
   @IsNotEmptyObject()
-  @ValidateNested()
   public methodABI: any;
 
   @IsNotEmpty()
