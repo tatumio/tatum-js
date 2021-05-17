@@ -109,7 +109,7 @@ export const FLOW_TESTNET_ADDRESSES = {
 export const FLOW_MAINNET_ADDRESSES = {
     FlowToken: '0x1654653399040a61',
     FungibleToken: '0xf233dcee88fe0abe',
-    FUSD: '0xe223d8a629e49c68',// TODO: after launch
+    FUSD: '0x3c5959b568896393',
 };
 
 export const CONTRACT_ADDRESSES = {
