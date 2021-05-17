@@ -3,10 +3,8 @@ import {
   IsNotEmpty,
   IsNotEmptyObject,
   IsOptional,
-  IsUUID,
   Length,
   Min,
-  Validate,
   ValidateIf,
   ValidateNested,
 } from 'class-validator';
@@ -24,6 +22,7 @@ export class SmartContractMethodInvocation extends PrivateKeyOrSignatureId {
   public params: any[];
 
   @IsNotEmptyObject()
+  @ValidateNested()
   public methodABI: any;
 
   @IsNotEmpty()
