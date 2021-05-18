@@ -16,11 +16,11 @@ import {
     CeloDeployErc721,
     CeloMintErc721,
     CeloMintMultipleErc721,
+    CeloSmartContractMethodInvocation,
     CeloTransferErc721,
     Currency,
     DeployCeloErc20,
     MintCeloErc20,
-    CeloSmartContractMethodInvocation,
     TransactionKMS,
     TransferCeloOrCeloErc20Token,
 } from '../model';
@@ -439,27 +439,27 @@ export const prepareCeloSmartContractWriteMethodInvocation = async (testnet: boo
   // @ts-ignore
   const contract = new (new Web3(url)).eth.Contract([methodABI], contractAddress.trim());
 
-  const transaction = {
-      chainId: network.chainId,
-      feeCurrency: feeCurrencyContractAddress,
-      nonce,
-      gasLimit: fee?.gasLimit ? '0x' + new BigNumber(fee.gasLimit).toString(16) : undefined,
-      gasPrice: fee?.gasPrice ? '0x' + new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16) : undefined,
-      to: contractAddress.trim(),
-      from: '0',
-      data: contract.methods[methodName as string](...params).encodeABI(),
-  };
-  if (signatureId) {
-      return JSON.stringify(transaction);
-  }
+    const transaction: any = {
+        chainId: network.chainId,
+        feeCurrency: feeCurrencyContractAddress,
+        nonce,
+        gasLimit: fee?.gasLimit ? '0x' + new BigNumber(fee.gasLimit).toString(16) : undefined,
+        gasPrice: fee?.gasPrice ? '0x' + new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16) : undefined,
+        to: contractAddress.trim(),
+        data: contract.methods[methodName as string](...params).encodeABI(),
+    };
+    if (signatureId) {
+        return JSON.stringify(transaction);
+    }
 
-  const wallet = new CeloWallet(fromPrivateKey as string, p);
-  const {txCount, gasPrice} = await obtainWalletInformation(wallet, feeCurrencyContractAddress);
+    const wallet = new CeloWallet(fromPrivateKey as string, p);
+    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress);
 
-  transaction.nonce = transaction.nonce || txCount
-  transaction.gasLimit = fee?.gasLimit ?? (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();
-  transaction.gasPrice = fee?.gasPrice ? '0x' + new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16) : gasPrice.toHexString();
-  return wallet.signTransaction(transaction);
+    transaction.nonce = transaction.nonce || txCount;
+    transaction.from = from;
+    transaction.gasLimit = fee?.gasLimit ?? (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();
+    transaction.gasPrice = fee?.gasPrice ? '0x' + new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16) : gasPrice.toHexString();
+    return wallet.signTransaction(transaction);
 };
 
 export const sendCeloSmartContractReadMethodInvocationTransaction = async (testnet: boolean, body: CeloSmartContractMethodInvocation, provider?: string) => {
