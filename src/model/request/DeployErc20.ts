@@ -25,7 +25,7 @@ export class DeployErc20 extends PrivateKeyOrSignatureId {
     public symbol: string;
 
     @IsNotEmpty()
-    @Length(42, 42)
+    @Length(42, 43)
     public address: string;
 
     @IsNotEmpty()

@@ -3,11 +3,11 @@ import {IsHexadecimal, IsNotEmpty, IsNumberString, IsOptional, Length, Matches, 
 export class EstimateGasEth {
 
   @IsNotEmpty()
-  @Length(42, 42)
+  @Length(42, 43)
   public from: string;
 
   @IsNotEmpty()
-  @Length(42, 42)
+  @Length(42, 43)
   public to: string;
 
   @IsNotEmpty()

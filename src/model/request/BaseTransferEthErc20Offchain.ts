@@ -7,7 +7,7 @@ export abstract class BaseTransferEthErc20Offchain {
     public senderAccountId: string;
 
     @IsNotEmpty()
-    @Length(42, 42)
+    @Length(42, 43)
     public address: string;
 
     @IsNotEmpty()

@@ -13,7 +13,8 @@ import {
     generateTronWallet,
     generateVetWallet,
     generateXlmWallet,
-    generateXrpWallet
+    generateXrpWallet,
+    generateXdcWallet
 } from './wallet';
 
 describe('Wallet tests', () => {
@@ -90,7 +91,13 @@ describe('Wallet tests', () => {
         expect(wallet.xpub).toBe('xpub6FMiQpA54nciqs52guGVdWQ5TonZt5XtGsFpurgtttL7H3mSfaJDXv5aBdThjX6tW9HYaJSQ8wZVnLm1ixaQUu1MRQCwvwZ6U2cX6mwWT25');
     });
 
-    it('should generate wallet for Celo mainnet', async () => {
+    it('should generate wallet for XDC testnet', async () => {
+        const wallet = await generateXdcWallet(true, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten');
+        expect(wallet.mnemonic).toBe('quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten');
+        expect(wallet.xpub).toBe('xpub6FMiQpA54nciqs52guGVdWQ5TonZt5XtGsFpurgtttL7H3mSfaJDXv5aBdThjX6tW9HYaJSQ8wZVnLm1ixaQUu1MRQCwvwZ6U2cX6mwWT25');
+    });
+
+  it('should generate wallet for Celo mainnet', async () => {
         const wallet = await generateCeloWallet(false, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten');
         expect(wallet.mnemonic).toBe('quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten');
         expect(wallet.xpub).toBe('xpub6F2PSwHVww3pw4NE7hbrNLNBYL87eYTEqXTF6Aw5FACuQTBHPtCUbqG39LqXv81NLXhjb4ECFA19h8jGhKtdQNVvxm4Md1xtiiKCnxp9Jq1');

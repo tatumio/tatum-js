@@ -111,8 +111,12 @@ export const generateFlowWallet = async (mnem: string): Promise<Wallet> => {
  * @param mnem mnemonic seed to use
  * @returns wallet
  */
-export const generateBscWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
-    return generateEthWallet(testnet, mnem);
+ export const generateBscWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
+  return generateEthWallet(testnet, mnem);
+};
+
+export const generateXdcWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
+  return generateEthWallet(testnet, mnem);
 };
 
 /**
@@ -302,6 +306,7 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
         case Currency.BLTC:
         case Currency.BBCH:
         case Currency.MMY:
+        case Currency.XDC:
             return generateEthWallet(testnet, mnem);
         case Currency.XRP:
             return generateXrpWallet();

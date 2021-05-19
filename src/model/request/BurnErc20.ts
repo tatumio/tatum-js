@@ -16,7 +16,7 @@ export class BurnErc20 extends PrivateKeyOrSignatureId {
     public amount: string;
 
     @IsNotEmpty()
-    @Length(42, 42)
+    @Length(42, 43)
     public contractAddress: string;
 
     @Min(0)

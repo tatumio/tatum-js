@@ -17,7 +17,7 @@ import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 export class TransferEthErc20 extends PrivateKeyOrSignatureId {
 
     @IsNotEmpty()
-    @Length(42, 42)
+    @Length(42, 43)
     public to: string;
 
     @IsNotEmpty()

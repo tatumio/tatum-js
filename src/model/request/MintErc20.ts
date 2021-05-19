@@ -11,7 +11,7 @@ import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 
 export class MintErc20 extends PrivateKeyOrSignatureId {
     @IsNotEmpty()
-    @Length(42, 42)
+    @Length(42, 43)
     public to: string;
 
     @IsNotEmpty()
@@ -19,7 +19,7 @@ export class MintErc20 extends PrivateKeyOrSignatureId {
     public amount: string;
 
     @IsNotEmpty()
-    @Length(42, 42)
+    @Length(42, 43)
     public contractAddress: string;
 
     @Min(0)
