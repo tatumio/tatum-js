@@ -62,3 +62,15 @@ export * from './PrepareEthErc20SignedOffchainTransaction'
 export * from './PrepareEthSignedOffchainTransaction'
 export * from './TransferAda';
 export * from './AdaUTxo';
+export * from './TransferMultiTokenBatch';
+export * from './MintMultiToken';
+export * from './MintMultiTokenBatch';
+export * from './TransferMultiToken';
+export * from './CeloMintMultiToken';
+export * from './CeloMintMultiTokenBatch';
+export * from './CeloTransferMultiToken';
+export * from './CeloTransferMultiTokenBatch';
+export * from './EthBurnMultiToken';
+export * from './EthBurnMultiTokenBatch';
+export * from './CeloBurnMultiToken';
+export * from './CeloBurnMultiTokenBatch';
