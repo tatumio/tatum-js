@@ -17,6 +17,7 @@ import {
     DOGE_NETWORK,
     DOGE_TEST_NETWORK,
     ETH_DERIVATION_PATH,
+    FLOW_DERIVATION_PATH,
     LTC_DERIVATION_PATH,
     LTC_NETWORK,
     LTC_TEST_NETWORK,
@@ -88,6 +89,19 @@ export const generateEthWallet = async (testnet: boolean, mnem: string): Promise
     return {
         xpub: derivePath.publicExtendedKey().toString(),
         mnemonic: mnem
+    };
+};
+
+/**
+ * Generate Flow or FUSD wallet
+ * @param mnem mnemonic seed to use
+ * @returns wallet
+ */
+export const generateFlowWallet = async (mnem: string): Promise<Wallet> => {
+    const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem));
+    return {
+        mnemonic: mnem,
+        xpub: hdwallet.derive(FLOW_DERIVATION_PATH).toJSON().xpub
     };
 };
 
@@ -252,6 +266,9 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
         case Currency.TRON:
         case Currency.USDT_TRON:
             return generateTronWallet(mnem);
+        case Currency.FLOW:
+        case Currency.FUSD:
+            return generateFlowWallet(mnem);
         case Currency.CELO:
         case Currency.CEUR:
         case Currency.CUSD:

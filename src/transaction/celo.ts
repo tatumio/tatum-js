@@ -18,6 +18,7 @@ import {
     CeloDeployErc721,
     CeloMintErc721,
     CeloMintMultipleErc721,
+    CeloSmartContractMethodInvocation,
     CeloTransferErc721,
     CeloMintMultiToken,
     CeloMintMultiTokenBatch,
@@ -466,6 +467,75 @@ export const prepareCeloMintErc20SignedTransaction = async (testnet: boolean, bo
     };
     transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();
     return wallet.signTransaction(transaction);
+};
+
+export const prepareCeloSmartContractWriteMethodInvocation = async (testnet: boolean, body: CeloSmartContractMethodInvocation, provider?: string) => {
+  await validateBody(body, CeloSmartContractMethodInvocation);
+  const {
+      fromPrivateKey,
+      feeCurrency,
+      fee,
+      params,
+      methodName,
+      methodABI,
+      contractAddress,
+      nonce,
+      signatureId,
+  } = body;
+
+  const url = provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`;
+  const p = new CeloProvider(url);
+  const network = await p.ready;
+
+  const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet);
+
+  // @ts-ignore
+  const contract = new (new Web3(url)).eth.Contract([methodABI], contractAddress.trim());
+
+    const transaction: any = {
+        chainId: network.chainId,
+        feeCurrency: feeCurrencyContractAddress,
+        nonce,
+        gasLimit: fee?.gasLimit ? '0x' + new BigNumber(fee.gasLimit).toString(16) : undefined,
+        gasPrice: fee?.gasPrice ? '0x' + new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16) : undefined,
+        to: contractAddress.trim(),
+        data: contract.methods[methodName as string](...params).encodeABI(),
+    };
+    if (signatureId) {
+        return JSON.stringify(transaction);
+    }
+
+    const wallet = new CeloWallet(fromPrivateKey as string, p);
+    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress);
+
+    transaction.nonce = transaction.nonce || txCount;
+    transaction.from = from;
+    transaction.gasLimit = fee?.gasLimit ?? (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();
+    transaction.gasPrice = fee?.gasPrice ? '0x' + new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16) : gasPrice.toHexString();
+    return wallet.signTransaction(transaction);
+};
+
+export const sendCeloSmartContractReadMethodInvocationTransaction = async (testnet: boolean, body: CeloSmartContractMethodInvocation, provider?: string) => {
+  await validateBody(body, CeloSmartContractMethodInvocation);
+  const {
+      params,
+      methodName,
+      methodABI,
+      contractAddress,
+  } = body;
+
+  const url = provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`;
+
+  // @ts-ignore
+  const contract = new (new Web3(url)).eth.Contract([methodABI], contractAddress.trim());
+  return { data: await contract.methods[methodName as string](...params).call() };
+};
+
+export const sendCeloSmartContractMethodInvocationTransaction = async (testnet: boolean, body: CeloSmartContractMethodInvocation, provider?: string) => {
+  if (body.methodABI.stateMutability === 'view') {
+      return sendCeloSmartContractReadMethodInvocationTransaction(testnet, body, provider);
+  }
+  return celoBroadcast(await prepareCeloSmartContractWriteMethodInvocation(testnet, body, provider), body.signatureId);
 };
 
 export const prepareCeloTransferErc20SignedTransaction = async (testnet: boolean, body: TransferCeloOrCeloErc20Token, provider?: string) => {

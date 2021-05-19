@@ -3,10 +3,8 @@ import {
   IsNotEmpty,
   IsNotEmptyObject,
   IsOptional,
-  IsUUID,
   Length,
   Min,
-  Validate,
   ValidateIf,
   ValidateNested,
 } from 'class-validator';

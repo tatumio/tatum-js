@@ -26,6 +26,8 @@ export enum Currency {
     BLTC = 'BLTC',
     BBCH = 'BBCH',
     USDT = 'USDT',
+    FLOW = 'FLOW',
+    FUSD = 'FUSD',
     USDT_TRON = 'USDT_TRON',
     TRON = 'TRON',
     LEO = 'LEO',

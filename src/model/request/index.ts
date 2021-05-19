@@ -12,6 +12,7 @@ export * from './TransferXlm';
 export * from './TransferQuorum';
 export * from './AccountPassword';
 export * from './TransferXrp';
+export * from './TransferFlow';
 export * from './DeployErc721';
 export * from './BurnErc721';
 export * from './MintErc721';
@@ -47,6 +48,7 @@ export * from './CreateAccount';
 export * from './BlockAmount';
 export * from './CreateSubscription';
 export * from './EstimateGasEth';
+export * from './CeloSmartContractMethodInvocation'
 export * from './CeloBurnErc721';
 export * from './CeloMintErc721';
 export * from './CeloMintMultipleErc721';
