@@ -482,7 +482,7 @@ const convertLyraPrivateKey = (testnet: boolean, privkey: string) => {
 
 const convertXdcPrivateKey = (testnet: boolean, privkey: string) => {
   const wallet = ethWallet.fromPrivateKey(Buffer.from(privkey.replace('0x', ''), 'hex'));
-  return wallet.getAddressString() as string;
+  return wallet.getAddressString().replace('0x', 'xdc');
 };
 
 /**

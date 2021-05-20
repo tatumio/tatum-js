@@ -211,6 +211,6 @@ describe('Address tests', () => {
 
     it('should generate an address from a testnet XDC private key', async () => {
         const address = await generateAddressFromPrivatekey(Currency.XDC, true, '0x4cda6d2c33b0f9a041e46474a638ac59aee0734cf208aa9aa2f05ef887bd09e1');
-        expect(address).toBe('0x8acbcfbc8ce37f6f674f4b9861d3efe89288d89f');
+        expect(address).toBe('xdc8acbcfbc8ce37f6f674f4b9861d3efe89288d89f');
   });
 });

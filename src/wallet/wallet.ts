@@ -313,8 +313,9 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
         case Currency.BLTC:
         case Currency.BBCH:
         case Currency.MMY:
-        case Currency.XDC:
             return generateEthWallet(testnet, mnem);
+        case Currency.XDC:
+            return generateXdcWallet(testnet, mnem);
         case Currency.XRP:
             return generateXrpWallet();
         case Currency.XLM:
