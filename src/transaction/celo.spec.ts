@@ -6,11 +6,11 @@ import {
     CeloMintErc721,
     CeloMintMultipleErc721,
     CeloTransferErc721,
+    CreateRecord,
     Currency,
     DeployCeloErc20,
     MintCeloErc20,
     TransferCeloOrCeloErc20Token,
-    CeloSmartContractMethodInvocation,
 } from '../model';
 import {CeloUpdateCashbackErc721} from '../model/request/CeloUpdateCashbackErc721';
 import {
@@ -23,6 +23,7 @@ import {
     prepareCeloMintMultipleCashbackErc721SignedTransaction,
     prepareCeloMintMultipleErc721SignedTransaction,
     prepareCeloOrCUsdSignedTransaction,
+    prepareCeloStoreDataSignedTransaction,
     prepareCeloTransferErc20SignedTransaction,
     prepareCeloTransferErc721SignedTransaction,
     prepareCeloUpdateCashbackForAuthorErc721SignedTransaction,
@@ -45,6 +46,30 @@ describe('CELO transactions', () => {
         // const provider = new CeloProvider('https://alfajores-forno.celo-testnet.org');
         // await provider.ready;
         // console.log(await provider.sendTransaction(txData));
+    });
+
+    it('should test valid store data CELO', async () => {
+        const body = new CreateRecord();
+        body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
+        body.data = '1';
+        body.chain = Currency.CELO;
+        body.feeCurrency = Currency.CUSD;
+        body.to = '0x10168acf3231ccc7b16ba53f17dd4d8bdecf4e1a';
+        const txData = await prepareCeloStoreDataSignedTransaction(true, body, 'https://alfajores-forno.celo-testnet.org');
+        expect(txData).toContain('0x');
+
+        // const provider = new CeloProvider('https://alfajores-forno.celo-testnet.org');
+        // await provider.ready;
+        // console.log(await provider.sendTransaction(txData));
+    });
+
+    it('should  not test valid store data CELO - missing feeCurrency', async () => {
+        const body = new CreateRecord();
+        body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
+        body.data = '1';
+        body.chain = Currency.CELO;
+        body.to = '0x10168acf3231ccc7b16ba53f17dd4d8bdecf4e1a';
+        await prepareCeloStoreDataSignedTransaction(true, body, 'https://alfajores-forno.celo-testnet.org');
     });
 
     it('should test valid transaction CELO with custom fee', async () => {
