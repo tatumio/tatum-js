@@ -14,6 +14,7 @@ import {
     DOGE_NETWORK,
     DOGE_TEST_NETWORK,
     ETH_DERIVATION_PATH,
+    XDC_DERIVATION_PATH,
     FLOW_DERIVATION_PATH,
     LTC_DERIVATION_PATH,
     LTC_NETWORK,
@@ -395,7 +396,10 @@ const generateEthPrivateKey = async (testnet: boolean, mnemonic: string, i: numb
 };
 
 const generateXdcPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
-  return generateEthPrivateKey(testnet, mnemonic, i);
+  const path = testnet ? TESTNET_DERIVATION_PATH : XDC_DERIVATION_PATH;
+  const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnemonic));
+  const derivePath = hdwallet.derivePath(path).deriveChild(i);
+  return derivePath.getWallet().getPrivateKeyString();
 };
 
 /**

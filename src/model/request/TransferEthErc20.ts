@@ -30,7 +30,7 @@ export class TransferEthErc20 extends PrivateKeyOrSignatureId {
     public data?: string;
 
     @IsNotEmpty()
-    @IsIn(ETH_BASED_CURRENCIES)
+    @IsIn([...ETH_BASED_CURRENCIES, Currency.XDC])
     public currency: Currency;
 
     @IsOptional()

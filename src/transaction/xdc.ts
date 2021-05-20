@@ -1,7 +1,8 @@
-import {BigNumber} from 'bignumber.js';
+import axios from 'axios';
 import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
 import {toWei} from 'web3-utils';
+import {BigNumber} from 'bignumber.js';
 import {xdcBroadcast, xdcGetTransactionsCount} from '../blockchain';
 import {validateBody} from '../connector/tatum';
 import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
@@ -31,7 +32,14 @@ import {UpdateCashbackErc721} from '../model/request/UpdateCashbackErc721';
  * Estimate Gas price for the transaction.
  */
 export const xdcGetGasPriceInWei = async () => {
-    return Web3.utils.toWei('20', 'gwei');
+    const gasStationUrl = 'https://rpc.xinfin.network/';
+    try {
+      const { result } = await axios.post(`${gasStationUrl}gasPrice`, {"jsonrpc":"2.0","method":"eth_gasPrice","params":[],"id":1})
+      return result ? Web3.utils.toWei(result, 'wei') : Web3.utils.toWei('5', 'kwei');
+    }
+    catch (e) {
+    }
+    return Web3.utils.toWei('5', 'kwei');
 };
 
 /**
