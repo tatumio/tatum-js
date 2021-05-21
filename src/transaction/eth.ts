@@ -106,10 +106,14 @@ export const prepareStoreDataTransaction = async (body: CreateRecord, provider?:
     } = body;
     const client = getClient(provider, fromPrivateKey);
     const address = (to || client.eth.defaultAccount) as string;
+    const hexData = client.utils.isHex(data) ? client.utils.stringToHex(data) : client.utils.toHex(data);
     const addressNonce = nonce ? nonce : await ethGetTransactionsCount(address);
-    const customFee = ethFee ? ethFee : {
-        gasLimit: `${data.length * 68 + 21000}`,
-        gasPrice: client.utils.fromWei(await ethGetGasPriceInWei(), 'gwei'),
+    const customFee = ethFee ? {
+        ...ethFee,
+        gasPrice: client.utils.toWei(ethFee.gasPrice, 'gwei'),
+    } : {
+        gasLimit: `${hexData.length * 68 + 21000}`,
+        gasPrice: await ethGetGasPriceInWei(),
     };
 
     const tx: TransactionConfig = {
@@ -118,7 +122,7 @@ export const prepareStoreDataTransaction = async (body: CreateRecord, provider?:
         value: '0',
         gasPrice: customFee.gasPrice,
         gas: customFee.gasLimit,
-        data: data ? (client.utils.isHex(data) ? client.utils.stringToHex(data) : client.utils.toHex(data)) : undefined,
+        data: hexData,
         nonce: addressNonce,
     };
 
