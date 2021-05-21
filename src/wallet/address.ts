@@ -14,6 +14,7 @@ import {
     DOGE_NETWORK,
     DOGE_TEST_NETWORK,
     ETH_DERIVATION_PATH,
+    XDC_DERIVATION_PATH,
     FLOW_DERIVATION_PATH,
     LTC_DERIVATION_PATH,
     LTC_NETWORK,
@@ -143,6 +144,12 @@ const generateEthAddress = (testnet: boolean, xpub: string, i: number) => {
  */
 const generateBscAddress = (testnet: boolean, xpub: string, i: number) => {
     return generateEthAddress(testnet, xpub, i);
+};
+
+const generateXdcAddress = (testnet: boolean, xpub: string, i: number) => {
+    const w = ethHdKey.fromExtendedKey(xpub);
+    const wallet = w.deriveChild(i).getWallet();
+    return 'xdc' + wallet.getAddress().toString('hex').toLowerCase();
 };
 
 /**
@@ -384,8 +391,15 @@ const generateEthPrivateKey = async (testnet: boolean, mnemonic: string, i: numb
  * @param i derivation index of private key to generate.
  * @returns blockchain private key to the address
  */
-const generateBscPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
-    return generateEthPrivateKey(testnet, mnemonic, i);
+ const generateBscPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
+  return generateEthPrivateKey(testnet, mnemonic, i);
+};
+
+const generateXdcPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
+  const path = testnet ? TESTNET_DERIVATION_PATH : XDC_DERIVATION_PATH;
+  const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnemonic));
+  const derivePath = hdwallet.derivePath(path).deriveChild(i);
+  return derivePath.getWallet().getPrivateKeyString();
 };
 
 /**
@@ -461,9 +475,14 @@ const convertLyraPrivateKey = (testnet: boolean, privkey: string) => {
  * @param privkey private key to use
  * @returns blockchain address
  */
-const convertEthPrivateKey = (testnet: boolean, privkey: string) => {
-    const wallet = ethWallet.fromPrivateKey(Buffer.from(privkey.replace('0x', ''), 'hex'));
-    return wallet.getAddressString() as string;
+ const convertEthPrivateKey = (testnet: boolean, privkey: string) => {
+  const wallet = ethWallet.fromPrivateKey(Buffer.from(privkey.replace('0x', ''), 'hex'));
+  return wallet.getAddressString() as string;
+};
+
+const convertXdcPrivateKey = (testnet: boolean, privkey: string) => {
+  const wallet = ethWallet.fromPrivateKey(Buffer.from(privkey.replace('0x', ''), 'hex'));
+  return wallet.getAddressString().replace('0x', 'xdc');
 };
 
 /**
@@ -524,6 +543,8 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
         case Currency.BBCH:
         case Currency.MMY:
             return generateEthAddress(testnet, xpub, i);
+        case Currency.XDC:
+            return generateXdcAddress(testnet, xpub, i);
         case Currency.VET:
             return generateVetAddress(testnet, xpub, i);
         case Currency.LYRA:
@@ -593,6 +614,8 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
         case Currency.BBCH:
         case Currency.MMY:
             return generateEthPrivateKey(testnet, mnemonic, i);
+        case Currency.XDC:
+            return generateXdcPrivateKey(testnet, mnemonic, i);
         case Currency.VET:
             return generateVetPrivateKey(testnet, mnemonic, i);
         case Currency.LYRA:
@@ -635,6 +658,8 @@ export const generateAddressFromPrivatekey = (currency: Currency, testnet: boole
         case Currency.BSC:
         case Currency.MMY:
             return convertEthPrivateKey(testnet, privateKey);
+        case Currency.XDC:
+            return convertXdcPrivateKey(testnet, privateKey);
         default:
             throw new Error('Unsupported blockchain.');
     }

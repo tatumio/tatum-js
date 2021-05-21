@@ -15,7 +15,7 @@ import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 export class SmartContractMethodInvocation extends PrivateKeyOrSignatureId {
 
   @IsNotEmpty()
-  @Length(42, 42)
+  @Length(42, 43)
   public contractAddress: string;
 
   @IsNotEmpty()

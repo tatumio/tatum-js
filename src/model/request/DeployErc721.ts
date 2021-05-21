@@ -9,7 +9,7 @@ export class DeployErc721 extends PrivateKeyOrSignatureId {
     public name: string;
 
     @IsNotEmpty()
-    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO])
+    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC])
     public chain: Currency;
 
     @IsNotEmpty()

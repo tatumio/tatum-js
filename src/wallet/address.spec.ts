@@ -66,7 +66,12 @@ describe('Address tests', () => {
         expect(address).toBe('0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea');
     });
 
-    it('should generate address 1 for CELO mainnet', () => {
+    it('should generate address 1 for XDC testnet', () => {
+        const address = generateAddressFromXPub(Currency.XDC, true, 'xpub6FMiQpA54nciqs52guGVdWQ5TonZt5XtGsFpurgtttL7H3mSfaJDXv5aBdThjX6tW9HYaJSQ8wZVnLm1ixaQUu1MRQCwvwZ6U2cX6mwWT25', 1);
+        expect(address).toBe('xdc8cb76aed9c5e336ef961265c6079c14e9cd3d2ea');
+    });
+
+  it('should generate address 1 for CELO mainnet', () => {
         const address = generateAddressFromXPub(Currency.CELO, false, 'xpub6F2PSwHVww3pw4NE7hbrNLNBYL87eYTEqXTF6Aw5FACuQTBHPtCUbqG39LqXv81NLXhjb4ECFA19h8jGhKtdQNVvxm4Md1xtiiKCnxp9Jq1', 1);
         expect(address).toBe('0xfc2d2698ffd1bcf31c950d61d5c517e28fd739f9');
     });
@@ -159,7 +164,12 @@ describe('Address tests', () => {
         expect(privateKey).toBe('0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb');
     });
 
-    it('should generate private key 1 for VET mainnet', async () => {
+    it('should generate private key 1 for XDC testnet', async () => {
+        const privateKey = await generatePrivateKeyFromMnemonic(Currency.XDC, true, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1);
+        expect(privateKey).toBe('0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb');
+    });
+
+  it('should generate private key 1 for VET mainnet', async () => {
         const privateKey = await generatePrivateKeyFromMnemonic(Currency.VET, false, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1);
         expect(privateKey).toBe('0xd2a4c2f89f58e50f2e29ed1e68552680417a0534c47bebf18f2f5f3a27817251');
     });
@@ -198,4 +208,9 @@ describe('Address tests', () => {
         const address = await generateAddressFromPrivatekey(Currency.ETH, true, '0x4cda6d2c33b0f9a041e46474a638ac59aee0734cf208aa9aa2f05ef887bd09e1');
         expect(address).toBe('0x8acbcfbc8ce37f6f674f4b9861d3efe89288d89f');
     });
+
+    it('should generate an address from a testnet XDC private key', async () => {
+        const address = await generateAddressFromPrivatekey(Currency.XDC, true, '0x4cda6d2c33b0f9a041e46474a638ac59aee0734cf208aa9aa2f05ef887bd09e1');
+        expect(address).toBe('xdc8acbcfbc8ce37f6f674f4b9861d3efe89288d89f');
+  });
 });

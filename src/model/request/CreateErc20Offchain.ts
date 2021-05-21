@@ -62,7 +62,7 @@ export class CreateErc20Offchain {
 
     @ValidateIf(o => (o.xpub && o.address) || !o.xpub)
     @Validate(CreateErc20Validator)
-    @Length(42, 42)
+    @Length(42, 43)
     @IsNotEmpty()
     public address: string;
 
