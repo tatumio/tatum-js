@@ -1,4 +1,4 @@
-import {get} from '../connector/tatum';
+import { get } from '../connector/tatum';
 import {
     CeloBurnErc721,
     CeloDeployErc721,
@@ -12,8 +12,8 @@ import {
     EthMintMultipleErc721,
     EthTransferErc721
 } from '../model';
-import {CeloUpdateCashbackErc721} from '../model/request/CeloUpdateCashbackErc721';
-import {UpdateCashbackErc721} from '../model/request/UpdateCashbackErc721';
+import { CeloUpdateCashbackErc721 } from '../model/request/CeloUpdateCashbackErc721';
+import { UpdateCashbackErc721 } from '../model/request/UpdateCashbackErc721';
 import {
     sendBep721Transaction,
     sendBurnBep721Transaction,

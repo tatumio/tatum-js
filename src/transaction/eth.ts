@@ -1,21 +1,25 @@
 import axios from 'axios';
-import {BigNumber} from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import Web3 from 'web3';
-import {TransactionConfig} from 'web3-core';
-import {toWei} from 'web3-utils';
-import {ethBroadcast, ethGetTransactionsCount} from '../blockchain';
-import {validateBody} from '../connector/tatum';
-import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
+import { TransactionConfig } from 'web3-core';
+import { toWei } from 'web3-utils';
+import { ethBroadcast, ethGetTransactionsCount } from '../blockchain';
+import { validateBody } from '../connector/tatum';
+import { CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI } from '../constants';
 import erc20TokenABI from '../contracts/erc20/token_abi';
 import erc20TokenBytecode from '../contracts/erc20/token_bytecode';
 import erc721TokenABI from '../contracts/erc721/erc721_abi';
 import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
+import erc1155TokenABI from '../contracts/erc1155/erc1155_abi';
+import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode';
 import {
     CreateRecord,
     Currency,
     DeployErc20,
     MintErc20,
     BurnErc20,
+    EthBurnMultiToken,
+    EthBurnMultiTokenBatch,
     EthBurnErc721,
     EthDeployErc721,
     EthMintErc721,
@@ -26,7 +30,12 @@ import {
     TransferCustomErc20,
     TransferEthErc20,
 } from '../model';
-import {UpdateCashbackErc721} from '../model/request/UpdateCashbackErc721';
+import { UpdateCashbackErc721 } from '../model/request/UpdateCashbackErc721';
+import { MintMultiToken } from '../model/request/MintMultiToken';
+import { MintMultiTokenBatch } from '../model/request/MintMultiTokenBatch';
+import { TransferMultiToken } from '../model/request/TransferMultiToken';
+import { TransferMultiTokenBatch } from '../model/request/TransferMultiTokenBatch';
+import { EthDeployMultiToken } from '../model/request/EthDeployMultiToken';
 
 /**
  * Estimate Gas price for the transaction.
@@ -127,36 +136,36 @@ export const prepareStoreDataTransaction = async (body: CreateRecord, provider?:
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareEthMintErc20SignedTransaction = async (body: MintErc20, provider?: string) => {
-  await validateBody(body, MintErc20);
-  const {
-    fromPrivateKey,
-    amount,
-    to,
-    contractAddress,
-    nonce,
-    signatureId,
-  } = body;
+    await validateBody(body, MintErc20);
+    const {
+        fromPrivateKey,
+        amount,
+        to,
+        contractAddress,
+        nonce,
+        signatureId,
+    } = body;
 
-  const client = getClient(provider, fromPrivateKey);
+    const client = getClient(provider, fromPrivateKey);
 
-  const gasPrice = await ethGetGasPriceInWei();
-  // @ts-ignore
-  const contract = new client.eth.Contract(erc20TokenABI, contractAddress.trim());
-  const digits = new BigNumber(10).pow(await contract.methods.decimals().call());
-  const tx: TransactionConfig = {
-    from: 0,
-    to: contractAddress.trim(),
-    data: contract.methods.mint(to.trim(), `0x${new BigNumber(amount).multipliedBy(digits).toString(16)}`).encodeABI(),
-    gasPrice,
-    nonce,
-  };
+    const gasPrice = await ethGetGasPriceInWei();
+    // @ts-ignore
+    const contract = new client.eth.Contract(erc20TokenABI, contractAddress.trim());
+    const digits = new BigNumber(10).pow(await contract.methods.decimals().call());
+    const tx: TransactionConfig = {
+        from: 0,
+        to: contractAddress.trim(),
+        data: contract.methods.mint(to.trim(), `0x${new BigNumber(amount).multipliedBy(digits).toString(16)}`).encodeABI(),
+        gasPrice,
+        nonce,
+    };
 
-  if (signatureId) {
-    return JSON.stringify(tx);
-  }
+    if (signatureId) {
+        return JSON.stringify(tx);
+    }
 
-  tx.gas = await client.eth.estimateGas(tx);
-  return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+    tx.gas = await client.eth.estimateGas(tx);
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
 };
 
 /**
@@ -166,35 +175,35 @@ export const prepareEthMintErc20SignedTransaction = async (body: MintErc20, prov
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareEthBurnErc20SignedTransaction = async (body: BurnErc20, provider?: string) => {
-  await validateBody(body, BurnErc20);
-  const {
-    fromPrivateKey,
-    amount,
-    contractAddress,
-    nonce,
-    signatureId,
-  } = body;
+    await validateBody(body, BurnErc20);
+    const {
+        fromPrivateKey,
+        amount,
+        contractAddress,
+        nonce,
+        signatureId,
+    } = body;
 
-  const client = getClient(provider, fromPrivateKey);
+    const client = getClient(provider, fromPrivateKey);
 
-  const gasPrice = await ethGetGasPriceInWei();
-  // @ts-ignore
-  const contract = new client.eth.Contract(erc20TokenABI, contractAddress.trim());
-  const digits = new BigNumber(10).pow(await contract.methods.decimals().call());
-  const tx: TransactionConfig = {
-    from: 0,
-    to: contractAddress.trim(),
-    data: contract.methods.burn(`0x${new BigNumber(amount).multipliedBy(digits).toString(16)}`).encodeABI(),
-    gasPrice,
-    nonce,
-  };
+    const gasPrice = await ethGetGasPriceInWei();
+    // @ts-ignore
+    const contract = new client.eth.Contract(erc20TokenABI, contractAddress.trim());
+    const digits = new BigNumber(10).pow(await contract.methods.decimals().call());
+    const tx: TransactionConfig = {
+        from: 0,
+        to: contractAddress.trim(),
+        data: contract.methods.burn(`0x${new BigNumber(amount).multipliedBy(digits).toString(16)}`).encodeABI(),
+        gasPrice,
+        nonce,
+    };
 
-  if (signatureId) {
-    return JSON.stringify(tx);
-  }
+    if (signatureId) {
+        return JSON.stringify(tx);
+    }
 
-  tx.gas = await client.eth.estimateGas(tx);
-  return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+    tx.gas = await client.eth.estimateGas(tx);
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
 };
 
 /**
@@ -203,51 +212,51 @@ export const prepareEthBurnErc20SignedTransaction = async (body: BurnErc20, prov
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
- export const prepareEthOrErc20SignedTransaction = async (body: TransferEthErc20, provider?: string) => {
-  await validateBody(body, TransferEthErc20);
-  const {
-      fromPrivateKey,
-      to,
-      amount,
-      currency,
-      fee,
-      data,
-      nonce,
-      signatureId
-  } = body;
+export const prepareEthOrErc20SignedTransaction = async (body: TransferEthErc20, provider?: string) => {
+    await validateBody(body, TransferEthErc20);
+    const {
+        fromPrivateKey,
+        to,
+        amount,
+        currency,
+        fee,
+        data,
+        nonce,
+        signatureId
+    } = body;
 
-  const client = getClient(provider, fromPrivateKey);
+    const client = getClient(provider, fromPrivateKey);
 
-  let tx: TransactionConfig;
-  const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei();
-  if (currency === Currency.ETH) {
-      tx = {
-          from: 0,
-          to: to.trim(),
-          value: client.utils.toWei(`${amount}`, 'ether'),
-          gasPrice,
-          data: data ? (client.utils.isHex(data) ? client.utils.stringToHex(data) : client.utils.toHex(data)) : undefined,
-          nonce,
-      };
-  } else {
-      // @ts-ignore
-      const contract = new client.eth.Contract([TRANSFER_METHOD_ABI], CONTRACT_ADDRESSES[currency]);
-      const digits = new BigNumber(10).pow(CONTRACT_DECIMALS[currency]);
-      tx = {
-          from: 0,
-          to: CONTRACT_ADDRESSES[currency],
-          data: contract.methods.transfer(to.trim(), `0x${new BigNumber(amount).multipliedBy(digits).toString(16)}`).encodeABI(),
-          gasPrice,
-          nonce,
-      };
-  }
+    let tx: TransactionConfig;
+    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei();
+    if (currency === Currency.ETH) {
+        tx = {
+            from: 0,
+            to: to.trim(),
+            value: client.utils.toWei(`${amount}`, 'ether'),
+            gasPrice,
+            data: data ? (client.utils.isHex(data) ? client.utils.stringToHex(data) : client.utils.toHex(data)) : undefined,
+            nonce,
+        };
+    } else {
+        // @ts-ignore
+        const contract = new client.eth.Contract([TRANSFER_METHOD_ABI], CONTRACT_ADDRESSES[currency]);
+        const digits = new BigNumber(10).pow(CONTRACT_DECIMALS[currency]);
+        tx = {
+            from: 0,
+            to: CONTRACT_ADDRESSES[currency],
+            data: contract.methods.transfer(to.trim(), `0x${new BigNumber(amount).multipliedBy(digits).toString(16)}`).encodeABI(),
+            gasPrice,
+            nonce,
+        };
+    }
 
-  if (signatureId) {
-      return JSON.stringify(tx);
-  }
-  tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
+    if (signatureId) {
+        return JSON.stringify(tx);
+    }
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
 
-  return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
 };
 
 /**
@@ -672,7 +681,419 @@ export const prepareEthTransferErc721SignedTransaction = async (body: EthTransfe
 
     return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
 };
+/**
+ * Sign Ethereum mint ERC 1155 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareEthMintMultiTokenBatchSignedTransaction = async (body: MintMultiTokenBatch, provider?: string) => {
+    await validateBody(body, MintMultiTokenBatch);
+    const {
+        fromPrivateKey,
+        to,
+        tokenId,
+        contractAddress,
+        nonce,
+        data,
+        fee,
+        amounts,
+        signatureId,
+    } = body;
 
+    const client = getClient(provider, fromPrivateKey);
+
+    // @ts-ignore
+    const contract = new (client).eth.Contract(erc1155TokenABI, contractAddress);
+    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei();
+    const amts = amounts.map(amts => amts.map(amt => `0x${new BigNumber(client.utils.toWei(amt, 'ether')).toString(16)}`));
+    const tx: TransactionConfig = {
+        from: 0,
+        to: contractAddress.trim(),
+        data: contract.methods.mintBatch(to, tokenId, amts, data).encodeABI(),
+        gasPrice,
+        nonce,
+    };
+
+    if (signatureId) {
+        return JSON.stringify(tx);
+    }
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+};
+/**
+ * Sign Ethereum mint ERC 1155 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareEthMintMultiTokenSignedTransaction = async (body: MintMultiToken, provider?: string) => {
+    await validateBody(body, MintMultiToken);
+    const {
+        fromPrivateKey,
+        to,
+        tokenId,
+        contractAddress,
+        nonce,
+        data,
+        fee,
+        amount,
+        signatureId,
+    } = body;
+
+    const client = getClient(provider, fromPrivateKey);
+
+    // @ts-ignore
+    const contract = new (client).eth.Contract(erc1155TokenABI, contractAddress);
+    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei();
+    const tx: TransactionConfig = {
+        from: 0,
+        to: contractAddress.trim(),
+        data: contract.methods.mint(to.trim(), tokenId, `0x${new BigNumber(client.utils.toWei(amount, 'ether')).toString(16)}`, data).encodeABI(),
+        gasPrice,
+        nonce,
+    };
+    if (signatureId) {
+        return JSON.stringify(tx);
+    }
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+};
+/**
+ * Sign Ethereum mint with cashback ERC 1155 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareEthMintCashbackMultiTokenSignedTransaction = async (body: MintMultiToken, provider?: string) => {
+    await validateBody(body, MintMultiToken);
+    const {
+        fromPrivateKey,
+        to,
+        tokenId,
+        contractAddress,
+        authorAddresses,
+        cashbackValues,
+        nonce,
+        amount,
+        data,
+        signatureId,
+        fee
+    } = body;
+
+    const client = await getClient(provider, fromPrivateKey);
+
+    // @ts-ignore
+    const contract = new (client).eth.Contract(erc1155TokenABI, contractAddress);
+
+    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei();
+    const cb: string[] = [];
+    const cashbacks: string[] = cashbackValues!;
+    // tslint:disable-next-line: prefer-for-of
+    for (const c of cashbacks) {
+        cb.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
+    }
+    const tx: TransactionConfig = {
+        from: 0,
+        to: contractAddress.trim(),
+        data: contract.methods.mintWithCashback(to, tokenId, `0x${new BigNumber(client.utils.toWei(amount, 'ether')).toString(16)}`, data, authorAddresses, cb).encodeABI(),
+        gasPrice,
+        nonce,
+    };
+    if (signatureId) {
+        return JSON.stringify(tx);
+    }
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+};
+/**
+ * Sign Ethereum mint multiple ERC 1155 Cashback transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareEthMintMultipleCashbackMultiTokenSignedTransaction = async (body: MintMultiTokenBatch, provider?: string) => {
+    await validateBody(body, MintMultiTokenBatch);
+    const {
+        fromPrivateKey,
+        to,
+        tokenId,
+        contractAddress,
+        nonce,
+        signatureId,
+        amounts,
+        authorAddresses,
+        cashbackValues,
+        data,
+        fee
+    } = body;
+
+    const client = await getClient(provider, fromPrivateKey);
+
+    // @ts-ignore
+    const contract = new (client).eth.Contract(erc1155TokenABI, contractAddress);
+    const cashbacks: string[][][] = cashbackValues!;
+    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei();
+    const cb = cashbacks.map(cashback => cashback.map(cbs => cbs.map(c => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)))
+    const amt = amounts.map(amts => amts.map(amt => `0x${new BigNumber(client.utils.toWei(amt, 'ether')).toString(16)}`));
+    const tx: TransactionConfig = {
+        from: 0,
+        to: contractAddress.trim(),
+        data: contract.methods.mintBatchWithCashback(to.map(t => t.trim()), tokenId, amt, data, authorAddresses, cb).encodeABI(),
+        gasPrice,
+        nonce,
+    };
+    if (signatureId) {
+        return JSON.stringify(tx);
+    }
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
+
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+};
+
+/**
+ * Sign Ethereum burn ERC 1155 batch transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareEthBurnBatchMultiTokenSignedTransaction = async (body: EthBurnMultiTokenBatch, provider?: string) => {
+    await validateBody(body, EthBurnMultiTokenBatch);
+    const {
+        fromPrivateKey,
+        account,
+        tokenId,
+        amounts,
+        fee,
+        contractAddress,
+        nonce,
+        signatureId
+    } = body;
+
+    const client = getClient(provider, fromPrivateKey);
+
+    // @ts-ignore
+    const contract = new (client).eth.Contract(erc1155TokenABI, contractAddress);
+    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei();
+    const tx: TransactionConfig = {
+        from: 0,
+        to: contractAddress.trim(),
+        data: contract.methods.burnBatch(account, tokenId, amounts).encodeABI(),
+        gasPrice,
+        nonce,
+    };
+
+    if (signatureId) {
+        return JSON.stringify(tx);
+    }
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
+
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+};
+/**
+ * Sign Ethereum burn ERC 1155 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareEthBurnMultiTokenSignedTransaction = async (body: EthBurnMultiToken, provider?: string) => {
+    await validateBody(body, EthBurnMultiToken);
+    const {
+        fromPrivateKey,
+        account,
+        tokenId,
+        amount,
+        fee,
+        contractAddress,
+        nonce,
+        signatureId
+    } = body;
+
+    const client = getClient(provider, fromPrivateKey);
+
+    // @ts-ignore
+    const contract = new (client).eth.Contract(erc1155TokenABI, contractAddress);
+    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei();
+    const tx: TransactionConfig = {
+        from: 0,
+        to: contractAddress.trim(),
+        data: contract.methods.burn(account, tokenId, amount).encodeABI(),
+        gasPrice,
+        nonce,
+    };
+
+    if (signatureId) {
+        return JSON.stringify(tx);
+    }
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+};
+/**
+ * Sign Ethereum update cashback ERC 1155 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareEthUpdateCashbackForAuthorMultiTokenSignedTransaction = async (body: UpdateCashbackErc721, provider?: string) => {
+    await validateBody(body, EthBurnErc721);
+    const {
+        fromPrivateKey,
+        author,
+        cashbackValue,
+        tokenId,
+        fee,
+        contractAddress,
+        nonce,
+        signatureId,
+    } = body;
+
+    const client = getClient(provider, fromPrivateKey);
+
+    // @ts-ignore
+    const contract = new (client).eth.Contract(erc1155TokenABI, contractAddress);
+    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei();
+    const tx: TransactionConfig = {
+        from: 0,
+        to: contractAddress.trim(),
+        data: contract.methods.updateCashbackForAuthor(tokenId, `0x${new BigNumber(toWei(cashbackValue, 'ether')).toString(16)}`).encodeABI(),
+        gasPrice,
+        nonce,
+    };
+
+    if (signatureId) {
+        return JSON.stringify(tx);
+    }
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
+
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+};
+/**
+ * Sign Ethereum transfer ERC 1155 Batch transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareEthBatchTransferMultiTokenSignedTransaction = async (body: TransferMultiTokenBatch, provider?: string) => {
+    await validateBody(body, TransferMultiTokenBatch);
+    const {
+        fromPrivateKey,
+        to,
+        tokenId,
+        fee,
+        contractAddress,
+        nonce,
+        signatureId,
+        amounts,
+        data,
+        value
+    } = body;
+
+    const client = await getClient(provider, fromPrivateKey);
+
+    // @ts-ignore
+    const contract = new (client).eth.Contract(erc1155TokenABI, contractAddress);
+    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei();
+    const amts = amounts.map(amt => `0x${new BigNumber(client.utils.toWei(amt, 'ether')).toString(16)}`)
+
+    const tx: TransactionConfig = {
+        from: 0,
+        to: contractAddress.trim(),
+        data: contract.methods.safeBatchTransfer(to.trim(), tokenId.map(token => token.trim()), amts).encodeABI(),
+        gasPrice,
+        nonce,
+        value: value ? `0x${new BigNumber(value).multipliedBy(1e18).toString(16)}` : undefined,
+    };
+
+    if (signatureId) {
+        return JSON.stringify(tx);
+    }
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
+
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+};
+/**
+ * Sign Ethereum transfer ERC 1155 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareEthTransferMultiTokenSignedTransaction = async (body: TransferMultiToken, provider?: string) => {
+    await validateBody(body, EthTransferErc721);
+    const {
+        fromPrivateKey,
+        to,
+        tokenId,
+        fee,
+        contractAddress,
+        nonce,
+        signatureId,
+        amount,
+        data,
+        value
+    } = body;
+
+    const client = await getClient(provider, fromPrivateKey);
+
+    // @ts-ignore
+    const contract = new (client).eth.Contract(erc1155TokenABI, contractAddress);
+    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei();
+    const tx: TransactionConfig = {
+        from: 0,
+        to: contractAddress.trim(),
+        data: contract.methods.safeTransfer(to.trim(), tokenId, `0x${new BigNumber(amount).multipliedBy(1e18).toString(16)}`, data).encodeABI(),
+        gasPrice,
+        nonce,
+        value: value ? `0x${new BigNumber(value).multipliedBy(1e18).toString(16)}` : undefined,
+    };
+
+    if (signatureId) {
+        return JSON.stringify(tx);
+    }
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
+
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+};
+/**
+ * Sign Ethereum deploy ERC 1155 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareEthDeployMultiTokenSignedTransaction = async (body: EthDeployMultiToken, provider?: string) => {
+    await validateBody(body, EthDeployMultiToken);
+    const {
+        fromPrivateKey,
+        fee,
+        uri,
+        nonce,
+        signatureId,
+    } = body;
+
+    const client = await getClient(provider, fromPrivateKey);
+
+    // @ts-ignore
+    const contract = new client.eth.Contract(erc1155TokenABI, null, {
+        data: erc1155TokenBytecode,
+    });
+
+    // @ts-ignore
+    const deploy = contract.deploy({
+        arguments: [uri]
+    });
+
+    const tx: TransactionConfig = {
+        from: 0,
+        data: deploy.encodeABI(),
+        gasPrice: fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei(),
+        nonce,
+        gas: fee ? fee.gasLimit : 7000000
+    };
+
+    if (signatureId) {
+        return JSON.stringify(tx);
+    }
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+};
 /**
  * Sign Ethereum deploy ERC 721 transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
@@ -842,6 +1263,8 @@ export const sendBurnErc721Transaction = async (body: EthBurnErc721, provider?: 
 
 export const sendUpdateCashbackForAuthorErc721Transaction = async (body: UpdateCashbackErc721, provider?: string) =>
     ethBroadcast(await prepareEthUpdateCashbackForAuthorErc721SignedTransaction(body, provider), body.signatureId);
+export const sendUpdateCashbackForAuthorMultiTokenTransaction = async (body: UpdateCashbackErc721, provider?: string) =>
+    ethBroadcast(await prepareEthUpdateCashbackForAuthorMultiTokenSignedTransaction(body, provider), body.signatureId);
 
 /**
  * Send Ethereum ERC721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -862,3 +1285,49 @@ export const sendErc721Transaction = async (body: EthTransferErc721, provider?: 
  */
 export const sendDeployErc721Transaction = async (body: EthDeployErc721, provider?: string) =>
     ethBroadcast(await prepareEthDeployErc721SignedTransaction(body, provider), body.signatureId);
+
+/**
+ * Send Ethereum ERC721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
+export const sendMultiTokenTransaction = async (body: TransferMultiToken, provider?: string) =>
+    ethBroadcast(await prepareEthTransferMultiTokenSignedTransaction(body, provider), body.signatureId);
+export const sendMultiTokenBatchTransaction = async (body: TransferMultiTokenBatch, provider?: string) =>
+    ethBroadcast(await prepareEthBatchTransferMultiTokenSignedTransaction(body, provider), body.signatureId);
+/**
+* Send Ethereum ERC721 deploy to the blockchain. This method broadcasts signed transaction to the blockchain.
+* This operation is irreversible.
+* @param body content of the transaction to broadcast
+* @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+* @returns transaction id of the transaction in the blockchain
+*/
+export const sendDeployMultiTokenTransaction = async (body: EthDeployMultiToken, provider?: string) =>
+    ethBroadcast(await prepareEthDeployMultiTokenSignedTransaction(body, provider), body.signatureId);
+
+/**
+ * Send Ethereum MultiToken mint transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
+export const sendMintMultiTokenTransaction = async (body: MintMultiToken, provider?: string) =>
+    ethBroadcast(await prepareEthMintMultiTokenSignedTransaction(body, provider), body.signatureId);
+
+export const sendMintMultiTokenBatchTransaction = async (body: MintMultiTokenBatch, provider?: string) =>
+    ethBroadcast(await prepareEthMintMultiTokenBatchSignedTransaction(body, provider), body.signatureId);
+// Cashback mints
+export const sendMintMultiTokenCashbackTransaction = async (body: MintMultiToken, provider?: string) =>
+    ethBroadcast(await prepareEthMintCashbackMultiTokenSignedTransaction(body, provider), body.signatureId);
+export const sendMintMultiTokenBatchCashbackTransaction = async (body: MintMultiTokenBatch, provider?: string) =>
+    ethBroadcast(await prepareEthMintMultipleCashbackMultiTokenSignedTransaction(body, provider), body.signatureId);
+
+// Burn 1155
+export const sendBurnMultiTokenTransaction = async (body: EthBurnMultiToken, provider?: string) =>
+    ethBroadcast(await prepareEthBurnMultiTokenSignedTransaction(body, provider), body.signatureId);
+
+export const sendBurnBatchMultiTokenTransaction = async (body: EthBurnMultiTokenBatch, provider?: string) =>
+    ethBroadcast(await prepareEthBurnBatchMultiTokenSignedTransaction(body, provider), body.signatureId);
