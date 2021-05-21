@@ -226,12 +226,12 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "account",
+				"name": "",
 				"type": "address"
 			},
 			{
 				"internalType": "address",
-				"name": "operator",
+				"name": "",
 				"type": "address"
 			}
 		],
@@ -405,27 +405,27 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "from",
+				"name": "",
 				"type": "address"
 			},
 			{
 				"internalType": "address",
-				"name": "to",
+				"name": "",
 				"type": "address"
 			},
 			{
 				"internalType": "uint256[]",
-				"name": "ids",
+				"name": "",
 				"type": "uint256[]"
 			},
 			{
 				"internalType": "uint256[]",
-				"name": "amounts",
+				"name": "",
 				"type": "uint256[]"
 			},
 			{
 				"internalType": "bytes",
-				"name": "data",
+				"name": "",
 				"type": "bytes"
 			}
 		],
@@ -466,27 +466,27 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "from",
+				"name": "",
 				"type": "address"
 			},
 			{
 				"internalType": "address",
-				"name": "to",
+				"name": "",
 				"type": "address"
 			},
 			{
 				"internalType": "uint256",
-				"name": "id",
+				"name": "",
 				"type": "uint256"
 			},
 			{
 				"internalType": "uint256",
-				"name": "amount",
+				"name": "",
 				"type": "uint256"
 			},
 			{
 				"internalType": "bytes",
-				"name": "data",
+				"name": "",
 				"type": "bytes"
 			}
 		],
@@ -499,12 +499,12 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "operator",
+				"name": "",
 				"type": "address"
 			},
 			{
 				"internalType": "bool",
-				"name": "approved",
+				"name": "",
 				"type": "bool"
 			}
 		],
