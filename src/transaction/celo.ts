@@ -2,10 +2,10 @@ import { CeloProvider, CeloWallet } from '@celo-tools/celo-ethers-wrapper';
 import { BigNumber as BN } from '@ethersproject/bignumber';
 import { BigNumber } from 'bignumber.js';
 import Web3 from 'web3';
-import { toWei } from 'web3-utils';
-import { celoBroadcast } from '../blockchain';
-import { validateBody } from '../connector/tatum';
-import { CEUR_ADDRESS_MAINNET, CEUR_ADDRESS_TESTNET, CUSD_ADDRESS_MAINNET, CUSD_ADDRESS_TESTNET, TATUM_API_URL, TRANSFER_METHOD_ABI } from '../constants';
+import {isHex, stringToHex, toHex, toWei} from 'web3-utils';
+import {celoBroadcast} from '../blockchain';
+import {validateBody} from '../connector/tatum';
+import {CEUR_ADDRESS_MAINNET, CEUR_ADDRESS_TESTNET, CUSD_ADDRESS_MAINNET, CUSD_ADDRESS_TESTNET, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
 import erc20_abi from '../contracts/erc20/token_abi';
 import erc20_bytecode from '../contracts/erc20/token_bytecode';
 import erc721_abi from '../contracts/erc721/erc721_abi';
@@ -24,6 +24,7 @@ import {
     CeloMintMultiTokenBatch,
     CeloTransferMultiToken,
     CeloTransferMultiTokenBatch,
+    CreateRecord,
     Currency,
     DeployCeloErc20,
     MintCeloErc20,
@@ -1288,6 +1289,59 @@ export const prepareCeloOrCUsdSignedTransaction = async (testnet: boolean, body:
         gasLimit: fee?.gasLimit ? '0x' + new BigNumber(fee.gasLimit).toString(16) : undefined,
         gasPrice: fee?.gasPrice ? '0x' + new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16) : gasPrice,
         value: currency === Currency.CELO ? value : undefined,
+        from,
+    };
+    transaction.gasLimit = transaction.gasLimit || (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();
+    return wallet.signTransaction(transaction);
+};
+
+/**
+ * Sign store data transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareCeloStoreDataSignedTransaction = async (testnet: boolean, body: CreateRecord, provider?: string) => {
+    await validateBody(body, CreateRecord);
+    const {
+        fromPrivateKey,
+        to,
+        feeCurrency,
+        nonce,
+        data,
+        ethFee: fee,
+        signatureId,
+    } = body;
+
+    const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
+    const network = await p.ready;
+
+    const feeCurrencyContractAddress = getFeeCurrency(feeCurrency as Currency, testnet);
+
+    if (signatureId) {
+        return JSON.stringify({
+            chainId: network.chainId,
+            feeCurrency: feeCurrencyContractAddress,
+            nonce,
+            to: to?.trim(),
+            data: data ? (isHex(data) ? stringToHex(data) : toHex(data)) : undefined,
+            gasLimit: fee?.gasLimit ? '0x' + new BigNumber(fee.gasLimit).toString(16) : undefined,
+            gasPrice: fee?.gasPrice ? '0x' + new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16) : undefined,
+            value: undefined,
+        });
+    }
+    const wallet = new CeloWallet(fromPrivateKey as string, p);
+    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress);
+    const transaction = {
+        chainId: network.chainId,
+        feeCurrency: feeCurrencyContractAddress,
+        nonce: nonce || txCount,
+        to: to?.trim() || from,
+        data: data ? (isHex(data) ? stringToHex(data) : toHex(data)) : undefined,
+        gasLimit: fee?.gasLimit ? '0x' + new BigNumber(fee.gasLimit).toString(16) : undefined,
+        gasPrice: fee?.gasPrice ? '0x' + new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16) : gasPrice,
+        value: undefined,
         from,
     };
     transaction.gasLimit = transaction.gasLimit || (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();
