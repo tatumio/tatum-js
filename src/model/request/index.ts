@@ -72,6 +72,7 @@ export * from './CeloMintMultiToken';
 export * from './CeloMintMultiTokenBatch';
 export * from './CeloTransferMultiToken';
 export * from './CeloTransferMultiTokenBatch';
+export * from './EthDeployMultiToken';
 export * from './EthBurnMultiToken';
 export * from './EthBurnMultiTokenBatch';
 export * from './CeloBurnMultiToken';

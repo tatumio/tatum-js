@@ -34,7 +34,6 @@ import {
     TransferMultiTokenBatch,
     EthDeployMultiToken,
     UpdateCashbackErc721,
-    UpdateCashbackErc721,
 } from '../model';
 
 /**
