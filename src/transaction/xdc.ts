@@ -105,7 +105,7 @@ export const prepareXdcStoreDataTransaction = async (body: CreateRecord, provide
     const addressNonce = nonce ? nonce : await xdcGetTransactionsCount(address);
     const customFee = ethFee ? ethFee : {
         gasLimit: `${data.length * 68 + 21000}`,
-        gasPrice: client.utils.fromWei(await xdcGetGasPriceInWei(), 'gwei'),
+        gasPrice: await xdcGetGasPriceInWei(),
     };
 
     const tx: TransactionConfig = {
@@ -114,7 +114,7 @@ export const prepareXdcStoreDataTransaction = async (body: CreateRecord, provide
         value: '0',
         gasPrice: customFee.gasPrice,
         gas: customFee.gasLimit,
-        data: data ? (client.utils.isHex(data) ? client.utils.stringToHex(data) : client.utils.toHex(data)) : undefined,
+        data: client.utils.isHex(data) ? client.utils.stringToHex(data) : client.utils.toHex(data),
         nonce: addressNonce,
     };
 
@@ -243,8 +243,7 @@ export const prepareXdcOrErc20SignedTransaction = async (body: TransferEthErc20,
             from: 0,
             to: to.trim(),
             value: client.utils.toWei(`${amount}`, 'ether'),
-            // gasPrice,
-            data: data ? (client.utils.isHex(data) ? client.utils.stringToHex(data) : client.utils.toHex(data)) : undefined,
+            data: client.utils.isHex(data as string | number) ? client.utils.stringToHex(data as string) : client.utils.toHex(data as string | number),
             nonce,
         };
     } else {
@@ -441,7 +440,6 @@ export const prepareXdcMintErcCashback721SignedTransaction = async (body: EthMin
         from: 0,
         to: contractAddress.trim(),
         data: contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb).encodeABI(),
-        // gasPrice,
         nonce,
     };
 
@@ -621,7 +619,6 @@ export const prepareXdcUpdateCashbackForAuthorErc721SignedTransaction = async (b
         from: 0,
         to: contractAddress.trim(),
         data: contract.methods.updateCashbackForAuthor(tokenId, `0x${new BigNumber(toWei(cashbackValue, 'ether')).toString(16)}`).encodeABI(),
-        // gasPrice,
         nonce,
     };
 
