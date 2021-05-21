@@ -29,7 +29,7 @@ export const xdcGetBlock = async (hash: string): Promise<EthBlock> => get(`/v3/x
 export const xdcGetAccountBalance = async (address: string): Promise<BigNumber> => get(`/v3/xdc/account/balance/${address}`);
 
 /**
- * For more details, see <a href="https://tatum.io/apidoc#operation/XdcBep20GetBalance" target="_blank">Tatum API documentation</a>
+ * For more details, see <a href="https://tatum.io/apidoc#operation/XdcErc20GetBalance" target="_blank">Tatum API documentation</a>
  */
 export const xdcGetAccountErc20Address = async (address: string, contractAddress: string): Promise<number> =>
     get(`/v3/xdc/account/balance/bep20/${address}?contractAddress=${contractAddress}`);

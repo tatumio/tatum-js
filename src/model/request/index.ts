@@ -77,3 +77,5 @@ export * from './EthBurnMultiTokenBatch';
 export * from './CeloBurnMultiToken';
 export * from './CeloBurnMultiTokenBatch';
 export * from './CeloDeployMultiToken';
+export * from './CeloUpdateCashbackErc721';
+export * from './UpdateCashbackErc721';
