@@ -2,7 +2,7 @@ import {IsIn, IsNotEmpty, IsOptional, Length, Min} from 'class-validator';
 import {Currency} from './Currency';
 import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
 
-export class DeployErc1155 extends PrivateKeyOrSignatureId {
+export class DeployMultiToken extends PrivateKeyOrSignatureId {
 
     @IsNotEmpty()
     public uri: string;

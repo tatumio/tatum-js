@@ -1,6 +1,6 @@
 import { CeloBurnMultiToken } from '../model/request/CeloBurnMultiToken';
 import { CeloBurnMultiTokenBatch } from '../model/request/CeloBurnMultiTokenBatch';
-import { CeloDeployErc1155 } from '../model/request/CeloDeployErc1155';
+import { CeloDeployMultiToken } from '../model/request/CeloDeployMultiToken';
 import { updateCashbackForAuthorMultiToken } from './index';
 import { Currency } from '../model';
 import {
@@ -14,15 +14,15 @@ import {
 } from './index';
 describe('NFT tests', () => {
     jest.setTimeout(99999);
-    describe('NFT ERC1155 transactions', () => {
+    describe('NFT MultiToken transactions', () => {
         it('should test eth 1155 deploy transaction', async () => {
-            const deployErc1155Token = await deployMultiToken(true, {
+            const deployMultiTokenToken = await deployMultiToken(true, {
                 chain: Currency.ETH,
                 fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
                 uri: 'tatum',
             });
-            expect(deployErc1155Token).not.toBeNull();
-            console.log('response::', deployErc1155Token);
+            expect(deployMultiTokenToken).not.toBeNull();
+            console.log('response::', deployMultiTokenToken);
         });
         it('should test eth 1155 mint transaction', async () => {
             const tokenId = '1';
@@ -53,7 +53,7 @@ describe('NFT tests', () => {
             expect(mintedToken).not.toBeNull();
         });
         it('should test eth 1155 send batch transaction', async () => {
-            const sendErc1155Token = await transferMultiTokenBatch(true, {
+            const sendMultiTokenToken = await transferMultiTokenBatch(true, {
                 to: '0x6c4A48886b77D1197eCFBDaA3D3f35d81d584342',
                 chain: Currency.ETH,
                 tokenId: ['1', '2'],
@@ -67,8 +67,8 @@ describe('NFT tests', () => {
                     gasPrice: '100'
                 },
             });
-            console.log('Result::', sendErc1155Token)
-            expect(sendErc1155Token).not.toBeNull();
+            console.log('Result::', sendMultiTokenToken)
+            expect(sendMultiTokenToken).not.toBeNull();
         });
         it('should test eth 1155 mint transaction', async () => {
             const mintedToken = await mintMultiToken(true, {
@@ -85,7 +85,7 @@ describe('NFT tests', () => {
             expect(mintedToken).not.toBeNull();
         });
         it('should test eth 1155 burn transaction', async () => {
-            const burnErc1155Token = await burnMultiToken(true, {
+            const burnMultiTokenToken = await burnMultiToken(true, {
                 account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
                 tokenId: '121002',
                 amount: '1',
@@ -93,10 +93,10 @@ describe('NFT tests', () => {
                 fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
                 contractAddress: '0x683f445d08d05a389368c0c646106a1599f12370'
             });
-            expect(burnErc1155Token).not.toBeNull();
+            expect(burnMultiTokenToken).not.toBeNull();
         });
         it('should test eth 1155 burn batch transaction', async () => {
-            const burnErc1155Token = await burnMultiTokenBatch(true, {
+            const burnMultiTokenToken = await burnMultiTokenBatch(true, {
                 account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
                 tokenId: ['121002', '121001', '121000'],
                 amounts: ['1', '1', '1'],
@@ -105,7 +105,7 @@ describe('NFT tests', () => {
                 contractAddress: '0x683f445d08d05a389368c0c646106a1599f12370',
 
             });
-            expect(burnErc1155Token).not.toBeNull();
+            expect(burnMultiTokenToken).not.toBeNull();
         });
         it('should test eth 1155 mint batch transaction', async () => {
             const time = new Date().getTime().toString();
@@ -140,7 +140,7 @@ describe('NFT tests', () => {
             expect(mintedToken).not.toBeNull();
         });
         it('should test eth 1155 send transaction', async () => {
-            const sendErc1155Token = await transferMultiToken(true, {
+            const sendMultiTokenToken = await transferMultiToken(true, {
                 to: '0x31a19a9E4BDd33982188BCb058a7E2a3515a8136',
                 chain: Currency.ETH,
                 tokenId: '121002',
@@ -150,11 +150,11 @@ describe('NFT tests', () => {
                 data: '0x1234',
                 value: '2'
             });
-            console.log('Result::', sendErc1155Token)
-            expect(sendErc1155Token).not.toBeNull();
+            console.log('Result::', sendMultiTokenToken)
+            expect(sendMultiTokenToken).not.toBeNull();
         });
         it('should test eth 1155 send batch transaction', async () => {
-            const sendErc1155Token = await transferMultiTokenBatch(true, {
+            const sendMultiTokenToken = await transferMultiTokenBatch(true, {
                 to: '0x31a19a9E4BDd33982188BCb058a7E2a3515a8136',
                 chain: Currency.ETH,
                 tokenId: ['121000', '121001'],
@@ -164,19 +164,19 @@ describe('NFT tests', () => {
                 data: '0x1234',
                 value: '4'
             });
-            console.log('Result::', sendErc1155Token)
-            expect(sendErc1155Token).not.toBeNull();
+            console.log('Result::', sendMultiTokenToken)
+            expect(sendMultiTokenToken).not.toBeNull();
         });
     });
     describe('NFT BSC1155 transactions', () => {
         it('should test eth 1155 deploy transaction', async () => {
-            const deployErc1155Token = await deployMultiToken(true, {
+            const deployMultiTokenToken = await deployMultiToken(true, {
                 chain: Currency.BSC,
                 fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
                 uri: 'tatum',
             });
-            expect(deployErc1155Token).not.toBeNull();
-            console.log('response::', deployErc1155Token);
+            expect(deployMultiTokenToken).not.toBeNull();
+            console.log('response::', deployMultiTokenToken);
         });
         it('should test BSC 1155 mint transaction', async () => {
             const tokenId = new Date().getTime().toString();
@@ -193,7 +193,7 @@ describe('NFT tests', () => {
             expect(mintedToken).not.toBeNull();
         });
         it('should test bsc 1155 send batch transaction', async () => {
-            const sendErc1155Token = await transferMultiTokenBatch(true, {
+            const sendMultiTokenToken = await transferMultiTokenBatch(true, {
                 to: '0x6c4A48886b77D1197eCFBDaA3D3f35d81d584342',
                 chain: Currency.BSC,
                 tokenId: ['101', '2', '101', '103'],
@@ -203,8 +203,8 @@ describe('NFT tests', () => {
                 data: '0x1234',
                 value: '6'
             });
-            console.log('Result::', sendErc1155Token)
-            expect(sendErc1155Token).not.toBeNull();
+            console.log('Result::', sendMultiTokenToken)
+            expect(sendMultiTokenToken).not.toBeNull();
         });
         it('should test BSC 1155 mint cashback transaction', async () => {
             const mintedToken = await mintMultiToken(true, {
@@ -271,7 +271,7 @@ describe('NFT tests', () => {
             expect(mintedToken).not.toBeNull();
         });
         it('should test bsc 1155 burn transaction', async () => {
-            const burnErc1155Token = await burnMultiToken(true, {
+            const burnMultiTokenToken = await burnMultiToken(true, {
                 account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
                 tokenId: '101',
                 amount: '1',
@@ -279,11 +279,11 @@ describe('NFT tests', () => {
                 fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
                 contractAddress: '0x8a5c9bd33e506f6bcf6a5bccbec2b8b8fe729f36'
             });
-            console.log(burnErc1155Token)
-            expect(burnErc1155Token).not.toBeNull();
+            console.log(burnMultiTokenToken)
+            expect(burnMultiTokenToken).not.toBeNull();
         });
         it('should test bsc 1155 burn batch transaction', async () => {
-            const burnErc1155Token = await burnMultiTokenBatch(true, {
+            const burnMultiTokenToken = await burnMultiTokenBatch(true, {
                 account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
                 tokenId: ['1', '2'],
                 amounts: ['1', '1'],
@@ -291,11 +291,11 @@ describe('NFT tests', () => {
                 fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
                 contractAddress: '0x8a5c9bd33e506f6bcf6a5bccbec2b8b8fe729f36',
             });
-            console.log(burnErc1155Token)
-            expect(burnErc1155Token).not.toBeNull();
+            console.log(burnMultiTokenToken)
+            expect(burnMultiTokenToken).not.toBeNull();
         });
         it('should test eth 1155 send transaction', async () => {
-            const sendErc1155Token = await transferMultiToken(true, {
+            const sendMultiTokenToken = await transferMultiToken(true, {
                 to: '0x31a19a9E4BDd33982188BCb058a7E2a3515a8136',
                 chain: Currency.BSC,
                 tokenId: '1',
@@ -305,11 +305,11 @@ describe('NFT tests', () => {
                 data: '0x1234',
                 value: '2'
             });
-            console.log('Result::', sendErc1155Token)
-            expect(sendErc1155Token).not.toBeNull();
+            console.log('Result::', sendMultiTokenToken)
+            expect(sendMultiTokenToken).not.toBeNull();
         });
         it('should test eth 1155 send batch transaction', async () => {
-            const sendErc1155Token = await transferMultiTokenBatch(true, {
+            const sendMultiTokenToken = await transferMultiTokenBatch(true, {
                 to: '0x31a19a9E4BDd33982188BCb058a7E2a3515a8136',
                 chain: Currency.BSC,
                 tokenId: ['118', '119'],
@@ -319,13 +319,13 @@ describe('NFT tests', () => {
                 data: '0x1234',
                 value: '5',
             });
-            console.log('Result::', sendErc1155Token)
-            expect(sendErc1155Token).not.toBeNull();
+            console.log('Result::', sendMultiTokenToken)
+            expect(sendMultiTokenToken).not.toBeNull();
         });
     });
     describe('NFT CELO1155 transactions', () => {
         it('should test valid deploy 1155 transaction', async () => {
-            const body = new CeloDeployErc1155();
+            const body = new CeloDeployMultiToken();
             body.fromPrivateKey = '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236';
             body.uri = 'Tatum';
             body.feeCurrency = Currency.CUSD;
@@ -352,7 +352,7 @@ describe('NFT tests', () => {
             expect(mintedTokens).not.toBeNull();
         });
         it('should test celo 1155 send batch transaction', async () => {
-            const sendErc1155Token = await transferMultiTokenBatch(true, {
+            const sendMultiTokenToken = await transferMultiTokenBatch(true, {
                 to: '0x31a19a9E4BDd33982188BCb058a7E2a3515a8136',
                 chain: Currency.CELO,
                 tokenId: ['1', '2'],
@@ -363,8 +363,8 @@ describe('NFT tests', () => {
                 value: '5',
                 feeCurrency: Currency.CUSD
             });
-            console.log('Result::', sendErc1155Token)
-            expect(sendErc1155Token).not.toBeNull();
+            console.log('Result::', sendMultiTokenToken)
+            expect(sendMultiTokenToken).not.toBeNull();
         });
         it('should test valid burn 1155 transaction', async () => {
             const body = new CeloBurnMultiToken();
@@ -405,7 +405,7 @@ describe('NFT tests', () => {
             console.log(mintedTokens);
             expect(mintedTokens).not.toBeNull();
         });
-        it('should test CELO erc1155 mint batch transaction', async () => {
+        it('should test CELO MultiToken mint batch transaction', async () => {
             const tokenId = [['12101', '12102']]
             const mintedToken = await mintMultiTokenBatch(true, {
                 to: ['0x48d4bA7B2698A4b89635b9a2E391152350DB740f'],
@@ -420,7 +420,7 @@ describe('NFT tests', () => {
             console.log(mintedToken);
             expect(mintedToken).not.toBeNull();
         });
-        it('should test CELO erc1155 mint batch cashback transaction', async () => {
+        it('should test CELO MultiToken mint batch cashback transaction', async () => {
             const time = new Date().getTime().toString();
             const tokenId = [['1', '1'], ['3', '4']]
             const mintedToken = await mintMultiTokenBatch(true, {
@@ -439,7 +439,7 @@ describe('NFT tests', () => {
             expect(mintedToken).not.toBeNull();
         });
         it('should test eth 1155 send transaction', async () => {
-            const sendErc1155Token = await transferMultiToken(true, {
+            const sendMultiTokenToken = await transferMultiToken(true, {
                 to: '0x48d4bA7B2698A4b89635b9a2E391152350DB740f',
                 chain: Currency.CELO,
                 tokenId: '12101',
@@ -450,11 +450,11 @@ describe('NFT tests', () => {
                 data: '0x1234',
                 value: '2'
             });
-            console.log('Result::', sendErc1155Token)
-            expect(sendErc1155Token).not.toBeNull();
+            console.log('Result::', sendMultiTokenToken)
+            expect(sendMultiTokenToken).not.toBeNull();
         });
         it('should test eth 1155 send batch transaction', async () => {
-            const sendErc1155Token = await transferMultiTokenBatch(true, {
+            const sendMultiTokenToken = await transferMultiTokenBatch(true, {
                 to: '0x28A16e2EF5e36a4eE559B52cE45E27831B15fd71',
                 chain: Currency.CELO,
                 tokenId: ['12101', '12102'],
@@ -465,8 +465,8 @@ describe('NFT tests', () => {
                 data: '0x1234',
                 value: '2',
             });
-            console.log('Result::', sendErc1155Token)
-            expect(sendErc1155Token).not.toBeNull();
+            console.log('Result::', sendMultiTokenToken)
+            expect(sendMultiTokenToken).not.toBeNull();
         });
     });
 

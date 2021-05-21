@@ -1,8 +1,8 @@
 import {IsIn, IsNotEmpty} from 'class-validator';
 import {Currency} from './Currency';
-import { DeployErc1155 } from './DeployErc1155';
+import { DeployMultiToken } from './DeployMultiToken';
 
-export class CeloDeployErc1155 extends DeployErc1155 {
+export class CeloDeployMultiToken extends DeployMultiToken {
     @IsNotEmpty()
     @IsIn([Currency.CELO, Currency.CUSD, Currency.CEUR])
     public feeCurrency: Currency;
