@@ -31,8 +31,8 @@ export const xdcGetAccountBalance = async (address: string): Promise<BigNumber> 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/XdcErc20GetBalance" target="_blank">Tatum API documentation</a>
  */
-export const xdcGetAccountErc20Address = async (address: string, contractAddress: string): Promise<number> =>
-    get(`/v3/xdc/account/balance/bep20/${address}?contractAddress=${contractAddress}`);
+export const xdcGetAccountErc20Balance = async (address: string, contractAddress: string): Promise<number> =>
+    get(`/v3/xdc/account/balance/erc20/${address}?contractAddress=${contractAddress}`);
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/XdcGetTransaction" target="_blank">Tatum API documentation</a>

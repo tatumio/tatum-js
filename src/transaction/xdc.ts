@@ -102,9 +102,13 @@ export const prepareXdcStoreDataTransaction = async (body: CreateRecord, provide
     if (!address) {
         throw new Error('Recipient must be provided.');
     }
+    const hexData = client.utils.isHex(data) ? client.utils.stringToHex(data) : client.utils.toHex(data);
     const addressNonce = nonce ? nonce : await xdcGetTransactionsCount(address);
-    const customFee = ethFee ? ethFee : {
-        gasLimit: `${data.length * 68 + 21000}`,
+    const customFee = ethFee ? {
+        ...ethFee,
+        gasPrice: client.utils.toWei(ethFee.gasPrice, 'gwei'),
+    } : {
+        gasLimit: `${hexData.length * 68 + 21000}`,
         gasPrice: await xdcGetGasPriceInWei(),
     };
 
@@ -114,7 +118,7 @@ export const prepareXdcStoreDataTransaction = async (body: CreateRecord, provide
         value: '0',
         gasPrice: customFee.gasPrice,
         gas: customFee.gasLimit,
-        data: client.utils.isHex(data) ? client.utils.stringToHex(data) : client.utils.toHex(data),
+        data: hexData,
         nonce: addressNonce,
     };
 
@@ -809,3 +813,5 @@ export const sendXdcErc721Transaction = async (body: EthTransferErc721, provider
  */
 export const sendXdcDeployErc721Transaction = async (body: EthDeployErc721, provider?: string) =>
     xdcBroadcast(await prepareXdcDeployErc721SignedTransaction(body, provider), body.signatureId);
+
+// TODO: add ERC-1155 support

@@ -53,7 +53,7 @@ export const sendXdcOffchainTransaction = async (testnet: boolean, body: Transfe
         }, provider);
     }
     // @ts-ignore
-    withdrawal.fee = fromWei(new BigNumber(fee.gasLimit).multipliedBy(toWei(fee.gasPrice, 'gwei')).toString(), 'ether');
+    withdrawal.fee = fromWei(new BigNumber(fee.gasLimit).multipliedBy(toWei(fee.gasPrice, 'kwei')).toString(), 'ether');
     const {id} = await offchainStoreWithdrawal(withdrawal);
     try {
         return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.XDC}), id};
