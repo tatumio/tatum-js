@@ -1,40 +1,40 @@
-import { BigNumber } from 'bignumber.js';
+import {BigNumber} from 'bignumber.js';
 import Web3 from 'web3';
-import { TransactionConfig } from 'web3-core';
-import { toWei } from 'web3-utils';
-import { bscBroadcast, bscGetTransactionsCount } from '../blockchain';
-import { validateBody } from '../connector/tatum';
-import { CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI } from '../constants';
+import {TransactionConfig} from 'web3-core';
+import {toWei} from 'web3-utils';
+import {bscBroadcast, bscGetTransactionsCount} from '../blockchain';
+import {validateBody} from '../connector/tatum';
+import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
+import erc1155TokenABI from '../contracts/erc1155/erc1155_abi';
+import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode';
 import erc20TokenABI from '../contracts/erc20/token_abi';
 import erc20TokenBytecode from '../contracts/erc20/token_bytecode';
 import erc721TokenABI from '../contracts/erc721/erc721_abi';
 import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
-import erc1155TokenABI from '../contracts/erc1155/erc1155_abi';
-import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode';
 import {
+    BurnErc20,
     CreateRecord,
     Currency,
     DeployErc20,
-    MintErc20,
-    BurnErc20,
     EthBurnErc721,
-    EthDeployErc721,
-    EthMintErc721,
     EthBurnMultiToken,
     EthBurnMultiTokenBatch,
+    EthDeployErc721,
+    EthMintErc721,
     EthMintMultipleErc721,
     EthTransferErc721,
+    MintErc20,
+    MintMultiToken,
+    MintMultiTokenBatch,
     SmartContractMethodInvocation,
     TransactionKMS,
     TransferBscBep20,
     TransferCustomErc20,
     TransferMultiToken,
-    TransferMultiTokenBatch,
-    MintMultiToken,
-    MintMultiTokenBatch
+    TransferMultiTokenBatch
 } from '../model';
-import { UpdateCashbackErc721 } from '../model/request/UpdateCashbackErc721';
-import { EthDeployMultiToken } from '../model/request/EthDeployMultiToken';
+import {EthDeployMultiToken} from '../model/request/EthDeployMultiToken';
+import {UpdateCashbackErc721} from '../model/request/UpdateCashbackErc721';
 
 /**
  * Estimate Gas price for the transaction.
@@ -100,9 +100,13 @@ export const prepareBscStoreDataTransaction = async (body: CreateRecord, provide
     if (!address) {
         throw new Error('Recipient must be provided.');
     }
+    const hexData = client.utils.isHex(data) ? client.utils.stringToHex(data) : client.utils.toHex(data);
     const addressNonce = nonce ? nonce : await bscGetTransactionsCount(address);
-    const customFee = ethFee ? ethFee : {
-        gasLimit: `${data.length * 68 + 21000}`,
+    const customFee = ethFee ? {
+        ...ethFee,
+        gasPrice: client.utils.toWei(ethFee.gasPrice, 'gwei'),
+    } : {
+        gasLimit: `${hexData.length * 68 + 21000}`,
         gasPrice: client.utils.fromWei(await bscGetGasPriceInWei(), 'gwei'),
     };
 
@@ -112,7 +116,7 @@ export const prepareBscStoreDataTransaction = async (body: CreateRecord, provide
         value: '0',
         gasPrice: customFee.gasPrice,
         gas: customFee.gasLimit,
-        data: data ? (client.utils.isHex(data) ? client.utils.stringToHex(data) : client.utils.toHex(data)) : undefined,
+        data: hexData,
         nonce: addressNonce,
     };
 
@@ -451,7 +455,7 @@ export const prepareBscMintBepCashback721SignedTransaction = async (body: EthMin
     const cb: string[] = [];
     const cashbacks: string[] = cashbackValues!;
     for (const c of cashbacks) {
-        cb.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
+        cb.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`);
     }
     const tx: TransactionConfig = {
         from: 0,
@@ -499,9 +503,9 @@ export const prepareBscMintMultipleCashbackBep721SignedTransaction = async (body
     for (const c of cashbacks) {
         const cb2: string[] = [];
         for (const c2 of c) {
-            cb2.push(`0x${new BigNumber(client.utils.toWei(c2, 'ether')).toString(16)}`)
+            cb2.push(`0x${new BigNumber(client.utils.toWei(c2, 'ether')).toString(16)}`);
         }
-        cb.push(cb2)
+        cb.push(cb2);
     }
     const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await bscGetGasPriceInWei();
     const tx: TransactionConfig = {
@@ -891,7 +895,7 @@ export const prepareBscBatchTransferBep1155SignedTransaction = async (body: Tran
     // @ts-ignore
     const contract = new (client).eth.Contract(erc1155TokenABI, contractAddress);
     const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await bscGetGasPriceInWei();
-    const amts = amounts.map(amt => `0x${new BigNumber(client.utils.toWei(amt, 'ether')).toString(16)}`)
+    const amts = amounts.map(amt => `0x${new BigNumber(client.utils.toWei(amt, 'ether')).toString(16)}`);
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
@@ -1018,7 +1022,7 @@ export const prepareBscMintCashbackBep1155SignedTransaction = async (body: MintM
     const cashbacks: string[] = cashbackValues!;
     // tslint:disable-next-line: prefer-for-of
     for (const c of cashbacks) {
-        cb.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
+        cb.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`);
     }
     const tx: TransactionConfig = {
         from: 0,
@@ -1062,7 +1066,7 @@ export const prepareBscMintMultipleCashbackBep1155SignedTransaction = async (bod
     const cashbacks: string[][][] = cashbackValues!;
 
     const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await bscGetGasPriceInWei();
-    const cb = cashbacks.map(cashback => cashback.map(cbs => cbs.map(c => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)))
+    const cb = cashbacks.map(cashback => cashback.map(cbs => cbs.map(c => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)));
     const amt = amounts.map(amts => amts.map(amt => `0x${new BigNumber(client.utils.toWei(amt, 'ether')).toString(16)}`));
     const tx: TransactionConfig = {
         from: 0,
@@ -1136,7 +1140,7 @@ export const sendBscSmartContractReadMethodInvocationTransaction = async (body: 
     } = body;
     const client = getBscClient(provider);
     const contract = new client.eth.Contract([methodABI], contractAddress);
-    return { data: await contract.methods[methodName as string](...params).call() };
+    return {data: await contract.methods[methodName as string](...params).call()};
 };
 
 /**
@@ -1288,11 +1292,11 @@ export const sendBep1155Transaction = async (body: TransferMultiToken, provider?
 export const sendBep1155BatchTransaction = async (body: TransferMultiTokenBatch, provider?: string) =>
     bscBroadcast(await prepareBscBatchTransferBep1155SignedTransaction(body, provider), body.signatureId);
 /**
-* Send Bsc BEP721 deploy to the blockchain. This method broadcasts signed transaction to the blockchain.
-* This operation is irreversible.
-* @param body content of the transaction to broadcast
-* @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
-* @returns transaction id of the transaction in the blockchain
-*/
+ * Send Bsc BEP721 deploy to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendDeployBep721Transaction = async (body: EthDeployErc721, provider?: string) =>
     bscBroadcast(await prepareBscDeployBep721SignedTransaction(body, provider), body.signatureId);
