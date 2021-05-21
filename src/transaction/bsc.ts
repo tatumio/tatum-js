@@ -107,7 +107,7 @@ export const prepareBscStoreDataTransaction = async (body: CreateRecord, provide
         gasPrice: client.utils.toWei(ethFee.gasPrice, 'gwei'),
     } : {
         gasLimit: `${hexData.length * 68 + 21000}`,
-        gasPrice: client.utils.fromWei(await bscGetGasPriceInWei(), 'gwei'),
+        gasPrice: await bscGetGasPriceInWei(),
     };
 
     const tx: TransactionConfig = {
