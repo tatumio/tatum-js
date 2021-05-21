@@ -31,10 +31,11 @@ import {
     TransferBscBep20,
     TransferCustomErc20,
     TransferMultiToken,
-    TransferMultiTokenBatch
+    TransferMultiTokenBatch,
+    EthDeployMultiToken,
+    UpdateCashbackErc721,
+    UpdateCashbackErc721,
 } from '../model';
-import {EthDeployMultiToken} from '../model/request/EthDeployMultiToken';
-import {UpdateCashbackErc721} from '../model/request/UpdateCashbackErc721';
 
 /**
  * Estimate Gas price for the transaction.

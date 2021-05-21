@@ -29,13 +29,13 @@ import {
     TransactionKMS,
     TransferCustomErc20,
     TransferEthErc20,
+    UpdateCashbackErc721,
+    MintMultiToken,
+    MintMultiTokenBatch,
+    TransferMultiToken,
+    TransferMultiTokenBatch,
+    EthDeployMultiToken,
 } from '../model';
-import { UpdateCashbackErc721 } from '../model/request/UpdateCashbackErc721';
-import { MintMultiToken } from '../model/request/MintMultiToken';
-import { MintMultiTokenBatch } from '../model/request/MintMultiTokenBatch';
-import { TransferMultiToken } from '../model/request/TransferMultiToken';
-import { TransferMultiTokenBatch } from '../model/request/TransferMultiTokenBatch';
-import { EthDeployMultiToken } from '../model/request/EthDeployMultiToken';
 
 /**
  * Estimate Gas price for the transaction.

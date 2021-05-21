@@ -25,8 +25,11 @@ import {
     TransactionKMS,
     TransferEthErc20,
     TransferCustomErc20,
+    Fee,
+    UpdateCashbackErc721,
 } from '../model';
-import {UpdateCashbackErc721} from '../model/request/UpdateCashbackErc721';
+
+// API Key: 'tatumapp'
 
 /**
  * Estimate Gas price for the transaction.
@@ -124,6 +127,32 @@ export const prepareXdcStoreDataTransaction = async (body: CreateRecord, provide
 
 /**
  * Sign ERC20 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param client Web3 client of the XDC Server to connect to. If not set, default public server will be used.
+ * @param transaction content of the transaction to broadcast
+ * @param signatureId signature ID
+ * @param fromPrivateKey private key 
+ * @param fee Fee object
+ * @returns transaction data to be broadcast to blockchain.
+ */
+ const prepareErc20SignedTransactionAbstraction = async (
+  client: Web3, transaction: TransactionConfig, signatureId: string | undefined, fromPrivateKey: string | undefined, fee?: Fee | undefined
+) => {
+  const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await xdcGetGasPriceInWei();
+  const tx = {
+    ...transaction,
+    gasPrice,
+  };
+
+  if (signatureId) {
+    return JSON.stringify(tx);
+  }
+
+  tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
+  return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+};
+
+/**
+ * Sign ERC20 transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
@@ -142,7 +171,6 @@ export const prepareXdcStoreDataTransaction = async (body: CreateRecord, provide
   const client = getXdcClient(provider, fromPrivateKey);
 
   let tx: TransactionConfig;
-  const gasPrice = await xdcGetGasPriceInWei();
   // @ts-ignore
   const contract = new client.eth.Contract(erc20TokenABI, contractAddress.trim());
   const digits = new BigNumber(10).pow(await contract.methods.decimals().call());
@@ -150,16 +178,10 @@ export const prepareXdcStoreDataTransaction = async (body: CreateRecord, provide
       from: 0,
       to: contractAddress.trim(),
       data: contract.methods.mint(to.trim(), `0x${new BigNumber(amount).multipliedBy(digits).toString(16)}`).encodeABI(),
-      gasPrice,
       nonce,
   };
 
-  if (signatureId) {
-      return JSON.stringify(tx);
-  }
-
-  tx.gas = await client.eth.estimateGas(tx);
-  return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+  return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey);
 };
 
 /**
@@ -181,7 +203,6 @@ export const prepareXdcStoreDataTransaction = async (body: CreateRecord, provide
   const client = getXdcClient(provider, fromPrivateKey);
 
   let tx: TransactionConfig;
-  const gasPrice = await xdcGetGasPriceInWei();
   // @ts-ignore
   const contract = new client.eth.Contract(erc20TokenABI, contractAddress.trim());
   const digits = new BigNumber(10).pow(await contract.methods.decimals().call());
@@ -189,16 +210,10 @@ export const prepareXdcStoreDataTransaction = async (body: CreateRecord, provide
       from: 0,
       to: contractAddress.trim(),
       data: contract.methods.burn(`0x${new BigNumber(amount).multipliedBy(digits).toString(16)}`).encodeABI(),
-      gasPrice,
       nonce,
   };
 
-  if (signatureId) {
-      return JSON.stringify(tx);
-  }
-
-  tx.gas = await client.eth.estimateGas(tx);
-  return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+  return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey);
 };
 
 /**
@@ -223,13 +238,12 @@ export const prepareXdcOrErc20SignedTransaction = async (body: TransferEthErc20,
     const client = getXdcClient(provider, fromPrivateKey);
 
     let tx: TransactionConfig;
-    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await xdcGetGasPriceInWei();
     if (currency === Currency.XDC) {
         tx = {
             from: 0,
             to: to.trim(),
             value: client.utils.toWei(`${amount}`, 'ether'),
-            gasPrice,
+            // gasPrice,
             data: data ? (client.utils.isHex(data) ? client.utils.stringToHex(data) : client.utils.toHex(data)) : undefined,
             nonce,
         };
@@ -241,17 +255,11 @@ export const prepareXdcOrErc20SignedTransaction = async (body: TransferEthErc20,
             from: 0,
             to: CONTRACT_ADDRESSES[currency],
             data: contract.methods.transfer(to.trim(), `0x${new BigNumber(amount).multipliedBy(digits).toString(16)}`).encodeABI(),
-            gasPrice,
             nonce,
         };
     }
 
-    if (signatureId) {
-        return JSON.stringify(tx);
-    }
-
-    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 
 /**
@@ -276,23 +284,17 @@ export const prepareXdcCustomErc20SignedTransaction = async (body: TransferCusto
     const client = getXdcClient(provider, fromPrivateKey);
 
     let tx: TransactionConfig;
-    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await xdcGetGasPriceInWei();
     // @ts-ignore
     const contract = new client.eth.Contract([TRANSFER_METHOD_ABI], contractAddress);
     const decimals = new BigNumber(10).pow(digits);
     tx = {
         from: 0,
-        to: contractAddress,
+        to: contractAddress.trim(),
         data: contract.methods.transfer(to.trim(), `0x${new BigNumber(amount).multipliedBy(decimals).toString(16)}`).encodeABI(),
-        gasPrice,
         nonce,
     };
 
-    if (signatureId) {
-        return JSON.stringify(tx);
-    }
-    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 
 /**
@@ -318,9 +320,9 @@ export const prepareXdcDeployErc20SignedTransaction = async (body: DeployErc20, 
 
     const client = getXdcClient(provider, fromPrivateKey);
 
-    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await xdcGetGasPriceInWei();
     // @ts-ignore
     const contract = new client.eth.Contract(erc20TokenABI);
+    const _digits = new BigNumber(10).pow(digits);
     const deploy = contract.deploy({
         data: erc20TokenBytecode,
         arguments: [
@@ -328,21 +330,17 @@ export const prepareXdcDeployErc20SignedTransaction = async (body: DeployErc20, 
             symbol,
             address,
             digits,
-            `0x${new BigNumber(totalCap || supply).multipliedBy(new BigNumber(10).pow(digits)).toString(16)}`,
-            `0x${new BigNumber(supply).multipliedBy(new BigNumber(10).pow(digits)).toString(16)}`,
+            `0x${new BigNumber(totalCap || supply).multipliedBy(_digits).toString(16)}`,
+            `0x${new BigNumber(supply).multipliedBy(_digits).toString(16)}`,
         ],
     });
     const tx: TransactionConfig = {
         from: 0,
         data: deploy.encodeABI(),
-        gasPrice,
         nonce,
     };
-    if (signatureId) {
-        return JSON.stringify(tx);
-    }
-    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+
+    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 
 /**
@@ -366,20 +364,15 @@ export const prepareXdcSmartContractWriteMethodInvocation = async (body: SmartCo
     const client = getXdcClient(provider, fromPrivateKey);
 
     const contract = new client.eth.Contract([methodABI]);
-    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await xdcGetGasPriceInWei();
 
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
         data: contract.methods[methodName as string](...params).encodeABI(),
-        gasPrice,
         nonce,
     };
-    if (signatureId) {
-        return JSON.stringify(tx);
-    }
-    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+  
+    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 
 /**
@@ -405,21 +398,14 @@ export const prepareXdcMintErc721SignedTransaction = async (body: EthMintErc721,
 
     // @ts-ignore
     const contract = new (client).eth.Contract(erc721TokenABI, contractAddress);
-    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await xdcGetGasPriceInWei();
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
         data: contract.methods.mintWithTokenURI(to.trim(), tokenId, url).encodeABI(),
-        gasPrice,
         nonce,
     };
 
-    if (signatureId) {
-        return JSON.stringify(tx);
-    }
-    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
-
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 /**
  * Sign XDC mint ERC 721 transaction with cashback via private keys locally. Nothing is broadcast to the blockchain.
@@ -446,7 +432,6 @@ export const prepareXdcMintErcCashback721SignedTransaction = async (body: EthMin
 
     // @ts-ignore
     const contract = new (client).eth.Contract(erc721TokenABI, contractAddress);
-    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await xdcGetGasPriceInWei();
     const cb: string[] = [];
     const cashbacks: string[] = cashbackValues!;
     for (const c of cashbacks) {
@@ -456,17 +441,13 @@ export const prepareXdcMintErcCashback721SignedTransaction = async (body: EthMin
         from: 0,
         to: contractAddress.trim(),
         data: contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb).encodeABI(),
-        gasPrice,
+        // gasPrice,
         nonce,
     };
 
-    if (signatureId) {
-        return JSON.stringify(tx);
-    }
-    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
-
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
+
 /**
  * Sign XDC mint multiple ERC 721 Cashback transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
@@ -502,21 +483,16 @@ export const prepareXdcMintMultipleCashbackErc721SignedTransaction = async (body
         }
         cb.push(cb2)
     }
-    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await xdcGetGasPriceInWei();
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
         data: contract.methods.mintMultipleCashback(to.map(t => t.trim()), tokenId, url, authorAddresses, cb).encodeABI(),
-        gasPrice,
         nonce,
     };
-    if (signatureId) {
-        return JSON.stringify(tx);
-    }
-    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
 
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
+
 /**
  * Sign XDC mint multiple ERC 721 transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
@@ -541,20 +517,14 @@ export const prepareXdcMintMultipleErc721SignedTransaction = async (body: EthMin
     // @ts-ignore
     const contract = new (client).eth.Contract(erc721TokenABI, contractAddress);
 
-    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await xdcGetGasPriceInWei();
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
         data: contract.methods.mintMultiple(to.map(t => t.trim()), tokenId, url).encodeABI(),
-        gasPrice,
         nonce,
     };
-    if (signatureId) {
-        return JSON.stringify(tx);
-    }
-    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
 
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 
 /**
@@ -578,21 +548,14 @@ export const prepareXdcBurnErc721SignedTransaction = async (body: EthBurnErc721,
 
     // @ts-ignore
     const contract = new (client).eth.Contract(erc721TokenABI, contractAddress);
-    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await xdcGetGasPriceInWei();
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
         data: contract.methods.burn(tokenId).encodeABI(),
-        gasPrice,
         nonce,
     };
 
-    if (signatureId) {
-        return JSON.stringify(tx);
-    }
-    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
-
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 
 /**
@@ -618,23 +581,16 @@ export const prepareXdcTransferErc721SignedTransaction = async (body: EthTransfe
 
     // @ts-ignore
     const contract = new (client).eth.Contract(erc721TokenABI, contractAddress);
-    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await xdcGetGasPriceInWei();
 
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
         data: contract.methods.safeTransfer(to.trim(), tokenId).encodeABI(),
-        gasPrice,
         nonce,
         value: value ? `0x${new BigNumber(value).multipliedBy(1e18).toString(16)}` : undefined,
     };
 
-    if (signatureId) {
-        return JSON.stringify(tx);
-    }
-    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
-
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 
 /**
@@ -660,22 +616,16 @@ export const prepareXdcUpdateCashbackForAuthorErc721SignedTransaction = async (b
 
     // @ts-ignore
     const contract = new (client).eth.Contract(erc721TokenABI, contractAddress);
-    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await xdcGetGasPriceInWei();
 
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
         data: contract.methods.updateCashbackForAuthor(tokenId, `0x${new BigNumber(toWei(cashbackValue, 'ether')).toString(16)}`).encodeABI(),
-        gasPrice,
+        // gasPrice,
         nonce,
     };
 
-    if (signatureId) {
-        return JSON.stringify(tx);
-    }
-    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
-
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 
 /**
@@ -710,16 +660,10 @@ export const prepareXdcDeployErc721SignedTransaction = async (body: EthDeployErc
     const tx: TransactionConfig = {
         from: 0,
         data: deploy.encodeABI(),
-        gasPrice: fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await xdcGetGasPriceInWei(),
         nonce,
-        gas: fee ? fee.gasLimit : 7000000
     };
 
-    if (signatureId) {
-        return JSON.stringify(tx);
-    }
-
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 
 /**
@@ -815,6 +759,7 @@ export const sendXdcMintErc721Transaction = async (body: EthMintErc721, provider
  */
 export const sendXdcMintErcCashback721Transaction = async (body: EthMintErc721, provider?: string) =>
     xdcBroadcast(await prepareXdcMintErcCashback721SignedTransaction(body, provider), body.signatureId);
+
 /**
  * Send XDC ERC721 mint multiple transaction with cashback to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.

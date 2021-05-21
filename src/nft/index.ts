@@ -10,10 +10,10 @@ import {
     EthDeployErc721,
     EthMintErc721,
     EthMintMultipleErc721,
-    EthTransferErc721
+    EthTransferErc721,
+    CeloUpdateCashbackErc721,
+    UpdateCashbackErc721,
 } from '../model';
-import { CeloUpdateCashbackErc721 } from '../model/request/CeloUpdateCashbackErc721';
-import { UpdateCashbackErc721 } from '../model/request/UpdateCashbackErc721';
 import {
     sendBep721Transaction,
     sendBurnBep721Transaction,

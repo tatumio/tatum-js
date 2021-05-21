@@ -11,8 +11,8 @@ import {
     DeployCeloErc20,
     MintCeloErc20,
     TransferCeloOrCeloErc20Token,
+    CeloUpdateCashbackErc721,
 } from '../model';
-import {CeloUpdateCashbackErc721} from '../model/request/CeloUpdateCashbackErc721';
 import {
     prepareCeloBurnErc20SignedTransaction,
     prepareCeloBurnErc721SignedTransaction,
