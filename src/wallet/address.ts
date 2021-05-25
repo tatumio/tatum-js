@@ -1,3 +1,4 @@
+import {getAddressFromPrivateKey} from '@binance-chain/javascript-sdk/lib/crypto';
 // @ts-ignore
 import {ECDSA_secp256k1, encodeKey, SHA3_256} from '@onflow/util-encode-key';
 import {fromBase58, fromPublicKey, fromSeed} from 'bip32';
@@ -14,7 +15,6 @@ import {
     DOGE_NETWORK,
     DOGE_TEST_NETWORK,
     ETH_DERIVATION_PATH,
-    XDC_DERIVATION_PATH,
     FLOW_DERIVATION_PATH,
     LTC_DERIVATION_PATH,
     LTC_NETWORK,
@@ -24,7 +24,8 @@ import {
     LYRA_TEST_NETWORK,
     TESTNET_DERIVATION_PATH,
     TRON_DERIVATION_PATH,
-    VET_DERIVATION_PATH
+    VET_DERIVATION_PATH,
+    XDC_DERIVATION_PATH
 } from '../constants';
 import {Currency} from '../model';
 import cardano from './cardano.crypto';
@@ -391,15 +392,15 @@ const generateEthPrivateKey = async (testnet: boolean, mnemonic: string, i: numb
  * @param i derivation index of private key to generate.
  * @returns blockchain private key to the address
  */
- const generateBscPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
-  return generateEthPrivateKey(testnet, mnemonic, i);
+const generateBscPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
+    return generateEthPrivateKey(testnet, mnemonic, i);
 };
 
 const generateXdcPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
-  const path = testnet ? TESTNET_DERIVATION_PATH : XDC_DERIVATION_PATH;
-  const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnemonic));
-  const derivePath = hdwallet.derivePath(path).deriveChild(i);
-  return derivePath.getWallet().getPrivateKeyString();
+    const path = testnet ? TESTNET_DERIVATION_PATH : XDC_DERIVATION_PATH;
+    const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnemonic));
+    const derivePath = hdwallet.derivePath(path).deriveChild(i);
+    return derivePath.getWallet().getPrivateKeyString();
 };
 
 /**
@@ -475,14 +476,14 @@ const convertLyraPrivateKey = (testnet: boolean, privkey: string) => {
  * @param privkey private key to use
  * @returns blockchain address
  */
- const convertEthPrivateKey = (testnet: boolean, privkey: string) => {
-  const wallet = ethWallet.fromPrivateKey(Buffer.from(privkey.replace('0x', ''), 'hex'));
-  return wallet.getAddressString() as string;
+const convertEthPrivateKey = (testnet: boolean, privkey: string) => {
+    const wallet = ethWallet.fromPrivateKey(Buffer.from(privkey.replace('0x', ''), 'hex'));
+    return wallet.getAddressString() as string;
 };
 
 const convertXdcPrivateKey = (testnet: boolean, privkey: string) => {
-  const wallet = ethWallet.fromPrivateKey(Buffer.from(privkey.replace('0x', ''), 'hex'));
-  return wallet.getAddressString().replace('0x', 'xdc');
+    const wallet = ethWallet.fromPrivateKey(Buffer.from(privkey.replace('0x', ''), 'hex'));
+    return wallet.getAddressString().replace('0x', 'xdc');
 };
 
 /**
@@ -640,6 +641,8 @@ export const generateAddressFromPrivatekey = (currency: Currency, testnet: boole
             return convertBtcPrivateKey(testnet, privateKey);
         case Currency.LYRA:
             return convertLyraPrivateKey(testnet, privateKey);
+        case Currency.BNB:
+            return getAddressFromPrivateKey(privateKey, testnet ? 'tbnb' : 'bnb');
         case Currency.ETH:
         case Currency.USDT:
         case Currency.WBTC:

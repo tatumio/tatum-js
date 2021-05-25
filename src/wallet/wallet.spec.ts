@@ -2,7 +2,6 @@ import {Currency} from '../model';
 import {generatePrivateKeyFromMnemonic} from './address';
 import {
     generateBchWallet,
-    generateBnbWallet,
     generateBtcWallet,
     generateCeloWallet,
     generateDogeWallet,
@@ -12,9 +11,10 @@ import {
     generateNeoWallet,
     generateTronWallet,
     generateVetWallet,
+    generateWallet,
+    generateXdcWallet,
     generateXlmWallet,
-    generateXrpWallet,
-    generateXdcWallet
+    generateXrpWallet
 } from './wallet';
 
 describe('Wallet tests', () => {
@@ -132,13 +132,13 @@ describe('Wallet tests', () => {
     });
 
     it('should generate wallet for BNB mainnet', async () => {
-        const wallet = await generateBnbWallet(false);
+        const wallet = await generateWallet(Currency.BNB, false) as { address: string, privateKey: string };
         expect(wallet.address).not.toBe('');
         expect(wallet.privateKey).not.toBe('');
     });
 
     it('should generate wallet for BNB testnet', async () => {
-        const wallet = await generateBnbWallet(true);
+        const wallet = await generateWallet(Currency.BNB, true) as { address: string, privateKey: string };
         expect(wallet.address).not.toBe('');
         expect(wallet.privateKey).not.toBe('');
     });
