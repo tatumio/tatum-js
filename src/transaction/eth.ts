@@ -12,6 +12,7 @@ import erc721TokenABI from '../contracts/erc721/erc721_abi';
 import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
 import erc1155TokenABI from '../contracts/erc1155/erc1155_abi';
 import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode';
+import { UpdateCashbackMultiToken } from '../model/request/UpdateCashbackMultiToken';
 import {
     CreateRecord,
     Currency,

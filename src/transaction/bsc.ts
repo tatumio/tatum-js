@@ -733,7 +733,7 @@ export const prepareBscDeployBep721SignedTransaction = async (body: EthDeployErc
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareBepBurnMultiTokenSignedTransaction = async (body: EthBurnMultiToken, provider?: string) => {
+export const prepareBscBurnMultiTokenSignedTransaction = async (body: EthBurnMultiToken, provider?: string) => {
     await validateBody(body, EthBurnMultiToken);
     const {
         fromPrivateKey,
@@ -767,7 +767,7 @@ export const prepareBepBurnMultiTokenSignedTransaction = async (body: EthBurnMul
     return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
 };
 
-export const prepareBepBurnBatchMultiTokenSignedTransaction = async (body: EthBurnMultiTokenBatch, provider?: string) => {
+export const prepareBscBurnMultiTokenBatchSignedTransaction = async (body: EthBurnMultiTokenBatch, provider?: string) => {
     await validateBody(body, EthBurnMultiTokenBatch);
     const {
         fromPrivateKey,
@@ -997,7 +997,7 @@ export const prepareBscMintMultiTokenBatchSignedTransaction = async (body: MintM
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareBscMintCashbackMultiTokenSignedTransaction = async (body: MintMultiToken, provider?: string) => {
+export const prepareBscMintMultiTokenCashbackSignedTransaction = async (body: MintMultiToken, provider?: string) => {
     await validateBody(body, MintMultiToken);
     const {
         fromPrivateKey,
@@ -1044,7 +1044,7 @@ export const prepareBscMintCashbackMultiTokenSignedTransaction = async (body: Mi
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareBscMintMultipleCashbackMultiTokenSignedTransaction = async (body: MintMultiTokenBatch, provider?: string) => {
+export const prepareBscMintMultiTokenBatchCashbackSignedTransaction = async (body: MintMultiTokenBatch, provider?: string) => {
     await validateBody(body, MintMultiTokenBatch);
     const {
         fromPrivateKey,
@@ -1216,9 +1216,9 @@ export const sendBscMintMultiTokenBatchTransaction = async (body: MintMultiToken
     bscBroadcast(await prepareBscMintMultiTokenBatchSignedTransaction(body, provider), body.signatureId);
 // cashbacks mints
 export const sendBscMintMultiTokenCashbackTransaction = async (body: MintMultiToken, provider?: string) =>
-    bscBroadcast(await prepareBscMintCashbackMultiTokenSignedTransaction(body, provider), body.signatureId);
+    bscBroadcast(await prepareBscMintMultiTokenCashbackSignedTransaction(body, provider), body.signatureId);
 export const sendBscMintMultiTokenBatchCashbackTransaction = async (body: MintMultiTokenBatch, provider?: string) =>
-    bscBroadcast(await prepareBscMintMultipleCashbackMultiTokenSignedTransaction(body, provider), body.signatureId);
+    bscBroadcast(await prepareBscMintMultiTokenBatchCashbackSignedTransaction(body, provider), body.signatureId);
 
 /**
  * Send Bsc BEP721 mint transaction to the blockchain with cashback details. This method broadcasts signed transaction to the blockchain.
@@ -1266,10 +1266,10 @@ export const sendBscUpdateCashbackForAuthorMultiTokenTransaction = async (body: 
 
 // Burn 1155
 export const sendBscBurnMultiTokenTransaction = async (body: EthBurnMultiToken, provider?: string) =>
-    bscBroadcast(await prepareBepBurnMultiTokenSignedTransaction(body, provider), body.signatureId);
+    bscBroadcast(await prepareBscBurnMultiTokenSignedTransaction(body, provider), body.signatureId);
 
 export const sendBscBurnBatchMultiTokenTransaction = async (body: EthBurnMultiTokenBatch, provider?: string) =>
-    bscBroadcast(await prepareBepBurnBatchMultiTokenSignedTransaction(body, provider), body.signatureId);
+    bscBroadcast(await prepareBscBurnMultiTokenBatchSignedTransaction(body, provider), body.signatureId);
 /**
  * Send Bsc BEP721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
