@@ -34,8 +34,8 @@ import {
     CeloBurnMultiToken,
     CeloBurnMultiTokenBatch,
     CeloDeployMultiToken,
+    CeloUpdateCashbackMultiToken
 } from '../model';
-import { CeloUpdateCashbackMultiToken } from '../model/request/CeloUpdateCashbackMultiToken';
 
 const obtainWalletInformation = async (wallet: CeloWallet, feeCurrencyContractAddress?: string) => {
     const [txCount, gasPrice, from] = await Promise.all([

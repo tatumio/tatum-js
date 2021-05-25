@@ -31,11 +31,11 @@ import {
     TransferMultiToken,
     TransferMultiTokenBatch,
     MintMultiToken,
-    MintMultiTokenBatch
+    MintMultiTokenBatch,
+    EthDeployMultiToken,
+    UpdateCashbackErc721,
+    UpdateCashbackMultiToken
 } from '../model';
-import { UpdateCashbackErc721 } from '../model/request/UpdateCashbackErc721';
-import { EthDeployMultiToken } from '../model/request/EthDeployMultiToken';
-import { UpdateCashbackMultiToken } from '../model/request/UpdateCashbackMultiToken';
 
 /**
  * Estimate Gas price for the transaction.
