@@ -1,4 +1,5 @@
 export * from './bitcoin';
+export * from './bnb';
 export * from './litecoin';
 export * from './bcash';
 export * from './dogecoin';
@@ -14,4 +15,4 @@ export * from './tron';
 export * from './ada';
 export * from './xdc';
 
-// TODO: add support for BNB / NEO transactions
+// TODO: add support for BNB local send tx / NEO transactions

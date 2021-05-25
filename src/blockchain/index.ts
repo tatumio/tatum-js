@@ -1,4 +1,5 @@
 export * from './xrp';
+export * from './bnb';
 export * from './xlm';
 export * from './bitcoin';
 export * from './litecoin';

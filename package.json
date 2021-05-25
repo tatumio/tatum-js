@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum",
-  "version": "1.13.13",
+  "version": "1.13.14",
   "description": "",
   "main": "dist/src/index.js",
   "repository": "https://github.com/tatumio/tatum-js",
@@ -28,7 +28,7 @@
   "author": "Tatum, hello@tatum.io",
   "license": "MIT",
   "dependencies": {
-    "@binance-chain/javascript-sdk": "^4.0.3",
+    "@binance-chain/javascript-sdk": "^4.1.1",
     "@celo-tools/celo-ethers-wrapper": "0.0.5",
     "@cityofzion/neon-js": "^4.8.0",
     "@emurgo/cardano-serialization-lib-nodejs": "^6.0.0",
