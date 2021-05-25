@@ -1,3 +1,4 @@
+import {getAddressFromPrivateKey} from '@binance-chain/javascript-sdk/lib/crypto';
 // @ts-ignore
 import {ECDSA_secp256k1, encodeKey, SHA3_256} from '@onflow/util-encode-key';
 import {fromBase58, fromPublicKey, fromSeed} from 'bip32';
@@ -23,7 +24,8 @@ import {
     LYRA_TEST_NETWORK,
     TESTNET_DERIVATION_PATH,
     TRON_DERIVATION_PATH,
-    VET_DERIVATION_PATH
+    VET_DERIVATION_PATH,
+    XDC_DERIVATION_PATH
 } from '../constants';
 import {Currency} from '../model';
 import cardano from './cardano.crypto';
@@ -143,6 +145,12 @@ const generateEthAddress = (testnet: boolean, xpub: string, i: number) => {
  */
 const generateBscAddress = (testnet: boolean, xpub: string, i: number) => {
     return generateEthAddress(testnet, xpub, i);
+};
+
+const generateXdcAddress = (testnet: boolean, xpub: string, i: number) => {
+    const w = ethHdKey.fromExtendedKey(xpub);
+    const wallet = w.deriveChild(i).getWallet();
+    return 'xdc' + wallet.getAddress().toString('hex').toLowerCase();
 };
 
 /**
@@ -388,6 +396,13 @@ const generateBscPrivateKey = async (testnet: boolean, mnemonic: string, i: numb
     return generateEthPrivateKey(testnet, mnemonic, i);
 };
 
+const generateXdcPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
+    const path = testnet ? TESTNET_DERIVATION_PATH : XDC_DERIVATION_PATH;
+    const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnemonic));
+    const derivePath = hdwallet.derivePath(path).deriveChild(i);
+    return derivePath.getWallet().getPrivateKeyString();
+};
+
 /**
  * Generate Celo or any other ERC20 private key from mnemonic seed
  * @param testnet testnet or mainnet version of address
@@ -466,6 +481,11 @@ const convertEthPrivateKey = (testnet: boolean, privkey: string) => {
     return wallet.getAddressString() as string;
 };
 
+const convertXdcPrivateKey = (testnet: boolean, privkey: string) => {
+    const wallet = ethWallet.fromPrivateKey(Buffer.from(privkey.replace('0x', ''), 'hex'));
+    return wallet.getAddressString().replace('0x', 'xdc');
+};
+
 /**
  * Generate address
  * @param currency type of blockchain
@@ -524,6 +544,8 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
         case Currency.BBCH:
         case Currency.MMY:
             return generateEthAddress(testnet, xpub, i);
+        case Currency.XDC:
+            return generateXdcAddress(testnet, xpub, i);
         case Currency.VET:
             return generateVetAddress(testnet, xpub, i);
         case Currency.LYRA:
@@ -593,6 +615,8 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
         case Currency.BBCH:
         case Currency.MMY:
             return generateEthPrivateKey(testnet, mnemonic, i);
+        case Currency.XDC:
+            return generateXdcPrivateKey(testnet, mnemonic, i);
         case Currency.VET:
             return generateVetPrivateKey(testnet, mnemonic, i);
         case Currency.LYRA:
@@ -617,6 +641,8 @@ export const generateAddressFromPrivatekey = (currency: Currency, testnet: boole
             return convertBtcPrivateKey(testnet, privateKey);
         case Currency.LYRA:
             return convertLyraPrivateKey(testnet, privateKey);
+        case Currency.BNB:
+            return getAddressFromPrivateKey(privateKey, testnet ? 'tbnb' : 'bnb');
         case Currency.ETH:
         case Currency.USDT:
         case Currency.WBTC:
@@ -635,6 +661,8 @@ export const generateAddressFromPrivatekey = (currency: Currency, testnet: boole
         case Currency.BSC:
         case Currency.MMY:
             return convertEthPrivateKey(testnet, privateKey);
+        case Currency.XDC:
+            return convertXdcPrivateKey(testnet, privateKey);
         default:
             throw new Error('Unsupported blockchain.');
     }

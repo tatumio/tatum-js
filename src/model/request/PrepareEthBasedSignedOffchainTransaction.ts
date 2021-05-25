@@ -13,7 +13,7 @@ export class PrepareEthBasedSignedOffchainTransaction {
   public privateKey: string
 
   @IsNotEmpty()
-  @Length(42, 42)
+  @Length(42, 43)
   @IsString()
   public address: string
 

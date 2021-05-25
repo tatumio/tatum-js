@@ -24,7 +24,7 @@ export class CreateRecord {
     public data: string;
 
     @IsNotEmpty()
-    @IsIn([Currency.ETH, Currency.QUORUM, Currency.FABRIC, Currency.BSC, Currency.CELO])
+    @IsIn([Currency.ETH, Currency.QUORUM, Currency.FABRIC, Currency.BSC, Currency.CELO, Currency.XDC])
     public chain: string;
 
     @ValidateIf(o => o.chain === Currency.CELO)

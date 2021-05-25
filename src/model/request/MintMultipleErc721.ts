@@ -14,11 +14,11 @@ export class MintMultipleErc721 extends PrivateKeyOrSignatureId {
     public url: string[];
 
     @IsNotEmpty()
-    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO])
+    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC])
     public chain: Currency;
 
     @IsNotEmpty()
-    @Length(42, 42)
+    @Length(42, 43)
     public contractAddress: string;
 
     @Min(0)

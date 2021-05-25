@@ -12,18 +12,18 @@ import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
 import erc1155TokenABI from '../contracts/erc1155/erc1155_abi';
 import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode';
 import {
+    BurnErc20,
     CreateRecord,
     Currency,
     DeployErc20,
-    MintErc20,
-    BurnErc20,
     EthBurnErc721,
-    EthDeployErc721,
-    EthMintErc721,
     EthBurnMultiToken,
     EthBurnMultiTokenBatch,
+    EthDeployErc721,
+    EthMintErc721,
     EthMintMultipleErc721,
     EthTransferErc721,
+    MintErc20,
     SmartContractMethodInvocation,
     TransactionKMS,
     TransferBscBep20,
@@ -101,10 +101,14 @@ export const prepareBscStoreDataTransaction = async (body: CreateRecord, provide
     if (!address) {
         throw new Error('Recipient must be provided.');
     }
+    const hexData = client.utils.isHex(data) ? client.utils.stringToHex(data) : client.utils.toHex(data);
     const addressNonce = nonce ? nonce : await bscGetTransactionsCount(address);
-    const customFee = ethFee ? ethFee : {
-        gasLimit: `${data.length * 68 + 21000}`,
-        gasPrice: client.utils.fromWei(await bscGetGasPriceInWei(), 'gwei'),
+    const customFee = ethFee ? {
+        ...ethFee,
+        gasPrice: client.utils.toWei(ethFee.gasPrice, 'gwei'),
+    } : {
+        gasLimit: `${hexData.length * 68 + 21000}`,
+        gasPrice: await bscGetGasPriceInWei(),
     };
 
     const tx: TransactionConfig = {
@@ -113,7 +117,7 @@ export const prepareBscStoreDataTransaction = async (body: CreateRecord, provide
         value: '0',
         gasPrice: customFee.gasPrice,
         gas: customFee.gasLimit,
-        data: data ? (client.utils.isHex(data) ? client.utils.stringToHex(data) : client.utils.toHex(data)) : undefined,
+        data: hexData,
         nonce: addressNonce,
     };
 
@@ -452,7 +456,7 @@ export const prepareBscMintBepCashback721SignedTransaction = async (body: EthMin
     const cb: string[] = [];
     const cashbacks: string[] = cashbackValues!;
     for (const c of cashbacks) {
-        cb.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
+        cb.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`);
     }
     const tx: TransactionConfig = {
         from: 0,
@@ -500,9 +504,9 @@ export const prepareBscMintMultipleCashbackBep721SignedTransaction = async (body
     for (const c of cashbacks) {
         const cb2: string[] = [];
         for (const c2 of c) {
-            cb2.push(`0x${new BigNumber(client.utils.toWei(c2, 'ether')).toString(16)}`)
+            cb2.push(`0x${new BigNumber(client.utils.toWei(c2, 'ether')).toString(16)}`);
         }
-        cb.push(cb2)
+        cb.push(cb2);
     }
     const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await bscGetGasPriceInWei();
     const tx: TransactionConfig = {
@@ -1137,7 +1141,7 @@ export const sendBscSmartContractReadMethodInvocationTransaction = async (body: 
     } = body;
     const client = getBscClient(provider);
     const contract = new client.eth.Contract([methodABI], contractAddress);
-    return { data: await contract.methods[methodName as string](...params).call() };
+    return {data: await contract.methods[methodName as string](...params).call()};
 };
 
 /**

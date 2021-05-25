@@ -30,11 +30,11 @@ import {
     MintCeloErc20,
     TransactionKMS,
     TransferCeloOrCeloErc20Token,
+    CeloUpdateCashbackErc721,
+    CeloBurnMultiToken,
+    CeloBurnMultiTokenBatch,
+    CeloDeployMultiToken,
 } from '../model';
-import { CeloUpdateCashbackErc721 } from '../model/request/CeloUpdateCashbackErc721';
-import { CeloBurnMultiToken } from '../model/request/CeloBurnMultiToken';
-import { CeloBurnMultiTokenBatch } from '../model/request/CeloBurnMultiTokenBatch';
-import { CeloDeployMultiToken } from '../model/request/CeloDeployMultiToken';
 import { CeloUpdateCashbackMultiToken } from '../model/request/CeloUpdateCashbackMultiToken';
 
 const obtainWalletInformation = async (wallet: CeloWallet, feeCurrencyContractAddress?: string) => {

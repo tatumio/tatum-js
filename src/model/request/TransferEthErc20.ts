@@ -17,7 +17,7 @@ import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 export class TransferEthErc20 extends PrivateKeyOrSignatureId {
 
     @IsNotEmpty()
-    @Length(42, 42)
+    @Length(42, 43)
     public to: string;
 
     @IsNotEmpty()
@@ -30,7 +30,7 @@ export class TransferEthErc20 extends PrivateKeyOrSignatureId {
     public data?: string;
 
     @IsNotEmpty()
-    @IsIn(ETH_BASED_CURRENCIES)
+    @IsIn([...ETH_BASED_CURRENCIES, Currency.XDC])
     public currency: Currency;
 
     @IsOptional()

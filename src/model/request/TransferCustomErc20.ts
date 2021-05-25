@@ -6,7 +6,7 @@ import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 export class TransferCustomErc20  extends PrivateKeyOrSignatureId {
 
     @IsNotEmpty()
-    @Length(42, 42)
+    @Length(42, 43)
     public to: string;
 
     @IsNotEmpty()
@@ -15,7 +15,7 @@ export class TransferCustomErc20  extends PrivateKeyOrSignatureId {
     public amount: string;
 
     @IsNotEmpty()
-    @Length(42, 42)
+    @Length(42, 43)
     public contractAddress: string;
 
     @IsOptional()

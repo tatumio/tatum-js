@@ -9,3 +9,4 @@ export * from './eth';
 export * from './xrp';
 export * from './xlm';
 export * from './tron';
+export * from './xdc';
