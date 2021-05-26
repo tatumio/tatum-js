@@ -93,13 +93,14 @@ const sign = (pk: string, msg: Buffer) => {
     return Buffer.concat([r, s]).toString('hex');
 };
 
-const getSigner = (
+export const getFlowSigner = (
     pk: string,
     address: string,
+    keyId = 0,
 ): AccountAuthorizer => {
     return sdk.authorization(fcl.sansPrefix(address), (data: any) => ({
         addr: fcl.withPrefix(address),
-        keyId: 0,
+        keyId,
         signature: sign(pk, Buffer.from(data.message, 'hex')),
     }), 0);
 };
@@ -173,7 +174,7 @@ export const flowCreateAccountFromPublicKey = async (testnet: boolean, publicKey
         1000
     );
     const args = [{type: 'String', value: encodedPublicKey}];
-    const auth = getSigner(signerPrivateKey, signerAddress);
+    const auth = getFlowSigner(signerPrivateKey, signerAddress);
     const result = await sendTransaction(testnet, {code, args, proposer: auth, authorizations: [auth], payer: auth});
     if (result.error) {
         throw new Error(result.error);
@@ -191,7 +192,7 @@ export const flowAddPublicKeyToAccount = async (testnet: boolean, publicKey: str
         1000
     );
     const args = [{type: 'String', value: encodedPublicKey}];
-    const auth = getSigner(signerPrivateKey, signerAddress);
+    const auth = getFlowSigner(signerPrivateKey, signerAddress);
     const result = await sendTransaction(testnet, {code, args, proposer: auth, authorizations: [auth], payer: auth});
     if (result.error) {
         throw new Error(result.error);
@@ -218,7 +219,7 @@ export const sendFlowNftMintToken = async (testnet: boolean, body: FlowMintNft):
     const {url, contractAddress: tokenType, to, mnemonic, index, account, privateKey} = body;
     const args = [{type: 'Address', value: to}, {type: 'String', value: url}, {type: 'String', value: tokenType}];
     const pk = (mnemonic && index && index >= 0) ? await generatePrivateKeyFromMnemonic(Currency.FLOW, testnet, mnemonic, index as number) : privateKey as string;
-    const auth = getSigner(pk, account);
+    const auth = getFlowSigner(pk, account);
     const result = await sendTransaction(testnet, {code, args, proposer: auth, authorizations: [auth], payer: auth});
     if (result.error) {
         throw new Error(result.error);
@@ -233,7 +234,7 @@ export const sendFlowNftMintMultipleToken = async (testnet: boolean, body: FlowM
     const {url, contractAddress: tokenType, to, mnemonic, index, account, privateKey} = body;
     const args = [{type: 'Array', value: to}, {type: 'Array', value: url}, {type: 'String', value: tokenType}];
     const pk = (mnemonic && index && index >= 0) ? await generatePrivateKeyFromMnemonic(Currency.FLOW, testnet, mnemonic, index as number) : privateKey as string;
-    const auth = getSigner(pk, account);
+    const auth = getFlowSigner(pk, account);
     const result = await sendTransaction(testnet, {code, args, proposer: auth, authorizations: [auth], payer: auth});
     if (result.error) {
         throw new Error(result.error);
@@ -248,7 +249,7 @@ export const sendFlowNftTransferToken = async (testnet: boolean, body: FlowTrans
     const {tokenId, contractAddress: tokenType, to, mnemonic, index, account, privateKey} = body;
     const args = [{type: 'Address', value: to}, {type: 'String', value: tokenId}, {type: 'String', value: tokenType}];
     const pk = (mnemonic && index && index >= 0) ? await generatePrivateKeyFromMnemonic(Currency.FLOW, testnet, mnemonic, index as number) : privateKey as string;
-    const auth = getSigner(pk, account);
+    const auth = getFlowSigner(pk, account);
     const result = await sendTransaction(testnet, {code, args, proposer: auth, authorizations: [auth], payer: auth});
     if (result.error) {
         throw new Error(result.error);
@@ -263,7 +264,7 @@ export const sendFlowNftBurnToken = async (testnet: boolean, body: FlowBurnNft):
     const {tokenId, contractAddress: tokenType, mnemonic, index, account, privateKey} = body;
     const args = [{type: 'UInt64', value: tokenId}, {type: 'String', value: tokenType}];
     const pk = (mnemonic && index && index >= 0) ? await generatePrivateKeyFromMnemonic(Currency.FLOW, testnet, mnemonic, index as number) : privateKey as string;
-    const auth = getSigner(pk, account);
+    const auth = getFlowSigner(pk, account);
     const result = await sendTransaction(testnet, {code, args, proposer: auth, authorizations: [auth], payer: auth});
     if (result.error) {
         throw new Error(result.error);
@@ -289,7 +290,7 @@ export const flowSendTransaction = async (testnet: boolean, body: TransferFlow):
     const code = prepareTransferFlowTxTemplate(testnet, tokenAddress, tokenName, tokenStorage);
     const args = [{value: parseFloat(body.amount).toFixed(8), type: 'UFix64'}, {value: body.to, type: 'Address'}];
     const pk = body.privateKey || await generatePrivateKeyFromMnemonic(Currency.FLOW, testnet, body.mnemonic as string, body.index as number);
-    const auth = getSigner(pk, body.account);
+    const auth = getFlowSigner(pk, body.account);
     const result = await sendTransaction(testnet, {code, args, proposer: auth, authorizations: [auth], payer: auth});
     if (result.error) {
         throw new Error(result.error);
