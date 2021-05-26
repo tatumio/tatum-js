@@ -18,36 +18,38 @@ import { CeloBurnMultiToken } from '../model/request/CeloBurnMultiToken';
 import { EthDeployMultiToken } from '../model/request/EthDeployMultiToken';
 import { CeloDeployMultiToken } from '../model/request/CeloDeployMultiToken';
 import { sendCeloUpdateCashbackForAuthorMultiTokenTransaction } from '../transaction/celo';
-import { sendUpdateCashbackForAuthorMultiTokenTransaction } from '../transaction/eth';
-import { sendUpdateCashbackForAuthorBep1155Transaction } from '../transaction/bsc';
+import { sendEthUpdateCashbackForAuthorMultiTokenTransaction } from '../transaction/eth';
+import { sendBscUpdateCashbackForAuthorMultiTokenTransaction } from '../transaction/bsc';
+import { UpdateCashbackMultiToken } from '../model/request/UpdateCashbackMultiToken';
+import { CeloUpdateCashbackMultiToken } from '../model/request/CeloUpdateCashbackMultiToken';
 import {
-    sendBep1155Transaction,
-    sendBep1155BatchTransaction,
-    sendBurnBatchBep1155Transaction,
-    sendBurnBep1155Transaction,
     sendCeloBurnMultiTokenTransaction,
-    sendBurnMultiTokenTransaction,
-    sendBurnBatchMultiTokenTransaction,
-    sendDeployBep1155Transaction,
+    sendEthDeployMultiTokenTransaction,
     sendCeloDeployMultiTokenTransaction,
-    sendMintBep1155Transaction,
-    sendMintBatchBep1155Transaction,
-    sendMintCashbackBep1155Transaction,
-    sendMintCashbackBatchBep1155Transaction,
-    sendMintMultiTokenTransaction,
-    sendDeployMultiTokenTransaction,
+    sendBscDeployMultiTokenTransaction,
     sendCeloTransferMultiTokenTransaction,
     sendCeloTransferMultiTokenBatchTransaction,
-    sendMultiTokenTransaction,
-    sendMultiTokenBatchTransaction,
-    sendMintMultiTokenBatchTransaction,
-    sendMintMultiTokenCashbackTransaction,
-    sendMintMultiTokenBatchCashbackTransaction,
+    sendEthMultiTokenTransaction,
+    sendEthMultiTokenBatchTransaction,
+    sendEthMintMultiTokenTransaction,
+    sendEthMintMultiTokenBatchTransaction,
+    sendEthMintMultiTokenCashbackTransaction,
+    sendEthMintMultiTokenBatchCashbackTransaction,
+    sendEthBurnMultiTokenTransaction,
+    sendEthBurnBatchMultiTokenTransaction,
+    sendBscMultiTokenTransaction,
+    sendBscMultiTokenBatchTransaction,
+    sendBscMintMultiTokenBatchTransaction,
+    sendBscMintMultiTokenTransaction,
+    sendBscMintMultiTokenCashbackTransaction,
+    sendBscMintMultiTokenBatchCashbackTransaction,
+    sendBscBurnMultiTokenTransaction,
+    sendBscBurnBatchMultiTokenTransaction,
     sendCeloMintMultiTokenTransaction,
-    sendCeloMintBatchMultiTokenTransaction,
-    sendCeloMintCashbackMultiTokenTransaction,
-    sendCeloMintBatchCashbackMultiTokenTransaction,
-    sendCeloBurnBatchMultiTokenTransaction
+    sendCeloMintMultiTokenBatchTransaction,
+    sendCeloMintMultiTokenCashbackTransaction,
+    sendCeloMintMultiTokenBatchCashbackTransaction,
+    sendCeloBurnMultiTokenBatchTransaction
 } from '../transaction';
 
 /**
@@ -59,52 +61,52 @@ export const deployMultiToken = async (testnet: boolean, body: CeloDeployMultiTo
         case Currency.CELO:
             return sendCeloDeployMultiTokenTransaction(testnet, body as CeloDeployMultiToken, provider);
         case Currency.ETH:
-            return sendDeployMultiTokenTransaction(body, provider);
+            return sendEthDeployMultiTokenTransaction(body, provider);
         case Currency.BSC:
-            return sendDeployBep1155Transaction(body, provider);
+            return sendBscDeployMultiTokenTransaction(body, provider);
     }
 };
 export const mintMultiToken = async (testnet: boolean, body: MintMultiToken | CeloMintMultiToken, provider?: string) => {
     switch (body.chain) {
         case Currency.CELO:
             if (body.authorAddresses) {
-                return sendCeloMintCashbackMultiTokenTransaction(testnet, body as CeloMintMultiToken, provider);
+                return sendCeloMintMultiTokenCashbackTransaction(testnet, body as CeloMintMultiToken, provider);
             } else {
                 return sendCeloMintMultiTokenTransaction(testnet, body as CeloMintMultiToken, provider);
             }
         case Currency.ETH:
             if (body.authorAddresses) {
 
-                return sendMintMultiTokenCashbackTransaction(body as MintMultiToken, provider)
+                return sendEthMintMultiTokenCashbackTransaction(body as MintMultiToken, provider)
             } else {
-                return sendMintMultiTokenTransaction(body as MintMultiToken, provider);
+                return sendEthMintMultiTokenTransaction(body as MintMultiToken, provider);
             }
         case Currency.BSC:
             if (body.authorAddresses) {
-                return sendMintCashbackBep1155Transaction(body, provider);
+                return sendBscMintMultiTokenCashbackTransaction(body, provider);
             }
-            return sendMintBep1155Transaction(body, provider);
+            return sendBscMintMultiTokenTransaction(body, provider);
     }
 };
 export const mintMultiTokenBatch = async (testnet: boolean, body: MintMultiTokenBatch | CeloMintMultiTokenBatch, provider?: string) => {
     switch (body.chain) {
         case Currency.CELO:
             if (body.authorAddresses) {
-                return sendCeloMintBatchCashbackMultiTokenTransaction(testnet, body as CeloMintMultiTokenBatch, provider);
+                return sendCeloMintMultiTokenBatchCashbackTransaction(testnet, body as CeloMintMultiTokenBatch, provider);
             } else {
-                return sendCeloMintBatchMultiTokenTransaction(testnet, body as CeloMintMultiTokenBatch, provider);
+                return sendCeloMintMultiTokenBatchTransaction(testnet, body as CeloMintMultiTokenBatch, provider);
             }
         case Currency.ETH:
             if (body.authorAddresses) {
-                return sendMintMultiTokenBatchCashbackTransaction(body as MintMultiTokenBatch, provider)
+                return sendEthMintMultiTokenBatchCashbackTransaction(body as MintMultiTokenBatch, provider)
             } else {
-                return sendMintMultiTokenBatchTransaction(body as MintMultiTokenBatch, provider);
+                return sendEthMintMultiTokenBatchTransaction(body as MintMultiTokenBatch, provider);
             }
         case Currency.BSC:
             if (body.authorAddresses) {
-                return sendMintCashbackBatchBep1155Transaction(body as MintMultiTokenBatch, provider);
+                return sendBscMintMultiTokenBatchCashbackTransaction(body as MintMultiTokenBatch, provider);
             }
-            return sendMintBatchBep1155Transaction(body as MintMultiTokenBatch, provider);
+            return sendBscMintMultiTokenBatchTransaction(body as MintMultiTokenBatch, provider);
     }
 };
 export const burnMultiToken = async (testnet: boolean, body: CeloBurnMultiToken | EthBurnMultiToken, provider?: string) => {
@@ -112,29 +114,29 @@ export const burnMultiToken = async (testnet: boolean, body: CeloBurnMultiToken 
         case Currency.CELO:
             return sendCeloBurnMultiTokenTransaction(testnet, body as CeloBurnMultiToken, provider);
         case Currency.ETH:
-            return sendBurnMultiTokenTransaction(body, provider);
+            return sendEthBurnMultiTokenTransaction(body, provider);
         case Currency.BSC:
-            return sendBurnBep1155Transaction(body, provider);
+            return sendBscBurnMultiTokenTransaction(body, provider);
     }
 };
 export const burnMultiTokenBatch = async (testnet: boolean, body: CeloBurnMultiTokenBatch | EthBurnMultiTokenBatch, provider?: string) => {
     switch (body.chain) {
         case Currency.CELO:
-            return sendCeloBurnBatchMultiTokenTransaction(testnet, body as CeloBurnMultiTokenBatch, provider);
+            return sendCeloBurnMultiTokenBatchTransaction(testnet, body as CeloBurnMultiTokenBatch, provider);
         case Currency.ETH:
-            return sendBurnBatchMultiTokenTransaction(body, provider);
+            return sendEthBurnBatchMultiTokenTransaction(body, provider);
         case Currency.BSC:
-            return sendBurnBatchBep1155Transaction(body, provider);
+            return sendBscBurnBatchMultiTokenTransaction(body, provider);
     }
 };
-export const updateCashbackForAuthorMultiToken = async (testnet: boolean, body: UpdateCashbackErc721 | CeloUpdateCashbackErc721, provider?: string) => {
+export const updateCashbackForAuthorMultiToken = async (testnet: boolean, body: UpdateCashbackMultiToken | CeloUpdateCashbackMultiToken, provider?: string) => {
     switch (body.chain) {
         case Currency.CELO:
-            return sendCeloUpdateCashbackForAuthorMultiTokenTransaction(testnet, body as CeloUpdateCashbackErc721, provider);
+            return sendCeloUpdateCashbackForAuthorMultiTokenTransaction(testnet, body as CeloUpdateCashbackMultiToken, provider);
         case Currency.ETH:
-            return sendUpdateCashbackForAuthorMultiTokenTransaction(body, provider);
+            return sendEthUpdateCashbackForAuthorMultiTokenTransaction(body, provider);
         case Currency.BSC:
-            return sendUpdateCashbackForAuthorBep1155Transaction(body, provider);
+            return sendBscUpdateCashbackForAuthorMultiTokenTransaction(body, provider);
     }
 };
 export const transferMultiToken = async (testnet: boolean, body: CeloTransferMultiToken | TransferMultiToken, provider?: string) => {
@@ -142,9 +144,9 @@ export const transferMultiToken = async (testnet: boolean, body: CeloTransferMul
         case Currency.CELO:
             return sendCeloTransferMultiTokenTransaction(testnet, body as CeloTransferMultiToken, provider);
         case Currency.ETH:
-            return sendMultiTokenTransaction(body, provider);
+            return sendEthMultiTokenTransaction(body, provider);
         case Currency.BSC:
-            return sendBep1155Transaction(body, provider);
+            return sendBscMultiTokenTransaction(body, provider);
     }
 };
 export const transferMultiTokenBatch = async (testnet: boolean, body: CeloTransferMultiTokenBatch | TransferMultiTokenBatch, provider?: string) => {
@@ -152,8 +154,8 @@ export const transferMultiTokenBatch = async (testnet: boolean, body: CeloTransf
         case Currency.CELO:
             return sendCeloTransferMultiTokenBatchTransaction(testnet, body as CeloTransferMultiTokenBatch, provider);
         case Currency.ETH:
-            return sendMultiTokenBatchTransaction(body, provider);
+            return sendEthMultiTokenBatchTransaction(body, provider);
         case Currency.BSC:
-            return sendBep1155BatchTransaction(body, provider);
+            return sendBscMultiTokenBatchTransaction(body, provider);
     }
 };

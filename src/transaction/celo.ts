@@ -33,7 +33,8 @@ import {
     CeloUpdateCashbackErc721,
     CeloBurnMultiToken,
     CeloBurnMultiTokenBatch,
-    CeloDeployMultiToken
+    CeloDeployMultiToken,
+    CeloUpdateCashbackMultiToken
 } from '../model';
 
 const obtainWalletInformation = async (wallet: CeloWallet, feeCurrencyContractAddress?: string) => {
@@ -835,7 +836,7 @@ export const prepareCeloMintMultiTokenSignedTransaction = async (testnet: boolea
     transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();
     return wallet.signTransaction(transaction);
 };
-export const prepareCeloMintCashbackMultiTokenSignedTransaction = async (testnet: boolean, body: CeloMintMultiToken, provider?: string) => {
+export const prepareCeloMintMultiTokenCashbackSignedTransaction = async (testnet: boolean, body: CeloMintMultiToken, provider?: string) => {
     await validateBody(body, CeloMintMultiToken);
     const {
         fromPrivateKey,
@@ -888,7 +889,7 @@ export const prepareCeloMintCashbackMultiTokenSignedTransaction = async (testnet
 
 
 };
-export const prepareCeloMintBatchMultiTokenSignedTransaction = async (testnet: boolean, body: CeloMintMultiTokenBatch, provider?: string) => {
+export const prepareCeloMintMultiTokenBatchSignedTransaction = async (testnet: boolean, body: CeloMintMultiTokenBatch, provider?: string) => {
     await validateBody(body, CeloMintMultiTokenBatch);
     const {
         fromPrivateKey,
@@ -935,7 +936,7 @@ export const prepareCeloMintBatchMultiTokenSignedTransaction = async (testnet: b
     transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();
     return wallet.signTransaction(transaction);
 };
-export const prepareCeloMintBatchCashbackMultiTokenSignedTransaction = async (testnet: boolean, body: CeloMintMultiTokenBatch, provider?: string) => {
+export const prepareCeloMintMultiTokenBatchCashbackSignedTransaction = async (testnet: boolean, body: CeloMintMultiTokenBatch, provider?: string) => {
     await validateBody(body, CeloMintMultiTokenBatch);
     const {
         fromPrivateKey,
@@ -1085,7 +1086,7 @@ export const prepareCeloBatchTransferMultiTokenSignedTransaction = async (testne
     transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();
     return wallet.signTransaction(transaction);
 };
-export const prepareCeloBurnBatchMultiTokenSignedTransaction = async (testnet: boolean, body: CeloBurnMultiTokenBatch, provider?: string) => {
+export const prepareCeloBurnMultiTokenBatchSignedTransaction = async (testnet: boolean, body: CeloBurnMultiTokenBatch, provider?: string) => {
     await validateBody(body, CeloBurnMultiTokenBatch);
     const {
         fromPrivateKey,
@@ -1177,8 +1178,8 @@ export const prepareCeloBurnMultiTokenSignedTransaction = async (testnet: boolea
     transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();
     return wallet.signTransaction(transaction);
 };
-export const prepareCeloUpdateCashbackForAuthorMultiTokenSignedTransaction = async (testnet: boolean, body: CeloUpdateCashbackErc721, provider?: string) => {
-    await validateBody(body, CeloUpdateCashbackErc721);
+export const prepareCeloUpdateCashbackForAuthorMultiTokenSignedTransaction = async (testnet: boolean, body: CeloUpdateCashbackMultiToken, provider?: string) => {
+    await validateBody(body, CeloUpdateCashbackMultiToken);
     const {
         fromPrivateKey,
         author,
@@ -1376,7 +1377,7 @@ export const sendCeloBurnErc721Transaction = async (testnet: boolean, body: Celo
 
 export const sendCeloUpdateCashbackForAuthorErc721Transaction = async (testnet: boolean, body: CeloUpdateCashbackErc721, provider?: string) =>
     celoBroadcast(await prepareCeloUpdateCashbackForAuthorErc721SignedTransaction(testnet, body, provider));
-export const sendCeloUpdateCashbackForAuthorMultiTokenTransaction = async (testnet: boolean, body: CeloUpdateCashbackErc721, provider?: string) =>
+export const sendCeloUpdateCashbackForAuthorMultiTokenTransaction = async (testnet: boolean, body: CeloUpdateCashbackMultiToken, provider?: string) =>
     celoBroadcast(await prepareCeloUpdateCashbackForAuthorMultiTokenSignedTransaction(testnet, body, provider));
 export const sendCeloTransferErc721Transaction = async (testnet: boolean, body: CeloTransferErc721, provider?: string) =>
     celoBroadcast(await prepareCeloTransferErc721SignedTransaction(testnet, body, provider));
@@ -1390,14 +1391,14 @@ export const sendCeloDeployMultiTokenTransaction = async (testnet: boolean, body
 export const sendCeloMintMultiTokenTransaction = async (testnet: boolean, body: CeloMintMultiToken, provider?: string) =>
     celoBroadcast(await prepareCeloMintMultiTokenSignedTransaction(testnet, body, provider));
 
-export const sendCeloMintBatchMultiTokenTransaction = async (testnet: boolean, body: CeloMintMultiTokenBatch, provider?: string) =>
-    celoBroadcast(await prepareCeloMintBatchMultiTokenSignedTransaction(testnet, body, provider));
+export const sendCeloMintMultiTokenBatchTransaction = async (testnet: boolean, body: CeloMintMultiTokenBatch, provider?: string) =>
+    celoBroadcast(await prepareCeloMintMultiTokenBatchSignedTransaction(testnet, body, provider));
 
 // Cashback mints for multitoken
-export const sendCeloMintCashbackMultiTokenTransaction = async (testnet: boolean, body: CeloMintMultiToken, provider?: string) =>
-    celoBroadcast(await prepareCeloMintCashbackMultiTokenSignedTransaction(testnet, body, provider));
-export const sendCeloMintBatchCashbackMultiTokenTransaction = async (testnet: boolean, body: CeloMintMultiTokenBatch, provider?: string) =>
-    celoBroadcast(await prepareCeloMintBatchCashbackMultiTokenSignedTransaction(testnet, body, provider));
+export const sendCeloMintMultiTokenCashbackTransaction = async (testnet: boolean, body: CeloMintMultiToken, provider?: string) =>
+    celoBroadcast(await prepareCeloMintMultiTokenCashbackSignedTransaction(testnet, body, provider));
+export const sendCeloMintMultiTokenBatchCashbackTransaction = async (testnet: boolean, body: CeloMintMultiTokenBatch, provider?: string) =>
+    celoBroadcast(await prepareCeloMintMultiTokenBatchCashbackSignedTransaction(testnet, body, provider));
 // MultiToken transfers for multitoken
 export const sendCeloTransferMultiTokenTransaction = async (testnet: boolean, body: CeloTransferMultiToken, provider?: string) =>
     celoBroadcast(await prepareCeloTransferMultiTokenSignedTransaction(testnet, body, provider));
@@ -1406,5 +1407,5 @@ export const sendCeloTransferMultiTokenBatchTransaction = async (testnet: boolea
 // Burn transactions for multitoken
 export const sendCeloBurnMultiTokenTransaction = async (testnet: boolean, body: CeloBurnMultiToken, provider?: string) =>
     celoBroadcast(await prepareCeloBurnMultiTokenSignedTransaction(testnet, body, provider));
-export const sendCeloBurnBatchMultiTokenTransaction = async (testnet: boolean, body: CeloBurnMultiTokenBatch, provider?: string) =>
-    celoBroadcast(await prepareCeloBurnBatchMultiTokenSignedTransaction(testnet, body, provider));
+export const sendCeloBurnMultiTokenBatchTransaction = async (testnet: boolean, body: CeloBurnMultiTokenBatch, provider?: string) =>
+    celoBroadcast(await prepareCeloBurnMultiTokenBatchSignedTransaction(testnet, body, provider));
