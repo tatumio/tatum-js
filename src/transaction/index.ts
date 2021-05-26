@@ -1,6 +1,7 @@
 export * from './bitcoin';
 export * from './bnb';
 export * from './litecoin';
+export * from './flow';
 export * from './bcash';
 export * from './dogecoin';
 export * from './vet';
