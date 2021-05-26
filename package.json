@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum",
-  "version": "1.13.15",
+  "version": "1.14.0",
   "description": "",
   "main": "dist/src/index.js",
   "repository": "https://github.com/tatumio/tatum-js",
@@ -54,7 +54,6 @@
     "class-transformer": "^0.2.3",
     "class-validator": "0.13.0",
     "coininfo": "^5.1.0",
-    "dedent-js": "^1.0.1",
     "elliptic": "^6.5.4",
     "ethereumjs-wallet": "^1.0.0",
     "hdkey": "^2.0.1",

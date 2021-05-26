@@ -1,40 +1,40 @@
-import { CeloProvider, CeloWallet } from '@celo-tools/celo-ethers-wrapper';
-import { BigNumber as BN } from '@ethersproject/bignumber';
-import { BigNumber } from 'bignumber.js';
+import {CeloProvider, CeloWallet} from '@celo-tools/celo-ethers-wrapper';
+import {BigNumber as BN} from '@ethersproject/bignumber';
+import {BigNumber} from 'bignumber.js';
 import Web3 from 'web3';
 import {isHex, stringToHex, toHex, toWei} from 'web3-utils';
 import {celoBroadcast} from '../blockchain';
 import {validateBody} from '../connector/tatum';
 import {CEUR_ADDRESS_MAINNET, CEUR_ADDRESS_TESTNET, CUSD_ADDRESS_MAINNET, CUSD_ADDRESS_TESTNET, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
+import erc1155_abi from '../contracts/erc1155/erc1155_abi';
+import erc1155_bytecode from '../contracts/erc1155/erc1155_bytecode';
 import erc20_abi from '../contracts/erc20/token_abi';
 import erc20_bytecode from '../contracts/erc20/token_bytecode';
 import erc721_abi from '../contracts/erc721/erc721_abi';
 import erc721_bytecode from '../contracts/erc721/erc721_bytecode';
-import erc1155_abi from '../contracts/erc1155/erc1155_abi';
-import erc1155_bytecode from '../contracts/erc1155/erc1155_bytecode';
 import {
     BurnCeloErc20,
     CeloBurnErc721,
+    CeloBurnMultiToken,
+    CeloBurnMultiTokenBatch,
     CeloDeployErc721,
+    CeloDeployMultiToken,
     CeloMintErc721,
     CeloMintMultipleErc721,
-    CeloSmartContractMethodInvocation,
-    CeloTransferErc721,
     CeloMintMultiToken,
     CeloMintMultiTokenBatch,
+    CeloSmartContractMethodInvocation,
+    CeloTransferErc721,
     CeloTransferMultiToken,
     CeloTransferMultiTokenBatch,
+    CeloUpdateCashbackErc721,
+    CeloUpdateCashbackMultiToken,
     CreateRecord,
     Currency,
     DeployCeloErc20,
     MintCeloErc20,
     TransactionKMS,
-    TransferCeloOrCeloErc20Token,
-    CeloUpdateCashbackErc721,
-    CeloBurnMultiToken,
-    CeloBurnMultiTokenBatch,
-    CeloDeployMultiToken,
-    CeloUpdateCashbackMultiToken
+    TransferCeloOrCeloErc20Token
 } from '../model';
 
 const obtainWalletInformation = async (wallet: CeloWallet, feeCurrencyContractAddress?: string) => {
@@ -1360,10 +1360,10 @@ export const prepareCeloStoreDataSignedTransaction = async (testnet: boolean, bo
 export const sendCeloOrcUsdTransaction = async (testnet: boolean, body: TransferCeloOrCeloErc20Token, provider?: string) =>
     celoBroadcast(await prepareCeloOrCUsdSignedTransaction(testnet, body, provider));
 
-export const sendCeloMinErc721Transaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) =>
+export const sendCeloMintErc721Transaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) =>
     celoBroadcast(await prepareCeloMintErc721SignedTransaction(testnet, body, provider));
 
-export const sendCeloMinCashbackErc721Transaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) =>
+export const sendCeloMintCashbackErc721Transaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) =>
     celoBroadcast(await prepareCeloMintCashbackErc721SignedTransaction(testnet, body, provider));
 
 export const sendCeloMintMultipleErc721Transaction = async (testnet: boolean, body: CeloMintMultipleErc721, provider?: string) =>
