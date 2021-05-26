@@ -51,10 +51,12 @@ import {sendFlowNftBurnToken, sendFlowNftMintMultipleToken, sendFlowNftMintToken
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetBalanceErc721" target="_blank">Tatum API documentation</a>
  */
-
 export const getNFTsByAddress = async (chain: Currency, contractAddress: string, address: string): Promise<string[]> =>
     get(`/v3/nft/balance/${chain}/${contractAddress}/${address}`);
 
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetContractAddress" target="_blank">Tatum API documentation</a>
+ */
 export const getNFTContractAddress = async (chain: Currency, txId: string): Promise<{ contractAddress: string }> =>
     get(`/v3/nft/address/${chain}/${txId}`);
 
