@@ -24,6 +24,31 @@ transaction(type: String) {
     }
 }`;
 
+export const metadataFlowNftTokenScript = (testnet: boolean) => `
+import TatumMultiNFT from ${testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLOW_MAINNET_ADDRESSES.TatumMultiNFT}
+
+pub fun main(account: Address, id: UInt64, type: String): String {
+    let collectionRef = getAccount(account)
+        .getCapability(TatumMultiNFT.CollectionPublicPath)
+        .borrow<&{TatumMultiNFT.TatumMultiNftCollectionPublic}>()
+        ?? panic("Could not borrow capability from public collection")
+
+    return collectionRef.getMetadata(id: id, type: type)
+}`;
+
+
+export const tokenByAddressFlowNftTokenScript = (testnet: boolean) => `
+import TatumMultiNFT from ${testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLOW_MAINNET_ADDRESSES.TatumMultiNFT}
+
+pub fun main(address: Address, type: String): [UInt64] {
+    let collectionRef = getAccount(address)
+        .getCapability(TatumMultiNFT.CollectionPublicPath)
+        .borrow<&{TatumMultiNFT.TatumMultiNftCollectionPublic}>()
+        ?? panic("Could not borrow capability from public collection")
+
+    return collectionRef.getIDs(type: type)
+}`;
+
 export const mintFlowNftTokenTxTemplate = (testnet: boolean) => `
 import TatumMultiNFT from ${testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLOW_MAINNET_ADDRESSES.TatumMultiNFT}
 

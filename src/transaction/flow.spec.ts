@@ -1,5 +1,5 @@
 import {Currency, TransferFlow} from '../model';
-import {flowAddPublicKeyToAccount, flowCreateAccountFromPublicKey, flowSendTransaction} from './flow';
+import {flowAddPublicKeyToAccount, flowCreateAccountFromPublicKey, flowSendTransaction, getFlowNftMetadata, getFlowNftTokenByAddress} from './flow';
 
 describe('Flow tests', () => {
 
@@ -28,5 +28,15 @@ describe('Flow tests', () => {
         body.currency = Currency.FLOW;
         const result = await flowSendTransaction(true, body);
         expect(result.txId).toBeDefined();
+    });
+
+    it.skip('should get NFT token by address', async () => {
+        const result = await getFlowNftTokenByAddress(true, '0x21cbd745a4df66f1', '1');
+        expect(result).toBeDefined();
+    });
+
+    it.skip('should get NFT token metadata', async () => {
+        const result = await getFlowNftMetadata(true, '0x21cbd745a4df66f1', '1', '1');
+        expect(result).toBeDefined();
     });
 });

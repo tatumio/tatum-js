@@ -14,11 +14,13 @@ import {Currency, FlowBurnNft, FlowMintMultipleNft, FlowMintNft, FlowTransferNft
 import {generatePrivateKeyFromMnemonic} from '../wallet';
 import {
     burnFlowNftTokenTxTemplate,
+    metadataFlowNftTokenScript,
     mintFlowMultipleNftTokenTxTemplate,
     mintFlowNftTokenTxTemplate,
     prepareAddPublicKeyToAccountTxTemplate,
     prepareCreateAccountWithFUSDFromPublicKeyTxTemplate,
     prepareTransferFlowTxTemplate,
+    tokenByAddressFlowNftTokenScript,
     transferFlowNftTokenTxTemplate
 } from './flowTransaction';
 
@@ -129,6 +131,15 @@ const sendTransaction = async (testnet: boolean, {
     };
 };
 
+const sendScript = async (testnet: boolean, code: string, args: Argument[]) => {
+    fcl.config().put('accessNode.api', testnet ? 'https://access-testnet.onflow.org' : 'https://access-mainnet-beta.onflow.org');
+    const response = await fcl.send([
+        fcl.script(code),
+        fcl.args(args.map(arg => fcl.arg(arg.value, types[arg.type]))),
+    ]);
+    return fcl.decode(response);
+};
+
 export const flowSignKMSTransaction = async (tx: TransactionKMS, privateKeys: string[], testnet: boolean) => {
     if (tx.chain !== Currency.FLOW) {
         throw Error('Unsupported chain.');
@@ -186,6 +197,18 @@ export const flowAddPublicKeyToAccount = async (testnet: boolean, publicKey: str
         throw new Error(result.error);
     }
     return {txId: result.id, address: result.events[0].data.address};
+};
+
+export const getFlowNftMetadata = async (testnet: boolean, account: string, id: string, tokenType: string) => {
+    const code = metadataFlowNftTokenScript(testnet);
+    const args = [{type: 'Address', value: account}, {type: 'UInt64', value: id}, {type: 'String', value: tokenType}];
+    return await sendScript(testnet, code, args);
+};
+
+export const getFlowNftTokenByAddress = async (testnet: boolean, account: string, tokenType: string) => {
+    const code = tokenByAddressFlowNftTokenScript(testnet);
+    const args = [{type: 'Address', value: account}, {type: 'String', value: tokenType}];
+    return await sendScript(testnet, code, args);
 };
 
 export const sendFlowNftMintToken = async (testnet: boolean, body: FlowMintNft):
