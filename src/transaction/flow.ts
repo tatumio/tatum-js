@@ -28,6 +28,7 @@ export enum FlowTxType {
     TRANSFER,
     DEPLOY_NFT,
     MINT_NFT,
+    MINT_MULTIPLE_NFT,
     BURN_NFT,
     TRANSFER_NFT,
 }
@@ -144,6 +145,8 @@ export const flowSignKMSTransaction = async (tx: TransactionKMS, privateKeys: st
             return await sendFlowNftTransferToken(testnet, {...body, privateKey: privateKeys[0]});
         case FlowTxType.MINT_NFT:
             return await sendFlowNftMintToken(testnet, {...body, privateKey: privateKeys[0]});
+        case FlowTxType.MINT_MULTIPLE_NFT:
+            return await sendFlowNftMintMultipleToken(testnet, {...body, privateKey: privateKeys[0]});
         case FlowTxType.BURN_NFT:
             return await sendFlowNftBurnToken(testnet, {...body, privateKey: privateKeys[0]});
     }
