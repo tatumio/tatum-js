@@ -1,6 +1,7 @@
+import dedent from 'dedent-js';
 import {FLOW_MAINNET_ADDRESSES, FLOW_TESTNET_ADDRESSES} from '../../constants';
 
-export const deployFlowNftTokenTypeWithMinterTxTemplate = (testnet: boolean) => `
+export const deployFlowNftTokenTypeWithMinterTxTemplate = (testnet: boolean) => dedent`
 import TatumMultiNFT from ${testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLOW_MAINNET_ADDRESSES.TatumMultiNFT}
 
 transaction(type: String) {
@@ -20,11 +21,11 @@ transaction(type: String) {
 
     execute {
         // add new minter for specific token type
-        self.minter.addMinter(minterAccount: self.newMinter, type: type)
+        return self.minter.addMinter(minterAccount: self.newMinter, type: type)
     }
 }`;
 
-export const metadataFlowNftTokenScript = (testnet: boolean) => `
+export const metadataFlowNftTokenScript = (testnet: boolean) => dedent`
 import TatumMultiNFT from ${testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLOW_MAINNET_ADDRESSES.TatumMultiNFT}
 
 pub fun main(account: Address, id: UInt64, type: String): String {
@@ -37,7 +38,7 @@ pub fun main(account: Address, id: UInt64, type: String): String {
 }`;
 
 
-export const tokenByAddressFlowNftTokenScript = (testnet: boolean) => `
+export const tokenByAddressFlowNftTokenScript = (testnet: boolean) => dedent`
 import TatumMultiNFT from ${testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLOW_MAINNET_ADDRESSES.TatumMultiNFT}
 
 pub fun main(address: Address, type: String): [UInt64] {
@@ -49,7 +50,7 @@ pub fun main(address: Address, type: String): [UInt64] {
     return collectionRef.getIDs(type: type)
 }`;
 
-export const mintFlowNftTokenTxTemplate = (testnet: boolean) => `
+export const mintFlowNftTokenTxTemplate = (testnet: boolean) => dedent`
 import TatumMultiNFT from ${testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLOW_MAINNET_ADDRESSES.TatumMultiNFT}
 
 transaction(recipient: Address, url: String, type: String) {
@@ -79,7 +80,7 @@ transaction(recipient: Address, url: String, type: String) {
     }
 }`;
 
-export const mintFlowMultipleNftTokenTxTemplate = (testnet: boolean) => `
+export const mintFlowMultipleNftTokenTxTemplate = (testnet: boolean) => dedent`
 import TatumMultiNFT from ${testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLOW_MAINNET_ADDRESSES.TatumMultiNFT}
 
 transaction(recipient: [Address], url: [String], type: String) {
@@ -113,7 +114,7 @@ transaction(recipient: [Address], url: [String], type: String) {
     }
 }`;
 
-export const burnFlowNftTokenTxTemplate = (testnet: boolean) => `
+export const burnFlowNftTokenTxTemplate = (testnet: boolean) => dedent`
 import TatumMultiNFT from ${testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLOW_MAINNET_ADDRESSES.TatumMultiNFT}
 
 transaction(withdrawID: UInt64, type: String) {
@@ -136,7 +137,7 @@ transaction(withdrawID: UInt64, type: String) {
     }
 }`;
 
-export const transferFlowNftTokenTxTemplate = (testnet: boolean) => `
+export const transferFlowNftTokenTxTemplate = (testnet: boolean) => dedent`
 import TatumMultiNFT from ${testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLOW_MAINNET_ADDRESSES.TatumMultiNFT}
 
 transaction(recipient: Address, withdrawID: UInt64, type: String) {
@@ -167,17 +168,15 @@ transaction(recipient: Address, withdrawID: UInt64, type: String) {
     }
 }`;
 
-export const prepareAddPublicKeyToAccountTxTemplate = () => {
-    return `transaction(publicKey: String) {
+export const prepareAddPublicKeyToAccountTxTemplate = () =>
+    dedent`transaction(publicKey: String) {
 prepare(signer: AuthAccount) {
 signer.addPublicKey(publicKey.decodeHex())
 }
 }`;
-};
 
 export const prepareTransferFlowTxTemplate = (testnet: boolean, tokenAddress: string, tokenName: string, tokenStorage: string) =>
-    `
-  import FungibleToken from ${testnet ? FLOW_TESTNET_ADDRESSES.FungibleToken : FLOW_MAINNET_ADDRESSES.FungibleToken}
+    dedent`import FungibleToken from ${testnet ? FLOW_TESTNET_ADDRESSES.FungibleToken : FLOW_MAINNET_ADDRESSES.FungibleToken}
   import ${tokenName} from ${tokenAddress}
 
 transaction(amount: UFix64, recipient: Address) {
@@ -200,7 +199,7 @@ transaction(amount: UFix64, recipient: Address) {
 }`;
 
 export const prepareCreateAccountWithFUSDFromPublicKeyTxTemplate = (testnet: boolean) =>
-    `import FungibleToken from ${testnet ? FLOW_TESTNET_ADDRESSES.FungibleToken : FLOW_MAINNET_ADDRESSES.FungibleToken}
+    dedent`import FungibleToken from ${testnet ? FLOW_TESTNET_ADDRESSES.FungibleToken : FLOW_MAINNET_ADDRESSES.FungibleToken}
   import FUSD from ${testnet ? FLOW_TESTNET_ADDRESSES.FUSD : FLOW_MAINNET_ADDRESSES.FUSD}
   import TatumMultiNFT from ${testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLOW_MAINNET_ADDRESSES.TatumMultiNFT}
   transaction(publicKey: String) {
