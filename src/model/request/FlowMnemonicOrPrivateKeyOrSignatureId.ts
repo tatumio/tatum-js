@@ -1,10 +1,9 @@
-import {IsHexadecimal, IsInt, IsNotEmpty, IsUUID, Length, Max, Min, Validate, ValidateIf} from 'class-validator';
+import {IsInt, IsNotEmpty, IsUUID, Length, Max, Min, Validate, ValidateIf} from 'class-validator';
 import {SignatureIdValidator} from '../validation/SignatureIdValidator';
 
 export class FlowMnemonicOrPrivateKeyOrSignatureId {
 
     @IsNotEmpty()
-    @IsHexadecimal()
     @Length(18, 18)
     public account: string;
 
