@@ -229,7 +229,7 @@ export const sendFlowNftMintToken = async (testnet: boolean, body: FlowMintNft):
 
 export const sendFlowNftMintMultipleToken = async (testnet: boolean, body: FlowMintMultipleNft):
     Promise<{ txId: string, tokenId: number[] }> => {
-    await validateBody(body, FlowMintNft);
+    await validateBody(body, FlowMintMultipleNft);
     const code = mintFlowMultipleNftTokenTxTemplate(testnet);
     const {url, contractAddress: tokenType, to, mnemonic, index, account, privateKey} = body;
     const args = [{type: 'Array', value: to}, {type: 'Array', value: url}, {type: 'String', value: tokenType}];
