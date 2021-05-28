@@ -213,7 +213,7 @@ export const getFlowNftTokenByAddress = async (testnet: boolean, account: string
 };
 
 export const sendFlowNftMintToken = async (testnet: boolean, body: FlowMintNft):
-    Promise<{ txId: string }> => {
+    Promise<{ txId: string, tokenId: number }> => {
     await validateBody(body, FlowMintNft);
     const code = mintFlowNftTokenTxTemplate(testnet);
     const {url, contractAddress: tokenType, to, mnemonic, index, account, privateKey} = body;
@@ -224,11 +224,11 @@ export const sendFlowNftMintToken = async (testnet: boolean, body: FlowMintNft):
     if (result.error) {
         throw new Error(result.error);
     }
-    return {txId: result.id};
+    return {txId: result.id, tokenId: result.events[0].data.id};
 };
 
 export const sendFlowNftMintMultipleToken = async (testnet: boolean, body: FlowMintMultipleNft):
-    Promise<{ txId: string }> => {
+    Promise<{ txId: string, tokenId: number[] }> => {
     await validateBody(body, FlowMintNft);
     const code = mintFlowMultipleNftTokenTxTemplate(testnet);
     const {url, contractAddress: tokenType, to, mnemonic, index, account, privateKey} = body;
@@ -239,7 +239,7 @@ export const sendFlowNftMintMultipleToken = async (testnet: boolean, body: FlowM
     if (result.error) {
         throw new Error(result.error);
     }
-    return {txId: result.id};
+    return {txId: result.id, tokenId: result.events.map(e => e.data.id)};
 };
 
 export const sendFlowNftTransferToken = async (testnet: boolean, body: FlowTransferNft):
