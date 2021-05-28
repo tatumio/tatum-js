@@ -30,13 +30,13 @@ describe('Flow tests', () => {
         expect(result.txId).toBeDefined();
     });
 
-    it.skip('should get NFT token by address', async () => {
-        const result = await getFlowNftTokenByAddress(true, '0x21cbd745a4df66f1', '1');
+    it('should get NFT token by address', async () => {
+        const result = await getFlowNftTokenByAddress(true, '0x2d0d7b39db4e3a08', '27320939-3087-490e-a65e-a53c8b06fcd9');
         expect(result).toBeDefined();
     });
 
-    it.skip('should get NFT token metadata', async () => {
-        const result = await getFlowNftMetadata(true, '0x21cbd745a4df66f1', '1', '1');
+    it('should get NFT token metadata', async () => {
+        const result = await getFlowNftMetadata(true, '0x2d0d7b39db4e3a08', '8', '27320939-3087-490e-a65e-a53c8b06fcd9');
         expect(result).toBeDefined();
     });
 });

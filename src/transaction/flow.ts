@@ -116,7 +116,8 @@ const sendTransaction = async (testnet: boolean, {
     fcl.config().put('accessNode.api', testnet ? 'https://access-testnet.onflow.org' : 'https://access-mainnet-beta.onflow.org');
     const response = await fcl.send([
         fcl.transaction(code),
-        fcl.args(args.map(arg => fcl.arg(arg.value, arg.type === 'Array' ? types[arg.type](types[arg.subType]) : types[arg.type]))),
+        fcl.args(args.map(arg => fcl.arg(arg.type === 'UInt64' ? parseInt(arg.value as string) : arg.value,
+            arg.type === 'Array' ? types[arg.type](types[arg.subType]) : types[arg.type]))),
         fcl.proposer(proposer),
         fcl.authorizations(authorizations),
         fcl.payer(payer),
@@ -137,7 +138,7 @@ const sendScript = async (testnet: boolean, code: string, args: Argument[]) => {
     fcl.config().put('accessNode.api', testnet ? 'https://access-testnet.onflow.org' : 'https://access-mainnet-beta.onflow.org');
     const response = await fcl.send([
         fcl.script(code),
-        fcl.args(args.map(arg => fcl.arg(arg.value, types[arg.type]))),
+        fcl.args(args.map(arg => fcl.arg(arg.type === 'UInt64' ? parseInt(arg.value as string) : arg.value, types[arg.type]))),
     ]);
     return fcl.decode(response);
 };
