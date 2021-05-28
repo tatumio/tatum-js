@@ -54,7 +54,8 @@ interface AccountAuthorization {
 
 
 type Argument = {
-    type: string
+    type: string,
+    subType?: string,
     value: string | string[]
 }
 
@@ -115,7 +116,7 @@ const sendTransaction = async (testnet: boolean, {
     fcl.config().put('accessNode.api', testnet ? 'https://access-testnet.onflow.org' : 'https://access-mainnet-beta.onflow.org');
     const response = await fcl.send([
         fcl.transaction(code),
-        fcl.args(args.map(arg => fcl.arg(arg.value, types[arg.type]))),
+        fcl.args(args.map(arg => fcl.arg(arg.value, arg.type === 'Array' ? types[arg.type](types[arg.subType]) : types[arg.type]))),
         fcl.proposer(proposer),
         fcl.authorizations(authorizations),
         fcl.payer(payer),
@@ -232,7 +233,7 @@ export const sendFlowNftMintMultipleToken = async (testnet: boolean, body: FlowM
     await validateBody(body, FlowMintMultipleNft);
     const code = mintFlowMultipleNftTokenTxTemplate(testnet);
     const {url, contractAddress: tokenType, to, mnemonic, index, account, privateKey} = body;
-    const args = [{type: 'Array', value: to}, {type: 'Array', value: url}, {type: 'String', value: tokenType}];
+    const args = [{type: 'Array', subType: 'Address', value: to}, {type: 'Array', subType: 'String', value: url}, {type: 'String', value: tokenType}];
     const pk = (mnemonic && index && index >= 0) ? await generatePrivateKeyFromMnemonic(Currency.FLOW, testnet, mnemonic, index as number) : privateKey as string;
     const auth = getFlowSigner(pk, account);
     const result = await sendTransaction(testnet, {code, args, proposer: auth, authorizations: [auth], payer: auth});
