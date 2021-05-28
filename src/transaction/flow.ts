@@ -224,7 +224,7 @@ export const sendFlowNftMintToken = async (testnet: boolean, body: FlowMintNft):
     if (result.error) {
         throw new Error(result.error);
     }
-    return {txId: result.id, tokenId: result.events[0].data.id};
+    return {txId: result.id, tokenId: result.events.find((e: any) => e.type.includes('TatumMultiNFT.Deposit'))?.data.id};
 };
 
 export const sendFlowNftMintMultipleToken = async (testnet: boolean, body: FlowMintMultipleNft):
@@ -239,7 +239,7 @@ export const sendFlowNftMintMultipleToken = async (testnet: boolean, body: FlowM
     if (result.error) {
         throw new Error(result.error);
     }
-    return {txId: result.id, tokenId: result.events.map(e => e.data.id)};
+    return {txId: result.id, tokenId: result.events.filter((e: any) => e.type.includes('TatumMultiNFT.Deposit')).map(e => e.data.id)};
 };
 
 export const sendFlowNftTransferToken = async (testnet: boolean, body: FlowTransferNft):
