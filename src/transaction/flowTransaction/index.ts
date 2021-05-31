@@ -104,10 +104,10 @@ transaction(recipient: [Address], url: [String], type: String) {
         var a = 0;
         while a < url.length {
         // get the public account object for the recipient
-        let recipient = getAccount(recipient[a])
+        let recipientAccount = getAccount(recipient[a])
 
         // borrow the recipient's public NFT collection reference
-        let receiver = recipient
+        let receiver = recipientAccount
             .getCapability(TatumMultiNFT.CollectionPublicPath)
             .borrow<&{TatumMultiNFT.TatumMultiNftCollectionPublic}>()
             ?? panic("Could not get receiver reference to the NFT Collection")

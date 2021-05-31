@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum",
-  "version": "1.14.17",
+  "version": "1.14.18",
   "description": "",
   "main": "dist/src/index.js",
   "repository": "https://github.com/tatumio/tatum-js",
