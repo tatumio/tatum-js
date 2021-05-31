@@ -248,8 +248,8 @@ export const sendFlowNftTransferToken = async (testnet: boolean, body: FlowTrans
     Promise<{ txId: string }> => {
     await validateBody(body, FlowTransferNft);
     const code = transferFlowNftTokenTxTemplate(testnet);
-    const {tokenId, contractAddress: tokenType, to, mnemonic, index, account, privateKey} = body;
-    const args = [{type: 'Address', value: to}, {type: 'UInt64', value: tokenId}, {type: 'String', value: tokenType}];
+    const {tokenId, to, mnemonic, index, account, privateKey} = body;
+    const args = [{type: 'Address', value: to}, {type: 'UInt64', value: tokenId}];
     const pk = (mnemonic && index && index >= 0) ? await generatePrivateKeyFromMnemonic(Currency.FLOW, testnet, mnemonic, index as number) : privateKey as string;
     const auth = getFlowSigner(pk, account);
     const result = await sendTransaction(testnet, {code, args, proposer: auth, authorizations: [auth], payer: auth});
