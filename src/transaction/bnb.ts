@@ -23,6 +23,14 @@ export const signBnbKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
     const account = await bnbGetAccount(fromAddress);
     bnbClient.setAccountNumber(account.account_number);
     const {msg, signMsg, memo} = JSON.parse(tx.serializedTransaction);
+    msg.inputs = msg.inputs.map((i: any) => {
+        i.address = Buffer.from(i.address.data);
+        return i;
+    });
+    msg.outputs = msg.outputs.map((i: any) => {
+        i.address = Buffer.from(i.address.data);
+        return i;
+    });
     const signedTx = await bnbClient._prepareTransaction(
         msg,
         signMsg,
