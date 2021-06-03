@@ -26,15 +26,11 @@ export class MintMultiToken extends PrivateKeyOrSignatureId {
     @IsOptional()
     public nonce?: number;
 
-    @IsNotEmpty()
+    @IsOptional()
     public data: string;
 
     @IsNotEmpty()
     public amount: string;
-
-    public authorAddresses?: string[];
-
-    public cashbackValues?: string[];
 
     @IsOptional()
     @Type(() => Fee)

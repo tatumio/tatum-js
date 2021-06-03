@@ -23,6 +23,9 @@ export class BurnMultiToken extends PrivateKeyOrSignatureId {
     @IsIn([Currency.BSC, Currency.ETH, Currency.CELO])
     public chain: Currency;
 
+    @IsOptional()
+    public data: string;
+    
     @Min(0)
     @IsInt()
     @IsOptional()

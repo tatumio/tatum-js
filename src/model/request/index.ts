@@ -86,5 +86,3 @@ export * from './CeloBurnMultiTokenBatch';
 export * from './CeloDeployMultiToken';
 export * from './CeloUpdateCashbackErc721';
 export * from './UpdateCashbackErc721';
-export * from './UpdateCashbackMultiToken';
-export * from './CeloUpdateCashbackMultiToken';

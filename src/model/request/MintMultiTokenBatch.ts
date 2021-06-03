@@ -1,7 +1,7 @@
 import { Type } from 'class-transformer'
-import { Fee } from './Fee'
 import {IsIn, IsNotEmpty, IsOptional, Length, Min, ValidateNested} from 'class-validator';
 import {Currency} from './Currency';
+import { Fee } from './Fee'
 import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
 
 export class MintMultiTokenBatch extends PrivateKeyOrSignatureId {
@@ -27,13 +27,9 @@ export class MintMultiTokenBatch extends PrivateKeyOrSignatureId {
     @IsNotEmpty()
     public amounts: string[][];
 
-    @IsNotEmpty()
+    @IsOptional()
     public data: string;
 
-    public authorAddresses?: string[][][];
-
-    public cashbackValues?: string[][][];
-    
     @IsOptional()
     @Type(() => Fee)
     @ValidateNested()
