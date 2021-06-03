@@ -24,16 +24,12 @@ export class TransferMultiTokenBatch extends PrivateKeyOrSignatureId {
     @IsNotEmpty()
     public amounts: string[];
 
-    @IsNotEmpty()
+    @IsOptional()
     public data: string;
 
     @Min(0)
     @IsOptional()
     public nonce?: number;
-
-    @IsOptional()
-    @IsNumberString()
-    public value?: string;
 
     @IsOptional()
     @Type(() => Fee)

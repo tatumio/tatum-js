@@ -34,7 +34,6 @@ import {
     MintMultiTokenBatch,
     EthDeployMultiToken,
     UpdateCashbackErc721,
-    UpdateCashbackMultiToken,
     Fee,
 } from '../model';
 
@@ -649,7 +648,8 @@ export const prepareBscBurnMultiTokenSignedTransaction = async (body: EthBurnMul
         fee,
         contractAddress,
         nonce,
-        signatureId
+        signatureId,
+        data
     } = body;
 
     const client = await getBscClient(provider, fromPrivateKey);
@@ -659,7 +659,7 @@ export const prepareBscBurnMultiTokenSignedTransaction = async (body: EthBurnMul
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
-        data: contract.methods.burn(account, tokenId, amount).encodeABI(),
+        data: contract.methods.burn(account, tokenId, amount,data?data:'0x0').encodeABI(),
         nonce,
     };
     return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey,fee);
@@ -675,55 +675,24 @@ export const prepareBscBurnMultiTokenBatchSignedTransaction = async (body: EthBu
         fee,
         contractAddress,
         nonce,
-        signatureId
-    } = body;
-
-    const client = await getBscClient(provider, fromPrivateKey);
-
-    // @ts-ignore
-    const contract = new (client).eth.Contract(erc1155TokenABI, contractAddress);
-    const tx: TransactionConfig = {
-        from: 0,
-        to: contractAddress.trim(),
-        data: contract.methods.burnBatch(account, tokenId, amounts).encodeABI(),
-        nonce,
-    };
-
-    return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey,fee);
-};
-/**
- * Sign Bsc update cashback ERC 1155 transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param body content of the transaction to broadcast
- * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
- * @returns transaction data to be broadcast to blockchain.
- */
-export const prepareBscUpdateCashbackForAuthorMultiTokenSignedTransaction = async (body: UpdateCashbackMultiToken, provider?: string) => {
-    await validateBody(body, UpdateCashbackMultiToken);
-    const {
-        fromPrivateKey,
-        author,
-        cashbackValue,
-        tokenId,
-        fee,
-        contractAddress,
-        nonce,
         signatureId,
+        data
     } = body;
 
     const client = await getBscClient(provider, fromPrivateKey);
 
     // @ts-ignore
     const contract = new (client).eth.Contract(erc1155TokenABI, contractAddress);
-
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
-        data: contract.methods.updateCashbackForAuthor(tokenId, `0x${new BigNumber(toWei(cashbackValue, 'ether')).toString(16)}`).encodeABI(),
+        data: contract.methods.burnBatch(account, tokenId, amounts,data?data:'0x0').encodeABI(),
         nonce,
     };
 
     return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey,fee);
 };
+
 export const prepareBscTransferMultiTokenSignedTransaction = async (body: TransferMultiToken, provider?: string) => {
     await validateBody(body, TransferMultiToken);
     const {
@@ -736,7 +705,6 @@ export const prepareBscTransferMultiTokenSignedTransaction = async (body: Transf
         signatureId,
         amount,
         data,
-        value
     } = body;
 
     const client = await getBscClient(provider, fromPrivateKey);
@@ -746,9 +714,8 @@ export const prepareBscTransferMultiTokenSignedTransaction = async (body: Transf
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
-        data: contract.methods.safeTransfer(to.trim(), tokenId, client.utils.toWei(`${amount}`, 'ether'), data).encodeABI(),
+        data: contract.methods.safeTransfer(to.trim(), tokenId, client.utils.toWei(`${amount}`, 'ether'), data?data:'0x0').encodeABI(),
         nonce,
-        value: value ? `0x${new BigNumber(value).multipliedBy(1e18).toString(16)}` : undefined,
     };
 
     return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey,fee);
@@ -765,7 +732,6 @@ export const prepareBscBatchTransferMultiTokenSignedTransaction = async (body: T
         signatureId,
         amounts,
         data,
-        value
     } = body;
 
     const client = await getBscClient(provider, fromPrivateKey);
@@ -778,7 +744,6 @@ export const prepareBscBatchTransferMultiTokenSignedTransaction = async (body: T
         to: contractAddress.trim(),
         data: contract.methods.safeBatchTransfer(to.trim(), tokenId.map(token => token.trim()), amts).encodeABI(),
         nonce,
-        value: value ? `0x${new BigNumber(value).multipliedBy(1e18).toString(16)}` : undefined,
     };
 
     return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey,fee);
@@ -810,7 +775,7 @@ export const prepareBscMintMultiTokenSignedTransaction = async (body: MintMultiT
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
-        data: contract.methods.mint(to.trim(), tokenId, `0x${new BigNumber(client.utils.toWei(amount, 'ether')).toString(16)}`, data).encodeABI(),
+        data: contract.methods.mint(to.trim(), tokenId, `0x${new BigNumber(client.utils.toWei(amount, 'ether')).toString(16)}`, data?data:'0x0').encodeABI(),
         nonce,
     };
 
@@ -843,86 +808,13 @@ export const prepareBscMintMultiTokenBatchSignedTransaction = async (body: MintM
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
-        data: contract.methods.mintBatch(to, tokenId, amts, data).encodeABI(),
+        data: contract.methods.mintBatch(to, tokenId, amts, data?data:'0x0').encodeABI(),
         nonce,
     };
 
     return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey,fee);
 };
-/**
- * Sign BSC mint multiple ERC 721 transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param body content of the transaction to broadcast
- * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
- * @returns transaction data to be broadcast to blockchain.
- */
-export const prepareBscMintMultiTokenCashbackSignedTransaction = async (body: MintMultiToken, provider?: string) => {
-    await validateBody(body, MintMultiToken);
-    const {
-        fromPrivateKey,
-        to,
-        tokenId,
-        contractAddress,
-        authorAddresses,
-        cashbackValues,
-        nonce,
-        amount,
-        data,
-        signatureId,
-        fee
-    } = body;
 
-    const client = await getBscClient(provider, fromPrivateKey);
-
-    // @ts-ignore
-    const contract = new (client).eth.Contract(erc1155TokenABI, contractAddress);
-    const cashbacks: string[] = cashbackValues!;
-    // tslint:disable-next-line: prefer-for-of
-    const cb=cashbacks.map(c=>`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
-    const tx: TransactionConfig = {
-        from: 0,
-        to: contractAddress.trim(),
-        data: contract.methods.mintWithCashback(to, tokenId, `0x${new BigNumber(client.utils.toWei(amount, 'ether')).toString(16)}`, data, authorAddresses, cb).encodeABI(),
-        nonce,
-    };
-    return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey,fee);
-};
-/**
- * Sign Ethereum mint multiple ERC 721 Cashback transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param body content of the transaction to broadcast
- * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
- * @returns transaction data to be broadcast to blockchain.
- */
-export const prepareBscMintMultiTokenBatchCashbackSignedTransaction = async (body: MintMultiTokenBatch, provider?: string) => {
-    await validateBody(body, MintMultiTokenBatch);
-    const {
-        fromPrivateKey,
-        to,
-        tokenId,
-        contractAddress,
-        nonce,
-        signatureId,
-        amounts,
-        authorAddresses,
-        cashbackValues,
-        data,
-        fee
-    } = body;
-
-    const client = await getBscClient(provider, fromPrivateKey);
-
-    // @ts-ignore
-    const contract = new (client).eth.Contract(erc1155TokenABI, contractAddress);
-    const cashbacks: string[][][] = cashbackValues!;
-    const cb = cashbacks.map(cashback => cashback.map(cbs => cbs.map(c => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)))
-    const amt = amounts.map(amts => amts.map(amt => `0x${new BigNumber(client.utils.toWei(amt, 'ether')).toString(16)}`));
-    const tx: TransactionConfig = {
-        from: 0,
-        to: contractAddress.trim(),
-        data: contract.methods.mintBatchWithCashback(to.map(t => t.trim()), tokenId, amt, data, authorAddresses, cb).encodeABI(),
-        nonce,
-    };
-    return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey,fee);
-};
 /**
  * Sign Bsc deploy ERC 1155 transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
@@ -1049,11 +941,6 @@ export const sendBscMintMultiTokenTransaction = async (body: MintMultiToken, pro
     bscBroadcast(await prepareBscMintMultiTokenSignedTransaction(body, provider), body.signatureId);
 export const sendBscMintMultiTokenBatchTransaction = async (body: MintMultiTokenBatch, provider?: string) =>
     bscBroadcast(await prepareBscMintMultiTokenBatchSignedTransaction(body, provider), body.signatureId);
-// cashbacks mints
-export const sendBscMintMultiTokenCashbackTransaction = async (body: MintMultiToken, provider?: string) =>
-    bscBroadcast(await prepareBscMintMultiTokenCashbackSignedTransaction(body, provider), body.signatureId);
-export const sendBscMintMultiTokenBatchCashbackTransaction = async (body: MintMultiTokenBatch, provider?: string) =>
-    bscBroadcast(await prepareBscMintMultiTokenBatchCashbackSignedTransaction(body, provider), body.signatureId);
 
 /**
  * Send Bsc BEP721 mint transaction to the blockchain with cashback details. This method broadcasts signed transaction to the blockchain.
@@ -1096,9 +983,6 @@ export const sendBurnBep721Transaction = async (body: EthBurnErc721, provider?: 
 
 export const sendUpdateCashbackForAuthorBep721Transaction = async (body: UpdateCashbackErc721, provider?: string) =>
     bscBroadcast(await prepareBscUpdateCashbackForAuthorErc721SignedTransaction(body, provider), body.signatureId);
-export const sendBscUpdateCashbackForAuthorMultiTokenTransaction = async (body: UpdateCashbackMultiToken, provider?: string) =>
-    bscBroadcast(await prepareBscUpdateCashbackForAuthorMultiTokenSignedTransaction(body, provider), body.signatureId);
-
 // Burn 1155
 export const sendBscBurnMultiTokenTransaction = async (body: EthBurnMultiToken, provider?: string) =>
     bscBroadcast(await prepareBscBurnMultiTokenSignedTransaction(body, provider), body.signatureId);

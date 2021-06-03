@@ -1,55 +1,42 @@
 import {
     CeloMintMultiToken,
     CeloMintMultiTokenBatch,
+    CeloTransferMultiToken,
+    CeloTransferMultiTokenBatch,
     Currency,
     MintMultiToken,
     MintMultiTokenBatch,
     TransferMultiToken,
-    TransferMultiTokenBatch,
-    CeloTransferMultiToken,
-    CeloTransferMultiTokenBatch
+    TransferMultiTokenBatch
 } from '../model';
-import { CeloUpdateCashbackErc721 } from '../model/request/CeloUpdateCashbackErc721';
-import { UpdateCashbackErc721 } from '../model/request/UpdateCashbackErc721';
+import { CeloBurnMultiToken } from '../model/request/CeloBurnMultiToken';
+import { CeloBurnMultiTokenBatch } from '../model/request/CeloBurnMultiTokenBatch';
+import { CeloDeployMultiToken } from '../model/request/CeloDeployMultiToken';
 import { EthBurnMultiToken } from '../model/request/EthBurnMultiToken';
 import { EthBurnMultiTokenBatch } from '../model/request/EthBurnMultiTokenBatch';
-import { CeloBurnMultiTokenBatch } from '../model/request/CeloBurnMultiTokenBatch';
-import { CeloBurnMultiToken } from '../model/request/CeloBurnMultiToken';
 import { EthDeployMultiToken } from '../model/request/EthDeployMultiToken';
-import { CeloDeployMultiToken } from '../model/request/CeloDeployMultiToken';
-import { sendCeloUpdateCashbackForAuthorMultiTokenTransaction } from '../transaction/celo';
-import { sendEthUpdateCashbackForAuthorMultiTokenTransaction } from '../transaction/eth';
-import { sendBscUpdateCashbackForAuthorMultiTokenTransaction } from '../transaction/bsc';
-import { UpdateCashbackMultiToken } from '../model/request/UpdateCashbackMultiToken';
-import { CeloUpdateCashbackMultiToken } from '../model/request/CeloUpdateCashbackMultiToken';
 import {
-    sendCeloBurnMultiTokenTransaction,
-    sendEthDeployMultiTokenTransaction,
-    sendCeloDeployMultiTokenTransaction,
+    sendBscBurnBatchMultiTokenTransaction,
+    sendBscBurnMultiTokenTransaction,
     sendBscDeployMultiTokenTransaction,
-    sendCeloTransferMultiTokenTransaction,
-    sendCeloTransferMultiTokenBatchTransaction,
-    sendEthMultiTokenTransaction,
-    sendEthMultiTokenBatchTransaction,
-    sendEthMintMultiTokenTransaction,
-    sendEthMintMultiTokenBatchTransaction,
-    sendEthMintMultiTokenCashbackTransaction,
-    sendEthMintMultiTokenBatchCashbackTransaction,
-    sendEthBurnMultiTokenTransaction,
-    sendEthBurnBatchMultiTokenTransaction,
-    sendBscMultiTokenTransaction,
-    sendBscMultiTokenBatchTransaction,
     sendBscMintMultiTokenBatchTransaction,
     sendBscMintMultiTokenTransaction,
-    sendBscMintMultiTokenCashbackTransaction,
-    sendBscMintMultiTokenBatchCashbackTransaction,
-    sendBscBurnMultiTokenTransaction,
-    sendBscBurnBatchMultiTokenTransaction,
-    sendCeloMintMultiTokenTransaction,
+    sendBscMultiTokenBatchTransaction,
+    sendBscMultiTokenTransaction,
+    sendCeloBurnMultiTokenBatchTransaction,
+    sendCeloBurnMultiTokenTransaction,
+    sendCeloDeployMultiTokenTransaction,
     sendCeloMintMultiTokenBatchTransaction,
-    sendCeloMintMultiTokenCashbackTransaction,
-    sendCeloMintMultiTokenBatchCashbackTransaction,
-    sendCeloBurnMultiTokenBatchTransaction
+    sendCeloMintMultiTokenTransaction,
+    sendCeloTransferMultiTokenBatchTransaction,
+    sendCeloTransferMultiTokenTransaction,
+    sendEthBurnBatchMultiTokenTransaction,
+    sendEthBurnMultiTokenTransaction,
+    sendEthDeployMultiTokenTransaction,
+    sendEthMintMultiTokenBatchTransaction,
+    sendEthMintMultiTokenTransaction,
+    sendEthMultiTokenBatchTransaction,
+    sendEthMultiTokenTransaction
 } from '../transaction';
 
 /**
@@ -69,43 +56,20 @@ export const deployMultiToken = async (testnet: boolean, body: CeloDeployMultiTo
 export const mintMultiToken = async (testnet: boolean, body: MintMultiToken | CeloMintMultiToken, provider?: string) => {
     switch (body.chain) {
         case Currency.CELO:
-            if (body.authorAddresses) {
-                return sendCeloMintMultiTokenCashbackTransaction(testnet, body as CeloMintMultiToken, provider);
-            } else {
                 return sendCeloMintMultiTokenTransaction(testnet, body as CeloMintMultiToken, provider);
-            }
         case Currency.ETH:
-            if (body.authorAddresses) {
-
-                return sendEthMintMultiTokenCashbackTransaction(body as MintMultiToken, provider)
-            } else {
                 return sendEthMintMultiTokenTransaction(body as MintMultiToken, provider);
-            }
         case Currency.BSC:
-            if (body.authorAddresses) {
-                return sendBscMintMultiTokenCashbackTransaction(body, provider);
-            }
             return sendBscMintMultiTokenTransaction(body, provider);
     }
 };
 export const mintMultiTokenBatch = async (testnet: boolean, body: MintMultiTokenBatch | CeloMintMultiTokenBatch, provider?: string) => {
     switch (body.chain) {
         case Currency.CELO:
-            if (body.authorAddresses) {
-                return sendCeloMintMultiTokenBatchCashbackTransaction(testnet, body as CeloMintMultiTokenBatch, provider);
-            } else {
                 return sendCeloMintMultiTokenBatchTransaction(testnet, body as CeloMintMultiTokenBatch, provider);
-            }
         case Currency.ETH:
-            if (body.authorAddresses) {
-                return sendEthMintMultiTokenBatchCashbackTransaction(body as MintMultiTokenBatch, provider)
-            } else {
                 return sendEthMintMultiTokenBatchTransaction(body as MintMultiTokenBatch, provider);
-            }
         case Currency.BSC:
-            if (body.authorAddresses) {
-                return sendBscMintMultiTokenBatchCashbackTransaction(body as MintMultiTokenBatch, provider);
-            }
             return sendBscMintMultiTokenBatchTransaction(body as MintMultiTokenBatch, provider);
     }
 };
@@ -129,16 +93,7 @@ export const burnMultiTokenBatch = async (testnet: boolean, body: CeloBurnMultiT
             return sendBscBurnBatchMultiTokenTransaction(body, provider);
     }
 };
-export const updateCashbackForAuthorMultiToken = async (testnet: boolean, body: UpdateCashbackMultiToken | CeloUpdateCashbackMultiToken, provider?: string) => {
-    switch (body.chain) {
-        case Currency.CELO:
-            return sendCeloUpdateCashbackForAuthorMultiTokenTransaction(testnet, body as CeloUpdateCashbackMultiToken, provider);
-        case Currency.ETH:
-            return sendEthUpdateCashbackForAuthorMultiTokenTransaction(body, provider);
-        case Currency.BSC:
-            return sendBscUpdateCashbackForAuthorMultiTokenTransaction(body, provider);
-    }
-};
+
 export const transferMultiToken = async (testnet: boolean, body: CeloTransferMultiToken | TransferMultiToken, provider?: string) => {
     switch (body.chain) {
         case Currency.CELO:
