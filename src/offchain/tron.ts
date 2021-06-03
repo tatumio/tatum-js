@@ -2,11 +2,7 @@ import {validateBody} from '../connector/tatum';
 import {CONTRACT_ADDRESSES} from '../constants';
 import {getAccountById, getVirtualCurrencyByName} from '../ledger';
 import {Currency, TransferTrxOffchain, TrcType} from '../model/request';
-import {
-    prepareTronSignedTransaction,
-    prepareTronTrc10SignedTransaction,
-    prepareTronTrc20SignedTransaction
-} from '../transaction';
+import {prepareTronSignedTransaction, prepareTronTrc10SignedTransaction, prepareTronTrc20SignedTransaction} from '../transaction';
 import {generatePrivateKeyFromMnemonic} from '../wallet';
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
 
@@ -44,7 +40,7 @@ export const sendTronOffchainTransaction = async (testnet: boolean, body: Transf
             amount,
             fromPrivateKey: fromPriv,
             to: address,
-            tokenAddress: CONTRACT_ADDRESSES[Currency.USDT],
+            tokenAddress: CONTRACT_ADDRESSES[Currency.USDT_TRON],
             feeLimit: parseFloat(withdrawal.fee),
         });
     } else {

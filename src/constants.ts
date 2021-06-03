@@ -127,6 +127,7 @@ export const CONTRACT_ADDRESSES = {
     [Currency.BAT.toString()]: '0x0d8775f648430679a709e98d2b0cb6250d2887ef',
     [Currency.TUSD.toString()]: '0x0000000000085d4780B73119b644AE5ecd22b376',
     [Currency.PAX.toString()]: '0x8e870d67f660d95d5be530380d0ec0bd388289e1',
+    [Currency.GMC.toString()]: '0xa6272359bc37f61af398071b65c8934aca744d53',
     [Currency.PAXG.toString()]: '0x45804880de22913dafe09f4980848ece6ecbaf78',
     [Currency.HAG.toString()]: '0x44e133e71bf90cb67de4c0f31c391ade021def4a',
     [Currency.PLTC.toString()]: '0x429d83bb0dcb8cdd5311e34680adc8b12070a07f',
@@ -144,6 +145,7 @@ export const CONTRACT_ADDRESSES = {
     [Currency.BBCH.toString()]: '0x8ff795a6f4d97e7887c79bea79aba5cc76444adf',
     [Currency.CAKE.toString()]: '0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82',
     [Currency.BUSD_BSC.toString()]: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
+    [Currency.GMC_BSC.toString()]: '0xa6272359bc37f61af398071b65c8934aca744d53',
 };
 
 export const CONTRACT_DECIMALS = {
@@ -151,6 +153,8 @@ export const CONTRACT_DECIMALS = {
     [Currency.USDT_TRON.toString()]: 6,
     [Currency.WBTC.toString()]: 8,
     [Currency.LEO.toString()]: 18,
+    [Currency.GMC.toString()]: 18,
+    [Currency.GMC_BSC.toString()]: 18,
     [Currency.BUSD.toString()]: 18,
     [Currency.CAKE.toString()]: 18,
     [Currency.BUSD_BSC.toString()]: 18,
