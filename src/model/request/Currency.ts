@@ -70,6 +70,7 @@ export const ERC20_CURRENCIES = [
     Currency.PLTC.toString(),
     Currency.XCON.toString(),
     Currency.MMY.toString(),
+    Currency.GMC.toString(),
 ]
 
 export const BEP20_CURRENCIES = [
@@ -77,6 +78,7 @@ export const BEP20_CURRENCIES = [
     Currency.BBTC.toString(),
     Currency.BADA.toString(),
     Currency.WBNB.toString(),
+    Currency.GMC_BSC.toString(),
     Currency.BDOT.toString(),
     Currency.BXRP.toString(),
     Currency.BLTC.toString(),
