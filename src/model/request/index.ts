@@ -5,6 +5,7 @@ export * from './Fee';
 export * from './TransferBchBlockchain';
 export * from './TransferBtcBasedBlockchain';
 export * from './TransferCustomErc20';
+export * from './TransferErc20';
 export * from './TransferEthErc20';
 export * from './FlowDeployNft';
 export * from './FlowMintNft';
