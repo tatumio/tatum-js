@@ -1,20 +1,20 @@
 import {
+    CeloBurnMultiToken,
+    CeloBurnMultiTokenBatch,
+    CeloDeployMultiToken,
     CeloMintMultiToken,
     CeloMintMultiTokenBatch,
     CeloTransferMultiToken,
     CeloTransferMultiTokenBatch,
     Currency,
+    EthBurnMultiToken,
+    EthBurnMultiTokenBatch,
+    EthDeployMultiToken,
     MintMultiToken,
     MintMultiTokenBatch,
     TransferMultiToken,
-    TransferMultiTokenBatch
+    TransferMultiTokenBatch,
 } from '../model';
-import { CeloBurnMultiToken } from '../model/request/CeloBurnMultiToken';
-import { CeloBurnMultiTokenBatch } from '../model/request/CeloBurnMultiTokenBatch';
-import { CeloDeployMultiToken } from '../model/request/CeloDeployMultiToken';
-import { EthBurnMultiToken } from '../model/request/EthBurnMultiToken';
-import { EthBurnMultiTokenBatch } from '../model/request/EthBurnMultiTokenBatch';
-import { EthDeployMultiToken } from '../model/request/EthDeployMultiToken';
 import {
     sendBscBurnBatchMultiTokenTransaction,
     sendBscBurnMultiTokenTransaction,
