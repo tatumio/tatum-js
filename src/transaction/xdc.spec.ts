@@ -31,7 +31,7 @@ describe('XDC transactions', () => {
         const body = new TransferErc20();
         body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29';
         body.amount = '0';
-        body.to = '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9';
+        body.to = 'xdc811DfbFF13ADFBC3Cf653dCc373C03616D3471c9';
         const txData = await prepareXdcOrErc20SignedTransaction(body);
         expect(txData).toContain('0x');
 
@@ -42,7 +42,7 @@ describe('XDC transactions', () => {
         const body = new TransferErc20();
         body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29';
         body.amount = '0';
-        body.to = '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9';
+        body.to = 'xdc811DfbFF13ADFBC3Cf653dCc373C03616D3471c9';
         const txData = await prepareXdcOrErc20SignedTransaction(body);
         expect(txData).toContain('0x');
 
@@ -54,7 +54,7 @@ describe('XDC transactions', () => {
         body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29';
         body.amount = '0';
         body.contractAddress = 'xdc811DfbFF13ADFBC3Cf653dCc373C03616D3471c9';
-        body.to = '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9';
+        body.to = 'xdc811DfbFF13ADFBC3Cf653dCc373C03616D3471c9';
         body.digits = 10;
         const txData = await prepareXdcCustomErc20SignedTransaction(body);
         expect(txData).toContain('0x');
