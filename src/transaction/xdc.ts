@@ -1,8 +1,8 @@
 import axios from 'axios';
+import {BigNumber} from 'bignumber.js';
 import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
 import {toWei} from 'web3-utils';
-import {BigNumber} from 'bignumber.js';
 import {xdcBroadcast, xdcGetTransactionsCount} from '../blockchain';
 import {validateBody} from '../connector/tatum';
 import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
@@ -11,21 +11,21 @@ import erc20TokenBytecode from '../contracts/erc20/token_bytecode';
 import erc721TokenABI from '../contracts/erc721/erc721_abi';
 import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
 import {
+    BurnErc20,
     CreateRecord,
     Currency,
     DeployErc20,
-    MintErc20,
-    BurnErc20,
     EthBurnErc721,
     EthDeployErc721,
     EthMintErc721,
     EthMintMultipleErc721,
     EthTransferErc721,
+    Fee,
+    MintErc20,
     SmartContractMethodInvocation,
     TransactionKMS,
-    TransferEthErc20,
     TransferCustomErc20,
-    Fee,
+    TransferEthErc20,
     UpdateCashbackErc721,
 } from '../model';
 
@@ -37,7 +37,7 @@ import {
 export const xdcGetGasPriceInWei = async () => {
     const gasStationUrl = 'https://rpc.xinfin.network/';
     try {
-      const { result } = await axios.post(`${gasStationUrl}gasPrice`, {"jsonrpc":"2.0","method":"eth_gasPrice","params":[],"id":1})
+        const {result} = await axios.post(`${gasStationUrl}gasPrice`, {'jsonrpc': '2.0', 'method': 'eth_gasPrice', 'params': [], 'id': 1});
       return result ? Web3.utils.toWei(result, 'wei') : Web3.utils.toWei('5', 'kwei');
     }
     catch (e) {
@@ -134,7 +134,7 @@ export const prepareXdcStoreDataTransaction = async (body: CreateRecord, provide
  * @param client Web3 client of the XDC Server to connect to. If not set, default public server will be used.
  * @param transaction content of the transaction to broadcast
  * @param signatureId signature ID
- * @param fromPrivateKey private key 
+ * @param fromPrivateKey private key
  * @param fee Fee object
  * @returns transaction data to be broadcast to blockchain.
  */
@@ -374,7 +374,7 @@ export const prepareXdcSmartContractWriteMethodInvocation = async (body: SmartCo
         data: contract.methods[methodName as string](...params).encodeABI(),
         nonce,
     };
-  
+
     return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 

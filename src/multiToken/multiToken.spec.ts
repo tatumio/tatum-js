@@ -1,16 +1,9 @@
-import { CeloBurnMultiToken } from '../model/request/CeloBurnMultiToken';
-import { CeloBurnMultiTokenBatch } from '../model/request/CeloBurnMultiTokenBatch';
-import { CeloDeployMultiToken } from '../model/request/CeloDeployMultiToken';
-import { Currency } from '../model';
-import {
-    burnMultiToken,
-    burnMultiTokenBatch,
-    deployMultiToken,
-    mintMultiToken,
-    mintMultiTokenBatch,
-    transferMultiToken,
-    transferMultiTokenBatch,
-} from './index';
+import {Currency} from '../model';
+import {CeloBurnMultiToken} from '../model/request/CeloBurnMultiToken';
+import {CeloBurnMultiTokenBatch} from '../model/request/CeloBurnMultiTokenBatch';
+import {CeloDeployMultiToken} from '../model/request/CeloDeployMultiToken';
+import {burnMultiToken, burnMultiTokenBatch, deployMultiToken, mintMultiToken, mintMultiTokenBatch, transferMultiToken, transferMultiTokenBatch,} from './index';
+
 describe('NFT tests', () => {
     jest.setTimeout(99999);
     describe('NFT MultiToken transactions', () => {

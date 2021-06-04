@@ -1,18 +1,17 @@
 import Web3 from 'web3';
-import {Currency, DeployErc20, TransferEthErc20, TransferCustomErc20} from '../model';
+import {Currency, DeployErc20, TransferCustomErc20, TransferEthErc20} from '../model';
 import {
-    xdcGetGasPriceInWei,
-    prepareXdcOrErc20SignedTransaction,
     prepareXdcCustomErc20SignedTransaction,
     prepareXdcDeployErc20SignedTransaction,
-    sendXdcErc721Transaction,
+    prepareXdcOrErc20SignedTransaction,
+    sendXdcBurnErc721Transaction,
     sendXdcDeployErc721Transaction,
+    sendXdcErc721Transaction,
+    sendXdcMintErc721Transaction,
+    sendXdcMintMultipleErc721Transaction,
     sendXdcSmartContractMethodInvocationTransaction,
     sendXdcSmartContractReadMethodInvocationTransaction,
-    sendXdcBurnErc721Transaction,
-    prepareXdcDeployErc721SignedTransaction,
-    sendXdcMintErc721Transaction,
-    sendXdcMintMultipleErc721Transaction
+    xdcGetGasPriceInWei
 } from './xdc';
 
 describe('XDC transactions', () => {

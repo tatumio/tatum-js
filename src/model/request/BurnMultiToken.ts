@@ -1,6 +1,6 @@
-import { IsIn, IsInt, IsNotEmpty, IsOptional, Length, MaxLength, Min, } from 'class-validator';
-import { Currency } from './Currency';
-import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId';
+import {IsIn, IsInt, IsNotEmpty, IsOptional, Length, MaxLength, Min,} from 'class-validator';
+import {Currency} from './Currency';
+import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
 
 export class BurnMultiToken extends PrivateKeyOrSignatureId {
 
@@ -25,7 +25,7 @@ export class BurnMultiToken extends PrivateKeyOrSignatureId {
 
     @IsOptional()
     public data: string;
-    
+
     @Min(0)
     @IsInt()
     @IsOptional()

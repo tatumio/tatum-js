@@ -1,6 +1,6 @@
-import { IsIn, IsInt, IsNotEmpty, IsOptional, Length, MaxLength, Min, } from 'class-validator';
-import { Currency } from './Currency';
-import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId';
+import {IsIn, IsInt, IsNotEmpty, IsOptional, Length, Min,} from 'class-validator';
+import {Currency} from './Currency';
+import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
 
 export class BurnMultiTokenBatch extends PrivateKeyOrSignatureId {
 
@@ -21,7 +21,7 @@ export class BurnMultiTokenBatch extends PrivateKeyOrSignatureId {
     @IsNotEmpty()
     @IsIn([Currency.BSC, Currency.ETH, Currency.CELO])
     public chain: Currency;
-    
+
     @IsOptional()
     public data: string;
 

@@ -1,10 +1,6 @@
-import { Type } from 'class-transformer';
-import {
-  IsNotEmpty,
-  IsIn,
-} from 'class-validator';
-import { SmartContractMethodInvocation } from './SmartContractMethodInvocation'
+import {IsIn, IsNotEmpty,} from 'class-validator';
 import {Currency} from './Currency';
+import {SmartContractMethodInvocation} from './SmartContractMethodInvocation';
 
 export class CeloSmartContractMethodInvocation extends SmartContractMethodInvocation {
   @IsNotEmpty()

@@ -6,12 +6,12 @@ import {
     CeloMintErc721,
     CeloMintMultipleErc721,
     CeloTransferErc721,
+    CeloUpdateCashbackErc721,
     CreateRecord,
     Currency,
     DeployCeloErc20,
     MintCeloErc20,
     TransferCeloOrCeloErc20Token,
-    CeloUpdateCashbackErc721,
 } from '../model';
 import {
     prepareCeloBurnErc20SignedTransaction,

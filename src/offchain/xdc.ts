@@ -3,7 +3,7 @@ import {fromWei, toWei} from 'web3-utils';
 import {validateBody} from '../connector/tatum';
 import {getAccountById, getVirtualCurrencyByName} from '../ledger';
 import {Currency, TransferEthOffchain} from '../model';
-import {prepareXdcOrErc20SignedTransaction, prepareXdcCustomErc20SignedTransaction} from '../transaction';
+import {prepareXdcCustomErc20SignedTransaction, prepareXdcOrErc20SignedTransaction} from '../transaction';
 import {generatePrivateKeyFromMnemonic} from '../wallet';
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
 

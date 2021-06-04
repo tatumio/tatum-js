@@ -1,8 +1,8 @@
-import { IsIn, IsNotEmpty, IsNumberString, IsOptional, Length, MaxLength, Min, ValidateNested } from 'class-validator';
-import { Currency } from './Currency';
-import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId';
-import { Fee } from './Fee'
-import { Type } from 'class-transformer'
+import {Type} from 'class-transformer';
+import {IsIn, IsNotEmpty, IsOptional, Length, Min, ValidateNested} from 'class-validator';
+import {Currency} from './Currency';
+import {Fee} from './Fee';
+import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
 
 export class TransferMultiTokenBatch extends PrivateKeyOrSignatureId {
 

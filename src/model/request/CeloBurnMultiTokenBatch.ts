@@ -1,6 +1,6 @@
-import { IsIn, IsNotEmpty, } from 'class-validator';
-import { Currency } from './Currency';
-import { BurnMultiTokenBatch } from './BurnMultiTokenBatch';
+import {IsIn, IsNotEmpty,} from 'class-validator';
+import {BurnMultiTokenBatch} from './BurnMultiTokenBatch';
+import {Currency} from './Currency';
 
 export class CeloBurnMultiTokenBatch extends BurnMultiTokenBatch {
   @IsNotEmpty()

@@ -1,13 +1,11 @@
 import {ethEstimateGas} from '../blockchain';
-import {
-  Currency, DeployErc20, MintErc20, BurnErc20, TransferCustomErc20, TransferEthErc20
-} from '../model';
+import {BurnErc20, Currency, DeployErc20, MintErc20, TransferCustomErc20, TransferEthErc20} from '../model';
 import {
   ethGetGasPriceInWei,
   prepareCustomErc20SignedTransaction,
   prepareDeployErc20SignedTransaction,
-  prepareEthMintErc20SignedTransaction,
   prepareEthBurnErc20SignedTransaction,
+  prepareEthMintErc20SignedTransaction,
   prepareEthOrErc20SignedTransaction,
   sendBurnErc721Transaction,
   sendDeployErc721Transaction,

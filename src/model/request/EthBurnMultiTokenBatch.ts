@@ -1,12 +1,9 @@
-import { Type } from 'class-transformer'
-import {
-  IsOptional,
-  ValidateNested,
-} from 'class-validator';
-import { Fee } from './Fee'
-import { BurnMultiTokenBatch } from './BurnMultiTokenBatch';
+import {Type} from 'class-transformer';
+import {IsOptional, ValidateNested,} from 'class-validator';
+import {BurnMultiTokenBatch} from './BurnMultiTokenBatch';
+import {Fee} from './Fee';
 
-export class EthBurnMultiTokenBatch extends BurnMultiTokenBatch{
+export class EthBurnMultiTokenBatch extends BurnMultiTokenBatch {
     @IsOptional()
     @Type(() => Fee)
     @ValidateNested()
