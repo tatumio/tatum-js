@@ -1,5 +1,5 @@
 import Web3 from 'web3';
-import {Currency, DeployErc20, TransferCustomErc20, TransferEthErc20} from '../model';
+import {Currency, DeployErc20, TransferErc20, TransferCustomErc20} from '../model';
 import {
     prepareXdcCustomErc20SignedTransaction,
     prepareXdcDeployErc20SignedTransaction,
@@ -28,10 +28,9 @@ describe('XDC transactions', () => {
     };
 
     it('should test valid transaction XDC data', async () => {
-        const body = new TransferEthErc20();
+        const body = new TransferErc20();
         body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29';
         body.amount = '0';
-        body.currency = Currency.XDC;
         body.to = 'xdc811DfbFF13ADFBC3Cf653dCc373C03616D3471c9';
         const txData = await prepareXdcOrErc20SignedTransaction(body);
         expect(txData).toContain('0x');
@@ -40,10 +39,9 @@ describe('XDC transactions', () => {
     });
 
     it('should test valid transaction ERC20 data', async () => {
-        const body = new TransferEthErc20();
+        const body = new TransferErc20();
         body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29';
         body.amount = '0';
-        body.currency = Currency.XDC;
         body.to = 'xdc811DfbFF13ADFBC3Cf653dCc373C03616D3471c9';
         const txData = await prepareXdcOrErc20SignedTransaction(body);
         expect(txData).toContain('0x');
@@ -108,7 +106,7 @@ describe('XDC transactions', () => {
     });
 
     it('should not test valid transaction data, missing currency', async () => {
-        const body = new TransferEthErc20();
+        const body = new TransferErc20();
         body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29';
         body.amount = '0';
         body.to = 'xdc811DfbFF13ADFBC3Cf653dCc373C03616D3471c9';

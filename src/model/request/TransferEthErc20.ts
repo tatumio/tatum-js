@@ -11,34 +11,10 @@ import {
     ValidateNested,
 } from 'class-validator';
 import {Currency, ETH_BASED_CURRENCIES} from './Currency';
-import {Fee} from './Fee';
-import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
+import { TransferErc20 } from './TransferErc20'
 
-export class TransferEthErc20 extends PrivateKeyOrSignatureId {
-
-    @IsNotEmpty()
-    @Length(42, 43)
-    public to: string;
-
-    @IsNotEmpty()
-    @IsNumberString()
-    @Matches(/^[+]?((\d+(\.\d*)?)|(\.\d+))$/)
-    public amount: string;
-
-    @MaxLength(130000)
-    @IsOptional()
-    public data?: string;
-
+export class TransferEthErc20 extends TransferErc20 {
     @IsNotEmpty()
     @IsIn([...ETH_BASED_CURRENCIES, Currency.XDC])
     public currency: Currency;
-
-    @IsOptional()
-    @Type(() => Fee)
-    @ValidateNested()
-    public fee?: Fee;
-
-    @Min(0)
-    @IsOptional()
-    public nonce?: number;
 }
