@@ -5,10 +5,6 @@ import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
 export class BurnMultiToken extends PrivateKeyOrSignatureId {
 
     @IsNotEmpty()
-    @Length(42, 42)
-    public account: string;
-
-    @IsNotEmpty()
     @MaxLength(256)
     public tokenId: string;
 

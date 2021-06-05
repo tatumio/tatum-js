@@ -668,7 +668,6 @@ export const prepareEthBurnBatchMultiTokenSignedTransaction = async (body: EthBu
     await validateBody(body, EthBurnMultiTokenBatch);
     const {
         fromPrivateKey,
-        account,
         tokenId,
         amounts,
         fee,
@@ -685,7 +684,7 @@ export const prepareEthBurnBatchMultiTokenSignedTransaction = async (body: EthBu
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
-        data: contract.methods.burnBatch(account, tokenId, amounts, data ? data : '0x0').encodeABI(),
+        data: contract.methods.burnBatch(tokenId, amounts, data ? data : '0x0').encodeABI(),
         nonce,
     };
     return await prepareErcSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
@@ -700,7 +699,6 @@ export const prepareEthBurnMultiTokenSignedTransaction = async (body: EthBurnMul
     await validateBody(body, EthBurnMultiToken);
     const {
         fromPrivateKey,
-        account,
         tokenId,
         amount,
         fee,
@@ -717,7 +715,7 @@ export const prepareEthBurnMultiTokenSignedTransaction = async (body: EthBurnMul
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
-        data: contract.methods.burn(account, tokenId, amount, data ? data : '0x0').encodeABI(),
+        data: contract.methods.burn(tokenId, amount, data ? data : '0x0').encodeABI(),
         nonce,
     };
     return await prepareErcSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);

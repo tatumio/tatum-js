@@ -642,7 +642,6 @@ export const prepareBscBurnMultiTokenSignedTransaction = async (body: EthBurnMul
     await validateBody(body, EthBurnMultiToken);
     const {
         fromPrivateKey,
-        account,
         tokenId,
         amount,
         fee,
@@ -659,17 +658,17 @@ export const prepareBscBurnMultiTokenSignedTransaction = async (body: EthBurnMul
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
-        data: contract.methods.burn(account, tokenId, amount, data ? data : '0x0').encodeABI(),
+        data: contract.methods.burn(tokenId, amount, data ? data : '0x0').encodeABI(),
         nonce,
     };
     return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 
+// TODO: remove from account
 export const prepareBscBurnMultiTokenBatchSignedTransaction = async (body: EthBurnMultiTokenBatch, provider?: string) => {
     await validateBody(body, EthBurnMultiTokenBatch);
     const {
         fromPrivateKey,
-        account,
         tokenId,
         amounts,
         fee,
@@ -686,7 +685,7 @@ export const prepareBscBurnMultiTokenBatchSignedTransaction = async (body: EthBu
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
-        data: contract.methods.burnBatch(account, tokenId, amounts, data ? data : '0x0').encodeABI(),
+        data: contract.methods.burnBatch(tokenId, amounts, data ? data : '0x0').encodeABI(),
         nonce,
     };
 

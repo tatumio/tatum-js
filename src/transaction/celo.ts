@@ -84,6 +84,7 @@ export const signCeloKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
     transaction.gasLimit = transaction.gasLimit === '0' || !transaction.gasLimit ? (await wallet.estimateGas(transaction)).add(100000).toHexString() : transaction.gasLimit;
     return wallet.signTransaction(transaction);
 };
+
 export const prepareCeloDeployMultiTokenSignedTransaction = async (testnet: boolean, body: CeloDeployMultiToken, provider?: string) => {
     await validateBody(body, CeloDeployMultiToken);
     const {
@@ -748,7 +749,6 @@ export const prepareCeloUpdateCashbackForAuthorErc721SignedTransaction = async (
     await validateBody(body, CeloUpdateCashbackErc721);
     const {
         fromPrivateKey,
-        author,
         cashbackValue,
         tokenId,
         contractAddress,
@@ -984,7 +984,6 @@ export const prepareCeloBurnMultiTokenBatchSignedTransaction = async (testnet: b
     const {
         fromPrivateKey,
         tokenId,
-        account,
         amounts,
         contractAddress,
         feeCurrency,
@@ -1008,7 +1007,7 @@ export const prepareCeloBurnMultiTokenBatchSignedTransaction = async (testnet: b
             nonce,
             gasLimit: '0',
             to: contractAddress.trim(),
-            data: contract.methods.burnBatch(account, tokenId, amounts, data ? data : '0x0').encodeABI(),
+            data: contract.methods.burnBatch(tokenId, amounts, data ? data : '0x0').encodeABI(),
         });
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p);
@@ -1020,7 +1019,7 @@ export const prepareCeloBurnMultiTokenBatchSignedTransaction = async (testnet: b
         gasLimit: '0',
         to: contractAddress.trim(),
         gasPrice,
-        data: contract.methods.burnBatch(account, tokenId, amounts, data ? data : '0x0').encodeABI(),
+        data: contract.methods.burnBatch(tokenId, amounts, data ? data : '0x0').encodeABI(),
         from,
     };
     transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();
@@ -1032,7 +1031,6 @@ export const prepareCeloBurnMultiTokenSignedTransaction = async (testnet: boolea
     const {
         fromPrivateKey,
         tokenId,
-        account,
         amount,
         contractAddress,
         feeCurrency,
@@ -1056,7 +1054,7 @@ export const prepareCeloBurnMultiTokenSignedTransaction = async (testnet: boolea
             nonce,
             gasLimit: '0',
             to: contractAddress.trim(),
-            data: contract.methods.burn(account, tokenId, amount, data ? data : '0x0').encodeABI(),
+            data: contract.methods.burn(tokenId, amount, data ? data : '0x0').encodeABI(),
         });
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p);
@@ -1068,7 +1066,7 @@ export const prepareCeloBurnMultiTokenSignedTransaction = async (testnet: boolea
         gasLimit: '0',
         to: contractAddress.trim(),
         gasPrice,
-        data: contract.methods.burn(account, tokenId, amount, data ? data : '0x0').encodeABI(),
+        data: contract.methods.burn(tokenId, amount, data ? data : '0x0').encodeABI(),
         from,
     };
     transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();
