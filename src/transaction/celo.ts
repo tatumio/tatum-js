@@ -857,7 +857,7 @@ export const prepareCeloMintMultiTokenBatchSignedTransaction = async (testnet: b
 
     // @ts-ignore
     const contract = new (new Web3()).eth.Contract(erc1155_abi, contractAddress.trim());
-    const amts = amounts.map(amts => amts.map(amt => `0x${new BigNumber(toWei(amt, 'ether')).toString(16)}`));
+    const amts = amounts.map(amts => amts.map(amt => `0x${new BigNumber(amt).toString(16)}`));
     if (signatureId) {
         return JSON.stringify({
             chainId: network.chainId,
