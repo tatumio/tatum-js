@@ -642,13 +642,13 @@ export const prepareBscBurnMultiTokenSignedTransaction = async (body: EthBurnMul
     await validateBody(body, EthBurnMultiToken);
     const {
         fromPrivateKey,
+        account,
         tokenId,
         amount,
         fee,
         contractAddress,
         nonce,
         signatureId,
-        data
     } = body;
 
     const client = await getBscClient(provider, fromPrivateKey);
@@ -658,24 +658,23 @@ export const prepareBscBurnMultiTokenSignedTransaction = async (body: EthBurnMul
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
-        data: contract.methods.burn(tokenId, amount, data ? data : '0x0').encodeABI(),
+        data: contract.methods.burn(account, tokenId, amount).encodeABI(),
         nonce,
     };
     return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 
-// TODO: remove from account
 export const prepareBscBurnMultiTokenBatchSignedTransaction = async (body: EthBurnMultiTokenBatch, provider?: string) => {
     await validateBody(body, EthBurnMultiTokenBatch);
     const {
         fromPrivateKey,
+        account,
         tokenId,
         amounts,
         fee,
         contractAddress,
         nonce,
         signatureId,
-        data
     } = body;
 
     const client = await getBscClient(provider, fromPrivateKey);
@@ -685,7 +684,7 @@ export const prepareBscBurnMultiTokenBatchSignedTransaction = async (body: EthBu
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
-        data: contract.methods.burnBatch(tokenId, amounts, data ? data : '0x0').encodeABI(),
+        data: contract.methods.burnBatch(account, tokenId, amounts).encodeABI(),
         nonce,
     };
 
@@ -741,7 +740,7 @@ export const prepareBscBatchTransferMultiTokenSignedTransaction = async (body: T
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
-        data: contract.methods.safeBatchTransfer(to.trim(), tokenId.map(token => token.trim()), amts).encodeABI(),
+        data: contract.methods.safeBatchTransfer(to.trim(), tokenId.map(token => token.trim()), amts, data).encodeABI(),
         nonce,
     };
 

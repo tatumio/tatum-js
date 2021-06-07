@@ -5,6 +5,10 @@ import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
 export class BurnMultiToken extends PrivateKeyOrSignatureId {
 
     @IsNotEmpty()
+    @Length(42, 42)
+    public account: string;
+
+    @IsNotEmpty()
     @MaxLength(256)
     public tokenId: string;
 
@@ -18,9 +22,6 @@ export class BurnMultiToken extends PrivateKeyOrSignatureId {
     @IsNotEmpty()
     @IsIn([Currency.BSC, Currency.ETH, Currency.CELO])
     public chain: Currency;
-
-    @IsOptional()
-    public data: string;
 
     @Min(0)
     @IsInt()

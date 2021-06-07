@@ -84,7 +84,6 @@ export const signCeloKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
     transaction.gasLimit = transaction.gasLimit === '0' || !transaction.gasLimit ? (await wallet.estimateGas(transaction)).add(100000).toHexString() : transaction.gasLimit;
     return wallet.signTransaction(transaction);
 };
-
 export const prepareCeloDeployMultiTokenSignedTransaction = async (testnet: boolean, body: CeloDeployMultiToken, provider?: string) => {
     await validateBody(body, CeloDeployMultiToken);
     const {
@@ -960,7 +959,7 @@ export const prepareCeloBatchTransferMultiTokenSignedTransaction = async (testne
             gasLimit: '0',
             nonce,
             to: contractAddress.trim(),
-            data: contract.methods.safeBatchTransfer(to.trim(), tokenId.map(token => token.trim()), amts).encodeABI(),
+            data: contract.methods.safeBatchTransfer(to.trim(), tokenId.map(token => token.trim()), amts, data).encodeABI(),
         });
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p);
@@ -972,7 +971,7 @@ export const prepareCeloBatchTransferMultiTokenSignedTransaction = async (testne
         gasLimit: '0',
         to: contractAddress.trim(),
         gasPrice,
-        data: contract.methods.safeBatchTransfer(to.trim(), tokenId.map(token => token.trim()), amts).encodeABI(),
+        data: contract.methods.safeBatchTransfer(to.trim(), tokenId.map(token => token.trim()), amts, data).encodeABI(),
         from,
     };
     transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();
@@ -984,12 +983,12 @@ export const prepareCeloBurnMultiTokenBatchSignedTransaction = async (testnet: b
     const {
         fromPrivateKey,
         tokenId,
+        account,
         amounts,
         contractAddress,
         feeCurrency,
         nonce,
         signatureId,
-        data
     } = body;
 
     const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
@@ -1007,7 +1006,7 @@ export const prepareCeloBurnMultiTokenBatchSignedTransaction = async (testnet: b
             nonce,
             gasLimit: '0',
             to: contractAddress.trim(),
-            data: contract.methods.burnBatch(tokenId, amounts, data ? data : '0x0').encodeABI(),
+            data: contract.methods.burnBatch(account, tokenId, amounts).encodeABI(),
         });
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p);
@@ -1019,7 +1018,7 @@ export const prepareCeloBurnMultiTokenBatchSignedTransaction = async (testnet: b
         gasLimit: '0',
         to: contractAddress.trim(),
         gasPrice,
-        data: contract.methods.burnBatch(tokenId, amounts, data ? data : '0x0').encodeABI(),
+        data: contract.methods.burnBatch(account, tokenId, amounts).encodeABI(),
         from,
     };
     transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();
@@ -1031,12 +1030,12 @@ export const prepareCeloBurnMultiTokenSignedTransaction = async (testnet: boolea
     const {
         fromPrivateKey,
         tokenId,
+        account,
         amount,
         contractAddress,
         feeCurrency,
         nonce,
         signatureId,
-        data
     } = body;
 
     const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
@@ -1054,7 +1053,7 @@ export const prepareCeloBurnMultiTokenSignedTransaction = async (testnet: boolea
             nonce,
             gasLimit: '0',
             to: contractAddress.trim(),
-            data: contract.methods.burn(tokenId, amount, data ? data : '0x0').encodeABI(),
+            data: contract.methods.burn(account, tokenId, amount).encodeABI(),
         });
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p);
@@ -1066,7 +1065,7 @@ export const prepareCeloBurnMultiTokenSignedTransaction = async (testnet: boolea
         gasLimit: '0',
         to: contractAddress.trim(),
         gasPrice,
-        data: contract.methods.burn(tokenId, amount, data ? data : '0x0').encodeABI(),
+        data: contract.methods.burn(account, tokenId, amount).encodeABI(),
         from,
     };
     transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();
