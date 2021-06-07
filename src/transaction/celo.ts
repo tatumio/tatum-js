@@ -959,7 +959,7 @@ export const prepareCeloBatchTransferMultiTokenSignedTransaction = async (testne
             gasLimit: '0',
             nonce,
             to: contractAddress.trim(),
-            data: contract.methods.safeBatchTransfer(to.trim(), tokenId.map(token => token.trim()), amts, data).encodeABI(),
+            data: contract.methods.safeBatchTransfer(to.trim(), tokenId.map(token => token.trim()), amts, data ? data : '0x0').encodeABI(),
         });
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p);
@@ -971,7 +971,7 @@ export const prepareCeloBatchTransferMultiTokenSignedTransaction = async (testne
         gasLimit: '0',
         to: contractAddress.trim(),
         gasPrice,
-        data: contract.methods.safeBatchTransfer(to.trim(), tokenId.map(token => token.trim()), amts, data).encodeABI(),
+        data: contract.methods.safeBatchTransfer(to.trim(), tokenId.map(token => token.trim()), amts, data ? data : '0x0').encodeABI(),
         from,
     };
     transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();

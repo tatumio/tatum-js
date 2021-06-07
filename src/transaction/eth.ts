@@ -750,7 +750,7 @@ export const prepareEthBatchTransferMultiTokenSignedTransaction = async (body: T
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
-        data: contract.methods.safeBatchTransfer(to.trim(), tokenId.map(token => token.trim()), amts, data).encodeABI(),
+        data: contract.methods.safeBatchTransfer(to.trim(), tokenId.map(token => token.trim()), amts, data ? data : '0x0').encodeABI(),
         nonce
     };
 
