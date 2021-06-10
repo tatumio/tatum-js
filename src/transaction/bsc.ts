@@ -573,7 +573,6 @@ export const prepareBscUpdateCashbackForAuthorErc721SignedTransaction = async (b
     await validateBody(body, UpdateCashbackErc721);
     const {
         fromPrivateKey,
-        author,
         cashbackValue,
         tokenId,
         fee,

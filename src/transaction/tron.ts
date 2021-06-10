@@ -3,6 +3,8 @@ import {tronBroadcast} from '../blockchain';
 import {validateBody} from '../connector/tatum';
 import abi from '../contracts/trc20/token_abi';
 import bytecode from '../contracts/trc20/token_bytecode';
+import trc721_abi from '../contracts/trc721/trc721_abi';
+import trc721_bytecode from '../contracts/trc721/trc721_bytecode';
 import {
     CreateTronTrc10,
     CreateTronTrc20,
@@ -12,6 +14,12 @@ import {
     TransferTron,
     TransferTronTrc10,
     TransferTronTrc20,
+    TronBurnTrc721,
+    TronDeployTrc721,
+    TronMintMultipleTrc721,
+    TronMintTrc721,
+    TronTransferTrc721,
+    TronUpdateCashbackTrc721,
 } from '../model';
 // tslint:disable-next-line:no-var-requires
 const TronWeb = require('tronweb');
@@ -108,6 +116,27 @@ export const signTronKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
     const transactionConfig = JSON.parse(tx.serializedTransaction);
     return JSON.stringify(await tronWeb.trx.sign(transactionConfig, fromPrivateKey));
 };
+
+export const sendTronDeployTrc721SignedTransaction = async (testnet: boolean, body: TronDeployTrc721) =>
+    await tronBroadcast(await prepareTronDeployTrc721SignedTransaction(testnet, body));
+
+export const sendTronMintCashbackTrc721SignedTransaction = async (testnet: boolean, body: TronMintTrc721) =>
+    await tronBroadcast(await prepareTronMintCashbackTrc721SignedTransaction(testnet, body));
+
+export const sendTronMintTrc721SignedTransaction = async (testnet: boolean, body: TronMintTrc721) =>
+    await tronBroadcast(await prepareTronMintTrc721SignedTransaction(testnet, body));
+
+export const sendTronTransferTrc721SignedTransaction = async (testnet: boolean, body: TronTransferTrc721) =>
+    await tronBroadcast(await prepareTronTransferTrc721SignedTransaction(testnet, body));
+
+export const sendTronBurnTrc721SignedTransaction = async (testnet: boolean, body: TronBurnTrc721) =>
+    await tronBroadcast(await prepareTronBurnTrc721SignedTransaction(testnet, body));
+
+export const sendTronMintMultipleTrc721SignedTransaction = async (testnet: boolean, body: TronMintMultipleTrc721) =>
+    await tronBroadcast(await prepareTronMintMultipleTrc721SignedTransaction(testnet, body));
+
+export const sendTronUpdateCashbackForAuthorTrc721SignedTransaction = async (testnet: boolean, body: TronUpdateCashbackTrc721) =>
+    await tronBroadcast(await prepareTronUpdateCashbackForAuthorTrc721SignedTransaction(testnet, body));
 
 /**
  * Sign Tron transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -477,6 +506,264 @@ export const prepareTronCreateTrc20SignedKMSTransaction = async (testnet: boolea
         name,
     }, from);
     return JSON.stringify(tx);
+};
+
+export const prepareTronDeployTrc721SignedTransaction = async (testnet: boolean, body: TronDeployTrc721) => {
+    await validateBody(body, TronDeployTrc721);
+    const {
+        fromPrivateKey,
+        name,
+        symbol,
+        feeLimit,
+        signatureId,
+        from,
+    } = body;
+
+    const tronWeb = prepareTronWeb(testnet);
+    const tx = await tronWeb.transactionBuilder.createSmartContract({
+        feeLimit: tronWeb.toSun(feeLimit),
+        callValue: 0,
+        userFeePercentage: 100,
+        originEnergyLimit: 1,
+        abi: JSON.stringify(trc721_abi),
+        bytecode: trc721_bytecode,
+        parameters: [
+            name,
+            symbol,
+        ],
+        name,
+    }, from || tronWeb.address.fromPrivateKey(fromPrivateKey));
+    if (signatureId) {
+        return JSON.stringify(tx);
+    }
+    return JSON.stringify(await tronWeb.trx.sign(tx, fromPrivateKey));
+};
+
+export const prepareTronMintCashbackTrc721SignedTransaction = async (testnet: boolean, body: TronMintTrc721) => {
+    await validateBody(body, TronMintTrc721);
+    const {
+        fromPrivateKey,
+        url,
+        to,
+        tokenId,
+        contractAddress,
+        feeLimit,
+        from,
+        signatureId,
+        authorAddresses,
+        cashbackValues
+    } = body;
+
+    const tronWeb = prepareTronWeb(testnet);
+    tronWeb.setAddress(contractAddress);
+    const sender = from || tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(fromPrivateKey));
+    const cb: string[] = [];
+    for (const c of cashbackValues!) {
+        cb.push(`0x${new BigNumber(c).multipliedBy(1e6).toString(16)}`);
+    }
+    const {transaction} = await tronWeb.transactionBuilder.triggerSmartContract(
+        tronWeb.address.toHex(contractAddress),
+        'mintWithCashback(address,uint256,string,address[],uint256[])',
+        {
+            feeLimit: tronWeb.toSun(feeLimit),
+            from: sender
+        },
+        [{type: 'address', value: tronWeb.address.toHex(to)},
+            {
+                type: 'uint256',
+                value: `0x${new BigNumber(tokenId).toString(16)}`
+            },
+            {
+                type: 'string',
+                value: url,
+            },
+            {
+                type: 'address[]',
+                value: authorAddresses?.map(a => tronWeb.address.toHex(a)),
+            },
+            {
+                type: 'uint256[]',
+                value: cb,
+            }],
+        sender,
+    );
+    return JSON.stringify(signatureId ? transaction : await tronWeb.trx.sign(transaction, fromPrivateKey));
+};
+
+export const prepareTronMintTrc721SignedTransaction = async (testnet: boolean, body: TronMintTrc721) => {
+    await validateBody(body, TronMintTrc721);
+    const {
+        fromPrivateKey,
+        url,
+        to,
+        tokenId,
+        contractAddress,
+        from,
+        feeLimit,
+        signatureId,
+    } = body;
+
+    const tronWeb = prepareTronWeb(testnet);
+    tronWeb.setAddress(contractAddress);
+    const sender = from || tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(fromPrivateKey));
+    const {transaction} = await tronWeb.transactionBuilder.triggerSmartContract(
+        tronWeb.address.toHex(contractAddress),
+        'mintWithTokenURI(address,uint256,string)',
+        {
+            feeLimit: tronWeb.toSun(feeLimit),
+            from: sender
+        },
+        [{type: 'address', value: tronWeb.address.toHex(to)},
+            {
+                type: 'uint256',
+                value: `0x${new BigNumber(tokenId).toString(16)}`
+            },
+            {
+                type: 'string',
+                value: url,
+            }],
+        sender,
+    );
+    return JSON.stringify(signatureId ? transaction : await tronWeb.trx.sign(transaction, fromPrivateKey));
+};
+
+export const prepareTronTransferTrc721SignedTransaction = async (testnet: boolean, body: TronTransferTrc721) => {
+    await validateBody(body, TronTransferTrc721);
+    const {
+        fromPrivateKey,
+        to,
+        tokenId,
+        contractAddress,
+        feeLimit,
+        from,
+        signatureId,
+        value
+    } = body;
+
+    const tronWeb = prepareTronWeb(testnet);
+    tronWeb.setAddress(contractAddress);
+    const sender = from || tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(fromPrivateKey));
+    const {transaction} = await tronWeb.transactionBuilder.triggerSmartContract(
+        tronWeb.address.toHex(contractAddress),
+        'safeTransfer(address,uint256)',
+        {
+            feeLimit: tronWeb.toSun(feeLimit),
+            from: sender,
+            callValue: value ? `0x${new BigNumber(value).multipliedBy(1e6).toString(16)}` : undefined,
+        },
+        [{type: 'address', value: tronWeb.address.toHex(to)},
+            {
+                type: 'uint256',
+                value: `0x${new BigNumber(tokenId).toString(16)}`
+            }],
+        sender,
+    );
+    return JSON.stringify(signatureId ? transaction : await tronWeb.trx.sign(transaction, fromPrivateKey));
+};
+
+export const prepareTronBurnTrc721SignedTransaction = async (testnet: boolean, body: TronBurnTrc721) => {
+    await validateBody(body, TronBurnTrc721);
+    const {
+        fromPrivateKey,
+        tokenId,
+        contractAddress,
+        feeLimit,
+        from,
+        signatureId,
+    } = body;
+
+    const tronWeb = prepareTronWeb(testnet);
+    tronWeb.setAddress(contractAddress);
+    const sender = from || tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(fromPrivateKey));
+    const {transaction} = await tronWeb.transactionBuilder.triggerSmartContract(
+        tronWeb.address.toHex(contractAddress),
+        'burn(uint256)',
+        {
+            feeLimit: tronWeb.toSun(feeLimit),
+            from: sender,
+        },
+        [{
+            type: 'uint256',
+            value: `0x${new BigNumber(tokenId).toString(16)}`
+        }],
+        sender,
+    );
+    return JSON.stringify(signatureId ? transaction : await tronWeb.trx.sign(transaction, fromPrivateKey));
+};
+
+export const prepareTronMintMultipleTrc721SignedTransaction = async (testnet: boolean, body: TronMintMultipleTrc721) => {
+    await validateBody(body, TronMintMultipleTrc721);
+    const {
+        fromPrivateKey,
+        to,
+        tokenId,
+        contractAddress,
+        url,
+        feeLimit,
+        from,
+        signatureId,
+    } = body;
+
+    const tronWeb = prepareTronWeb(testnet);
+    tronWeb.setAddress(contractAddress);
+    const sender = from || tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(fromPrivateKey));
+    const {transaction} = await tronWeb.transactionBuilder.triggerSmartContract(
+        tronWeb.address.toHex(contractAddress),
+        'mintMultiple(address[],uint256[],string[])',
+        {
+            feeLimit: tronWeb.toSun(feeLimit),
+            from: sender
+        },
+        [{
+            type: 'address[]',
+            value: to.map(a => tronWeb.address.toHex(a)),
+        },
+            {
+                type: 'uint256[]',
+                value: tokenId.map(t => `0x${new BigNumber(t).toString(16)}`)
+            },
+            {
+                type: 'string[]',
+                value: url,
+            }],
+        sender,
+    );
+    return JSON.stringify(signatureId ? transaction : await tronWeb.trx.sign(transaction, fromPrivateKey));
+};
+
+export const prepareTronUpdateCashbackForAuthorTrc721SignedTransaction = async (testnet: boolean, body: TronUpdateCashbackTrc721) => {
+    await validateBody(body, TronUpdateCashbackTrc721);
+    const {
+        fromPrivateKey,
+        cashbackValue,
+        tokenId,
+        contractAddress,
+        feeLimit,
+        from,
+        signatureId,
+    } = body;
+
+    const tronWeb = prepareTronWeb(testnet);
+    tronWeb.setAddress(contractAddress);
+    const sender = from || tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(fromPrivateKey));
+    const {transaction} = await tronWeb.transactionBuilder.triggerSmartContract(
+        tronWeb.address.toHex(contractAddress),
+        'updateCashbackForAuthor(uint256,uint256)',
+        {
+            feeLimit: tronWeb.toSun(feeLimit),
+            from: sender
+        },
+        [{
+            type: 'uint256',
+            value: `0x${new BigNumber(tokenId).toString(16)}`
+        },
+            {
+                type: 'uint256',
+                value: `0x${new BigNumber(cashbackValue).multipliedBy(1e6).toString(16)}`
+            }],
+        sender,
+    );
+    return JSON.stringify(signatureId ? transaction : await tronWeb.trx.sign(transaction, fromPrivateKey));
 };
 
 /**

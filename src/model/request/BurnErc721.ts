@@ -13,7 +13,7 @@ export class BurnErc721 extends PrivateKeyOrSignatureId {
     public contractAddress: string;
 
     @IsNotEmpty()
-    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC])
+    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC, Currency.TRON])
     public chain: Currency;
 
     @Min(0)

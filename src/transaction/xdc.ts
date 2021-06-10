@@ -5,7 +5,7 @@ import {TransactionConfig} from 'web3-core';
 import {toWei} from 'web3-utils';
 import {xdcBroadcast, xdcGetTransactionsCount} from '../blockchain';
 import {validateBody} from '../connector/tatum';
-import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
+import {TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
 import erc20TokenABI from '../contracts/erc20/token_abi';
 import erc20TokenBytecode from '../contracts/erc20/token_bytecode';
 import erc721TokenABI from '../contracts/erc721/erc721_abi';
@@ -24,9 +24,8 @@ import {
     MintErc20,
     SmartContractMethodInvocation,
     TransactionKMS,
-    TransferErc20,
     TransferCustomErc20,
-    TransferEthErc20,
+    TransferErc20,
     UpdateCashbackErc721,
 } from '../model';
 
@@ -598,7 +597,6 @@ export const prepareXdcUpdateCashbackForAuthorErc721SignedTransaction = async (b
     await validateBody(body, UpdateCashbackErc721);
     const {
         fromPrivateKey,
-        author,
         cashbackValue,
         tokenId,
         fee,

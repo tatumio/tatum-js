@@ -204,6 +204,11 @@ describe('Address tests', () => {
         expect(address).toBe('tJJKy2c3mqXjpWDKdBADQJY6p5pBr5qvpn');
     });
 
+    it('should generate an address from a TRON private key', async () => {
+        const address = await generateAddressFromPrivatekey(Currency.TRON, true, '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701');
+        expect(address).toBe('TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh');
+    });
+
     it('should generate an address from a mainnet ETH private key', async () => {
         const address = await generateAddressFromPrivatekey(Currency.ETH, false, '0xac12f9a2d0d1f06c7dc33a3e9c18f60fe1ca65c592d1e9345c994740f9e1971e');
         expect(address).toBe('0xefc395c295a90023d3e9afacb4399da3d332947b');

@@ -7,15 +7,11 @@ import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
 export class UpdateCashbackErc721 extends PrivateKeyOrSignatureId {
 
     @IsNotEmpty()
-    @Length(42, 43)
-    public author: string;
-
-    @IsNotEmpty()
     @MaxLength(256)
     public tokenId: string;
 
     @IsNotEmpty()
-    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC])
+    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC, Currency.TRON])
     public chain: Currency;
 
     @IsNotEmpty()

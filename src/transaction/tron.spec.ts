@@ -1,23 +1,39 @@
+import {tronBroadcast} from '../blockchain';
+
+import token_bytecode from '../contracts/trc20/token_bytecode';
 import {
     CreateTronTrc10,
     CreateTronTrc20,
+    Currency,
     FreezeTron,
     TransferTron,
     TransferTronTrc10,
-    TransferTronTrc20
+    TransferTronTrc20,
+    TronBurnTrc721,
+    TronDeployTrc721,
+    TronMintMultipleTrc721,
+    TronMintTrc721,
+    TronTransferTrc721,
+    TronUpdateCashbackTrc721
 } from '../model';
 import {
+    prepareTronBurnTrc721SignedTransaction,
     prepareTronCreateTrc10SignedTransaction,
     prepareTronCreateTrc20SignedTransaction,
+    prepareTronDeployTrc721SignedTransaction,
     prepareTronFreezeTransaction,
+    prepareTronMintCashbackTrc721SignedTransaction,
+    prepareTronMintMultipleTrc721SignedTransaction,
+    prepareTronMintTrc721SignedTransaction,
     prepareTronSignedTransaction,
+    prepareTronTransferTrc721SignedTransaction,
     prepareTronTrc10SignedTransaction,
-    prepareTronTrc20SignedTransaction
+    prepareTronTrc20SignedTransaction,
+    prepareTronUpdateCashbackForAuthorTrc721SignedTransaction,
 } from './tron';
 
-import token_bytecode from '../contracts/trc20/token_bytecode';
-
 describe('Tron transactions', () => {
+    jest.setTimeout(9999);
     it('should test valid transaction data', async () => {
         const body = new TransferTron();
         body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701';
@@ -60,7 +76,7 @@ describe('Tron transactions', () => {
         expect(JSON.parse(txData).raw_data.contract[0].parameter.value.amount).toBe(1);
     });
 
-     it('should test valid TRC20 transaction data', async () => {
+    it('should test valid TRC20 transaction data', async () => {
         const body = new TransferTronTrc20();
         body.tokenAddress = 'TWgHeettKLgq1hCdEUPaZNCM6hPg8JkG2X';
         body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701';
@@ -96,5 +112,136 @@ describe('Tron transactions', () => {
         } catch (e) {
             console.error(e);
         }
+    });
+
+    // ERC-721 tests
+
+    it('should test valid deploy 721 transaction', async () => {
+        process.env.TRON_PRO_API_KEY = 'b35409b4-7d11-491e-8760-32d2506a90b5';
+        process.env.TATUM_API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd';
+        const body = new TronDeployTrc721();
+        body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701';
+        body.chain = Currency.TRON;
+        body.name = 'Tatum';
+        body.symbol = 'TTM';
+        body.feeLimit = 600;
+        try {
+            const txData = await prepareTronDeployTrc721SignedTransaction(true, body);
+            expect(JSON.parse(txData).txID).toBeDefined();
+            console.log(await tronBroadcast(txData));
+        } catch (e) {
+            console.error(e);
+        }
+    });
+
+    it('should test valid mint 721 transaction', async () => {
+        process.env.TRON_PRO_API_KEY = 'b35409b4-7d11-491e-8760-32d2506a90b5';
+        process.env.TATUM_API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd';
+        const body = new TronMintTrc721();
+        body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701';
+        body.chain = Currency.TRON;
+        body.to = 'TFnpwE8jCgtq3QpAhFfF2QpXzdBGmKvKMe';
+        body.contractAddress = 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ';
+        body.tokenId = '3';
+        body.url = 'https://google.com';
+        body.feeLimit = 50;
+        const txData = await prepareTronMintTrc721SignedTransaction(true, body);
+        expect(JSON.parse(txData).txID).toBeDefined();
+        console.log(await tronBroadcast(txData));
+    });
+
+    it('should test valid mint 721 with cashback transaction', async () => {
+        process.env.TRON_PRO_API_KEY = 'b35409b4-7d11-491e-8760-32d2506a90b5';
+        process.env.TATUM_API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd';
+        const body = new TronMintTrc721();
+        body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701';
+        body.chain = Currency.TRON;
+        body.to = 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh';
+        body.contractAddress = 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ';
+        body.cashbackValues = ['3'];
+        body.authorAddresses = ['TFnpwE8jCgtq3QpAhFfF2QpXzdBGmKvKMe'];
+        body.tokenId = '3000';
+        body.url = 'https://google.com';
+        body.feeLimit = 50;
+        const txData = await prepareTronMintCashbackTrc721SignedTransaction(true, body);
+        expect(JSON.parse(txData).txID).toBeDefined();
+        console.log(await tronBroadcast(txData));
+    });
+
+    it('should test valid mint multiple 721 transaction', async () => {
+        process.env.TRON_PRO_API_KEY = 'b35409b4-7d11-491e-8760-32d2506a90b5';
+        process.env.TATUM_API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd';
+        const body = new TronMintMultipleTrc721();
+        body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701';
+        body.chain = Currency.TRON;
+        body.to = ['TFnpwE8jCgtq3QpAhFfF2QpXzdBGmKvKMe', 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh'];
+        body.contractAddress = 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ';
+        body.tokenId = ['40', '50'];
+        body.url = ['https://google.com', 'https://google.com'];
+        body.feeLimit = 50;
+        const txData = await prepareTronMintMultipleTrc721SignedTransaction(true, body);
+        expect(JSON.parse(txData).txID).toBeDefined();
+        console.log(await tronBroadcast(txData));
+    });
+
+    it('should test valid update 721 cashback transaction', async () => {
+        process.env.TRON_PRO_API_KEY = 'b35409b4-7d11-491e-8760-32d2506a90b5';
+        process.env.TATUM_API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd';
+        const body = new TronUpdateCashbackTrc721();
+        body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701';
+        body.chain = Currency.TRON;
+        body.contractAddress = 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ';
+        body.cashbackValue = '0';
+        body.tokenId = '11';
+        body.feeLimit = 50;
+        const txData = await prepareTronUpdateCashbackForAuthorTrc721SignedTransaction(true, body);
+        expect(JSON.parse(txData).txID).toBeDefined();
+        console.log(await tronBroadcast(txData));
+    });
+
+    it('should test valid burn 721 transaction', async () => {
+        process.env.TRON_PRO_API_KEY = 'b35409b4-7d11-491e-8760-32d2506a90b5';
+        process.env.TATUM_API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd';
+        const body = new TronBurnTrc721();
+        body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701';
+        body.chain = Currency.TRON;
+        body.contractAddress = 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ';
+        body.tokenId = '3';
+        body.feeLimit = 50;
+        const txData = await prepareTronBurnTrc721SignedTransaction(true, body);
+        expect(JSON.parse(txData).txID).toBeDefined();
+        console.log(await tronBroadcast(txData));
+    });
+
+    it('should test valid transfer 721 transaction without cashback', async () => {
+        process.env.TRON_PRO_API_KEY = 'b35409b4-7d11-491e-8760-32d2506a90b5';
+        process.env.TATUM_API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd';
+        const body = new TronTransferTrc721();
+        body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701';
+        body.chain = Currency.TRON;
+        body.contractAddress = 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ';
+        body.to = 'TFnpwE8jCgtq3QpAhFfF2QpXzdBGmKvKMe';
+        body.tokenId = '50';
+        body.value = '0';
+        body.feeLimit = 50;
+        const txData = await prepareTronTransferTrc721SignedTransaction(true, body);
+        expect(JSON.parse(txData).txID).toBeDefined();
+        console.log(await tronBroadcast(txData));
+    });
+
+    it('should test valid transfer 721 transaction with cashback', async () => {
+        process.env.TRON_PRO_API_KEY = 'b35409b4-7d11-491e-8760-32d2506a90b5';
+        process.env.TATUM_API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd';
+        const body = new TronTransferTrc721();
+        body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701';
+        body.chain = Currency.TRON;
+        body.contractAddress = 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ';
+        body.to = 'TFnpwE8jCgtq3QpAhFfF2QpXzdBGmKvKMe';
+        body.tokenId = '3000';
+        body.value = '30';
+        body.feeLimit = 50;
+        const txData = await prepareTronTransferTrc721SignedTransaction(true, body);
+        expect(JSON.parse(txData).txID).toBeDefined();
+        console.log(await tronBroadcast(txData));
     });
 });

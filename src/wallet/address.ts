@@ -647,6 +647,9 @@ export const generateAddressFromPrivatekey = (currency: Currency, testnet: boole
             return convertLyraPrivateKey(testnet, privateKey);
         case Currency.BNB:
             return getAddressFromPrivateKey(privateKey, testnet ? 'tbnb' : 'bnb');
+        case Currency.TRON:
+        case Currency.USDT_TRON:
+            return TronWeb.address.fromPrivateKey(privateKey);
         case Currency.ETH:
         case Currency.USDT:
         case Currency.GMC:

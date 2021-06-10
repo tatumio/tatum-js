@@ -18,6 +18,12 @@ import {
     FlowMintNft,
     FlowTransferNft,
     TransactionHash,
+    TronBurnTrc721,
+    TronDeployTrc721,
+    TronMintMultipleTrc721,
+    TronMintTrc721,
+    TronTransferTrc721,
+    TronUpdateCashbackTrc721,
     UpdateCashbackErc721,
 } from '../model';
 import {
@@ -43,6 +49,13 @@ import {
     sendMintMultipleBep721Transaction,
     sendMintMultipleCashbackBep721Transaction,
     sendMintMultipleErc721Transaction,
+    sendTronBurnTrc721SignedTransaction,
+    sendTronDeployTrc721SignedTransaction,
+    sendTronMintCashbackTrc721SignedTransaction,
+    sendTronMintMultipleTrc721SignedTransaction,
+    sendTronMintTrc721SignedTransaction,
+    sendTronTransferTrc721SignedTransaction,
+    sendTronUpdateCashbackForAuthorTrc721SignedTransaction,
     sendUpdateCashbackForAuthorBep721Transaction,
     sendUpdateCashbackForAuthorErc721Transaction
 } from '../transaction';
@@ -70,12 +83,14 @@ export const getNFTMetadataURI = async (chain: Currency, contractAddress: string
  */
 export const getNFTRoyalty = async (chain: Currency, contractAddress: string, tokenId: string): Promise<{ data: string }> => get(`/v3/nft/royalty/${chain}/${contractAddress}/${tokenId}`);
 
-export const deployNFT = async (testnet: boolean, body: CeloDeployErc721 | EthDeployErc721 | FlowDeployNft, provider?: string): Promise<TransactionHash> => {
+export const deployNFT = async (testnet: boolean, body: CeloDeployErc721 | EthDeployErc721 | TronDeployTrc721 | FlowDeployNft, provider?: string): Promise<TransactionHash> => {
     switch (body.chain) {
         case Currency.CELO:
             return sendCeloDeployErc721Transaction(testnet, body as CeloDeployErc721, provider);
         case Currency.ETH:
             return sendDeployErc721Transaction(body as EthDeployErc721, provider);
+        case Currency.TRON:
+            return sendTronDeployTrc721SignedTransaction(testnet, body as TronDeployTrc721);
         case Currency.BSC:
             return sendDeployBep721Transaction(body as EthDeployErc721, provider);
         case Currency.FLOW:
@@ -85,7 +100,7 @@ export const deployNFT = async (testnet: boolean, body: CeloDeployErc721 | EthDe
     }
 };
 
-export const mintNFTWithUri = async (testnet: boolean, body: CeloMintErc721 | EthMintErc721 | FlowMintNft, provider?: string) => {
+export const mintNFTWithUri = async (testnet: boolean, body: CeloMintErc721 | EthMintErc721 | TronMintTrc721 | FlowMintNft, provider?: string) => {
     switch (body.chain) {
         case Currency.CELO:
             if ((body as CeloMintErc721).authorAddresses) {
@@ -98,6 +113,12 @@ export const mintNFTWithUri = async (testnet: boolean, body: CeloMintErc721 | Et
                 return sendMintCashbackErc721Transaction(body as EthMintErc721, provider);
             } else {
                 return sendMintErc721Transaction(body as EthMintErc721, provider);
+            }
+        case Currency.TRON:
+            if ((body as TronMintTrc721).authorAddresses) {
+                return sendTronMintCashbackTrc721SignedTransaction(testnet, body as TronMintTrc721);
+            } else {
+                return sendTronMintTrc721SignedTransaction(testnet, body as TronMintTrc721);
             }
         case Currency.BSC:
             if ((body as EthMintErc721).authorAddresses) {
@@ -119,6 +140,12 @@ export const mintMultipleNFTWithUri = async (testnet: boolean, body: CeloMintMul
             } else {
                 return sendCeloMintMultipleErc721Transaction(testnet, body as CeloMintMultipleErc721, provider);
             }
+        case Currency.TRON:
+            if ((body as TronMintMultipleTrc721).authorAddresses) {
+                throw new Error('Unsupported operation.');
+            } else {
+                return sendTronMintMultipleTrc721SignedTransaction(testnet, body as TronMintMultipleTrc721);
+            }
         case Currency.ETH:
             if ((body as EthMintMultipleErc721).authorAddresses) {
                 return sendEthMintMultipleCashbackErc721SignedTransaction(body as EthMintMultipleErc721, provider);
@@ -138,10 +165,12 @@ export const mintMultipleNFTWithUri = async (testnet: boolean, body: CeloMintMul
     }
 };
 
-export const burnNFT = async (testnet: boolean, body: CeloBurnErc721 | EthBurnErc721 | FlowBurnNft, provider?: string) => {
+export const burnNFT = async (testnet: boolean, body: CeloBurnErc721 | EthBurnErc721 | TronBurnTrc721 | FlowBurnNft, provider?: string) => {
     switch (body.chain) {
         case Currency.CELO:
             return sendCeloBurnErc721Transaction(testnet, body as CeloBurnErc721, provider);
+        case Currency.TRON:
+            return sendTronBurnTrc721SignedTransaction(testnet, body as TronBurnTrc721);
         case Currency.ETH:
             return sendBurnErc721Transaction(body, provider);
         case Currency.BSC:
@@ -153,12 +182,14 @@ export const burnNFT = async (testnet: boolean, body: CeloBurnErc721 | EthBurnEr
     }
 };
 
-export const updateCashbackForAuthorNFT = async (testnet: boolean, body: UpdateCashbackErc721 | CeloUpdateCashbackErc721, provider?: string) => {
+export const updateCashbackForAuthorNFT = async (testnet: boolean, body: UpdateCashbackErc721 | TronUpdateCashbackTrc721 | CeloUpdateCashbackErc721, provider?: string) => {
     switch (body.chain) {
         case Currency.CELO:
             return sendCeloUpdateCashbackForAuthorErc721Transaction(testnet, body as CeloUpdateCashbackErc721, provider);
         case Currency.ETH:
             return sendUpdateCashbackForAuthorErc721Transaction(body, provider);
+        case Currency.TRON:
+            return sendTronUpdateCashbackForAuthorTrc721SignedTransaction(testnet, body as TronUpdateCashbackTrc721);
         case Currency.BSC:
             return sendUpdateCashbackForAuthorBep721Transaction(body, provider);
         default:
@@ -166,12 +197,14 @@ export const updateCashbackForAuthorNFT = async (testnet: boolean, body: UpdateC
     }
 };
 
-export const transferNFT = async (testnet: boolean, body: CeloTransferErc721 | EthTransferErc721 | FlowTransferNft, provider?: string) => {
+export const transferNFT = async (testnet: boolean, body: CeloTransferErc721 | EthTransferErc721 | TronTransferTrc721 | FlowTransferNft, provider?: string) => {
     switch (body.chain) {
         case Currency.CELO:
             return sendCeloTransferErc721Transaction(testnet, body as CeloTransferErc721, provider);
         case Currency.ETH:
             return sendErc721Transaction(body, provider);
+        case Currency.TRON:
+            return sendTronTransferTrc721SignedTransaction(testnet, body as TronTransferTrc721);
         case Currency.BSC:
             return sendBep721Transaction(body, provider);
         case Currency.FLOW:

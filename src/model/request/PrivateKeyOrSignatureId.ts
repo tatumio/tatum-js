@@ -5,7 +5,7 @@ export class PrivateKeyOrSignatureId {
   @ValidateIf(o => (o.fromPrivateKey && o.signatureId) || !o.signatureId)
   @Validate(SignatureIdValidator)
   @IsNotEmpty()
-  @Length(66, 66)
+  @Length(64, 66)
   public fromPrivateKey?: string;
 
   @ValidateIf(o => (o.fromPrivateKey && o.signatureId) || !o.fromPrivateKey)

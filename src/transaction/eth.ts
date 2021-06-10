@@ -537,7 +537,6 @@ export const prepareEthUpdateCashbackForAuthorErc721SignedTransaction = async (b
     await validateBody(body, EthBurnErc721);
     const {
         fromPrivateKey,
-        author,
         cashbackValue,
         tokenId,
         fee,

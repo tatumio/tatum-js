@@ -1,20 +1,23 @@
-import {IsIn, IsNotEmpty, IsOptional, Length, Min} from 'class-validator';
+import {IsArray, IsIn, IsNotEmpty, IsOptional, Length, Min} from 'class-validator';
 import {Currency} from './Currency';
 import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
 
 export class MintMultipleErc721 extends PrivateKeyOrSignatureId {
 
     @IsNotEmpty()
+    @IsArray()
     public to: string[];
 
     @IsNotEmpty()
+    @IsArray()
     public tokenId: string[];
 
     @IsNotEmpty()
+    @IsArray()
     public url: string[];
 
     @IsNotEmpty()
-    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC])
+    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC, Currency.TRON])
     public chain: Currency;
 
     @IsNotEmpty()
@@ -25,7 +28,11 @@ export class MintMultipleErc721 extends PrivateKeyOrSignatureId {
     @IsOptional()
     public nonce?: number;
 
+    @IsArray()
+    @IsOptional()
     public authorAddresses?: string[][];
 
+    @IsArray()
+    @IsOptional()
     public cashbackValues?: string[][];
 }

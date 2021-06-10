@@ -207,7 +207,6 @@ describe('CELO transactions', () => {
         body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
         body.chain = Currency.CELO;
         body.contractAddress = '0x8e6e6fc994d18F8A9B1A38f93469E1F9252d605E';
-        body.author = '0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea';
         body.cashbackValue = '0';
         body.tokenId = '11';
         body.feeCurrency = Currency.CUSD;
