@@ -38,6 +38,11 @@ export default {
         'stateMutability': 'View',
         'type': 'Function'
     }, {'outputs': [{'type': 'string'}], 'constant': true, 'name': 'baseURI', 'stateMutability': 'View', 'type': 'Function'}, {
+        'inputs': [{'name': 'tokenId', 'type': 'uint256'}],
+        'name': 'burn',
+        'stateMutability': 'Nonpayable',
+        'type': 'Function'
+    }, {
         'outputs': [{'type': 'address'}],
         'constant': true,
         'inputs': [{'name': 'tokenId', 'type': 'uint256'}],
@@ -62,15 +67,6 @@ export default {
         'outputs': [{'type': 'bool'}],
         'inputs': [{'name': 'to', 'type': 'address[]'}, {'name': 'tokenId', 'type': 'uint256[]'}, {'name': 'uri', 'type': 'string[]'}],
         'name': 'mintMultiple',
-        'stateMutability': 'Nonpayable',
-        'type': 'Function'
-    }, {
-        'outputs': [{'type': 'bool'}],
-        'inputs': [{'name': 'to', 'type': 'address[]'}, {'name': 'tokenId', 'type': 'uint256[]'}, {'name': 'uri', 'type': 'string[]'}, {
-            'name': 'recipientAddresses',
-            'type': 'address[][]'
-        }, {'name': 'cashbackValues', 'type': 'uint256[][]'}],
-        'name': 'mintMultipleCashback',
         'stateMutability': 'Nonpayable',
         'type': 'Function'
     }, {
