@@ -117,6 +117,8 @@ export const signTronKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
     return JSON.stringify(await tronWeb.trx.sign(transactionConfig, fromPrivateKey));
 };
 
+export const convertAddressFromHex = (address: string) => TronWeb.address.fromHex(address);
+
 export const sendTronDeployTrc721SignedTransaction = async (testnet: boolean, body: TronDeployTrc721) =>
     await tronBroadcast(await prepareTronDeployTrc721SignedTransaction(testnet, body));
 
