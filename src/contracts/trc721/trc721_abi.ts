@@ -154,6 +154,13 @@ export default {
         'name': 'tokenURI',
         'stateMutability': 'View',
         'type': 'Function'
+    }, {
+        'outputs': [{'type': 'uint256[]'}],
+        'constant': true,
+        'inputs': [{'name': 'owner', 'type': 'address'}],
+        'name': 'tokensOfOwner',
+        'stateMutability': 'View',
+        'type': 'Function'
     }, {'outputs': [{'type': 'uint256'}], 'constant': true, 'name': 'totalSupply', 'stateMutability': 'View', 'type': 'Function'}, {
         'inputs': [{
             'name': 'from',
