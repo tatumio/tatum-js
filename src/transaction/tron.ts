@@ -651,7 +651,7 @@ export const prepareTronTransferTrc721SignedTransaction = async (testnet: boolea
         {
             feeLimit: tronWeb.toSun(feeLimit),
             from: sender,
-            callValue: value ? `0x${new BigNumber(value).multipliedBy(1e6).toString(16)}` : undefined,
+            callValue: value ? `0x${new BigNumber(value).multipliedBy(1e6).toString(16)}` : 0,
         },
         [{type: 'address', value: tronWeb.address.toHex(to)},
             {
