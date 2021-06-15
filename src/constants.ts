@@ -7,9 +7,13 @@ export const TATUM_RETRIES = 5;
 export const TEST_VET_URL = 'https://sync-testnet.vechain.org/';
 export const VET_URL = 'https://sync-mainnet.vechain.org/';
 
+export const TEST_ONE_URL = 'https://api.s0.b.hmny.io';
+export const ONE_URL = 'https://api.harmony.one';
+
 export const HARDENED_THRESHOLD = 0x80000000;
 
 export const ETH_DERIVATION_PATH = 'm/44\'/60\'/0\'/0';
+export const ONE_DERIVATION_PATH = 'm/44\'/1023\'/0\'/0';
 export const FLOW_DERIVATION_PATH = 'm/44\'/539\'/0\'/0';
 export const CELO_DERIVATION_PATH = 'm/44\'/52752\'/0\'/0';
 export const VET_DERIVATION_PATH = 'm/44\'/818\'/0\'/0';
@@ -112,7 +116,7 @@ export const FLOW_MAINNET_ADDRESSES = {
     FlowToken: '0x1654653399040a61',
     FungibleToken: '0xf233dcee88fe0abe',
     FUSD: '0x3c5959b568896393',
-    TatumMultiNFT: '0xc4b2a5119c7c6cd6',
+    TatumMultiNFT: '0x354e6721564ccd2c',
 };
 
 export const CONTRACT_ADDRESSES = {

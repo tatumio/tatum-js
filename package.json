@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum",
-  "version": "1.15.4",
+  "version": "1.15.5",
   "description": "",
   "main": "dist/src/index.js",
   "repository": "https://github.com/tatumio/tatum-js",
@@ -32,6 +32,10 @@
     "@celo-tools/celo-ethers-wrapper": "0.0.5",
     "@cityofzion/neon-js": "^4.8.0",
     "@emurgo/cardano-serialization-lib-nodejs": "^6.0.0",
+    "@harmony-js/account": "^0.1.57",
+    "@harmony-js/core": "^0.1.57",
+    "@harmony-js/crypto": "^0.1.56",
+    "@harmony-js/utils": "^0.1.56",
     "@onflow/config": "^0.0.2",
     "@onflow/fcl": "^0.0.70",
     "@onflow/six-add-new-key": "^0.0.5",
