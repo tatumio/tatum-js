@@ -7,23 +7,24 @@ import TatumMultiNFT from ${testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLO
 transaction(type: String) {
 
     // local variable for storing the minter reference
-    let minter: &TatumMultiNFT.NFTMinter
+    let minter: &TatumMultiNFT.AdminMinter
 
     let newMinter: AuthAccount;
 
     prepare(adminMinter: AuthAccount, newMinter: AuthAccount) {
 
         // borrow a reference to the NFTMinter resource in storage
-        self.minter = adminMinter.borrow<&TatumMultiNFT.NFTMinter>(from: TatumMultiNFT.MinterStoragePath)
+        self.minter = adminMinter.borrow<&TatumMultiNFT.AdminMinter>(from: TatumMultiNFT.AdminMinterStoragePath)
             ?? panic("Could not borrow a reference to the NFT minter")
         self.newMinter = newMinter;
     }
 
     execute {
         // add new minter for specific token type
-        return self.minter.addMinter(minterAccount: self.newMinter, type: type)
+        self.minter.addMinter(minterAccount: self.newMinter, type: type)
     }
-}`;
+}
+`;
 
 export const metadataFlowNftTokenScript = (testnet: boolean) => dedent`
 import TatumMultiNFT from ${testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLOW_MAINNET_ADDRESSES.TatumMultiNFT}
