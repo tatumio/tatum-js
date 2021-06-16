@@ -12,6 +12,7 @@ export * from './quorum';
 export * from './xrp';
 export * from './xlm';
 export * from './scrypta';
+export * from './one';
 export * from './tron';
 export * from './ada';
 export * from './xdc';
