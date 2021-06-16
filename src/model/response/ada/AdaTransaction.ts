@@ -1,4 +1,4 @@
-export interface CardanoTransaction {
+export interface AdaTransaction {
   block: { hash: string, number: number };
   blockIndex: number;
   deposit: number;

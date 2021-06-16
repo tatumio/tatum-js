@@ -1,4 +1,4 @@
-export interface CardanoBlock {
+export interface AdaBlock {
   fees: number;
   slotLeader: { description: string, hash: string };
   forgedAt: string;

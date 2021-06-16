@@ -1,4 +1,4 @@
-export interface CardanoAccount {
+export interface AdaAccount {
   assetBalances: [{
     asset: {
       assetId: string,

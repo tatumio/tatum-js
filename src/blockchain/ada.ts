@@ -1,46 +1,46 @@
 import {get, post} from '../connector/tatum';
 import {
-    AdaUTxo,
-    CardanoAccount,
-    CardanoBlock,
-    CardanoBlockChainInfo,
-    CardanoTransaction,
+    AdaUtxo,
+    AdaAccount,
+    AdaBlock,
+    AdaBlockChainInfo,
+    AdaTransaction,
     TransactionHash
 } from '../model';
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/CardanoBroadcast" target="_blank">Tatum API documentation</a>
  */
-export const cardanoBroadcast = async (txData: string): Promise<TransactionHash> =>
-    post(`/v3/cardano/broadcast`, {txData});
+export const adaBroadcast = async (txData: string): Promise<TransactionHash> =>
+    post(`/v3/ada/broadcast`, {txData});
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/CardanoGetBlockChainInfo" target="_blank">Tatum API documentation</a>
  */
-export const cardanoGetBlockChainInfo = async (): Promise<CardanoBlockChainInfo> => get(`/v3/cardano/info`);
+export const adaGetBlockChainInfo = async (): Promise<AdaBlockChainInfo> => get(`/v3/ada/info`);
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/CardanoGetBlock" target="_blank">Tatum API documentation</a>
  */
-export const cardanoGetBlock = async (hash: string): Promise<CardanoBlock> => get(`/v3/cardano/block/${hash}`);
+export const adaGetBlock = async (hash: string): Promise<AdaBlock> => get(`/v3/ada/block/${hash}`);
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/CardanoGetTransaction" target="_blank">Tatum API documentation</a>
  */
-export const cardanoGetTransaction = async (hash: string): Promise<CardanoTransaction> => get(`/v3/cardano/transaction/${hash}`);
+export const adaGetTransaction = async (hash: string): Promise<AdaTransaction> => get(`/v3/ada/transaction/${hash}`);
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/CardanoGetAccount" target="_blank">Tatum API documentation</a>
  */
-export const cardanoGetAccount = async (address: string): Promise<CardanoAccount> => get(`/v3/cardano/account/${address}`);
+export const adaGetAccount = async (address: string): Promise<AdaAccount> => get(`/v3/ada/account/${address}`);
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/CardanoGetTransactionsByAccount" target="_blank">Tatum API documentation</a>
  */
-export const cardanoGetTransactionsByAccount = async (address: string, limit: number, offset: number): Promise<CardanoTransaction[]> =>
-  get(`/v3/cardano/account/${address}/transactions?limit=${limit}?offset=${offset}`);
+export const adaGetTransactionsByAccount = async (address: string, limit: number, offset: number): Promise<AdaTransaction[]> =>
+  get(`/v3/ada/account/${address}/transactions?limit=${limit}?offset=${offset}`);
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/CardanoGetUTxos" target="_blank">Tatum API documentation</a>
  */
-export const cardanoGetUTxos = async (address: string): Promise<AdaUTxo[]> => get(`/v3/cardano/${address}/utxos`);
+export const adaGetUtxos = async (address: string): Promise<AdaUtxo[]> => get(`/v3/ada/utxo/${address}`);

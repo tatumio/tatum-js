@@ -1,6 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 
-export class AdaUTxo {
+export class AdaUtxo {
     @IsNotEmpty()
     public txHash: string; // transactionHash
 
