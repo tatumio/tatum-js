@@ -1,5 +1,4 @@
 import {getAddressFromPrivateKey} from '@binance-chain/javascript-sdk/lib/crypto';
-import {Account} from '@harmony-js/account';
 import {HarmonyAddress} from '@harmony-js/crypto';
 // @ts-ignore
 import {ECDSA_secp256k1, encodeKey, SHA3_256} from '@onflow/util-encode-key';
@@ -512,8 +511,8 @@ const convertEthPrivateKey = (testnet: boolean, privkey: string) => {
  * @returns blockchain address
  */
 const convertOnePrivateKey = (testnet: boolean, privKey: string) => {
-    const account = Account.add(privKey.replace('0x', ''));
-    return account.address;
+    const wallet = ethWallet.fromPrivateKey(Buffer.from(privKey.replace('0x', ''), 'hex'));
+    return wallet.getAddressString() as string;
 };
 
 const convertXdcPrivateKey = (testnet: boolean, privKey: string) => {

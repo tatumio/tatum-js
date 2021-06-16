@@ -33,8 +33,8 @@ import {
 /**
  * Convert XDC address format.
  */
- export const fromXdcAddress = (xdcAddress: string): string => {
-  return xdcAddress.trim().replace('xdc', '0x')
+export const fromXdcAddress = (xdcAddress: string): string => {
+    return xdcAddress.trim().replace('xdc', '0x');
 };
 
 /**
@@ -43,10 +43,9 @@ import {
 export const xdcGetGasPriceInWei = async () => {
     const gasStationUrl = 'https://rpc.xinfin.network/';
     try {
-        const {result} = await axios.post(`${gasStationUrl}gasPrice`, {'jsonrpc': '2.0', 'method': 'eth_gasPrice', 'params': [], 'id': 1});
-      return result ? Web3.utils.toWei(result, 'wei') : Web3.utils.toWei('5', 'kwei');
-    }
-    catch (e) {
+        const {data} = await axios.post(`${gasStationUrl}gasPrice`, {'jsonrpc': '2.0', 'method': 'eth_gasPrice', 'params': [], 'id': 1});
+        return data ? Web3.utils.toWei(data, 'wei') : Web3.utils.toWei('5', 'kwei');
+    } catch (e) {
     }
     return Web3.utils.toWei('5', 'kwei');
 };
@@ -144,21 +143,21 @@ export const prepareXdcStoreDataTransaction = async (body: CreateRecord, provide
  * @param fee Fee object
  * @returns transaction data to be broadcast to blockchain.
  */
- const prepareErc20SignedTransactionAbstraction = async (
-  client: Web3, transaction: TransactionConfig, signatureId: string | undefined, fromPrivateKey: string | undefined, fee?: Fee | undefined
+const prepareErc20SignedTransactionAbstraction = async (
+    client: Web3, transaction: TransactionConfig, signatureId: string | undefined, fromPrivateKey: string | undefined, fee?: Fee | undefined
 ) => {
-  const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await xdcGetGasPriceInWei();
-  const tx = {
-    ...transaction,
-    gasPrice,
-  };
+    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await xdcGetGasPriceInWei();
+    const tx = {
+        ...transaction,
+        gasPrice,
+    };
 
-  if (signatureId) {
-    return JSON.stringify(tx);
-  }
+    if (signatureId) {
+        return JSON.stringify(tx);
+    }
 
-  tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
-  return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
 };
 
 /**
@@ -167,31 +166,31 @@ export const prepareXdcStoreDataTransaction = async (body: CreateRecord, provide
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
- export const prepareXdcMintErc20SignedTransaction = async (body: MintErc20, provider?: string) => {
-  await validateBody(body, MintErc20);
-  const {
-    fromPrivateKey,
-    amount,
-    to,
-    contractAddress,
-    nonce,
-    signatureId,
-  } = body;
+export const prepareXdcMintErc20SignedTransaction = async (body: MintErc20, provider?: string) => {
+    await validateBody(body, MintErc20);
+    const {
+        fromPrivateKey,
+        amount,
+        to,
+        contractAddress,
+        nonce,
+        signatureId,
+    } = body;
 
-  const client = getXdcClient(provider, fromPrivateKey);
+    const client = getXdcClient(provider, fromPrivateKey);
 
-  let tx: TransactionConfig;
-  // @ts-ignore
-  const contract = new client.eth.Contract(erc20TokenABI, fromXdcAddress(contractAddress));
-  const digits = new BigNumber(10).pow(await contract.methods.decimals().call());
-  tx = {
-      from: 0,
-      to: fromXdcAddress(contractAddress),
-      data: contract.methods.mint(fromXdcAddress(to), `0x${new BigNumber(amount).multipliedBy(digits).toString(16)}`).encodeABI(),
-      nonce,
-  };
+    let tx: TransactionConfig;
+    // @ts-ignore
+    const contract = new client.eth.Contract(erc20TokenABI, fromXdcAddress(contractAddress));
+    const digits = new BigNumber(10).pow(await contract.methods.decimals().call());
+    tx = {
+        from: 0,
+        to: fromXdcAddress(contractAddress),
+        data: contract.methods.mint(fromXdcAddress(to), `0x${new BigNumber(amount).multipliedBy(digits).toString(16)}`).encodeABI(),
+        nonce,
+    };
 
-  return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey);
+    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey);
 };
 
 /**
@@ -200,30 +199,30 @@ export const prepareXdcStoreDataTransaction = async (body: CreateRecord, provide
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
- export const prepareXdcBurnErc20SignedTransaction = async (body: BurnErc20, provider?: string) => {
-  await validateBody(body, BurnErc20);
-  const {
-    fromPrivateKey,
-    amount,
-    contractAddress,
-    nonce,
-    signatureId,
-  } = body;
+export const prepareXdcBurnErc20SignedTransaction = async (body: BurnErc20, provider?: string) => {
+    await validateBody(body, BurnErc20);
+    const {
+        fromPrivateKey,
+        amount,
+        contractAddress,
+        nonce,
+        signatureId,
+    } = body;
 
-  const client = getXdcClient(provider, fromPrivateKey);
+    const client = getXdcClient(provider, fromPrivateKey);
 
-  let tx: TransactionConfig;
-  // @ts-ignore
-  const contract = new client.eth.Contract(erc20TokenABI, fromXdcAddress(contractAddress));
-  const digits = new BigNumber(10).pow(await contract.methods.decimals().call());
-  tx = {
-      from: 0,
-      to: fromXdcAddress(contractAddress),
-      data: contract.methods.burn(`0x${new BigNumber(amount).multipliedBy(digits).toString(16)}`).encodeABI(),
-      nonce,
-  };
+    let tx: TransactionConfig;
+    // @ts-ignore
+    const contract = new client.eth.Contract(erc20TokenABI, fromXdcAddress(contractAddress));
+    const digits = new BigNumber(10).pow(await contract.methods.decimals().call());
+    tx = {
+        from: 0,
+        to: fromXdcAddress(contractAddress),
+        data: contract.methods.burn(`0x${new BigNumber(amount).multipliedBy(digits).toString(16)}`).encodeABI(),
+        nonce,
+    };
 
-  return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey);
+    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey);
 };
 
 /**
@@ -430,7 +429,7 @@ export const prepareXdcMintErcCashback721SignedTransaction = async (body: EthMin
     const cb: string[] = [];
     const cashbacks: string[] = cashbackValues!;
     for (const c of cashbacks) {
-        cb.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
+        cb.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`);
     }
     const tx: TransactionConfig = {
         from: 0,
@@ -473,9 +472,9 @@ export const prepareXdcMintMultipleCashbackErc721SignedTransaction = async (body
     for (const c of cashbacks) {
         const cb2: string[] = [];
         for (const c2 of c) {
-            cb2.push(`0x${new BigNumber(client.utils.toWei(c2, 'ether')).toString(16)}`)
+            cb2.push(`0x${new BigNumber(client.utils.toWei(c2, 'ether')).toString(16)}`);
         }
-        cb.push(cb2)
+        cb.push(cb2);
     }
     const tx: TransactionConfig = {
         from: 0,
@@ -675,7 +674,7 @@ export const sendXdcSmartContractReadMethodInvocationTransaction = async (body: 
     } = body;
     const client = getXdcClient(provider);
     const contract = new client.eth.Contract([methodABI], fromXdcAddress(contractAddress));
-    return { data: await contract.methods[methodName as string](...params).call() };
+    return {data: await contract.methods[methodName as string](...params).call()};
 };
 
 /**
