@@ -24,6 +24,7 @@ import {
     LYRA_DERIVATION_PATH,
     LYRA_NETWORK,
     LYRA_TEST_NETWORK,
+    ONE_DERIVATION_PATH,
     TESTNET_DERIVATION_PATH,
     TRON_DERIVATION_PATH,
     VET_DERIVATION_PATH,
@@ -85,6 +86,22 @@ export const generateVetWallet = async (testnet: boolean, mnem: string): Promise
  */
 export const generateEthWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
     const path = testnet ? TESTNET_DERIVATION_PATH : ETH_DERIVATION_PATH;
+    const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnem));
+    const derivePath = hdwallet.derivePath(path);
+    return {
+        xpub: derivePath.publicExtendedKey().toString(),
+        mnemonic: mnem
+    };
+};
+
+/**
+ * Generate Harmony or any other ERC20 wallet
+ * @param testnet testnet or mainnet version of address
+ * @param mnem mnemonic seed to use
+ * @returns wallet
+ */
+export const generateOneWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
+    const path = testnet ? TESTNET_DERIVATION_PATH : ONE_DERIVATION_PATH;
     const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnem));
     const derivePath = hdwallet.derivePath(path);
     return {
@@ -284,6 +301,8 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
         case Currency.CEUR:
         case Currency.CUSD:
             return generateCeloWallet(testnet, mnem);
+        case Currency.ONE:
+            return generateOneWallet(testnet, mnem);
         case Currency.USDT:
         case Currency.WBTC:
         case Currency.LEO:

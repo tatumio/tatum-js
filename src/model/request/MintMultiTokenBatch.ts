@@ -1,7 +1,7 @@
-import { Type } from 'class-transformer'
+import {Type} from 'class-transformer';
 import {IsIn, IsNotEmpty, IsOptional, Length, Min, ValidateNested} from 'class-validator';
 import {Currency} from './Currency';
-import { Fee } from './Fee'
+import {Fee} from './Fee';
 import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
 
 export class MintMultiTokenBatch extends PrivateKeyOrSignatureId {
@@ -13,11 +13,11 @@ export class MintMultiTokenBatch extends PrivateKeyOrSignatureId {
     public tokenId: string[][];
 
     @IsNotEmpty()
-    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO])
+    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE])
     public chain: Currency;
 
     @IsNotEmpty()
-    @Length(42, 42)
+    @Length(42, 43)
     public contractAddress: string;
 
     @Min(0)

@@ -17,7 +17,7 @@ export class MintMultipleErc721 extends PrivateKeyOrSignatureId {
     public url: string[];
 
     @IsNotEmpty()
-    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC, Currency.TRON])
+    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC, Currency.TRON, Currency.ONE])
     public chain: Currency;
 
     @IsNotEmpty()

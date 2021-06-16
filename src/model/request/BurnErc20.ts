@@ -1,14 +1,5 @@
-import {
-    IsIn,
-    IsInt,
-    IsNotEmpty,
-    IsNumberString,
-    IsOptional,
-    Length,
-    Min,
-} from 'class-validator';
-import {Currency} from './Currency';
-import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
+import {IsInt, IsNotEmpty, IsNumberString, IsOptional, Length, Min,} from 'class-validator';
+import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
 
 export class BurnErc20 extends PrivateKeyOrSignatureId {
     @IsNotEmpty()

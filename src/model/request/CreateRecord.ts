@@ -24,7 +24,7 @@ export class CreateRecord {
     public data: string;
 
     @IsNotEmpty()
-    @IsIn([Currency.ETH, Currency.QUORUM, Currency.FABRIC, Currency.BSC, Currency.CELO, Currency.XDC])
+    @IsIn([Currency.ETH, Currency.QUORUM, Currency.FABRIC, Currency.BSC, Currency.CELO, Currency.XDC, Currency.ONE])
     public chain: string;
 
     @ValidateIf(o => o.chain === Currency.CELO)
@@ -53,4 +53,14 @@ export class CreateRecord {
     @Type(() => Fee)
     @ValidateNested()
     public ethFee?: Fee;
+
+    @ValidateIf(o => o.chain === Currency.ONE)
+    @IsOptional()
+    @Min(0)
+    public fromShardID?: number;
+
+    @ValidateIf(o => o.chain === Currency.ONE)
+    @IsOptional()
+    @Min(0)
+    public toShardID?: number;
 }

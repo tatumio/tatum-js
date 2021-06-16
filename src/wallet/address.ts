@@ -1,4 +1,6 @@
 import {getAddressFromPrivateKey} from '@binance-chain/javascript-sdk/lib/crypto';
+import {Account} from '@harmony-js/account';
+import {HarmonyAddress} from '@harmony-js/crypto';
 // @ts-ignore
 import {ECDSA_secp256k1, encodeKey, SHA3_256} from '@onflow/util-encode-key';
 import {fromBase58, fromPublicKey, fromSeed} from 'bip32';
@@ -22,6 +24,7 @@ import {
     LYRA_DERIVATION_PATH,
     LYRA_NETWORK,
     LYRA_TEST_NETWORK,
+    ONE_DERIVATION_PATH,
     TESTNET_DERIVATION_PATH,
     TRON_DERIVATION_PATH,
     VET_DERIVATION_PATH,
@@ -151,6 +154,13 @@ const generateXdcAddress = (testnet: boolean, xpub: string, i: number) => {
     const w = ethHdKey.fromExtendedKey(xpub);
     const wallet = w.deriveChild(i).getWallet();
     return 'xdc' + wallet.getAddress().toString('hex').toLowerCase();
+};
+
+const generateOneAddress = (testnet: boolean, xpub: string, i: number) => {
+    const w = ethHdKey.fromExtendedKey(xpub);
+    const wallet = w.deriveChild(i).getWallet();
+    const harmonyAddress = new HarmonyAddress('0x' + wallet.getAddress().toString('hex'));
+    return harmonyAddress.basicHex;
 };
 
 /**
@@ -386,6 +396,20 @@ const generateEthPrivateKey = async (testnet: boolean, mnemonic: string, i: numb
 };
 
 /**
+ * Generate Harmony or any other ERC20 private key from mnemonic seed
+ * @param testnet testnet or mainnet version of address
+ * @param mnemonic mnemonic to generate private key from
+ * @param i derivation index of private key to generate.
+ * @returns blockchain private key to the address
+ */
+const generateOnePrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
+    const path = testnet ? TESTNET_DERIVATION_PATH : ONE_DERIVATION_PATH;
+    const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnemonic));
+    const derivePath = hdwallet.derivePath(path).deriveChild(i);
+    return derivePath.getWallet().getPrivateKeyString().replace('0x', '');
+};
+
+/**
  * Generate BSC or any other BEP-20 or BEP721 private key from mnemonic seed
  * @param testnet testnet or mainnet version of address
  * @param mnemonic mnemonic to generate private key from
@@ -481,8 +505,19 @@ const convertEthPrivateKey = (testnet: boolean, privkey: string) => {
     return wallet.getAddressString() as string;
 };
 
-const convertXdcPrivateKey = (testnet: boolean, privkey: string) => {
-    const wallet = ethWallet.fromPrivateKey(Buffer.from(privkey.replace('0x', ''), 'hex'));
+/**
+ * Convert Harmony Private Key to Address
+ * @param testnet testnet or mainnet version of address
+ * @param privKey private key to use
+ * @returns blockchain address
+ */
+const convertOnePrivateKey = (testnet: boolean, privKey: string) => {
+    const account = Account.add(privKey.replace('0x', ''));
+    return account.address;
+};
+
+const convertXdcPrivateKey = (testnet: boolean, privKey: string) => {
+    const wallet = ethWallet.fromPrivateKey(Buffer.from(privKey.replace('0x', ''), 'hex'));
     return wallet.getAddressString().replace('0x', 'xdc');
 };
 
@@ -546,6 +581,8 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
         case Currency.BBCH:
         case Currency.MMY:
             return generateEthAddress(testnet, xpub, i);
+        case Currency.ONE:
+            return generateOneAddress(testnet, xpub, i);
         case Currency.XDC:
             return generateXdcAddress(testnet, xpub, i);
         case Currency.VET:
@@ -619,6 +656,8 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
         case Currency.BBCH:
         case Currency.MMY:
             return generateEthPrivateKey(testnet, mnemonic, i);
+        case Currency.ONE:
+            return generateEthPrivateKey(testnet, mnemonic, i);
         case Currency.XDC:
             return generateXdcPrivateKey(testnet, mnemonic, i);
         case Currency.VET:
@@ -670,6 +709,8 @@ export const generateAddressFromPrivatekey = (currency: Currency, testnet: boole
         case Currency.BSC:
         case Currency.MMY:
             return convertEthPrivateKey(testnet, privateKey);
+        case Currency.ONE:
+            return convertOnePrivateKey(testnet, privateKey);
         case Currency.XDC:
             return convertXdcPrivateKey(testnet, privateKey);
         default:

@@ -11,7 +11,7 @@ export class UpdateCashbackErc721 extends PrivateKeyOrSignatureId {
     public tokenId: string;
 
     @IsNotEmpty()
-    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC, Currency.TRON])
+    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC, Currency.TRON, Currency.ONE])
     public chain: Currency;
 
     @IsNotEmpty()

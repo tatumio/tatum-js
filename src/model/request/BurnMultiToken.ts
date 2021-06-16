@@ -5,7 +5,7 @@ import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
 export class BurnMultiToken extends PrivateKeyOrSignatureId {
 
     @IsNotEmpty()
-    @Length(42, 42)
+    @Length(42, 43)
     public account: string;
 
     @IsNotEmpty()
@@ -16,11 +16,11 @@ export class BurnMultiToken extends PrivateKeyOrSignatureId {
     public amount: string;
 
     @IsNotEmpty()
-    @Length(42, 42)
+    @Length(42, 43)
     public contractAddress: string;
 
     @IsNotEmpty()
-    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO])
+    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE])
     public chain: Currency;
 
     @Min(0)

@@ -7,9 +7,6 @@ export const TATUM_RETRIES = 5;
 export const TEST_VET_URL = 'https://sync-testnet.vechain.org/';
 export const VET_URL = 'https://sync-mainnet.vechain.org/';
 
-export const TEST_ONE_URL = 'https://api.s0.b.hmny.io';
-export const ONE_URL = 'https://api.harmony.one';
-
 export const HARDENED_THRESHOLD = 0x80000000;
 
 export const ETH_DERIVATION_PATH = 'm/44\'/60\'/0\'/0';

@@ -11,6 +11,16 @@ describe('Address tests', () => {
         expect(address).toBe('1HWYaP13JKtaW2Mhq69NVeSLjRYGpD3aKv');
     });
 
+    it('should generate address 1 for ONE mainnet', () => {
+        const address = generateAddressFromXPub(Currency.ONE, false, 'xpub6EiLaLx7QvbzXKLr8AmyHCEDss5gM5mW3XuTEFCYVH7HHCVA7dyrbzE7YawQ4yTxRtZyjgX1sTgbjEWaMKxYMrhhk8rjtVvhbhPH3wrw8Ei', 1);
+        expect(address).toBe('0x209f1ecead1c7096669e65f2ab21fca280b7de32');
+    });
+
+    it('should generate address 1 for ONE testnet', () => {
+        const address = generateAddressFromXPub(Currency.ONE, true, 'xpub6FMiQpA54nciqs52guGVdWQ5TonZt5XtGsFpurgtttL7H3mSfaJDXv5aBdThjX6tW9HYaJSQ8wZVnLm1ixaQUu1MRQCwvwZ6U2cX6mwWT25', 2);
+        expect(address).toBe('0x10168acf3231ccc7b16ba53f17dd4d8bdecf4e1a');
+    });
+
     it('should generate address 1 for TRON mainnet', () => {
         const address = generateAddressFromXPub(Currency.TRON, false, '0244b3f40c6e570ae0032f6d7be87737a6c4e5314a4a1a82e22d0460a0d0cd794936c61f0c80dc74ace4cd04690d4eeb1aa6555883be006e1748306faa7ed3a26a', 1);
         expect(address).toBe('TFFBpkRNro4Pe4154ayGWx7C6Ev7BvQZ6t');
@@ -174,6 +184,16 @@ describe('Address tests', () => {
         expect(privateKey).toBe('0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb');
     });
 
+    it('should generate private key 1 for ONE testnet', async () => {
+        const privateKey = await generatePrivateKeyFromMnemonic(Currency.ONE, true, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1);
+        expect(privateKey).toBe('0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb');
+    });
+
+    it('should generate private key 1 for ONE mainnet', async () => {
+        const privateKey = await generatePrivateKeyFromMnemonic(Currency.ONE, false, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1);
+        expect(privateKey).toBe('0xbc93ab7d2dbad88e64879569a9e3ceaa12d119c70d6dda4d1fc6e73765794a8d');
+    });
+
     it('should generate private key 1 for VET mainnet', async () => {
         const privateKey = await generatePrivateKeyFromMnemonic(Currency.VET, false, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1);
         expect(privateKey).toBe('0xd2a4c2f89f58e50f2e29ed1e68552680417a0534c47bebf18f2f5f3a27817251');
@@ -216,6 +236,16 @@ describe('Address tests', () => {
 
     it('should generate an address from a testnet ETH private key', async () => {
         const address = await generateAddressFromPrivatekey(Currency.ETH, true, '0x4cda6d2c33b0f9a041e46474a638ac59aee0734cf208aa9aa2f05ef887bd09e1');
+        expect(address).toBe('0x8acbcfbc8ce37f6f674f4b9861d3efe89288d89f');
+    });
+
+    it('should generate an address from a mainnet ONE private key', async () => {
+        const address = await generateAddressFromPrivatekey(Currency.ONE, false, '0xac12f9a2d0d1f06c7dc33a3e9c18f60fe1ca65c592d1e9345c994740f9e1971e');
+        expect(address).toBe('0xefc395c295a90023d3e9afacb4399da3d332947b');
+    });
+
+    it('should generate an address from a testnet ONE private key', async () => {
+        const address = await generateAddressFromPrivatekey(Currency.ONE, true, '0x4cda6d2c33b0f9a041e46474a638ac59aee0734cf208aa9aa2f05ef887bd09e1');
         expect(address).toBe('0x8acbcfbc8ce37f6f674f4b9861d3efe89288d89f');
     });
 

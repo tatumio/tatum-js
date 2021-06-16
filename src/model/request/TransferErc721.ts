@@ -17,7 +17,7 @@ export class TransferErc721 extends PrivateKeyOrSignatureId {
     public contractAddress: string;
 
     @IsNotEmpty()
-    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC, Currency.TRON])
+    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC, Currency.TRON, Currency.ONE])
     public chain: Currency;
 
     @Min(0)
