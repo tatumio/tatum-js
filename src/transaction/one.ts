@@ -48,7 +48,7 @@ const prepareGeneralTx = async (client: Web3, testnet: boolean, fromPrivateKey?:
         gas: gasLimit || await client.eth.estimateGas({to: recipient, data: data || ''}),
         data,
         nonce,
-        gasPrice: gasPrice || toWei(await client.eth.getGasPrice(), 'gwei'),
+        gasPrice: gasPrice || await client.eth.getGasPrice(),
     };
 
     if (signatureId) {
