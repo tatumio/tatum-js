@@ -106,7 +106,7 @@ export const FLOW_TESTNET_ADDRESSES = {
     FlowToken: '0x7e60df042a9c0868',
     FungibleToken: '0x9a0766d93b6608b7',
     FUSD: '0xe223d8a629e49c68',
-    TatumMultiNFT: '0x790d994fca93ecb7',
+    TatumMultiNFT: '0x87fe4ebd0cddde06',
 };
 
 export const FLOW_MAINNET_ADDRESSES = {
