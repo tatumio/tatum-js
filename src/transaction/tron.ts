@@ -24,9 +24,9 @@ import {
 // tslint:disable-next-line:no-var-requires
 const TronWeb = require('tronweb');
 
-const prepareTronWeb = (testnet: boolean) => {
+const prepareTronWeb = (testnet: boolean, provider?: string) => {
     const HttpProvider = TronWeb.providers.HttpProvider;
-    const url = testnet ? 'https://api.shasta.trongrid.io' : 'https://api.trongrid.io';
+    const url = provider || testnet ? 'https://api.shasta.trongrid.io' : 'https://api.trongrid.io';
     const fullNode = new HttpProvider(url);
     const solidityNode = new HttpProvider(url);
     const eventServer = new HttpProvider(url);
@@ -218,9 +218,10 @@ export const prepareTronTrc10SignedTransaction = async (testnet: boolean, body: 
  * Sign Tron TRC20 transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
+ * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronTrc20SignedTransaction = async (testnet: boolean, body: TransferTronTrc20) => {
+export const prepareTronTrc20SignedTransaction = async (testnet: boolean, body: TransferTronTrc20, provider?: string) => {
     await validateBody(body, TransferTronTrc20);
     const {
         fromPrivateKey,
@@ -230,7 +231,7 @@ export const prepareTronTrc20SignedTransaction = async (testnet: boolean, body: 
         feeLimit,
     } = body;
 
-    const tronWeb = prepareTronWeb(testnet);
+    const tronWeb = prepareTronWeb(testnet, provider);
     tronWeb.setAddress(tokenAddress);
     const contractInstance = await tronWeb.contract().at(tokenAddress);
     const decimals = await contractInstance.decimals().call();
@@ -329,9 +330,10 @@ export const prepareTronCreateTrc20SignedTransaction = async (testnet: boolean, 
  * Prepare Tron transaction for KMS. Nothing is broadcast to the blockchain.
  * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
+ * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronSignedKMSTransaction = async (testnet: boolean, body: TransferTron) => {
+export const prepareTronSignedKMSTransaction = async (testnet: boolean, body: TransferTron, provider?: string) => {
     await validateBody(body, TransferTron);
     const {
         from,
@@ -339,7 +341,7 @@ export const prepareTronSignedKMSTransaction = async (testnet: boolean, body: Tr
         amount,
     } = body;
 
-    const tronWeb = prepareTronWeb(testnet);
+    const tronWeb = prepareTronWeb(testnet, provider);
     const tx = await tronWeb.transactionBuilder.sendTrx(
         to,
         tronWeb.toSun(amount),
@@ -351,9 +353,10 @@ export const prepareTronSignedKMSTransaction = async (testnet: boolean, body: Tr
  * Prepare Tron Freeze balance transaction for KMS. Nothing is broadcast to the blockchain.
  * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
+ * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronFreezeKMSTransaction = async (testnet: boolean, body: FreezeTron) => {
+export const prepareTronFreezeKMSTransaction = async (testnet: boolean, body: FreezeTron, provider?: string) => {
     await validateBody(body, FreezeTron);
     const {
         from,
@@ -363,7 +366,7 @@ export const prepareTronFreezeKMSTransaction = async (testnet: boolean, body: Fr
         duration,
     } = body;
 
-    const tronWeb = prepareTronWeb(testnet);
+    const tronWeb = prepareTronWeb(testnet, provider);
     const tx = await tronWeb.transactionBuilder.freezeBalance(
         tronWeb.toSun(parseFloat(amount)),
         duration,
@@ -379,9 +382,10 @@ export const prepareTronFreezeKMSTransaction = async (testnet: boolean, body: Fr
  * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param precision
+ * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronTrc10SignedKMSTransaction = async (testnet: boolean, body: TransferTronTrc10, precision?: number) => {
+export const prepareTronTrc10SignedKMSTransaction = async (testnet: boolean, body: TransferTronTrc10, precision?: number, provider?: string) => {
     await validateBody(body, TransferTronTrc10);
     const {
         from,
@@ -390,7 +394,7 @@ export const prepareTronTrc10SignedKMSTransaction = async (testnet: boolean, bod
         amount,
     } = body;
 
-    const tronWeb = prepareTronWeb(testnet);
+    const tronWeb = prepareTronWeb(testnet, provider);
     const tx = await tronWeb.transactionBuilder.sendToken(
         to,
         new BigNumber(amount).multipliedBy(new BigNumber(10).pow(precision || await getTrc10Precision(tronWeb, tokenId))),
@@ -403,9 +407,10 @@ export const prepareTronTrc10SignedKMSTransaction = async (testnet: boolean, bod
  * Prepare Tron TRC20 transaction for KMS. Nothing is broadcast to the blockchain.
  * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
+ * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronTrc20SignedKMSTransaction = async (testnet: boolean, body: TransferTronTrc20) => {
+export const prepareTronTrc20SignedKMSTransaction = async (testnet: boolean, body: TransferTronTrc20, provider?: string) => {
     await validateBody(body, TransferTronTrc20);
     const {
         from,
@@ -415,7 +420,7 @@ export const prepareTronTrc20SignedKMSTransaction = async (testnet: boolean, bod
         feeLimit,
     } = body;
 
-    const tronWeb = prepareTronWeb(testnet);
+    const tronWeb = prepareTronWeb(testnet, provider);
     tronWeb.setAddress(tokenAddress);
     const contractInstance = await tronWeb.contract().at(tokenAddress);
     const decimals = await contractInstance.decimals().call();
@@ -439,9 +444,10 @@ export const prepareTronTrc20SignedKMSTransaction = async (testnet: boolean, bod
  * Prepare create Tron TRC10 transaction for KMS. Nothing is broadcast to the blockchain.
  * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
+ * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronCreateTrc10SignedKMSTransaction = async (testnet: boolean, body: CreateTronTrc10) => {
+export const prepareTronCreateTrc10SignedKMSTransaction = async (testnet: boolean, body: CreateTronTrc10, provider?: string) => {
     await validateBody(body, CreateTronTrc10);
     const {
         from,
@@ -453,7 +459,7 @@ export const prepareTronCreateTrc10SignedKMSTransaction = async (testnet: boolea
         decimals,
     } = body;
 
-    const tronWeb = prepareTronWeb(testnet);
+    const tronWeb = prepareTronWeb(testnet, provider);
     const tx = await tronWeb.transactionBuilder.createToken({
         name,
         abbreviation,
@@ -477,9 +483,10 @@ export const prepareTronCreateTrc10SignedKMSTransaction = async (testnet: boolea
  * Prepare create Tron TRC20 transaction for KMS. Nothing is broadcast to the blockchain.
  * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
+ * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronCreateTrc20SignedKMSTransaction = async (testnet: boolean, body: CreateTronTrc20) => {
+export const prepareTronCreateTrc20SignedKMSTransaction = async (testnet: boolean, body: CreateTronTrc20, provider?: string) => {
     await validateBody(body, CreateTronTrc20);
     const {
         from,
@@ -490,7 +497,7 @@ export const prepareTronCreateTrc20SignedKMSTransaction = async (testnet: boolea
         totalSupply,
     } = body;
 
-    const tronWeb = prepareTronWeb(testnet);
+    const tronWeb = prepareTronWeb(testnet, provider);
     const tx = await tronWeb.transactionBuilder.createSmartContract({
         feeLimit: 1000000000,
         callValue: 0,
@@ -541,7 +548,7 @@ export const prepareTronDeployTrc721SignedTransaction = async (testnet: boolean,
     return JSON.stringify(await tronWeb.trx.sign(tx, fromPrivateKey));
 };
 
-export const prepareTronMintCashbackTrc721SignedTransaction = async (testnet: boolean, body: TronMintTrc721) => {
+export const prepareTronMintCashbackTrc721SignedTransaction = async (testnet: boolean, body: TronMintTrc721, provider?: string) => {
     await validateBody(body, TronMintTrc721);
     const {
         fromPrivateKey,
@@ -556,7 +563,7 @@ export const prepareTronMintCashbackTrc721SignedTransaction = async (testnet: bo
         cashbackValues
     } = body;
 
-    const tronWeb = prepareTronWeb(testnet);
+    const tronWeb = prepareTronWeb(testnet, provider);
     tronWeb.setAddress(contractAddress);
     const sender = from || tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(fromPrivateKey));
     const cb: string[] = [];
