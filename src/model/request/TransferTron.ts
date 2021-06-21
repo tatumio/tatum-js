@@ -1,4 +1,4 @@
-import {IsNotEmpty, IsNumberString, IsUUID, Length, Matches, ValidateIf} from 'class-validator';
+import {IsNotEmpty, IsNumberString, IsUUID, Length, Matches, ValidateIf, Min, IsInt} from 'class-validator';
 
 export class TransferTron {
 
@@ -17,6 +17,12 @@ export class TransferTron {
     @IsUUID('4')
     @IsNotEmpty()
     public signatureId?: string;
+
+    @ValidateIf(o => o.signatureId)
+    @IsNotEmpty()
+    @IsInt()
+    @Min(0)
+    public index?: number;
 
     @IsNotEmpty()
     @Length(34, 34)

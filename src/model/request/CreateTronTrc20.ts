@@ -1,4 +1,4 @@
-import {IsNotEmpty, IsUUID, Length, Max, Min, ValidateIf} from 'class-validator';
+import {IsNotEmpty, IsUUID, Length, Max, Min, ValidateIf, IsInt} from 'class-validator';
 
 export class CreateTronTrc20 {
 
@@ -17,6 +17,12 @@ export class CreateTronTrc20 {
     @IsUUID('4')
     @IsNotEmpty()
     public signatureId?: string;
+
+    @ValidateIf(o => o.signatureId)
+    @IsNotEmpty()
+    @IsInt()
+    @Min(0)
+    public index?: number;
 
     @IsNotEmpty()
     @Length(1, 100)
