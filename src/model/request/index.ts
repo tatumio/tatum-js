@@ -94,7 +94,7 @@ export * from './CeloDeployErc721';
 export * from './PrepareEthErc20SignedOffchainTransaction'
 export * from './PrepareEthSignedOffchainTransaction'
 export * from './TransferAda';
-export * from './AdaUTxo';
+export * from './AdaUtxo';
 export * from './TransferMultiTokenBatch';
 export * from './MintMultiToken';
 export * from './MintMultiTokenBatch';

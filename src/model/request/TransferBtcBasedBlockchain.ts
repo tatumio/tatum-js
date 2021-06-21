@@ -13,13 +13,13 @@ import {
 import {SignatureIdValidator} from '../validation/SignatureIdValidator';
 import {TransferBtcValidator} from '../validation/TransferBtcValidator';
 
-class FromAddress {
+export class FromAddress {
     @IsNotEmpty()
-    @Length(30, 50)
+    @Length(30, 110)
     public address: string;
 
     @IsNotEmpty()
-    @Length(52, 52)
+    @Length(52, 256)
     public privateKey: string;
 
     @ValidateIf(o => (o.privateKey && o.signatureId) || !o.privateKey)
@@ -44,7 +44,7 @@ export class FromUTXO {
     @ValidateIf(o => (o.privateKey && o.signatureId) || !o.signatureId)
     @Validate(SignatureIdValidator)
     @IsNotEmpty()
-    @Length(52, 52)
+    @Length(52, 256)
     public privateKey: string;
 
     @ValidateIf(o => (o.privateKey && o.signatureId) || !o.privateKey)
@@ -57,7 +57,7 @@ export class FromUTXO {
 
 export class To {
     @IsNotEmpty()
-    @Length(30, 50)
+    @Length(30, 110)
     public address: string;
 
     @IsNotEmpty()

@@ -1,4 +1,4 @@
-export interface CardanoBlockChainInfo {
+export interface AdaBlockChainInfo {
   testnet: boolean;
   tip: {
     number: number,
