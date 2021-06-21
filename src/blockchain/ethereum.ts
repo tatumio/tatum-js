@@ -31,7 +31,7 @@ export const ethGetAccountBalance = async (address: string): Promise<BigNumber> 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/EthErc20GetBalance" target="_blank">Tatum API documentation</a>
  */
-export const ethGetAccountErc20Address = async (address: string, contractAddress: string): Promise<number> =>
+export const ethGetAccountErc20Address = async (address: string, contractAddress: string): Promise<{ balance: number }> =>
   get(`/v3/ethereum/account/balance/erc20/${address}?contractAddress=${contractAddress}`);
 
 /**
