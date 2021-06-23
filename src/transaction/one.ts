@@ -45,8 +45,8 @@ const prepareGeneralTx = async (client: Web3, testnet: boolean, fromPrivateKey?:
         from: 0,
         to: recipient,
         value: amount ? `0x${new BigNumber(toWei(amount, 'ether')).toString(16)}` : undefined,
-        gas: gasLimit || await client.eth.estimateGas({to: recipient, data: data || ''}),
         data,
+        gas: gasLimit,
         nonce,
         gasPrice: gasPrice ? `0x${new BigNumber(toWei(gasPrice, 'gwei')).toString(16)}` : await client.eth.getGasPrice(),
     };
@@ -54,6 +54,7 @@ const prepareGeneralTx = async (client: Web3, testnet: boolean, fromPrivateKey?:
     if (signatureId) {
         return JSON.stringify(tx);
     }
+    tx.gas = gasLimit || await client.eth.estimateGas({to: recipient, data: data || ''});
     return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
 };
 
@@ -93,6 +94,9 @@ export const signOneKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
     }
     const client = prepareOneClient(testnet, provider, fromPrivateKey);
     const transactionConfig = JSON.parse(tx.serializedTransaction);
+    if (!transactionConfig.gas) {
+        transactionConfig.gas = await client.eth.estimateGas({to: transactionConfig.to, data: transactionConfig.data});
+    }
     return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey)).rawTransaction as string;
 };
 
