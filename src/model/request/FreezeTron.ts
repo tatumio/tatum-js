@@ -1,4 +1,4 @@
-import {IsIn, IsNotEmpty, IsNumberString, IsUUID, IsInt, Length, Matches, Min, ValidateIf} from 'class-validator';
+import {IsIn, IsNotEmpty, IsNumberString, IsOptional, IsUUID, Length, Matches, Min, ValidateIf} from 'class-validator';
 
 export class FreezeTron {
 
@@ -19,8 +19,7 @@ export class FreezeTron {
     public signatureId?: string;
 
     @ValidateIf(o => o.signatureId)
-    @IsNotEmpty()
-    @IsInt()
+    @IsOptional()
     @Min(0)
     public index?: number;
 

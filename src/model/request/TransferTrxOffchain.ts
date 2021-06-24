@@ -1,4 +1,4 @@
-import {IsInt, IsNotEmpty, IsUUID, Length, Max, Min, ValidateIf} from 'class-validator';
+import {IsInt, IsNotEmpty, IsOptional, IsUUID, Length, Max, Min, ValidateIf} from 'class-validator';
 import {CreateWithdrawal} from './CreateWithdrawal';
 
 export class TransferTrxOffchain extends CreateWithdrawal {
@@ -9,7 +9,7 @@ export class TransferTrxOffchain extends CreateWithdrawal {
 
     @ValidateIf(o => (o.mnemonic && o.index >= 0 && o.fromPrivateKey) || o.mnemonic)
     @Min(0)
-    @IsNotEmpty()
+    @IsOptional()
     @IsInt()
     @Max(2147483647)
     public index?: number;
