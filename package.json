@@ -34,7 +34,7 @@
     "@emurgo/cardano-serialization-lib-nodejs": "^6.0.0",
     "@harmony-js/crypto": "^0.1.56",
     "@onflow/config": "^0.0.2",
-    "@onflow/fcl": "^0.0.70",
+    "@onflow/fcl": "^0.0.73",
     "@onflow/six-add-new-key": "^0.0.5",
     "@onflow/six-create-account": "^0.0.4",
     "@onflow/six-transfer-tokens": "^0.0.5",
