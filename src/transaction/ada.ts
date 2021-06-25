@@ -60,7 +60,7 @@ export const signAdaKMSTransaction = async (tx: TransactionKMS, privateKeys: str
   ).toString('hex')
 };
 
-const addOutputs = (transactionBuilder: TransactionBuilder, tos: To[]) => {
+export const addOutputs = (transactionBuilder: TransactionBuilder, tos: To[]) => {
   let amount = new BigNumber(0)
   for (const to of tos) {
     const value = new BigNumber(1000000).times(to.value)
@@ -112,14 +112,14 @@ const addUtxoInputs = async (transactionBuilder: TransactionBuilder, fromUTXOs: 
   return { amount, privateKeysToSign }
 }
 
-const addOutput = (transactionBuilder: TransactionBuilder, address: string, amount: string) => {
+export const addOutput = (transactionBuilder: TransactionBuilder, address: string, amount: string) => {
   transactionBuilder.add_output(TransactionOutput.new(
     Address.from_bech32(address),
     Value.new(BigNum.from_str(amount)),
   ));
 }
 
-const addInput = (transactionBuilder: TransactionBuilder, privateKey: string, utxo: AdaUtxo, address: string) => {
+export const addInput = (transactionBuilder: TransactionBuilder, privateKey: string, utxo: AdaUtxo, address: string) => {
   transactionBuilder.add_input(
     Address.from_bech32(address),
     TransactionInput.new(
@@ -130,7 +130,7 @@ const addInput = (transactionBuilder: TransactionBuilder, privateKey: string, ut
   )
 }
 
-const initTransactionBuilder = async () => {
+export const initTransactionBuilder = async () => {
   const txBuilder = TransactionBuilder.new(
     LinearFee.new(
       BigNum.from_str('44'),
@@ -145,7 +145,7 @@ const initTransactionBuilder = async () => {
   return txBuilder
 }
 
-const createWitnesses = (transactionBody: TransactionBody, transferBtcBasedBlockchain: TransferBtcBasedBlockchain) => {
+export const createWitnesses = (transactionBody: TransactionBody, transferBtcBasedBlockchain: TransferBtcBasedBlockchain) => {
   const { fromAddress, fromUTXO } = transferBtcBasedBlockchain
   const txHash = hash_transaction(transactionBody);
   const vKeyWitnesses = Vkeywitnesses.new();
@@ -165,14 +165,15 @@ const createWitnesses = (transactionBody: TransactionBody, transferBtcBasedBlock
   return witnesses
 }
 
-const makeWitness = (privateKey: string, txHash: TransactionHash, vKeyWitnesses: Vkeywitnesses) => {
+export const makeWitness = (privateKey: string, txHash: TransactionHash, vKeyWitnesses: Vkeywitnesses) => {
   const privateKeyCardano = Bip32PrivateKey.from_128_xprv(
     Buffer.from(privateKey, 'hex'),
   ).to_raw_key();
   vKeyWitnesses.add(make_vkey_witness(txHash, privateKeyCardano));
 }
 
-const processFeeAndRest = async (transactionBuilder: TransactionBuilder, fromAmount: BigNumber, toAmount: BigNumber, transferBtcBasedBlockchain: TransferBtcBasedBlockchain) => {
+export const processFeeAndRest = async (transactionBuilder: TransactionBuilder, fromAmount: BigNumber, toAmount: BigNumber,
+                                        transferBtcBasedBlockchain: TransferBtcBasedBlockchain) => {
   const { fromAddress, fromUTXO } = transferBtcBasedBlockchain
   if (fromAddress) {
     addFeeAndRest(transactionBuilder, fromAddress[0].address, fromAmount, toAmount)
@@ -188,7 +189,7 @@ const processFeeAndRest = async (transactionBuilder: TransactionBuilder, fromAmo
   }
 }
 
-const addFeeAndRest = (transactionBuilder: TransactionBuilder, address: string, fromAmount: BigNumber, toAmount: BigNumber) => {
+export const addFeeAndRest = (transactionBuilder: TransactionBuilder, address: string, fromAmount: BigNumber, toAmount: BigNumber) => {
   const fromRest = Address.from_bech32(address);
   const tmpOutput = TransactionOutput.new(
     fromRest,
@@ -199,7 +200,7 @@ const addFeeAndRest = (transactionBuilder: TransactionBuilder, address: string, 
   transactionBuilder.set_fee(BigNum.from_str(String(fee)));
 }
 
-const signTransaction = (transactionBuilder: TransactionBuilder, transferBtcBasedBlockchain: TransferBtcBasedBlockchain, privateKeysToSign: string[]) => {
+export const signTransaction = (transactionBuilder: TransactionBuilder, transferBtcBasedBlockchain: TransferBtcBasedBlockchain, privateKeysToSign: string[]) => {
   const txBody = transactionBuilder.build();
   const { fromAddress, fromUTXO } = transferBtcBasedBlockchain
 
