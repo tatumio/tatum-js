@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js';
 import {tronBroadcast} from '../blockchain';
 import {validateBody} from '../connector/tatum';
+import {TATUM_API_URL} from '../constants';
 import abi from '../contracts/trc20/token_abi';
 import bytecode from '../contracts/trc20/token_bytecode';
 import trc721_abi from '../contracts/trc721/trc721_abi';
@@ -26,13 +27,11 @@ const TronWeb = require('tronweb');
 
 const prepareTronWeb = (testnet: boolean, provider?: string) => {
     const HttpProvider = TronWeb.providers.HttpProvider;
-    const url = provider || testnet ? 'https://api.shasta.trongrid.io' : 'https://api.trongrid.io';
+    const url = provider || `${TATUM_API_URL}/v3/tron/node/${process.env.TATUM_API_KEY}`;
     const fullNode = new HttpProvider(url);
     const solidityNode = new HttpProvider(url);
     const eventServer = new HttpProvider(url);
-    const tronWeb = new TronWeb(fullNode, solidityNode, eventServer);
-    tronWeb.setHeader({'TRON-PRO-API-KEY': process.env.TRON_PRO_API_KEY});
-    return tronWeb;
+    return new TronWeb(fullNode, solidityNode, eventServer);
 };
 
 /**
