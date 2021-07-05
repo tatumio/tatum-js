@@ -190,7 +190,7 @@ export const flowCreateAccountFromPublicKey = async (testnet: boolean, publicKey
     if (result.error) {
         throw new Error(result.error);
     }
-    return {txId: result.id, address: result.events[0].data.address};
+    return {txId: result.id, address: result.events.find((e: any) => e.type === 'flow.AccountCreated')?.data.address};
 };
 
 export const flowAddPublicKeyToAccount = async (testnet: boolean, publicKey: string, signerAddress: string, signerPrivateKey: string):
