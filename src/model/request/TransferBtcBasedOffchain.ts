@@ -6,11 +6,11 @@ import {CreateWithdrawal} from './CreateWithdrawal';
 export class KeyPair {
 
     @IsNotEmpty()
-    @Length(30, 50)
+    @Length(30, 110)
     public address: string;
 
     @IsNotEmpty()
-    @Length(52, 52)
+    @Length(52, 256)
     public privateKey: string;
 }
 
@@ -52,9 +52,9 @@ export class TransferBtcBasedOffchain extends CreateWithdrawal {
     @ValidateIf(m)
     @Validate(TransferBtcOffchainValidator)
     @IsNotEmpty()
-    public mnemonic: string;
+    public mnemonic?: string;
 
-    @Length(1, 150)
+    @Length(1, 256)
     @ValidateIf(o => (o.mnemonic || o.signatureId) && !o.attr)
     @IsNotEmpty()
     public xpub?: string;

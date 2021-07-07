@@ -43,4 +43,4 @@ export const adaGetTransactionsByAccount = async (address: string, limit: number
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/CardanoGetUTxos" target="_blank">Tatum API documentation</a>
  */
-export const adaGetUtxos = async (address: string): Promise<AdaUtxo[]> => get(`/v3/ada/utxo/${address}`);
+export const adaGetUtxos = async (address: string): Promise<AdaUtxo[]> => get(`/v3/ada/${address}/utxos`);
