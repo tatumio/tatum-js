@@ -1,5 +1,5 @@
 import {TransferDogeBlockchain} from '../model';
-import {prepareDogecoinSignedTransaction} from './dogecoin';
+import { prepareDogecoinSignedTransaction, sendDogecoinTransaction } from './dogecoin';
 
 describe('DOGE transactions', () => {
     it('should test DOGE transaction data', async () => {
@@ -25,4 +25,29 @@ describe('DOGE transactions', () => {
             fail();
         }
     });
+  it('should test DOGE send transaction', async () => {
+    process.env.TATUM_API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd';
+    const body = new TransferDogeBlockchain();
+    body.fromUTXO = [{
+      txHash: '20c569c3d7722a11d004646e1f00b35e1f51da0dcbe8d2446a544c0daa88097d',
+      address: 'nUPfS5zGfHzehxcReVQR2Jb53ef2i8xQb1',
+      index: 1,
+      value: '100',
+      privateKey: 'cifcEG11CVMvauPyEXLJXw6VTy3cpivuiRVekE8afRu1LPF1JZCw',
+    }];
+    body.fee = '1';
+    body.changeAddress = 'nUPfS5zGfHzehxcReVQR2Jb53ef2i8xQb1';
+    body.to = [{
+      address: 'nXz1s8tMQbqjARaSMNCPkgdwJQ2JDW2M7W',
+      value: 1,
+    }];
+    try {
+      const txData = await sendDogecoinTransaction(body);
+      console.log(txData)
+      expect(txData).toHaveProperty('txId');
+    } catch (e) {
+      console.error(e);
+      fail();
+    }
+  });
 });
