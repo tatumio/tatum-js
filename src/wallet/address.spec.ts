@@ -3,12 +3,17 @@ import {generateAddressFromPrivatekey, generateAddressFromXPub, generateFlowPubl
 import {generateBnbWallet, generateTronWallet} from './wallet';
 // tslint:disable-next-line:no-var-requires
 const TronWeb = require('tronweb');
-
+import { getInfo } from '../blockchain';
 describe('Address tests', () => {
-
-    it('should generate address 1 for BTC mainnet', () => {
-        const address = generateAddressFromXPub(Currency.BTC, false, 'xpub6EsCk1uU6cJzqvP9CdsTiJwT2rF748YkPnhv5Qo8q44DG7nn2vbyt48YRsNSUYS44jFCW9gwvD9kLQu9AuqXpTpM1c5hgg9PsuBLdeNncid', 1);
-        expect(address).toBe('1HWYaP13JKtaW2Mhq69NVeSLjRYGpD3aKv');
+    it('should generate private key and address for QTUM testnet', async () => {
+        const privateKey = await generatePrivateKeyFromMnemonic(Currency.QTUM, true, 'unable stone luggage syrup soul country hammer fee private coyote phrase brisk', 1);
+        const address= await generateAddressFromXPub(Currency.QTUM,true,privateKey,1);
+        console.log(privateKey)
+        console.log(address)
+        const res= await getInfo(true,address)
+        console.log('res',res)
+        console.log('res',privateKey)
+        expect(address).toBe('qZ4oBnNAyQBEsy5G7VRUCJXZsiQKkTU3KL')
     });
 
     it('should generate address 1 for ONE mainnet', () => {

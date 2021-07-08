@@ -52,3 +52,6 @@ export * from './ada/AdaAccount';
 export * from './ada/AdaBlock';
 export * from './ada/AdaTransaction';
 export * from './ada/CardanoGenerateWallet';
+export * from './qtum/qtumInfo'
+export * from './qtum/qtumTx'
+export * from './qtum/qtumUTXO'

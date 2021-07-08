@@ -15,3 +15,4 @@ export * from './bcash';
 export * from './scrypta';
 export * from './tron';
 export * from './xdc';
+export * from './qtum'

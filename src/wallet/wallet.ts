@@ -32,6 +32,7 @@ import {
 } from '../constants';
 import {Currency} from '../model';
 import cardano from './cardano.crypto';
+import { QTUM_DERIVATION_PATH } from '../constants';
 // tslint:disable-next-line:no-var-requires
 const TronWeb = require('tronweb');
 
@@ -186,6 +187,13 @@ export const generateBtcWallet = async (testnet: boolean, mnem: string): Promise
         xpub: hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : BTC_DERIVATION_PATH).toJSON().xpub
     };
 };
+export const generateQtumWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
+    const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? networks.testnet.bip32 : networks.bitcoin.bip32);
+    return {
+        mnemonic: mnem,
+        xpub: hdwallet.derive(QTUM_DERIVATION_PATH).toJSON().xpub
+    };
+};
 
 /**
  * Generate Doge wallet
@@ -303,6 +311,8 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
             return generateCeloWallet(testnet, mnem);
         case Currency.ONE:
             return generateOneWallet(testnet, mnem);
+        case Currency.QTUM:
+            return generateQtumWallet(testnet,mnem)
         case Currency.USDT:
         case Currency.WBTC:
         case Currency.LEO:
