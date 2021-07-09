@@ -32,7 +32,6 @@ import {
 } from '../constants';
 import {Currency} from '../model';
 import cardano from './cardano.crypto';
-import { QTUM_DERIVATION_PATH } from '../constants';
 // tslint:disable-next-line:no-var-requires
 const TronWeb = require('tronweb');
 
@@ -191,7 +190,7 @@ export const generateQtumWallet = async (testnet: boolean, mnem: string): Promis
     const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? networks.testnet.bip32 : networks.bitcoin.bip32);
     return {
         mnemonic: mnem,
-        xpub: hdwallet.derive(QTUM_DERIVATION_PATH).toJSON().xpub
+        xpub: hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : BTC_DERIVATION_PATH).toJSON().xpub
     };
 };
 
