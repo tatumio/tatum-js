@@ -15,6 +15,7 @@ export const FLOW_DERIVATION_PATH = 'm/44\'/539\'/0\'/0';
 export const CELO_DERIVATION_PATH = 'm/44\'/52752\'/0\'/0';
 export const VET_DERIVATION_PATH = 'm/44\'/818\'/0\'/0';
 export const BTC_DERIVATION_PATH = 'm/44\'/0\'/0\'/0';
+export const QTUM_DERIVATION_PATH = 'm/44\'/2301\'/0\'/0'
 export const TRON_DERIVATION_PATH = 'm/44\'/195\'/0\'/0';
 export const LTC_DERIVATION_PATH = 'm/44\'/2\'/0\'/0';
 export const DOGE_DERIVATION_PATH = 'm/44\'/3\'/0\'/0';

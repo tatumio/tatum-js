@@ -12,6 +12,7 @@ import {Keypair} from 'stellar-sdk';
 import {
     BCH_DERIVATION_PATH,
     BTC_DERIVATION_PATH,
+    QTUM_DERIVATION_PATH,
     CELO_DERIVATION_PATH,
     DOGE_DERIVATION_PATH,
     DOGE_NETWORK,
@@ -190,7 +191,7 @@ export const generateQtumWallet = async (testnet: boolean, mnem: string): Promis
     const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? networks.testnet.bip32 : networks.bitcoin.bip32);
     return {
         mnemonic: mnem,
-        xpub: hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : BTC_DERIVATION_PATH).toJSON().xpub
+        xpub: hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : QTUM_DERIVATION_PATH).toJSON().xpub
     };
 };
 

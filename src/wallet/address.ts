@@ -29,12 +29,13 @@ import {
     TRON_DERIVATION_PATH,
     VET_DERIVATION_PATH,
     XDC_DERIVATION_PATH,
-    QTUM_NETWORK_TESTNET
+    QTUM_NETWORK_TESTNET,
+    QTUM_NETWORK_MAINNET,
+    QTUM_DERIVATION_PATH
 } from '../constants';
 import {Currency} from '../model';
 import cardano from './cardano.crypto';
 import {generateAddress} from './tron.crypto';
-import { QTUM_NETWORK_MAINNET } from '../constants';
 // tslint:disable:no-var-requires
 const bcash = require('@tatumio/bitcoincashjs2-lib');
 const cashaddr = require('cashaddrjs');
@@ -259,8 +260,8 @@ const generateTronPrivateKey = async (mnemonic: string, i: number) => {
 const generateQtumPrivateKey = async (testnet: boolean, mnem: string,i:number) => {
     const network=testnet?QTUM_NETWORK_TESTNET:QTUM_NETWORK_MAINNET;
     const hdwallet = HDKey.fromMasterSeed(await mnemonicToSeed(mnem), network.bip32);
-    console.log(hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : BTC_DERIVATION_PATH).toJSON())
-    return hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : BTC_DERIVATION_PATH).toJSON().xpub
+    console.log(hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : QTUM_DERIVATION_PATH).toJSON())
+    return hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : QTUM_DERIVATION_PATH).toJSON().xpub
     
 };
 
