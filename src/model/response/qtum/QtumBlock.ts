@@ -4,7 +4,6 @@
  * @interface QtumBlock
  */
 export interface QtumBlock {
-    result: {
         hash: string,
         confirmations: number,
         strippedsize: number,
@@ -32,7 +31,4 @@ export interface QtumBlock {
         proofhash: string,
         modifier: string,
         signature: string
-    },
-    error: null,
-    id: null
 }
