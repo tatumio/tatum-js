@@ -63,9 +63,8 @@ export const signAdaKMSTransaction = async (tx: TransactionKMS, privateKeys: str
 export const addOutputs = (transactionBuilder: TransactionBuilder, tos: To[]) => {
   let amount = new BigNumber(0)
   for (const to of tos) {
-    const value = new BigNumber(1000000).times(to.value)
-    amount = value.plus(amount)
-    addOutput(transactionBuilder, to.address, value.toString())
+    const valueAdded = addOutputAda(transactionBuilder, to.address, to.value);
+    amount = amount.plus(valueAdded)
   }
   return amount
 }
@@ -81,22 +80,34 @@ const addInputs = async (transactionBuilder: TransactionBuilder, transferBtcBase
   throw new Error('Field fromAddress or fromUTXO is not filled.')
 }
 
-const addAddressInputs = async (transactionBuilder: TransactionBuilder, fromAddresses: FromAddress[]) => {
-  let amount = new BigNumber(0)
-  const privateKeysToSign: string[] = [];
-  for (const fromAddress of fromAddresses) {
-    const { address, privateKey } = fromAddress
-    const utxos: AdaUtxo[] = await adaGetUtxos(address)
-    for (const utxo of utxos) {
-      amount = amount.plus(utxo.value);
-      addInput(transactionBuilder, privateKey, utxo, address)
-      privateKeysToSign.push(fromAddress.signatureId || fromAddress.privateKey)
-    }
-  }
+export const addAddressInputs = async (transactionBuilder: TransactionBuilder, fromAddresses: FromAddress[]) => {
+  const amount = await addAddressInputsWithoutPrivateKey(transactionBuilder, fromAddresses)
+  const privateKeysToSign = await addInputsPrivateKeys(fromAddresses)
   return { amount, privateKeysToSign }
 }
 
-const addUtxoInputs = async (transactionBuilder: TransactionBuilder, fromUTXOs: FromUTXO[]) => {
+export const addAddressInputsWithoutPrivateKey = async (transactionBuilder: TransactionBuilder, fromAddresses: {address: string}[]) => {
+  let amount = new BigNumber(0)
+  for (const fromAddress of fromAddresses) {
+    const { address } = fromAddress
+    const utxos: AdaUtxo[] = await adaGetUtxos(address)
+    for (const utxo of utxos) {
+      amount = amount.plus(utxo.value);
+      addInput(transactionBuilder, utxo, address)
+    }
+  }
+  return amount
+}
+
+export const addInputsPrivateKeys = async (froms: FromAddress[] | FromUTXO[]) => {
+  const privateKeysToSign: string[] = [];
+  for (const from of froms) {
+    privateKeysToSign.push(from.signatureId || from.privateKey)
+  }
+  return privateKeysToSign
+}
+
+export const addUtxoInputs = async (transactionBuilder: TransactionBuilder, fromUTXOs: FromUTXO[]) => {
   let amount = new BigNumber(0)
   const privateKeysToSign: string[] = [];
   for (const utxo of fromUTXOs) {
@@ -105,21 +116,27 @@ const addUtxoInputs = async (transactionBuilder: TransactionBuilder, fromUTXOs: 
     if (output) {
       const value = output.value;
       amount = amount.plus(value);
-      addInput(transactionBuilder, utxo.privateKey, { value, ...utxo }, output.address)
+      addInput(transactionBuilder, { value, ...utxo }, output.address)
       privateKeysToSign.push(utxo.signatureId || utxo.privateKey)
     }
   }
   return { amount, privateKeysToSign }
 }
 
-export const addOutput = (transactionBuilder: TransactionBuilder, address: string, amount: string) => {
+export const addOutputLovelace = (transactionBuilder: TransactionBuilder, address: string, amount: string) => {
   transactionBuilder.add_output(TransactionOutput.new(
     Address.from_bech32(address),
     Value.new(BigNum.from_str(amount)),
   ));
 }
 
-export const addInput = (transactionBuilder: TransactionBuilder, privateKey: string, utxo: AdaUtxo, address: string) => {
+export const addOutputAda = (transactionBuilder: TransactionBuilder, address: string, amount: string | number ) => {
+  const amountLovelace = adaToLovelace(amount)
+  addOutputLovelace(transactionBuilder, address, amountLovelace)
+  return amountLovelace
+}
+
+export const addInput = (transactionBuilder: TransactionBuilder, utxo: AdaUtxo, address: string) => {
   transactionBuilder.add_input(
     Address.from_bech32(address),
     TransactionInput.new(
@@ -196,7 +213,7 @@ export const addFeeAndRest = (transactionBuilder: TransactionBuilder, address: s
     Value.new(BigNum.from_str(String('1000000'))),
   );
   const fee = parseInt(transactionBuilder.min_fee().to_str()) + parseInt(transactionBuilder.fee_for_output(tmpOutput).to_str());
-  addOutput(transactionBuilder, address, fromAmount.minus(toAmount).minus(fee).toString())
+  addOutputLovelace(transactionBuilder, address, fromAmount.minus(toAmount).minus(fee).toString())
   transactionBuilder.set_fee(BigNum.from_str(String(fee)));
 }
 
@@ -214,3 +231,6 @@ export const signTransaction = (transactionBuilder: TransactionBuilder, transfer
     Transaction.new(txBody, witnesses).to_bytes(),
   ).toString('hex')
 }
+
+export const lovelaceToAda = (lovelace: string | number) => new BigNumber(lovelace).dividedBy(1000000).toFixed(8, BigNumber.ROUND_FLOOR).toString()
+export const adaToLovelace = (ada: string | number) => new BigNumber(ada).times(1000000).toString()
