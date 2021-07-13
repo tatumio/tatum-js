@@ -32,16 +32,11 @@ export interface QtumITransactionReceipt {
   log: any[]
 }
 
-export interface QtumIContractCall {
-  address: string
-  executionResult: any
-}
 export interface QtumISendRawTxResult {
   txid: string
 }
 export interface IOutput {
   value: string
-
   address?: string
   script?: Buffer
   scriptPubKey: {
@@ -54,6 +49,5 @@ export interface IOutput {
 
 export interface IInput {
   value: number
-
   script?: Buffer
 }
