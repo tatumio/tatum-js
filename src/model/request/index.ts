@@ -89,6 +89,7 @@ export * from './EthMintErc721';
 export * from './EthMintMultipleErc721';
 export * from './EthTransferErc721';
 export * from './SmartContractMethodInvocation';
+export * from './SmartContractReadMethodInvocation';
 export * from './EthDeployErc721';
 export * from './CeloDeployErc721';
 export * from './PrepareEthErc20SignedOffchainTransaction'
