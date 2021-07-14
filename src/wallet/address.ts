@@ -7,6 +7,7 @@ import {mnemonicToSeed} from 'bip39';
 import {ECPair, networks, payments} from 'bitcoinjs-lib';
 import * as elliptic from 'elliptic';
 import ethWallet, {hdkey as ethHdKey} from 'ethereumjs-wallet';
+import HDKey from 'hdkey';
 // @ts-ignore
 import {
     BCH_DERIVATION_PATH,
@@ -27,7 +28,10 @@ import {
     TESTNET_DERIVATION_PATH,
     TRON_DERIVATION_PATH,
     VET_DERIVATION_PATH,
-    XDC_DERIVATION_PATH
+    XDC_DERIVATION_PATH,
+    QTUM_NETWORK_TESTNET,
+    QTUM_NETWORK_MAINNET,
+    QTUM_DERIVATION_PATH
 } from '../constants';
 import {Currency} from '../model';
 import cardano from './cardano.crypto';
@@ -174,7 +178,11 @@ const generateCeloAddress = (testnet: boolean, xpub: string, i: number) => {
     const wallet = w.deriveChild(i).getWallet();
     return '0x' + wallet.getAddress().toString('hex').toLowerCase();
 };
-
+const generateQtumAddress = (testnet: boolean, xpub: string,i:number) => {
+    const network=testnet?QTUM_NETWORK_TESTNET:QTUM_NETWORK_MAINNET;
+    const w = fromBase58(xpub, network).derivePath(String(i));
+    return payments.p2pkh({pubkey: w.publicKey, network}).address as string;
+}
 /**
  * Generate FLOW or FUSD public key
  * @param xpub extended public key to generate address from
@@ -248,6 +256,13 @@ const generateTronPrivateKey = async (mnemonic: string, i: number) => {
         .derivePath(TRON_DERIVATION_PATH)
         .derive(i)
         .privateKey?.toString('hex') ?? '';
+};
+const generateQtumPrivateKey = async (testnet: boolean, mnem: string,i:number) => {
+    const network=testnet?QTUM_NETWORK_TESTNET:QTUM_NETWORK_MAINNET;
+    const hdwallet = HDKey.fromMasterSeed(await mnemonicToSeed(mnem), network.bip32);
+    console.log(hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : QTUM_DERIVATION_PATH).toJSON())
+    return hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : QTUM_DERIVATION_PATH).toJSON().xpub
+    
 };
 
 /**
@@ -480,7 +495,11 @@ const convertBtcPrivateKey = (testnet: boolean, privkey: string) => {
     const keyPair = ECPair.fromWIF(privkey, network);
     return payments.p2pkh({pubkey: keyPair.publicKey, network}).address as string;
 };
-
+const convertQTUMPrivateKey = (testnet: boolean, privkey: string) => {
+    const network = testnet ? QTUM_NETWORK_TESTNET : QTUM_NETWORK_MAINNET;
+    const keyPair = ECPair.fromWIF(privkey, network);
+    return payments.p2pkh({pubkey: keyPair.publicKey, network}).address as string;
+};
 /**
  * Convert Scrypta Private Key to Address
  * @param testnet testnet or mainnet version of address
@@ -548,6 +567,8 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
             return generateCeloAddress(testnet, xpub, i);
         case Currency.BCH:
             return generateBchAddress(testnet, xpub, i);
+        case Currency.QTUM:
+            return generateQtumAddress(testnet,xpub,i);
         case Currency.USDT:
         case Currency.WBTC:
         case Currency.LEO:
@@ -616,6 +637,8 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
         case Currency.TRON:
         case Currency.USDT_TRON:
             return generateTronPrivateKey(mnemonic, i);
+        case Currency.QTUM:
+            return generateQtumPrivateKey(testnet,mnemonic,i)
         case Currency.FLOW:
         case Currency.FUSD:
             return generateFlowPrivateKey(mnemonic, i);
@@ -681,6 +704,8 @@ export const generateAddressFromPrivatekey = (currency: Currency, testnet: boole
     switch (currency) {
         case Currency.BTC:
             return convertBtcPrivateKey(testnet, privateKey);
+        case Currency.QTUM:
+            return convertQTUMPrivateKey(testnet, privateKey);
         case Currency.LYRA:
             return convertLyraPrivateKey(testnet, privateKey);
         case Currency.BNB:

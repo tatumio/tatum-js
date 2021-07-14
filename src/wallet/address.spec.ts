@@ -3,12 +3,24 @@ import {generateAddressFromPrivatekey, generateAddressFromXPub, generateFlowPubl
 import {generateBnbWallet, generateTronWallet} from './wallet';
 // tslint:disable-next-line:no-var-requires
 const TronWeb = require('tronweb');
-
+import { getInfo } from '../blockchain';
 describe('Address tests', () => {
-
-    it('should generate address 1 for BTC mainnet', () => {
-        const address = generateAddressFromXPub(Currency.BTC, false, 'xpub6EsCk1uU6cJzqvP9CdsTiJwT2rF748YkPnhv5Qo8q44DG7nn2vbyt48YRsNSUYS44jFCW9gwvD9kLQu9AuqXpTpM1c5hgg9PsuBLdeNncid', 1);
-        expect(address).toBe('1HWYaP13JKtaW2Mhq69NVeSLjRYGpD3aKv');
+    it('should generate private key for QTUM testnet', async () => {
+        const privateKey = await generatePrivateKeyFromMnemonic(Currency.QTUM, true, 'unable stone luggage syrup soul country hammer fee private coyote phrase brisk', 1);
+        expect(privateKey).toBe('tpubDEPswwDHtxcS3q3K81iRgcxRKinjdEBM6dKer3HjeVPRgL44fFpJpttdDxQLLAxLoZLu69c6bMeyGqCPihUdCZedYu9vqah2gbP1wkLUvzB')
+    });
+    it('should get address info for QTUM testnet', async () => {
+        const res= await getInfo('qWpEineYmtc2Ea25GqDYhvuzCjTiu5hMYA')
+        console.log(res)
+    });
+    it('should generate address from private key for QTUM testnet', async () => {
+        const address= await generateAddressFromPrivatekey(Currency.QTUM,true,'cNR1n1EuzzaWHD7xcmAo71mwxyVV3uJUbLoamQFiXzaJhjTfCF2P');    
+        expect(address).toBe('qWpEineYmtc2Ea25GqDYhvuzCjTiu5hMYA');
+    });
+    it('should generate address from XPub for QTUM testnet', async () => {
+        const address= await generateAddressFromXPub(Currency.QTUM,true,'tpubDEPswwDHtxcS3q3K81iRgcxRKinjdEBM6dKer3HjeVPRgL44fFpJpttdDxQLLAxLoZLu69c6bMeyGqCPihUdCZedYu9vqah2gbP1wkLUvzB',1);    
+        console.log(address)
+        expect(address).toBe('qZ4oBnNAyQBEsy5G7VRUCJXZsiQKkTU3KL');
     });
 
     it('should generate address 1 for ONE mainnet', () => {

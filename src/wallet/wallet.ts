@@ -12,6 +12,7 @@ import {Keypair} from 'stellar-sdk';
 import {
     BCH_DERIVATION_PATH,
     BTC_DERIVATION_PATH,
+    QTUM_DERIVATION_PATH,
     CELO_DERIVATION_PATH,
     DOGE_DERIVATION_PATH,
     DOGE_NETWORK,
@@ -28,7 +29,9 @@ import {
     TESTNET_DERIVATION_PATH,
     TRON_DERIVATION_PATH,
     VET_DERIVATION_PATH,
-    XDC_DERIVATION_PATH
+    XDC_DERIVATION_PATH,
+    QTUM_NETWORK_MAINNET,
+    QTUM_NETWORK_TESTNET
 } from '../constants';
 import {Currency} from '../model';
 import cardano from './cardano.crypto';
@@ -186,6 +189,13 @@ export const generateBtcWallet = async (testnet: boolean, mnem: string): Promise
         xpub: hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : BTC_DERIVATION_PATH).toJSON().xpub
     };
 };
+export const generateQtumWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
+    const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? QTUM_NETWORK_TESTNET.bip32 : QTUM_NETWORK_MAINNET.bip32);
+    return {
+        mnemonic: mnem,
+        xpub: hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : QTUM_DERIVATION_PATH).toJSON().xpub
+    };
+};
 
 /**
  * Generate Doge wallet
@@ -303,6 +313,8 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
             return generateCeloWallet(testnet, mnem);
         case Currency.ONE:
             return generateOneWallet(testnet, mnem);
+        case Currency.QTUM:
+            return generateQtumWallet(testnet,mnem)
         case Currency.USDT:
         case Currency.WBTC:
         case Currency.LEO:

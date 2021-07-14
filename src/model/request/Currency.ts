@@ -52,6 +52,7 @@ export enum Currency {
     LYRA = 'LYRA',
     ADA = 'ADA',
     XDC = 'XDC',
+    QTUM = 'QTUM',
 }
 
 export const ERC20_CURRENCIES = [
