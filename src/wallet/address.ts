@@ -25,13 +25,13 @@ import {
     LYRA_NETWORK,
     LYRA_TEST_NETWORK,
     ONE_DERIVATION_PATH,
+    QTUM_DERIVATION_PATH,
+    QTUM_NETWORK_MAINNET,
+    QTUM_NETWORK_TESTNET,
     TESTNET_DERIVATION_PATH,
     TRON_DERIVATION_PATH,
     VET_DERIVATION_PATH,
-    XDC_DERIVATION_PATH,
-    QTUM_NETWORK_TESTNET,
-    QTUM_NETWORK_MAINNET,
-    QTUM_DERIVATION_PATH
+    XDC_DERIVATION_PATH
 } from '../constants';
 import {Currency} from '../model';
 import cardano from './cardano.crypto';
@@ -178,11 +178,11 @@ const generateCeloAddress = (testnet: boolean, xpub: string, i: number) => {
     const wallet = w.deriveChild(i).getWallet();
     return '0x' + wallet.getAddress().toString('hex').toLowerCase();
 };
-const generateQtumAddress = (testnet: boolean, xpub: string,i:number) => {
-    const network=testnet?QTUM_NETWORK_TESTNET:QTUM_NETWORK_MAINNET;
+const generateQtumAddress = (testnet: boolean, xpub: string, i: number) => {
+    const network = testnet ? QTUM_NETWORK_TESTNET : QTUM_NETWORK_MAINNET;
     const w = fromBase58(xpub, network).derivePath(String(i));
     return payments.p2pkh({pubkey: w.publicKey, network}).address as string;
-}
+};
 /**
  * Generate FLOW or FUSD public key
  * @param xpub extended public key to generate address from
@@ -257,12 +257,12 @@ const generateTronPrivateKey = async (mnemonic: string, i: number) => {
         .derive(i)
         .privateKey?.toString('hex') ?? '';
 };
-const generateQtumPrivateKey = async (testnet: boolean, mnem: string,i:number) => {
-    const network=testnet?QTUM_NETWORK_TESTNET:QTUM_NETWORK_MAINNET;
+const generateQtumPrivateKey = async (testnet: boolean, mnem: string, i: number) => {
+    const network = testnet ? QTUM_NETWORK_TESTNET : QTUM_NETWORK_MAINNET;
     const hdwallet = HDKey.fromMasterSeed(await mnemonicToSeed(mnem), network.bip32);
-    console.log(hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : QTUM_DERIVATION_PATH).toJSON())
-    return hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : QTUM_DERIVATION_PATH).toJSON().xpub
-    
+    console.log(hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : QTUM_DERIVATION_PATH).toJSON());
+    return hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : QTUM_DERIVATION_PATH).toJSON().xpub;
+
 };
 
 /**
@@ -568,7 +568,7 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
         case Currency.BCH:
             return generateBchAddress(testnet, xpub, i);
         case Currency.QTUM:
-            return generateQtumAddress(testnet,xpub,i);
+            return generateQtumAddress(testnet, xpub, i);
         case Currency.USDT:
         case Currency.WBTC:
         case Currency.LEO:
@@ -638,7 +638,7 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
         case Currency.USDT_TRON:
             return generateTronPrivateKey(mnemonic, i);
         case Currency.QTUM:
-            return generateQtumPrivateKey(testnet,mnemonic,i)
+            return generateQtumPrivateKey(testnet, mnemonic, i);
         case Currency.FLOW:
         case Currency.FUSD:
             return generateFlowPrivateKey(mnemonic, i);

@@ -12,7 +12,6 @@ import {Keypair} from 'stellar-sdk';
 import {
     BCH_DERIVATION_PATH,
     BTC_DERIVATION_PATH,
-    QTUM_DERIVATION_PATH,
     CELO_DERIVATION_PATH,
     DOGE_DERIVATION_PATH,
     DOGE_NETWORK,
@@ -26,12 +25,13 @@ import {
     LYRA_NETWORK,
     LYRA_TEST_NETWORK,
     ONE_DERIVATION_PATH,
+    QTUM_DERIVATION_PATH,
+    QTUM_NETWORK_MAINNET,
+    QTUM_NETWORK_TESTNET,
     TESTNET_DERIVATION_PATH,
     TRON_DERIVATION_PATH,
     VET_DERIVATION_PATH,
-    XDC_DERIVATION_PATH,
-    QTUM_NETWORK_MAINNET,
-    QTUM_NETWORK_TESTNET
+    XDC_DERIVATION_PATH
 } from '../constants';
 import {Currency} from '../model';
 import cardano from './cardano.crypto';
@@ -132,8 +132,8 @@ export const generateFlowWallet = async (mnem: string): Promise<Wallet> => {
  * @param mnem mnemonic seed to use
  * @returns wallet
  */
- export const generateBscWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
-  return generateEthWallet(testnet, mnem);
+export const generateBscWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
+    return generateEthWallet(testnet, mnem);
 };
 
 export const generateXdcWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
@@ -279,8 +279,8 @@ export const generateLyraWallet = async (testnet: boolean, mnem: string): Promis
  * @param mnemonic mnemonic seed to use
  * @returns wallet
  */
- export const generateAdaWallet = async (mnemonic: string): Promise<Wallet> => {
-    return { mnemonic, xpub: await cardano.generateXPublicKey(mnemonic) };
+export const generateAdaWallet = async (mnemonic: string): Promise<Wallet> => {
+    return {mnemonic, xpub: await cardano.generateXPublicKey(mnemonic)};
 };
 
 /**
@@ -314,7 +314,7 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
         case Currency.ONE:
             return generateOneWallet(testnet, mnem);
         case Currency.QTUM:
-            return generateQtumWallet(testnet,mnem)
+            return generateQtumWallet(testnet, mnem);
         case Currency.USDT:
         case Currency.WBTC:
         case Currency.LEO:

@@ -1,5 +1,5 @@
 import Web3 from 'web3';
-import {Currency, DeployErc20, TransferErc20, TransferCustomErc20} from '../model';
+import {Currency, DeployErc20, TransferCustomErc20, TransferErc20} from '../model';
 import {
     prepareXdcCustomErc20SignedTransaction,
     prepareXdcDeployErc20SignedTransaction,

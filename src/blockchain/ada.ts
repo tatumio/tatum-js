@@ -1,12 +1,5 @@
 import {get, post} from '../connector/tatum';
-import {
-    AdaUtxo,
-    AdaAccount,
-    AdaBlock,
-    AdaBlockChainInfo,
-    AdaTransaction,
-    TransactionHash
-} from '../model';
+import {AdaAccount, AdaBlock, AdaBlockChainInfo, AdaTransaction, AdaUtxo, TransactionHash} from '../model';
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/CardanoBroadcast" target="_blank">Tatum API documentation</a>

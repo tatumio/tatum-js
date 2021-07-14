@@ -1,18 +1,18 @@
 export class QtumIRawTransactionInfo {
-  txid: string
-  version: number
-  locktime: number
-  receipt: QtumITransactionReceipt[]
-  vin: IInput[]
-  vout: IOutput[]
-  confirmations: number
-  time: number
-  valueOut: number
-  valueIn: number
-  fees: number
-  blockhash: string
-  blockheight: number
-  isqrc20Transfer: boolean
+  public txid: string;
+  public version: number;
+  public locktime: number;
+  public receipt: QtumITransactionReceipt[];
+  public vin: IInput[];
+  public vout: IOutput[];
+  public confirmations: number;
+  public time: number;
+  public valueOut: number;
+  public valueIn: number;
+  public fees: number;
+  public blockhash: string;
+  public blockheight: number;
+  public isqrc20Transfer: boolean;
 }
 export interface QtumIRawTransactions {
   pagesTotal: number

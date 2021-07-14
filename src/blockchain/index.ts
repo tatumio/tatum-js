@@ -5,6 +5,7 @@ export * from './bitcoin';
 export * from './litecoin';
 export * from './dogecoin';
 export * from './quorum';
+export * from './ada';
 export * from './vet';
 export * from './one';
 export * from './flow';
