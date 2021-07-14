@@ -125,7 +125,6 @@ describe('XDC transactions', () => {
 
     it('should test read smart contract method invocation', async () => {
         const result = await sendXdcSmartContractReadMethodInvocationTransaction({
-            fromPrivateKey: '0x192afdb39073e202f200117b609e8d40c1c8f50c3baebe1bda4773db48df81a0',
             contractAddress: 'xdc595bad1621784e9b0161d909be0117f17a5d37ca',
             methodName: 'balanceOf',
             methodABI: {

@@ -37,6 +37,7 @@ import {
     TransferMultiTokenBatch,
     UpdateCashbackErc721,
 } from '../model';
+import {SmartContractReadMethodInvocation} from '../model/request/SmartContractReadMethodInvocation';
 
 /**
  * Estimate Gas price for the transaction.
@@ -867,8 +868,8 @@ export const prepareEthDeployErc721SignedTransaction = async (body: EthDeployErc
  * @param body content of the transaction to broadcast
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  */
-export const sendSmartContractReadMethodInvocationTransaction = async (body: SmartContractMethodInvocation, provider?: string) => {
-    await validateBody(body, SmartContractMethodInvocation);
+export const sendSmartContractReadMethodInvocationTransaction = async (body: SmartContractReadMethodInvocation, provider?: string) => {
+    await validateBody(body, SmartContractReadMethodInvocation);
     const {
         params,
         methodName,
@@ -927,11 +928,11 @@ export const sendDeployErc20Transaction = async (body: DeployErc20, provider?: s
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendSmartContractMethodInvocationTransaction = async (body: SmartContractMethodInvocation, provider?: string) => {
+export const sendSmartContractMethodInvocationTransaction = async (body: SmartContractMethodInvocation | SmartContractReadMethodInvocation, provider?: string) => {
     if (body.methodABI.stateMutability === 'view') {
         return sendSmartContractReadMethodInvocationTransaction(body, provider);
     }
-    return ethBroadcast(await prepareSmartContractWriteMethodInvocation(body, provider), body.signatureId);
+    return ethBroadcast(await prepareSmartContractWriteMethodInvocation(body, provider), (body as SmartContractMethodInvocation).signatureId);
 };
 
 /**

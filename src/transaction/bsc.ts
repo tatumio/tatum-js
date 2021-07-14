@@ -36,6 +36,7 @@ import {
     TransferMultiTokenBatch,
     UpdateCashbackErc721,
 } from '../model';
+import {SmartContractReadMethodInvocation} from '../model/request/SmartContractReadMethodInvocation';
 
 /**
  * Estimate Gas price for the transaction.
@@ -855,8 +856,8 @@ export const prepareBscDeployMultiTokenSignedTransaction = async (body: EthDeplo
  * @param body content of the transaction to broadcast
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  */
-export const sendBscSmartContractReadMethodInvocationTransaction = async (body: SmartContractMethodInvocation, provider?: string) => {
-    await validateBody(body, SmartContractMethodInvocation);
+export const sendBscSmartContractReadMethodInvocationTransaction = async (body: SmartContractReadMethodInvocation, provider?: string) => {
+    await validateBody(body, SmartContractReadMethodInvocation);
     const {
         params,
         methodName,
@@ -915,11 +916,11 @@ export const sendDeployBep20Transaction = async (body: DeployErc20, provider?: s
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendBscSmartContractMethodInvocationTransaction = async (body: SmartContractMethodInvocation, provider?: string) => {
+export const sendBscSmartContractMethodInvocationTransaction = async (body: SmartContractMethodInvocation | SmartContractReadMethodInvocation, provider?: string) => {
     if (body.methodABI.stateMutability === 'view') {
         return sendBscSmartContractReadMethodInvocationTransaction(body, provider);
     }
-    return bscBroadcast(await prepareBscSmartContractWriteMethodInvocation(body, provider), body.signatureId);
+    return bscBroadcast(await prepareBscSmartContractWriteMethodInvocation(body, provider), (body as SmartContractMethodInvocation).signatureId);
 };
 
 /**

@@ -341,9 +341,7 @@ describe('CELO transactions', () => {
 
     it('should test read smart contract method invocation', async () => {
       const body = {
-        fromPrivateKey: '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb',
         contractAddress: '0xB7205685AABeB4092EBBa67Ed0443Af807AaC282',
-        feeCurrency: Currency.CUSD,
         methodName: 'balanceOf',
         methodABI: {
             constant: true,
