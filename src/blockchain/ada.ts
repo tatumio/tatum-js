@@ -4,8 +4,8 @@ import {AdaAccount, AdaBlock, AdaBlockChainInfo, AdaTransaction, AdaUtxo, Transa
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/CardanoBroadcast" target="_blank">Tatum API documentation</a>
  */
-export const adaBroadcast = async (txData: string): Promise<TransactionHash> =>
-    post(`/v3/ada/broadcast`, {txData});
+export const adaBroadcast = async (txData: string, signatureId?: string): Promise<TransactionHash> =>
+    post(`/v3/ada/broadcast`, {txData, signatureId});
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/CardanoGetBlockChainInfo" target="_blank">Tatum API documentation</a>
