@@ -12,3 +12,4 @@ export * from './xlm';
 export * from './tron';
 export * from './xdc';
 export * from './celo';
+export * from './ada';

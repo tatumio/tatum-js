@@ -1,13 +1,13 @@
 import {
   BigNum,
   hash_transaction,
-  Transaction,
+  Transaction, TransactionBody,
   TransactionWitnessSet,
   Vkeywitnesses,
 } from '@emurgo/cardano-serialization-lib-nodejs'
 import BigNumber from 'bignumber.js'
 import { validateBody } from '../connector/tatum'
-import { Currency, KeyPair, TransferBtcBasedOffchain, WithdrawalResponseData } from '../model'
+import { Currency, KeyPair, TransactionKMS, TransferBtcBasedOffchain, WithdrawalResponseData } from '../model'
 import {
   adaToLovelace,
   addAddressInputsWithoutPrivateKey, addOutputAda,
@@ -109,3 +109,29 @@ const prepareAdaSignedOffchainTransaction = async (testnet: boolean, data: Withd
     Transaction.new(txBody, witnesses).to_bytes(),
   ).toString('hex')
 }
+
+/**
+ * Sign Ada pending transaction from Tatum KMS
+ * @param tx pending transaction from KMS
+ * @param mnemonic mnemonic to generate private keys to sign transaction with.
+ * @param testnet mainnet or testnet version
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const signAdaOffchainKMSTransaction = async (tx: TransactionKMS, mnemonic: string, testnet: boolean) => {
+  if (tx.chain !== Currency.ADA || !tx.withdrawalResponses) {
+    throw Error('Unsupported chain.');
+  }
+
+  const transactionBody = TransactionBody.from_bytes(Uint8Array.from(Array.from(tx.serializedTransaction).map(Number)))
+  const txHash = hash_transaction(transactionBody);
+  const vKeyWitnesses = Vkeywitnesses.new();
+  for (const response of tx.withdrawalResponses) {
+    const privateKey = await generatePrivateKeyFromMnemonic(Currency.ADA, testnet, mnemonic, response.address?.derivationKey || 0)
+    makeWitness(privateKey, txHash, vKeyWitnesses)
+  }
+  const witnesses = TransactionWitnessSet.new();
+  witnesses.set_vkeys(vKeyWitnesses);
+  return Buffer.from(
+    Transaction.new(transactionBody, witnesses).to_bytes(),
+  ).toString('hex')
+};

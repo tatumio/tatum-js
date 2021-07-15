@@ -158,7 +158,7 @@ export const initTransactionBuilder = async () => {
     BigNum.from_str('2000000'),
   );
   const { tip: { slotNo } } = await adaGetBlockChainInfo();
-  txBuilder.set_ttl(slotNo + 200);
+  txBuilder.set_ttl(slotNo + 50000);
   return txBuilder
 }
 
