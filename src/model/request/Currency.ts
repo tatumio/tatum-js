@@ -26,6 +26,7 @@ export enum Currency {
     BXRP = 'BXRP',
     BLTC = 'BLTC',
     BBCH = 'BBCH',
+    MATIC = 'MATIC',
     USDT = 'USDT',
     GMC = 'GMC',
     GMC_BSC = 'GMC_BSC',

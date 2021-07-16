@@ -8,6 +8,7 @@ export * from './quorum';
 export * from './ada';
 export * from './vet';
 export * from './one';
+export * from './polygon';
 export * from './flow';
 export * from './ethereum';
 export * from './celo';

@@ -11,6 +11,7 @@ export * from './eth';
 export * from './quorum';
 export * from './xrp';
 export * from './xlm';
+export * from './polygon';
 export * from './scrypta';
 export * from './one';
 export * from './tron';

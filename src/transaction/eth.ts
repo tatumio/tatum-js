@@ -30,6 +30,7 @@ import {
     MintMultiToken,
     MintMultiTokenBatch,
     SmartContractMethodInvocation,
+    SmartContractReadMethodInvocation,
     TransactionKMS,
     TransferCustomErc20,
     TransferEthErc20,
@@ -37,7 +38,6 @@ import {
     TransferMultiTokenBatch,
     UpdateCashbackErc721,
 } from '../model';
-import {SmartContractReadMethodInvocation} from '../model/request/SmartContractReadMethodInvocation';
 
 /**
  * Estimate Gas price for the transaction.

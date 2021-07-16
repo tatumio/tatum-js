@@ -24,6 +24,7 @@ import {
     LYRA_DERIVATION_PATH,
     LYRA_NETWORK,
     LYRA_TEST_NETWORK,
+    MATIC_DERIVATION_PATH,
     ONE_DERIVATION_PATH,
     QTUM_DERIVATION_PATH,
     QTUM_NETWORK_MAINNET,
@@ -140,6 +141,17 @@ const generateEthAddress = (testnet: boolean, xpub: string, i: number) => {
     const w = ethHdKey.fromExtendedKey(xpub);
     const wallet = w.deriveChild(i).getWallet();
     return '0x' + wallet.getAddress().toString('hex').toLowerCase();
+};
+
+/**
+ * Generate Polygon or any other ERC20 address
+ * @param testnet testnet or mainnet version of address
+ * @param xpub extended public key to generate address from
+ * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
+ * @returns blockchain address
+ */
+const generatePolygonAddress = (testnet: boolean, xpub: string, i: number) => {
+    return generateEthAddress(testnet, xpub, i);
 };
 
 /**
@@ -424,6 +436,20 @@ const generateOnePrivateKey = async (testnet: boolean, mnemonic: string, i: numb
 };
 
 /**
+ * Generate Polygon or any other ERC20 private key from mnemonic seed
+ * @param testnet testnet or mainnet version of address
+ * @param mnemonic mnemonic to generate private key from
+ * @param i derivation index of private key to generate.
+ * @returns blockchain private key to the address
+ */
+const generatePolygonPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
+    const path = testnet ? TESTNET_DERIVATION_PATH : MATIC_DERIVATION_PATH;
+    const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnemonic));
+    const derivePath = hdwallet.derivePath(path).deriveChild(i);
+    return derivePath.getWallet().getPrivateKeyString().replace('0x', '');
+};
+
+/**
  * Generate BSC or any other BEP-20 or BEP721 private key from mnemonic seed
  * @param testnet testnet or mainnet version of address
  * @param mnemonic mnemonic to generate private key from
@@ -585,6 +611,7 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
         case Currency.XCON:
         case Currency.ETH:
         case Currency.BSC:
+        case Currency.MATIC:
         case Currency.BETH:
         case Currency.BUSD:
         case Currency.CAKE:
@@ -679,7 +706,9 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
         case Currency.MMY:
             return generateEthPrivateKey(testnet, mnemonic, i);
         case Currency.ONE:
-            return generateEthPrivateKey(testnet, mnemonic, i);
+            return generateOnePrivateKey(testnet, mnemonic, i);
+        case Currency.MATIC:
+            return generatePolygonPrivateKey(testnet, mnemonic, i);
         case Currency.XDC:
             return generateXdcPrivateKey(testnet, mnemonic, i);
         case Currency.VET:
@@ -732,6 +761,7 @@ export const generateAddressFromPrivatekey = (currency: Currency, testnet: boole
         case Currency.XCON:
         case Currency.BSC:
         case Currency.MMY:
+        case Currency.MATIC:
             return convertEthPrivateKey(testnet, privateKey);
         case Currency.ONE:
             return convertOnePrivateKey(testnet, privateKey);

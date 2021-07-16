@@ -24,6 +24,7 @@ import {
     LYRA_DERIVATION_PATH,
     LYRA_NETWORK,
     LYRA_TEST_NETWORK,
+    MATIC_DERIVATION_PATH,
     ONE_DERIVATION_PATH,
     QTUM_DERIVATION_PATH,
     QTUM_NETWORK_MAINNET,
@@ -89,6 +90,22 @@ export const generateVetWallet = async (testnet: boolean, mnem: string): Promise
  */
 export const generateEthWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
     const path = testnet ? TESTNET_DERIVATION_PATH : ETH_DERIVATION_PATH;
+    const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnem));
+    const derivePath = hdwallet.derivePath(path);
+    return {
+        xpub: derivePath.publicExtendedKey().toString(),
+        mnemonic: mnem
+    };
+};
+
+/**
+ * Generate Polygon or any other ERC20 wallet
+ * @param testnet testnet or mainnet version of address
+ * @param mnem mnemonic seed to use
+ * @returns wallet
+ */
+export const generatePolygonWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
+    const path = testnet ? TESTNET_DERIVATION_PATH : MATIC_DERIVATION_PATH;
     const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnem));
     const derivePath = hdwallet.derivePath(path);
     return {
@@ -347,6 +364,8 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
         case Currency.BBCH:
         case Currency.MMY:
             return generateEthWallet(testnet, mnem);
+        case Currency.MATIC:
+            return generatePolygonWallet(testnet, mnem);
         case Currency.XDC:
             return generateXdcWallet(testnet, mnem);
         case Currency.XRP:
