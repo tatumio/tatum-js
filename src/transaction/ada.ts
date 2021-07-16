@@ -86,7 +86,7 @@ export const addAddressInputs = async (transactionBuilder: TransactionBuilder, f
   return { amount, privateKeysToSign }
 }
 
-export const addAddressInputsWithoutPrivateKey = async (transactionBuilder: TransactionBuilder, fromAddresses: {address: string}[]) => {
+export const addAddressInputsWithoutPrivateKey = async (transactionBuilder: TransactionBuilder, fromAddresses: { address: string }[]) => {
   let amount = new BigNumber(0)
   for (const fromAddress of fromAddresses) {
     const { address } = fromAddress
@@ -100,7 +100,7 @@ export const addAddressInputsWithoutPrivateKey = async (transactionBuilder: Tran
 }
 
 export const addInputsPrivateKeys = async (froms: FromAddress[] | FromUTXO[]) => {
-  const privateKeysToSign: string[] = [];
+  const privateKeysToSign = [];
   for (const from of froms) {
     privateKeysToSign.push(from.signatureId || from.privateKey)
   }
@@ -109,7 +109,7 @@ export const addInputsPrivateKeys = async (froms: FromAddress[] | FromUTXO[]) =>
 
 export const addUtxoInputs = async (transactionBuilder: TransactionBuilder, fromUTXOs: FromUTXO[]) => {
   let amount = new BigNumber(0)
-  const privateKeysToSign: string[] = [];
+  const privateKeysToSign = [];
   for (const utxo of fromUTXOs) {
     const transaction = await adaGetTransaction(utxo.txHash)
     const output = transaction.outputs.find(output => output.index === utxo.index)
@@ -130,7 +130,7 @@ export const addOutputLovelace = (transactionBuilder: TransactionBuilder, addres
   ));
 }
 
-export const addOutputAda = (transactionBuilder: TransactionBuilder, address: string, amount: string | number ) => {
+export const addOutputAda = (transactionBuilder: TransactionBuilder, address: string, amount: string | number) => {
   const amountLovelace = adaToLovelace(amount)
   addOutputLovelace(transactionBuilder, address, amountLovelace)
   return amountLovelace
@@ -168,11 +168,15 @@ export const createWitnesses = (transactionBody: TransactionBody, transferBtcBas
   const vKeyWitnesses = Vkeywitnesses.new();
   if (fromAddress) {
     for (const address of fromAddress) {
-      makeWitness(address.privateKey, txHash, vKeyWitnesses)
+      if (address.privateKey) {
+        makeWitness(address.privateKey, txHash, vKeyWitnesses)
+      }
     }
   } else if (fromUTXO) {
     for (const utxo of fromUTXO) {
-      makeWitness(utxo.privateKey, txHash, vKeyWitnesses)
+      if (utxo.privateKey) {
+        makeWitness(utxo.privateKey, txHash, vKeyWitnesses)
+      }
     }
   } else {
     throw new Error('No private key for witness found.')
@@ -217,7 +221,7 @@ export const addFeeAndRest = (transactionBuilder: TransactionBuilder, address: s
   transactionBuilder.set_fee(BigNum.from_str(String(fee)));
 }
 
-export const signTransaction = (transactionBuilder: TransactionBuilder, transferBtcBasedBlockchain: TransferBtcBasedBlockchain, privateKeysToSign: string[]) => {
+export const signTransaction = (transactionBuilder: TransactionBuilder, transferBtcBasedBlockchain: TransferBtcBasedBlockchain, privateKeysToSign: (string|undefined)[]) => {
   const txBody = transactionBuilder.build();
   const { fromAddress, fromUTXO } = transferBtcBasedBlockchain
 
