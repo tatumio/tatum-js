@@ -11,7 +11,7 @@ const prepareSignedTransaction = async (body: TransferDogeBlockchain) => {
     const tx = new Transaction()
         .fee(Number(new BigNumber(fee).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)))
         .change(changeAddress);
-    const privateKeysToSign: string[] = [];
+    const privateKeysToSign = [];
     for (const item of fromUTXO) {
         tx.from({
             txId: item.txHash,

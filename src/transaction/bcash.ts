@@ -67,7 +67,7 @@ export const prepareBitcoinCashSignedTransaction = async (testnet: boolean, body
     const {fromUTXO, to} = body;
     const network = testnet ? coininfo.bitcoincash.test.toBitcoinJS() : coininfo.bitcoincash.main.toBitcoinJS();
     const transactionBuilder = new TransactionBuilder(network);
-    const privateKeysToSign: string[] = [];
+    const privateKeysToSign = [];
     const amountToSign: number[] = [];
     const txs = await getTransactions(fromUTXO.map(u => u.txHash));
     for (const [i, item] of fromUTXO.entries()) {

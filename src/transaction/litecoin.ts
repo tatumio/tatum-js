@@ -9,7 +9,7 @@ const prepareSignedTransaction = async (body: TransferBtcBasedBlockchain) => {
     await validateBody(body, TransferBtcBasedBlockchain);
     const {fromUTXO, fromAddress, to} = body;
     const tx = new Transaction();
-    const privateKeysToSign: string[] = [];
+    const privateKeysToSign = [];
     if (fromAddress) {
         for (const item of fromAddress) {
             const txs = await ltcGetTxForAccount(item.address);
