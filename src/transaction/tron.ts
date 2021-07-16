@@ -21,12 +21,15 @@ import {
     TronTransferTrc721,
     TronUpdateCashbackTrc721,
 } from '../model';
+
+import { TATUM_API_URL } from '../constants'; 
+
 // tslint:disable-next-line:no-var-requires
 const TronWeb = require('tronweb');
 
 const prepareTronWeb = (testnet: boolean, provider?: string) => {
     const HttpProvider = TronWeb.providers.HttpProvider;
-    const url = provider || testnet ? 'https://api.shasta.trongrid.io' : 'https://api.trongrid.io';
+    const url = provider || `${TATUM_API_URL}/v3/tron/node/${process.env.TATUM_API_KEY}`;
     const fullNode = new HttpProvider(url);
     const solidityNode = new HttpProvider(url);
     const eventServer = new HttpProvider(url);
