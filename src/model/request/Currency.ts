@@ -27,6 +27,7 @@ export enum Currency {
     BLTC = 'BLTC',
     BBCH = 'BBCH',
     MATIC = 'MATIC',
+    USDC_MATIC = 'USDC_MATIC',
     USDT = 'USDT',
     GMC = 'GMC',
     GMC_BSC = 'GMC_BSC',
@@ -91,9 +92,18 @@ export const BEP20_CURRENCIES = [
     Currency.BUSD_BSC.toString(),
 ];
 
+export const MATIC20_CURRENCIES = [
+    Currency.USDC_MATIC.toString(),
+];
+
 export const ETH_BASED_CURRENCIES = [
     Currency.ETH.toString(),
     ...ERC20_CURRENCIES,
+];
+
+export const MATIC_BASED_CURRENCIES = [
+    Currency.MATIC.toString(),
+    ...MATIC20_CURRENCIES,
 ];
 
 export const BSC_BASED_CURRENCIES = [
