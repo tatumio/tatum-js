@@ -12,7 +12,6 @@ import {Keypair} from 'stellar-sdk';
 import {
     BCH_DERIVATION_PATH,
     BTC_DERIVATION_PATH,
-    QTUM_DERIVATION_PATH,
     CELO_DERIVATION_PATH,
     DOGE_DERIVATION_PATH,
     DOGE_NETWORK,
@@ -33,9 +32,7 @@ import {
     TESTNET_DERIVATION_PATH,
     TRON_DERIVATION_PATH,
     VET_DERIVATION_PATH,
-    XDC_DERIVATION_PATH,
-    QTUM_NETWORK_MAINNET,
-    QTUM_NETWORK_TESTNET
+    XDC_DERIVATION_PATH
 } from '../constants';
 import {Currency} from '../model';
 import cardano from './cardano.crypto';

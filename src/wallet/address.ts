@@ -32,10 +32,7 @@ import {
     TESTNET_DERIVATION_PATH,
     TRON_DERIVATION_PATH,
     VET_DERIVATION_PATH,
-    XDC_DERIVATION_PATH,
-    QTUM_NETWORK_TESTNET,
-    QTUM_NETWORK_MAINNET,
-    QTUM_DERIVATION_PATH
+    XDC_DERIVATION_PATH
 } from '../constants';
 import {Currency} from '../model';
 import cardano from './cardano.crypto';
