@@ -1,12 +1,12 @@
 import { get, post } from '../connector/tatum'
-import { QtumIRawTransactions, QtumIRawTransactionInfo, QtumISendRawTxResult } from "src/model/response/qtum/QtumTx"
-import { QtumIGetInfo } from 'src/model/response/qtum/QtumInfo';
-import { QtumIUTXO } from 'src/model/response/qtum/QtumUTXO';
+import { QtumIRawTransactions, QtumIRawTransactionInfo, QtumISendRawTxResult } from "../model/response/qtum/QtumTx"
+import { QtumIGetInfo } from '../model/response/qtum/QtumInfo';
+import { QtumIUTXO } from '../model/response/qtum/QtumUTXO';
 import { QtumBlock } from '../model/response/qtum/QtumBlock';
 
 export const getQtumUTXOs = async (address: string): Promise<QtumIUTXO> => get(`/v3/qtum/utxo/${address}`);
 export const getQtumTransaction = async (id: string): Promise<QtumIRawTransactionInfo> => get(`/v3/qtum/transaction/${id}`)
-export const getQtumTransactions = async (address: string, pageSize: number, offset:number): Promise<QtumIRawTransactions> => get(`/v3/qtum/transactions/address/${address}/?pageSize=${pageSize}&offset=${offset}`)
+export const getQtumTransactions = async (address: string, pageSize: number = 50, offset: number = 0): Promise<QtumIRawTransactions> => get(`/v3/qtum/transactions/address/${address}/?pageSize=${pageSize}&offset=${offset}`)
 
 export const getInfo = async (address: string): Promise<QtumIGetInfo> => get(`/v3/qtum/${address}/balance`);
 
