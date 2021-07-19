@@ -36,7 +36,7 @@ import {
     SmartContractMethodInvocation,
     TransactionKMS,
 } from '../model';
-import {sendBscSmartContractReadMethodInvocationTransaction} from './bsc';
+import {SmartContractReadMethodInvocation} from '../model/request/SmartContractReadMethodInvocation';
 
 const prepareGeneralTx = async (client: Web3, testnet: boolean, fromPrivateKey?: string, signatureId?: string, to?: string, amount?: string, nonce?: number,
                                 data?: string, gasLimit?: string, gasPrice?: string) => {
@@ -336,6 +336,19 @@ export const prepareOneSmartContractWriteMethodInvocation = async (testnet: bool
         fee?.gasLimit, fee?.gasPrice);
 };
 
+export const sendOneSmartContractReadMethodInvocationTransaction = async (testnet: boolean, body: SmartContractReadMethodInvocation, provider?: string) => {
+    await validateBody(body, SmartContractReadMethodInvocation);
+    const {
+        params,
+        methodName,
+        methodABI,
+        contractAddress,
+    } = body;
+    const client = prepareOneClient(testnet, provider);
+    const contract = new client.eth.Contract([methodABI], contractAddress);
+    return {data: await contract.methods[methodName as string](...params).call()};
+};
+
 export const sendOneStoreDataTransaction = async (testnet: boolean, body: CreateRecord, provider?: string) =>
     oneBroadcast(await prepareOneStoreDataTransaction(testnet, body, provider));
 export const sendOneMint20SignedTransaction = async (testnet: boolean, body: OneMint20, provider?: string) =>
@@ -376,9 +389,10 @@ export const sendOneMintMultiTokenBatchSignedTransaction = async (testnet: boole
     oneBroadcast(await prepareOneMintMultiTokenBatchSignedTransaction(testnet, body, provider));
 export const sendOneDeployMultiTokenSignedTransaction = async (testnet: boolean, body: OneDeployMultiToken, provider?: string) =>
     oneBroadcast(await prepareOneDeployMultiTokenSignedTransaction(testnet, body, provider));
-export const sendOneSmartContractMethodInvocationTransaction = async (testnet: boolean, body: SmartContractMethodInvocation, provider?: string) => {
+export const sendOneSmartContractMethodInvocationTransaction = async (testnet: boolean,
+                                                                      body: SmartContractMethodInvocation | SmartContractReadMethodInvocation, provider?: string) => {
     if (body.methodABI.stateMutability === 'view') {
-        return sendBscSmartContractReadMethodInvocationTransaction(body, provider);
+        return sendOneSmartContractReadMethodInvocationTransaction(testnet, body as SmartContractReadMethodInvocation, provider);
     }
-    return oneBroadcast(await prepareOneSmartContractWriteMethodInvocation(testnet, body, provider), body.signatureId);
+    return oneBroadcast(await prepareOneSmartContractWriteMethodInvocation(testnet, body, provider), (body as SmartContractMethodInvocation).signatureId);
 };

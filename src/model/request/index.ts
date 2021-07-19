@@ -59,6 +59,9 @@ export * from './TransferBscBep20';
 export * from './TransferCeloOrCeloErc20Token';
 export * from './TransferTrxOffchain';
 export * from './TransferTron';
+export * from './TransferPolygon';
+export * from './BurnMultiToken';
+export * from './BurnMultiTokenBatch';
 export * from './CreateErc20Offchain';
 export * from './TransferTronTrc10';
 export * from './TransferTronTrc20';
@@ -89,6 +92,7 @@ export * from './EthMintErc721';
 export * from './EthMintMultipleErc721';
 export * from './EthTransferErc721';
 export * from './SmartContractMethodInvocation';
+export * from './SmartContractReadMethodInvocation';
 export * from './EthDeployErc721';
 export * from './CeloDeployErc721';
 export * from './PrepareEthErc20SignedOffchainTransaction'
@@ -111,3 +115,4 @@ export * from './CeloBurnMultiTokenBatch';
 export * from './CeloDeployMultiToken';
 export * from './CeloUpdateCashbackErc721';
 export * from './UpdateCashbackErc721';
+export * from './PrivateKeyOrSignatureIdBtcBased'

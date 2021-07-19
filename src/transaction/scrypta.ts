@@ -12,7 +12,7 @@ const prepareSignedTransaction = async (network: Network, body: TransferBtcBased
     await validateBody(body, TransferBtcBasedBlockchain);
     const {fromUTXO, fromAddress, to} = body;
     const tx = new TransactionBuilder(network);
-    const privateKeysToSign: string[] = [];
+    const privateKeysToSign = [];
     tx.setVersion(1)
     if (fromAddress) {
         for (const item of fromAddress) {
@@ -20,7 +20,9 @@ const prepareSignedTransaction = async (network: Network, body: TransferBtcBased
             for (const t of txs) {
                 try {
                     tx.addInput(t.txid, t.vout);
-                    privateKeysToSign.push(item.privateKey);
+                    if(item.privateKey) {
+                      privateKeysToSign.push(item.privateKey);
+                    }
                 } catch (e) {
                 }
             }
@@ -28,7 +30,9 @@ const prepareSignedTransaction = async (network: Network, body: TransferBtcBased
     } else if (fromUTXO) {
         for (const item of fromUTXO) {
             tx.addInput(item.txHash, item.index);
-            privateKeysToSign.push(item.privateKey);
+            if(item.privateKey) {
+              privateKeysToSign.push(item.privateKey);
+            }
         }
     }
     for (const item of to) {

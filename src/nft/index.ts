@@ -42,6 +42,10 @@ import {
     sendDeployErc721Transaction,
     sendErc721Transaction,
     sendEthMintMultipleCashbackErc721SignedTransaction,
+    sendFlowNftBurnToken,
+    sendFlowNftMintMultipleToken,
+    sendFlowNftMintToken,
+    sendFlowNftTransferToken,
     sendMintBep721Transaction,
     sendMintBepCashback721Transaction,
     sendMintCashbackErc721Transaction,
@@ -49,6 +53,22 @@ import {
     sendMintMultipleBep721Transaction,
     sendMintMultipleCashbackBep721Transaction,
     sendMintMultipleErc721Transaction,
+    sendOneBurn721SignedTransaction,
+    sendOneDeploy721SignedTransaction,
+    sendOneMint721SignedTransaction,
+    sendOneMintCashback721SignedTransaction,
+    sendOneMintMultiple721SignedTransaction,
+    sendOneMintMultipleCashback721SignedTransaction,
+    sendOneTransfer721SignedTransaction,
+    sendOneUpdateCashbackForAuthor721SignedTransaction,
+    sendPolygonBurnErc721SignedTransaction,
+    sendPolygonDeployErc721SignedTransaction,
+    sendPolygonMintCashbackErc721SignedTransaction,
+    sendPolygonMintErc721SignedTransaction,
+    sendPolygonMintMultipleCashbackErc721SignedTransaction,
+    sendPolygonMintMultipleErc721SignedTransaction,
+    sendPolygonTransferErc721SignedTransaction,
+    sendPolygonUpdateCashbackForAuthorErc721SignedTransaction,
     sendTronBurnTrc721SignedTransaction,
     sendTronDeployTrc721SignedTransaction,
     sendTronMintCashbackTrc721SignedTransaction,
@@ -57,9 +77,8 @@ import {
     sendTronTransferTrc721SignedTransaction,
     sendTronUpdateCashbackForAuthorTrc721SignedTransaction,
     sendUpdateCashbackForAuthorBep721Transaction,
-    sendUpdateCashbackForAuthorErc721Transaction
+    sendUpdateCashbackForAuthorErc721Transaction,
 } from '../transaction';
-import {sendFlowNftBurnToken, sendFlowNftMintMultipleToken, sendFlowNftMintToken, sendFlowNftTransferToken} from '../transaction/flow';
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetBalanceErc721" target="_blank">Tatum API documentation</a>
@@ -89,6 +108,10 @@ export const deployNFT = async (testnet: boolean, body: CeloDeployErc721 | EthDe
             return sendCeloDeployErc721Transaction(testnet, body as CeloDeployErc721, provider);
         case Currency.ETH:
             return sendDeployErc721Transaction(body as EthDeployErc721, provider);
+        case Currency.MATIC:
+            return sendPolygonDeployErc721SignedTransaction(testnet, body as EthDeployErc721, provider);
+        case Currency.ONE:
+            return sendOneDeploy721SignedTransaction(testnet, body as EthDeployErc721, provider);
         case Currency.TRON:
             return sendTronDeployTrc721SignedTransaction(testnet, body as TronDeployTrc721);
         case Currency.BSC:
@@ -113,6 +136,18 @@ export const mintNFTWithUri = async (testnet: boolean, body: CeloMintErc721 | Et
                 return sendMintCashbackErc721Transaction(body as EthMintErc721, provider);
             } else {
                 return sendMintErc721Transaction(body as EthMintErc721, provider);
+            }
+        case Currency.MATIC:
+            if ((body as EthMintErc721).authorAddresses) {
+                return sendPolygonMintCashbackErc721SignedTransaction(testnet, body as EthMintErc721, provider);
+            } else {
+                return sendPolygonMintErc721SignedTransaction(testnet, body as EthMintErc721, provider);
+            }
+        case Currency.ONE:
+            if ((body as EthMintErc721).authorAddresses) {
+                return sendOneMintCashback721SignedTransaction(testnet, body as EthMintErc721, provider);
+            } else {
+                return sendOneMint721SignedTransaction(testnet, body as EthMintErc721, provider);
             }
         case Currency.TRON:
             if ((body as TronMintTrc721).authorAddresses) {
@@ -152,6 +187,18 @@ export const mintMultipleNFTWithUri = async (testnet: boolean, body: CeloMintMul
             } else {
                 return sendMintMultipleErc721Transaction(body as EthMintMultipleErc721, provider);
             }
+        case Currency.MATIC:
+            if ((body as EthMintMultipleErc721).authorAddresses) {
+                return sendPolygonMintMultipleCashbackErc721SignedTransaction(testnet, body as EthMintMultipleErc721, provider);
+            } else {
+                return sendPolygonMintMultipleErc721SignedTransaction(testnet, body as EthMintMultipleErc721, provider);
+            }
+        case Currency.ONE:
+            if ((body as EthMintMultipleErc721).authorAddresses) {
+                return sendOneMintMultipleCashback721SignedTransaction(testnet, body as EthMintMultipleErc721, provider);
+            } else {
+                return sendOneMintMultiple721SignedTransaction(testnet, body as EthMintMultipleErc721, provider);
+            }
         case Currency.BSC:
             if ((body as EthMintMultipleErc721).authorAddresses) {
                 return sendMintMultipleCashbackBep721Transaction(body as EthMintMultipleErc721, provider);
@@ -173,6 +220,10 @@ export const burnNFT = async (testnet: boolean, body: CeloBurnErc721 | EthBurnEr
             return sendTronBurnTrc721SignedTransaction(testnet, body as TronBurnTrc721);
         case Currency.ETH:
             return sendBurnErc721Transaction(body, provider);
+        case Currency.MATIC:
+            return sendPolygonBurnErc721SignedTransaction(testnet, body, provider);
+        case Currency.ONE:
+            return sendOneBurn721SignedTransaction(testnet, body, provider);
         case Currency.BSC:
             return sendBurnBep721Transaction(body, provider);
         case Currency.FLOW:
@@ -188,6 +239,10 @@ export const updateCashbackForAuthorNFT = async (testnet: boolean, body: UpdateC
             return sendCeloUpdateCashbackForAuthorErc721Transaction(testnet, body as CeloUpdateCashbackErc721, provider);
         case Currency.ETH:
             return sendUpdateCashbackForAuthorErc721Transaction(body, provider);
+        case Currency.MATIC:
+            return sendPolygonUpdateCashbackForAuthorErc721SignedTransaction(testnet, body, provider);
+        case Currency.ONE:
+            return sendOneUpdateCashbackForAuthor721SignedTransaction(testnet, body, provider);
         case Currency.TRON:
             return sendTronUpdateCashbackForAuthorTrc721SignedTransaction(testnet, body as TronUpdateCashbackTrc721);
         case Currency.BSC:
@@ -203,6 +258,10 @@ export const transferNFT = async (testnet: boolean, body: CeloTransferErc721 | E
             return sendCeloTransferErc721Transaction(testnet, body as CeloTransferErc721, provider);
         case Currency.ETH:
             return sendErc721Transaction(body, provider);
+        case Currency.MATIC:
+            return sendPolygonTransferErc721SignedTransaction(testnet, body, provider);
+        case Currency.ONE:
+            return sendOneTransfer721SignedTransaction(testnet, body, provider);
         case Currency.TRON:
             return sendTronTransferTrc721SignedTransaction(testnet, body as TronTransferTrc721);
         case Currency.BSC:

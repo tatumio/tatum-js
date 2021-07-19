@@ -24,7 +24,7 @@ describe('ADA transactions', () => {
     }
   });
 
-  it('should test sending ADA fromAddress transaction', async () => {
+  it('should test sending ADA fromAddress transaction private key', async () => {
     const body = new TransferBtcBasedBlockchain();
     body.fromAddress = [{
       address: 'addr_test1qqnp3dfw869cz74jfvkmvrs47fwmhwx7c96n44u80w2mrskkrxsadwhjss06kp6tke68rt0apcl864tlqw40ddy5jumqr7g7xy',

@@ -1,18 +1,11 @@
 import {get, post} from '../connector/tatum';
-import {
-    AdaUtxo,
-    AdaAccount,
-    AdaBlock,
-    AdaBlockChainInfo,
-    AdaTransaction,
-    TransactionHash
-} from '../model';
+import {AdaAccount, AdaBlock, AdaBlockChainInfo, AdaTransaction, AdaUtxo, TransactionHash} from '../model';
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/CardanoBroadcast" target="_blank">Tatum API documentation</a>
  */
-export const adaBroadcast = async (txData: string): Promise<TransactionHash> =>
-    post(`/v3/ada/broadcast`, {txData});
+export const adaBroadcast = async (txData: string, signatureId?: string): Promise<TransactionHash> =>
+    post(`/v3/ada/broadcast`, {txData, signatureId});
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/CardanoGetBlockChainInfo" target="_blank">Tatum API documentation</a>
@@ -43,4 +36,4 @@ export const adaGetTransactionsByAccount = async (address: string, limit: number
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/CardanoGetUTxos" target="_blank">Tatum API documentation</a>
  */
-export const adaGetUtxos = async (address: string): Promise<AdaUtxo[]> => get(`/v3/ada/utxo/${address}`);
+export const adaGetUtxos = async (address: string): Promise<AdaUtxo[]> => get(`/v3/ada/${address}/utxos`);

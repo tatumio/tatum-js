@@ -5,13 +5,10 @@ const {
   getPubKeyBlake2b224Hash,
   mnemonicToRootKeypair,
   packBaseAddress,
+// tslint:disable-next-line:no-var-requires
 } = require('cardano-crypto.js');
 
-import {
-  ADA_DERIVATION_PATH,
-  ADA_DERIVATION_SCHEME,
-  HARDENED_THRESHOLD,
-} from '../constants';
+import {ADA_DERIVATION_PATH, ADA_DERIVATION_SCHEME, HARDENED_THRESHOLD,} from '../constants';
 
 /**
  * Generate an Ada key for the standard derivation path

@@ -126,8 +126,7 @@ describe('BSC transactions', () => {
 
     it('should test read smart contract method invocation', async () => {
         const result = await sendBscSmartContractReadMethodInvocationTransaction({
-            fromPrivateKey: '0x192afdb39073e202f200117b609e8d40c1c8f50c3baebe1bda4773db48df81a0',
-            contractAddress: '0x595bad1621784e9b0161d909be0117f17a5d37ca',
+            contractAddress: '0xae13d989dac2f0debff460ac112a837c89baa7cd',
             methodName: 'balanceOf',
             methodABI: {
                 constant: true,
@@ -148,8 +147,8 @@ describe('BSC transactions', () => {
                 stateMutability: 'view',
                 type: 'function',
             },
-            params: ['0x8c76887d2e738371bd750362fb55887343472346'],
-        });
+            params: ['0x9ac64cc6e4415144c455bd8e4837fea55603e5c3'],
+        }, 'https://data-seed-prebsc-2-s1.binance.org:8545');
         console.log(result);
         expect(result).not.toBeNull();
     });

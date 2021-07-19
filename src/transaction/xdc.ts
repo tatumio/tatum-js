@@ -28,6 +28,7 @@ import {
     TransferErc20,
     UpdateCashbackErc721,
 } from '../model';
+import {SmartContractReadMethodInvocation} from '../model/request/SmartContractReadMethodInvocation';
 
 
 /**
@@ -664,8 +665,8 @@ export const prepareXdcDeployErc721SignedTransaction = async (body: EthDeployErc
  * @param body content of the transaction to broadcast
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  */
-export const sendXdcSmartContractReadMethodInvocationTransaction = async (body: SmartContractMethodInvocation, provider?: string) => {
-    await validateBody(body, SmartContractMethodInvocation);
+export const sendXdcSmartContractReadMethodInvocationTransaction = async (body: SmartContractReadMethodInvocation, provider?: string) => {
+    await validateBody(body, SmartContractReadMethodInvocation);
     const {
         params,
         methodName,
@@ -724,11 +725,11 @@ export const sendXdcDeployErc20Transaction = async (body: DeployErc20, provider?
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendXdcSmartContractMethodInvocationTransaction = async (body: SmartContractMethodInvocation, provider?: string) => {
+export const sendXdcSmartContractMethodInvocationTransaction = async (body: SmartContractMethodInvocation | SmartContractReadMethodInvocation, provider?: string) => {
     if (body.methodABI.stateMutability === 'view') {
         return sendXdcSmartContractReadMethodInvocationTransaction(body, provider);
     }
-    return xdcBroadcast(await prepareXdcSmartContractWriteMethodInvocation(body, provider), body.signatureId);
+    return xdcBroadcast(await prepareXdcSmartContractWriteMethodInvocation(body, provider), (body as SmartContractMethodInvocation).signatureId);
 };
 
 /**
