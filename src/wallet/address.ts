@@ -432,7 +432,7 @@ const generateOnePrivateKey = async (testnet: boolean, mnemonic: string, i: numb
     const path = testnet ? TESTNET_DERIVATION_PATH : ONE_DERIVATION_PATH;
     const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnemonic));
     const derivePath = hdwallet.derivePath(path).deriveChild(i);
-    return derivePath.getWallet().getPrivateKeyString().replace('0x', '');
+    return derivePath.getWallet().getPrivateKeyString();
 };
 
 /**
@@ -446,7 +446,7 @@ const generatePolygonPrivateKey = async (testnet: boolean, mnemonic: string, i: 
     const path = testnet ? TESTNET_DERIVATION_PATH : MATIC_DERIVATION_PATH;
     const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnemonic));
     const derivePath = hdwallet.derivePath(path).deriveChild(i);
-    return derivePath.getWallet().getPrivateKeyString().replace('0x', '');
+    return derivePath.getWallet().getPrivateKeyString();
 };
 
 /**
