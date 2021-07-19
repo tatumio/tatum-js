@@ -6,7 +6,7 @@ import { QtumBlock } from '../model/response/qtum/QtumBlock';
 
 export const getQtumUTXOs = async (address: string): Promise<QtumIUTXO> => get(`/v3/qtum/utxo/${address}`);
 export const getQtumTransaction = async (id: string): Promise<QtumIRawTransactionInfo> => get(`/v3/qtum/transaction/${id}`)
-export const getQtumTransactions = async (address: string, pageNum: number): Promise<QtumIRawTransactions> => get(`/v3/qtum/transactions/address/${address}/${pageNum}`)
+export const getQtumTransactions = async (address: string, pageSize: number, offset:number): Promise<QtumIRawTransactions> => get(`/v3/qtum/transactions/address/${address}/?pageSize=${pageSize}&offset=${offset}`)
 
 export const getInfo = async (address: string): Promise<QtumIGetInfo> => get(`/v3/qtum/${address}/balance`);
 
