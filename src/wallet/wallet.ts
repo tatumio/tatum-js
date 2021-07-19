@@ -25,7 +25,11 @@ import {
     LYRA_DERIVATION_PATH,
     LYRA_NETWORK,
     LYRA_TEST_NETWORK,
+    MATIC_DERIVATION_PATH,
     ONE_DERIVATION_PATH,
+    QTUM_DERIVATION_PATH,
+    QTUM_NETWORK_MAINNET,
+    QTUM_NETWORK_TESTNET,
     TESTNET_DERIVATION_PATH,
     TRON_DERIVATION_PATH,
     VET_DERIVATION_PATH,
@@ -98,6 +102,22 @@ export const generateEthWallet = async (testnet: boolean, mnem: string): Promise
 };
 
 /**
+ * Generate Polygon or any other ERC20 wallet
+ * @param testnet testnet or mainnet version of address
+ * @param mnem mnemonic seed to use
+ * @returns wallet
+ */
+export const generatePolygonWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
+    const path = testnet ? TESTNET_DERIVATION_PATH : MATIC_DERIVATION_PATH;
+    const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnem));
+    const derivePath = hdwallet.derivePath(path);
+    return {
+        xpub: derivePath.publicExtendedKey().toString(),
+        mnemonic: mnem
+    };
+};
+
+/**
  * Generate Harmony or any other ERC20 wallet
  * @param testnet testnet or mainnet version of address
  * @param mnem mnemonic seed to use
@@ -132,8 +152,8 @@ export const generateFlowWallet = async (mnem: string): Promise<Wallet> => {
  * @param mnem mnemonic seed to use
  * @returns wallet
  */
- export const generateBscWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
-  return generateEthWallet(testnet, mnem);
+export const generateBscWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
+    return generateEthWallet(testnet, mnem);
 };
 
 export const generateXdcWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
@@ -279,8 +299,8 @@ export const generateLyraWallet = async (testnet: boolean, mnem: string): Promis
  * @param mnemonic mnemonic seed to use
  * @returns wallet
  */
- export const generateAdaWallet = async (mnemonic: string): Promise<Wallet> => {
-    return { mnemonic, xpub: await cardano.generateXPublicKey(mnemonic) };
+export const generateAdaWallet = async (mnemonic: string): Promise<Wallet> => {
+    return {mnemonic, xpub: await cardano.generateXPublicKey(mnemonic)};
 };
 
 /**
@@ -314,7 +334,7 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
         case Currency.ONE:
             return generateOneWallet(testnet, mnem);
         case Currency.QTUM:
-            return generateQtumWallet(testnet,mnem)
+            return generateQtumWallet(testnet, mnem);
         case Currency.USDT:
         case Currency.WBTC:
         case Currency.LEO:
@@ -347,6 +367,8 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
         case Currency.BBCH:
         case Currency.MMY:
             return generateEthWallet(testnet, mnem);
+        case Currency.MATIC:
+            return generatePolygonWallet(testnet, mnem);
         case Currency.XDC:
             return generateXdcWallet(testnet, mnem);
         case Currency.XRP:

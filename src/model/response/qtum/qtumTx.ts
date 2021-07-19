@@ -26,25 +26,25 @@ export class VInput{
   vout: number
   sequence: number
   n: number
-  scriptSig: {
-      hex: string
-      asm: string
-  }
   addr: string
   valueSat: number
   value: string
   doubleSpentTxID: string
+  scriptSig: {
+      hex: string
+      asm: string
+  }
 }
 export class VOutput{
   value: string
   n: number
+  spentTxId: string
+  spentIndex: string
+  spentHeight: string
   scriptPubKey: {
       hex: string
       asm: string
   }
-  spentTxId: string
-  spentIndex: string
-  spentHeight: string
 }
 export class QtumIRawTransactionInfo {
   txid: string
@@ -75,7 +75,6 @@ export interface QtumITransactionReceipt {
   excepted: string
   log: any[]
 }
-
 export interface QtumISendRawTxResult {
   txid: string
 }
@@ -90,7 +89,6 @@ export interface IOutput {
     type: string
   }
 }
-
 export interface IInput {
   value: number
   script?: Buffer

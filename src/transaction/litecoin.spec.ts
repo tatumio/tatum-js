@@ -1,5 +1,5 @@
 import {TransferBtcBasedBlockchain} from '../model';
-import {prepareLitecoinSignedTransaction} from './litecoin';
+import { prepareLitecoinSignedTransaction, sendLitecoinTransaction } from './litecoin';
 
 describe('LTC transactions', () => {
     it('should test LTC transaction data', async () => {
@@ -17,6 +17,23 @@ describe('LTC transactions', () => {
         const txData = await prepareLitecoinSignedTransaction(true, body);
         expect(txData).toBe('010000000107b82207b41ce255ba227719f93ff426dd49fb53986b843145d496ca07c770660100000000ffffffff01702dc501000000001976a91401ece42befef00eb643febc32cb0764563fb4e6988ac00000000');
     });
+
+  it('should test LTC send transaction', async () => {
+    process.env.TATUM_API_KEY = '8a66adad-9e68-4f5b-a9b9-8efd971a14d3';
+    const body = new TransferBtcBasedBlockchain();
+    body.fromUTXO = [{
+      txHash: '6670c707ca96d44531846b9853fb49dd26f43ff9197722ba55e21cb40722b807',
+      index: 1,
+      privateKey: 'cVX7YtgL5muLTPncHFhP95oitV1mqUUA5VeSn8HeCRJbPqipzobf',
+    }];
+    body.to = [{
+      address: 'mfh8kjy36ppH7bGXTzUwhWbKGgZziq4CbF',
+      value: 0.2969944
+    }];
+    const txData = await sendLitecoinTransaction(true, body);
+    console.log(txData)
+    expect(txData).toHaveProperty('txId');
+  });
 
     it('should not test LTC transaction data, fromAddress and fromUTXO present at the same time', async () => {
         const body = new TransferBtcBasedBlockchain();

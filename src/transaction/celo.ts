@@ -35,6 +35,7 @@ import {
     TransactionKMS,
     TransferCeloOrCeloErc20Token
 } from '../model';
+import {SmartContractReadMethodInvocation} from '../model/request/SmartContractReadMethodInvocation';
 
 const obtainWalletInformation = async (wallet: CeloWallet, feeCurrencyContractAddress?: string) => {
     const [txCount, gasPrice, from] = await Promise.all([
@@ -516,8 +517,8 @@ export const prepareCeloSmartContractWriteMethodInvocation = async (testnet: boo
     return wallet.signTransaction(transaction);
 };
 
-export const sendCeloSmartContractReadMethodInvocationTransaction = async (testnet: boolean, body: CeloSmartContractMethodInvocation, provider?: string) => {
-    await validateBody(body, CeloSmartContractMethodInvocation);
+export const sendCeloSmartContractReadMethodInvocationTransaction = async (testnet: boolean, body: SmartContractReadMethodInvocation, provider?: string) => {
+    await validateBody(body, SmartContractReadMethodInvocation);
     const {
         params,
         methodName,
@@ -532,12 +533,14 @@ export const sendCeloSmartContractReadMethodInvocationTransaction = async (testn
     return {data: await contract.methods[methodName as string](...params).call()};
 };
 
-export const sendCeloSmartContractMethodInvocationTransaction = async (testnet: boolean, body: CeloSmartContractMethodInvocation, provider?: string) => {
-    if (body.methodABI.stateMutability === 'view') {
-        return sendCeloSmartContractReadMethodInvocationTransaction(testnet, body, provider);
-    }
-    return celoBroadcast(await prepareCeloSmartContractWriteMethodInvocation(testnet, body, provider), body.signatureId);
-};
+export const sendCeloSmartContractMethodInvocationTransaction =
+    async (testnet: boolean, body: CeloSmartContractMethodInvocation | SmartContractReadMethodInvocation, provider?: string) => {
+        if (body.methodABI.stateMutability === 'view') {
+            return sendCeloSmartContractReadMethodInvocationTransaction(testnet, body, provider);
+        }
+        const celoBody = body as CeloSmartContractMethodInvocation;
+        return celoBroadcast(await prepareCeloSmartContractWriteMethodInvocation(testnet, celoBody, provider), celoBody.signatureId);
+    };
 
 export const prepareCeloTransferErc20SignedTransaction = async (testnet: boolean, body: TransferCeloOrCeloErc20Token, provider?: string) => {
     await validateBody(body, TransferCeloOrCeloErc20Token);

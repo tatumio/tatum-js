@@ -18,7 +18,7 @@ export class TransferMultiTokenBatch extends PrivateKeyOrSignatureId {
     public contractAddress: string;
 
     @IsNotEmpty()
-    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE])
+    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC])
     public chain: Currency;
 
     @IsNotEmpty()

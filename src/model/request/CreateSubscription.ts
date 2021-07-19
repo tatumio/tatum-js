@@ -1,21 +1,9 @@
 import {Type} from 'class-transformer';
-import {
-    IsIn,
-    IsNotEmpty,
-    IsNotEmptyObject,
-    IsNumber,
-    IsUrl,
-    Length,
-    Matches,
-    Max,
-    MaxLength,
-    Min,
-    ValidateNested,
-} from 'class-validator';
+import {IsIn, IsNotEmpty, IsNotEmptyObject, IsNumber, IsUrl, Length, Matches, Max, MaxLength, Min, ValidateNested,} from 'class-validator';
 import {SubscriptionType} from '../response/ledger/SubscriptionType';
 
 abstract class Subscription {
-    public __type?: string
+    public __type?: string;
 }
 
 export class SubscriptionAttrAccountBalanceLimit extends Subscription {
@@ -30,7 +18,7 @@ export class SubscriptionAttrAccountBalanceLimit extends Subscription {
     public typeOfBalance: string;
 }
 
-export class SubscriptionAttrOffchainWithdrawal extends Subscription{
+export class SubscriptionAttrOffchainWithdrawal extends Subscription {
 
     @IsNotEmpty()
     @Length(1, 30)
@@ -58,6 +46,14 @@ export class SubscriptionAttrIncomingBlockchainTx extends Subscription {
     public url: string;
 }
 
+export class SubscriptionAttrUrl extends Subscription {
+
+    @IsUrl()
+    @IsNotEmpty()
+    @MaxLength(500)
+    public url: string;
+}
+
 export class SubscriptionAttrCompleteBlockchainTx extends Subscription {
 
     @IsNotEmpty()
@@ -78,15 +74,18 @@ export class CreateSubscription {
         discriminator: {
             property: '__type',
             subTypes: [
-                { value: SubscriptionAttrAccountBalanceLimit, name: 'ACCOUNT_BALANCE_LIMIT' },
-                { value: SubscriptionAttrOffchainWithdrawal, name: 'OFFCHAIN_WITHDRAWAL' },
-                { value: SubscriptionAttrTxHistoryReport, name: 'TRANSACTION_HISTORY_REPORT' },
-                { value: SubscriptionAttrIncomingBlockchainTx, name: 'ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION' },
-                { value: SubscriptionAttrCompleteBlockchainTx, name: 'COMPLETE_BLOCKCHAIN_TRANSACTION' },
-                { value: SubscriptionAttrIncomingBlockchainTx, name: 'ACCOUNT_PENDING_BLOCKCHAIN_TRANSACTION' },
+                {value: SubscriptionAttrAccountBalanceLimit, name: 'ACCOUNT_BALANCE_LIMIT'},
+                {value: SubscriptionAttrUrl, name: 'KMS_FAILED_TX'},
+                {value: SubscriptionAttrUrl, name: 'CUSTOMER_TRADE_MATCH'},
+                {value: SubscriptionAttrUrl, name: 'TRANSACTION_IN_THE_BLOCK'},
+                {value: SubscriptionAttrOffchainWithdrawal, name: 'OFFCHAIN_WITHDRAWAL'},
+                {value: SubscriptionAttrTxHistoryReport, name: 'TRANSACTION_HISTORY_REPORT'},
+                {value: SubscriptionAttrIncomingBlockchainTx, name: 'ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION'},
+                {value: SubscriptionAttrCompleteBlockchainTx, name: 'COMPLETE_BLOCKCHAIN_TRANSACTION'},
+                {value: SubscriptionAttrIncomingBlockchainTx, name: 'ACCOUNT_PENDING_BLOCKCHAIN_TRANSACTION'},
             ],
         },
     })
     public attr: SubscriptionAttrAccountBalanceLimit | SubscriptionAttrOffchainWithdrawal | SubscriptionAttrTxHistoryReport
-        | SubscriptionAttrIncomingBlockchainTx | SubscriptionAttrCompleteBlockchainTx;
+        | SubscriptionAttrIncomingBlockchainTx | SubscriptionAttrCompleteBlockchainTx | SubscriptionAttrUrl;
 }
