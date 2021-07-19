@@ -44,19 +44,18 @@ export const sendAdaTransaction = async (body: TransferBtcBasedBlockchain) => {
  * @returns transaction data to be broadcast to blockchain.
  */
 export const signAdaKMSTransaction = async (tx: TransactionKMS, privateKeys: string[]) => {
-  if (tx.chain !== Currency.ADA) {
-    throw Error('Unsupported chain.');
-  }
-  const transactionBody = TransactionBody.from_bytes(Uint8Array.from(Array.from(tx.serializedTransaction).map(Number)))
-  const txHash = hash_transaction(transactionBody);
-  const vKeyWitnesses = Vkeywitnesses.new();
-  for (const privateKey of privateKeys) {
-    makeWitness(privateKey, txHash, vKeyWitnesses)
-  }
-  const witnesses = TransactionWitnessSet.new();
-  witnesses.set_vkeys(vKeyWitnesses);
+  const transferBtcBasedBlockchain = JSON.parse(tx.serializedTransaction).txData
+  const txBuilder = await initTransactionBuilder()
+  const { to } = transferBtcBasedBlockchain
+
+  const {amount: fromAmount } = await addInputs(txBuilder, transferBtcBasedBlockchain)
+  const toAmount = addOutputs(txBuilder, to)
+  await processFeeAndRest(txBuilder, fromAmount, toAmount, transferBtcBasedBlockchain)
+
+  const txBody = txBuilder.build();
+  const witnesses = createWitnesses(txBody, transferBtcBasedBlockchain)
   return Buffer.from(
-    Transaction.new(transactionBody, witnesses).to_bytes(),
+    Transaction.new(txBody, witnesses).to_bytes(),
   ).toString('hex')
 };
 
@@ -226,7 +225,7 @@ export const signTransaction = (transactionBuilder: TransactionBuilder, transfer
   const { fromAddress, fromUTXO } = transferBtcBasedBlockchain
 
   if ((fromAddress && fromAddress[0].signatureId) || (fromUTXO && fromUTXO[0].signatureId)) {
-    return JSON.stringify({ txData: JSON.stringify(txBody.to_bytes()), privateKeysToSign });
+    return JSON.stringify({ txData: transferBtcBasedBlockchain, privateKeysToSign });
   }
 
   const witnesses = createWitnesses(txBody, transferBtcBasedBlockchain)
