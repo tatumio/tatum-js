@@ -32,7 +32,10 @@ import {
     TESTNET_DERIVATION_PATH,
     TRON_DERIVATION_PATH,
     VET_DERIVATION_PATH,
-    XDC_DERIVATION_PATH
+    XDC_DERIVATION_PATH,
+    QTUM_NETWORK_TESTNET,
+    QTUM_NETWORK_MAINNET,
+    QTUM_DERIVATION_PATH
 } from '../constants';
 import {Currency} from '../model';
 import cardano from './cardano.crypto';
@@ -195,6 +198,7 @@ const generateQtumAddress = (testnet: boolean, xpub: string, i: number) => {
     const w = fromBase58(xpub, network).derivePath(String(i));
     return payments.p2pkh({pubkey: w.publicKey, network}).address as string;
 };
+
 /**
  * Generate FLOW or FUSD public key
  * @param xpub extended public key to generate address from
@@ -274,7 +278,6 @@ const generateQtumPrivateKey = async (testnet: boolean, mnem: string, i: number)
     const hdwallet = HDKey.fromMasterSeed(await mnemonicToSeed(mnem), network.bip32);
     console.log(hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : QTUM_DERIVATION_PATH).toJSON());
     return hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : QTUM_DERIVATION_PATH).toJSON().xpub;
-
 };
 
 /**
