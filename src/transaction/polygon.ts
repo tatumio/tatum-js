@@ -45,7 +45,7 @@ import {
  */
 export const polygonGetGasPriceInWei = async () => {
     const {data} = await axios.get('https://gasstation-mainnet.matic.network');
-    return Web3.utils.toWei(`${data.fastest / 10}`, 'gwei');
+    return Web3.utils.toWei(`${Math.ceil(data.fastest / 10)}`, 'gwei');
 };
 
 const prepareGeneralTx = async (client: Web3, testnet: boolean, fromPrivateKey?: string, signatureId?: string, to?: string, amount?: string, nonce?: number,
