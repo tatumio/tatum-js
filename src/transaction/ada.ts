@@ -53,7 +53,16 @@ export const signAdaKMSTransaction = async (tx: TransactionKMS, privateKeys: str
   await processFeeAndRest(txBuilder, fromAmount, toAmount, transferBtcBasedBlockchain)
 
   const txBody = txBuilder.build();
-  const witnesses = createWitnesses(txBody, transferBtcBasedBlockchain)
+  const txHash = hash_transaction(txBody);
+
+
+  const vKeyWitnesses = Vkeywitnesses.new();
+  for (const key of privateKeys) {
+    makeWitness(key, txHash, vKeyWitnesses)
+  }
+  const witnesses = TransactionWitnessSet.new();
+  witnesses.set_vkeys(vKeyWitnesses);
+
   return Buffer.from(
     Transaction.new(txBody, witnesses).to_bytes(),
   ).toString('hex')
