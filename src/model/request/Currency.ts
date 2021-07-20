@@ -48,6 +48,8 @@ export enum Currency {
     PAX = 'PAX',
     PLTC = 'PLTC',
     XCON = 'XCON',
+    REVV = 'REVV',
+    SAND = 'SAND',
     MMY = 'MMY',
     PAXG = 'PAXG',
     HAG = 'HAG',
@@ -74,6 +76,8 @@ export const ERC20_CURRENCIES = [
     Currency.PLTC.toString(),
     Currency.XCON.toString(),
     Currency.MMY.toString(),
+    Currency.REVV.toString(),
+    Currency.SAND.toString(),
     Currency.GMC.toString(),
 ]
 

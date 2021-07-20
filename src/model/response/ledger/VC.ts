@@ -3,7 +3,7 @@
  * @export
  * @interface VC
  */
-import {TrcType} from '../../request/TrcType';
+import {TrcType} from '../../request';
 
 export interface VC {
     /**
