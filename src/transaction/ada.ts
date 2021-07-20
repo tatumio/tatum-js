@@ -44,6 +44,9 @@ export const sendAdaTransaction = async (body: TransferBtcBasedBlockchain) => {
  * @returns transaction data to be broadcast to blockchain.
  */
 export const signAdaKMSTransaction = async (tx: TransactionKMS, privateKeys: string[]) => {
+  if (tx.chain !== Currency.ADA) {
+    throw Error('Unsupported chain.');
+  }
   const transferBtcBasedBlockchain = JSON.parse(tx.serializedTransaction).txData
   const txBuilder = await initTransactionBuilder()
   const { to } = transferBtcBasedBlockchain
@@ -77,7 +80,7 @@ export const addOutputs = (transactionBuilder: TransactionBuilder, tos: To[]) =>
   return amount
 }
 
-const addInputs = async (transactionBuilder: TransactionBuilder, transferBtcBasedBlockchain: TransferBtcBasedBlockchain) => {
+export const addInputs = async (transactionBuilder: TransactionBuilder, transferBtcBasedBlockchain: TransferBtcBasedBlockchain) => {
   const { fromUTXO, fromAddress } = transferBtcBasedBlockchain
   if (fromAddress) {
     return addAddressInputs(transactionBuilder, fromAddress)
