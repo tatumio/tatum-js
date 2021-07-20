@@ -4,8 +4,14 @@ import {TransactionHash, TronAccount, TronBlock, TronTransaction, TronTrc10} fro
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/TronBroadcast" target="_blank">Tatum API documentation</a>
  */
-export const tronBroadcast = async (txData: string, signatureId?: string): Promise<TransactionHash> =>
-  post(`/v3/tron/broadcast`, { txData, signatureId });
+export const tronBroadcast = async (txData: string, signatureId?: string): Promise<TransactionHash> => {
+  const { raw_data } = JSON.parse(txData);
+  const expiration = raw_data?.expiration;
+  if (Date.now() > expiration) {
+      throw new Error('Transaction expired');
+  }
+  return post(`/v3/tron/broadcast`, { txData, signatureId });
+}
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/TronGetCurrentBlock" target="_blank">Tatum API documentation</a>
