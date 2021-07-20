@@ -1,6 +1,8 @@
 import BigNumber from 'bignumber.js';
 import {tronBroadcast} from '../blockchain';
 import {validateBody} from '../connector/tatum';
+
+import {TATUM_API_URL} from '../constants';
 import abi from '../contracts/trc20/token_abi';
 import bytecode from '../contracts/trc20/token_bytecode';
 import trc721_abi from '../contracts/trc721/trc721_abi';
@@ -21,8 +23,6 @@ import {
     TronTransferTrc721,
     TronUpdateCashbackTrc721,
 } from '../model';
-
-import { TATUM_API_URL } from '../constants'; 
 
 // tslint:disable-next-line:no-var-requires
 const TronWeb = require('tronweb');
@@ -794,7 +794,7 @@ export const signTrxKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
     return JSON.stringify(await tronWeb.trx.sign(transactionConfig, fromPrivateKey));
 };
 
-export const transferHexToBase58Address = (address: string) => prepareTronWeb(true).address.fromHex(address);
+export const transferHexToBase58Address = (address: string) => TronWeb.address.fromHex(address);
 
 const getTrc10Precision = async (tronWeb: any, tokenId: string): Promise<number> => {
     const {data} = (await tronWeb.fullNode.request(`/v1/assets/${tokenId}`));
