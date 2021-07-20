@@ -1,3 +1,4 @@
+import axios, {AxiosRequestConfig} from 'axios';
 import BigNumber from 'bignumber.js';
 import {tronBroadcast} from '../blockchain';
 import {validateBody} from '../connector/tatum';
@@ -211,7 +212,7 @@ export const prepareTronTrc10SignedTransaction = async (testnet: boolean, body: 
     const tronWeb = prepareTronWeb(testnet, provider);
     const tx = await tronWeb.transactionBuilder.sendToken(
         to,
-        new BigNumber(amount).multipliedBy(new BigNumber(10).pow(precision || await getTrc10Precision(tronWeb, tokenId))),
+        new BigNumber(amount).multipliedBy(new BigNumber(10).pow(precision || await getTrc10Precision(testnet, tokenId))),
         tokenId,
         tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(fromPrivateKey)));
     return JSON.stringify(await tronWeb.trx.sign(tx, fromPrivateKey));
@@ -400,7 +401,7 @@ export const prepareTronTrc10SignedKMSTransaction = async (testnet: boolean, bod
     const tronWeb = prepareTronWeb(testnet, provider);
     const tx = await tronWeb.transactionBuilder.sendToken(
         to,
-        new BigNumber(amount).multipliedBy(new BigNumber(10).pow(precision || await getTrc10Precision(tronWeb, tokenId))),
+        new BigNumber(amount).multipliedBy(new BigNumber(10).pow(precision || await getTrc10Precision(testnet, tokenId))),
         tokenId,
         from);
     return JSON.stringify(tx);
@@ -796,10 +797,24 @@ export const signTrxKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
 
 export const transferHexToBase58Address = (address: string) => TronWeb.address.fromHex(address);
 
-const getTrc10Precision = async (tronWeb: any, tokenId: string): Promise<number> => {
-    const {data} = (await tronWeb.fullNode.request(`/v1/assets/${tokenId}`));
-    if (!data?.length) {
-        throw new Error('No such asset.');
+const getTrc10Precision = async (testnet: boolean, tokenId: string): Promise<number> => {
+    const config = {
+        method: 'GET',
+        url: `/v1/assets/${tokenId}`,
+        baseURL: `${testnet ? 'https://api.shasta.trongrid.io' : 'https://api.trongrid.io'}`,
+        headers: {
+            'content-type': 'application/json',
+            'TRON-PRO-API-KEY': process.env.TRON_PRO_API_KEY,
+        },
+    };
+    try {
+        const {data} = (await axios.request(config as AxiosRequestConfig)).data;
+        if (!data?.length) {
+            throw new Error('No such asset.');
+        }
+        return data[0].precision;
+    } catch (e) {
+        throw e;
     }
-    return data[0].precision;
-};
+    throw new Error('Get TRC10 precision error.');
+  };
