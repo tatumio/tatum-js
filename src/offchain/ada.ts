@@ -1,7 +1,7 @@
 import {
   BigNum,
   hash_transaction,
-  Transaction, TransactionBody,
+  Transaction, TransactionBody, TransactionBuilder,
   TransactionWitnessSet,
   Vkeywitnesses,
 } from '@emurgo/cardano-serialization-lib-nodejs'
@@ -10,7 +10,7 @@ import { validateBody } from '../connector/tatum'
 import { Currency, KeyPair, TransactionKMS, TransferBtcBasedOffchain, WithdrawalResponseData } from '../model'
 import {
   adaToLovelace,
-  addAddressInputsWithoutPrivateKey, addInputs, addOutputAda, addOutputs,
+  addAddressInputsWithoutPrivateKey, addInput, addInputs, addOutputAda, addOutputs,
   initTransactionBuilder, makeWitness, processFeeAndRest,
 } from '../transaction'
 import { generateAddressFromXPub, generatePrivateKeyFromMnemonic } from '../wallet'
@@ -51,18 +51,20 @@ export const sendAdaOffchainTransaction = async (testnet: boolean, body: Transfe
 }
 
 const prepareAdaSignedOffchainTransaction = async (testnet: boolean, data: WithdrawalResponseData[], amount: string, address: string, mnemonic?: string, keyPair?: KeyPair[],
-                                                 changeAddress?: string, xpub?: string, multipleAmounts?: string[], signatureId?: string) => {
+                                                   changeAddress?: string, xpub?: string, multipleAmounts?: string[], signatureId?: string) => {
   const txBuilder = await initTransactionBuilder()
-  const fromAddress = data.filter(input => input.address).map(input => ({address: input.address.address }))
+  const fromAddress = data.filter(input => input.address).map(input => ({ address: input.address.address }))
   await addAddressInputsWithoutPrivateKey(txBuilder, fromAddress)
 
+  addOffchainInputs(txBuilder, data);
   if (multipleAmounts?.length) {
     for (const [i, multipleAmount] of multipleAmounts.entries()) {
-      addOutputAda(txBuilder, address.split(',')[i], multipleAmount)
+      addOutputAda(txBuilder, address.split(',')[i], multipleAmount);
     }
   } else {
-    addOutputAda(txBuilder, address, amount)
+    addOutputAda(txBuilder, address, amount);
   }
+
   const lastVin = data.find(d => d.vIn === '-1') as WithdrawalResponseData;
   if (new BigNumber(lastVin.amount).isGreaterThan(0)) {
     if (xpub) {
@@ -95,7 +97,7 @@ const prepareAdaSignedOffchainTransaction = async (testnet: boolean, data: Withd
       const privateKey = await generatePrivateKeyFromMnemonic(Currency.ADA, testnet, mnemonic, derivationKey)
       makeWitness(privateKey, txHash, vKeyWitnesses)
     } else if (keyPair) {
-      const {privateKey} = keyPair.find(k => k.address === input.address.address) as KeyPair;
+      const { privateKey } = keyPair.find(k => k.address === input.address.address) as KeyPair;
       makeWitness(privateKey, txHash, vKeyWitnesses)
     } else {
       throw new Error('Impossible to prepare transaction. Either mnemonic or keyPair and attr must be present.');
@@ -110,6 +112,21 @@ const prepareAdaSignedOffchainTransaction = async (testnet: boolean, data: Withd
   ).toString('hex')
 }
 
+const addOffchainInputs = (transactionBuilder: TransactionBuilder, inputs: WithdrawalResponseData[]) => {
+  let amount = new BigNumber(0);
+  for (const input of inputs) {
+    if (input.vIn !== '-1' && input.amount && input.vInIndex !== undefined && input.address?.address) {
+      addInput(transactionBuilder, {
+        value: adaToLovelace(input.amount),
+        index: input.vInIndex,
+        txHash: input.vIn,
+      }, input.address.address);
+      amount = amount.plus(input.amount);
+    }
+  }
+  return amount;
+}
+
 /**
  * Sign Ada pending transaction from Tatum KMS
  * @param tx pending transaction from KMS
@@ -118,7 +135,7 @@ const prepareAdaSignedOffchainTransaction = async (testnet: boolean, data: Withd
  * @returns transaction data to be broadcast to blockchain.
  */
 export const signAdaOffchainKMSTransaction = async (tx: TransactionKMS, mnemonic: string, testnet: boolean) => {
-  if (tx.chain !== Currency.ADA  || !tx.withdrawalResponses) {
+  if (tx.chain !== Currency.ADA || !tx.withdrawalResponses) {
     throw Error('Unsupported chain.');
   }
   const txData = JSON.parse(tx.serializedTransaction).txData
