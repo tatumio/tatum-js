@@ -10,8 +10,8 @@ import { validateBody } from '../connector/tatum'
 import { Currency, KeyPair, TransactionKMS, TransferBtcBasedOffchain, WithdrawalResponseData } from '../model'
 import {
   adaToLovelace,
-  addAddressInputsWithoutPrivateKey, addOutputAda,
-  initTransactionBuilder, makeWitness,
+  addAddressInputsWithoutPrivateKey, addInputs, addOutputAda, addOutputs,
+  initTransactionBuilder, makeWitness, processFeeAndRest,
 } from '../transaction'
 import { generateAddressFromXPub, generatePrivateKeyFromMnemonic } from '../wallet'
 import { offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal } from './common'
@@ -80,7 +80,7 @@ const prepareAdaSignedOffchainTransaction = async (testnet: boolean, data: Withd
 
   const txBody = txBuilder.build();
   if (signatureId) {
-    return JSON.stringify({ txData: JSON.stringify(txBody.to_bytes()), privateKeysToSign: keyPair?.map(pair => pair.privateKey) });
+    return JSON.stringify({ txData: txBody.to_bytes().toString() });
   }
   const vKeyWitnesses = Vkeywitnesses.new();
   const txHash = hash_transaction(txBody);
@@ -118,14 +118,17 @@ const prepareAdaSignedOffchainTransaction = async (testnet: boolean, data: Withd
  * @returns transaction data to be broadcast to blockchain.
  */
 export const signAdaOffchainKMSTransaction = async (tx: TransactionKMS, mnemonic: string, testnet: boolean) => {
-  if (tx.chain !== Currency.ADA || !tx.withdrawalResponses) {
+  if (tx.chain !== Currency.ADA  || !tx.withdrawalResponses) {
     throw Error('Unsupported chain.');
   }
-
-  const transactionBody = TransactionBody.from_bytes(Uint8Array.from(Array.from(tx.serializedTransaction).map(Number)))
+  const txData = JSON.parse(tx.serializedTransaction).txData
+  const transactionBody = TransactionBody.from_bytes(Uint8Array.from(txData.split(',')))
   const txHash = hash_transaction(transactionBody);
   const vKeyWitnesses = Vkeywitnesses.new();
   for (const response of tx.withdrawalResponses) {
+    if (response.vIn === '-1') {
+      continue;
+    }
     const privateKey = await generatePrivateKeyFromMnemonic(Currency.ADA, testnet, mnemonic, response.address?.derivationKey || 0)
     makeWitness(privateKey, txHash, vKeyWitnesses)
   }
@@ -134,4 +137,5 @@ export const signAdaOffchainKMSTransaction = async (tx: TransactionKMS, mnemonic
   return Buffer.from(
     Transaction.new(transactionBody, witnesses).to_bytes(),
   ).toString('hex')
+
 };
