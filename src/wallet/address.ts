@@ -615,6 +615,9 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
         case Currency.ETH:
         case Currency.BSC:
         case Currency.MATIC:
+        case Currency.USDT_MATIC:
+        case Currency.USDC_MATIC:
+        case Currency.LATOKEN:
         case Currency.BETH:
         case Currency.BUSD:
         case Currency.CAKE:
@@ -669,6 +672,10 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
             return generateTronPrivateKey(mnemonic, i);
         case Currency.QTUM:
             return generateQtumPrivateKey(testnet, mnemonic, i);
+        case Currency.MATIC:
+        case Currency.USDT_MATIC:
+        case Currency.USDC_MATIC:
+            return generatePolygonPrivateKey(testnet, mnemonic, i);
         case Currency.FLOW:
         case Currency.FUSD:
             return generateFlowPrivateKey(mnemonic, i);
@@ -683,6 +690,7 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
         case Currency.UNI:
         case Currency.FREE:
         case Currency.MKR:
+        case Currency.LATOKEN:
         case Currency.USDC:
         case Currency.BAT:
         case Currency.TUSD:
@@ -713,8 +721,6 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
             return generateEthPrivateKey(testnet, mnemonic, i);
         case Currency.ONE:
             return generateOnePrivateKey(testnet, mnemonic, i);
-        case Currency.MATIC:
-            return generatePolygonPrivateKey(testnet, mnemonic, i);
         case Currency.XDC:
             return generateXdcPrivateKey(testnet, mnemonic, i);
         case Currency.VET:

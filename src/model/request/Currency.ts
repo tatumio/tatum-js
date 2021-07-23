@@ -57,11 +57,14 @@ export enum Currency {
     LYRA = 'LYRA',
     ADA = 'ADA',
     XDC = 'XDC',
+    LATOKEN = 'LATOKEN',
+    USDT_MATIC = 'USDT_MATIC',
     QTUM = 'QTUM',
 }
 
 export const ERC20_CURRENCIES = [
     Currency.USDT.toString(),
+    Currency.LATOKEN.toString(),
     Currency.LEO.toString(),
     Currency.LINK.toString(),
     Currency.UNI.toString(),
@@ -100,6 +103,7 @@ export const BEP20_CURRENCIES = [
 
 export const MATIC20_CURRENCIES = [
     Currency.USDC_MATIC.toString(),
+    Currency.USDT_MATIC.toString(),
 ];
 
 export const ETH_BASED_CURRENCIES = [
