@@ -5,14 +5,7 @@ import {validateBody} from '../connector/tatum';
 import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS} from '../constants';
 import tokenAbi from '../contracts/erc20/token_abi';
 import {getAccountById, getVirtualCurrencyByName} from '../ledger';
-import {
-    Currency,
-    ETH_BASED_CURRENCIES,
-    PrepareEthErc20SignedOffchainTransaction,
-    PrepareEthSignedOffchainTransaction,
-    TransactionKMS,
-    TransferEthOffchain,
-} from '../model';
+import {Currency, ETH_BASED_CURRENCIES, PrepareEthErc20SignedOffchainTransaction, PrepareEthSignedOffchainTransaction, TransactionKMS, TransferEthOffchain,} from '../model';
 import {ethGetGasPriceInWei, getClient} from '../transaction';
 import {generatePrivateKeyFromMnemonic} from '../wallet';
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
@@ -150,6 +143,9 @@ export const signEthOffchainKMSTransaction = async (tx: TransactionKMS, fromPriv
     transactionConfig.gas = await client.eth.estimateGas(transactionConfig);
     if (!transactionConfig.nonce) {
         transactionConfig.nonce = await ethGetTransactionsCount(client.eth.defaultAccount as string);
+    }
+    if (!transactionConfig.gasPrice || transactionConfig.gasPrice === '0') {
+        transactionConfig.gasPrice = await ethGetGasPriceInWei();
     }
     return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey)).rawTransaction as string;
 };
