@@ -106,6 +106,9 @@ export const signPolygonKMSTransaction = async (tx: TransactionKMS, fromPrivateK
     if (!transactionConfig.gas) {
         transactionConfig.gas = await client.eth.estimateGas({to: transactionConfig.to, data: transactionConfig.data});
     }
+    if (!transactionConfig.gasPrice || transactionConfig.gasPrice === '0') {
+        transactionConfig.gasPrice = await polygonGetGasPriceInWei();
+    }
     return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey)).rawTransaction as string;
 };
 

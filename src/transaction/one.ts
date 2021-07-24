@@ -34,9 +34,9 @@ import {
     OneTransferMultiTokenBatch,
     OneUpdateCashback721,
     SmartContractMethodInvocation,
+    SmartContractReadMethodInvocation,
     TransactionKMS,
 } from '../model';
-import {SmartContractReadMethodInvocation} from '../model/request/SmartContractReadMethodInvocation';
 
 const prepareGeneralTx = async (client: Web3, testnet: boolean, fromPrivateKey?: string, signatureId?: string, to?: string, amount?: string, nonce?: number,
                                 data?: string, gasLimit?: string, gasPrice?: string) => {
@@ -96,6 +96,9 @@ export const signOneKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
     const transactionConfig = JSON.parse(tx.serializedTransaction);
     if (!transactionConfig.gas) {
         transactionConfig.gas = await client.eth.estimateGas({to: transactionConfig.to, data: transactionConfig.data});
+    }
+    if (!transactionConfig.gasPrice || transactionConfig.gasPrice === '0') {
+        transactionConfig.gasPrice = await client.eth.getGasPrice();
     }
     return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey)).rawTransaction as string;
 };

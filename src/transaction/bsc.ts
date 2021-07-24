@@ -93,6 +93,9 @@ export const signBscKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
     if (!transactionConfig.nonce) {
         transactionConfig.nonce = await bscGetTransactionsCount(client.eth.defaultAccount as string);
     }
+    if (!transactionConfig.gasPrice || transactionConfig.gasPrice === '0') {
+        transactionConfig.gasPrice = await bscGetGasPriceInWei();
+    }
     return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey as string)).rawTransaction as string;
 };
 
