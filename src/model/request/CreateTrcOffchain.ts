@@ -46,7 +46,7 @@ export class CreateTrcOffchain {
     @Min(0)
     public decimals: number;
 
-    @Length(3, 5)
+    @Length(3, 20)
     @IsIn([...Object.keys(Currency), ...Object.keys(Fiat)])
     @IsNotEmpty()
     public basePair: Currency | Fiat;

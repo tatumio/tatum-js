@@ -8,6 +8,7 @@ import {validateBody} from '../connector/tatum';
 import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
 import erc1155TokenABI from '../contracts/erc1155/erc1155_abi';
 import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode';
+import erc20_abi from '../contracts/erc20/token_abi';
 import erc20TokenABI from '../contracts/erc20/token_abi';
 import erc20TokenBytecode from '../contracts/erc20/token_bytecode';
 import erc721TokenABI from '../contracts/erc721/erc721_abi';
@@ -26,6 +27,7 @@ import {
     EthMintMultipleErc721,
     EthTransferErc721,
     Fee,
+    GenerateCustodialAddress,
     MintErc20,
     MintMultiToken,
     MintMultiTokenBatch,
@@ -38,6 +40,7 @@ import {
     TransferMultiTokenBatch,
     UpdateCashbackErc721,
 } from '../model';
+import {obtainCustodialAddressType} from '../wallet/custodial';
 
 /**
  * Estimate Gas price for the transaction.
@@ -52,8 +55,8 @@ export const ethGetGasPriceInWei = async () => {
             .then(response => `${response.data.fastest / 10}`),
         axios.get('https://www.etherchain.org/api/gasPriceOracle').then(response => `${response.data.fastest}`),
     ]);
-    const first = toWei(data[0], 'gwei');
-    const second = toWei(data[1], 'gwei');
+    const first = data[0];
+    const second = data[1];
     let gasPrice;
     if (new BigNumber(first).isGreaterThan(second)) {
         gasPrice = first.toString();
@@ -98,10 +101,35 @@ export const signEthKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
     if (!transactionConfig.nonce) {
         transactionConfig.nonce = await ethGetTransactionsCount(client.eth.defaultAccount as string);
     }
-    if (!transactionConfig.gasPrice || transactionConfig.gasPrice === '0') {
+    if (!transactionConfig.gasPrice || transactionConfig.gasPrice === '0' ||transactionConfig.gasPrice === 0 || transactionConfig.gasPrice === '0x0') {
         transactionConfig.gasPrice = await ethGetGasPriceInWei();
     }
     return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey as string)).rawTransaction as string;
+};
+
+/**
+ * Sign Eth generate custodial wallet address transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareEthGenerateCustodialWalletSignedTransaction = async (body: GenerateCustodialAddress, provider?: string) => {
+    await validateBody(body, GenerateCustodialAddress);
+
+    const client = getClient(provider, body.fromPrivateKey);
+
+    const {abi, code} = obtainCustodialAddressType(body);
+    // @ts-ignore
+    const contract = new client.eth.Contract(abi);
+    const deploy = contract.deploy({
+        data: code,
+    });
+    const tx: TransactionConfig = {
+        from: 0,
+        data: deploy.encodeABI(),
+        nonce: body.nonce,
+    };
+    return await prepareEthSignedTransactionAbstraction(client, tx, body.signatureId, body.fromPrivateKey, body.fee);
 };
 
 /**
@@ -178,9 +206,9 @@ export const prepareEthMintErc20SignedTransaction = async (body: MintErc20, prov
         nonce,
     };
 
-    return await prepareErcSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey);
+    return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey);
 };
-const prepareErcSignedTransactionAbstraction = async (
+const prepareEthSignedTransactionAbstraction = async (
     client: Web3, transaction: TransactionConfig, signatureId: string | undefined, fromPrivateKey: string | undefined, fee?: Fee | undefined
 ) => {
     const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei();
@@ -222,7 +250,7 @@ export const prepareEthBurnErc20SignedTransaction = async (body: BurnErc20, prov
         data: contract.methods.burn(`0x${new BigNumber(amount).multipliedBy(digits).toString(16)}`).encodeABI(),
         nonce,
     };
-    return await prepareErcSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey);
+    return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey);
 };
 
 /**
@@ -267,7 +295,7 @@ export const prepareEthOrErc20SignedTransaction = async (body: TransferEthErc20,
         };
     }
 
-    return await prepareErcSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
+    return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 
 /**
@@ -302,7 +330,7 @@ export const prepareCustomErc20SignedTransaction = async (body: TransferCustomEr
         nonce,
     };
 
-    return await prepareErcSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
+    return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 
 /**
@@ -345,7 +373,7 @@ export const prepareDeployErc20SignedTransaction = async (body: DeployErc20, pro
         data: deploy.encodeABI(),
         nonce,
     };
-    return await prepareErcSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
+    return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 
 /**
@@ -375,7 +403,7 @@ export const prepareSmartContractWriteMethodInvocation = async (body: SmartContr
         data: contract.methods[methodName as string](...params).encodeABI(),
         nonce,
     };
-    return await prepareErcSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
+    return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 
 /**
@@ -407,7 +435,7 @@ export const prepareEthMintErc721SignedTransaction = async (body: EthMintErc721,
         data: contract.methods.mintWithTokenURI(to.trim(), tokenId, url).encodeABI(),
         nonce,
     };
-    return await prepareErcSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
+    return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 /**
  * Sign Ethereum mint multiple ERC 721 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -443,7 +471,7 @@ export const prepareEthMintCashbackErc721SignedTransaction = async (body: EthMin
         data: contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb).encodeABI(),
         nonce,
     };
-    return await prepareErcSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
+    return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 /**
  * Sign Ethereum mint multiple ERC 721 Cashback transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -478,7 +506,7 @@ export const prepareEthMintMultipleCashbackErc721SignedTransaction = async (body
         data: contract.methods.mintMultipleCashback(to.map(t => t.trim()), tokenId, url, authorAddresses, cb).encodeABI(),
         nonce,
     };
-    return await prepareErcSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
+    return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 /**
  * Sign Ethereum mint multiple ERC 721 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -509,7 +537,7 @@ export const prepareEthMintMultipleErc721SignedTransaction = async (body: EthMin
         data: contract.methods.mintMultiple(to.map(t => t.trim()), tokenId, url).encodeABI(),
         nonce,
     };
-    return await prepareErcSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
+    return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 
 /**
@@ -539,7 +567,7 @@ export const prepareEthBurnErc721SignedTransaction = async (body: EthBurnErc721,
         data: contract.methods.burn(tokenId).encodeABI(),
         nonce,
     };
-    return await prepareErcSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
+    return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 
 /**
@@ -570,7 +598,7 @@ export const prepareEthUpdateCashbackForAuthorErc721SignedTransaction = async (b
         data: contract.methods.updateCashbackForAuthor(tokenId, `0x${new BigNumber(toWei(cashbackValue, 'ether')).toString(16)}`).encodeABI(),
         nonce,
     };
-    return await prepareErcSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
+    return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 
 /**
@@ -603,7 +631,7 @@ export const prepareEthTransferErc721SignedTransaction = async (body: EthTransfe
         nonce,
         value: value ? `0x${new BigNumber(value).multipliedBy(1e18).toString(16)}` : undefined,
     };
-    return await prepareErcSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
+    return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 /**
  * Sign Ethereum mint ERC 1155 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -637,7 +665,7 @@ export const prepareEthMintMultiTokenBatchSignedTransaction = async (body: MintM
         nonce,
     };
 
-    return await prepareErcSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
+    return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 /**
  * Sign Ethereum mint ERC 1155 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -669,7 +697,7 @@ export const prepareEthMintMultiTokenSignedTransaction = async (body: MintMultiT
         data: contract.methods.mint(to.trim(), tokenId, `0x${new BigNumber(amount).toString(16)}`, data ? data : '0x0').encodeABI(),
         nonce,
     };
-    return await prepareErcSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
+    return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 
 /**
@@ -701,7 +729,7 @@ export const prepareEthBurnBatchMultiTokenSignedTransaction = async (body: EthBu
         data: contract.methods.burnBatch(account, tokenId, amounts).encodeABI(),
         nonce,
     };
-    return await prepareErcSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
+    return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 /**
  * Sign Ethereum burn ERC 1155 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -732,7 +760,7 @@ export const prepareEthBurnMultiTokenSignedTransaction = async (body: EthBurnMul
         data: contract.methods.burn(account, tokenId, amount).encodeABI(),
         nonce,
     };
-    return await prepareErcSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
+    return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 
 /**
@@ -768,7 +796,7 @@ export const prepareEthBatchTransferMultiTokenSignedTransaction = async (body: T
         nonce
     };
 
-    return await prepareErcSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
+    return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 /**
  * Sign Ethereum transfer ERC 1155 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -800,7 +828,7 @@ export const prepareEthTransferMultiTokenSignedTransaction = async (body: Transf
         data: contract.methods.safeTransfer(to.trim(), tokenId, `0x${new BigNumber(amount).toString(16)}`, data ? data : '0x0').encodeABI(),
         nonce
     };
-    return await prepareErcSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
+    return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 /**
  * Sign Ethereum deploy ERC 1155 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -835,7 +863,7 @@ export const prepareEthDeployMultiTokenSignedTransaction = async (body: EthDeplo
         data: deploy.encodeABI(),
         nonce,
     };
-    return await prepareErcSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
+    return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
 /**
  * Sign Ethereum deploy ERC 721 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -872,8 +900,18 @@ export const prepareEthDeployErc721SignedTransaction = async (body: EthDeployErc
         nonce,
     };
 
-    return await prepareErcSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
+    return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 };
+
+export const getEthErc20ContractDecimals = async (testnet: boolean, contractAddress: string, provider?: string) => {
+    if (!contractAddress) {
+        throw new Error('Contract address not set.');
+    }
+    const client = await getClient(provider);
+    // @ts-ignore
+    const contract = new client.eth.Contract(erc20_abi, contractAddress.trim());
+    return await contract.methods.decimals().call();
+}
 
 /**
  * Send Ethereum invoke smart contract transaction to the blockchain.
@@ -1067,3 +1105,6 @@ export const sendEthBurnMultiTokenTransaction = async (body: EthBurnMultiToken, 
 
 export const sendEthBurnBatchMultiTokenTransaction = async (body: EthBurnMultiTokenBatch, provider?: string) =>
     ethBroadcast(await prepareEthBurnBatchMultiTokenSignedTransaction(body, provider), body.signatureId);
+
+export const sendEthGenerateCustodialWalletSignedTransaction = async (body: GenerateCustodialAddress, provider?: string) =>
+    ethBroadcast(await prepareEthGenerateCustodialWalletSignedTransaction(body, provider), body.signatureId);

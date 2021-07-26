@@ -36,7 +36,7 @@ export class CreateErc20Offchain {
     @Matches(/^[+]?((\d+(\.\d*)?)|(\.\d+))$/)
     public supply: string;
 
-    @Length(3, 5)
+    @Length(3, 20)
     @IsIn([...Object.keys(Currency), ...Object.keys(Fiat)])
     @IsNotEmpty()
     public basePair: Currency | Fiat;

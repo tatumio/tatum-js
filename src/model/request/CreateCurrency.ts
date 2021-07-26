@@ -26,7 +26,7 @@ export class CreateCurrency {
 
     @IsNotEmpty()
     @IsIn([...Object.keys(Currency), ...Object.keys(Fiat)])
-    @Length(3, 5)
+    @Length(3, 20)
     public basePair: Currency | Fiat;
 
     @Min(0)

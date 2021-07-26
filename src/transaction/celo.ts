@@ -31,11 +31,13 @@ import {
     CreateRecord,
     Currency,
     DeployCeloErc20,
+    GenerateCustodialAddress,
     MintCeloErc20,
+    SmartContractReadMethodInvocation,
     TransactionKMS,
     TransferCeloOrCeloErc20Token
 } from '../model';
-import {SmartContractReadMethodInvocation} from '../model/request/SmartContractReadMethodInvocation';
+import {obtainCustodialAddressType} from '../wallet/custodial';
 
 const obtainWalletInformation = async (wallet: CeloWallet, feeCurrencyContractAddress?: string) => {
     const [txCount, gasPrice, from] = await Promise.all([
@@ -62,6 +64,50 @@ const getFeeCurrency = (feeCurrency: Currency, testnet: boolean) => {
     }
 };
 
+/**
+ * Sign CELO generate custodial wallet address transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareCeloGenerateCustodialWalletSignedTransaction = async (testnet: boolean, body: GenerateCustodialAddress, provider?: string) => {
+    await validateBody(body, GenerateCustodialAddress);
+
+    const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
+    const network = await p.ready;
+    const feeCurrency = body.feeCurrency || Currency.CELO;
+    const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet);
+    const {abi, code} = obtainCustodialAddressType(body);
+    // @ts-ignore
+    const contract = new (new Web3()).eth.Contract(abi);
+    const deploy = contract.deploy({
+        data: code,
+    });
+
+    if (body.signatureId) {
+        return JSON.stringify({
+            chainId: network.chainId,
+            feeCurrency: feeCurrencyContractAddress,
+            nonce: body.nonce,
+            gasLimit: '0',
+            data: deploy.encodeABI(),
+        });
+    }
+    const wallet = new CeloWallet(body.fromPrivateKey as string, p);
+    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress);
+    const transaction = {
+        chainId: network.chainId,
+        feeCurrency: feeCurrencyContractAddress,
+        nonce: body.nonce || txCount,
+        gasLimit: '0',
+        gasPrice,
+        data: deploy.encodeABI(),
+        from,
+    };
+    transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();
+    return wallet.signTransaction(transaction);
+};
 /**
  * Sign Celo pending transaction from Tatum KMS
  * @param tx pending transaction from KMS
@@ -541,6 +587,16 @@ export const sendCeloSmartContractMethodInvocationTransaction =
         const celoBody = body as CeloSmartContractMethodInvocation;
         return celoBroadcast(await prepareCeloSmartContractWriteMethodInvocation(testnet, celoBody, provider), celoBody.signatureId);
     };
+
+export const getCeloErc20ContractDecimals = async (testnet: boolean, contractAddress: string, provider?: string) => {
+    if (!contractAddress) {
+        throw new Error('Contract address not set.');
+    }
+    const url = provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`;
+    // @ts-ignore
+    const contract = new (new Web3(url)).eth.Contract(erc20_abi, contractAddress.trim());
+    return await contract.methods.decimals().call();
+}
 
 export const prepareCeloTransferErc20SignedTransaction = async (testnet: boolean, body: TransferCeloOrCeloErc20Token, provider?: string) => {
     await validateBody(body, TransferCeloOrCeloErc20Token);
@@ -1253,3 +1309,5 @@ export const sendCeloBurnMultiTokenTransaction = async (testnet: boolean, body: 
     celoBroadcast(await prepareCeloBurnMultiTokenSignedTransaction(testnet, body, provider));
 export const sendCeloBurnMultiTokenBatchTransaction = async (testnet: boolean, body: CeloBurnMultiTokenBatch, provider?: string) =>
     celoBroadcast(await prepareCeloBurnMultiTokenBatchSignedTransaction(testnet, body, provider));
+export const sendCeloGenerateCustodialWalletSignedTransaction = async (testnet: boolean, body: GenerateCustodialAddress, provider?: string) =>
+    celoBroadcast(await prepareCeloGenerateCustodialWalletSignedTransaction(testnet, body, provider));
