@@ -203,7 +203,17 @@ describe('Address tests', () => {
 
     it('should generate private key 1 for ONE mainnet', async () => {
         const privateKey = await generatePrivateKeyFromMnemonic(Currency.ONE, false, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1);
-        expect(privateKey).toBe('0xbc93ab7d2dbad88e64879569a9e3ceaa12d119c70d6dda4d1fc6e73765794a8d');
+        expect(privateKey).toBe('0xe271a071aaa5e8abfcb02ce12758ae90eeb324dd6b9267778ef7990f2266429e');
+    });
+
+    it('should generate private key 1 for MATIC testnet', async () => {
+        const privateKey = await generatePrivateKeyFromMnemonic(Currency.MATIC, true, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1);
+        expect(privateKey).toBe('0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb');
+    });
+
+    it('should generate private key 1 for MATIC mainnet', async () => {
+        const privateKey = await generatePrivateKeyFromMnemonic(Currency.MATIC, false, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1);
+        expect(privateKey).toBe('0x4bc3706c9fa5345f61d8186b817f3ba2c44581ce40fae86bec84dd9b079bc40a');
     });
 
     it('should generate private key 1 for VET mainnet', async () => {

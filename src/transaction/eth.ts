@@ -47,12 +47,23 @@ export const ethGetGasPriceInWei = async () => {
     if (process.env.TATUM_GAS_STATION_API_KEY) {
         gasStationUrl = `${gasStationUrl}?apiKey=${process.env.TATUM_GAS_STATION_API_KEY}`;
     }
-    const data = await Promise.race([
+    const data = await Promise.all([
         axios.get(gasStationUrl.toString())
             .then(response => `${response.data.fastest / 10}`),
         axios.get('https://www.etherchain.org/api/gasPriceOracle').then(response => `${response.data.fastest}`),
     ]);
-    return Web3.utils.toWei(data, 'gwei');
+    const first = toWei(data[0], 'gwei');
+    const second = toWei(data[1], 'gwei');
+    let gasPrice;
+    if (new BigNumber(first).isGreaterThan(second)) {
+        gasPrice = first.toString();
+    } else {
+        gasPrice = second.toString();
+    }
+    if (gasPrice === '0') {
+        gasPrice = '20';
+    }
+    return Web3.utils.toWei(gasPrice, 'gwei');
 };
 
 /**
@@ -86,6 +97,9 @@ export const signEthKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
     transactionConfig.gas = await client.eth.estimateGas(transactionConfig);
     if (!transactionConfig.nonce) {
         transactionConfig.nonce = await ethGetTransactionsCount(client.eth.defaultAccount as string);
+    }
+    if (!transactionConfig.gasPrice || transactionConfig.gasPrice === '0') {
+        transactionConfig.gasPrice = await ethGetGasPriceInWei();
     }
     return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey as string)).rawTransaction as string;
 };

@@ -47,16 +47,27 @@ export const signAdaKMSTransaction = async (tx: TransactionKMS, privateKeys: str
   if (tx.chain !== Currency.ADA) {
     throw Error('Unsupported chain.');
   }
-  const transactionBody = TransactionBody.from_bytes(Uint8Array.from(Array.from(tx.serializedTransaction).map(Number)))
-  const txHash = hash_transaction(transactionBody);
+  const transferBtcBasedBlockchain = JSON.parse(tx.serializedTransaction).txData
+  const txBuilder = await initTransactionBuilder()
+  const { to } = transferBtcBasedBlockchain
+
+  const {amount: fromAmount } = await addInputs(txBuilder, transferBtcBasedBlockchain)
+  const toAmount = addOutputs(txBuilder, to)
+  await processFeeAndRest(txBuilder, fromAmount, toAmount, transferBtcBasedBlockchain)
+
+  const txBody = txBuilder.build();
+  const txHash = hash_transaction(txBody);
+
+
   const vKeyWitnesses = Vkeywitnesses.new();
-  for (const privateKey of privateKeys) {
-    makeWitness(privateKey, txHash, vKeyWitnesses)
+  for (const key of privateKeys) {
+    makeWitness(key, txHash, vKeyWitnesses)
   }
   const witnesses = TransactionWitnessSet.new();
   witnesses.set_vkeys(vKeyWitnesses);
+
   return Buffer.from(
-    Transaction.new(transactionBody, witnesses).to_bytes(),
+    Transaction.new(txBody, witnesses).to_bytes(),
   ).toString('hex')
 };
 
@@ -69,7 +80,7 @@ export const addOutputs = (transactionBuilder: TransactionBuilder, tos: To[]) =>
   return amount
 }
 
-const addInputs = async (transactionBuilder: TransactionBuilder, transferBtcBasedBlockchain: TransferBtcBasedBlockchain) => {
+export const addInputs = async (transactionBuilder: TransactionBuilder, transferBtcBasedBlockchain: TransferBtcBasedBlockchain) => {
   const { fromUTXO, fromAddress } = transferBtcBasedBlockchain
   if (fromAddress) {
     return addAddressInputs(transactionBuilder, fromAddress)
@@ -226,7 +237,7 @@ export const signTransaction = (transactionBuilder: TransactionBuilder, transfer
   const { fromAddress, fromUTXO } = transferBtcBasedBlockchain
 
   if ((fromAddress && fromAddress[0].signatureId) || (fromUTXO && fromUTXO[0].signatureId)) {
-    return JSON.stringify({ txData: JSON.stringify(txBody.to_bytes()), privateKeysToSign });
+    return JSON.stringify({ txData: transferBtcBasedBlockchain, privateKeysToSign });
   }
 
   const witnesses = createWitnesses(txBody, transferBtcBasedBlockchain)

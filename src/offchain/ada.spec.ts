@@ -1,16 +1,21 @@
-import { sendAdaOffchainTransaction } from './ada'
+import { Currency } from '../model'
+import { sendAdaOffchainTransaction, signAdaOffchainKMSTransaction } from './ada'
 
 describe('ADA offchain', () => {
   it('should transaction with mnemonic and xpub', async () => {
+    try {
     const tx = await sendAdaOffchainTransaction(true, {
-      senderAccountId: '60ec1b6879cba0127ceb73ab',
-      address: 'addr_test1qqr585tvlc7ylnqvz8pyqwauzrdu0mxag3m7q56grgmgu7sxu2hyfhlkwuxupa9d5085eunq2qywy7hvmvej456flknswgndm3',
+      senderAccountId: '60f990befd2f551040f512c0',
+      address: 'addr_test1qp33h99feurpn7n8cezqthh75723q5kjwqmthaf073y7edlg9xj6jj5qs9pe3nxq8rx59aa5qlmjrgsm0jt22hh3ll5q7n3j5s',
       amount: '1',
-      xpub: 'd817412f8a32f7a6eaec247dd624727f0cff6cfa72dcdeb58f8c27a0241a8297040513c3d1fcec4ecebae7a70471c52afd225e61ba926cc75ffc1c3aab649d9fb8927d7328a01d4d969ff419f55d372c2653dab0da0d91aae8be2f33acb569bf34ee70a6e93c4225488f40c2073268509f2336a6248c40335b3b66e255099244',
-      mnemonic: 'chimney farm monster tail zero aerobic depend skin tiger dream camp ask crowd antique jar cousin general neutral license evil cram patch source sister',
+      xpub: '59bed551a66a043510e8f8cd7a0a34c630f82aeaa4198d212625b7c7438c82259dc3766148401d5a697cb7c8311b366258be6e74700419c3f385932d22fb49bf90ee448d740e6529d1936e33a1e806b1c745eba19d24e299757c9baed1caf24a5e25b1cd8da401a3ff37d4c6b8e4e984ffde03eb8cadd9bf3740152999604b04',
+      mnemonic: 'head surround recipe nuclear giraffe tool benefit steel plug obey damp scale suffer fortune lift tree affair oyster engine ceiling physical emotion drink bubble',
     })
     expect(tx).not.toBeNull()
     expect(tx).toHaveProperty('txId');
+    } catch (e) {
+      console.log(e)
+    }
   })
 
   it('should with keypair', async () => {
@@ -28,4 +33,6 @@ describe('ADA offchain', () => {
     expect(tx).not.toBeNull()
     expect(tx).toHaveProperty('txId');
   })
+
+
 });

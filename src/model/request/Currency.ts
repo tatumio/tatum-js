@@ -27,6 +27,7 @@ export enum Currency {
     BLTC = 'BLTC',
     BBCH = 'BBCH',
     MATIC = 'MATIC',
+    USDC_MATIC = 'USDC_MATIC',
     USDT = 'USDT',
     GMC = 'GMC',
     GMC_BSC = 'GMC_BSC',
@@ -41,23 +42,29 @@ export enum Currency {
     FREE = 'FREE',
     MKR = 'MKR',
     USDC = 'USDC',
+    MATIC_ETH = 'MATIC_ETH',
     BAT = 'BAT',
     TUSD = 'TUSD',
     BUSD = 'BUSD',
     PAX = 'PAX',
     PLTC = 'PLTC',
     XCON = 'XCON',
+    REVV = 'REVV',
+    SAND = 'SAND',
     MMY = 'MMY',
     PAXG = 'PAXG',
     HAG = 'HAG',
     LYRA = 'LYRA',
     ADA = 'ADA',
     XDC = 'XDC',
+    LATOKEN = 'LATOKEN',
+    USDT_MATIC = 'USDT_MATIC',
     QTUM = 'QTUM',
 }
 
 export const ERC20_CURRENCIES = [
     Currency.USDT.toString(),
+    Currency.LATOKEN.toString(),
     Currency.LEO.toString(),
     Currency.LINK.toString(),
     Currency.UNI.toString(),
@@ -65,6 +72,7 @@ export const ERC20_CURRENCIES = [
     Currency.MKR.toString(),
     Currency.BUSD.toString(),
     Currency.USDC.toString(),
+    Currency.MATIC_ETH.toString(),
     Currency.BAT.toString(),
     Currency.WBTC.toString(),
     Currency.TUSD.toString(),
@@ -73,6 +81,8 @@ export const ERC20_CURRENCIES = [
     Currency.PLTC.toString(),
     Currency.XCON.toString(),
     Currency.MMY.toString(),
+    Currency.REVV.toString(),
+    Currency.SAND.toString(),
     Currency.GMC.toString(),
 ]
 
@@ -91,9 +101,19 @@ export const BEP20_CURRENCIES = [
     Currency.BUSD_BSC.toString(),
 ];
 
+export const MATIC20_CURRENCIES = [
+    Currency.USDC_MATIC.toString(),
+    Currency.USDT_MATIC.toString(),
+];
+
 export const ETH_BASED_CURRENCIES = [
     Currency.ETH.toString(),
     ...ERC20_CURRENCIES,
+];
+
+export const MATIC_BASED_CURRENCIES = [
+    Currency.MATIC.toString(),
+    ...MATIC20_CURRENCIES,
 ];
 
 export const BSC_BASED_CURRENCIES = [

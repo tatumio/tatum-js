@@ -5,7 +5,7 @@ import {TransactionConfig} from 'web3-core';
 import {toWei} from 'web3-utils';
 import {polygonBroadcast} from '../blockchain';
 import {validateBody} from '../connector/tatum';
-import {TATUM_API_URL} from '../constants';
+import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
 import erc1155TokenABI from '../contracts/erc1155/erc1155_abi';
 import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode';
 import erc20TokenABI from '../contracts/erc20/token_abi';
@@ -34,9 +34,9 @@ import {
     SmartContractReadMethodInvocation,
     TransactionKMS,
     TransferCustomErc20,
+    TransferEthErc20,
     TransferMultiToken,
     TransferMultiTokenBatch,
-    TransferPolygon,
     UpdateCashbackErc721,
 } from '../model';
 
@@ -45,7 +45,7 @@ import {
  */
 export const polygonGetGasPriceInWei = async () => {
     const {data} = await axios.get('https://gasstation-mainnet.matic.network');
-    return Web3.utils.toWei(`${data.fastest / 10}`, 'gwei');
+    return Web3.utils.toWei(`${Math.ceil(data.fastest / 10)}`, 'gwei');
 };
 
 const prepareGeneralTx = async (client: Web3, testnet: boolean, fromPrivateKey?: string, signatureId?: string, to?: string, amount?: string, nonce?: number,
@@ -75,7 +75,7 @@ const prepareGeneralTx = async (client: Web3, testnet: boolean, fromPrivateKey?:
  * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendPolygonTransaction = async (testnet: boolean, body: TransferPolygon, provider?: string) => {
+export const sendPolygonTransaction = async (testnet: boolean, body: TransferEthErc20, provider?: string) => {
     return polygonBroadcast(await preparePolygonSignedTransaction(testnet, body, provider));
 };
 
@@ -106,6 +106,9 @@ export const signPolygonKMSTransaction = async (tx: TransactionKMS, fromPrivateK
     if (!transactionConfig.gas) {
         transactionConfig.gas = await client.eth.estimateGas({to: transactionConfig.to, data: transactionConfig.data});
     }
+    if (!transactionConfig.gasPrice || transactionConfig.gasPrice === '0') {
+        transactionConfig.gasPrice = await polygonGetGasPriceInWei();
+    }
     return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey)).rawTransaction as string;
 };
 
@@ -116,10 +119,21 @@ export const signPolygonKMSTransaction = async (tx: TransactionKMS, fromPrivateK
  * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const preparePolygonSignedTransaction = async (testnet: boolean, body: TransferPolygon, provider?: string) => {
-    await validateBody(body, TransferPolygon);
+export const preparePolygonSignedTransaction = async (testnet: boolean, body: TransferEthErc20, provider?: string) => {
+    await validateBody(body, TransferEthErc20);
     const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey);
-    return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.to, body.amount, body.nonce, undefined,
+    let data;
+    let to = body.to;
+    if (body.currency === Currency.MATIC) {
+        data = body.data ? (client.utils.isHex(body.data) ? client.utils.stringToHex(body.data) : client.utils.toHex(body.data)) : undefined;
+    } else {
+        to = CONTRACT_ADDRESSES[body.currency];
+        // @ts-ignore
+        const contract = new client.eth.Contract([TRANSFER_METHOD_ABI], to);
+        const digits = new BigNumber(10).pow(CONTRACT_DECIMALS[body.currency]);
+        data = contract.methods.transfer(body.to.trim(), `0x${new BigNumber(body.amount).multipliedBy(digits).toString(16)}`).encodeABI();
+    }
+    return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.to, body.amount, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice);
 };
 

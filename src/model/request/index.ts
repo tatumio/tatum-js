@@ -59,7 +59,6 @@ export * from './TransferBscBep20';
 export * from './TransferCeloOrCeloErc20Token';
 export * from './TransferTrxOffchain';
 export * from './TransferTron';
-export * from './TransferPolygon';
 export * from './BurnMultiToken';
 export * from './BurnMultiTokenBatch';
 export * from './CreateErc20Offchain';

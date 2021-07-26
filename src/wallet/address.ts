@@ -435,7 +435,7 @@ const generateOnePrivateKey = async (testnet: boolean, mnemonic: string, i: numb
     const path = testnet ? TESTNET_DERIVATION_PATH : ONE_DERIVATION_PATH;
     const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnemonic));
     const derivePath = hdwallet.derivePath(path).deriveChild(i);
-    return derivePath.getWallet().getPrivateKeyString().replace('0x', '');
+    return derivePath.getWallet().getPrivateKeyString();
 };
 
 /**
@@ -449,7 +449,7 @@ const generatePolygonPrivateKey = async (testnet: boolean, mnemonic: string, i: 
     const path = testnet ? TESTNET_DERIVATION_PATH : MATIC_DERIVATION_PATH;
     const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnemonic));
     const derivePath = hdwallet.derivePath(path).deriveChild(i);
-    return derivePath.getWallet().getPrivateKeyString().replace('0x', '');
+    return derivePath.getWallet().getPrivateKeyString();
 };
 
 /**
@@ -610,11 +610,17 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
         case Currency.TUSD:
         case Currency.PAX:
         case Currency.PAXG:
+        case Currency.MATIC_ETH:
         case Currency.PLTC:
         case Currency.XCON:
+        case Currency.REVV:
+        case Currency.SAND:
         case Currency.ETH:
         case Currency.BSC:
         case Currency.MATIC:
+        case Currency.USDT_MATIC:
+        case Currency.USDC_MATIC:
+        case Currency.LATOKEN:
         case Currency.BETH:
         case Currency.BUSD:
         case Currency.CAKE:
@@ -669,6 +675,10 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
             return generateTronPrivateKey(mnemonic, i);
         case Currency.QTUM:
             return generateQtumPrivateKey(testnet, mnemonic, i);
+        case Currency.MATIC:
+        case Currency.USDT_MATIC:
+        case Currency.USDC_MATIC:
+            return generatePolygonPrivateKey(testnet, mnemonic, i);
         case Currency.FLOW:
         case Currency.FUSD:
             return generateFlowPrivateKey(mnemonic, i);
@@ -683,6 +693,7 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
         case Currency.UNI:
         case Currency.FREE:
         case Currency.MKR:
+        case Currency.LATOKEN:
         case Currency.USDC:
         case Currency.BAT:
         case Currency.TUSD:
@@ -690,7 +701,10 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
         case Currency.PAXG:
         case Currency.PLTC:
         case Currency.XCON:
+        case Currency.REVV:
+        case Currency.SAND:
         case Currency.ETH:
+        case Currency.MATIC_ETH:
         case Currency.BSC:
         case Currency.BETH:
         case Currency.BBTC:
@@ -710,8 +724,6 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
             return generateEthPrivateKey(testnet, mnemonic, i);
         case Currency.ONE:
             return generateOnePrivateKey(testnet, mnemonic, i);
-        case Currency.MATIC:
-            return generatePolygonPrivateKey(testnet, mnemonic, i);
         case Currency.XDC:
             return generateXdcPrivateKey(testnet, mnemonic, i);
         case Currency.VET:
@@ -762,6 +774,9 @@ export const generateAddressFromPrivatekey = (currency: Currency, testnet: boole
         case Currency.PAXG:
         case Currency.PLTC:
         case Currency.XCON:
+        case Currency.REVV:
+        case Currency.SAND:
+        case Currency.MATIC_ETH:
         case Currency.BSC:
         case Currency.MMY:
         case Currency.MATIC:

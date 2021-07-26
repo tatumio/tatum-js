@@ -1,7 +1,7 @@
 import {
   BigNum,
   hash_transaction,
-  Transaction, TransactionBody,
+  Transaction, TransactionBody, TransactionBuilder,
   TransactionWitnessSet,
   Vkeywitnesses,
 } from '@emurgo/cardano-serialization-lib-nodejs'
@@ -10,8 +10,8 @@ import { validateBody } from '../connector/tatum'
 import { Currency, KeyPair, TransactionKMS, TransferBtcBasedOffchain, WithdrawalResponseData } from '../model'
 import {
   adaToLovelace,
-  addAddressInputsWithoutPrivateKey, addOutputAda,
-  initTransactionBuilder, makeWitness,
+  addAddressInputsWithoutPrivateKey, addInput, addInputs, addOutputAda, addOutputs,
+  initTransactionBuilder, makeWitness, processFeeAndRest,
 } from '../transaction'
 import { generateAddressFromXPub, generatePrivateKeyFromMnemonic } from '../wallet'
 import { offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal } from './common'
@@ -51,18 +51,20 @@ export const sendAdaOffchainTransaction = async (testnet: boolean, body: Transfe
 }
 
 const prepareAdaSignedOffchainTransaction = async (testnet: boolean, data: WithdrawalResponseData[], amount: string, address: string, mnemonic?: string, keyPair?: KeyPair[],
-                                                 changeAddress?: string, xpub?: string, multipleAmounts?: string[], signatureId?: string) => {
+                                                   changeAddress?: string, xpub?: string, multipleAmounts?: string[], signatureId?: string) => {
   const txBuilder = await initTransactionBuilder()
-  const fromAddress = data.filter(input => input.address).map(input => ({address: input.address.address }))
+  const fromAddress = data.filter(input => input.address).map(input => ({ address: input.address.address }))
   await addAddressInputsWithoutPrivateKey(txBuilder, fromAddress)
 
+  addOffchainInputs(txBuilder, data);
   if (multipleAmounts?.length) {
     for (const [i, multipleAmount] of multipleAmounts.entries()) {
-      addOutputAda(txBuilder, address.split(',')[i], multipleAmount)
+      addOutputAda(txBuilder, address.split(',')[i], multipleAmount);
     }
   } else {
-    addOutputAda(txBuilder, address, amount)
+    addOutputAda(txBuilder, address, amount);
   }
+
   const lastVin = data.find(d => d.vIn === '-1') as WithdrawalResponseData;
   if (new BigNumber(lastVin.amount).isGreaterThan(0)) {
     if (xpub) {
@@ -80,7 +82,7 @@ const prepareAdaSignedOffchainTransaction = async (testnet: boolean, data: Withd
 
   const txBody = txBuilder.build();
   if (signatureId) {
-    return JSON.stringify({ txData: JSON.stringify(txBody.to_bytes()), privateKeysToSign: keyPair?.map(pair => pair.privateKey) });
+    return JSON.stringify({ txData: txBody.to_bytes().toString() });
   }
   const vKeyWitnesses = Vkeywitnesses.new();
   const txHash = hash_transaction(txBody);
@@ -95,7 +97,7 @@ const prepareAdaSignedOffchainTransaction = async (testnet: boolean, data: Withd
       const privateKey = await generatePrivateKeyFromMnemonic(Currency.ADA, testnet, mnemonic, derivationKey)
       makeWitness(privateKey, txHash, vKeyWitnesses)
     } else if (keyPair) {
-      const {privateKey} = keyPair.find(k => k.address === input.address.address) as KeyPair;
+      const { privateKey } = keyPair.find(k => k.address === input.address.address) as KeyPair;
       makeWitness(privateKey, txHash, vKeyWitnesses)
     } else {
       throw new Error('Impossible to prepare transaction. Either mnemonic or keyPair and attr must be present.');
@@ -110,6 +112,21 @@ const prepareAdaSignedOffchainTransaction = async (testnet: boolean, data: Withd
   ).toString('hex')
 }
 
+const addOffchainInputs = (transactionBuilder: TransactionBuilder, inputs: WithdrawalResponseData[]) => {
+  let amount = new BigNumber(0);
+  for (const input of inputs) {
+    if (input.vIn !== '-1' && input.amount && input.vInIndex !== undefined && input.address?.address) {
+      addInput(transactionBuilder, {
+        value: adaToLovelace(input.amount),
+        index: input.vInIndex,
+        txHash: input.vIn,
+      }, input.address.address);
+      amount = amount.plus(input.amount);
+    }
+  }
+  return amount;
+}
+
 /**
  * Sign Ada pending transaction from Tatum KMS
  * @param tx pending transaction from KMS
@@ -121,11 +138,14 @@ export const signAdaOffchainKMSTransaction = async (tx: TransactionKMS, mnemonic
   if (tx.chain !== Currency.ADA || !tx.withdrawalResponses) {
     throw Error('Unsupported chain.');
   }
-
-  const transactionBody = TransactionBody.from_bytes(Uint8Array.from(Array.from(tx.serializedTransaction).map(Number)))
+  const txData = JSON.parse(tx.serializedTransaction).txData
+  const transactionBody = TransactionBody.from_bytes(Uint8Array.from(txData.split(',')))
   const txHash = hash_transaction(transactionBody);
   const vKeyWitnesses = Vkeywitnesses.new();
   for (const response of tx.withdrawalResponses) {
+    if (response.vIn === '-1') {
+      continue;
+    }
     const privateKey = await generatePrivateKeyFromMnemonic(Currency.ADA, testnet, mnemonic, response.address?.derivationKey || 0)
     makeWitness(privateKey, txHash, vKeyWitnesses)
   }
@@ -134,4 +154,5 @@ export const signAdaOffchainKMSTransaction = async (tx: TransactionKMS, mnemonic
   return Buffer.from(
     Transaction.new(transactionBody, witnesses).to_bytes(),
   ).toString('hex')
+
 };
