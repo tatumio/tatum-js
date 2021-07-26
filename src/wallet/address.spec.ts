@@ -7,7 +7,7 @@ const TronWeb = require('tronweb');
 describe('Address tests', () => {
     it('should generate private key for QTUM testnet', async () => {
         const privateKey = await generatePrivateKeyFromMnemonic(Currency.QTUM, true, 'unable stone luggage syrup soul country hammer fee private coyote phrase brisk', 1);
-        expect(privateKey).toBe('tpubDEPswwDHtxcS3q3K81iRgcxRKinjdEBM6dKer3HjeVPRgL44fFpJpttdDxQLLAxLoZLu69c6bMeyGqCPihUdCZedYu9vqah2gbP1wkLUvzB')
+        expect(privateKey).toBe('cPtkzH8zCxWgyaqMiLJ7sJmZBgmLUb2kBMBrWzhKP9BVUHJfbg5w')
     });
     it('should get address info for QTUM testnet', async () => {
         const res= await getInfo('qWpEineYmtc2Ea25GqDYhvuzCjTiu5hMYA')
