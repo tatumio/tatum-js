@@ -32,7 +32,7 @@ import {
     TESTNET_DERIVATION_PATH,
     TRON_DERIVATION_PATH,
     VET_DERIVATION_PATH,
-    XDC_DERIVATION_PATH
+    XDC_DERIVATION_PATH,
 } from '../constants';
 import {Currency} from '../model';
 import cardano from './cardano.crypto';
@@ -272,9 +272,10 @@ const generateTronPrivateKey = async (mnemonic: string, i: number) => {
 };
 const generateQtumPrivateKey = async (testnet: boolean, mnem: string, i: number) => {
     const network = testnet ? QTUM_NETWORK_TESTNET : QTUM_NETWORK_MAINNET;
-    const hdwallet = HDKey.fromMasterSeed(await mnemonicToSeed(mnem), network.bip32);
-    console.log(hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : QTUM_DERIVATION_PATH).toJSON());
-    return hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : QTUM_DERIVATION_PATH).toJSON().xpub;
+    return fromSeed(await mnemonicToSeed(mnem), network)
+        .derivePath(testnet ? TESTNET_DERIVATION_PATH : QTUM_DERIVATION_PATH)
+        .derive(i)
+        .toWIF();
 };
 
 /**
