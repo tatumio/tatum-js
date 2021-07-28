@@ -41,7 +41,7 @@ import {
     TransferMultiTokenBatch,
     UpdateCashbackErc721,
 } from '../model';
-import {obtainCustodialAddressType} from '../wallet/custodial';
+import {obtainCustodialAddressType} from '../wallet';
 
 /**
  * Estimate Gas price for the transaction.
