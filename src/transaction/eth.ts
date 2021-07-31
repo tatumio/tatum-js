@@ -53,19 +53,8 @@ export const ethGetGasPriceInWei = async () => {
     const data = await Promise.all([
         axios.get(gasStationUrl.toString())
             .then(response => `${response.data.fastest / 10}`),
-        axios.get('https://www.etherchain.org/api/gasPriceOracle').then(response => `${response.data.fastest}`),
     ]);
-    const first = data[0];
-    const second = data[1];
-    let gasPrice;
-    if (new BigNumber(first).isGreaterThan(second)) {
-        gasPrice = first.toString();
-    } else {
-        gasPrice = second.toString();
-    }
-    if (gasPrice === '0') {
-        gasPrice = '20';
-    }
+    const gasPrice = data[0] === '0' ? '20' : data[0];
     return Web3.utils.toWei(gasPrice, 'gwei');
 };
 
