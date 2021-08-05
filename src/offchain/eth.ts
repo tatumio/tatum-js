@@ -100,14 +100,14 @@ export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: Tr
 
     const vc = await getVirtualCurrencyByName(account.currency);
     const {txData, gasLimit} = await prepareEthErc20SignedOffchainTransaction({
-      amount,
-      privateKey: fromPriv,
-      address,
-      web3,
-      tokenAddress: vc.erc20Address as string,
-      gasPrice,
-      nonce,
-      gasLimit: body.gasLimit
+        amount,
+        privateKey: fromPriv,
+        address,
+        web3,
+        tokenAddress: vc.erc20Address as string,
+        gasPrice,
+        nonce,
+        gasLimit: body.gasLimit
     });
     // @ts-ignore
     withdrawal.fee = new BigNumber(web3.utils.fromWei(new BigNumber(gasLimit).multipliedBy(gasPrice).toString(), 'ether')).toString();
@@ -144,7 +144,7 @@ export const signEthOffchainKMSTransaction = async (tx: TransactionKMS, fromPriv
     if (!transactionConfig.nonce) {
         transactionConfig.nonce = await ethGetTransactionsCount(client.eth.defaultAccount as string);
     }
-    if (!transactionConfig.gasPrice || transactionConfig.gasPrice === '0') {
+    if (!transactionConfig.gasPrice || transactionConfig.gasPrice === '0' ||transactionConfig.gasPrice === 0 || transactionConfig.gasPrice === '0x0') {
         transactionConfig.gasPrice = await ethGetGasPriceInWei();
     }
     return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey)).rawTransaction as string;
@@ -167,7 +167,7 @@ export const prepareEthSignedOffchainTransaction = async (body: PrepareEthSigned
         privateKey,
         web3,
     } = body;
-        let tx: TransactionConfig;
+    let tx: TransactionConfig;
     if (currency === Currency.ETH) {
         tx = {
             from: 0,
@@ -179,25 +179,25 @@ export const prepareEthSignedOffchainTransaction = async (body: PrepareEthSigned
     } else {
         if (!Object.keys(CONTRACT_ADDRESSES).includes(currency)) {
             throw new Error('Unsupported ETH ERC20 blockchain.');
-            }
-            // @ts-ignore
-            const contract = new web3.eth.Contract(tokenAbi, CONTRACT_ADDRESSES[currency]);
-
-            tx = {
-                from: 0,
-                to: CONTRACT_ADDRESSES[currency],
-                data: contract.methods.transfer(address.trim(),
-                    `0x${new BigNumber(amount).multipliedBy(new BigNumber(10).pow(CONTRACT_DECIMALS[currency])).toString(16)}`).encodeABI(),
-                gasPrice,
-                nonce,
-            };
         }
-        tx.gas = gasLimit || await web3.eth.estimateGas(tx);
-        return {
-            txData: (await web3.eth.accounts.signTransaction(tx, privateKey)).rawTransaction as string,
-            gasLimit: tx.gas,
+        // @ts-ignore
+        const contract = new web3.eth.Contract(tokenAbi, CONTRACT_ADDRESSES[currency]);
+
+        tx = {
+            from: 0,
+            to: CONTRACT_ADDRESSES[currency],
+            data: contract.methods.transfer(address.trim(),
+                `0x${new BigNumber(amount).multipliedBy(new BigNumber(10).pow(CONTRACT_DECIMALS[currency])).toString(16)}`).encodeABI(),
+            gasPrice,
+            nonce,
         };
+    }
+    tx.gas = gasLimit || await web3.eth.estimateGas(tx);
+    return {
+        txData: (await web3.eth.accounts.signTransaction(tx, privateKey)).rawTransaction as string,
+        gasLimit: tx.gas,
     };
+};
 
 /**
  * Sign Ethereum custom ERC20 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -217,19 +217,19 @@ export const prepareEthErc20SignedOffchainTransaction = async (body: PrepareEthE
         web3,
         gasLimit,
     } = body;
-        // @ts-ignore
-        const contract = new web3.eth.Contract(tokenAbi, tokenAddress);
-        let tx: TransactionConfig;
-        tx = {
-            from: 0,
-            to: tokenAddress.trim(),
-            data: contract.methods.transfer(address.trim(), `0x${new BigNumber(amount).multipliedBy(new BigNumber(10).pow(18)).toString(16)}`).encodeABI(),
-            gasPrice,
-            nonce,
-        };
-        tx.gas = gasLimit || await web3.eth.estimateGas(tx);
-        return {
-            txData: (await web3.eth.accounts.signTransaction(tx, privateKey)).rawTransaction as string,
-            gasLimit: tx.gas,
-        };
+    // @ts-ignore
+    const contract = new web3.eth.Contract(tokenAbi, tokenAddress);
+    let tx: TransactionConfig;
+    tx = {
+        from: 0,
+        to: tokenAddress.trim(),
+        data: contract.methods.transfer(address.trim(), `0x${new BigNumber(amount).multipliedBy(new BigNumber(10).pow(18)).toString(16)}`).encodeABI(),
+        gasPrice,
+        nonce,
     };
+    tx.gas = gasLimit || await web3.eth.estimateGas(tx);
+    return {
+        txData: (await web3.eth.accounts.signTransaction(tx, privateKey)).rawTransaction as string,
+        gasLimit: tx.gas,
+    };
+};

@@ -8,6 +8,7 @@ import {validateBody} from '../connector/tatum';
 import {TATUM_API_URL} from '../constants';
 import erc1155TokenABI from '../contracts/erc1155/erc1155_abi';
 import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode';
+import erc20_abi from '../contracts/erc20/token_abi';
 import erc20TokenABI from '../contracts/erc20/token_abi';
 import erc20TokenBytecode from '../contracts/erc20/token_bytecode';
 import erc721TokenABI from '../contracts/erc721/erc721_abi';
@@ -15,6 +16,7 @@ import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
 import {
     CreateRecord,
     Currency,
+    GenerateCustodialAddress,
     OneBurn20,
     OneBurn721,
     OneBurnMultiToken,
@@ -37,6 +39,7 @@ import {
     SmartContractReadMethodInvocation,
     TransactionKMS,
 } from '../model';
+import {obtainCustodialAddressType} from '../wallet/custodial';
 
 const prepareGeneralTx = async (client: Web3, testnet: boolean, fromPrivateKey?: string, signatureId?: string, to?: string, amount?: string, nonce?: number,
                                 data?: string, gasLimit?: string, gasPrice?: string) => {
@@ -97,7 +100,7 @@ export const signOneKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
     if (!transactionConfig.gas) {
         transactionConfig.gas = await client.eth.estimateGas({to: transactionConfig.to, data: transactionConfig.data});
     }
-    if (!transactionConfig.gasPrice || transactionConfig.gasPrice === '0') {
+    if (!transactionConfig.gasPrice || transactionConfig.gasPrice === '0' ||transactionConfig.gasPrice === 0 || transactionConfig.gasPrice === '0x0') {
         transactionConfig.gasPrice = await client.eth.getGasPrice();
     }
     return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey)).rawTransaction as string;
@@ -155,6 +158,30 @@ export const prepareOneTransfer20SignedTransaction = async (testnet: boolean, bo
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, undefined, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice);
 };
+
+export const getOne20ContractDecimals = async (testnet: boolean, contractAddress: string, provider?: string) => {
+    if (!contractAddress) {
+        throw new Error('Contract address not set.');
+    }
+    const client = await prepareOneClient(testnet, provider);
+    // @ts-ignore
+    const contract = new client.eth.Contract(erc20_abi, contractAddress.trim());
+    return await contract.methods.decimals().call();
+}
+
+export const prepareOneGenerateCustodialWalletSignedTransaction = async (testnet: boolean, body: GenerateCustodialAddress, provider?: string) => {
+    await validateBody(body, GenerateCustodialAddress);
+    const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
+    const {abi, code} = obtainCustodialAddressType(body);
+    // @ts-ignore
+    const contract = new client.eth.Contract(abi);
+    const data = contract.deploy({
+        data: code,
+    }).encodeABI();
+    return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, undefined, undefined, body.nonce, data,
+        body.fee?.gasLimit, body.fee?.gasPrice);
+};
+
 export const prepareOneDeploy20SignedTransaction = async (testnet: boolean, body: OneDeploy20, provider?: string) => {
     await validateBody(body, OneDeploy20);
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
@@ -174,6 +201,7 @@ export const prepareOneDeploy20SignedTransaction = async (testnet: boolean, body
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, undefined, undefined, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice);
 };
+
 export const prepareOneMint721SignedTransaction = async (testnet: boolean, body: OneMint721, provider?: string) => {
     await validateBody(body, OneMint721);
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
@@ -392,6 +420,8 @@ export const sendOneMintMultiTokenBatchSignedTransaction = async (testnet: boole
     oneBroadcast(await prepareOneMintMultiTokenBatchSignedTransaction(testnet, body, provider));
 export const sendOneDeployMultiTokenSignedTransaction = async (testnet: boolean, body: OneDeployMultiToken, provider?: string) =>
     oneBroadcast(await prepareOneDeployMultiTokenSignedTransaction(testnet, body, provider));
+export const sendOneGenerateCustodialWalletSignedTransaction = async (testnet: boolean, body: GenerateCustodialAddress, provider?: string) =>
+    oneBroadcast(await prepareOneGenerateCustodialWalletSignedTransaction(testnet, body, provider), body.signatureId);
 export const sendOneSmartContractMethodInvocationTransaction = async (testnet: boolean,
                                                                       body: SmartContractMethodInvocation | SmartContractReadMethodInvocation, provider?: string) => {
     if (body.methodABI.stateMutability === 'view') {

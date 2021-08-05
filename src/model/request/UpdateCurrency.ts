@@ -10,7 +10,7 @@ export class UpdateCurrency {
     public name: string;
 
     @IsOptional()
-    @Length(3, 5)
+    @Length(3, 20)
     @IsIn([...Object.keys(Currency), ...Object.keys(Fiat)])
     public basePair?: Currency | Fiat;
 

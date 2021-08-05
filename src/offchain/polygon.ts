@@ -22,7 +22,7 @@ export const sendPolygonOffchainTransaction = async (testnet: boolean, body: Tra
     } = body;
     const {amount, address} = withdrawal;
 
-    const fromPriv = mnemonic && index !== undefined ? await generatePrivateKeyFromMnemonic(Currency.BSC, testnet, mnemonic, index) : privateKey as string;
+    const fromPriv = mnemonic && index !== undefined ? await generatePrivateKeyFromMnemonic(Currency.MATIC, testnet, mnemonic, index) : privateKey as string;
 
     const account = await getAccountById(withdrawal.senderAccountId);
     let txData;

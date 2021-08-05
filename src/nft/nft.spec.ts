@@ -51,9 +51,9 @@ describe('NFT tests', () => {
 
         it('should test valid mint 721 transaction', async () => {
             const body = new CeloMintErc721();
-            body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
+            body.fromPrivateKey = '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236';
             body.to = '0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea';
-            body.contractAddress = '0x3e1a302DA9345ae6f8188607C017d342A4CCf22e';
+            body.contractAddress = '0x1214BEada6b25bc98f7494C7BDBf22C095FDCaBD';
             body.tokenId = '3';
             body.url = 'https://google.com';
             body.feeCurrency = Currency.CUSD;
@@ -63,7 +63,7 @@ describe('NFT tests', () => {
 
         it('should test valid mint multiple 721 transaction', async () => {
             const body = new CeloMintMultipleErc721();
-            body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
+            body.fromPrivateKey = '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236';
             body.to = ['0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea', '0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea'];
             body.contractAddress = '0x3e1a302DA9345ae6f8188607C017d342A4CCf22e';
             body.tokenId = ['4', '5'];
@@ -75,7 +75,7 @@ describe('NFT tests', () => {
 
         it('should test valid burn 721 transaction', async () => {
             const body = new CeloBurnErc721();
-            body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
+            body.fromPrivateKey = '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236';
             body.contractAddress = '0x3e1a302DA9345ae6f8188607C017d342A4CCf22e';
             body.tokenId = '3';
             body.feeCurrency = Currency.CUSD;
@@ -85,7 +85,7 @@ describe('NFT tests', () => {
 
         it('should test valid transfer 721 transaction', async () => {
             const body = new CeloTransferErc721();
-            body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
+            body.fromPrivateKey = '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236';
             body.to = '0x48d4bA7B2698A4b89635b9a2E391152350DB740f';
             body.contractAddress = '0x28980D12Ce9E7Bf6C20f568Db998E9A4d8F13271';
             body.tokenId = '1';

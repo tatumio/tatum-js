@@ -45,6 +45,6 @@ export class CreateTronTrc10 {
 
     @IsNotEmpty()
     @Min(0)
-    @Max(5)
+    @Max(6)
     public decimals: number;
 }

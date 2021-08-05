@@ -7,6 +7,7 @@ import {validateBody} from '../connector/tatum';
 import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
 import erc1155TokenABI from '../contracts/erc1155/erc1155_abi';
 import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode';
+import erc20_abi from '../contracts/erc20/token_abi';
 import erc20TokenABI from '../contracts/erc20/token_abi';
 import erc20TokenBytecode from '../contracts/erc20/token_bytecode';
 import erc721TokenABI from '../contracts/erc721/erc721_abi';
@@ -25,6 +26,7 @@ import {
     EthMintMultipleErc721,
     EthTransferErc721,
     Fee,
+    GenerateCustodialAddress,
     MintErc20,
     MintMultiToken,
     MintMultiTokenBatch,
@@ -37,6 +39,7 @@ import {
     TransferMultiTokenBatch,
     UpdateCashbackErc721
 } from '../model';
+import {obtainCustodialAddressType} from '../wallet/custodial';
 
 /**
  * Estimate Gas price for the transaction.
@@ -93,10 +96,20 @@ export const signBscKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
     if (!transactionConfig.nonce) {
         transactionConfig.nonce = await bscGetTransactionsCount(client.eth.defaultAccount as string);
     }
-    if (!transactionConfig.gasPrice || transactionConfig.gasPrice === '0') {
+    if (!transactionConfig.gasPrice || transactionConfig.gasPrice === '0' || transactionConfig.gasPrice === 0 || transactionConfig.gasPrice === '0x0') {
         transactionConfig.gasPrice = await bscGetGasPriceInWei();
     }
     return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey as string)).rawTransaction as string;
+};
+
+export const getBscBep20ContractDecimals = async (testnet: boolean, contractAddress: string, provider?: string) => {
+    if (!contractAddress) {
+        throw new Error('Contract address not set.');
+    }
+    const client = await getBscClient(provider);
+    // @ts-ignore
+    const contract = new client.eth.Contract(erc20_abi, contractAddress.trim());
+    return await contract.methods.decimals().call();
 };
 
 /**
@@ -332,6 +345,31 @@ export const prepareDeployBep20SignedTransaction = async (body: DeployErc20, pro
         nonce,
     };
     return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
+};
+
+/**
+ * Sign Bsc generate custodial wallet address transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareBscGenerateCustodialWalletSignedTransaction = async (body: GenerateCustodialAddress, provider?: string) => {
+    await validateBody(body, GenerateCustodialAddress);
+
+    const client = getBscClient(provider, body.fromPrivateKey);
+
+    const {abi, code} = obtainCustodialAddressType(body);
+    // @ts-ignore
+    const contract = new client.eth.Contract(abi);
+    const deploy = contract.deploy({
+        data: code,
+    });
+    const tx: TransactionConfig = {
+        from: 0,
+        data: deploy.encodeABI(),
+        nonce: body.nonce,
+    };
+    return await prepareBscSignedTransactionAbstraction(client, tx, body.signatureId, body.fromPrivateKey, body.fee);
 };
 
 /**
@@ -935,6 +973,8 @@ export const sendBscSmartContractMethodInvocationTransaction = async (body: Smar
  */
 export const sendMintBep721Transaction = async (body: EthMintErc721, provider?: string) =>
     bscBroadcast(await prepareBscMintBep721SignedTransaction(body, provider), body.signatureId);
+export const sendBscGenerateCustodialWalletSignedTransaction = async (body: GenerateCustodialAddress, provider?: string) =>
+    bscBroadcast(await prepareBscGenerateCustodialWalletSignedTransaction(body, provider), body.signatureId);
 // MultiToken
 export const sendBscDeployMultiTokenTransaction = async (body: EthDeployMultiToken, provider?: string) =>
     bscBroadcast(await prepareBscDeployMultiTokenSignedTransaction(body, provider));
