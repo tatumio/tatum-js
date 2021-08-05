@@ -254,6 +254,35 @@ export const prepareTronCustodialTransfer = async (testnet: boolean, body: Smart
         ],
         sender
     );
+    if (body.signatureId) {
+        return JSON.stringify(transaction);
+    }
+    return JSON.stringify(await tronWeb.trx.sign(transaction, body.fromPrivateKey));
+};
+
+export const prepareTronCustodialTransferBatch = async (testnet: boolean, body: SmartContractMethodInvocation, feeLimit: number, from?: string, provider?: string) => {
+    const tronWeb = prepareTronWeb(testnet, provider);
+    tronWeb.setAddress(body.contractAddress);
+    const sender = from || tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(body.fromPrivateKey));
+    const {transaction} = await tronWeb.transactionBuilder.triggerSmartContract(
+        tronWeb.address.toHex(body.contractAddress),
+        'transferBatch(address[],uint256[],address[],uint256[],uint256[])',
+        {
+            feeLimit: tronWeb.toSun(feeLimit),
+            from: sender
+        },
+        [
+            {type: 'address[]', value: body.params[0].map(tronWeb.address.toHex)},
+            {type: 'uint256[]', value: body.params[1]},
+            {type: 'address[]', value: body.params[2].map(tronWeb.address.toHex)},
+            {type: 'uint256[]', value: body.params[3]},
+            {type: 'uint256[]', value: body.params[4]},
+        ],
+        sender
+    );
+    if (body.signatureId) {
+        return JSON.stringify(transaction);
+    }
     return JSON.stringify(await tronWeb.trx.sign(transaction, body.fromPrivateKey));
 };
 
