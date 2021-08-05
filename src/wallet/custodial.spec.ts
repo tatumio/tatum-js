@@ -1,5 +1,5 @@
 import {CeloProvider} from '@celo-tools/celo-ethers-wrapper';
-import {bscBroadcast} from '../blockchain';
+import {bscBroadcast, tronBroadcast} from '../blockchain';
 import {
     Custodial_1155_TokenWallet,
     Custodial_1155_TokenWalletWithBatch,
@@ -16,7 +16,15 @@ import {
     CustodialFullTokenWallet,
     CustodialFullTokenWalletWithBatch,
 } from '../contracts/custodial';
-import {ContractType, Currency, GenerateCustodialAddress, GenerateTronCustodialAddress, TransferFromCustodialAddress, TransferFromCustodialAddressBatch} from '../model';
+import {
+    ContractType,
+    Currency,
+    GenerateCustodialAddress,
+    GenerateTronCustodialAddress,
+    TransferFromCustodialAddress,
+    TransferFromCustodialAddressBatch, TransferFromTronCustodialAddress,
+    TransferFromTronCustodialAddressBatch
+} from '../model';
 import {
     sendBscGenerateCustodialWalletSignedTransaction,
     sendCeloGenerateCustodialWalletSignedTransaction,
@@ -219,9 +227,9 @@ describe('Custodial wallet tests', () => {
             body.chain = Currency.TRON;
             body.enableFungibleTokens = true;
             body.enableNonFungibleTokens = true;
-            body.feeLimit = 100;
+            body.feeLimit = 500;
             body.enableSemiFungibleTokens = false;
-            body.enableBatchTransactions = false;
+            body.enableBatchTransactions = true;
             const txData = await sendTronGenerateCustodialWalletSignedTransaction(true, body);
             expect(txData.txId).toBeDefined();
             console.log(txData.txId);
@@ -320,67 +328,67 @@ describe('Custodial wallet tests', () => {
         });
 
     });
-    // describe('Transfer from address TRON', () => {
-    //
-    //     it('should transfer TRON on TRON', async () => {
-    //         const body = new TransferFromTronCustodialAddress();
-    //         body.feeLimit = 100;
-    //         body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701';
-    //         body.chain = Currency.TRON;
-    //         body.contractType = ContractType.NATIVE_ASSET;
-    //         body.custodialAddress = 'TTZ4BRfvYHBxgtFAf6hktCTtw4mghAbCvC';
-    //         body.recipient = 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh';
-    //         body.amount = '1.9';
-    //         const txData = await prepareTransferFromCustodialWallet(true, body);
-    //         expect(txData).toBeDefined();
-    //         console.log(await tronBroadcast(txData));
-    //     });
-    //
-    //     it('should transfer 20 on TRON', async () => {
-    //         const body = new TransferFromTronCustodialAddress();
-    //         body.feeLimit = 100;
-    //         body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701';
-    //         body.chain = Currency.TRON;
-    //         body.contractType = ContractType.FUNGIBLE_TOKEN;
-    //         body.custodialAddress = '0x009bc01b990e2781e8a961fd792f4ebb12a683b4';
-    //         body.tokenAddress = '0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867';
-    //         body.recipient = '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA';
-    //         body.amount = '1';
-    //         const txData = await prepareTransferFromCustodialWallet(true, body);
-    //         expect(txData).toContain('0x');
-    //         console.log(await tronBroadcast(txData));
-    //     });
-    //
-    //     it('should transfer 721 on TRON', async () => {
-    //         const body = new TransferFromTronCustodialAddress();
-    //         body.feeLimit = 100;
-    //         body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701';
-    //         body.chain = Currency.TRON;
-    //         body.contractType = ContractType.NON_FUNGIBLE_TOKEN;
-    //         body.custodialAddress = '0x009bc01b990e2781e8a961fd792f4ebb12a683b4';
-    //         body.tokenAddress = '0x9b0eea3aa1e61b8ecb7d1c8260cd426eb2a9a698';
-    //         body.recipient = '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA';
-    //         body.tokenId = '20';
-    //         const txData = await prepareTransferFromCustodialWallet(true, body);
-    //         expect(txData).toContain('0x');
-    //         console.log(await tronBroadcast(txData));
-    //     });
-    //
-    //     it('should transfer all batch on TRON', async () => {
-    //         const body = new TransferFromTronCustodialAddressBatch();
-    //         body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701';
-    //         body.chain = Currency.TRON;
-    //         body.feeLimit = 100;
-    //         body.contractType = [ContractType.FUNGIBLE_TOKEN, ContractType.NON_FUNGIBLE_TOKEN, ContractType.NATIVE_ASSET];
-    //         body.custodialAddress = '0x009bc01b990e2781e8a961fd792f4ebb12a683b4';
-    //         body.tokenAddress = ['0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867', '0x9b0eea3aa1e61b8ecb7d1c8260cd426eb2a9a698', '0'];
-    //         body.recipient = ['0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA', '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA', '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA'];
-    //         body.tokenId = ['0', '200', '0'];
-    //         body.amount = ['1', '0', '0.00001'];
-    //         const txData = await prepareBatchTransferFromCustodialWallet(true, body);
-    //         expect(txData).toContain('0x');
-    //         console.log(await tronBroadcast(txData));
-    //     });
-    //
-    // });
+    describe('Transfer from address TRON', () => {
+
+        it('should transfer TRON on TRON', async () => {
+            const body = new TransferFromTronCustodialAddress();
+            body.feeLimit = 100;
+            body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701';
+            body.chain = Currency.TRON;
+            body.contractType = ContractType.NATIVE_ASSET;
+            body.custodialAddress = 'TKogX3qk6E8tRYtqNUSVa9PsZHWwL3a7q8';
+            body.recipient = 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh';
+            body.amount = '1.9';
+            const txData = await prepareTransferFromCustodialWallet(true, body);
+            expect(txData).toBeDefined();
+            console.log(await tronBroadcast(txData));
+        });
+
+        it('should transfer 20 on TRON', async () => {
+            const body = new TransferFromTronCustodialAddress();
+            body.feeLimit = 100;
+            body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701';
+            body.chain = Currency.TRON;
+            body.contractType = ContractType.FUNGIBLE_TOKEN;
+            body.custodialAddress = 'TKogX3qk6E8tRYtqNUSVa9PsZHWwL3a7q8';
+            body.tokenAddress = 'TWgHeettKLgq1hCdEUPaZNCM6hPg8JkG2X';
+            body.recipient = 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh';
+            body.amount = '1';
+            const txData = await prepareTransferFromCustodialWallet(true, body);
+            expect(txData).toBeDefined();
+            console.log(await tronBroadcast(txData));
+        });
+
+        it('should transfer 721 on TRON', async () => {
+            const body = new TransferFromTronCustodialAddress();
+            body.feeLimit = 100;
+            body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701';
+            body.chain = Currency.TRON;
+            body.contractType = ContractType.NON_FUNGIBLE_TOKEN;
+            body.custodialAddress = 'TKogX3qk6E8tRYtqNUSVa9PsZHWwL3a7q8';
+            body.tokenAddress = 'TERXc8ZZbrKokDR8BVi8XCwEZBp83ewVgg';
+            body.recipient = 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh';
+            body.tokenId = '1111';
+            const txData = await prepareTransferFromCustodialWallet(true, body);
+            expect(txData).toBeDefined();
+            console.log(await tronBroadcast(txData));
+        });
+
+        it('should transfer all batch on TRON', async () => {
+            const body = new TransferFromTronCustodialAddressBatch();
+            body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701';
+            body.chain = Currency.TRON;
+            body.feeLimit = 100;
+            body.contractType = [ContractType.FUNGIBLE_TOKEN, ContractType.NON_FUNGIBLE_TOKEN, ContractType.NATIVE_ASSET];
+            body.custodialAddress = 'TKogX3qk6E8tRYtqNUSVa9PsZHWwL3a7q8';
+            body.tokenAddress = ['TWgHeettKLgq1hCdEUPaZNCM6hPg8JkG2X', 'TERXc8ZZbrKokDR8BVi8XCwEZBp83ewVgg', '0'];
+            body.recipient = ['TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh', 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh', 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh'];
+            body.tokenId = ['0', '1112', '0'];
+            body.amount = ['1', '0', '0.00001'];
+            const txData = await prepareBatchTransferFromCustodialWallet(true, body);
+            expect(txData).toBeDefined();
+            console.log(await tronBroadcast(txData));
+        });
+
+    });
 });

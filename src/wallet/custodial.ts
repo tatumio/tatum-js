@@ -15,6 +15,7 @@ import {
     Custodial_721_1155_TokenWalletWithBatch,
     Custodial_721_TokenWallet,
     Custodial_721_TokenWalletWithBatch,
+    TronCustodialFullTokenWalletWithBatch,
 } from '../contracts/custodial';
 import {
     CeloSmartContractMethodInvocation,
@@ -34,24 +35,27 @@ import {
     getEthErc20ContractDecimals,
     getOne20ContractDecimals,
     getPolygonErc20ContractDecimals,
+    getTronTrc20ContractDecimals,
     prepareBscSmartContractWriteMethodInvocation,
     prepareCeloSmartContractWriteMethodInvocation,
     prepareOneSmartContractWriteMethodInvocation,
     preparePolygonSmartContractWriteMethodInvocation,
     prepareSmartContractWriteMethodInvocation,
+    prepareTronCustodialTransfer, prepareTronCustodialTransferBatch,
     sendBscGenerateCustodialWalletSignedTransaction,
     sendCeloGenerateCustodialWalletSignedTransaction,
     sendEthGenerateCustodialWalletSignedTransaction,
     sendOneGenerateCustodialWalletSignedTransaction,
-    sendPolygonGenerateCustodialWalletSignedTransaction
+    sendPolygonGenerateCustodialWalletSignedTransaction,
+    sendTronGenerateCustodialWalletSignedTransaction
 } from '../transaction';
 
 export const obtainCustodialAddressType = (body: GenerateCustodialAddress) => {
     let abi;
     let code;
     if (body.enableFungibleTokens && body.enableNonFungibleTokens && body.enableSemiFungibleTokens && body.enableBatchTransactions) {
-        code = CustodialFullTokenWalletWithBatch.bytecode;
-        abi = CustodialFullTokenWalletWithBatch.abi;
+        code = body.chain === Currency.TRON ? TronCustodialFullTokenWalletWithBatch.bytecode : CustodialFullTokenWalletWithBatch.bytecode;
+        abi = body.chain === Currency.TRON ? TronCustodialFullTokenWalletWithBatch.abi : CustodialFullTokenWalletWithBatch.abi;
     } else if (body.enableFungibleTokens && body.enableNonFungibleTokens && body.enableSemiFungibleTokens && !body.enableBatchTransactions) {
         code = CustodialFullTokenWallet.bytecode;
         abi = CustodialFullTokenWallet.abi;
@@ -62,12 +66,21 @@ export const obtainCustodialAddressType = (body: GenerateCustodialAddress) => {
         code = Custodial_20_721_TokenWallet.bytecode;
         abi = Custodial_20_721_TokenWallet.abi;
     } else if (body.enableFungibleTokens && !body.enableNonFungibleTokens && body.enableSemiFungibleTokens && body.enableBatchTransactions) {
+        if (body.chain === Currency.TRON) {
+            throw new Error('MultiToken not supported for TRON.')
+        }
         code = Custodial_20_1155_TokenWalletWithBatch.bytecode;
         abi = Custodial_20_1155_TokenWalletWithBatch.abi;
     } else if (body.enableFungibleTokens && !body.enableNonFungibleTokens && body.enableSemiFungibleTokens && !body.enableBatchTransactions) {
+        if (body.chain === Currency.TRON) {
+            throw new Error('MultiToken not supported for TRON.')
+        }
         code = Custodial_20_1155_TokenWallet.bytecode;
         abi = Custodial_20_1155_TokenWallet.abi;
     } else if (!body.enableFungibleTokens && body.enableNonFungibleTokens && body.enableSemiFungibleTokens && body.enableBatchTransactions) {
+        if (body.chain === Currency.TRON) {
+            throw new Error('MultiToken not supported for TRON.')
+        }
         code = Custodial_721_1155_TokenWalletWithBatch.bytecode;
         abi = Custodial_721_1155_TokenWalletWithBatch.abi;
     } else if (!body.enableFungibleTokens && body.enableNonFungibleTokens && body.enableSemiFungibleTokens && !body.enableBatchTransactions) {
@@ -86,9 +99,15 @@ export const obtainCustodialAddressType = (body: GenerateCustodialAddress) => {
         code = Custodial_721_TokenWallet.bytecode;
         abi = Custodial_721_TokenWallet.abi;
     } else if (!body.enableFungibleTokens && !body.enableNonFungibleTokens && body.enableSemiFungibleTokens && body.enableBatchTransactions) {
+        if (body.chain === Currency.TRON) {
+            throw new Error('MultiToken not supported for TRON.')
+        }
         code = Custodial_1155_TokenWalletWithBatch.bytecode;
         abi = Custodial_1155_TokenWalletWithBatch.abi;
     } else if (!body.enableFungibleTokens && !body.enableNonFungibleTokens && body.enableSemiFungibleTokens && !body.enableBatchTransactions) {
+        if (body.chain === Currency.TRON) {
+            throw new Error('MultiToken not supported for TRON.')
+        }
         code = Custodial_1155_TokenWallet.bytecode;
         abi = Custodial_1155_TokenWallet.abi;
     } else {
@@ -109,8 +128,8 @@ export const generateCustodialWallet = async (testnet: boolean, body: GenerateCu
             return await sendBscGenerateCustodialWalletSignedTransaction(body, provider);
         case Currency.MATIC:
             return await sendPolygonGenerateCustodialWalletSignedTransaction(testnet, body, provider);
-        // case Currency.TRON:
-        //     return await sendTronGenerateCustodialWalletSignedTransaction(testnet, body as GenerateTronCustodialAddress, provider);
+        case Currency.TRON:
+            return await sendTronGenerateCustodialWalletSignedTransaction(testnet, body as GenerateTronCustodialAddress, provider);
         default:
             throw new Error('Unsupported chain');
     }
@@ -160,9 +179,9 @@ export const prepareTransferFromCustodialWallet = async (testnet: boolean, body:
             case Currency.MATIC:
                 amount = amount.multipliedBy(new BigNumber(10).pow(await getPolygonErc20ContractDecimals(testnet, body.tokenAddress, provider)));
                 break;
-            // case Currency.TRON:
-            //     amount = amount.multipliedBy(new BigNumber(10).pow(await getTronTrc20ContractDecimals(testnet, body.tokenAddress, provider)));
-            //     break;
+            case Currency.TRON:
+                amount = amount.multipliedBy(new BigNumber(10).pow(await getTronTrc20ContractDecimals(testnet, body.tokenAddress, provider)));
+                break;
             default:
                 throw new Error('Unsupported combination of inputs.');
         }
@@ -181,8 +200,8 @@ export const prepareTransferFromCustodialWallet = async (testnet: boolean, body:
         case Currency.MATIC:
             return await preparePolygonSmartContractWriteMethodInvocation(testnet, r, provider);
         case Currency.TRON:
-            // const body1 = body as TransferFromTronCustodialAddress;
-            // return await prepareTronCustodialTransfer(testnet, r, body1.feeLimit, body1.from, provider);
+            const body1 = body as TransferFromTronCustodialAddress;
+            return await prepareTronCustodialTransfer(testnet, r, body1.feeLimit, body1.from, provider);
         default:
             throw new Error('Unsupported combination of inputs.');
     }
@@ -238,9 +257,9 @@ export const prepareBatchTransferFromCustodialWallet = async (testnet: boolean,
                 case Currency.MATIC:
                     amount = amount.multipliedBy(new BigNumber(10).pow(await getPolygonErc20ContractDecimals(testnet, body.tokenAddress[i], provider)));
                     break;
-                // case Currency.TRON:
-                //     amount = amount.multipliedBy(new BigNumber(10).pow(await getTronTrc20ContractDecimals(testnet, body.tokenAddress[i], provider)));
-                //     break;
+                case Currency.TRON:
+                    amount = amount.multipliedBy(new BigNumber(10).pow(await getTronTrc20ContractDecimals(testnet, body.tokenAddress[i], provider)));
+                    break;
                 default:
                     throw new Error('Unsupported combination of inputs.');
             }
@@ -261,9 +280,9 @@ export const prepareBatchTransferFromCustodialWallet = async (testnet: boolean,
             return await prepareBscSmartContractWriteMethodInvocation(r, provider);
         case Currency.MATIC:
             return await preparePolygonSmartContractWriteMethodInvocation(testnet, r, provider);
-        // case Currency.TRON:
-        //     const body1 = body as TransferFromTronCustodialAddressBatch;
-        //     return await prepareTronCustodialTransfer(testnet, r, body1.feeLimit, body1.from, provider);
+        case Currency.TRON:
+            const body1 = body as TransferFromTronCustodialAddressBatch;
+            return await prepareTronCustodialTransferBatch(testnet, r, body1.feeLimit, body1.from, provider);
         default:
             throw new Error('Unsupported combination of inputs.');
     }
