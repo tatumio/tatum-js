@@ -4,7 +4,7 @@ import {TransferFromCustodialAddress} from './TransferFromCustodialAddress';
 
 export class TransferFromTronCustodialAddress extends TransferFromCustodialAddress {
 
-    @ValidateIf(o => o.signatureId)
+    @ValidateIf(o => o.signatureId && o.chain === Currency.TRON)
     @IsNotEmpty()
     @Length(34, 34)
     public from?: string;

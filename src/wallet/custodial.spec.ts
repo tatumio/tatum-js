@@ -1,6 +1,8 @@
 import {CeloProvider} from '@celo-tools/celo-ethers-wrapper';
 import {bscBroadcast, tronBroadcast} from '../blockchain';
 import {
+    CustodialFullTokenWallet,
+    CustodialFullTokenWalletWithBatch,
     Custodial_1155_TokenWallet,
     Custodial_1155_TokenWalletWithBatch,
     Custodial_20_1155_TokenWallet,
@@ -13,8 +15,6 @@ import {
     Custodial_721_1155_TokenWalletWithBatch,
     Custodial_721_TokenWallet,
     Custodial_721_TokenWalletWithBatch,
-    CustodialFullTokenWallet,
-    CustodialFullTokenWalletWithBatch,
 } from '../contracts/custodial';
 import {
     ContractType,
@@ -26,6 +26,7 @@ import {
     TransferFromTronCustodialAddressBatch
 } from '../model';
 import {
+    prepareEthGenerateCustodialWalletSignedTransaction,
     sendBscGenerateCustodialWalletSignedTransaction,
     sendCeloGenerateCustodialWalletSignedTransaction,
     sendEthGenerateCustodialWalletSignedTransaction,
@@ -221,6 +222,18 @@ describe('Custodial wallet tests', () => {
             console.log(txData.txId);
         });
 
+        it('should create on ETH no batch KMS', async () => {
+            const body = new GenerateCustodialAddress();
+            body.signatureId = '96e13f7f-393e-4f64-8fde-17bd90ce2c5b';
+            body.chain = Currency.ETH;
+            body.enableFungibleTokens = true;
+            body.enableNonFungibleTokens = true;
+            body.enableSemiFungibleTokens = false;
+            body.enableBatchTransactions = false;
+            const txData = await prepareEthGenerateCustodialWalletSignedTransaction(body);
+            expect(txData).toContain('0x');
+        });
+
         it('should create on TRON no batch', async () => {
             const body = new GenerateTronCustodialAddress();
             body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701';
@@ -233,6 +246,38 @@ describe('Custodial wallet tests', () => {
             const txData = await sendTronGenerateCustodialWalletSignedTransaction(true, body);
             expect(txData.txId).toBeDefined();
             console.log(txData.txId);
+        });
+
+        it('should fail create on TRON no batch - 1155', async () => {
+            const body = new GenerateTronCustodialAddress();
+            body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701';
+            body.chain = Currency.TRON;
+            body.enableFungibleTokens = true;
+            body.enableNonFungibleTokens = true;
+            body.feeLimit = 500;
+            body.enableSemiFungibleTokens = true;
+            body.enableBatchTransactions = true;
+            try {
+                await sendTronGenerateCustodialWalletSignedTransaction(true, body);
+                fail('should not create address')
+            } catch (_) {
+            }
+        });
+
+        it('should fail create on TRON no batch KMS - missing FROM', async () => {
+            const body = new GenerateTronCustodialAddress();
+            body.signatureId = '96e13f7f-393e-4f64-8fde-17bd90ce2c5b';
+            body.chain = Currency.TRON;
+            body.enableFungibleTokens = true;
+            body.enableNonFungibleTokens = true;
+            body.feeLimit = 500;
+            body.enableSemiFungibleTokens = false;
+            body.enableBatchTransactions = true;
+            try {
+                await sendTronGenerateCustodialWalletSignedTransaction(true, body);
+                fail('should not create address')
+            } catch (_) {
+            }
         });
     });
 

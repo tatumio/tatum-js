@@ -12,5 +12,3 @@ export * as Custodial_1155_TokenWallet from './Custodial_1155_TokenWallet';
 export * as Custodial_1155_TokenWalletWithBatch from './Custodial_1155_TokenWalletWithBatch';
 export * as CustodialFullTokenWallet from './CustodialFullTokenWallet';
 export * as CustodialFullTokenWalletWithBatch from './CustodialFullTokenWalletWithBatch';
-export * as TronCustodialFullTokenWallet from './TronCustodialFullTokenWallet';
-export * as TronCustodialFullTokenWalletWithBatch from './TronCustodialFullTokenWalletWithBatch';
