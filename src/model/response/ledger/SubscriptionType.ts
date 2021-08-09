@@ -1,3 +1,6 @@
+/**
+ * SubscriptionType
+ */
 export enum SubscriptionType {
   ACCOUNT_BALANCE_LIMIT = 'ACCOUNT_BALANCE_LIMIT',
   CUSTOMER_TRADE_MATCH = 'CUSTOMER_TRADE_MATCH',

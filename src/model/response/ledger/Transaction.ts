@@ -1,12 +1,10 @@
-/**
- *
- * @export
- * @interface Transaction
- */
 import {MarketValue} from './MarketValue';
 import {OperationType} from './OperationType';
 import {TransactionType} from './TransactionType';
 
+/**
+ * Transaction
+ */
 export interface Transaction {
     /**
      * Source account - source of transaction(s)

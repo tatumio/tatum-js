@@ -1,7 +1,5 @@
 /**
- *
- * @export
- * @interface MarketValue
+ * MarketValue
  */
 import {Fiat} from './Fiat';
 

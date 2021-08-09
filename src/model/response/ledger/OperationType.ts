@@ -1,6 +1,5 @@
 /**
- * @export
- * @enum {string}
+ * Operation Type
  */
 export enum OperationType {
     PAYMENT = 'PAYMENT',

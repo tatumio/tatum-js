@@ -55,3 +55,4 @@ export * from './ada/CardanoGenerateWallet';
 export * from './qtum/QtumInfo'
 export * from './qtum/QtumTx'
 export * from './qtum/QtumUTXO'
+export * from './ledger/Customer'
