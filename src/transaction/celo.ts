@@ -578,6 +578,10 @@ export const sendCeloSmartContractReadMethodInvocationTransaction = async (testn
     const contract = new (new Web3(url)).eth.Contract([methodABI], contractAddress.trim());
     return {data: await contract.methods[methodName as string](...params).call()};
 };
+export const sendCeloDeployErc20Transaction = async (testnet:boolean,body: DeployCeloErc20, provider?: string) =>
+    celoBroadcast(await prepareCeloDeployErc20SignedTransaction(testnet, body), body.signatureId);
+export const sendCeloStoreDataSignedTransaction = async (testnet:boolean,body: CreateRecord, provider?: string) =>
+    celoBroadcast(await prepareCeloStoreDataSignedTransaction(testnet, body), body.signatureId);
 
 export const sendCeloSmartContractMethodInvocationTransaction =
     async (testnet: boolean, body: CeloSmartContractMethodInvocation | SmartContractReadMethodInvocation, provider?: string) => {
@@ -1266,48 +1270,164 @@ export const prepareCeloStoreDataSignedTransaction = async (testnet: boolean, bo
  */
 export const sendCeloOrcUsdTransaction = async (testnet: boolean, body: TransferCeloOrCeloErc20Token, provider?: string) =>
     celoBroadcast(await prepareCeloOrCUsdSignedTransaction(testnet, body, provider));
-
+/**
+ * Send Celo mint nft transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendCeloMintErc721Transaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) =>
     celoBroadcast(await prepareCeloMintErc721SignedTransaction(testnet, body, provider));
-
+/**
+ * Send Celo mint nft with cashback transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendCeloMintCashbackErc721Transaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) =>
     celoBroadcast(await prepareCeloMintCashbackErc721SignedTransaction(testnet, body, provider));
-
+/**
+ * Send Celo mint multiple nfts transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendCeloMintMultipleErc721Transaction = async (testnet: boolean, body: CeloMintMultipleErc721, provider?: string) =>
     celoBroadcast(await prepareCeloMintMultipleErc721SignedTransaction(testnet, body, provider));
-
+/**
+ * Send Celo mint multiple nfts with cashback transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendCeloMintMultipleCashbackErc721Transaction = async (testnet: boolean, body: CeloMintMultipleErc721, provider?: string) =>
     celoBroadcast(await prepareCeloMintMultipleCashbackErc721SignedTransaction(testnet, body, provider));
-
+/**
+ * Send Celo burn nft transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendCeloBurnErc721Transaction = async (testnet: boolean, body: CeloBurnErc721, provider?: string) =>
     celoBroadcast(await prepareCeloBurnErc721SignedTransaction(testnet, body, provider));
-
+/**
+ * Send Celo update cashback for nft transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendCeloUpdateCashbackForAuthorErc721Transaction = async (testnet: boolean, body: CeloUpdateCashbackErc721, provider?: string) =>
     celoBroadcast(await prepareCeloUpdateCashbackForAuthorErc721SignedTransaction(testnet, body, provider));
+/**
+ * Send Celo transfer nft transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendCeloTransferErc721Transaction = async (testnet: boolean, body: CeloTransferErc721, provider?: string) =>
     celoBroadcast(await prepareCeloTransferErc721SignedTransaction(testnet, body, provider));
-
+/**
+ * Send Celo deploy nft transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendCeloDeployErc721Transaction = async (testnet: boolean, body: CeloDeployErc721, provider?: string) =>
     celoBroadcast(await prepareCeloDeployErc721SignedTransaction(testnet, body, provider));
-
+/**
+ * Send Celo burn nft transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendCeloDeployMultiTokenTransaction = async (testnet: boolean, body: CeloDeployMultiToken, provider?: string) =>
     celoBroadcast(await prepareCeloDeployMultiTokenSignedTransaction(testnet, body, provider));
-
+/**
+ * Send Celo mint multitoken transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendCeloMintMultiTokenTransaction = async (testnet: boolean, body: CeloMintMultiToken, provider?: string) =>
     celoBroadcast(await prepareCeloMintMultiTokenSignedTransaction(testnet, body, provider));
-
+/**
+ * Send Celo mint multitoken batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendCeloMintMultiTokenBatchTransaction = async (testnet: boolean, body: CeloMintMultiTokenBatch, provider?: string) =>
     celoBroadcast(await prepareCeloMintMultiTokenBatchSignedTransaction(testnet, body, provider));
 
-// MultiToken transfers for multitoken
+/**
+ * Send Celo transfer multitoken transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendCeloTransferMultiTokenTransaction = async (testnet: boolean, body: CeloTransferMultiToken, provider?: string) =>
     celoBroadcast(await prepareCeloTransferMultiTokenSignedTransaction(testnet, body, provider));
+/**
+ * Send Celo transfer multitoken batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendCeloTransferMultiTokenBatchTransaction = async (testnet: boolean, body: CeloTransferMultiTokenBatch, provider?: string) =>
     celoBroadcast(await prepareCeloBatchTransferMultiTokenSignedTransaction(testnet, body, provider));
-// Burn transactions for multitoken
+/**
+ * Send Celo burn multitoken transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendCeloBurnMultiTokenTransaction = async (testnet: boolean, body: CeloBurnMultiToken, provider?: string) =>
     celoBroadcast(await prepareCeloBurnMultiTokenSignedTransaction(testnet, body, provider));
+/**
+ * Send Celo burn multitoken batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendCeloBurnMultiTokenBatchTransaction = async (testnet: boolean, body: CeloBurnMultiTokenBatch, provider?: string) =>
     celoBroadcast(await prepareCeloBurnMultiTokenBatchSignedTransaction(testnet, body, provider));
+/**
+ * Send Celo generated custodial wallet signed transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendCeloGenerateCustodialWalletSignedTransaction = async (testnet: boolean, body: GenerateCustodialAddress, provider?: string) =>
     celoBroadcast(await prepareCeloGenerateCustodialWalletSignedTransaction(testnet, body, provider));
