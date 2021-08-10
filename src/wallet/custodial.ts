@@ -15,7 +15,6 @@ import {
     Custodial_721_1155_TokenWalletWithBatch,
     Custodial_721_TokenWallet,
     Custodial_721_TokenWalletWithBatch,
-    TronCustodialFullTokenWalletWithBatch,
 } from '../contracts/custodial';
 import {
     CeloSmartContractMethodInvocation,
@@ -51,11 +50,14 @@ import {
 } from '../transaction';
 
 export const obtainCustodialAddressType = (body: GenerateCustodialAddress) => {
+    if (body.chain === Currency.TRON && body.enableSemiFungibleTokens) {
+        throw new Error('MultiToken not supported for TRON.')
+    }
     let abi;
     let code;
     if (body.enableFungibleTokens && body.enableNonFungibleTokens && body.enableSemiFungibleTokens && body.enableBatchTransactions) {
-        code = body.chain === Currency.TRON ? TronCustodialFullTokenWalletWithBatch.bytecode : CustodialFullTokenWalletWithBatch.bytecode;
-        abi = body.chain === Currency.TRON ? TronCustodialFullTokenWalletWithBatch.abi : CustodialFullTokenWalletWithBatch.abi;
+        code = CustodialFullTokenWalletWithBatch.bytecode;
+        abi = CustodialFullTokenWalletWithBatch.abi;
     } else if (body.enableFungibleTokens && body.enableNonFungibleTokens && body.enableSemiFungibleTokens && !body.enableBatchTransactions) {
         code = CustodialFullTokenWallet.bytecode;
         abi = CustodialFullTokenWallet.abi;
@@ -66,21 +68,12 @@ export const obtainCustodialAddressType = (body: GenerateCustodialAddress) => {
         code = Custodial_20_721_TokenWallet.bytecode;
         abi = Custodial_20_721_TokenWallet.abi;
     } else if (body.enableFungibleTokens && !body.enableNonFungibleTokens && body.enableSemiFungibleTokens && body.enableBatchTransactions) {
-        if (body.chain === Currency.TRON) {
-            throw new Error('MultiToken not supported for TRON.')
-        }
         code = Custodial_20_1155_TokenWalletWithBatch.bytecode;
         abi = Custodial_20_1155_TokenWalletWithBatch.abi;
     } else if (body.enableFungibleTokens && !body.enableNonFungibleTokens && body.enableSemiFungibleTokens && !body.enableBatchTransactions) {
-        if (body.chain === Currency.TRON) {
-            throw new Error('MultiToken not supported for TRON.')
-        }
         code = Custodial_20_1155_TokenWallet.bytecode;
         abi = Custodial_20_1155_TokenWallet.abi;
     } else if (!body.enableFungibleTokens && body.enableNonFungibleTokens && body.enableSemiFungibleTokens && body.enableBatchTransactions) {
-        if (body.chain === Currency.TRON) {
-            throw new Error('MultiToken not supported for TRON.')
-        }
         code = Custodial_721_1155_TokenWalletWithBatch.bytecode;
         abi = Custodial_721_1155_TokenWalletWithBatch.abi;
     } else if (!body.enableFungibleTokens && body.enableNonFungibleTokens && body.enableSemiFungibleTokens && !body.enableBatchTransactions) {
@@ -99,15 +92,9 @@ export const obtainCustodialAddressType = (body: GenerateCustodialAddress) => {
         code = Custodial_721_TokenWallet.bytecode;
         abi = Custodial_721_TokenWallet.abi;
     } else if (!body.enableFungibleTokens && !body.enableNonFungibleTokens && body.enableSemiFungibleTokens && body.enableBatchTransactions) {
-        if (body.chain === Currency.TRON) {
-            throw new Error('MultiToken not supported for TRON.')
-        }
         code = Custodial_1155_TokenWalletWithBatch.bytecode;
         abi = Custodial_1155_TokenWalletWithBatch.abi;
     } else if (!body.enableFungibleTokens && !body.enableNonFungibleTokens && body.enableSemiFungibleTokens && !body.enableBatchTransactions) {
-        if (body.chain === Currency.TRON) {
-            throw new Error('MultiToken not supported for TRON.')
-        }
         code = Custodial_1155_TokenWallet.bytecode;
         abi = Custodial_1155_TokenWallet.abi;
     } else {

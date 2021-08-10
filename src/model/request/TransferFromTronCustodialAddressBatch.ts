@@ -4,7 +4,7 @@ import {TransferFromCustodialAddressBatch} from './TransferFromCustodialAddressB
 
 export class TransferFromTronCustodialAddressBatch extends TransferFromCustodialAddressBatch {
 
-    @ValidateIf(o => o.signatureId)
+    @ValidateIf(o => o.signatureId && o.chain === Currency.TRON)
     @IsNotEmpty()
     @Length(34, 34)
     public from?: string;
