@@ -578,6 +578,10 @@ export const sendCeloSmartContractReadMethodInvocationTransaction = async (testn
     const contract = new (new Web3(url)).eth.Contract([methodABI], contractAddress.trim());
     return {data: await contract.methods[methodName as string](...params).call()};
 };
+export const sendCeloDeployErc20Transaction = async (testnet:boolean,body: DeployCeloErc20, provider?: string) =>
+    celoBroadcast(await prepareCeloDeployErc20SignedTransaction(testnet, body), body.signatureId);
+export const sendCeloStoreDataSignedTransaction = async (testnet:boolean,body: CreateRecord, provider?: string) =>
+    celoBroadcast(await prepareCeloStoreDataSignedTransaction(testnet, body), body.signatureId);
 
 export const sendCeloSmartContractMethodInvocationTransaction =
     async (testnet: boolean, body: CeloSmartContractMethodInvocation | SmartContractReadMethodInvocation, provider?: string) => {
