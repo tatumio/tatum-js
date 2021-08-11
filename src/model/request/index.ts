@@ -82,6 +82,7 @@ export * from './BroadcastWithdrawal';
 export * from './TransferXlmOffchain';
 export * from './TransferXrpOffchain';
 export * from './TransferEthOffchain';
+export * from './TransferCeloOffchain';
 export * from './CreateTransaction';
 export * from './TransactionFilter';
 export * from './CreateAccount';
