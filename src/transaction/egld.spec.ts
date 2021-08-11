@@ -75,7 +75,7 @@ describe('Elrond EGLD tests', () => {
             data,
         };
         const result = await prepareEgldDeployNftOrSftSignedTransaction(body);
-        console.log(result);
+        // console.log(result);
         expect(result).toBeDefined();
     });
 

@@ -99,7 +99,7 @@ export const signEgldTransaction = async (tx: EgldSendTransaction, fromPrivateKe
  * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @param fromPrivateKey optional private key of sender account
  */
-export const getEgldClient = (provider?: string, fromPrivateKey?: string) => {
+export const getEgldClient = (provider?: string) => {
     const client = (provider || ELROND_V3_ENDPOINT);
     return client;
 };
@@ -115,7 +115,7 @@ export const signEgldKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
     if (tx.chain !== Currency.EGLD) {
         throw Error('Unsupported chain.');
     }
-    const client = getEgldClient(provider, fromPrivateKey);
+    const client = getEgldClient(provider);
     const transaction = JSON.parse(tx.serializedTransaction);
     return await prepareSignedTransactionAbstraction(client, transaction, undefined, fromPrivateKey, undefined);
 };
@@ -136,7 +136,7 @@ export const signEgldKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
 //         nonce,
 //         signatureId
 //     } = body;
-//     const client = getEgldClient(provider, fromPrivateKey);
+//     const client = getEgldClient(provider);
 //     const address = to || client.eth.defaultAccount;
 //     if (!address) {
 //         throw new Error('Recipient must be provided.');
@@ -169,13 +169,28 @@ export const signEgldKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
 // };
 
 /**
+ * Encode number for ESDT transaction
+ * @param n number or BigNumber
+ * @returns n as hex encoded string with an even number of characters
+ */
+const encodeNumber = (n: number | BigNumber): string => {
+    const bn = new BigNumber(n);
+    if (bn.isNaN()) {
+        return '00';
+    }
+    const result = bn.toString(16).toLowerCase();
+
+    return `${(result.length % 2 ? '' : '0') + result}`;
+};
+
+/**
  * Prepare properties for ESDT Issue transaction
  * @param props content of the data transaction
  * @returns props as encoded string
  */
 const prepareProperties = (props: any): string => {
     if (!props) {
-        return ''
+        return '';
     }
     const keys = Object.keys(props);
     const asHexTrue = Buffer.from('true').toString('hex');
@@ -197,19 +212,18 @@ const prepareProperties = (props: any): string => {
 
     const tokenName = Buffer.from(data.tokenName).toString('hex');
     const tokenTicker = Buffer.from(data.tokenTicker).toString('hex');
-    const initialSupply = new BigNumber(data.initialSupply).toString(16).toLowerCase();
-    const decimals = new BigNumber(data.decimals).toString(16).toLowerCase();
+    const initialSupply = encodeNumber(data.initialSupply);
+    const decimals = encodeNumber(data.decimals);
     const properties = prepareProperties(data.properties);
 
-    return `${data.service}@${tokenName}@${tokenTicker}@${(initialSupply.length % 2 ? '0' : '') + initialSupply}`
-        + `@${(decimals.length % 2 ? '0' : '') + decimals}` + properties;
+    return `${data.service}@${tokenName}@${tokenTicker}@${initialSupply}@${decimals}` + properties;
  };
 
 const prepareEgldEsdtTransferData = async (data: EsdtTransfer): Promise<string> => {
     await validateBody(data, EsdtTransfer);
 
     const tokenId = Buffer.from(data.tokenId as string).toString('hex');
-    const value = new BigNumber(data.value).toString(16).toLowerCase();
+    const value = encodeNumber(data.value);
     let args = '';
     if (data.methodName) {
         args += '@' + Buffer.from(data.methodName).toString('hex');
@@ -217,7 +231,7 @@ const prepareEgldEsdtTransferData = async (data: EsdtTransfer): Promise<string> 
             if (new BigNumber(k).isNaN()) {
                 args += `@${Buffer.from(k as string).toString('hex')}`;
             } else {
-                args += `@${new BigNumber(k).toString(16).toLowerCase()}`;
+                args += `@${encodeNumber(new BigNumber(k))}`;
             }
         }
     }
@@ -229,7 +243,7 @@ const prepareEgldEsdtMintOrBurnData = async (data: EsdtMint): Promise<string> =>
     await validateBody(data, EsdtMint);
 
     const tokenId = Buffer.from(data.tokenId as string).toString('hex');
-    const supply = new BigNumber(data.supply).toString(16).toLowerCase();
+    const supply = encodeNumber(data.supply);
 
     return `${data.service}@${tokenId}@${supply}`;
 };
@@ -288,8 +302,8 @@ const prepareEgldCreateNftOrSftData = async (data: EsdtCreateNftOrSft): Promise<
 
     const tokenId = Buffer.from(data.tokenId as string).toString('hex');
     const nftName = Buffer.from(data.nftName).toString('hex');
-    const quantity = new BigNumber(data.quantity).toString(16).toLowerCase();
-    const royalties = new BigNumber(data.royalties).multipliedBy(100).toString(16).toLowerCase();
+    const quantity = encodeNumber(data.quantity);
+    const royalties = encodeNumber(new BigNumber(data.royalties).multipliedBy(100));
     const attributes = Buffer.from(data.attributes).toString('hex');
 
     let uris = '';
@@ -323,8 +337,8 @@ const prepareEgldAddOrBurnNftQuantityData = async (data: EsdtAddOrBurnNftQuantit
     await validateBody(data, EsdtAddOrBurnNftQuantity);
 
     const tokenId = Buffer.from(data.tokenId as string).toString('hex');
-    const nonce = new BigNumber(data.nonce).toString(16).toLowerCase();
-    const quantity = new BigNumber(data.quantity).toString(16).toLowerCase();
+    const nonce = encodeNumber(data.nonce);
+    const quantity = encodeNumber(data.quantity);
 
     return `${data.service}@${tokenId}@${nonce}@${quantity}`;
 };
@@ -333,8 +347,8 @@ const prepareEgldFreezeOrWipeNftData = async (data: EsdtFreezeOrWipeNft): Promis
     await validateBody(data, EsdtFreezeOrWipeNft);
 
     const tokenId = Buffer.from(data.tokenId as string).toString('hex');
-    const nonce = new BigNumber(data.nonce).toString(16).toLowerCase();
-    const account = new BigNumber(data.account).toString(16).toLowerCase();
+    const nonce = encodeNumber(data.nonce);
+    const account = Buffer.from(data.account).toString('hex');
 
     return `${data.service}@${tokenId}@${nonce}@${account}`;
 };
@@ -343,8 +357,8 @@ const prepareEgldTransferNftData = async (data: EsdtTransferNft): Promise<string
     await validateBody(data, EsdtTransferNft);
 
     const tokenId = Buffer.from(data.tokenId as string).toString('hex');
-    const nonce = new BigNumber(data.nonce).toString(16).toLowerCase();
-    const quantity = new BigNumber(data.quantity).toString(16).toLowerCase();
+    const nonce = encodeNumber(data.nonce);
+    const quantity = encodeNumber(data.quantity);
     const to = Buffer.from(data.to).toString('hex');
 
     let args = '';
@@ -354,7 +368,7 @@ const prepareEgldTransferNftData = async (data: EsdtTransferNft): Promise<string
             if (new BigNumber(k).isNaN()) {
                 args += `@${Buffer.from(k as string).toString('hex')}`;
             } else {
-                args += `@${new BigNumber(k).toString(16).toLowerCase()}`;
+                args += `@${encodeNumber(new BigNumber(k))}`;
             }
         }
     }
@@ -418,7 +432,7 @@ export const prepareEgldDeployEsdtSignedTransaction = async (body: EgldEsdtTrans
         signatureId,
     } = body;
 
-    const client = getEgldClient(provider, fromPrivateKey);
+    const client = getEgldClient(provider);
     
     const value = amount ? new BigNumber(amount).toNumber() : 0.05;
     const gasLimit = fee?.gasLimit ? fee.gasLimit : '60000000';
@@ -453,7 +467,7 @@ export const prepareEgldTransferEsdtSignedTransaction = async (body: EgldEsdtTra
         signatureId,
     } = body;
 
-    const client = getEgldClient(provider, fromPrivateKey);
+    const client = getEgldClient(provider);
 
     const value = amount ? new BigNumber(amount).toNumber() : 0;
     const gasLimit = fee?.gasLimit ? fee.gasLimit : '500000';
@@ -485,7 +499,7 @@ export const prepareEgldMintEsdtSignedTransaction = async (body: EgldEsdtTransac
         signatureId,
     } = body;
 
-    const client = getEgldClient(provider, fromPrivateKey);
+    const client = getEgldClient(provider);
 
     const gasLimit = fee?.gasLimit ? fee.gasLimit : '60000000';
     
@@ -514,7 +528,7 @@ export const prepareEgldBurnEsdtSignedTransaction = async (body: EgldEsdtTransac
         signatureId,
     } = body;
 
-    const client = getEgldClient(provider, fromPrivateKey);
+    const client = getEgldClient(provider);
 
     const gasLimit = fee?.gasLimit ? fee.gasLimit : '60000000';
     
@@ -543,7 +557,7 @@ export const prepareEgldPauseEsdtSignedTransaction = async (body: EgldEsdtTransa
         signatureId,
     } = body;
 
-    const client = getEgldClient(provider, fromPrivateKey);
+    const client = getEgldClient(provider);
 
     const gasLimit = fee?.gasLimit ? fee.gasLimit : '60000000';
     
@@ -572,7 +586,7 @@ export const prepareEgldSpecialRoleEsdtOrNftSignedTransaction = async (body: Egl
         signatureId,
     } = body;
 
-    const client = getEgldClient(provider, fromPrivateKey);
+    const client = getEgldClient(provider);
 
     const gasLimit = fee?.gasLimit ? fee.gasLimit : '60000000';
     
@@ -601,7 +615,7 @@ export const prepareEgldTransferFreezeOrWipeOrOwvershipEsdtSignedTransaction = a
         signatureId,
     } = body;
 
-    const client = getEgldClient(provider, fromPrivateKey);
+    const client = getEgldClient(provider);
 
     const gasLimit = fee?.gasLimit ? fee.gasLimit : '60000000';
     
@@ -630,7 +644,7 @@ export const prepareEgldControlChangesEsdtSignedTransaction = async (body: EgldE
       signatureId,
   } = body;
 
-  const client = getEgldClient(provider, fromPrivateKey);
+  const client = getEgldClient(provider);
 
   const gasLimit = fee?.gasLimit ? fee.gasLimit : '60000000';
   
@@ -661,7 +675,7 @@ export const prepareEgldDeployNftOrSftSignedTransaction = async (body: EgldEsdtT
         signatureId,
     } = body;
 
-    const client = getEgldClient(provider, fromPrivateKey);
+    const client = getEgldClient(provider);
     
     const value = amount ? new BigNumber(amount).toNumber() : 0.05;
     const gasLimit = fee?.gasLimit ? fee.gasLimit : '60000000';
@@ -696,7 +710,7 @@ export const prepareEgldCreateNftOrSftSignedTransaction = async (body: EgldEsdtT
         signatureId,
     } = body;
 
-    const client = getEgldClient(provider, fromPrivateKey);
+    const client = getEgldClient(provider);
     
     const value = amount ? new BigNumber(amount).toNumber() : 0;
     const sender = generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string);
@@ -734,7 +748,7 @@ export const prepareEgldTransferNftCreateRoleSignedTransaction = async (body: Eg
         signatureId,
     } = body;
 
-    const client = getEgldClient(provider, fromPrivateKey);
+    const client = getEgldClient(provider);
     
     const value = amount ? new BigNumber(amount).toNumber() : 0;
 
@@ -771,7 +785,7 @@ export const prepareEgldStopNftCreateSignedTransaction = async (body: EgldEsdtTr
         signatureId,
     } = body;
 
-    const client = getEgldClient(provider, fromPrivateKey);
+    const client = getEgldClient(provider);
     
     const value = amount ? new BigNumber(amount).toNumber() : 0;
     const gasLimit = fee?.gasLimit ? fee.gasLimit : '60000000';
@@ -806,7 +820,7 @@ export const prepareEgldAddOrBurnNftQuantitySignedTransaction = async (body: Egl
         signatureId,
     } = body;
 
-    const client = getEgldClient(provider, fromPrivateKey);
+    const client = getEgldClient(provider);
     
     const value = amount ? new BigNumber(amount).toNumber() : 0;
     const gasLimit = fee?.gasLimit ? fee.gasLimit : '10000000';
@@ -842,7 +856,7 @@ export const prepareEgldFreezeNftSignedTransaction = async (body: EgldEsdtTransa
         signatureId,
     } = body;
 
-    const client = getEgldClient(provider, fromPrivateKey);
+    const client = getEgldClient(provider);
     
     const value = amount ? new BigNumber(amount).toNumber() : 0;
     const gasLimit = fee?.gasLimit ? fee.gasLimit : '60000000';
@@ -877,7 +891,7 @@ export const prepareEgldTransferNftSignedTransaction = async (body: EgldEsdtTran
         signatureId,
     } = body;
 
-    const client = getEgldClient(provider, fromPrivateKey);
+    const client = getEgldClient(provider);
     
     const value = amount ? new BigNumber(amount).toNumber() : 0;
     const sender = generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string);
@@ -916,7 +930,7 @@ export const prepareEgldSignedTransaction = async (body: EgldEsdtTransaction, pr
         signatureId
     } = body;
 
-    const client = getEgldClient(provider, fromPrivateKey);
+    const client = getEgldClient(provider);
 
     const tx: TransactionConfig = {
         from: 0,

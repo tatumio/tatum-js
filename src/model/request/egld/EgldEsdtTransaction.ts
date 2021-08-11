@@ -22,8 +22,4 @@ export class EgldEsdtTransaction extends PrivateKeyOrSignatureId {
 
     @IsOptional()
     public data?: any;
-
-    @IsOptional()
-    @IsNotEmpty()
-    public signatureId?: string;
 }
