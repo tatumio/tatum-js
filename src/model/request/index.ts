@@ -123,3 +123,4 @@ export * from './CeloUpdateCashbackErc721';
 export * from './UpdateCashbackErc721';
 export * from './PrivateKeyOrSignatureIdBtcBased'
 export {ContractType} from './ContractType';
+export * from './egld';

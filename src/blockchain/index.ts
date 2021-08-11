@@ -18,3 +18,4 @@ export * from './scrypta';
 export * from './tron';
 export * from './xdc';
 export * from './qtum'
+export * from './egld'
