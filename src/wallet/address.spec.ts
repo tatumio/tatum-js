@@ -275,4 +275,38 @@ describe('Address tests', () => {
         const address = await generateAddressFromPrivatekey(Currency.XDC, true, '0x4cda6d2c33b0f9a041e46474a638ac59aee0734cf208aa9aa2f05ef887bd09e1');
         expect(address).toBe('xdc8acbcfbc8ce37f6f674f4b9861d3efe89288d89f');
     });
+
+    it('should generate private key 0!!!1 for EGLD mainnet', async () => {
+        const privateKey = await generatePrivateKeyFromMnemonic(Currency.EGLD, false, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 0);
+        expect(privateKey).toBe('1da12bfa82725be308f79b2c313358be5a215ca6b405b00f28750560a1febb90');
+    });
+
+    it ('should generate private key for EGLD testnet', async () => {
+        const privateKey = await generatePrivateKeyFromMnemonic(Currency.EGLD, true, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 0);
+        expect(privateKey).toBe('74ecd7fbab10383652083f503eec77fa356a7665982c1b76f526e8fd332f4747');
+    });
+
+    it('should generate address 0!!!1 for EGLD mainnet', () => {
+        const address = generateAddressFromXPub(Currency.EGLD, false, 'f588698267befb4b35b4bb6bb33ce49c99d11415f2dde72aeb221dbefd712d0b', 0);
+        expect(address.length).toBe(62);
+        expect(address).toBe('erd17kyxnqn8hma5kdd5hd4mx08ynjvaz9q47tw7w2htygwmalt3959s2wvqmr');
+    });
+
+    it('should generate address for EGLD testnet', () => {
+        const address = generateAddressFromXPub(Currency.EGLD, true, '0cd8e6217b4a218807b858ffb508483cdcdadbb7a21196727f764a510a692760', 0);
+        expect(address.length).toBe(62);
+        expect(address).toBe('erd1pnvwvgtmfgscspactrlm2zzg8nwd4kah5ggevunlwe99zznfyasq5m7fz2');
+    });
+
+    it('should generate an address from a mainnet EGLD private key', async () => {
+        const address = await generateAddressFromPrivatekey(Currency.EGLD, false, '1da12bfa82725be308f79b2c313358be5a215ca6b405b00f28750560a1febb90');
+        expect(address.length).toBe(62);
+        expect(address).toBe('erd17kyxnqn8hma5kdd5hd4mx08ynjvaz9q47tw7w2htygwmalt3959s2wvqmr');
+    });
+
+    it('should generate an address from a testnet EGLD private key', async () => {
+        const address = await generateAddressFromPrivatekey(Currency.EGLD, true, '74ecd7fbab10383652083f503eec77fa356a7665982c1b76f526e8fd332f4747');
+        expect(address.length).toBe(62);
+        expect(address).toBe('erd1pnvwvgtmfgscspactrlm2zzg8nwd4kah5ggevunlwe99zznfyasq5m7fz2');
+    });
 });

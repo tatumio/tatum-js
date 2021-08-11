@@ -60,6 +60,7 @@ export enum Currency {
     LATOKEN = 'LATOKEN',
     USDT_MATIC = 'USDT_MATIC',
     QTUM = 'QTUM',
+    EGLD = 'EGLD',
 }
 
 export const ERC20_CURRENCIES = [

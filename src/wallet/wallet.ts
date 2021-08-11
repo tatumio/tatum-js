@@ -2,6 +2,7 @@ import {generatePrivateKey, getAddressFromPrivateKey} from '@binance-chain/javas
 import Neon, {wallet} from '@cityofzion/neon-js';
 import {generateMnemonic, mnemonicToSeed} from 'bip39';
 import {bip32, networks} from 'bitcoinjs-lib';
+import {derivePath, getPublicKey} from 'ed25519-hd-key';
 // @ts-ignore
 import {Networks} from 'bitcore-lib-doge';
 import {hdkey as ethHdKey} from 'ethereumjs-wallet';
@@ -33,6 +34,7 @@ import {
     TRON_DERIVATION_PATH,
     VET_DERIVATION_PATH,
     XDC_DERIVATION_PATH,
+    EGLD_DERIVATION_PATH,
 } from '../constants';
 import {Currency} from '../model';
 import cardano from './cardano.crypto';
@@ -126,6 +128,21 @@ export const generateOneWallet = async (testnet: boolean, mnem: string): Promise
     const derivePath = hdwallet.derivePath(path);
     return {
         xpub: derivePath.publicExtendedKey().toString(),
+        mnemonic: mnem
+    };
+};
+
+/**
+ * Generate EGLD wallet
+ * @param mnem mnemonic seed to use
+ * @returns wallet
+ */
+export const generateEgldWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
+    const path = testnet ? `${TESTNET_DERIVATION_PATH}'` : `${EGLD_DERIVATION_PATH}/0'`;
+    const seed = await mnemonicToSeed(mnem);
+    const {key, chainCode} = derivePath(path, seed.toString('hex'));
+    return {
+        xpub: getPublicKey(key, false).toString('hex'),
         mnemonic: mnem
     };
 };
@@ -332,6 +349,8 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
             return generateOneWallet(testnet, mnem);
         case Currency.QTUM:
             return generateQtumWallet(testnet, mnem);
+        case Currency.EGLD:
+            return generateEgldWallet(testnet, mnem);
         case Currency.USDT:
         case Currency.WBTC:
         case Currency.LEO:

@@ -17,5 +17,6 @@ export * from './one';
 export * from './tron';
 export * from './ada';
 export * from './xdc';
+export * from './egld';
 
 // TODO: add support for BNB local send tx / NEO transactions

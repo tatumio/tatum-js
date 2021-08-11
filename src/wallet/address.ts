@@ -1,5 +1,7 @@
 import {getAddressFromPrivateKey} from '@binance-chain/javascript-sdk/lib/crypto';
 import {HarmonyAddress} from '@harmony-js/crypto';
+import * as bech32 from 'bech32';
+import {derivePath, getPublicKey} from 'ed25519-hd-key';
 // @ts-ignore
 import {ECDSA_secp256k1, encodeKey, SHA3_256} from '@onflow/util-encode-key';
 import {fromBase58, fromPublicKey, fromSeed} from 'bip32';
@@ -33,6 +35,7 @@ import {
     TRON_DERIVATION_PATH,
     VET_DERIVATION_PATH,
     XDC_DERIVATION_PATH,
+    EGLD_DERIVATION_PATH,
 } from '../constants';
 import {Currency} from '../model';
 import cardano from './cardano.crypto';
@@ -165,17 +168,44 @@ const generateBscAddress = (testnet: boolean, xpub: string, i: number) => {
     return generateEthAddress(testnet, xpub, i);
 };
 
+/**
+ * Generate XDC address
+ * @param testnet testnet or mainnet version of address
+ * @param xpub extended public key to generate address from
+ * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
+ * @returns blockchain address
+ */
 const generateXdcAddress = (testnet: boolean, xpub: string, i: number) => {
     const w = ethHdKey.fromExtendedKey(xpub);
     const wallet = w.deriveChild(i).getWallet();
     return 'xdc' + wallet.getAddress().toString('hex').toLowerCase();
 };
 
+/**
+ * Generate ONE address
+ * @param testnet testnet or mainnet version of address
+ * @param xpub extended public key to generate address from
+ * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
+ * @returns blockchain address
+ */
 const generateOneAddress = (testnet: boolean, xpub: string, i: number) => {
     const w = ethHdKey.fromExtendedKey(xpub);
     const wallet = w.deriveChild(i).getWallet();
     const harmonyAddress = new HarmonyAddress('0x' + wallet.getAddress().toString('hex'));
     return harmonyAddress.basicHex;
+};
+
+/**
+ * Generate EGLD address
+ * @param testnet testnet or mainnet version of address
+ * @param xpub extended public key to generate address from
+ * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
+ * @returns blockchain address
+ */
+const generateEgldAddress = (testnet: boolean, xpub: string, i: number) => {
+    const words = bech32.toWords(Buffer.from(xpub.slice(-64), 'hex'));
+    const address = bech32.encode('erd', words);
+    return address;
 };
 
 /**
@@ -190,6 +220,14 @@ const generateCeloAddress = (testnet: boolean, xpub: string, i: number) => {
     const wallet = w.deriveChild(i).getWallet();
     return '0x' + wallet.getAddress().toString('hex').toLowerCase();
 };
+
+/**
+ * Generate QTUM address
+ * @param testnet testnet or mainnet version of address
+ * @param xpub extended public key to generate address from
+ * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
+ * @returns blockchain address
+ */
 const generateQtumAddress = (testnet: boolean, xpub: string, i: number) => {
     const network = testnet ? QTUM_NETWORK_TESTNET : QTUM_NETWORK_MAINNET;
     const w = fromBase58(xpub, network).derivePath(String(i));
@@ -270,6 +308,13 @@ const generateTronPrivateKey = async (mnemonic: string, i: number) => {
         .derive(i)
         .privateKey?.toString('hex') ?? '';
 };
+
+/**
+ * Generate QTUM private key from mnemonic seed
+ * @param mnemonic mnemonic to generate private key from
+ * @param i derivation index of private key to generate.
+ * @returns blockchain private key to the address
+ */
 const generateQtumPrivateKey = async (testnet: boolean, mnem: string, i: number) => {
     const network = testnet ? QTUM_NETWORK_TESTNET : QTUM_NETWORK_MAINNET;
     return fromSeed(await mnemonicToSeed(mnem), network)
@@ -437,6 +482,20 @@ const generateOnePrivateKey = async (testnet: boolean, mnemonic: string, i: numb
 };
 
 /**
+ * Generate EGLD private key from mnemonic seed
+ * @param testnet testnet or mainnet version of address
+ * @param mnemonic mnemonic to generate private key from
+ * @param i derivation index of private key to generate.
+ * @returns blockchain private key to the address
+ */
+const generateEgldPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
+    const path = testnet ? `${TESTNET_DERIVATION_PATH}'` : `${EGLD_DERIVATION_PATH}/${i}'`;
+    const seed = await mnemonicToSeed(mnemonic);
+    const {key, chainCode} = derivePath(path, seed.toString('hex'));
+    return key.toString('hex');
+};
+
+/**
  * Generate Polygon or any other ERC20 private key from mnemonic seed
  * @param testnet testnet or mainnet version of address
  * @param mnemonic mnemonic to generate private key from
@@ -461,6 +520,13 @@ const generateBscPrivateKey = async (testnet: boolean, mnemonic: string, i: numb
     return generateEthPrivateKey(testnet, mnemonic, i);
 };
 
+/**
+ * Generate XDC private key from mnemonic seed
+ * @param testnet testnet or mainnet version of address
+ * @param mnemonic mnemonic to generate private key from
+ * @param i derivation index of private key to generate.
+ * @returns blockchain private key to the address
+ */
 const generateXdcPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
     const path = testnet ? TESTNET_DERIVATION_PATH : XDC_DERIVATION_PATH;
     const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnemonic));
@@ -522,11 +588,20 @@ const convertBtcPrivateKey = (testnet: boolean, privkey: string) => {
     const keyPair = ECPair.fromWIF(privkey, network);
     return payments.p2pkh({pubkey: keyPair.publicKey, network}).address as string;
 };
+
+/**
+ * Generate QTUM private key from mnemonic seed
+ * @param testnet testnet or mainnet version of address
+ * @param mnemonic mnemonic to generate private key from
+ * @param i derivation index of private key to generate.
+ * @returns blockchain private key to the address
+ */
 const convertQTUMPrivateKey = (testnet: boolean, privkey: string) => {
     const network = testnet ? QTUM_NETWORK_TESTNET : QTUM_NETWORK_MAINNET;
     const keyPair = ECPair.fromWIF(privkey, network);
     return payments.p2pkh({pubkey: keyPair.publicKey, network}).address as string;
 };
+
 /**
  * Convert Scrypta Private Key to Address
  * @param testnet testnet or mainnet version of address
@@ -561,6 +636,25 @@ const convertOnePrivateKey = (testnet: boolean, privKey: string) => {
     return wallet.getAddressString() as string;
 };
 
+/**
+ * Convert EGLD Private Key to Address
+ * @param testnet testnet or mainnet version of address
+ * @param privKey private key to use
+ * @returns blockchain address
+ */
+const convertEgldPrivateKey = (testnet: boolean, privKey: string) => {
+    const publicKey = getPublicKey(Buffer.from(privKey, 'hex'), false).toString('hex');
+    const words = bech32.toWords(Buffer.from(publicKey.slice(-64), 'hex'));
+    const address = bech32.encode('erd', words);
+    return address;
+};
+
+/**
+ * Convert XDC Private Key to Address
+ * @param testnet testnet or mainnet version of address
+ * @param privKey private key to use
+ * @returns blockchain address
+ */
 const convertXdcPrivateKey = (testnet: boolean, privKey: string) => {
     const wallet = ethWallet.fromPrivateKey(Buffer.from(privKey.replace('0x', ''), 'hex'));
     return wallet.getAddressString().replace('0x', 'xdc');
@@ -639,6 +733,8 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
             return generateOneAddress(testnet, xpub, i);
         case Currency.XDC:
             return generateXdcAddress(testnet, xpub, i);
+        case Currency.EGLD:
+            return generateEgldAddress(testnet, xpub, i);
         case Currency.VET:
             return generateVetAddress(testnet, xpub, i);
         case Currency.LYRA:
@@ -724,6 +820,8 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
             return generateOnePrivateKey(testnet, mnemonic, i);
         case Currency.XDC:
             return generateXdcPrivateKey(testnet, mnemonic, i);
+        case Currency.EGLD:
+            return generateEgldPrivateKey(testnet, mnemonic, i);
         case Currency.VET:
             return generateVetPrivateKey(testnet, mnemonic, i);
         case Currency.LYRA:
@@ -783,6 +881,8 @@ export const generateAddressFromPrivatekey = (currency: Currency, testnet: boole
             return convertOnePrivateKey(testnet, privateKey);
         case Currency.XDC:
             return convertXdcPrivateKey(testnet, privateKey);
+        case Currency.EGLD:
+            return convertEgldPrivateKey(testnet, privateKey);
         default:
             throw new Error('Unsupported blockchain.');
     }

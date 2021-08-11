@@ -23,7 +23,8 @@ export const DOGE_DERIVATION_PATH = 'm/44\'/3\'/0\'/0';
 export const BCH_DERIVATION_PATH = 'm/44\'/145\'/0\'/0';
 export const LYRA_DERIVATION_PATH = 'm/44\'/497\'/0\'/0';
 export const ADA_DERIVATION_PATH = 'm/1852\'/1815\'/0\'';
-export const XDC_DERIVATION_PATH = 'm/44\'/550\'/0\'';
+export const XDC_DERIVATION_PATH = 'm/44\'/550\'/0\'/0';
+export const EGLD_DERIVATION_PATH = 'm/44\'/508\'/0\'/0\'';
 export const TESTNET_DERIVATION_PATH = 'm/44\'/1\'/0\'/0';
 
 export const ADA_DERIVATION_SCHEME = 2;
@@ -245,3 +246,5 @@ export const TRANSFER_METHOD_ABI = {
     stateMutability: 'nonpayable',
     type: 'function',
 };
+
+export const ESDT_SYSTEM_SMART_CONTRACT_ADDRESS = 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls8a5w6u';

@@ -14,3 +14,4 @@ export * from './tron';
 export * from './xdc';
 export * from './celo';
 export * from './ada';
+export * from './egld';
