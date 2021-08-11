@@ -223,6 +223,13 @@ export const getFlowNftTokenByAddress = async (testnet: boolean, account: string
     return await sendScript(testnet, code, args);
 };
 
+/**
+ * Send Flow NFT mint token transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendFlowNftMintToken = async (testnet: boolean, body: FlowMintNft):
     Promise<{ txId: string, tokenId: number }> => {
     await validateBody(body, FlowMintNft);
@@ -238,6 +245,13 @@ export const sendFlowNftMintToken = async (testnet: boolean, body: FlowMintNft):
     return {txId: result.id, tokenId: result.events.find((e: any) => e.type.includes('TatumMultiNFT.Minted'))?.data.id};
 };
 
+/**
+ * Send Flow NFT mint multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendFlowNftMintMultipleToken = async (testnet: boolean, body: FlowMintMultipleNft):
     Promise<{ txId: string, tokenId: number[] }> => {
     await validateBody(body, FlowMintMultipleNft);
@@ -253,6 +267,13 @@ export const sendFlowNftMintMultipleToken = async (testnet: boolean, body: FlowM
     return {txId: result.id, tokenId: result.events.filter((e: any) => e.type.includes('TatumMultiNFT.Minted')).map(e => e.data.id)};
 };
 
+/**
+ * Send Flow NFT transfer token transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendFlowNftTransferToken = async (testnet: boolean, body: FlowTransferNft):
     Promise<{ txId: string }> => {
     await validateBody(body, FlowTransferNft);
@@ -268,6 +289,13 @@ export const sendFlowNftTransferToken = async (testnet: boolean, body: FlowTrans
     return {txId: result.id};
 };
 
+/**
+ * Send Flow NFT burn token transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendFlowNftBurnToken = async (testnet: boolean, body: FlowBurnNft):
     Promise<{ txId: string }> => {
     await validateBody(body, FlowBurnNft);

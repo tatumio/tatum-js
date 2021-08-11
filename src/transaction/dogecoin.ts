@@ -5,6 +5,10 @@ import {dogeBroadcast} from '../blockchain';
 import {validateBody} from '../connector/tatum';
 import {Currency, TransactionKMS, TransferDogeBlockchain} from '../model';
 
+/**
+ * Prepare a signed Doge transaction with the private key locally. Nothing is broadcasted to the blockchain.
+ * @returns raw transaction data in hex, to be broadcasted to blockchain.
+ */
 const prepareSignedTransaction = async (body: TransferDogeBlockchain) => {
     await validateBody(body, TransferDogeBlockchain);
     const {fromUTXO, to, fee, changeAddress} = body;

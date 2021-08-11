@@ -16,6 +16,13 @@ import {
 import { generateAddressFromXPub, generatePrivateKeyFromMnemonic } from '../wallet'
 import { offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal } from './common'
 
+/**
+ * Send Ada transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
+ */
 export const sendAdaOffchainTransaction = async (testnet: boolean, body: TransferBtcBasedOffchain) => {
   await validateBody(body, TransferBtcBasedOffchain)
   const {

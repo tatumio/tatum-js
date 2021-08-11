@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum",
-  "version": "1.18.12",
+  "version": "1.18.13",
   "description": "",
   "main": "dist/src/index.js",
   "repository": "https://github.com/tatumio/tatum-js",
@@ -11,7 +11,8 @@
     "clean": "rimraf dist/*",
     "build": "tsc",
     "prepublish": "npm run clean && npm run build",
-    "lint": "tslint -p tsconfig.json -c tslint.json --fix"
+    "lint": "tslint -p tsconfig.json -c tslint.json --fix",
+    "docs": "typedoc"
   },
   "types": "dist/src/index.d.ts",
   "keywords": [
@@ -81,8 +82,7 @@
     "ts-jest": "^26.1.1",
     "ts-node": "^8.10.2",
     "tslint": "^6.1.2",
-    "typedoc": "^0.17.8",
-    "typedoc-plugin-markdown": "^3.0.3",
+    "typedoc": "^0.21.5",
     "typescript": "^4.3.2"
   },
   "jest": {

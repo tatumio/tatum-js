@@ -120,12 +120,27 @@ export const prepareOneSignedTransaction = async (testnet: boolean, body: OneTra
         body.fee?.gasLimit, body.fee?.gasPrice);
 };
 
+/**
+ * Sign Harmony store data transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
 export const prepareOneStoreDataTransaction = async (testnet: boolean, body: CreateRecord, provider?: string) => {
     await validateBody(body, CreateRecord);
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.to, undefined, body.nonce, body.data,
         body.ethFee?.gasLimit, body.ethFee?.gasPrice);
 };
+
+/**
+ * Sign Harmony mint erc20 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
 export const prepareOneMint20SignedTransaction = async (testnet: boolean, body: OneMint20, provider?: string) => {
     await validateBody(body, OneMint20);
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
@@ -137,6 +152,14 @@ export const prepareOneMint20SignedTransaction = async (testnet: boolean, body: 
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, undefined, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice);
 };
+
+/**
+ * Sign Harmony burn erc20 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
 export const prepareOneBurn20SignedTransaction = async (testnet: boolean, body: OneBurn20, provider?: string) => {
     await validateBody(body, OneBurn20);
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
@@ -148,6 +171,14 @@ export const prepareOneBurn20SignedTransaction = async (testnet: boolean, body: 
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, undefined, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice);
 };
+
+/**
+ * Sign Harmony transfer erc20 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
 export const prepareOneTransfer20SignedTransaction = async (testnet: boolean, body: OneTransfer20, provider?: string) => {
     await validateBody(body, OneTransfer20);
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
@@ -169,6 +200,13 @@ export const getOne20ContractDecimals = async (testnet: boolean, contractAddress
     return await contract.methods.decimals().call();
 }
 
+/**
+ * Sign Harmony generate custodial wallet transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
 export const prepareOneGenerateCustodialWalletSignedTransaction = async (testnet: boolean, body: GenerateCustodialAddress, provider?: string) => {
     await validateBody(body, GenerateCustodialAddress);
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
@@ -182,6 +220,13 @@ export const prepareOneGenerateCustodialWalletSignedTransaction = async (testnet
         body.fee?.gasLimit, body.fee?.gasPrice);
 };
 
+/**
+ * Sign Harmony deploy erc20 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
 export const prepareOneDeploy20SignedTransaction = async (testnet: boolean, body: OneDeploy20, provider?: string) => {
     await validateBody(body, OneDeploy20);
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
@@ -202,6 +247,13 @@ export const prepareOneDeploy20SignedTransaction = async (testnet: boolean, body
         body.fee?.gasLimit, body.fee?.gasPrice);
 };
 
+/**
+ * Sign Harmony mint erc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
 export const prepareOneMint721SignedTransaction = async (testnet: boolean, body: OneMint721, provider?: string) => {
     await validateBody(body, OneMint721);
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
@@ -211,6 +263,14 @@ export const prepareOneMint721SignedTransaction = async (testnet: boolean, body:
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, undefined, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice);
 };
+
+/**
+ * Sign Harmony mint cashback erc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
 export const prepareOneMintCashback721SignedTransaction = async (testnet: boolean, body: OneMint721, provider?: string) => {
     await validateBody(body, OneMint721);
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
@@ -222,6 +282,14 @@ export const prepareOneMintCashback721SignedTransaction = async (testnet: boolea
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, undefined, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice);
 };
+
+/**
+ * Sign Harmony mint multiple cashback erc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
 export const prepareOneMintMultipleCashback721SignedTransaction = async (testnet: boolean, body: OneMintMultiple721, provider?: string) => {
     await validateBody(body, OneMintMultiple721);
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
@@ -234,6 +302,14 @@ export const prepareOneMintMultipleCashback721SignedTransaction = async (testnet
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, undefined, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice);
 };
+
+/**
+ * Sign Harmony mint multiple erc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
 export const prepareOneMintMultiple721SignedTransaction = async (testnet: boolean, body: OneMintMultiple721, provider?: string) => {
     await validateBody(body, OneMintMultiple721);
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
@@ -243,6 +319,14 @@ export const prepareOneMintMultiple721SignedTransaction = async (testnet: boolea
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, undefined, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice);
 };
+
+/**
+ * Sign Harmony burn erc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
 export const prepareOneBurn721SignedTransaction = async (testnet: boolean, body: OneBurn721, provider?: string) => {
     await validateBody(body, OneBurn721);
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
@@ -251,6 +335,14 @@ export const prepareOneBurn721SignedTransaction = async (testnet: boolean, body:
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, undefined, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice);
 };
+
+/**
+ * Sign Harmony transfer erc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
 export const prepareOneTransfer721SignedTransaction = async (testnet: boolean, body: OneTransfer721, provider?: string) => {
     await validateBody(body, OneTransfer721);
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
@@ -260,6 +352,14 @@ export const prepareOneTransfer721SignedTransaction = async (testnet: boolean, b
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, body.value, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice);
 };
+
+/**
+ * Sign Harmony update cashback for author 721 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
 export const prepareOneUpdateCashbackForAuthor721SignedTransaction = async (testnet: boolean, body: OneUpdateCashback721, provider?: string) => {
     await validateBody(body, OneUpdateCashback721);
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
@@ -269,6 +369,14 @@ export const prepareOneUpdateCashbackForAuthor721SignedTransaction = async (test
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, undefined, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice);
 };
+
+/**
+ * Sign Harmony deploy erc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
 export const prepareOneDeploy721SignedTransaction = async (testnet: boolean, body: OneDeploy721, provider?: string) => {
     await validateBody(body, OneDeploy721);
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
@@ -280,6 +388,14 @@ export const prepareOneDeploy721SignedTransaction = async (testnet: boolean, bod
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, undefined, undefined, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice);
 };
+
+/**
+ * Sign Harmony burn multiple tokens transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
 export const prepareOneBurnMultiTokenSignedTransaction = async (testnet: boolean, body: OneBurnMultiToken, provider?: string) => {
     await validateBody(body, OneBurnMultiToken);
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
@@ -289,6 +405,14 @@ export const prepareOneBurnMultiTokenSignedTransaction = async (testnet: boolean
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, undefined, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice);
 };
+
+/**
+ * Sign Harmony burn multiple tokens batch transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
 export const prepareOneBurnMultiTokenBatchSignedTransaction = async (testnet: boolean, body: OneBurnMultiTokenBatch, provider?: string) => {
     await validateBody(body, OneBurnMultiTokenBatch);
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
@@ -298,6 +422,14 @@ export const prepareOneBurnMultiTokenBatchSignedTransaction = async (testnet: bo
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, undefined, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice);
 };
+
+/**
+ * Sign Harmony transfer multiple tokens transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
 export const prepareOneTransferMultiTokenSignedTransaction = async (testnet: boolean, body: OneTransferMultiToken, provider?: string) => {
     await validateBody(body, OneTransferMultiToken);
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
@@ -307,6 +439,14 @@ export const prepareOneTransferMultiTokenSignedTransaction = async (testnet: boo
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, undefined, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice);
 };
+
+/**
+ * Sign Harmony batch transfer multiple tokens transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
 export const prepareOneBatchTransferMultiTokenSignedTransaction = async (testnet: boolean, body: OneTransferMultiTokenBatch, provider?: string) => {
     await validateBody(body, OneTransferMultiTokenBatch);
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
@@ -317,6 +457,14 @@ export const prepareOneBatchTransferMultiTokenSignedTransaction = async (testnet
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, undefined, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice);
 };
+
+/**
+ * Sign Harmony mint multiple tokens transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
 export const prepareOneMintMultiTokenSignedTransaction = async (testnet: boolean, body: OneMintMultiToken, provider?: string) => {
     await validateBody(body, OneMintMultiToken);
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
@@ -326,6 +474,14 @@ export const prepareOneMintMultiTokenSignedTransaction = async (testnet: boolean
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, undefined, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice);
 };
+
+/**
+ * Sign Harmony mint multiple tokens transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
 export const prepareOneMintMultiTokenBatchSignedTransaction = async (testnet: boolean, body: OneMintMultiTokenBatch, provider?: string) => {
     await validateBody(body, OneMintMultiTokenBatch);
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
@@ -336,6 +492,14 @@ export const prepareOneMintMultiTokenBatchSignedTransaction = async (testnet: bo
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, undefined, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice);
 };
+
+/**
+ * Sign Harmony deploy multiple tokens transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
 export const prepareOneDeployMultiTokenSignedTransaction = async (testnet: boolean, body: OneDeployMultiToken, provider?: string) => {
     await validateBody(body, OneDeployMultiToken);
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
@@ -348,6 +512,13 @@ export const prepareOneDeployMultiTokenSignedTransaction = async (testnet: boole
         body.fee?.gasLimit, body.fee?.gasPrice);
 };
 
+/**
+ * Sign Harmony smart contract write method invocation transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
 export const prepareOneSmartContractWriteMethodInvocation = async (testnet: boolean, body: SmartContractMethodInvocation, provider?: string) => {
     await validateBody(body, SmartContractMethodInvocation);
     const {
@@ -367,6 +538,14 @@ export const prepareOneSmartContractWriteMethodInvocation = async (testnet: bool
         fee?.gasLimit, fee?.gasPrice);
 };
 
+/**
+ * Send Harmony smart contract read method invocation transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendOneSmartContractReadMethodInvocationTransaction = async (testnet: boolean, body: SmartContractReadMethodInvocation, provider?: string) => {
     await validateBody(body, SmartContractReadMethodInvocation);
     const {
@@ -380,48 +559,244 @@ export const sendOneSmartContractReadMethodInvocationTransaction = async (testne
     return {data: await contract.methods[methodName as string](...params).call()};
 };
 
+/**
+ * Send Harmony store data transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendOneStoreDataTransaction = async (testnet: boolean, body: CreateRecord, provider?: string) =>
     oneBroadcast(await prepareOneStoreDataTransaction(testnet, body, provider));
+
+/**
+ * Send Harmony mint erc20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendOneMint20SignedTransaction = async (testnet: boolean, body: OneMint20, provider?: string) =>
     oneBroadcast(await prepareOneMint20SignedTransaction(testnet, body, provider));
+
+/**
+ * Send Harmony burn erc20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendOneBurn20SignedTransaction = async (testnet: boolean, body: OneBurn20, provider?: string) =>
     oneBroadcast(await prepareOneBurn20SignedTransaction(testnet, body, provider));
+
+/**
+ * Send Harmony transfer erc20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendOneTransfer20SignedTransaction = async (testnet: boolean, body: OneTransfer20, provider?: string) =>
     oneBroadcast(await prepareOneTransfer20SignedTransaction(testnet, body, provider));
+/**
+ * Send Harmony deploy erc20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendOneDeploy20SignedTransaction = async (testnet: boolean, body: OneDeploy20, provider?: string) =>
     oneBroadcast(await prepareOneDeploy20SignedTransaction(testnet, body, provider));
+
+/**
+ * Send Harmony mint erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendOneMint721SignedTransaction = async (testnet: boolean, body: OneMint721, provider?: string) =>
     oneBroadcast(await prepareOneMint721SignedTransaction(testnet, body, provider));
+
+/**
+ * Send Harmony mint cashback erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendOneMintCashback721SignedTransaction = async (testnet: boolean, body: OneMint721, provider?: string) =>
     oneBroadcast(await prepareOneMintCashback721SignedTransaction(testnet, body, provider));
+
+/**
+ * Send Harmony mint multiple cashback erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendOneMintMultipleCashback721SignedTransaction = async (testnet: boolean, body: OneMintMultiple721, provider?: string) =>
     oneBroadcast(await prepareOneMintMultipleCashback721SignedTransaction(testnet, body, provider));
+
+/**
+ * Send Harmony mint multiple erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendOneMintMultiple721SignedTransaction = async (testnet: boolean, body: OneMintMultiple721, provider?: string) =>
     oneBroadcast(await prepareOneMintMultiple721SignedTransaction(testnet, body, provider));
+
+/**
+ * Send Harmony burn erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendOneBurn721SignedTransaction = async (testnet: boolean, body: OneBurn721, provider?: string) =>
     oneBroadcast(await prepareOneBurn721SignedTransaction(testnet, body, provider));
+
+/**
+ * Send Harmony transfer erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendOneTransfer721SignedTransaction = async (testnet: boolean, body: OneTransfer721, provider?: string) =>
     oneBroadcast(await prepareOneTransfer721SignedTransaction(testnet, body, provider));
+
+/**
+ * Send Harmony update cashback for author erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendOneUpdateCashbackForAuthor721SignedTransaction = async (testnet: boolean, body: OneUpdateCashback721, provider?: string) =>
     oneBroadcast(await prepareOneUpdateCashbackForAuthor721SignedTransaction(testnet, body, provider));
+
+/**
+ * Send Harmony deploy erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendOneDeploy721SignedTransaction = async (testnet: boolean, body: OneDeploy721, provider?: string) =>
     oneBroadcast(await prepareOneDeploy721SignedTransaction(testnet, body, provider));
+
+/**
+ * Send Harmony burn multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendOneBurnMultiTokenSignedTransaction = async (testnet: boolean, body: OneBurnMultiToken, provider?: string) =>
     oneBroadcast(await prepareOneBurnMultiTokenSignedTransaction(testnet, body, provider));
+
+/**
+ * Send Harmony burn multiple tokens batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendOneBurnMultiTokenBatchSignedTransaction = async (testnet: boolean, body: OneBurnMultiTokenBatch, provider?: string) =>
     oneBroadcast(await prepareOneBurnMultiTokenBatchSignedTransaction(testnet, body, provider));
+
+/**
+ * Send Harmony transfer multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendOneTransferMultiTokenSignedTransaction = async (testnet: boolean, body: OneTransferMultiToken, provider?: string) =>
     oneBroadcast(await prepareOneTransferMultiTokenSignedTransaction(testnet, body, provider));
+
+/**
+ * Send Harmony batch transfer multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendOneBatchTransferMultiTokenSignedTransaction = async (testnet: boolean, body: OneTransferMultiTokenBatch, provider?: string) =>
     oneBroadcast(await prepareOneBatchTransferMultiTokenSignedTransaction(testnet, body, provider));
+
+/**
+ * Send Harmony mint multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendOneMintMultiTokenSignedTransaction = async (testnet: boolean, body: OneMintMultiToken, provider?: string) =>
     oneBroadcast(await prepareOneMintMultiTokenSignedTransaction(testnet, body, provider));
+
+/**
+ * Send Harmony mint multiple tokens batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendOneMintMultiTokenBatchSignedTransaction = async (testnet: boolean, body: OneMintMultiTokenBatch, provider?: string) =>
     oneBroadcast(await prepareOneMintMultiTokenBatchSignedTransaction(testnet, body, provider));
+
+/**
+ * Send Harmony deploy multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendOneDeployMultiTokenSignedTransaction = async (testnet: boolean, body: OneDeployMultiToken, provider?: string) =>
     oneBroadcast(await prepareOneDeployMultiTokenSignedTransaction(testnet, body, provider));
+
+/**
+ * Send Harmony mint generate custodial wallet signed transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendOneGenerateCustodialWalletSignedTransaction = async (testnet: boolean, body: GenerateCustodialAddress, provider?: string) =>
     oneBroadcast(await prepareOneGenerateCustodialWalletSignedTransaction(testnet, body, provider), body.signatureId);
+
+/**
+ * Send Harmony smart contract method invocation transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendOneSmartContractMethodInvocationTransaction = async (testnet: boolean,
                                                                       body: SmartContractMethodInvocation | SmartContractReadMethodInvocation, provider?: string) => {
     if (body.methodABI.stateMutability === 'view') {

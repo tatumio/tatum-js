@@ -5,6 +5,9 @@
  */
 import {TrcType} from '../../request';
 
+/**
+ * Virtual Currency
+ */
 export interface VC {
     /**
      * Exchange rate of the base pair. Each unit of the created curency will represent value of baseRate*1 basePair.

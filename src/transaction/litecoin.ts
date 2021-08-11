@@ -5,6 +5,10 @@ import {ltcBroadcast, ltcGetTransaction, ltcGetTxForAccount, ltcGetUTXO} from '.
 import {validateBody} from '../connector/tatum';
 import {Currency, LtcTxOutputs, TransactionKMS, TransferBtcBasedBlockchain} from '../model';
 
+/**
+ * Prepare a signed Ltc transaction with the private key locally. Nothing is broadcasted to the blockchain.
+ * @returns raw transaction data in hex, to be broadcasted to blockchain.
+ */
 const prepareSignedTransaction = async (body: TransferBtcBasedBlockchain) => {
     await validateBody(body, TransferBtcBasedBlockchain);
     const {fromUTXO, fromAddress, to} = body;

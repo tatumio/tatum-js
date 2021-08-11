@@ -1,4 +1,4 @@
-# Tatum API client
+# [Tatum API client](http://tatum.io/) &middot; [![GitHub license](https://img.shields.io/npm/dm/@tatumio/tatum)](https://img.shields.io/npm/dm/@tatumio/tatum) [![GitHub license](https://img.shields.io/npm/v/@tatumio/tatum)](https://img.shields.io/npm/v/@tatumio/tatum) [![CI](https://github.com/tatumio/tatum-js/actions/workflows/main.yml/badge.svg)](https://github.com/tatumio/tatum-js/actions/workflows/main.yml)
 Tatum API client allows browsers and Node.js clients to interact with Tatum API. It includes the following core components.
 
 - **wallet** - cryptographic functions like generation of wallets, private keys or addresses.
@@ -99,6 +99,8 @@ If you are using the types in a `commonjs` module, like in a Node app, you just 
     "esModuleInterop": true,
     ....
 ```
+
+## Documentation
 
 ## Contributing
 

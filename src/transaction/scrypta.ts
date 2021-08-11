@@ -8,6 +8,10 @@ import { validateBody } from '../connector/tatum'
 import {LYRA_NETWORK, LYRA_TEST_NETWORK} from '../constants';
 import {Currency, TransactionKMS, TransferBtcBasedBlockchain} from '../model';
 
+/**
+ * Prepare a signed Scrypta transaction with the private key locally. Nothing is broadcasted to the blockchain.
+ * @returns raw transaction data in hex, to be broadcasted to blockchain.
+ */
 const prepareSignedTransaction = async (network: Network, body: TransferBtcBasedBlockchain) => {
     await validateBody(body, TransferBtcBasedBlockchain);
     const {fromUTXO, fromAddress, to} = body;

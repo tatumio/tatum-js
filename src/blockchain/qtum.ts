@@ -1,8 +1,7 @@
-
 import { get, post } from '../connector/tatum'
-import { QtumIRawTransactions, QtumIRawTransactionInfo, QtumISendRawTxResult } from "../model/response/qtum/QtumTx"
-import { QtumIGetInfo } from '../model/response/qtum/QtumInfo';
-import { QtumIUTXO } from '../model/response/qtum/QtumUTXO';
+import { QtumIGetInfo } from '../model';
+import { QtumIRawTransactionInfo, QtumIRawTransactions, QtumISendRawTxResult } from '../model'
+import { QtumIUTXO } from '../model';
 import { QtumBlock } from '../model/response/qtum/QtumBlock';
 
 export const getQtumUTXOs = async (address: string): Promise<QtumIUTXO> => get(`/v3/qtum/utxo/${address}`);

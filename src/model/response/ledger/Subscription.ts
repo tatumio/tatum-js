@@ -1,7 +1,5 @@
 /**
- *
- * @export
- * @interface Subscription
+ * Subscription
  */
 import {SubscriptionType} from './SubscriptionType';
 
