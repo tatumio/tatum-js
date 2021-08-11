@@ -28,4 +28,3 @@ export const oneGetTransaction = async (hash: string): Promise<OneTx> => get(`/v
  * For more details, see <a href="https://tatum.io/apidoc#operation/OneGetBalance" target="_blank">Tatum API documentation</a>
  */
  export const oneGetTransactionCount = async (address: string): Promise<number> => get(`v3/one/transaction/count/${address}`);
- /**
