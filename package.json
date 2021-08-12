@@ -52,7 +52,7 @@
     "bitcore-lib-ltc": "8.25.8",
     "cardano-crypto.js": "^6.0.0",
     "cashaddrjs": "^0.4.4",
-    "class-transformer": "^0.2.3",
+    "class-transformer": "^0.3.1",
     "class-validator": "0.13.0",
     "coininfo": "^5.1.0",
     "dedent-js": "^1.0.1",
