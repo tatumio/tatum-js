@@ -245,7 +245,7 @@ export const prepareMarketplaceApproveErc20Spending = async (testnet: boolean, b
 export const prepareMarketplaceCreateListing = async (testnet: boolean, body: CreateMarketplaceListing | CreateTronMarketplaceListing, provider?: string) => {
     const params = [body.listingId, body.isErc721, body.nftAddress.trim(), `0x${new BigNumber(body.tokenId).toString(16)}`,
         `0x${new BigNumber(body.price).multipliedBy(body.chain === Currency.TRON ? 1e6 : 1e18).toString(16)}`, body.seller.trim(), `0x${new BigNumber(body.amount || 0).toString(16)}`,
-        body.erc20Address || '0x000000000000000000000000000000000000dEaD'];
+        body.erc20Address || '0x0000000000000000000000000000000000000000'];
     if (body.chain === Currency.TRON) {
         return await prepareSCCall(testnet, body, CreateTronMarketplaceListing, 'createListing',
             [
@@ -272,7 +272,7 @@ export const prepareMarketplaceCreateListing = async (testnet: boolean, body: Cr
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceBuyListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation | InvokeTronMarketplaceListingOperation, provider?: string) => {
-    const params = [body.listingId, body.erc20Address || '0x000000000000000000000000000000000000dEaD'];
+    const params = [body.listingId, body.erc20Address || '0x0000000000000000000000000000000000000000'];
     if (body.chain === Currency.TRON) {
         return await prepareSCCall(testnet, body, InvokeTronMarketplaceListingOperation, 'buyAssetFromListing',
             [

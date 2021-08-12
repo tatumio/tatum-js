@@ -150,9 +150,9 @@ describe('Marketplace Listing tests', () => {
             const body = new CreateMarketplaceListing();
             body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29';
             body.contractAddress = '0xc4585ec777bA6dc5d33524Ca72c425D512780C31';
-            body.nftAddress = '0xc353cce0854d68689fd3e144e91f14160b25c87b';
+            body.nftAddress = '0x9b0eea3aa1e61b8ecb7d1c8260cd426eb2a9a698';
             body.tokenId = '2';
-            body.listingId = '6';
+            body.listingId = '8';
             body.isErc721 = true;
             body.price = '1';
             body.seller = '0x811dfbff13adfbc3cf653dcc373c03616d3471c9';
@@ -167,7 +167,7 @@ describe('Marketplace Listing tests', () => {
                 chain: Currency.BSC,
                 tokenId: '2',
                 fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
-                contractAddress: '0xc353cce0854d68689fd3e144e91f14160b25c87b'
+                contractAddress: '0x9b0eea3aa1e61b8ecb7d1c8260cd426eb2a9a698'
             }));
         });
 
@@ -193,13 +193,9 @@ describe('Marketplace Listing tests', () => {
             const body = new InvokeMarketplaceListingOperation();
             body.fromPrivateKey = '0x3497eb7fa0fadf23da006c31f874a5aaed7da58c1caf3d84fa3387e1208ada39';
             body.contractAddress = '0xc4585ec777bA6dc5d33524Ca72c425D512780C31';
-            body.listingId = '6';
+            body.listingId = '8';
             body.amount = '1.015';
             body.chain = Currency.BSC;
-            body.fee = {
-                gasLimit: '400000',
-                gasPrice: '10'
-            };
             const txData = await prepareMarketplaceBuyListing(true, body, 'https://data-seed-prebsc-2-s1.binance.org:8545');
             expect(txData).toContain('0x');
             console.log(await bscBroadcast(txData));
