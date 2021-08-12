@@ -22,14 +22,18 @@ export const sendTransaction = async (testnet: boolean, chain: Currency,
             b.feeCurrency = Currency.CELO;
             return sendCeloOrcUsdTransaction(testnet, b, provider);
         case Currency.ETH:
+            (body as TransferEthErc20).currency = chain;
             return sendEthOrErc20Transaction(body as TransferEthErc20, provider);
         case Currency.MATIC:
+            (body as TransferEthErc20).currency = chain;
             return sendPolygonTransaction(testnet, body as TransferEthErc20, provider);
         case Currency.ONE:
+            (body as TransferEthErc20).currency = chain;
             return sendOneTransaction(testnet, body as TransferEthErc20, provider);
         case Currency.TRON:
             return sendTronTransaction(testnet, body as TransferTron);
         case Currency.BSC:
+            (body as TransferBscBep20).currency = chain;
             return sendBscOrBep20Transaction(body as TransferBscBep20, provider);
         default:
             throw new Error('Unsupported blockchain.');
