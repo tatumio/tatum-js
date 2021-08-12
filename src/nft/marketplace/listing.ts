@@ -28,11 +28,17 @@ import {
     getOne20ContractDecimals,
     getPolygonErc20ContractDecimals,
     getTronTrc20ContractDecimals,
+    prepareBscDeployMarketplaceListingSignedTransaction,
     prepareBscSmartContractWriteMethodInvocation,
+    prepareCeloDeployMarketplaceListingSignedTransaction,
     prepareCeloSmartContractWriteMethodInvocation,
+    prepareEthDeployMarketplaceListingSignedTransaction,
+    prepareOneDeployMarketplaceListingSignedTransaction,
     prepareOneSmartContractWriteMethodInvocation,
+    preparePolygonDeployMarketplaceListingSignedTransaction,
     preparePolygonSmartContractWriteMethodInvocation,
     prepareSmartContractWriteMethodInvocation,
+    prepareTronDeployMarketplaceListingSignedTransaction,
     prepareTronSmartContractInvocation,
     sendBscDeployMarketplaceListingSignedTransaction,
     sendCeloDeployMarketplaceListingSignedTransaction,
@@ -147,6 +153,40 @@ export const deployMarketplaceListing = async (testnet: boolean, body: DeployMar
             return await sendPolygonDeployMarketplaceListingSignedTransaction(testnet, body, provider);
         case Currency.TRON:
             return await sendTronDeployMarketplaceListingSignedTransaction(testnet, body as DeployTronMarketplaceListing, provider);
+        default:
+            throw new Error('Unsupported chain');
+    }
+};
+
+
+/**
+ * Prepare signed transaction for deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
+ * Operator can set a fee in percentage, which will be paid on top of the price of the asset.
+ * Listing can be offered for native asset - ETH, BSC, etc. - or any ERC20 token - this is configurable during listing creation.
+ * Once the listing is created, seller must send the NFT asset to the smart contract.
+ * Buyer will buy the asset from the listing using native asset - send assets along the buyAssetFromListing() smart contract call, or via ERC20 token.
+ * Buyer of the listing must perform approval for the smart contract to access ERC20 token, before the actual buyAssetFromListing() method is called.
+ * Once both assets - from buyer and seller - are in the smart contract, NFT is sent to the buyer, price is sent to the seller
+ * and marketplace fee is set to the operator.
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const prepareMarketplaceListing = async (testnet: boolean, body: DeployMarketplaceListing | DeployTronMarketplaceListing, provider?: string) => {
+    switch (body.chain) {
+        case Currency.CELO:
+            return await prepareCeloDeployMarketplaceListingSignedTransaction(testnet, body, provider);
+        case Currency.ONE:
+            return await prepareOneDeployMarketplaceListingSignedTransaction(testnet, body, provider);
+        case Currency.ETH:
+            return await prepareEthDeployMarketplaceListingSignedTransaction(body, provider);
+        case Currency.BSC:
+            return await prepareBscDeployMarketplaceListingSignedTransaction(body, provider);
+        case Currency.MATIC:
+            return await preparePolygonDeployMarketplaceListingSignedTransaction(testnet, body, provider);
+        case Currency.TRON:
+            return await prepareTronDeployMarketplaceListingSignedTransaction(testnet, body as DeployTronMarketplaceListing, provider);
         default:
             throw new Error('Unsupported chain');
     }
