@@ -15,6 +15,7 @@ export class CreateMarketplaceListing extends PrivateKeyOrSignatureId {
     public chain: Currency;
 
     @IsNotEmpty()
+    @Length(1, 200)
     public listingId: string;
 
     @IsNotEmpty()

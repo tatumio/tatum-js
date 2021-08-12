@@ -28,11 +28,17 @@ import {
     getOne20ContractDecimals,
     getPolygonErc20ContractDecimals,
     getTronTrc20ContractDecimals,
+    prepareBscDeployMarketplaceListingSignedTransaction,
     prepareBscSmartContractWriteMethodInvocation,
+    prepareCeloDeployMarketplaceListingSignedTransaction,
     prepareCeloSmartContractWriteMethodInvocation,
+    prepareEthDeployMarketplaceListingSignedTransaction,
+    prepareOneDeployMarketplaceListingSignedTransaction,
     prepareOneSmartContractWriteMethodInvocation,
+    preparePolygonDeployMarketplaceListingSignedTransaction,
     preparePolygonSmartContractWriteMethodInvocation,
     prepareSmartContractWriteMethodInvocation,
+    prepareTronDeployMarketplaceListingSignedTransaction,
     prepareTronSmartContractInvocation,
     sendBscDeployMarketplaceListingSignedTransaction,
     sendCeloDeployMarketplaceListingSignedTransaction,
@@ -152,6 +158,40 @@ export const deployMarketplaceListing = async (testnet: boolean, body: DeployMar
     }
 };
 
+
+/**
+ * Prepare signed transaction for deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
+ * Operator can set a fee in percentage, which will be paid on top of the price of the asset.
+ * Listing can be offered for native asset - ETH, BSC, etc. - or any ERC20 token - this is configurable during listing creation.
+ * Once the listing is created, seller must send the NFT asset to the smart contract.
+ * Buyer will buy the asset from the listing using native asset - send assets along the buyAssetFromListing() smart contract call, or via ERC20 token.
+ * Buyer of the listing must perform approval for the smart contract to access ERC20 token, before the actual buyAssetFromListing() method is called.
+ * Once both assets - from buyer and seller - are in the smart contract, NFT is sent to the buyer, price is sent to the seller
+ * and marketplace fee is set to the operator.
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const prepareDeployMarketplaceListing = async (testnet: boolean, body: DeployMarketplaceListing | DeployTronMarketplaceListing, provider?: string) => {
+    switch (body.chain) {
+        case Currency.CELO:
+            return await prepareCeloDeployMarketplaceListingSignedTransaction(testnet, body, provider);
+        case Currency.ONE:
+            return await prepareOneDeployMarketplaceListingSignedTransaction(testnet, body, provider);
+        case Currency.ETH:
+            return await prepareEthDeployMarketplaceListingSignedTransaction(body, provider);
+        case Currency.BSC:
+            return await prepareBscDeployMarketplaceListingSignedTransaction(body, provider);
+        case Currency.MATIC:
+            return await preparePolygonDeployMarketplaceListingSignedTransaction(testnet, body, provider);
+        case Currency.TRON:
+            return await prepareTronDeployMarketplaceListingSignedTransaction(testnet, body as DeployTronMarketplaceListing, provider);
+        default:
+            throw new Error('Unsupported chain');
+    }
+};
+
 /**
  * Update marketplace fee.
  * @param testnet chain to work with
@@ -160,6 +200,7 @@ export const deployMarketplaceListing = async (testnet: boolean, body: DeployMar
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceUpdateFee = async (testnet: boolean, body: UpdateMarketplaceFee | UpdateTronMarketplaceFee, provider?: string) => {
+    await validateBody(body, body.chain === Currency.TRON ? UpdateTronMarketplaceFee : UpdateMarketplaceFee);
     const params = [`0x${new BigNumber(body.marketplaceFee).toString(16)}`];
     if (body.chain === Currency.TRON) {
         return await prepareSCCall(testnet, body, UpdateTronMarketplaceFee, 'setMarketplaceFee',
@@ -179,6 +220,7 @@ export const prepareMarketplaceUpdateFee = async (testnet: boolean, body: Update
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceUpdateFeeRecipient = async (testnet: boolean, body: UpdateMarketplaceFeeRecipient | UpdateTronMarketplaceFeeRecipient, provider?: string) => {
+    await validateBody(body, body.chain === Currency.TRON ? UpdateTronMarketplaceFeeRecipient : UpdateMarketplaceFeeRecipient);
     const params = [body.feeRecipient];
     if (body.chain === Currency.TRON) {
         return await prepareSCCall(testnet, body, UpdateTronMarketplaceFeeRecipient, 'setMarketplaceFeeRecipient',
@@ -198,6 +240,7 @@ export const prepareMarketplaceUpdateFeeRecipient = async (testnet: boolean, bod
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceApproveErc20Spending = async (testnet: boolean, body: ApproveMarketplaceErc20Spending | ApproveTronMarketplaceErc20Spending, provider?: string) => {
+    await validateBody(body, body.chain === Currency.TRON ? ApproveTronMarketplaceErc20Spending : ApproveMarketplaceErc20Spending);
     let amount;
     switch (body.chain) {
         case Currency.CELO:
@@ -243,6 +286,7 @@ export const prepareMarketplaceApproveErc20Spending = async (testnet: boolean, b
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceCreateListing = async (testnet: boolean, body: CreateMarketplaceListing | CreateTronMarketplaceListing, provider?: string) => {
+    await validateBody(body, body.chain === Currency.TRON ? CreateTronMarketplaceListing : CreateMarketplaceListing);
     const params = [body.listingId, body.isErc721, body.nftAddress.trim(), `0x${new BigNumber(body.tokenId).toString(16)}`,
         `0x${new BigNumber(body.price).multipliedBy(body.chain === Currency.TRON ? 1e6 : 1e18).toString(16)}`, body.seller.trim(), `0x${new BigNumber(body.amount || 0).toString(16)}`,
         body.erc20Address || '0x0000000000000000000000000000000000000000'];
@@ -272,6 +316,7 @@ export const prepareMarketplaceCreateListing = async (testnet: boolean, body: Cr
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceBuyListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation | InvokeTronMarketplaceListingOperation, provider?: string) => {
+    await validateBody(body, body.chain === Currency.TRON ? InvokeTronMarketplaceListingOperation : InvokeMarketplaceListingOperation);
     const params = [body.listingId, body.erc20Address || '0x0000000000000000000000000000000000000000'];
     if (body.chain === Currency.TRON) {
         return await prepareSCCall(testnet, body, InvokeTronMarketplaceListingOperation, 'buyAssetFromListing',
@@ -292,6 +337,7 @@ export const prepareMarketplaceBuyListing = async (testnet: boolean, body: Invok
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceCancelListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation | InvokeTronMarketplaceListingOperation, provider?: string) => {
+    await validateBody(body, body.chain === Currency.TRON ? InvokeTronMarketplaceListingOperation : InvokeMarketplaceListingOperation);
     const params = [body.listingId];
     if (body.chain === Currency.TRON) {
         return await prepareSCCall(testnet, body, InvokeTronMarketplaceListingOperation, 'cancelListing',
@@ -306,7 +352,6 @@ export const prepareMarketplaceCancelListing = async (testnet: boolean, body: In
 const prepareSCCall = async <U>(testnet: boolean, body: any, clazz: ClassType<object>, methodName: string, params: any[], methodSig?: string,
                                 provider?: string, abi: any[] = listing.abi) => {
     let r: SmartContractMethodInvocation | CeloSmartContractMethodInvocation;
-    await validateBody(body, clazz);
     if (body.chain === Currency.CELO) {
         r = new CeloSmartContractMethodInvocation();
     } else {
