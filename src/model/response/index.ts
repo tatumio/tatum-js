@@ -11,6 +11,7 @@ export * from './common/Rate';
 export * from './common/SignatureId';
 export * from './common/TransactionHash';
 export * from './common/TxHash';
+export * from './common/Consumption';
 export * from './kms/TransactionKMS';
 export * from './eth/EthBlock';
 export * from './eth/EthTx';
