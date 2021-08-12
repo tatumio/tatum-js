@@ -173,7 +173,7 @@ export const deployMarketplaceListing = async (testnet: boolean, body: DeployMar
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareMarketplaceListing = async (testnet: boolean, body: DeployMarketplaceListing | DeployTronMarketplaceListing, provider?: string) => {
+export const prepareDeployMarketplaceListing = async (testnet: boolean, body: DeployMarketplaceListing | DeployTronMarketplaceListing, provider?: string) => {
     switch (body.chain) {
         case Currency.CELO:
             return await prepareCeloDeployMarketplaceListingSignedTransaction(testnet, body, provider);
@@ -200,6 +200,7 @@ export const prepareMarketplaceListing = async (testnet: boolean, body: DeployMa
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceUpdateFee = async (testnet: boolean, body: UpdateMarketplaceFee | UpdateTronMarketplaceFee, provider?: string) => {
+    await validateBody(body, body.chain === Currency.TRON ? UpdateTronMarketplaceFee : UpdateMarketplaceFee);
     const params = [`0x${new BigNumber(body.marketplaceFee).toString(16)}`];
     if (body.chain === Currency.TRON) {
         return await prepareSCCall(testnet, body, UpdateTronMarketplaceFee, 'setMarketplaceFee',
@@ -219,6 +220,7 @@ export const prepareMarketplaceUpdateFee = async (testnet: boolean, body: Update
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceUpdateFeeRecipient = async (testnet: boolean, body: UpdateMarketplaceFeeRecipient | UpdateTronMarketplaceFeeRecipient, provider?: string) => {
+    await validateBody(body, body.chain === Currency.TRON ? UpdateTronMarketplaceFeeRecipient : UpdateMarketplaceFeeRecipient);
     const params = [body.feeRecipient];
     if (body.chain === Currency.TRON) {
         return await prepareSCCall(testnet, body, UpdateTronMarketplaceFeeRecipient, 'setMarketplaceFeeRecipient',
@@ -238,6 +240,7 @@ export const prepareMarketplaceUpdateFeeRecipient = async (testnet: boolean, bod
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceApproveErc20Spending = async (testnet: boolean, body: ApproveMarketplaceErc20Spending | ApproveTronMarketplaceErc20Spending, provider?: string) => {
+    await validateBody(body, body.chain === Currency.TRON ? ApproveTronMarketplaceErc20Spending : ApproveMarketplaceErc20Spending);
     let amount;
     switch (body.chain) {
         case Currency.CELO:
@@ -283,6 +286,7 @@ export const prepareMarketplaceApproveErc20Spending = async (testnet: boolean, b
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceCreateListing = async (testnet: boolean, body: CreateMarketplaceListing | CreateTronMarketplaceListing, provider?: string) => {
+    await validateBody(body, body.chain === Currency.TRON ? CreateTronMarketplaceListing : CreateMarketplaceListing);
     const params = [body.listingId, body.isErc721, body.nftAddress.trim(), `0x${new BigNumber(body.tokenId).toString(16)}`,
         `0x${new BigNumber(body.price).multipliedBy(body.chain === Currency.TRON ? 1e6 : 1e18).toString(16)}`, body.seller.trim(), `0x${new BigNumber(body.amount || 0).toString(16)}`,
         body.erc20Address || '0x0000000000000000000000000000000000000000'];
@@ -312,6 +316,7 @@ export const prepareMarketplaceCreateListing = async (testnet: boolean, body: Cr
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceBuyListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation | InvokeTronMarketplaceListingOperation, provider?: string) => {
+    await validateBody(body, body.chain === Currency.TRON ? InvokeTronMarketplaceListingOperation : InvokeMarketplaceListingOperation);
     const params = [body.listingId, body.erc20Address || '0x0000000000000000000000000000000000000000'];
     if (body.chain === Currency.TRON) {
         return await prepareSCCall(testnet, body, InvokeTronMarketplaceListingOperation, 'buyAssetFromListing',
@@ -332,6 +337,7 @@ export const prepareMarketplaceBuyListing = async (testnet: boolean, body: Invok
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceCancelListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation | InvokeTronMarketplaceListingOperation, provider?: string) => {
+    await validateBody(body, body.chain === Currency.TRON ? InvokeTronMarketplaceListingOperation : InvokeMarketplaceListingOperation);
     const params = [body.listingId];
     if (body.chain === Currency.TRON) {
         return await prepareSCCall(testnet, body, InvokeTronMarketplaceListingOperation, 'cancelListing',
@@ -346,7 +352,6 @@ export const prepareMarketplaceCancelListing = async (testnet: boolean, body: In
 const prepareSCCall = async <U>(testnet: boolean, body: any, clazz: ClassType<object>, methodName: string, params: any[], methodSig?: string,
                                 provider?: string, abi: any[] = listing.abi) => {
     let r: SmartContractMethodInvocation | CeloSmartContractMethodInvocation;
-    await validateBody(body, clazz);
     if (body.chain === Currency.CELO) {
         r = new CeloSmartContractMethodInvocation();
     } else {
