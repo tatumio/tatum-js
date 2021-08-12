@@ -1,19 +1,19 @@
-import axios from 'axios'
-import {BigNumber} from 'bignumber.js'
-import Web3 from 'web3'
-import {TransactionConfig} from 'web3-core'
-import {toWei} from 'web3-utils'
-import {polygonBroadcast} from '../blockchain'
-import {validateBody} from '../connector/tatum'
-import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants'
-import erc1155TokenABI from '../contracts/erc1155/erc1155_abi'
-import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode'
-import erc20_abi from '../contracts/erc20/token_abi'
-import erc20TokenABI from '../contracts/erc20/token_abi'
-import erc20TokenBytecode from '../contracts/erc20/token_bytecode'
-import erc721TokenABI from '../contracts/erc721/erc721_abi'
-import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode'
-import * as listing from '../contracts/marketplace'
+import axios from 'axios';
+import {BigNumber} from 'bignumber.js';
+import Web3 from 'web3';
+import {TransactionConfig} from 'web3-core';
+import {toWei} from 'web3-utils';
+import {polygonBroadcast} from '../blockchain';
+import {validateBody} from '../connector/tatum';
+import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
+import erc1155TokenABI from '../contracts/erc1155/erc1155_abi';
+import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode';
+import erc20_abi from '../contracts/erc20/token_abi';
+import erc20TokenABI from '../contracts/erc20/token_abi';
+import erc20TokenBytecode from '../contracts/erc20/token_bytecode';
+import erc721TokenABI from '../contracts/erc721/erc721_abi';
+import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
+import * as listing from '../contracts/marketplace';
 import {
     BurnErc20,
     BurnMultiToken,
@@ -42,8 +42,8 @@ import {
     TransferMultiToken,
     TransferMultiTokenBatch,
     UpdateCashbackErc721,
-} from '../model'
-import {obtainCustodialAddressType} from '../wallet'
+} from '../model';
+import {obtainCustodialAddressType} from '../wallet';
 
 /**
  * Estimate Gas price for the transaction.
@@ -68,7 +68,7 @@ const prepareGeneralTx = async (client: Web3, testnet: boolean, fromPrivateKey?:
     if (signatureId) {
         return JSON.stringify(tx)
     }
-    tx.gas = gasLimit || await client.eth.estimateGas({to, data: data || ''})
+    tx.gas = gasLimit || await client.eth.estimateGas({to, data: data || '', value: tx.value})
     return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string
 }
 

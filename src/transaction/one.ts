@@ -1,19 +1,19 @@
-import {HarmonyAddress} from '@harmony-js/crypto'
-import {BigNumber} from 'bignumber.js'
-import Web3 from 'web3'
-import {TransactionConfig} from 'web3-core'
-import {toWei} from 'web3-utils'
-import {oneBroadcast} from '../blockchain'
-import {validateBody} from '../connector/tatum'
-import {TATUM_API_URL} from '../constants'
-import erc1155TokenABI from '../contracts/erc1155/erc1155_abi'
-import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode'
-import erc20_abi from '../contracts/erc20/token_abi'
-import erc20TokenABI from '../contracts/erc20/token_abi'
-import erc20TokenBytecode from '../contracts/erc20/token_bytecode'
-import erc721TokenABI from '../contracts/erc721/erc721_abi'
-import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode'
-import * as listing from '../contracts/marketplace'
+import {HarmonyAddress} from '@harmony-js/crypto';
+import {BigNumber} from 'bignumber.js';
+import Web3 from 'web3';
+import {TransactionConfig} from 'web3-core';
+import {toWei} from 'web3-utils';
+import {oneBroadcast} from '../blockchain';
+import {validateBody} from '../connector/tatum';
+import {TATUM_API_URL} from '../constants';
+import erc1155TokenABI from '../contracts/erc1155/erc1155_abi';
+import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode';
+import erc20_abi from '../contracts/erc20/token_abi';
+import erc20TokenABI from '../contracts/erc20/token_abi';
+import erc20TokenBytecode from '../contracts/erc20/token_bytecode';
+import erc721TokenABI from '../contracts/erc721/erc721_abi';
+import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
+import * as listing from '../contracts/marketplace';
 import {
     CreateRecord,
     Currency,
@@ -40,8 +40,8 @@ import {
     SmartContractMethodInvocation,
     SmartContractReadMethodInvocation,
     TransactionKMS,
-} from '../model'
-import {obtainCustodialAddressType} from '../wallet'
+} from '../model';
+import {obtainCustodialAddressType} from '../wallet';
 
 const prepareGeneralTx = async (client: Web3, testnet: boolean, fromPrivateKey?: string, signatureId?: string, to?: string, amount?: string, nonce?: number,
                                 data?: string, gasLimit?: string, gasPrice?: string) => {
@@ -59,7 +59,7 @@ const prepareGeneralTx = async (client: Web3, testnet: boolean, fromPrivateKey?:
     if (signatureId) {
         return JSON.stringify(tx)
     }
-    tx.gas = gasLimit || await client.eth.estimateGas({to: recipient, data: data || ''})
+    tx.gas = gasLimit || await client.eth.estimateGas({to: recipient, data: data || '', value: tx.value})
     return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string
 }
 

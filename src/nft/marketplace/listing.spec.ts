@@ -1,6 +1,6 @@
-import {CeloProvider} from '@celo-tools/celo-ethers-wrapper'
-import {bscBroadcast} from '../../blockchain'
-import * as listing from '../../contracts/marketplace'
+import {CeloProvider} from '@celo-tools/celo-ethers-wrapper';
+import {bscBroadcast, polygonBroadcast} from '../../blockchain';
+import * as listing from '../../contracts/marketplace';
 import {
     ApproveMarketplaceErc20Spending,
     CreateMarketplaceListing,
@@ -8,14 +8,16 @@ import {
     DeployMarketplaceListing,
     InvokeMarketplaceListingOperation,
     SmartContractReadMethodInvocation
-} from '../../model'
+} from '../../model';
 import {
     sendBscSmartContractMethodInvocationTransaction,
     sendBscSmartContractReadMethodInvocationTransaction,
-    sendCeloSmartContractReadMethodInvocationTransaction
-} from '../../transaction'
-import {transferNFT} from '../nft'
-import {deployMarketplaceListing, prepareMarketplaceApproveErc20Spending, prepareMarketplaceBuyListing, prepareMarketplaceCreateListing} from './listing'
+    sendCeloSmartContractReadMethodInvocationTransaction,
+    sendPolygonSmartContractMethodInvocationTransaction,
+    sendPolygonSmartContractReadMethodInvocationTransaction
+} from '../../transaction';
+import {transferNFT} from '../nft';
+import {deployMarketplaceListing, prepareMarketplaceApproveErc20Spending, prepareMarketplaceBuyListing, prepareMarketplaceCreateListing} from './listing';
 
 describe('Marketplace Listing tests', () => {
     jest.setTimeout(99999)
@@ -202,4 +204,73 @@ describe('Marketplace Listing tests', () => {
         })
 
     })
+
+    describe('Marketplace Listing MATIC transactions', () => {
+        it('should deploy marketplace', async () => {
+            const body = new DeployMarketplaceListing();
+            body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29';
+            body.feeRecipient = '0x811dfbff13adfbc3cf653dcc373c03616d3471c9';
+            body.marketplaceFee = 150;
+            body.chain = Currency.MATIC;
+            const test = await deployMarketplaceListing(true, body, 'https://rpc-mumbai.matic.today');
+            console.log(test);
+            expect(test).toBeDefined();
+        });
+
+        it('should create listing native asset', async () => {
+            const body = new CreateMarketplaceListing();
+            body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29';
+            body.contractAddress = '0xe6938a3e82168e462d6250a85e78a17356af34d4';
+            body.nftAddress = '0x5d7d868ed584b04b922905a481f274206a42dd8a';
+            body.tokenId = '1626777706895';
+            body.listingId = '10';
+            body.isErc721 = true;
+            body.price = '0.001';
+            body.seller = '0x811dfbff13adfbc3cf653dcc373c03616d3471c9';
+            body.chain = Currency.MATIC;
+            const txData = await prepareMarketplaceCreateListing(true, body, 'https://rpc-mumbai.matic.today');
+            expect(txData).toContain('0x');
+            console.log(await polygonBroadcast(txData));
+
+            await new Promise(r => setTimeout(r, 5000));
+            console.log(await transferNFT(true, {
+                to: '0xe6938a3e82168e462d6250a85e78a17356af34d4',
+                chain: Currency.MATIC,
+                tokenId: '1626777706895',
+                fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+                contractAddress: '0x5d7d868ed584b04b922905a481f274206a42dd8a'
+            }));
+        });
+
+        it('should get listing', async () => {
+            const r = new SmartContractReadMethodInvocation();
+            r.contractAddress = '0xe6938a3e82168e462d6250a85e78a17356af34d4';
+            r.methodName = 'getListing';
+            r.methodABI = listing.abi.find(a => a.name === r.methodName);
+            r.params = ['8'];
+            console.log(await sendPolygonSmartContractMethodInvocationTransaction(true, r, 'https://rpc-mumbai.matic.today'));
+        });
+
+        it('should get marketplace fee', async () => {
+            const r = new SmartContractReadMethodInvocation();
+            r.contractAddress = '0xe6938a3e82168e462d6250a85e78a17356af34d4';
+            r.methodName = 'getMarketplaceFee';
+            r.methodABI = listing.abi.find(a => a.name === r.methodName);
+            r.params = [];
+            console.log(await sendPolygonSmartContractReadMethodInvocationTransaction(true, r, 'https://rpc-mumbai.matic.today'));
+        });
+
+        it('should buy listing native', async () => {
+            const body = new InvokeMarketplaceListingOperation();
+            body.fromPrivateKey = '0x3497eb7fa0fadf23da006c31f874a5aaed7da58c1caf3d84fa3387e1208ada39';
+            body.contractAddress = '0xe6938a3e82168e462d6250a85e78a17356af34d4';
+            body.listingId = '10';
+            body.amount = '0.0015';
+            body.chain = Currency.MATIC;
+            const txData = await prepareMarketplaceBuyListing(true, body, 'https://rpc-mumbai.matic.today');
+            expect(txData).toContain('0x');
+            console.log(await polygonBroadcast(txData));
+        });
+
+    });
 })
