@@ -150,6 +150,41 @@
 <span style="color: #000000">    </span><span style="color: #0451A5">&quot;esModuleInterop&quot;</span><span style="color: #000000">: </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
 <span style="color: #000000">    </span><span style="color: #CD3131">....</span>
 </code></pre>
+				<a href="#directory-structure" id="directory-structure" style="color: inherit; text-decoration: none;">
+					<h2>Directory structure</h2>
+				</a>
+				<pre><code class="language-bash"><span style="color: #000000">└── src</span>
+<span style="color: #000000">│   ├── blockchain          // Blockchain API methods without private key</span>
+<span style="color: #000000">│   ├── connector           // Wrapper around all HTTP methods</span>
+<span style="color: #000000">│   ├── contracts           // Abi and byte code smart contracts</span>
+<span style="color: #000000">│   │   ├── custodial</span>
+<span style="color: #000000">│   │   ├── erc20</span>
+<span style="color: #000000">│   │   ├── erc721</span>
+<span style="color: #000000">│   │   ├── erc1155</span>
+<span style="color: #000000">│   │   ├── marketplace</span>
+<span style="color: #000000">│   │   ├── trc20</span>
+<span style="color: #000000">│   │   ├── trc721</span>
+<span style="color: #000000">│   ├── ledger              // Ledger API methods</span>
+<span style="color: #000000">│   ├── model               // Validation, interfaces and DTO classes</span>
+<span style="color: #000000">│   │   ├── request</span>
+<span style="color: #000000">│   │   ├── response</span>
+<span style="color: #000000">│   │   ├── validation</span>
+<span style="color: #000000">│   ├── multiToken          // Multi Token API methods</span>
+<span style="color: #000000">│   ├── nft                 // NFT API methods</span>
+<span style="color: #000000">│   │   ├── marketplace     // Marketplace API methods</span>
+<span style="color: #000000">│   ├── offchain            // Offchain API methods</span>
+<span style="color: #000000">│   ├── record              // Logging API methods</span>
+<span style="color: #000000">│   ├── security            // Security and KMS methods</span>
+<span style="color: #000000">│   ├── tatum               // Service API methods</span>
+<span style="color: #000000">│   ├── transaction         // Transaction API methods</span>
+<span style="color: #000000">│   ├── wallet              // Wallet, private key and address API methods</span>
+<span style="color: #000000">│   └── constants.ts        // Constants</span>
+<span style="color: #000000">├── README.md</span>
+<span style="color: #000000">├── package.json</span>
+<span style="color: #000000">├── tslint.js</span>
+<span style="color: #000000">├── tsconfig.json</span>
+<span style="color: #000000">└── .gitignore</span>
+</code></pre>
 				<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
 					<h2>Contributing</h2>
 				</a>
@@ -782,6 +817,9 @@
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/CardanoGenerateWallet.html" class="tsd-kind-icon">Cardano<wbr>Generate<wbr>Wallet</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/Consumption.html" class="tsd-kind-icon">Consumption</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/DogeBlock.html" class="tsd-kind-icon">Doge<wbr>Block</a>
@@ -1730,6 +1768,9 @@
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="modules.html#getTronTrc20ContractDecimals" class="tsd-kind-icon">get<wbr>Tron<wbr>Trc20<wbr>Contract<wbr>Decimals</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getUsage" class="tsd-kind-icon">get<wbr>Usage</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="modules.html#getVirtualCurrencyByName" class="tsd-kind-icon">get<wbr>Virtual<wbr>Currency<wbr>ByName</a>
