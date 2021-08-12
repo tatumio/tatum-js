@@ -8,8 +8,7 @@ Tatum API client allows browsers and Node.js clients to interact with Tatum API.
 - **transaction** - set of functions to generate and sign blockchain transactions locally.
 - **offchain** - set of functions to generate and sign Tatum off-chain transactions locally.
 
-You can find more detailed documentation and examples in Tatum API documentation
-[Documentation](https://tatum.io) pages or read the documentation for the [client](./docs/globals.md).
+You can find API documentation at [Github Pages](https://tatumio.github.io/tatum-js/) or at [API doc](https://tatum.io/apidoc).
 
 ## Installation
 
@@ -99,8 +98,6 @@ If you are using the types in a `commonjs` module, like in a Node app, you just 
     "esModuleInterop": true,
     ....
 ```
-
-## Documentation
 
 ## Contributing
 
