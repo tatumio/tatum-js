@@ -1,0 +1,19 @@
+name: Pull request
+on:
+  pull_request:
+    branches:
+      - master
+jobs:
+  build:
+    name: 🏗️ Install and build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - run: yarn install
+
+      - run: yarn build
