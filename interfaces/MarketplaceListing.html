@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>LtcBlock | @tatumio/tatum - v1.19.3</title>
+	<title>MarketplaceListing | @tatumio/tatum - v1.19.3</title>
 	<meta name="description" content="Documentation for @tatumio/tatum - v1.19.3">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,10 +55,10 @@
 					<a href="../modules.html">@tatumio/tatum - v1.19.3</a>
 				</li>
 				<li>
-					<a href="LtcBlock.html">LtcBlock</a>
+					<a href="MarketplaceListing.html">MarketplaceListing</a>
 				</li>
 			</ul>
-			<h1>Interface LtcBlock</h1>
+			<h1>Interface MarketplaceListing</h1>
 		</div>
 	</div>
 </header>
@@ -69,7 +69,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">LtcBlock</span>
+						<span class="target">MarketplaceListing</span>
 					</li>
 				</ul>
 			</section>
@@ -80,15 +80,16 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="LtcBlock.html#bits" class="tsd-kind-icon">bits</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="LtcBlock.html#hash" class="tsd-kind-icon">hash</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="LtcBlock.html#height" class="tsd-kind-icon">height</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="LtcBlock.html#merkleRoot" class="tsd-kind-icon">merkle<wbr>Root</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="LtcBlock.html#nonce" class="tsd-kind-icon">nonce</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="LtcBlock.html#prevBlock" class="tsd-kind-icon">prev<wbr>Block</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="LtcBlock.html#ts" class="tsd-kind-icon">ts</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="LtcBlock.html#txs" class="tsd-kind-icon">txs</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="LtcBlock.html#version" class="tsd-kind-icon">version</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="MarketplaceListing.html#amount" class="tsd-kind-icon">amount</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="MarketplaceListing.html#buyer" class="tsd-kind-icon">buyer</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="MarketplaceListing.html#erc20Address" class="tsd-kind-icon">erc20<wbr>Address</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="MarketplaceListing.html#isErc721" class="tsd-kind-icon">is<wbr>Erc721</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="MarketplaceListing.html#listingId" class="tsd-kind-icon">listing<wbr>Id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="MarketplaceListing.html#nftAddress" class="tsd-kind-icon">nft<wbr>Address</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="MarketplaceListing.html#price" class="tsd-kind-icon">price</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="MarketplaceListing.html#seller" class="tsd-kind-icon">seller</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="MarketplaceListing.html#state" class="tsd-kind-icon">state</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="MarketplaceListing.html#tokenId" class="tsd-kind-icon">token<wbr>Id</a></li>
 							</ul>
 						</section>
 					</div>
@@ -97,177 +98,153 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="bits" class="tsd-anchor"></a>
-					<h3>bits</h3>
-					<div class="tsd-signature tsd-kind-icon">bits<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="amount" class="tsd-anchor"></a>
+					<h3>amount</h3>
+					<div class="tsd-signature tsd-kind-icon">amount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/b895a79/src/model/response/ltc/LtcBlock.ts#L50">model/response/ltc/LtcBlock.ts:50</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<dl class="tsd-comment-tags">
-							<dt>memberof</dt>
-							<dd><p>LtcBlock</p>
-							</dd>
-						</dl>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="hash" class="tsd-anchor"></a>
-					<h3>hash</h3>
-					<div class="tsd-signature tsd-kind-icon">hash<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/b895a79/src/model/response/ltc/LtcBlock.ts#L14">model/response/ltc/LtcBlock.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/b895a79/src/nft/marketplace/listing.ts#L90">nft/marketplace/listing.ts:90</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Hash of block.</p>
+							<p>Amount of assets to sell. Valid only for ERC1155.</p>
 						</div>
-						<dl class="tsd-comment-tags">
-							<dt>memberof</dt>
-							<dd><p>LtcBlock</p>
-							</dd>
-						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="height" class="tsd-anchor"></a>
-					<h3>height</h3>
-					<div class="tsd-signature tsd-kind-icon">height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="buyer" class="tsd-anchor"></a>
+					<h3>buyer</h3>
+					<div class="tsd-signature tsd-kind-icon">buyer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/b895a79/src/model/response/ltc/LtcBlock.ts#L20">model/response/ltc/LtcBlock.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/b895a79/src/nft/marketplace/listing.ts#L100">nft/marketplace/listing.ts:100</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The number of blocks preceding a particular block on a block chain.</p>
+							<p>Address of the buyer, if already exists.</p>
 						</div>
-						<dl class="tsd-comment-tags">
-							<dt>memberof</dt>
-							<dd><p>LtcBlock</p>
-							</dd>
-						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="merkleRoot" class="tsd-anchor"></a>
-					<h3>merkle<wbr>Root</h3>
-					<div class="tsd-signature tsd-kind-icon">merkle<wbr>Root<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="erc20Address" class="tsd-anchor"></a>
+					<h3>erc20<wbr>Address</h3>
+					<div class="tsd-signature tsd-kind-icon">erc20<wbr>Address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/b895a79/src/model/response/ltc/LtcBlock.ts#L38">model/response/ltc/LtcBlock.ts:38</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/b895a79/src/nft/marketplace/listing.ts#L80">nft/marketplace/listing.ts:80</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The root node of a merkle tree, a descendant of all the hashed pairs in the tree.</p>
+							<p>Address of the ERC20 token, which will be used for paying. 0x0 if native asset is used</p>
 						</div>
-						<dl class="tsd-comment-tags">
-							<dt>memberof</dt>
-							<dd><p>LtcBlock</p>
-							</dd>
-						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="nonce" class="tsd-anchor"></a>
-					<h3>nonce</h3>
-					<div class="tsd-signature tsd-kind-icon">nonce<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="isErc721" class="tsd-anchor"></a>
+					<h3>is<wbr>Erc721</h3>
+					<div class="tsd-signature tsd-kind-icon">is<wbr>Erc721<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/b895a79/src/model/response/ltc/LtcBlock.ts#L56">model/response/ltc/LtcBlock.ts:56</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/b895a79/src/nft/marketplace/listing.ts#L60">nft/marketplace/listing.ts:60</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Arbitrary number that is used in Litecoin&#39;s proof of work consensus algorithm.</p>
+							<p>whether listing is for ERC721 or ERC1155</p>
 						</div>
-						<dl class="tsd-comment-tags">
-							<dt>memberof</dt>
-							<dd><p>LtcBlock</p>
-							</dd>
-						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="prevBlock" class="tsd-anchor"></a>
-					<h3>prev<wbr>Block</h3>
-					<div class="tsd-signature tsd-kind-icon">prev<wbr>Block<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="listingId" class="tsd-anchor"></a>
+					<h3>listing<wbr>Id</h3>
+					<div class="tsd-signature tsd-kind-icon">listing<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/b895a79/src/model/response/ltc/LtcBlock.ts#L32">model/response/ltc/LtcBlock.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/b895a79/src/nft/marketplace/listing.ts#L55">nft/marketplace/listing.ts:55</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Hash of the previous block.</p>
+							<p>ID of the listing</p>
 						</div>
-						<dl class="tsd-comment-tags">
-							<dt>memberof</dt>
-							<dd><p>LtcBlock</p>
-							</dd>
-						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="ts" class="tsd-anchor"></a>
-					<h3>ts</h3>
-					<div class="tsd-signature tsd-kind-icon">ts<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="nftAddress" class="tsd-anchor"></a>
+					<h3>nft<wbr>Address</h3>
+					<div class="tsd-signature tsd-kind-icon">nft<wbr>Address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/b895a79/src/model/response/ltc/LtcBlock.ts#L44">model/response/ltc/LtcBlock.ts:44</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/b895a79/src/nft/marketplace/listing.ts#L70">nft/marketplace/listing.ts:70</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Time of the block.</p>
+							<p>Address of the NFT asset contract</p>
 						</div>
-						<dl class="tsd-comment-tags">
-							<dt>memberof</dt>
-							<dd><p>LtcBlock</p>
-							</dd>
-						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="txs" class="tsd-anchor"></a>
-					<h3>txs</h3>
-					<div class="tsd-signature tsd-kind-icon">txs<span class="tsd-signature-symbol">:</span> <a href="LtcTx.html" class="tsd-signature-type" data-tsd-kind="Interface">LtcTx</a><span class="tsd-signature-symbol">[]</span></div>
+					<a name="price" class="tsd-anchor"></a>
+					<h3>price</h3>
+					<div class="tsd-signature tsd-kind-icon">price<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/b895a79/src/model/response/ltc/LtcBlock.ts#L62">model/response/ltc/LtcBlock.ts:62</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<dl class="tsd-comment-tags">
-							<dt>memberof</dt>
-							<dd><p>LtcBlock</p>
-							</dd>
-						</dl>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="version" class="tsd-anchor"></a>
-					<h3>version</h3>
-					<div class="tsd-signature tsd-kind-icon">version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/b895a79/src/model/response/ltc/LtcBlock.ts#L26">model/response/ltc/LtcBlock.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/b895a79/src/nft/marketplace/listing.ts#L95">nft/marketplace/listing.ts:95</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Block version.</p>
+							<p>Price to sell asset for.</p>
 						</div>
-						<dl class="tsd-comment-tags">
-							<dt>memberof</dt>
-							<dd><p>LtcBlock</p>
-							</dd>
-						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="seller" class="tsd-anchor"></a>
+					<h3>seller</h3>
+					<div class="tsd-signature tsd-kind-icon">seller<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/b895a79/src/nft/marketplace/listing.ts#L75">nft/marketplace/listing.ts:75</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Address of the seller</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="state" class="tsd-anchor"></a>
+					<h3>state</h3>
+					<div class="tsd-signature tsd-kind-icon">state<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ListingState</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/b895a79/src/nft/marketplace/listing.ts#L65">nft/marketplace/listing.ts:65</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>State of the listing,</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="tokenId" class="tsd-anchor"></a>
+					<h3>token<wbr>Id</h3>
+					<div class="tsd-signature tsd-kind-icon">token<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/b895a79/src/nft/marketplace/listing.ts#L85">nft/marketplace/listing.ts:85</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>TokenID to sell</p>
+						</div>
 					</div>
 				</section>
 			</section>
@@ -285,34 +262,37 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="LtcBlock.html" class="tsd-kind-icon">Ltc<wbr>Block</a>
+						<a href="MarketplaceListing.html" class="tsd-kind-icon">Marketplace<wbr>Listing</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="LtcBlock.html#bits" class="tsd-kind-icon">bits</a>
+								<a href="MarketplaceListing.html#amount" class="tsd-kind-icon">amount</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="LtcBlock.html#hash" class="tsd-kind-icon">hash</a>
+								<a href="MarketplaceListing.html#buyer" class="tsd-kind-icon">buyer</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="LtcBlock.html#height" class="tsd-kind-icon">height</a>
+								<a href="MarketplaceListing.html#erc20Address" class="tsd-kind-icon">erc20<wbr>Address</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="LtcBlock.html#merkleRoot" class="tsd-kind-icon">merkle<wbr>Root</a>
+								<a href="MarketplaceListing.html#isErc721" class="tsd-kind-icon">is<wbr>Erc721</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="LtcBlock.html#nonce" class="tsd-kind-icon">nonce</a>
+								<a href="MarketplaceListing.html#listingId" class="tsd-kind-icon">listing<wbr>Id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="LtcBlock.html#prevBlock" class="tsd-kind-icon">prev<wbr>Block</a>
+								<a href="MarketplaceListing.html#nftAddress" class="tsd-kind-icon">nft<wbr>Address</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="LtcBlock.html#ts" class="tsd-kind-icon">ts</a>
+								<a href="MarketplaceListing.html#price" class="tsd-kind-icon">price</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="LtcBlock.html#txs" class="tsd-kind-icon">txs</a>
+								<a href="MarketplaceListing.html#seller" class="tsd-kind-icon">seller</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="LtcBlock.html#version" class="tsd-kind-icon">version</a>
+								<a href="MarketplaceListing.html#state" class="tsd-kind-icon">state</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="MarketplaceListing.html#tokenId" class="tsd-kind-icon">token<wbr>Id</a>
 							</li>
 						</ul>
 					</li>
