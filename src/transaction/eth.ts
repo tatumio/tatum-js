@@ -1025,6 +1025,13 @@ export const sendMintMultipleErc721Transaction = async (body: EthMintMultipleErc
 export const sendBurnErc721Transaction = async (body: EthBurnErc721, provider?: string) =>
     ethBroadcast(await prepareEthBurnErc721SignedTransaction(body, provider), body.signatureId);
 
+/**
+ * Send Ethereum ERC721 update cashback for author transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendUpdateCashbackForAuthorErc721Transaction = async (body: UpdateCashbackErc721, provider?: string) =>
     ethBroadcast(await prepareEthUpdateCashbackForAuthorErc721SignedTransaction(body, provider), body.signatureId);
 
@@ -1057,6 +1064,14 @@ export const sendDeployErc721Transaction = async (body: EthDeployErc721, provide
  */
 export const sendEthMultiTokenTransaction = async (body: TransferMultiToken, provider?: string) =>
     ethBroadcast(await prepareEthTransferMultiTokenSignedTransaction(body, provider), body.signatureId);
+
+/**
+ * Send Ethereum MultiToken batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendEthMultiTokenBatchTransaction = async (body: TransferMultiTokenBatch, provider?: string) =>
     ethBroadcast(await prepareEthBatchTransferMultiTokenSignedTransaction(body, provider), body.signatureId);
 /**
@@ -1079,6 +1094,13 @@ export const sendEthDeployMultiTokenTransaction = async (body: EthDeployMultiTok
 export const sendEthMintMultiTokenTransaction = async (body: MintMultiToken, provider?: string) =>
     ethBroadcast(await prepareEthMintMultiTokenSignedTransaction(body, provider), body.signatureId);
 
+/**
+ * Send Ethereum MultiToken mint batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendEthMintMultiTokenBatchTransaction = async (body: MintMultiTokenBatch, provider?: string) =>
     ethBroadcast(await prepareEthMintMultiTokenBatchSignedTransaction(body, provider), body.signatureId);
 
@@ -1092,8 +1114,22 @@ export const sendEthMintMultiTokenBatchTransaction = async (body: MintMultiToken
 export const sendEthBurnMultiTokenTransaction = async (body: EthBurnMultiToken, provider?: string) =>
     ethBroadcast(await prepareEthBurnMultiTokenSignedTransaction(body, provider), body.signatureId);
 
+/**
+ * Send Ethereum MultiToken burn batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendEthBurnBatchMultiTokenTransaction = async (body: EthBurnMultiTokenBatch, provider?: string) =>
     ethBroadcast(await prepareEthBurnBatchMultiTokenSignedTransaction(body, provider), body.signatureId);
 
+/**
+ * Send Ethereum generate custodial wallet transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
 export const sendEthGenerateCustodialWalletSignedTransaction = async (body: GenerateCustodialAddress, provider?: string) =>
     ethBroadcast(await prepareEthGenerateCustodialWalletSignedTransaction(body, provider), body.signatureId);

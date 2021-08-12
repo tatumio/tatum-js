@@ -51,6 +51,8 @@ export const deleteBlockedAmountWithTransaction = async (id: string, txData: Blo
 export const deleteBlockedAmountForAccount = async (id: string): Promise<void> => httpDelete(`/v3/ledger/account/block/account/${id}`);
 
 /**
+ * Activates deactivated account. If active account is deactivated nothing will happen.
+ *
  * For more details, see <a href="https://tatum.io/apidoc#operation/activateAccount" target="_blank">Tatum API documentation</a>
  */
 export const activateAccount = async (id: string): Promise<void> => put(`v3/ledger/account/${id}/activate`);

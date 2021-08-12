@@ -1,7 +1,5 @@
 /**
- *
- * @export
- * @interface AccountBalance
+ * Ledger Account Balance
  */
 export interface AccountBalance {
     /**
