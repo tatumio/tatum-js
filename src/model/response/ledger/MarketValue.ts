@@ -1,7 +1,7 @@
 /**
  * MarketValue
  */
-import {Fiat} from './Fiat';
+import {Fiat} from './Fiat'
 
 export interface MarketValue {
     /**

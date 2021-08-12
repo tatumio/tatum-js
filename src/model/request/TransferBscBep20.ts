@@ -1,4 +1,4 @@
-import {Type} from 'class-transformer';
+import {Type} from 'class-transformer'
 import {
     IsIn,
     IsNotEmpty,
@@ -9,10 +9,10 @@ import {
     MaxLength,
     Min,
     ValidateNested,
-} from 'class-validator';
-import {BSC_BASED_CURRENCIES, Currency} from './Currency';
-import {Fee} from './Fee';
-import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
+} from 'class-validator'
+import {BSC_BASED_CURRENCIES, Currency} from './Currency'
+import {Fee} from './Fee'
+import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId'
 
 export class TransferBscBep20 extends PrivateKeyOrSignatureId {
 

@@ -1,6 +1,6 @@
-import {IsNotEmpty, Length, Min, ValidateIf} from 'class-validator';
-import {Currency} from './Currency';
-import {InvokeMarketplaceListingOperation} from './InvokeMarketplaceListingOperation';
+import {IsNotEmpty, Length, Min, ValidateIf} from 'class-validator'
+import {Currency} from './Currency'
+import {InvokeMarketplaceListingOperation} from './InvokeMarketplaceListingOperation'
 
 export class InvokeTronMarketplaceListingOperation extends InvokeMarketplaceListingOperation {
 

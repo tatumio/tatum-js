@@ -1,4 +1,4 @@
-import {IsBoolean, IsNotEmpty, IsNumberString, IsOptional, Length, Matches, MaxLength} from 'class-validator';
+import {IsBoolean, IsNotEmpty, IsNumberString, IsOptional, Length, Matches, MaxLength} from 'class-validator'
 
 export class CreateWithdrawal {
 

@@ -2,7 +2,7 @@ import { Type } from 'class-transformer'
 import {
   IsOptional,
   ValidateNested,
-} from 'class-validator';
+} from 'class-validator'
 import { BurnErc721 } from './BurnErc721'
 import { Fee } from './Fee'
 

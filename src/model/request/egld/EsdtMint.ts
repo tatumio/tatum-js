@@ -1,5 +1,5 @@
-import {EsdtToken} from './EsdtToken';
-import {IsNotEmpty, Min} from 'class-validator';
+import {EsdtToken} from './EsdtToken'
+import {IsNotEmpty, Min} from 'class-validator'
 
 export class EsdtMint extends EsdtToken {
     @IsNotEmpty()

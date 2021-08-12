@@ -1,7 +1,7 @@
-import {Type} from 'class-transformer';
-import {IsNotEmpty, IsNotEmptyObject, IsNumberString, IsOptional, Length, Matches, Min, ValidateNested,} from 'class-validator';
-import {Fee} from './Fee';
-import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
+import {Type} from 'class-transformer'
+import {IsNotEmpty, IsNotEmptyObject, IsNumberString, IsOptional, Length, Matches, Min, ValidateNested,} from 'class-validator'
+import {Fee} from './Fee'
+import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId'
 
 export class SmartContractMethodInvocation extends PrivateKeyOrSignatureId {
 

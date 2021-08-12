@@ -1,8 +1,8 @@
-import axios from 'axios';
-import {isHex, stringToHex, toHex} from 'web3-utils';
+import axios from 'axios'
+import {isHex, stringToHex, toHex} from 'web3-utils'
 import { validateBody } from '../connector/tatum'
-import {CreateRecord} from '../model';
-import {TransferQuorum} from '../model';
+import {CreateRecord} from '../model'
+import {TransferQuorum} from '../model'
 
 /**
  * Send Quorum store data transaction to the blockchain.
@@ -23,12 +23,12 @@ export const sendStoreDataQuorumTransaction = async (body: CreateRecord, provide
             data: body.data ? (isHex(body.data) ? stringToHex(body.data) : toHex(body.data)) : undefined,
         }],
         'id': 1
-    })).data;
+    })).data
     if (data.result) {
-        return {txId: data.result};
+        return {txId: data.result}
     }
-    throw new Error(data.error.message);
-};
+    throw new Error(data.error.message)
+}
 
 /**
  * Send Quorum transaction to the blockchain.
@@ -44,9 +44,9 @@ export const sendQuorumTransaction = async (body: TransferQuorum, provider: stri
         'method': 'eth_sendTransaction',
         'params': [body],
         'id': 1
-    })).data;
+    })).data
     if (data.result) {
-        return {txId: data.result};
+        return {txId: data.result}
     }
-    throw new Error(data.error.message);
-};
+    throw new Error(data.error.message)
+}

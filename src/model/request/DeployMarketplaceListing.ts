@@ -1,8 +1,8 @@
-import {Type} from 'class-transformer';
-import {IsIn, IsNotEmpty, IsNumber, IsOptional, IsPositive, Length, Max, Min} from 'class-validator';
-import {Currency} from './Currency';
-import {Fee} from './Fee';
-import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
+import {Type} from 'class-transformer'
+import {IsIn, IsNotEmpty, IsNumber, IsOptional, IsPositive, Length, Max, Min} from 'class-validator'
+import {Currency} from './Currency'
+import {Fee} from './Fee'
+import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId'
 
 export class DeployMarketplaceListing extends PrivateKeyOrSignatureId {
 

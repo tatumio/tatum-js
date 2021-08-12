@@ -1,5 +1,5 @@
-import {Currency} from '../../request';
-import {WithdrawalResponseData} from '../offchain/WithdrawalResponse';
+import {Currency} from '../../request'
+import {WithdrawalResponseData} from '../offchain/WithdrawalResponse'
 
 export class TransactionKMS {
     public id: string;

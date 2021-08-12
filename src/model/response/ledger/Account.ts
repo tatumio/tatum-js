@@ -3,7 +3,7 @@
  * @export
  * @interface Account
  */
-import {AccountBalance} from './AccountBalance';
+import {AccountBalance} from './AccountBalance'
 
 /**
  * Ledger Account Type

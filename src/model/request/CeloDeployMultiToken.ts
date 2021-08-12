@@ -1,6 +1,6 @@
-import {IsIn, IsNotEmpty} from 'class-validator';
-import {Currency} from './Currency';
-import { DeployMultiToken } from './DeployMultiToken';
+import {IsIn, IsNotEmpty} from 'class-validator'
+import {Currency} from './Currency'
+import { DeployMultiToken } from './DeployMultiToken'
 
 export class CeloDeployMultiToken extends DeployMultiToken {
     @IsNotEmpty()

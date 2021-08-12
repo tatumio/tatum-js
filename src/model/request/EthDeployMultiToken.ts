@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer'
-import { IsOptional, ValidateNested } from 'class-validator';
+import { IsOptional, ValidateNested } from 'class-validator'
 import { DeployMultiToken } from './DeployMultiToken'
 import { Fee } from './Fee'
 

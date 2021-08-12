@@ -173,4 +173,4 @@ export default {
         'stateMutability': 'Nonpayable',
         'type': 'Function'
     }]
-};
+}

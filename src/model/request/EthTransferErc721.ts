@@ -10,9 +10,9 @@ import {
   Validate,
   ValidateIf,
   ValidateNested,
-} from 'class-validator';
-import {SignatureIdValidator} from '../validation/SignatureIdValidator';
-import {Currency} from './Currency';
+} from 'class-validator'
+import {SignatureIdValidator} from '../validation/SignatureIdValidator'
+import {Currency} from './Currency'
 import { Fee } from './Fee'
 import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 import { TransferErc721 } from './TransferErc721'

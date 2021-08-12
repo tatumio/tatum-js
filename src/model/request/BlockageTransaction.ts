@@ -8,7 +8,7 @@ import {
     Matches,
     MaxLength,
     Min,
-} from 'class-validator';
+} from 'class-validator'
 
 export class BlockageTransaction {
 

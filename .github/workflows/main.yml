@@ -17,6 +17,8 @@ jobs:
       - run: yarn install
 
       - run: yarn build
+
+      - run: yarn lint
   docs:
     name: 📄 Generate and deploy docs
     runs-on: ubuntu-latest
@@ -30,6 +32,9 @@ jobs:
       - run: yarn install
 
       - run: yarn build
+
+      - run: yarn lint
+
       - run: yarn docs
 
       - name: Deploy 🚀
@@ -50,6 +55,8 @@ jobs:
       - run: yarn install
 
       - run: yarn build
+
+      - run: yarn lint
 
       - run: yarn publish --access public
         env:

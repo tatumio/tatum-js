@@ -1,5 +1,5 @@
-import {IsNotEmpty, Length, Min, ValidateIf,} from 'class-validator';
-import {TransferErc721} from './TransferErc721';
+import {IsNotEmpty, Length, Min, ValidateIf,} from 'class-validator'
+import {TransferErc721} from './TransferErc721'
 
 export class TronTransferTrc721 extends TransferErc721 {
 

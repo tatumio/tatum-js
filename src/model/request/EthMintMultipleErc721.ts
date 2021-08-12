@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer'
-import { IsOptional, ValidateNested } from 'class-validator';
+import { IsOptional, ValidateNested } from 'class-validator'
 import { Fee } from './Fee'
 import { MintMultipleErc721 } from './MintMultipleErc721'
 

@@ -1,4 +1,4 @@
-import { Type } from 'class-transformer';
+import { Type } from 'class-transformer'
 import {
     ArrayNotEmpty,
     IsNotEmpty, IsUUID,
@@ -8,9 +8,9 @@ import {
     Validate,
     ValidateIf,
     ValidateNested,
-} from 'class-validator';
+} from 'class-validator'
 import { SignatureIdValidator } from '../validation/SignatureIdValidator'
-import { TransferBtcValidator } from '../validation/TransferBtcValidator';
+import { TransferBtcValidator } from '../validation/TransferBtcValidator'
 
 class PrivateKeyOrSignatureIdBtcBased {
     /**

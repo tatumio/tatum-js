@@ -1,4 +1,4 @@
-import { TradeType } from '../model/request/TradeType';
+import { TradeType } from '../model/request/TradeType'
 import {
     deleteAccountTrades,
     deleteTrade,
@@ -7,7 +7,7 @@ import {
     getHistoricalTrades,
     getTradeById,
     storeTrade
-} from './orderBook';
+} from './orderBook'
 describe('LEDGER TESTS: Trades test suite', () => {
     /*
     returns error validation failed
@@ -36,7 +36,7 @@ describe('LEDGER TESTS: Trades test suite', () => {
             // return error if any
             console.log(JSON.stringify(e.response.data))
         }
-    });
+    })
     it('should fail to validate using same ids in both accounts', async () => {
         try {
             const accountObj = await storeTrade({
@@ -56,7 +56,7 @@ describe('LEDGER TESTS: Trades test suite', () => {
             // return error if any
             console.log(e.response.data)
         }
-    });
+    })
     it('should fail if using different ids and pair combination', async () => {
         try {
             const accountObj = await storeTrade({
@@ -75,5 +75,5 @@ describe('LEDGER TESTS: Trades test suite', () => {
             expect(e.response.data.statusCode).toBe(403)
             expect(e.response.data.errorCode).toBe('trade.currency1.pair')
         }
-    });
-});
+    })
+})

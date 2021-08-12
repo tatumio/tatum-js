@@ -1,8 +1,8 @@
-import {Account, Asset, Keypair, Memo, Networks, Operation, TransactionBuilder} from 'stellar-sdk';
-import {xlmGetAccountInfo} from '../blockchain';
+import {Account, Asset, Keypair, Memo, Networks, Operation, TransactionBuilder} from 'stellar-sdk'
+import {xlmGetAccountInfo} from '../blockchain'
 import { validateBody } from '../connector/tatum'
-import {Currency, TransactionKMS, TransferXlmOffchain} from '../model';
-import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
+import {Currency, TransactionKMS, TransferXlmOffchain} from '../model'
+import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common'
 
 /**
  * Send Stellar transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -15,38 +15,38 @@ export const sendXlmOffchainTransaction = async (testnet: boolean, body: Transfe
     await validateBody(body, TransferXlmOffchain)
     const {
         secret, ...withdrawal
-    } = body;
+    } = body
     if (!withdrawal.fee) {
-        withdrawal.fee = '0.00001';
+        withdrawal.fee = '0.00001'
     }
-    const memo = withdrawal.attr ? withdrawal.attr.length > 28 ? Memo.hash(withdrawal.attr) : Memo.text(withdrawal.attr) : undefined;
-    const account = await xlmGetAccountInfo(Keypair.fromSecret(secret).publicKey());
-    const {id} = await offchainStoreWithdrawal(withdrawal);
+    const memo = withdrawal.attr ? withdrawal.attr.length > 28 ? Memo.hash(withdrawal.attr) : Memo.text(withdrawal.attr) : undefined
+    const account = await xlmGetAccountInfo(Keypair.fromSecret(secret).publicKey())
+    const {id} = await offchainStoreWithdrawal(withdrawal)
     const {
         amount, address,
-    } = withdrawal;
+    } = withdrawal
 
-    let txData;
+    let txData
     try {
-        txData = await prepareXlmSignedOffchainTransaction(testnet, account, amount, address, secret, memo);
+        txData = await prepareXlmSignedOffchainTransaction(testnet, account, amount, address, secret, memo)
     } catch (e) {
-        console.error(e);
-        await offchainCancelWithdrawal(id);
-        throw e;
+        console.error(e)
+        await offchainCancelWithdrawal(id)
+        throw e
     }
     try {
-        return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.XLM}), id};
+        return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.XLM}), id}
     } catch (e) {
-        console.error(e);
+        console.error(e)
         try {
-            await offchainCancelWithdrawal(id);
+            await offchainCancelWithdrawal(id)
         } catch (e1) {
-            console.log(e);
-            return {id};
+            console.log(e)
+            return {id}
         }
-        throw e;
+        throw e
     }
-};
+}
 
 /**
  * Sign Stellar pending transaction from Tatum KMS
@@ -57,12 +57,12 @@ export const sendXlmOffchainTransaction = async (testnet: boolean, body: Transfe
  */
 export const signXlmOffchainKMSTransaction = async (tx: TransactionKMS, secret: string, testnet: boolean) => {
     if (tx.chain !== Currency.XLM) {
-        throw Error('Unsupported chain.');
+        throw Error('Unsupported chain.')
     }
-    const transaction = TransactionBuilder.fromXDR(tx.serializedTransaction, testnet ? Networks.TESTNET : Networks.PUBLIC);
-    transaction.sign(Keypair.fromSecret(secret));
-    return transaction.toEnvelope().toXDR().toString('base64');
-};
+    const transaction = TransactionBuilder.fromXDR(tx.serializedTransaction, testnet ? Networks.TESTNET : Networks.PUBLIC)
+    transaction.sign(Keypair.fromSecret(secret))
+    return transaction.toEnvelope().toXDR().toString('base64')
+}
 
 /**
  * Sign Stellar transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -80,13 +80,13 @@ export const prepareXlmSignedOffchainTransaction =
             fee: '100',
             networkPassphrase: testnet ? Networks.TESTNET : Networks.PUBLIC,
             memo,
-        }).setTimeout(300);
+        }).setTimeout(300)
 
         const tx = builder.addOperation(Operation.payment({
             destination: address,
             asset: Asset.native(),
             amount,
-        })).build();
-        tx.sign(Keypair.fromSecret(secret));
-        return tx.toEnvelope().toXDR().toString('base64');
-    };
+        })).build()
+        tx.sign(Keypair.fromSecret(secret))
+        return tx.toEnvelope().toXDR().toString('base64')
+    }

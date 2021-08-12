@@ -1,5 +1,5 @@
-import {IsOptional, Min} from 'class-validator';
-import {EthMintErc721} from './EthMintErc721';
+import {IsOptional, Min} from 'class-validator'
+import {EthMintErc721} from './EthMintErc721'
 
 export class OneMint721 extends EthMintErc721 {
 

@@ -1,5 +1,5 @@
-import {IsNotEmpty, IsOptional, Length, Min} from 'class-validator';
-import {CreateWithdrawal} from './CreateWithdrawal';
+import {IsNotEmpty, IsOptional, Length, Min} from 'class-validator'
+import {CreateWithdrawal} from './CreateWithdrawal'
 
 export class TransferXrpOffchain extends CreateWithdrawal {
     @IsNotEmpty()

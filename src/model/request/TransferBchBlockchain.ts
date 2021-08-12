@@ -1,6 +1,6 @@
-import {Type} from 'class-transformer';
-import {ArrayNotEmpty, IsNotEmpty, IsNumberString, ValidateNested} from 'class-validator';
-import {FromUTXO, To} from './TransferBtcBasedBlockchain';
+import {Type} from 'class-transformer'
+import {ArrayNotEmpty, IsNotEmpty, IsNumberString, ValidateNested} from 'class-validator'
+import {FromUTXO, To} from './TransferBtcBasedBlockchain'
 
 export class FromUTXOBcash extends FromUTXO {
     @IsNotEmpty()

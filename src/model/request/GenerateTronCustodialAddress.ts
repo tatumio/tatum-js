@@ -1,6 +1,6 @@
-import {IsNotEmpty, Length, Min, ValidateIf} from 'class-validator';
-import {Currency} from './Currency';
-import {GenerateCustodialAddress} from './GenerateCustodialAddress';
+import {IsNotEmpty, Length, Min, ValidateIf} from 'class-validator'
+import {Currency} from './Currency'
+import {GenerateCustodialAddress} from './GenerateCustodialAddress'
 
 export class GenerateTronCustodialAddress extends GenerateCustodialAddress {
 

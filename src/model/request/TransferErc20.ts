@@ -1,4 +1,4 @@
-import {Type} from 'class-transformer';
+import {Type} from 'class-transformer'
 import {
     IsIn,
     IsNotEmpty,
@@ -9,8 +9,8 @@ import {
     MaxLength,
     Min,
     ValidateNested,
-} from 'class-validator';
-import {Fee} from './Fee';
+} from 'class-validator'
+import {Fee} from './Fee'
 import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 
 export class TransferErc20 extends PrivateKeyOrSignatureId {

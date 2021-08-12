@@ -1,33 +1,33 @@
-import {Currency} from './model';
+import {Currency} from './model'
 
-export const TATUM_API_URL = 'https://api-eu1.tatum.io';
-export const TATUM_RETRY_DELAY = 1000;
-export const TATUM_RETRIES = 5;
+export const TATUM_API_URL = 'https://api-eu1.tatum.io'
+export const TATUM_RETRY_DELAY = 1000
+export const TATUM_RETRIES = 5
 
-export const TEST_VET_URL = 'https://sync-testnet.vechain.org/';
-export const VET_URL = 'https://sync-mainnet.vechain.org/';
+export const TEST_VET_URL = 'https://sync-testnet.vechain.org/'
+export const VET_URL = 'https://sync-mainnet.vechain.org/'
 
-export const HARDENED_THRESHOLD = 0x80000000;
+export const HARDENED_THRESHOLD = 0x80000000
 
-export const ETH_DERIVATION_PATH = 'm/44\'/60\'/0\'/0';
-export const MATIC_DERIVATION_PATH = 'm/44\'/966\'/0\'/0';
-export const ONE_DERIVATION_PATH = 'm/44\'/1023\'/0\'/0';
-export const FLOW_DERIVATION_PATH = 'm/44\'/539\'/0\'/0';
-export const CELO_DERIVATION_PATH = 'm/44\'/52752\'/0\'/0';
-export const VET_DERIVATION_PATH = 'm/44\'/818\'/0\'/0';
-export const BTC_DERIVATION_PATH = 'm/44\'/0\'/0\'/0';
+export const ETH_DERIVATION_PATH = 'm/44\'/60\'/0\'/0'
+export const MATIC_DERIVATION_PATH = 'm/44\'/966\'/0\'/0'
+export const ONE_DERIVATION_PATH = 'm/44\'/1023\'/0\'/0'
+export const FLOW_DERIVATION_PATH = 'm/44\'/539\'/0\'/0'
+export const CELO_DERIVATION_PATH = 'm/44\'/52752\'/0\'/0'
+export const VET_DERIVATION_PATH = 'm/44\'/818\'/0\'/0'
+export const BTC_DERIVATION_PATH = 'm/44\'/0\'/0\'/0'
 export const QTUM_DERIVATION_PATH = 'm/44\'/2301\'/0\'/0'
-export const TRON_DERIVATION_PATH = 'm/44\'/195\'/0\'/0';
-export const LTC_DERIVATION_PATH = 'm/44\'/2\'/0\'/0';
-export const DOGE_DERIVATION_PATH = 'm/44\'/3\'/0\'/0';
-export const BCH_DERIVATION_PATH = 'm/44\'/145\'/0\'/0';
-export const LYRA_DERIVATION_PATH = 'm/44\'/497\'/0\'/0';
-export const ADA_DERIVATION_PATH = 'm/1852\'/1815\'/0\'';
-export const XDC_DERIVATION_PATH = 'm/44\'/550\'/0\'/0';
-export const EGLD_DERIVATION_PATH = 'm/44\'/508\'/0\'/0\'';
-export const TESTNET_DERIVATION_PATH = 'm/44\'/1\'/0\'/0';
+export const TRON_DERIVATION_PATH = 'm/44\'/195\'/0\'/0'
+export const LTC_DERIVATION_PATH = 'm/44\'/2\'/0\'/0'
+export const DOGE_DERIVATION_PATH = 'm/44\'/3\'/0\'/0'
+export const BCH_DERIVATION_PATH = 'm/44\'/145\'/0\'/0'
+export const LYRA_DERIVATION_PATH = 'm/44\'/497\'/0\'/0'
+export const ADA_DERIVATION_PATH = 'm/1852\'/1815\'/0\''
+export const XDC_DERIVATION_PATH = 'm/44\'/550\'/0\'/0'
+export const EGLD_DERIVATION_PATH = 'm/44\'/508\'/0\'/0\''
+export const TESTNET_DERIVATION_PATH = 'm/44\'/1\'/0\'/0'
 
-export const ADA_DERIVATION_SCHEME = 2;
+export const ADA_DERIVATION_SCHEME = 2
 
 export const LTC_TEST_NETWORK = {
     messagePrefix: '\x18Litecoin Signed Message:\n',
@@ -39,7 +39,7 @@ export const LTC_TEST_NETWORK = {
     pubKeyHash: 0x6f,
     scriptHash: 0x3a,
     wif: 0xef,
-};
+}
 export const LTC_NETWORK = {
     messagePrefix: '\x18Litecoin Signed Message:\n',
     bech32: '',
@@ -50,7 +50,7 @@ export const LTC_NETWORK = {
     pubKeyHash: 0x30,
     scriptHash: 0x32,
     wif: 0xb0,
-};
+}
 export const QTUM_NETWORK_MAINNET ={
     messagePrefix: '\x15Qtum Signed Message:\n',
     bech32: 'qc',
@@ -84,7 +84,7 @@ export const DOGE_TEST_NETWORK = {
     pubKeyHash: 0x71,
     scriptHash: 0xc4,
     wif: 0xf1,
-};
+}
 export const DOGE_NETWORK = {
     messagePrefix: '\x18Dogecoin Signed Message:\n',
     bech32: '',
@@ -95,7 +95,7 @@ export const DOGE_NETWORK = {
     pubKeyHash: 0x1e,
     scriptHash: 0x16,
     wif: 0x9e,
-};
+}
 
 export const LYRA_TEST_NETWORK = {
     messagePrefix: '\x18DarkNet Signed Message:\n',
@@ -107,7 +107,7 @@ export const LYRA_TEST_NETWORK = {
     pubKeyHash: 0x7f,
     scriptHash: 0x13,
     wif: 0xae,
-};
+}
 export const LYRA_NETWORK = {
     messagePrefix: '\x18DarkNet Signed Message:\n',
     bech32: '',
@@ -118,28 +118,28 @@ export const LYRA_NETWORK = {
     pubKeyHash: 0x30,
     scriptHash: 0x0d,
     wif: 0xae,
-};
+}
 
-export const RIPPLE_EPOCH = 946684800;
+export const RIPPLE_EPOCH = 946684800
 
-export const CUSD_ADDRESS_MAINNET = '0x765de816845861e75a25fca122bb6898b8b1282a';
-export const CUSD_ADDRESS_TESTNET = '0x874069fa1eb16d44d622f2e0ca25eea172369bc1';
-export const CEUR_ADDRESS_MAINNET = '0xd8763cba276a3738e6de85b4b3bf5fded6d6ca73';
-export const CEUR_ADDRESS_TESTNET = '0x10c892a6ec43a53e45d0b916b4b7d383b1b78c0f';
+export const CUSD_ADDRESS_MAINNET = '0x765de816845861e75a25fca122bb6898b8b1282a'
+export const CUSD_ADDRESS_TESTNET = '0x874069fa1eb16d44d622f2e0ca25eea172369bc1'
+export const CEUR_ADDRESS_MAINNET = '0xd8763cba276a3738e6de85b4b3bf5fded6d6ca73'
+export const CEUR_ADDRESS_TESTNET = '0x10c892a6ec43a53e45d0b916b4b7d383b1b78c0f'
 
 export const FLOW_TESTNET_ADDRESSES = {
     FlowToken: '0x7e60df042a9c0868',
     FungibleToken: '0x9a0766d93b6608b7',
     FUSD: '0xe223d8a629e49c68',
     TatumMultiNFT: '0x87fe4ebd0cddde06',
-};
+}
 
 export const FLOW_MAINNET_ADDRESSES = {
     FlowToken: '0x1654653399040a61',
     FungibleToken: '0xf233dcee88fe0abe',
     FUSD: '0x3c5959b568896393',
     TatumMultiNFT: '0x354e6721564ccd2c',
-};
+}
 
 export const CONTRACT_ADDRESSES = {
     [Currency.USDT.toString()]: '0xdac17f958d2ee523a2206206994597c13d831ec7',
@@ -179,7 +179,7 @@ export const CONTRACT_ADDRESSES = {
     [Currency.CAKE.toString()]: '0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82',
     [Currency.BUSD_BSC.toString()]: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
     [Currency.GMC_BSC.toString()]: '0xa6272359bc37f61af398071b65c8934aca744d53',
-};
+}
 
 export const CONTRACT_DECIMALS = {
     [Currency.USDT.toString()]: 6,
@@ -219,11 +219,11 @@ export const CONTRACT_DECIMALS = {
     [Currency.BXRP.toString()]: 18,
     [Currency.BLTC.toString()]: 18,
     [Currency.BBCH.toString()]: 18,
-};
+}
 
 export const CELO_BASED_CURRENCIES = [
     Currency.CELO.toString(), Currency.CEUR.toString(), Currency.CUSD.toString(),
-];
+]
 
 export const TRANSFER_METHOD_ABI = {
     constant: false,
@@ -247,6 +247,6 @@ export const TRANSFER_METHOD_ABI = {
     payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
-};
+}
 
-export const ESDT_SYSTEM_SMART_CONTRACT_ADDRESS = 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls8a5w6u';
+export const ESDT_SYSTEM_SMART_CONTRACT_ADDRESS = 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls8a5w6u'

@@ -1,6 +1,6 @@
-import {MarketValue} from './MarketValue';
-import {OperationType} from './OperationType';
-import {TransactionType} from './TransactionType';
+import {MarketValue} from './MarketValue'
+import {OperationType} from './OperationType'
+import {TransactionType} from './TransactionType'
 
 /**
  * Transaction

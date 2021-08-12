@@ -1,6 +1,6 @@
-import {IsNotEmpty, Length, Min, ValidateIf} from 'class-validator';
-import {Currency} from './Currency';
-import {UpdateMarketplaceFee} from './UpdateMarketplaceFee';
+import {IsNotEmpty, Length, Min, ValidateIf} from 'class-validator'
+import {Currency} from './Currency'
+import {UpdateMarketplaceFee} from './UpdateMarketplaceFee'
 
 export class UpdateTronMarketplaceFee extends UpdateMarketplaceFee {
 

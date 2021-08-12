@@ -1,4 +1,4 @@
-import {IsNotEmpty, IsNumberString, IsOptional, Length, Matches, MaxLength} from 'class-validator';
+import {IsNotEmpty, IsNumberString, IsOptional, Length, Matches, MaxLength} from 'class-validator'
 
 export class TransferXlm {
 

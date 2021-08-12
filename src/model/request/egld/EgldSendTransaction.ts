@@ -1,5 +1,5 @@
-import {IsHexadecimal, IsNotEmpty, IsNumberString, IsOptional, Length, Min, MaxLength} from 'class-validator';
-import { activateAccount } from 'src/ledger';
+import {IsHexadecimal, IsNotEmpty, IsNumberString, IsOptional, Length, Min, MaxLength} from 'class-validator'
+import { activateAccount } from 'src/ledger'
 // import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
 
 // export class EgldSendTransaction extends PrivateKeyOrSignatureId {

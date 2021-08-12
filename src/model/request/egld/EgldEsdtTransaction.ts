@@ -1,7 +1,7 @@
-import {Type} from 'class-transformer';
-import {IsNotEmpty, IsNumberString, IsOptional, Length, ValidateNested,} from 'class-validator';
-import {Fee} from '../Fee';
-import {PrivateKeyOrSignatureId} from '../PrivateKeyOrSignatureId';
+import {Type} from 'class-transformer'
+import {IsNotEmpty, IsNumberString, IsOptional, Length, ValidateNested,} from 'class-validator'
+import {Fee} from '../Fee'
+import {PrivateKeyOrSignatureId} from '../PrivateKeyOrSignatureId'
 
 export class EgldEsdtTransaction extends PrivateKeyOrSignatureId {
     @IsOptional()

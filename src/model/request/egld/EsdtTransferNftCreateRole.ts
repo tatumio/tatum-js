@@ -1,5 +1,5 @@
-import {EsdtToken} from './EsdtToken';
-import {IsNotEmpty, Length} from 'class-validator';
+import {EsdtToken} from './EsdtToken'
+import {IsNotEmpty, Length} from 'class-validator'
 
 export class EsdtTransferNftCreateRole extends EsdtToken {
     @IsNotEmpty()
