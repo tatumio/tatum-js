@@ -1,4 +1,4 @@
-import {IsNotEmpty, IsOptional, Length, MaxLength} from 'class-validator';
+import {IsNotEmpty, IsOptional, Length, MaxLength} from 'class-validator'
 
 export class BroadcastTx {
 

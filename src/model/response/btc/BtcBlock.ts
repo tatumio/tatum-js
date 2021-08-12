@@ -1,4 +1,4 @@
-import {BtcTx} from './BtcTx';
+import {BtcTx} from './BtcTx'
 
 /**
  *

@@ -3,7 +3,7 @@
  * @export
  * @interface LtcBlock
  */
-import {LtcTx} from './LtcTx';
+import {LtcTx} from './LtcTx'
 
 export interface LtcBlock {
     /**

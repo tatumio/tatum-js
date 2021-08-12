@@ -1,8 +1,8 @@
-import {Type} from 'class-transformer';
-import {IsIn, IsNotEmpty, IsOptional, IsUUID, Length, Min, Validate, ValidateIf, ValidateNested,} from 'class-validator';
-import {SignatureIdValidator} from '../validation/SignatureIdValidator';
-import {Currency} from './Currency';
-import {Fee} from './Fee';
+import {Type} from 'class-transformer'
+import {IsIn, IsNotEmpty, IsOptional, IsUUID, Length, Min, Validate, ValidateIf, ValidateNested,} from 'class-validator'
+import {SignatureIdValidator} from '../validation/SignatureIdValidator'
+import {Currency} from './Currency'
+import {Fee} from './Fee'
 
 export class CreateRecord {
 

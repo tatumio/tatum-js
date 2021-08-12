@@ -3,7 +3,7 @@
  * @export
  * @interface WithdrawalResponse
  */
-import {Address} from './Address';
+import {Address} from './Address'
 
 export interface WithdrawalResponse {
     /**

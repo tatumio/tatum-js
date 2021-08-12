@@ -1,4 +1,4 @@
-import {IsNotEmpty, IsNumberString, Matches} from 'class-validator';
+import {IsNotEmpty, IsNumberString, Matches} from 'class-validator'
 
 export class Fee {
 

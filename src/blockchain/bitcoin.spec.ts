@@ -6,5 +6,5 @@ describe('BTC connector', () => {
     console.log(currentBlock)
     expect(currentBlock).not.toBeNull()
     expect(currentBlock).toHaveProperty('chain')
-  });
-});
+  })
+})

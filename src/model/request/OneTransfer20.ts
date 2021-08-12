@@ -1,5 +1,5 @@
-import {IsOptional, Min} from 'class-validator';
-import {TransferCustomErc20} from './TransferCustomErc20';
+import {IsOptional, Min} from 'class-validator'
+import {TransferCustomErc20} from './TransferCustomErc20'
 
 export class OneTransfer20 extends TransferCustomErc20 {
 

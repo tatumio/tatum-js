@@ -1,8 +1,8 @@
-import {Type} from 'class-transformer';
-import {IsBoolean, IsIn, IsNotEmpty, IsNumberString, IsOptional, Length, Min} from 'class-validator';
-import {Currency} from './Currency';
-import {Fee} from './Fee';
-import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
+import {Type} from 'class-transformer'
+import {IsBoolean, IsIn, IsNotEmpty, IsNumberString, IsOptional, Length, Min} from 'class-validator'
+import {Currency} from './Currency'
+import {Fee} from './Fee'
+import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId'
 
 export class CreateMarketplaceListing extends PrivateKeyOrSignatureId {
 

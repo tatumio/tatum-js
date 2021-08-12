@@ -3,7 +3,7 @@
  * @export
  * @interface VC
  */
-import {TrcType} from '../../request';
+import {TrcType} from '../../request'
 
 /**
  * Virtual Currency

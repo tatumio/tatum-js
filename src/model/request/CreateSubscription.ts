@@ -1,6 +1,6 @@
-import {Type} from 'class-transformer';
-import {IsIn, IsNotEmpty, IsNotEmptyObject, IsNumber, IsUrl, Length, Matches, Max, MaxLength, Min, ValidateNested,} from 'class-validator';
-import {SubscriptionType} from '../response/ledger/SubscriptionType';
+import {Type} from 'class-transformer'
+import {IsIn, IsNotEmpty, IsNotEmptyObject, IsNumber, IsUrl, Length, Matches, Max, MaxLength, Min, ValidateNested,} from 'class-validator'
+import {SubscriptionType} from '../response/ledger/SubscriptionType'
 
 abstract class Subscription {
     public __type?: string;

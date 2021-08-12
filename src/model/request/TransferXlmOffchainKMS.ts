@@ -1,5 +1,5 @@
-import {IsNotEmpty, IsUUID, Length} from 'class-validator';
-import {CreateWithdrawal} from './CreateWithdrawal';
+import {IsNotEmpty, IsUUID, Length} from 'class-validator'
+import {CreateWithdrawal} from './CreateWithdrawal'
 
 export class TransferXlmOffchainKMS extends CreateWithdrawal {
 

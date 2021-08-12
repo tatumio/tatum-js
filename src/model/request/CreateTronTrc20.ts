@@ -1,4 +1,4 @@
-import {IsNotEmpty, IsOptional, IsUUID, Length, Max, Min, ValidateIf} from 'class-validator';
+import {IsNotEmpty, IsOptional, IsUUID, Length, Max, Min, ValidateIf} from 'class-validator'
 
 export class CreateTronTrc20 {
 

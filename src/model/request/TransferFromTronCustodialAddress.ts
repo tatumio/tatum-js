@@ -1,6 +1,6 @@
-import {IsNotEmpty, Length, Min, ValidateIf} from 'class-validator';
-import {Currency} from './Currency';
-import {TransferFromCustodialAddress} from './TransferFromCustodialAddress';
+import {IsNotEmpty, Length, Min, ValidateIf} from 'class-validator'
+import {Currency} from './Currency'
+import {TransferFromCustodialAddress} from './TransferFromCustodialAddress'
 
 export class TransferFromTronCustodialAddress extends TransferFromCustodialAddress {
 

@@ -1,4 +1,4 @@
-import {Type} from 'class-transformer';
+import {Type} from 'class-transformer'
 import {
     IsIn,
     IsNotEmpty,
@@ -13,11 +13,11 @@ import {
     Validate,
     ValidateIf,
     ValidateNested,
-} from 'class-validator';
-import {Fiat} from '../response';
-import {CreateErc20Validator} from './CreateErc20Validator';
-import {Currency} from './Currency';
-import {CustomerUpdate} from './CustomerUpdate';
+} from 'class-validator'
+import {Fiat} from '../response'
+import {CreateErc20Validator} from './CreateErc20Validator'
+import {Currency} from './Currency'
+import {CustomerUpdate} from './CustomerUpdate'
 
 export class CreateErc20Offchain {
 

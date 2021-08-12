@@ -1,5 +1,5 @@
-import {IsNotEmpty, IsOptional, IsUUID, Length, MaxLength, ValidateIf,} from 'class-validator';
-import {BaseTransferEthErc20Offchain} from './BaseTransferEthErc20Offchain';
+import {IsNotEmpty, IsOptional, IsUUID, Length, MaxLength, ValidateIf,} from 'class-validator'
+import {BaseTransferEthErc20Offchain} from './BaseTransferEthErc20Offchain'
 
 export class TransferEthOffchainKMS extends BaseTransferEthErc20Offchain {
 

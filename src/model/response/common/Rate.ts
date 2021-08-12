@@ -1,5 +1,5 @@
-import {Currency} from '../../request';
-import {Fiat} from '../ledger/Fiat';
+import {Currency} from '../../request'
+import {Fiat} from '../ledger/Fiat'
 
 export class Rate {
 

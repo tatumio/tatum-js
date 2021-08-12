@@ -1,6 +1,6 @@
-import {IsNotEmpty, Length, Min, ValidateIf} from 'class-validator';
-import {CreateMarketplaceListing} from './CreateMarketplaceListing';
-import {Currency} from './Currency';
+import {IsNotEmpty, Length, Min, ValidateIf} from 'class-validator'
+import {CreateMarketplaceListing} from './CreateMarketplaceListing'
+import {Currency} from './Currency'
 
 export class CreateTronMarketplaceListing extends CreateMarketplaceListing {
 

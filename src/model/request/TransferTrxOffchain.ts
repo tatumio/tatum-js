@@ -1,5 +1,5 @@
-import {IsInt, IsNotEmpty, IsOptional, IsUUID, Length, Max, Min, ValidateIf} from 'class-validator';
-import {CreateWithdrawal} from './CreateWithdrawal';
+import {IsInt, IsNotEmpty, IsOptional, IsUUID, Length, Max, Min, ValidateIf} from 'class-validator'
+import {CreateWithdrawal} from './CreateWithdrawal'
 
 export class TransferTrxOffchain extends CreateWithdrawal {
     @Length(1, 500)

@@ -1,5 +1,5 @@
-import { Country } from '../../request/Country';
-import { Fiat } from './Fiat';
+import { Country } from '../../request/Country'
+import { Fiat } from './Fiat'
 
 /**
  * Customer

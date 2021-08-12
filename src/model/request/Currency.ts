@@ -101,24 +101,24 @@ export const BEP20_CURRENCIES = [
     Currency.HAG.toString(),
     Currency.CAKE.toString(),
     Currency.BUSD_BSC.toString(),
-];
+]
 
 export const MATIC20_CURRENCIES = [
     Currency.USDC_MATIC.toString(),
     Currency.USDT_MATIC.toString(),
-];
+]
 
 export const ETH_BASED_CURRENCIES = [
     Currency.ETH.toString(),
     ...ERC20_CURRENCIES,
-];
+]
 
 export const MATIC_BASED_CURRENCIES = [
     Currency.MATIC.toString(),
     ...MATIC20_CURRENCIES,
-];
+]
 
 export const BSC_BASED_CURRENCIES = [
     Currency.BSC.toString(),
     ...BEP20_CURRENCIES,
-];
+]

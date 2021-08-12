@@ -1,6 +1,6 @@
-import {IsIn, IsNotEmpty, IsOptional, Length, Min} from 'class-validator';
-import {Currency} from './Currency';
-import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
+import {IsIn, IsNotEmpty, IsOptional, Length, Min} from 'class-validator'
+import {Currency} from './Currency'
+import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId'
 
 export class DeployErc721 extends PrivateKeyOrSignatureId {
 

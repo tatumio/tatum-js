@@ -1,17 +1,17 @@
-import { Currency } from '../model/request/Currency';
-import { Fiat } from '../model/response/ledger/Fiat';
+import { Currency } from '../model/request/Currency'
+import { Fiat } from '../model/response/ledger/Fiat'
 import {
     createVirtualCurrency,
     getVirtualCurrencyByName,
     mintVirtualCurrency,
     revokeVirtualCurrency,
     updateVirtualCurrency
-} from './index';
+} from './index'
 // import { updateVirtualCurrency } from './vc';
 
 describe('LEDGER TESTS: Virtual Currency test suite', () => {
     // declaring global variables which have larger scope
-    let id: string = '';
+    let id = ''
     it('should create a virtual currency', async () => {
         /*
             always returns error currency already registered
@@ -45,7 +45,7 @@ describe('LEDGER TESTS: Virtual Currency test suite', () => {
             console.log('reached error state', error.response.data)
             expect(error.response.data.errorCode).toBe('virtual.duplicate')
         }
-    });
+    })
     it('should update virtual currency BaseRate', async () => {
         const accountObj = await updateVirtualCurrency({
             'name': 'VC_demoVC',
@@ -53,7 +53,7 @@ describe('LEDGER TESTS: Virtual Currency test suite', () => {
             'baseRate': 0.5
         })
         expect(accountObj).toBeUndefined()
-    });
+    })
     it('should return error in case of wrong name', async () => {
         try {
             const accountObj = await updateVirtualCurrency({
@@ -66,27 +66,27 @@ describe('LEDGER TESTS: Virtual Currency test suite', () => {
             expect(e.response.data.statusCode).toBe(403)
             expect(e.response.data.errorCode).toBe('vc.not.found')
         }
-    });
+    })
     it('should return error in case of missing validations', async () => {
         try {
             const accountObj = await updateVirtualCurrency({
                 'name': 'demoVC',
                 'basePair': Currency.BTC,
                 'baseRate': 0.5
-            });
+            })
             console.log(accountObj)
         } catch (e) {
             // checking negative test results
             expect(e.response.data.statusCode).toBe(400)
             expect(e.response.data.errorCode).toBe('validation.failed')
         }
-    });
+    })
     it('should return VC by name', async () => {
         const accountObj = await getVirtualCurrencyByName('VC_demoVC')
         id = accountObj.accountId
         expect(accountObj.name).toBe('VC_demoVC')
         expect(accountObj.basePair).toBe('BTC')
-    });
+    })
     it('should return error if currency does not exists', async () => {
         try {
             const accountObj = await getVirtualCurrencyByName('VC_emoVC')
@@ -105,7 +105,7 @@ describe('LEDGER TESTS: Virtual Currency test suite', () => {
         } catch (e) {
             console.log(JSON.stringify(e.response.data))
         }
-    });
+    })
     // revokeVirtualCurrency
     it('should destroy new created currency', async () => {
         try {
@@ -117,6 +117,6 @@ describe('LEDGER TESTS: Virtual Currency test suite', () => {
         } catch (e) {
             console.log(JSON.stringify(e.response.data))
         }
-    });
+    })
 
-});
+})

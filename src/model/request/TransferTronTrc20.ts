@@ -1,4 +1,4 @@
-import {IsNotEmpty, IsNumberString, IsOptional, IsUUID, Length, Matches, Min, ValidateIf} from 'class-validator';
+import {IsNotEmpty, IsNumberString, IsOptional, IsUUID, Length, Matches, Min, ValidateIf} from 'class-validator'
 
 export class TransferTronTrc20 {
 

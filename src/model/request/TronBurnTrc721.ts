@@ -1,5 +1,5 @@
-import {IsNotEmpty, Length, Min, ValidateIf,} from 'class-validator';
-import {BurnErc721} from './BurnErc721';
+import {IsNotEmpty, Length, Min, ValidateIf,} from 'class-validator'
+import {BurnErc721} from './BurnErc721'
 
 export class TronBurnTrc721 extends BurnErc721 {
 

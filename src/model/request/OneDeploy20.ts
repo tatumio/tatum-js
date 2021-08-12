@@ -1,5 +1,5 @@
-import {IsOptional, Min,} from 'class-validator';
-import {DeployErc20} from './DeployErc20';
+import {IsOptional, Min,} from 'class-validator'
+import {DeployErc20} from './DeployErc20'
 
 export class OneDeploy20 extends DeployErc20 {
 

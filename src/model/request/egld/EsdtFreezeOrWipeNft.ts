@@ -1,5 +1,5 @@
-import {EsdtToken} from './EsdtToken';
-import {IsString, IsNotEmpty, Length, Min} from 'class-validator';
+import {EsdtToken} from './EsdtToken'
+import {IsString, IsNotEmpty, Length, Min} from 'class-validator'
 
 export class EsdtFreezeOrWipeNft extends EsdtToken {
     @IsNotEmpty()

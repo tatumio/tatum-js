@@ -1,5 +1,5 @@
-import {IsOptional, Min,} from 'class-validator';
-import {MintErc20} from './MintErc20';
+import {IsOptional, Min,} from 'class-validator'
+import {MintErc20} from './MintErc20'
 
 export class OneMint20 extends MintErc20 {
     @IsOptional()

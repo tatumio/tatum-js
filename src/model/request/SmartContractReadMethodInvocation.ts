@@ -1,4 +1,4 @@
-import {IsNotEmpty, IsNotEmptyObject, Length,} from 'class-validator';
+import {IsNotEmpty, IsNotEmptyObject, Length,} from 'class-validator'
 
 export class SmartContractReadMethodInvocation {
 

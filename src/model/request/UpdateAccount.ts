@@ -1,4 +1,4 @@
-import {IsNotEmpty, Length, ValidateIf} from 'class-validator';
+import {IsNotEmpty, Length, ValidateIf} from 'class-validator'
 
 export class UpdateAccount {
     @Length(1, 50)

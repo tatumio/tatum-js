@@ -1,4 +1,4 @@
-import {IsInt, IsNotEmpty, IsNumberString, IsOptional, Length, Matches, Min} from 'class-validator';
+import {IsInt, IsNotEmpty, IsNumberString, IsOptional, Length, Matches, Min} from 'class-validator'
 
 export class TransferXrp {
 

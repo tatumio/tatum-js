@@ -1,9 +1,9 @@
-import {Type} from 'class-transformer';
-import {IsIn, IsNotEmpty, IsNumberString, IsOptional, Min, ValidateIf} from 'class-validator';
-import {ContractType} from './ContractType';
-import {Currency} from './Currency';
-import {Fee} from './Fee';
-import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
+import {Type} from 'class-transformer'
+import {IsIn, IsNotEmpty, IsNumberString, IsOptional, Min, ValidateIf} from 'class-validator'
+import {ContractType} from './ContractType'
+import {Currency} from './Currency'
+import {Fee} from './Fee'
+import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId'
 
 export class TransferFromCustodialAddress extends PrivateKeyOrSignatureId {
 

@@ -1,6 +1,6 @@
-import {IsIn, IsNotEmpty, IsNumberString, IsOptional, Length, MaxLength, Min} from 'class-validator';
-import {Currency} from './Currency';
-import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
+import {IsIn, IsNotEmpty, IsNumberString, IsOptional, Length, MaxLength, Min} from 'class-validator'
+import {Currency} from './Currency'
+import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId'
 
 export class TransferErc721 extends PrivateKeyOrSignatureId {
 

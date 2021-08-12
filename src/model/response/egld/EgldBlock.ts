@@ -4,7 +4,7 @@
  * @interface EgldBlock
  */
 
-import { EgldTransaction } from './EgldTx';
+import { EgldTransaction } from './EgldTx'
 
 export interface EgldShardBlock {
     hash: string

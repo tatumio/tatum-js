@@ -1,10 +1,10 @@
-import BigNumber from 'bignumber.js';
+import BigNumber from 'bignumber.js'
 // @ts-ignore
-import {PrivateKey, Script, Transaction} from 'bitcore-lib-ltc';
-import {validateBody} from '../connector/tatum';
-import {Currency, KeyPair, TransactionKMS, TransferBtcBasedOffchain, WithdrawalResponseData} from '../model';
-import {generateAddressFromXPub, generatePrivateKeyFromMnemonic} from '../wallet';
-import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
+import {PrivateKey, Script, Transaction} from 'bitcore-lib-ltc'
+import {validateBody} from '../connector/tatum'
+import {Currency, KeyPair, TransactionKMS, TransferBtcBasedOffchain, WithdrawalResponseData} from '../model'
+import {generateAddressFromXPub, generatePrivateKeyFromMnemonic} from '../wallet'
+import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common'
 
 /**
  * Send Litecoin transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -14,38 +14,38 @@ import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} fr
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendLitecoinOffchainTransaction = async (testnet: boolean, body: TransferBtcBasedOffchain) => {
-    await validateBody(body, TransferBtcBasedOffchain);
+    await validateBody(body, TransferBtcBasedOffchain)
     const {
         mnemonic, keyPair, attr: changeAddress, xpub, ...withdrawal
-    } = body;
+    } = body
     if (!withdrawal.fee) {
-        withdrawal.fee = '0.0005';
+        withdrawal.fee = '0.0005'
     }
-    const {id, data} = await offchainStoreWithdrawal(withdrawal);
+    const {id, data} = await offchainStoreWithdrawal(withdrawal)
     const {
         amount, address,
-    } = withdrawal;
-    let txData;
+    } = withdrawal
+    let txData
     try {
-        txData = await prepareLitecoinSignedOffchainTransaction(testnet, data, amount, address, mnemonic, keyPair, changeAddress, xpub, withdrawal.multipleAmounts);
+        txData = await prepareLitecoinSignedOffchainTransaction(testnet, data, amount, address, mnemonic, keyPair, changeAddress, xpub, withdrawal.multipleAmounts)
     } catch (e) {
-        console.error(e);
-        await offchainCancelWithdrawal(id);
-        throw e;
+        console.error(e)
+        await offchainCancelWithdrawal(id)
+        throw e
     }
     try {
-        return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.LTC}), id};
+        return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.LTC}), id}
     } catch (e) {
-        console.error(e);
+        console.error(e)
         try {
-            await offchainCancelWithdrawal(id);
+            await offchainCancelWithdrawal(id)
         } catch (e1) {
-            console.log(e);
-            return {id};
+            console.log(e)
+            return {id}
         }
-        throw e;
+        throw e
     }
-};
+}
 
 /**
  * Sign Litecoin pending transaction from Tatum KMS
@@ -56,17 +56,17 @@ export const sendLitecoinOffchainTransaction = async (testnet: boolean, body: Tr
  */
 export const signLitecoinOffchainKMSTransaction = async (tx: TransactionKMS, mnemonic: string, testnet: boolean) => {
     if (tx.chain !== Currency.LTC || !tx.withdrawalResponses) {
-        throw Error('Unsupported chain.');
+        throw Error('Unsupported chain.')
     }
-    const builder = new Transaction(JSON.parse(tx.serializedTransaction));
+    const builder = new Transaction(JSON.parse(tx.serializedTransaction))
     for (const response of tx.withdrawalResponses) {
         if (response.vIn === '-1') {
-            continue;
+            continue
         }
-        builder.sign(PrivateKey.fromWIF(await generatePrivateKeyFromMnemonic(Currency.LTC, testnet, mnemonic, response.address?.derivationKey || 0)));
+        builder.sign(PrivateKey.fromWIF(await generatePrivateKeyFromMnemonic(Currency.LTC, testnet, mnemonic, response.address?.derivationKey || 0)))
     }
-    return builder.serialize(true);
-};
+    return builder.serialize(true)
+}
 
 /**
  * Sign Litecoin transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -85,7 +85,7 @@ export const signLitecoinOffchainKMSTransaction = async (tx: TransactionKMS, mne
 export const prepareLitecoinSignedOffchainTransaction =
     async (testnet: boolean, data: WithdrawalResponseData[], amount: string, address: string, mnemonic?: string, keyPair?: KeyPair[],
            changeAddress?: string, xpub?: string, multipleAmounts?: string[], signatureId?: string) => {
-        const tx = new Transaction();
+        const tx = new Transaction()
 
         data.forEach((input) => {
             if (input.vIn !== '-1') {
@@ -94,48 +94,48 @@ export const prepareLitecoinSignedOffchainTransaction =
                     outputIndex: input.vInIndex,
                     script: Script.fromAddress(input.address.address).toString(),
                     satoshis: Number(new BigNumber(input.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR))
-                });
+                })
             }
-        });
+        })
 
-        const lastVin = data.find(d => d.vIn === '-1') as WithdrawalResponseData;
+        const lastVin = data.find(d => d.vIn === '-1') as WithdrawalResponseData
         if (multipleAmounts?.length) {
             for (const [i, multipleAmount] of multipleAmounts.entries()) {
-                tx.to(address.split(',')[i], Number(new BigNumber(multipleAmount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+                tx.to(address.split(',')[i], Number(new BigNumber(multipleAmount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)))
             }
         } else {
-            tx.to(address, Number(new BigNumber(amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+            tx.to(address, Number(new BigNumber(amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)))
         }
         if (new BigNumber(lastVin.amount).isGreaterThan(0)) {
             if (xpub) {
                 tx.to(generateAddressFromXPub(Currency.LTC, testnet, xpub, 0),
-                    Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+                    Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)))
             } else if (changeAddress) {
-                tx.to(changeAddress, Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+                tx.to(changeAddress, Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)))
             } else {
-                throw new Error('Impossible to prepare transaction. Either mnemonic or keyPair and attr must be present.');
+                throw new Error('Impossible to prepare transaction. Either mnemonic or keyPair and attr must be present.')
             }
         }
 
         if (signatureId) {
-            return JSON.stringify(tx);
+            return JSON.stringify(tx)
         }
 
         for (const input of data) {
             // when there is no address field present, input is pool transfer to 0
             if (input.vIn === '-1') {
-                continue;
+                continue
             }
             if (mnemonic) {
-                const derivationKey = input.address?.derivationKey || 0;
-                tx.sign(PrivateKey.fromWIF(await generatePrivateKeyFromMnemonic(Currency.LTC, testnet, mnemonic, derivationKey)));
+                const derivationKey = input.address?.derivationKey || 0
+                tx.sign(PrivateKey.fromWIF(await generatePrivateKeyFromMnemonic(Currency.LTC, testnet, mnemonic, derivationKey)))
             } else if (keyPair) {
-                const {privateKey} = keyPair.find(k => k.address === input.address.address) as KeyPair;
-                tx.sign(PrivateKey.fromWIF(privateKey));
+                const {privateKey} = keyPair.find(k => k.address === input.address.address) as KeyPair
+                tx.sign(PrivateKey.fromWIF(privateKey))
             } else {
-                throw new Error('Impossible to prepare transaction. Either mnemonic or keyPair and attr must be present.');
+                throw new Error('Impossible to prepare transaction. Either mnemonic or keyPair and attr must be present.')
             }
         }
 
-        return tx.serialize(true);
-    };
+        return tx.serialize(true)
+    }

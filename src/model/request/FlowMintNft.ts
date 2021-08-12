@@ -1,6 +1,6 @@
-import {IsIn, IsNotEmpty, IsUUID, Length, MaxLength} from 'class-validator';
-import {Currency} from './Currency';
-import {FlowMnemonicOrPrivateKeyOrSignatureId} from './FlowMnemonicOrPrivateKeyOrSignatureId';
+import {IsIn, IsNotEmpty, IsUUID, Length, MaxLength} from 'class-validator'
+import {Currency} from './Currency'
+import {FlowMnemonicOrPrivateKeyOrSignatureId} from './FlowMnemonicOrPrivateKeyOrSignatureId'
 
 export class FlowMintNft extends FlowMnemonicOrPrivateKeyOrSignatureId {
 

@@ -1,4 +1,4 @@
-import {IsAlphanumeric, IsIn, IsNotEmpty, IsOptional, IsUppercase, Length, ValidateIf} from 'class-validator';
+import {IsAlphanumeric, IsIn, IsNotEmpty, IsOptional, IsUppercase, Length, ValidateIf} from 'class-validator'
 
 export enum EgldServiceType {
   issue = 'issue',

@@ -1,6 +1,6 @@
-import {IsIn, IsNotEmpty} from 'class-validator';
-import {Currency} from './Currency';
-import {MintMultiTokenBatch} from './MintMultiTokenBatch';
+import {IsIn, IsNotEmpty} from 'class-validator'
+import {Currency} from './Currency'
+import {MintMultiTokenBatch} from './MintMultiTokenBatch'
 
 export class CeloMintMultiTokenBatch extends MintMultiTokenBatch {
 

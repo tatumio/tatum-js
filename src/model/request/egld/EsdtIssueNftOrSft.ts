@@ -1,5 +1,5 @@
-import {EsdtToken} from './EsdtToken';
-import {IsAlphanumeric, IsNotEmpty, IsOptional, IsUppercase, Length} from 'class-validator';
+import {EsdtToken} from './EsdtToken'
+import {IsAlphanumeric, IsNotEmpty, IsOptional, IsUppercase, Length} from 'class-validator'
 
 export class EsdtPropertiesNftOrSft {
     @IsOptional()

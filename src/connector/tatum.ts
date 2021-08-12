@@ -10,7 +10,7 @@ axiosRetry(axios, {
   retryDelay: () => process.env.TATUM_RETRY_DELAY ? Number(process.env.TATUM_RETRY_DELAY) : TATUM_RETRY_DELAY,
   retries: process.env.TATUM_RETRIES ? Number(process.env.TATUM_RETRIES) : TATUM_RETRIES,
   retryCondition: (error) => isNetworkOrIdempotentRequestError(error) || error?.response?.status === 429
-});
+})
 
 const baseUrl = () => process.env.TATUM_API_URL || TATUM_API_URL
 
@@ -21,12 +21,14 @@ export const get = async <T>(url: string): Promise<T> => {
   return data
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export const post = async <T extends object, U, V>(url: string, body?: U, classType?: ClassType<T>): Promise<V> => {
   await validateBody(body, classType)
   const { data } = await axios.post(`${baseUrl()}${url}`, body, headers())
   return data
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export const put = async <T extends object, U, V>(url: string, body?: U, classType?: ClassType<T>): Promise<V> => {
   await validateBody(body, classType)
   const { data } = await axios.put(`${baseUrl()}${url}`, body, headers())
@@ -37,6 +39,7 @@ export const httpDelete = async (url: string): Promise<void> => {
   await axios.delete(`${baseUrl()}${url}`, headers())
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export const validateBody = async <T extends object, U>(body: U, classType?: ClassType<T>): Promise<void> => {
   if (classType) {
     const classInstance = plainToClass(classType, body)

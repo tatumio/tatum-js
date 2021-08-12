@@ -1,10 +1,10 @@
-import BigNumber from 'bignumber.js';
-import {validateBody} from '../connector/tatum';
-import {getAccountById} from '../ledger';
-import {Currency, TransferEthOffchain} from '../model';
-import {prepareEgldSignedTransaction} from '../transaction';
-import {generatePrivateKeyFromMnemonic} from '../wallet';
-import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
+import BigNumber from 'bignumber.js'
+import {validateBody} from '../connector/tatum'
+import {getAccountById} from '../ledger'
+import {Currency, TransferEthOffchain} from '../model'
+import {prepareEgldSignedTransaction} from '../transaction'
+import {generatePrivateKeyFromMnemonic} from '../wallet'
+import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common'
 
 /**
  * Send EGLD transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -15,37 +15,37 @@ import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} fr
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendEgldOffchainTransaction = async (testnet: boolean, body: TransferEthOffchain, provider?: string) => {
-    await validateBody(body, TransferEthOffchain);
+    await validateBody(body, TransferEthOffchain)
     const {
         mnemonic, index, privateKey, gasLimit, gasPrice, nonce, ...withdrawal
-    } = body;
-    const {amount, address} = withdrawal;
+    } = body
+    const {amount, address} = withdrawal
 
-    const fromPriv = mnemonic && index !== undefined ? await generatePrivateKeyFromMnemonic(Currency.EGLD, testnet, mnemonic, index) : privateKey as string;
+    const fromPriv = mnemonic && index !== undefined ? await generatePrivateKeyFromMnemonic(Currency.EGLD, testnet, mnemonic, index) : privateKey as string
 
-    const account = await getAccountById(withdrawal.senderAccountId);
+    const account = await getAccountById(withdrawal.senderAccountId)
     const fee = {
         gasLimit: gasLimit || '50000',
         gasPrice: gasPrice || '1000000000',
-    };
+    }
     const txData = await prepareEgldSignedTransaction({
         amount,
         fromPrivateKey: fromPriv,
         fee,
         to: address,
-    }, provider);
+    }, provider)
     // @ts-ignore
-    withdrawal.fee = new BigNumber(fee.gasLimit).multipliedBy(fee.gasPrice).toString();
-    const {id} = await offchainStoreWithdrawal(withdrawal);
+    withdrawal.fee = new BigNumber(fee.gasLimit).multipliedBy(fee.gasPrice).toString()
+    const {id} = await offchainStoreWithdrawal(withdrawal)
     try {
-        return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.EGLD}), id};
+        return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.EGLD}), id}
     } catch (e) {
-        console.error(e);
+        console.error(e)
         try {
-            await offchainCancelWithdrawal(id);
+            await offchainCancelWithdrawal(id)
         } catch (e1) {
-            console.log(e);
-            return {id};
+            console.log(e)
+            return {id}
         }
     }
-};
+}

@@ -1,6 +1,6 @@
-import {IsIn, IsNotEmpty,} from 'class-validator';
-import {Currency} from './Currency';
-import {TransferEthOffchain} from './TransferEthOffchain';
+import {IsIn, IsNotEmpty,} from 'class-validator'
+import {Currency} from './Currency'
+import {TransferEthOffchain} from './TransferEthOffchain'
 
 export class TransferCeloOffchain extends TransferEthOffchain {
 
