@@ -99,6 +99,41 @@ If you are using the types in a `commonjs` module, like in a Node app, you just 
     ....
 ```
 
+## Directory structure
+```bash
+└── src
+│   ├── blockchain          // Blockchain API methods without private key
+│   ├── connector           // Wrapper around all HTTP methods
+│   ├── contracts           // Abi and byte code smart contracts
+│   │   ├── custodial
+│   │   ├── erc20
+│   │   ├── erc721
+│   │   ├── erc1155
+│   │   ├── marketplace
+│   │   ├── trc20
+│   │   ├── trc721
+│   ├── ledger              // Ledger API methods
+│   ├── model               // Validation, interfaces and DTO classes
+│   │   ├── request
+│   │   ├── response
+│   │   ├── validation
+│   ├── multiToken          // Multi Token API methods
+│   ├── nft                 // NFT API methods
+│   │   ├── marketplace     // Marketplace API methods
+│   ├── offchain            // Offchain API methods
+│   ├── record              // Logging API methods
+│   ├── security            // Security and KMS methods
+│   ├── tatum               // Service API methods
+│   ├── transaction         // Transaction API methods
+│   ├── wallet              // Wallet, private key and address API methods
+│   └── constants.ts        // Constants
+├── README.md
+├── package.json
+├── tslint.js
+├── tsconfig.json
+└── .gitignore
+```
+
 ## Contributing
 
 Contributions to the Tatum API client are welcome. Please ensure
