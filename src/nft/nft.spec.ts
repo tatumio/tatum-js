@@ -1,5 +1,5 @@
 import {CeloBurnErc721, CeloDeployErc721, CeloMintErc721, CeloMintMultipleErc721, CeloTransferErc721, Currency,} from '../model';
-import {burnNFT, deployNFT, mintMultipleNFTWithUri, mintNFTWithUri, transferNFT} from './index';
+import {burnNFT, deployNFT, mintMultipleNFTWithUri, mintNFTWithUri, transferNFT} from './nft';
 
 describe('NFT tests', () => {
     jest.setTimeout(99999);
@@ -52,9 +52,9 @@ describe('NFT tests', () => {
         it('should test valid mint 721 transaction', async () => {
             const body = new CeloMintErc721();
             body.fromPrivateKey = '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236';
-            body.to = '0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea';
+            body.to = '0x48d4bA7B2698A4b89635b9a2E391152350DB740f';
             body.contractAddress = '0x1214BEada6b25bc98f7494C7BDBf22C095FDCaBD';
-            body.tokenId = '3';
+            body.tokenId = '33334';
             body.url = 'https://google.com';
             body.feeCurrency = Currency.CUSD;
             body.chain = Currency.CELO;
@@ -86,9 +86,9 @@ describe('NFT tests', () => {
         it('should test valid transfer 721 transaction', async () => {
             const body = new CeloTransferErc721();
             body.fromPrivateKey = '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236';
-            body.to = '0x48d4bA7B2698A4b89635b9a2E391152350DB740f';
-            body.contractAddress = '0x28980D12Ce9E7Bf6C20f568Db998E9A4d8F13271';
-            body.tokenId = '1';
+            body.to = '0xd093bEd4BC06403bfEABB54667B42C48533D3Fd9';
+            body.contractAddress = '0x1214BEada6b25bc98f7494C7BDBf22C095FDCaBD';
+            body.tokenId = '33334';
             body.feeCurrency = Currency.CUSD;
             body.chain = Currency.CELO;
             expect(await transferNFT(true, body, 'https://alfajores-forno.celo-testnet.org')).toBeDefined();

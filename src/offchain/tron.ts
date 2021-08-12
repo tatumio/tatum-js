@@ -34,12 +34,12 @@ export const sendTronOffchainTransaction = async (testnet: boolean, body: Transf
     let txData;
     if (account.currency === Currency.TRON) {
         txData = await prepareTronSignedTransaction(testnet, {amount, fromPrivateKey: fromPriv, to: address});
-    } else if (account.currency === Currency.USDT_TRON) {
+    } else if (account.currency === Currency.USDT_TRON || account.currency === Currency.INRT_TRON) {
         txData = await prepareTronTrc20SignedTransaction(testnet, {
             amount,
             fromPrivateKey: fromPriv,
             to: address,
-            tokenAddress: CONTRACT_ADDRESSES[Currency.USDT_TRON],
+            tokenAddress: CONTRACT_ADDRESSES[account.currency],
             feeLimit: parseFloat(withdrawal.fee),
         });
     } else {

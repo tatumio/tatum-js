@@ -23,12 +23,12 @@ import {
     Fee,
     MintErc20,
     SmartContractMethodInvocation,
+    SmartContractReadMethodInvocation,
     TransactionKMS,
     TransferCustomErc20,
     TransferErc20,
-    UpdateCashbackErc721,
+    UpdateCashbackErc721
 } from '../model';
-import {SmartContractReadMethodInvocation} from '../model/request/SmartContractReadMethodInvocation';
 
 
 /**
@@ -353,6 +353,7 @@ export const prepareXdcSmartContractWriteMethodInvocation = async (body: SmartCo
         methodName,
         methodABI,
         contractAddress,
+        amount,
         nonce,
         signatureId,
     } = body;
@@ -363,6 +364,7 @@ export const prepareXdcSmartContractWriteMethodInvocation = async (body: SmartCo
     const tx: TransactionConfig = {
         from: 0,
         to: fromXdcAddress(contractAddress),
+        value: toWei(amount || '0', 'ether'),
         data: contract.methods[methodName as string](...params).encodeABI(),
         nonce,
     };

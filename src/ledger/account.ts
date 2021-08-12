@@ -1,8 +1,12 @@
-import { get, httpDelete, post, put } from '../connector/tatum'
+import {get, httpDelete, post, put} from '../connector/tatum';
 import {Account, AccountBalance, Blockage, BlockAmount, CreateAccount} from '../model';
 import {BlockageTransaction} from '../model/request/BlockageTransaction';
 import {CreateAccountsBatch} from '../model/request/CreateAccountsBatch';
 import {UpdateAccount} from '../model/request/UpdateAccount';
+import {SubscriptionType} from '../model/response/ledger/SubscriptionType';
+import {generateDepositAddress} from '../offchain';
+import {generateWallet} from '../wallet';
+import {createNewSubscription} from './subscription';
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/getAccountByAccountId" target="_blank">Tatum API documentation</a>
@@ -13,6 +17,30 @@ export const getAccountById = async (id: string): Promise<Account> => get(`/v3/l
  * For more details, see <a href="https://tatum.io/apidoc#operation/createAccount" target="_blank">Tatum API documentation</a>
  */
 export const createAccount = async (account: CreateAccount): Promise<Account> => post('/v3/ledger/account', account, CreateAccount);
+
+/**
+ * Abstraction unification endpoint for creating new ledger account, optionally added wallet generation, generating deposit blockchain address
+ * and register incoming TX webhook notification.
+ * @param account Account to be created.
+ * @param generateNewWallet If new wallet should be created as well
+ * @param testnet if we are using testnet or not
+ * @param webhookUrl optional URL, where webhook will be post for every incoming blockchain transaction to the address
+ */
+export const generateAccount = async (account: CreateAccount, generateNewWallet = true, testnet = true, webhookUrl?: string) => {
+    let w;
+    if (generateNewWallet) {
+        // @ts-ignore
+        w = await generateWallet(account.currency, testnet);
+        // @ts-ignore
+        account.xpub = w.xpub || w.address;
+    }
+    const a = await createAccount(account);
+    const address = await generateDepositAddress(a.id);
+    if (webhookUrl) {
+        await createNewSubscription({type: SubscriptionType.ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION, attr: {url: webhookUrl, id: a.id}});
+    }
+    return {account: a, address, wallet: w};
+};
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/updateAccountByAccountId" target="_blank">Tatum API documentation</a>

@@ -13,6 +13,7 @@ export * from './xrp';
 export * from './xlm';
 export * from './polygon';
 export * from './scrypta';
+export * from './abstraction';
 export * from './one';
 export * from './tron';
 export * from './ada';

@@ -13,9 +13,11 @@ import erc20TokenABI from '../contracts/erc20/token_abi';
 import erc20TokenBytecode from '../contracts/erc20/token_bytecode';
 import erc721TokenABI from '../contracts/erc721/erc721_abi';
 import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
+import * as listing from '../contracts/marketplace';
 import {
     CreateRecord,
     Currency,
+    DeployMarketplaceListing,
     GenerateCustodialAddress,
     OneBurn20,
     OneBurn721,
@@ -39,7 +41,7 @@ import {
     SmartContractReadMethodInvocation,
     TransactionKMS,
 } from '../model';
-import {obtainCustodialAddressType} from '../wallet/custodial';
+import {obtainCustodialAddressType} from '../wallet';
 
 const prepareGeneralTx = async (client: Web3, testnet: boolean, fromPrivateKey?: string, signatureId?: string, to?: string, amount?: string, nonce?: number,
                                 data?: string, gasLimit?: string, gasPrice?: string) => {
@@ -215,6 +217,26 @@ export const prepareOneGenerateCustodialWalletSignedTransaction = async (testnet
     const contract = new client.eth.Contract(abi);
     const data = contract.deploy({
         data: code,
+    }).encodeABI();
+    return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, undefined, undefined, body.nonce, data,
+        body.fee?.gasLimit, body.fee?.gasPrice);
+};
+
+/**
+ * Sign ONE generate custodial wallet address transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
+ */
+export const prepareOneDeployMarketplaceListingSignedTransaction = async (testnet: boolean, body: DeployMarketplaceListing, provider?: string) => {
+    await validateBody(body, DeployMarketplaceListing);
+    const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
+    // @ts-ignore
+    const contract = new client.eth.Contract(listing.abi);
+    const data = contract.deploy({
+        data: listing.data,
+        arguments: [body.marketplaceFee, body.feeRecipient]
     }).encodeABI();
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, undefined, undefined, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice);
@@ -527,6 +549,7 @@ export const prepareOneSmartContractWriteMethodInvocation = async (testnet: bool
         params,
         methodName,
         methodABI,
+        amount,
         contractAddress,
         nonce,
         signatureId,
@@ -534,7 +557,7 @@ export const prepareOneSmartContractWriteMethodInvocation = async (testnet: bool
     const client = await prepareOneClient(testnet, provider, fromPrivateKey);
 
     const data = new client.eth.Contract([methodABI]).methods[methodName as string](...params).encodeABI();
-    return prepareGeneralTx(client, testnet, fromPrivateKey, signatureId, new HarmonyAddress(contractAddress).basicHex, undefined, nonce, data,
+    return prepareGeneralTx(client, testnet, fromPrivateKey, signatureId, new HarmonyAddress(contractAddress).basicHex, amount, nonce, data,
         fee?.gasLimit, fee?.gasPrice);
 };
 
@@ -788,6 +811,17 @@ export const sendOneDeployMultiTokenSignedTransaction = async (testnet: boolean,
  */
 export const sendOneGenerateCustodialWalletSignedTransaction = async (testnet: boolean, body: GenerateCustodialAddress, provider?: string) =>
     oneBroadcast(await prepareOneGenerateCustodialWalletSignedTransaction(testnet, body, provider), body.signatureId);
+
+/**
+ * Deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const sendOneDeployMarketplaceListingSignedTransaction = async (testnet: boolean, body: DeployMarketplaceListing, provider?: string) =>
+    oneBroadcast(await prepareOneDeployMarketplaceListingSignedTransaction(testnet, body, provider), body.signatureId);
+
 
 /**
  * Send Harmony smart contract method invocation transaction to the blockchain. This method broadcasts signed transaction to the blockchain.

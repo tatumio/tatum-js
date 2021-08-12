@@ -34,6 +34,7 @@ export enum Currency {
     FLOW = 'FLOW',
     FUSD = 'FUSD',
     USDT_TRON = 'USDT_TRON',
+    INRT_TRON = 'INRT_TRON',
     TRON = 'TRON',
     LEO = 'LEO',
     LINK = 'LINK',

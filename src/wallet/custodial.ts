@@ -1,8 +1,6 @@
 import BigNumber from 'bignumber.js';
 import {validateBody} from '../connector/tatum';
 import {
-    CustodialFullTokenWallet,
-    CustodialFullTokenWalletWithBatch,
     Custodial_1155_TokenWallet,
     Custodial_1155_TokenWalletWithBatch,
     Custodial_20_1155_TokenWallet,
@@ -15,6 +13,8 @@ import {
     Custodial_721_1155_TokenWalletWithBatch,
     Custodial_721_TokenWallet,
     Custodial_721_TokenWalletWithBatch,
+    CustodialFullTokenWallet,
+    CustodialFullTokenWalletWithBatch,
 } from '../contracts/custodial';
 import {
     CeloSmartContractMethodInvocation,
@@ -29,6 +29,7 @@ import {
     TransferFromTronCustodialAddressBatch
 } from '../model';
 import {
+    convertAddressToHex,
     getBscBep20ContractDecimals,
     getCeloErc20ContractDecimals,
     getEthErc20ContractDecimals,
@@ -40,7 +41,8 @@ import {
     prepareOneSmartContractWriteMethodInvocation,
     preparePolygonSmartContractWriteMethodInvocation,
     prepareSmartContractWriteMethodInvocation,
-    prepareTronCustodialTransfer, prepareTronCustodialTransferBatch,
+    prepareTronCustodialTransferBatch,
+    prepareTronSmartContractInvocation,
     sendBscGenerateCustodialWalletSignedTransaction,
     sendCeloGenerateCustodialWalletSignedTransaction,
     sendEthGenerateCustodialWalletSignedTransaction,
@@ -187,8 +189,16 @@ export const prepareTransferFromCustodialWallet = async (testnet: boolean, body:
         case Currency.MATIC:
             return await preparePolygonSmartContractWriteMethodInvocation(testnet, r, provider);
         case Currency.TRON:
-            const body1 = body as TransferFromTronCustodialAddress;
-            return await prepareTronCustodialTransfer(testnet, r, body1.feeLimit, body1.from, provider);
+            const {feeLimit, from} = body as TransferFromTronCustodialAddress;
+            r.methodName = 'transfer(address,uint256,address,uint256,uint256)';
+            r.params = [
+                {type: 'address', value: convertAddressToHex(r.params[0])},
+                {type: 'uint256', value: r.params[1]},
+                {type: 'address', value: convertAddressToHex(r.params[2])},
+                {type: 'uint256', value: r.params[3]},
+                {type: 'uint256', value: r.params[4]},
+            ];
+            return await prepareTronSmartContractInvocation(testnet, r, feeLimit, from, provider);
         default:
             throw new Error('Unsupported combination of inputs.');
     }

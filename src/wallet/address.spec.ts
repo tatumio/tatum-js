@@ -1,4 +1,3 @@
-import {getInfo} from '../blockchain';
 import {Currency} from '../model';
 import {generateAddressFromPrivatekey, generateAddressFromXPub, generateFlowPublicKeyFromPrivateKey, generatePrivateKeyFromMnemonic} from './address';
 import {generateBnbWallet, generateTronWallet} from './wallet';
@@ -8,10 +7,6 @@ describe('Address tests', () => {
     it('should generate private key for QTUM testnet', async () => {
         const privateKey = await generatePrivateKeyFromMnemonic(Currency.QTUM, true, 'unable stone luggage syrup soul country hammer fee private coyote phrase brisk', 1);
         expect(privateKey).toBe('cPtkzH8zCxWgyaqMiLJ7sJmZBgmLUb2kBMBrWzhKP9BVUHJfbg5w')
-    });
-    it('should get address info for QTUM testnet', async () => {
-        const res= await getInfo('qWpEineYmtc2Ea25GqDYhvuzCjTiu5hMYA')
-        console.log(res)
     });
     it('should generate address from private key for QTUM testnet', async () => {
         const address = await generateAddressFromPrivatekey(Currency.QTUM, true, 'cNR1n1EuzzaWHD7xcmAo71mwxyVV3uJUbLoamQFiXzaJhjTfCF2P');

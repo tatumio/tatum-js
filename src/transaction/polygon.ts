@@ -13,6 +13,7 @@ import erc20TokenABI from '../contracts/erc20/token_abi';
 import erc20TokenBytecode from '../contracts/erc20/token_bytecode';
 import erc721TokenABI from '../contracts/erc721/erc721_abi';
 import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
+import * as listing from '../contracts/marketplace';
 import {
     BurnErc20,
     BurnMultiToken,
@@ -20,6 +21,7 @@ import {
     CreateRecord,
     Currency,
     DeployErc20,
+    DeployMarketplaceListing,
     EthBurnErc721,
     EthBurnMultiToken,
     EthBurnMultiTokenBatch,
@@ -410,6 +412,25 @@ export const preparePolygonDeployErc721SignedTransaction = async (testnet: boole
 };
 
 /**
+ * Sign Polygon generate custodial wallet address transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
+ */
+export const preparePolygonDeployMarketplaceListingSignedTransaction = async (testnet: boolean, body: DeployMarketplaceListing, provider?: string) => {
+    await validateBody(body, DeployMarketplaceListing);
+    const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey);
+    // @ts-ignore
+    const data = new client.eth.Contract(listing.abi).deploy({
+        arguments: [body.marketplaceFee, body.feeRecipient],
+        data: listing.data,
+    }).encodeABI();
+    return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, undefined, undefined, body.nonce, data,
+        body.fee?.gasLimit, body.fee?.gasPrice);
+};
+
+/**
  * Sign Polygon burn multiple tokens transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
@@ -549,12 +570,13 @@ export const preparePolygonSmartContractWriteMethodInvocation = async (testnet: 
         methodABI,
         contractAddress,
         nonce,
+        amount,
         signatureId,
     } = body;
     const client = await preparePolygonClient(testnet, provider, fromPrivateKey);
 
     const data = new client.eth.Contract([methodABI]).methods[methodName as string](...params).encodeABI();
-    return prepareGeneralTx(client, testnet, fromPrivateKey, signatureId, contractAddress.trim(), undefined, nonce, data,
+    return prepareGeneralTx(client, testnet, fromPrivateKey, signatureId, contractAddress.trim(), amount, nonce, data,
         fee?.gasLimit, fee?.gasPrice);
 };
 
@@ -580,7 +602,7 @@ export const sendPolygonSmartContractReadMethodInvocationTransaction = async (te
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendPolygonStoreDataTransaction = async (testnet: boolean, body: CreateRecord, provider?: string) =>
-    polygonBroadcast(await preparePolygonStoreDataTransaction(testnet, body, provider));
+    polygonBroadcast(await preparePolygonStoreDataTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Polygon mint erc20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -591,7 +613,7 @@ export const sendPolygonStoreDataTransaction = async (testnet: boolean, body: Cr
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendPolygonMintErc20SignedTransaction = async (testnet: boolean, body: MintErc20, provider?: string) =>
-    polygonBroadcast(await preparePolygonMintErc20SignedTransaction(testnet, body, provider));
+    polygonBroadcast(await preparePolygonMintErc20SignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Polygon burn erc20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -602,7 +624,7 @@ export const sendPolygonMintErc20SignedTransaction = async (testnet: boolean, bo
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendPolygonBurnErc20SignedTransaction = async (testnet: boolean, body: BurnErc20, provider?: string) =>
-    polygonBroadcast(await preparePolygonBurnErc20SignedTransaction(testnet, body, provider));
+    polygonBroadcast(await preparePolygonBurnErc20SignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Polygon transfer erc20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -613,7 +635,7 @@ export const sendPolygonBurnErc20SignedTransaction = async (testnet: boolean, bo
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendPolygonTransferErc20SignedTransaction = async (testnet: boolean, body: TransferCustomErc20, provider?: string) =>
-    polygonBroadcast(await preparePolygonTransferErc20SignedTransaction(testnet, body, provider));
+    polygonBroadcast(await preparePolygonTransferErc20SignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Polygon deploy erc20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -624,7 +646,7 @@ export const sendPolygonTransferErc20SignedTransaction = async (testnet: boolean
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendPolygonDeployErc20SignedTransaction = async (testnet: boolean, body: DeployErc20, provider?: string) =>
-    polygonBroadcast(await preparePolygonDeployErc20SignedTransaction(testnet, body, provider));
+    polygonBroadcast(await preparePolygonDeployErc20SignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Polygon mint erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -635,7 +657,7 @@ export const sendPolygonDeployErc20SignedTransaction = async (testnet: boolean, 
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendPolygonMintErc721SignedTransaction = async (testnet: boolean, body: EthMintErc721, provider?: string) =>
-    polygonBroadcast(await preparePolygonMintErc721SignedTransaction(testnet, body, provider));
+    polygonBroadcast(await preparePolygonMintErc721SignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Polygon mint cashback erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -646,7 +668,7 @@ export const sendPolygonMintErc721SignedTransaction = async (testnet: boolean, b
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendPolygonMintCashbackErc721SignedTransaction = async (testnet: boolean, body: EthMintErc721, provider?: string) =>
-    polygonBroadcast(await preparePolygonMintCashbackErc721SignedTransaction(testnet, body, provider));
+    polygonBroadcast(await preparePolygonMintCashbackErc721SignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Polygon mint multiple erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -657,7 +679,7 @@ export const sendPolygonMintCashbackErc721SignedTransaction = async (testnet: bo
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendPolygonMintMultipleCashbackErc721SignedTransaction = async (testnet: boolean, body: EthMintMultipleErc721, provider?: string) =>
-    polygonBroadcast(await preparePolygonMintMultipleCashbackErc721SignedTransaction(testnet, body, provider));
+    polygonBroadcast(await preparePolygonMintMultipleCashbackErc721SignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Polygon mint multiple erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -668,7 +690,7 @@ export const sendPolygonMintMultipleCashbackErc721SignedTransaction = async (tes
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendPolygonMintMultipleErc721SignedTransaction = async (testnet: boolean, body: EthMintMultipleErc721, provider?: string) =>
-    polygonBroadcast(await preparePolygonMintMultipleErc721SignedTransaction(testnet, body, provider));
+    polygonBroadcast(await preparePolygonMintMultipleErc721SignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Polygon burn erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -679,7 +701,7 @@ export const sendPolygonMintMultipleErc721SignedTransaction = async (testnet: bo
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendPolygonBurnErc721SignedTransaction = async (testnet: boolean, body: EthBurnErc721, provider?: string) =>
-    polygonBroadcast(await preparePolygonBurnErc721SignedTransaction(testnet, body, provider));
+    polygonBroadcast(await preparePolygonBurnErc721SignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Polygon transfer erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -690,7 +712,7 @@ export const sendPolygonBurnErc721SignedTransaction = async (testnet: boolean, b
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendPolygonTransferErc721SignedTransaction = async (testnet: boolean, body: EthTransferErc721, provider?: string) =>
-    polygonBroadcast(await preparePolygonTransferErc721SignedTransaction(testnet, body, provider));
+    polygonBroadcast(await preparePolygonTransferErc721SignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Polygon update cashback for author erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -701,7 +723,7 @@ export const sendPolygonTransferErc721SignedTransaction = async (testnet: boolea
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendPolygonUpdateCashbackForAuthorErc721SignedTransaction = async (testnet: boolean, body: UpdateCashbackErc721, provider?: string) =>
-    polygonBroadcast(await preparePolygonUpdateCashbackForAuthorErc721SignedTransaction(testnet, body, provider));
+    polygonBroadcast(await preparePolygonUpdateCashbackForAuthorErc721SignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Polygon deploy erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -712,7 +734,7 @@ export const sendPolygonUpdateCashbackForAuthorErc721SignedTransaction = async (
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendPolygonDeployErc721SignedTransaction = async (testnet: boolean, body: EthDeployErc721, provider?: string) =>
-    polygonBroadcast(await preparePolygonDeployErc721SignedTransaction(testnet, body, provider));
+    polygonBroadcast(await preparePolygonDeployErc721SignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Polygon burn multiple tokens erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -723,7 +745,7 @@ export const sendPolygonDeployErc721SignedTransaction = async (testnet: boolean,
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendPolygonBurnMultiTokenSignedTransaction = async (testnet: boolean, body: BurnMultiToken, provider?: string) =>
-    polygonBroadcast(await preparePolygonBurnMultiTokenSignedTransaction(testnet, body, provider));
+    polygonBroadcast(await preparePolygonBurnMultiTokenSignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Polygon burn multiple tokens batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -734,7 +756,7 @@ export const sendPolygonBurnMultiTokenSignedTransaction = async (testnet: boolea
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendPolygonBurnMultiTokenBatchSignedTransaction = async (testnet: boolean, body: BurnMultiTokenBatch, provider?: string) =>
-    polygonBroadcast(await preparePolygonBurnMultiTokenBatchSignedTransaction(testnet, body, provider));
+    polygonBroadcast(await preparePolygonBurnMultiTokenBatchSignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Polygon transfer multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -745,7 +767,7 @@ export const sendPolygonBurnMultiTokenBatchSignedTransaction = async (testnet: b
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendPolygonTransferMultiTokenSignedTransaction = async (testnet: boolean, body: TransferMultiToken, provider?: string) =>
-    polygonBroadcast(await preparePolygonTransferMultiTokenSignedTransaction(testnet, body, provider));
+    polygonBroadcast(await preparePolygonTransferMultiTokenSignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Polygon batch transfer multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -756,7 +778,7 @@ export const sendPolygonTransferMultiTokenSignedTransaction = async (testnet: bo
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendPolygonBatchTransferMultiTokenSignedTransaction = async (testnet: boolean, body: TransferMultiTokenBatch, provider?: string) =>
-    polygonBroadcast(await preparePolygonBatchTransferMultiTokenSignedTransaction(testnet, body, provider));
+    polygonBroadcast(await preparePolygonBatchTransferMultiTokenSignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Polygon mint multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -767,7 +789,7 @@ export const sendPolygonBatchTransferMultiTokenSignedTransaction = async (testne
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendPolygonMintMultiTokenSignedTransaction = async (testnet: boolean, body: MintMultiToken, provider?: string) =>
-    polygonBroadcast(await preparePolygonMintMultiTokenSignedTransaction(testnet, body, provider));
+    polygonBroadcast(await preparePolygonMintMultiTokenSignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Polygon mint multiple tokens batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -778,7 +800,7 @@ export const sendPolygonMintMultiTokenSignedTransaction = async (testnet: boolea
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendPolygonMintMultiTokenBatchSignedTransaction = async (testnet: boolean, body: MintMultiTokenBatch, provider?: string) =>
-    polygonBroadcast(await preparePolygonMintMultiTokenBatchSignedTransaction(testnet, body, provider));
+    polygonBroadcast(await preparePolygonMintMultiTokenBatchSignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Polygon deploy multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -789,7 +811,7 @@ export const sendPolygonMintMultiTokenBatchSignedTransaction = async (testnet: b
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendPolygonDeployMultiTokenSignedTransaction = async (testnet: boolean, body: EthDeployMultiToken, provider?: string) =>
-    polygonBroadcast(await preparePolygonDeployMultiTokenSignedTransaction(testnet, body, provider));
+    polygonBroadcast(await preparePolygonDeployMultiTokenSignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Polygon generate custodial wallet transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -800,7 +822,7 @@ export const sendPolygonDeployMultiTokenSignedTransaction = async (testnet: bool
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendPolygonGenerateCustodialWalletSignedTransaction = async (testnet: boolean, body: GenerateCustodialAddress, provider?: string) =>
-    polygonBroadcast(await preparePolygonGenerateCustodialWalletSignedTransaction(testnet, body, provider));
+    polygonBroadcast(await preparePolygonGenerateCustodialWalletSignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Polygon smart contract method invocation transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -817,3 +839,12 @@ export const sendPolygonSmartContractMethodInvocationTransaction = async (testne
     }
     return polygonBroadcast(await preparePolygonSmartContractWriteMethodInvocation(testnet, body, provider), (body as SmartContractMethodInvocation).signatureId);
 };
+/**
+ * Deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const sendPolygonDeployMarketplaceListingSignedTransaction = async (testnet: boolean, body: DeployMarketplaceListing, provider?: string) =>
+    polygonBroadcast(await preparePolygonDeployMarketplaceListingSignedTransaction(testnet, body, provider), body.signatureId);

@@ -12,6 +12,7 @@ import erc20_abi from '../contracts/erc20/token_abi';
 import erc20_bytecode from '../contracts/erc20/token_bytecode';
 import erc721_abi from '../contracts/erc721/erc721_abi';
 import erc721_bytecode from '../contracts/erc721/erc721_bytecode';
+import * as listing from '../contracts/marketplace';
 import {
     BurnCeloErc20,
     CeloBurnErc721,
@@ -31,6 +32,7 @@ import {
     CreateRecord,
     Currency,
     DeployCeloErc20,
+    DeployMarketplaceListing,
     GenerateCustodialAddress,
     MintCeloErc20,
     SmartContractReadMethodInvocation,
@@ -69,7 +71,7 @@ const getFeeCurrency = (feeCurrency: Currency, testnet: boolean) => {
  * @param testnet
  * @param body content of the transaction to broadcast
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
- * @returns transaction data to be broadcast to blockchain.
+ * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
  */
 export const prepareCeloGenerateCustodialWalletSignedTransaction = async (testnet: boolean, body: GenerateCustodialAddress, provider?: string) => {
     await validateBody(body, GenerateCustodialAddress);
@@ -108,13 +110,58 @@ export const prepareCeloGenerateCustodialWalletSignedTransaction = async (testne
     transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();
     return wallet.signTransaction(transaction);
 };
+
+/**
+ * Sign CELO generate custodial wallet address transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
+ */
+export const prepareCeloDeployMarketplaceListingSignedTransaction = async (testnet: boolean, body: DeployMarketplaceListing, provider?: string) => {
+    await validateBody(body, DeployMarketplaceListing);
+
+    const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
+    const network = await p.ready;
+    const feeCurrency = body.feeCurrency || Currency.CELO;
+    const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet);
+    // @ts-ignore
+    const contract = new (new Web3()).eth.Contract(listing.abi);
+    const deploy = contract.deploy({
+        data: listing.data,
+        arguments: [body.marketplaceFee, body.feeRecipient]
+    });
+
+    if (body.signatureId) {
+        return JSON.stringify({
+            chainId: network.chainId,
+            feeCurrency: feeCurrencyContractAddress,
+            nonce: body.nonce,
+            gasLimit: '0',
+            data: deploy.encodeABI(),
+        });
+    }
+    const wallet = new CeloWallet(body.fromPrivateKey as string, p);
+    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress);
+    const transaction = {
+        chainId: network.chainId,
+        feeCurrency: feeCurrencyContractAddress,
+        nonce: body.nonce || txCount,
+        gasLimit: '0',
+        gasPrice,
+        data: deploy.encodeABI(),
+        from,
+    };
+    transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();
+    return wallet.signTransaction(transaction);
+};
 /**
  * Sign Celo pending transaction from Tatum KMS
  * @param tx pending transaction from KMS
  * @param fromPrivateKey private key to sign transaction with.
  * @param testnet mainnet or testnet version
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
- * @returns transaction data to be broadcast to blockchain.
+ * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
  */
 export const signCeloKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, testnet: boolean, provider?: string) => {
     if (tx.chain !== Currency.CELO) {
@@ -566,6 +613,7 @@ export const prepareCeloSmartContractWriteMethodInvocation = async (testnet: boo
         contractAddress,
         nonce,
         signatureId,
+        amount,
     } = body;
 
     const url = provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`;
@@ -581,8 +629,9 @@ export const prepareCeloSmartContractWriteMethodInvocation = async (testnet: boo
         chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
         nonce,
-        gasLimit: fee?.gasLimit ? '0x' + new BigNumber(fee.gasLimit).toString(16) : undefined,
-        gasPrice: fee?.gasPrice ? '0x' + new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16) : undefined,
+        value: amount ? `0x${new BigNumber(toWei(amount, 'ether')).toString(16)}` : undefined,
+        gasLimit: fee?.gasLimit ? `0x${new BigNumber(fee.gasLimit).toString(16)}` : undefined,
+        gasPrice: fee?.gasPrice ? `0x${new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16)}` : undefined,
         to: contractAddress.trim(),
         data: contract.methods[methodName as string](...params).encodeABI(),
     };
@@ -595,7 +644,7 @@ export const prepareCeloSmartContractWriteMethodInvocation = async (testnet: boo
 
     transaction.nonce = transaction.nonce || txCount;
     transaction.from = from;
-    transaction.gasLimit = fee?.gasLimit ?? (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();
+    transaction.gasLimit = transaction.gasLimit ?? (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();
     transaction.gasPrice = fee?.gasPrice ? '0x' + new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16) : gasPrice.toHexString();
     return wallet.signTransaction(transaction);
 };
@@ -619,9 +668,9 @@ export const sendCeloSmartContractReadMethodInvocationTransaction = async (testn
     const contract = new (new Web3(url)).eth.Contract([methodABI], contractAddress.trim());
     return {data: await contract.methods[methodName as string](...params).call()};
 };
-export const sendCeloDeployErc20Transaction = async (testnet:boolean,body: DeployCeloErc20, provider?: string) =>
+export const sendCeloDeployErc20Transaction = async (testnet: boolean, body: DeployCeloErc20, provider?: string) =>
     celoBroadcast(await prepareCeloDeployErc20SignedTransaction(testnet, body), body.signatureId);
-export const sendCeloStoreDataSignedTransaction = async (testnet:boolean,body: CreateRecord, provider?: string) =>
+export const sendCeloStoreDataSignedTransaction = async (testnet: boolean, body: CreateRecord, provider?: string) =>
     celoBroadcast(await prepareCeloStoreDataSignedTransaction(testnet, body), body.signatureId);
 
 /**
@@ -647,7 +696,7 @@ export const getCeloErc20ContractDecimals = async (testnet: boolean, contractAdd
     // @ts-ignore
     const contract = new (new Web3(url)).eth.Contract(erc20_abi, contractAddress.trim());
     return await contract.methods.decimals().call();
-}
+};
 
 /**
  * Prepare a signed Celo transfer erc20 transaction with the private key locally. Nothing is broadcasted to the blockchain.
@@ -1231,7 +1280,7 @@ export const prepareCeloBurnMultiTokenSignedTransaction = async (testnet: boolea
  * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
- * @returns transaction data to be broadcast to blockchain.
+ * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
  */
 export const prepareCeloOrCUsdSignedTransaction = async (testnet: boolean, body: TransferCeloOrCeloErc20Token, provider?: string) => {
     await validateBody(body, TransferCeloOrCeloErc20Token);
@@ -1303,7 +1352,7 @@ export const prepareCeloOrCUsdSignedTransaction = async (testnet: boolean, body:
  * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
- * @returns transaction data to be broadcast to blockchain.
+ * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
  */
 export const prepareCeloStoreDataSignedTransaction = async (testnet: boolean, body: CreateRecord, provider?: string) => {
     await validateBody(body, CreateRecord);
@@ -1360,7 +1409,7 @@ export const prepareCeloStoreDataSignedTransaction = async (testnet: boolean, bo
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendCeloOrcUsdTransaction = async (testnet: boolean, body: TransferCeloOrCeloErc20Token, provider?: string) =>
-    celoBroadcast(await prepareCeloOrCUsdSignedTransaction(testnet, body, provider));
+    celoBroadcast(await prepareCeloOrCUsdSignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Celo mint erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1371,7 +1420,7 @@ export const sendCeloOrcUsdTransaction = async (testnet: boolean, body: Transfer
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendCeloMintErc721Transaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) =>
-    celoBroadcast(await prepareCeloMintErc721SignedTransaction(testnet, body, provider));
+    celoBroadcast(await prepareCeloMintErc721SignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Celo mint cashback erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1382,7 +1431,7 @@ export const sendCeloMintErc721Transaction = async (testnet: boolean, body: Celo
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendCeloMintCashbackErc721Transaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) =>
-    celoBroadcast(await prepareCeloMintCashbackErc721SignedTransaction(testnet, body, provider));
+    celoBroadcast(await prepareCeloMintCashbackErc721SignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Celo mint multiple erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1393,7 +1442,7 @@ export const sendCeloMintCashbackErc721Transaction = async (testnet: boolean, bo
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendCeloMintMultipleErc721Transaction = async (testnet: boolean, body: CeloMintMultipleErc721, provider?: string) =>
-    celoBroadcast(await prepareCeloMintMultipleErc721SignedTransaction(testnet, body, provider));
+    celoBroadcast(await prepareCeloMintMultipleErc721SignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Celo mint multiple cashback erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1404,7 +1453,7 @@ export const sendCeloMintMultipleErc721Transaction = async (testnet: boolean, bo
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendCeloMintMultipleCashbackErc721Transaction = async (testnet: boolean, body: CeloMintMultipleErc721, provider?: string) =>
-    celoBroadcast(await prepareCeloMintMultipleCashbackErc721SignedTransaction(testnet, body, provider));
+    celoBroadcast(await prepareCeloMintMultipleCashbackErc721SignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Celo burn erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1415,7 +1464,7 @@ export const sendCeloMintMultipleCashbackErc721Transaction = async (testnet: boo
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendCeloBurnErc721Transaction = async (testnet: boolean, body: CeloBurnErc721, provider?: string) =>
-    celoBroadcast(await prepareCeloBurnErc721SignedTransaction(testnet, body, provider));
+    celoBroadcast(await prepareCeloBurnErc721SignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Celo update cashback for author erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1426,7 +1475,7 @@ export const sendCeloBurnErc721Transaction = async (testnet: boolean, body: Celo
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendCeloUpdateCashbackForAuthorErc721Transaction = async (testnet: boolean, body: CeloUpdateCashbackErc721, provider?: string) =>
-    celoBroadcast(await prepareCeloUpdateCashbackForAuthorErc721SignedTransaction(testnet, body, provider));
+    celoBroadcast(await prepareCeloUpdateCashbackForAuthorErc721SignedTransaction(testnet, body, provider), body.signatureId);
 /**
  * Send Celo transfer nft transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
@@ -1436,7 +1485,7 @@ export const sendCeloUpdateCashbackForAuthorErc721Transaction = async (testnet: 
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendCeloTransferErc721Transaction = async (testnet: boolean, body: CeloTransferErc721, provider?: string) =>
-    celoBroadcast(await prepareCeloTransferErc721SignedTransaction(testnet, body, provider));
+    celoBroadcast(await prepareCeloTransferErc721SignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Celo deploy erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1447,7 +1496,7 @@ export const sendCeloTransferErc721Transaction = async (testnet: boolean, body: 
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendCeloDeployErc721Transaction = async (testnet: boolean, body: CeloDeployErc721, provider?: string) =>
-    celoBroadcast(await prepareCeloDeployErc721SignedTransaction(testnet, body, provider));
+    celoBroadcast(await prepareCeloDeployErc721SignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Celo deploy multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1458,7 +1507,7 @@ export const sendCeloDeployErc721Transaction = async (testnet: boolean, body: Ce
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendCeloDeployMultiTokenTransaction = async (testnet: boolean, body: CeloDeployMultiToken, provider?: string) =>
-    celoBroadcast(await prepareCeloDeployMultiTokenSignedTransaction(testnet, body, provider));
+    celoBroadcast(await prepareCeloDeployMultiTokenSignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Celo mint multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1469,7 +1518,7 @@ export const sendCeloDeployMultiTokenTransaction = async (testnet: boolean, body
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendCeloMintMultiTokenTransaction = async (testnet: boolean, body: CeloMintMultiToken, provider?: string) =>
-    celoBroadcast(await prepareCeloMintMultiTokenSignedTransaction(testnet, body, provider));
+    celoBroadcast(await prepareCeloMintMultiTokenSignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Celo mint multiple tokens batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1480,7 +1529,7 @@ export const sendCeloMintMultiTokenTransaction = async (testnet: boolean, body: 
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendCeloMintMultiTokenBatchTransaction = async (testnet: boolean, body: CeloMintMultiTokenBatch, provider?: string) =>
-    celoBroadcast(await prepareCeloMintMultiTokenBatchSignedTransaction(testnet, body, provider));
+    celoBroadcast(await prepareCeloMintMultiTokenBatchSignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Celo transfer multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1491,7 +1540,7 @@ export const sendCeloMintMultiTokenBatchTransaction = async (testnet: boolean, b
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendCeloTransferMultiTokenTransaction = async (testnet: boolean, body: CeloTransferMultiToken, provider?: string) =>
-    celoBroadcast(await prepareCeloTransferMultiTokenSignedTransaction(testnet, body, provider));
+    celoBroadcast(await prepareCeloTransferMultiTokenSignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Celo transfer multiple tokens batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1502,7 +1551,7 @@ export const sendCeloTransferMultiTokenTransaction = async (testnet: boolean, bo
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendCeloTransferMultiTokenBatchTransaction = async (testnet: boolean, body: CeloTransferMultiTokenBatch, provider?: string) =>
-    celoBroadcast(await prepareCeloBatchTransferMultiTokenSignedTransaction(testnet, body, provider));
+    celoBroadcast(await prepareCeloBatchTransferMultiTokenSignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Celo burn multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1513,7 +1562,7 @@ export const sendCeloTransferMultiTokenBatchTransaction = async (testnet: boolea
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendCeloBurnMultiTokenTransaction = async (testnet: boolean, body: CeloBurnMultiToken, provider?: string) =>
-    celoBroadcast(await prepareCeloBurnMultiTokenSignedTransaction(testnet, body, provider));
+    celoBroadcast(await prepareCeloBurnMultiTokenSignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Celo burn multiple tokens batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1524,7 +1573,7 @@ export const sendCeloBurnMultiTokenTransaction = async (testnet: boolean, body: 
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendCeloBurnMultiTokenBatchTransaction = async (testnet: boolean, body: CeloBurnMultiTokenBatch, provider?: string) =>
-    celoBroadcast(await prepareCeloBurnMultiTokenBatchSignedTransaction(testnet, body, provider));
+    celoBroadcast(await prepareCeloBurnMultiTokenBatchSignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send generate custodial wallet transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1535,4 +1584,14 @@ export const sendCeloBurnMultiTokenBatchTransaction = async (testnet: boolean, b
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendCeloGenerateCustodialWalletSignedTransaction = async (testnet: boolean, body: GenerateCustodialAddress, provider?: string) =>
-    celoBroadcast(await prepareCeloGenerateCustodialWalletSignedTransaction(testnet, body, provider));
+    celoBroadcast(await prepareCeloGenerateCustodialWalletSignedTransaction(testnet, body, provider), body.signatureId);
+
+/**
+ * Deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const sendCeloDeployMarketplaceListingSignedTransaction = async (testnet: boolean, body: DeployMarketplaceListing, provider?: string) =>
+    celoBroadcast(await prepareCeloDeployMarketplaceListingSignedTransaction(testnet, body, provider), body.signatureId);

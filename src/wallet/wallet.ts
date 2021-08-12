@@ -2,9 +2,9 @@ import {generatePrivateKey, getAddressFromPrivateKey} from '@binance-chain/javas
 import Neon, {wallet} from '@cityofzion/neon-js';
 import {generateMnemonic, mnemonicToSeed} from 'bip39';
 import {bip32, networks} from 'bitcoinjs-lib';
-import {derivePath, getPublicKey} from 'ed25519-hd-key';
 // @ts-ignore
 import {Networks} from 'bitcore-lib-doge';
+import {derivePath, getPublicKey} from 'ed25519-hd-key';
 import {hdkey as ethHdKey} from 'ethereumjs-wallet';
 // @ts-ignore
 import hdkey from 'hdkey';
@@ -17,6 +17,7 @@ import {
     DOGE_DERIVATION_PATH,
     DOGE_NETWORK,
     DOGE_TEST_NETWORK,
+    EGLD_DERIVATION_PATH,
     ETH_DERIVATION_PATH,
     FLOW_DERIVATION_PATH,
     LTC_DERIVATION_PATH,
@@ -34,7 +35,6 @@ import {
     TRON_DERIVATION_PATH,
     VET_DERIVATION_PATH,
     XDC_DERIVATION_PATH,
-    EGLD_DERIVATION_PATH,
 } from '../constants';
 import {Currency} from '../model';
 import cardano from './cardano.crypto';
@@ -337,6 +337,7 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
             return generateBchWallet(testnet, mnem);
         case Currency.TRON:
         case Currency.USDT_TRON:
+        case Currency.INRT_TRON:
             return generateTronWallet(mnem);
         case Currency.FLOW:
         case Currency.FUSD:

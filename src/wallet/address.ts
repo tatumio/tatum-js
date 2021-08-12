@@ -1,15 +1,14 @@
 import {getAddressFromPrivateKey} from '@binance-chain/javascript-sdk/lib/crypto';
 import {HarmonyAddress} from '@harmony-js/crypto';
-import * as bech32 from 'bech32';
-import {derivePath, getPublicKey} from 'ed25519-hd-key';
 // @ts-ignore
 import {ECDSA_secp256k1, encodeKey, SHA3_256} from '@onflow/util-encode-key';
+import * as bech32 from 'bech32';
 import {fromBase58, fromPublicKey, fromSeed} from 'bip32';
 import {mnemonicToSeed} from 'bip39';
 import {ECPair, networks, payments} from 'bitcoinjs-lib';
+import {derivePath, getPublicKey} from 'ed25519-hd-key';
 import * as elliptic from 'elliptic';
 import ethWallet, {hdkey as ethHdKey} from 'ethereumjs-wallet';
-import HDKey from 'hdkey';
 // @ts-ignore
 import {
     BCH_DERIVATION_PATH,
@@ -18,6 +17,7 @@ import {
     DOGE_DERIVATION_PATH,
     DOGE_NETWORK,
     DOGE_TEST_NETWORK,
+    EGLD_DERIVATION_PATH,
     ETH_DERIVATION_PATH,
     FLOW_DERIVATION_PATH,
     LTC_DERIVATION_PATH,
@@ -35,7 +35,6 @@ import {
     TRON_DERIVATION_PATH,
     VET_DERIVATION_PATH,
     XDC_DERIVATION_PATH,
-    EGLD_DERIVATION_PATH,
 } from '../constants';
 import {Currency} from '../model';
 import cardano from './cardano.crypto';
@@ -674,6 +673,7 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
             return generateBtcAddress(testnet, xpub, i);
         case Currency.TRON:
         case Currency.USDT_TRON:
+        case Currency.INRT_TRON:
             return generateTronAddress(xpub, i);
         case Currency.FLOW:
         case Currency.FUSD:
@@ -766,6 +766,7 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
             return generateBchPrivateKey(testnet, mnemonic, i);
         case Currency.TRON:
         case Currency.USDT_TRON:
+        case Currency.INRT_TRON:
             return generateTronPrivateKey(mnemonic, i);
         case Currency.QTUM:
             return generateQtumPrivateKey(testnet, mnemonic, i);
@@ -852,6 +853,7 @@ export const generateAddressFromPrivatekey = (currency: Currency, testnet: boole
             return getAddressFromPrivateKey(privateKey, testnet ? 'tbnb' : 'bnb');
         case Currency.TRON:
         case Currency.USDT_TRON:
+        case Currency.INRT_TRON:
             return TronWeb.address.fromPrivateKey(privateKey);
         case Currency.ETH:
         case Currency.USDT:

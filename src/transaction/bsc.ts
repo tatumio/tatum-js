@@ -12,11 +12,13 @@ import erc20TokenABI from '../contracts/erc20/token_abi';
 import erc20TokenBytecode from '../contracts/erc20/token_bytecode';
 import erc721TokenABI from '../contracts/erc721/erc721_abi';
 import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
+import * as listing from '../contracts/marketplace';
 import {
     BurnErc20,
     CreateRecord,
     Currency,
     DeployErc20,
+    DeployMarketplaceListing,
     EthBurnErc721,
     EthBurnMultiToken,
     EthBurnMultiTokenBatch,
@@ -39,7 +41,7 @@ import {
     TransferMultiTokenBatch,
     UpdateCashbackErc721
 } from '../model';
-import {obtainCustodialAddressType} from '../wallet/custodial';
+import {obtainCustodialAddressType} from '../wallet';
 
 /**
  * Estimate Gas price for the transaction.
@@ -388,6 +390,7 @@ export const prepareBscSmartContractWriteMethodInvocation = async (body: SmartCo
         methodABI,
         contractAddress,
         nonce,
+        amount,
         signatureId,
     } = body;
     const client = getBscClient(provider, fromPrivateKey);
@@ -397,6 +400,7 @@ export const prepareBscSmartContractWriteMethodInvocation = async (body: SmartCo
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
+        value: amount ? `0x${new BigNumber(toWei(amount, 'ether')).toString(16)}` : undefined,
         data: contract.methods[methodName as string](...params).encodeABI(),
         nonce,
     };
@@ -664,6 +668,43 @@ export const prepareBscDeployBep721SignedTransaction = async (body: EthDeployErc
     // @ts-ignore
     const deploy = contract.deploy({
         arguments: [name, symbol]
+    });
+
+    const tx: TransactionConfig = {
+        from: 0,
+        data: deploy.encodeABI(),
+        nonce,
+    };
+    return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
+};
+
+/**
+ * Sign BSC generate custodial wallet address transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
+ */
+export const prepareBscDeployMarketplaceListingSignedTransaction = async (body: DeployMarketplaceListing, provider?: string) => {
+    await validateBody(body, DeployMarketplaceListing);
+    const {
+        fromPrivateKey,
+        fee,
+        feeRecipient,
+        marketplaceFee,
+        nonce,
+        signatureId,
+    } = body;
+
+    const client = await getBscClient(provider, fromPrivateKey);
+
+    // @ts-ignore
+    const contract = new client.eth.Contract(listing.abi, null, {
+        data: listing.data,
+    });
+
+    // @ts-ignore
+    const deploy = contract.deploy({
+        arguments: [marketplaceFee, feeRecipient]
     });
 
     const tx: TransactionConfig = {
@@ -1061,3 +1102,13 @@ export const sendBscMultiTokenBatchTransaction = async (body: TransferMultiToken
  */
 export const sendDeployBep721Transaction = async (body: EthDeployErc721, provider?: string) =>
     bscBroadcast(await prepareBscDeployBep721SignedTransaction(body, provider), body.signatureId);
+
+/**
+ * Deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const sendBscDeployMarketplaceListingSignedTransaction = async (body: DeployMarketplaceListing, provider?: string) =>
+    bscBroadcast(await prepareBscDeployMarketplaceListingSignedTransaction(body, provider), body.signatureId);

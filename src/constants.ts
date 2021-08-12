@@ -165,6 +165,7 @@ export const CONTRACT_ADDRESSES = {
     [Currency.MATIC_ETH.toString()]: '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0',
     [Currency.SAND.toString()]: '0x3845badade8e6dff049820680d1f14bd3903a5d0',
     [Currency.USDT_TRON.toString()]: 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t',
+    [Currency.INRT_TRON.toString()]: 'TX66VmiV1txm45vVLvcHYEqPXXLoREyAXm',
     [Currency.USDC_MATIC.toString()]: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
     [Currency.BUSD.toString()]: '0x4fabb145d64652a948d72533023f6e7a623c7c53',
     [Currency.BETH.toString()]: '0x2170ed0880ac9a755fd29b2688956bd959f933f8',
@@ -183,6 +184,7 @@ export const CONTRACT_ADDRESSES = {
 export const CONTRACT_DECIMALS = {
     [Currency.USDT.toString()]: 6,
     [Currency.USDT_TRON.toString()]: 6,
+    [Currency.INRT_TRON.toString()]: 2,
     [Currency.USDT_MATIC.toString()]: 6,
     [Currency.WBTC.toString()]: 8,
     [Currency.LEO.toString()]: 18,

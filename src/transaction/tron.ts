@@ -4,6 +4,7 @@ import {tronBroadcast} from '../blockchain';
 import {validateBody} from '../connector/tatum';
 
 import {TATUM_API_URL} from '../constants';
+import * as listing from '../contracts/marketplace';
 import abi from '../contracts/trc20/token_abi';
 import bytecode from '../contracts/trc20/token_bytecode';
 import trc721_abi from '../contracts/trc721/trc721_abi';
@@ -12,8 +13,10 @@ import {
     CreateTronTrc10,
     CreateTronTrc20,
     Currency,
+    DeployTronMarketplaceListing,
     FreezeTron,
-    GenerateTronCustodialAddress, SmartContractMethodInvocation,
+    GenerateTronCustodialAddress,
+    SmartContractMethodInvocation,
     TransactionKMS,
     TransferTron,
     TransferTronTrc10,
@@ -25,7 +28,7 @@ import {
     TronTransferTrc721,
     TronUpdateCashbackTrc721,
 } from '../model';
-import {obtainCustodialAddressType} from '../wallet/custodial';
+import {obtainCustodialAddressType} from '../wallet';
 
 // tslint:disable-next-line:no-var-requires
 const TronWeb = require('tronweb');
@@ -125,6 +128,8 @@ export const signTronKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
 
 export const convertAddressFromHex = (address: string) => TronWeb.address.fromHex(address);
 
+export const convertAddressToHex = (address: string) => TronWeb.address.toHex(address);
+
 /**
  * Send Tron deploy trc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
@@ -144,6 +149,16 @@ export const sendTronDeployTrc721SignedTransaction = async (testnet: boolean, bo
  */
 export const sendTronGenerateCustodialWalletSignedTransaction = async (testnet: boolean, body: GenerateTronCustodialAddress, provider?: string) =>
     await tronBroadcast(await prepareTronGenerateCustodialWalletSignedTransaction(testnet, body, provider), body.signatureId);
+
+/**
+ * Deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum provider will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const sendTronDeployMarketplaceListingSignedTransaction = async (testnet: boolean, body: DeployTronMarketplaceListing, provider?: string) =>
+    await tronBroadcast(await prepareTronDeployMarketplaceListingSignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Tron mint cashback trc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -232,6 +247,7 @@ export const prepareTronSignedTransaction = async (testnet: boolean, body: Trans
  * Sign Tron Freeze balance transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
+ * @param provider optional provider to enter. if not present, Tatum provider will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareTronFreezeTransaction = async (testnet: boolean, body: FreezeTron, provider?: string) => {
@@ -299,24 +315,19 @@ export const getTronTrc20ContractDecimals = async (testnet: boolean, contractAdd
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronCustodialTransfer = async (testnet: boolean, body: SmartContractMethodInvocation, feeLimit: number, from?: string, provider?: string) => {
+export const prepareTronSmartContractInvocation = async (testnet: boolean, body: SmartContractMethodInvocation, feeLimit: number, from?: string, provider?: string) => {
     const tronWeb = prepareTronWeb(testnet, provider);
     tronWeb.setAddress(body.contractAddress);
     const sender = from || tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(body.fromPrivateKey));
     const {transaction} = await tronWeb.transactionBuilder.triggerSmartContract(
         tronWeb.address.toHex(body.contractAddress),
-        'transfer(address,uint256,address,uint256,uint256)',
+        body.methodName,
         {
             feeLimit: tronWeb.toSun(feeLimit),
-            from: sender
+            from: sender,
+            callValue: tronWeb.toSun(body.amount || 0),
         },
-        [
-            {type: 'address', value: tronWeb.address.toHex(body.params[0])},
-            {type: 'uint256', value: body.params[1]},
-            {type: 'address', value: tronWeb.address.toHex(body.params[2])},
-            {type: 'uint256', value: body.params[3]},
-            {type: 'uint256', value: body.params[4]},
-        ],
+        body.params,
         sender
     );
     if (body.signatureId) {
@@ -720,6 +731,35 @@ export const prepareTronGenerateCustodialWalletSignedTransaction = async (testne
         abi: JSON.stringify(abi),
         bytecode: code,
         parameters: [],
+        name: 'CustodialWallet',
+    }, body.from || tronWeb.address.fromPrivateKey(body.fromPrivateKey));
+    if (body.signatureId) {
+        return JSON.stringify(tx);
+    }
+    return JSON.stringify(await tronWeb.trx.sign(tx, body.fromPrivateKey));
+};
+
+/**
+ * Sign TRON deploy new smart contract for NFT marketplace transaction. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum provider will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const prepareTronDeployMarketplaceListingSignedTransaction = async (testnet: boolean, body: DeployTronMarketplaceListing, provider?: string) => {
+    await validateBody(body, DeployTronMarketplaceListing);
+    const tronWeb = prepareTronWeb(testnet, provider);
+    const tx = await tronWeb.transactionBuilder.createSmartContract({
+        feeLimit: tronWeb.toSun(body.feeLimit || 300),
+        callValue: 0,
+        userFeePercentage: 100,
+        originEnergyLimit: 1,
+        abi: JSON.stringify(listing.abi),
+        bytecode: listing.data,
+        parameters: [
+            body.marketplaceFee,
+            body.feeRecipient,
+        ],
         name: 'CustodialWallet',
     }, body.from || tronWeb.address.fromPrivateKey(body.fromPrivateKey));
     if (body.signatureId) {
