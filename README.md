@@ -86,9 +86,18 @@ We support types within the repo itself. Please open an issue here if you find a
 You can use `@tatumio/tatum` as follows:
 
 ```typescript
-import {generateWallet, Currency} from '@tatumio/tatum';
+import { generateWallet, Currency } from '@tatumio/tatum';
 const btcWallet = generateWallet(Currency.BTC, true);
 ```
+
+More examples are available here:
+- [blockchain](https://github.com/tatumio/tatum-js/tree/master/src/blockchain)
+- [ledger](https://github.com/tatumio/tatum-js/tree/master/src/ledger)
+- [nft](https://github.com/tatumio/tatum-js/tree/master/src/nft)
+- [offchain](https://github.com/tatumio/tatum-js/tree/master/src/offchain)
+- [security](https://github.com/tatumio/tatum-js/tree/master/src/security)
+- [transaction](https://github.com/tatumio/tatum-js/tree/master/src/transaction)
+- [wallet](https://github.com/tatumio/tatum-js/tree/master/src/wallet)
 
 If you are using the types in a `commonjs` module, like in a Node app, you just have to enable `esModuleInterop` and `allowSyntheticDefaultImports` in your `tsconfig` for typesystem compatibility:
 
