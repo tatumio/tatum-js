@@ -2,7 +2,6 @@ import {generatePrivateKey, getAddressFromPrivateKey} from '@binance-chain/javas
 import Neon, {wallet} from '@cityofzion/neon-js';
 import {generateMnemonic, mnemonicToSeed} from 'bip39';
 import {bip32, networks} from 'bitcoinjs-lib';
-import {derivePath, getPublicKey} from 'ed25519-hd-key';
 import {hdkey as ethHdKey} from 'ethereumjs-wallet';
 // @ts-ignore
 import hdkey from 'hdkey';
@@ -134,12 +133,8 @@ export const generateOneWallet = async (testnet: boolean, mnem: string): Promise
  * @param mnem mnemonic seed to use
  * @returns wallet
  */
-export const generateEgldWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
-    const path = testnet ? TESTNET_DERIVATION_PATH : EGLD_DERIVATION_PATH;
-    const seed = await mnemonicToSeed(mnem);
-    const {key} = derivePath(path, seed.toString('hex'));
+export const generateEgldWallet = async (mnem: string): Promise<{mnemonic: string}> => {
     return {
-        xpub: getPublicKey(key, false).toString('hex'),
         mnemonic: mnem
     }
 }
@@ -348,7 +343,7 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
         case Currency.QTUM:
             return generateQtumWallet(testnet, mnem)
         case Currency.EGLD:
-            return generateEgldWallet(testnet, mnem)
+            return generateEgldWallet(mnem)
         case Currency.USDT:
         case Currency.WBTC:
         case Currency.LEO:

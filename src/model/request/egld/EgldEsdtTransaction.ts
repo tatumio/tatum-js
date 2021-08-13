@@ -1,5 +1,5 @@
 import {Type} from 'class-transformer'
-import {IsNotEmpty, IsNumberString, IsOptional, Length, ValidateNested,} from 'class-validator'
+import {IsNumberString, IsOptional, Length, ValidateNested,} from 'class-validator'
 import {Fee} from '../Fee'
 import {PrivateKeyOrSignatureId} from '../PrivateKeyOrSignatureId'
 
@@ -21,5 +21,6 @@ export class EgldEsdtTransaction extends PrivateKeyOrSignatureId {
     public nonce?: number;
 
     @IsOptional()
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public data?: any;
 }
