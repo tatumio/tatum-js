@@ -1,5 +1,5 @@
-import BigNumber from 'bignumber.js'
-import {validateBody} from '../connector/tatum'
+import BigNumber from 'bignumber.js';
+import {validateBody} from '../connector/tatum';
 import {
     Custodial_1155_TokenWallet,
     Custodial_1155_TokenWalletWithBatch,
@@ -15,7 +15,7 @@ import {
     Custodial_721_TokenWalletWithBatch,
     CustodialFullTokenWallet,
     CustodialFullTokenWalletWithBatch,
-} from '../contracts/custodial'
+} from '../contracts/custodial';
 import {
     CeloSmartContractMethodInvocation,
     ContractType,
@@ -27,7 +27,7 @@ import {
     TransferFromCustodialAddressBatch,
     TransferFromTronCustodialAddress,
     TransferFromTronCustodialAddressBatch
-} from '../model'
+} from '../model';
 import {
     convertAddressToHex,
     getBscBep20ContractDecimals,
@@ -55,7 +55,7 @@ import {
     sendOneGenerateCustodialWalletSignedTransaction,
     sendPolygonGenerateCustodialWalletSignedTransaction,
     sendTronGenerateCustodialWalletSignedTransaction
-} from '../transaction'
+} from '../transaction';
 
 export const obtainCustodialAddressType = (body: GenerateCustodialAddress) => {
     if (body.chain === Currency.TRON && body.enableSemiFungibleTokens) {
@@ -317,8 +317,8 @@ export const prepareBatchTransferFromCustodialWallet = async (testnet: boolean,
                     throw new Error('Unsupported combination of inputs.')
             }
         }
-        amounts.push(`0x${amount.toString(16)}`)
-        tokenIds.push(`0x${new BigNumber(body.tokenId[i]).toString(16)}`)
+        amounts.push(`0x${amount.toString(16)}`);
+        tokenIds.push(`0x${tokenId.toString(16)}`);
     }
     r.params = [body.tokenAddress.map(t => t === '0' ? '0x000000000000000000000000000000000000dEaD' : t), body.contractType, body.recipient, amounts, tokenIds]
     r.methodABI = CustodialFullTokenWalletWithBatch.abi.find(a => a.name === 'transferBatch')

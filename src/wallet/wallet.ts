@@ -1,15 +1,13 @@
-import {generatePrivateKey, getAddressFromPrivateKey} from '@binance-chain/javascript-sdk/lib/crypto'
-import Neon, {wallet} from '@cityofzion/neon-js'
-import {generateMnemonic, mnemonicToSeed} from 'bip39'
-import {bip32, networks} from 'bitcoinjs-lib'
+import {generatePrivateKey, getAddressFromPrivateKey} from '@binance-chain/javascript-sdk/lib/crypto';
+import Neon, {wallet} from '@cityofzion/neon-js';
+import {generateMnemonic, mnemonicToSeed} from 'bip39';
+import {bip32, networks} from 'bitcoinjs-lib';
+import {derivePath, getPublicKey} from 'ed25519-hd-key';
+import {hdkey as ethHdKey} from 'ethereumjs-wallet';
 // @ts-ignore
-import {Networks} from 'bitcore-lib-doge'
-import {derivePath, getPublicKey} from 'ed25519-hd-key'
-import {hdkey as ethHdKey} from 'ethereumjs-wallet'
-// @ts-ignore
-import hdkey from 'hdkey'
-import {RippleAPI} from 'ripple-lib'
-import {Keypair} from 'stellar-sdk'
+import hdkey from 'hdkey';
+import {RippleAPI} from 'ripple-lib';
+import {Keypair} from 'stellar-sdk';
 import {
     BCH_DERIVATION_PATH,
     BTC_DERIVATION_PATH,
@@ -35,11 +33,9 @@ import {
     TRON_DERIVATION_PATH,
     VET_DERIVATION_PATH,
     XDC_DERIVATION_PATH,
-} from '../constants'
-import {Currency} from '../model'
-import cardano from './cardano.crypto'
-// tslint:disable-next-line:no-var-requires
-const TronWeb = require('tronweb')
+} from '../constants';
+import {Currency} from '../model';
+import cardano from './cardano.crypto';
 
 export interface Wallet {
 
@@ -134,13 +130,14 @@ export const generateOneWallet = async (testnet: boolean, mnem: string): Promise
 
 /**
  * Generate EGLD wallet
+ * @param testnet
  * @param mnem mnemonic seed to use
  * @returns wallet
  */
 export const generateEgldWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
-    const path = testnet ? `${TESTNET_DERIVATION_PATH}'` : `${EGLD_DERIVATION_PATH}/0'`
-    const seed = await mnemonicToSeed(mnem)
-    const {key, chainCode} = derivePath(path, seed.toString('hex'))
+    const path = testnet ? TESTNET_DERIVATION_PATH : EGLD_DERIVATION_PATH;
+    const seed = await mnemonicToSeed(mnem);
+    const {key} = derivePath(path, seed.toString('hex'));
     return {
         xpub: getPublicKey(key, false).toString('hex'),
         mnemonic: mnem

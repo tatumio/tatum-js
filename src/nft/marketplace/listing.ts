@@ -1,8 +1,8 @@
-import BigNumber from 'bignumber.js'
-import {ClassType} from 'class-transformer/ClassTransformer'
-import {get, validateBody} from '../../connector/tatum'
-import token_abi from '../../contracts/erc20/token_abi'
-import * as listing from '../../contracts/marketplace'
+import BigNumber from 'bignumber.js';
+import {ClassType} from 'class-transformer/ClassTransformer';
+import {get, validateBody} from '../../connector/tatum';
+import token_abi from '../../contracts/erc20/token_abi';
+import * as listing from '../../contracts/marketplace';
 import {
     ApproveMarketplaceErc20Spending,
     ApproveTronMarketplaceErc20Spending,
@@ -19,7 +19,7 @@ import {
     UpdateMarketplaceFeeRecipient,
     UpdateTronMarketplaceFee,
     UpdateTronMarketplaceFeeRecipient
-} from '../../model'
+} from '../../model';
 import {
     convertAddressToHex,
     getBscBep20ContractDecimals,
@@ -46,7 +46,7 @@ import {
     sendOneDeployMarketplaceListingSignedTransaction,
     sendPolygonDeployMarketplaceListingSignedTransaction,
     sendTronDeployMarketplaceListingSignedTransaction
-} from '../../transaction'
+} from '../../transaction';
 
 enum ListingState {
     INITIATED = '0',
@@ -109,8 +109,8 @@ export interface MarketplaceListing {
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/MPListingFee" target="_blank">Tatum API documentation</a>
  */
-export const getMarketplaceFee = async (chain: Currency, contractAddress: string, address: string): Promise<number> =>
-    get(`/v3/blockchain/marketplace/listing/${chain}/${contractAddress}/fee`)
+export const getMarketplaceFee = async (chain: Currency, contractAddress: string): Promise<number> =>
+    get(`/v3/blockchain/marketplace/listing/${chain}/${contractAddress}/fee`);
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/MPListing" target="_blank">Tatum API documentation</a>
@@ -350,17 +350,17 @@ export const prepareMarketplaceCancelListing = async (testnet: boolean, body: In
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-const prepareSCCall = async <U>(testnet: boolean, body: any, clazz: ClassType<object>, methodName: string, params: any[], methodSig?: string,
-                                provider?: string, abi: any[] = listing.abi) => {
-    let r: SmartContractMethodInvocation | CeloSmartContractMethodInvocation
+const prepareSCCall = async (testnet: boolean, body: any, clazz: ClassType<object>, methodName: string, params: any[], methodSig?: string,
+                             provider?: string, abi: any[] = listing.abi) => {
+    let r: SmartContractMethodInvocation | CeloSmartContractMethodInvocation;
     if (body.chain === Currency.CELO) {
-        r = new CeloSmartContractMethodInvocation()
+        r = new CeloSmartContractMethodInvocation();
     } else {
-        r = new SmartContractMethodInvocation()
+        r = new SmartContractMethodInvocation();
     }
-    r.fee = body.fee
-    r.nonce = body.nonce
-    r.fromPrivateKey = body.fromPrivateKey
+    r.fee = body.fee;
+    r.nonce = body.nonce;
+    r.fromPrivateKey = body.fromPrivateKey;
     r.signatureId = body.signatureId
     r.index = body.index
     r.amount = body.amount

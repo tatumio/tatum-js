@@ -1,18 +1,18 @@
-import {CeloProvider, CeloWallet} from '@celo-tools/celo-ethers-wrapper'
-import {BigNumber as BN} from '@ethersproject/bignumber'
-import {BigNumber} from 'bignumber.js'
-import Web3 from 'web3'
-import {isHex, stringToHex, toHex, toWei} from 'web3-utils'
-import {celoBroadcast} from '../blockchain'
-import {validateBody} from '../connector/tatum'
-import {CEUR_ADDRESS_MAINNET, CEUR_ADDRESS_TESTNET, CUSD_ADDRESS_MAINNET, CUSD_ADDRESS_TESTNET, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants'
-import erc1155_abi from '../contracts/erc1155/erc1155_abi'
-import erc1155_bytecode from '../contracts/erc1155/erc1155_bytecode'
-import erc20_abi from '../contracts/erc20/token_abi'
-import erc20_bytecode from '../contracts/erc20/token_bytecode'
-import erc721_abi from '../contracts/erc721/erc721_abi'
-import erc721_bytecode from '../contracts/erc721/erc721_bytecode'
-import * as listing from '../contracts/marketplace'
+import {CeloProvider, CeloWallet} from '@celo-tools/celo-ethers-wrapper';
+import {BigNumber as BN} from '@ethersproject/bignumber';
+import {BigNumber} from 'bignumber.js';
+import Web3 from 'web3';
+import {isHex, stringToHex, toHex, toWei} from 'web3-utils';
+import {celoBroadcast} from '../blockchain';
+import {validateBody} from '../connector/tatum';
+import {CEUR_ADDRESS_MAINNET, CEUR_ADDRESS_TESTNET, CUSD_ADDRESS_MAINNET, CUSD_ADDRESS_TESTNET, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
+import erc1155_abi from '../contracts/erc1155/erc1155_abi';
+import erc1155_bytecode from '../contracts/erc1155/erc1155_bytecode';
+import erc20_abi from '../contracts/erc20/token_abi';
+import erc20_bytecode from '../contracts/erc20/token_bytecode';
+import erc721_abi from '../contracts/erc721/erc721_abi';
+import erc721_bytecode from '../contracts/erc721/erc721_bytecode';
+import * as listing from '../contracts/marketplace';
 import {
     BurnCeloErc20,
     CeloBurnErc721,
@@ -38,15 +38,15 @@ import {
     SmartContractReadMethodInvocation,
     TransactionKMS,
     TransferCeloOrCeloErc20Token
-} from '../model'
-import {obtainCustodialAddressType} from '../wallet/custodial'
+} from '../model';
+import {obtainCustodialAddressType} from '../wallet/custodial';
 
 const obtainWalletInformation = async (wallet: CeloWallet, feeCurrencyContractAddress?: string) => {
     const [txCount, gasPrice, from] = await Promise.all([
         wallet.getTransactionCount(),
         wallet.getGasPrice(feeCurrencyContractAddress),
         wallet.getAddress(),
-    ])
+    ]);
     return {
         txCount,
         gasPrice: [CUSD_ADDRESS_MAINNET, CUSD_ADDRESS_TESTNET].includes(feeCurrencyContractAddress || '') && gasPrice.lte(0x1dcd6500)
@@ -669,14 +669,16 @@ export const sendCeloSmartContractReadMethodInvocationTransaction = async (testn
     return {data: await contract.methods[methodName as string](...params).call()}
 }
 export const sendCeloDeployErc20Transaction = async (testnet: boolean, body: DeployCeloErc20, provider?: string) =>
-    celoBroadcast(await prepareCeloDeployErc20SignedTransaction(testnet, body), body.signatureId)
+    celoBroadcast(await prepareCeloDeployErc20SignedTransaction(testnet, body, provider), body.signatureId)
 export const sendCeloStoreDataSignedTransaction = async (testnet: boolean, body: CreateRecord, provider?: string) =>
-    celoBroadcast(await prepareCeloStoreDataSignedTransaction(testnet, body), body.signatureId)
+    celoBroadcast(await prepareCeloStoreDataSignedTransaction(testnet, body, provider), body.signatureId)
 
 /**
  * Send Celo smart contract method invocation transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
+ * @param testnet
  * @param body content of the transaction to broadcast
+ * @param provider
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendCeloSmartContractMethodInvocationTransaction =

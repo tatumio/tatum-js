@@ -1,10 +1,9 @@
-import BigNumber from 'bignumber.js'
-import {validateBody} from '../connector/tatum'
-import {getAccountById} from '../ledger'
-import {Currency, TransferEthOffchain} from '../model'
-import {prepareEgldSignedTransaction} from '../transaction'
-import {generatePrivateKeyFromMnemonic} from '../wallet'
-import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common'
+import BigNumber from 'bignumber.js';
+import {validateBody} from '../connector/tatum';
+import {Currency, TransferEthOffchain} from '../model';
+import {prepareEgldSignedTransaction} from '../transaction';
+import {generatePrivateKeyFromMnemonic} from '../wallet';
+import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
 
 /**
  * Send EGLD transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -23,7 +22,6 @@ export const sendEgldOffchainTransaction = async (testnet: boolean, body: Transf
 
     const fromPriv = mnemonic && index !== undefined ? await generatePrivateKeyFromMnemonic(Currency.EGLD, testnet, mnemonic, index) : privateKey as string
 
-    const account = await getAccountById(withdrawal.senderAccountId)
     const fee = {
         gasLimit: gasLimit || '50000',
         gasPrice: gasPrice || '1000000000',
@@ -33,6 +31,7 @@ export const sendEgldOffchainTransaction = async (testnet: boolean, body: Transf
         fromPrivateKey: fromPriv,
         fee,
         to: address,
+        nonce
     }, provider)
     // @ts-ignore
     withdrawal.fee = new BigNumber(fee.gasLimit).multipliedBy(fee.gasPrice).toString()

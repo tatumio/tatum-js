@@ -1,4 +1,4 @@
-import { get, post } from '../connector/tatum'
+import {get} from '../connector/tatum';
 import {
     CeloBurnMultiToken,
     CeloBurnMultiTokenBatch,
@@ -15,7 +15,7 @@ import {
     MintMultiTokenBatch,
     TransferMultiToken,
     TransferMultiTokenBatch,
-} from '../model'
+} from '../model';
 import {
     prepareOneBatchTransferMultiTokenSignedTransaction,
     preparePolygonBatchTransferMultiTokenSignedTransaction,
@@ -52,7 +52,7 @@ import {
     sendPolygonMintMultiTokenBatchSignedTransaction,
     sendPolygonMintMultiTokenSignedTransaction,
     sendPolygonTransferMultiTokenSignedTransaction
-} from '../transaction'
+} from '../transaction';
 
 /**
 * For more details, see <a href="https://tatum.io/apidoc#operation/MultiTokenGetContractAddress" target="_blank">Tatum API documentation</a>

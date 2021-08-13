@@ -1,5 +1,4 @@
-import { Currency } from '../model'
-import { sendAdaOffchainTransaction, signAdaOffchainKMSTransaction } from './ada'
+import {sendAdaOffchainTransaction} from './ada';
 
 describe('ADA offchain', () => {
   it('should transaction with mnemonic and xpub', async () => {

@@ -1,29 +1,28 @@
-import {IsHexadecimal, IsNotEmpty, IsNumberString, IsOptional, Length, Min, MaxLength} from 'class-validator'
-import { activateAccount } from 'src/ledger'
+import {IsHexadecimal, IsNotEmpty, IsNumberString, IsOptional, Length, MaxLength, Min} from 'class-validator';
+
 // import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
 
-// export class EgldSendTransaction extends PrivateKeyOrSignatureId {
 export class EgldSendTransaction {
     @IsNotEmpty()
     @Min(0)
     public nonce: number;
-  
+
     @IsNotEmpty()
     @IsNumberString()
     public value: string;
-    
+
     @IsNotEmpty()
     @Length(62, 62)
     public receiver: string;
-    
+
     @IsNotEmpty()
     @Length(62, 62)
     public sender: string;
-    
+
     @IsNotEmpty()
     @Min(0)
     public gasPrice: number;
-    
+
     @IsNotEmpty()
     @Min(0)
     public gasLimit: number;

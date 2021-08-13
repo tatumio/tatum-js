@@ -1,20 +1,10 @@
-import {
-  BigNum,
-  hash_transaction,
-  Transaction, TransactionBody, TransactionBuilder,
-  TransactionWitnessSet,
-  Vkeywitnesses,
-} from '@emurgo/cardano-serialization-lib-nodejs'
-import BigNumber from 'bignumber.js'
-import { validateBody } from '../connector/tatum'
-import { Currency, KeyPair, TransactionKMS, TransferBtcBasedOffchain, WithdrawalResponseData } from '../model'
-import {
-  adaToLovelace,
-  addAddressInputsWithoutPrivateKey, addInput, addInputs, addOutputAda, addOutputs,
-  initTransactionBuilder, makeWitness, processFeeAndRest,
-} from '../transaction'
-import { generateAddressFromXPub, generatePrivateKeyFromMnemonic } from '../wallet'
-import { offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal } from './common'
+import {BigNum, hash_transaction, Transaction, TransactionBody, TransactionBuilder, TransactionWitnessSet, Vkeywitnesses,} from '@emurgo/cardano-serialization-lib-nodejs';
+import BigNumber from 'bignumber.js';
+import {validateBody} from '../connector/tatum';
+import {Currency, KeyPair, TransactionKMS, TransferBtcBasedOffchain, WithdrawalResponseData} from '../model';
+import {adaToLovelace, addAddressInputsWithoutPrivateKey, addInput, addOutputAda, initTransactionBuilder, makeWitness,} from '../transaction';
+import {generateAddressFromXPub, generatePrivateKeyFromMnemonic} from '../wallet';
+import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
 
 /**
  * Send Ada transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -24,7 +14,7 @@ import { offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal } 
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendAdaOffchainTransaction = async (testnet: boolean, body: TransferBtcBasedOffchain) => {
-  await validateBody(body, TransferBtcBasedOffchain)
+  await validateBody(body, TransferBtcBasedOffchain);
   const {
     mnemonic, keyPair, xpub, attr: changeAddress, ...withdrawal
   } = body

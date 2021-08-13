@@ -1,22 +1,19 @@
-import BigNumber from 'bignumber.js'
-import {ECPair, Network, networks, Transaction, TransactionBuilder} from 'bitcoinjs-lib'
-import {
-    scryptaBroadcast,
-    scryptaGetUnspentForAccount
-} from '../blockchain'
-import { validateBody } from '../connector/tatum'
-import {LYRA_NETWORK, LYRA_TEST_NETWORK} from '../constants'
-import {Currency, TransactionKMS, TransferBtcBasedBlockchain} from '../model'
+import BigNumber from 'bignumber.js';
+import {ECPair, Network, Transaction, TransactionBuilder} from 'bitcoinjs-lib';
+import {scryptaBroadcast, scryptaGetUnspentForAccount} from '../blockchain';
+import {validateBody} from '../connector/tatum';
+import {LYRA_NETWORK, LYRA_TEST_NETWORK} from '../constants';
+import {Currency, TransactionKMS, TransferBtcBasedBlockchain} from '../model';
 
 /**
  * Prepare a signed Scrypta transaction with the private key locally. Nothing is broadcasted to the blockchain.
  * @returns raw transaction data in hex, to be broadcasted to blockchain.
  */
 const prepareSignedTransaction = async (network: Network, body: TransferBtcBasedBlockchain) => {
-    await validateBody(body, TransferBtcBasedBlockchain)
-    const {fromUTXO, fromAddress, to} = body
-    const tx = new TransactionBuilder(network)
-    const privateKeysToSign = []
+    await validateBody(body, TransferBtcBasedBlockchain);
+    const {fromUTXO, fromAddress, to} = body;
+    const tx = new TransactionBuilder(network);
+    const privateKeysToSign = [];
     tx.setVersion(1)
     if (fromAddress) {
         for (const item of fromAddress) {

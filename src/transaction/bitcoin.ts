@@ -1,22 +1,22 @@
-import BigNumber from 'bignumber.js'
+import BigNumber from 'bignumber.js';
 // @ts-ignore
-import {PrivateKey, Script, Transaction} from 'bitcore-lib'
-import {btcBroadcast, btcGetTransaction, btcGetTxForAccount, btcGetUTXO,} from '../blockchain'
-import {validateBody} from '../connector/tatum'
-import {BtcTxOutputs, Currency, TransactionKMS, TransferBtcBasedBlockchain} from '../model'
+import {PrivateKey, Script, Transaction} from 'bitcore-lib';
+import {btcBroadcast, btcGetTransaction, btcGetTxForAccount, btcGetUTXO,} from '../blockchain';
+import {validateBody} from '../connector/tatum';
+import {BtcTxOutputs, Currency, TransactionKMS, TransferBtcBasedBlockchain} from '../model';
 
 /**
  * Prepare a signed Btc transaction with the private key locally. Nothing is broadcasted to the blockchain.
  * @returns raw transaction data in hex, to be broadcasted to blockchain.
  */
-const prepareSignedTransaction = async (body: TransferBtcBasedBlockchain, currency: Currency) => {
-    await validateBody(body, TransferBtcBasedBlockchain)
-    const {fromUTXO, fromAddress, to} = body
-    const tx = new Transaction()
-    const privateKeysToSign = []
+const prepareSignedTransaction = async (body: TransferBtcBasedBlockchain) => {
+    await validateBody(body, TransferBtcBasedBlockchain);
+    const {fromUTXO, fromAddress, to} = body;
+    const tx = new Transaction();
+    const privateKeysToSign = [];
     if (fromAddress) {
         for (const item of fromAddress) {
-            const txs = await btcGetTxForAccount(item.address)
+            const txs = await btcGetTxForAccount(item.address);
             for (const t of txs) {
                 for (const [i, o] of (t.outputs as BtcTxOutputs[]).entries()) {
                     if (o.address !== item.address) {
@@ -91,7 +91,7 @@ export const signBitcoinKMSTransaction = async (tx: TransactionKMS, privateKeys:
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareBitcoinSignedTransaction = async (testnet: boolean, body: TransferBtcBasedBlockchain) => {
-    return prepareSignedTransaction(body, Currency.BTC)
+    return prepareSignedTransaction(body);
 }
 
 /**

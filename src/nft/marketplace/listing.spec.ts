@@ -215,7 +215,7 @@ describe('Marketplace Listing tests', () => {
             const test = await deployMarketplaceListing(true, body, 'https://rpc-mumbai.matic.today');
             console.log(test);
             expect(test).toBeDefined();
-        });
+        })
 
         it('should create listing native asset', async () => {
             const body = new CreateMarketplaceListing();
@@ -240,7 +240,7 @@ describe('Marketplace Listing tests', () => {
                 fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
                 contractAddress: '0x5d7d868ed584b04b922905a481f274206a42dd8a'
             }));
-        });
+        })
 
         it('should get listing', async () => {
             const r = new SmartContractReadMethodInvocation();
@@ -249,7 +249,7 @@ describe('Marketplace Listing tests', () => {
             r.methodABI = listing.abi.find(a => a.name === r.methodName);
             r.params = ['8'];
             console.log(await sendPolygonSmartContractMethodInvocationTransaction(true, r, 'https://rpc-mumbai.matic.today'));
-        });
+        })
 
         it('should get marketplace fee', async () => {
             const r = new SmartContractReadMethodInvocation();
@@ -258,7 +258,7 @@ describe('Marketplace Listing tests', () => {
             r.methodABI = listing.abi.find(a => a.name === r.methodName);
             r.params = [];
             console.log(await sendPolygonSmartContractReadMethodInvocationTransaction(true, r, 'https://rpc-mumbai.matic.today'));
-        });
+        })
 
         it('should buy listing native', async () => {
             const body = new InvokeMarketplaceListingOperation();
@@ -270,7 +270,7 @@ describe('Marketplace Listing tests', () => {
             const txData = await prepareMarketplaceBuyListing(true, body, 'https://rpc-mumbai.matic.today');
             expect(txData).toContain('0x');
             console.log(await polygonBroadcast(txData));
-        });
+        })
 
-    });
+    })
 })

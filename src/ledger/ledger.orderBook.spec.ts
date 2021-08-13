@@ -1,13 +1,6 @@
-import { TradeType } from '../model/request/TradeType'
-import {
-    deleteAccountTrades,
-    deleteTrade,
-    getActiveBuyTrades,
-    getActiveSellTrades,
-    getHistoricalTrades,
-    getTradeById,
-    storeTrade
-} from './orderBook'
+import {TradeType} from '../model/request/TradeType';
+import {storeTrade} from './orderBook';
+
 describe('LEDGER TESTS: Trades test suite', () => {
     /*
     returns error validation failed

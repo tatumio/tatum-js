@@ -1,4 +1,4 @@
-import {IsAlphanumeric, IsIn, IsNotEmpty, IsOptional, IsUppercase, Length, ValidateIf} from 'class-validator'
+import {IsIn, IsNotEmpty, IsOptional, IsUppercase, Length, ValidateIf} from 'class-validator';
 
 export enum EgldServiceType {
   issue = 'issue',
@@ -13,7 +13,7 @@ export enum EgldServiceType {
   unPause = 'unPause',
   freeze = 'freeze',
   unFreeze = 'unFreeze',
-  wipe = 'wipe', 
+  wipe = 'wipe',
   setSpecialRole = 'setSpecialRole',
   unSetSpecialRole = 'unSetSpecialRole',
   transferOwnership = 'transferOwnership',

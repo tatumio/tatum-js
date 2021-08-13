@@ -1,15 +1,15 @@
-import {CeloBurnErc721, CeloDeployErc721, CeloMintErc721, CeloMintMultipleErc721, CeloTransferErc721, Currency,} from '../model'
-import {burnNFT, deployNFT, mintMultipleNFTWithUri, mintNFTWithUri, transferNFT} from './nft'
+import {CeloBurnErc721, CeloDeployErc721, CeloMintErc721, CeloMintMultipleErc721, CeloTransferErc721, Currency,} from '../model';
+import {burnNFT, deployNFT, mintMultipleNFTWithUri, mintNFTWithUri, transferNFT} from './nft';
 
 describe('NFT tests', () => {
-    jest.setTimeout(99999)
+    jest.setTimeout(99999);
     describe('NFT CELO transactions', () => {
         it('should test valid deploy 721 transaction', async () => {
-            const body = new CeloDeployErc721()
-            body.fromPrivateKey = '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236'
-            body.name = 'Tatum'
-            body.symbol = 'TTM'
-            body.feeCurrency = Currency.CUSD
+            const body = new CeloDeployErc721();
+            body.fromPrivateKey = '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236';
+            body.name = 'Tatum';
+            body.symbol = 'TTM';
+            body.feeCurrency = Currency.CUSD;
             body.chain = Currency.CELO
             const test = await deployNFT(true, body, 'https://alfajores-forno.celo-testnet.org')
             console.log(test)
@@ -126,7 +126,7 @@ describe('NFT tests', () => {
             const mintedToken = await mintNFTWithUri(true, {
                 to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
                 chain: Currency.ETH,
-                tokenId: '2',
+                tokenId,
                 url: 'test.com',
                 fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
                 contractAddress: '0xE4966098662cF4c8e9BB63D643336b163cB9FFE1',

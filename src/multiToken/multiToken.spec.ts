@@ -1,8 +1,8 @@
-import {CeloBurnMultiToken, CeloBurnMultiTokenBatch, CeloDeployMultiToken, Currency} from '../model'
-import {burnMultiToken, burnMultiTokenBatch, deployMultiToken, mintMultiToken, mintMultiTokenBatch, transferMultiToken, transferMultiTokenBatch,} from './index'
+import {CeloBurnMultiToken, CeloBurnMultiTokenBatch, CeloDeployMultiToken, Currency} from '../model';
+import {burnMultiToken, burnMultiTokenBatch, deployMultiToken, mintMultiToken, mintMultiTokenBatch, transferMultiToken, transferMultiTokenBatch,} from './index';
 
 describe('NFT tests', () => {
-    jest.setTimeout(99999)
+    jest.setTimeout(99999);
     describe('NFT MultiToken transactions', () => {
         it('should test eth 1155 deploy transaction', async () => {
             const deployMultiTokenToken = await deployMultiToken(true, {
@@ -133,7 +133,6 @@ describe('NFT tests', () => {
             expect(mintedToken).not.toBeNull()
         })
         it('should test bsc 1155 mint batch transaction', async () => {
-            const time = new Date().getTime().toString()
             const tokenId = [['12101', '12102'],['12101', '12102']]
             const mintedToken = await mintMultiTokenBatch(true, {
                 to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f','0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
@@ -228,7 +227,6 @@ describe('NFT tests', () => {
             expect(mintedToken).not.toBeNull()
         })
         it('should test polygon 1155 mint batch transaction', async () => {
-            const time = new Date().getTime().toString()
             const tokenId = [['12101', '12102'], ['12101', '12102']]
             const mintedToken = await mintMultiTokenBatch(true, {
                 to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],

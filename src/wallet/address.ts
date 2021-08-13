@@ -1,14 +1,14 @@
-import {getAddressFromPrivateKey} from '@binance-chain/javascript-sdk/lib/crypto'
-import {HarmonyAddress} from '@harmony-js/crypto'
+import {getAddressFromPrivateKey} from '@binance-chain/javascript-sdk/lib/crypto';
+import {HarmonyAddress} from '@harmony-js/crypto';
 // @ts-ignore
-import {ECDSA_secp256k1, encodeKey, SHA3_256} from '@onflow/util-encode-key'
-import * as bech32 from 'bech32'
-import {fromBase58, fromPublicKey, fromSeed} from 'bip32'
-import {mnemonicToSeed} from 'bip39'
-import {ECPair, networks, payments} from 'bitcoinjs-lib'
-import {derivePath, getPublicKey} from 'ed25519-hd-key'
-import * as elliptic from 'elliptic'
-import ethWallet, {hdkey as ethHdKey} from 'ethereumjs-wallet'
+import {ECDSA_secp256k1, encodeKey, SHA3_256} from '@onflow/util-encode-key';
+import * as bech32 from 'bech32';
+import {fromBase58, fromPublicKey, fromSeed} from 'bip32';
+import {mnemonicToSeed} from 'bip39';
+import {ECPair, networks, payments} from 'bitcoinjs-lib';
+import {derivePath, getPublicKey} from 'ed25519-hd-key';
+import * as elliptic from 'elliptic';
+import ethWallet, {hdkey as ethHdKey} from 'ethereumjs-wallet';
 // @ts-ignore
 import {
     BCH_DERIVATION_PATH,
@@ -35,20 +35,20 @@ import {
     TRON_DERIVATION_PATH,
     VET_DERIVATION_PATH,
     XDC_DERIVATION_PATH,
-} from '../constants'
-import {Currency} from '../model'
-import cardano from './cardano.crypto'
-import {generateAddress} from './tron.crypto'
+} from '../constants';
+import {Currency} from '../model';
+import cardano from './cardano.crypto';
+import {generateAddress} from './tron.crypto';
 // tslint:disable:no-var-requires
-const bcash = require('@tatumio/bitcoincashjs2-lib')
-const cashaddr = require('cashaddrjs')
-const coininfo = require('coininfo')
+const bcash = require('@tatumio/bitcoincashjs2-lib');
+const cashaddr = require('cashaddrjs');
+const coininfo = require('coininfo');
 // tslint:disable-next-line:no-var-requires
-const TronWeb = require('tronweb')
+const TronWeb = require('tronweb');
 
 
 interface Hash {
-    hash: Buffer
+    hash: Buffer;
 }
 
 interface Bytes extends Hash {
@@ -143,28 +143,6 @@ const generateEthAddress = (testnet: boolean, xpub: string, i: number) => {
     const w = ethHdKey.fromExtendedKey(xpub)
     const wallet = w.deriveChild(i).getWallet()
     return '0x' + wallet.getAddress().toString('hex').toLowerCase()
-}
-
-/**
- * Generate Polygon or any other ERC20 address
- * @param testnet testnet or mainnet version of address
- * @param xpub extended public key to generate address from
- * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
- * @returns blockchain address
- */
-const generatePolygonAddress = (testnet: boolean, xpub: string, i: number) => {
-    return generateEthAddress(testnet, xpub, i)
-}
-
-/**
- * Generate BSC or any other BEP-20 / BEP-721 address
- * @param testnet testnet or mainnet version of address
- * @param xpub extended public key to generate address from
- * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
- * @returns blockchain address
- */
-const generateBscAddress = (testnet: boolean, xpub: string, i: number) => {
-    return generateEthAddress(testnet, xpub, i)
 }
 
 /**

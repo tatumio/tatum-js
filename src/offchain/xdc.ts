@@ -1,11 +1,10 @@
-import BigNumber from 'bignumber.js'
-import {fromWei, toWei} from 'web3-utils'
-import {validateBody} from '../connector/tatum'
-import {getAccountById, getVirtualCurrencyByName} from '../ledger'
-import {Currency, TransferEthOffchain} from '../model'
-import {prepareXdcOrErc20SignedTransaction} from '../transaction'
-import {generatePrivateKeyFromMnemonic} from '../wallet'
-import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common'
+import BigNumber from 'bignumber.js';
+import {fromWei, toWei} from 'web3-utils';
+import {validateBody} from '../connector/tatum';
+import {Currency, TransferEthOffchain} from '../model';
+import {prepareXdcOrErc20SignedTransaction} from '../transaction';
+import {generatePrivateKeyFromMnemonic} from '../wallet';
+import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
 
 /**
  * Send XDC transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -24,7 +23,6 @@ export const sendXdcOffchainTransaction = async (testnet: boolean, body: Transfe
 
     const fromPriv = mnemonic && index !== undefined ? await generatePrivateKeyFromMnemonic(Currency.XDC, testnet, mnemonic, index) : privateKey as string
 
-    const account = await getAccountById(withdrawal.senderAccountId)
     const fee = {
         gasLimit: gasLimit || '21000',
         gasPrice: gasPrice || '5',

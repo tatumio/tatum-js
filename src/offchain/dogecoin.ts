@@ -1,10 +1,10 @@
-import BigNumber from 'bignumber.js'
+import BigNumber from 'bignumber.js';
 // @ts-ignore
-import {PrivateKey, Script, Transaction} from 'bitcore-lib-doge'
-import {validateBody} from '../connector/tatum'
-import {Currency, KeyPair, TransactionKMS, TransferBtcBasedOffchain, WithdrawalResponseData} from '../model'
-import {generateAddressFromXPub, generatePrivateKeyFromMnemonic} from '../wallet'
-import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common'
+import {PrivateKey, Script, Transaction} from 'bitcore-lib-doge';
+import {validateBody} from '../connector/tatum';
+import {Currency, KeyPair, TransactionKMS, TransferBtcBasedOffchain, WithdrawalResponseData} from '../model';
+import {generateAddressFromXPub, generatePrivateKeyFromMnemonic} from '../wallet';
+import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
 
 /**
  * Send Dogecoin transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -14,7 +14,7 @@ import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} fr
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendDogecoinOffchainTransaction = async (testnet: boolean, body: TransferBtcBasedOffchain) => {
-    await validateBody(body, TransferBtcBasedOffchain)
+    await validateBody(body, TransferBtcBasedOffchain);
     const {
         mnemonic, keyPair, attr: changeAddress, xpub, ...withdrawal
     } = body
@@ -121,17 +121,17 @@ export const prepareDogecoinSignedOffchainTransaction =
             return JSON.stringify(tx)
         }
 
-        for (const [i, input] of data.entries()) {
+        for (const input of data) {
             // when there is no address field present, input is pool transfer to 0
             if (input.vIn === '-1') {
-                continue
+                continue;
             }
             if (mnemonic) {
-                const derivationKey = input.address?.derivationKey || 0
-                tx.sign(PrivateKey.fromWIF(await generatePrivateKeyFromMnemonic(Currency.DOGE, testnet, mnemonic, derivationKey)))
+                const derivationKey = input.address?.derivationKey || 0;
+                tx.sign(PrivateKey.fromWIF(await generatePrivateKeyFromMnemonic(Currency.DOGE, testnet, mnemonic, derivationKey)));
             } else if (keyPair) {
-                const {privateKey} = keyPair.find(k => k.address === input.address.address) as KeyPair
-                tx.sign(PrivateKey.fromWIF(privateKey))
+                const {privateKey} = keyPair.find(k => k.address === input.address.address) as KeyPair;
+                tx.sign(PrivateKey.fromWIF(privateKey));
             } else {
                 throw new Error('Impossible to prepare transaction. Either mnemonic or keyPair and attr must be present.')
             }

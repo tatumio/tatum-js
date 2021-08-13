@@ -1,17 +1,11 @@
-import { Currency } from '../model/request/Currency'
-import { Fiat } from '../model/response/ledger/Fiat'
-import {
-    createVirtualCurrency,
-    getVirtualCurrencyByName,
-    mintVirtualCurrency,
-    revokeVirtualCurrency,
-    updateVirtualCurrency
-} from './index'
+import {Currency} from '../model/request/Currency';
+import {Fiat} from '../model/response/ledger/Fiat';
+import {createVirtualCurrency, getVirtualCurrencyByName, mintVirtualCurrency, revokeVirtualCurrency, updateVirtualCurrency} from './index';
 // import { updateVirtualCurrency } from './vc';
 
 describe('LEDGER TESTS: Virtual Currency test suite', () => {
     // declaring global variables which have larger scope
-    let id = ''
+    let id = '';
     it('should create a virtual currency', async () => {
         /*
             always returns error currency already registered
@@ -89,7 +83,7 @@ describe('LEDGER TESTS: Virtual Currency test suite', () => {
     })
     it('should return error if currency does not exists', async () => {
         try {
-            const accountObj = await getVirtualCurrencyByName('VC_emoVC')
+            await getVirtualCurrencyByName('VC_emoVC');
         } catch (e) {
             expect(e.response.data.statusCode).toBe(403)
             expect(e.response.data.errorCode).toBe('vc.not.found')
