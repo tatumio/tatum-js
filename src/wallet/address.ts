@@ -1,7 +1,7 @@
 import {getAddressFromPrivateKey} from '@binance-chain/javascript-sdk/lib/crypto';
 import {HarmonyAddress} from '@harmony-js/crypto';
 // @ts-ignore
-import {ECDSA_secp256k1, encodeKey, SHA3_256} from '@onflow/util-encode-key';
+// import {ECDSA_secp256k1, encodeKey, SHA3_256} from '@onflow/util-encode-key';
 import * as bech32 from 'bech32';
 import {fromBase58, fromPublicKey, fromSeed} from 'bip32';
 import {mnemonicToSeed} from 'bip39';
@@ -179,8 +179,11 @@ const generateOneAddress = (testnet: boolean, xpub: string, i: number) => {
  * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
-const generateEgldAddress = (testnet: boolean, xpub: string, i: number) => {
-    const words = bech32.toWords(Buffer.from(xpub.slice(-64), 'hex'))
+export const generateEgldAddress = async (testnet: boolean, mnem: string, i: number): Promise<string> => {
+    const path = testnet ? TESTNET_DERIVATION_PATH + '\'' : EGLD_DERIVATION_PATH + `/${i}'`
+    const seed = await mnemonicToSeed(mnem);
+    const {key} = derivePath(path, seed.toString('hex'))
+    const words = bech32.toWords(getPublicKey(key, false))
     const address = bech32.encode('erd', words)
     return address
 }
@@ -466,10 +469,10 @@ const generateOnePrivateKey = async (testnet: boolean, mnemonic: string, i: numb
  * @returns blockchain private key to the address
  */
 const generateEgldPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
-    const path = testnet ? `${TESTNET_DERIVATION_PATH}'` : `${EGLD_DERIVATION_PATH}/${i}'`
+    const path = testnet ? TESTNET_DERIVATION_PATH + '\'' : EGLD_DERIVATION_PATH + `/${i}'`
     const seed = await mnemonicToSeed(mnemonic)
-    const {key, chainCode} = derivePath(path, seed.toString('hex'))
-    return key.toString('hex')
+    const {key} = derivePath(path, seed.toString('hex'))
+    return getPublicKey(key, false).toString('hex')
 }
 
 /**

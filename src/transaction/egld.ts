@@ -391,7 +391,7 @@ const prepareSignedTransactionAbstraction = async (
 ): Promise<string> => {
     const config = await egldGetConfig()
     const gasPrice = fee?.gasPrice ? new BigNumber(fee?.gasPrice as string).toNumber() : config?.erd_min_gas_price || 1000000000
-    const sender = generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string)
+    const sender = await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string)
     const nonce = transaction.nonce ? transaction.nonce as number : await egldGetTransactionsCount(sender as string)
     
     const egldTx: EgldSendTransaction = {
@@ -703,7 +703,7 @@ export const prepareEgldCreateNftOrSftSignedTransaction = async (body: EgldEsdtT
     const client = getEgldClient(provider)
     
     const value = amount ? new BigNumber(amount).toNumber() : 0
-    const sender = generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string)
+    const sender = await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string)
 
     const tx: TransactionConfig = {
         from: sender,
@@ -808,7 +808,7 @@ export const prepareEgldAddOrBurnNftQuantitySignedTransaction = async (body: Egl
     
     const value = amount ? new BigNumber(amount).toNumber() : 0
     const gasLimit = fee?.gasLimit ? fee.gasLimit : '10000000'
-    const sender = generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string)
+    const sender = await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string)
 
     const tx: TransactionConfig = {
         from: sender,
@@ -874,7 +874,7 @@ export const prepareEgldTransferNftSignedTransaction = async (body: EgldEsdtTran
     const client = getEgldClient(provider)
     
     const value = amount ? new BigNumber(amount).toNumber() : 0
-    const sender = generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string)
+    const sender = await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string)
 
     const tx: TransactionConfig = {
         from: sender,
