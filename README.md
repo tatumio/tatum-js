@@ -108,6 +108,61 @@ If you are using the types in a `commonjs` module, like in a Node app, you just 
     ....
 ```
 
+### Usage with React Native
+Tatum js use core node js modules or browser APIs that are not available in React Native, so in order to be able to run Tatum js in React Native we need to install and use some additional dependencies.
+
+```
+npm i rn-nodeify -g
+npm i react-native-randombytes --save
+npm i @tatumio/tatum --save
+rn-nodeify --install http,https,path,crypto,fs,stream,os --hack
+cd ios && pod install
+```
+ rn-nodeify will create a `shim.js` file in your project root directory. The first line in `index.js` should be to import it (NOT require it!)
+
+`import "./shim";`
+
+Uncomment the last line from the shim.js file:
+`require('crypto')`
+
+`shim.js` file example:
+```
+if (typeof __dirname === 'undefined') global.__dirname = '/'
+if (typeof __filename === 'undefined') global.__filename = ''
+if (typeof process === 'undefined') {
+  global.process = require('process')
+} else {
+  const bProcess = require('process')
+  for (var p in bProcess) {
+    if (!(p in process)) {
+      process[p] = bProcess[p]
+    }
+  }
+}
+
+process.browser = false
+if (typeof Buffer === 'undefined') global.Buffer = require('buffer').Buffer
+
+// global.location = global.location || { port: 80 }
+const isDev = typeof __DEV__ === 'boolean' && __DEV__
+process.env['NODE_ENV'] = isDev ? 'development' : 'production'
+if (typeof localStorage !== 'undefined') {
+  localStorage.debug = isDev ? '*' : ''
+}
+
+// If using the crypto shim, uncomment the following line to ensure
+// crypto is loaded first, so it can populate global.crypto
+require('crypto')
+```
+
+Tatum js will look for the API_KEY using .env variables, for this you can simply write `process.env.TATUM_API_KEY = "YOUR_API_KEY_HERE";` before importing Tatum in you project.
+
+Run your app:
+```
+npx react-native run-ios
+npx react-native run-android
+```
+
 ## Directory structure
 ```bash
 └── src
