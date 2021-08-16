@@ -265,6 +265,7 @@ export const prepareMarketplaceApproveErc20Spending = async (testnet: boolean, b
             throw new Error('Unsupported combination of inputs.')
     }
     const params = [body.marketplaceAddress, `0x${amount}`]
+    body.amount = '0';
     if (body.chain === Currency.TRON) {
         return await prepareSCCall(testnet, body, ApproveTronMarketplaceErc20Spending, 'approve',
             [
@@ -318,6 +319,7 @@ export const prepareMarketplaceCreateListing = async (testnet: boolean, body: Cr
 export const prepareMarketplaceBuyListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation | InvokeTronMarketplaceListingOperation, provider?: string) => {
     await validateBody(body, body.chain === Currency.TRON ? InvokeTronMarketplaceListingOperation : InvokeMarketplaceListingOperation)
     const params = [body.listingId, body.erc20Address || '0x0000000000000000000000000000000000000000']
+    body.amount = undefined;
     if (body.chain === Currency.TRON) {
         return await prepareSCCall(testnet, body, InvokeTronMarketplaceListingOperation, 'buyAssetFromListing',
             [
