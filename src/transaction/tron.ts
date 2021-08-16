@@ -1,14 +1,14 @@
-import axios, {AxiosRequestConfig} from 'axios'
-import BigNumber from 'bignumber.js'
-import {tronBroadcast} from '../blockchain'
-import {validateBody} from '../connector/tatum'
+import {AxiosRequestConfig} from 'axios';
+import BigNumber from 'bignumber.js';
+import {tronBroadcast} from '../blockchain';
+import {axios, validateBody} from '../connector/tatum';
 
-import {TATUM_API_URL} from '../constants'
-import * as listing from '../contracts/marketplace'
-import abi from '../contracts/trc20/token_abi'
-import bytecode from '../contracts/trc20/token_bytecode'
-import trc721_abi from '../contracts/trc721/trc721_abi'
-import trc721_bytecode from '../contracts/trc721/trc721_bytecode'
+import {TATUM_API_URL} from '../constants';
+import * as listing from '../contracts/marketplace';
+import abi from '../contracts/trc20/token_abi';
+import bytecode from '../contracts/trc20/token_bytecode';
+import trc721_abi from '../contracts/trc721/trc721_abi';
+import trc721_bytecode from '../contracts/trc721/trc721_bytecode';
 import {
     CreateTronTrc10,
     CreateTronTrc20,
@@ -27,18 +27,18 @@ import {
     TronMintTrc721,
     TronTransferTrc721,
     TronUpdateCashbackTrc721,
-} from '../model'
-import {obtainCustodialAddressType} from '../wallet'
+} from '../model';
+import {obtainCustodialAddressType} from '../wallet';
 
 // tslint:disable-next-line:no-var-requires
-const TronWeb = require('tronweb')
+const TronWeb = require('tronweb');
 
 const prepareTronWeb = (testnet: boolean, provider?: string) => {
-    const HttpProvider = TronWeb.providers.HttpProvider
-    const url = provider || `${TATUM_API_URL}/v3/tron/node/${process.env.TATUM_API_KEY}`
-    const fullNode = new HttpProvider(url)
-    const solidityNode = new HttpProvider(url)
-    const eventServer = new HttpProvider(url)
+    const HttpProvider = TronWeb.providers.HttpProvider;
+    const url = provider || `${TATUM_API_URL}/v3/tron/node/${process.env.TATUM_API_KEY}`;
+    const fullNode = new HttpProvider(url);
+    const solidityNode = new HttpProvider(url);
+    const eventServer = new HttpProvider(url);
     const tronWeb = new TronWeb(fullNode, solidityNode, eventServer)
     tronWeb.setHeader({'TRON-PRO-API-KEY': process.env.TRON_PRO_API_KEY})
     return tronWeb

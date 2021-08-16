@@ -1,19 +1,18 @@
-import axios from 'axios'
-import {BigNumber} from 'bignumber.js'
-import Web3 from 'web3'
-import {TransactionConfig} from 'web3-core'
-import {toWei} from 'web3-utils'
-import {ethBroadcast, ethGetTransactionsCount} from '../blockchain'
-import {validateBody} from '../connector/tatum'
-import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants'
-import erc1155TokenABI from '../contracts/erc1155/erc1155_abi'
-import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode'
-import erc20_abi from '../contracts/erc20/token_abi'
-import erc20TokenABI from '../contracts/erc20/token_abi'
-import erc20TokenBytecode from '../contracts/erc20/token_bytecode'
-import erc721TokenABI from '../contracts/erc721/erc721_abi'
-import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode'
-import * as listing from '../contracts/marketplace'
+import {BigNumber} from 'bignumber.js';
+import Web3 from 'web3';
+import {TransactionConfig} from 'web3-core';
+import {toWei} from 'web3-utils';
+import {ethBroadcast, ethGetTransactionsCount} from '../blockchain';
+import {axios, validateBody} from '../connector/tatum';
+import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
+import erc1155TokenABI from '../contracts/erc1155/erc1155_abi';
+import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode';
+import erc20_abi from '../contracts/erc20/token_abi';
+import erc20TokenABI from '../contracts/erc20/token_abi';
+import erc20TokenBytecode from '../contracts/erc20/token_bytecode';
+import erc721TokenABI from '../contracts/erc721/erc721_abi';
+import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
+import * as listing from '../contracts/marketplace';
 import {
     BurnErc20,
     CreateRecord,
@@ -41,16 +40,16 @@ import {
     TransferMultiToken,
     TransferMultiTokenBatch,
     UpdateCashbackErc721,
-} from '../model'
-import {obtainCustodialAddressType} from '../wallet'
+} from '../model';
+import {obtainCustodialAddressType} from '../wallet';
 
 /**
  * Estimate Gas price for the transaction.
  */
 export const ethGetGasPriceInWei = async () => {
-    let gasStationUrl = 'https://ethgasstation.info/json/ethgasAPI.json'
+    let gasStationUrl = 'https://ethgasstation.info/json/ethgasAPI.json';
     if (process.env.TATUM_GAS_STATION_API_KEY) {
-        gasStationUrl = `${gasStationUrl}?apiKey=${process.env.TATUM_GAS_STATION_API_KEY}`
+        gasStationUrl = `${gasStationUrl}?apiKey=${process.env.TATUM_GAS_STATION_API_KEY}`;
     }
     const data = await Promise.all([
         axios.get(gasStationUrl.toString())

@@ -1,15 +1,14 @@
-import axios from 'axios'
-import {BigNumber} from 'bignumber.js'
-import Web3 from 'web3'
-import {TransactionConfig} from 'web3-core'
-import {toWei} from 'web3-utils'
-import {xdcBroadcast, xdcGetTransactionsCount} from '../blockchain'
-import {validateBody} from '../connector/tatum'
-import {TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants'
-import erc20TokenABI from '../contracts/erc20/token_abi'
-import erc20TokenBytecode from '../contracts/erc20/token_bytecode'
-import erc721TokenABI from '../contracts/erc721/erc721_abi'
-import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode'
+import {BigNumber} from 'bignumber.js';
+import Web3 from 'web3';
+import {TransactionConfig} from 'web3-core';
+import {toWei} from 'web3-utils';
+import {xdcBroadcast, xdcGetTransactionsCount} from '../blockchain';
+import {axios, validateBody} from '../connector/tatum';
+import {TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
+import erc20TokenABI from '../contracts/erc20/token_abi';
+import erc20TokenBytecode from '../contracts/erc20/token_bytecode';
+import erc721TokenABI from '../contracts/erc721/erc721_abi';
+import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
 import {
     BurnErc20,
     CreateRecord,
@@ -28,8 +27,7 @@ import {
     TransferCustomErc20,
     TransferErc20,
     UpdateCashbackErc721
-} from '../model'
-
+} from '../model';
 
 /**
  * Convert XDC address format.

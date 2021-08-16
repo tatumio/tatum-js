@@ -1,18 +1,25 @@
-import axios from 'axios'
-import axiosRetry, { isNetworkOrIdempotentRequestError } from 'axios-retry'
-import { plainToClass } from 'class-transformer'
-import { ClassType } from 'class-transformer/ClassTransformer'
-import { validateOrReject } from 'class-validator'
-import { TATUM_API_URL, TATUM_RETRIES, TATUM_RETRY_DELAY } from '../constants'
+import a from 'axios';
+import axiosRetry, {isNetworkOrIdempotentRequestError} from 'axios-retry';
+import {plainToClass} from 'class-transformer';
+import {ClassType} from 'class-transformer/ClassTransformer';
+import {validateOrReject} from 'class-validator';
+import http from 'http';
+import https from 'https';
+import {TATUM_API_URL, TATUM_RETRIES, TATUM_RETRY_DELAY} from '../constants';
+
+export const axios = a.create({
+  httpAgent: new http.Agent({keepAlive: true}),
+  httpsAgent: new https.Agent({keepAlive: true})
+});
 
 // In case of 429 Too Many Requests response error, request is triggered again
 axiosRetry(axios, {
   retryDelay: () => process.env.TATUM_RETRY_DELAY ? Number(process.env.TATUM_RETRY_DELAY) : TATUM_RETRY_DELAY,
   retries: process.env.TATUM_RETRIES ? Number(process.env.TATUM_RETRIES) : TATUM_RETRIES,
   retryCondition: (error) => isNetworkOrIdempotentRequestError(error) || error?.response?.status === 429
-})
+});
 
-const baseUrl = () => process.env.TATUM_API_URL || TATUM_API_URL
+const baseUrl = () => process.env.TATUM_API_URL || TATUM_API_URL;
 
 const headers = () => ({ headers: { 'x-api-key': process.env.TATUM_API_KEY } })
 

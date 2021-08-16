@@ -1,43 +1,41 @@
-import axios from 'axios'
-import {BigNumber} from 'bignumber.js'
-import * as tweetnacl from 'tweetnacl'
-import Web3 from 'web3'
-import {TransactionConfig} from 'web3-core'
-import {egldBroadcast, egldGetTransactionsCount, egldEstimateGas} from '../blockchain'
-import {validateBody} from '../connector/tatum'
-import {TATUM_API_URL, ESDT_SYSTEM_SMART_CONTRACT_ADDRESS} from '../constants'
+import {BigNumber} from 'bignumber.js';
+import * as tweetnacl from 'tweetnacl';
+import Web3 from 'web3';
+import {TransactionConfig} from 'web3-core';
+import {egldBroadcast, egldEstimateGas, egldGetTransactionsCount} from '../blockchain';
+import {axios, validateBody} from '../connector/tatum';
+import {ESDT_SYSTEM_SMART_CONTRACT_ADDRESS, TATUM_API_URL} from '../constants';
 import {
-    // CreateRecord,
     Currency,
-    EgldSendTransaction,
-    EsdtToken,
-    EsdtIssue,
-    EsdtTransfer,
-    EsdtMint,
-    EsdtFreezeOrWipeOrOwnership,
-    EsdtSpecialRole,
-    EsdtControlChanges,
-    EsdtIssueNftOrSft,
-    EsdtCreateNftOrSft,
-    EsdtTransferNftCreateRole,
-    EsdtAddOrBurnNftQuantity,
-    EsdtFreezeOrWipeNft,
-    EsdtTransferNft,
     EgldEsdtTransaction,
+    EgldSendTransaction,
+    EsdtAddOrBurnNftQuantity,
+    EsdtControlChanges,
+    EsdtCreateNftOrSft,
+    EsdtFreezeOrWipeNft,
+    EsdtFreezeOrWipeOrOwnership,
+    EsdtIssue,
+    EsdtIssueNftOrSft,
+    EsdtMint,
+    EsdtSpecialRole,
+    EsdtToken,
+    EsdtTransfer,
+    EsdtTransferNft,
+    EsdtTransferNftCreateRole,
     Fee,
     TransactionKMS,
-} from '../model'
-import {generateAddressFromPrivatekey} from '../wallet/address'
+} from '../model';
+import {generateAddressFromPrivatekey} from '../wallet/address';
 
-const ELROND_V3_ENDPOINT = `${TATUM_API_URL}/v3/egld/web3/${process.env.TATUM_API_KEY}`
+const ELROND_V3_ENDPOINT = `${TATUM_API_URL}/v3/egld/web3/${process.env.TATUM_API_KEY}`;
 
 /**
  * Get Elrond network config
  */
 export const egldGetConfig = async () => {
-    const gasStationUrl = await getEgldClient('https://api.elrond.com') // TODO: use TATUM API endpoint
+    const gasStationUrl = await getEgldClient('https://api.elrond.com'); // TODO: use TATUM API endpoint
     try {
-        const {data} = await axios.get(`${gasStationUrl}/network/config`)
+        const {data} = await axios.get(`${gasStationUrl}/network/config`);
         return data
     } catch (e) {
         console.error(e.toString())
@@ -393,7 +391,7 @@ const prepareSignedTransactionAbstraction = async (
     const gasPrice = fee?.gasPrice ? new BigNumber(fee?.gasPrice as string).toNumber() : config?.erd_min_gas_price || 1000000000
     const sender = await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string)
     const nonce = transaction.nonce ? transaction.nonce as number : await egldGetTransactionsCount(sender as string)
-    
+
     const egldTx: EgldSendTransaction = {
         nonce,
         value: new BigNumber(transaction.value as string).isLessThan(0) ? '0' : new BigNumber(transaction.value as string).multipliedBy(1e18).toString(),
@@ -403,7 +401,7 @@ const prepareSignedTransactionAbstraction = async (
         gasLimit: new BigNumber(fee?.gasLimit as string).toNumber(),
         data: transaction.data,
         chainID: config.erd_chain_id,
-        version: config.erd_min_transaction_version, 
+        version: config.erd_min_transaction_version,
         signature: signatureId,
     }
 
@@ -434,7 +432,7 @@ export const prepareEgldDeployEsdtSignedTransaction = async (body: EgldEsdtTrans
     } = body
 
     const client = getEgldClient(provider)
-    
+
     const value = amount ? new BigNumber(amount).toNumber() : 0.05
     const gasLimit = fee?.gasLimit ? fee.gasLimit : '60000000'
 
@@ -667,7 +665,7 @@ export const prepareEgldDeployNftOrSftSignedTransaction = async (body: EgldEsdtT
     } = body
 
     const client = getEgldClient(provider)
-    
+
     const value = amount ? new BigNumber(amount).toNumber() : 0.05
     const gasLimit = fee?.gasLimit ? fee.gasLimit : '60000000'
 
@@ -701,7 +699,7 @@ export const prepareEgldCreateNftOrSftSignedTransaction = async (body: EgldEsdtT
     } = body
 
     const client = getEgldClient(provider)
-    
+
     const value = amount ? new BigNumber(amount).toNumber() : 0
     const sender = await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string)
 
@@ -737,7 +735,7 @@ export const prepareEgldTransferNftCreateRoleSignedTransaction = async (body: Eg
     } = body
 
     const client = getEgldClient(provider)
-    
+
     const value = amount ? new BigNumber(amount).toNumber() : 0
 
     const tx: TransactionConfig = {
@@ -772,7 +770,7 @@ export const prepareEgldStopNftCreateSignedTransaction = async (body: EgldEsdtTr
     } = body
 
     const client = getEgldClient(provider)
-    
+
     const value = amount ? new BigNumber(amount).toNumber() : 0
     const gasLimit = fee?.gasLimit ? fee.gasLimit : '60000000'
 
@@ -805,7 +803,7 @@ export const prepareEgldAddOrBurnNftQuantitySignedTransaction = async (body: Egl
     } = body
 
     const client = getEgldClient(provider)
-    
+
     const value = amount ? new BigNumber(amount).toNumber() : 0
     const gasLimit = fee?.gasLimit ? fee.gasLimit : '10000000'
     const sender = await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string)
@@ -839,7 +837,7 @@ export const prepareEgldFreezeNftSignedTransaction = async (body: EgldEsdtTransa
     } = body
 
     const client = getEgldClient(provider)
-    
+
     const value = amount ? new BigNumber(amount).toNumber() : 0
     const gasLimit = fee?.gasLimit ? fee.gasLimit : '60000000'
 
@@ -872,7 +870,7 @@ export const prepareEgldTransferNftSignedTransaction = async (body: EgldEsdtTran
     } = body
 
     const client = getEgldClient(provider)
-    
+
     const value = amount ? new BigNumber(amount).toNumber() : 0
     const sender = await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string)
 

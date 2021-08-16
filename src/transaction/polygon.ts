@@ -1,10 +1,9 @@
-import axios from 'axios';
 import {BigNumber} from 'bignumber.js';
 import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
 import {toWei} from 'web3-utils';
 import {polygonBroadcast} from '../blockchain';
-import {validateBody} from '../connector/tatum';
+import {axios, validateBody} from '../connector/tatum';
 import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
 import erc1155TokenABI from '../contracts/erc1155/erc1155_abi';
 import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode';
