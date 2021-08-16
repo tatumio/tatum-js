@@ -1,3 +1,6 @@
+/**
+ * Fiat
+ */
 export enum Fiat {
     AED = 'AED',
     AFN = 'AFN',

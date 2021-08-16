@@ -1,7 +1,7 @@
-import {Type} from 'class-transformer';
-import {IsNotEmpty, IsUUID, Length, Validate, ValidateIf, ValidateNested} from 'class-validator';
-import {TransferBtcOffchainValidator} from '../validation/TransferBtcOffchainValidator';
-import {CreateWithdrawal} from './CreateWithdrawal';
+import {Type} from 'class-transformer'
+import {IsNotEmpty, IsUUID, Length, Validate, ValidateIf, ValidateNested} from 'class-validator'
+import {TransferBtcOffchainValidator} from '../validation/TransferBtcOffchainValidator'
+import {CreateWithdrawal} from './CreateWithdrawal'
 
 export class KeyPair {
 
@@ -16,35 +16,35 @@ export class KeyPair {
 
 const m = (o: TransferBtcBasedOffchain) => {
     if (o.mnemonic) {
-        return true;
+        return true
     }
     if (!o.signatureId && !o.keyPair) {
-        return true;
+        return true
     }
     if (o.xpub && !o.signatureId) {
-        return true;
+        return true
     }
     if (!o.keyPair && !o.signatureId) {
-        return true;
+        return true
     }
-    return false;
-};
+    return false
+}
 
 const k = (o: TransferBtcBasedOffchain) => {
     if (o.keyPair) {
-        return true;
+        return true
     }
     if (!o.signatureId && !o.mnemonic) {
-        return true;
+        return true
     }
     if (o.xpub && !(o.signatureId || o.mnemonic)) {
-        return true;
+        return true
     }
     if (!o.mnemonic && !o.signatureId) {
-        return true;
+        return true
     }
-    return false;
-};
+    return false
+}
 
 export class TransferBtcBasedOffchain extends CreateWithdrawal {
 

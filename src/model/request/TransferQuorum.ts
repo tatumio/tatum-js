@@ -1,4 +1,4 @@
-import {IsHexadecimal, IsNotEmpty, IsNumber, IsOptional, Length, MaxLength, Min} from 'class-validator';
+import {IsHexadecimal, IsNotEmpty, IsNumber, IsOptional, Length, MaxLength, Min} from 'class-validator'
 
 export class TransferQuorum {
 

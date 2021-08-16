@@ -3,7 +3,7 @@
  * @export
  * @interface EthBlock
  */
-import {EthTx} from './EthTx';
+import {EthTx} from './EthTx'
 
 export interface EthBlock {
     /**

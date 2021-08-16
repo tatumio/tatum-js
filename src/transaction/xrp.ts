@@ -1,9 +1,9 @@
-import BigNumber from 'bignumber.js';
-import {RippleAPI} from 'ripple-lib';
-import {Payment} from 'ripple-lib/dist/npm/transaction/payment';
-import {xrpBroadcast, xrpGetAccountInfo, xrpGetFee} from '../blockchain';
-import {validateBody} from '../connector/tatum';
-import {Currency, TransactionKMS, TransferXrp} from '../model';
+import BigNumber from 'bignumber.js'
+import {RippleAPI} from 'ripple-lib'
+import {Payment} from 'ripple-lib/dist/npm/transaction/payment'
+import {xrpBroadcast, xrpGetAccountInfo, xrpGetFee} from '../blockchain'
+import {validateBody} from '../connector/tatum'
+import {Currency, TransactionKMS, TransferXrp} from '../model'
 
 /**
  * Send Xrp transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -12,8 +12,8 @@ import {Currency, TransactionKMS, TransferXrp} from '../model';
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendXrpTransaction = async (body: TransferXrp) => {
-    return xrpBroadcast(await prepareXrpSignedTransaction(body));
-};
+    return xrpBroadcast(await prepareXrpSignedTransaction(body))
+}
 
 /**
  * Sign Xrp pending transaction from Tatum KMS
@@ -23,11 +23,11 @@ export const sendXrpTransaction = async (body: TransferXrp) => {
  */
 export const signXrpKMSTransaction = async (tx: TransactionKMS, secret: string) => {
     if (tx.chain !== Currency.XRP) {
-        throw Error('Unsupported chain.');
+        throw Error('Unsupported chain.')
     }
-    const rippleAPI = new RippleAPI();
-    return rippleAPI.sign(tx.serializedTransaction, secret).signedTransaction;
-};
+    const rippleAPI = new RippleAPI()
+    return rippleAPI.sign(tx.serializedTransaction, secret).signedTransaction
+}
 
 /**
  * Sign Xrp transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -35,7 +35,7 @@ export const signXrpKMSTransaction = async (tx: TransactionKMS, secret: string) 
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareXrpSignedTransaction = async (body: TransferXrp) => {
-    await validateBody(body, TransferXrp);
+    await validateBody(body, TransferXrp)
     const {
         fromAccount,
         fromSecret,
@@ -44,9 +44,9 @@ export const prepareXrpSignedTransaction = async (body: TransferXrp) => {
         fee,
         sourceTag,
         destinationTag,
-    } = body;
+    } = body
 
-    const f = fee ? fee : new BigNumber((await xrpGetFee()).drops.base_fee).dividedBy(1000000).toString();
+    const f = fee ? fee : new BigNumber((await xrpGetFee()).drops.base_fee).dividedBy(1000000).toString()
     const payment: Payment = {
         source: {
             address: fromAccount,
@@ -64,18 +64,18 @@ export const prepareXrpSignedTransaction = async (body: TransferXrp) => {
             },
             tag: destinationTag,
         },
-    };
-    const accountInfo = await xrpGetAccountInfo(fromAccount);
-    const sequence = accountInfo.account_data.Sequence;
-    const maxLedgerVersion = accountInfo.ledger_current_index + 500;
-    const rippleAPI = new RippleAPI();
+    }
+    const accountInfo = await xrpGetAccountInfo(fromAccount)
+    const sequence = accountInfo.account_data.Sequence
+    const maxLedgerVersion = accountInfo.ledger_current_index + 500
+    const rippleAPI = new RippleAPI()
     const prepared = await rippleAPI.preparePayment(fromAccount, payment, {
         fee: f,
         sequence,
         maxLedgerVersion,
-    });
-    const signed = await rippleAPI.sign(prepared.txJSON, fromSecret);
-    return signed.signedTransaction;
-};
+    })
+    const signed = await rippleAPI.sign(prepared.txJSON, fromSecret)
+    return signed.signedTransaction
+}
 
 // TODO: add support for ModifyAccount and TrustLine

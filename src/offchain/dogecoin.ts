@@ -17,35 +17,35 @@ export const sendDogecoinOffchainTransaction = async (testnet: boolean, body: Tr
     await validateBody(body, TransferBtcBasedOffchain);
     const {
         mnemonic, keyPair, attr: changeAddress, xpub, ...withdrawal
-    } = body;
+    } = body
     if (!withdrawal.fee) {
-        withdrawal.fee = '1';
+        withdrawal.fee = '1'
     }
-    const {id, data} = await offchainStoreWithdrawal(withdrawal);
+    const {id, data} = await offchainStoreWithdrawal(withdrawal)
     const {
         amount, address,
-    } = withdrawal;
-    let txData;
+    } = withdrawal
+    let txData
     try {
-        txData = await prepareDogecoinSignedOffchainTransaction(testnet, data, amount, address, mnemonic, keyPair, changeAddress, xpub, withdrawal.multipleAmounts);
+        txData = await prepareDogecoinSignedOffchainTransaction(testnet, data, amount, address, mnemonic, keyPair, changeAddress, xpub, withdrawal.multipleAmounts)
     } catch (e) {
-        console.error(e);
-        await offchainCancelWithdrawal(id);
-        throw e;
+        console.error(e)
+        await offchainCancelWithdrawal(id)
+        throw e
     }
     try {
-        return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.DOGE}), id};
+        return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.DOGE}), id}
     } catch (e) {
-        console.error(e);
+        console.error(e)
         try {
-            await offchainCancelWithdrawal(id);
+            await offchainCancelWithdrawal(id)
         } catch (e1) {
-            console.log(e);
-            return {id};
+            console.log(e)
+            return {id}
         }
-        throw e;
+        throw e
     }
-};
+}
 
 /**
  * Sign Dogecoin pending transaction from Tatum KMS
@@ -56,17 +56,17 @@ export const sendDogecoinOffchainTransaction = async (testnet: boolean, body: Tr
  */
 export const signDogecoinOffchainKMSTransaction = async (tx: TransactionKMS, mnemonic: string, testnet: boolean) => {
     if (tx.chain !== Currency.DOGE || !tx.withdrawalResponses) {
-        throw Error('Unsupported chain.');
+        throw Error('Unsupported chain.')
     }
-    const builder = new Transaction(JSON.parse(tx.serializedTransaction));
+    const builder = new Transaction(JSON.parse(tx.serializedTransaction))
     for (const response of tx.withdrawalResponses) {
         if (response.vIn === '-1') {
-            continue;
+            continue
         }
-        builder.sign(PrivateKey.fromWIF(await generatePrivateKeyFromMnemonic(Currency.DOGE, testnet, mnemonic, response.address?.derivationKey || 0)));
+        builder.sign(PrivateKey.fromWIF(await generatePrivateKeyFromMnemonic(Currency.DOGE, testnet, mnemonic, response.address?.derivationKey || 0)))
     }
-    return builder.serialize(true);
-};
+    return builder.serialize(true)
+}
 
 /**
  * Sign Dogecoin transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -85,7 +85,7 @@ export const signDogecoinOffchainKMSTransaction = async (tx: TransactionKMS, mne
 export const prepareDogecoinSignedOffchainTransaction =
     async (testnet: boolean, data: WithdrawalResponseData[], amount: string, address: string, mnemonic?: string, keyPair?: KeyPair[],
            changeAddress?: string, xpub?: string, multipleAmounts?: string[], signatureId?: string) => {
-        const tx = new Transaction();
+        const tx = new Transaction()
 
         data.forEach((input) => {
             if (input.vIn !== '-1') {
@@ -94,34 +94,34 @@ export const prepareDogecoinSignedOffchainTransaction =
                     outputIndex: input.vInIndex,
                     script: Script.fromAddress(input.address.address).toString(),
                     satoshis: Number(new BigNumber(input.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR))
-                });
+                })
             }
-        });
+        })
 
-        const lastVin = data.find(d => d.vIn === '-1') as WithdrawalResponseData;
+        const lastVin = data.find(d => d.vIn === '-1') as WithdrawalResponseData
         if (multipleAmounts?.length) {
             for (const [i, multipleAmount] of multipleAmounts.entries()) {
-                tx.to(address.split(',')[i], Number(new BigNumber(multipleAmount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+                tx.to(address.split(',')[i], Number(new BigNumber(multipleAmount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)))
             }
         } else {
-            tx.to(address, Number(new BigNumber(amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+            tx.to(address, Number(new BigNumber(amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)))
         }
         if (new BigNumber(lastVin.amount).isGreaterThan(0)) {
             if (xpub) {
                 tx.to(generateAddressFromXPub(Currency.DOGE, testnet, xpub, 0),
-                    Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+                    Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)))
             } else if (changeAddress) {
-                tx.to(changeAddress, Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+                tx.to(changeAddress, Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)))
             } else {
-                throw new Error('Impossible to prepare transaction. Either mnemonic or keyPair and attr must be present.');
+                throw new Error('Impossible to prepare transaction. Either mnemonic or keyPair and attr must be present.')
             }
         }
 
         if (signatureId) {
-            return JSON.stringify(tx);
+            return JSON.stringify(tx)
         }
 
-        for (const [i, input] of data.entries()) {
+        for (const input of data) {
             // when there is no address field present, input is pool transfer to 0
             if (input.vIn === '-1') {
                 continue;
@@ -133,9 +133,9 @@ export const prepareDogecoinSignedOffchainTransaction =
                 const {privateKey} = keyPair.find(k => k.address === input.address.address) as KeyPair;
                 tx.sign(PrivateKey.fromWIF(privateKey));
             } else {
-                throw new Error('Impossible to prepare transaction. Either mnemonic or keyPair and attr must be present.');
+                throw new Error('Impossible to prepare transaction. Either mnemonic or keyPair and attr must be present.')
             }
         }
 
-        return tx.serialize(true);
-    };
+        return tx.serialize(true)
+    }

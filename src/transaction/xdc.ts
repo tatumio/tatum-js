@@ -1,10 +1,9 @@
-import axios from 'axios';
 import {BigNumber} from 'bignumber.js';
 import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
 import {toWei} from 'web3-utils';
 import {xdcBroadcast, xdcGetTransactionsCount} from '../blockchain';
-import {validateBody} from '../connector/tatum';
+import {axios, validateBody} from '../connector/tatum';
 import {TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
 import erc20TokenABI from '../contracts/erc20/token_abi';
 import erc20TokenBytecode from '../contracts/erc20/token_bytecode';
@@ -23,33 +22,33 @@ import {
     Fee,
     MintErc20,
     SmartContractMethodInvocation,
+    SmartContractReadMethodInvocation,
     TransactionKMS,
     TransferCustomErc20,
     TransferErc20,
-    UpdateCashbackErc721,
+    UpdateCashbackErc721
 } from '../model';
-import {SmartContractReadMethodInvocation} from '../model/request/SmartContractReadMethodInvocation';
-
 
 /**
  * Convert XDC address format.
  */
 export const fromXdcAddress = (xdcAddress: string): string => {
-    return xdcAddress.trim().replace('xdc', '0x');
-};
+    return xdcAddress.trim().replace('xdc', '0x')
+}
 
 /**
  * Estimate Gas price for the transaction.
  */
 export const xdcGetGasPriceInWei = async () => {
-    const gasStationUrl = 'https://rpc.xinfin.network/';
+    const gasStationUrl = 'https://rpc.xinfin.network/'
     try {
-        const {data} = await axios.post(`${gasStationUrl}gasPrice`, {'jsonrpc': '2.0', 'method': 'eth_gasPrice', 'params': [], 'id': 1});
-        return data ? Web3.utils.toWei(data, 'wei') : Web3.utils.toWei('5', 'kwei');
+        const {data} = await axios.post(`${gasStationUrl}gasPrice`, {'jsonrpc': '2.0', 'method': 'eth_gasPrice', 'params': [], 'id': 1})
+        return data ? Web3.utils.toWei(data, 'wei') : Web3.utils.toWei('5', 'kwei')
     } catch (e) {
+        return Web3.utils.toWei('5', 'kwei')
     }
-    return Web3.utils.toWei('5', 'kwei');
-};
+    return Web3.utils.toWei('5', 'kwei')
+}
 
 /**
  * Returns XDC server to connect to.
@@ -58,14 +57,14 @@ export const xdcGetGasPriceInWei = async () => {
  * @param fromPrivateKey optional private key of sender account
  */
 export const getXdcClient = (provider?: string, fromPrivateKey?: string) => {
-    const client = new Web3(provider || `${TATUM_API_URL}/v3/xdc/web3/${process.env.TATUM_API_KEY}`);
+    const client = new Web3(provider || `${TATUM_API_URL}/v3/xdc/web3/${process.env.TATUM_API_KEY}`)
     if (fromPrivateKey) {
-        client.eth.accounts.wallet.clear();
-        client.eth.accounts.wallet.add(fromPrivateKey);
-        client.eth.defaultAccount = client.eth.accounts.wallet[0].address;
+        client.eth.accounts.wallet.clear()
+        client.eth.accounts.wallet.add(fromPrivateKey)
+        client.eth.defaultAccount = client.eth.accounts.wallet[0].address
     }
-    return client;
-};
+    return client
+}
 
 /**
  * Sign XDC pending transaction from Tatum KMS
@@ -76,16 +75,16 @@ export const getXdcClient = (provider?: string, fromPrivateKey?: string) => {
  */
 export const signXdcKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, provider?: string) => {
     if (tx.chain !== Currency.XDC) {
-        throw Error('Unsupported chain.');
+        throw Error('Unsupported chain.')
     }
-    const client = getXdcClient(provider, fromPrivateKey);
-    const transactionConfig = JSON.parse(tx.serializedTransaction);
-    transactionConfig.gas = await client.eth.estimateGas(transactionConfig);
+    const client = getXdcClient(provider, fromPrivateKey)
+    const transactionConfig = JSON.parse(tx.serializedTransaction)
+    transactionConfig.gas = await client.eth.estimateGas(transactionConfig)
     if (!transactionConfig.nonce) {
-        transactionConfig.nonce = await xdcGetTransactionsCount(client.eth.defaultAccount as string);
+        transactionConfig.nonce = await xdcGetTransactionsCount(client.eth.defaultAccount as string)
     }
-    return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey as string)).rawTransaction as string;
-};
+    return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey as string)).rawTransaction as string
+}
 
 /**
  * Sign XDC Store data transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -94,7 +93,7 @@ export const signXdcKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareXdcStoreDataTransaction = async (body: CreateRecord, provider?: string) => {
-    await validateBody(body, CreateRecord);
+    await validateBody(body, CreateRecord)
     const {
         fromPrivateKey,
         to,
@@ -102,21 +101,21 @@ export const prepareXdcStoreDataTransaction = async (body: CreateRecord, provide
         data,
         nonce,
         signatureId
-    } = body;
-    const client = getXdcClient(provider, fromPrivateKey);
-    const address = to || client.eth.defaultAccount;
+    } = body
+    const client = getXdcClient(provider, fromPrivateKey)
+    const address = to || client.eth.defaultAccount
     if (!address) {
-        throw new Error('Recipient must be provided.');
+        throw new Error('Recipient must be provided.')
     }
-    const hexData = client.utils.isHex(data) ? client.utils.stringToHex(data) : client.utils.toHex(data);
-    const addressNonce = nonce ? nonce : await xdcGetTransactionsCount(address);
+    const hexData = client.utils.isHex(data) ? client.utils.stringToHex(data) : client.utils.toHex(data)
+    const addressNonce = nonce ? nonce : await xdcGetTransactionsCount(address)
     const customFee = ethFee ? {
         ...ethFee,
         gasPrice: client.utils.toWei(ethFee.gasPrice, 'gwei'),
     } : {
         gasLimit: `${hexData.length * 68 + 21000}`,
         gasPrice: await xdcGetGasPriceInWei(),
-    };
+    }
 
     const tx: TransactionConfig = {
         from: 0,
@@ -126,14 +125,14 @@ export const prepareXdcStoreDataTransaction = async (body: CreateRecord, provide
         gas: customFee.gasLimit,
         data: hexData,
         nonce: addressNonce,
-    };
-
-    if (signatureId) {
-        return JSON.stringify(tx);
     }
 
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
-};
+    if (signatureId) {
+        return JSON.stringify(tx)
+    }
+
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string
+}
 
 /**
  * Sign ERC20 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -147,19 +146,19 @@ export const prepareXdcStoreDataTransaction = async (body: CreateRecord, provide
 const prepareErc20SignedTransactionAbstraction = async (
     client: Web3, transaction: TransactionConfig, signatureId: string | undefined, fromPrivateKey: string | undefined, fee?: Fee | undefined
 ) => {
-    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await xdcGetGasPriceInWei();
+    const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await xdcGetGasPriceInWei()
     const tx = {
         ...transaction,
         gasPrice,
-    };
-
-    if (signatureId) {
-        return JSON.stringify(tx);
     }
 
-    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx);
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
-};
+    if (signatureId) {
+        return JSON.stringify(tx)
+    }
+
+    tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx)
+    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string
+}
 
 /**
  * Sign ERC20 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -168,7 +167,7 @@ const prepareErc20SignedTransactionAbstraction = async (
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareXdcMintErc20SignedTransaction = async (body: MintErc20, provider?: string) => {
-    await validateBody(body, MintErc20);
+    await validateBody(body, MintErc20)
     const {
         fromPrivateKey,
         amount,
@@ -176,23 +175,22 @@ export const prepareXdcMintErc20SignedTransaction = async (body: MintErc20, prov
         contractAddress,
         nonce,
         signatureId,
-    } = body;
+    } = body
 
-    const client = getXdcClient(provider, fromPrivateKey);
+    const client = getXdcClient(provider, fromPrivateKey)
 
-    let tx: TransactionConfig;
     // @ts-ignore
-    const contract = new client.eth.Contract(erc20TokenABI, fromXdcAddress(contractAddress));
-    const digits = new BigNumber(10).pow(await contract.methods.decimals().call());
-    tx = {
+    const contract = new client.eth.Contract(erc20TokenABI, fromXdcAddress(contractAddress))
+    const digits = new BigNumber(10).pow(await contract.methods.decimals().call())
+    const tx: TransactionConfig = {
         from: 0,
         to: fromXdcAddress(contractAddress),
         data: contract.methods.mint(fromXdcAddress(to), `0x${new BigNumber(amount).multipliedBy(digits).toString(16)}`).encodeABI(),
         nonce,
-    };
+    }
 
-    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey);
-};
+    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
+}
 
 /**
  * Sign ERC20 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -201,30 +199,29 @@ export const prepareXdcMintErc20SignedTransaction = async (body: MintErc20, prov
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareXdcBurnErc20SignedTransaction = async (body: BurnErc20, provider?: string) => {
-    await validateBody(body, BurnErc20);
+    await validateBody(body, BurnErc20)
     const {
         fromPrivateKey,
         amount,
         contractAddress,
         nonce,
         signatureId,
-    } = body;
+    } = body
 
-    const client = getXdcClient(provider, fromPrivateKey);
+    const client = getXdcClient(provider, fromPrivateKey)
 
-    let tx: TransactionConfig;
     // @ts-ignore
-    const contract = new client.eth.Contract(erc20TokenABI, fromXdcAddress(contractAddress));
-    const digits = new BigNumber(10).pow(await contract.methods.decimals().call());
-    tx = {
+    const contract = new client.eth.Contract(erc20TokenABI, fromXdcAddress(contractAddress))
+    const digits = new BigNumber(10).pow(await contract.methods.decimals().call())
+    const tx: TransactionConfig = {
         from: 0,
         to: fromXdcAddress(contractAddress),
         data: contract.methods.burn(`0x${new BigNumber(amount).multipliedBy(digits).toString(16)}`).encodeABI(),
         nonce,
-    };
+    }
 
-    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey);
-};
+    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
+}
 
 /**
  * Sign XDC or supported ERC20 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -233,7 +230,7 @@ export const prepareXdcBurnErc20SignedTransaction = async (body: BurnErc20, prov
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareXdcOrErc20SignedTransaction = async (body: TransferErc20, provider?: string) => {
-    await validateBody(body, TransferErc20);
+    await validateBody(body, TransferErc20)
     const {
         fromPrivateKey,
         to,
@@ -242,9 +239,9 @@ export const prepareXdcOrErc20SignedTransaction = async (body: TransferErc20, pr
         data,
         nonce,
         signatureId
-    } = body;
+    } = body
 
-    const client = getXdcClient(provider, fromPrivateKey);
+    const client = getXdcClient(provider, fromPrivateKey)
 
     const tx: TransactionConfig = {
         from: 0,
@@ -252,10 +249,10 @@ export const prepareXdcOrErc20SignedTransaction = async (body: TransferErc20, pr
         value: client.utils.toWei(`${amount}`, 'ether'),
         data: client.utils.isHex(data as string | number) ? client.utils.stringToHex(data as string) : client.utils.toHex(data as string | number),
         nonce,
-    };
+    }
 
-    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
-};
+    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
+}
 
 /**
  * Sign XDC custom ERC20 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -264,7 +261,7 @@ export const prepareXdcOrErc20SignedTransaction = async (body: TransferErc20, pr
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareXdcCustomErc20SignedTransaction = async (body: TransferCustomErc20, provider?: string) => {
-    await validateBody(body, TransferCustomErc20);
+    await validateBody(body, TransferCustomErc20)
     const {
         fromPrivateKey,
         to,
@@ -274,23 +271,22 @@ export const prepareXdcCustomErc20SignedTransaction = async (body: TransferCusto
         fee,
         nonce,
         signatureId
-    } = body;
+    } = body
 
-    const client = getXdcClient(provider, fromPrivateKey);
+    const client = getXdcClient(provider, fromPrivateKey)
 
-    let tx: TransactionConfig;
     // @ts-ignore
-    const contract = new client.eth.Contract([TRANSFER_METHOD_ABI], fromXdcAddress(contractAddress));
-    const decimals = new BigNumber(10).pow(digits);
-    tx = {
+    const contract = new client.eth.Contract([TRANSFER_METHOD_ABI], fromXdcAddress(contractAddress))
+    const decimals = new BigNumber(10).pow(digits)
+    const tx: TransactionConfig = {
         from: 0,
         to: fromXdcAddress(contractAddress),
         data: contract.methods.transfer(fromXdcAddress(to), `0x${new BigNumber(amount).multipliedBy(decimals).toString(16)}`).encodeABI(),
         nonce,
-    };
+    }
 
-    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
-};
+    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
+}
 
 /**
  * Sign XDC deploy ERC20 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -299,7 +295,7 @@ export const prepareXdcCustomErc20SignedTransaction = async (body: TransferCusto
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareXdcDeployErc20SignedTransaction = async (body: DeployErc20, provider?: string) => {
-    await validateBody(body, DeployErc20);
+    await validateBody(body, DeployErc20)
     const {
         name,
         address,
@@ -311,13 +307,13 @@ export const prepareXdcDeployErc20SignedTransaction = async (body: DeployErc20, 
         fee,
         signatureId,
         totalCap,
-    } = body;
+    } = body
 
-    const client = getXdcClient(provider, fromPrivateKey);
+    const client = getXdcClient(provider, fromPrivateKey)
 
     // @ts-ignore
-    const contract = new client.eth.Contract(erc20TokenABI);
-    const _digits = new BigNumber(10).pow(digits);
+    const contract = new client.eth.Contract(erc20TokenABI)
+    const _digits = new BigNumber(10).pow(digits)
     const deploy = contract.deploy({
         data: erc20TokenBytecode,
         arguments: [
@@ -328,15 +324,15 @@ export const prepareXdcDeployErc20SignedTransaction = async (body: DeployErc20, 
             `0x${new BigNumber(totalCap || supply).multipliedBy(_digits).toString(16)}`,
             `0x${new BigNumber(supply).multipliedBy(_digits).toString(16)}`,
         ],
-    });
+    })
     const tx: TransactionConfig = {
         from: 0,
         data: deploy.encodeABI(),
         nonce,
-    };
+    }
 
-    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
-};
+    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
+}
 
 /**
  * Sign XDC invoke smart contract transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -345,7 +341,7 @@ export const prepareXdcDeployErc20SignedTransaction = async (body: DeployErc20, 
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareXdcSmartContractWriteMethodInvocation = async (body: SmartContractMethodInvocation, provider?: string) => {
-    await validateBody(body, SmartContractMethodInvocation);
+    await validateBody(body, SmartContractMethodInvocation)
     const {
         fromPrivateKey,
         fee,
@@ -353,22 +349,24 @@ export const prepareXdcSmartContractWriteMethodInvocation = async (body: SmartCo
         methodName,
         methodABI,
         contractAddress,
+        amount,
         nonce,
         signatureId,
-    } = body;
-    const client = getXdcClient(provider, fromPrivateKey);
+    } = body
+    const client = getXdcClient(provider, fromPrivateKey)
 
-    const contract = new client.eth.Contract([methodABI]);
+    const contract = new client.eth.Contract([methodABI])
 
     const tx: TransactionConfig = {
         from: 0,
         to: fromXdcAddress(contractAddress),
+        value: toWei(amount || '0', 'ether'),
         data: contract.methods[methodName as string](...params).encodeABI(),
         nonce,
-    };
+    }
 
-    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
-};
+    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
+}
 
 /**
  * Sign XDC mint ERC 721 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -377,7 +375,7 @@ export const prepareXdcSmartContractWriteMethodInvocation = async (body: SmartCo
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareXdcMintErc721SignedTransaction = async (body: EthMintErc721, provider?: string) => {
-    await validateBody(body, EthMintErc721);
+    await validateBody(body, EthMintErc721)
     const {
         fromPrivateKey,
         to,
@@ -387,21 +385,21 @@ export const prepareXdcMintErc721SignedTransaction = async (body: EthMintErc721,
         fee,
         url,
         signatureId
-    } = body;
+    } = body
 
-    const client = getXdcClient(provider, fromPrivateKey);
+    const client = getXdcClient(provider, fromPrivateKey)
 
     // @ts-ignore
-    const contract = new (client).eth.Contract(erc721TokenABI, fromXdcAddress(contractAddress));
+    const contract = new (client).eth.Contract(erc721TokenABI, fromXdcAddress(contractAddress))
     const tx: TransactionConfig = {
         from: 0,
         to: fromXdcAddress(contractAddress),
         data: contract.methods.mintWithTokenURI(fromXdcAddress(to), tokenId, url).encodeABI(),
         nonce,
-    };
+    }
 
-    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
-};
+    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
+}
 /**
  * Sign XDC mint ERC 721 transaction with cashback via private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
@@ -409,7 +407,7 @@ export const prepareXdcMintErc721SignedTransaction = async (body: EthMintErc721,
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareXdcMintErcCashback721SignedTransaction = async (body: EthMintErc721, provider?: string) => {
-    await validateBody(body, EthMintErc721);
+    await validateBody(body, EthMintErc721)
     const {
         fromPrivateKey,
         to,
@@ -421,26 +419,26 @@ export const prepareXdcMintErcCashback721SignedTransaction = async (body: EthMin
         signatureId,
         authorAddresses,
         cashbackValues
-    } = body;
+    } = body
 
-    const client = getXdcClient(provider, fromPrivateKey);
+    const client = getXdcClient(provider, fromPrivateKey)
 
     // @ts-ignore
-    const contract = new (client).eth.Contract(erc721TokenABI, fromXdcAddress(contractAddress));
-    const cb: string[] = [];
-    const cashbacks: string[] = cashbackValues!;
+    const contract = new (client).eth.Contract(erc721TokenABI, fromXdcAddress(contractAddress))
+    const cb: string[] = []
+    const cashbacks: string[] = cashbackValues!
     for (const c of cashbacks) {
-        cb.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`);
+        cb.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
     }
     const tx: TransactionConfig = {
         from: 0,
         to: fromXdcAddress(contractAddress),
         data: contract.methods.mintWithCashback(fromXdcAddress(to), tokenId, url, authorAddresses, cb).encodeABI(),
         nonce,
-    };
+    }
 
-    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
-};
+    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
+}
 
 /**
  * Sign XDC mint multiple ERC 721 Cashback transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -449,7 +447,7 @@ export const prepareXdcMintErcCashback721SignedTransaction = async (body: EthMin
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareXdcMintMultipleCashbackErc721SignedTransaction = async (body: EthMintMultipleErc721, provider?: string) => {
-    await validateBody(body, EthMintMultipleErc721);
+    await validateBody(body, EthMintMultipleErc721)
     const {
         fromPrivateKey,
         to,
@@ -461,31 +459,31 @@ export const prepareXdcMintMultipleCashbackErc721SignedTransaction = async (body
         authorAddresses,
         cashbackValues,
         fee
-    } = body;
+    } = body
 
-    const client = await getXdcClient(provider, fromPrivateKey);
+    const client = await getXdcClient(provider, fromPrivateKey)
 
     // @ts-ignore
-    const contract = new (client).eth.Contract(erc721TokenABI, fromXdcAddress(contractAddress));
-    const cashbacks: string[][] = cashbackValues!;
-    const cb: string[][] = [];
+    const contract = new (client).eth.Contract(erc721TokenABI, fromXdcAddress(contractAddress))
+    const cashbacks: string[][] = cashbackValues!
+    const cb: string[][] = []
 
     for (const c of cashbacks) {
-        const cb2: string[] = [];
+        const cb2: string[] = []
         for (const c2 of c) {
-            cb2.push(`0x${new BigNumber(client.utils.toWei(c2, 'ether')).toString(16)}`);
+            cb2.push(`0x${new BigNumber(client.utils.toWei(c2, 'ether')).toString(16)}`)
         }
-        cb.push(cb2);
+        cb.push(cb2)
     }
     const tx: TransactionConfig = {
         from: 0,
         to: fromXdcAddress(contractAddress),
         data: contract.methods.mintMultipleCashback(to.map(t => fromXdcAddress(t)), tokenId, url, authorAddresses, cb).encodeABI(),
         nonce,
-    };
+    }
 
-    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
-};
+    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
+}
 
 /**
  * Sign XDC mint multiple ERC 721 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -494,7 +492,7 @@ export const prepareXdcMintMultipleCashbackErc721SignedTransaction = async (body
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareXdcMintMultipleErc721SignedTransaction = async (body: EthMintMultipleErc721, provider?: string) => {
-    await validateBody(body, EthMintMultipleErc721);
+    await validateBody(body, EthMintMultipleErc721)
     const {
         fromPrivateKey,
         to,
@@ -504,22 +502,22 @@ export const prepareXdcMintMultipleErc721SignedTransaction = async (body: EthMin
         nonce,
         signatureId,
         fee
-    } = body;
+    } = body
 
-    const client = await getXdcClient(provider, fromPrivateKey);
+    const client = await getXdcClient(provider, fromPrivateKey)
 
     // @ts-ignore
-    const contract = new (client).eth.Contract(erc721TokenABI, fromXdcAddress(contractAddress));
+    const contract = new (client).eth.Contract(erc721TokenABI, fromXdcAddress(contractAddress))
 
     const tx: TransactionConfig = {
         from: 0,
         to: fromXdcAddress(contractAddress),
         data: contract.methods.mintMultiple(to.map(t => fromXdcAddress(t)), tokenId, url).encodeABI(),
         nonce,
-    };
+    }
 
-    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
-};
+    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
+}
 
 /**
  * Sign XDC burn ERC 721 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -528,7 +526,7 @@ export const prepareXdcMintMultipleErc721SignedTransaction = async (body: EthMin
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareXdcBurnErc721SignedTransaction = async (body: EthBurnErc721, provider?: string) => {
-    await validateBody(body, EthBurnErc721);
+    await validateBody(body, EthBurnErc721)
     const {
         fromPrivateKey,
         tokenId,
@@ -536,21 +534,21 @@ export const prepareXdcBurnErc721SignedTransaction = async (body: EthBurnErc721,
         contractAddress,
         nonce,
         signatureId
-    } = body;
+    } = body
 
-    const client = getXdcClient(provider, fromPrivateKey);
+    const client = getXdcClient(provider, fromPrivateKey)
 
     // @ts-ignore
-    const contract = new (client).eth.Contract(erc721TokenABI, fromXdcAddress(contractAddress));
+    const contract = new (client).eth.Contract(erc721TokenABI, fromXdcAddress(contractAddress))
     const tx: TransactionConfig = {
         from: 0,
         to: fromXdcAddress(contractAddress),
         data: contract.methods.burn(tokenId).encodeABI(),
         nonce,
-    };
+    }
 
-    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
-};
+    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
+}
 
 /**
  * Sign XDC transfer ERC 721 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -559,7 +557,7 @@ export const prepareXdcBurnErc721SignedTransaction = async (body: EthBurnErc721,
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareXdcTransferErc721SignedTransaction = async (body: EthTransferErc721, provider?: string) => {
-    await validateBody(body, EthTransferErc721);
+    await validateBody(body, EthTransferErc721)
     const {
         fromPrivateKey,
         to,
@@ -569,12 +567,12 @@ export const prepareXdcTransferErc721SignedTransaction = async (body: EthTransfe
         nonce,
         signatureId,
         value
-    } = body;
+    } = body
 
-    const client = await getXdcClient(provider, fromPrivateKey);
+    const client = await getXdcClient(provider, fromPrivateKey)
 
     // @ts-ignore
-    const contract = new (client).eth.Contract(erc721TokenABI, fromXdcAddress(contractAddress));
+    const contract = new (client).eth.Contract(erc721TokenABI, fromXdcAddress(contractAddress))
 
     const tx: TransactionConfig = {
         from: 0,
@@ -582,10 +580,10 @@ export const prepareXdcTransferErc721SignedTransaction = async (body: EthTransfe
         data: contract.methods.safeTransfer(fromXdcAddress(to), tokenId).encodeABI(),
         nonce,
         value: value ? `0x${new BigNumber(value).multipliedBy(1e18).toString(16)}` : undefined,
-    };
+    }
 
-    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
-};
+    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
+}
 
 /**
  * Sign XDC update cashback ERC 721 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -594,7 +592,7 @@ export const prepareXdcTransferErc721SignedTransaction = async (body: EthTransfe
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareXdcUpdateCashbackForAuthorErc721SignedTransaction = async (body: UpdateCashbackErc721, provider?: string) => {
-    await validateBody(body, UpdateCashbackErc721);
+    await validateBody(body, UpdateCashbackErc721)
     const {
         fromPrivateKey,
         cashbackValue,
@@ -603,22 +601,22 @@ export const prepareXdcUpdateCashbackForAuthorErc721SignedTransaction = async (b
         contractAddress,
         nonce,
         signatureId,
-    } = body;
+    } = body
 
-    const client = await getXdcClient(provider, fromPrivateKey);
+    const client = await getXdcClient(provider, fromPrivateKey)
 
     // @ts-ignore
-    const contract = new (client).eth.Contract(erc721TokenABI, fromXdcAddress(contractAddress));
+    const contract = new (client).eth.Contract(erc721TokenABI, fromXdcAddress(contractAddress))
 
     const tx: TransactionConfig = {
         from: 0,
         to: fromXdcAddress(contractAddress),
         data: contract.methods.updateCashbackForAuthor(tokenId, `0x${new BigNumber(toWei(cashbackValue, 'ether')).toString(16)}`).encodeABI(),
         nonce,
-    };
+    }
 
-    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
-};
+    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
+}
 
 /**
  * Sign XDC deploy ERC 721 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -627,7 +625,7 @@ export const prepareXdcUpdateCashbackForAuthorErc721SignedTransaction = async (b
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareXdcDeployErc721SignedTransaction = async (body: EthDeployErc721, provider?: string) => {
-    await validateBody(body, EthDeployErc721);
+    await validateBody(body, EthDeployErc721)
     const {
         fromPrivateKey,
         fee,
@@ -635,28 +633,28 @@ export const prepareXdcDeployErc721SignedTransaction = async (body: EthDeployErc
         symbol,
         nonce,
         signatureId,
-    } = body;
+    } = body
 
-    const client = await getXdcClient(provider, fromPrivateKey);
+    const client = await getXdcClient(provider, fromPrivateKey)
 
     // @ts-ignore
     const contract = new client.eth.Contract(erc721TokenABI, null, {
         data: erc721TokenBytecode,
-    });
+    })
 
     // @ts-ignore
     const deploy = contract.deploy({
         arguments: [name, symbol]
-    });
+    })
 
     const tx: TransactionConfig = {
         from: 0,
         data: deploy.encodeABI(),
         nonce,
-    };
+    }
 
-    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
-};
+    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
+}
 
 /**
  * Send XDC invoke smart contract transaction to the blockchain.
@@ -666,17 +664,17 @@ export const prepareXdcDeployErc721SignedTransaction = async (body: EthDeployErc
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  */
 export const sendXdcSmartContractReadMethodInvocationTransaction = async (body: SmartContractReadMethodInvocation, provider?: string) => {
-    await validateBody(body, SmartContractReadMethodInvocation);
+    await validateBody(body, SmartContractReadMethodInvocation)
     const {
         params,
         methodName,
         methodABI,
         contractAddress,
-    } = body;
-    const client = getXdcClient(provider);
-    const contract = new client.eth.Contract([methodABI], fromXdcAddress(contractAddress));
-    return {data: await contract.methods[methodName as string](...params).call()};
-};
+    } = body
+    const client = getXdcClient(provider)
+    const contract = new client.eth.Contract([methodABI], fromXdcAddress(contractAddress))
+    return {data: await contract.methods[methodName as string](...params).call()}
+}
 
 /**
  * Send XDC store data transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -686,7 +684,7 @@ export const sendXdcSmartContractReadMethodInvocationTransaction = async (body: 
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendXdcStoreDataTransaction = async (body: CreateRecord, provider?: string) =>
-    xdcBroadcast(await prepareXdcStoreDataTransaction(body, provider), body.signatureId);
+    xdcBroadcast(await prepareXdcStoreDataTransaction(body, provider), body.signatureId)
 
 /**
  * Send XDC or supported ERC20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -696,7 +694,7 @@ export const sendXdcStoreDataTransaction = async (body: CreateRecord, provider?:
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendXdcOrErc20Transaction = async (body: TransferErc20, provider?: string) =>
-    xdcBroadcast(await prepareXdcOrErc20SignedTransaction(body, provider), body.signatureId);
+    xdcBroadcast(await prepareXdcOrErc20SignedTransaction(body, provider), body.signatureId)
 
 /**
  * Send XDC custom ERC20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -706,7 +704,7 @@ export const sendXdcOrErc20Transaction = async (body: TransferErc20, provider?: 
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendXdcCustomErc20Transaction = async (body: TransferCustomErc20, provider?: string) =>
-    xdcBroadcast(await prepareXdcCustomErc20SignedTransaction(body, provider), body.signatureId);
+    xdcBroadcast(await prepareXdcCustomErc20SignedTransaction(body, provider), body.signatureId)
 
 /**
  * Send XDC deploy ERC20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -716,7 +714,7 @@ export const sendXdcCustomErc20Transaction = async (body: TransferCustomErc20, p
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendXdcDeployErc20Transaction = async (body: DeployErc20, provider?: string) =>
-    xdcBroadcast(await prepareXdcDeployErc20SignedTransaction(body, provider), body.signatureId);
+    xdcBroadcast(await prepareXdcDeployErc20SignedTransaction(body, provider), body.signatureId)
 
 /**
  * Send XDC invoke smart contract transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -727,10 +725,10 @@ export const sendXdcDeployErc20Transaction = async (body: DeployErc20, provider?
  */
 export const sendXdcSmartContractMethodInvocationTransaction = async (body: SmartContractMethodInvocation | SmartContractReadMethodInvocation, provider?: string) => {
     if (body.methodABI.stateMutability === 'view') {
-        return sendXdcSmartContractReadMethodInvocationTransaction(body, provider);
+        return sendXdcSmartContractReadMethodInvocationTransaction(body, provider)
     }
-    return xdcBroadcast(await prepareXdcSmartContractWriteMethodInvocation(body, provider), (body as SmartContractMethodInvocation).signatureId);
-};
+    return xdcBroadcast(await prepareXdcSmartContractWriteMethodInvocation(body, provider), (body as SmartContractMethodInvocation).signatureId)
+}
 
 /**
  * Send XDC ERC721 mint transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -740,7 +738,7 @@ export const sendXdcSmartContractMethodInvocationTransaction = async (body: Smar
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendXdcMintErc721Transaction = async (body: EthMintErc721, provider?: string) =>
-    xdcBroadcast(await prepareXdcMintErc721SignedTransaction(body, provider), body.signatureId);
+    xdcBroadcast(await prepareXdcMintErc721SignedTransaction(body, provider), body.signatureId)
 
 /**
  * Send XDC ERC721 mint transaction to the blockchain with cashback details. This method broadcasts signed transaction to the blockchain.
@@ -750,7 +748,7 @@ export const sendXdcMintErc721Transaction = async (body: EthMintErc721, provider
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendXdcMintErcCashback721Transaction = async (body: EthMintErc721, provider?: string) =>
-    xdcBroadcast(await prepareXdcMintErcCashback721SignedTransaction(body, provider), body.signatureId);
+    xdcBroadcast(await prepareXdcMintErcCashback721SignedTransaction(body, provider), body.signatureId)
 
 /**
  * Send XDC ERC721 mint multiple transaction with cashback to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -760,7 +758,7 @@ export const sendXdcMintErcCashback721Transaction = async (body: EthMintErc721, 
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendXdcMintMultipleCashbackErc721Transaction = async (body: EthMintMultipleErc721, provider?: string) =>
-    xdcBroadcast(await prepareXdcMintMultipleCashbackErc721SignedTransaction(body, provider), body.signatureId);
+    xdcBroadcast(await prepareXdcMintMultipleCashbackErc721SignedTransaction(body, provider), body.signatureId)
 
 /**
  * Send XDC ERC721 mint multiple transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -770,7 +768,7 @@ export const sendXdcMintMultipleCashbackErc721Transaction = async (body: EthMint
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendXdcMintMultipleErc721Transaction = async (body: EthMintMultipleErc721, provider?: string) =>
-    xdcBroadcast(await prepareXdcMintMultipleErc721SignedTransaction(body, provider), body.signatureId);
+    xdcBroadcast(await prepareXdcMintMultipleErc721SignedTransaction(body, provider), body.signatureId)
 
 /**
  * Send XDC ERC721 burn transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -780,10 +778,10 @@ export const sendXdcMintMultipleErc721Transaction = async (body: EthMintMultiple
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendXdcBurnErc721Transaction = async (body: EthBurnErc721, provider?: string) =>
-    xdcBroadcast(await prepareXdcBurnErc721SignedTransaction(body, provider), body.signatureId);
+    xdcBroadcast(await prepareXdcBurnErc721SignedTransaction(body, provider), body.signatureId)
 
 export const sendXdcUpdateCashbackForAuthorErc721Transaction = async (body: UpdateCashbackErc721, provider?: string) =>
-    xdcBroadcast(await prepareXdcUpdateCashbackForAuthorErc721SignedTransaction(body, provider), body.signatureId);
+    xdcBroadcast(await prepareXdcUpdateCashbackForAuthorErc721SignedTransaction(body, provider), body.signatureId)
 
 /**
  * Send XDC ERC721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -793,7 +791,7 @@ export const sendXdcUpdateCashbackForAuthorErc721Transaction = async (body: Upda
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendXdcErc721Transaction = async (body: EthTransferErc721, provider?: string) =>
-    xdcBroadcast(await prepareXdcTransferErc721SignedTransaction(body, provider), body.signatureId);
+    xdcBroadcast(await prepareXdcTransferErc721SignedTransaction(body, provider), body.signatureId)
 
 /**
  * Send XDC ERC721 deploy to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -803,6 +801,6 @@ export const sendXdcErc721Transaction = async (body: EthTransferErc721, provider
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendXdcDeployErc721Transaction = async (body: EthDeployErc721, provider?: string) =>
-    xdcBroadcast(await prepareXdcDeployErc721SignedTransaction(body, provider), body.signatureId);
+    xdcBroadcast(await prepareXdcDeployErc721SignedTransaction(body, provider), body.signatureId)
 
 // TODO: add ERC-1155 support

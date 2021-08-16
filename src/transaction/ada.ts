@@ -4,11 +4,11 @@ import {
   Bip32PrivateKey, hash_transaction,
   LinearFee, make_vkey_witness, Transaction, TransactionBody,
   TransactionBuilder, TransactionHash, TransactionInput, TransactionOutput, TransactionWitnessSet, Value, Vkeywitnesses,
-} from '@emurgo/cardano-serialization-lib-nodejs';
+} from '@emurgo/cardano-serialization-lib-nodejs'
 import BigNumber from 'bignumber.js'
 import { adaBroadcast, adaGetBlockChainInfo, adaGetTransaction, adaGetUtxos } from '../blockchain/ada'
-import { validateBody } from '../connector/tatum';
-import { AdaUtxo, Currency, FromAddress, FromUTXO, To, TransactionKMS, TransferBtcBasedBlockchain } from '../model';
+import { validateBody } from '../connector/tatum'
+import { AdaUtxo, Currency, FromAddress, FromUTXO, To, TransactionKMS, TransferBtcBasedBlockchain } from '../model'
 
 /**
  * Prepare a signed Ada transaction with the private key locally. Nothing is broadcasted to the blockchain.
@@ -16,7 +16,7 @@ import { AdaUtxo, Currency, FromAddress, FromUTXO, To, TransactionKMS, TransferB
  * @returns raw transaction data in hex, to be broadcasted to blockchain.
  */
 export const prepareAdaTransaction = async (transferBtcBasedBlockchain: TransferBtcBasedBlockchain) => {
-  await validateBody(transferBtcBasedBlockchain, TransferBtcBasedBlockchain);
+  await validateBody(transferBtcBasedBlockchain, TransferBtcBasedBlockchain)
   const txBuilder = await initTransactionBuilder()
   const { to } = transferBtcBasedBlockchain
 
@@ -25,7 +25,7 @@ export const prepareAdaTransaction = async (transferBtcBasedBlockchain: Transfer
   await processFeeAndRest(txBuilder, fromAmount, toAmount, transferBtcBasedBlockchain)
 
   return signTransaction(txBuilder, transferBtcBasedBlockchain, privateKeysToSign)
-};
+}
 
 /**
  * Send Ada transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -45,7 +45,7 @@ export const sendAdaTransaction = async (body: TransferBtcBasedBlockchain) => {
  */
 export const signAdaKMSTransaction = async (tx: TransactionKMS, privateKeys: string[]) => {
   if (tx.chain !== Currency.ADA) {
-    throw Error('Unsupported chain.');
+    throw Error('Unsupported chain.')
   }
   const transferBtcBasedBlockchain = JSON.parse(tx.serializedTransaction).txData
   const txBuilder = await initTransactionBuilder()
@@ -55,26 +55,26 @@ export const signAdaKMSTransaction = async (tx: TransactionKMS, privateKeys: str
   const toAmount = addOutputs(txBuilder, to)
   await processFeeAndRest(txBuilder, fromAmount, toAmount, transferBtcBasedBlockchain)
 
-  const txBody = txBuilder.build();
-  const txHash = hash_transaction(txBody);
+  const txBody = txBuilder.build()
+  const txHash = hash_transaction(txBody)
 
 
-  const vKeyWitnesses = Vkeywitnesses.new();
+  const vKeyWitnesses = Vkeywitnesses.new()
   for (const key of privateKeys) {
     makeWitness(key, txHash, vKeyWitnesses)
   }
-  const witnesses = TransactionWitnessSet.new();
-  witnesses.set_vkeys(vKeyWitnesses);
+  const witnesses = TransactionWitnessSet.new()
+  witnesses.set_vkeys(vKeyWitnesses)
 
   return Buffer.from(
     Transaction.new(txBody, witnesses).to_bytes(),
   ).toString('hex')
-};
+}
 
 export const addOutputs = (transactionBuilder: TransactionBuilder, tos: To[]) => {
   let amount = new BigNumber(0)
   for (const to of tos) {
-    const valueAdded = addOutputAda(transactionBuilder, to.address, to.value);
+    const valueAdded = addOutputAda(transactionBuilder, to.address, to.value)
     amount = amount.plus(valueAdded)
   }
   return amount
@@ -103,7 +103,7 @@ export const addAddressInputsWithoutPrivateKey = async (transactionBuilder: Tran
     const { address } = fromAddress
     const utxos: AdaUtxo[] = await adaGetUtxos(address)
     for (const utxo of utxos) {
-      amount = amount.plus(utxo.value);
+      amount = amount.plus(utxo.value)
       addInput(transactionBuilder, utxo, address)
     }
   }
@@ -111,7 +111,7 @@ export const addAddressInputsWithoutPrivateKey = async (transactionBuilder: Tran
 }
 
 export const addInputsPrivateKeys = async (froms: FromAddress[] | FromUTXO[]) => {
-  const privateKeysToSign = [];
+  const privateKeysToSign = []
   for (const from of froms) {
     privateKeysToSign.push(from.signatureId || from.privateKey)
   }
@@ -120,13 +120,13 @@ export const addInputsPrivateKeys = async (froms: FromAddress[] | FromUTXO[]) =>
 
 export const addUtxoInputs = async (transactionBuilder: TransactionBuilder, fromUTXOs: FromUTXO[]) => {
   let amount = new BigNumber(0)
-  const privateKeysToSign = [];
+  const privateKeysToSign = []
   for (const utxo of fromUTXOs) {
     const transaction = await adaGetTransaction(utxo.txHash)
     const output = transaction.outputs.find(output => output.index === utxo.index)
     if (output) {
-      const value = output.value;
-      amount = amount.plus(value);
+      const value = output.value
+      amount = amount.plus(value)
       addInput(transactionBuilder, { value, ...utxo }, output.address)
       privateKeysToSign.push(utxo.signatureId || utxo.privateKey)
     }
@@ -138,7 +138,7 @@ export const addOutputLovelace = (transactionBuilder: TransactionBuilder, addres
   transactionBuilder.add_output(TransactionOutput.new(
     Address.from_bech32(address),
     Value.new(BigNum.from_str(amount)),
-  ));
+  ))
 }
 
 export const addOutputAda = (transactionBuilder: TransactionBuilder, address: string, amount: string | number) => {
@@ -167,16 +167,16 @@ export const initTransactionBuilder = async () => {
     BigNum.from_str('1000000'),
     BigNum.from_str('500000000'),
     BigNum.from_str('2000000'),
-  );
-  const { tip: { slotNo } } = await adaGetBlockChainInfo();
-  txBuilder.set_ttl(slotNo + 50000);
+  )
+  const { tip: { slotNo } } = await adaGetBlockChainInfo()
+  txBuilder.set_ttl(slotNo + 50000)
   return txBuilder
 }
 
 export const createWitnesses = (transactionBody: TransactionBody, transferBtcBasedBlockchain: TransferBtcBasedBlockchain) => {
   const { fromAddress, fromUTXO } = transferBtcBasedBlockchain
-  const txHash = hash_transaction(transactionBody);
-  const vKeyWitnesses = Vkeywitnesses.new();
+  const txHash = hash_transaction(transactionBody)
+  const vKeyWitnesses = Vkeywitnesses.new()
   if (fromAddress) {
     for (const address of fromAddress) {
       if (address.privateKey) {
@@ -192,16 +192,16 @@ export const createWitnesses = (transactionBody: TransactionBody, transferBtcBas
   } else {
     throw new Error('No private key for witness found.')
   }
-  const witnesses = TransactionWitnessSet.new();
-  witnesses.set_vkeys(vKeyWitnesses);
+  const witnesses = TransactionWitnessSet.new()
+  witnesses.set_vkeys(vKeyWitnesses)
   return witnesses
 }
 
 export const makeWitness = (privateKey: string, txHash: TransactionHash, vKeyWitnesses: Vkeywitnesses) => {
   const privateKeyCardano = Bip32PrivateKey.from_128_xprv(
     Buffer.from(privateKey, 'hex'),
-  ).to_raw_key();
-  vKeyWitnesses.add(make_vkey_witness(txHash, privateKeyCardano));
+  ).to_raw_key()
+  vKeyWitnesses.add(make_vkey_witness(txHash, privateKeyCardano))
 }
 
 export const processFeeAndRest = async (transactionBuilder: TransactionBuilder, fromAmount: BigNumber, toAmount: BigNumber,
@@ -222,22 +222,22 @@ export const processFeeAndRest = async (transactionBuilder: TransactionBuilder, 
 }
 
 export const addFeeAndRest = (transactionBuilder: TransactionBuilder, address: string, fromAmount: BigNumber, toAmount: BigNumber) => {
-  const fromRest = Address.from_bech32(address);
+  const fromRest = Address.from_bech32(address)
   const tmpOutput = TransactionOutput.new(
     fromRest,
     Value.new(BigNum.from_str(String('1000000'))),
-  );
-  const fee = parseInt(transactionBuilder.min_fee().to_str()) + parseInt(transactionBuilder.fee_for_output(tmpOutput).to_str());
+  )
+  const fee = parseInt(transactionBuilder.min_fee().to_str()) + parseInt(transactionBuilder.fee_for_output(tmpOutput).to_str())
   addOutputLovelace(transactionBuilder, address, fromAmount.minus(toAmount).minus(fee).toString())
-  transactionBuilder.set_fee(BigNum.from_str(String(fee)));
+  transactionBuilder.set_fee(BigNum.from_str(String(fee)))
 }
 
 export const signTransaction = (transactionBuilder: TransactionBuilder, transferBtcBasedBlockchain: TransferBtcBasedBlockchain, privateKeysToSign: (string|undefined)[]) => {
-  const txBody = transactionBuilder.build();
+  const txBody = transactionBuilder.build()
   const { fromAddress, fromUTXO } = transferBtcBasedBlockchain
 
   if ((fromAddress && fromAddress[0].signatureId) || (fromUTXO && fromUTXO[0].signatureId)) {
-    return JSON.stringify({ txData: transferBtcBasedBlockchain, privateKeysToSign });
+    return JSON.stringify({ txData: transferBtcBasedBlockchain, privateKeysToSign })
   }
 
   const witnesses = createWitnesses(txBody, transferBtcBasedBlockchain)

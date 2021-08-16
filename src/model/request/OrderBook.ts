@@ -8,8 +8,8 @@ import {
     MaxLength, Min,
     MinLength,
     ValidateIf
-} from 'class-validator';
-import {TradeType} from './TradeType';
+} from 'class-validator'
+import {TradeType} from './TradeType'
 
 export class OrderBookRequest {
 
@@ -31,7 +31,7 @@ export class OrderBookRequest {
 
     @IsNotEmpty()
     @IsString()
-    @Matches(/^[A-Za-z0-9_\-]+\/[A-Za-z0-9_\-]+$/)
+    @Matches(/^[A-Za-z0-9_-]+\/[A-Za-z0-9_-]+$/)
     @MinLength(3)
     @MaxLength(30)
     public pair: string;

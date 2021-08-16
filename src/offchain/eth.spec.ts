@@ -44,4 +44,4 @@ describe('ETH offchain', () => {
         })
         expect(tx).not.toBeNull()
     })
-});
+})

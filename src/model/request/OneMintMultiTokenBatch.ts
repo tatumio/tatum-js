@@ -1,5 +1,5 @@
-import {IsOptional, Min} from 'class-validator';
-import {MintMultiTokenBatch} from './MintMultiTokenBatch';
+import {IsOptional, Min} from 'class-validator'
+import {MintMultiTokenBatch} from './MintMultiTokenBatch'
 
 export class OneMintMultiTokenBatch extends MintMultiTokenBatch {
 

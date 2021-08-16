@@ -1,6 +1,6 @@
-import {IsIn, IsNotEmpty, IsOptional, Length, Matches, Min} from 'class-validator';
-import {Fiat} from '../response';
-import {Currency} from './Currency';
+import {IsIn, IsNotEmpty, IsOptional, Length, Matches, Min} from 'class-validator'
+import {Fiat} from '../response'
+import {Currency} from './Currency'
 
 export class UpdateCurrency {
 

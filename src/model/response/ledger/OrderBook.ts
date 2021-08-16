@@ -1,5 +1,8 @@
-import {TradeType} from '../../request/TradeType';
+import {TradeType} from '../../request/TradeType'
 
+/**
+ * Order Book Response
+ */
 export interface OrderBookResponse {
 
     /**

@@ -440,4 +440,4 @@ export default [
         name: 'Approval',
         type: 'event',
     },
-];
+]

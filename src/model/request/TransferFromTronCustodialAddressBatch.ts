@@ -1,6 +1,6 @@
-import {IsNotEmpty, Length, Min, ValidateIf} from 'class-validator';
-import {Currency} from './Currency';
-import {TransferFromCustodialAddressBatch} from './TransferFromCustodialAddressBatch';
+import {IsNotEmpty, Length, Min, ValidateIf} from 'class-validator'
+import {Currency} from './Currency'
+import {TransferFromCustodialAddressBatch} from './TransferFromCustodialAddressBatch'
 
 export class TransferFromTronCustodialAddressBatch extends TransferFromCustodialAddressBatch {
 

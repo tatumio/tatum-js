@@ -1,10 +1,10 @@
-import {validateBody} from '../connector/tatum';
-import {CONTRACT_ADDRESSES} from '../constants';
-import {getAccountById, getVirtualCurrencyByName} from '../ledger';
-import {Currency, TransferTrxOffchain, TrcType} from '../model/request';
-import {prepareTronSignedTransaction, prepareTronTrc10SignedTransaction, prepareTronTrc20SignedTransaction} from '../transaction';
-import {generatePrivateKeyFromMnemonic} from '../wallet';
-import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
+import {validateBody} from '../connector/tatum'
+import {CONTRACT_ADDRESSES} from '../constants'
+import {getAccountById, getVirtualCurrencyByName} from '../ledger'
+import {Currency, TransferTrxOffchain, TrcType} from '../model/request'
+import {prepareTronSignedTransaction, prepareTronTrc10SignedTransaction, prepareTronTrc20SignedTransaction} from '../transaction'
+import {generatePrivateKeyFromMnemonic} from '../wallet'
+import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common'
 
 /**
  * Send Tron transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -14,43 +14,43 @@ import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} fr
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendTronOffchainTransaction = async (testnet: boolean, body: TransferTrxOffchain) => {
-    await validateBody(body, TransferTrxOffchain);
+    await validateBody(body, TransferTrxOffchain)
     const {
         mnemonic, index, fromPrivateKey, ...withdrawal
-    } = body;
-    const {amount, address} = withdrawal;
+    } = body
+    const {amount, address} = withdrawal
 
-    let fromPriv: string;
+    let fromPriv: string
     if (mnemonic && index !== undefined) {
-        fromPriv = mnemonic && index ? await generatePrivateKeyFromMnemonic(Currency.TRON, testnet, mnemonic, index) : fromPrivateKey as string;
+        fromPriv = mnemonic && index ? await generatePrivateKeyFromMnemonic(Currency.TRON, testnet, mnemonic, index) : fromPrivateKey as string
     } else if (fromPrivateKey) {
-        fromPriv = fromPrivateKey;
+        fromPriv = fromPrivateKey
     } else {
-        throw new Error('No mnemonic or private key is present.');
+        throw new Error('No mnemonic or private key is present.')
     }
 
-    withdrawal.fee = withdrawal.fee || '2.5';
-    const account = await getAccountById(withdrawal.senderAccountId);
-    let txData;
+    withdrawal.fee = withdrawal.fee || '2.5'
+    const account = await getAccountById(withdrawal.senderAccountId)
+    let txData
     if (account.currency === Currency.TRON) {
-        txData = await prepareTronSignedTransaction(testnet, {amount, fromPrivateKey: fromPriv, to: address});
-    } else if (account.currency === Currency.USDT_TRON) {
+        txData = await prepareTronSignedTransaction(testnet, {amount, fromPrivateKey: fromPriv, to: address})
+    } else if (account.currency === Currency.USDT_TRON || account.currency === Currency.INRT_TRON) {
         txData = await prepareTronTrc20SignedTransaction(testnet, {
             amount,
             fromPrivateKey: fromPriv,
             to: address,
-            tokenAddress: CONTRACT_ADDRESSES[Currency.USDT_TRON],
+            tokenAddress: CONTRACT_ADDRESSES[account.currency],
             feeLimit: parseFloat(withdrawal.fee),
-        });
+        })
     } else {
-        const vc = await getVirtualCurrencyByName(account.currency);
+        const vc = await getVirtualCurrencyByName(account.currency)
         if (vc.trcType === TrcType.TRC10) {
             txData = await prepareTronTrc10SignedTransaction(testnet, {
                 amount,
                 fromPrivateKey: fromPriv,
                 to: address,
                 tokenId: vc.erc20Address as string,
-            }, vc.precision);
+            }, vc.precision)
         } else if (vc.trcType === TrcType.TRC20) {
             txData = await prepareTronTrc20SignedTransaction(testnet, {
                 amount,
@@ -58,21 +58,21 @@ export const sendTronOffchainTransaction = async (testnet: boolean, body: Transf
                 fromPrivateKey: fromPriv,
                 to: address,
                 tokenAddress: vc.erc20Address as string
-            });
+            })
         } else {
-            throw new Error('Unsupported account.');
+            throw new Error('Unsupported account.')
         }
     }
-    const {id} = await offchainStoreWithdrawal(withdrawal);
+    const {id} = await offchainStoreWithdrawal(withdrawal)
     try {
-        return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.TRON}), id};
+        return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.TRON}), id}
     } catch (e) {
-        console.error(e);
+        console.error(e)
         try {
-            await offchainCancelWithdrawal(id);
+            await offchainCancelWithdrawal(id)
         } catch (e1) {
-            console.log(e);
-            return {id};
+            console.log(e)
+            return {id}
         }
     }
-};
+}

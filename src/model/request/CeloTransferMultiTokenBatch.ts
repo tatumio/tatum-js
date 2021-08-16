@@ -1,6 +1,6 @@
-import { IsIn, IsNotEmpty, } from 'class-validator';
-import { Currency } from './Currency';
-import { TransferMultiTokenBatch } from './TransferMultiTokenBatch';
+import { IsIn, IsNotEmpty, } from 'class-validator'
+import { Currency } from './Currency'
+import { TransferMultiTokenBatch } from './TransferMultiTokenBatch'
 
 export class CeloTransferMultiTokenBatch extends TransferMultiTokenBatch {
   @IsNotEmpty()

@@ -1,5 +1,5 @@
-import {IsInt, IsNotEmpty, IsOptional, IsUUID, Length, Max, MaxLength, Min, ValidateIf,} from 'class-validator';
-import {BaseTransferEthErc20Offchain} from './BaseTransferEthErc20Offchain';
+import {IsInt, IsNotEmpty, IsOptional, IsUUID, Length, Max, MaxLength, Min, ValidateIf,} from 'class-validator'
+import {BaseTransferEthErc20Offchain} from './BaseTransferEthErc20Offchain'
 
 export class TransferEthOffchain extends BaseTransferEthErc20Offchain {
 

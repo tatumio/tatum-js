@@ -3,7 +3,7 @@
  * @export
  * @interface QuorumBlock
  */
-import {QuorumTx} from './QuorumTx';
+import {QuorumTx} from './QuorumTx'
 
 export interface QuorumBlock {
     /**

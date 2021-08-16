@@ -1,5 +1,5 @@
-import {IsNotEmpty, IsOptional, IsUUID, Length, Min} from 'class-validator';
-import {CreateWithdrawal} from './CreateWithdrawal';
+import {IsNotEmpty, IsOptional, IsUUID, Length, Min} from 'class-validator'
+import {CreateWithdrawal} from './CreateWithdrawal'
 
 export class TransferXrpOffchainKMS extends CreateWithdrawal {
 

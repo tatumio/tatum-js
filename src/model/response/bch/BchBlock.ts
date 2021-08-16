@@ -3,7 +3,7 @@
  * @export
  * @interface BchBlock
  */
-import {BchTx} from './BchTx';
+import {BchTx} from './BchTx'
 
 export interface BchBlock {
     /**

@@ -1,5 +1,5 @@
-import {IsNotEmpty, Length, Min, ValidateIf} from 'class-validator';
-import {MintMultipleErc721} from './MintMultipleErc721';
+import {IsNotEmpty, Length, Min, ValidateIf} from 'class-validator'
+import {MintMultipleErc721} from './MintMultipleErc721'
 
 export class TronMintMultipleTrc721 extends MintMultipleErc721 {
 

@@ -1,5 +1,5 @@
-import {IsOptional, Min,} from 'class-validator';
-import {EthBurnMultiTokenBatch} from './EthBurnMultiTokenBatch';
+import {IsOptional, Min,} from 'class-validator'
+import {EthBurnMultiTokenBatch} from './EthBurnMultiTokenBatch'
 
 export class OneBurnMultiTokenBatch extends EthBurnMultiTokenBatch {
     @IsOptional()

@@ -1,4 +1,4 @@
-import {ScryptaTx} from './ScryptaTx';
+import {ScryptaTx} from './ScryptaTx'
 
 /**
  *

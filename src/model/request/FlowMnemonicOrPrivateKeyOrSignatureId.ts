@@ -1,5 +1,5 @@
-import {IsInt, IsNotEmpty, IsUUID, Length, Max, Min, Validate, ValidateIf} from 'class-validator';
-import {SignatureIdValidator} from '../validation/SignatureIdValidator';
+import {IsInt, IsNotEmpty, IsUUID, Length, Max, Min, Validate, ValidateIf} from 'class-validator'
+import {SignatureIdValidator} from '../validation/SignatureIdValidator'
 
 export class FlowMnemonicOrPrivateKeyOrSignatureId {
 

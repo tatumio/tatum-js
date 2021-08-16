@@ -1,5 +1,5 @@
-import {Currency} from '../model';
-import {signBnbKMSTransaction} from './bnb';
+import {Currency} from '../model'
+import {signBnbKMSTransaction} from './bnb'
 
 describe('BNB tests', () => {
     it('should test KMS sign', async () => {
@@ -13,8 +13,8 @@ describe('BNB tests', () => {
             'index': null,
             'withdrawalResponses': null,
             'id': '60b4ea4fae706954a27ee2dd'
-        };
-        const data = await signBnbKMSTransaction(tx as any, '268a1c3c1b08e4cfd93cf380c39027ac0b6a707abcb4f578ad9ffd172a6eb327', true);
-        expect(data).toBeDefined();
-    });
-});
+        }
+        const data = await signBnbKMSTransaction(tx as any, '268a1c3c1b08e4cfd93cf380c39027ac0b6a707abcb4f578ad9ffd172a6eb327', true)
+        expect(data).toBeDefined()
+    })
+})

@@ -1,4 +1,4 @@
-import {IsBoolean, IsInt, IsNotEmpty, IsNumberString, IsOptional, Length, Matches, Min,} from 'class-validator';
+import {IsBoolean, IsInt, IsNotEmpty, IsNumberString, IsOptional, Length, Matches, Min,} from 'class-validator'
 
 export abstract class BaseTransferEthErc20Offchain {
 

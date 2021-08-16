@@ -1,11 +1,11 @@
-import BigNumber from 'bignumber.js';
-import {fromWei, toWei} from 'web3-utils';
-import {validateBody} from '../connector/tatum';
-import {getAccountById, getVirtualCurrencyByName} from '../ledger';
-import {Currency, TransferEthOffchain} from '../model';
-import {preparePolygonSignedTransaction, preparePolygonTransferErc20SignedTransaction} from '../transaction';
-import {generatePrivateKeyFromMnemonic} from '../wallet';
-import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
+import BigNumber from 'bignumber.js'
+import {fromWei, toWei} from 'web3-utils'
+import {validateBody} from '../connector/tatum'
+import {getAccountById, getVirtualCurrencyByName} from '../ledger'
+import {Currency, TransferEthOffchain} from '../model'
+import {preparePolygonSignedTransaction, preparePolygonTransferErc20SignedTransaction} from '../transaction'
+import {generatePrivateKeyFromMnemonic} from '../wallet'
+import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common'
 
 /**
  * Send Polygon transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -16,20 +16,20 @@ import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} fr
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendPolygonOffchainTransaction = async (testnet: boolean, body: TransferEthOffchain, provider?: string) => {
-    await validateBody(body, TransferEthOffchain);
+    await validateBody(body, TransferEthOffchain)
     const {
         mnemonic, index, privateKey, gasLimit, gasPrice, nonce, ...withdrawal
-    } = body;
-    const {amount, address} = withdrawal;
+    } = body
+    const {amount, address} = withdrawal
 
-    const fromPriv = mnemonic && index !== undefined ? await generatePrivateKeyFromMnemonic(Currency.MATIC, testnet, mnemonic, index) : privateKey as string;
+    const fromPriv = mnemonic && index !== undefined ? await generatePrivateKeyFromMnemonic(Currency.MATIC, testnet, mnemonic, index) : privateKey as string
 
-    const account = await getAccountById(withdrawal.senderAccountId);
-    let txData;
+    const account = await getAccountById(withdrawal.senderAccountId)
+    let txData
     const fee = {
         gasLimit: gasLimit || '21000',
         gasPrice: gasPrice || '20',
-    };
+    }
     if (account.currency === Currency.MATIC) {
         txData = await preparePolygonSignedTransaction(testnet, {
             amount,
@@ -38,10 +38,10 @@ export const sendPolygonOffchainTransaction = async (testnet: boolean, body: Tra
             fee,
             nonce,
             to: address
-        }, provider);
+        }, provider)
     } else {
-        fee.gasLimit = '100000';
-        const vc = await getVirtualCurrencyByName(account.currency);
+        fee.gasLimit = '100000'
+        const vc = await getVirtualCurrencyByName(account.currency)
         txData = await preparePolygonTransferErc20SignedTransaction(testnet, {
             amount,
             fee,
@@ -50,20 +50,20 @@ export const sendPolygonOffchainTransaction = async (testnet: boolean, body: Tra
             digits: vc.precision as number,
             nonce,
             contractAddress: vc.erc20Address as string
-        }, provider);
+        }, provider)
     }
     // @ts-ignore
-    withdrawal.fee = fromWei(new BigNumber(fee.gasLimit).multipliedBy(toWei(fee.gasPrice, 'gwei')).toString(), 'ether');
-    const {id} = await offchainStoreWithdrawal(withdrawal);
+    withdrawal.fee = fromWei(new BigNumber(fee.gasLimit).multipliedBy(toWei(fee.gasPrice, 'gwei')).toString(), 'ether')
+    const {id} = await offchainStoreWithdrawal(withdrawal)
     try {
-        return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.MATIC}), id};
+        return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.MATIC}), id}
     } catch (e) {
-        console.error(e);
+        console.error(e)
         try {
-            await offchainCancelWithdrawal(id);
+            await offchainCancelWithdrawal(id)
         } catch (e1) {
-            console.log(e);
-            return {id};
+            console.log(e)
+            return {id}
         }
     }
-};
+}

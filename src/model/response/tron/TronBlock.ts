@@ -1,4 +1,4 @@
-import {TronTransaction} from './TronTransaction';
+import {TronTransaction} from './TronTransaction'
 
 export interface TronBlock {
     hash: string;

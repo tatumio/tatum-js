@@ -1,4 +1,4 @@
-import {IsInt, IsNotEmpty, Length, Min} from 'class-validator';
+import {IsInt, IsNotEmpty, Length, Min} from 'class-validator'
 
 export class TransferAda {
     @IsNotEmpty()

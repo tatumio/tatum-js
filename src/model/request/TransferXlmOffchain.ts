@@ -1,5 +1,5 @@
-import {IsNotEmpty, Length} from 'class-validator';
-import {CreateWithdrawal} from './CreateWithdrawal';
+import {IsNotEmpty, Length} from 'class-validator'
+import {CreateWithdrawal} from './CreateWithdrawal'
 
 export class TransferXlmOffchain extends CreateWithdrawal {
 

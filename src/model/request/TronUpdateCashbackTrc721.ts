@@ -1,5 +1,5 @@
-import {IsNotEmpty, Length, Min, ValidateIf} from 'class-validator';
-import {UpdateCashbackErc721} from './UpdateCashbackErc721';
+import {IsNotEmpty, Length, Min, ValidateIf} from 'class-validator'
+import {UpdateCashbackErc721} from './UpdateCashbackErc721'
 
 export class TronUpdateCashbackTrc721 extends UpdateCashbackErc721 {
 

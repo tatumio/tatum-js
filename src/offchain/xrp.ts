@@ -1,9 +1,9 @@
-import BigNumber from 'bignumber.js';
-import {RippleAPI} from 'ripple-lib';
-import {xrpGetAccountInfo, xrpGetFee} from '../blockchain';
+import BigNumber from 'bignumber.js'
+import {RippleAPI} from 'ripple-lib'
+import {xrpGetAccountInfo, xrpGetFee} from '../blockchain'
 import { validateBody } from '../connector/tatum'
-import {Currency, TransactionKMS, TransferXrpOffchain} from '../model';
-import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
+import {Currency, TransactionKMS, TransferXrpOffchain} from '../model'
+import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common'
 
 /**
  * Send Xrp transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -13,40 +13,40 @@ import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} fr
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendXrpOffchainTransaction = async (testnet: boolean, body: TransferXrpOffchain) => {
-    await validateBody(body, TransferXrpOffchain);
+    await validateBody(body, TransferXrpOffchain)
     const {
         account, secret, ...withdrawal
-    } = body;
+    } = body
     if (!withdrawal.fee) {
-        withdrawal.fee = new BigNumber((await xrpGetFee()).drops.base_fee).dividedBy(1000000).toString();
+        withdrawal.fee = new BigNumber((await xrpGetFee()).drops.base_fee).dividedBy(1000000).toString()
     }
-    const acc = await xrpGetAccountInfo(account);
-    const {id} = await offchainStoreWithdrawal(withdrawal);
+    const acc = await xrpGetAccountInfo(account)
+    const {id} = await offchainStoreWithdrawal(withdrawal)
     const {
         amount, fee, address,
-    } = withdrawal;
+    } = withdrawal
 
-    let txData;
+    let txData
     try {
-        txData = await prepareXrpSignedOffchainTransaction(testnet, amount, address, secret, acc, fee, withdrawal.sourceTag, withdrawal.attr);
+        txData = await prepareXrpSignedOffchainTransaction(testnet, amount, address, secret, acc, fee, withdrawal.sourceTag, withdrawal.attr)
     } catch (e) {
-        console.error(e);
-        await offchainCancelWithdrawal(id);
-        throw e;
+        console.error(e)
+        await offchainCancelWithdrawal(id)
+        throw e
     }
     try {
-        return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.XRP}), id};
+        return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.XRP}), id}
     } catch (e) {
-        console.error(e);
+        console.error(e)
         try {
-            await offchainCancelWithdrawal(id);
+            await offchainCancelWithdrawal(id)
         } catch (e1) {
-            console.log(e);
-            return {id};
+            console.log(e)
+            return {id}
         }
-        throw e;
+        throw e
     }
-};
+}
 
 /**
  * Sign Xrp pending transaction from Tatum KMS
@@ -56,11 +56,11 @@ export const sendXrpOffchainTransaction = async (testnet: boolean, body: Transfe
  */
 export const signXrpOffchainKMSTransaction = async (tx: TransactionKMS, secret: string) => {
     if (tx.chain !== Currency.XRP) {
-        throw Error('Unsupported chain.');
+        throw Error('Unsupported chain.')
     }
-    const rippleAPI = new RippleAPI();
-    return rippleAPI.sign(tx.serializedTransaction, secret).signedTransaction;
-};
+    const rippleAPI = new RippleAPI()
+    return rippleAPI.sign(tx.serializedTransaction, secret).signedTransaction
+}
 
 /**
  * Sign Xrp transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -76,7 +76,7 @@ export const signXrpOffchainKMSTransaction = async (tx: TransactionKMS, secret: 
  */
 export const prepareXrpSignedOffchainTransaction =
     async (testnet: boolean, amount: string, address: string, secret: string, account: any, fee: string, sourceTag?: number, destinationTag?: string) => {
-        const currency = 'XRP';
+        const currency = 'XRP'
         const payment: any = {
             source: {
                 address: account.account_data.Account,
@@ -93,15 +93,15 @@ export const prepareXrpSignedOffchainTransaction =
                     value: amount,
                 },
             },
-        };
-        if (destinationTag) {
-            payment.destination.tag = parseInt(destinationTag);
         }
-        const rippleAPI = new RippleAPI();
+        if (destinationTag) {
+            payment.destination.tag = parseInt(destinationTag)
+        }
+        const rippleAPI = new RippleAPI()
         const prepared = await rippleAPI.preparePayment(account.account_data.Account, payment, {
             fee: `${fee}`,
             sequence: account.account_data.Sequence,
             maxLedgerVersion: account.ledger_current_index + 5,
-        });
-        return (await rippleAPI.sign(prepared.txJSON, secret)).signedTransaction;
-    };
+        })
+        return (await rippleAPI.sign(prepared.txJSON, secret)).signedTransaction
+    }

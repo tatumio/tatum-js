@@ -6,9 +6,9 @@ const {
   mnemonicToRootKeypair,
   packBaseAddress,
 // tslint:disable-next-line:no-var-requires
-} = require('cardano-crypto.js');
+} = require('cardano-crypto.js')
 
-import {ADA_DERIVATION_PATH, ADA_DERIVATION_SCHEME, HARDENED_THRESHOLD,} from '../constants';
+import {ADA_DERIVATION_PATH, ADA_DERIVATION_SCHEME, HARDENED_THRESHOLD,} from '../constants'
 
 /**
  * Generate an Ada key for the standard derivation path
@@ -16,13 +16,13 @@ import {ADA_DERIVATION_PATH, ADA_DERIVATION_SCHEME, HARDENED_THRESHOLD,} from '.
  * @returns the key buffer
  */
 const generateKey = async (mnemonic: string): Promise<Buffer> => {
-  const walletSecret = await mnemonicToRootKeypair(mnemonic, ADA_DERIVATION_SCHEME);
+  const walletSecret = await mnemonicToRootKeypair(mnemonic, ADA_DERIVATION_SCHEME)
   return ADA_DERIVATION_PATH
     .split('/')
     .slice(1)
     .map(index => index.slice(-1) === '\'' ? HARDENED_THRESHOLD + parseInt(index.slice(0, -1)) : parseInt(index))
-    .reduce((secret, index) => derivePrivate(secret, index, ADA_DERIVATION_SCHEME), walletSecret);
-};
+    .reduce((secret, index) => derivePrivate(secret, index, ADA_DERIVATION_SCHEME), walletSecret)
+}
 
 /**
  * Generate an Ada private key for the standard derivation path
@@ -36,7 +36,7 @@ const generatePrivateKey = async (mnemonic: string, i: number): Promise<string> 
     derivePrivate(await generateKey(mnemonic), 0, ADA_DERIVATION_SCHEME),
     i,
     ADA_DERIVATION_SCHEME
-  ).toString('hex');
+  ).toString('hex')
 }
 
 /**
@@ -45,18 +45,18 @@ const generatePrivateKey = async (mnemonic: string, i: number): Promise<string> 
  * @returns the extended public key string (spend + stake)
  */
 const generateXPublicKey = async (mnemonic: string): Promise<string> => {
-  const root = await generateKey(mnemonic);
+  const root = await generateKey(mnemonic)
   // /0
-  const spendXPub = derivePrivate(root, 0, ADA_DERIVATION_SCHEME).slice(64, 128).toString('hex');
+  const spendXPub = derivePrivate(root, 0, ADA_DERIVATION_SCHEME).slice(64, 128).toString('hex')
   // /2/0
   const stakeXPub = derivePrivate(
     derivePrivate(root, 2, ADA_DERIVATION_SCHEME), 0, ADA_DERIVATION_SCHEME
-  ).slice(64, 128).toString('hex');
-  return spendXPub + stakeXPub;
+  ).slice(64, 128).toString('hex')
+  return spendXPub + stakeXPub
 }
 
 function xpub2blake2b224Hash(xpub: string) {
-  return getPubKeyBlake2b224Hash(Buffer.from(xpub, 'hex').slice(0, 32));
+  return getPubKeyBlake2b224Hash(Buffer.from(xpub, 'hex').slice(0, 32))
 }
 
 /**
@@ -67,8 +67,8 @@ function xpub2blake2b224Hash(xpub: string) {
  * @returns blockchain address
  */
 const generateAddress = async (testnet: boolean, xpub: string, i: number): Promise<string> => {
-  const spendXPub = derivePublic(Buffer.from(xpub.substr(0, 128), 'hex'), i, ADA_DERIVATION_SCHEME);
-  const stakeXPub = xpub.substr(128, 128);
+  const spendXPub = derivePublic(Buffer.from(xpub.substr(0, 128), 'hex'), i, ADA_DERIVATION_SCHEME)
+  const stakeXPub = xpub.substr(128, 128)
   return bech32.encode(
     testnet ? 'addr_test' : 'addr',
     packBaseAddress(
@@ -76,7 +76,7 @@ const generateAddress = async (testnet: boolean, xpub: string, i: number): Promi
       xpub2blake2b224Hash(stakeXPub),
       testnet ? 0 : 1
     )
-  );
+  )
 }
 
 export default {

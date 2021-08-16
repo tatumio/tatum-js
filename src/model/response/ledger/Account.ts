@@ -3,8 +3,11 @@
  * @export
  * @interface Account
  */
-import {AccountBalance} from './AccountBalance';
+import {AccountBalance} from './AccountBalance'
 
+/**
+ * Ledger Account Type
+ */
 export interface Account {
     /**
      * For bookkeeping to distinct account purpose.

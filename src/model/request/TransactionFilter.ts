@@ -1,4 +1,4 @@
-import {Type} from 'class-transformer';
+import {Type} from 'class-transformer'
 import {
     IsArray,
     IsIn,
@@ -10,8 +10,8 @@ import {
     Length,
     Min,
     ValidateNested,
-} from 'class-validator';
-import {OperationType, TransactionType} from '../response';
+} from 'class-validator'
+import {OperationType, TransactionType} from '../response'
 
 class AmountFilter {
     @IsNotEmpty()

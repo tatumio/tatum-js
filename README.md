@@ -1,4 +1,4 @@
-# Tatum API client
+# [Tatum API client](http://tatum.io/) &middot; [![GitHub license](https://img.shields.io/npm/dm/@tatumio/tatum)](https://img.shields.io/npm/dm/@tatumio/tatum) [![GitHub license](https://img.shields.io/npm/v/@tatumio/tatum)](https://img.shields.io/npm/v/@tatumio/tatum) [![CI](https://github.com/tatumio/tatum-js/actions/workflows/main.yml/badge.svg)](https://github.com/tatumio/tatum-js/actions/workflows/main.yml)
 Tatum API client allows browsers and Node.js clients to interact with Tatum API. It includes the following core components.
 
 - **wallet** - cryptographic functions like generation of wallets, private keys or addresses.
@@ -8,8 +8,7 @@ Tatum API client allows browsers and Node.js clients to interact with Tatum API.
 - **transaction** - set of functions to generate and sign blockchain transactions locally.
 - **offchain** - set of functions to generate and sign Tatum off-chain transactions locally.
 
-You can find more detailed documentation and examples in Tatum API documentation
-[Documentation](https://tatum.io) pages or read the documentation for the [client](./docs/globals.md).
+You can find API documentation at [Github Pages](https://tatumio.github.io/tatum-js/) or at [API doc](https://tatum.io/apidoc).
 
 ## Installation
 
@@ -87,9 +86,18 @@ We support types within the repo itself. Please open an issue here if you find a
 You can use `@tatumio/tatum` as follows:
 
 ```typescript
-import {generateWallet, Currency} from '@tatumio/tatum';
+import { generateWallet, Currency } from '@tatumio/tatum';
 const btcWallet = generateWallet(Currency.BTC, true);
 ```
+
+More examples are available here:
+- [blockchain](https://github.com/tatumio/tatum-js/tree/master/src/blockchain)
+- [ledger](https://github.com/tatumio/tatum-js/tree/master/src/ledger)
+- [nft](https://github.com/tatumio/tatum-js/tree/master/src/nft)
+- [offchain](https://github.com/tatumio/tatum-js/tree/master/src/offchain)
+- [security](https://github.com/tatumio/tatum-js/tree/master/src/security)
+- [transaction](https://github.com/tatumio/tatum-js/tree/master/src/transaction)
+- [wallet](https://github.com/tatumio/tatum-js/tree/master/src/wallet)
 
 If you are using the types in a `commonjs` module, like in a Node app, you just have to enable `esModuleInterop` and `allowSyntheticDefaultImports` in your `tsconfig` for typesystem compatibility:
 
@@ -98,6 +106,96 @@ If you are using the types in a `commonjs` module, like in a Node app, you just 
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     ....
+```
+
+### Usage with React Native
+Tatum js use core node js modules or browser APIs that are not available in React Native, so in order to be able to run Tatum js in React Native we need to install and use some additional dependencies.
+
+```
+npm i rn-nodeify -g
+npm i react-native-randombytes --save
+npm i @tatumio/tatum --save
+rn-nodeify --install http,https,path,crypto,fs,stream,os --hack
+cd ios && pod install
+```
+ rn-nodeify will create a `shim.js` file in your project root directory. The first line in `index.js` should be to import it (NOT require it!)
+
+`import "./shim";`
+
+Uncomment the last line from the shim.js file:
+`require('crypto')`
+
+`shim.js` file example:
+```
+if (typeof __dirname === 'undefined') global.__dirname = '/'
+if (typeof __filename === 'undefined') global.__filename = ''
+if (typeof process === 'undefined') {
+  global.process = require('process')
+} else {
+  const bProcess = require('process')
+  for (var p in bProcess) {
+    if (!(p in process)) {
+      process[p] = bProcess[p]
+    }
+  }
+}
+
+process.browser = false
+if (typeof Buffer === 'undefined') global.Buffer = require('buffer').Buffer
+
+// global.location = global.location || { port: 80 }
+const isDev = typeof __DEV__ === 'boolean' && __DEV__
+process.env['NODE_ENV'] = isDev ? 'development' : 'production'
+if (typeof localStorage !== 'undefined') {
+  localStorage.debug = isDev ? '*' : ''
+}
+
+// If using the crypto shim, uncomment the following line to ensure
+// crypto is loaded first, so it can populate global.crypto
+require('crypto')
+```
+
+Tatum js will look for the API_KEY using .env variables, for this you can simply write `process.env.TATUM_API_KEY = "YOUR_API_KEY_HERE";` before importing Tatum in you project.
+
+Run your app:
+```
+npx react-native run-ios
+npx react-native run-android
+```
+
+## Directory structure
+```bash
+└── src
+│   ├── blockchain          // Blockchain API methods without private key
+│   ├── connector           // Wrapper around all HTTP methods
+│   ├── contracts           // Abi and byte code smart contracts
+│   │   ├── custodial
+│   │   ├── erc20
+│   │   ├── erc721
+│   │   ├── erc1155
+│   │   ├── marketplace
+│   │   ├── trc20
+│   │   ├── trc721
+│   ├── ledger              // Ledger API methods
+│   ├── model               // Validation, interfaces and DTO classes
+│   │   ├── request
+│   │   ├── response
+│   │   ├── validation
+│   ├── multiToken          // Multi Token API methods
+│   ├── nft                 // NFT API methods
+│   │   ├── marketplace     // Marketplace API methods
+│   ├── offchain            // Offchain API methods
+│   ├── record              // Logging API methods
+│   ├── security            // Security and KMS methods
+│   ├── tatum               // Service API methods
+│   ├── transaction         // Transaction API methods
+│   ├── wallet              // Wallet, private key and address API methods
+│   └── constants.ts        // Constants
+├── README.md
+├── package.json
+├── tslint.js
+├── tsconfig.json
+└── .gitignore
 ```
 
 ## Contributing

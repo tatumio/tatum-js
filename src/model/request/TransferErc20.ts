@@ -1,17 +1,7 @@
 import {Type} from 'class-transformer';
-import {
-    IsIn,
-    IsNotEmpty,
-    IsNumberString,
-    IsOptional,
-    Length,
-    Matches,
-    MaxLength,
-    Min,
-    ValidateNested,
-} from 'class-validator';
+import {IsNotEmpty, IsNumberString, IsOptional, Length, Matches, MaxLength, Min, ValidateNested,} from 'class-validator';
 import {Fee} from './Fee';
-import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
+import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
 
 export class TransferErc20 extends PrivateKeyOrSignatureId {
 

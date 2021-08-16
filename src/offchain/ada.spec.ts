@@ -1,5 +1,4 @@
-import { Currency } from '../model'
-import { sendAdaOffchainTransaction, signAdaOffchainKMSTransaction } from './ada'
+import {sendAdaOffchainTransaction} from './ada';
 
 describe('ADA offchain', () => {
   it('should transaction with mnemonic and xpub', async () => {
@@ -12,7 +11,7 @@ describe('ADA offchain', () => {
       mnemonic: 'head surround recipe nuclear giraffe tool benefit steel plug obey damp scale suffer fortune lift tree affair oyster engine ceiling physical emotion drink bubble',
     })
     expect(tx).not.toBeNull()
-    expect(tx).toHaveProperty('txId');
+    expect(tx).toHaveProperty('txId')
     } catch (e) {
       console.log(e)
     }
@@ -31,8 +30,8 @@ describe('ADA offchain', () => {
       amount: '1',
     })
     expect(tx).not.toBeNull()
-    expect(tx).toHaveProperty('txId');
+    expect(tx).toHaveProperty('txId')
   })
 
 
-});
+})

@@ -1,13 +1,14 @@
 import BigNumber from 'bignumber.js';
-import {ECPair, Network, networks, Transaction, TransactionBuilder} from 'bitcoinjs-lib';
-import {
-    scryptaBroadcast,
-    scryptaGetUnspentForAccount
-} from '../blockchain';
-import { validateBody } from '../connector/tatum'
+import {ECPair, Network, Transaction, TransactionBuilder} from 'bitcoinjs-lib';
+import {scryptaBroadcast, scryptaGetUnspentForAccount} from '../blockchain';
+import {validateBody} from '../connector/tatum';
 import {LYRA_NETWORK, LYRA_TEST_NETWORK} from '../constants';
 import {Currency, TransactionKMS, TransferBtcBasedBlockchain} from '../model';
 
+/**
+ * Prepare a signed Scrypta transaction with the private key locally. Nothing is broadcasted to the blockchain.
+ * @returns raw transaction data in hex, to be broadcasted to blockchain.
+ */
 const prepareSignedTransaction = async (network: Network, body: TransferBtcBasedBlockchain) => {
     await validateBody(body, TransferBtcBasedBlockchain);
     const {fromUTXO, fromAddress, to} = body;
@@ -16,34 +17,35 @@ const prepareSignedTransaction = async (network: Network, body: TransferBtcBased
     tx.setVersion(1)
     if (fromAddress) {
         for (const item of fromAddress) {
-            const txs = await scryptaGetUnspentForAccount(item.address);
+            const txs = await scryptaGetUnspentForAccount(item.address)
             for (const t of txs) {
                 try {
-                    tx.addInput(t.txid, t.vout);
+                    tx.addInput(t.txid, t.vout)
                     if(item.privateKey) {
-                      privateKeysToSign.push(item.privateKey);
+                      privateKeysToSign.push(item.privateKey)
                     }
                 } catch (e) {
+                    console.error(e.toString())
                 }
             }
         }
     } else if (fromUTXO) {
         for (const item of fromUTXO) {
-            tx.addInput(item.txHash, item.index);
+            tx.addInput(item.txHash, item.index)
             if(item.privateKey) {
-              privateKeysToSign.push(item.privateKey);
+              privateKeysToSign.push(item.privateKey)
             }
         }
     }
     for (const item of to) {
-        tx.addOutput(item.address, Number(new BigNumber(item.value).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
+        tx.addOutput(item.address, Number(new BigNumber(item.value).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)))
     }
     for (let i = 0; i < privateKeysToSign.length; i++) {
-        const ecPair = ECPair.fromWIF(privateKeysToSign[i], network);
-        tx.sign(i, ecPair);
+        const ecPair = ECPair.fromWIF(privateKeysToSign[i], network)
+        tx.sign(i, ecPair)
     }
-    return tx.build().toHex();
-};
+    return tx.build().toHex()
+}
 
 /**
  * Sign Scrypta pending transaction from Tatum KMS
@@ -54,16 +56,16 @@ const prepareSignedTransaction = async (network: Network, body: TransferBtcBased
  */
 export const signScryptaKMSTransaction = async (tx: TransactionKMS, privateKeys: string[], testnet: boolean) => {
     if (tx.chain !== Currency.LTC) {
-        throw Error('Unsupported chain.');
+        throw Error('Unsupported chain.')
     }
-    const network = testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK;
-    const builder = TransactionBuilder.fromTransaction(Transaction.fromHex(tx.serializedTransaction), network);
+    const network = testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK
+    const builder = TransactionBuilder.fromTransaction(Transaction.fromHex(tx.serializedTransaction), network)
     for (const [i, privateKey] of privateKeys.entries()) {
-        const ecPair = ECPair.fromWIF(privateKey, network);
-        builder.sign(i, ecPair);
+        const ecPair = ECPair.fromWIF(privateKey, network)
+        builder.sign(i, ecPair)
     }
-    return builder.build().toHex();
-};
+    return builder.build().toHex()
+}
 
 /**
  * Sign Scrypta transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -72,8 +74,8 @@ export const signScryptaKMSTransaction = async (tx: TransactionKMS, privateKeys:
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareScryptaSignedTransaction = async (testnet: boolean, body: TransferBtcBasedBlockchain) => {
-    return prepareSignedTransaction(testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK, body);
-};
+    return prepareSignedTransaction(testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK, body)
+}
 
 
 /**
@@ -84,5 +86,5 @@ export const prepareScryptaSignedTransaction = async (testnet: boolean, body: Tr
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendScryptaTransaction = async (testnet: boolean, body: TransferBtcBasedBlockchain) => {
-    return scryptaBroadcast(await prepareScryptaSignedTransaction(testnet, body));
-};
+    return scryptaBroadcast(await prepareScryptaSignedTransaction(testnet, body))
+}

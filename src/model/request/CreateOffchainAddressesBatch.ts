@@ -1,5 +1,5 @@
-import {Type} from 'class-transformer';
-import {IsNotEmpty, IsOptional, Length, Max, Min, ValidateNested} from 'class-validator';
+import {Type} from 'class-transformer'
+import {IsNotEmpty, IsOptional, Length, Max, Min, ValidateNested} from 'class-validator'
 
 export class AddressQuery {
 

@@ -1,6 +1,6 @@
-import {IsNotEmpty, IsUUID, Length, Validate, ValidateIf} from 'class-validator';
-import {TransferBtcOffchainValidator} from '../validation/TransferBtcOffchainValidator';
-import {CreateWithdrawal} from './CreateWithdrawal';
+import {IsNotEmpty, IsUUID, Length, Validate, ValidateIf} from 'class-validator'
+import {TransferBtcOffchainValidator} from '../validation/TransferBtcOffchainValidator'
+import {CreateWithdrawal} from './CreateWithdrawal'
 
 export class TransferBtcBasedOffchainKMS extends CreateWithdrawal {
 

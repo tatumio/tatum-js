@@ -1,5 +1,5 @@
-import {IsOptional, Min} from 'class-validator';
-import {EthDeployMultiToken} from './EthDeployMultiToken';
+import {IsOptional, Min} from 'class-validator'
+import {EthDeployMultiToken} from './EthDeployMultiToken'
 
 export class OneDeployMultiToken extends EthDeployMultiToken {
 

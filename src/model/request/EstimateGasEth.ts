@@ -1,4 +1,4 @@
-import {IsHexadecimal, IsNotEmpty, IsNumberString, IsOptional, Length, Matches, MaxLength} from 'class-validator';
+import {IsHexadecimal, IsNotEmpty, IsNumberString, IsOptional, Length, Matches, MaxLength} from 'class-validator'
 
 export class EstimateGasEth {
 

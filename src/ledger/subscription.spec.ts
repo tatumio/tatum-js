@@ -11,5 +11,5 @@ describe('Subscription tests', () => {
             },
         })
         expect(subscription).not.toBeNull()
-    });
-});
+    })
+})

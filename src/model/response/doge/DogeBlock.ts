@@ -3,7 +3,7 @@
  * @export
  * @interface DogeBlock
  */
-import {DogeTx} from './DogeTx';
+import {DogeTx} from './DogeTx'
 
 export interface DogeBlock {
     /**

@@ -1,9 +1,7 @@
 /**
- *
- * @export
- * @interface Subscription
+ * Subscription
  */
-import {SubscriptionType} from './SubscriptionType';
+import {SubscriptionType} from './SubscriptionType'
 
 export interface Subscription {
   /**
@@ -23,5 +21,6 @@ export interface Subscription {
    * @type {object}
    * @memberof Subscription
    */
+  // eslint-disable-next-line @typescript-eslint/ban-types
   attr: object
 }

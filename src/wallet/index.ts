@@ -1,3 +1,3 @@
-export * from './wallet';
-export * from './custodial';
-export * from './address';
+export * from './wallet'
+export * from './custodial'
+export * from './address'

@@ -1,7 +1,5 @@
 /**
- *
- * @export
- * @interface Blockage
+ * Ledger Account Blockage
  */
 export interface Blockage {
     /**

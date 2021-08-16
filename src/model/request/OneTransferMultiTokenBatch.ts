@@ -1,5 +1,5 @@
-import {IsOptional, Min} from 'class-validator';
-import {TransferMultiTokenBatch} from './TransferMultiTokenBatch';
+import {IsOptional, Min} from 'class-validator'
+import {TransferMultiTokenBatch} from './TransferMultiTokenBatch'
 
 export class OneTransferMultiTokenBatch extends TransferMultiTokenBatch {
 

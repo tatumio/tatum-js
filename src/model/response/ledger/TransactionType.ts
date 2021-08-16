@@ -1,6 +1,5 @@
 /**
- * @export
- * @enum {string}
+ * Transaction Type
  */
 export enum TransactionType {
     FAILED = 'FAILED',
