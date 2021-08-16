@@ -36,8 +36,7 @@ export const celoGetBlock = async (hash: string): Promise<Block> => get(`/v3/cel
  * For more details, see <a href="https://tatum.io/apidoc#operation/CeloGetBalance" target="_blank">Tatum API documentation</a>
  */
 export const celoGetAccountBalance = async (address: string): Promise<{ celo: BigNumber, cUsd: BigNumber }> => {
-    const {data} = await get(`/v3/celo/account/balance/${address}`)
-    return {celo: new BigNumber(data.celo), cUsd: new BigNumber(data.cUsd)}
+    return await get(`/v3/celo/account/balance/${address}`)
 }
 
 /**

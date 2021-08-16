@@ -19,7 +19,7 @@ export const oneGetBlock = async (hash: string): Promise<any> => get(`/v3/one/bl
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/OneGetBalance" target="_blank">Tatum API documentation</a>
  */
-export const oneGetBalance = async (address: string): Promise<string> => get(`v3/one/account/balance/${address}`);
+export const oneGetBalance = async (address: string): Promise<string> => get(`/v3/one/account/balance/${address}`);
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/OneGetTransaction" target="_blank">Tatum API documentation</a>
  */
@@ -27,4 +27,4 @@ export const oneGetTransaction = async (hash: string): Promise<OneTx> => get(`/v
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/OneGetBalance" target="_blank">Tatum API documentation</a>
  */
- export const oneGetTransactionCount = async (address: string): Promise<number> => get(`v3/one/transaction/count/${address}`);
+ export const oneGetTransactionCount = async (address: string): Promise<number> => get(`/v3/one/transaction/count/${address}`);
