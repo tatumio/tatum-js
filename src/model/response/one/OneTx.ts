@@ -39,4 +39,4 @@ export interface OneTx {
     root: string,
     status: boolean,
     transactionHash: string
-}
+};
