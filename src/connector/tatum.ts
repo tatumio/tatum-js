@@ -34,6 +34,12 @@ export const post = async <T extends object, U, V>(url: string, body?: U, classT
   const { data } = await axios.post(`${baseUrl()}${url}`, body, headers())
   return data
 }
+// eslint-disable-next-line @typescript-eslint/ban-types
+export const upload = async <T extends object, U, V>(url: string, body?: U, classType?: ClassType<T>): Promise<V> => {
+  await validateBody(body, classType)
+  const { data } = await axios.post(`${baseUrl()}${url}`, body, { headers: { 'x-api-key': process.env.TATUM_API_KEY, 'content-type': 'multipart/form-data'} })
+  return data
+}
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const put = async <T extends object, U, V>(url: string, body?: U, classType?: ClassType<T>): Promise<V> => {
