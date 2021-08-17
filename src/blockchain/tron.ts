@@ -1,5 +1,5 @@
 import { get, post } from '../connector/tatum'
-import {TransactionHash, TronAccount, TronBlock, TronTransaction, TronTrc10} from '../model'
+import { TransactionHash, TronAccount, TronBlock, TronTransaction, TronTrc10 } from '../model'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/TronBroadcast" target="_blank">Tatum API documentation</a>
@@ -10,7 +10,7 @@ export const tronBroadcast = async (txData: string, signatureId?: string): Promi
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/TronGetCurrentBlock" target="_blank">Tatum API documentation</a>
  */
-export const tronGetCurrentBlock = async (): Promise<{ testnet: boolean, hash: string, blockNumber: number }> => get(`/v3/tron/current`)
+export const tronGetCurrentBlock = async (): Promise<{ testnet: boolean, hash: string, blockNumber: number }> => get(`/v3/tron/info`)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/TronGetBlock" target="_blank">Tatum API documentation</a>
