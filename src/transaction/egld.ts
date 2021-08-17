@@ -54,7 +54,7 @@ export const egldGetGasPrice = async (): Promise<number> => {
 /**
  * Estimate Gas limit for the transaction.
  */
-const egldGetGasLimit = async (tx: EgldSendTransaction): Promise<number> => {
+export const egldGetGasLimit = async (tx: EgldSendTransaction): Promise<number> => {
     // TODO: use this as TATUM API endpoint
     // const gasStationUrl = 'https://api.elrond.com';
     // // const gasStationUrl = await getEgldClient();
@@ -68,15 +68,15 @@ const egldGetGasLimit = async (tx: EgldSendTransaction): Promise<number> => {
     return new BigNumber((await egldEstimateGas(tx)) || 50000).toNumber()
 }
 
-/**
- * Get account nonce
- */
-const egldGetAccountNonce = async (from: string): Promise<number> => {
-    // TODO: use this as TATUM API endpoint
-    // const {data} = await axios.get(`${ELROND_V3_ENDPOINT}/address/${from}/nonce`);
-    // return data?.nonce;
-    return await egldGetTransactionsCount(from)
-}
+// /**
+//  * Get account nonce
+//  */
+// const egldGetAccountNonce = async (from: string): Promise<number> => {
+//     // TODO: use this as TATUM API endpoint
+//     // const {data} = await axios.get(`${ELROND_V3_ENDPOINT}/address/${from}/nonce`);
+//     // return data?.nonce;
+//     return await egldGetTransactionsCount(from)
+// }
 
 /**
  * Sign transaction
@@ -597,7 +597,7 @@ export const prepareEgldSpecialRoleEsdtOrNftSignedTransaction = async (body: Egl
  * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEgldTransferFreezeOrWipeOrOwvershipEsdtSignedTransaction = async (body: EgldEsdtTransaction, provider?: string) => {
+export const prepareEgldFreezeOrWipeOrOwvershipEsdtSignedTransaction = async (body: EgldEsdtTransaction, provider?: string) => {
     await validateBody(body, EgldEsdtTransaction)
     const {
         fromPrivateKey,
@@ -641,7 +641,7 @@ export const prepareEgldControlChangesEsdtSignedTransaction = async (body: EgldE
     const tx: TransactionConfig = {
         from: 0,
         to: ESDT_SYSTEM_SMART_CONTRACT_ADDRESS,
-        data: await prepareEgldEsdtSpecialRoleData(data),
+        data: await prepareEgldEsdtControlChangesData(data),
     }
 
   return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, { gasLimit, gasPrice: fee?.gasPrice as string } as Fee)

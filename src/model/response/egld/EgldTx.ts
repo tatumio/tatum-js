@@ -4,6 +4,27 @@
  * @interface EgldTransaction
  */
 
+export interface EgldReceipt {
+    value: number
+    sender: string
+    data: string
+    txHash: string
+}
+
+export interface EgldSmartContractResult {
+    hash: string
+    nonce: number
+    value: number
+    receiver: string
+    sender: string
+    data: string
+    prevTxHash: string
+    originalTxHash: string
+    gasLimit: number
+    gasPrice: number
+    callType: number
+}
+
 export interface EgldTransaction {
     type: string
     nonce: number
@@ -20,14 +41,11 @@ export interface EgldTransaction {
     destinationShard: number
     blockNonce: number
     blockHash: string
-    notarizedAtSourceInMetaNonce: number
-    NotarizedAtSourceInMetaHash: string
-    notarizedAtDestinationInMetaNonce: number
-    notarizedAtDestinationInMetaHash: string
-    miniblockType: string
     miniblockHash: string
     timestamp: number
     status: string
     hyperblockNonce: number
     hyperblockHash: string
+    receipt: EgldReceipt
+    smartContractResults: EgldSmartContractResult[]
 }

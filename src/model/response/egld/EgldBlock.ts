@@ -9,7 +9,6 @@ import { EgldTransaction } from './EgldTx'
 export interface EgldShardBlock {
     hash: string
     nonce: number
-    round: number
     shard: number
 }
 
@@ -22,9 +21,4 @@ export interface EgldBlock {
     numTxs: number
     shardBlocks: EgldShardBlock[]
     transactions: EgldTransaction[]
-    accumulatedFees: string
-    developerFees: string
-    accumulatedFeesInEpoch: string
-    developerFeesInEpoch: string
-    status: string
 }
