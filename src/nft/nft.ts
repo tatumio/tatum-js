@@ -1,4 +1,4 @@
-import {get, post} from '../connector/tatum';
+import {axios, get, post} from '../connector/tatum';
 import {
     CeloBurnErc721,
     CeloDeployErc721,
@@ -96,7 +96,32 @@ export const getNFTContractAddress = async (chain: Currency, txId: string): Prom
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetMetadataErc721" target="_blank">Tatum API documentation</a>
  */
-export const getNFTMetadataURI = async (chain: Currency, contractAddress: string, tokenId: string): Promise<{ data: string }> => get(`/v3/nft/metadata/${chain}/${contractAddress}/${tokenId}`);
+export const getNFTMetadataURI = async (chain: Currency, contractAddress: string, tokenId: string, account?: string): Promise<{ data: string }> => {
+    let url = `/v3/nft/metadata/${chain}/${contractAddress}/${tokenId}`;
+    if (account) {
+        url += `?account=${account}`;
+    }
+    return get(url);
+};
+
+/**
+ * Get IPFS image URL from the NFT with the IPFS Metadata scheme. URL
+ * @param chain chain where NFT token is
+ * @param contractAddress contract address of the NFT token
+ * @param tokenId ID of the token
+ * @param account FLOW only - account where the token is minted
+ */
+export const getNFTImageFromIPFS = async (chain: Currency, contractAddress: string, tokenId: string, account?: string): Promise<{ originalUrl: string, publicUrl: string }> => {
+    const {data: metadata} = await getNFTMetadataURI(chain, contractAddress, tokenId, account);
+    console.log(`Metadata stored with the NFT: ${metadata}`);
+    const metadataUrl = `https://gateway.pinata.cloud/ipfs/${metadata.replace('ipfs://', '')}`;
+    const {data} = await axios.get(metadataUrl);
+    const imageUrl = data.properties.image.description;
+    return {
+        originalUrl: imageUrl,
+        publicUrl: `https://gateway.pinata.cloud/ipfs/${imageUrl.replace('ipfs://', '')}`
+    };
+};
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetRoyaltyErc721" target="_blank">Tatum API documentation</a>

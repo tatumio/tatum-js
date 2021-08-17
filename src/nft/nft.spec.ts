@@ -1,6 +1,6 @@
 import {readFileSync} from 'fs';
 import {CeloBurnErc721, CeloDeployErc721, CeloMintErc721, CeloMintMultipleErc721, CeloTransferErc721, Currency, MintErc721,} from '../model';
-import {burnNFT, deployNFT, mintMultipleNFTWithUri, mintNFTWithIPFSMetadata, mintNFTWithUri, transferNFT} from './nft';
+import {burnNFT, deployNFT, getNFTImageFromIPFS, mintMultipleNFTWithUri, mintNFTWithIPFSMetadata, mintNFTWithUri, transferNFT} from './nft';
 
 describe('NFT tests', () => {
     jest.setTimeout(99999);
@@ -339,6 +339,16 @@ describe('NFT tests', () => {
             };
             console.log(await mintNFTWithIPFSMetadata(true, body, readFileSync('/Users/ssramko/Downloads/logo_tatum.png'),
                 'Tatum LOGO', 'description', undefined, 'https://rpc-mumbai.matic.today'));
+        });
+        it('should obtain metadata from NFT on IPFS on MATIC', async () => {
+            const data = await getNFTImageFromIPFS(Currency.MATIC, '0x6d8eae641416b8b79e0fb3a92b17448cfff02b11', '1629193549967');
+            expect(data.publicUrl).toBe('https://gateway.pinata.cloud/ipfs/Qmaiu5NAXe2gwH734hWhvyharurBjoxi8Kv37sGp1ZhRpf');
+            expect(data.originalUrl).toBe('ipfs://Qmaiu5NAXe2gwH734hWhvyharurBjoxi8Kv37sGp1ZhRpf');
+        });
+        it('should obtain metadata from NFT on IPFS on FLOW', async () => {
+            const data = await getNFTImageFromIPFS(Currency.FLOW, '2d103773-50e2-4a37-ac3d-61bc6af8faee', '145', '0x10247089e55180c9');
+            expect(data.publicUrl).toBe('https://gateway.pinata.cloud/ipfs/Qmaiu5NAXe2gwH734hWhvyharurBjoxi8Kv37sGp1ZhRpf');
+            expect(data.originalUrl).toBe('ipfs://Qmaiu5NAXe2gwH734hWhvyharurBjoxi8Kv37sGp1ZhRpf');
         });
         it('should test MATIC 721 mint transaction', async () => {
             try {
