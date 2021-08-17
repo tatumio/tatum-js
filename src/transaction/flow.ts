@@ -1,17 +1,17 @@
 // @ts-ignore
-import * as fcl from '@onflow/fcl'
+import * as fcl from '@onflow/fcl';
 // @ts-ignore
-import * as sdk from '@onflow/sdk'
+import * as sdk from '@onflow/sdk';
 // @ts-ignore
-import * as types from '@onflow/types'
+import * as types from '@onflow/types';
 // @ts-ignore
-import {ECDSA_secp256k1, encodeKey, SHA3_256,} from '@onflow/util-encode-key'
-import * as elliptic from 'elliptic'
-import {SHA3} from 'sha3'
-import {validateBody} from '../connector/tatum'
-import {FLOW_MAINNET_ADDRESSES, FLOW_TESTNET_ADDRESSES} from '../constants'
-import {Currency, FlowBurnNft, FlowMintMultipleNft, FlowMintNft, FlowTransferNft, TransactionKMS, TransferFlow} from '../model'
-import {generatePrivateKeyFromMnemonic} from '../wallet'
+import {ECDSA_secp256k1, encodeKey, SHA3_256,} from '@onflow/util-encode-key';
+import * as elliptic from 'elliptic';
+import {SHA3} from 'sha3';
+import {validateBody} from '../connector/tatum';
+import {FLOW_MAINNET_ADDRESSES, FLOW_TESTNET_ADDRESSES} from '../constants';
+import {Currency, FlowBurnNft, FlowMintMultipleNft, FlowMintNft, FlowTransferNft, TransactionKMS, TransferFlow} from '../model';
+import {generatePrivateKeyFromMnemonic} from '../wallet';
 import {
     burnFlowNftTokenTxTemplate,
     metadataFlowNftTokenScript,
@@ -22,7 +22,7 @@ import {
     prepareTransferFlowTxTemplate,
     tokenByAddressFlowNftTokenScript,
     transferFlowNftTokenTxTemplate
-} from './flowTransaction'
+} from './flowTransaction';
 
 export enum FlowTxType {
     CREATE_ACCOUNT,
@@ -231,18 +231,18 @@ export const getFlowNftTokenByAddress = async (testnet: boolean, account: string
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendFlowNftMintToken = async (testnet: boolean, body: FlowMintNft):
-    Promise<{ txId: string, tokenId: number }> => {
-    await validateBody(body, FlowMintNft)
-    const code = mintFlowNftTokenTxTemplate(testnet)
-    const {url, contractAddress: tokenType, to, mnemonic, index, account, privateKey} = body
-    const args = [{type: 'Address', value: to}, {type: 'String', value: url}, {type: 'String', value: tokenType}]
-    const pk = (mnemonic && index && index >= 0) ? await generatePrivateKeyFromMnemonic(Currency.FLOW, testnet, mnemonic, index as number) : privateKey as string
-    const auth = getFlowSigner(pk, account)
-    const result = await sendTransaction(testnet, {code, args, proposer: auth, authorizations: [auth], payer: auth})
+    Promise<{ txId: string, tokenId: string }> => {
+    await validateBody(body, FlowMintNft);
+    const code = mintFlowNftTokenTxTemplate(testnet);
+    const {url, contractAddress: tokenType, to, mnemonic, index, account, privateKey} = body;
+    const args = [{type: 'Address', value: to}, {type: 'String', value: url}, {type: 'String', value: tokenType}];
+    const pk = (mnemonic && index && index >= 0) ? await generatePrivateKeyFromMnemonic(Currency.FLOW, testnet, mnemonic, index as number) : privateKey as string;
+    const auth = getFlowSigner(pk, account);
+    const result = await sendTransaction(testnet, {code, args, proposer: auth, authorizations: [auth], payer: auth});
     if (result.error) {
-        throw new Error(result.error)
+        throw new Error(result.error);
     }
-    return {txId: result.id, tokenId: result.events.find((e: any) => e.type.includes('TatumMultiNFT.Minted'))?.data.id}
+    return {txId: result.id, tokenId: `${result.events.find((e: any) => e.type.includes('TatumMultiNFT.Minted'))?.data.id}`};
 }
 
 /**
