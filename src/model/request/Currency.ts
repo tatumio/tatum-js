@@ -28,6 +28,7 @@ export enum Currency {
     BBCH = 'BBCH',
     MATIC = 'MATIC',
     USDC_MATIC = 'USDC_MATIC',
+    USDC_BSC = 'USDC_BSC',
     USDT = 'USDT',
     GMC = 'GMC',
     GMC_BSC = 'GMC_BSC',
@@ -91,6 +92,7 @@ export const ERC20_CURRENCIES = [
 export const BEP20_CURRENCIES = [
     Currency.BETH.toString(),
     Currency.BBTC.toString(),
+    Currency.USDC_BSC.toString(),
     Currency.BADA.toString(),
     Currency.WBNB.toString(),
     Currency.GMC_BSC.toString(),

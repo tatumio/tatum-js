@@ -14,7 +14,6 @@ import {
     DOGE_DERIVATION_PATH,
     DOGE_NETWORK,
     DOGE_TEST_NETWORK,
-    EGLD_DERIVATION_PATH,
     ETH_DERIVATION_PATH,
     FLOW_DERIVATION_PATH,
     LTC_DERIVATION_PATH,
@@ -358,6 +357,7 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
         case Currency.BAT:
         case Currency.TUSD:
         case Currency.BUSD:
+        case Currency.USDC_BSC:
         case Currency.GMC:
         case Currency.GMC_BSC:
         case Currency.PAX:

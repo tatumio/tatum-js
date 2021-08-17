@@ -1,4 +1,4 @@
-import {Currency} from './model'
+import {Currency} from './model';
 
 export const TATUM_API_URL = 'https://api-eu1.tatum.io'
 export const TATUM_RETRY_DELAY = 1000
@@ -167,6 +167,7 @@ export const CONTRACT_ADDRESSES = {
     [Currency.USDT_TRON.toString()]: 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t',
     [Currency.INRT_TRON.toString()]: 'TX66VmiV1txm45vVLvcHYEqPXXLoREyAXm',
     [Currency.USDC_MATIC.toString()]: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
+    [Currency.USDC_BSC.toString()]: '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d',
     [Currency.BUSD.toString()]: '0x4fabb145d64652a948d72533023f6e7a623c7c53',
     [Currency.BETH.toString()]: '0x2170ed0880ac9a755fd29b2688956bd959f933f8',
     [Currency.BBTC.toString()]: '0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c',
@@ -211,6 +212,7 @@ export const CONTRACT_DECIMALS = {
     [Currency.REVV.toString()]: 18,
     [Currency.SAND.toString()]: 18,
     [Currency.USDC_MATIC.toString()]: 6,
+    [Currency.USDC_BSC.toString()]: 18,
     [Currency.BETH.toString()]: 18,
     [Currency.BBTC.toString()]: 18,
     [Currency.BADA.toString()]: 18,
