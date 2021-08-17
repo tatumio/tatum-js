@@ -67,11 +67,11 @@ describe('NFT tests', () => {
             body.fromPrivateKey = '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236';
             body.to = '0x48d4bA7B2698A4b89635b9a2E391152350DB740f';
             body.contractAddress = '0x1214BEada6b25bc98f7494C7BDBf22C095FDCaBD';
-            body.tokenId = '333340';
+            body.tokenId = '333341';
             body.feeCurrency = Currency.CUSD;
             body.chain = Currency.CELO;
-            expect(await mintNFTWithIPFSMetadata(true, body, readFileSync('/Users/ssramko/Downloads/logo_tatum.png'),
-                'Tatum LOGO', 'description', undefined, 'https://alfajores-forno.celo-testnet.org')).toBeDefined();
+            console.log(await mintNFTWithIPFSMetadata(true, body, readFileSync('/Users/ssramko/Downloads/logo_tatum.png'),
+                'Tatum LOGO', 'description', undefined, 'https://alfajores-forno.celo-testnet.org'));
         });
 
         it('should test valid mint multiple 721 transaction', async () => {

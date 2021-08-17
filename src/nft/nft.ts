@@ -182,7 +182,14 @@ export const mintNFTWithIPFSMetadata = async (testnet: boolean, body: CeloMintEr
     metadata.properties.image = {type: 'string', description: `ipfs://${ipfsHash}`};
     const {ipfsHash: metadataHash} = await ipfsUpload(Buffer.from(JSON.stringify(metadata)), 'metadata.json');
     body.url = `ipfs://${metadataHash}`;
-    return await mintNFTWithUri(testnet, body, provider);
+    const result = await mintNFTWithUri(testnet, body, provider);
+    return {
+        ...result,
+        metadataUrl: body.url,
+        metadataPublicUrl: `https://gateway.pinata.cloud/ipfs/${metadataHash}`,
+        imageUrl: `ipfs://${ipfsHash}`,
+        imagePublicUrl: `https://gateway.pinata.cloud/ipfs/${ipfsHash}`
+    };
 };
 
 /**
