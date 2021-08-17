@@ -1,6 +1,6 @@
 import {readFileSync} from 'fs';
 import {CeloBurnErc721, CeloDeployErc721, CeloMintErc721, CeloMintMultipleErc721, CeloTransferErc721, Currency, MintErc721,} from '../model';
-import {burnNFT, deployNFT, getNFTImageFromIPFS, mintMultipleNFTWithUri, mintNFTWithIPFSMetadata, mintNFTWithUri, transferNFT} from './nft';
+import {burnNFT, createNFT, deployNFT, getNFTImage, mintMultipleNFTWithUri, mintNFTWithUri, transferNFT} from './nft';
 
 describe('NFT tests', () => {
     jest.setTimeout(99999);
@@ -70,7 +70,7 @@ describe('NFT tests', () => {
             body.tokenId = '333342';
             body.feeCurrency = Currency.CUSD;
             body.chain = Currency.CELO;
-            console.log(await mintNFTWithIPFSMetadata(true, body, readFileSync('/Users/ssramko/Downloads/logo_tatum.png'),
+            console.log(await createNFT(true, body, readFileSync('/Users/ssramko/Downloads/logo_tatum.png'),
                 'Tatum LOGO', 'description', undefined, 'https://alfajores-forno.celo-testnet.org'));
         });
 
@@ -282,7 +282,7 @@ describe('NFT tests', () => {
                 fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
                 contractAddress: '0xC25f71fEaD66A160758265321e4c2Fb93b83BabF',
             };
-            console.log(await mintNFTWithIPFSMetadata(true, body, readFileSync('/Users/ssramko/Downloads/logo_tatum.png'),
+            console.log(await createNFT(true, body, readFileSync('/Users/ssramko/Downloads/logo_tatum.png'),
                 'Tatum LOGO', 'description'));
         });
         it('should test BSC send transaction', async () => {
@@ -337,16 +337,16 @@ describe('NFT tests', () => {
                 fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
                 contractAddress: '0xdb778b39bd7a7c479b3bb1d70df6665fe73e7e1d',
             };
-            console.log(await mintNFTWithIPFSMetadata(true, body, readFileSync('/Users/ssramko/Downloads/logo_tatum.png'),
+            console.log(await createNFT(true, body, readFileSync('/Users/ssramko/Downloads/logo_tatum.png'),
                 'Tatum LOGO', 'description', undefined, 'https://rpc-mumbai.matic.today'));
         });
         it('should obtain metadata from NFT on IPFS on MATIC', async () => {
-            const data = await getNFTImageFromIPFS(Currency.MATIC, '0x6d8eae641416b8b79e0fb3a92b17448cfff02b11', '1629193549967');
+            const data = await getNFTImage(Currency.MATIC, '0x6d8eae641416b8b79e0fb3a92b17448cfff02b11', '1629193549967');
             expect(data.publicUrl).toBe('https://gateway.pinata.cloud/ipfs/Qmaiu5NAXe2gwH734hWhvyharurBjoxi8Kv37sGp1ZhRpf');
             expect(data.originalUrl).toBe('ipfs://Qmaiu5NAXe2gwH734hWhvyharurBjoxi8Kv37sGp1ZhRpf');
         });
         it('should obtain metadata from NFT on IPFS on FLOW', async () => {
-            const data = await getNFTImageFromIPFS(Currency.FLOW, '2d103773-50e2-4a37-ac3d-61bc6af8faee', '145', '0x10247089e55180c9');
+            const data = await getNFTImage(Currency.FLOW, '2d103773-50e2-4a37-ac3d-61bc6af8faee', '145', '0x10247089e55180c9');
             expect(data.publicUrl).toBe('https://gateway.pinata.cloud/ipfs/Qmaiu5NAXe2gwH734hWhvyharurBjoxi8Kv37sGp1ZhRpf');
             expect(data.originalUrl).toBe('ipfs://Qmaiu5NAXe2gwH734hWhvyharurBjoxi8Kv37sGp1ZhRpf');
         });

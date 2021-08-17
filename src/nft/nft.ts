@@ -111,7 +111,7 @@ export const getNFTMetadataURI = async (chain: Currency, contractAddress: string
  * @param tokenId ID of the token
  * @param account FLOW only - account where the token is minted
  */
-export const getNFTImageFromIPFS = async (chain: Currency, contractAddress: string, tokenId: string, account?: string): Promise<{ originalUrl: string, publicUrl: string }> => {
+export const getNFTImage = async (chain: Currency, contractAddress: string, tokenId: string, account?: string): Promise<{ originalUrl: string, publicUrl: string }> => {
     const {data: metadata} = await getNFTMetadataURI(chain, contractAddress, tokenId, account);
     const metadataUrl = `https://gateway.pinata.cloud/ipfs/${metadata.replace('ipfs://', '')}`;
     const {data} = await axios.get(metadataUrl);
@@ -164,11 +164,11 @@ export const deployNFT = async (testnet: boolean, body: CeloDeployErc721 | EthDe
  * @param scheme optional JSON Metadata scheme
  * @param provider optional provider do broadcast tx
  */
-export const mintNFTWithIPFSMetadata = async (testnet: boolean, body: CeloMintErc721 | EthMintErc721 | TronMintTrc721 | FlowMintNft,
-                                              file: Buffer,
-                                              name: string,
-                                              description?: string,
-                                              scheme?: any, provider?: string) => {
+export const createNFT = async (testnet: boolean, body: CeloMintErc721 | EthMintErc721 | TronMintTrc721 | FlowMintNft,
+                                file: Buffer,
+                                name: string,
+                                description?: string,
+                                scheme?: any, provider?: string) => {
     const metadata = scheme || {
         title: 'Asset Metadata',
         type: 'object',
