@@ -317,17 +317,19 @@ export const prepareMarketplaceCreateListing = async (testnet: boolean, body: Cr
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceBuyListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation | InvokeTronMarketplaceListingOperation, provider?: string) => {
-    await validateBody(body, body.chain === Currency.TRON ? InvokeTronMarketplaceListingOperation : InvokeMarketplaceListingOperation)
-    const params = [body.listingId, body.erc20Address || '0x0000000000000000000000000000000000000000']
-    body.amount = undefined;
+    await validateBody(body, body.chain === Currency.TRON ? InvokeTronMarketplaceListingOperation : InvokeMarketplaceListingOperation);
+    const params = [body.listingId, body.erc20Address || '0x0000000000000000000000000000000000000000'];
+    if (body.erc20Address) {
+        body.amount = undefined;
+    }
     if (body.chain === Currency.TRON) {
         return await prepareSCCall(testnet, body, InvokeTronMarketplaceListingOperation, 'buyAssetFromListing',
             [
                 {type: 'string', value: params[0]},
                 {type: 'address', value: convertAddressToHex(params[1])},
-            ], 'buyAssetFromListing(string,address)', provider)
+            ], 'buyAssetFromListing(string,address)', provider);
     } else {
-        return await prepareSCCall(testnet, body, InvokeMarketplaceListingOperation, 'buyAssetFromListing', params, undefined, provider)
+        return await prepareSCCall(testnet, body, InvokeMarketplaceListingOperation, 'buyAssetFromListing', params, undefined, provider);
     }
 }
 
