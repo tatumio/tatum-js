@@ -3,6 +3,7 @@ import axiosRetry, {isNetworkOrIdempotentRequestError} from 'axios-retry';
 import {plainToClass} from 'class-transformer';
 import {ClassType} from 'class-transformer/ClassTransformer';
 import {validateOrReject} from 'class-validator';
+import FormData from 'form-data';
 import http from 'http';
 import https from 'https';
 import {TATUM_API_URL, TATUM_RETRIES, TATUM_RETRY_DELAY} from '../constants';
@@ -29,17 +30,19 @@ export const get = async <T>(url: string): Promise<T> => {
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-export const post = async <T extends object, U, V>(url: string, body?: U, classType?: ClassType<T>): Promise<V> => {
-  await validateBody(body, classType)
-  const { data } = await axios.post(`${baseUrl()}${url}`, body, headers())
-  return data
-}
+export const post = async <T extends object, U, V>(url: string, body?: U, classType?: ClassType<T>, header?: any): Promise<V> => {
+  await validateBody(body, classType);
+  const {data} = await axios.post(`${baseUrl()}${url}`, body, headers());
+  return data;
+};
+
 // eslint-disable-next-line @typescript-eslint/ban-types
-export const upload = async <T extends object, U, V>(url: string, body?: U, classType?: ClassType<T>): Promise<V> => {
-  await validateBody(body, classType)
-  const { data } = await axios.post(`${baseUrl()}${url}`, body, { headers: { 'x-api-key': process.env.TATUM_API_KEY, 'content-type': 'multipart/form-data'} })
-  return data
-}
+export const postMultiForm = async (url: string, body: FormData): Promise<any> => {
+  const h = headers();
+  h.headers = {...h.headers, ...body.getHeaders()};
+  const {data} = await axios.post(`${baseUrl()}${url}`, body, h);
+  return data;
+};
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const put = async <T extends object, U, V>(url: string, body?: U, classType?: ClassType<T>): Promise<V> => {

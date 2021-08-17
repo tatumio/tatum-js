@@ -1,3 +1,4 @@
+import {validateBody} from '../connector/tatum';
 import {CreateRecord, Currency, TransferBscBep20, TransferCeloOrCeloErc20Token, TransferEthErc20, TransferTron} from '../model';
 import {sendBscOrBep20Transaction, sendBscStoreDataTransaction} from './bsc';
 import {sendCeloOrcUsdTransaction, sendCeloStoreDataSignedTransaction} from './celo';
@@ -14,6 +15,7 @@ import {sendXdcStoreDataTransaction} from './xdc';
  * @param provider Optional provider to use for broadcasting signed tx to the blockchain.
  */
 export const storeData = async (testnet: boolean, body: CreateRecord, provider?: string) => {
+    await validateBody(body, CreateRecord);
     switch (body.chain) {
         case Currency.ETH:
             return await sendStoreDataTransaction(body, provider);

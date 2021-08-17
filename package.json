@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum",
-  "version": "1.19.17",
+  "version": "1.19.18",
   "description": "Tatum API client allows browsers and Node.js clients to interact with Tatum API.",
   "main": "dist/src/index.js",
   "repository": "https://github.com/tatumio/tatum-js",
@@ -59,6 +59,7 @@
     "ed25519-hd-key": "^1.1.2",
     "elliptic": "^6.5.4",
     "ethereumjs-wallet": "^1.0.0",
+    "form-data": "^4.0.0",
     "hdkey": "^2.0.1",
     "neon": "^2.0.0",
     "reflect-metadata": "^0.1.13",

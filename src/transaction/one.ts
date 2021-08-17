@@ -130,10 +130,11 @@ export const prepareOneSignedTransaction = async (testnet: boolean, body: OneTra
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareOneStoreDataTransaction = async (testnet: boolean, body: CreateRecord, provider?: string) => {
-    await validateBody(body, CreateRecord)
-    const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
-    return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.to, undefined, body.nonce, body.data,
-        body.ethFee?.gasLimit, body.ethFee?.gasPrice)
+    await validateBody(body, CreateRecord);
+    const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
+    const hexData = client.utils.isHex(body.data) ? client.utils.stringToHex(body.data) : client.utils.toHex(body.data);
+    return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.to || client.eth.accounts.wallet[0].address, undefined, body.nonce, hexData,
+        body.ethFee?.gasLimit, body.ethFee?.gasPrice);
 }
 
 /**

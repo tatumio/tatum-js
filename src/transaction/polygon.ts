@@ -1,7 +1,7 @@
 import {BigNumber} from 'bignumber.js';
 import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
-import {toWei} from 'web3-utils';
+import {isHex, stringToHex, toHex, toWei} from 'web3-utils';
 import {polygonBroadcast} from '../blockchain';
 import {axios, validateBody} from '../connector/tatum';
 import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
@@ -179,10 +179,11 @@ export const preparePolygonSignedTransaction = async (testnet: boolean, body: Tr
  * @returns transaction data to be broadcast to blockchain.
  */
 export const preparePolygonStoreDataTransaction = async (testnet: boolean, body: CreateRecord, provider?: string) => {
-    await validateBody(body, CreateRecord)
-    const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
-    return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.to, undefined, body.nonce, body.data,
-        body.ethFee?.gasLimit, body.ethFee?.gasPrice)
+    await validateBody(body, CreateRecord);
+    const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey);
+    const hexData = isHex(body.data) ? stringToHex(body.data) : toHex(body.data);
+    return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.to || client.eth.accounts.wallet[0].address, undefined, body.nonce, hexData,
+        body.ethFee?.gasLimit, body.ethFee?.gasPrice);
 }
 
 /**

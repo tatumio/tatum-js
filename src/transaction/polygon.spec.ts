@@ -1,5 +1,5 @@
-import Web3 from 'web3'
-import {Currency, DeployErc20, TransferCustomErc20, TransferEthErc20} from '../model'
+import Web3 from 'web3';
+import {CreateRecord, Currency, DeployErc20, TransferCustomErc20, TransferEthErc20} from '../model';
 import {
     polygonGetGasPriceInWei,
     preparePolygonBurnErc721SignedTransaction,
@@ -9,10 +9,11 @@ import {
     preparePolygonMintMultipleErc721SignedTransaction,
     preparePolygonSignedTransaction,
     preparePolygonSmartContractWriteMethodInvocation,
+    preparePolygonStoreDataTransaction,
     preparePolygonTransferErc20SignedTransaction,
     preparePolygonTransferErc721SignedTransaction,
     sendPolygonSmartContractReadMethodInvocationTransaction
-} from './polygon'
+} from './polygon';
 
 describe('MATIC transactions', () => {
     jest.setTimeout(19999)
@@ -28,20 +29,31 @@ describe('MATIC transactions', () => {
     describe('MATIC common transactions', () => {
         it('should test valid transaction MATIC data', async () => {
             const body = new TransferEthErc20()
-            body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29'
-            body.amount = '0.0001'
-            body.currency = Currency.MATIC
-            body.to = '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
-            const txData = await preparePolygonSignedTransaction(true, body, 'https://matic-mumbai.chainstacklabs.com/')
-            expect(txData).toContain('0x')
+            body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29';
+            body.amount = '0.0001';
+            body.currency = Currency.MATIC;
+            body.to = '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9';
+            const txData = await preparePolygonSignedTransaction(true, body, 'https://matic-mumbai.chainstacklabs.com/');
+            expect(txData).toContain('0x');
 
-            console.log(await broadcast(txData))
+            console.log(await broadcast(txData));
         })
+
+        it('should test valid transaction MATIC store data', async () => {
+            const body = new CreateRecord();
+            body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29';
+            body.data = 'Hello hi';
+            body.chain = Currency.MATIC;
+            const txData = await preparePolygonStoreDataTransaction(true, body, 'https://matic-mumbai.chainstacklabs.com/');
+            expect(txData).toContain('0x');
+
+            console.log(await broadcast(txData));
+        });
 
         it('should test ethGetGasPriceInWei', async () => {
-            const gasPrice = await polygonGetGasPriceInWei()
-            expect(gasPrice).not.toBeNull()
-        })
+            const gasPrice = await polygonGetGasPriceInWei();
+            expect(gasPrice).not.toBeNull();
+        });
 
         it('should test read smart contract method invocation', async () => {
             const result = await sendPolygonSmartContractReadMethodInvocationTransaction(true, {
