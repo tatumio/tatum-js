@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>VetTxClauses | @tatumio/tatum - v1.21.5</title>
+	<title>EgldReceipt | @tatumio/tatum - v1.21.5</title>
 	<meta name="description" content="Documentation for @tatumio/tatum - v1.21.5">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,10 +55,10 @@
 					<a href="../modules.html">@tatumio/tatum - v1.21.5</a>
 				</li>
 				<li>
-					<a href="VetTxClauses.html">VetTxClauses</a>
+					<a href="EgldReceipt.html">EgldReceipt</a>
 				</li>
 			</ul>
-			<h1>Interface VetTxClauses</h1>
+			<h1>Interface EgldReceipt</h1>
 		</div>
 	</div>
 </header>
@@ -71,7 +71,7 @@
 						<dt>export</dt>
 						<dd></dd>
 						<dt>interface</dt>
-						<dd><p>VetTxClauses</p>
+						<dd><p>EgldTransaction</p>
 						</dd>
 					</dl>
 				</div>
@@ -80,7 +80,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">VetTxClauses</span>
+						<span class="target">EgldReceipt</span>
 					</li>
 				</ul>
 			</section>
@@ -91,9 +91,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="VetTxClauses.html#data" class="tsd-kind-icon">data</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="VetTxClauses.html#to" class="tsd-kind-icon">to</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="VetTxClauses.html#value" class="tsd-kind-icon">value</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="EgldReceipt.html#data" class="tsd-kind-icon">data</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="EgldReceipt.html#sender" class="tsd-kind-icon">sender</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="EgldReceipt.html#txHash" class="tsd-kind-icon">tx<wbr>Hash</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="EgldReceipt.html#value" class="tsd-kind-icon">value</a></li>
 							</ul>
 						</section>
 					</div>
@@ -107,50 +108,39 @@
 					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/8733605/src/model/response/vet/VetTx.ts#L104">model/response/vet/VetTx.ts:104</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/8733605/src/model/response/egld/EgldTx.ts#L10">model/response/egld/EgldTx.ts:10</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<dl class="tsd-comment-tags">
-							<dt>memberof</dt>
-							<dd><p>VetTxClauses</p>
-							</dd>
-						</dl>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="to" class="tsd-anchor"></a>
-					<h3>to</h3>
-					<div class="tsd-signature tsd-kind-icon">to<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="sender" class="tsd-anchor"></a>
+					<h3>sender</h3>
+					<div class="tsd-signature tsd-kind-icon">sender<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/8733605/src/model/response/vet/VetTx.ts#L92">model/response/vet/VetTx.ts:92</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/8733605/src/model/response/egld/EgldTx.ts#L9">model/response/egld/EgldTx.ts:9</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<dl class="tsd-comment-tags">
-							<dt>memberof</dt>
-							<dd><p>VetTxClauses</p>
-							</dd>
-						</dl>
-					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="txHash" class="tsd-anchor"></a>
+					<h3>tx<wbr>Hash</h3>
+					<div class="tsd-signature tsd-kind-icon">tx<wbr>Hash<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/8733605/src/model/response/egld/EgldTx.ts#L11">model/response/egld/EgldTx.ts:11</a></li>
+						</ul>
+					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="value" class="tsd-anchor"></a>
 					<h3>value</h3>
-					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/8733605/src/model/response/vet/VetTx.ts#L98">model/response/vet/VetTx.ts:98</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/8733605/src/model/response/egld/EgldTx.ts#L8">model/response/egld/EgldTx.ts:8</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<dl class="tsd-comment-tags">
-							<dt>memberof</dt>
-							<dd><p>VetTxClauses</p>
-							</dd>
-						</dl>
-					</div>
 				</section>
 			</section>
 		</div>
@@ -167,16 +157,19 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="VetTxClauses.html" class="tsd-kind-icon">Vet<wbr>TxClauses</a>
+						<a href="EgldReceipt.html" class="tsd-kind-icon">Egld<wbr>Receipt</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="VetTxClauses.html#data" class="tsd-kind-icon">data</a>
+								<a href="EgldReceipt.html#data" class="tsd-kind-icon">data</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="VetTxClauses.html#to" class="tsd-kind-icon">to</a>
+								<a href="EgldReceipt.html#sender" class="tsd-kind-icon">sender</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="VetTxClauses.html#value" class="tsd-kind-icon">value</a>
+								<a href="EgldReceipt.html#txHash" class="tsd-kind-icon">tx<wbr>Hash</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="EgldReceipt.html#value" class="tsd-kind-icon">value</a>
 							</li>
 						</ul>
 					</li>
