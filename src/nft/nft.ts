@@ -184,6 +184,7 @@ export const mintNFTWithIPFSMetadata = async (testnet: boolean, body: CeloMintEr
     body.url = `ipfs://${metadataHash}`;
     const result = await mintNFTWithUri(testnet, body, provider);
     return {
+        tokenId: (body as any).tokenId,
         ...result,
         metadataUrl: body.url,
         metadataPublicUrl: `https://gateway.pinata.cloud/ipfs/${metadataHash}`,
