@@ -22,6 +22,7 @@ export enum EgldServiceType {
   ESDTNFTAddQuantity = 'ESDTNFTAddQuantity',
   ESDTNFTBurn = 'ESDTNFTBurn',
   freezeSingleNFT = 'freezeSingleNFT',
+  wipeSingleNFT = 'wipeSingleNFT',
   unFreezeSingleNFT = 'unFreezeSingleNFT',
   ESDTNFTTransfer = 'ESDTNFTTransfer',
 }

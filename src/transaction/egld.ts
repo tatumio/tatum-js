@@ -853,6 +853,39 @@ export const prepareEgldFreezeNftSignedTransaction = async (body: EgldEsdtTransa
 }
 
 /**
+ * Sign ESDT freeze NFT transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+ export const prepareEgldWipeNftSignedTransaction = async (body: EgldEsdtTransaction, provider?: string) => {
+  await validateBody(body, EgldEsdtTransaction)
+  const {
+      fromPrivateKey,
+      amount,
+      fee,
+      data,
+      nonce,
+      signatureId,
+  } = body
+
+  const client = getEgldClient(provider)
+
+  const value = amount ? new BigNumber(amount).toNumber() : 0
+  const gasLimit = fee?.gasLimit ? fee.gasLimit : '60000000'
+
+  const tx: TransactionConfig = {
+      from: 0,
+      to: ESDT_SYSTEM_SMART_CONTRACT_ADDRESS,
+      value,
+      nonce,
+      data: await prepareEgldFreezeOrWipeNftData(data),
+  }
+
+  return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, { gasLimit, gasPrice: fee?.gasPrice as string } as Fee)
+}
+
+/**
  * Sign ESDT transfer NFT transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
  * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
