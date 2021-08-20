@@ -66,12 +66,16 @@ export const ethGetGasPriceInWei = async () => {
  * @param privateKey
  */
 export const getClient = (provider?: string, privateKey?: string) => {
-    const web3 = new Web3(provider || `${TATUM_API_URL}/v3/ethereum/web3/${process.env.TATUM_API_KEY}`)
-    if (privateKey) {
-        web3.eth.accounts.wallet.add(privateKey)
-        web3.eth.defaultAccount = web3.eth.accounts.wallet[0].address
+    let url = provider || `${TATUM_API_URL}/v3/ethereum/web3/${process.env.TATUM_API_KEY}`;
+    if (process.env.TESTNET_TYPE === 'ethereum-rinkeby') {
+        url += '?testnetType=ethereum-rinkeby';
     }
-    return web3
+    const web3 = new Web3(url);
+    if (privateKey) {
+        web3.eth.accounts.wallet.add(privateKey);
+        web3.eth.defaultAccount = web3.eth.accounts.wallet[0].address;
+    }
+    return web3;
 }
 
 /**

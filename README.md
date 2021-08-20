@@ -36,17 +36,30 @@ $ npm run test
 ```
 
 ## Configuration and setup
-Provide Tatum API key to process.env.TATUM_API_KEY variable. You can use dotenv or any other way.
-There are modules and functions, that do not have to communicate with Tatum API, like wallet generation or signing of transactions locally.
-In those cases, there is no need to provide TATUM_API_KEY parameter.
+
+### Tatum API KEY
+
+Provide Tatum API key to process.env.TATUM_API_KEY variable. You can use dotenv or any other way. There are modules and
+functions, that do not have to communicate with Tatum API, like wallet generation or signing of transactions locally. In
+those cases, there is no need to provide TATUM_API_KEY parameter.
 
 ```process.env.TATUM_API_KEY=${YOUR_API_KEY}```
 
-There are some cases when requests fail to complete successfully. For instance, when you exceed request rate limitations.
-To configure behavior when requests fails we provide env variables process.env.TATUM_RETRY_DELAY and process.env.TATUM_RETRIES.
+### Testnet type
 
-Variable process.env.TATUM_RETRY_DELAY specifies the number in milliseconds how long wait before the failed request is resent again.
-Default value is 1000 milliseconds. 
+For Ethereum, there are 2 testnet chains supported - Ropsten (default one) and Rinkeby. To enable Rinkeby, you need to
+set up TESTNET_TYPE parameter to rinkeby.
+
+```process.env.TESTNET_TYPE=rinkeby```
+
+### Retry Delay
+
+There are some cases when requests fail to complete successfully. For instance, when you exceed request rate
+limitations. To configure behavior when requests fails we provide env variables process.env.TATUM_RETRY_DELAY and
+process.env.TATUM_RETRIES.
+
+Variable process.env.TATUM_RETRY_DELAY specifies the number in milliseconds how long wait before the failed request is
+resent again. Default value is 1000 milliseconds.
 
 ```process.env.TATUM_RETRY_DELAY=1000```
 

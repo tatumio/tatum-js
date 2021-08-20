@@ -1,5 +1,5 @@
 import {CeloProvider} from '@celo-tools/celo-ethers-wrapper';
-import {bscBroadcast, polygonBroadcast} from '../../blockchain';
+import {bscBroadcast, polygonBroadcast, tronBroadcast} from '../../blockchain';
 import * as listing from '../../contracts/marketplace';
 import {
     ApproveMarketplaceErc20Spending,
@@ -284,4 +284,47 @@ describe('Marketplace Listing tests', () => {
             console.log(await polygonBroadcast(tx));
         });
     })
+    describe('Marketplace Listing TRON transactions', () => {
+        it('should deploy marketplace', async () => {
+            const test = await deployMarketplaceListing(true, {
+                'feeRecipient': 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
+                'marketplaceFee': 250,
+                'chain': Currency.TRON,
+                'fromPrivateKey': '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701',
+                'feeLimit': 500
+            });
+            console.log(test);
+            expect(test).toBeDefined();
+        });
+
+        it('should create listing native asset', async () => {
+            const txData = await prepareMarketplaceCreateListing(true, {
+                'contractAddress': 'TXseqo4U5yZZgVjjDzodA3par23pxevvtD',
+                'nftAddress': 'TGXh2YJhfwchMGKuzfEJ27W1VEJRKnMdy9',
+                'tokenId': '1',
+                'listingId': '1',
+                'isErc721': true,
+                'price': '0.001',
+                'seller': 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
+                'chain': Currency.TRON,
+                'fromPrivateKey': '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701',
+                'feeLimit': 100
+            });
+            expect(txData).toContain('txID');
+            console.log(await tronBroadcast(txData));
+        });
+
+        it('should buy listing native asset', async () => {
+            const txData = await prepareMarketplaceBuyListing(true, {
+                'contractAddress': 'TXseqo4U5yZZgVjjDzodA3par23pxevvtD',
+                'listingId': '1',
+                'amount': '0.002',
+                'chain': Currency.TRON,
+                'fromPrivateKey': '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701',
+                'feeLimit': 100
+            });
+            expect(txData).toContain('txID');
+            console.log(await tronBroadcast(txData));
+        });
+    });
 })

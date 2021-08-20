@@ -21,13 +21,11 @@ import {
     UpdateTronMarketplaceFeeRecipient
 } from '../../model';
 import {
-    convertAddressToHex,
     getBscBep20ContractDecimals,
     getCeloErc20ContractDecimals,
     getEthErc20ContractDecimals,
     getOne20ContractDecimals,
     getPolygonErc20ContractDecimals,
-    getTronTrc20ContractDecimals,
     prepareBscDeployMarketplaceListingSignedTransaction,
     prepareBscSmartContractWriteMethodInvocation,
     prepareCeloDeployMarketplaceListingSignedTransaction,
@@ -38,14 +36,11 @@ import {
     preparePolygonDeployMarketplaceListingSignedTransaction,
     preparePolygonSmartContractWriteMethodInvocation,
     prepareSmartContractWriteMethodInvocation,
-    prepareTronDeployMarketplaceListingSignedTransaction,
-    prepareTronSmartContractInvocation,
     sendBscDeployMarketplaceListingSignedTransaction,
     sendCeloDeployMarketplaceListingSignedTransaction,
     sendEthDeployMarketplaceListingSignedTransaction,
     sendOneDeployMarketplaceListingSignedTransaction,
-    sendPolygonDeployMarketplaceListingSignedTransaction,
-    sendTronDeployMarketplaceListingSignedTransaction
+    sendPolygonDeployMarketplaceListingSignedTransaction
 } from '../../transaction';
 
 enum ListingState {
@@ -142,19 +137,19 @@ export const getMarketplaceFeeRecipient = async (chain: Currency, contractAddres
 export const deployMarketplaceListing = async (testnet: boolean, body: DeployMarketplaceListing | DeployTronMarketplaceListing, provider?: string) => {
     switch (body.chain) {
         case Currency.CELO:
-            return await sendCeloDeployMarketplaceListingSignedTransaction(testnet, body, provider)
+            return await sendCeloDeployMarketplaceListingSignedTransaction(testnet, body, provider);
         case Currency.ONE:
-            return await sendOneDeployMarketplaceListingSignedTransaction(testnet, body, provider)
+            return await sendOneDeployMarketplaceListingSignedTransaction(testnet, body, provider);
         case Currency.ETH:
-            return await sendEthDeployMarketplaceListingSignedTransaction(body, provider)
+            return await sendEthDeployMarketplaceListingSignedTransaction(body, provider);
         case Currency.BSC:
-            return await sendBscDeployMarketplaceListingSignedTransaction(body, provider)
+            return await sendBscDeployMarketplaceListingSignedTransaction(body, provider);
         case Currency.MATIC:
-            return await sendPolygonDeployMarketplaceListingSignedTransaction(testnet, body, provider)
-        case Currency.TRON:
-            return await sendTronDeployMarketplaceListingSignedTransaction(testnet, body as DeployTronMarketplaceListing, provider)
+            return await sendPolygonDeployMarketplaceListingSignedTransaction(testnet, body, provider);
+        // case Currency.TRON:
+        //     return await sendTronDeployMarketplaceListingSignedTransaction(testnet, body as DeployTronMarketplaceListing, provider)
         default:
-            throw new Error('Unsupported chain')
+            throw new Error('Unsupported chain');
     }
 }
 
@@ -176,19 +171,19 @@ export const deployMarketplaceListing = async (testnet: boolean, body: DeployMar
 export const prepareDeployMarketplaceListing = async (testnet: boolean, body: DeployMarketplaceListing | DeployTronMarketplaceListing, provider?: string) => {
     switch (body.chain) {
         case Currency.CELO:
-            return await prepareCeloDeployMarketplaceListingSignedTransaction(testnet, body, provider)
+            return await prepareCeloDeployMarketplaceListingSignedTransaction(testnet, body, provider);
         case Currency.ONE:
-            return await prepareOneDeployMarketplaceListingSignedTransaction(testnet, body, provider)
+            return await prepareOneDeployMarketplaceListingSignedTransaction(testnet, body, provider);
         case Currency.ETH:
-            return await prepareEthDeployMarketplaceListingSignedTransaction(body, provider)
+            return await prepareEthDeployMarketplaceListingSignedTransaction(body, provider);
         case Currency.BSC:
-            return await prepareBscDeployMarketplaceListingSignedTransaction(body, provider)
+            return await prepareBscDeployMarketplaceListingSignedTransaction(body, provider);
         case Currency.MATIC:
-            return await preparePolygonDeployMarketplaceListingSignedTransaction(testnet, body, provider)
-        case Currency.TRON:
-            return await prepareTronDeployMarketplaceListingSignedTransaction(testnet, body as DeployTronMarketplaceListing, provider)
+            return await preparePolygonDeployMarketplaceListingSignedTransaction(testnet, body, provider);
+        // case Currency.TRON:
+        //     return await prepareTronDeployMarketplaceListingSignedTransaction(testnet, body as DeployTronMarketplaceListing, provider)
         default:
-            throw new Error('Unsupported chain')
+            throw new Error('Unsupported chain');
     }
 }
 
@@ -203,10 +198,11 @@ export const prepareMarketplaceUpdateFee = async (testnet: boolean, body: Update
     await validateBody(body, body.chain === Currency.TRON ? UpdateTronMarketplaceFee : UpdateMarketplaceFee)
     const params = [`0x${new BigNumber(body.marketplaceFee).toString(16)}`]
     if (body.chain === Currency.TRON) {
-        return await prepareSCCall(testnet, body, UpdateTronMarketplaceFee, 'setMarketplaceFee',
-            [
-                {type: 'uint256', value: params[0]},
-            ], 'setMarketplaceFee(uint256)', provider)
+        throw new Error('Unsupported chain');
+        // return await prepareSCCall(testnet, body, UpdateTronMarketplaceFee, 'setMarketplaceFee',
+        //     [
+        //         {type: 'uint256', value: params[0]},
+        //     ], 'setMarketplaceFee(uint256)', provider)
     } else {
         return await prepareSCCall(testnet, body, UpdateMarketplaceFee, 'setMarketplaceFee', params, undefined, provider)
     }
@@ -223,10 +219,11 @@ export const prepareMarketplaceUpdateFeeRecipient = async (testnet: boolean, bod
     await validateBody(body, body.chain === Currency.TRON ? UpdateTronMarketplaceFeeRecipient : UpdateMarketplaceFeeRecipient)
     const params = [body.feeRecipient]
     if (body.chain === Currency.TRON) {
-        return await prepareSCCall(testnet, body, UpdateTronMarketplaceFeeRecipient, 'setMarketplaceFeeRecipient',
-            [
-                {type: 'address', value: convertAddressToHex(params[0])},
-            ], 'setMarketplaceFeeRecipient(address)', provider)
+        throw new Error('Unsupported chain');
+        // return await prepareSCCall(testnet, body, UpdateTronMarketplaceFeeRecipient, 'setMarketplaceFeeRecipient',
+        //     [
+        //         {type: 'address', value: convertAddressToHex(params[0])},
+        //     ], 'setMarketplaceFeeRecipient(address)', provider)
     } else {
         return await prepareSCCall(testnet, body, UpdateMarketplaceFeeRecipient, 'setMarketplaceFeeRecipient', params, undefined, provider)
     }
@@ -248,33 +245,33 @@ export const prepareMarketplaceApproveErc20Spending = async (testnet: boolean, b
             break
         case Currency.ONE:
             amount = new BigNumber(body.amount).multipliedBy(new BigNumber(10).pow(await getOne20ContractDecimals(testnet, body.contractAddress, provider))).toString(16)
-            break
+            break;
         case Currency.ETH:
-            amount = new BigNumber(body.amount).multipliedBy(new BigNumber(10).pow(await getEthErc20ContractDecimals(testnet, body.contractAddress, provider))).toString(16)
-            break
+            amount = new BigNumber(body.amount).multipliedBy(new BigNumber(10).pow(await getEthErc20ContractDecimals(testnet, body.contractAddress, provider))).toString(16);
+            break;
         case Currency.BSC:
-            amount = new BigNumber(body.amount).multipliedBy(new BigNumber(10).pow(await getBscBep20ContractDecimals(testnet, body.contractAddress, provider))).toString(16)
-            break
+            amount = new BigNumber(body.amount).multipliedBy(new BigNumber(10).pow(await getBscBep20ContractDecimals(testnet, body.contractAddress, provider))).toString(16);
+            break;
         case Currency.MATIC:
-            amount = new BigNumber(body.amount).multipliedBy(new BigNumber(10).pow(await getPolygonErc20ContractDecimals(testnet, body.contractAddress, provider))).toString(16)
-            break
-        case Currency.TRON:
-            amount = new BigNumber(body.amount).multipliedBy(new BigNumber(10).pow(await getTronTrc20ContractDecimals(testnet, body.contractAddress, provider))).toString(16)
-            break
+            amount = new BigNumber(body.amount).multipliedBy(new BigNumber(10).pow(await getPolygonErc20ContractDecimals(testnet, body.contractAddress, provider))).toString(16);
+            break;
+        // case Currency.TRON:
+        //     amount = new BigNumber(body.amount).multipliedBy(new BigNumber(10).pow(await getTronTrc20ContractDecimals(testnet, body.contractAddress, provider))).toString(16)
+        //     break
         default:
-            throw new Error('Unsupported combination of inputs.')
+            throw new Error('Unsupported combination of inputs.');
     }
-    const params = [body.marketplaceAddress, `0x${amount}`]
+    const params = [body.marketplaceAddress, `0x${amount}`];
     body.amount = '0';
-    if (body.chain === Currency.TRON) {
-        return await prepareSCCall(testnet, body, ApproveTronMarketplaceErc20Spending, 'approve',
-            [
-                {type: 'address', value: convertAddressToHex(params[0])},
-                {type: 'uint256', value: params[1]},
-            ], 'approve(address,uint256)', provider, token_abi)
-    } else {
-        return await prepareSCCall(testnet, body, ApproveMarketplaceErc20Spending, 'approve', params, undefined, provider, token_abi)
-    }
+    // if (body.chain === Currency.TRON) {
+    //     return await prepareSCCall(testnet, body, ApproveTronMarketplaceErc20Spending, 'approve',
+    //         [
+    //             {type: 'address', value: convertAddressToHex(params[0])},
+    //             {type: 'uint256', value: params[1]},
+    //         ], 'approve(address,uint256)', provider, token_abi)
+    // } else {
+    return await prepareSCCall(testnet, body, ApproveMarketplaceErc20Spending, 'approve', params, undefined, provider, token_abi);
+    // }
 }
 
 /**
@@ -292,17 +289,21 @@ export const prepareMarketplaceCreateListing = async (testnet: boolean, body: Cr
         `0x${new BigNumber(body.price).multipliedBy(body.chain === Currency.TRON ? 1e6 : 1e18).toString(16)}`, body.seller.trim(), `0x${new BigNumber(body.amount || 0).toString(16)}`,
         body.erc20Address || '0x0000000000000000000000000000000000000000']
     if (body.chain === Currency.TRON) {
-        return await prepareSCCall(testnet, body, CreateTronMarketplaceListing, 'createListing',
-            [
-                {type: 'string', value: params[0]},
-                {type: 'bool', value: params[1]},
-                {type: 'address', value: convertAddressToHex(params[2] as string)},
-                {type: 'uint256', value: params[3]},
-                {type: 'uint256', value: params[4]},
-                {type: 'address', value: convertAddressToHex(params[5] as string)},
-                {type: 'uint256', value: params[6]},
-                {type: 'address', value: convertAddressToHex(params[7] as string)},
-            ], 'createListing(string,bool,address,uint256,uint256,address,uint256,address)', provider)
+        throw new Error('Unsupported chain');
+        // if (!body.erc20Address) {
+        //     params[7] = 'T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb';
+        // }
+        // return await prepareSCCall(testnet, body, CreateTronMarketplaceListing, 'createListing',
+        //     [
+        //         {type: 'string', value: params[0]},
+        //         {type: 'bool', value: params[1]},
+        //         {type: 'address', value: convertAddressToHex(params[2] as string)},
+        //         {type: 'uint256', value: params[3]},
+        //         {type: 'uint256', value: params[4]},
+        //         {type: 'address', value: convertAddressToHex(params[5] as string)},
+        //         {type: 'uint256', value: params[6]},
+        //         {type: 'address', value: convertAddressToHex(params[7] as string)},
+        //     ], 'createListing(string,bool,address,uint256,uint256,address,uint256,address)', provider)
     } else {
         return await prepareSCCall(testnet, body, CreateMarketplaceListing, 'createListing', params, undefined, provider)
     }
@@ -323,11 +324,12 @@ export const prepareMarketplaceBuyListing = async (testnet: boolean, body: Invok
         body.amount = undefined;
     }
     if (body.chain === Currency.TRON) {
-        return await prepareSCCall(testnet, body, InvokeTronMarketplaceListingOperation, 'buyAssetFromListing',
-            [
-                {type: 'string', value: params[0]},
-                {type: 'address', value: convertAddressToHex(params[1])},
-            ], 'buyAssetFromListing(string,address)', provider);
+        throw new Error('Unsupported chain');
+        // return await prepareSCCall(testnet, body, InvokeTronMarketplaceListingOperation, 'buyAssetFromListing',
+        //     [
+        //         {type: 'string', value: params[0]},
+        //         {type: 'address', value: convertAddressToHex(params[1])},
+        //     ], 'buyAssetFromListing(string,address)', provider);
     } else {
         return await prepareSCCall(testnet, body, InvokeMarketplaceListingOperation, 'buyAssetFromListing', params, undefined, provider);
     }
@@ -344,10 +346,11 @@ export const prepareMarketplaceCancelListing = async (testnet: boolean, body: In
     await validateBody(body, body.chain === Currency.TRON ? InvokeTronMarketplaceListingOperation : InvokeMarketplaceListingOperation)
     const params = [body.listingId]
     if (body.chain === Currency.TRON) {
-        return await prepareSCCall(testnet, body, InvokeTronMarketplaceListingOperation, 'cancelListing',
-            [
-                {type: 'string', value: params[0]},
-            ], 'cancelListing(string)', provider)
+        throw new Error('Unsupported chain');
+        // return await prepareSCCall(testnet, body, InvokeTronMarketplaceListingOperation, 'cancelListing',
+        //     [
+        //         {type: 'string', value: params[0]},
+        //     ], 'cancelListing(string)', provider)
     } else {
         return await prepareSCCall(testnet, body, InvokeMarketplaceListingOperation, 'cancelListing', params, undefined, provider)
     }
@@ -374,23 +377,19 @@ const prepareSCCall = async (testnet: boolean, body: any, clazz: ClassType<objec
     r.methodABI = abi.find(a => a.name === r.methodName)
     switch (body.chain) {
         case Currency.CELO:
-            return await prepareCeloSmartContractWriteMethodInvocation(testnet, {...r, feeCurrency: body.feeCurrency || Currency.CELO}, provider)
+            return await prepareCeloSmartContractWriteMethodInvocation(testnet, {...r, feeCurrency: body.feeCurrency || Currency.CELO}, provider);
         case Currency.ONE:
-            return await prepareOneSmartContractWriteMethodInvocation(testnet, r, provider)
+            return await prepareOneSmartContractWriteMethodInvocation(testnet, r, provider);
         case Currency.ETH:
-            return await prepareSmartContractWriteMethodInvocation(r, provider)
+            return await prepareSmartContractWriteMethodInvocation(r, provider);
         case Currency.BSC:
-            return await prepareBscSmartContractWriteMethodInvocation(r, provider)
+            return await prepareBscSmartContractWriteMethodInvocation(r, provider);
         case Currency.MATIC:
-            return await preparePolygonSmartContractWriteMethodInvocation(testnet, r, provider)
-        case Currency.TRON:
-            r.methodName = methodSig as string
-            r.params = [
-                {type: 'string', value: r.params[0]},
-                {type: 'address', value: convertAddressToHex(r.params[1])},
-            ]
-            return await prepareTronSmartContractInvocation(testnet, r, body.feeLimit, body.from, provider)
+            return await preparePolygonSmartContractWriteMethodInvocation(testnet, r, provider);
+        // case Currency.TRON:
+        //     r.methodName = methodSig as string
+        //     return await prepareTronSmartContractInvocation(testnet, r, body.feeLimit, body.from, provider)
         default:
-            throw new Error('Unsupported combination of inputs.')
+            throw new Error('Unsupported combination of inputs.');
     }
 }

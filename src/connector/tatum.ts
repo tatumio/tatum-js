@@ -22,7 +22,7 @@ axiosRetry(axios, {
 
 const baseUrl = () => process.env.TATUM_API_URL || TATUM_API_URL;
 
-const headers = () => ({ headers: { 'x-api-key': process.env.TATUM_API_KEY } })
+const headers = () => ({headers: {'x-api-key': process.env.TATUM_API_KEY, 'x-testnet-type': process.env.TESTNET_TYPE || 'ethereum-ropsten'}});
 
 export const get = async <T>(url: string): Promise<T> => {
   const { data } = await axios.get(`${baseUrl()}${url}`, headers())
@@ -30,7 +30,7 @@ export const get = async <T>(url: string): Promise<T> => {
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-export const post = async <T extends object, U, V>(url: string, body?: U, classType?: ClassType<T>, header?: any): Promise<V> => {
+export const post = async <T extends object, U, V>(url: string, body?: U, classType?: ClassType<T>): Promise<V> => {
   await validateBody(body, classType);
   const {data} = await axios.post(`${baseUrl()}${url}`, body, headers());
   return data;
