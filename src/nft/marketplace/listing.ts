@@ -275,7 +275,7 @@ export const prepareMarketplaceApproveErc20Spending = async (testnet: boolean, b
 }
 
 /**
- * Create new listing on the marketplace. Only marketplace operator can establish those on behalf of the seller of the NFT.
+ * Create new listing on the marketplace.
  * After listing is created, seller must send the asset to the marketplace smart contract.
  * Only listing for existing NFTs can be created - seller must be owner of the NFT asset.
  * @param testnet chain to work with
