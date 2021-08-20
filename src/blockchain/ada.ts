@@ -38,8 +38,8 @@ export const adaGetTransaction = async (hash: string): Promise<AdaTransaction> =
  *
  * For more details, see <a href="https://tatum.io/apidoc#operation/AdaGetTxByAddress" target="_blank">Tatum API documentation</a>
  */
-export const adaGetTransactionsByAccount = async (address: string, limit: number, offset: number): Promise<AdaTransaction[]> =>
-  get(`/v3/ada/account/${address}/transactions?limit=${limit}?offset=${offset}`)
+export const adaGetTransactionsByAccount = async (address: string, pageSize = 50, offset = 0): Promise<AdaTransaction[]> =>
+  get(`/v3/ada/transaction/address/${address}?pageSize=${pageSize}&offset=${offset}`)
 
 /**
  * Returns UTXOs by address from Ada blockchain. <br>
