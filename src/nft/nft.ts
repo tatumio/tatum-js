@@ -182,6 +182,9 @@ export const createNFT = async (testnet: boolean, body: CeloMintErc721 | EthMint
     metadata.properties.image = {type: 'string', description: `ipfs://${ipfsHash}`};
     const {ipfsHash: metadataHash} = await ipfsUpload(Buffer.from(JSON.stringify(metadata)), 'metadata.json');
     body.url = `ipfs://${metadataHash}`;
+    if (body.chain === Currency.FLOW) {
+        (body as any).privateKey = (body as any).privateKey || (body as any).fromPrivateKey;
+    }
     const result = await mintNFTWithUri(testnet, body, provider);
     return {
         tokenId: (body as any).tokenId,
