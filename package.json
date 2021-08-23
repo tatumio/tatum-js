@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum",
-  "version": "1.21.3",
+  "version": "1.22.5",
   "description": "Tatum API client allows browsers and Node.js clients to interact with Tatum API.",
   "main": "dist/src/index.js",
   "repository": "https://github.com/tatumio/tatum-js",
@@ -8,7 +8,7 @@
     "dist/"
   ],
   "scripts": {
-    "clean": "rimraf dist/*",
+    "clean": "rimraf dist*",
     "build": "tsc",
     "prepublish": "npm run clean && npm run build",
     "docs": "typedoc",
@@ -32,7 +32,6 @@
     "@binance-chain/javascript-sdk": "^4.1.1",
     "@celo-tools/celo-ethers-wrapper": "0.0.5",
     "@cityofzion/neon-js": "^4.8.0",
-    "@elrondnetwork/erdjs": "^6.4.0",
     "@emurgo/cardano-serialization-lib-nodejs": "^6.0.0",
     "@harmony-js/crypto": "^0.1.56",
     "@onflow/config": "^0.0.2",

@@ -1,7 +1,7 @@
-import {Type} from 'class-transformer'
-import {IsBoolean, IsIn, IsNotEmpty, IsOptional, Length, MaxLength, ValidateNested} from 'class-validator'
-import {Fiat} from '../response'
-import {CustomerUpdate} from './CustomerUpdate'
+import {Type} from 'class-transformer';
+import {IsBoolean, IsIn, IsNotEmpty, IsOptional, Length, MaxLength, ValidateNested} from 'class-validator';
+import {Fiat} from '../response';
+import {CustomerUpdate} from './CustomerUpdate';
 
 export class CreateAccount {
 
@@ -9,7 +9,7 @@ export class CreateAccount {
     @Length(2, 40)
     public currency: string;
 
-    @MaxLength(192)
+    @MaxLength(256)
     @IsOptional()
     public xpub?: string;
 

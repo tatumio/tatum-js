@@ -1,5 +1,5 @@
 import {CeloProvider} from '@celo-tools/celo-ethers-wrapper';
-import {bscBroadcast, polygonBroadcast} from '../../blockchain';
+import {bscBroadcast, polygonBroadcast, tronBroadcast} from '../../blockchain';
 import * as listing from '../../contracts/marketplace';
 import {
     ApproveMarketplaceErc20Spending,
@@ -220,10 +220,10 @@ describe('Marketplace Listing tests', () => {
         it('should create listing native asset', async () => {
             const body = new CreateMarketplaceListing();
             body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29';
-            body.contractAddress = '0xe6938a3e82168e462d6250a85e78a17356af34d4';
+            body.contractAddress = '0xc4585ec777ba6dc5d33524ca72c425d512780c31';
             body.nftAddress = '0x5d7d868ed584b04b922905a481f274206a42dd8a';
-            body.tokenId = '1626777706895';
-            body.listingId = '10';
+            body.tokenId = '121';
+            body.listingId = '111';
             body.isErc721 = true;
             body.price = '0.001';
             body.seller = '0x811dfbff13adfbc3cf653dcc373c03616d3471c9';
@@ -234,9 +234,9 @@ describe('Marketplace Listing tests', () => {
 
             await new Promise(r => setTimeout(r, 5000));
             console.log(await transferNFT(true, {
-                to: '0xe6938a3e82168e462d6250a85e78a17356af34d4',
+                to: '0xc4585ec777ba6dc5d33524ca72c425d512780c31',
                 chain: Currency.MATIC,
-                tokenId: '1626777706895',
+                tokenId: '121',
                 fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
                 contractAddress: '0x5d7d868ed584b04b922905a481f274206a42dd8a'
             }));
@@ -244,7 +244,7 @@ describe('Marketplace Listing tests', () => {
 
         it('should get listing', async () => {
             const r = new SmartContractReadMethodInvocation();
-            r.contractAddress = '0xe6938a3e82168e462d6250a85e78a17356af34d4';
+            r.contractAddress = '0xc4585ec777ba6dc5d33524ca72c425d512780c31';
             r.methodName = 'getListing';
             r.methodABI = listing.abi.find(a => a.name === r.methodName);
             r.params = ['8'];
@@ -253,7 +253,7 @@ describe('Marketplace Listing tests', () => {
 
         it('should get marketplace fee', async () => {
             const r = new SmartContractReadMethodInvocation();
-            r.contractAddress = '0xe6938a3e82168e462d6250a85e78a17356af34d4';
+            r.contractAddress = '0xc4585ec777ba6dc5d33524ca72c425d512780c31';
             r.methodName = 'getMarketplaceFee';
             r.methodABI = listing.abi.find(a => a.name === r.methodName);
             r.params = [];
@@ -263,8 +263,8 @@ describe('Marketplace Listing tests', () => {
         it('should buy listing native', async () => {
             const body = new InvokeMarketplaceListingOperation();
             body.fromPrivateKey = '0x3497eb7fa0fadf23da006c31f874a5aaed7da58c1caf3d84fa3387e1208ada39';
-            body.contractAddress = '0xe6938a3e82168e462d6250a85e78a17356af34d4';
-            body.listingId = '10';
+            body.contractAddress = '0xc4585ec777ba6dc5d33524ca72c425d512780c31';
+            body.listingId = '111';
             body.amount = '0.0015';
             body.chain = Currency.MATIC;
             const txData = await prepareMarketplaceBuyListing(true, body, 'https://rpc-mumbai.matic.today');
@@ -284,4 +284,47 @@ describe('Marketplace Listing tests', () => {
             console.log(await polygonBroadcast(tx));
         });
     })
+    describe('Marketplace Listing TRON transactions', () => {
+        it('should deploy marketplace', async () => {
+            const test = await deployMarketplaceListing(true, {
+                'feeRecipient': 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
+                'marketplaceFee': 250,
+                'chain': Currency.TRON,
+                'fromPrivateKey': '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701',
+                'feeLimit': 500
+            });
+            console.log(test);
+            expect(test).toBeDefined();
+        });
+
+        it('should create listing native asset', async () => {
+            const txData = await prepareMarketplaceCreateListing(true, {
+                'contractAddress': 'TXseqo4U5yZZgVjjDzodA3par23pxevvtD',
+                'nftAddress': 'TGXh2YJhfwchMGKuzfEJ27W1VEJRKnMdy9',
+                'tokenId': '1',
+                'listingId': '1',
+                'isErc721': true,
+                'price': '0.001',
+                'seller': 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
+                'chain': Currency.TRON,
+                'fromPrivateKey': '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701',
+                'feeLimit': 100
+            });
+            expect(txData).toContain('txID');
+            console.log(await tronBroadcast(txData));
+        });
+
+        it('should buy listing native asset', async () => {
+            const txData = await prepareMarketplaceBuyListing(true, {
+                'contractAddress': 'TXseqo4U5yZZgVjjDzodA3par23pxevvtD',
+                'listingId': '1',
+                'amount': '0.002',
+                'chain': Currency.TRON,
+                'fromPrivateKey': '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701',
+                'feeLimit': 100
+            });
+            expect(txData).toContain('txID');
+            console.log(await tronBroadcast(txData));
+        });
+    });
 })
