@@ -82,18 +82,10 @@
 						<p><code>npm install @tatumio/tatum</code></p>
 					</li>
 				</ol>
-				<a href="#browser" id="browser" style="color: inherit; text-decoration: none;">
-					<h3>Browser</h3>
-				</a>
-				<ol>
-					<li><p>Install module:</p>
-						<p><code>npm install @tatumio/tatum</code></p>
-					</li>
-				</ol>
 				<a href="#nodejs-amp-browser-support" id="nodejs-amp-browser-support" style="color: inherit; text-decoration: none;">
 					<h3>Node.JS &amp; Browser support</h3>
 				</a>
-				<p>Library is written in TypeScript with ES2017 as the target JS version. Library should work in all modern browsers with ES2017 support and Node.JS current LTS. </p>
+				<p>Library is written in TypeScript with ES2017 as the target JS version. Library should work in Node.JS current LTS. </p>
 				<a href="#testing" id="testing" style="color: inherit; text-decoration: none;">
 					<h2>Testing</h2>
 				</a>
@@ -140,7 +132,7 @@
 				</a>
 				<pre><code class="language-js"><span style="color: #008000">// In Node.js</span>
 <span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">Tatum</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;@tatumio/tatum&#039;</span><span style="color: #000000">);</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">btcWallet</span><span style="color: #000000"> = </span><span style="color: #001080">Tatum</span><span style="color: #000000">.</span><span style="color: #795E26">generateWallet</span><span style="color: #000000">(</span><span style="color: #001080">Tatum</span><span style="color: #000000">.</span><span style="color: #001080">Currency</span><span style="color: #000000">.</span><span style="color: #0070C1">BTC</span><span style="color: #000000">, </span><span style="color: #0000FF">true</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">btcWallet</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">Tatum</span><span style="color: #000000">.</span><span style="color: #795E26">generateWallet</span><span style="color: #000000">(</span><span style="color: #001080">Tatum</span><span style="color: #000000">.</span><span style="color: #001080">Currency</span><span style="color: #000000">.</span><span style="color: #0070C1">BTC</span><span style="color: #000000">, </span><span style="color: #0000FF">true</span><span style="color: #000000">);</span>
 
 <span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">btcWallet</span><span style="color: #000000">);</span>
 <span style="color: #000000">&gt;</span>
@@ -155,7 +147,7 @@
 				<p>We support types within the repo itself. Please open an issue here if you find any wrong types.</p>
 				<p>You can use <code>@tatumio/tatum</code> as follows:</p>
 				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">generateWallet</span><span style="color: #000000">, </span><span style="color: #001080">Currency</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@tatumio/tatum&#039;</span><span style="color: #000000">;</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">btcWallet</span><span style="color: #000000"> = </span><span style="color: #795E26">generateWallet</span><span style="color: #000000">(</span><span style="color: #001080">Currency</span><span style="color: #000000">.</span><span style="color: #0070C1">BTC</span><span style="color: #000000">, </span><span style="color: #0000FF">true</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">btcWallet</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">generateWallet</span><span style="color: #000000">(</span><span style="color: #001080">Currency</span><span style="color: #000000">.</span><span style="color: #0070C1">BTC</span><span style="color: #000000">, </span><span style="color: #0000FF">true</span><span style="color: #000000">);</span>
 </code></pre>
 				<p>More examples are available here:</p>
 				<ul>
