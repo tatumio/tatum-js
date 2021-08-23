@@ -2,11 +2,12 @@ import {BigNumber} from 'bignumber.js';
 import * as tweetnacl from 'tweetnacl';
 import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
-import {egldBroadcast, egldEstimateGas, egldGetTransactionsCount} from '../blockchain';
+import {egldBroadcast, egldGetTransactionsCount} from '../blockchain';
 import {axios, validateBody} from '../connector/tatum';
 import {ESDT_SYSTEM_SMART_CONTRACT_ADDRESS, TATUM_API_URL} from '../constants';
 import {
     Currency,
+    CreateRecord,
     EgldEsdtTransaction,
     EgldSendTransaction,
     EsdtAddOrBurnNftQuantity,
@@ -33,7 +34,7 @@ const ELROND_V3_ENDPOINT = `${TATUM_API_URL}/v3/egld/web3/${process.env.TATUM_AP
  * Get Elrond network config
  */
 export const egldGetConfig = async () => {
-    const gasStationUrl = await getEgldClient('https://api.elrond.com'); // TODO: use TATUM API endpoint
+    const gasStationUrl = await getEgldClient();
     try {
         const {data} = await axios.get(`${gasStationUrl}/network/config`);
         return data
@@ -55,28 +56,10 @@ export const egldGetGasPrice = async (): Promise<number> => {
  * Estimate Gas limit for the transaction.
  */
 export const egldGetGasLimit = async (tx: EgldSendTransaction): Promise<number> => {
-    // TODO: use this as TATUM API endpoint
-    // const gasStationUrl = 'https://api.elrond.com';
-    // // const gasStationUrl = await getEgldClient();
-    // try {
-    //     const {data} = await axios.post(`${gasStationUrl}/transaction/cost`, tx);
-    //     return data?.txGasUnits || 50000;
-    // } catch (e) {
-    // }
-    // return 50000;
-
-    return new BigNumber((await egldEstimateGas(tx)) || 50000).toNumber()
+    const gasStationUrl = await getEgldClient();
+    const {data} = await axios.post(`${gasStationUrl}/transaction/cost`, tx);
+    return data?.txGasUnits || 50000;
 }
-
-// /**
-//  * Get account nonce
-//  */
-// const egldGetAccountNonce = async (from: string): Promise<number> => {
-//     // TODO: use this as TATUM API endpoint
-//     // const {data} = await axios.get(`${ELROND_V3_ENDPOINT}/address/${from}/nonce`);
-//     // return data?.nonce;
-//     return await egldGetTransactionsCount(from)
-// }
 
 /**
  * Sign transaction
@@ -119,53 +102,39 @@ export const signEgldKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
     return await prepareSignedTransactionAbstraction(client, transaction, undefined, fromPrivateKey, undefined)
 }
 
-// /**
-//  * Sign EGLD Store data transaction with private keys locally. Nothing is broadcast to the blockchain.
-//  * @param body content of the transaction to broadcast
-//  * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
-//  * @returns transaction data to be broadcast to blockchain.
-//  */
-// export const prepareEgldStoreDataTransaction = async (body: CreateRecord, provider?: string) => {
-//     await validateBody(body, CreateRecord);
-//     const {
-//         fromPrivateKey,
-//         to,
-//         ethFee,
-//         data,
-//         nonce,
-//         signatureId
-//     } = body;
-//     const client = getEgldClient(provider);
-//     const address = to || client.eth.defaultAccount;
-//     if (!address) {
-//         throw new Error('Recipient must be provided.');
-//     }
-//     const hexData = client.utils.isHex(data) ? client.utils.stringToHex(data) : client.utils.toHex(data);
-//     const addressNonce = nonce ? nonce : await egldGetTransactionsCount(address);
-//     const customFee = ethFee ? {
-//         ...ethFee,
-//         gasPrice: client.utils.toWei(ethFee.gasPrice, 'gwei'),
-//     } : {
-//         gasLimit: `${hexData.length * 68 + 21000}`,
-//         gasPrice: await egldGetGasPrice(),
-//     };
+/**
+ * Sign EGLD Store data transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareEgldStoreDataTransaction = async (body: CreateRecord, provider?: string) => {
+    await validateBody(body, CreateRecord);
+    const {
+        fromPrivateKey,
+        ethFee,
+        data,
+        nonce,
+        signatureId
+    } = body;
+    const client = getEgldClient(provider);
+    const address = await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string);
+    if (!address) {
+        throw new Error('Recipient must be provided.');
+    }
 
-//     const tx: TransactionConfig = {
-//         from: 0,
-//         to: address,
-//         value: '0',
-//         gasPrice: customFee.gasPrice,
-//         gas: customFee.gasLimit,
-//         data: hexData,
-//         nonce: addressNonce,
-//     };
+    const tx: TransactionConfig = {
+        from: 0,
+        to: address,
+        value: '0',
+        gasPrice: ethFee?.gasPrice,
+        gas: ethFee?.gasLimit,
+        data,
+        nonce,
+    };
 
-//     if (signatureId) {
-//         return JSON.stringify(tx);
-//     }
-
-//     return (await client.eth.accounts.signEgldTransaction(tx, fromPrivateKey as string)).rawTransaction as string;
-// };
+    return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, ethFee)
+};
 
 /**
  * Encode number for ESDT transaction
@@ -951,15 +920,15 @@ export const prepareEgldSignedTransaction = async (body: EgldEsdtTransaction, pr
     return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
 }
 
-// /**
-//  * Send EGLD store data transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
-//  * This operation is irreversible.
-//  * @param body content of the transaction to broadcast
-//  * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
-//  * @returns transaction id of the transaction in the blockchain
-//  */
-// export const sendEgldStoreDataTransaction = async (body: CreateRecord, provider?: string) =>
-//     egldBroadcast(await prepareEgldStoreDataTransaction(body, provider), body.signatureId);
+/**
+ * Send EGLD store data transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
+export const sendEgldStoreDataTransaction = async (body: CreateRecord, provider?: string) =>
+    egldBroadcast(await prepareEgldStoreDataTransaction(body, provider), body.signatureId);
 
 /**
  * Send EGLD or supported ERC20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
