@@ -44,7 +44,7 @@ those cases, there is no need to provide TATUM_API_KEY parameter.
 For Ethereum, there are 2 testnet chains supported - Ropsten (default one) and Rinkeby. To enable Rinkeby, you need to
 set up TESTNET_TYPE parameter to rinkeby.
 
-```process.env.TESTNET_TYPE=rinkeby```
+```process.env.TESTNET_TYPE=ethereum-rinkeby```
 
 ### Retry Delay
 
