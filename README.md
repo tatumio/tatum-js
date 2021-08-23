@@ -17,14 +17,8 @@ You can find API documentation at [Github Pages](https://tatumio.github.io/tatum
 
    `npm install @tatumio/tatum`
 
-### Browser
-
-1. Install module:
-
-   `npm install @tatumio/tatum`
-
 ### Node.JS & Browser support
-Library is written in TypeScript with ES2017 as the target JS version. Library should work in all modern browsers with ES2017 support and Node.JS current LTS. 
+Library is written in TypeScript with ES2017 as the target JS version. Library should work in Node.JS current LTS. 
 
 ## Testing
 
@@ -82,7 +76,7 @@ If you want to work with TRON locally, you need to enter API Key for [Trongrid](
 ```js
 // In Node.js
 const Tatum = require('@tatumio/tatum');
-const btcWallet = Tatum.generateWallet(Tatum.Currency.BTC, true);
+const btcWallet = await Tatum.generateWallet(Tatum.Currency.BTC, true);
 
 console.log(btcWallet);
 >
@@ -100,7 +94,7 @@ You can use `@tatumio/tatum` as follows:
 
 ```typescript
 import { generateWallet, Currency } from '@tatumio/tatum';
-const btcWallet = generateWallet(Currency.BTC, true);
+const btcWallet = await generateWallet(Currency.BTC, true);
 ```
 
 More examples are available here:
