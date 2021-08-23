@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>EgldSmartContractResult | @tatumio/tatum - v1.22.5</title>
+	<title>EgldInBlockTransaction | @tatumio/tatum - v1.22.5</title>
 	<meta name="description" content="Documentation for @tatumio/tatum - v1.22.5">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,21 +55,32 @@
 					<a href="../modules.html">@tatumio/tatum - v1.22.5</a>
 				</li>
 				<li>
-					<a href="EgldSmartContractResult.html">EgldSmartContractResult</a>
+					<a href="EgldInBlockTransaction.html">EgldInBlockTransaction</a>
 				</li>
 			</ul>
-			<h1>Interface EgldSmartContractResult</h1>
+			<h1>Interface EgldInBlockTransaction</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<dl class="tsd-comment-tags">
+						<dt>export</dt>
+						<dd></dd>
+						<dt>interface</dt>
+						<dd><p>EgldBlock</p>
+						</dd>
+					</dl>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">EgldSmartContractResult</span>
+						<span class="target">EgldInBlockTransaction</span>
 					</li>
 				</ul>
 			</section>
@@ -80,17 +91,17 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="EgldSmartContractResult.html#callType" class="tsd-kind-icon">call<wbr>Type</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="EgldSmartContractResult.html#data" class="tsd-kind-icon">data</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="EgldSmartContractResult.html#gasLimit" class="tsd-kind-icon">gas<wbr>Limit</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="EgldSmartContractResult.html#gasPrice" class="tsd-kind-icon">gas<wbr>Price</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="EgldSmartContractResult.html#hash" class="tsd-kind-icon">hash</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="EgldSmartContractResult.html#nonce" class="tsd-kind-icon">nonce</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="EgldSmartContractResult.html#originalTxHash" class="tsd-kind-icon">original<wbr>TxHash</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="EgldSmartContractResult.html#prevTxHash" class="tsd-kind-icon">prev<wbr>TxHash</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="EgldSmartContractResult.html#receiver" class="tsd-kind-icon">receiver</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="EgldSmartContractResult.html#sender" class="tsd-kind-icon">sender</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="EgldSmartContractResult.html#value" class="tsd-kind-icon">value</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="EgldInBlockTransaction.html#data" class="tsd-kind-icon">data</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="EgldInBlockTransaction.html#gasLimit" class="tsd-kind-icon">gas<wbr>Limit</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="EgldInBlockTransaction.html#gasPrice" class="tsd-kind-icon">gas<wbr>Price</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="EgldInBlockTransaction.html#hash" class="tsd-kind-icon">hash</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="EgldInBlockTransaction.html#nonce" class="tsd-kind-icon">nonce</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="EgldInBlockTransaction.html#receiver" class="tsd-kind-icon">receiver</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="EgldInBlockTransaction.html#sender" class="tsd-kind-icon">sender</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="EgldInBlockTransaction.html#signature" class="tsd-kind-icon">signature</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="EgldInBlockTransaction.html#status" class="tsd-kind-icon">status</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="EgldInBlockTransaction.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="EgldInBlockTransaction.html#value" class="tsd-kind-icon">value</a></li>
 							</ul>
 						</section>
 					</div>
@@ -99,22 +110,12 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="callType" class="tsd-anchor"></a>
-					<h3>call<wbr>Type</h3>
-					<div class="tsd-signature tsd-kind-icon">call<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/6620c0d/src/model/response/egld/EgldTx.ts#L25">model/response/egld/EgldTx.ts:25</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="data" class="tsd-anchor"></a>
 					<h3>data</h3>
 					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/6620c0d/src/model/response/egld/EgldTx.ts#L20">model/response/egld/EgldTx.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/6620c0d/src/model/response/egld/EgldBlock.ts#L16">model/response/egld/EgldBlock.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -124,7 +125,7 @@
 					<div class="tsd-signature tsd-kind-icon">gas<wbr>Limit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/6620c0d/src/model/response/egld/EgldTx.ts#L23">model/response/egld/EgldTx.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/6620c0d/src/model/response/egld/EgldBlock.ts#L15">model/response/egld/EgldBlock.ts:15</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -134,7 +135,7 @@
 					<div class="tsd-signature tsd-kind-icon">gas<wbr>Price<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/6620c0d/src/model/response/egld/EgldTx.ts#L24">model/response/egld/EgldTx.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/6620c0d/src/model/response/egld/EgldBlock.ts#L14">model/response/egld/EgldBlock.ts:14</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -144,7 +145,7 @@
 					<div class="tsd-signature tsd-kind-icon">hash<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/6620c0d/src/model/response/egld/EgldTx.ts#L15">model/response/egld/EgldTx.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/6620c0d/src/model/response/egld/EgldBlock.ts#L9">model/response/egld/EgldBlock.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -154,27 +155,7 @@
 					<div class="tsd-signature tsd-kind-icon">nonce<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/6620c0d/src/model/response/egld/EgldTx.ts#L16">model/response/egld/EgldTx.ts:16</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="originalTxHash" class="tsd-anchor"></a>
-					<h3>original<wbr>TxHash</h3>
-					<div class="tsd-signature tsd-kind-icon">original<wbr>TxHash<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/6620c0d/src/model/response/egld/EgldTx.ts#L22">model/response/egld/EgldTx.ts:22</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="prevTxHash" class="tsd-anchor"></a>
-					<h3>prev<wbr>TxHash</h3>
-					<div class="tsd-signature tsd-kind-icon">prev<wbr>TxHash<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/6620c0d/src/model/response/egld/EgldTx.ts#L21">model/response/egld/EgldTx.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/6620c0d/src/model/response/egld/EgldBlock.ts#L10">model/response/egld/EgldBlock.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -184,7 +165,7 @@
 					<div class="tsd-signature tsd-kind-icon">receiver<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/6620c0d/src/model/response/egld/EgldTx.ts#L18">model/response/egld/EgldTx.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/6620c0d/src/model/response/egld/EgldBlock.ts#L12">model/response/egld/EgldBlock.ts:12</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -194,17 +175,47 @@
 					<div class="tsd-signature tsd-kind-icon">sender<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/6620c0d/src/model/response/egld/EgldTx.ts#L19">model/response/egld/EgldTx.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/6620c0d/src/model/response/egld/EgldBlock.ts#L13">model/response/egld/EgldBlock.ts:13</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="signature" class="tsd-anchor"></a>
+					<h3>signature</h3>
+					<div class="tsd-signature tsd-kind-icon">signature<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/6620c0d/src/model/response/egld/EgldBlock.ts#L17">model/response/egld/EgldBlock.ts:17</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="status" class="tsd-anchor"></a>
+					<h3>status</h3>
+					<div class="tsd-signature tsd-kind-icon">status<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/6620c0d/src/model/response/egld/EgldBlock.ts#L18">model/response/egld/EgldBlock.ts:18</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="type" class="tsd-anchor"></a>
+					<h3>type</h3>
+					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/6620c0d/src/model/response/egld/EgldBlock.ts#L8">model/response/egld/EgldBlock.ts:8</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="value" class="tsd-anchor"></a>
 					<h3>value</h3>
-					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/6620c0d/src/model/response/egld/EgldTx.ts#L17">model/response/egld/EgldTx.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/6620c0d/src/model/response/egld/EgldBlock.ts#L11">model/response/egld/EgldBlock.ts:11</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -223,40 +234,40 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="EgldSmartContractResult.html" class="tsd-kind-icon">Egld<wbr>Smart<wbr>Contract<wbr>Result</a>
+						<a href="EgldInBlockTransaction.html" class="tsd-kind-icon">Egld<wbr>InBlock<wbr>Transaction</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="EgldSmartContractResult.html#callType" class="tsd-kind-icon">call<wbr>Type</a>
+								<a href="EgldInBlockTransaction.html#data" class="tsd-kind-icon">data</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="EgldSmartContractResult.html#data" class="tsd-kind-icon">data</a>
+								<a href="EgldInBlockTransaction.html#gasLimit" class="tsd-kind-icon">gas<wbr>Limit</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="EgldSmartContractResult.html#gasLimit" class="tsd-kind-icon">gas<wbr>Limit</a>
+								<a href="EgldInBlockTransaction.html#gasPrice" class="tsd-kind-icon">gas<wbr>Price</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="EgldSmartContractResult.html#gasPrice" class="tsd-kind-icon">gas<wbr>Price</a>
+								<a href="EgldInBlockTransaction.html#hash" class="tsd-kind-icon">hash</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="EgldSmartContractResult.html#hash" class="tsd-kind-icon">hash</a>
+								<a href="EgldInBlockTransaction.html#nonce" class="tsd-kind-icon">nonce</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="EgldSmartContractResult.html#nonce" class="tsd-kind-icon">nonce</a>
+								<a href="EgldInBlockTransaction.html#receiver" class="tsd-kind-icon">receiver</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="EgldSmartContractResult.html#originalTxHash" class="tsd-kind-icon">original<wbr>TxHash</a>
+								<a href="EgldInBlockTransaction.html#sender" class="tsd-kind-icon">sender</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="EgldSmartContractResult.html#prevTxHash" class="tsd-kind-icon">prev<wbr>TxHash</a>
+								<a href="EgldInBlockTransaction.html#signature" class="tsd-kind-icon">signature</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="EgldSmartContractResult.html#receiver" class="tsd-kind-icon">receiver</a>
+								<a href="EgldInBlockTransaction.html#status" class="tsd-kind-icon">status</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="EgldSmartContractResult.html#sender" class="tsd-kind-icon">sender</a>
+								<a href="EgldInBlockTransaction.html#type" class="tsd-kind-icon">type</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="EgldSmartContractResult.html#value" class="tsd-kind-icon">value</a>
+								<a href="EgldInBlockTransaction.html#value" class="tsd-kind-icon">value</a>
 							</li>
 						</ul>
 					</li>
