@@ -66,7 +66,7 @@ export const ethGetGasPriceInWei = async () => {
  * @param privateKey
  */
 export const getClient = (provider?: string, privateKey?: string) => {
-    let url = provider || `${TATUM_API_URL}/v3/ethereum/web3/${process.env.TATUM_API_KEY}`;
+    let url = provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/ethereum/web3/${process.env.TATUM_API_KEY}`;
     if (process.env.TESTNET_TYPE === 'ethereum-rinkeby') {
         url += '?testnetType=ethereum-rinkeby';
     }

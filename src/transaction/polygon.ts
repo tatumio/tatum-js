@@ -84,7 +84,7 @@ export const sendPolygonTransaction = async (testnet: boolean, body: TransferEth
 }
 
 export const preparePolygonClient = (testnet: boolean, provider?: string, fromPrivateKey?: string) => {
-    const client = new Web3(provider || `${TATUM_API_URL}/v3/polygon/web3/${process.env.TATUM_API_KEY}`)
+    const client = new Web3(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/polygon/web3/${process.env.TATUM_API_KEY}`);
     if (fromPrivateKey) {
         client.eth.accounts.wallet.clear()
         client.eth.accounts.wallet.add(fromPrivateKey)

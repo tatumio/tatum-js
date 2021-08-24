@@ -76,8 +76,8 @@ const getFeeCurrency = (feeCurrency: Currency, testnet: boolean) => {
 export const prepareCeloGenerateCustodialWalletSignedTransaction = async (testnet: boolean, body: GenerateCustodialAddress, provider?: string) => {
     await validateBody(body, GenerateCustodialAddress)
 
-    const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
-    const network = await p.ready
+    const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
+    const network = await p.ready;
     const feeCurrency = body.feeCurrency || Currency.CELO
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
     const {abi, code} = obtainCustodialAddressType(body)
@@ -121,8 +121,8 @@ export const prepareCeloGenerateCustodialWalletSignedTransaction = async (testne
 export const prepareCeloDeployMarketplaceListingSignedTransaction = async (testnet: boolean, body: DeployMarketplaceListing, provider?: string) => {
     await validateBody(body, DeployMarketplaceListing)
 
-    const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
-    const network = await p.ready
+    const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
+    const network = await p.ready;
     const feeCurrency = body.feeCurrency || Currency.CELO
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
     // @ts-ignore
@@ -167,7 +167,7 @@ export const signCeloKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
     if (tx.chain !== Currency.CELO) {
         throw Error('Unsupported chain.')
     }
-    const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
+    const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
     await p.ready
     const wallet = new CeloWallet(fromPrivateKey as string, p)
     const transaction = JSON.parse(tx.serializedTransaction)
@@ -193,8 +193,8 @@ export const prepareCeloDeployMultiTokenSignedTransaction = async (testnet: bool
         signatureId,
     } = body
 
-    const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
-    const network = await p.ready
+    const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
+    const network = await p.ready;
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
 
     // @ts-ignore
@@ -243,8 +243,8 @@ export const prepareCeloDeployErc721SignedTransaction = async (testnet: boolean,
         signatureId,
     } = body
 
-    const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
-    const network = await p.ready
+    const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
+    const network = await p.ready;
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
 
     // @ts-ignore
@@ -297,8 +297,8 @@ export const prepareCeloMintCashbackErc721SignedTransaction = async (testnet: bo
         cashbackValues
     } = body
 
-    const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
-    const network = await p.ready
+    const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
+    const network = await p.ready;
 
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
     // @ts-ignore
@@ -350,8 +350,8 @@ export const prepareCeloMintErc721SignedTransaction = async (testnet: boolean, b
         signatureId,
     } = body
 
-    const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
-    const network = await p.ready
+    const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
+    const network = await p.ready;
 
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
     // @ts-ignore
@@ -400,8 +400,8 @@ export const prepareCeloTransferErc721SignedTransaction = async (testnet: boolea
         value
     } = body
 
-    const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
-    const network = await p.ready
+    const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
+    const network = await p.ready;
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
 
     // @ts-ignore
@@ -450,8 +450,8 @@ export const prepareCeloBurnErc721SignedTransaction = async (testnet: boolean, b
         signatureId,
     } = body
 
-    const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
-    const network = await p.ready
+    const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
+    const network = await p.ready;
 
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
 
@@ -503,8 +503,8 @@ export const prepareCeloDeployErc20SignedTransaction = async (testnet: boolean, 
         totalCap,
     } = body
 
-    const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
-    const network = await p.ready
+    const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
+    const network = await p.ready;
 
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
 
@@ -562,8 +562,8 @@ export const prepareCeloMintErc20SignedTransaction = async (testnet: boolean, bo
         signatureId,
     } = body
 
-    const url = provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`
-    const p = new CeloProvider(url)
+    const url = provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`;
+    const p = new CeloProvider(url);
     const network = await p.ready
 
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
@@ -616,8 +616,8 @@ export const prepareCeloSmartContractWriteMethodInvocation = async (testnet: boo
         amount,
     } = body
 
-    const url = provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`
-    const p = new CeloProvider(url)
+    const url = provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`;
+    const p = new CeloProvider(url);
     const network = await p.ready
 
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
@@ -662,7 +662,7 @@ export const sendCeloSmartContractReadMethodInvocationTransaction = async (testn
         contractAddress,
     } = body
 
-    const url = provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`
+    const url = provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`;
 
     // @ts-ignore
     const contract = new (new Web3(url)).eth.Contract([methodABI], contractAddress.trim())
@@ -694,7 +694,7 @@ export const getCeloErc20ContractDecimals = async (testnet: boolean, contractAdd
     if (!contractAddress) {
         throw new Error('Contract address not set.')
     }
-    const url = provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`
+    const url = provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`;
     // @ts-ignore
     const contract = new (new Web3(url)).eth.Contract(erc20_abi, contractAddress.trim())
     return await contract.methods.decimals().call()
@@ -720,8 +720,8 @@ export const prepareCeloTransferErc20SignedTransaction = async (testnet: boolean
     if (!contractAddress) {
         throw new Error('Contract address not set.')
     }
-    const url = provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`
-    const p = new CeloProvider(url)
+    const url = provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`;
+    const p = new CeloProvider(url);
     const network = await p.ready
 
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
@@ -772,8 +772,8 @@ export const prepareCeloBurnErc20SignedTransaction = async (testnet: boolean, bo
         signatureId,
     } = body
 
-    const url = provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`
-    const p = new CeloProvider(url)
+    const url = provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`;
+    const p = new CeloProvider(url);
     const network = await p.ready
 
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
@@ -827,8 +827,8 @@ export const prepareCeloMintMultipleCashbackErc721SignedTransaction = async (tes
         cashbackValues
     } = body
 
-    const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
-    const network = await p.ready
+    const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
+    const network = await p.ready;
 
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
 
@@ -887,8 +887,8 @@ export const prepareCeloMintMultipleErc721SignedTransaction = async (testnet: bo
         signatureId,
     } = body
 
-    const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
-    const network = await p.ready
+    const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
+    const network = await p.ready;
 
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
 
@@ -937,8 +937,8 @@ export const prepareCeloUpdateCashbackForAuthorErc721SignedTransaction = async (
         signatureId,
     } = body
 
-    const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
-    const network = await p.ready
+    const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
+    const network = await p.ready;
 
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
 
@@ -989,8 +989,8 @@ export const prepareCeloMintMultiTokenSignedTransaction = async (testnet: boolea
         signatureId,
     } = body
 
-    const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
-    const network = await p.ready
+    const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
+    const network = await p.ready;
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
     // @ts-ignore
     const contract = new (new Web3()).eth.Contract(erc1155_abi, contractAddress.trim())
@@ -1039,8 +1039,8 @@ export const prepareCeloMintMultiTokenBatchSignedTransaction = async (testnet: b
         signatureId
     } = body
 
-    const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
-    const network = await p.ready
+    const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
+    const network = await p.ready;
 
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
 
@@ -1091,8 +1091,8 @@ export const prepareCeloTransferMultiTokenSignedTransaction = async (testnet: bo
         signatureId,
     } = body
 
-    const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
-    const network = await p.ready
+    const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
+    const network = await p.ready;
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
 
     // @ts-ignore
@@ -1142,8 +1142,8 @@ export const prepareCeloBatchTransferMultiTokenSignedTransaction = async (testne
         signatureId,
     } = body
 
-    const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
-    const network = await p.ready
+    const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
+    const network = await p.ready;
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
     const amts = amounts.map(amt => `0x${new BigNumber(amt).toString(16)}`)
     // @ts-ignore
@@ -1192,8 +1192,8 @@ export const prepareCeloBurnMultiTokenBatchSignedTransaction = async (testnet: b
         signatureId,
     } = body
 
-    const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
-    const network = await p.ready
+    const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
+    const network = await p.ready;
 
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
 
@@ -1243,8 +1243,8 @@ export const prepareCeloBurnMultiTokenSignedTransaction = async (testnet: boolea
         signatureId,
     } = body
 
-    const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
-    const network = await p.ready
+    const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
+    const network = await p.ready;
 
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
 
@@ -1298,8 +1298,8 @@ export const prepareCeloOrCUsdSignedTransaction = async (testnet: boolean, body:
         signatureId,
     } = body
 
-    const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
-    const network = await p.ready
+    const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
+    const network = await p.ready;
 
     const cUsdAddress = testnet ? CUSD_ADDRESS_TESTNET : CUSD_ADDRESS_MAINNET
     const cEurAddress = testnet ? CEUR_ADDRESS_TESTNET : CEUR_ADDRESS_MAINNET
@@ -1368,8 +1368,8 @@ export const prepareCeloStoreDataSignedTransaction = async (testnet: boolean, bo
         signatureId,
     } = body
 
-    const p = new CeloProvider(provider || `${TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
-    const network = await p.ready
+    const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
+    const network = await p.ready;
 
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency as Currency, testnet)
 

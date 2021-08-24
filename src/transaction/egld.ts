@@ -6,8 +6,8 @@ import {egldBroadcast, egldGetTransactionsCount} from '../blockchain';
 import {axios, validateBody} from '../connector/tatum';
 import {ESDT_SYSTEM_SMART_CONTRACT_ADDRESS, TATUM_API_URL} from '../constants';
 import {
-    Currency,
     CreateRecord,
+    Currency,
     EgldEsdtTransaction,
     EgldSendTransaction,
     EsdtAddOrBurnNftQuantity,
@@ -28,7 +28,7 @@ import {
 } from '../model';
 import {generateAddressFromPrivatekey} from '../wallet/address';
 
-const ELROND_V3_ENDPOINT = `${TATUM_API_URL}/v3/egld/web3/${process.env.TATUM_API_KEY}`;
+const ELROND_V3_ENDPOINT = `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/egld/web3/${process.env.TATUM_API_KEY}`;
 
 /**
  * Get Elrond network config
