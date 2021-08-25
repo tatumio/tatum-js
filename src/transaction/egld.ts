@@ -1,7 +1,7 @@
 import {BigNumber} from 'bignumber.js';
-import * as tweetnacl from 'tweetnacl';
 import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
+import {UserSigner, UserSecretKey, Transaction, Nonce, Balance, ChainID, GasLimit, GasPrice, TransactionPayload, Address} from '@elrondnetwork/erdjs';
 import {egldBroadcast, egldGetTransactionsCount} from '../blockchain';
 import {axios, validateBody} from '../connector/tatum';
 import {ESDT_SYSTEM_SMART_CONTRACT_ADDRESS, TATUM_API_URL} from '../constants';
@@ -28,7 +28,7 @@ import {
 } from '../model';
 import {generateAddressFromPrivatekey} from '../wallet/address';
 
-const ELROND_V3_ENDPOINT = `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/egld/web3/${process.env.TATUM_API_KEY}`;
+const ELROND_V3_ENDPOINT = `${TATUM_API_URL}/v3/egld/node`;
 
 /**
  * Get Elrond network config
@@ -36,7 +36,7 @@ const ELROND_V3_ENDPOINT = `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/egl
 export const egldGetConfig = async () => {
     const gasStationUrl = await getEgldClient();
     try {
-        const {data} = await axios.get(`${gasStationUrl}/network/config`);
+        const {data} = await axios.get(`${gasStationUrl}/${process.env.TATUM_API_KEY}/network/config`);
         return data
     } catch (e) {
         console.error(e.toString())
@@ -48,8 +48,9 @@ export const egldGetConfig = async () => {
  * Estimate Gas price for the transaction.
  */
 export const egldGetGasPrice = async (): Promise<number> => {
-    const config = await egldGetConfig()
-    return config?.erd_min_gas_price || 1000000000
+  const { data } = await egldGetConfig();
+  const { config } = data;
+  return config?.erd_min_gas_price || 1000000000
 }
 
 /**
@@ -57,23 +58,26 @@ export const egldGetGasPrice = async (): Promise<number> => {
  */
 export const egldGetGasLimit = async (tx: EgldSendTransaction): Promise<number> => {
     const gasStationUrl = await getEgldClient();
-    const {data} = await axios.post(`${gasStationUrl}/transaction/cost`, tx);
-    return data?.txGasUnits || 50000;
+    const {data} = await axios.post(`${gasStationUrl}/${process.env.TATUM_API_KEY}/transaction/cost`, tx);
+    return data?.data?.txGasUnits || 50000;
 }
 
 /**
  * Sign transaction
  */
 export const signEgldTransaction = async (tx: EgldSendTransaction, fromPrivateKey: string): Promise<string> => {
-    const message = new Uint8Array(Buffer.from(JSON.stringify(tx)))
-
-    const pair = tweetnacl.sign.keyPair.fromSeed(new Uint8Array(Buffer.from(fromPrivateKey, 'hex')))
-    const signingKey = pair.secretKey
-    const signature = Buffer.from(tweetnacl.sign(message, signingKey)).toString('hex')
-    // "tweetnacl.sign()" returns the concatenated [signature, message], therfore we remove the appended message:
-    tx.signature = signature.slice(0, signature.length - message.length)
-
-    return JSON.stringify(tx)
+    const fromAddrSigner = new UserSigner(UserSecretKey.fromString(fromPrivateKey));
+    const transaction = new Transaction({
+        nonce: new Nonce(tx.nonce),
+        value: Balance.egld(tx.value),
+        receiver: new Address(tx.receiver),
+        gasPrice: new GasPrice(tx.gasPrice),
+        gasLimit: new GasLimit(tx.gasLimit),
+        data: new TransactionPayload(tx.data),
+        chainID: new ChainID(tx.chainID),
+    });
+    fromAddrSigner.sign(transaction);
+    return JSON.stringify(transaction.toSendable());
 }
 
 /**
@@ -356,7 +360,8 @@ const prepareEgldTransferNftData = async (data: EsdtTransferNft): Promise<string
 const prepareSignedTransactionAbstraction = async (
     client: string, transaction: TransactionConfig, signatureId: string | undefined, fromPrivateKey: string | undefined, fee?: Fee | undefined
 ): Promise<string> => {
-    const config = await egldGetConfig()
+    const { data } = await egldGetConfig();
+    const { config } = data;
     const gasPrice = fee?.gasPrice ? new BigNumber(fee?.gasPrice as string).toNumber() : config?.erd_min_gas_price || 1000000000
     const sender = await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string)
     const nonce = transaction.nonce ? transaction.nonce as number : await egldGetTransactionsCount(sender as string)
