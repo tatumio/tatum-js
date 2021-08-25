@@ -8,7 +8,6 @@ import {ESDT_SYSTEM_SMART_CONTRACT_ADDRESS, TATUM_API_URL} from '../constants';
 import {
     CreateRecord,
     Currency,
-    CreateRecord,
     EgldEsdtTransaction,
     EgldSendTransaction,
     EsdtAddOrBurnNftQuantity,
