@@ -115,7 +115,7 @@ export const getNFTImage = async (chain: Currency, contractAddress: string, toke
     const {data: metadata} = await getNFTMetadataURI(chain, contractAddress, tokenId, account);
     const metadataUrl = `https://gateway.pinata.cloud/ipfs/${metadata.replace('ipfs://', '')}`;
     const {data} = await axios.get(metadataUrl);
-    const imageUrl = data.properties.image.description;
+    const imageUrl = data.image;
     return {
         originalUrl: imageUrl,
         publicUrl: `https://gateway.pinata.cloud/ipfs/${imageUrl.replace('ipfs://', '')}`
