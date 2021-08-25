@@ -472,7 +472,7 @@ const generateEgldPrivateKey = async (testnet: boolean, mnemonic: string, i: num
     const path = testnet ? TESTNET_DERIVATION_PATH + '\'' : EGLD_DERIVATION_PATH + `/${i}'`
     const seed = await mnemonicToSeed(mnemonic)
     const {key} = derivePath(path, seed.toString('hex'))
-    return getPublicKey(key, false).toString('hex')
+    return key.toString('hex')
 }
 
 /**
