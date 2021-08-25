@@ -169,17 +169,13 @@ export const createNFT = async (testnet: boolean, body: CeloMintErc721 | EthMint
                                 name: string,
                                 description?: string,
                                 scheme?: any, provider?: string) => {
-    const metadata = scheme || {
-        title: 'Asset Metadata',
-        type: 'object',
-        properties: {}
-    };
-    metadata.properties.name = name;
+    const metadata = scheme || {};
+    metadata.name = name;
     if (description) {
-        metadata.properties.description = description;
+        metadata.description = description;
     }
     const {ipfsHash} = await ipfsUpload(file, name);
-    metadata.properties.image = `ipfs://${ipfsHash}`;
+    metadata.image = `ipfs://${ipfsHash}`;
     const {ipfsHash: metadataHash} = await ipfsUpload(Buffer.from(JSON.stringify(metadata)), 'metadata.json');
     body.url = `ipfs://${metadataHash}`;
     if (body.chain === Currency.FLOW) {

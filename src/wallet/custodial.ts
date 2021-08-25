@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import {bscBroadcast, celoBroadcast, ethBroadcast, oneBroadcast, polygonBroadcast, tronBroadcast} from '../blockchain';
 import {validateBody} from '../connector/tatum';
 import {
     Custodial_1155_TokenWallet,
@@ -155,15 +156,42 @@ export const prepareCustodialWallet = async (testnet: boolean, body: GenerateCus
         case Currency.ETH:
             return await prepareEthGenerateCustodialWalletSignedTransaction(body, provider)
         case Currency.BSC:
-            return await prepareBscGenerateCustodialWalletSignedTransaction(body, provider)
+            return await prepareBscGenerateCustodialWalletSignedTransaction(body, provider);
         case Currency.MATIC:
-            return await preparePolygonGenerateCustodialWalletSignedTransaction(testnet, body, provider)
+            return await preparePolygonGenerateCustodialWalletSignedTransaction(testnet, body, provider);
         case Currency.TRON:
-            return await prepareTronGenerateCustodialWalletSignedTransaction(testnet, body as GenerateTronCustodialAddress, provider)
+            return await prepareTronGenerateCustodialWalletSignedTransaction(testnet, body as GenerateTronCustodialAddress, provider);
         default:
-            throw new Error('Unsupported chain')
+            throw new Error('Unsupported chain');
     }
 }
+
+/**
+ * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, btu transaction costs connected to the withdrawal
+ * of assets is covered by the deployer.
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const sendCustodialWallet = async (testnet: boolean, body: GenerateCustodialAddress | GenerateTronCustodialAddress, provider?: string) => {
+    switch (body.chain) {
+        case Currency.CELO:
+            return await celoBroadcast(await prepareCeloGenerateCustodialWalletSignedTransaction(testnet, body, provider), body.signatureId);
+        case Currency.ONE:
+            return await oneBroadcast(await prepareOneGenerateCustodialWalletSignedTransaction(testnet, body, provider), body.signatureId);
+        case Currency.ETH:
+            return await ethBroadcast(await prepareEthGenerateCustodialWalletSignedTransaction(body, provider), body.signatureId);
+        case Currency.BSC:
+            return await bscBroadcast(await prepareBscGenerateCustodialWalletSignedTransaction(body, provider), body.signatureId);
+        case Currency.MATIC:
+            return await polygonBroadcast(await preparePolygonGenerateCustodialWalletSignedTransaction(testnet, body, provider), body.signatureId);
+        case Currency.TRON:
+            return await tronBroadcast(await prepareTronGenerateCustodialWalletSignedTransaction(testnet, body, provider), body.signatureId);
+        default:
+            throw new Error('Unsupported chain');
+    }
+};
 
 /**
  * Prepare signed transaction from the custodial SC wallet.
@@ -173,7 +201,7 @@ export const prepareCustodialWallet = async (testnet: boolean, body: GenerateCus
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareTransferFromCustodialWallet = async (testnet: boolean, body: TransferFromCustodialAddress | TransferFromTronCustodialAddress, provider?: string) => {
-    let r: SmartContractMethodInvocation | CeloSmartContractMethodInvocation
+    let r: SmartContractMethodInvocation | CeloSmartContractMethodInvocation;
     let decimals
     if (body.chain === Currency.TRON) {
         decimals = 6
@@ -246,12 +274,38 @@ export const prepareTransferFromCustodialWallet = async (testnet: boolean, body:
                 {type: 'uint256', value: r.params[3]},
                 {type: 'uint256', value: r.params[4]},
             ]
-            return await prepareTronSmartContractInvocation(testnet, r, feeLimit, from, provider)
+            return await prepareTronSmartContractInvocation(testnet, r, feeLimit as number, from, provider);
         }
         default:
-            throw new Error('Unsupported combination of inputs.')
+            throw new Error('Unsupported combination of inputs.');
     }
 }
+
+/**
+ * Prepare signed transaction from the custodial SC wallet.
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const sendTransferFromCustodialWallet = async (testnet: boolean, body: TransferFromCustodialAddress | TransferFromTronCustodialAddress, provider?: string) => {
+    switch (body.chain) {
+        case Currency.CELO:
+            return await celoBroadcast(await prepareTransferFromCustodialWallet(testnet, body, provider), body.signatureId);
+        case Currency.ONE:
+            return await oneBroadcast(await prepareTransferFromCustodialWallet(testnet, body, provider), body.signatureId);
+        case Currency.ETH:
+            return await ethBroadcast(await prepareTransferFromCustodialWallet(testnet, body, provider), body.signatureId);
+        case Currency.BSC:
+            return await bscBroadcast(await prepareTransferFromCustodialWallet(testnet, body, provider), body.signatureId);
+        case Currency.MATIC:
+            return await polygonBroadcast(await prepareTransferFromCustodialWallet(testnet, body, provider), body.signatureId);
+        case Currency.TRON:
+            return await tronBroadcast(await prepareTransferFromCustodialWallet(testnet, body, provider), body.signatureId);
+        default:
+            throw new Error('Unsupported chain');
+    }
+};
 
 /**
  * Prepare signed batch transaction from the custodial SC wallet.
@@ -332,12 +386,39 @@ export const prepareBatchTransferFromCustodialWallet = async (testnet: boolean,
         case Currency.BSC:
             return await prepareBscSmartContractWriteMethodInvocation(r, provider)
         case Currency.MATIC:
-            return await preparePolygonSmartContractWriteMethodInvocation(testnet, r, provider)
+            return await preparePolygonSmartContractWriteMethodInvocation(testnet, r, provider);
         case Currency.TRON: {
-            const body1 = body as TransferFromTronCustodialAddressBatch
-            return await prepareTronCustodialTransferBatch(testnet, r, body1.feeLimit, body1.from, provider)
+            const body1 = body as TransferFromTronCustodialAddressBatch;
+            return await prepareTronCustodialTransferBatch(testnet, r, body1.feeLimit as number, body1.from, provider);
         }
         default:
-            throw new Error('Unsupported combination of inputs.')
+            throw new Error('Unsupported combination of inputs.');
     }
 }
+
+/**
+ * Prepare signed batch transaction from the custodial SC wallet.
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const sendBatchTransferFromCustodialWallet = async (testnet: boolean,
+                                                           body: TransferFromCustodialAddressBatch | TransferFromTronCustodialAddressBatch, provider?: string) => {
+    switch (body.chain) {
+        case Currency.CELO:
+            return await celoBroadcast(await prepareBatchTransferFromCustodialWallet(testnet, body, provider), body.signatureId);
+        case Currency.ONE:
+            return await oneBroadcast(await prepareBatchTransferFromCustodialWallet(testnet, body, provider), body.signatureId);
+        case Currency.ETH:
+            return await ethBroadcast(await prepareBatchTransferFromCustodialWallet(testnet, body, provider), body.signatureId);
+        case Currency.BSC:
+            return await bscBroadcast(await prepareBatchTransferFromCustodialWallet(testnet, body, provider), body.signatureId);
+        case Currency.MATIC:
+            return await polygonBroadcast(await prepareBatchTransferFromCustodialWallet(testnet, body, provider), body.signatureId);
+        case Currency.TRON:
+            return await tronBroadcast(await prepareBatchTransferFromCustodialWallet(testnet, body, provider), body.signatureId);
+        default:
+            throw new Error('Unsupported chain');
+    }
+};
