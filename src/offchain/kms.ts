@@ -46,3 +46,9 @@ export const offchainTransferXlmKMS = async (body: TransferXlmOffchainKMS): Prom
  */
 export const offchainTransferXrpKMS = async (body: TransferXrpOffchainKMS): Promise<SignatureId> =>
     post(`/v3/offchain/xrp/transfer`, body, TransferXrpOffchainKMS)
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/AdaTransferOffchain" target="_blank">Tatum API documentation</a>
+ */
+export const offchainTransferAdaKMS = async (body: TransferBtcBasedOffchainKMS): Promise<SignatureId> =>
+    post(`/v3/offchain/ada/transfer`, body, TransferBtcBasedOffchainKMS)
