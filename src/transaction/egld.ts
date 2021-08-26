@@ -357,7 +357,7 @@ const prepareSignedTransactionAbstraction = async (
     const nonce = await egldGetTransactionsCount(sender as string);
 
     const egldTx: EgldSendTransaction = {
-        nonce: nonce,
+        nonce,
         value: new BigNumber(transaction.value as string).isLessThan(0) ? '0' : new BigNumber(transaction.value as string).multipliedBy(1e18).toString(),
         receiver: transaction.to as string,
         sender,
