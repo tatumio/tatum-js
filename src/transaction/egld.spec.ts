@@ -28,22 +28,22 @@ describe('Elrond EGLD tests', () => {
         expect(result).toBeDefined()
     })
 
-    it('should sign transaction', async () => {
-        const body: EgldSendTransaction = {
-            nonce: 123,
-            value: '0',
-            receiver: 'erd1pnvwvgtmfgscspactrlm2zzg8nwd4kah5ggevunlwe99zznfyasq5m7fz2',
-            sender: 'erd17kyxnqn8hma5kdd5hd4mx08ynjvaz9q47tw7w2htygwmalt3959s2wvqmr',
-            gasPrice: 1000000000,
-            gasLimit: 60000000,
-            // data: transaction.data,
-            chainID: '1',
-            version: 1, 
-        }
-        const result = await signEgldTransaction(body, '1da12bfa82725be308f79b2c313358be5a215ca6b405b00f28750560a1febb90')
-        // console.log(result);
-        expect(result).toBeDefined()
-    })
+    // it('should sign transaction', async () => {
+    //     const body: EgldSendTransaction = {
+    //         nonce: 123,
+    //         value: '0',
+    //         receiver: 'erd1pnvwvgtmfgscspactrlm2zzg8nwd4kah5ggevunlwe99zznfyasq5m7fz2',
+    //         sender: 'erd17kyxnqn8hma5kdd5hd4mx08ynjvaz9q47tw7w2htygwmalt3959s2wvqmr',
+    //         gasPrice: 1000000000,
+    //         gasLimit: 60000000,
+    //         // data: transaction.data,
+    //         chainID: '1',
+    //         version: 1, 
+    //     }
+    //     const result = await signEgldTransaction(body, '1da12bfa82725be308f79b2c313358be5a215ca6b405b00f28750560a1febb90')
+    //     // console.log(result);
+    //     expect(result).toBeDefined()
+    // })
 
     it('should prepare issuance of fungible ESDT token', async () => {
         const data: EsdtIssue = {
