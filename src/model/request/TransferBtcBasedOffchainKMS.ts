@@ -4,7 +4,7 @@ import {CreateWithdrawal} from './CreateWithdrawal'
 
 export class TransferBtcBasedOffchainKMS extends CreateWithdrawal {
 
-    @Length(1, 150)
+    @Length(1, 256)
     @ValidateIf(o => !o.attr)
     @IsNotEmpty()
     public xpub?: string;
