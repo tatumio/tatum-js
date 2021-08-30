@@ -4,7 +4,7 @@ import {Currency} from './Currency';
 import {Fee} from './Fee';
 import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
 
-export class DeployMarketplaceListing extends PrivateKeyOrSignatureId {
+export class DeployNftAuction extends PrivateKeyOrSignatureId {
 
     @IsNotEmpty()
     @IsIn([Currency.ETH, Currency.MATIC, Currency.BSC, Currency.ONE, Currency.CELO])
@@ -14,7 +14,7 @@ export class DeployMarketplaceListing extends PrivateKeyOrSignatureId {
     @IsNumber()
     @IsPositive()
     @Max(10000)
-    public marketplaceFee: number;
+    public auctionFee: number;
 
     @IsNotEmpty()
     @Length(34, 43)

@@ -13,11 +13,12 @@ import erc20TokenABI from '../contracts/erc20/token_abi';
 import erc20TokenBytecode from '../contracts/erc20/token_bytecode';
 import erc721TokenABI from '../contracts/erc721/erc721_abi';
 import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
-import * as listing from '../contracts/marketplace';
+import {auction, listing} from '../contracts/marketplace';
 import {
     CreateRecord,
     Currency,
     DeployMarketplaceListing,
+    DeployNftAuction,
     GenerateCustodialAddress,
     OneBurn20,
     OneBurn721,
@@ -227,21 +228,40 @@ export const prepareOneGenerateCustodialWalletSignedTransaction = async (testnet
  * Sign ONE generate custodial wallet address transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param testnet
  * @param body content of the transaction to broadcast
- * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @param provider url of the One Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
  */
 export const prepareOneDeployMarketplaceListingSignedTransaction = async (testnet: boolean, body: DeployMarketplaceListing, provider?: string) => {
-    await validateBody(body, DeployMarketplaceListing)
-    const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+    await validateBody(body, DeployMarketplaceListing);
+    const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
     // @ts-ignore
-    const contract = new client.eth.Contract(listing.abi)
+    const contract = new client.eth.Contract(auction.abi);
+    const data = contract.deploy({
+        data: auction.data,
+        arguments: [body.marketplaceFee, body.feeRecipient]
+    }).encodeABI();
+    return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, undefined, undefined, body.nonce, data,
+        body.fee?.gasLimit, body.fee?.gasPrice);
+};
+/**
+ * Sign ONE deploy NFT Auction contract transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the One Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
+ */
+export const prepareOneDeployAuctionSignedTransaction = async (testnet: boolean, body: DeployNftAuction, provider?: string) => {
+    await validateBody(body, DeployNftAuction);
+    const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
+    // @ts-ignore
+    const contract = new client.eth.Contract(listing.abi);
     const data = contract.deploy({
         data: listing.data,
-        arguments: [body.marketplaceFee, body.feeRecipient]
-    }).encodeABI()
+        arguments: [body.auctionFee, body.feeRecipient]
+    }).encodeABI();
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, undefined, undefined, body.nonce, data,
-        body.fee?.gasLimit, body.fee?.gasPrice)
-}
+        body.fee?.gasLimit, body.fee?.gasPrice);
+};
 
 /**
  * Sign Harmony deploy erc20 transaction with private keys locally. Nothing is broadcast to the blockchain.

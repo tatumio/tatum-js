@@ -12,13 +12,14 @@ import erc20TokenABI from '../contracts/erc20/token_abi';
 import erc20TokenBytecode from '../contracts/erc20/token_bytecode';
 import erc721TokenABI from '../contracts/erc721/erc721_abi';
 import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
-import * as listing from '../contracts/marketplace';
+import {auction, listing} from '../contracts/marketplace';
 import {
     BurnErc20,
     CreateRecord,
     Currency,
     DeployErc20,
     DeployMarketplaceListing,
+    DeployNftAuction,
     EthBurnErc721,
     EthBurnMultiToken,
     EthBurnMultiTokenBatch,
@@ -682,27 +683,33 @@ export const prepareBscDeployBep721SignedTransaction = async (body: EthDeployErc
  * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
  */
 export const prepareBscDeployMarketplaceListingSignedTransaction = async (body: DeployMarketplaceListing, provider?: string) => {
-    await validateBody(body, DeployMarketplaceListing)
-    const {
-        fromPrivateKey,
-        fee,
-        feeRecipient,
-        marketplaceFee,
-        nonce,
-        signatureId,
-    } = body
+    await validateBody(body, DeployMarketplaceListing);
+    return deployContract(listing.abi, listing.data, [body.marketplaceFee, body.feeRecipient],
+        body.fromPrivateKey, body.fee, body.nonce, body.signatureId, provider);
+};
+/**
+ * Sign BSC deploy NFT Auction contract transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
+ */
+export const prepareBscDeployAuctionSignedTransaction = async (body: DeployNftAuction, provider?: string) => {
+    await validateBody(body, DeployNftAuction);
+    return deployContract(auction.abi, auction.data, [body.auctionFee, body.feeRecipient],
+        body.fromPrivateKey, body.fee, body.nonce, body.signatureId, provider);
+};
 
-    const client = await getBscClient(provider, fromPrivateKey)
-
+const deployContract = async (abi: any[], bytecode: string, args: any[], fromPrivateKey?: string, fee?: Fee,
+                              nonce?: number, signatureId?: string, provider?: string) => {
+    const client = await getBscClient(provider, fromPrivateKey);
     // @ts-ignore
-    const contract = new client.eth.Contract(listing.abi, null, {
-        data: listing.data,
-    })
-
+    const contract = new client.eth.Contract(abi, null, {
+        data: bytecode,
+    });
     // @ts-ignore
     const deploy = contract.deploy({
-        arguments: [marketplaceFee, feeRecipient]
-    })
+        arguments: args,
+    });
 
     const tx: TransactionConfig = {
         from: 0,
@@ -711,6 +718,7 @@ export const prepareBscDeployMarketplaceListingSignedTransaction = async (body: 
     }
     return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
 }
+
 /**
  * Sign Bsc burn ERC 1155 transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast

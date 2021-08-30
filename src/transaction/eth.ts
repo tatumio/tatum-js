@@ -12,13 +12,14 @@ import erc20TokenABI from '../contracts/erc20/token_abi';
 import erc20TokenBytecode from '../contracts/erc20/token_bytecode';
 import erc721TokenABI from '../contracts/erc721/erc721_abi';
 import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
-import * as listing from '../contracts/marketplace';
+import {auction, listing} from '../contracts/marketplace';
 import {
     BurnErc20,
     CreateRecord,
     Currency,
     DeployErc20,
     DeployMarketplaceListing,
+    DeployNftAuction,
     EthBurnErc721,
     EthBurnMultiToken,
     EthBurnMultiTokenBatch,
@@ -104,7 +105,7 @@ export const signEthKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
 /**
  * Sign Eth generate custodial wallet address transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
- * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @param provider url of the ETH Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareEthGenerateCustodialWalletSignedTransaction = async (body: GenerateCustodialAddress, provider?: string) => {
@@ -401,42 +402,49 @@ export const prepareSmartContractWriteMethodInvocation = async (body: SmartContr
     return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
 }
 
-/**
- * Sign ETH generate custodial wallet address transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param body content of the transaction to broadcast
- * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
- * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
- */
-export const prepareEthDeployMarketplaceListingSignedTransaction = async (body: DeployMarketplaceListing, provider?: string) => {
-    await validateBody(body, DeployMarketplaceListing)
-    const {
-        fromPrivateKey,
-        fee,
-        feeRecipient,
-        marketplaceFee,
-        nonce,
-        signatureId,
-    } = body
-
-    const client = await getClient(provider, fromPrivateKey)
-
+const deployContract = async (abi: any[], bytecode: string, args: any[], fromPrivateKey?: string, fee?: Fee,
+                              nonce?: number, signatureId?: string, provider?: string) => {
+    const client = await getClient(provider, fromPrivateKey);
     // @ts-ignore
-    const contract = new client.eth.Contract(listing.abi, null, {
-        data: listing.data,
-    })
-
+    const contract = new client.eth.Contract(abi, null, {
+        data: bytecode,
+    });
     // @ts-ignore
     const deploy = contract.deploy({
-        arguments: [marketplaceFee, feeRecipient]
-    })
+        arguments: args,
+    });
 
     const tx: TransactionConfig = {
         from: 0,
         data: deploy.encodeABI(),
         nonce,
-    }
-    return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
-}
+    };
+    return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
+};
+
+/**
+ * Sign ETH generate custodial wallet address transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the ETH Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
+ */
+export const prepareEthDeployMarketplaceListingSignedTransaction = async (body: DeployMarketplaceListing, provider?: string) => {
+    await validateBody(body, DeployMarketplaceListing);
+    return deployContract(listing.abi, listing.data, [body.marketplaceFee, body.feeRecipient],
+        body.fromPrivateKey, body.fee, body.nonce, body.signatureId, provider);
+};
+
+/**
+ * Sign ETH deploy NFT Auction contract transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the ETH Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
+ */
+export const prepareEthDeployAuctionSignedTransaction = async (body: DeployNftAuction, provider?: string) => {
+    await validateBody(body, DeployNftAuction);
+    return deployContract(auction.abi, auction.data, [body.auctionFee, body.feeRecipient],
+        body.fromPrivateKey, body.fee, body.nonce, body.signatureId, provider);
+};
 
 /**
  * Sign Ethereum mint ERC 721 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -445,7 +453,7 @@ export const prepareEthDeployMarketplaceListingSignedTransaction = async (body: 
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareEthMintErc721SignedTransaction = async (body: EthMintErc721, provider?: string) => {
-    await validateBody(body, EthMintErc721)
+    await validateBody(body, EthMintErc721);
     const {
         fromPrivateKey,
         to,

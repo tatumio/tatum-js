@@ -12,7 +12,7 @@ import erc20_abi from '../contracts/erc20/token_abi';
 import erc20_bytecode from '../contracts/erc20/token_bytecode';
 import erc721_abi from '../contracts/erc721/erc721_abi';
 import erc721_bytecode from '../contracts/erc721/erc721_bytecode';
-import * as listing from '../contracts/marketplace';
+import {auction, listing} from '../contracts/marketplace';
 import {
     BurnCeloErc20,
     CeloBurnErc721,
@@ -33,6 +33,7 @@ import {
     Currency,
     DeployCeloErc20,
     DeployMarketplaceListing,
+    DeployNftAuction,
     GenerateCustodialAddress,
     MintCeloErc20,
     SmartContractReadMethodInvocation,
@@ -111,6 +112,42 @@ export const prepareCeloGenerateCustodialWalletSignedTransaction = async (testne
     return wallet.signTransaction(transaction)
 }
 
+const deployContract = async (testnet: boolean, abi: any[], bytecode: string, args: any[], feeCurrency = Currency.CELO,
+                              fromPrivateKey?: string, nonce?: number, signatureId?: string, provider?: string) => {
+    const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
+    const network = await p.ready;
+    const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet);
+    // @ts-ignore
+    const contract = new (new Web3()).eth.Contract(abi);
+    const deploy = contract.deploy({
+        data: bytecode,
+        arguments: args,
+    });
+
+    if (signatureId) {
+        return JSON.stringify({
+            chainId: network.chainId,
+            feeCurrency: feeCurrencyContractAddress,
+            nonce,
+            gasLimit: '0',
+            data: deploy.encodeABI(),
+        });
+    }
+    const wallet = new CeloWallet(fromPrivateKey as string, p);
+    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress);
+    const transaction = {
+        chainId: network.chainId,
+        feeCurrency: feeCurrencyContractAddress,
+        nonce: nonce || txCount,
+        gasLimit: '0',
+        gasPrice,
+        data: deploy.encodeABI(),
+        from,
+    }
+    transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();
+    return wallet.signTransaction(transaction);
+}
+
 /**
  * Sign CELO generate custodial wallet address transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param testnet
@@ -119,42 +156,25 @@ export const prepareCeloGenerateCustodialWalletSignedTransaction = async (testne
  * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
  */
 export const prepareCeloDeployMarketplaceListingSignedTransaction = async (testnet: boolean, body: DeployMarketplaceListing, provider?: string) => {
-    await validateBody(body, DeployMarketplaceListing)
+    await validateBody(body, DeployMarketplaceListing);
 
-    const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
-    const network = await p.ready;
-    const feeCurrency = body.feeCurrency || Currency.CELO
-    const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
-    // @ts-ignore
-    const contract = new (new Web3()).eth.Contract(listing.abi)
-    const deploy = contract.deploy({
-        data: listing.data,
-        arguments: [body.marketplaceFee, body.feeRecipient]
-    })
+    return deployContract(testnet, listing.abi, listing.data, [body.marketplaceFee, body.feeRecipient], body.feeCurrency,
+        body.fromPrivateKey, body.nonce, body.signatureId, provider);
+};
 
-    if (body.signatureId) {
-        return JSON.stringify({
-            chainId: network.chainId,
-            feeCurrency: feeCurrencyContractAddress,
-            nonce: body.nonce,
-            gasLimit: '0',
-            data: deploy.encodeABI(),
-        })
-    }
-    const wallet = new CeloWallet(body.fromPrivateKey as string, p)
-    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
-    const transaction = {
-        chainId: network.chainId,
-        feeCurrency: feeCurrencyContractAddress,
-        nonce: body.nonce || txCount,
-        gasLimit: '0',
-        gasPrice,
-        data: deploy.encodeABI(),
-        from,
-    }
-    transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString()
-    return wallet.signTransaction(transaction)
-}
+/**
+ * Sign CELO deploy NFT Auction contract transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
+ */
+export const prepareCeloDeployAuctionSignedTransaction = async (testnet: boolean, body: DeployNftAuction, provider?: string) => {
+    await validateBody(body, DeployNftAuction);
+
+    return deployContract(testnet, auction.abi, auction.data, [body.auctionFee, body.feeRecipient], body.feeCurrency,
+        body.fromPrivateKey, body.nonce, body.signatureId, provider);
+};
 /**
  * Sign Celo pending transaction from Tatum KMS
  * @param tx pending transaction from KMS

@@ -4,7 +4,7 @@ import {tronBroadcast} from '../blockchain';
 import {axios, validateBody} from '../connector/tatum';
 
 import {TATUM_API_URL} from '../constants';
-import * as listing from '../contracts/marketplace';
+import {listing} from '../contracts/marketplace';
 import abi from '../contracts/trc20/token_abi';
 import bytecode from '../contracts/trc20/token_bytecode';
 import trc721_abi from '../contracts/trc721/trc721_abi';
