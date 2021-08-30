@@ -176,8 +176,8 @@ export const prepareAuctionApproveErc20Transfer = async (testnet: boolean, body:
 };
 
 /**
- * Create new auction on the auction contract.
- * After auction is created, seller must send the asset to the auction smart contract.
+ * Create new auction on the auction contract. Before auction, seller must approve spending of the NFT token for the Auction contract.
+ * After auction is created, auction contract transfers the asset to the auction smart contract.
  * Only auction for existing NFTs can be created - seller must be owner of the NFT asset.
  * @param testnet chain to work with
  * @param body request data
@@ -270,8 +270,8 @@ export const sendAuctionApproveNftTransfer = async (testnet: boolean, body: Appr
 export const sendAuctionApproveErc20Transfer = async (testnet: boolean, body: ApproveErc20, provider?: string) =>
     helperBroadcastTx(body.chain, await prepareAuctionApproveErc20Transfer(testnet, body, provider), body.signatureId);
 /**
- * Create new auction on the auction contract.
- * After auction is created, seller must send the asset to the auction smart contract.
+ * Create new auction on the auction contract. Before auction, seller must approve spending of the NFT token for the Auction contract.
+ * After auction is created, auction contract transfers the asset to the auction smart contract.
  * Only auction for existing NFTs can be created - seller must be owner of the NFT asset.
  * @param testnet chain to work with
  * @param body request data
