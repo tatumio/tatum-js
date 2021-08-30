@@ -3,6 +3,7 @@ import {get, validateBody} from '../../connector/tatum';
 import erc1155_abi from '../../contracts/erc1155/erc1155_abi';
 import erc721_abi from '../../contracts/erc721/erc721_abi';
 import {auction} from '../../contracts/marketplace';
+import {prepareApproveErc20} from '../../fungible';
 import {helperBroadcastTx, helperPrepareSCCall} from '../../helpers';
 import {ApproveErc20, ApproveNftTransfer, CreateAuction, Currency, DeployNftAuction, InvokeAuctionOperation, UpdateAuctionFee, UpdateMarketplaceFeeRecipient,} from '../../model';
 import {
@@ -12,7 +13,6 @@ import {
     prepareOneDeployAuctionSignedTransaction,
     preparePolygonDeployAuctionSignedTransaction
 } from '../../transaction';
-import {prepareMarketplaceApproveErc20Spending} from './listing';
 
 export interface Auction {
     /*
@@ -176,8 +176,7 @@ export const prepareAuctionApproveNftTransfer = async (testnet: boolean, body: A
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareAuctionApproveErc20Transfer = async (testnet: boolean, body: ApproveErc20, provider?: string) => {
-    await validateBody(body, ApproveErc20);
-    return prepareMarketplaceApproveErc20Spending(testnet, {...body, marketplaceAddress: body.spender}, provider);
+    return prepareApproveErc20(testnet, body, provider);
 };
 
 /**

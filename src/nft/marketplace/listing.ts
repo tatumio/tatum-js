@@ -1,10 +1,9 @@
 import BigNumber from 'bignumber.js';
 import {get, validateBody} from '../../connector/tatum';
-import token_abi from '../../contracts/erc20/token_abi';
+import {prepareApproveErc20} from '../../fungible';
 import {helperBroadcastTx, helperPrepareSCCall} from '../../helpers';
 import {
-    ApproveMarketplaceErc20Spending,
-    ApproveTronMarketplaceErc20Spending,
+    ApproveErc20,
     CreateMarketplaceListing,
     CreateTronMarketplaceListing,
     Currency,
@@ -18,11 +17,6 @@ import {
     UpdateTronMarketplaceFeeRecipient
 } from '../../model';
 import {
-    getBscBep20ContractDecimals,
-    getCeloErc20ContractDecimals,
-    getEthErc20ContractDecimals,
-    getOne20ContractDecimals,
-    getPolygonErc20ContractDecimals,
     prepareBscDeployMarketplaceListingSignedTransaction,
     prepareCeloDeployMarketplaceListingSignedTransaction,
     prepareEthDeployMarketplaceListingSignedTransaction,
@@ -226,42 +220,8 @@ export const prepareMarketplaceUpdateFeeRecipient = async (testnet: boolean, bod
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareMarketplaceApproveErc20Spending = async (testnet: boolean, body: ApproveMarketplaceErc20Spending | ApproveTronMarketplaceErc20Spending, provider?: string) => {
-    await validateBody(body, body.chain === Currency.TRON ? ApproveTronMarketplaceErc20Spending : ApproveMarketplaceErc20Spending);
-    let amount;
-    switch (body.chain) {
-        case Currency.CELO:
-            amount = new BigNumber(body.amount).multipliedBy(new BigNumber(10).pow(await getCeloErc20ContractDecimals(testnet, body.contractAddress, provider))).toString(16);
-            break;
-        case Currency.ONE:
-            amount = new BigNumber(body.amount).multipliedBy(new BigNumber(10).pow(await getOne20ContractDecimals(testnet, body.contractAddress, provider))).toString(16);
-            break;
-        case Currency.ETH:
-            amount = new BigNumber(body.amount).multipliedBy(new BigNumber(10).pow(await getEthErc20ContractDecimals(testnet, body.contractAddress, provider))).toString(16);
-            break;
-        case Currency.BSC:
-            amount = new BigNumber(body.amount).multipliedBy(new BigNumber(10).pow(await getBscBep20ContractDecimals(testnet, body.contractAddress, provider))).toString(16);
-            break;
-        case Currency.MATIC:
-            amount = new BigNumber(body.amount).multipliedBy(new BigNumber(10).pow(await getPolygonErc20ContractDecimals(testnet, body.contractAddress, provider))).toString(16);
-            break;
-        // case Currency.TRON:
-        //     amount = new BigNumber(body.amount).multipliedBy(new BigNumber(10).pow(await getTronTrc20ContractDecimals(testnet, body.contractAddress, provider))).toString(16)
-        //     break
-        default:
-            throw new Error('Unsupported combination of inputs.');
-    }
-    const params = [body.marketplaceAddress, `0x${amount}`];
-    body.amount = '0';
-    // if (body.chain === Currency.TRON) {
-    //     return await helperPrepareSCCall(testnet, body, ApproveTronMarketplaceErc20Spending, 'approve',
-    //         [
-    //             {type: 'address', value: convertAddressToHex(params[0])},
-    //             {type: 'uint256', value: params[1]},
-    //         ], 'approve(address,uint256)', provider, token_abi)
-    // } else {
-    return await helperPrepareSCCall(testnet, body, ApproveMarketplaceErc20Spending, 'approve', params, undefined, provider, token_abi);
-    // }
+export const prepareMarketplaceApproveErc20Spending = async (testnet: boolean, body: ApproveErc20, provider?: string) => {
+    return prepareApproveErc20(testnet, body, provider);
 };
 
 /**
@@ -372,7 +332,7 @@ export const sendMarketplaceUpdateFeeRecipient = async (testnet: boolean, body: 
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendMarketplaceApproveErc20Spending = async (testnet: boolean, body: ApproveMarketplaceErc20Spending | ApproveTronMarketplaceErc20Spending, provider?: string) =>
+export const sendMarketplaceApproveErc20Spending = async (testnet: boolean, body: ApproveErc20, provider?: string) =>
     helperBroadcastTx(body.chain, await prepareMarketplaceApproveErc20Spending(testnet, body, provider), body.signatureId);
 /**
  * Create new listing on the marketplace.

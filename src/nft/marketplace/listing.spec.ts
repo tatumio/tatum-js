@@ -1,13 +1,6 @@
 import {tronBroadcast} from '../../blockchain';
 import {listing} from '../../contracts/marketplace';
-import {
-    ApproveMarketplaceErc20Spending,
-    CreateMarketplaceListing,
-    Currency,
-    DeployMarketplaceListing,
-    InvokeMarketplaceListingOperation,
-    SmartContractReadMethodInvocation
-} from '../../model';
+import {ApproveErc20, CreateMarketplaceListing, Currency, DeployMarketplaceListing, InvokeMarketplaceListingOperation, SmartContractReadMethodInvocation} from '../../model';
 import {
     sendBscSmartContractMethodInvocationTransaction,
     sendBscSmartContractReadMethodInvocationTransaction,
@@ -102,10 +95,10 @@ describe('Marketplace Listing tests', () => {
 
         it('should buy listing erc20', async () => {
 
-            const approve = new ApproveMarketplaceErc20Spending()
-            approve.contractAddress = '0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1'
-            approve.marketplaceAddress = '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA'
-            approve.chain = Currency.CELO
+            const approve = new ApproveErc20();
+            approve.contractAddress = '0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1';
+            approve.spender = '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA';
+            approve.chain = Currency.CELO;
             approve.feeCurrency = Currency.CELO
             approve.amount = '1.015'
             approve.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb'
@@ -253,9 +246,9 @@ describe('Marketplace Listing tests', () => {
         })
 
         it('should approve erc20', async () => {
-            const approve = new ApproveMarketplaceErc20Spending();
+            const approve = new ApproveErc20();
             approve.contractAddress = '0x326c977e6efc84e512bb9c30f76e30c160ed06fb';
-            approve.marketplaceAddress = '0x4153B909f55B0Ec43c11e980dF09b853477D9F79';
+            approve.spender = '0x4153B909f55B0Ec43c11e980dF09b853477D9F79';
             approve.chain = Currency.MATIC;
             approve.amount = '0.002';
             approve.fromPrivateKey = '0xf09110a0aae3dddba3d722c6c629fb08082963d8ed38afaf25cfce084c22e3d2';

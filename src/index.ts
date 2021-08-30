@@ -7,6 +7,7 @@ export * from './tatum';
 export * from './security';
 export * from './storage';
 export * from './offchain';
+export * from './fungible';
 export * from './blockchain';
 export * from './transaction';
 export * from './record'

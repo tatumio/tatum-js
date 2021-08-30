@@ -53,8 +53,6 @@ export * from './ApproveErc20';
 export * from './InvokeAuctionOperation';
 export * from './CreateAuction';
 export * from './UpdateAuctionFee';
-export * from './ApproveMarketplaceErc20Spending';
-export * from './ApproveTronMarketplaceErc20Spending';
 export * from './InvokeMarketplaceListingOperation';
 export * from './InvokeTronMarketplaceListingOperation';
 export * from './UpdateTronMarketplaceFeeRecipient';
