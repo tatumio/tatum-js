@@ -58,7 +58,6 @@ describe('Auction  tests', () => {
             body.tokenId = tokenId;
             body.id = tokenId;
             body.isErc721 = true;
-            body.price = '0.001';
             body.seller = '0x48d4bA7B2698A4b89635b9a2E391152350DB740f';
             body.feeCurrency = Currency.CUSD;
             body.chain = Currency.CELO;
@@ -113,7 +112,6 @@ describe('Auction  tests', () => {
             body.id = `${tokenId}1`;
             body.endedAt = endedAt;
             body.isErc721 = true;
-            body.price = '0.001';
             body.seller = '0x48d4bA7B2698A4b89635b9a2E391152350DB740f';
             body.erc20Address = '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA';
             body.feeCurrency = Currency.CUSD;
@@ -199,19 +197,18 @@ describe('Auction  tests', () => {
             console.log(await sendAuctionApproveNftTransfer(true, {
                 fromPrivateKey: '0x37b091fc4ce46a56da643f021254612551dbe0944679a6e09cb5724d3085c9ab',
                 chain: Currency.BSC, contractAddress: '0xada3e67deae341f16b44f67687866d2560d79ec8',
-                isErc721: true, spender: '0x236b8bb130ef326da06d1c712d1ca8f388455548', tokenId
+                isErc721: true, spender: '0x568bf1e6849e250f4705347a9cff717b5dcfc4ad', tokenId
             }, 'https://data-seed-prebsc-2-s1.binance.org:8545'));
 
             await sleep();
             const body = new CreateAuction();
             body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29';
-            body.contractAddress = '0x236b8bb130ef326da06d1c712d1ca8f388455548';
+            body.contractAddress = '0x568bf1e6849e250f4705347a9cff717b5dcfc4ad';
             body.nftAddress = '0xada3e67deae341f16b44f67687866d2560d79ec8';
             body.tokenId = tokenId;
             body.endedAt = (await bscGetCurrentBlock()) + 9;
             body.id = tokenId;
             body.isErc721 = true;
-            body.price = '0.001';
             body.seller = '0x80d8bac9a6901698b3749fe336bbd1385c1f98f2';
             body.chain = Currency.BSC;
             console.log(await sendAuctionCreate(true, body, 'https://data-seed-prebsc-2-s1.binance.org:8545'));
@@ -219,7 +216,7 @@ describe('Auction  tests', () => {
             await sleep(10000);
             const bid = new InvokeAuctionOperation();
             bid.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
-            bid.contractAddress = '0x236b8bb130ef326da06d1c712d1ca8f388455548';
+            bid.contractAddress = '0x568bf1e6849e250f4705347a9cff717b5dcfc4ad';
             bid.id = tokenId;
             bid.bidValue = '0.001015';
             bid.amount = '0.001015';
@@ -229,7 +226,7 @@ describe('Auction  tests', () => {
             await sleep(15000);
             const settle = new InvokeAuctionOperation();
             settle.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29';
-            settle.contractAddress = '0x236b8bb130ef326da06d1c712d1ca8f388455548';
+            settle.contractAddress = '0x568bf1e6849e250f4705347a9cff717b5dcfc4ad';
             settle.id = tokenId;
             settle.chain = Currency.BSC;
             console.log(await sendAuctionSettle(true, settle, 'https://data-seed-prebsc-2-s1.binance.org:8545'));
@@ -237,7 +234,7 @@ describe('Auction  tests', () => {
 
         it('should get auction', async () => {
             const r = new SmartContractReadMethodInvocation();
-            r.contractAddress = '0x236b8bb130ef326da06d1c712d1ca8f388455548';
+            r.contractAddress = '0x568bf1e6849e250f4705347a9cff717b5dcfc4ad';
             r.methodName = 'getAuction';
             r.methodABI = auction.abi.find((a: any) => a.name === r.methodName);
             r.params = ['1630313952428'];
@@ -246,7 +243,7 @@ describe('Auction  tests', () => {
 
         it('should get auction fee', async () => {
             const r = new SmartContractReadMethodInvocation();
-            r.contractAddress = '0x236b8bb130ef326da06d1c712d1ca8f388455548';
+            r.contractAddress = '0x568bf1e6849e250f4705347a9cff717b5dcfc4ad';
             r.methodName = 'getAuctionFee';
             r.methodABI = auction.abi.find((a: any) => a.name === r.methodName);
             r.params = [];
@@ -285,19 +282,18 @@ describe('Auction  tests', () => {
             console.log(await sendAuctionApproveNftTransfer(true, {
                 fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
                 chain: Currency.MATIC, contractAddress: '0x5d7d868ed584b04b922905a481f274206a42dd8a',
-                isErc721: true, spender: '0xf2e28658d474929d5df2c9c321cda132fb292fb5', tokenId
+                isErc721: true, spender: '0x7a2cc5a4788a15d5705b1d31e0ff5cfc4465d073', tokenId
             }, 'https://rpc-mumbai.maticvigil.com'));
 
             await sleep();
             const body = new CreateAuction();
             body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29';
-            body.contractAddress = '0xf2e28658d474929d5df2c9c321cda132fb292fb5';
+            body.contractAddress = '0x7a2cc5a4788a15d5705b1d31e0ff5cfc4465d073';
             body.nftAddress = '0x5d7d868ed584b04b922905a481f274206a42dd8a';
             body.tokenId = tokenId;
             body.endedAt = (await polygonGetCurrentBlock()) + 12;
             body.id = tokenId;
             body.isErc721 = true;
-            body.price = '0.001';
             body.seller = '0x811dfbff13adfbc3cf653dcc373c03616d3471c9';
             body.chain = Currency.MATIC;
             console.log(await sendAuctionCreate(true, body, 'https://rpc-mumbai.maticvigil.com'));
@@ -305,7 +301,7 @@ describe('Auction  tests', () => {
             await sleep(2000);
             const bid = new InvokeAuctionOperation();
             bid.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
-            bid.contractAddress = '0xf2e28658d474929d5df2c9c321cda132fb292fb5';
+            bid.contractAddress = '0x7a2cc5a4788a15d5705b1d31e0ff5cfc4465d073';
             bid.id = tokenId;
             bid.bidValue = '0.001015';
             bid.amount = '0.001015';
@@ -315,7 +311,7 @@ describe('Auction  tests', () => {
             await sleep(20000);
             const settle = new InvokeAuctionOperation();
             settle.fromPrivateKey = '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236';
-            settle.contractAddress = '0xf2e28658d474929d5df2c9c321cda132fb292fb5';
+            settle.contractAddress = '0x7a2cc5a4788a15d5705b1d31e0ff5cfc4465d073';
             settle.id = tokenId;
             settle.chain = Currency.MATIC;
             console.log(await sendAuctionSettle(true, settle, 'https://rpc-mumbai.maticvigil.com'));
@@ -325,7 +321,7 @@ describe('Auction  tests', () => {
 
             const approve = new ApproveErc20();
             approve.contractAddress = '0x326c977e6efc84e512bb9c30f76e30c160ed06fb';
-            approve.spender = '0xf2e28658d474929d5df2c9c321cda132fb292fb5';
+            approve.spender = '0x7a2cc5a4788a15d5705b1d31e0ff5cfc4465d073';
             approve.chain = Currency.MATIC;
             approve.amount = '0.001015';
             approve.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
@@ -345,20 +341,19 @@ describe('Auction  tests', () => {
             console.log(await sendAuctionApproveNftTransfer(true, {
                 fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
                 chain: Currency.MATIC, contractAddress: '0x5d7d868ed584b04b922905a481f274206a42dd8a',
-                isErc721: true, spender: '0xf2e28658d474929d5df2c9c321cda132fb292fb5', tokenId
+                isErc721: true, spender: '0x7a2cc5a4788a15d5705b1d31e0ff5cfc4465d073', tokenId
             }, 'https://rpc-mumbai.maticvigil.com'));
 
             await sleep();
             const body = new CreateAuction();
             body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29';
-            body.contractAddress = '0xf2e28658d474929d5df2c9c321cda132fb292fb5';
+            body.contractAddress = '0x7a2cc5a4788a15d5705b1d31e0ff5cfc4465d073';
             body.nftAddress = '0x5d7d868ed584b04b922905a481f274206a42dd8a';
             body.tokenId = tokenId;
             body.endedAt = (await polygonGetCurrentBlock()) + 10;
             body.id = tokenId;
             body.isErc721 = true;
             body.erc20Address = '0x326c977e6efc84e512bb9c30f76e30c160ed06fb';
-            body.price = '0.001';
             body.seller = '0x811dfbff13adfbc3cf653dcc373c03616d3471c9';
             body.chain = Currency.MATIC;
             console.log(await sendAuctionCreate(true, body, 'https://rpc-mumbai.maticvigil.com'));
@@ -366,7 +361,7 @@ describe('Auction  tests', () => {
             await sleep(2000);
             const bid = new InvokeAuctionOperation();
             bid.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
-            bid.contractAddress = '0xf2e28658d474929d5df2c9c321cda132fb292fb5';
+            bid.contractAddress = '0x7a2cc5a4788a15d5705b1d31e0ff5cfc4465d073';
             bid.id = tokenId;
             bid.bidValue = '0.001015';
             bid.chain = Currency.MATIC;
@@ -379,7 +374,7 @@ describe('Auction  tests', () => {
             await sleep(20000);
             const settle = new InvokeAuctionOperation();
             settle.fromPrivateKey = '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236';
-            settle.contractAddress = '0xf2e28658d474929d5df2c9c321cda132fb292fb5';
+            settle.contractAddress = '0x7a2cc5a4788a15d5705b1d31e0ff5cfc4465d073';
             settle.id = tokenId;
             settle.chain = Currency.MATIC;
             console.log(await sendAuctionSettle(true, settle, 'https://rpc-mumbai.maticvigil.com'));

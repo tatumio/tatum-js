@@ -32,10 +32,6 @@ export interface Auction {
      */
     isErc721: boolean;
     /*
-     Starting price of the asset
-     */
-    startingPrice: string;
-    /*
      Block height of end of auction
      */
     endedAt: string;
@@ -46,7 +42,7 @@ export interface Auction {
     /*
      optional - if the auction is settled in the ERC20 token or in native currency
      */
-    erc20Address: string;
+    erc20Address?: string;
     /*
      for ERC-1155 - how many tokens are for sale
      */
@@ -58,7 +54,7 @@ export interface Auction {
     /*
      Actual highest bidder
      */
-    bidder: string;
+    bidder?: string;
 }
 
 /**
@@ -191,7 +187,7 @@ export const prepareAuctionApproveErc20Transfer = async (testnet: boolean, body:
 export const prepareAuctionCreate = async (testnet: boolean, body: CreateAuction, provider?: string) => {
     await validateBody(body, CreateAuction);
     const params = [body.id, body.isErc721, body.nftAddress.trim(), `0x${new BigNumber(body.tokenId).toString(16)}`,
-        `0x${new BigNumber(body.price).multipliedBy(1e18).toString(16)}`, body.seller.trim(), `0x${new BigNumber(body.amount || 0).toString(16)}`,
+        body.seller.trim(), `0x${new BigNumber(body.amount || 0).toString(16)}`,
         `0x${new BigNumber(body.endedAt).toString(16)}`, body.erc20Address || '0x0000000000000000000000000000000000000000'];
     body.amount = undefined;
     return await helperPrepareSCCall(testnet, body, CreateAuction, 'createAuction', params, undefined, provider, auction.abi);

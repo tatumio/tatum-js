@@ -31,10 +31,6 @@ export class CreateAuction extends PrivateKeyOrSignatureId {
     public erc20Address?: string;
 
     @IsNotEmpty()
-    @IsNumberString()
-    public price: string;
-
-    @IsNotEmpty()
     @IsNumber()
     @IsPositive()
     public endedAt: number;
