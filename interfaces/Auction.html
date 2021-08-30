@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>MarketplaceListing | @tatumio/tatum - v1.22.16</title>
+	<title>Auction | @tatumio/tatum - v1.22.16</title>
 	<meta name="description" content="Documentation for @tatumio/tatum - v1.22.16">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,10 +55,10 @@
 					<a href="../modules.html">@tatumio/tatum - v1.22.16</a>
 				</li>
 				<li>
-					<a href="MarketplaceListing.html">MarketplaceListing</a>
+					<a href="Auction.html">Auction</a>
 				</li>
 			</ul>
-			<h1>Interface MarketplaceListing</h1>
+			<h1>Interface Auction</h1>
 		</div>
 	</div>
 </header>
@@ -69,7 +69,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">MarketplaceListing</span>
+						<span class="target">Auction</span>
 					</li>
 				</ul>
 			</section>
@@ -80,16 +80,17 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="MarketplaceListing.html#amount" class="tsd-kind-icon">amount</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="MarketplaceListing.html#buyer" class="tsd-kind-icon">buyer</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="MarketplaceListing.html#erc20Address" class="tsd-kind-icon">erc20<wbr>Address</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="MarketplaceListing.html#isErc721" class="tsd-kind-icon">is<wbr>Erc721</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="MarketplaceListing.html#listingId" class="tsd-kind-icon">listing<wbr>Id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="MarketplaceListing.html#nftAddress" class="tsd-kind-icon">nft<wbr>Address</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="MarketplaceListing.html#price" class="tsd-kind-icon">price</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="MarketplaceListing.html#seller" class="tsd-kind-icon">seller</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="MarketplaceListing.html#state" class="tsd-kind-icon">state</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="MarketplaceListing.html#tokenId" class="tsd-kind-icon">token<wbr>Id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="Auction.html#amount" class="tsd-kind-icon">amount</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="Auction.html#bidder" class="tsd-kind-icon">bidder</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="Auction.html#endedAt" class="tsd-kind-icon">ended<wbr>At</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="Auction.html#endingPrice" class="tsd-kind-icon">ending<wbr>Price</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="Auction.html#erc20Address" class="tsd-kind-icon">erc20<wbr>Address</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="Auction.html#isErc721" class="tsd-kind-icon">is<wbr>Erc721</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="Auction.html#nftAddress" class="tsd-kind-icon">nft<wbr>Address</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="Auction.html#seller" class="tsd-kind-icon">seller</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="Auction.html#startedAt" class="tsd-kind-icon">started<wbr>At</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="Auction.html#startingPrice" class="tsd-kind-icon">starting<wbr>Price</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="Auction.html#tokenId" class="tsd-kind-icon">token<wbr>Id</a></li>
 							</ul>
 						</section>
 					</div>
@@ -103,29 +104,39 @@
 					<div class="tsd-signature tsd-kind-icon">amount<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/81438bf/src/nft/marketplace/listing.ts#L83">nft/marketplace/listing.ts:83</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/81438bf/src/nft/marketplace/auction.ts#L53">nft/marketplace/auction.ts:53</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Amount of assets to sell. Valid only for ERC1155.</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="buyer" class="tsd-anchor"></a>
-					<h3>buyer</h3>
-					<div class="tsd-signature tsd-kind-icon">buyer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="bidder" class="tsd-anchor"></a>
+					<h3>bidder</h3>
+					<div class="tsd-signature tsd-kind-icon">bidder<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/81438bf/src/nft/marketplace/listing.ts#L93">nft/marketplace/listing.ts:93</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/81438bf/src/nft/marketplace/auction.ts#L61">nft/marketplace/auction.ts:61</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Address of the buyer, if already exists.</p>
-						</div>
-					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="endedAt" class="tsd-anchor"></a>
+					<h3>ended<wbr>At</h3>
+					<div class="tsd-signature tsd-kind-icon">ended<wbr>At<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/81438bf/src/nft/marketplace/auction.ts#L41">nft/marketplace/auction.ts:41</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="endingPrice" class="tsd-anchor"></a>
+					<h3>ending<wbr>Price</h3>
+					<div class="tsd-signature tsd-kind-icon">ending<wbr>Price<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/81438bf/src/nft/marketplace/auction.ts#L57">nft/marketplace/auction.ts:57</a></li>
+						</ul>
+					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="erc20Address" class="tsd-anchor"></a>
@@ -133,14 +144,9 @@
 					<div class="tsd-signature tsd-kind-icon">erc20<wbr>Address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/81438bf/src/nft/marketplace/listing.ts#L73">nft/marketplace/listing.ts:73</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/81438bf/src/nft/marketplace/auction.ts#L49">nft/marketplace/auction.ts:49</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Address of the ERC20 token, which will be used for paying. 0x0 if native asset is used</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="isErc721" class="tsd-anchor"></a>
@@ -148,29 +154,9 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Erc721<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/81438bf/src/nft/marketplace/listing.ts#L53">nft/marketplace/listing.ts:53</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/81438bf/src/nft/marketplace/auction.ts#L33">nft/marketplace/auction.ts:33</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>whether listing is for ERC721 or ERC1155</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="listingId" class="tsd-anchor"></a>
-					<h3>listing<wbr>Id</h3>
-					<div class="tsd-signature tsd-kind-icon">listing<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/81438bf/src/nft/marketplace/listing.ts#L48">nft/marketplace/listing.ts:48</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>ID of the listing</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="nftAddress" class="tsd-anchor"></a>
@@ -178,29 +164,9 @@
 					<div class="tsd-signature tsd-kind-icon">nft<wbr>Address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/81438bf/src/nft/marketplace/listing.ts#L63">nft/marketplace/listing.ts:63</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/81438bf/src/nft/marketplace/auction.ts#L25">nft/marketplace/auction.ts:25</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Address of the NFT asset contract</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="price" class="tsd-anchor"></a>
-					<h3>price</h3>
-					<div class="tsd-signature tsd-kind-icon">price<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/81438bf/src/nft/marketplace/listing.ts#L88">nft/marketplace/listing.ts:88</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Price to sell asset for.</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="seller" class="tsd-anchor"></a>
@@ -208,29 +174,29 @@
 					<div class="tsd-signature tsd-kind-icon">seller<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/81438bf/src/nft/marketplace/listing.ts#L68">nft/marketplace/listing.ts:68</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/81438bf/src/nft/marketplace/auction.ts#L21">nft/marketplace/auction.ts:21</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Address of the seller</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="state" class="tsd-anchor"></a>
-					<h3>state</h3>
-					<div class="tsd-signature tsd-kind-icon">state<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ListingState</span></div>
+					<a name="startedAt" class="tsd-anchor"></a>
+					<h3>started<wbr>At</h3>
+					<div class="tsd-signature tsd-kind-icon">started<wbr>At<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/81438bf/src/nft/marketplace/listing.ts#L58">nft/marketplace/listing.ts:58</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/81438bf/src/nft/marketplace/auction.ts#L45">nft/marketplace/auction.ts:45</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>State of the listing,</p>
-						</div>
-					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="startingPrice" class="tsd-anchor"></a>
+					<h3>starting<wbr>Price</h3>
+					<div class="tsd-signature tsd-kind-icon">starting<wbr>Price<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/81438bf/src/nft/marketplace/auction.ts#L37">nft/marketplace/auction.ts:37</a></li>
+						</ul>
+					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="tokenId" class="tsd-anchor"></a>
@@ -238,14 +204,9 @@
 					<div class="tsd-signature tsd-kind-icon">token<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/81438bf/src/nft/marketplace/listing.ts#L78">nft/marketplace/listing.ts:78</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/81438bf/src/nft/marketplace/auction.ts#L29">nft/marketplace/auction.ts:29</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>TokenID to sell</p>
-						</div>
-					</div>
 				</section>
 			</section>
 		</div>
@@ -262,37 +223,40 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="MarketplaceListing.html" class="tsd-kind-icon">Marketplace<wbr>Listing</a>
+						<a href="Auction.html" class="tsd-kind-icon">Auction</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="MarketplaceListing.html#amount" class="tsd-kind-icon">amount</a>
+								<a href="Auction.html#amount" class="tsd-kind-icon">amount</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="MarketplaceListing.html#buyer" class="tsd-kind-icon">buyer</a>
+								<a href="Auction.html#bidder" class="tsd-kind-icon">bidder</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="MarketplaceListing.html#erc20Address" class="tsd-kind-icon">erc20<wbr>Address</a>
+								<a href="Auction.html#endedAt" class="tsd-kind-icon">ended<wbr>At</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="MarketplaceListing.html#isErc721" class="tsd-kind-icon">is<wbr>Erc721</a>
+								<a href="Auction.html#endingPrice" class="tsd-kind-icon">ending<wbr>Price</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="MarketplaceListing.html#listingId" class="tsd-kind-icon">listing<wbr>Id</a>
+								<a href="Auction.html#erc20Address" class="tsd-kind-icon">erc20<wbr>Address</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="MarketplaceListing.html#nftAddress" class="tsd-kind-icon">nft<wbr>Address</a>
+								<a href="Auction.html#isErc721" class="tsd-kind-icon">is<wbr>Erc721</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="MarketplaceListing.html#price" class="tsd-kind-icon">price</a>
+								<a href="Auction.html#nftAddress" class="tsd-kind-icon">nft<wbr>Address</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="MarketplaceListing.html#seller" class="tsd-kind-icon">seller</a>
+								<a href="Auction.html#seller" class="tsd-kind-icon">seller</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="MarketplaceListing.html#state" class="tsd-kind-icon">state</a>
+								<a href="Auction.html#startedAt" class="tsd-kind-icon">started<wbr>At</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="MarketplaceListing.html#tokenId" class="tsd-kind-icon">token<wbr>Id</a>
+								<a href="Auction.html#startingPrice" class="tsd-kind-icon">starting<wbr>Price</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="Auction.html#tokenId" class="tsd-kind-icon">token<wbr>Id</a>
 							</li>
 						</ul>
 					</li>
