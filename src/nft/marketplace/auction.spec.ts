@@ -325,7 +325,6 @@ describe('Auction  tests', () => {
             approve.chain = Currency.MATIC;
             approve.amount = '0.001015';
             approve.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
-            approve.fee = {gasPrice: '5', gasLimit: '300000'};
             console.log(await sendAuctionApproveErc20Transfer(true, approve, 'https://rpc-mumbai.maticvigil.com'));
 
             const mint = new MintErc721();

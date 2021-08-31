@@ -16,8 +16,10 @@ import {
     CustodialFullTokenWallet,
     CustodialFullTokenWalletWithBatch,
 } from '../contracts/custodial';
-import {helperBroadcastTx} from '../helpers';
+import {getErc20Decimals} from '../fungible';
+import {helperBroadcastTx, helperPrepareSCCall} from '../helpers';
 import {
+    ApproveCustodialTransfer,
     CeloSmartContractMethodInvocation,
     ContractType,
     Currency,
@@ -290,7 +292,7 @@ export const prepareTransferFromCustodialWallet = async (testnet: boolean, body:
 };
 
 /**
- * Prepare signed transaction from the custodial SC wallet.
+ * Send signed transaction from the custodial SC wallet.
  * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
@@ -389,7 +391,7 @@ export const prepareBatchTransferFromCustodialWallet = async (testnet: boolean,
 };
 
 /**
- * Prepare signed batch transaction from the custodial SC wallet.
+ * Send signed batch transaction from the custodial SC wallet.
  * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
@@ -398,3 +400,33 @@ export const prepareBatchTransferFromCustodialWallet = async (testnet: boolean,
 export const sendBatchTransferFromCustodialWallet = async (testnet: boolean,
                                                            body: TransferFromCustodialAddressBatch | TransferFromTronCustodialAddressBatch, provider?: string) =>
     helperBroadcastTx(body.chain, await prepareBatchTransferFromCustodialWallet(testnet, body, provider), body.signatureId);
+
+
+/**
+ * Prepare signed approve transaction from the custodial SC wallet.
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const prepareApproveFromCustodialWallet = async (testnet: boolean, body: ApproveCustodialTransfer, provider?: string) => {
+    await validateBody(body, ApproveCustodialTransfer);
+
+    const decimals = body.contractType === ContractType.FUNGIBLE_TOKEN ? await getErc20Decimals(testnet, body.chain, body.tokenAddress, provider) : 0;
+    const params = [body.tokenAddress.trim(), body.contractType, body.spender,
+        `0x${new BigNumber(body.amount || 0).multipliedBy(new BigNumber(10).pow(decimals)).toString(16)}`, `0x${new BigNumber(body.tokenId || 0).toString(16)}`];
+    delete body.amount;
+    return await helperPrepareSCCall(testnet, {
+        ...body,
+        contractAddress: body.custodialAddress
+    }, ApproveCustodialTransfer, 'approve', params, undefined, provider, CustodialFullTokenWallet.abi);
+};
+/**
+ * Send signed approve transaction from the custodial SC wallet.
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const sendApproveFromCustodialWallet = async (testnet: boolean, body: ApproveCustodialTransfer, provider?: string) =>
+    helperBroadcastTx(body.chain, await prepareApproveFromCustodialWallet(testnet, body, provider), body.signatureId);

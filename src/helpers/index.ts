@@ -1,11 +1,17 @@
 import {ClassType} from 'class-transformer/ClassTransformer';
+import Web3 from 'web3';
 import {bscBroadcast, celoBroadcast, ethBroadcast, oneBroadcast, polygonBroadcast, tronBroadcast} from '../blockchain';
 import {listing} from '../contracts/marketplace';
 import {CeloSmartContractMethodInvocation, Currency, SmartContractMethodInvocation} from '../model';
 import {
+    getBscClient,
+    getCeloClient,
+    getClient,
     prepareBscSmartContractWriteMethodInvocation,
     prepareCeloSmartContractWriteMethodInvocation,
+    prepareOneClient,
     prepareOneSmartContractWriteMethodInvocation,
+    preparePolygonClient,
     preparePolygonSmartContractWriteMethodInvocation,
     prepareSmartContractWriteMethodInvocation
 } from '../transaction';
@@ -24,6 +30,23 @@ export const helperBroadcastTx = async (chain: Currency, txData: string, signatu
             return await polygonBroadcast(txData, signatureId);
         case Currency.TRON:
             return await tronBroadcast(txData, signatureId);
+        default:
+            throw new Error('Unsupported chain');
+    }
+};
+
+export const helperGetWeb3Client = (testnet: boolean, chain: Currency, provider?: string): Web3 => {
+    switch (chain) {
+        case Currency.CELO:
+            return getCeloClient(provider);
+        case Currency.ONE:
+            return prepareOneClient(testnet, provider);
+        case Currency.ETH:
+            return getClient(provider);
+        case Currency.BSC:
+            return getBscClient(provider);
+        case Currency.MATIC:
+            return preparePolygonClient(testnet, provider);
         default:
             throw new Error('Unsupported chain');
     }

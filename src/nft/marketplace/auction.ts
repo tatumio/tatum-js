@@ -3,8 +3,8 @@ import {get, validateBody} from '../../connector/tatum';
 import erc1155_abi from '../../contracts/erc1155/erc1155_abi';
 import erc721_abi from '../../contracts/erc721/erc721_abi';
 import {auction} from '../../contracts/marketplace';
-import {prepareApproveErc20} from '../../fungible';
-import {helperBroadcastTx, helperPrepareSCCall} from '../../helpers';
+import {getErc20Decimals, prepareApproveErc20} from '../../fungible';
+import {helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall} from '../../helpers';
 import {ApproveErc20, ApproveNftTransfer, CreateAuction, Currency, DeployNftAuction, InvokeAuctionOperation, UpdateAuctionFee, UpdateMarketplaceFeeRecipient,} from '../../model';
 import {
     prepareBscDeployAuctionSignedTransaction,
@@ -203,7 +203,17 @@ export const prepareAuctionCreate = async (testnet: boolean, body: CreateAuction
  */
 export const prepareAuctionBid = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
     await validateBody(body, InvokeAuctionOperation);
-    const params = [body.id, `0x${new BigNumber(body.bidValue).multipliedBy(1e18).toString(16)}`,];
+
+    const web3 = helperGetWeb3Client(testnet, body.chain, provider);
+    // @ts-ignore
+    const a = await (new web3.eth.Contract(auction.abi, body.contractAddress)).methods.getAuction(body.id).call();
+    let decimals = 18;
+    if (a[6] !== '0x0000000000000000000000000000000000000000') {
+        // @ts-ignore
+        decimals = await getErc20Decimals(testnet, body.chain, a[6], provider);
+    }
+
+    const params = [body.id, `0x${new BigNumber(body.bidValue).multipliedBy(new BigNumber(10).pow(decimals)).toString(16)}`,];
     return await helperPrepareSCCall(testnet, body, InvokeAuctionOperation, 'bid', params, undefined, provider, auction.abi);
 };
 

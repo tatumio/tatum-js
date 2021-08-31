@@ -1,8 +1,6 @@
-import {CeloProvider} from '@celo-tools/celo-ethers-wrapper'
-import {bscBroadcast, tronBroadcast} from '../blockchain'
+import {CeloProvider} from '@celo-tools/celo-ethers-wrapper';
+import {bscBroadcast, tronBroadcast} from '../blockchain';
 import {
-    CustodialFullTokenWallet,
-    CustodialFullTokenWalletWithBatch,
     Custodial_1155_TokenWallet,
     Custodial_1155_TokenWalletWithBatch,
     Custodial_20_1155_TokenWallet,
@@ -15,34 +13,38 @@ import {
     Custodial_721_1155_TokenWalletWithBatch,
     Custodial_721_TokenWallet,
     Custodial_721_TokenWalletWithBatch,
-} from '../contracts/custodial'
+    CustodialFullTokenWallet,
+    CustodialFullTokenWalletWithBatch,
+} from '../contracts/custodial';
 import {
+    ApproveCustodialTransfer,
     ContractType,
     Currency,
     GenerateCustodialAddress,
     GenerateTronCustodialAddress,
     TransferFromCustodialAddress,
-    TransferFromCustodialAddressBatch, TransferFromTronCustodialAddress,
+    TransferFromCustodialAddressBatch,
+    TransferFromTronCustodialAddress,
     TransferFromTronCustodialAddressBatch
-} from '../model'
+} from '../model';
 import {
     prepareEthGenerateCustodialWalletSignedTransaction,
     sendBscGenerateCustodialWalletSignedTransaction,
     sendCeloGenerateCustodialWalletSignedTransaction,
     sendEthGenerateCustodialWalletSignedTransaction,
     sendTronGenerateCustodialWalletSignedTransaction
-} from '../transaction'
-import {obtainCustodialAddressType, prepareBatchTransferFromCustodialWallet, prepareTransferFromCustodialWallet} from './custodial'
+} from '../transaction';
+import {obtainCustodialAddressType, prepareApproveFromCustodialWallet, prepareBatchTransferFromCustodialWallet, prepareTransferFromCustodialWallet} from './custodial';
 
 describe('Custodial wallet tests', () => {
 
-    process.env.TRON_PRO_API_KEY = 'b35409b4-7d11-491e-8760-32d2506a90b5'
-    jest.setTimeout(9999)
+    process.env.TRON_PRO_API_KEY = 'b35409b4-7d11-491e-8760-32d2506a90b5';
+    jest.setTimeout(9999);
 
     describe('Feature enablement logic', () => {
         it('should deploy all batch', () => {
-            const body = new GenerateCustodialAddress()
-            body.enableBatchTransactions = true
+            const body = new GenerateCustodialAddress();
+            body.enableBatchTransactions = true;
             body.enableFungibleTokens = true
             body.enableNonFungibleTokens = true
             body.enableSemiFungibleTokens = true
@@ -339,26 +341,69 @@ describe('Custodial wallet tests', () => {
         it('should transfer 1155 on BSC', async () => {
             const body = new TransferFromCustodialAddress()
             body.fromPrivateKey = '0x37b091fc4ce46a56da643f021254612551dbe0944679a6e09cb5724d3085c9ab'
-            body.chain = Currency.BSC
-            body.contractType = ContractType.SEMI_FUNGIBLE_TOKEN
-            body.custodialAddress = '0x009bc01b990e2781e8a961fd792f4ebb12a683b4'
-            body.tokenAddress = '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3'
-            body.recipient = '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA'
-            body.tokenId = '1'
-            body.amount = '1'
-            const txData = await prepareTransferFromCustodialWallet(true, body)
-            expect(txData).toContain('0x')
-            console.log(await bscBroadcast(txData))
+            body.chain = Currency.BSC;
+            body.contractType = ContractType.SEMI_FUNGIBLE_TOKEN;
+            body.custodialAddress = '0x009bc01b990e2781e8a961fd792f4ebb12a683b4';
+            body.tokenAddress = '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3';
+            body.recipient = '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA';
+            body.tokenId = '1';
+            body.amount = '1';
+            const txData = await prepareTransferFromCustodialWallet(true, body);
+            expect(txData).toContain('0x');
+            console.log(await bscBroadcast(txData));
         })
 
+        it('should approve 20 on BSC', async () => {
+            const body = new ApproveCustodialTransfer();
+            body.fromPrivateKey = '0x37b091fc4ce46a56da643f021254612551dbe0944679a6e09cb5724d3085c9ab';
+            body.chain = Currency.BSC;
+            body.contractType = ContractType.FUNGIBLE_TOKEN;
+            body.custodialAddress = '0x95abdd7406a6aca49797e833bacc3edaa394853a';
+            body.tokenAddress = '0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867';
+            body.spender = '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA';
+            body.amount = '1';
+            const txData = await prepareApproveFromCustodialWallet(true, body);
+            expect(txData).toContain('0x');
+            console.log(await bscBroadcast(txData));
+        });
+
+        it('should approve 721 on BSC', async () => {
+            const body = new ApproveCustodialTransfer();
+            body.fromPrivateKey = '0x37b091fc4ce46a56da643f021254612551dbe0944679a6e09cb5724d3085c9ab';
+            body.chain = Currency.BSC;
+            body.contractType = ContractType.NON_FUNGIBLE_TOKEN;
+            body.custodialAddress = '0x95abdd7406a6aca49797e833bacc3edaa394853a';
+            body.tokenAddress = '0x9b0eea3aa1e61b8ecb7d1c8260cd426eb2a9a698';
+            body.spender = '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA';
+            body.tokenId = '10';
+            const txData = await prepareApproveFromCustodialWallet(true, body);
+            expect(txData).toContain('0x');
+            console.log(await bscBroadcast(txData));
+        });
+
+        it('should approve 1155 on BSC', async () => {
+            const body = new ApproveCustodialTransfer();
+            body.fromPrivateKey = '0x37b091fc4ce46a56da643f021254612551dbe0944679a6e09cb5724d3085c9ab';
+            body.chain = Currency.BSC;
+            body.contractType = ContractType.SEMI_FUNGIBLE_TOKEN;
+            body.custodialAddress = '0x95abdd7406a6aca49797e833bacc3edaa394853a';
+            body.tokenAddress = '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3';
+            body.spender = '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA';
+            body.tokenId = '1';
+            body.amount = '1';
+            const txData = await prepareApproveFromCustodialWallet(true, body);
+            expect(txData).toContain('0x');
+            console.log(await bscBroadcast(txData));
+        });
+
         it('should transfer all batch on BSC', async () => {
-            const body = new TransferFromCustodialAddressBatch()
-            body.fromPrivateKey = '0x37b091fc4ce46a56da643f021254612551dbe0944679a6e09cb5724d3085c9ab'
-            body.chain = Currency.BSC
-            body.contractType = [ContractType.FUNGIBLE_TOKEN, ContractType.NON_FUNGIBLE_TOKEN, ContractType.SEMI_FUNGIBLE_TOKEN, ContractType.NATIVE_ASSET]
-            body.custodialAddress = '0x009bc01b990e2781e8a961fd792f4ebb12a683b4'
-            body.tokenAddress = ['0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867', '0x9b0eea3aa1e61b8ecb7d1c8260cd426eb2a9a698', '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3', '0']
-            body.recipient = ['0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA', '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA', '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA', '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA']
+            const body = new TransferFromCustodialAddressBatch();
+            body.fromPrivateKey = '0x37b091fc4ce46a56da643f021254612551dbe0944679a6e09cb5724d3085c9ab';
+            body.chain = Currency.BSC;
+            body.contractType = [ContractType.FUNGIBLE_TOKEN, ContractType.NON_FUNGIBLE_TOKEN, ContractType.SEMI_FUNGIBLE_TOKEN, ContractType.NATIVE_ASSET];
+            body.custodialAddress = '0x009bc01b990e2781e8a961fd792f4ebb12a683b4';
+            body.tokenAddress = ['0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867', '0x9b0eea3aa1e61b8ecb7d1c8260cd426eb2a9a698', '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3', '0'];
+            body.recipient = ['0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA', '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA', '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA', '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA'];
             body.tokenId = ['0', '200', '1', '0']
             body.amount = ['1', '0', '1', '0.00001']
             const txData = await prepareBatchTransferFromCustodialWallet(true, body)

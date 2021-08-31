@@ -39,6 +39,7 @@ export * from './TronUpdateCashbackTrc721'
 export * from './FlowMnemonicOrPrivateKeyOrSignatureId'
 export * from './TransferVet';
 export * from './TransferDogeBlockchain';
+export * from './ApproveCustodialTransfer';
 export * from './TransferXlm';
 export * from './TransferQuorum';
 export * from './DeployMarketplaceListing';

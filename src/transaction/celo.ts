@@ -613,16 +613,18 @@ export const prepareCeloMintErc20SignedTransaction = async (testnet: boolean, bo
         data: contract.methods.mint(to.trim(), '0x' + new BigNumber(amount).multipliedBy(10 ** decimals).toString(16)).encodeABI(),
         from,
     }
-    transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString()
-    return wallet.signTransaction(transaction)
+    transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString();
+    return wallet.signTransaction(transaction);
 }
+
+export const getCeloClient = (provider?: string) => new Web3(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
 
 /**
  * Prepare a smart contract write method invocation transaction with the private key locally. Nothing is broadcasted to the blockchain.
  * @returns raw transaction data in hex, to be broadcasted to blockchain.
  */
 export const prepareCeloSmartContractWriteMethodInvocation = async (testnet: boolean, body: CeloSmartContractMethodInvocation, provider?: string) => {
-    await validateBody(body, CeloSmartContractMethodInvocation)
+    await validateBody(body, CeloSmartContractMethodInvocation);
     const {
         fromPrivateKey,
         feeCurrency,

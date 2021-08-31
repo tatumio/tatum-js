@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import {validateBody} from '../connector/tatum';
 import token_abi from '../contracts/erc20/token_abi';
-import {helperBroadcastTx, helperPrepareSCCall} from '../helpers';
+import {helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall} from '../helpers';
 import {ApproveErc20, Currency} from '../model';
 import {getBscBep20ContractDecimals, getCeloErc20ContractDecimals, getEthErc20ContractDecimals, getOne20ContractDecimals, getPolygonErc20ContractDecimals} from '../transaction';
 
@@ -46,4 +46,17 @@ export const prepareApproveErc20 = async (testnet: boolean, body: ApproveErc20, 
     const params = [body.spender.trim(), `0x${amount}`];
     body.amount = '0';
     return await helperPrepareSCCall(testnet, body, ApproveErc20, 'approve', params, undefined, provider, token_abi);
+};
+
+/**
+ * Get Decimals for the ERC20 token
+ * @param testnet if we are using testnet or mainnet
+ * @param chain chain to query for the token
+ * @param contractAddress address of the token
+ * @param provider optional provider
+ */
+export const getErc20Decimals = async (testnet: boolean, chain: Currency, contractAddress: string, provider?: string) => {
+    const web3 = helperGetWeb3Client(testnet, chain, provider);
+    // @ts-ignore
+    return (new web3.eth.Contract(token_abi, contractAddress)).methods.decimals().call();
 };
