@@ -180,7 +180,7 @@ const generateOneAddress = (testnet: boolean, xpub: string, i: number) => {
  * @returns blockchain address
  */
 export const generateEgldAddress = async (testnet: boolean, mnem: string, i: number): Promise<string> => {
-    const path = testnet ? TESTNET_DERIVATION_PATH + '\'' : EGLD_DERIVATION_PATH + `/${i}'`
+    const path = (testnet ? TESTNET_DERIVATION_PATH + '\'' : EGLD_DERIVATION_PATH) + `/${i}'`
     const seed = await mnemonicToSeed(mnem);
     const {key} = derivePath(path, seed.toString('hex'))
     const words = bech32.toWords(getPublicKey(key, false))
@@ -469,7 +469,7 @@ const generateOnePrivateKey = async (testnet: boolean, mnemonic: string, i: numb
  * @returns blockchain private key to the address
  */
 const generateEgldPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
-    const path = testnet ? TESTNET_DERIVATION_PATH + '\'' : EGLD_DERIVATION_PATH + `/${i}'`
+    const path = (testnet ? TESTNET_DERIVATION_PATH + '\'' : EGLD_DERIVATION_PATH) + `/${i}'`
     const seed = await mnemonicToSeed(mnemonic)
     const {key} = derivePath(path, seed.toString('hex'))
     return key.toString('hex')
