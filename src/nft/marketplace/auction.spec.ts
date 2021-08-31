@@ -69,7 +69,6 @@ describe('Auction  tests', () => {
             bid.contractAddress = '0x57929da44de20959b604238d4d50d15d1a24ea43';
             bid.id = tokenId;
             bid.bidValue = '0.001015';
-            bid.amount = '0.001015';
             bid.feeCurrency = Currency.CELO;
             bid.chain = Currency.CELO;
             console.log(await sendAuctionBid(true, bid, 'https://alfajores-forno.celo-testnet.org'));
@@ -219,7 +218,6 @@ describe('Auction  tests', () => {
             bid.contractAddress = '0x568bf1e6849e250f4705347a9cff717b5dcfc4ad';
             bid.id = tokenId;
             bid.bidValue = '0.001015';
-            bid.amount = '0.001015';
             bid.chain = Currency.BSC;
             console.log(await sendAuctionBid(true, bid, 'https://data-seed-prebsc-2-s1.binance.org:8545'));
 
@@ -304,7 +302,6 @@ describe('Auction  tests', () => {
             bid.contractAddress = '0x7a2cc5a4788a15d5705b1d31e0ff5cfc4465d073';
             bid.id = tokenId;
             bid.bidValue = '0.001015';
-            bid.amount = '0.001015';
             bid.chain = Currency.MATIC;
             console.log(await sendAuctionBid(true, bid, 'https://rpc-mumbai.maticvigil.com'));
 

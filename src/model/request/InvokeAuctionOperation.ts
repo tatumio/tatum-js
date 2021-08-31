@@ -23,11 +23,6 @@ export class InvokeAuctionOperation extends PrivateKeyOrSignatureId {
     public bidValue: string;
 
     @IsOptional()
-    @IsNumberString()
-    @Matches(/^[+]?((\d+(\.\d*)?)|(\.\d+))$/)
-    public amount?: string;
-
-    @IsOptional()
     @Min(0)
     public nonce?: number;
 

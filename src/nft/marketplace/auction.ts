@@ -208,13 +208,16 @@ export const prepareAuctionBid = async (testnet: boolean, body: InvokeAuctionOpe
     // @ts-ignore
     const a = await (new web3.eth.Contract(auction.abi, body.contractAddress)).methods.getAuction(body.id).call();
     let decimals = 18;
+    const b: any = {...body};
     if (a[6] !== '0x0000000000000000000000000000000000000000') {
         // @ts-ignore
         decimals = await getErc20Decimals(testnet, body.chain, a[6], provider);
+    } else {
+        b.amount = body.bidValue;
     }
 
     const params = [body.id, `0x${new BigNumber(body.bidValue).multipliedBy(new BigNumber(10).pow(decimals)).toString(16)}`,];
-    return await helperPrepareSCCall(testnet, body, InvokeAuctionOperation, 'bid', params, undefined, provider, auction.abi);
+    return await helperPrepareSCCall(testnet, b, InvokeAuctionOperation, 'bid', params, undefined, provider, auction.abi);
 };
 
 /**
