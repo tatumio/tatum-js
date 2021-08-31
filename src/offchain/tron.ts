@@ -5,6 +5,7 @@ import {Currency, TransferTrxOffchain, TrcType} from '../model/request'
 import {prepareTronSignedTransaction, prepareTronTrc10SignedTransaction, prepareTronTrc20SignedTransaction} from '../transaction'
 import {generatePrivateKeyFromMnemonic} from '../wallet'
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common'
+import { offchainTransferTronKMS } from './kms'
 
 /**
  * Send Tron transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -14,6 +15,9 @@ import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} fr
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendTronOffchainTransaction = async (testnet: boolean, body: TransferTrxOffchain) => {
+    if (body.signatureId) {
+        return offchainTransferTronKMS(body)
+    }
     await validateBody(body, TransferTrxOffchain)
     const {
         mnemonic, index, fromPrivateKey, ...withdrawal

@@ -1,5 +1,5 @@
 import {post} from '../connector/tatum'
-import {SignatureId} from '../model'
+import { SignatureId, TransferTrxOffchain } from '../model'
 import {TransferBtcBasedOffchainKMS} from '../model/request/TransferBtcBasedOffchainKMS'
 import {TransferEthOffchainKMS} from '../model/request/TransferEthOffchainKMS'
 import {TransferXlmOffchainKMS} from '../model/request/TransferXlmOffchainKMS'
@@ -52,3 +52,40 @@ export const offchainTransferXrpKMS = async (body: TransferXrpOffchainKMS): Prom
  */
 export const offchainTransferAdaKMS = async (body: TransferBtcBasedOffchainKMS): Promise<SignatureId> =>
     post(`/v3/offchain/ada/transfer`, body, TransferBtcBasedOffchainKMS)
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/BscOrBepTransfer" target="_blank">Tatum API documentation</a>
+ */
+export const offchainTransferBscKMS = async (body: TransferEthOffchainKMS): Promise<SignatureId> =>
+    post(`/v3/offchain/bsc/transfer`, body, TransferEthOffchainKMS)
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/CeloOrErc20Transfer" target="_blank">Tatum API documentation</a>
+ */
+export const offchainTransferCeloKMS = async (body: TransferEthOffchainKMS): Promise<SignatureId> =>
+    post(`/v3/offchain/celo/transfer`, body, TransferEthOffchainKMS)
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/DogeTransfer" target="_blank">Tatum API documentation</a>
+ */
+export const offchainTransferDogeKMS = async (body: TransferBtcBasedOffchainKMS): Promise<SignatureId> =>
+    post(`/v3/offchain/dogecoin/transfer`, body, TransferBtcBasedOffchainKMS)
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/PolygonTransfer" target="_blank">Tatum API documentation</a>
+ */
+export const offchainTransferPolygonKMS = async (body: TransferEthOffchainKMS): Promise<SignatureId> =>
+    post(`/v3/offchain/polygon/transfer`, body, TransferEthOffchainKMS)
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/TronTransferOffchain" target="_blank">Tatum API documentation</a>
+ */
+export const offchainTransferTronKMS = async (body: TransferTrxOffchain): Promise<SignatureId> =>
+    post(`/v3/offchain/tron/transfer`, body, TransferTrxOffchain)
+
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/XdcTransfer" target="_blank">Tatum API documentation</a>
+ */
+export const offchainTransferXdcKMS = async (body: TransferEthOffchainKMS): Promise<SignatureId> =>
+    post(`/v3/offchain/xdc/transfer`, body, TransferEthOffchainKMS)

@@ -5,6 +5,7 @@ import {Currency, TransferEthOffchain} from '../model';
 import {prepareXdcOrErc20SignedTransaction} from '../transaction';
 import {generatePrivateKeyFromMnemonic} from '../wallet';
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
+import { offchainTransferXdcKMS } from './kms'
 
 /**
  * Send XDC transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -15,6 +16,9 @@ import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} fr
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendXdcOffchainTransaction = async (testnet: boolean, body: TransferEthOffchain, provider?: string) => {
+    if (body.signatureId) {
+        return offchainTransferXdcKMS(body)
+    }
     await validateBody(body, TransferEthOffchain)
     const {
         mnemonic, index, privateKey, gasLimit, gasPrice, nonce, ...withdrawal

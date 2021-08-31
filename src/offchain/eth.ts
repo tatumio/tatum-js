@@ -9,6 +9,7 @@ import {Currency, ETH_BASED_CURRENCIES, PrepareEthErc20SignedOffchainTransaction
 import {ethGetGasPriceInWei, getClient} from '../transaction'
 import {generatePrivateKeyFromMnemonic} from '../wallet'
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common'
+import { offchainTransferEthKMS } from './kms'
 
 /**
  * Send Ethereum transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -19,6 +20,9 @@ import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} fr
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendEthOffchainTransaction = async (testnet: boolean, body: TransferEthOffchain, provider?: string) => {
+    if (body.signatureId) {
+        return offchainTransferEthKMS(body)
+    }
     await validateBody(body, TransferEthOffchain)
     const {
         mnemonic, index, privateKey, nonce, ...withdrawal
