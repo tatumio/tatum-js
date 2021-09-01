@@ -1,5 +1,6 @@
 import {Type} from 'class-transformer';
-import {IsBoolean, IsIn, IsNotEmpty, IsNumber, IsNumberString, IsOptional, IsPositive, Length, Min} from 'class-validator';
+import {IsBoolean, IsIn, IsNotEmpty, IsNumber, IsNumberString, IsOptional, IsPositive, Length, Min, Validate} from 'class-validator';
+import {AmountDecimalValidator} from '../validation/AmountDecimalValidator';
 import {Currency} from './Currency';
 import {Fee} from './Fee';
 import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
@@ -39,6 +40,7 @@ export class CreateAuction extends PrivateKeyOrSignatureId {
     @IsNumberString()
     public tokenId: string;
 
+    @Validate(AmountDecimalValidator)
     @IsOptional()
     @IsNumberString()
     public amount?: string;

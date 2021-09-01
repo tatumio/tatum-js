@@ -1,5 +1,6 @@
 import {Type} from 'class-transformer';
 import {IsIn, IsNotEmpty, IsNumber, IsOptional, IsPositive, Length, Max, Min} from 'class-validator';
+import {HasDecimalPlaces} from '../validation/HasDecimalPlaces';
 import {Currency} from './Currency';
 import {Fee} from './Fee';
 import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
@@ -14,6 +15,7 @@ export class DeployNftAuction extends PrivateKeyOrSignatureId {
     @IsNumber()
     @IsPositive()
     @Max(10000)
+    @HasDecimalPlaces(0)
     public auctionFee: number;
 
     @IsNotEmpty()

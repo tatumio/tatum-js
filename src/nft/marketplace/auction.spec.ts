@@ -29,6 +29,32 @@ describe('Auction  tests', () => {
             expect(test).toBeDefined();
         });
 
+        it('should not deploy auction - wrong validation', async () => {
+            const body = new DeployNftAuction();
+            body.fromPrivateKey = '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236';
+            body.feeRecipient = '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA';
+            body.auctionFee = 150.1;
+            body.feeCurrency = Currency.CUSD;
+            body.chain = Currency.CELO;
+            await deployAuction(true, body, 'https://alfajores-forno.celo-testnet.org');
+        });
+
+        it('should not create auction - wrong validation', async () => {
+            const body = new CreateAuction();
+            body.fromPrivateKey = '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236';
+            body.amount = '0.2';
+            body.nftAddress = '0x1214BEada6b25bc98f7494C7BDBf22C095FDCaBD';
+            body.contractAddress = '0x1214BEada6b25bc98f7494C7BDBf22C095FDCaBD';
+            body.endedAt = 123456789;
+            body.tokenId = tokenId;
+            body.id = tokenId;
+            body.isErc721 = false;
+            body.seller = '0x48d4bA7B2698A4b89635b9a2E391152350DB740f';
+            body.feeCurrency = Currency.CUSD;
+            body.chain = Currency.CELO;
+            await sendAuctionCreate(true, body, 'https://alfajores-forno.celo-testnet.org');
+        });
+
         it('should create auction native asset', async () => {
 
             const mint = new CeloMintErc721();

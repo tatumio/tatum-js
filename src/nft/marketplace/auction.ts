@@ -83,7 +83,7 @@ export const getAuctionFeeRecipient = async (chain: Currency, contractAddress: s
  * Before auction is created, seller must approve transfer of the NFT to the auction contract.
  * Buyer will bid for the asset from the auction using native asset - send assets along the gid() smart contract call, or via ERC20 token.
  * Buyer of the auction must perform approval for the smart contract to access ERC20 token, before the actual bid() method is called.
- * Once there is higher bid then the actual one, the previous bidder's funds will be returned to him and new bidder will be the current winning one.
+ * Once there is higher bid than the actual one, the previous bidder's funds will be returned to him and new bidder will be the current winning one.
  * When auction ends, anyone can settle the auction - NFT will be sent to the bidder, assets to the seller and fee to the operator.
  * @param testnet chain to work with
  * @param body request data
@@ -100,7 +100,7 @@ export const deployAuction = async (testnet: boolean, body: DeployNftAuction, pr
  * Before auction is created, seller must approve transfer of the NFT to the auction contract.
  * Buyer will bid for the asset from the auction using native asset - send assets along the gid() smart contract call, or via ERC20 token.
  * Buyer of the auction must perform approval for the smart contract to access ERC20 token, before the actual bid() method is called.
- * Once there is higher bid then the actual one, the previous bidder's funds will be returned to him and new bidder will be the current winning one.
+ * Once there is higher bid than the actual one, the previous bidder's funds will be returned to him and new bidder will be the current winning one.
  * When auction ends, anyone can settle the auction - NFT will be sent to the bidder, assets to the seller and fee to the operator.
  * @param testnet chain to work with
  * @param body request data
@@ -234,7 +234,7 @@ export const prepareAuctionCancel = async (testnet: boolean, body: InvokeAuction
 };
 
 /**
- * Settle auction. Only possible for the seller or the operator. There must be no buyer present for that auction. NFT asset is sent back to the seller. Auction must have ended.
+ * Settle auction. There must be buyer present for that auction. NFT will be sent to the bidder, assets to the seller and fee to the operator.
  * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
@@ -314,7 +314,7 @@ export const sendAuctionCancel = async (testnet: boolean, body: InvokeAuctionOpe
     helperBroadcastTx(body.chain, await prepareAuctionCancel(testnet, body, provider), body.signatureId);
 
 /**
- * Settle auction. Only possible for the seller or the operator. There must be no buyer present for that auction. NFT asset is sent back to the seller. Auction must have ended.
+ * Settle auction. There must be buyer present for that auction. NFT will be sent to the bidder, assets to the seller and fee to the operator.
  * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
