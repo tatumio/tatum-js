@@ -1,8 +1,8 @@
 import {IsIn, IsNotEmpty, IsOptional, Length, MaxLength, Min} from 'class-validator'
 import {Currency} from './Currency'
-import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId'
+import { PrivateKeyOrSignatureIdBuiltInPrivateKey } from './PrivateKeyOrSignatureIdBuiltInPrivateKey'
 
-export class MintErc721 extends PrivateKeyOrSignatureId {
+export class MintErc721 extends PrivateKeyOrSignatureIdBuiltInPrivateKey {
 
     @IsNotEmpty()
     @Length(42, 43)
