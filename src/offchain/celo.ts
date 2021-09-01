@@ -8,6 +8,7 @@ import {TransferCeloOffchain} from '../model/request/TransferCeloOffchain'
 import {prepareCeloOrCUsdSignedTransaction, prepareCeloTransferErc20SignedTransaction} from '../transaction'
 import {generatePrivateKeyFromMnemonic} from '../wallet'
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common'
+import { offchainTransferCeloKMS } from './kms'
 
 /**
  * Send Celo transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -18,6 +19,9 @@ import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} fr
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendCeloOffchainTransaction = async (testnet: boolean, body: TransferCeloOffchain, provider?: string) => {
+    if (body.signatureId) {
+        return offchainTransferCeloKMS(body)
+    }
     await validateBody(body, TransferCeloOffchain)
     const {
         mnemonic, index, privateKey, gasLimit, gasPrice, nonce, feeCurrency, ...withdrawal
