@@ -7,7 +7,7 @@ export function HasDecimalPlaces(decimals: number, validationOptions?: Validatio
         constraints: [decimals],
         validator: {
             validate: (value) => new BigNumber(value).decimalPlaces() <= decimals,
-            defaultMessage: buildMessage(eachPrefix => eachPrefix + '$property must have less than $constraint1 decimals', validationOptions),
+            defaultMessage: buildMessage(eachPrefix => eachPrefix + '$property must have less than or equal to $constraint1 decimals', validationOptions),
         }
     }, validationOptions);
 }
