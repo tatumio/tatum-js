@@ -43,6 +43,8 @@ import {
     UpdateCashbackErc721
 } from '../model';
 import {obtainCustodialAddressType} from '../wallet';
+import { ValidationError } from 'class-validator'
+import { mintNFT } from '../nft'
 
 /**
  * Estimate Gas price for the transaction.
@@ -428,14 +430,16 @@ export const prepareBscMintBep721SignedTransaction = async (body: EthMintErc721,
 
     // @ts-ignore
     const contract = new (client).eth.Contract(erc721TokenABI, contractAddress)
-    const tx: TransactionConfig = {
-        from: 0,
-        to: contractAddress.trim(),
-        data: contract.methods.mintWithTokenURI(to.trim(), tokenId, url).encodeABI(),
-        nonce,
+    if(contractAddress) {
+        const tx: TransactionConfig = {
+            from: 0,
+            to: contractAddress.trim(),
+            data: contract.methods.mintWithTokenURI(to.trim(), tokenId, url).encodeABI(),
+            nonce,
+        }
+        return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
     }
-
-    return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
+    throw new Error('Contract address should not be empty');
 }
 /**
  * Sign Bsc mint ERC 721 transaction with cashback via private keys locally. Nothing is broadcast to the blockchain.
@@ -464,14 +468,17 @@ export const prepareBscMintBepCashback721SignedTransaction = async (body: EthMin
     const contract = new (client).eth.Contract(erc721TokenABI, contractAddress)
     const cashbacks: string[] = cashbackValues!
     const cb = cashbacks.map(c => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
-    const tx: TransactionConfig = {
-        from: 0,
-        to: contractAddress.trim(),
-        data: contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb).encodeABI(),
-        nonce,
-    }
+    if (contractAddress) {
+        const tx: TransactionConfig = {
+            from: 0,
+            to: contractAddress.trim(),
+            data: contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb).encodeABI(),
+            nonce,
+        }
 
-    return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
+        return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
+    }
+    throw new Error('Contract address should not be empty!')
 }
 /**
  * Sign Bsc mint multiple ERC 721 Cashback transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -1017,8 +1024,13 @@ export const sendBscSmartContractMethodInvocationTransaction = async (body: Smar
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendMintBep721Transaction = async (body: EthMintErc721, provider?: string) =>
-    bscBroadcast(await prepareBscMintBep721SignedTransaction(body, provider), body.signatureId)
+export const sendMintBep721Transaction = async (body: EthMintErc721, provider?: string) => {
+    if (!body.fromPrivateKey && !body.fromPrivateKey) {
+        return mintNFT(body)
+    }
+    return bscBroadcast(await prepareBscMintBep721SignedTransaction(body, provider), body.signatureId)
+}
+
 export const sendBscGenerateCustodialWalletSignedTransaction = async (body: GenerateCustodialAddress, provider?: string) =>
     bscBroadcast(await prepareBscGenerateCustodialWalletSignedTransaction(body, provider), body.signatureId)
 // MultiToken
