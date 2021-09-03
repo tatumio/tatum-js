@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>EsdtPropertiesNftOrSft | @tatumio/tatum - v1.24.2</title>
+	<title>EgldBasicTransaction | @tatumio/tatum - v1.24.2</title>
 	<meta name="description" content="Documentation for @tatumio/tatum - v1.24.2">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,10 +55,10 @@
 					<a href="../modules.html">@tatumio/tatum - v1.24.2</a>
 				</li>
 				<li>
-					<a href="EsdtPropertiesNftOrSft.html">EsdtPropertiesNftOrSft</a>
+					<a href="EgldBasicTransaction.html">EgldBasicTransaction</a>
 				</li>
 			</ul>
-			<h1>Class EsdtPropertiesNftOrSft</h1>
+			<h1>Class EgldBasicTransaction</h1>
 		</div>
 	</div>
 </header>
@@ -69,7 +69,12 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">EsdtPropertiesNftOrSft</span>
+						<span class="target">EgldBasicTransaction</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<a href="EgldSendTransaction.html" class="tsd-signature-type" data-tsd-kind="Class">EgldSendTransaction</a>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -80,16 +85,18 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="EsdtPropertiesNftOrSft.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="EgldBasicTransaction.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="EsdtPropertiesNftOrSft.html#canFreeze" class="tsd-kind-icon">can<wbr>Freeze</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="EsdtPropertiesNftOrSft.html#canPause" class="tsd-kind-icon">can<wbr>Pause</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="EsdtPropertiesNftOrSft.html#canTransferNFTCreateRole" class="tsd-kind-icon">can<wbr>TransferNFTCreate<wbr>Role</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="EsdtPropertiesNftOrSft.html#canWipe" class="tsd-kind-icon">can<wbr>Wipe</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="EgldBasicTransaction.html#chainID" class="tsd-kind-icon">chainID</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="EgldBasicTransaction.html#data" class="tsd-kind-icon">data</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="EgldBasicTransaction.html#receiver" class="tsd-kind-icon">receiver</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="EgldBasicTransaction.html#sender" class="tsd-kind-icon">sender</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="EgldBasicTransaction.html#value" class="tsd-kind-icon">value</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="EgldBasicTransaction.html#version" class="tsd-kind-icon">version</a></li>
 							</ul>
 						</section>
 					</div>
@@ -101,13 +108,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Esdt<wbr>Properties<wbr>Nft<wbr>OrSft<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="EsdtPropertiesNftOrSft.html" class="tsd-signature-type" data-tsd-kind="Class">EsdtPropertiesNftOrSft</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Egld<wbr>Basic<wbr>Transaction<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="EgldBasicTransaction.html" class="tsd-signature-type" data-tsd-kind="Class">EgldBasicTransaction</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="EsdtPropertiesNftOrSft.html" class="tsd-signature-type" data-tsd-kind="Class">EsdtPropertiesNftOrSft</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="EgldBasicTransaction.html" class="tsd-signature-type" data-tsd-kind="Class">EgldBasicTransaction</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -115,42 +122,62 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="canFreeze" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> can<wbr>Freeze</h3>
-					<div class="tsd-signature tsd-kind-icon">can<wbr>Freeze<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<a name="chainID" class="tsd-anchor"></a>
+					<h3>chainID</h3>
+					<div class="tsd-signature tsd-kind-icon">chainID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/254b7bb/src/model/request/egld/EsdtIssueNftOrSft.ts#L6">model/request/egld/EsdtIssueNftOrSft.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/254b7bb/src/model/request/egld/EgldBasicTransaction.ts#L23">model/request/egld/EgldBasicTransaction.ts:23</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="canPause" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> can<wbr>Pause</h3>
-					<div class="tsd-signature tsd-kind-icon">can<wbr>Pause<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<a name="data" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> data</h3>
+					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/254b7bb/src/model/request/egld/EsdtIssueNftOrSft.ts#L12">model/request/egld/EsdtIssueNftOrSft.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/254b7bb/src/model/request/egld/EgldBasicTransaction.ts#L19">model/request/egld/EgldBasicTransaction.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="canTransferNFTCreateRole" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> can<wbr>TransferNFTCreate<wbr>Role</h3>
-					<div class="tsd-signature tsd-kind-icon">can<wbr>TransferNFTCreate<wbr>Role<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<a name="receiver" class="tsd-anchor"></a>
+					<h3>receiver</h3>
+					<div class="tsd-signature tsd-kind-icon">receiver<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/254b7bb/src/model/request/egld/EsdtIssueNftOrSft.ts#L15">model/request/egld/EsdtIssueNftOrSft.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/254b7bb/src/model/request/egld/EgldBasicTransaction.ts#L10">model/request/egld/EgldBasicTransaction.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="canWipe" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> can<wbr>Wipe</h3>
-					<div class="tsd-signature tsd-kind-icon">can<wbr>Wipe<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<a name="sender" class="tsd-anchor"></a>
+					<h3>sender</h3>
+					<div class="tsd-signature tsd-kind-icon">sender<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/254b7bb/src/model/request/egld/EsdtIssueNftOrSft.ts#L9">model/request/egld/EsdtIssueNftOrSft.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/254b7bb/src/model/request/egld/EgldBasicTransaction.ts#L14">model/request/egld/EgldBasicTransaction.ts:14</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="value" class="tsd-anchor"></a>
+					<h3>value</h3>
+					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/254b7bb/src/model/request/egld/EgldBasicTransaction.ts#L6">model/request/egld/EgldBasicTransaction.ts:6</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="version" class="tsd-anchor"></a>
+					<h3>version</h3>
+					<div class="tsd-signature tsd-kind-icon">version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/tatumio/tatum-js/blob/254b7bb/src/model/request/egld/EgldBasicTransaction.ts#L27">model/request/egld/EgldBasicTransaction.ts:27</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -169,22 +196,28 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class">
-						<a href="EsdtPropertiesNftOrSft.html" class="tsd-kind-icon">Esdt<wbr>Properties<wbr>Nft<wbr>OrSft</a>
+						<a href="EgldBasicTransaction.html" class="tsd-kind-icon">Egld<wbr>Basic<wbr>Transaction</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="EsdtPropertiesNftOrSft.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="EgldBasicTransaction.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="EsdtPropertiesNftOrSft.html#canFreeze" class="tsd-kind-icon">can<wbr>Freeze</a>
+								<a href="EgldBasicTransaction.html#chainID" class="tsd-kind-icon">chainID</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="EsdtPropertiesNftOrSft.html#canPause" class="tsd-kind-icon">can<wbr>Pause</a>
+								<a href="EgldBasicTransaction.html#data" class="tsd-kind-icon">data</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="EsdtPropertiesNftOrSft.html#canTransferNFTCreateRole" class="tsd-kind-icon">can<wbr>TransferNFTCreate<wbr>Role</a>
+								<a href="EgldBasicTransaction.html#receiver" class="tsd-kind-icon">receiver</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="EsdtPropertiesNftOrSft.html#canWipe" class="tsd-kind-icon">can<wbr>Wipe</a>
+								<a href="EgldBasicTransaction.html#sender" class="tsd-kind-icon">sender</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="EgldBasicTransaction.html#value" class="tsd-kind-icon">value</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="EgldBasicTransaction.html#version" class="tsd-kind-icon">version</a>
 							</li>
 						</ul>
 					</li>
