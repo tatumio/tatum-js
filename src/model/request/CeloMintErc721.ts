@@ -6,6 +6,6 @@ export class CeloMintErc721 extends MintErc721 {
 
     @IsOptional()
     @IsIn([Currency.CELO, Currency.CUSD, Currency.CEUR])
-    public feeCurrency = Currency.CELO;
+    public feeCurrency? = Currency.CELO;
 
 }
