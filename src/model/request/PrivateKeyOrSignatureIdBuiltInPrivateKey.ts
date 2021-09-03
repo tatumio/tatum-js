@@ -1,15 +1,11 @@
-import {IsNotEmpty, IsOptional, IsUUID, Length, Min, ValidateIf} from 'class-validator'
+import { IsNotEmpty, IsOptional, IsUUID, Length, Min, Validate, ValidateIf } from 'class-validator'
+import { Mint721BuiltInPrivateKeyValidator } from '../validation/Mint721BuiltInPrivateKeyValidator'
 
 export class PrivateKeyOrSignatureIdBuiltInPrivateKey {
-  @ValidateIf(o => (o.fromPrivateKey && o.signatureId) || !o.signatureId)
-  @IsNotEmpty()
-  @Length(64, 66)
+  @Validate(Mint721BuiltInPrivateKeyValidator)
   public fromPrivateKey?: string;
 
-  @ValidateIf(o => (o.fromPrivateKey && o.signatureId) || !o.fromPrivateKey)
-  @Length(36, 36)
-  @IsUUID('4')
-  @IsNotEmpty()
+  @Validate(Mint721BuiltInPrivateKeyValidator)
   public signatureId?: string;
 
   @ValidateIf(o => o.signatureId)

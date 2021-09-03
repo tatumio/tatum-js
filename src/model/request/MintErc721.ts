@@ -1,6 +1,7 @@
-import {IsIn, IsNotEmpty, IsOptional, Length, MaxLength, Min} from 'class-validator'
+import { IsIn, IsNotEmpty, IsOptional, Length, MaxLength, Min, Validate } from 'class-validator'
 import {Currency} from './Currency'
 import { PrivateKeyOrSignatureIdBuiltInPrivateKey } from './PrivateKeyOrSignatureIdBuiltInPrivateKey'
+import { Mint721BuiltInPrivateKeyValidator } from '../validation/Mint721BuiltInPrivateKeyValidator'
 
 export class MintErc721 extends PrivateKeyOrSignatureIdBuiltInPrivateKey {
 
@@ -12,17 +13,15 @@ export class MintErc721 extends PrivateKeyOrSignatureIdBuiltInPrivateKey {
     @MaxLength(256)
     public url: string;
 
-    @IsNotEmpty()
-    @MaxLength(256)
-    public tokenId: string;
+    @Validate(Mint721BuiltInPrivateKeyValidator)
+    public tokenId?: string;
 
     @IsNotEmpty()
     @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC, Currency.TRON, Currency.ONE, Currency.MATIC])
     public chain: Currency;
 
-    @IsNotEmpty()
-    @Length(42, 43)
-    public contractAddress: string;
+    @Validate(Mint721BuiltInPrivateKeyValidator)
+    public contractAddress?: string;
 
     @Min(0)
     @IsOptional()
