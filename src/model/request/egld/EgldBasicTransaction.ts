@@ -1,4 +1,4 @@
-import {IsHexadecimal, IsNotEmpty, IsNumberString, IsOptional, Length, MaxLength, Min} from 'class-validator';
+import {IsNotEmpty, IsNumberString, IsOptional, Length, MaxLength, Min} from 'class-validator';
 
 export class EgldBasicTransaction {
     @IsNotEmpty()
@@ -15,7 +15,6 @@ export class EgldBasicTransaction {
 
     @IsOptional()
     @MaxLength(130000)
-    @IsHexadecimal()
     public data?: string;
 
     @IsNotEmpty()
