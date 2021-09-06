@@ -49,12 +49,20 @@ export class Mint721BuiltInPrivateKeyValidator implements ValidatorConstraintInt
             return false
         }
 
-        if(!data.fromPrivateKey || !maxLength(data.fromPrivateKey, 66) || !minLength(data.fromPrivateKey, 64)) {
+        if(!data.fromPrivateKey && !data.signatureId) {
             return false
         }
 
-        if(!data.signatureId || !maxLength(data.signatureId, 36) || !minLength(data.signatureId, 36) || !isUUID(4)) {
-            return false
+        if (data.fromPrivateKey) {
+            if(!maxLength(data.fromPrivateKey, 66) || !minLength(data.fromPrivateKey, 64)) {
+                return false
+            }
+        }
+
+        if(data.signatureId) {
+            if(!maxLength(data.signatureId, 36) || !minLength(data.signatureId, 36) || !isUUID(4)) {
+                return false
+            }
         }
 
         const signatureIdValidation = new SignatureIdValidator()
