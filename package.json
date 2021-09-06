@@ -8,6 +8,7 @@
     "dist/"
   ],
   "scripts": {
+    "test": "jest",
     "clean": "rimraf dist*",
     "build": "tsc",
     "prepublish": "npm run clean && npm run build",
@@ -40,8 +41,10 @@
     "@onflow/types": "^0.0.4",
     "@onflow/util-encode-key": "^0.0.2",
     "@tatumio/bitcoincashjs2-lib": "4.1.2",
+    "algosdk": "^1.11.1",
     "axios": "^0.21.1",
     "axios-retry": "^3.1.9",
+    "base32.js": "^0.1.0",
     "bech32": "^1.1.4",
     "bignumber.js": "^9.0.0",
     "bip32": "^2.0.5",
@@ -61,6 +64,7 @@
     "ethereumjs-wallet": "^1.0.0",
     "form-data": "^4.0.0",
     "hdkey": "^2.0.1",
+    "js-sha512": "^0.8.0",
     "neon": "^2.0.0",
     "reflect-metadata": "^0.1.13",
     "ripple-lib": "^1.7.1",

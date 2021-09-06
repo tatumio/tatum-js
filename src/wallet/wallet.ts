@@ -1,4 +1,6 @@
 import {generatePrivateKey, getAddressFromPrivateKey} from '@binance-chain/javascript-sdk/lib/crypto';
+const algosdk = require('algosdk');
+const base32 = require('base32.js');
 import Neon, {wallet} from '@cityofzion/neon-js';
 import {generateMnemonic, mnemonicToSeed} from 'bip39';
 import {bip32, networks} from 'bitcoinjs-lib';
@@ -7,6 +9,7 @@ import {hdkey as ethHdKey} from 'ethereumjs-wallet';
 import hdkey from 'hdkey';
 import {RippleAPI} from 'ripple-lib';
 import {Keypair} from 'stellar-sdk';
+import {derivePath, getPublicKey} from 'ed25519-hd-key';
 import {
     BCH_DERIVATION_PATH,
     BTC_DERIVATION_PATH,
@@ -31,6 +34,7 @@ import {
     TRON_DERIVATION_PATH,
     VET_DERIVATION_PATH,
     XDC_DERIVATION_PATH,
+    ALGO_DERIVATION_PATH,
 } from '../constants';
 import {Currency} from '../model';
 import cardano from './cardano.crypto';
@@ -309,6 +313,19 @@ export const generateAdaWallet = async (mnemonic: string): Promise<Wallet> => {
 }
 
 /**
+ * Generate Algo wallet
+ * @param mnem mnemonic seed to use
+ * @returns address and secret
+ */
+export const generateAlgoWallet = async (mnem: string) => {
+    const account = algosdk.mnemonicToSecretKey(mnem);
+    return {
+        address: account.addr,
+        secret: account.sk,
+    }
+}
+
+/**
  * Generate wallet
  * @param currency blockchain to generate wallet for
  * @param testnet testnet or mainnet version of address
@@ -400,6 +417,8 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
             return generateLyraWallet(testnet, mnem)
         case Currency.ADA:
             return generateAdaWallet(mnem)
+        case Currency.ALGO:
+            return generateAlgoWallet(mnem)
         default:
             throw new Error('Unsupported blockchain.')
     }
