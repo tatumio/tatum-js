@@ -43,6 +43,7 @@ import {
     TransactionKMS,
 } from '../model';
 import {obtainCustodialAddressType} from '../wallet';
+import { mintNFT } from '../nft'
 
 const prepareGeneralTx = async (client: Web3, testnet: boolean, fromPrivateKey?: string, signatureId?: string, to?: string, amount?: string, nonce?: number,
                                 data?: string, gasLimit?: string, gasPrice?: string) => {
@@ -303,8 +304,11 @@ export const prepareOneMint721SignedTransaction = async (testnet: boolean, body:
     // @ts-ignore
     const data = new (client).eth.Contract(erc721TokenABI, new HarmonyAddress(body.contractAddress).basicHex).methods
         .mintWithTokenURI(new HarmonyAddress(body.to).basicHex, body.tokenId, body.url).encodeABI()
-    return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, undefined, body.nonce, data,
-        body.fee?.gasLimit, body.fee?.gasPrice)
+    if (body.contractAddress) {
+        return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, undefined, body.nonce, data,
+            body.fee?.gasLimit, body.fee?.gasPrice)
+        }
+    throw new Error('Contract address should not be empty!')
 }
 
 /**
@@ -322,8 +326,11 @@ export const prepareOneMintCashback721SignedTransaction = async (testnet: boolea
     // @ts-ignore
     const data = new (client).eth.Contract(erc721TokenABI, new HarmonyAddress(body.contractAddress).basicHex).methods
         .mintWithCashback(new HarmonyAddress(body.to).basicHex, body.tokenId, body.url, body.authorAddresses?.map(a => new HarmonyAddress(a).basicHex), cb).encodeABI()
-    return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, undefined, body.nonce, data,
-        body.fee?.gasLimit, body.fee?.gasPrice)
+    if(body.contractAddress) {
+        return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, undefined, body.nonce, data,
+            body.fee?.gasLimit, body.fee?.gasPrice)
+    }
+    throw new Error('Contract address should not be empty!')
 }
 
 /**
@@ -665,8 +672,13 @@ export const sendOneDeploy20SignedTransaction = async (testnet: boolean, body: O
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendOneMint721SignedTransaction = async (testnet: boolean, body: OneMint721, provider?: string) =>
-    oneBroadcast(await prepareOneMint721SignedTransaction(testnet, body, provider))
+export const sendOneMint721SignedTransaction = async (testnet: boolean, body: OneMint721, provider?: string) => {
+    if (!body.fromPrivateKey && !body.fromPrivateKey) {
+        return mintNFT(body)
+    }
+
+    return oneBroadcast(await prepareOneMint721SignedTransaction(testnet, body, provider))
+}
 
 /**
  * Send Harmony mint cashback erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.

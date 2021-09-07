@@ -43,6 +43,7 @@ import {
     UpdateCashbackErc721,
 } from '../model';
 import {obtainCustodialAddressType} from '../wallet';
+import { mintNFT } from '../nft'
 
 /**
  * Estimate Gas price for the transaction.
@@ -469,13 +470,16 @@ export const prepareEthMintErc721SignedTransaction = async (body: EthMintErc721,
 
     // @ts-ignore
     const contract = new (client).eth.Contract(erc721TokenABI, contractAddress)
-    const tx: TransactionConfig = {
-        from: 0,
-        to: contractAddress.trim(),
-        data: contract.methods.mintWithTokenURI(to.trim(), tokenId, url).encodeABI(),
-        nonce,
+    if (contractAddress) {
+        const tx: TransactionConfig = {
+            from: 0,
+            to: contractAddress.trim(),
+            data: contract.methods.mintWithTokenURI(to.trim(), tokenId, url).encodeABI(),
+            nonce,
+        }
+        return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
     }
-    return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
+    throw new Error('Contract address should not be empty!')
 }
 /**
  * Sign Ethereum mint multiple ERC 721 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -505,13 +509,16 @@ export const prepareEthMintCashbackErc721SignedTransaction = async (body: EthMin
     const cashbacks: string[] = cashbackValues!
     // tslint:disable-next-line: prefer-for-of
     const cb = cashbacks.map(c => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
-    const tx: TransactionConfig = {
-        from: 0,
-        to: contractAddress.trim(),
-        data: contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb).encodeABI(),
-        nonce,
+    if (contractAddress) {
+        const tx: TransactionConfig = {
+            from: 0,
+            to: contractAddress.trim(),
+            data: contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb).encodeABI(),
+            nonce,
+        }
+        return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
     }
-    return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
+    throw new Error('Contract address should not be empty!')
 }
 /**
  * Sign Ethereum mint multiple ERC 721 Cashback transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -1034,8 +1041,12 @@ export const sendSmartContractMethodInvocationTransaction = async (body: SmartCo
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendMintErc721Transaction = async (body: EthMintErc721, provider?: string) =>
-    ethBroadcast(await prepareEthMintErc721SignedTransaction(body, provider), body.signatureId)
+export const sendMintErc721Transaction = async (body: EthMintErc721, provider?: string) => {
+    if (!body.fromPrivateKey && !body.fromPrivateKey) {
+        return mintNFT(body)
+    }
+    return ethBroadcast(await prepareEthMintErc721SignedTransaction(body, provider), body.signatureId)
+}
 
 /**
  * Send Ethereum ERC721 mint with cashback transaction to the blockchain. This method broadcasts signed transaction to the blockchain.

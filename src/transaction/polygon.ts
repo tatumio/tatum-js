@@ -44,6 +44,7 @@ import {
     UpdateCashbackErc721,
 } from '../model';
 import {obtainCustodialAddressType} from '../wallet';
+import { mintNFT } from '../nft'
 
 /**
  * Estimate Gas price for the transaction.
@@ -283,8 +284,11 @@ export const preparePolygonMintErc721SignedTransaction = async (testnet: boolean
     // @ts-ignore
     const data = new (client).eth.Contract(erc721TokenABI, body.contractAddress.trim()).methods
         .mintWithTokenURI(body.to.trim(), body.tokenId, body.url).encodeABI()
-    return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), undefined, body.nonce, data,
-        body.fee?.gasLimit, body.fee?.gasPrice)
+    if (body.contractAddress) {
+        return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), undefined, body.nonce, data,
+            body.fee?.gasLimit, body.fee?.gasPrice)
+    }
+    throw new Error('Contract address should not be empty!')
 }
 
 /**
@@ -302,8 +306,11 @@ export const preparePolygonMintCashbackErc721SignedTransaction = async (testnet:
     // @ts-ignore
     const data = new (client).eth.Contract(erc721TokenABI, body.contractAddress.trim()).methods
         .mintWithCashback(body.to.trim(), body.tokenId, body.url, body.authorAddresses, cb).encodeABI()
-    return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), undefined, body.nonce, data,
-        body.fee?.gasLimit, body.fee?.gasPrice)
+    if(body.contractAddress) {
+        return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), undefined, body.nonce, data,
+            body.fee?.gasLimit, body.fee?.gasPrice)
+    }
+    throw new Error('Contract address should not be empty!')
 }
 
 /**
@@ -675,8 +682,12 @@ export const sendPolygonDeployErc20SignedTransaction = async (testnet: boolean, 
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendPolygonMintErc721SignedTransaction = async (testnet: boolean, body: EthMintErc721, provider?: string) =>
-    polygonBroadcast(await preparePolygonMintErc721SignedTransaction(testnet, body, provider), body.signatureId)
+export const sendPolygonMintErc721SignedTransaction = async (testnet: boolean, body: EthMintErc721, provider?: string) => {
+    if (!body.fromPrivateKey && !body.fromPrivateKey) {
+        return mintNFT(body)
+    }
+    return polygonBroadcast(await preparePolygonMintErc721SignedTransaction(testnet, body, provider), body.signatureId)
+}
 
 /**
  * Send Polygon mint cashback erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
