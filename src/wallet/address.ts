@@ -1,5 +1,8 @@
 import {getAddressFromPrivateKey} from '@binance-chain/javascript-sdk/lib/crypto';
 import {HarmonyAddress} from '@harmony-js/crypto';
+const algosdk = require('algosdk');
+const base32 = require('base32.js');
+const sha512_256 = require('js-sha512').sha512_256;
 // @ts-ignore
 // import {ECDSA_secp256k1, encodeKey, SHA3_256} from '@onflow/util-encode-key';
 import * as bech32 from 'bech32';
@@ -639,6 +642,20 @@ const convertXdcPrivateKey = (testnet: boolean, privKey: string) => {
     const wallet = ethWallet.fromPrivateKey(Buffer.from(privKey.replace('0x', ''), 'hex'))
     return wallet.getAddressString().replace('0x', 'xdc')
 }
+
+/**
+ * Generate Algo Address From Private Key
+ * @param privKey Private key to use
+ * @returns blockchain address
+ */
+export const generateAlgodAddressFromPrivatetKey = (privKey: string) => {
+    const decoder = new base32.Decoder({type: "rfc4648"})
+    const scretKey = decoder.write(privKey).buf;
+    let mn = algosdk.secretKeyToMnemonic(scretKey)
+    const address = algosdk.mnemonicToSecretKey(mn).addr;
+    return address;
+}
+
 
 /**
  * Generate address
