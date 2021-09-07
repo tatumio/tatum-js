@@ -1,23 +1,16 @@
-import {
-    isUUID,
-    maxLength,
-    minLength,
-    ValidationArguments,
-    ValidatorConstraint,
-    ValidatorConstraintInterface,
-} from 'class-validator'
-import { Currency } from '../request'
-import { SignatureIdValidator } from './SignatureIdValidator'
+import {isUUID, maxLength, minLength, ValidationArguments, ValidatorConstraint, ValidatorConstraintInterface,} from 'class-validator';
+import {Currency} from '../request';
+import {SignatureIdValidator} from './SignatureIdValidator';
 
-@ValidatorConstraint({ name: 'builtInPrivateKey', async: false })
+@ValidatorConstraint({name: 'builtInPrivateKey', async: false})
 export class Mint721BuiltInPrivateKeyValidator implements ValidatorConstraintInterface {
     public defaultMessage(validationArguments?: ValidationArguments) {
-        return 'If you fill signatureId or privateKey/secret/fromPrivateKey, then tokenId, contractAddress must be present.'
+        return 'If you fill signatureId or privateKey/secret/fromPrivateKey, then tokenId, contractAddress must be present.';
     }
 
     public validate(value: any, validationArguments?: ValidationArguments) {
-        const data = validationArguments?.object as any
-        const isAllowedChain = [Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC].includes(data.chain)
+        const data = validationArguments?.object as any;
+        const isAllowedChain = [Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC].includes(data.chain);
 
         if (!data.fromPrivateKey && !data.signatureId) {
             if (isAllowedChain) {
@@ -60,8 +53,8 @@ export class Mint721BuiltInPrivateKeyValidator implements ValidatorConstraintInt
         }
 
         if(data.signatureId) {
-            if(!maxLength(data.signatureId, 36) || !minLength(data.signatureId, 36) || !isUUID(4)) {
-                return false
+            if (!maxLength(data.signatureId, 36) || !minLength(data.signatureId, 36) || !isUUID(data.signatureId, 4)) {
+                return false;
             }
         }
 
