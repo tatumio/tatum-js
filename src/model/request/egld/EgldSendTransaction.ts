@@ -4,10 +4,6 @@ import {EgldBasicTransaction} from './EgldBasicTransaction'
 export class EgldSendTransaction extends EgldBasicTransaction {
     @IsNotEmpty()
     @Min(0)
-    public nonce: number;
-
-    @IsNotEmpty()
-    @Min(0)
     public gasPrice: number;
 
     @IsNotEmpty()
