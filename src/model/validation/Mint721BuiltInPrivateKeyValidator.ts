@@ -4,7 +4,13 @@ import {SignatureIdValidator} from './SignatureIdValidator';
 
 @ValidatorConstraint({name: 'builtInPrivateKey', async: false})
 export class Mint721BuiltInPrivateKeyValidator implements ValidatorConstraintInterface {
+
+    private message: string | null = null;
+
     public defaultMessage(validationArguments?: ValidationArguments) {
+        if (this.message) {
+            return this.message;
+        }
         return 'If you fill signatureId or privateKey/secret/fromPrivateKey, then tokenId, contractAddress must be present.';
     }
 
@@ -16,12 +22,12 @@ export class Mint721BuiltInPrivateKeyValidator implements ValidatorConstraintInt
             if (isAllowedChain) {
                 return true
             } else {
-                if(!this.validateNonBuiltInPrivateKey(data, validationArguments)) {
+                if (!this.validateNonBuiltInPrivateKey(data, validationArguments)) {
                     return false
                 }
             }
         } else {
-            if(!this.validateNonBuiltInPrivateKey(data, validationArguments)) {
+            if (!this.validateNonBuiltInPrivateKey(data, validationArguments)) {
                 return false
             }
         }
@@ -30,30 +36,37 @@ export class Mint721BuiltInPrivateKeyValidator implements ValidatorConstraintInt
     }
 
     private validateNonBuiltInPrivateKey(data: any, validationArguments?: ValidationArguments) {
-        if (data.chain === Currency.CELO && (!data.feeCurrency || ![Currency.CELO, Currency.CUSD, Currency.CEUR].includes(data.feeCurrency) )) {
+        if (data.chain === Currency.CELO && (!data.feeCurrency || ![Currency.CELO, Currency.CUSD, Currency.CEUR].includes(data.feeCurrency))) {
+            this.message = 'CELO chain must have assigned feeCurrency field.'
             return false
         }
 
         if (!data.tokenId || !maxLength(data.tokenId, 256)) {
+            this.message = 'Field tokenId must have 256 digits maximum.';
             return false
         }
 
         if (!data.contractAddress || !maxLength(data.contractAddress, 43) || !minLength(data.contractAddress, 42)) {
+            this.message = 'Field contractAddress must have between 42 and 43 characters.';
             return false
         }
 
-        if(!data.fromPrivateKey && !data.signatureId) {
+
+        if (!data.fromPrivateKey && !data.signatureId) {
+            this.message = 'Field fromPrivateKey or signatureId must be filled.';
             return false
         }
 
         if (data.fromPrivateKey) {
-            if(!maxLength(data.fromPrivateKey, 66) || !minLength(data.fromPrivateKey, 64)) {
+            if (!maxLength(data.fromPrivateKey, 66) || !minLength(data.fromPrivateKey, 64)) {
+                this.message = 'Field fromPrivateKey must have between 64 and 66 characters.';
                 return false
             }
         }
 
-        if(data.signatureId) {
+        if (data.signatureId) {
             if (!maxLength(data.signatureId, 36) || !minLength(data.signatureId, 36) || !isUUID(data.signatureId, 4)) {
+                this.message = 'Field fromPrivateKey must have 36 characters and must be in form of UUID.';
                 return false;
             }
         }
