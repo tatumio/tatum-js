@@ -648,7 +648,7 @@ const convertXdcPrivateKey = (testnet: boolean, privKey: string) => {
  * @param privKey Private key to use
  * @returns blockchain address
  */
-const generateAddressFromPrivatetKey = (privKey: string) => {
+export const generateAlgodAddressFromPrivatetKey = (privKey: string) => {
     const decoder = new base32.Decoder({type: "rfc4648"})
     const scretKey = decoder.write(privKey).buf;
     let mn = algosdk.secretKeyToMnemonic(scretKey)

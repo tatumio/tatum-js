@@ -318,9 +318,11 @@ export const generateAdaWallet = async (mnemonic: string): Promise<Wallet> => {
  */
 export const generateAlgoWallet = async (mnem: string) => {
     const account = algosdk.mnemonicToSecretKey(mnem);
+    const encoder = new base32.Encoder({type: "rfc4648"});
+    const secret = encoder.write(account.sk).finalize();
     return {
         address: account.addr,
-        secret: account.sk,
+        secret: secret,
     }
 }
 
