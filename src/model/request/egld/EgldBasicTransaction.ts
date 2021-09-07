@@ -2,6 +2,10 @@ import {IsNotEmpty, IsNumberString, IsOptional, Length, MaxLength, Min} from 'cl
 
 export class EgldBasicTransaction {
     @IsNotEmpty()
+    @Min(0)
+    public nonce: number;
+
+    @IsNotEmpty()
     @IsNumberString()
     public value: string;
 
