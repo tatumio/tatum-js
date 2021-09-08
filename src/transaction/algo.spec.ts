@@ -1,5 +1,4 @@
 import { signAlgoTransaction } from './algo'
-import BigNumber from 'bignumber.js'
 describe('Algo transaction', () => {
     jest.setTimeout(19999)
     it('should test signed transaction for Algo transfer', async () => {
