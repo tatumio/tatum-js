@@ -16,17 +16,17 @@ export const getClient = (testnet: boolean) => {
 const waitForConfirmation = async (algodClient: any, txId: string) => {
     let lastround = (await algodClient.status().do())['last-round'];
     let limit = 0;
-    while (true) {
+    while (limit < 30) {
         let pendingInfo = await algodClient.pendingTransactionInformation(txId).do();
         if (pendingInfo['confirmed-round'] !== null && pendingInfo['confirmed-round'] > 0) {
+            return 1;
             break;
         }
         lastround++;
         limit++;
-        if (limit > 30) return 0;
         await algodClient.statusAfterBlock(lastround).do();
     }
-    return 1;
+    return 0;
 }
 
 export const signAlgoTransaction = async ( testnet: boolean, from: string, to: string, fee: number, amount: BigInt, privKey: string) => {
