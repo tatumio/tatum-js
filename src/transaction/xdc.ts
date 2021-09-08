@@ -391,14 +391,17 @@ export const prepareXdcMintErc721SignedTransaction = async (body: EthMintErc721,
 
     // @ts-ignore
     const contract = new (client).eth.Contract(erc721TokenABI, fromXdcAddress(contractAddress))
-    const tx: TransactionConfig = {
-        from: 0,
-        to: fromXdcAddress(contractAddress),
-        data: contract.methods.mintWithTokenURI(fromXdcAddress(to), tokenId, url).encodeABI(),
-        nonce,
-    }
+    if (contractAddress) {
+        const tx: TransactionConfig = {
+            from: 0,
+            to: fromXdcAddress(contractAddress),
+            data: contract.methods.mintWithTokenURI(fromXdcAddress(to), tokenId, url).encodeABI(),
+            nonce,
+        }
 
-    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
+        return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
+    }
+    throw new Error('Contract address should not be empty!')
 }
 /**
  * Sign XDC mint ERC 721 transaction with cashback via private keys locally. Nothing is broadcast to the blockchain.
@@ -430,14 +433,18 @@ export const prepareXdcMintErcCashback721SignedTransaction = async (body: EthMin
     for (const c of cashbacks) {
         cb.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
     }
-    const tx: TransactionConfig = {
-        from: 0,
-        to: fromXdcAddress(contractAddress),
-        data: contract.methods.mintWithCashback(fromXdcAddress(to), tokenId, url, authorAddresses, cb).encodeABI(),
-        nonce,
-    }
 
-    return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
+    if (contractAddress) {
+        const tx: TransactionConfig = {
+            from: 0,
+            to: fromXdcAddress(contractAddress),
+            data: contract.methods.mintWithCashback(fromXdcAddress(to), tokenId, url, authorAddresses, cb).encodeABI(),
+            nonce,
+        }
+
+        return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
+    }
+    throw new Error('Contract address should not be empty!')
 }
 
 /**

@@ -1,5 +1,6 @@
 export * from './EgldSendTransaction'
 export * from './EgldEsdtTransaction'
+export * from './EgldBasicTransaction'
 export * from './EsdtToken'
 export * from './EsdtIssue'
 export * from './EsdtTransfer'

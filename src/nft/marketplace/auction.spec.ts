@@ -71,14 +71,14 @@ describe('Auction  tests', () => {
             console.log(await sendAuctionApproveNftTransfer(true, {
                 fromPrivateKey: '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236',
                 chain: Currency.CELO, contractAddress: '0x1214BEada6b25bc98f7494C7BDBf22C095FDCaBD',
-                isErc721: true, spender: '0x57929da44de20959b604238d4d50d15d1a24ea43', tokenId
+                isErc721: true, spender: '0x991dfc0db4cbe2480296eec5bcc6b3215a9b7038', tokenId
             }, 'https://alfajores-forno.celo-testnet.org'));
 
             await sleep();
             const endedAt = (await celoGetCurrentBlock()) + 9;
             const body = new CreateAuction();
             body.fromPrivateKey = '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236';
-            body.contractAddress = '0x57929da44de20959b604238d4d50d15d1a24ea43';
+            body.contractAddress = '0x991dfc0db4cbe2480296eec5bcc6b3215a9b7038';
             body.nftAddress = '0x1214BEada6b25bc98f7494C7BDBf22C095FDCaBD';
             body.endedAt = endedAt;
             body.tokenId = tokenId;
@@ -92,7 +92,7 @@ describe('Auction  tests', () => {
             await sleep();
             const bid = new InvokeAuctionOperation();
             bid.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
-            bid.contractAddress = '0x57929da44de20959b604238d4d50d15d1a24ea43';
+            bid.contractAddress = '0x991dfc0db4cbe2480296eec5bcc6b3215a9b7038';
             bid.id = tokenId;
             bid.bidValue = '0.001015';
             bid.feeCurrency = Currency.CELO;
@@ -102,7 +102,7 @@ describe('Auction  tests', () => {
             await sleep(35000);
             const settle = new InvokeAuctionOperation();
             settle.fromPrivateKey = '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236';
-            settle.contractAddress = '0x57929da44de20959b604238d4d50d15d1a24ea43';
+            settle.contractAddress = '0x991dfc0db4cbe2480296eec5bcc6b3215a9b7038';
             settle.id = tokenId;
             settle.feeCurrency = Currency.CUSD;
             settle.chain = Currency.CELO;
@@ -124,14 +124,14 @@ describe('Auction  tests', () => {
             console.log(await sendAuctionApproveNftTransfer(true, {
                 fromPrivateKey: '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236',
                 chain: Currency.CELO, contractAddress: '0xdf82c2f74aa7b629bda65b1cfd258248c9c2b7d3',
-                isErc721: true, spender: '0x57929da44de20959b604238d4d50d15d1a24ea43', tokenId
+                isErc721: true, spender: '0x991dfc0db4cbe2480296eec5bcc6b3215a9b7038', tokenId
             }, 'https://alfajores-forno.celo-testnet.org'));
 
             await sleep();
             const endedAt = (await celoGetCurrentBlock()) + 7;
             const body = new CreateAuction();
             body.fromPrivateKey = '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236';
-            body.contractAddress = '0x57929da44de20959b604238d4d50d15d1a24ea43';
+            body.contractAddress = '0x991dfc0db4cbe2480296eec5bcc6b3215a9b7038';
             body.nftAddress = '0xdf82c2f74aa7b629bda65b1cfd258248c9c2b7d3';
             body.tokenId = tokenId;
             body.id = `${tokenId}1`;
@@ -167,7 +167,7 @@ describe('Auction  tests', () => {
             await sleep(20000);
             const settle = new InvokeAuctionOperation();
             settle.fromPrivateKey = '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236';
-            settle.contractAddress = '0x57929da44de20959b604238d4d50d15d1a24ea43';
+            settle.contractAddress = '0x991dfc0db4cbe2480296eec5bcc6b3215a9b7038';
             settle.id = tokenId;
             settle.feeCurrency = Currency.CUSD;
             settle.chain = Currency.CELO;
@@ -176,7 +176,7 @@ describe('Auction  tests', () => {
 
         it('should get auction', async () => {
             const r = new SmartContractReadMethodInvocation();
-            r.contractAddress = '0x57929da44de20959b604238d4d50d15d1a24ea43';
+            r.contractAddress = '0x991dfc0db4cbe2480296eec5bcc6b3215a9b7038';
             r.methodName = 'get';
             r.methodABI = auction.abi.find((a: any) => a.name === r.methodName);
             r.params = [tokenId];
@@ -185,7 +185,7 @@ describe('Auction  tests', () => {
 
         it('should get auction fee', async () => {
             const r = new SmartContractReadMethodInvocation();
-            r.contractAddress = '0x57929da44de20959b604238d4d50d15d1a24ea43';
+            r.contractAddress = '0x991dfc0db4cbe2480296eec5bcc6b3215a9b7038';
             r.methodName = 'getAuctionFee';
             r.methodABI = auction.abi.find((a: any) => a.name === r.methodName);
             r.params = [];
