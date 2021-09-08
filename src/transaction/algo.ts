@@ -1,7 +1,5 @@
 const algosdk = require('algosdk');
 const base32 = require('base32.js');
-import BigNumber from 'bignumber.js'
-import { TextEncoder } from 'util';
 
 export const getClient = (testnet: boolean) => {
     if (testnet) {
@@ -19,7 +17,7 @@ const waitForConfirmation = async (algodClient: any, txId: string) => {
     let lastround = (await algodClient.status().do())['last-round'];
     let limit = 0;
     while (true) {
-        const pendingInfo = await algodClient.pendingTransactionInformation(txId).do();
+        let pendingInfo = await algodClient.pendingTransactionInformation(txId).do();
         if (pendingInfo['confirmed-round'] !== null && pendingInfo['confirmed-round'] > 0) {
             break;
         }
