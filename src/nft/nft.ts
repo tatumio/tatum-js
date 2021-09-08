@@ -16,7 +16,7 @@ import {
     FlowDeployNft,
     FlowMintMultipleNft,
     FlowMintNft,
-    FlowTransferNft,
+    FlowTransferNft, OneMint721,
     TransactionHash,
     TronBurnTrc721,
     TronDeployTrc721,
@@ -80,6 +80,8 @@ import {
     sendUpdateCashbackForAuthorBep721Transaction,
     sendUpdateCashbackForAuthorErc721Transaction,
 } from '../transaction';
+
+export const mintNFT = (body: CeloMintErc721 | EthMintErc721 | OneMint721 ) => post(`/v3/nft/mint`, body)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetBalanceErc721" target="_blank">Tatum API documentation</a>
@@ -184,6 +186,7 @@ export const createNFT = async (testnet: boolean, body: CeloMintErc721 | EthMint
     const result = await mintNFTWithUri(testnet, body, provider);
     return {
         tokenId: (body as any).tokenId,
+        // @ts-ignore
         ...result,
         metadataUrl: body.url,
         metadataPublicUrl: `https://gateway.pinata.cloud/ipfs/${metadataHash}`,

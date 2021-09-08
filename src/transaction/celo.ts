@@ -41,6 +41,7 @@ import {
     TransferCeloOrCeloErc20Token
 } from '../model';
 import {obtainCustodialAddressType} from '../wallet/custodial';
+import { mintNFT } from '../nft'
 
 const obtainWalletInformation = async (wallet: CeloWallet, feeCurrencyContractAddress?: string) => {
     const [txCount, gasPrice, from] = await Promise.all([
@@ -314,43 +315,46 @@ export const prepareCeloMintCashbackErc721SignedTransaction = async (testnet: bo
         nonce,
         signatureId,
         authorAddresses,
-        cashbackValues
+        cashbackValues,
     } = body
 
     const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
     const network = await p.ready;
+    if (contractAddress && feeCurrency) {
+        const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
+        // @ts-ignore
+        const contract = new (new Web3()).eth.Contract(erc721_abi, contractAddress.trim())
+        const cb: string[] = []
+        for (const c of cashbackValues!) {
+            cb.push(`0x${new BigNumber(toWei(c, 'ether')).toString(16)}`)
+        }
+        if (signatureId) {
+            return JSON.stringify({
+                chainId: network.chainId,
+                feeCurrency: feeCurrencyContractAddress,
+                nonce,
+                to: contractAddress.trim(),
+                gasLimit: '0',
+                data: contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb).encodeABI(),
+            })
+        }
+        const wallet = new CeloWallet(fromPrivateKey as string, p)
+        const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
 
-    const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
-    // @ts-ignore
-    const contract = new (new Web3()).eth.Contract(erc721_abi, contractAddress.trim())
-    const cb: string[] = []
-    for (const c of cashbackValues!) {
-        cb.push(`0x${new BigNumber(toWei(c, 'ether')).toString(16)}`)
-    }
-    if (signatureId) {
-        return JSON.stringify({
+        const transaction = {
             chainId: network.chainId,
             feeCurrency: feeCurrencyContractAddress,
-            nonce,
-            to: contractAddress.trim(),
+            nonce: nonce || txCount,
             gasLimit: '0',
+            to: contractAddress.trim(),
+            gasPrice,
             data: contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb).encodeABI(),
-        })
+            from,
+        }
+        transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString()
+        return wallet.signTransaction(transaction)
     }
-    const wallet = new CeloWallet(fromPrivateKey as string, p)
-    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
-    const transaction = {
-        chainId: network.chainId,
-        feeCurrency: feeCurrencyContractAddress,
-        nonce: nonce || txCount,
-        gasLimit: '0',
-        to: contractAddress.trim(),
-        gasPrice,
-        data: contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb).encodeABI(),
-        from,
-    }
-    transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString()
-    return wallet.signTransaction(transaction)
+    throw new Error('Contract address and fee currency should not be empty!')
 }
 
 /**
@@ -373,34 +377,37 @@ export const prepareCeloMintErc721SignedTransaction = async (testnet: boolean, b
     const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
     const network = await p.ready;
 
-    const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
-    // @ts-ignore
-    const contract = new (new Web3()).eth.Contract(erc721_abi, contractAddress.trim())
+    if (contractAddress && feeCurrency) {
+        const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
+        // @ts-ignore
+        const contract = new (new Web3()).eth.Contract(erc721_abi, contractAddress.trim())
 
-    if (signatureId) {
-        return JSON.stringify({
+        if (signatureId) {
+            return JSON.stringify({
+                chainId: network.chainId,
+                feeCurrency: feeCurrencyContractAddress,
+                nonce,
+                to: contractAddress.trim(),
+                gasLimit: '0',
+                data: contract.methods.mintWithTokenURI(to.trim(), tokenId, url).encodeABI(),
+            })
+        }
+        const wallet = new CeloWallet(fromPrivateKey as string, p)
+        const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
+        const transaction = {
             chainId: network.chainId,
             feeCurrency: feeCurrencyContractAddress,
-            nonce,
-            to: contractAddress.trim(),
+            nonce: nonce || txCount,
             gasLimit: '0',
+            to: contractAddress.trim(),
+            gasPrice,
             data: contract.methods.mintWithTokenURI(to.trim(), tokenId, url).encodeABI(),
-        })
+            from,
+        }
+        transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString()
+        return wallet.signTransaction(transaction)
     }
-    const wallet = new CeloWallet(fromPrivateKey as string, p)
-    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
-    const transaction = {
-        chainId: network.chainId,
-        feeCurrency: feeCurrencyContractAddress,
-        nonce: nonce || txCount,
-        gasLimit: '0',
-        to: contractAddress.trim(),
-        gasPrice,
-        data: contract.methods.mintWithTokenURI(to.trim(), tokenId, url).encodeABI(),
-        from,
-    }
-    transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString()
-    return wallet.signTransaction(transaction)
+    throw new Error('Contract address and fee currency should not be empty!')
 }
 
 /**
@@ -1443,8 +1450,12 @@ export const sendCeloOrcUsdTransaction = async (testnet: boolean, body: Transfer
  * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendCeloMintErc721Transaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) =>
-    celoBroadcast(await prepareCeloMintErc721SignedTransaction(testnet, body, provider), body.signatureId)
+export const sendCeloMintErc721Transaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) => {
+    if (!body.fromPrivateKey && !body.fromPrivateKey) {
+        return mintNFT(body)
+    }
+    return celoBroadcast(await prepareCeloMintErc721SignedTransaction(testnet, body, provider), body.signatureId)
+}
 
 /**
  * Send Celo mint cashback erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.

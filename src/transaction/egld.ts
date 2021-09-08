@@ -8,6 +8,7 @@ import {
     CreateRecord,
     Currency,
     EgldEsdtTransaction,
+    EgldBasicTransaction,
     EgldSendTransaction,
     EsdtAddOrBurnNftQuantity,
     EsdtControlChanges,
@@ -48,18 +49,25 @@ export const egldGetConfig = async () => {
  */
 export const egldGetGasPrice = async (): Promise<number> => {
   const { data } = await egldGetConfig();
-  const { config } = data;
-  return config?.erd_min_gas_price || 1000000000
+  const price = data?.config?.erd_min_gas_price;
+  if (price) {
+    return price;
+  }
+  throw Error(data?.data?.returnMessage || 'egld.gasPrice.error')
 }
 
 /**
  * Estimate Gas limit for the transaction.
  */
-export const egldGetGasLimit = async (tx: EgldSendTransaction): Promise<number> => {
+export const egldGetGasLimit = async (tx: EgldBasicTransaction): Promise<number> => {
     const gasStationUrl = await getEgldClient();
     const {data} = await axios.post(`${gasStationUrl}/${process.env.TATUM_API_KEY}/transaction/cost`, tx);
-    return data?.data?.txGasUnits || 50000;
-}
+    const gas = data?.data?.txGasUnits;
+    if (gas) {
+      return gas;
+    }
+    throw Error(data?.data?.returnMessage || 'egld.gasLimit.error')
+  }
 
 /**
  * Sign transaction
