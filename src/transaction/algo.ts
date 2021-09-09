@@ -44,7 +44,6 @@ export const signAlgoTransaction = async ( testnet: boolean, tx: AlgoTransaction
         "genesisHash": params.genesisHash,
         "note": new Uint8Array(0)
     }
-    console.log("--->", txn);
     const signedTxn = algosdk.signTransaction(txn, secretKey);
     const sendTx = await algodClient.sendRawTransaction(signedTxn.blob).do();
     const confirm = await waitForConfirmation(algodClient, sendTx.txId);
