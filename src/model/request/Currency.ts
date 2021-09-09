@@ -21,6 +21,7 @@ export enum Currency {
     BETH = 'BETH',
     BBTC = 'BBTC',
     BADA = 'BADA',
+    RMD = 'RMD',
     WBNB = 'WBNB',
     BDOT = 'BDOT',
     BXRP = 'BXRP',
@@ -93,6 +94,7 @@ export const ERC20_CURRENCIES = [
 export const BEP20_CURRENCIES = [
     Currency.BETH.toString(),
     Currency.BBTC.toString(),
+    Currency.RMD.toString(),
     Currency.USDC_BSC.toString(),
     Currency.BADA.toString(),
     Currency.WBNB.toString(),

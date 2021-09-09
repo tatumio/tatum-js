@@ -1,8 +1,5 @@
 import {getAddressFromPrivateKey} from '@binance-chain/javascript-sdk/lib/crypto';
 import {HarmonyAddress} from '@harmony-js/crypto';
-const algosdk = require('algosdk');
-const base32 = require('base32.js');
-const sha512_256 = require('js-sha512').sha512_256;
 // @ts-ignore
 // import {ECDSA_secp256k1, encodeKey, SHA3_256} from '@onflow/util-encode-key';
 import * as bech32 from 'bech32';
@@ -42,6 +39,10 @@ import {
 import {Currency} from '../model';
 import cardano from './cardano.crypto';
 import {generateAddress} from './tron.crypto';
+
+const algosdk = require('algosdk');
+const base32 = require('base32.js');
+const sha512_256 = require('js-sha512').sha512_256;
 // tslint:disable:no-var-requires
 const bcash = require('@tatumio/bitcoincashjs2-lib');
 const cashaddr = require('cashaddrjs');
@@ -721,6 +722,7 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
         case Currency.GMC:
         case Currency.BBTC:
         case Currency.BADA:
+        case Currency.RMD:
         case Currency.WBNB:
         case Currency.BDOT:
         case Currency.BXRP:
@@ -789,6 +791,7 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
         case Currency.MKR:
         case Currency.LATOKEN:
         case Currency.USDC:
+        case Currency.RMD:
         case Currency.BAT:
         case Currency.TUSD:
         case Currency.PAX:
@@ -859,6 +862,7 @@ export const generateAddressFromPrivatekey = (currency: Currency, testnet: boole
         case Currency.USDT:
         case Currency.GMC:
         case Currency.GMC_BSC:
+        case Currency.RMD:
         case Currency.WBTC:
         case Currency.LEO:
         case Currency.LINK:
