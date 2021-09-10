@@ -10,7 +10,7 @@ import { AlgoTransaction } from '../model';
  * @param provider url of the algorand server endpoint for purestake.io restapi
  * @returns algorand Client
  */
-export const getClient = (testnet: boolean, provider?: string) => {
+export const getAlgoClient = (testnet: boolean, provider?: string) => {
     const baseServer = provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/algorand/node`;
     const token = {'X-API-Key': `${process.env.ALGO_API_KEY}`}
     const algodClient = new algosdk.Algodv2(token, baseServer, '');
@@ -48,7 +48,7 @@ const waitForConfirmation = async (algodClient: any, txId: string) => {
  * @returns transaction id of the transaction in the blockchain
  */
 export const signAlgoTransaction = async ( testnet: boolean, tx: AlgoTransaction, provider?: string) => {
-    const algodClient = getClient(testnet, provider);
+    const algodClient = getAlgoClient(testnet, provider);
     const params = await algodClient.getTransactionParams().do();
     const decoder = new base32.Decoder({type: "rfc4648"})
     const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
