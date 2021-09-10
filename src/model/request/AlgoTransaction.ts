@@ -1,5 +1,5 @@
 import { PrivateKeyOrSignatureId } from "./PrivateKeyOrSignatureId";
-import { IsNotEmpty, IsNumberString, IsOptional, Length, Matches, } from 'class-validator';
+import { IsNotEmpty, IsNumberString, IsOptional, Length, Matches, MaxLength, } from 'class-validator';
 
 export class AlgoTransaction extends PrivateKeyOrSignatureId {
 
@@ -22,5 +22,6 @@ export class AlgoTransaction extends PrivateKeyOrSignatureId {
     public amount: string;
 
     @IsOptional()
+    @MaxLength(30)
     public note: string;
 }

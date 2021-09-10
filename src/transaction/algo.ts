@@ -27,7 +27,7 @@ const waitForConfirmation = async (algodClient: any, txId: string) => {
     let lastround = (await algodClient.status().do())['last-round'];
     let limit = 0;
     while (limit < 50) {
-        let pendingInfo = await algodClient.pendingTransactionInformation(txId).do();
+        const pendingInfo = await algodClient.pendingTransactionInformation(txId).do();
         if (pendingInfo['confirmed-round']) {
             return true;
         } else if (pendingInfo["pool-error"]) {
