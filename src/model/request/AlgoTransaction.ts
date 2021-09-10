@@ -1,5 +1,5 @@
 import { PrivateKeyOrSignatureId } from "./PrivateKeyOrSignatureId";
-import { IsNotEmpty, IsNumberString, Length, Matches, } from 'class-validator';
+import { IsNotEmpty, IsNumberString, IsOptional, Length, Matches, } from 'class-validator';
 
 export class AlgoTransaction extends PrivateKeyOrSignatureId {
 
@@ -21,4 +21,6 @@ export class AlgoTransaction extends PrivateKeyOrSignatureId {
     @Matches(/^[+]?((\d+(\.\d*)?)|(\.\d+))$/)
     public amount: string;
 
+    @IsOptional()
+    public note: string;
 }
