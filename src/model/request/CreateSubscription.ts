@@ -1,6 +1,6 @@
-import {Type} from 'class-transformer'
-import {IsIn, IsNotEmpty, IsNotEmptyObject, IsNumber, IsUrl, Length, Matches, Max, MaxLength, Min, ValidateNested,} from 'class-validator'
-import {SubscriptionType} from '../response/ledger/SubscriptionType'
+import {Type} from 'class-transformer';
+import {IsIn, IsNotEmpty, IsNotEmptyObject, IsNumber, IsUrl, Length, Matches, Max, MaxLength, Min, ValidateNested,} from 'class-validator';
+import {SubscriptionType} from '../response/ledger/SubscriptionType';
 
 abstract class Subscription {
     public __type?: string;
@@ -58,7 +58,7 @@ export class SubscriptionAttrCompleteBlockchainTx extends Subscription {
 
     @IsNotEmpty()
     @Length(1, 30)
-    @Matches(/^BTC|BNB|LTC|BCH|ETH|USDT|LEO|LINK|UNI|FREE|MKR|USDC|BAT|TUSD|PAX|PAXG|PLTC|XCON|MMY|[a-zA-Z0-9_]+$/)
+    @Matches(/^BTC|ADA|LTC|FLOW|FUSD|ONE|XDC|DOGE|RMD|BSC|CELO|CEUR|CUSD|BETH|GMC|GMC_BSC|BUSD|BUSD_BSC|CAKE|BBTC|BADA|WBNB|BDOT|BXRP|BLTC|BBCH|BCH|ETH|USDT|WBTC|LEO|LINK|UNI|FREE|MKR|USDC|BAT|TUSD|PAX|PAXG|PLTC|XCON|MMY|[a-zA-Z0-9_]+$/)
     public currency: string;
 }
 
