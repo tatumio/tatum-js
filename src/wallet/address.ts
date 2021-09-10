@@ -651,10 +651,9 @@ const convertXdcPrivateKey = (testnet: boolean, privKey: string) => {
  */
 export const generateAlgodAddressFromPrivatetKey = (privKey: string) => {
     const decoder = new base32.Decoder({type: "rfc4648"})
-    const scretKey = decoder.write(privKey).buf;
-    let mn = algosdk.secretKeyToMnemonic(scretKey)
-    const address = algosdk.mnemonicToSecretKey(mn).addr;
-    return address;
+    const secretKey = decoder.write(privKey).buf;
+    const mn = algosdk.secretKeyToMnemonic(secretKey)
+    return algosdk.mnemonicToSecretKey(mn).addr;
 }
 
 
