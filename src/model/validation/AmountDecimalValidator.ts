@@ -8,7 +8,7 @@ export class AmountDecimalValidator implements ValidatorConstraintInterface {
     }
 
     public validate(value: any, validationArguments?: ValidationArguments) {
-        return new BigNumber(value.amount || 0).decimalPlaces() == 18;
+        return new BigNumber(value.amount || 0).decimalPlaces() === 0;
     }
 
 }
