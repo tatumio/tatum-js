@@ -1,8 +1,6 @@
 // @ts-ignore
 import * as fcl from '@onflow/fcl';
 // @ts-ignore
-import * as sdk from '@onflow/sdk';
-// @ts-ignore
 import * as types from '@onflow/types';
 // @ts-ignore
 import {ECDSA_secp256k1, encodeKey, SHA3_256,} from '@onflow/util-encode-key';

@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum",
-  "version": "1.25.2",
+  "version": "1.25.3",
   "description": "Tatum API client allows browsers and Node.js clients to interact with Tatum API.",
   "main": "dist/src/index.js",
   "repository": "https://github.com/tatumio/tatum-js",
@@ -38,6 +38,7 @@
     "@harmony-js/crypto": "^0.1.56",
     "@onflow/config": "^0.0.2",
     "@onflow/fcl": "^0.0.73",
+    "@onflow/sdk": "^0.0.54",
     "@onflow/types": "^0.0.4",
     "@onflow/util-encode-key": "^0.0.2",
     "@tatumio/bitcoincashjs2-lib": "4.1.2",
