@@ -1,6 +1,4 @@
 import {generatePrivateKey, getAddressFromPrivateKey} from '@binance-chain/javascript-sdk/lib/crypto';
-const algosdk = require('algosdk');
-const base32 = require('base32.js');
 import Neon, {wallet} from '@cityofzion/neon-js';
 import {generateMnemonic, mnemonicToSeed} from 'bip39';
 import {bip32, networks} from 'bitcoinjs-lib';
@@ -9,7 +7,6 @@ import {hdkey as ethHdKey} from 'ethereumjs-wallet';
 import hdkey from 'hdkey';
 import {RippleAPI} from 'ripple-lib';
 import {Keypair} from 'stellar-sdk';
-import {derivePath, getPublicKey} from 'ed25519-hd-key';
 import {
     BCH_DERIVATION_PATH,
     BTC_DERIVATION_PATH,
@@ -37,6 +34,9 @@ import {
 } from '../constants';
 import {Currency} from '../model';
 import cardano from './cardano.crypto';
+
+const algosdk = require('algosdk');
+const base32 = require('base32.js');
 
 export interface Wallet {
 
@@ -376,6 +376,7 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
         case Currency.TUSD:
         case Currency.BUSD:
         case Currency.USDC_BSC:
+        case Currency.B2U_BSC:
         case Currency.GMC:
         case Currency.GMC_BSC:
         case Currency.PAX:
