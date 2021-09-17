@@ -1,14 +1,6 @@
-import {CeloProvider} from '@celo-tools/celo-ethers-wrapper';
-import {bscBroadcast, polygonBroadcast, tronBroadcast} from '../../blockchain';
-import * as listing from '../../contracts/marketplace';
-import {
-    ApproveMarketplaceErc20Spending,
-    CreateMarketplaceListing,
-    Currency,
-    DeployMarketplaceListing,
-    InvokeMarketplaceListingOperation,
-    SmartContractReadMethodInvocation
-} from '../../model';
+import {tronBroadcast} from '../../blockchain';
+import {listing} from '../../contracts/marketplace';
+import {ApproveErc20, CreateMarketplaceListing, Currency, DeployMarketplaceListing, InvokeMarketplaceListingOperation, SmartContractReadMethodInvocation} from '../../model';
 import {
     sendBscSmartContractMethodInvocationTransaction,
     sendBscSmartContractReadMethodInvocationTransaction,
@@ -17,7 +9,14 @@ import {
     sendPolygonSmartContractReadMethodInvocationTransaction
 } from '../../transaction';
 import {transferNFT} from '../nft';
-import {deployMarketplaceListing, prepareMarketplaceApproveErc20Spending, prepareMarketplaceBuyListing, prepareMarketplaceCreateListing} from './listing';
+import {
+    deployMarketplaceListing,
+    prepareMarketplaceBuyListing,
+    prepareMarketplaceCreateListing,
+    sendMarketplaceApproveErc20Spending,
+    sendMarketplaceBuyListing,
+    sendMarketplaceCreateListing
+} from './listing';
 
 describe('Marketplace Listing tests', () => {
     jest.setTimeout(99999)
@@ -45,12 +44,8 @@ describe('Marketplace Listing tests', () => {
             body.price = '1'
             body.seller = '0x48d4bA7B2698A4b89635b9a2E391152350DB740f'
             body.feeCurrency = Currency.CUSD
-            body.chain = Currency.CELO
-            const txData = await prepareMarketplaceCreateListing(true, body, 'https://alfajores-forno.celo-testnet.org')
-            expect(txData).toContain('0x')
-            const provider = new CeloProvider('https://alfajores-forno.celo-testnet.org')
-            await provider.ready
-            console.log(await provider.sendTransaction(txData))
+            body.chain = Currency.CELO;
+            console.log(await sendMarketplaceCreateListing(true, body, 'https://alfajores-forno.celo-testnet.org'));
         })
 
         it('should create listing erc20 asset', async () => {
@@ -65,12 +60,8 @@ describe('Marketplace Listing tests', () => {
             body.seller = '0x48d4bA7B2698A4b89635b9a2E391152350DB740f'
             body.erc20Address = '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA'
             body.feeCurrency = Currency.CUSD
-            body.chain = Currency.CELO
-            const txData = await prepareMarketplaceCreateListing(true, body, 'https://alfajores-forno.celo-testnet.org')
-            expect(txData).toContain('0x')
-            const provider = new CeloProvider('https://alfajores-forno.celo-testnet.org')
-            await provider.ready
-            console.log(await provider.sendTransaction(txData))
+            body.chain = Currency.CELO;
+            console.log(await sendMarketplaceCreateListing(true, body, 'https://alfajores-forno.celo-testnet.org'));
         })
 
         it('should get listing', async () => {
@@ -98,29 +89,21 @@ describe('Marketplace Listing tests', () => {
             body.listingId = '1'
             body.amount = '1.015'
             body.feeCurrency = Currency.CELO
-            body.chain = Currency.CELO
-            const txData = await prepareMarketplaceBuyListing(true, body, 'https://alfajores-forno.celo-testnet.org')
-            expect(txData).toContain('0x')
-            const provider = new CeloProvider('https://alfajores-forno.celo-testnet.org')
-            await provider.ready
-            console.log(await provider.sendTransaction(txData))
+            body.chain = Currency.CELO;
+            console.log(await sendMarketplaceBuyListing(true, body, 'https://alfajores-forno.celo-testnet.org'));
         })
 
         it('should buy listing erc20', async () => {
 
-            const approve = new ApproveMarketplaceErc20Spending()
-            approve.contractAddress = '0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1'
-            approve.marketplaceAddress = '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA'
-            approve.chain = Currency.CELO
+            const approve = new ApproveErc20();
+            approve.contractAddress = '0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1';
+            approve.spender = '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA';
+            approve.chain = Currency.CELO;
             approve.feeCurrency = Currency.CELO
             approve.amount = '1.015'
             approve.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb'
-            approve.fee = {gasPrice: '5', gasLimit: '300000'}
-            const tx = await prepareMarketplaceApproveErc20Spending(true, approve, 'https://alfajores-forno.celo-testnet.org')
-            expect(tx).toContain('0x')
-            const provider = new CeloProvider('https://alfajores-forno.celo-testnet.org')
-            await provider.ready
-            console.log(await provider.sendTransaction(tx))
+            approve.fee = {gasPrice: '5', gasLimit: '300000'};
+            console.log(await sendMarketplaceApproveErc20Spending(true, approve, 'https://alfajores-forno.celo-testnet.org'));
 
             const body = new InvokeMarketplaceListingOperation()
             body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb'
@@ -129,10 +112,8 @@ describe('Marketplace Listing tests', () => {
             body.amount = '1.015'
             body.feeCurrency = Currency.CELO
             body.chain = Currency.CELO
-            body.fee = {gasPrice: '5', gasLimit: '300000'}
-            const txData = await prepareMarketplaceBuyListing(true, body, 'https://alfajores-forno.celo-testnet.org')
-            expect(txData).toContain('0x')
-            console.log(await provider.sendTransaction(txData))
+            body.fee = {gasPrice: '5', gasLimit: '300000'};
+            console.log(await sendMarketplaceBuyListing(true, body, 'https://alfajores-forno.celo-testnet.org'));
         })
     })
 
@@ -158,10 +139,8 @@ describe('Marketplace Listing tests', () => {
             body.isErc721 = true
             body.price = '1'
             body.seller = '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'
-            body.chain = Currency.BSC
-            const txData = await prepareMarketplaceCreateListing(true, body, 'https://data-seed-prebsc-2-s1.binance.org:8545')
-            expect(txData).toContain('0x')
-            console.log(await bscBroadcast(txData))
+            body.chain = Currency.BSC;
+            console.log(await sendMarketplaceCreateListing(true, body, 'https://data-seed-prebsc-2-s1.binance.org:8545'));
 
             await new Promise(r => setTimeout(r, 10000))
             console.log(await transferNFT(true, {
@@ -197,10 +176,8 @@ describe('Marketplace Listing tests', () => {
             body.contractAddress = '0xc4585ec777bA6dc5d33524Ca72c425D512780C31'
             body.listingId = '8'
             body.amount = '1.015'
-            body.chain = Currency.BSC
-            const txData = await prepareMarketplaceBuyListing(true, body, 'https://data-seed-prebsc-2-s1.binance.org:8545')
-            expect(txData).toContain('0x')
-            console.log(await bscBroadcast(txData))
+            body.chain = Currency.BSC;
+            console.log(await sendMarketplaceBuyListing(true, body, 'https://data-seed-prebsc-2-s1.binance.org:8545'));
         })
 
     })
@@ -228,9 +205,7 @@ describe('Marketplace Listing tests', () => {
             body.price = '0.001';
             body.seller = '0x811dfbff13adfbc3cf653dcc373c03616d3471c9';
             body.chain = Currency.MATIC;
-            const txData = await prepareMarketplaceCreateListing(true, body, 'https://rpc-mumbai.matic.today');
-            expect(txData).toContain('0x');
-            console.log(await polygonBroadcast(txData));
+            console.log(await sendMarketplaceCreateListing(true, body, 'https://rpc-mumbai.matic.today'));
 
             await new Promise(r => setTimeout(r, 5000));
             console.log(await transferNFT(true, {
@@ -267,24 +242,20 @@ describe('Marketplace Listing tests', () => {
             body.listingId = '111';
             body.amount = '0.0015';
             body.chain = Currency.MATIC;
-            const txData = await prepareMarketplaceBuyListing(true, body, 'https://rpc-mumbai.matic.today');
-            expect(txData).toContain('0x');
-            console.log(await polygonBroadcast(txData));
+            console.log(await sendMarketplaceBuyListing(true, body, 'https://rpc-mumbai.matic.today'));
         })
 
         it('should approve erc20', async () => {
-            const approve = new ApproveMarketplaceErc20Spending();
+            const approve = new ApproveErc20();
             approve.contractAddress = '0x326c977e6efc84e512bb9c30f76e30c160ed06fb';
-            approve.marketplaceAddress = '0x4153B909f55B0Ec43c11e980dF09b853477D9F79';
+            approve.spender = '0x4153B909f55B0Ec43c11e980dF09b853477D9F79';
             approve.chain = Currency.MATIC;
             approve.amount = '0.002';
             approve.fromPrivateKey = '0xf09110a0aae3dddba3d722c6c629fb08082963d8ed38afaf25cfce084c22e3d2';
-            const tx = await prepareMarketplaceApproveErc20Spending(true, approve, 'https://rpc-mumbai.matic.today');
-            expect(tx).toContain('0x');
-            console.log(await polygonBroadcast(tx));
+            console.log(await sendMarketplaceApproveErc20Spending(true, approve, 'https://rpc-mumbai.matic.today'));
         });
     })
-    describe('Marketplace Listing TRON transactions', () => {
+    describe.skip('Marketplace Listing TRON transactions', () => {
         it('should deploy marketplace', async () => {
             const test = await deployMarketplaceListing(true, {
                 'feeRecipient': 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',

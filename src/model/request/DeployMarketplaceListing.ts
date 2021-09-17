@@ -1,19 +1,21 @@
-import {Type} from 'class-transformer'
-import {IsIn, IsNotEmpty, IsNumber, IsOptional, IsPositive, Length, Max, Min} from 'class-validator'
-import {Currency} from './Currency'
-import {Fee} from './Fee'
-import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId'
+import {Type} from 'class-transformer';
+import {IsIn, IsNotEmpty, IsNumber, IsOptional, IsPositive, Length, Max, Min} from 'class-validator';
+import {HasDecimalPlaces} from '../validation/HasDecimalPlaces';
+import {Currency} from './Currency';
+import {Fee} from './Fee';
+import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
 
 export class DeployMarketplaceListing extends PrivateKeyOrSignatureId {
 
     @IsNotEmpty()
-    @IsIn([Currency.ETH, Currency.MATIC, Currency.BSC, Currency.ONE, Currency.CELO, Currency.TRON])
+    @IsIn([Currency.ETH, Currency.MATIC, Currency.BSC, Currency.ONE, Currency.CELO])
     public chain: Currency;
 
     @IsNotEmpty()
     @IsNumber()
     @IsPositive()
     @Max(10000)
+    @HasDecimalPlaces(0)
     public marketplaceFee: number;
 
     @IsNotEmpty()

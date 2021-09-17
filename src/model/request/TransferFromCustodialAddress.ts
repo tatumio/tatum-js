@@ -1,13 +1,14 @@
-import {Type} from 'class-transformer'
-import {IsIn, IsNotEmpty, IsNumberString, IsOptional, Min, ValidateIf} from 'class-validator'
-import {ContractType} from './ContractType'
-import {Currency} from './Currency'
-import {Fee} from './Fee'
-import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId'
+import {Type} from 'class-transformer';
+import {IsIn, IsNotEmpty, IsNumberString, IsOptional, Length, Min, ValidateIf} from 'class-validator';
+import {ContractType} from './ContractType';
+import {Currency} from './Currency';
+import {Fee} from './Fee';
+import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
 
 export class TransferFromCustodialAddress extends PrivateKeyOrSignatureId {
 
     @IsNotEmpty()
+    @Length(34, 43)
     public custodialAddress: string;
 
     @IsNotEmpty()
@@ -16,6 +17,7 @@ export class TransferFromCustodialAddress extends PrivateKeyOrSignatureId {
 
     @ValidateIf(o => o.contractType !== ContractType.NATIVE_ASSET)
     @IsNotEmpty()
+    @Length(34, 43)
     public tokenAddress: string;
 
     @IsIn(Object.values(ContractType))

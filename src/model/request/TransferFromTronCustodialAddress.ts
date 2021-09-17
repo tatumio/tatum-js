@@ -1,6 +1,6 @@
-import {IsNotEmpty, Length, Min, ValidateIf} from 'class-validator'
-import {Currency} from './Currency'
-import {TransferFromCustodialAddress} from './TransferFromCustodialAddress'
+import {IsNotEmpty, Length, Min, ValidateIf} from 'class-validator';
+import {Currency} from './Currency';
+import {TransferFromCustodialAddress} from './TransferFromCustodialAddress';
 
 export class TransferFromTronCustodialAddress extends TransferFromCustodialAddress {
 
@@ -12,5 +12,5 @@ export class TransferFromTronCustodialAddress extends TransferFromCustodialAddre
     @ValidateIf(o => o.chain === Currency.TRON)
     @IsNotEmpty()
     @Min(0)
-    public feeLimit: number;
+    public feeLimit?: number;
 }

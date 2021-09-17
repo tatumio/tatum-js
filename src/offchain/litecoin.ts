@@ -5,6 +5,7 @@ import {validateBody} from '../connector/tatum'
 import {Currency, KeyPair, TransactionKMS, TransferBtcBasedOffchain, WithdrawalResponseData} from '../model'
 import {generateAddressFromXPub, generatePrivateKeyFromMnemonic} from '../wallet'
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common'
+import { offchainTransferLtcKMS } from './kms'
 
 /**
  * Send Litecoin transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -14,6 +15,9 @@ import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} fr
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendLitecoinOffchainTransaction = async (testnet: boolean, body: TransferBtcBasedOffchain) => {
+    if (body.signatureId) {
+       return offchainTransferLtcKMS(body)
+    }
     await validateBody(body, TransferBtcBasedOffchain)
     const {
         mnemonic, keyPair, attr: changeAddress, xpub, ...withdrawal

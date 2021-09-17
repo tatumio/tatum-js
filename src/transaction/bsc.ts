@@ -1,24 +1,25 @@
-import {BigNumber} from 'bignumber.js'
-import Web3 from 'web3'
-import {TransactionConfig} from 'web3-core'
-import {toWei} from 'web3-utils'
-import {bscBroadcast, bscGetTransactionsCount} from '../blockchain'
-import {validateBody} from '../connector/tatum'
-import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants'
-import erc1155TokenABI from '../contracts/erc1155/erc1155_abi'
-import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode'
-import erc20_abi from '../contracts/erc20/token_abi'
-import erc20TokenABI from '../contracts/erc20/token_abi'
-import erc20TokenBytecode from '../contracts/erc20/token_bytecode'
-import erc721TokenABI from '../contracts/erc721/erc721_abi'
-import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode'
-import * as listing from '../contracts/marketplace'
+import {BigNumber} from 'bignumber.js';
+import Web3 from 'web3';
+import {TransactionConfig} from 'web3-core';
+import {toWei} from 'web3-utils';
+import {bscBroadcast, bscGetTransactionsCount} from '../blockchain';
+import {validateBody} from '../connector/tatum';
+import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
+import erc1155TokenABI from '../contracts/erc1155/erc1155_abi';
+import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode';
+import erc20_abi from '../contracts/erc20/token_abi';
+import erc20TokenABI from '../contracts/erc20/token_abi';
+import erc20TokenBytecode from '../contracts/erc20/token_bytecode';
+import erc721TokenABI from '../contracts/erc721/erc721_abi';
+import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
+import {auction, listing} from '../contracts/marketplace';
 import {
     BurnErc20,
     CreateRecord,
     Currency,
     DeployErc20,
     DeployMarketplaceListing,
+    DeployNftAuction,
     EthBurnErc721,
     EthBurnMultiToken,
     EthBurnMultiTokenBatch,
@@ -40,15 +41,17 @@ import {
     TransferMultiToken,
     TransferMultiTokenBatch,
     UpdateCashbackErc721
-} from '../model'
-import {obtainCustodialAddressType} from '../wallet'
+} from '../model';
+import {obtainCustodialAddressType} from '../wallet';
+import { ValidationError } from 'class-validator'
+import { mintNFT } from '../nft'
 
 /**
  * Estimate Gas price for the transaction.
  */
 export const bscGetGasPriceInWei = async () => {
-    return Web3.utils.toWei('20', 'gwei')
-}
+    return Web3.utils.toWei('20', 'gwei');
+};
 
 /**
  * Returns BSC server to connect to.
@@ -57,7 +60,7 @@ export const bscGetGasPriceInWei = async () => {
  * @param fromPrivateKey optional private key of sender account
  */
 export const getBscClient = (provider?: string, fromPrivateKey?: string) => {
-    const client = new Web3(provider || `${TATUM_API_URL}/v3/bsc/web3/${process.env.TATUM_API_KEY}`)
+    const client = new Web3(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/bsc/web3/${process.env.TATUM_API_KEY}`);
     if (fromPrivateKey) {
         client.eth.accounts.wallet.clear()
         client.eth.accounts.wallet.add(fromPrivateKey)
@@ -427,14 +430,16 @@ export const prepareBscMintBep721SignedTransaction = async (body: EthMintErc721,
 
     // @ts-ignore
     const contract = new (client).eth.Contract(erc721TokenABI, contractAddress)
-    const tx: TransactionConfig = {
-        from: 0,
-        to: contractAddress.trim(),
-        data: contract.methods.mintWithTokenURI(to.trim(), tokenId, url).encodeABI(),
-        nonce,
+    if(contractAddress) {
+        const tx: TransactionConfig = {
+            from: 0,
+            to: contractAddress.trim(),
+            data: contract.methods.mintWithTokenURI(to.trim(), tokenId, url).encodeABI(),
+            nonce,
+        }
+        return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
     }
-
-    return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
+    throw new Error('Contract address should not be empty');
 }
 /**
  * Sign Bsc mint ERC 721 transaction with cashback via private keys locally. Nothing is broadcast to the blockchain.
@@ -463,14 +468,17 @@ export const prepareBscMintBepCashback721SignedTransaction = async (body: EthMin
     const contract = new (client).eth.Contract(erc721TokenABI, contractAddress)
     const cashbacks: string[] = cashbackValues!
     const cb = cashbacks.map(c => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
-    const tx: TransactionConfig = {
-        from: 0,
-        to: contractAddress.trim(),
-        data: contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb).encodeABI(),
-        nonce,
-    }
+    if (contractAddress) {
+        const tx: TransactionConfig = {
+            from: 0,
+            to: contractAddress.trim(),
+            data: contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb).encodeABI(),
+            nonce,
+        }
 
-    return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
+        return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
+    }
+    throw new Error('Contract address should not be empty!')
 }
 /**
  * Sign Bsc mint multiple ERC 721 Cashback transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -682,27 +690,33 @@ export const prepareBscDeployBep721SignedTransaction = async (body: EthDeployErc
  * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
  */
 export const prepareBscDeployMarketplaceListingSignedTransaction = async (body: DeployMarketplaceListing, provider?: string) => {
-    await validateBody(body, DeployMarketplaceListing)
-    const {
-        fromPrivateKey,
-        fee,
-        feeRecipient,
-        marketplaceFee,
-        nonce,
-        signatureId,
-    } = body
+    await validateBody(body, DeployMarketplaceListing);
+    return deployContract(listing.abi, listing.data, [body.marketplaceFee, body.feeRecipient],
+        body.fromPrivateKey, body.fee, body.nonce, body.signatureId, provider);
+};
+/**
+ * Sign BSC deploy NFT Auction contract transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
+ */
+export const prepareBscDeployAuctionSignedTransaction = async (body: DeployNftAuction, provider?: string) => {
+    await validateBody(body, DeployNftAuction);
+    return deployContract(auction.abi, auction.data, [body.auctionFee, body.feeRecipient],
+        body.fromPrivateKey, body.fee, body.nonce, body.signatureId, provider);
+};
 
-    const client = await getBscClient(provider, fromPrivateKey)
-
+const deployContract = async (abi: any[], bytecode: string, args: any[], fromPrivateKey?: string, fee?: Fee,
+                              nonce?: number, signatureId?: string, provider?: string) => {
+    const client = await getBscClient(provider, fromPrivateKey);
     // @ts-ignore
-    const contract = new client.eth.Contract(listing.abi, null, {
-        data: listing.data,
-    })
-
+    const contract = new client.eth.Contract(abi, null, {
+        data: bytecode,
+    });
     // @ts-ignore
     const deploy = contract.deploy({
-        arguments: [marketplaceFee, feeRecipient]
-    })
+        arguments: args,
+    });
 
     const tx: TransactionConfig = {
         from: 0,
@@ -711,6 +725,7 @@ export const prepareBscDeployMarketplaceListingSignedTransaction = async (body: 
     }
     return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
 }
+
 /**
  * Sign Bsc burn ERC 1155 transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
@@ -1009,8 +1024,13 @@ export const sendBscSmartContractMethodInvocationTransaction = async (body: Smar
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendMintBep721Transaction = async (body: EthMintErc721, provider?: string) =>
-    bscBroadcast(await prepareBscMintBep721SignedTransaction(body, provider), body.signatureId)
+export const sendMintBep721Transaction = async (body: EthMintErc721, provider?: string) => {
+    if (!body.fromPrivateKey && !body.fromPrivateKey) {
+        return mintNFT(body)
+    }
+    return bscBroadcast(await prepareBscMintBep721SignedTransaction(body, provider), body.signatureId)
+}
+
 export const sendBscGenerateCustodialWalletSignedTransaction = async (body: GenerateCustodialAddress, provider?: string) =>
     bscBroadcast(await prepareBscGenerateCustodialWalletSignedTransaction(body, provider), body.signatureId)
 // MultiToken

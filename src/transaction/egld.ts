@@ -1,14 +1,14 @@
 import {BigNumber} from 'bignumber.js';
-import * as tweetnacl from 'tweetnacl';
-import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
+import {UserSigner, UserSecretKey, Transaction, Nonce, Balance, ChainID, GasLimit, GasPrice, TransactionPayload, TransactionVersion, Address, NetworkConfig} from '@elrondnetwork/erdjs';
 import {egldBroadcast, egldGetTransactionsCount} from '../blockchain';
 import {axios, validateBody} from '../connector/tatum';
 import {ESDT_SYSTEM_SMART_CONTRACT_ADDRESS, TATUM_API_URL} from '../constants';
 import {
-    Currency,
     CreateRecord,
+    Currency,
     EgldEsdtTransaction,
+    EgldBasicTransaction,
     EgldSendTransaction,
     EsdtAddOrBurnNftQuantity,
     EsdtControlChanges,
@@ -28,7 +28,7 @@ import {
 } from '../model';
 import {generateAddressFromPrivatekey} from '../wallet/address';
 
-const ELROND_V3_ENDPOINT = `${TATUM_API_URL}/v3/egld/web3/${process.env.TATUM_API_KEY}`;
+const ELROND_V3_ENDPOINT = () => `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/egld/node`;
 
 /**
  * Get Elrond network config
@@ -36,7 +36,7 @@ const ELROND_V3_ENDPOINT = `${TATUM_API_URL}/v3/egld/web3/${process.env.TATUM_AP
 export const egldGetConfig = async () => {
     const gasStationUrl = await getEgldClient();
     try {
-        const {data} = await axios.get(`${gasStationUrl}/network/config`);
+        const {data} = await axios.get(`${gasStationUrl}/${process.env.TATUM_API_KEY}/network/config`);
         return data
     } catch (e) {
         console.error(e.toString())
@@ -48,32 +48,34 @@ export const egldGetConfig = async () => {
  * Estimate Gas price for the transaction.
  */
 export const egldGetGasPrice = async (): Promise<number> => {
-    const config = await egldGetConfig()
-    return config?.erd_min_gas_price || 1000000000
+  const { data } = await egldGetConfig();
+  const price = data?.config?.erd_min_gas_price;
+  if (price) {
+    return price;
+  }
+  throw Error(data?.data?.returnMessage || 'egld.gasPrice.error')
 }
 
 /**
  * Estimate Gas limit for the transaction.
  */
-export const egldGetGasLimit = async (tx: EgldSendTransaction): Promise<number> => {
+export const egldGetGasLimit = async (tx: EgldBasicTransaction): Promise<number> => {
     const gasStationUrl = await getEgldClient();
-    const {data} = await axios.post(`${gasStationUrl}/transaction/cost`, tx);
-    return data?.txGasUnits || 50000;
-}
+    const {data} = await axios.post(`${gasStationUrl}/${process.env.TATUM_API_KEY}/transaction/cost`, tx);
+    const gas = data?.data?.txGasUnits;
+    if (gas) {
+      return gas;
+    }
+    throw Error(data?.data?.returnMessage || 'egld.gasLimit.error')
+  }
 
 /**
  * Sign transaction
  */
-export const signEgldTransaction = async (tx: EgldSendTransaction, fromPrivateKey: string): Promise<string> => {
-    const message = new Uint8Array(Buffer.from(JSON.stringify(tx)))
-
-    const pair = tweetnacl.sign.keyPair.fromSeed(new Uint8Array(Buffer.from(fromPrivateKey, 'hex')))
-    const signingKey = pair.secretKey
-    const signature = Buffer.from(tweetnacl.sign(message, signingKey)).toString('hex')
-    // "tweetnacl.sign()" returns the concatenated [signature, message], therfore we remove the appended message:
-    tx.signature = signature.slice(0, signature.length - message.length)
-
-    return JSON.stringify(tx)
+export const signEgldTransaction = async (tx: Transaction, fromPrivateKey: string): Promise<string> => {
+    const fromAddrSigner = new UserSigner(UserSecretKey.fromString(fromPrivateKey));
+    fromAddrSigner.sign(tx);
+    return JSON.stringify(tx.toSendable());
 }
 
 /**
@@ -82,7 +84,7 @@ export const signEgldTransaction = async (tx: EgldSendTransaction, fromPrivateKe
  * @param fromPrivateKey optional private key of sender account
  */
 export const getEgldClient = (provider?: string) => {
-    const client = (provider || ELROND_V3_ENDPOINT)
+    const client = (provider || ELROND_V3_ENDPOINT())
     return client
 }
 
@@ -356,10 +358,11 @@ const prepareEgldTransferNftData = async (data: EsdtTransferNft): Promise<string
 const prepareSignedTransactionAbstraction = async (
     client: string, transaction: TransactionConfig, signatureId: string | undefined, fromPrivateKey: string | undefined, fee?: Fee | undefined
 ): Promise<string> => {
-    const config = await egldGetConfig()
-    const gasPrice = fee?.gasPrice ? new BigNumber(fee?.gasPrice as string).toNumber() : config?.erd_min_gas_price || 1000000000
-    const sender = await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string)
-    const nonce = transaction.nonce ? transaction.nonce as number : await egldGetTransactionsCount(sender as string)
+    const { data } = await egldGetConfig();
+    const { config } = data;
+    const gasPrice = fee?.gasPrice ? new BigNumber(fee?.gasPrice as string).toNumber() : config?.erd_min_gas_price || 1000000000;
+    const sender = await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string);
+    const nonce = await egldGetTransactionsCount(sender as string);
 
     const egldTx: EgldSendTransaction = {
         nonce,
@@ -367,20 +370,26 @@ const prepareSignedTransactionAbstraction = async (
         receiver: transaction.to as string,
         sender,
         gasPrice,
-        gasLimit: new BigNumber(fee?.gasLimit as string).toNumber(),
-        data: transaction.data,
+        gasLimit: 0,
+        data: transaction.data ? Buffer.from(transaction.data as string).toString('base64') : undefined,
         chainID: config.erd_chain_id,
         version: config.erd_min_transaction_version,
-        signature: signatureId,
-    }
+    };
 
-    if (signatureId) {
-        return JSON.stringify(egldTx)
-    }
+    const erdjsTransaction = new Transaction({
+        nonce: new Nonce(egldTx.nonce),
+        value: Balance.fromString(egldTx.value),
+        receiver: new Address(egldTx.receiver),
+        sender: new Address(egldTx.sender),
+        gasPrice: new GasPrice(egldTx.gasPrice),
+        data: transaction.data ? new TransactionPayload(transaction.data) : undefined,
+        chainID: new ChainID(egldTx.chainID),
+        version: new TransactionVersion(egldTx.version),
+    });
+    
+    erdjsTransaction.setGasLimit(new GasLimit(await egldGetGasLimit(egldTx)))
 
-    egldTx.gasLimit = fee?.gasLimit ? new BigNumber(fee?.gasLimit).toNumber() : await egldGetGasLimit(egldTx)
-
-    return await signEgldTransaction(egldTx, fromPrivateKey as string)
+    return await signEgldTransaction(erdjsTransaction, fromPrivateKey as string)
 }
 
 /**
@@ -914,7 +923,7 @@ export const prepareEgldSignedTransaction = async (body: EgldEsdtTransaction, pr
         from: 0,
         to: to,
         value: amount,
-        data: Web3.utils.isHex(data as string | number) ? Web3.utils.stringToHex(data as string) : Web3.utils.toHex(data as string | number),
+        data,
     }
 
     return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)

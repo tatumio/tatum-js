@@ -1,7 +1,8 @@
-import {IsNotEmpty, Length, Min, ValidateIf,} from 'class-validator'
-import {MintErc721} from './MintErc721'
+import { IsIn, IsNotEmpty, IsOptional, Length, MaxLength, Min, ValidateIf } from 'class-validator'
+import { Currency } from './Currency'
+import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 
-export class TronMintTrc721 extends MintErc721 {
+export class TronMintTrc721 extends PrivateKeyOrSignatureId {
 
   @IsNotEmpty()
   @Length(34, 34)
@@ -20,4 +21,23 @@ export class TronMintTrc721 extends MintErc721 {
   @Min(0)
   public feeLimit: number;
 
+  @IsNotEmpty()
+  @MaxLength(256)
+  public url: string;
+
+  @IsNotEmpty()
+  @MaxLength(256)
+  public tokenId: string;
+
+  @IsNotEmpty()
+  @IsIn([Currency.TRON])
+  public chain: Currency;
+
+  @Min(0)
+  @IsOptional()
+  public nonce?: number;
+
+  public authorAddresses?: string[];
+
+  public cashbackValues?: string[];
 }

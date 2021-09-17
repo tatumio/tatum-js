@@ -18,9 +18,11 @@ export enum Currency {
     BSC = 'BSC',
     CAKE = 'CAKE',
     BUSD_BSC = 'BUSD_BSC',
+    B2U_BSC = 'B2U_BSC',
     BETH = 'BETH',
     BBTC = 'BBTC',
     BADA = 'BADA',
+    RMD = 'RMD',
     WBNB = 'WBNB',
     BDOT = 'BDOT',
     BXRP = 'BXRP',
@@ -63,6 +65,7 @@ export enum Currency {
     USDT_MATIC = 'USDT_MATIC',
     QTUM = 'QTUM',
     EGLD = 'EGLD',
+    ALGO = 'ALGO',
 }
 
 export const ERC20_CURRENCIES = [
@@ -92,7 +95,9 @@ export const ERC20_CURRENCIES = [
 export const BEP20_CURRENCIES = [
     Currency.BETH.toString(),
     Currency.BBTC.toString(),
+    Currency.RMD.toString(),
     Currency.USDC_BSC.toString(),
+    Currency.B2U_BSC.toString(),
     Currency.BADA.toString(),
     Currency.WBNB.toString(),
     Currency.GMC_BSC.toString(),

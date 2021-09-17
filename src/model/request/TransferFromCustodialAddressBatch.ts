@@ -1,14 +1,15 @@
-import {Type} from 'class-transformer'
-import {IsArray, IsIn, IsNotEmpty, IsOptional, Min, Validate, ValidateIf} from 'class-validator'
-import {CustodialBatchTransferValidator} from '../validation/CustodialBatchTransferValidator'
-import {ContractType} from './ContractType'
-import {Currency} from './Currency'
-import {Fee} from './Fee'
-import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId'
+import {Type} from 'class-transformer';
+import {IsArray, IsIn, IsNotEmpty, IsOptional, Length, Min, Validate, ValidateIf} from 'class-validator';
+import {CustodialBatchTransferValidator} from '../validation/CustodialBatchTransferValidator';
+import {ContractType} from './ContractType';
+import {Currency} from './Currency';
+import {Fee} from './Fee';
+import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
 
 export class TransferFromCustodialAddressBatch extends PrivateKeyOrSignatureId {
 
     @IsNotEmpty()
+    @Length(34, 43)
     public custodialAddress: string;
 
     @IsNotEmpty()

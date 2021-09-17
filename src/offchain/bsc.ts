@@ -6,6 +6,7 @@ import {BSC_BASED_CURRENCIES, Currency, TransferEthOffchain} from '../model'
 import {prepareBscOrBep20SignedTransaction, prepareCustomBep20SignedTransaction} from '../transaction'
 import {generatePrivateKeyFromMnemonic} from '../wallet'
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common'
+import { offchainTransferBscKMS } from './kms'
 
 /**
  * Send Bsc transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -16,6 +17,9 @@ import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} fr
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendBscOffchainTransaction = async (testnet: boolean, body: TransferEthOffchain, provider?: string) => {
+    if(body.signatureId) {
+        return offchainTransferBscKMS(body)
+    }
     await validateBody(body, TransferEthOffchain)
     const {
         mnemonic, index, privateKey, gasLimit, gasPrice, nonce, ...withdrawal

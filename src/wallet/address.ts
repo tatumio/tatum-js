@@ -39,6 +39,10 @@ import {
 import {Currency} from '../model';
 import cardano from './cardano.crypto';
 import {generateAddress} from './tron.crypto';
+
+const algosdk = require('algosdk');
+const base32 = require('base32.js');
+const sha512_256 = require('js-sha512').sha512_256;
 // tslint:disable:no-var-requires
 const bcash = require('@tatumio/bitcoincashjs2-lib');
 const cashaddr = require('cashaddrjs');
@@ -180,7 +184,7 @@ const generateOneAddress = (testnet: boolean, xpub: string, i: number) => {
  * @returns blockchain address
  */
 export const generateEgldAddress = async (testnet: boolean, mnem: string, i: number): Promise<string> => {
-    const path = testnet ? TESTNET_DERIVATION_PATH + '\'' : EGLD_DERIVATION_PATH + `/${i}'`
+    const path = (testnet ? TESTNET_DERIVATION_PATH + '\'' : EGLD_DERIVATION_PATH) + `/${i}'`
     const seed = await mnemonicToSeed(mnem);
     const {key} = derivePath(path, seed.toString('hex'))
     const words = bech32.toWords(getPublicKey(key, false))
@@ -469,10 +473,10 @@ const generateOnePrivateKey = async (testnet: boolean, mnemonic: string, i: numb
  * @returns blockchain private key to the address
  */
 const generateEgldPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
-    const path = testnet ? TESTNET_DERIVATION_PATH + '\'' : EGLD_DERIVATION_PATH + `/${i}'`
+    const path = (testnet ? TESTNET_DERIVATION_PATH + '\'' : EGLD_DERIVATION_PATH) + `/${i}'`
     const seed = await mnemonicToSeed(mnemonic)
     const {key} = derivePath(path, seed.toString('hex'))
-    return getPublicKey(key, false).toString('hex')
+    return key.toString('hex')
 }
 
 /**
@@ -641,6 +645,19 @@ const convertXdcPrivateKey = (testnet: boolean, privKey: string) => {
 }
 
 /**
+ * Generate Algo Address From Private Key
+ * @param privKey Private key to use
+ * @returns blockchain address
+ */
+export const generateAlgodAddressFromPrivatetKey = (privKey: string) => {
+    const decoder = new base32.Decoder({type: "rfc4648"})
+    const secretKey = decoder.write(privKey).buf;
+    const mn = algosdk.secretKeyToMnemonic(secretKey)
+    return algosdk.mnemonicToSecretKey(mn).addr;
+}
+
+
+/**
  * Generate address
  * @param currency type of blockchain
  * @param testnet testnet or mainnet version of address
@@ -697,6 +714,7 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
         case Currency.BETH:
         case Currency.BUSD:
         case Currency.USDC_BSC:
+        case Currency.B2U_BSC:
         case Currency.CAKE:
         case Currency.HAG:
         case Currency.BUSD_BSC:
@@ -704,6 +722,7 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
         case Currency.GMC:
         case Currency.BBTC:
         case Currency.BADA:
+        case Currency.RMD:
         case Currency.WBNB:
         case Currency.BDOT:
         case Currency.BXRP:
@@ -772,6 +791,7 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
         case Currency.MKR:
         case Currency.LATOKEN:
         case Currency.USDC:
+        case Currency.RMD:
         case Currency.BAT:
         case Currency.TUSD:
         case Currency.PAX:
@@ -789,6 +809,7 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
         case Currency.WBNB:
         case Currency.BUSD:
         case Currency.USDC_BSC:
+        case Currency.B2U_BSC:
         case Currency.CAKE:
         case Currency.HAG:
         case Currency.BUSD_BSC:
@@ -842,6 +863,7 @@ export const generateAddressFromPrivatekey = (currency: Currency, testnet: boole
         case Currency.USDT:
         case Currency.GMC:
         case Currency.GMC_BSC:
+        case Currency.RMD:
         case Currency.WBTC:
         case Currency.LEO:
         case Currency.LINK:

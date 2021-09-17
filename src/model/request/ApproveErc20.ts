@@ -1,10 +1,10 @@
-import {Type} from 'class-transformer'
-import {IsIn, IsNotEmpty, IsNumberString, IsOptional, Length, Matches, Min, ValidateNested,} from 'class-validator'
-import {Currency} from './Currency'
-import {Fee} from './Fee'
-import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId'
+import {Type} from 'class-transformer';
+import {IsIn, IsNotEmpty, IsNumberString, IsOptional, Length, Matches, Min, ValidateNested,} from 'class-validator';
+import {Currency} from './Currency';
+import {Fee} from './Fee';
+import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
 
-export class ApproveMarketplaceErc20Spending extends PrivateKeyOrSignatureId {
+export class ApproveErc20 extends PrivateKeyOrSignatureId {
 
     @IsNotEmpty()
     @Length(34, 43)
@@ -16,7 +16,7 @@ export class ApproveMarketplaceErc20Spending extends PrivateKeyOrSignatureId {
 
     @IsNotEmpty()
     @Length(34, 43)
-    public marketplaceAddress: string;
+    public spender: string;
 
     @IsNotEmpty()
     @IsNumberString()

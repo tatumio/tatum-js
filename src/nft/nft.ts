@@ -16,7 +16,7 @@ import {
     FlowDeployNft,
     FlowMintMultipleNft,
     FlowMintNft,
-    FlowTransferNft,
+    FlowTransferNft, OneMint721,
     TransactionHash,
     TronBurnTrc721,
     TronDeployTrc721,
@@ -81,6 +81,8 @@ import {
     sendUpdateCashbackForAuthorErc721Transaction,
 } from '../transaction';
 
+export const mintNFT = (body: CeloMintErc721 | EthMintErc721 | OneMint721 ) => post(`/v3/nft/mint`, body)
+
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetBalanceErc721" target="_blank">Tatum API documentation</a>
  */
@@ -115,7 +117,7 @@ export const getNFTImage = async (chain: Currency, contractAddress: string, toke
     const {data: metadata} = await getNFTMetadataURI(chain, contractAddress, tokenId, account);
     const metadataUrl = `https://gateway.pinata.cloud/ipfs/${metadata.replace('ipfs://', '')}`;
     const {data} = await axios.get(metadataUrl);
-    const imageUrl = data.properties.image.description;
+    const imageUrl = data.image;
     return {
         originalUrl: imageUrl,
         publicUrl: `https://gateway.pinata.cloud/ipfs/${imageUrl.replace('ipfs://', '')}`
@@ -169,17 +171,13 @@ export const createNFT = async (testnet: boolean, body: CeloMintErc721 | EthMint
                                 name: string,
                                 description?: string,
                                 scheme?: any, provider?: string) => {
-    const metadata = scheme || {
-        title: 'Asset Metadata',
-        type: 'object',
-        properties: {}
-    };
-    metadata.properties.name = {type: 'string', description: name};
+    const metadata = scheme || {};
+    metadata.name = name;
     if (description) {
-        metadata.properties.description = {type: 'string', description};
+        metadata.description = description;
     }
     const {ipfsHash} = await ipfsUpload(file, name);
-    metadata.properties.image = {type: 'string', description: `ipfs://${ipfsHash}`};
+    metadata.image = `ipfs://${ipfsHash}`;
     const {ipfsHash: metadataHash} = await ipfsUpload(Buffer.from(JSON.stringify(metadata)), 'metadata.json');
     body.url = `ipfs://${metadataHash}`;
     if (body.chain === Currency.FLOW) {
@@ -188,6 +186,7 @@ export const createNFT = async (testnet: boolean, body: CeloMintErc721 | EthMint
     const result = await mintNFTWithUri(testnet, body, provider);
     return {
         tokenId: (body as any).tokenId,
+        // @ts-ignore
         ...result,
         metadataUrl: body.url,
         metadataPublicUrl: `https://gateway.pinata.cloud/ipfs/${metadataHash}`,

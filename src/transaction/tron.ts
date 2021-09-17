@@ -4,7 +4,7 @@ import {tronBroadcast} from '../blockchain';
 import {axios, validateBody} from '../connector/tatum';
 
 import {TATUM_API_URL} from '../constants';
-import * as listing from '../contracts/marketplace';
+import {listing} from '../contracts/marketplace';
 import abi from '../contracts/trc20/token_abi';
 import bytecode from '../contracts/trc20/token_bytecode';
 import trc721_abi from '../contracts/trc721/trc721_abi';
@@ -35,7 +35,7 @@ const TronWeb = require('tronweb');
 
 const prepareTronWeb = (testnet: boolean, provider?: string) => {
     const HttpProvider = TronWeb.providers.HttpProvider;
-    const url = provider || `${TATUM_API_URL}/v3/tron/node/${process.env.TATUM_API_KEY}`;
+    const url = provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/tron/node/${process.env.TATUM_API_KEY}`;
     const fullNode = new HttpProvider(url);
     const solidityNode = new HttpProvider(url);
     const eventServer = new HttpProvider(url);
