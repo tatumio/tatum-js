@@ -42,15 +42,14 @@ import {
     TransferMultiTokenBatch,
     UpdateCashbackErc721
 } from '../model';
+import {mintNFT} from '../nft';
 import {obtainCustodialAddressType} from '../wallet';
-import { ValidationError } from 'class-validator'
-import { mintNFT } from '../nft'
 
 /**
  * Estimate Gas price for the transaction.
  */
-export const bscGetGasPriceInWei = async () => {
-    return Web3.utils.toWei('20', 'gwei');
+export const bscGetGasPriceInWei = async (testnet = false) => {
+    return Web3.utils.toWei(testnet ? '10' : '5', 'gwei');
 };
 
 /**
