@@ -48,8 +48,8 @@ import {obtainCustodialAddressType} from '../wallet';
 /**
  * Estimate Gas price for the transaction.
  */
-export const bscGetGasPriceInWei = async () => {
-    return Web3.utils.toWei('5', 'gwei');
+export const bscGetGasPriceInWei = async (testnet = false) => {
+    return Web3.utils.toWei(testnet ? '10' : '5', 'gwei');
 };
 
 /**
