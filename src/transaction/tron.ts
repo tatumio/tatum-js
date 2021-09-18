@@ -1,10 +1,9 @@
-import {AxiosRequestConfig} from 'axios';
+import { AxiosRequestConfig } from 'axios';
 import BigNumber from 'bignumber.js';
-import {tronBroadcast} from '../blockchain';
-import {axios, validateBody} from '../connector/tatum';
-
-import {TATUM_API_URL} from '../constants';
-import {listing} from '../contracts/marketplace';
+import { tronBroadcast } from '../blockchain';
+import { axios, validateBody } from '../connector/tatum';
+import { TATUM_API_URL } from '../constants';
+import { listing } from '../contracts/marketplace';
 import abi from '../contracts/trc20/token_abi';
 import bytecode from '../contracts/trc20/token_bytecode';
 import trc721_abi from '../contracts/trc721/trc721_abi';
@@ -26,9 +25,10 @@ import {
     TronMintMultipleTrc721,
     TronMintTrc721,
     TronTransferTrc721,
-    TronUpdateCashbackTrc721,
+    TronUpdateCashbackTrc721
 } from '../model';
-import {obtainCustodialAddressType} from '../wallet';
+import { obtainCustodialAddressType } from '../wallet';
+
 
 // tslint:disable-next-line:no-var-requires
 const TronWeb = require('tronweb');
@@ -295,6 +295,28 @@ export const prepareTronTrc10SignedTransaction = async (testnet: boolean, body: 
         tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(fromPrivateKey)))
     return JSON.stringify(await tronWeb.trx.sign(tx, fromPrivateKey))
 }
+
+/**
+ * Get TRC20 balance for the given tron address.
+ * @param testnet mainnet or testnet version
+ * @param address the address whose balance is returned
+ * @param contractAddress the TRC20 contract address
+ * @param provider
+ */
+export const tronGetAccountTrc20Address = async (
+	testnet: boolean,
+    address: string,
+	contractAddress: string,
+	provider?: string,
+) => {
+	if (!contractAddress) {
+		throw new Error('Contract address not set.');
+	}
+	const tronWeb = prepareTronWeb(testnet, provider);
+	tronWeb.setAddress(contractAddress);
+	const contractInstance = await tronWeb.contract().at(contractAddress);
+	return await contractInstance.balanceOf(address).call();
+};
 
 export const getTronTrc20ContractDecimals = async (testnet: boolean, contractAddress: string, provider?: string) => {
     if (!contractAddress) {
