@@ -20,12 +20,6 @@ export const abi = [
         'inputs': [
             {
                 'indexed': true,
-                'internalType': 'string',
-                'name': 'id',
-                'type': 'string'
-            },
-            {
-                'indexed': true,
                 'internalType': 'address',
                 'name': 'buyer',
                 'type': 'address'
@@ -35,6 +29,12 @@ export const abi = [
                 'internalType': 'uint256',
                 'name': 'amount',
                 'type': 'uint256'
+            },
+            {
+                'indexed': false,
+                'internalType': 'string',
+                'name': 'id',
+                'type': 'string'
             }
         ],
         'name': 'AuctionBid',
@@ -58,12 +58,6 @@ export const abi = [
         'inputs': [
             {
                 'indexed': true,
-                'internalType': 'string',
-                'name': 'id',
-                'type': 'string'
-            },
-            {
-                'indexed': true,
                 'internalType': 'bool',
                 'name': 'isErc721',
                 'type': 'bool'
@@ -75,10 +69,16 @@ export const abi = [
                 'type': 'address'
             },
             {
-                'indexed': false,
+                'indexed': true,
                 'internalType': 'uint256',
                 'name': 'tokenId',
                 'type': 'uint256'
+            },
+            {
+                'indexed': false,
+                'internalType': 'string',
+                'name': 'id',
+                'type': 'string'
             },
             {
                 'indexed': false,
@@ -106,7 +106,7 @@ export const abi = [
         'anonymous': false,
         'inputs': [
             {
-                'indexed': true,
+                'indexed': false,
                 'internalType': 'string',
                 'name': 'id',
                 'type': 'string'

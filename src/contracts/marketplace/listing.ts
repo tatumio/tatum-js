@@ -19,7 +19,7 @@ export const abi = [
         'anonymous': false,
         'inputs': [
             {
-                'indexed': true,
+                'indexed': false,
                 'internalType': 'string',
                 'name': 'listingId',
                 'type': 'string'
@@ -33,12 +33,6 @@ export const abi = [
         'inputs': [
             {
                 'indexed': true,
-                'internalType': 'string',
-                'name': 'listingId',
-                'type': 'string'
-            },
-            {
-                'indexed': true,
                 'internalType': 'bool',
                 'name': 'isErc721',
                 'type': 'bool'
@@ -50,10 +44,16 @@ export const abi = [
                 'type': 'address'
             },
             {
-                'indexed': false,
+                'indexed': true,
                 'internalType': 'uint256',
                 'name': 'tokenId',
                 'type': 'uint256'
+            },
+            {
+                'indexed': false,
+                'internalType': 'string',
+                'name': 'listingId',
+                'type': 'string'
             },
             {
                 'indexed': false,
@@ -82,15 +82,15 @@ export const abi = [
         'inputs': [
             {
                 'indexed': true,
-                'internalType': 'string',
-                'name': 'listingId',
-                'type': 'string'
-            },
-            {
-                'indexed': true,
                 'internalType': 'address',
                 'name': 'buyer',
                 'type': 'address'
+            },
+            {
+                'indexed': false,
+                'internalType': 'string',
+                'name': 'listingId',
+                'type': 'string'
             }
         ],
         'name': 'ListingSold',
