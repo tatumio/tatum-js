@@ -75,6 +75,7 @@ export class CreateSubscription {
             property: '__type',
             subTypes: [
                 {value: SubscriptionAttrAccountBalanceLimit, name: 'ACCOUNT_BALANCE_LIMIT'},
+                {value: SubscriptionAttrUrl, name: 'KMS_COMPLETED_TX'},
                 {value: SubscriptionAttrUrl, name: 'KMS_FAILED_TX'},
                 {value: SubscriptionAttrUrl, name: 'CUSTOMER_TRADE_MATCH'},
                 {value: SubscriptionAttrUrl, name: 'TRANSACTION_IN_THE_BLOCK'},
