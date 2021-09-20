@@ -1,8 +1,9 @@
 const algosdk = require('algosdk');
 const base32 = require('base32.js');
+import { algorandBroadcast } from 'src/blockchain';
 import { TextEncoder } from 'util';
 import { TATUM_API_URL } from '../constants';
-import { AlgoTransaction } from '../model';
+import { AlgoTransaction, Currency, TransactionKMS } from '../model';
 
 /**
  * 
@@ -17,37 +18,15 @@ export const getAlgoClient = (testnet: boolean, provider?: string) => {
     return algodClient;
 }
 
-/**
- * 
- * @param algodClient algorand Client
- * @param txId transaction id
- * @returns confirmed result
- */
-const waitForConfirmation = async (algodClient: any, txId: string) => {
-    let lastround = (await algodClient.status().do())['last-round'];
-    let limit = 0;
-    while (limit < 50) {
-        const pendingInfo = await algodClient.pendingTransactionInformation(txId).do();
-        if (pendingInfo['confirmed-round']) {
-            return true;
-        } else if (pendingInfo["pool-error"]) {
-            return false;
-        }
-        lastround++;
-        limit++;
-        await algodClient.statusAfterBlock(lastround).do();
-    }
-    return false;
-}
 
 /**
- * Algorand transaction signing and confirm result
+ * Algorand transaction signing
  * @param testnet if the algorand node is testnet or not
  * @param tx content of the transaction to broadcast
  * @param provider url of the algorand server endpoint for purestake.io restapi
  * @returns transaction id of the transaction in the blockchain
  */
-export const signAlgoTransaction = async ( testnet: boolean, tx: AlgoTransaction, provider?: string) => {
+export const prepareAlgoSignedTransaction = async ( testnet: boolean, tx: AlgoTransaction, provider?: string) => {
     const algodClient = getAlgoClient(testnet, provider);
     const params = await algodClient.getTransactionParams().do();
     const decoder = new base32.Decoder({type: "rfc4648"})
@@ -65,8 +44,31 @@ export const signAlgoTransaction = async ( testnet: boolean, tx: AlgoTransaction
         "genesisHash": params.genesisHash,
         "note": note
     }
+    if (tx.signatureId) {
+        return JSON.stringify(txn);
+    }
     const signedTxn = algosdk.signTransaction(txn, secretKey);
-    const sendTx = await algodClient.sendRawTransaction(signedTxn.blob).do();
-    const confirm = await waitForConfirmation(algodClient, sendTx.txId);
-    if (confirm) return sendTx.txId; else throw Error("Failed Algo Transaction Signing");
+    return signedTxn.blob;
+}
+
+/**
+ * Send Algorand transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet mainnet or testnet version
+ * @param tx content of the transaction to broadcast
+ * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
+export const sendAlgoSignedTransaction = async (testnet: boolean, tx: AlgoTransaction, provider?: string) => {
+    return algorandBroadcast(await prepareAlgoSignedTransaction(testnet, tx, provider))
+}
+
+export const signAlgoKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, testnet: boolean, provider?: string) => {
+    if (tx.chain !== Currency.ALGO) {
+        throw Error('Unsupported chain.')
+    }
+    const client = getAlgoClient(testnet, provider);    
+    const transactionConfig = JSON.parse(tx.serializedTransaction)
+    // const signedTxn = algosdk.signTransaction(txn, secretKey);
+    // return signedTxn.blob
 }
