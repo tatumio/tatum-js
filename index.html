@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>@tatumio/tatum - v1.25.9</title>
-	<meta name="description" content="Documentation for @tatumio/tatum - v1.25.9">
+	<title>@tatumio/tatum - v1.25.10</title>
+	<meta name="description" content="Documentation for @tatumio/tatum - v1.25.10">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
 	<script async src="assets/js/search.js" id="search-script"></script>
@@ -23,7 +23,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">@tatumio/tatum - v1.25.9</a>
+					<a href="index.html" class="title">@tatumio/tatum - v1.25.10</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -50,7 +50,7 @@
 	</div>
 	<div class="tsd-page-title">
 		<div class="container">
-			<h1>@tatumio/tatum - v1.25.9</h1>
+			<h1>@tatumio/tatum - v1.25.10</h1>
 		</div>
 	</div>
 </header>
@@ -859,6 +859,12 @@
 						<a href="interfaces/Address.html" class="tsd-kind-icon">Address</a>
 					</li>
 					<li class=" tsd-kind-interface">
+						<a href="interfaces/AlgoBlock.html" class="tsd-kind-icon">Algo<wbr>Block</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/AlgoTx.html" class="tsd-kind-icon">Algo<wbr>Tx</a>
+					</li>
+					<li class=" tsd-kind-interface">
 						<a href="interfaces/Auction.html" class="tsd-kind-icon">Auction</a>
 					</li>
 					<li class=" tsd-kind-interface">
@@ -1342,6 +1348,24 @@
 						<a href="modules.html#addUtxoInputs" class="tsd-kind-icon">add<wbr>Utxo<wbr>Inputs</a>
 					</li>
 					<li class=" tsd-kind-function">
+						<a href="modules.html#algorandBroadcast" class="tsd-kind-icon">algorand<wbr>Broadcast</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#algorandGetAccountBalance" class="tsd-kind-icon">algorand<wbr>Get<wbr>Account<wbr>Balance</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#algorandGetBlock" class="tsd-kind-icon">algorand<wbr>Get<wbr>Block</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#algorandGetCurrentBlock" class="tsd-kind-icon">algorand<wbr>Get<wbr>Current<wbr>Block</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#algorandGetTransaction" class="tsd-kind-icon">algorand<wbr>Get<wbr>Transaction</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#algorandGetTransactionsCount" class="tsd-kind-icon">algorand<wbr>Get<wbr>Transactions<wbr>Count</a>
+					</li>
+					<li class=" tsd-kind-function">
 						<a href="modules.html#assignDepositAddress" class="tsd-kind-icon">assign<wbr>Deposit<wbr>Address</a>
 					</li>
 					<li class=" tsd-kind-function">
@@ -1768,6 +1792,9 @@
 						<a href="modules.html#getAlgoClient" class="tsd-kind-icon">get<wbr>Algo<wbr>Client</a>
 					</li>
 					<li class=" tsd-kind-function">
+						<a href="modules.html#getAlgoIndexerClient" class="tsd-kind-icon">get<wbr>Algo<wbr>Indexer<wbr>Client</a>
+					</li>
+					<li class=" tsd-kind-function">
 						<a href="modules.html#getAllAccounts" class="tsd-kind-icon">get<wbr>All<wbr>Accounts</a>
 					</li>
 					<li class=" tsd-kind-function">
@@ -2093,6 +2120,9 @@
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="modules.html#prepareAdaTransaction" class="tsd-kind-icon">prepare<wbr>Ada<wbr>Transaction</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#prepareAlgoSignedTransaction" class="tsd-kind-icon">prepare<wbr>Algo<wbr>Signed<wbr>Transaction</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="modules.html#prepareApproveErc20" class="tsd-kind-icon">prepare<wbr>Approve<wbr>Erc20</a>
@@ -2821,6 +2851,9 @@
 						<a href="modules.html#sendAdaTransaction" class="tsd-kind-icon">send<wbr>Ada<wbr>Transaction</a>
 					</li>
 					<li class=" tsd-kind-function">
+						<a href="modules.html#sendAlgoSignedTransaction" class="tsd-kind-icon">send<wbr>Algo<wbr>Signed<wbr>Transaction</a>
+					</li>
+					<li class=" tsd-kind-function">
 						<a href="modules.html#sendApproveErc20" class="tsd-kind-icon">send<wbr>Approve<wbr>Erc20</a>
 					</li>
 					<li class=" tsd-kind-function">
@@ -3421,7 +3454,7 @@
 						<a href="modules.html#signAdaOffchainKMSTransaction" class="tsd-kind-icon">sign<wbr>Ada<wbr>OffchainKMSTransaction</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="modules.html#signAlgoTransaction" class="tsd-kind-icon">sign<wbr>Algo<wbr>Transaction</a>
+						<a href="modules.html#signAlgoKMSTransaction" class="tsd-kind-icon">sign<wbr>AlgoKMSTransaction</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="modules.html#signBitcoinCashKMSTransaction" class="tsd-kind-icon">sign<wbr>Bitcoin<wbr>CashKMSTransaction</a>
