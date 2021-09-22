@@ -6,8 +6,9 @@ export * from './TransferBchBlockchain'
 export * from './TransferBtcBasedBlockchain'
 export * from './TransferCustomErc20'
 export * from './TransferErc20'
-export * from './TransferEthErc20'
-export * from './OneBurn721'
+export * from './TransferEthErc20';
+export * from './TransferFlowCustomTx';
+export * from './OneBurn721';
 export * from './OneBurnMultiToken'
 export * from './OneBurnMultiTokenBatch'
 export * from './OneDeploy20'

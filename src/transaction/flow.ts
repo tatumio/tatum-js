@@ -8,7 +8,7 @@ import * as elliptic from 'elliptic';
 import {SHA3} from 'sha3';
 import {validateBody} from '../connector/tatum';
 import {FLOW_MAINNET_ADDRESSES, FLOW_TESTNET_ADDRESSES} from '../constants';
-import {Currency, FlowBurnNft, FlowMintMultipleNft, FlowMintNft, FlowTransferNft, TransactionKMS, TransferFlow} from '../model';
+import {Currency, FlowArgs, FlowBurnNft, FlowMintMultipleNft, FlowMintNft, FlowTransferNft, TransactionKMS, TransferFlow, TransferFlowCustomTx} from '../model';
 import {generatePrivateKeyFromMnemonic} from '../wallet';
 import {
     burnFlowNftTokenTxTemplate,
@@ -31,6 +31,7 @@ export enum FlowTxType {
     MINT_MULTIPLE_NFT,
     BURN_NFT,
     TRANSFER_NFT,
+    CUSTOM_TX,
 }
 
 interface Account {
@@ -51,15 +52,9 @@ interface AccountAuthorization {
 }
 
 
-type Argument = {
-    type: string,
-    subType?: string,
-    value: string | string[]
-}
-
 type Transaction = {
     code: string
-    args: Argument[]
+    args: FlowArgs[]
     proposer: AccountAuthorizer
     authorizations: AccountAuthorizer[]
     payer: AccountAuthorizer
@@ -141,14 +136,14 @@ const sendTransaction = async (testnet: boolean, {
     }
 }
 
-const sendScript = async (testnet: boolean, code: string, args: Argument[]) => {
-    fcl.config().put('accessNode.api', testnet ? 'https://access-testnet.onflow.org' : 'https://access-mainnet-beta.onflow.org')
+const sendScript = async (testnet: boolean, code: string, args: FlowArgs[]) => {
+    fcl.config().put('accessNode.api', testnet ? 'https://access-testnet.onflow.org' : 'https://access-mainnet-beta.onflow.org');
     const response = await fcl.send([
         fcl.script(code),
         fcl.args(args.map(arg => fcl.arg(arg.type === 'UInt64' ? parseInt(arg.value as string) : arg.value, types[arg.type]))),
-    ])
-    return fcl.decode(response)
-}
+    ]);
+    return fcl.decode(response);
+};
 
 export const flowSignKMSTransaction = async (tx: TransactionKMS, privateKeys: string[], testnet: boolean) => {
     if (tx.chain !== Currency.FLOW) {
@@ -161,15 +156,17 @@ export const flowSignKMSTransaction = async (tx: TransactionKMS, privateKeys: st
         case FlowTxType.ADD_PK_TO_ACCOUNT:
             return await flowAddPublicKeyToAccount(testnet, body.publicKey, body.account, privateKeys[0])
         case FlowTxType.TRANSFER:
-            return await flowSendTransaction(testnet, {...body, privateKey: privateKeys[0]})
+            return await flowSendTransaction(testnet, {...body, privateKey: privateKeys[0]});
         case FlowTxType.TRANSFER_NFT:
-            return await sendFlowNftTransferToken(testnet, {...body, privateKey: privateKeys[0]})
+            return await sendFlowNftTransferToken(testnet, {...body, privateKey: privateKeys[0]});
         case FlowTxType.MINT_NFT:
-            return await sendFlowNftMintToken(testnet, {...body, privateKey: privateKeys[0]})
+            return await sendFlowNftMintToken(testnet, {...body, privateKey: privateKeys[0]});
         case FlowTxType.MINT_MULTIPLE_NFT:
-            return await sendFlowNftMintMultipleToken(testnet, {...body, privateKey: privateKeys[0]})
+            return await sendFlowNftMintMultipleToken(testnet, {...body, privateKey: privateKeys[0]});
         case FlowTxType.BURN_NFT:
-            return await sendFlowNftBurnToken(testnet, {...body, privateKey: privateKeys[0]})
+            return await sendFlowNftBurnToken(testnet, {...body, privateKey: privateKeys[0]});
+        default:
+            return await flowSendCustomTransaction(testnet, {...body, privateKey: privateKeys[0]});
     }
 }
 
@@ -226,7 +223,7 @@ export const getFlowNftTokenByAddress = async (testnet: boolean, account: string
  * This operation is irreversible.
  * @param testnet
  * @param body content of the transaction to broadcast
- * @returns transaction id of the transaction in the blockchain
+ * @returns txId id of the transaction in the blockchain
  */
 export const sendFlowNftMintToken = async (testnet: boolean, body: FlowMintNft):
     Promise<{ txId: string, tokenId: string }> => {
@@ -248,7 +245,7 @@ export const sendFlowNftMintToken = async (testnet: boolean, body: FlowMintNft):
  * This operation is irreversible.
  * @param testnet
  * @param body content of the transaction to broadcast
- * @returns transaction id of the transaction in the blockchain
+ * @returns txId id of the transaction in the blockchain
  */
 export const sendFlowNftMintMultipleToken = async (testnet: boolean, body: FlowMintMultipleNft):
     Promise<{ txId: string, tokenId: number[] }> => {
@@ -270,19 +267,19 @@ export const sendFlowNftMintMultipleToken = async (testnet: boolean, body: FlowM
  * This operation is irreversible.
  * @param testnet
  * @param body content of the transaction to broadcast
- * @returns transaction id of the transaction in the blockchain
+ * @returns {txId: string, events: any[]} id of the transaction in the blockchain and events this tx produced
  */
 export const sendFlowNftTransferToken = async (testnet: boolean, body: FlowTransferNft):
     Promise<{ txId: string }> => {
-    await validateBody(body, FlowTransferNft)
-    const code = transferFlowNftTokenTxTemplate(testnet)
-    const {tokenId, to, mnemonic, index, account, privateKey} = body
-    const args = [{type: 'Address', value: to}, {type: 'UInt64', value: tokenId}]
-    const pk = (mnemonic && index && index >= 0) ? await generatePrivateKeyFromMnemonic(Currency.FLOW, testnet, mnemonic, index as number) : privateKey as string
-    const auth = getFlowSigner(pk, account)
-    const result = await sendTransaction(testnet, {code, args, proposer: auth, authorizations: [auth], payer: auth})
+    await validateBody(body, FlowTransferNft);
+    const code = transferFlowNftTokenTxTemplate(testnet);
+    const {tokenId, to, mnemonic, index, account, privateKey} = body;
+    const args = [{type: 'Address', value: to}, {type: 'UInt64', value: tokenId}];
+    const pk = (mnemonic && index && index >= 0) ? await generatePrivateKeyFromMnemonic(Currency.FLOW, testnet, mnemonic, index as number) : privateKey as string;
+    const auth = getFlowSigner(pk, account);
+    const result = await sendTransaction(testnet, {code, args, proposer: auth, authorizations: [auth], payer: auth});
     if (result.error) {
-        throw new Error(result.error)
+        throw new Error(result.error);
     }
     return {txId: result.id}
 }
@@ -292,23 +289,47 @@ export const sendFlowNftTransferToken = async (testnet: boolean, body: FlowTrans
  * This operation is irreversible.
  * @param testnet
  * @param body content of the transaction to broadcast
- * @returns transaction id of the transaction in the blockchain
+ * @returns txId id of the transaction in the blockchain
  */
 export const sendFlowNftBurnToken = async (testnet: boolean, body: FlowBurnNft):
     Promise<{ txId: string }> => {
     await validateBody(body, FlowBurnNft)
-    const code = burnFlowNftTokenTxTemplate(testnet)
-    const {tokenId, contractAddress: tokenType, mnemonic, index, account, privateKey} = body
-    const args = [{type: 'UInt64', value: tokenId}, {type: 'String', value: tokenType}]
-    const pk = (mnemonic && index && index >= 0) ? await generatePrivateKeyFromMnemonic(Currency.FLOW, testnet, mnemonic, index as number) : privateKey as string
-    const auth = getFlowSigner(pk, account)
-    const result = await sendTransaction(testnet, {code, args, proposer: auth, authorizations: [auth], payer: auth})
+    const code = burnFlowNftTokenTxTemplate(testnet);
+    const {tokenId, contractAddress: tokenType, mnemonic, index, account, privateKey} = body;
+    const args = [{type: 'UInt64', value: tokenId}, {type: 'String', value: tokenType}];
+    const pk = (mnemonic && index && index >= 0) ? await generatePrivateKeyFromMnemonic(Currency.FLOW, testnet, mnemonic, index as number) : privateKey as string;
+    const auth = getFlowSigner(pk, account);
+    const result = await sendTransaction(testnet, {code, args, proposer: auth, authorizations: [auth], payer: auth});
     if (result.error) {
-        throw new Error(result.error)
+        throw new Error(result.error);
     }
-    return {txId: result.id}
+    return {txId: result.id};
 }
 
+/**
+ * Send custom transaction to the FLOW network
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @returns txId id of the transaction in the blockchain
+ */
+export const flowSendCustomTransaction = async (testnet: boolean, body: TransferFlowCustomTx):
+    Promise<{ txId: string, events: any[] }> => {
+    await validateBody(body, TransferFlowCustomTx);
+    const pk = body.privateKey || await generatePrivateKeyFromMnemonic(Currency.FLOW, testnet, body.mnemonic as string, body.index as number);
+    const auth = getFlowSigner(pk, body.account);
+    const result = await sendTransaction(testnet, {code: body.transaction, args: body.args, proposer: auth, authorizations: [auth], payer: auth});
+    if (result.error) {
+        throw new Error(result.error);
+    }
+    return {txId: result.id, events: result.events};
+};
+
+/**
+ * Send FLOW or FUSD from account to account.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @returns txId id of the transaction in the blockchain
+ */
 export const flowSendTransaction = async (testnet: boolean, body: TransferFlow):
     Promise<{ txId: string }> => {
     await validateBody(body, TransferFlow)
