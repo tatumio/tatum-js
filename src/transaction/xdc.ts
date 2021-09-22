@@ -24,7 +24,6 @@ import {
     SmartContractMethodInvocation,
     SmartContractReadMethodInvocation,
     TransactionKMS,
-    TransferCustomErc20,
     TransferErc20,
     UpdateCashbackErc721
 } from '../model';
@@ -260,8 +259,8 @@ export const prepareXdcOrErc20SignedTransaction = async (body: TransferErc20, pr
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareXdcCustomErc20SignedTransaction = async (body: TransferCustomErc20, provider?: string) => {
-    await validateBody(body, TransferCustomErc20)
+export const prepareXdcCustomErc20SignedTransaction = async (body: TransferErc20, provider?: string) => {
+    await validateBody(body, TransferErc20);
     const {
         fromPrivateKey,
         to,
@@ -271,7 +270,7 @@ export const prepareXdcCustomErc20SignedTransaction = async (body: TransferCusto
         fee,
         nonce,
         signatureId
-    } = body
+    } = body;
 
     const client = getXdcClient(provider, fromPrivateKey)
 
@@ -710,8 +709,8 @@ export const sendXdcOrErc20Transaction = async (body: TransferErc20, provider?: 
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendXdcCustomErc20Transaction = async (body: TransferCustomErc20, provider?: string) =>
-    xdcBroadcast(await prepareXdcCustomErc20SignedTransaction(body, provider), body.signatureId)
+export const sendXdcCustomErc20Transaction = async (body: TransferErc20, provider?: string) =>
+    xdcBroadcast(await prepareXdcCustomErc20SignedTransaction(body, provider), body.signatureId);
 
 /**
  * Send XDC deploy ERC20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.

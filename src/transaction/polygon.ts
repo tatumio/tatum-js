@@ -37,14 +37,13 @@ import {
     SmartContractMethodInvocation,
     SmartContractReadMethodInvocation,
     TransactionKMS,
-    TransferCustomErc20,
-    TransferEthErc20,
+    TransferErc20,
     TransferMultiToken,
     TransferMultiTokenBatch,
     UpdateCashbackErc721,
 } from '../model';
+import {mintNFT} from '../nft';
 import {obtainCustodialAddressType} from '../wallet';
-import { mintNFT } from '../nft'
 
 /**
  * Estimate Gas price for the transaction.
@@ -81,9 +80,9 @@ const prepareGeneralTx = async (client: Web3, testnet: boolean, fromPrivateKey?:
  * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendPolygonTransaction = async (testnet: boolean, body: TransferEthErc20, provider?: string) => {
-    return polygonBroadcast(await preparePolygonSignedTransaction(testnet, body, provider))
-}
+export const sendPolygonTransaction = async (testnet: boolean, body: TransferErc20, provider?: string) => {
+    return polygonBroadcast(await preparePolygonSignedTransaction(testnet, body, provider));
+};
 
 export const preparePolygonClient = (testnet: boolean, provider?: string, fromPrivateKey?: string) => {
     const client = new Web3(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/polygon/web3/${process.env.TATUM_API_KEY}`);
@@ -155,18 +154,18 @@ export const preparePolygonGenerateCustodialWalletSignedTransaction = async (tes
  * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const preparePolygonSignedTransaction = async (testnet: boolean, body: TransferEthErc20, provider?: string) => {
-    await validateBody(body, TransferEthErc20)
-    const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
-    let data
-    let to = body.to
+export const preparePolygonSignedTransaction = async (testnet: boolean, body: TransferErc20, provider?: string) => {
+    await validateBody(body, TransferErc20);
+    const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey);
+    let data;
+    let to = body.to;
     if (body.currency === Currency.MATIC) {
-        data = body.data ? (client.utils.isHex(body.data) ? client.utils.stringToHex(body.data) : client.utils.toHex(body.data)) : undefined
+        data = body.data ? (client.utils.isHex(body.data) ? client.utils.stringToHex(body.data) : client.utils.toHex(body.data)) : undefined;
     } else {
-        to = CONTRACT_ADDRESSES[body.currency]
+        to = CONTRACT_ADDRESSES[body.currency];
         // @ts-ignore
-        const contract = new client.eth.Contract([TRANSFER_METHOD_ABI], to)
-        const digits = new BigNumber(10).pow(CONTRACT_DECIMALS[body.currency])
+        const contract = new client.eth.Contract([TRANSFER_METHOD_ABI], to);
+        const digits = new BigNumber(10).pow(CONTRACT_DECIMALS[body.currency]);
         data = contract.methods.transfer(body.to.trim(), `0x${new BigNumber(body.amount).multipliedBy(digits).toString(16)}`).encodeABI()
     }
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.to, body.amount, body.nonce, data,
@@ -233,16 +232,16 @@ export const preparePolygonBurnErc20SignedTransaction = async (testnet: boolean,
  * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const preparePolygonTransferErc20SignedTransaction = async (testnet: boolean, body: TransferCustomErc20, provider?: string) => {
-    await validateBody(body, TransferCustomErc20)
-    const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
-    const decimals = new BigNumber(10).pow(body.digits)
+export const preparePolygonTransferErc20SignedTransaction = async (testnet: boolean, body: TransferErc20, provider?: string) => {
+    await validateBody(body, TransferErc20);
+    const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey);
+    const decimals = new BigNumber(10).pow(body.digits);
     // @ts-ignore
     const data = new client.eth.Contract(erc20TokenABI, body.contractAddress.trim().trim()).methods
-        .transfer(body.to.trim(), `0x${new BigNumber(body.amount).multipliedBy(decimals).toString(16)}`).encodeABI()
+        .transfer(body.to.trim(), `0x${new BigNumber(body.amount).multipliedBy(decimals).toString(16)}`).encodeABI();
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), undefined, body.nonce, data,
-        body.fee?.gasLimit, body.fee?.gasPrice)
-}
+        body.fee?.gasLimit, body.fee?.gasPrice);
+};
 
 /**
  * Sign Polygon deploy erc20 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -660,8 +659,8 @@ export const sendPolygonBurnErc20SignedTransaction = async (testnet: boolean, bo
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendPolygonTransferErc20SignedTransaction = async (testnet: boolean, body: TransferCustomErc20, provider?: string) =>
-    polygonBroadcast(await preparePolygonTransferErc20SignedTransaction(testnet, body, provider), body.signatureId)
+export const sendPolygonTransferErc20SignedTransaction = async (testnet: boolean, body: TransferErc20, provider?: string) =>
+    polygonBroadcast(await preparePolygonTransferErc20SignedTransaction(testnet, body, provider), body.signatureId);
 
 /**
  * Send Polygon deploy erc20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.

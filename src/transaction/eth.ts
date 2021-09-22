@@ -36,14 +36,13 @@ import {
     SmartContractMethodInvocation,
     SmartContractReadMethodInvocation,
     TransactionKMS,
-    TransferCustomErc20,
-    TransferEthErc20,
+    TransferErc20,
     TransferMultiToken,
     TransferMultiTokenBatch,
     UpdateCashbackErc721,
 } from '../model';
+import {mintNFT} from '../nft';
 import {obtainCustodialAddressType} from '../wallet';
-import { mintNFT } from '../nft'
 
 /**
  * Estimate Gas price for the transaction.
@@ -255,8 +254,8 @@ export const prepareEthBurnErc20SignedTransaction = async (body: BurnErc20, prov
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEthOrErc20SignedTransaction = async (body: TransferEthErc20, provider?: string) => {
-    await validateBody(body, TransferEthErc20)
+export const prepareEthOrErc20SignedTransaction = async (body: TransferErc20, provider?: string) => {
+    await validateBody(body, TransferErc20);
     const {
         fromPrivateKey,
         to,
@@ -266,7 +265,7 @@ export const prepareEthOrErc20SignedTransaction = async (body: TransferEthErc20,
         data,
         nonce,
         signatureId
-    } = body
+    } = body;
 
     const client = getClient(provider, fromPrivateKey)
 
@@ -300,8 +299,8 @@ export const prepareEthOrErc20SignedTransaction = async (body: TransferEthErc20,
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareCustomErc20SignedTransaction = async (body: TransferCustomErc20, provider?: string) => {
-    await validateBody(body, TransferCustomErc20)
+export const prepareCustomErc20SignedTransaction = async (body: TransferErc20, provider?: string) => {
+    await validateBody(body, TransferErc20);
     const {
         fromPrivateKey,
         to,
@@ -311,7 +310,7 @@ export const prepareCustomErc20SignedTransaction = async (body: TransferCustomEr
         fee,
         nonce,
         signatureId
-    } = body
+    } = body;
 
     const client = getClient(provider, fromPrivateKey)
 
@@ -997,8 +996,8 @@ export const sendStoreDataTransaction = async (body: CreateRecord, provider?: st
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendEthOrErc20Transaction = async (body: TransferEthErc20, provider?: string) =>
-    ethBroadcast(await prepareEthOrErc20SignedTransaction(body, provider), body.signatureId)
+export const sendEthOrErc20Transaction = async (body: TransferErc20, provider?: string) =>
+    ethBroadcast(await prepareEthOrErc20SignedTransaction(body, provider), body.signatureId);
 
 /**
  * Send Ethereum custom ERC20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1007,8 +1006,8 @@ export const sendEthOrErc20Transaction = async (body: TransferEthErc20, provider
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendCustomErc20Transaction = async (body: TransferCustomErc20, provider?: string) =>
-    ethBroadcast(await prepareCustomErc20SignedTransaction(body, provider), body.signatureId)
+export const sendCustomErc20Transaction = async (body: TransferErc20, provider?: string) =>
+    ethBroadcast(await prepareCustomErc20SignedTransaction(body, provider), body.signatureId);
 
 /**
  * Send Ethereum deploy ERC20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.

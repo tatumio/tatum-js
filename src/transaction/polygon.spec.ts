@@ -1,5 +1,5 @@
 import Web3 from 'web3';
-import {CreateRecord, Currency, DeployErc20, TransferCustomErc20, TransferEthErc20} from '../model';
+import {CreateRecord, Currency, DeployErc20, TransferErc20} from '../model';
 import {
     polygonGetGasPriceInWei,
     preparePolygonBurnErc721SignedTransaction,
@@ -28,7 +28,7 @@ describe('MATIC transactions', () => {
 
     describe('MATIC common transactions', () => {
         it('should test valid transaction MATIC data', async () => {
-            const body = new TransferEthErc20()
+            const body = new TransferErc20();
             body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29';
             body.amount = '0.0001';
             body.currency = Currency.MATIC;
@@ -122,7 +122,7 @@ describe('MATIC transactions', () => {
 
     describe('MATIC ERC20 transactions', () => {
         it('should test valid custom transaction ERC20 data', async () => {
-            const body = new TransferCustomErc20()
+            const body = new TransferErc20();
             body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29'
             body.amount = '10'
             body.contractAddress = '0x0b9808fce74030c87aae334a30f6c8f6c66b090d'

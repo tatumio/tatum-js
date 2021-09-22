@@ -4,9 +4,7 @@ export * from './EstimateGasVet'
 export * from './Fee'
 export * from './TransferBchBlockchain'
 export * from './TransferBtcBasedBlockchain'
-export * from './TransferCustomErc20'
 export * from './TransferErc20'
-export * from './TransferEthErc20';
 export * from './TransferFlowCustomTx';
 export * from './OneBurn721';
 export * from './OneBurnMultiToken'

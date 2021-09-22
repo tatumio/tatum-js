@@ -1,5 +1,5 @@
-import Web3 from 'web3'
-import {Currency, DeployErc20, TransferBscBep20, TransferCustomErc20} from '../model'
+import Web3 from 'web3';
+import {Currency, DeployErc20, TransferBscBep20, TransferErc20} from '../model';
 import {
     bscGetGasPriceInWei,
     prepareBscOrBep20SignedTransaction,
@@ -12,7 +12,7 @@ import {
     sendDeployBep721Transaction,
     sendMintBep721Transaction,
     sendMintMultipleBep721Transaction
-} from './bsc'
+} from './bsc';
 
 describe('BSC transactions', () => {
     jest.setTimeout(19999)
@@ -51,7 +51,7 @@ describe('BSC transactions', () => {
     })
 
     it('should test valid custom transaction ERC20 data', async () => {
-        const body = new TransferCustomErc20()
+        const body = new TransferErc20();
         body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29'
         body.amount = '0'
         body.contractAddress = '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
@@ -93,7 +93,7 @@ describe('BSC transactions', () => {
     })
 
     it('should test invalid custom transaction ERC20 data, missing digits', async () => {
-        const body = new TransferCustomErc20()
+        const body = new TransferErc20();
         body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29'
         body.amount = '0'
         body.contractAddress = '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'

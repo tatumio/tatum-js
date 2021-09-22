@@ -1,5 +1,6 @@
 import {Type} from 'class-transformer';
-import {IsNotEmpty, IsNumberString, IsOptional, Length, Matches, MaxLength, Min, ValidateNested,} from 'class-validator';
+import {IsIn, IsNotEmpty, IsNumberString, IsOptional, Length, Matches, Max, MaxLength, Min, ValidateIf, ValidateNested} from 'class-validator';
+import {Currency, ETH_BASED_CURRENCIES, MATIC_BASED_CURRENCIES} from './Currency';
 import {Fee} from './Fee';
 import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
 
@@ -18,10 +19,25 @@ export class TransferErc20 extends PrivateKeyOrSignatureId {
     @IsOptional()
     public data?: string;
 
+    @ValidateIf(o => !o.contractAddress)
+    @IsNotEmpty()
+    @IsIn([...ETH_BASED_CURRENCIES, Currency.XDC, Currency.MATIC, ...MATIC_BASED_CURRENCIES])
+    public currency: Currency;
+
+    @ValidateIf(o => !o.currency)
+    @IsNotEmpty()
+    @Length(42, 43)
+    public contractAddress: string;
+
     @IsOptional()
     @Type(() => Fee)
     @ValidateNested()
     public fee?: Fee;
+
+    @ValidateIf(o => !o.currency)
+    @Min(1)
+    @Max(30)
+    public digits: number;
 
     @Min(0)
     @IsOptional()

@@ -37,7 +37,7 @@ import {
     SmartContractReadMethodInvocation,
     TransactionKMS,
     TransferBscBep20,
-    TransferCustomErc20,
+    TransferErc20,
     TransferMultiToken,
     TransferMultiTokenBatch,
     UpdateCashbackErc721
@@ -276,8 +276,8 @@ export const prepareBscOrBep20SignedTransaction = async (body: TransferBscBep20,
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareCustomBep20SignedTransaction = async (body: TransferCustomErc20, provider?: string) => {
-    await validateBody(body, TransferCustomErc20)
+export const prepareCustomBep20SignedTransaction = async (body: TransferErc20, provider?: string) => {
+    await validateBody(body, TransferErc20);
     const {
         fromPrivateKey,
         to,
@@ -287,7 +287,7 @@ export const prepareCustomBep20SignedTransaction = async (body: TransferCustomEr
         fee,
         nonce,
         signatureId
-    } = body
+    } = body;
 
     const client = getBscClient(provider, fromPrivateKey)
 
@@ -989,8 +989,8 @@ export const sendBscOrBep20Transaction = async (body: TransferBscBep20, provider
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendCustomBep20Transaction = async (body: TransferCustomErc20, provider?: string) =>
-    bscBroadcast(await prepareCustomBep20SignedTransaction(body, provider), body.signatureId)
+export const sendCustomBep20Transaction = async (body: TransferErc20, provider?: string) =>
+    bscBroadcast(await prepareCustomBep20SignedTransaction(body, provider), body.signatureId);
 
 /**
  * Send Bsc deploy BEP20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.

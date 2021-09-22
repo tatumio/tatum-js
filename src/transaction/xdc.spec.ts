@@ -1,5 +1,5 @@
-import Web3 from 'web3'
-import {Currency, DeployErc20, TransferCustomErc20, TransferErc20} from '../model'
+import Web3 from 'web3';
+import {Currency, DeployErc20, TransferErc20} from '../model';
 import {
     prepareXdcCustomErc20SignedTransaction,
     prepareXdcDeployErc20SignedTransaction,
@@ -12,7 +12,7 @@ import {
     sendXdcSmartContractMethodInvocationTransaction,
     sendXdcSmartContractReadMethodInvocationTransaction,
     xdcGetGasPriceInWei
-} from './xdc'
+} from './xdc';
 
 describe('XDC transactions', () => {
     jest.setTimeout(19999)
@@ -50,7 +50,7 @@ describe('XDC transactions', () => {
     })
 
     it('should test valid custom transaction ERC20 data', async () => {
-        const body = new TransferCustomErc20()
+        const body = new TransferErc20();
         body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29'
         body.amount = '0'
         body.contractAddress = 'xdc811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
@@ -92,7 +92,7 @@ describe('XDC transactions', () => {
     })
 
     it('should test invalid custom transaction ERC20 data, missing digits', async () => {
-        const body = new TransferCustomErc20()
+        const body = new TransferErc20();
         body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29'
         body.amount = '0'
         body.contractAddress = 'xdc811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
