@@ -292,14 +292,14 @@ export const prepareCustomBep20SignedTransaction = async (body: TransferErc20, p
     const client = getBscClient(provider, fromPrivateKey)
 
     // @ts-ignore
-    const contract = new client.eth.Contract([TRANSFER_METHOD_ABI], contractAddress)
-    const decimals = new BigNumber(10).pow(digits)
+    const contract = new client.eth.Contract([TRANSFER_METHOD_ABI], contractAddress);
+    const decimals = new BigNumber(10).pow(digits as number);
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress,
         data: contract.methods.transfer(to.trim(), `0x${new BigNumber(amount).multipliedBy(decimals).toString(16)}`).encodeABI(),
         nonce,
-    }
+    };
 
     return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
 }

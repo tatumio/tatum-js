@@ -1,5 +1,5 @@
 import {validateBody} from '../connector/tatum';
-import {CreateRecord, Currency, TransferBscBep20, TransferCeloOrCeloErc20Token, TransferEthErc20, TransferTron} from '../model';
+import {CreateRecord, Currency, TransferBscBep20, TransferCeloOrCeloErc20Token, TransferErc20, TransferTron} from '../model';
 import {sendBscOrBep20Transaction, sendBscStoreDataTransaction} from './bsc';
 import {sendCeloOrcUsdTransaction, sendCeloStoreDataSignedTransaction} from './celo';
 import {sendEthOrErc20Transaction, sendStoreDataTransaction} from './eth';
@@ -42,7 +42,7 @@ export const storeData = async (testnet: boolean, body: CreateRecord, provider?:
  * @param provider Optional provider to use for broadcasting signed tx to the blockchain.
  */
 export const sendTransaction = async (testnet: boolean, chain: Currency,
-                                      body: TransferEthErc20 | TransferCeloOrCeloErc20Token | TransferBscBep20 | TransferTron, provider?: string) => {
+                                      body: TransferErc20 | TransferCeloOrCeloErc20Token | TransferBscBep20 | TransferTron, provider?: string) => {
     switch (chain) {
         case Currency.CELO: {
             const b = body as TransferCeloOrCeloErc20Token;
@@ -51,14 +51,14 @@ export const sendTransaction = async (testnet: boolean, chain: Currency,
             return sendCeloOrcUsdTransaction(testnet, b, provider);
         }
         case Currency.ETH:
-            (body as TransferEthErc20).currency = chain;
-            return sendEthOrErc20Transaction(body as TransferEthErc20, provider);
+            (body as TransferErc20).currency = chain;
+            return sendEthOrErc20Transaction(body as TransferErc20, provider);
         case Currency.MATIC:
-            (body as TransferEthErc20).currency = chain;
-            return sendPolygonTransaction(testnet, body as TransferEthErc20, provider);
+            (body as TransferErc20).currency = chain;
+            return sendPolygonTransaction(testnet, body as TransferErc20, provider);
         case Currency.ONE:
-            (body as TransferEthErc20).currency = chain;
-            return sendOneTransaction(testnet, body as TransferEthErc20, provider);
+            (body as TransferErc20).currency = chain;
+            return sendOneTransaction(testnet, body as TransferErc20, provider);
         case Currency.TRON:
             return sendTronTransaction(testnet, body as TransferTron);
         case Currency.BSC:

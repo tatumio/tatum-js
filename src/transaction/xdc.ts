@@ -275,14 +275,14 @@ export const prepareXdcCustomErc20SignedTransaction = async (body: TransferErc20
     const client = getXdcClient(provider, fromPrivateKey)
 
     // @ts-ignore
-    const contract = new client.eth.Contract([TRANSFER_METHOD_ABI], fromXdcAddress(contractAddress))
-    const decimals = new BigNumber(10).pow(digits)
+    const contract = new client.eth.Contract([TRANSFER_METHOD_ABI], fromXdcAddress(contractAddress));
+    const decimals = new BigNumber(10).pow(digits as number);
     const tx: TransactionConfig = {
         from: 0,
-        to: fromXdcAddress(contractAddress),
+        to: fromXdcAddress(contractAddress as string),
         data: contract.methods.transfer(fromXdcAddress(to), `0x${new BigNumber(amount).multipliedBy(decimals).toString(16)}`).encodeABI(),
         nonce,
-    }
+    };
 
     return await prepareErc20SignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
 }

@@ -162,10 +162,10 @@ export const preparePolygonSignedTransaction = async (testnet: boolean, body: Tr
     if (body.currency === Currency.MATIC) {
         data = body.data ? (client.utils.isHex(body.data) ? client.utils.stringToHex(body.data) : client.utils.toHex(body.data)) : undefined;
     } else {
-        to = CONTRACT_ADDRESSES[body.currency];
+        to = CONTRACT_ADDRESSES[body.currency as string];
         // @ts-ignore
         const contract = new client.eth.Contract([TRANSFER_METHOD_ABI], to);
-        const digits = new BigNumber(10).pow(CONTRACT_DECIMALS[body.currency]);
+        const digits = new BigNumber(10).pow(CONTRACT_DECIMALS[body.currency as string]);
         data = contract.methods.transfer(body.to.trim(), `0x${new BigNumber(body.amount).multipliedBy(digits).toString(16)}`).encodeABI()
     }
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.to, body.amount, body.nonce, data,
@@ -235,11 +235,11 @@ export const preparePolygonBurnErc20SignedTransaction = async (testnet: boolean,
 export const preparePolygonTransferErc20SignedTransaction = async (testnet: boolean, body: TransferErc20, provider?: string) => {
     await validateBody(body, TransferErc20);
     const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey);
-    const decimals = new BigNumber(10).pow(body.digits);
+    const decimals = new BigNumber(10).pow(body.digits as number);
     // @ts-ignore
     const data = new client.eth.Contract(erc20TokenABI, body.contractAddress.trim().trim()).methods
         .transfer(body.to.trim(), `0x${new BigNumber(body.amount).multipliedBy(decimals).toString(16)}`).encodeABI();
-    return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), undefined, body.nonce, data,
+    return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, (body.contractAddress as string).trim(), undefined, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice);
 };
 

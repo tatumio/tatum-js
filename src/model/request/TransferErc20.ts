@@ -22,12 +22,12 @@ export class TransferErc20 extends PrivateKeyOrSignatureId {
     @ValidateIf(o => !o.contractAddress)
     @IsNotEmpty()
     @IsIn([...ETH_BASED_CURRENCIES, Currency.XDC, Currency.MATIC, ...MATIC_BASED_CURRENCIES])
-    public currency: Currency;
+    public currency?: Currency;
 
     @ValidateIf(o => !o.currency)
     @IsNotEmpty()
     @Length(42, 43)
-    public contractAddress: string;
+    public contractAddress?: string;
 
     @IsOptional()
     @Type(() => Fee)
@@ -37,7 +37,7 @@ export class TransferErc20 extends PrivateKeyOrSignatureId {
     @ValidateIf(o => !o.currency)
     @Min(1)
     @Max(30)
-    public digits: number;
+    public digits?: number;
 
     @Min(0)
     @IsOptional()

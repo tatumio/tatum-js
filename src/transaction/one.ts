@@ -42,8 +42,8 @@ import {
     SmartContractReadMethodInvocation,
     TransactionKMS,
 } from '../model';
+import {mintNFT} from '../nft';
 import {obtainCustodialAddressType} from '../wallet';
-import { mintNFT } from '../nft'
 
 const prepareGeneralTx = async (client: Web3, testnet: boolean, fromPrivateKey?: string, signatureId?: string, to?: string, amount?: string, nonce?: number,
                                 data?: string, gasLimit?: string, gasPrice?: string) => {
@@ -186,13 +186,13 @@ export const prepareOneBurn20SignedTransaction = async (testnet: boolean, body: 
  */
 export const prepareOneTransfer20SignedTransaction = async (testnet: boolean, body: OneTransfer20, provider?: string) => {
     await validateBody(body, OneTransfer20)
-    const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
-    const decimals = new BigNumber(10).pow(body.digits)
+    const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
+    const decimals = new BigNumber(10).pow(body.digits as number);
     // @ts-ignore
     const data = new client.eth.Contract(erc20TokenABI, new HarmonyAddress(body.contractAddress).basicHex.trim()).methods
         .transfer(new HarmonyAddress(body.to).basicHex, `0x${new BigNumber(body.amount).multipliedBy(decimals).toString(16)}`).encodeABI()
-    return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, undefined, body.nonce, data,
-        body.fee?.gasLimit, body.fee?.gasPrice)
+    return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress as string).basicHex, undefined, body.nonce, data,
+        body.fee?.gasLimit, body.fee?.gasPrice);
 }
 
 export const getOne20ContractDecimals = async (testnet: boolean, contractAddress: string, provider?: string) => {
