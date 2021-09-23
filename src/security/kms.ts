@@ -10,7 +10,7 @@ export const getTransactionKMS = async (id: string): Promise<TransactionKMS> => 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/DeletePendingTransactionToSign" target="_blank">Tatum API documentation</a>
  */
-export const deleteTransactionKMS = async (id: string, revert = true): Promise<void> => httpDelete(`/v3/kms/${id}/${revert}`)
+export const deleteTransactionKMS = async (id: string, revert = true): Promise<void> => httpDelete(`/v3/kms/${id}?revert=${revert}`)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/CompletePendingSignature" target="_blank">Tatum API documentation</a>
