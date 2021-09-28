@@ -1,9 +1,9 @@
 const algosdk = require('algosdk');
 const base32 = require('base32.js');
-import {TextEncoder} from 'util';
-import {algorandBroadcast} from '../blockchain';
-import {TATUM_API_URL} from '../constants';
-import {AlgoTransaction, Currency, TransactionKMS} from '../model';
+import { algorandBroadcast } from 'src/blockchain';
+import { TextEncoder } from 'util';
+import { TATUM_API_URL } from '../constants';
+import { AlgoTransaction, Currency, TransactionKMS } from '../model';
 
 /**
  * PureStake Algod V2 Client
@@ -13,7 +13,7 @@ import {AlgoTransaction, Currency, TransactionKMS} from '../model';
  */
 export const getAlgoClient = (testnet: boolean, provider?: string) => {
     const baseServer = provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/algorand/node`;
-    const token = {'X-API-Key': `${process.env.ALGO_API_KEY}`};
+    const token = {'X-API-Key': `${process.env.ALGO_API_KEY}`}
     const algodClient = new algosdk.Algodv2(token, baseServer, '');
     return algodClient;
 }
@@ -80,8 +80,9 @@ export const signAlgoKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
     if (tx.chain !== Currency.ALGO) {
         throw Error('Unsupported chain.')
     }
-    const client = getAlgoClient(testnet, provider);
+    const decoder = new base32.Decoder({type: "rfc4648"})
     const txn = JSON.parse(tx.serializedTransaction);
-    const signedTxn = algosdk.signTransaction(txn, fromPrivateKey);
+    const secretKey = new Uint8Array(decoder.write(fromPrivateKey).buf);
+    const signedTxn = algosdk.signTransaction(txn, secretKey);
     return signedTxn.blob
 }
