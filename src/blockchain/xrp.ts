@@ -42,4 +42,4 @@ export const xrpGetTransaction = async (hash: string) => get(`/v3/xrp/transactio
  * For more details, see <a href="https://tatum.io/apidoc#operation/XrpGetAccountTx" target="_blank">Tatum API documentation</a>
  */
 export const xrpGetAccountTransactions = async (address: string, min?: number, marker?: string) =>
-  get(`/v3/xrp/account/tx/${address}?min=${min}&marker=${marker}`)
+  get(`/v3/xrp/account/tx/${address}${min ? `?min=${min}${marker ? `&marker=${marker}` : ''}` : marker ? `?marker=${marker}` : ''}`)
