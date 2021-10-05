@@ -1,14 +1,14 @@
 import BigNumber from 'bignumber.js';
-import {get, validateBody} from '@tatumio/tatum-core';
-import erc1155_abi from '@tatumio/tatum-core';
-import erc721_abi from '@tatumio/tatum-core';
+import {erc1155TokenABI, erc721TokenABI, get, validateBody} from '@tatumio/tatum-core';
+// import erc1155_abi from '@tatumio/tatum-core';
+// import erc721_abi from '@tatumio/tatum-core';
 import {auction} from '@tatumio/tatum-core';
-import {getErc20Decimals, prepareApproveErc20} from '@tatumio/tatum-core';
-import {helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall} from '@tatumio/tatum-core';
 import {ApproveErc20, ApproveNftTransfer, CreateAuction, Currency, DeployNftAuction, InvokeAuctionOperation, UpdateAuctionFee, UpdateMarketplaceFeeRecipient,} from '@tatumio/tatum-core';
 import {
     prepareEthDeployAuctionSignedTransaction
 } from '../../transaction';
+import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from 'src/helpers';
+import { prepareApproveErc20 } from 'src/fungible';
 
 export interface Auction {
     /*
@@ -86,7 +86,7 @@ export const getAuctionFeeRecipient = async (chain: Currency, contractAddress: s
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const deployAuction = async (testnet: boolean, body: DeployNftAuction, provider?: string) =>
+export const deployAuction = async (testnet: boolean, body: DeployNftAuction & { chain: Currency.ETH }, provider?: string) =>
     helperBroadcastTx(body.chain, await prepareDeployAuction(testnet, body, provider), body.signatureId);
 
 /**
@@ -103,18 +103,10 @@ export const deployAuction = async (testnet: boolean, body: DeployNftAuction, pr
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareDeployAuction = async (testnet: boolean, body: DeployNftAuction, provider?: string) => {
+export const prepareDeployAuction = async (testnet: boolean, body: DeployNftAuction & { chain: Currency.ETH }, provider?: string) => {
     switch (body.chain) {
-        case Currency.CELO:
-            return await prepareCeloDeployAuctionSignedTransaction(testnet, body, provider);
-        case Currency.ONE:
-            return await prepareOneDeployAuctionSignedTransaction(testnet, body, provider);
         case Currency.ETH:
             return await prepareEthDeployAuctionSignedTransaction(body, provider);
-        case Currency.BSC:
-            return await prepareBscDeployAuctionSignedTransaction(body, provider);
-        case Currency.MATIC:
-            return await preparePolygonDeployAuctionSignedTransaction(testnet, body, provider);
         default:
             throw new Error('Unsupported chain');
     }
@@ -157,7 +149,7 @@ export const prepareAuctionApproveNftTransfer = async (testnet: boolean, body: A
     await validateBody(body, ApproveNftTransfer);
     const params = body.isErc721 ? [body.spender, `0x${new BigNumber(body.tokenId).toString(16)}`] : [body.spender, true];
     return await helperPrepareSCCall(testnet, body, ApproveNftTransfer, body.isErc721 ? 'approve' : 'setApprovalForAll', params, undefined, provider,
-        body.isErc721 ? erc721_abi : erc1155_abi);
+        body.isErc721 ? erc721TokenABI : erc1155TokenABI);
 };
 
 /**

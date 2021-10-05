@@ -1,11 +1,11 @@
 import {get, httpDelete, post, put} from '../connector/tatum'
-import {Account, AccountBalance, Blockage, BlockAmount, CreateAccount} from '../model'
+import {Account, AccountBalance, Blockage, BlockAmount, CreateAccount, Currency} from '../model'
 import {BlockageTransaction} from '../model/request/BlockageTransaction'
 import {CreateAccountsBatch} from '../model/request/CreateAccountsBatch'
 import {UpdateAccount} from '../model/request/UpdateAccount'
 import {SubscriptionType} from '../model/response/ledger/SubscriptionType'
 import {generateDepositAddress} from '../offchain'
-import {generateWallet} from '../wallet'
+import { Wallet} from '../wallet/wallet'
 import {createNewSubscription} from './subscription'
 
 /**
@@ -22,15 +22,15 @@ export const createAccount = async (account: CreateAccount): Promise<Account> =>
  * Abstraction unification endpoint for creating new ledger account, optionally added wallet generation, generating deposit blockchain address
  * and register incoming TX webhook notification.
  * @param account Account to be created.
- * @param generateNewWallet If new wallet should be created as well
+ * @param generateNewWalletFn Function for creation of the new wallet. If you don't want to create a new wallet, pass undefined
  * @param testnet if we are using testnet or not
  * @param webhookUrl optional URL, where webhook will be post for every incoming blockchain transaction to the address
  */
-export const generateAccount = async (account: CreateAccount, generateNewWallet = true, testnet = true, webhookUrl?: string) => {
+export const generateAccount = async (account: CreateAccount, generateNewWalletFn: (undefined | ((currency: Currency, testnet: boolean, mnemonic?: string) => Promise<Wallet>)) = undefined, testnet = true, webhookUrl?: string) => {
     let w
-    if (generateNewWallet) {
+    if (generateNewWalletFn) {
         // @ts-ignore
-        w = await generateWallet(account.currency, testnet)
+        w = await generateNewWalletFn(account.currency, testnet)
         // @ts-ignore
         account.xpub = w.xpub || w.address
     }

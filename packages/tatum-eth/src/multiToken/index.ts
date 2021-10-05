@@ -1,4 +1,5 @@
-import {get, Currency} from '@tatumio/tatum-core';
+import {get, Currency, MintMultiTokenBatch, TransferMultiToken, TransferMultiTokenBatch} from '@tatumio/tatum-core';
+import { MintMultiToken } from '@tatumio/tatum-core';
 import {
     EthBurnMultiToken,
     EthBurnMultiTokenBatch,
@@ -46,25 +47,25 @@ export const getMultiTokenMetadata = async (chain: Currency, contractAddress: st
     get(`/v3/multitoken/metadata/${chain}/${contractAddress}/${tokenId}`)
 
 
-export const deployMultiToken = async (testnet: boolean, body: EthDeployMultiToken, provider?: string) => {
+export const deployMultiToken = async (testnet: boolean, body: EthDeployMultiToken & { chain: Currency.ETH }, provider?: string) => {
     return sendEthDeployMultiTokenTransaction(body, provider)
 }
-export const mintMultiToken = async (testnet: boolean, body: MintMultiToken, provider?: string) => {
+export const mintMultiToken = async (testnet: boolean, body: MintMultiToken & { chain: Currency.ETH }, provider?: string) => {
     return sendEthMintMultiTokenTransaction(body, provider)
 }
-export const mintMultiTokenBatch = async (testnet: boolean, body: MintMultiTokenBatch, provider?: string) => {
+export const mintMultiTokenBatch = async (testnet: boolean, body: MintMultiTokenBatch & { chain: Currency.ETH }, provider?: string) => {
     return sendEthMintMultiTokenBatchTransaction(body, provider)
 }
-export const burnMultiToken = async (testnet: boolean, body: EthBurnMultiToken, provider?: string) => {
+export const burnMultiToken = async (testnet: boolean, body: EthBurnMultiToken & { chain: Currency.ETH }, provider?: string) => {
     return sendEthBurnMultiTokenTransaction(body, provider)
 }
-export const burnMultiTokenBatch = async (testnet: boolean, body: EthBurnMultiTokenBatch, provider?: string) => {
+export const burnMultiTokenBatch = async (testnet: boolean, body: EthBurnMultiTokenBatch & { chain: Currency.ETH }, provider?: string) => {
     return sendEthBurnBatchMultiTokenTransaction(body, provider)
 }
 
-export const transferMultiToken = async (testnet: boolean, body: TransferMultiToken, provider?: string) => {
+export const transferMultiToken = async (testnet: boolean, body: TransferMultiToken & { chain: Currency.ETH }, provider?: string) => {
     return sendEthMultiTokenTransaction(body, provider)
 }
-export const transferMultiTokenBatch = async (testnet: boolean, body: TransferMultiTokenBatch, provider?: string) => {
+export const transferMultiTokenBatch = async (testnet: boolean, body: TransferMultiTokenBatch & { chain: Currency.ETH }, provider?: string) => {
     return sendEthMultiTokenBatchTransaction(body, provider)
 }

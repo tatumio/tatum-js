@@ -3,7 +3,8 @@ import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
 import {toWei} from 'web3-utils';
 import {ethBroadcast, ethGetTransactionsCount} from '../blockchain';
-import {auction, listing, axios, validateBody, CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI, erc1155TokenABI, erc1155TokenBytecode, erc20_abi, erc20TokenABI, erc20TokenBytecode, erc721TokenABI, erc721TokenBytecode } from '@tatumio/tatum-core';
+import {auction, listing, axios, validateBody, erc1155TokenABI, erc1155TokenBytecode, erc20TokenABI, erc20TokenBytecode, erc721TokenABI, erc721TokenBytecode, obtainCustodialAddressType } from '@tatumio/tatum-core';
+import { CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI } from "@tatumio/tatum-core/dist/constants"
 import {
     BurnErc20,
     CreateRecord,
@@ -35,7 +36,6 @@ import {
     EthTransferErc721,
 } from '../model';
 import {mintNFT} from '../nft';
-import {obtainCustodialAddressType} from '../wallet';
 
 /**
  * Estimate Gas price for the transaction.
@@ -948,7 +948,7 @@ export const getEthErc20ContractDecimals = async (testnet: boolean, contractAddr
     }
     const client = await getClient(provider)
     // @ts-ignore
-    const contract = new client.eth.Contract(erc20_abi, contractAddress.trim())
+    const contract = new client.eth.Contract(erc20TokenABI, contractAddress.trim())
     return await contract.methods.decimals().call()
 }
 

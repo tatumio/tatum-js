@@ -1,4 +1,4 @@
-import {validateBody, CreateRecord, Currency, TransferBscBep20, TransferCeloOrCeloErc20Token, TransferErc20, TransferTron} from '@tatumio/tatum-core';
+import {validateBody, CreateRecord, Currency, TransferErc20} from '@tatumio/tatum-core';
 import {sendEthOrErc20Transaction, sendStoreDataTransaction} from './eth';
 
 /**
@@ -20,7 +20,7 @@ export const storeData = async (testnet: boolean, body: CreateRecord, provider?:
  * @param provider Optional provider to use for broadcasting signed tx to the blockchain.
  */
 export const sendTransaction = async (testnet: boolean, chain: Currency,
-                                      body: TransferErc20 | TransferCeloOrCeloErc20Token | TransferBscBep20 | TransferTron, provider?: string) => {
+                                      body: TransferErc20  , provider?: string) => {
     (body as TransferErc20).currency = chain;
     return sendEthOrErc20Transaction(body as TransferErc20, provider);
 };

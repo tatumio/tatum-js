@@ -1,4 +1,5 @@
-import {ethEstimateGas, BurnErc20, Currency, DeployErc20, MintErc20, TransferErc20} from '@tatumio/tatum-core';
+import { BurnErc20, Currency, DeployErc20, MintErc20, TransferErc20} from '@tatumio/tatum-core';
+import { ethEstimateGas } from 'src/blockchain';
 import {
   ethGetGasPriceInWei,
   prepareCustomErc20SignedTransaction,
