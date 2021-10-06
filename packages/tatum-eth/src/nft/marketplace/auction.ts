@@ -1,76 +1,12 @@
 import BigNumber from 'bignumber.js';
 import {erc1155TokenABI, erc721TokenABI, get, validateBody} from '@tatumio/tatum-core';
-// import erc1155_abi from '@tatumio/tatum-core';
-// import erc721_abi from '@tatumio/tatum-core';
-import {auction} from '@tatumio/tatum-core';
+import {auction, prepareAuctionUpdateFeeAbstraction, prepareAuctionUpdateFeeRecipientAbstraction, prepareAuctionApproveNftTransferAbstraction, prepareAuctionBidAbstraction, prepareAuctionCreateAbstraction, prepareAuctionSettleAbstraction, prepareAuctionCancelAbstraction} from '@tatumio/tatum-core';
 import {ApproveErc20, ApproveNftTransfer, CreateAuction, Currency, DeployNftAuction, InvokeAuctionOperation, UpdateAuctionFee, UpdateMarketplaceFeeRecipient,} from '@tatumio/tatum-core';
 import {
     prepareEthDeployAuctionSignedTransaction
 } from '../../transaction';
 import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from 'src/helpers';
 import { prepareApproveErc20 } from 'src/fungible';
-
-export interface Auction {
-    /*
-     address of the seller
-     */
-    seller: string;
-    /*
-     address of the token to sale
-     */
-    nftAddress: string;
-    /*
-     ID of the NFT
-     */
-    tokenId: string;
-    /*
-     if the auction is for ERC721 - true - or ERC1155 - false
-     */
-    isErc721: boolean;
-    /*
-     Block height of end of auction
-     */
-    endedAt: string;
-    /*
-     Block height, in which the auction started.
-     */
-    startedAt: string;
-    /*
-     optional - if the auction is settled in the ERC20 token or in native currency
-     */
-    erc20Address?: string;
-    /*
-     for ERC-1155 - how many tokens are for sale
-     */
-    amount: string;
-    /*
-     Ending price of the asset at the end of the auction
-     */
-    endingPrice: string;
-    /*
-     Actual highest bidder
-     */
-    bidder?: string;
-}
-
-/**
- * For more details, see <a href="https://tatum.io/apidoc#operation/MPAuctionFee" target="_blank">Tatum API documentation</a>
- */
-export const getAuctionFee = async (chain: Currency, contractAddress: string): Promise<number> =>
-    get(`/v3/blockchain/auction/auction/${chain}/${contractAddress}/fee`);
-
-/**
- * For more details, see <a href="https://tatum.io/apidoc#operation/MPAuction" target="_blank">Tatum API documentation</a>
- */
-export const getAuction = async (chain: Currency, contractAddress: string, auctionId: string): Promise<Auction> =>
-    get(`/v3/blockchain/auction/auction/${chain}/${contractAddress}/auction/${auctionId}`);
-
-/**
- * For more details, see <a href="https://tatum.io/apidoc#operation/MPAuctionRecipient" target="_blank">Tatum API documentation</a>
- */
-export const getAuctionFeeRecipient = async (chain: Currency, contractAddress: string): Promise<{ address: string }> =>
-    get(`/v3/blockchain/auction/auction/${chain}/${contractAddress}/recipient`);
-
 
 /**
  * Deploy new smart contract for NFT auction logic. Smart contract enables auction operator to create new auction for NFT (ERC-721/1155).
@@ -104,12 +40,7 @@ export const deployAuction = async (testnet: boolean, body: DeployNftAuction & {
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareDeployAuction = async (testnet: boolean, body: DeployNftAuction & { chain: Currency.ETH }, provider?: string) => {
-    switch (body.chain) {
-        case Currency.ETH:
-            return await prepareEthDeployAuctionSignedTransaction(body, provider);
-        default:
-            throw new Error('Unsupported chain');
-    }
+    return await prepareEthDeployAuctionSignedTransaction(body, provider);
 };
 
 /**
@@ -121,7 +52,7 @@ export const prepareDeployAuction = async (testnet: boolean, body: DeployNftAuct
  */
 export const prepareAuctionUpdateFee = async (testnet: boolean, body: UpdateAuctionFee, provider?: string) => {
     await validateBody(body, UpdateAuctionFee);
-    const params = [`0x${new BigNumber(body.auctionFee).toString(16)}`];
+    const params = await prepareAuctionUpdateFeeAbstraction(body)
     return await helperPrepareSCCall(testnet, body, UpdateAuctionFee, 'setAuctionFee', params, undefined, provider, auction.abi);
 };
 
@@ -133,8 +64,7 @@ export const prepareAuctionUpdateFee = async (testnet: boolean, body: UpdateAuct
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareAuctionUpdateFeeRecipient = async (testnet: boolean, body: UpdateMarketplaceFeeRecipient, provider?: string) => {
-    await validateBody(body, UpdateMarketplaceFeeRecipient);
-    const params = [body.feeRecipient];
+    const params = await prepareAuctionUpdateFeeRecipientAbstraction(body)
     return await helperPrepareSCCall(testnet, body, UpdateMarketplaceFeeRecipient, 'setAuctionFeeRecipient', params, undefined, provider, auction.abi);
 };
 
@@ -146,8 +76,7 @@ export const prepareAuctionUpdateFeeRecipient = async (testnet: boolean, body: U
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareAuctionApproveNftTransfer = async (testnet: boolean, body: ApproveNftTransfer, provider?: string) => {
-    await validateBody(body, ApproveNftTransfer);
-    const params = body.isErc721 ? [body.spender, `0x${new BigNumber(body.tokenId).toString(16)}`] : [body.spender, true];
+    const params = await prepareAuctionApproveNftTransferAbstraction(body)
     return await helperPrepareSCCall(testnet, body, ApproveNftTransfer, body.isErc721 ? 'approve' : 'setApprovalForAll', params, undefined, provider,
         body.isErc721 ? erc721TokenABI : erc1155TokenABI);
 };
@@ -173,12 +102,8 @@ export const prepareAuctionApproveErc20Transfer = async (testnet: boolean, body:
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareAuctionCreate = async (testnet: boolean, body: CreateAuction, provider?: string) => {
-    await validateBody(body, CreateAuction);
-    const params = [body.id, body.isErc721, body.nftAddress.trim(), `0x${new BigNumber(body.tokenId).toString(16)}`,
-        body.seller.trim(), `0x${new BigNumber(body.amount || 0).toString(16)}`,
-        `0x${new BigNumber(body.endedAt).toString(16)}`, body.erc20Address || '0x0000000000000000000000000000000000000000'];
-    body.amount = undefined;
-    return await helperPrepareSCCall(testnet, body, CreateAuction, 'createAuction', params, undefined, provider, auction.abi);
+    const { body: validatedBody, params} = await prepareAuctionCreateAbstraction(body)
+    return await helperPrepareSCCall(testnet, validatedBody, CreateAuction, 'createAuction', params, undefined, provider, auction.abi);
 };
 
 /**
@@ -190,22 +115,8 @@ export const prepareAuctionCreate = async (testnet: boolean, body: CreateAuction
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareAuctionBid = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
-    await validateBody(body, InvokeAuctionOperation);
-
-    const web3 = helperGetWeb3Client(testnet, body.chain, provider);
-    // @ts-ignore
-    const a = await (new web3.eth.Contract(auction.abi, body.contractAddress)).methods.getAuction(body.id).call();
-    let decimals = 18;
-    const b: any = {...body};
-    if (a[6] !== '0x0000000000000000000000000000000000000000') {
-        // @ts-ignore
-        decimals = await getErc20Decimals(testnet, body.chain, a[6], provider);
-    } else {
-        b.amount = body.bidValue;
-    }
-
-    const params = [body.id, `0x${new BigNumber(body.bidValue).multipliedBy(new BigNumber(10).pow(decimals)).toString(16)}`,];
-    return await helperPrepareSCCall(testnet, b, InvokeAuctionOperation, 'bid', params, undefined, provider, auction.abi);
+    const { body: validatedBody, params} = await prepareAuctionBidAbstraction(helperGetWeb3Client, testnet, body, provider)
+    return await helperPrepareSCCall(testnet, validatedBody, InvokeAuctionOperation, 'bid', params, undefined, provider, auction.abi);
 };
 
 /**
@@ -216,8 +127,7 @@ export const prepareAuctionBid = async (testnet: boolean, body: InvokeAuctionOpe
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareAuctionCancel = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
-    await validateBody(body, InvokeAuctionOperation);
-    const params = [body.id];
+    const params = await prepareAuctionCancelAbstraction(body)
     return await helperPrepareSCCall(testnet, body, InvokeAuctionOperation, 'cancelAuction', params, undefined, provider, auction.abi);
 };
 
@@ -229,8 +139,7 @@ export const prepareAuctionCancel = async (testnet: boolean, body: InvokeAuction
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareAuctionSettle = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
-    await validateBody(body, InvokeAuctionOperation);
-    const params = [body.id];
+    const params = await prepareAuctionSettleAbstraction(body)
     return await helperPrepareSCCall(testnet, body, InvokeAuctionOperation, 'settleAuction', params, undefined, provider, auction.abi);
 };
 
@@ -311,3 +220,11 @@ export const sendAuctionCancel = async (testnet: boolean, body: InvokeAuctionOpe
 export const sendAuctionSettle = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) =>
     helperBroadcastTx(body.chain, await prepareAuctionSettle(testnet, body, provider), body.signatureId);
 
+
+export { 
+    Auction,
+    getAuctionFee,
+    getAuction,
+    getAuctionFeeRecipient,
+} from "@tatumio/tatum-core"
+    
