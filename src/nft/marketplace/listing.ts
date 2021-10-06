@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import {get, validateBody} from '../../connector/tatum';
-import {prepareApproveErc20} from '../../fungible';
+import {getErc20Decimals, prepareApproveErc20} from '../../fungible';
 import {helperBroadcastTx, helperPrepareSCCall} from '../../helpers';
 import {
     ApproveErc20,
@@ -235,8 +235,9 @@ export const prepareMarketplaceApproveErc20Spending = async (testnet: boolean, b
  */
 export const prepareMarketplaceCreateListing = async (testnet: boolean, body: CreateMarketplaceListing | CreateTronMarketplaceListing, provider?: string) => {
     await validateBody(body, body.chain === Currency.TRON ? CreateTronMarketplaceListing : CreateMarketplaceListing);
+    const decimals = body.erc20Address ? await getErc20Decimals(testnet, body.chain, body.erc20Address, provider) : 18;
     const params = [body.listingId, body.isErc721, body.nftAddress.trim(), `0x${new BigNumber(body.tokenId).toString(16)}`,
-        `0x${new BigNumber(body.price).multipliedBy(body.chain === Currency.TRON ? 1e6 : 1e18).toString(16)}`, body.seller.trim(), `0x${new BigNumber(body.amount || 0).toString(16)}`,
+        `0x${new BigNumber(body.price).multipliedBy(10 ** decimals).toString(16)}`, body.seller.trim(), `0x${new BigNumber(body.amount || 0).toString(16)}`,
         body.erc20Address || '0x0000000000000000000000000000000000000000'];
     if (body.chain === Currency.TRON) {
         throw new Error('Unsupported chain');
