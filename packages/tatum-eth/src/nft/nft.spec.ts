@@ -1,13 +1,12 @@
-import { readFileSync } from 'fs';
 import { Currency } from "@tatumio/tatum-core"
-import { burnNFT, createNFT, deployNFT, getNFTImage, mintMultipleNFTWithUri, mintNFTWithUri, transferNFT } from './nft';
+import { burnNFT, deployNFT, mintMultipleNFTWithUri, mintNFTWithUri, transferNFT } from './nft';
 
 describe('NFT tests', () => {
     jest.setTimeout(99999);
     describe('NFT ETH transactions', () => {
 
         it('should test eth 721 deploy transaction', async () => {
-            const deployErc721Token = await deployNFT(true, {
+            const deployErc721Token = await deployNFT({
                 symbol: 'TatumToken',
                 chain: Currency.ETH,
                 fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
@@ -20,7 +19,7 @@ describe('NFT tests', () => {
 
         it('should test eth 721 mint transaction', async () => {
             const tokenId = new Date().getTime().toString();
-            const mintedToken = await mintNFTWithUri(true, {
+            const mintedToken = await mintNFTWithUri({
                 to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
                 chain: Currency.ETH,
                 tokenId,
@@ -33,7 +32,7 @@ describe('NFT tests', () => {
         });
         it('should test eth 721 mint transaction with cashback', async () => {
             const tokenId = new Date().getTime().toString();
-            const mintedToken = await mintNFTWithUri(true, {
+            const mintedToken = await mintNFTWithUri({
                 to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
                 chain: Currency.ETH,
                 tokenId,
@@ -49,7 +48,7 @@ describe('NFT tests', () => {
         it('should test eth 721 mint multiple transaction with cashback', async () => {
             const firstTokenId = new Date().getTime();
             const secondTokenId = firstTokenId + 1;
-            const mintedTokens = await mintMultipleNFTWithUri(true, {
+            const mintedTokens = await mintMultipleNFTWithUri({
                 to: ['0x811dfbff13adfbc3cf653dcc373c03616d3471c9', '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'],
                 chain: Currency.ETH,
                 tokenId: [firstTokenId.toString(), secondTokenId.toString()],
@@ -65,7 +64,7 @@ describe('NFT tests', () => {
         it('should test eth 721 mint multiple transaction', async () => {
             const firstTokenId = new Date().getTime();
             const secondTokenId = firstTokenId + 1;
-            const mintedTokens = await mintMultipleNFTWithUri(true, {
+            const mintedTokens = await mintMultipleNFTWithUri({
                 to: ['0x811dfbff13adfbc3cf653dcc373c03616d3471c9', '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'],
                 chain: Currency.ETH,
                 tokenId: [firstTokenId.toString(), secondTokenId.toString()],
@@ -82,7 +81,7 @@ describe('NFT tests', () => {
         });
 
         it('should test eth 721 burn transaction', async () => {
-            const burnErc721Token = await burnNFT(true, {
+            const burnErc721Token = await burnNFT({
                 tokenId: '1615884747446',
                 chain: Currency.ETH,
                 fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
@@ -96,7 +95,7 @@ describe('NFT tests', () => {
         });
 
         it('should test eth 721 send transaction', async () => {
-            const sendErc721Token = await transferNFT(true, {
+            const sendErc721Token = await transferNFT({
                 to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
                 chain: Currency.ETH,
                 tokenId: '2',
@@ -107,7 +106,7 @@ describe('NFT tests', () => {
             expect(sendErc721Token).not.toBeNull();
         });
         it('should test eth 721 send transaction', async () => {
-            const sendErc721Token = await transferNFT(true, {
+            const sendErc721Token = await transferNFT( {
                 to: '0x811dfbff13adfbc3cf653dcc373c03616d3471c9',
                 chain: Currency.ETH,
                 tokenId: '1615884907854',

@@ -1,5 +1,5 @@
 import {Currency} from '../model'
-import {generateAddressFromPrivatekey, generateAddressFromXPub, generatePrivateKeyFromMnemonic} from './address'
+import {generateAddressFromPrivatekey, generateAddressFromXPub, generateFlowPublicKeyFromPrivateKey, generatePrivateKeyFromMnemonic} from './address'
 import {generateBnbWallet, generateTronWallet} from './wallet'
 // tslint:disable-next-line:no-var-requires
 const TronWeb = require('tronweb')
@@ -163,6 +163,12 @@ describe('Address tests', () => {
     it('should generate private key 1 for FLOW mainnet', async () => {
         const privateKey = await generatePrivateKeyFromMnemonic(Currency.FLOW, false, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1)
         expect(privateKey).toBe('37afa218d41d9cd6a2c6f2b96d9eaa3ad96c598252bc50e4d45d62f9356a51f8')
+    })
+
+    it('should generate public key from private key for FLOW mainnet', async () => {
+        const privateKey = await generatePrivateKeyFromMnemonic(Currency.FLOW, false, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1)
+        expect(privateKey).toBe('37afa218d41d9cd6a2c6f2b96d9eaa3ad96c598252bc50e4d45d62f9356a51f8')
+        expect(generateFlowPublicKeyFromPrivateKey('37afa218d41d9cd6a2c6f2b96d9eaa3ad96c598252bc50e4d45d62f9356a51f8')).toBe(generateAddressFromXPub(Currency.FLOW, false, 'xpub6EVKqCYcoa9DXpjAACsdyQTUZ5tgx3DUyt5Yy8xx9kmVKMCsn3vtLictDQMjdEtpo5CpwVwipVxThFKwh49xNJ5Fy752ifnM5mwYy28AtVv', 1))
     })
 
     it('should generate private key 1 for BCH testnet', async () => {
