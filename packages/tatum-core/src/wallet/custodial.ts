@@ -1,3 +1,5 @@
+import { BigNumber } from 'bignumber.js';
+import { validateBody } from 'src/connector/tatum';
 import {
     CustodialFullTokenWallet,
     CustodialFullTokenWalletWithBatch, Custodial_1155_TokenWallet,
@@ -14,8 +16,12 @@ import {
     Custodial_721_TokenWalletWithBatch
 } from '../contracts/custodial';
 import {
+    ContractType,
     Currency,
-    GenerateCustodialAddress
+    GenerateCustodialAddress,
+    SmartContractMethodInvocation,
+    TransferFromCustodialAddress,
+    TransferFromCustodialAddressBatch,
 } from '../model';
 
 export const obtainCustodialAddressType = (body: GenerateCustodialAddress) => {
@@ -70,4 +76,150 @@ export const obtainCustodialAddressType = (body: GenerateCustodialAddress) => {
         throw new Error('Unsupported combination of inputs.');
     }
     return {abi, code};
+};
+
+/**
+ * Prepare signed transaction from the custodial SC wallet.
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+ export const prepareTransferFromCustodialWalletAbstract = async (
+   testnet: boolean,
+   body: TransferFromCustodialAddress,
+   getContractDecimals: (
+     testnet: boolean,
+     contractAddress: string,
+     provider?: string
+   ) => Promise<any>,
+   prepareSmartContractWriteMethodInvocation: (
+     testnet: boolean,
+     body: TransferFromCustodialAddress,
+     r: SmartContractMethodInvocation,
+     provider?: string
+   ) => Promise<string>,
+   SmartContractMethodInvocationCtor: any,
+   decimals: number,
+   validateClass: any,
+   provider?: string
+ ) => {
+   await validateBody(body, validateClass);
+   const r: SmartContractMethodInvocation = new SmartContractMethodInvocationCtor();
+   r.fee = body.fee;
+   r.nonce = body.nonce;
+   r.fromPrivateKey = body.fromPrivateKey;
+   r.signatureId = body.signatureId;
+   r.index = body.index;
+   r.contractAddress = body.custodialAddress;
+   r.methodName = "transfer";
+   let amount = new BigNumber(body.amount || 0);
+   let tokenId = new BigNumber(body.tokenId || 0);
+   if (body.contractType === ContractType.NATIVE_ASSET) {
+     amount = amount.multipliedBy(new BigNumber(10).pow(decimals));
+   } else if (body.contractType === ContractType.FUNGIBLE_TOKEN) {
+     tokenId = new BigNumber(0);
+     amount = amount.multipliedBy(
+       new BigNumber(10).pow(
+         await getContractDecimals(testnet, body.tokenAddress, provider)
+       )
+     );
+   }
+   r.params = [
+     body.tokenAddress || "0x000000000000000000000000000000000000dEaD",
+     body.contractType,
+     body.recipient,
+     `0x${amount.toString(16)}`,
+     `0x${new BigNumber(tokenId).toString(16)}`,
+   ];
+   r.methodABI = CustodialFullTokenWallet.abi.find(
+     (a) => a.name === "transfer"
+   );
+   return await prepareSmartContractWriteMethodInvocation(
+     testnet,
+     body,
+     r,
+     provider
+   );
+ };
+
+ /**
+ * Prepare signed batch transaction from the custodial SC wallet.
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const prepareBatchTransferFromCustodialWalletAbstract = async (
+  testnet: boolean,
+  body: TransferFromCustodialAddressBatch,
+  getContractDecimals: (
+    testnet: boolean,
+    contractAddress: string,
+    provider?: string
+  ) => Promise<any>,
+  prepareSmartContractWriteMethodInvocation: (
+    testnet: boolean,
+    body: TransferFromCustodialAddressBatch,
+    r: SmartContractMethodInvocation,
+    provider?: string
+  ) => Promise<string>,
+  SmartContractMethodInvocationCtor: any,
+  decimals: number,
+  validateClass: any,
+  provider?: string
+) => {
+  if (body.chain === Currency.TRON) {
+    await validateBody(body, validateClass);
+    decimals = 6;
+  } else {
+    await validateBody(body, validateClass);
+    decimals = 18;
+  }
+  const r: SmartContractMethodInvocation = new SmartContractMethodInvocationCtor();
+  r.fee = body.fee;
+  r.nonce = body.nonce;
+  r.fromPrivateKey = body.fromPrivateKey;
+  r.signatureId = body.signatureId;
+  r.index = body.index;
+  r.contractAddress = body.custodialAddress;
+  r.methodName = "transferBatch";
+  const amounts = [];
+  const tokenIds = [];
+  for (let i = 0; i < body.contractType.length; i++) {
+    let amount = new BigNumber(body.amount[i]);
+    let tokenId = new BigNumber(body.tokenId[i]);
+    if (body.contractType[i] === ContractType.NATIVE_ASSET) {
+      amount = amount.multipliedBy(new BigNumber(10).pow(decimals));
+    } else if (body.contractType[i] === ContractType.NON_FUNGIBLE_TOKEN) {
+      amount = new BigNumber(0);
+    } else if (body.contractType[i] === ContractType.FUNGIBLE_TOKEN) {
+      tokenId = new BigNumber(0);
+      amount = amount.multipliedBy(
+        new BigNumber(10).pow(
+          await getContractDecimals(testnet, body.tokenAddress[i], provider)
+        )
+      );
+    }
+    amounts.push(`0x${amount.toString(16)}`);
+    tokenIds.push(`0x${tokenId.toString(16)}`);
+  }
+  r.params = [
+    body.tokenAddress.map((t) =>
+      t === "0" ? "0x000000000000000000000000000000000000dEaD" : t
+    ),
+    body.contractType,
+    body.recipient,
+    amounts,
+    tokenIds,
+  ];
+  r.methodABI = CustodialFullTokenWalletWithBatch.abi.find(
+    (a) => a.name === "transferBatch"
+  );
+  return await prepareSmartContractWriteMethodInvocation(
+    testnet,
+    body,
+    r,
+    provider
+  );
 };
