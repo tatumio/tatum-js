@@ -1,22 +1,12 @@
-import { prepareBatchTransferFromCustodialWalletAbstract, prepareTransferFromCustodialWalletAbstract } from '@tatumio/tatum-core';
+import { ApproveCustodialTransfer, ContractType, Currency, CustodialFullTokenWallet, GenerateCustodialAddress, prepareBatchTransferFromCustodialWalletAbstract, prepareTransferFromCustodialWalletAbstract, SmartContractMethodInvocation, TransferFromCustodialAddress, TransferFromCustodialAddressBatch, validateBody } from '@tatumio/tatum-core';
 import BigNumber from 'bignumber.js';
-import { validateBody } from '../connector/tatum';
-import {
-    CustodialFullTokenWallet
-} from '../contracts/custodial';
 import { getErc20Decimals } from '../fungible';
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers';
 import {
-    ApproveCustodialTransfer,
-    ContractType, GenerateCustodialAddress, SmartContractMethodInvocation,
-    TransferFromCustodialAddress,
-    TransferFromCustodialAddressBatch
-} from '../model';
-import {
-    getEthErc20ContractDecimals,
-    prepareEthGenerateCustodialWalletSignedTransaction,
-    prepareSmartContractWriteMethodInvocation,
-    sendEthGenerateCustodialWalletSignedTransaction
+  getEthErc20ContractDecimals,
+  prepareEthGenerateCustodialWalletSignedTransaction,
+  prepareSmartContractWriteMethodInvocation,
+  sendEthGenerateCustodialWalletSignedTransaction
 } from '../transaction';
 
 /**

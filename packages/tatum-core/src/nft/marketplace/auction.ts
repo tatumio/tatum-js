@@ -129,7 +129,7 @@ export const prepareAuctionCreateAbstraction = async ( body: CreateAuction) => {
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareAuctionBidAbstraction = async (helperGetWeb3Client: (testnet: boolean, chain: Currency, provider?: string | undefined) => Promise<Web3>, testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
+export const prepareAuctionBidAbstraction = async (helperGetWeb3Client: (testnet: boolean, chain: Currency, provider?: string | undefined) => Web3, testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
     await validateBody(body, InvokeAuctionOperation);
 
     const web3 = helperGetWeb3Client(testnet, body.chain, provider);

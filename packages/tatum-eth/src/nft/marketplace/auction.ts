@@ -1,6 +1,4 @@
-import BigNumber from 'bignumber.js';
-import {erc1155TokenABI, erc721TokenABI, get, validateBody} from '@tatumio/tatum-core';
-import {auction, prepareAuctionUpdateFeeAbstraction, prepareAuctionUpdateFeeRecipientAbstraction, prepareAuctionApproveNftTransferAbstraction, prepareAuctionBidAbstraction, prepareAuctionCreateAbstraction, prepareAuctionSettleAbstraction, prepareAuctionCancelAbstraction} from '@tatumio/tatum-core';
+import {auction, erc1155TokenABI, erc721TokenABI, prepareAuctionApproveNftTransferAbstraction, prepareAuctionBidAbstraction, prepareAuctionCancelAbstraction, prepareAuctionCreateAbstraction, prepareAuctionSettleAbstraction, prepareAuctionUpdateFeeAbstraction, prepareAuctionUpdateFeeRecipientAbstraction, validateBody} from '@tatumio/tatum-core';
 import {ApproveErc20, ApproveNftTransfer, CreateAuction, Currency, DeployNftAuction, InvokeAuctionOperation, UpdateAuctionFee, UpdateMarketplaceFeeRecipient,} from '@tatumio/tatum-core';
 import {
     prepareEthDeployAuctionSignedTransaction
@@ -115,7 +113,7 @@ export const prepareAuctionCreate = async (testnet: boolean, body: CreateAuction
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareAuctionBid = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
-    const { body: validatedBody, params} = await prepareAuctionBidAbstraction(helperGetWeb3Client, testnet, body, provider)
+    const { b: validatedBody, params} = await prepareAuctionBidAbstraction(helperGetWeb3Client, testnet, body, provider)
     return await helperPrepareSCCall(testnet, validatedBody, InvokeAuctionOperation, 'bid', params, undefined, provider, auction.abi);
 };
 
@@ -139,7 +137,7 @@ export const prepareAuctionCancel = async (testnet: boolean, body: InvokeAuction
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareAuctionSettle = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
-    const params = await prepareAuctionSettleAbstraction(body)
+    const params = await prepareAuctionSettleAbstraction(testnet, body, provider)
     return await helperPrepareSCCall(testnet, body, InvokeAuctionOperation, 'settleAuction', params, undefined, provider, auction.abi);
 };
 

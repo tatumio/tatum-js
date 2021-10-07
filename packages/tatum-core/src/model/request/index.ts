@@ -1,5 +1,6 @@
 export * from "./ApproveErc20"
 export * from "./ApproveNftTransfer"
+export * from "./ApproveCustodialTransfer"
 export * from "./BlockAmount"
 export * from "./BlockageTransaction"
 export * from "./BroadcastWithdrawal"
