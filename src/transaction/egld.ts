@@ -389,6 +389,10 @@ const prepareSignedTransactionAbstraction = async (
     
     erdjsTransaction.setGasLimit(new GasLimit(await egldGetGasLimit(egldTx)))
 
+    if (signatureId) {
+      return JSON.stringify(erdjsTransaction)
+    }
+
     return await signEgldTransaction(erdjsTransaction, fromPrivateKey as string)
 }
 

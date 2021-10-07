@@ -4,6 +4,7 @@ import {TransferBtcBasedOffchainKMS} from '../model/request/TransferBtcBasedOffc
 import {TransferEthOffchainKMS} from '../model/request/TransferEthOffchainKMS'
 import {TransferXlmOffchainKMS} from '../model/request/TransferXlmOffchainKMS'
 import {TransferXrpOffchainKMS} from '../model/request/TransferXrpOffchainKMS'
+import {EgldTransferOffchain} from '../model/request/egld/'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/BtcTransfer" target="_blank">Tatum API documentation</a>
@@ -83,9 +84,14 @@ export const offchainTransferPolygonKMS = async (body: TransferEthOffchainKMS): 
 export const offchainTransferTronKMS = async (body: TransferTrxOffchain): Promise<SignatureId> =>
     post(`/v3/offchain/tron/transfer`, body, TransferTrxOffchain)
 
-
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/XdcTransfer" target="_blank">Tatum API documentation</a>
  */
 export const offchainTransferXdcKMS = async (body: TransferEthOffchainKMS): Promise<SignatureId> =>
     post(`/v3/offchain/xdc/transfer`, body, TransferEthOffchainKMS)
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/XdcTransfer" target="_blank">Tatum API documentation</a>
+ */
+export const offchainTransferEgldKMS = async (body: EgldTransferOffchain): Promise<SignatureId> =>
+    post(`/v3/offchain/egld/transfer`, body, EgldTransferOffchain)
