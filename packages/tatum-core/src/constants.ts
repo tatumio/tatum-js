@@ -9,7 +9,7 @@ export const TATUM_RETRIES = 5
 
 // export const HARDENED_THRESHOLD = 0x80000000
 
-// export const ETH_DERIVATION_PATH = 'm/44\'/60\'/0\'/0'
+export const ETH_DERIVATION_PATH = 'm/44\'/60\'/0\'/0'
 // export const MATIC_DERIVATION_PATH = 'm/44\'/966\'/0\'/0'
 // export const ONE_DERIVATION_PATH = 'm/44\'/1023\'/0\'/0'
 // export const FLOW_DERIVATION_PATH = 'm/44\'/539\'/0\'/0'
@@ -25,7 +25,7 @@ export const TATUM_RETRIES = 5
 // export const ADA_DERIVATION_PATH = 'm/1852\'/1815\'/0\''
 // export const XDC_DERIVATION_PATH = 'm/44\'/550\'/0\'/0'
 // export const EGLD_DERIVATION_PATH = 'm/44\'/508\'/0\'/0\''
-// export const TESTNET_DERIVATION_PATH = 'm/44\'/1\'/0\'/0'
+export const TESTNET_DERIVATION_PATH = 'm/44\'/1\'/0\'/0'
 
 // export const ADA_DERIVATION_SCHEME = 2
 
