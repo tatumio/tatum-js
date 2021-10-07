@@ -1,4 +1,4 @@
-import { Currency, TransactionHash, UpdateCashbackErc721, MintErc721, createNFTAbstraction, mintNFTRequest } from '@tatumio/tatum-core';
+import { Currency, TransactionHash, UpdateCashbackErc721, MintErc721, createNFTAbstraction, mintNFTRequest, getNFTsByAddress, post } from '@tatumio/tatum-core';
 import {
     EthBurnErc721,
     EthDeployErc721,
@@ -38,7 +38,7 @@ export const deployNFT = async (body: EthDeployErc721 & { chain: Currency.ETH}, 
  * @param provider optional provider do broadcast tx
  */
  export const createNFT = async (
-    body: MintErc721,
+    body: EthMintErc721 & { chain: Currency.ETH },
     file: Buffer,
     name: string,
     description?: string,
@@ -46,7 +46,8 @@ export const deployNFT = async (body: EthDeployErc721 & { chain: Currency.ETH}, 
     provider?: string) => {
     
     return await createNFTAbstraction(
-        mintNFTWithUri,
+        () => mintNFTWithUri(false, body, provider),
+        false,
         body,
         file,
         name,
@@ -61,7 +62,7 @@ export const deployNFT = async (body: EthDeployErc721 & { chain: Currency.ETH}, 
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const mintNFTWithUri = async (body: EthMintErc721 & { chain: Currency.ETH }, provider?: string) => {
+export const mintNFTWithUri = async (_testnet: boolean, body: EthMintErc721 & { chain: Currency.ETH }, provider?: string) => {
     if ((body as EthMintErc721).authorAddresses) {
         return sendMintCashbackErc721Transaction(body as EthMintErc721, provider);
     } else {

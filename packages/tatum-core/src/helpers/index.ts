@@ -1,4 +1,4 @@
-import { SmartContractMethodInvocation } from "src/model";
+import { SmartContractMethodInvocation } from "../model";
 
 export const buildSmartContractMethodInvocation = (body: any, params: any[], methodName: string, abi: any[], clazz: SmartContractMethodInvocation = new SmartContractMethodInvocation() ) => {
   const r = new SmartContractMethodInvocation();

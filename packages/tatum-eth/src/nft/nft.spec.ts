@@ -19,7 +19,7 @@ describe('NFT tests', () => {
 
         it('should test eth 721 mint transaction', async () => {
             const tokenId = new Date().getTime().toString();
-            const mintedToken = await mintNFTWithUri({
+            const mintedToken = await mintNFTWithUri(false, {
                 to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
                 chain: Currency.ETH,
                 tokenId,
@@ -30,9 +30,10 @@ describe('NFT tests', () => {
             console.log(tokenId);
             expect(mintedToken).not.toBeNull();
         });
+
         it('should test eth 721 mint transaction with cashback', async () => {
             const tokenId = new Date().getTime().toString();
-            const mintedToken = await mintNFTWithUri({
+            const mintedToken = await mintNFTWithUri(false, {
                 to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
                 chain: Currency.ETH,
                 tokenId,
@@ -45,6 +46,7 @@ describe('NFT tests', () => {
             console.log(mintedToken);
             expect(mintedToken).not.toBeNull();
         });
+
         it('should test eth 721 mint multiple transaction with cashback', async () => {
             const firstTokenId = new Date().getTime();
             const secondTokenId = firstTokenId + 1;
@@ -105,6 +107,7 @@ describe('NFT tests', () => {
             });
             expect(sendErc721Token).not.toBeNull();
         });
+        
         it('should test eth 721 send transaction', async () => {
             const sendErc721Token = await transferNFT( {
                 to: '0x811dfbff13adfbc3cf653dcc373c03616d3471c9',
