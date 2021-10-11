@@ -1,7 +1,7 @@
 import { SmartContractMethodInvocation } from "../model";
 
 export const buildSmartContractMethodInvocation = (body: any, params: any[], methodName: string, abi: any[], clazz: SmartContractMethodInvocation = new SmartContractMethodInvocation() ) => {
-  const r = new SmartContractMethodInvocation();
+  const r = clazz;
   r.fee = body.fee;
   r.nonce = body.nonce;
   r.fromPrivateKey = body.fromPrivateKey;
