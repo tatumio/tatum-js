@@ -1,5 +1,5 @@
 import { BigNumber } from 'bignumber.js';
-import { validateBody } from 'src/connector/tatum';
+import { validateBody } from '../connector/tatum';
 import {
     CustodialFullTokenWallet,
     CustodialFullTokenWalletWithBatch, Custodial_1155_TokenWallet,

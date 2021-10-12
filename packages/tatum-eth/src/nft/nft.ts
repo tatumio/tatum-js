@@ -1,4 +1,4 @@
-import { Currency, TransactionHash, UpdateCashbackErc721, MintErc721, createNFTAbstraction, mintNFTRequest, getNFTsByAddress, post } from '@tatumio/tatum-core';
+import { Currency, TransactionHash, UpdateCashbackErc721, createNFTAbstraction, mintNFTRequest } from '@tatumio/tatum-core';
 import {
     EthBurnErc721,
     EthDeployErc721,

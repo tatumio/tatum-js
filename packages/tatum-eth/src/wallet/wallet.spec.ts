@@ -1,7 +1,5 @@
-import {generatePrivateKeyFromMnemonic} from './address'
 import {
     generateEthWallet,
-    generateWallet,
 } from './wallet'
 
 describe('Wallet tests', () => {

@@ -1,9 +1,7 @@
 import BigNumber from 'bignumber.js';
 import {get, validateBody} from '../../connector/tatum';
-import erc1155_abi from '../../contracts/erc1155/erc1155_abi';
-import erc721_abi from '../../contracts/erc721/erc721_abi';
 import {auction} from '../../contracts/marketplace';
-import {ApproveErc20, ApproveNftTransfer, CreateAuction, Currency, DeployNftAuction, InvokeAuctionOperation, UpdateAuctionFee, UpdateMarketplaceFeeRecipient,} from '../../model';
+import {ApproveNftTransfer, CreateAuction, Currency, InvokeAuctionOperation, UpdateAuctionFee, UpdateMarketplaceFeeRecipient} from '../../model';
 import Web3 from 'web3';
 
 export interface Auction {

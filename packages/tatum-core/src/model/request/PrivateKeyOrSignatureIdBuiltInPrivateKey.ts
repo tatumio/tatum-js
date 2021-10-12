@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, IsUUID, Length, Min, Validate, ValidateIf } from 'class-validator'
+import { IsOptional, Min, Validate, ValidateIf } from 'class-validator'
 import { Mint721BuiltInPrivateKeyValidator } from '../validation/Mint721BuiltInPrivateKeyValidator'
 
 export class PrivateKeyOrSignatureIdBuiltInPrivateKey {

@@ -3,13 +3,11 @@ import {
     Account,
     Address,
     BroadcastWithdrawal,
-    CreateErc20Offchain,
     TxHash,
     Withdrawal,
     WithdrawalResponse
 } from '../model'
 import {AddressBatch} from '../model/request/CreateOffchainAddressesBatch'
-import {CreateTrcOffchain} from '../model/request/CreateTrcOffchain'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/generateDepositAddress" target="_blank">Tatum API documentation</a>
@@ -50,28 +48,6 @@ export const getWithdrawals = async (status?: string, currency?: string, pageSiz
  * For more details, see <a href="https://tatum.io/apidoc#operation/assignAddress" target="_blank">Tatum API documentation</a>
  */
 export const assignDepositAddress = async (id: string, address: string): Promise<Address> => post(`/v3/offchain/account/${id}/address/${address}`)
-
-/**
- * For more details, see <a href="https://tatum.io/apidoc#operation/createErc20" target="_blank">Tatum API documentation</a>
- */
-export const registerEthereumErc20 = async (data: CreateErc20Offchain): Promise<Account> =>
-  post(`/v3/offchain/ethereum/erc20`, data, CreateErc20Offchain)
-
-/**
- * For more details, see <a href="https://tatum.io/apidoc#operation/storeErc20Address" target="_blank">Tatum API documentation</a>
- */
-export const storeErc20ContractAddress = async (name: string, address: string): Promise<Address> =>
-  post(`/v3/offchain/ethereum/erc20/${name}/${address}`)
-
-/**
- * For more details, see <a href="https://tatum.io/apidoc#operation/storeTrcAddress" target="_blank">Tatum API documentation</a>
- */
-export const storeTrcContractAddress = async (name: string, address: string): Promise<Address> => post(`/v3/offchain/tron/trc/${name}/${address}`)
-
-/**
- * For more details, see <a href="https://tatum.io/apidoc#operation/createTrc" target="_blank">Tatum API documentation</a>
- */
-export const registerTronTrc = async (data: CreateTrcOffchain): Promise<Account> => post(`/v3/offchain/tron/trc`, data, CreateTrcOffchain)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/removeAddress" target="_blank">Tatum API documentation</a>

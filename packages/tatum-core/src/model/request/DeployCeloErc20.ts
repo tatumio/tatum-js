@@ -1,4 +1,4 @@
-import {IsIn, IsNotEmpty, IsNumberString, IsOptional, Length, Matches, Max, MaxLength, Min,} from 'class-validator'
+import {IsIn, IsNotEmpty} from 'class-validator'
 import {Currency} from './Currency'
 import { DeployErc20 } from './DeployErc20'
 
