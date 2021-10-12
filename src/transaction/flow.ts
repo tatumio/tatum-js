@@ -162,7 +162,7 @@ const sendTransaction = async (testnet: boolean, {
     } catch (e) {
         try {
             if (keyHash) {
-                await flowBroadcastTx('', keyHash ? parseInt((process.env[keyHash] || '0') as string) : undefined);
+                await flowBroadcastTx('', undefined, keyHash ? parseInt((process.env[keyHash] || '0') as string) : undefined);
                 delete process.env[keyHash];
             }
             // eslint-disable-next-line no-empty
@@ -182,7 +182,7 @@ const sendTransaction = async (testnet: boolean, {
     } finally {
         try {
             if (keyHash) {
-                await flowBroadcastTx(transactionId, keyHash ? parseInt((process.env[keyHash] || '0') as string) : undefined);
+                await flowBroadcastTx(transactionId, undefined, keyHash ? parseInt((process.env[keyHash] || '0') as string) : undefined);
                 delete process.env[keyHash];
             }
             // eslint-disable-next-line no-empty

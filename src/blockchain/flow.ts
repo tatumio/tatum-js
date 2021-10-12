@@ -18,7 +18,8 @@ export const flowGetSignKey = async (isPayer: boolean): Promise<{ keyId: number,
  */
 export const flowGetCurrentBlock = async (): Promise<number> => get(`/v3/flow/block/current`);
 
-export const flowBroadcastTx = async (txData: string, proposalKey?: number) => post('/v3/flow/broadcast', {txData, proposalKey});
+export const flowBroadcastTx = async (txData: string, signatureId?: string, proposalKey?: number) => post('/v3/flow/broadcast',
+    {txData, signatureId, proposalKey});
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/FlowGetBlock" target="_blank">Tatum API documentation</a>
