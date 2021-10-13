@@ -1,9 +1,10 @@
 import BigNumber from 'bignumber.js';
 import {validateBody} from '../connector/tatum';
-import {Currency, TransferEthOffchain} from '../model';
+import {Currency, EgldTransferOffchain} from '../model';
 import {prepareEgldSignedTransaction} from '../transaction';
 import {generatePrivateKeyFromMnemonic} from '../wallet';
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
+import { offchainTransferEgldKMS } from './kms'
 
 /**
  * Send EGLD transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -13,25 +14,27 @@ import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} fr
  * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
-export const sendEgldOffchainTransaction = async (testnet: boolean, body: TransferEthOffchain, provider?: string) => {
-    await validateBody(body, TransferEthOffchain)
+export const sendEgldOffchainTransaction = async (testnet: boolean, body: EgldTransferOffchain, provider?: string) => {
+    if (body.signatureId) {
+        return offchainTransferEgldKMS(body)
+    }
+    await validateBody(body, EgldTransferOffchain)
     const {
-        mnemonic, index, privateKey, gasLimit, gasPrice, nonce, ...withdrawal
+        mnemonic, index, fromPrivateKey, gasLimit, gasPrice, ...withdrawal
     } = body
-    const {amount, address} = withdrawal
+    const {value, receiver} = withdrawal
 
-    const fromPriv = mnemonic && index !== undefined ? await generatePrivateKeyFromMnemonic(Currency.EGLD, testnet, mnemonic, index) : privateKey as string
+    const fromPriv = mnemonic && index !== undefined ? await generatePrivateKeyFromMnemonic(Currency.EGLD, testnet, mnemonic, index) : fromPrivateKey as string
 
     const fee = {
-        gasLimit: gasLimit || '50000',
-        gasPrice: gasPrice || '1000000000',
+        gasLimit: `${gasLimit || '50000'}`,
+        gasPrice: `${gasPrice || '1000000000'}`,
     }
     const txData = await prepareEgldSignedTransaction({
-        amount,
+        amount: value,
         fromPrivateKey: fromPriv,
         fee,
-        to: address,
-        nonce
+        to: receiver
     }, provider)
     // @ts-ignore
     withdrawal.fee = new BigNumber(fee.gasLimit).multipliedBy(fee.gasPrice).toString()

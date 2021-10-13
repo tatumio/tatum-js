@@ -1,6 +1,6 @@
 import {Type} from 'class-transformer';
 import {IsIn, IsNotEmpty, IsNumberString, IsOptional, Length, Matches, Max, MaxLength, Min, ValidateIf, ValidateNested} from 'class-validator';
-import {Currency, ETH_BASED_CURRENCIES, MATIC_BASED_CURRENCIES} from './Currency';
+import {BSC_BASED_CURRENCIES, Currency, ETH_BASED_CURRENCIES, MATIC_BASED_CURRENCIES} from './Currency';
 import {Fee} from './Fee';
 import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId';
 
@@ -21,7 +21,7 @@ export class TransferErc20 extends PrivateKeyOrSignatureId {
 
     @ValidateIf(o => !o.contractAddress)
     @IsNotEmpty()
-    @IsIn([...ETH_BASED_CURRENCIES, ...MATIC_BASED_CURRENCIES, Currency.XDC, Currency.ONE])
+    @IsIn([...ETH_BASED_CURRENCIES, ...MATIC_BASED_CURRENCIES, Currency.XDC, Currency.ONE, ...BSC_BASED_CURRENCIES])
     public currency?: Currency;
 
     @ValidateIf(o => !o.currency)
