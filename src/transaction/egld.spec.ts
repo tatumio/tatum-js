@@ -48,14 +48,13 @@ describe('Elrond EGLD tests', () => {
     it('should prepare issuance of fungible ESDT token', async () => {
         const data: EsdtIssue = {
             service: 'issue',
-            tokenName: 'testName',
-            tokenTicker: 'TEST1',
-            initialSupply: 1000,
-            decimals: 6,
+            name: 'testName',
+            symbol: 'TEST1',
+            supply: 1000,
+            digits: 6,
         }
         const body: EgldEsdtTransaction = {
             fromPrivateKey: '1da12bfa82725be308f79b2c313358be5a215ca6b405b00f28750560a1febb90',
-            nonce: 1,
             data,
         }
         const result = await prepareEgldDeployEsdtSignedTransaction(body)
@@ -66,12 +65,11 @@ describe('Elrond EGLD tests', () => {
     it('should prepare issuance of NFT/SFT ESDT token', async () => {
         const data: EsdtIssueNftOrSft = {
             service: 'issueNonFungible',
-            tokenName: 'testNFTName',
-            tokenTicker: 'TEST1NFT',
+            name: 'testNFTName',
+            symbol: 'TEST1NFT',
         }
         const body: EgldEsdtTransaction = {
             fromPrivateKey: '1da12bfa82725be308f79b2c313358be5a215ca6b405b00f28750560a1febb90',
-            nonce: 1,
             data,
         }
         const result = await prepareEgldDeployNftOrSftSignedTransaction(body)
@@ -86,7 +84,6 @@ describe('Elrond EGLD tests', () => {
         }
         const body: EgldEsdtTransaction = {
             fromPrivateKey: '1da12bfa82725be308f79b2c313358be5a215ca6b405b00f28750560a1febb90',
-            nonce: 1,
             data,
         }
         const result = await prepareEgldStopNftCreateSignedTransaction(body)

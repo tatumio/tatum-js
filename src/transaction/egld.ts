@@ -23,7 +23,6 @@ import {
     EsdtTransfer,
     EsdtTransferNft,
     EsdtTransferNftCreateRole,
-    Fee,
     TransactionKMS,
 } from '../model';
 import {generateAddressFromPrivatekey} from '../wallet/address';
@@ -114,10 +113,9 @@ export const prepareEgldStoreDataTransaction = async (body: CreateRecord, provid
     await validateBody(body, CreateRecord);
     const {
         fromPrivateKey,
+        signatureId,
         from,
         data,
-        nonce,
-        signatureId
     } = body;
     const client = getEgldClient(provider);
     const address = from || await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string);
@@ -130,7 +128,6 @@ export const prepareEgldStoreDataTransaction = async (body: CreateRecord, provid
         to: address,
         value: '0',
         data,
-        nonce,
     };
 
     return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
@@ -144,7 +141,7 @@ export const prepareEgldStoreDataTransaction = async (body: CreateRecord, provid
 const encodeNumber = (n: number | BigNumber): string => {
     const bn = new BigNumber(n)
     if (bn.isNaN()) {
-        return '00'
+        return ''
     }
     const result = bn.toString(16).toLowerCase()
 
@@ -161,8 +158,8 @@ const prepareProperties = (props: any): string => {
         return ''
     }
     const keys = Object.keys(props)
-    const asHexTrue = Buffer.from('true').toString('hex')
-    const asHexFalse = Buffer.from('false').toString('hex')
+    const asHexTrue = '0x01' // Buffer.from('true').toString('hex')
+    const asHexFalse = '0x' // Buffer.from('false').toString('hex')
     let result = ''
     for (const k of keys) {
         result += `@${Buffer.from(k).toString('hex')}@${props[k] ? asHexTrue : asHexFalse}`
@@ -178,10 +175,10 @@ const prepareProperties = (props: any): string => {
  const prepareEgldEsdtIssuanceData = async (data: EsdtIssue): Promise<string> => {
     await validateBody(data, EsdtIssue)
 
-    const tokenName = Buffer.from(data.tokenName).toString('hex')
-    const tokenTicker = Buffer.from(data.tokenTicker).toString('hex')
-    const initialSupply = encodeNumber(data.initialSupply)
-    const decimals = encodeNumber(data.decimals)
+    const tokenName = Buffer.from(data.name).toString('hex')
+    const tokenTicker = Buffer.from(data.symbol).toString('hex')
+    const initialSupply = encodeNumber(data.supply)
+    const decimals = encodeNumber(data.digits)
     const properties = prepareProperties(data.properties)
 
     return `${data.service}@${tokenName}@${tokenTicker}@${initialSupply}@${decimals}` + properties
@@ -258,8 +255,8 @@ const prepareEgldEsdtControlChangesData = async (data: EsdtControlChanges): Prom
 const prepareEgldIssuanceNftOrSftData = async (data: EsdtIssueNftOrSft): Promise<string> => {
     await validateBody(data, EsdtIssueNftOrSft)
 
-    const tokenName = Buffer.from(data.tokenName).toString('hex')
-    const tokenTicker = Buffer.from(data.tokenTicker).toString('hex')
+    const tokenName = Buffer.from(data.name).toString('hex')
+    const tokenTicker = Buffer.from(data.symbol).toString('hex')
     const properties = prepareProperties(data.properties)
 
     return `${data.service}@${tokenName}@${tokenTicker}` + properties
@@ -414,23 +411,22 @@ export const prepareEgldDeployEsdtSignedTransaction = async (body: EgldEsdtTrans
     await validateBody(body, EgldEsdtTransaction)
     const {
         fromPrivateKey,
+        signatureId,
         from,
         amount,
         data,
-        nonce,
-        signatureId,
     } = body
 
     const client = getEgldClient(provider)
 
     const value = amount ? new BigNumber(amount).toNumber() : 0.05
+    const sender = from || await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string)
 
     const tx: TransactionConfig = {
-        from: from || 0,
+        from: sender,
         to: ESDT_SYSTEM_SMART_CONTRACT_ADDRESS,
         value,
-        nonce,
-        data: await prepareEgldEsdtIssuanceData(data),
+        data: await prepareEgldEsdtIssuanceData({ ...data, service: data.service || 'issue' }),
     }
 
     return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
@@ -446,22 +442,19 @@ export const prepareEgldTransferEsdtSignedTransaction = async (body: EgldEsdtTra
     await validateBody(body, EgldEsdtTransaction)
     const {
         fromPrivateKey,
-        to,
-        from,
-        amount,
-        data,
         signatureId,
+        from,
+        to,
+        data,
     } = body
 
     const client = getEgldClient(provider)
-
-    const value = amount ? new BigNumber(amount).toNumber() : 0
+    const sender = from || await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string)
 
     const tx: TransactionConfig =  {
-        from: from || 0,
+        from: sender,
         to,
-        value,
-        data: await prepareEgldEsdtTransferData(data),
+        data: await prepareEgldEsdtTransferData({ ...data, service: data.service || 'ESDTTransfer' }),
     }
 
     return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
@@ -477,17 +470,18 @@ export const prepareEgldMintEsdtSignedTransaction = async (body: EgldEsdtTransac
     await validateBody(body, EgldEsdtTransaction)
     const {
         fromPrivateKey,
+        signatureId,
         from,
         data,
-        signatureId,
     } = body
 
     const client = getEgldClient(provider)
+    const sender = from || await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string)
 
     const tx: TransactionConfig =  {
-        from: from || 0,
+        from: sender,
         to: ESDT_SYSTEM_SMART_CONTRACT_ADDRESS,
-        data: await prepareEgldEsdtMintOrBurnData(data),
+        data: await prepareEgldEsdtMintOrBurnData({ ...data, service: data.service || 'mint' }),
     }
 
     return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
@@ -503,17 +497,18 @@ export const prepareEgldBurnEsdtSignedTransaction = async (body: EgldEsdtTransac
     await validateBody(body, EgldEsdtTransaction)
     const {
         fromPrivateKey,
+        signatureId,
         from,
         data,
-        signatureId,
     } = body
 
     const client = getEgldClient(provider)
+    const sender = from || await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string)
 
     const tx: TransactionConfig =  {
-        from: from || 0,
+        from: sender,
         to: ESDT_SYSTEM_SMART_CONTRACT_ADDRESS,
-        data: await prepareEgldEsdtMintOrBurnData(data),
+        data: await prepareEgldEsdtMintOrBurnData({ ...data, service: data.service || 'ESDTBurn' }),
     }
 
     return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
@@ -529,17 +524,18 @@ export const prepareEgldPauseEsdtSignedTransaction = async (body: EgldEsdtTransa
     await validateBody(body, EgldEsdtTransaction)
     const {
         fromPrivateKey,
+        signatureId,
         from,
         data,
-        signatureId,
     } = body
 
     const client = getEgldClient(provider)
+    const sender = from || await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string)
 
     const tx: TransactionConfig =  {
-        from: from || 0,
+        from: sender,
         to: ESDT_SYSTEM_SMART_CONTRACT_ADDRESS,
-        data: await prepareEgldEsdtPauseData(data),
+        data: await prepareEgldEsdtPauseData({ ...data, service: data.service || 'pause' }),
     }
 
     return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
@@ -555,17 +551,18 @@ export const prepareEgldSpecialRoleEsdtOrNftSignedTransaction = async (body: Egl
     await validateBody(body, EgldEsdtTransaction)
     const {
         fromPrivateKey,
+        signatureId,
         from,
         data,
-        signatureId,
     } = body
 
     const client = getEgldClient(provider)
+    const sender = from || await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string)
 
     const tx: TransactionConfig =  {
-        from: from || 0,
+        from: sender,
         to: ESDT_SYSTEM_SMART_CONTRACT_ADDRESS,
-        data: await prepareEgldEsdtSpecialRoleData(data),
+        data: await prepareEgldEsdtSpecialRoleData({ ...data, service: data.service || 'setSpecialRole' }),
     }
 
     return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
@@ -581,17 +578,18 @@ export const prepareEgldFreezeOrWipeOrOwvershipEsdtSignedTransaction = async (bo
     await validateBody(body, EgldEsdtTransaction)
     const {
         fromPrivateKey,
+        signatureId,
         from,
         data,
-        signatureId,
     } = body
 
     const client = getEgldClient(provider)
+    const sender = from || await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string)
 
     const tx: TransactionConfig =  {
-        from: from || 0,
+        from: sender,
         to: ESDT_SYSTEM_SMART_CONTRACT_ADDRESS,
-        data: await prepareEgldEsdtFreezeOrWipeOrOwnershipData(data),
+        data: await prepareEgldEsdtFreezeOrWipeOrOwnershipData({ ...data, service: data.service || 'transferOwnership' }),
     }
 
     return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
@@ -607,18 +605,19 @@ export const prepareEgldControlChangesEsdtSignedTransaction = async (body: EgldE
   await validateBody(body, EgldEsdtTransaction)
   const {
       fromPrivateKey,
+      signatureId,
       from,
       data,
-      signatureId,
   } = body
 
   const client = getEgldClient(provider)
+  const sender = from || await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string)
 
-    const tx: TransactionConfig = {
-        from: from || 0,
-        to: ESDT_SYSTEM_SMART_CONTRACT_ADDRESS,
-        data: await prepareEgldEsdtControlChangesData(data),
-    }
+  const tx: TransactionConfig = {
+      from: sender,
+      to: ESDT_SYSTEM_SMART_CONTRACT_ADDRESS,
+      data: await prepareEgldEsdtControlChangesData({ ...data, service: data.service || 'controlChanges' }),
+  }
 
   return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
 }
@@ -633,24 +632,23 @@ export const prepareEgldDeployNftOrSftSignedTransaction = async (body: EgldEsdtT
     await validateBody(body, EgldEsdtTransaction)
     const {
         fromPrivateKey,
+        signatureId,
         from,
         amount,
         data,
-        nonce,
-        signatureId,
     } = body
 
     const client = getEgldClient(provider)
 
     const value = amount ? new BigNumber(amount).toNumber() : 0.05
+    const sender = from || await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string)
 
     // @ts-ignore
     const tx: TransactionConfig = {
-        from: from || 0,
+        from: sender,
         to: ESDT_SYSTEM_SMART_CONTRACT_ADDRESS,
         value,
-        nonce,
-        data: await prepareEgldIssuanceNftOrSftData(data),
+        data: await prepareEgldIssuanceNftOrSftData({ ...data, service: data.service || 'issueNonFungible' }),
     }
 
     return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
@@ -666,11 +664,10 @@ export const prepareEgldCreateNftOrSftSignedTransaction = async (body: EgldEsdtT
     await validateBody(body, EgldEsdtTransaction)
     const {
         fromPrivateKey,
+        signatureId,
         from,
         amount,
         data,
-        nonce,
-        signatureId,
     } = body
 
     const client = getEgldClient(provider)
@@ -682,8 +679,7 @@ export const prepareEgldCreateNftOrSftSignedTransaction = async (body: EgldEsdtT
         from: sender,
         to: sender,
         value,
-        nonce,
-        data: await prepareEgldCreateNftOrSftData(data),
+        data: await prepareEgldCreateNftOrSftData({ ...data, service: data.service || 'ESDTNFTCreate' }),
     }
 
     // gas limit = 60000000 + (1500 * data.length) + (50000 * NFT size)
@@ -702,23 +698,22 @@ export const prepareEgldTransferNftCreateRoleSignedTransaction = async (body: Eg
     await validateBody(body, EgldEsdtTransaction)
     const {
         fromPrivateKey,
+        signatureId,
         from,
         amount,
         data,
-        nonce,
-        signatureId,
     } = body
 
     const client = getEgldClient(provider)
 
     const value = amount ? new BigNumber(amount).toNumber() : 0
+    const sender = from || await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string)
 
     const tx: TransactionConfig = {
-        from: from || 0,
+        from: sender,
         to: ESDT_SYSTEM_SMART_CONTRACT_ADDRESS,
         value,
-        nonce,
-        data: await prepareEgldTransferNftCreateRoleData(data),
+        data: await prepareEgldTransferNftCreateRoleData({ ...data, service: data.service || 'transferNFTCreateRole' }),
     }
 
     // gas limit = 60000000 + (1500 * data.length)
@@ -737,23 +732,22 @@ export const prepareEgldStopNftCreateSignedTransaction = async (body: EgldEsdtTr
     await validateBody(body, EgldEsdtTransaction)
     const {
         fromPrivateKey,
+        signatureId,
         from,
         amount,
         data,
-        nonce,
-        signatureId,
     } = body
 
     const client = getEgldClient(provider)
 
     const value = amount ? new BigNumber(amount).toNumber() : 0
+    const sender = from || await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string)
 
     const tx: TransactionConfig = {
-        from: from || 0,
+        from: sender,
         to: ESDT_SYSTEM_SMART_CONTRACT_ADDRESS,
         value,
-        nonce,
-        data: await prepareEgldStopNftCreateData(data),
+        data: await prepareEgldStopNftCreateData({ ...data, service: data.service || 'stopNFTCreate' }),
     }
 
     return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
@@ -769,11 +763,10 @@ export const prepareEgldAddOrBurnNftQuantitySignedTransaction = async (body: Egl
     await validateBody(body, EgldEsdtTransaction)
     const {
         fromPrivateKey,
+        signatureId,
         from,
         amount,
         data,
-        nonce,
-        signatureId,
     } = body
 
     const client = getEgldClient(provider)
@@ -785,8 +778,7 @@ export const prepareEgldAddOrBurnNftQuantitySignedTransaction = async (body: Egl
         from: sender,
         to: sender,
         value,
-        nonce,
-        data: await prepareEgldAddOrBurnNftQuantityData(data),
+        data: await prepareEgldAddOrBurnNftQuantityData({ ...data, service: data.service || 'ESDTNFTBurn' }),
     }
 
     return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
@@ -802,23 +794,22 @@ export const prepareEgldFreezeNftSignedTransaction = async (body: EgldEsdtTransa
     await validateBody(body, EgldEsdtTransaction)
     const {
         fromPrivateKey,
+        signatureId,
         from,
         amount,
         data,
-        nonce,
-        signatureId,
     } = body
 
     const client = getEgldClient(provider)
 
     const value = amount ? new BigNumber(amount).toNumber() : 0
+    const sender = from || await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string)
 
     const tx: TransactionConfig = {
-        from: from || 0,
+        from: sender,
         to: ESDT_SYSTEM_SMART_CONTRACT_ADDRESS,
         value,
-        nonce,
-        data: await prepareEgldFreezeOrWipeNftData(data),
+        data: await prepareEgldFreezeOrWipeNftData({ ...data, service: data.service || 'freezeSingleNFT' }),
     }
 
     return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
@@ -834,23 +825,22 @@ export const prepareEgldFreezeNftSignedTransaction = async (body: EgldEsdtTransa
   await validateBody(body, EgldEsdtTransaction)
   const {
       fromPrivateKey,
+      signatureId,
       from,
       amount,
       data,
-      nonce,
-      signatureId,
   } = body
 
   const client = getEgldClient(provider)
 
   const value = amount ? new BigNumber(amount).toNumber() : 0
+  const sender = from || await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string)
 
   const tx: TransactionConfig = {
-      from: from || 0,
+      from: sender,
       to: ESDT_SYSTEM_SMART_CONTRACT_ADDRESS,
       value,
-      nonce,
-      data: await prepareEgldFreezeOrWipeNftData(data),
+      data: await prepareEgldFreezeOrWipeNftData({ ...data, service: data.service || 'wipeSingleNFT' }),
   }
 
   return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
@@ -866,11 +856,10 @@ export const prepareEgldTransferNftSignedTransaction = async (body: EgldEsdtTran
     await validateBody(body, EgldEsdtTransaction)
     const {
         fromPrivateKey,
+        signatureId,
         from,
         amount,
         data,
-        nonce,
-        signatureId,
     } = body
 
     const client = getEgldClient(provider)
@@ -882,8 +871,7 @@ export const prepareEgldTransferNftSignedTransaction = async (body: EgldEsdtTran
         from: sender,
         to: sender,
         value,
-        nonce,
-        data: await prepareEgldTransferNftData(data),
+        data: await prepareEgldTransferNftData({ ...data as EsdtTransferNft, service: data.service || 'ESDTNFTTransfer' }),
     }
 
     // TRANSFER: GasLimit: 1000000 + length of Data field in bytes * 1500
@@ -903,11 +891,11 @@ export const prepareEgldSignedTransaction = async (body: EgldEsdtTransaction, pr
     await validateBody(body, EgldEsdtTransaction)
     const {
         fromPrivateKey,
+        signatureId,
         from,
         to,
         amount,
         data,
-        signatureId
     } = body
 
     const client = getEgldClient(provider)

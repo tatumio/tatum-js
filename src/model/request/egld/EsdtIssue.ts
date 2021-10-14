@@ -31,22 +31,22 @@ export class EsdtIssue extends EsdtToken {
     @IsNotEmpty()
     @IsAlphanumeric()
     @Length(3, 20)
-    public tokenName: string;
+    public name: string;
 
     @IsNotEmpty()
     @IsAlphanumeric()
     @IsUppercase()
     @Length(3, 10)
-    public tokenTicker: string;
+    public symbol: string;
 
     @IsNotEmpty()
     @Min(0)
-    public initialSupply: number;
+    public supply: number;
 
     @IsNotEmpty()
     @Min(0)
     @Max(18)
-    public decimals: number;
+    public digits: number;
 
     @IsOptional()
     public properties?: EsdtProperties;

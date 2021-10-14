@@ -19,13 +19,13 @@ export class EsdtIssueNftOrSft extends EsdtToken {
     @IsNotEmpty()
     @IsAlphanumeric()
     @Length(3, 20)
-    public tokenName: string;
+    public name: string;
 
     @IsNotEmpty()
     @IsAlphanumeric()
     @IsUppercase()
     @Length(3, 10)
-    public tokenTicker: string;
+    public symbol: string;
 
     @IsOptional()
     public properties?: EsdtPropertiesNftOrSft;
