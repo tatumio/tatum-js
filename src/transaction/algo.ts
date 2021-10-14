@@ -2,32 +2,35 @@ const algosdk = require('algosdk');
 const base32 = require('base32.js');
 import {TextEncoder} from 'util';
 import {algorandBroadcast} from '../blockchain';
-import {TATUM_API_URL} from '../constants';
 import {AlgoTransaction, Currency, TransactionKMS} from '../model';
 
 /**
- * PureStake Algod V2 Client
- * @param testnet if the algorand node is testnet or not
- * @param provider url of the algorand server endpoint for purestake.io restapi
+ * Algod V2 Client
+ * @param provider url of the algorand server endpoint with token and port seperate by comman (for example: '<baseurl>,<port>,<token>')
  * @returns algorand Client
  */
-export const getAlgoClient = (testnet: boolean, provider?: string) => {
-    const baseServer = provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/algorand/node`;
-    const token = {'X-API-Key': `${process.env.ALGO_API_KEY}`};
-    return new algosdk.Algodv2(token, baseServer, '');
+export const getAlgoClient = (provider?: string) => {
+    if (provider) {
+        const params = provider.split(',');
+        return new algosdk.Algodv2(params[2], params[0], params[1]);
+    } else {
+        return new algosdk.Algodv2({'X-API-Key': `${process.env.ALGO_API_KEY}`}, `${process.env.ALGOD_API_URL}`, '');
+    }
+    
 }
 
 /**
- * PureStake Algo Indexer Client
- * @param testnet if the algorand node is testnet or not
- * @param provider url of the algorand server endpoint for purestake.io restapi
+ * Algo Indexer Client
+ * @param provider url of the algorand server endpoint with token and port seperate by comman (for example: '<baseurl>,<port>,<token>')
  * @returns algorand Indexer Client
  */
-export const getAlgoIndexerClient = (testnet: boolean, provider?: string) => {
-    const baseServer = provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/algorand/indexer`;
-    const token = {'X-API-Key': `${process.env.ALGO_API_KEY}`}
-    const algoIndexerClient = new algosdk.Indexer(token, baseServer, '');
-    return algoIndexerClient;
+export const getAlgoIndexerClient = (provider?: string) => {
+    if (provider) {
+        const params = provider.split(',');
+        return algosdk.Indexer(params[2], params[0], params[1]);
+    } else {
+        return new algosdk.Indexer({'X-API-Key': `${process.env.ALGO_API_KEY}`}, `${process.env.ALGO_INDEXER_API_URL}`, '');
+    }
 }
 
 
@@ -39,7 +42,7 @@ export const getAlgoIndexerClient = (testnet: boolean, provider?: string) => {
  * @returns transaction id of the transaction in the blockchain
  */
 export const prepareAlgoSignedTransaction = async ( testnet: boolean, tx: AlgoTransaction, provider?: string) => {
-    const algodClient = getAlgoClient(testnet, provider);
+    const algodClient = getAlgoClient(provider);
     const params = await algodClient.getTransactionParams().do();
     const decoder = new base32.Decoder({type: "rfc4648"})
     const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
