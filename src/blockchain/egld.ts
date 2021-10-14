@@ -29,6 +29,12 @@ export const egldGetBlock = async (hash: string): Promise<EgldBlock> => get(`/v3
 export const egldGetAccountBalance = async (address: string): Promise<BigNumber> => get(`/v3/egld/account/balance/${address}`)
 
 /**
+ * For more details, see <a href="https://tatum.io/apidoc" target="_blank">Tatum API documentation</a>
+ */
+export const egldGetAccountErc20Balance = async (address: string, tokenId: string): Promise<number> =>
+    get(`/v3/egld/account/esdt/balance/${address}/${tokenId}`)
+
+/**
  * For more details, see <a href="https://tatum.io/apidoc#operation/EgldGetTransaction" target="_blank">Tatum API documentation</a>
  */
 export const egldGetTransaction = async (hash: string): Promise<EgldTransaction> => get(`/v3/egld/transaction/${hash}`)
