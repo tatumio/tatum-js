@@ -48,8 +48,8 @@ export const prepareAlgoSignedTransaction = async ( testnet: boolean, tx: AlgoTr
     const txn = {
         "from": tx.from,
         "to": tx.to,
-        "fee": Number(tx.fee),
-        "amount": BigInt(tx.amount),
+        "fee": BigInt(Number(tx.fee) * 1000000),
+        "amount": BigInt(Number(tx.amount) * 1000000),
         "firstRound": params.firstRound,
         "lastRound": params.lastRound,
         "genesisID": params.genesisID,
