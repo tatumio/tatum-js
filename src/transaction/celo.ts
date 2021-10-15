@@ -445,7 +445,7 @@ export const prepareCeloMintMultipleErc721ProvenanceSignedTransaction = async (t
 
     const cb: string[][] = []
     const fv: string[][] = []
-    if (cashbackValues) {
+    if (cashbackValues && fixedValues) {
         for (let i = 0; i < cashbackValues.length; i++) {
             const cb2: string[] = []
             const fv2: string[] = []

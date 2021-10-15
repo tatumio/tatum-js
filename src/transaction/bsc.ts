@@ -474,7 +474,7 @@ export const prepareBscMintMultipleBep721ProvenanceSignedTransaction = async (bo
     const contract = new (client).eth.Contract(erc721Provenance_abi, contractAddress)
     const cb: string[][] = []
     const fv: string[][] = []
-    if (cashbackValues) {
+    if (cashbackValues && fixedValues) {
         for (let i = 0; i < cashbackValues.length; i++) {
             const cb2: string[] = []
             const fv2: string[] = []
@@ -523,7 +523,7 @@ export const prepareBscMintBep721ProvenanceSignedTransaction = async (body: EthM
     const contract = new (client).eth.Contract(erc721Provenance_abi, contractAddress)
     let cb: string[] = []
     let fval: string[] = []
-    if (authorAddresses && cashbackValues) {
+    if (authorAddresses && cashbackValues && fixedValues) {
         cb = cashbackValues.map(c => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
         fval = fixedValues.map(c => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
     }

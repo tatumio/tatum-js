@@ -517,7 +517,7 @@ export const prepareEthMintMultipleErc721ProvenanceSignedTransaction = async (bo
     const contract = new (client).eth.Contract(erc721Provenance_abi, contractAddress)
     const cb: string[][] = []
     const fv: string[][] = []
-    if (cashbackValues) {
+    if (cashbackValues && fixedValues) {
         for (let i = 0; i < cashbackValues.length; i++) {
             const cb2: string[] = []
             const fv2: string[] = []
