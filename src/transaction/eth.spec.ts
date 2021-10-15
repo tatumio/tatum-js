@@ -347,7 +347,6 @@ describe('ETH transactions', () => {
       fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
       chain: Currency.ETH,
       contractAddress: '0x5ef08fba01e8d80ff18f4d98e31a43fbb01e7f8a',
-      provenance: true,
       fee: {
         gasLimit: '5000000',
         gasPrice: '110'

@@ -411,7 +411,7 @@ describe('CELO transactions', () => {
         console.log(txData)
         expect(txData).not.toBeNull()
     })
-    // // ERC-721 Provenance
+    // ERC-721 Provenance
     it('should test valid deploy 721 provenance transaction', async () => {
         const body = new CeloDeployErc721()
         body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb'
@@ -487,7 +487,7 @@ describe('CELO transactions', () => {
         body.chain = Currency.CELO
         body.contractAddress = '0x26daf61fc9b8e52970686c0e8b5d66c63d5cab54'
         body.to = '0x10168acf3231ccc7b16ba53f17dd4d8bdecf4e1a'
-        body.tokenId = '11223'
+        body.tokenId = '12355'
         body.feeCurrency = Currency.CUSD
         body.provenance = true
         body.data = "send token X"
@@ -495,6 +495,9 @@ describe('CELO transactions', () => {
         body.value = '1000'
         const txData = await prepareCeloTransferErc721SignedTransaction(true, body, 'https://alfajores-forno.celo-testnet.org')
         expect(txData).toContain('0x')
+        // const provider = new CeloProvider('https://alfajores-forno.celo-testnet.org');
+        // await provider.ready;
+        // console.log(await provider.sendTransaction(txData));
     })
 
     it('should test valid transfer with cashback 721 transaction', async () => {
@@ -511,6 +514,9 @@ describe('CELO transactions', () => {
         body.value = '1000'
         const txData = await prepareCeloTransferErc721SignedTransaction(true, body, 'https://alfajores-forno.celo-testnet.org')
         expect(txData).toContain('0x')
+        // const provider = new CeloProvider('https://alfajores-forno.celo-testnet.org');
+        // await provider.ready;
+        // console.log(await provider.sendTransaction(txData));
     })
     it('should test valid transfer data 721 transaction', async () => {
         const body = new SmartContractReadMethodInvocation()

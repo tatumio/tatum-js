@@ -1,5 +1,5 @@
-import { IsIn, IsNotEmpty, IsOptional, Length, MaxLength, Min, Validate, ValidateIf,IsNumberString } from 'class-validator'
-import {Currency} from './Currency'
+import { IsIn, IsBoolean, IsNotEmpty, IsOptional, Length, MaxLength, Min, Validate, ValidateIf, IsNumberString } from 'class-validator'
+import { Currency } from './Currency'
 import { PrivateKeyOrSignatureIdBuiltInPrivateKey } from './PrivateKeyOrSignatureIdBuiltInPrivateKey'
 import { Mint721BuiltInPrivateKeyValidator } from '../validation/Mint721BuiltInPrivateKeyValidator'
 
@@ -28,6 +28,8 @@ export class MintErc721 extends PrivateKeyOrSignatureIdBuiltInPrivateKey {
     public nonce?: number;
 
     @IsOptional()
+    @ValidateIf(o => o.provenance && o.fixedValues)
+    @IsBoolean()
     public provenance?: boolean;
 
     @IsOptional()
@@ -39,7 +41,7 @@ export class MintErc721 extends PrivateKeyOrSignatureIdBuiltInPrivateKey {
     public cashbackValues?: string[];
 
     @IsOptional()
-    @ValidateIf(o => o.authorAddresses && o.cashbackValues && o.fixedValues)
-    public fixedValues?:string[];
+    @ValidateIf(o => o.provenance && o.fixedValues)
+    public fixedValues?: string[];
 
 }

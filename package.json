@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum",
-  "version": "1.26.7",
+  "version": "1.28.7",
   "description": "Tatum API client allows browsers and Node.js clients to interact with Tatum API.",
   "main": "dist/src/index.js",
   "repository": "https://github.com/tatumio/tatum-js",
@@ -8,7 +8,7 @@
     "dist/"
   ],
   "scripts": {
-    "test": "jest",
+    "test": "jest src/transaction/celo.spec.ts",
     "clean": "rimraf dist*",
     "build": "tsc",
     "prepublish": "npm run clean && npm run build",

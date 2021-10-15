@@ -467,6 +467,7 @@ export const prepareEthMintErc721ProvenanceSignedTransaction = async (body: EthM
         fee,
         url,
         signatureId,
+        provenance,
         authorAddresses,
         cashbackValues,
         fixedValues
@@ -503,6 +504,7 @@ export const prepareEthMintMultipleErc721ProvenanceSignedTransaction = async (bo
         url,
         nonce,
         signatureId,
+        provenance,
         authorAddresses,
         cashbackValues,
         fixedValues,
@@ -690,14 +692,13 @@ export const prepareEthBurnErc721SignedTransaction = async (body: EthBurnErc721,
         fee,
         contractAddress,
         nonce,
-        signatureId,
-        provenance
+        signatureId
     } = body
 
     const client = getClient(provider, fromPrivateKey)
 
     // @ts-ignore
-    const contract = new (client).eth.Contract(provenance ? erc721Provenance_abi : erc721TokenABI, contractAddress)
+    const contract = new (client).eth.Contract(erc721TokenABI, contractAddress)
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
@@ -722,14 +723,13 @@ export const prepareEthUpdateCashbackForAuthorErc721SignedTransaction = async (b
         fee,
         contractAddress,
         nonce,
-        signatureId,
-        provenance
+        signatureId
     } = body
 
     const client = getClient(provider, fromPrivateKey)
 
     // @ts-ignore
-    const contract = new (client).eth.Contract(provenance ? erc721Provenance_abi : erc721TokenABI, contractAddress)
+    const contract = new (client).eth.Contract(erc721TokenABI, contractAddress)
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
@@ -765,7 +765,8 @@ export const prepareEthTransferErc721SignedTransaction = async (body: EthTransfe
 
     // @ts-ignore
     const contract = new (client).eth.Contract(provenance ? erc721Provenance_abi : erc721TokenABI, contractAddress)
-    const tokenData = provenance ? contract.methods.safeTransfer(to.trim(), tokenId, data + "'''###'''" + dataValue).encodeABI() : contract.methods.safeTransfer(to.trim(), tokenId).encodeABI()
+    // @ts-ignore
+    const tokenData = contract.methods.safeTransfer(to.trim(), tokenId, provenance ? data + "'''###'''" + dataValue : undefined).encodeABI()
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),

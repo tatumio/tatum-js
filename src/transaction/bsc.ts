@@ -1,10 +1,10 @@
-import {BigNumber} from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import Web3 from 'web3';
-import {TransactionConfig} from 'web3-core';
-import {toWei} from 'web3-utils';
-import {bscBroadcast, bscGetTransactionsCount} from '../blockchain';
-import {validateBody} from '../connector/tatum';
-import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
+import { TransactionConfig } from 'web3-core';
+import { toWei } from 'web3-utils';
+import { bscBroadcast, bscGetTransactionsCount } from '../blockchain';
+import { validateBody } from '../connector/tatum';
+import { CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI } from '../constants';
 import erc1155TokenABI from '../contracts/erc1155/erc1155_abi';
 import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode';
 import erc20_abi from '../contracts/erc20/token_abi';
@@ -14,7 +14,7 @@ import erc721TokenABI from '../contracts/erc721/erc721_abi';
 import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
 import erc721Provenance_abi from '../contracts/erc721Provenance/erc721Provenance_abi';
 import erc721Provenance_bytecode from '../contracts/erc721Provenance/erc721Provenance_bytecode';
-import {auction, listing} from '../contracts/marketplace';
+import { auction, listing } from '../contracts/marketplace';
 import {
     BurnErc20,
     CreateRecord,
@@ -44,8 +44,8 @@ import {
     TransferMultiTokenBatch,
     UpdateCashbackErc721
 } from '../model';
-import {mintNFT} from '../nft';
-import {obtainCustodialAddressType} from '../wallet';
+import { mintNFT } from '../nft';
+import { obtainCustodialAddressType } from '../wallet';
 
 /**
  * Estimate Gas price for the transaction.
@@ -364,7 +364,7 @@ export const prepareBscGenerateCustodialWalletSignedTransaction = async (body: G
 
     const client = getBscClient(provider, body.fromPrivateKey)
 
-    const {abi, code} = obtainCustodialAddressType(body)
+    const { abi, code } = obtainCustodialAddressType(body)
     // @ts-ignore
     const contract = new client.eth.Contract(abi)
     const deploy = contract.deploy({
@@ -427,15 +427,14 @@ export const prepareBscMintBep721SignedTransaction = async (body: EthMintErc721,
         nonce,
         fee,
         url,
-        signatureId,
-        provenance
+        signatureId
     } = body
 
     const client = getBscClient(provider, fromPrivateKey)
 
     // @ts-ignore
-    const contract = new (client).eth.Contract(provenance?erc721Provenance_abi:erc721TokenABI, contractAddress)
-    if(contractAddress) {
+    const contract = new (client).eth.Contract(erc721TokenABI, contractAddress)
+    if (contractAddress) {
         const tx: TransactionConfig = {
             from: 0,
             to: contractAddress.trim(),
@@ -452,7 +451,7 @@ export const prepareBscMintBep721SignedTransaction = async (body: EthMintErc721,
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
- export const prepareBscMintMultipleBep721ProvenanceSignedTransaction = async (body: EthMintMultipleErc721, provider?: string) => {
+export const prepareBscMintMultipleBep721ProvenanceSignedTransaction = async (body: EthMintMultipleErc721, provider?: string) => {
     await validateBody(body, EthMintMultipleErc721)
     const {
         fromPrivateKey,
@@ -462,6 +461,7 @@ export const prepareBscMintBep721SignedTransaction = async (body: EthMintErc721,
         url,
         nonce,
         signatureId,
+        provenance,
         authorAddresses,
         cashbackValues,
         fixedValues,
@@ -473,12 +473,12 @@ export const prepareBscMintBep721SignedTransaction = async (body: EthMintErc721,
     // @ts-ignore
     const contract = new (client).eth.Contract(erc721Provenance_abi, contractAddress)
     const cb: string[][] = []
-    const fv:string[][]=[]
-    if (cashbackValues){
-        for(let i=0;i<cashbackValues.length;i++){
+    const fv: string[][] = []
+    if (cashbackValues) {
+        for (let i = 0; i < cashbackValues.length; i++) {
             const cb2: string[] = []
-            const fv2:string[] = []
-            for(let j=0;j<cashbackValues[i].length;j++){
+            const fv2: string[] = []
+            for (let j = 0; j < cashbackValues[i].length; j++) {
                 cb2.push(`0x${new BigNumber(toWei(cashbackValues[i][j], 'ether')).toString(16)}`)
                 fv2.push(`0x${new BigNumber(toWei(fixedValues[i][j], 'ether')).toString(16)}`)
             }
@@ -500,7 +500,7 @@ export const prepareBscMintBep721SignedTransaction = async (body: EthMintErc721,
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
- export const prepareBscMintBep721ProvenanceSignedTransaction = async (body: EthMintErc721, provider?: string) => {
+export const prepareBscMintBep721ProvenanceSignedTransaction = async (body: EthMintErc721, provider?: string) => {
     await validateBody(body, EthMintErc721)
     const {
         fromPrivateKey,
@@ -513,16 +513,17 @@ export const prepareBscMintBep721SignedTransaction = async (body: EthMintErc721,
         signatureId,
         authorAddresses,
         cashbackValues,
-        fixedValues
+        fixedValues,
+        provenance
     } = body
 
     const client = getBscClient(provider, fromPrivateKey)
 
     // @ts-ignore
     const contract = new (client).eth.Contract(erc721Provenance_abi, contractAddress)
-    let cb:string[]=[]
-    let fval:string[]=[]
-    if (authorAddresses&&cashbackValues){
+    let cb: string[] = []
+    let fval: string[] = []
+    if (authorAddresses && cashbackValues) {
         cb = cashbackValues.map(c => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
         fval = fixedValues.map(c => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
     }
@@ -530,7 +531,7 @@ export const prepareBscMintBep721SignedTransaction = async (body: EthMintErc721,
         const tx: TransactionConfig = {
             from: 0,
             to: contractAddress.trim(),
-            data: contract.methods.mintWithTokenURI(to.trim(), tokenId, url, authorAddresses?authorAddresses:[],cb,fval).encodeABI(),
+            data: contract.methods.mintWithTokenURI(to.trim(), tokenId, url, authorAddresses ? authorAddresses : [], cb, fval).encodeABI(),
             nonce,
         }
 
@@ -660,13 +661,12 @@ export const prepareBscBurnBep721SignedTransaction = async (body: EthBurnErc721,
         contractAddress,
         nonce,
         signatureId,
-        provenance
     } = body
 
     const client = getBscClient(provider, fromPrivateKey)
 
     // @ts-ignore
-    const contract = new (client).eth.Contract(provenance?erc721Provenance_abi:erc721TokenABI, contractAddress)
+    const contract = new (client).eth.Contract(erc721TokenABI, contractAddress)
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
@@ -702,8 +702,9 @@ export const prepareBscTransferBep721SignedTransaction = async (body: EthTransfe
     const client = await getBscClient(provider, fromPrivateKey)
 
     // @ts-ignore
-    const contract = new (client).eth.Contract(provenance?erc721Provenance_abi:erc721TokenABI, contractAddress)
-    const tokenData=provenance?contract.methods.safeTransfer(to.trim(), tokenId,data+"'''###'''"+dataValue).encodeABI():contract.methods.safeTransfer(to.trim(), tokenId).encodeABI();
+    const contract = new (client).eth.Contract(provenance ? erc721Provenance_abi : erc721TokenABI, contractAddress)
+    // @ts-ignore
+    const tokenData = contract.methods.safeTransfer(to.trim(), tokenId, provenance ? data + "'''###'''" + dataValue : undefined).encodeABI()
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
@@ -730,14 +731,13 @@ export const prepareBscUpdateCashbackForAuthorErc721SignedTransaction = async (b
         fee,
         contractAddress,
         nonce,
-        signatureId,
-        provenance
+        signatureId
     } = body
 
     const client = await getBscClient(provider, fromPrivateKey)
 
     // @ts-ignore
-    const contract = new (client).eth.Contract(provenance?erc721Provenance_abi:erc721TokenABI, contractAddress)
+    const contract = new (client).eth.Contract(erc721TokenABI, contractAddress)
 
     const tx: TransactionConfig = {
         from: 0,
@@ -769,8 +769,8 @@ export const prepareBscDeployBep721SignedTransaction = async (body: EthDeployErc
     const client = await getBscClient(provider, fromPrivateKey)
 
     // @ts-ignore
-    const contract = new client.eth.Contract(provenance?erc721Provenance_abi:erc721TokenABI, null, {
-        data: provenance?erc721Provenance_bytecode:erc721TokenBytecode,
+    const contract = new client.eth.Contract(provenance ? erc721Provenance_abi : erc721TokenABI, null, {
+        data: provenance ? erc721Provenance_bytecode : erc721TokenBytecode,
     })
 
     // @ts-ignore
@@ -810,7 +810,7 @@ export const prepareBscDeployAuctionSignedTransaction = async (body: DeployNftAu
 };
 
 const deployContract = async (abi: any[], bytecode: string, args: any[], fromPrivateKey?: string, fee?: Fee,
-                              nonce?: number, signatureId?: string, provider?: string) => {
+    nonce?: number, signatureId?: string, provider?: string) => {
     const client = await getBscClient(provider, fromPrivateKey);
     // @ts-ignore
     const contract = new client.eth.Contract(abi, null, {
@@ -1063,7 +1063,7 @@ export const sendBscSmartContractReadMethodInvocationTransaction = async (body: 
     } = body
     const client = getBscClient(provider)
     const contract = new client.eth.Contract([methodABI], contractAddress)
-    return {data: await contract.methods[methodName as string](...params).call()}
+    return { data: await contract.methods[methodName as string](...params).call() }
 }
 
 /**
@@ -1180,8 +1180,8 @@ export const sendMintMultipleBep721Transaction = async (body: EthMintMultipleErc
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
- export const sendMintMultipleBep721ProvenanceTransaction = async (body: EthMintMultipleErc721, provider?: string) =>
- bscBroadcast(await prepareBscMintMultipleBep721ProvenanceSignedTransaction(body, provider), body.signatureId)
+export const sendMintMultipleBep721ProvenanceTransaction = async (body: EthMintMultipleErc721, provider?: string) =>
+    bscBroadcast(await prepareBscMintMultipleBep721ProvenanceSignedTransaction(body, provider), body.signatureId)
 /**
  * Send Bsc BEP721 mint provenance transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
@@ -1189,7 +1189,7 @@ export const sendMintMultipleBep721Transaction = async (body: EthMintMultipleErc
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
- export const sendMintBep721ProvenanceTransaction = async (body: EthMintErc721, provider?: string) => {
+export const sendMintBep721ProvenanceTransaction = async (body: EthMintErc721, provider?: string) => {
     return bscBroadcast(await prepareBscMintBep721ProvenanceSignedTransaction(body, provider), body.signatureId)
 }
 /**

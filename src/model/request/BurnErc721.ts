@@ -1,6 +1,6 @@
-import {IsIn, IsInt, IsNotEmpty, IsOptional, Length, MaxLength, Min,IsBoolean} from 'class-validator'
-import {Currency} from './Currency'
-import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId'
+import { IsIn, IsInt, IsNotEmpty, IsOptional, Length, MaxLength, Min, IsBoolean } from 'class-validator'
+import { Currency } from './Currency'
+import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 
 export class BurnErc721 extends PrivateKeyOrSignatureId {
 
@@ -21,7 +21,4 @@ export class BurnErc721 extends PrivateKeyOrSignatureId {
     @IsOptional()
     public nonce?: number;
 
-    @IsOptional()
-    @IsBoolean()
-    public provenance?: boolean;
 }

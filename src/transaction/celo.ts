@@ -1,11 +1,11 @@
-import {CeloProvider, CeloWallet} from '@celo-tools/celo-ethers-wrapper';
-import {BigNumber as BN} from '@ethersproject/bignumber';
-import {BigNumber} from 'bignumber.js';
+import { CeloProvider, CeloWallet } from '@celo-tools/celo-ethers-wrapper';
+import { BigNumber as BN } from '@ethersproject/bignumber';
+import { BigNumber } from 'bignumber.js';
 import Web3 from 'web3';
-import {isHex, stringToHex, toHex, toWei} from 'web3-utils';
-import {celoBroadcast} from '../blockchain';
-import {validateBody} from '../connector/tatum';
-import {CEUR_ADDRESS_MAINNET, CEUR_ADDRESS_TESTNET, CUSD_ADDRESS_MAINNET, CUSD_ADDRESS_TESTNET, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
+import { isHex, stringToHex, toHex, toWei } from 'web3-utils';
+import { celoBroadcast } from '../blockchain';
+import { validateBody } from '../connector/tatum';
+import { CEUR_ADDRESS_MAINNET, CEUR_ADDRESS_TESTNET, CUSD_ADDRESS_MAINNET, CUSD_ADDRESS_TESTNET, TATUM_API_URL, TRANSFER_METHOD_ABI } from '../constants';
 import erc1155_abi from '../contracts/erc1155/erc1155_abi';
 import erc1155_bytecode from '../contracts/erc1155/erc1155_bytecode';
 import erc20_abi from '../contracts/erc20/token_abi';
@@ -14,7 +14,7 @@ import erc721_abi from '../contracts/erc721/erc721_abi';
 import erc721_bytecode from '../contracts/erc721/erc721_bytecode';
 import erc721Provenance_abi from '../contracts/erc721Provenance/erc721Provenance_abi';
 import erc721Provenance_bytecode from '../contracts/erc721Provenance/erc721Provenance_bytecode';
-import {auction, listing} from '../contracts/marketplace';
+import { auction, listing } from '../contracts/marketplace';
 import {
     BurnCeloErc20,
     CeloBurnErc721,
@@ -42,7 +42,7 @@ import {
     TransactionKMS,
     TransferCeloOrCeloErc20Token
 } from '../model';
-import {obtainCustodialAddressType} from '../wallet/custodial';
+import { obtainCustodialAddressType } from '../wallet/custodial';
 import { mintNFT } from '../nft'
 
 const obtainWalletInformation = async (wallet: CeloWallet, feeCurrencyContractAddress?: string) => {
@@ -84,7 +84,7 @@ export const prepareCeloGenerateCustodialWalletSignedTransaction = async (testne
     const network = await p.ready;
     const feeCurrency = body.feeCurrency || Currency.CELO
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
-    const {abi, code} = obtainCustodialAddressType(body)
+    const { abi, code } = obtainCustodialAddressType(body)
     // @ts-ignore
     const contract = new (new Web3()).eth.Contract(abi)
     const deploy = contract.deploy({
@@ -101,7 +101,7 @@ export const prepareCeloGenerateCustodialWalletSignedTransaction = async (testne
         })
     }
     const wallet = new CeloWallet(body.fromPrivateKey as string, p)
-    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
+    const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
     const transaction = {
         chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
@@ -116,7 +116,7 @@ export const prepareCeloGenerateCustodialWalletSignedTransaction = async (testne
 }
 
 const deployContract = async (testnet: boolean, abi: any[], bytecode: string, args: any[], feeCurrency = Currency.CELO,
-                              fromPrivateKey?: string, nonce?: number, signatureId?: string, provider?: string) => {
+    fromPrivateKey?: string, nonce?: number, signatureId?: string, provider?: string) => {
     const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
     const network = await p.ready;
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet);
@@ -137,7 +137,7 @@ const deployContract = async (testnet: boolean, abi: any[], bytecode: string, ar
         });
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p);
-    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress);
+    const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress);
     const transaction = {
         chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
@@ -194,7 +194,7 @@ export const signCeloKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
     await p.ready
     const wallet = new CeloWallet(fromPrivateKey as string, p)
     const transaction = JSON.parse(tx.serializedTransaction)
-    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, transaction.feeCurrency)
+    const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, transaction.feeCurrency)
     transaction.nonce = transaction.nonce || txCount
     transaction.gasPrice = transaction.gasPrice || gasPrice
     transaction.from = from
@@ -237,7 +237,7 @@ export const prepareCeloDeployMultiTokenSignedTransaction = async (testnet: bool
         })
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p)
-    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
+    const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
     const transaction = {
         chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
@@ -272,9 +272,9 @@ export const prepareCeloDeployErc721SignedTransaction = async (testnet: boolean,
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
 
     // @ts-ignore
-    const contract = new (new Web3()).eth.Contract(provenance?erc721Provenance_abi:erc721_abi)
+    const contract = new (new Web3()).eth.Contract(provenance ? erc721Provenance_abi : erc721_abi)
     const deploy = contract.deploy({
-        data: provenance?erc721Provenance_bytecode:erc721_bytecode,
+        data: provenance ? erc721Provenance_bytecode : erc721_bytecode,
         arguments: [name, symbol]
     })
 
@@ -288,7 +288,7 @@ export const prepareCeloDeployErc721SignedTransaction = async (testnet: boolean,
         })
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p)
-    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
+    const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
     const transaction = {
         chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
@@ -387,7 +387,7 @@ export const prepareCeloMintErc721ProvenanceSignedTransaction = async (testnet: 
         const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
         // @ts-ignore
         const contract = new (new Web3()).eth.Contract(erc721Provenance_abi, contractAddress.trim())
-        const data=contract.methods.mintWithTokenURI(to.trim(), tokenId, url,authorAddresses?authorAddresses:[],cashbackValues?cashbackValues:[],fixedValues?fixedValues:[]).encodeABI();
+        const data = contract.methods.mintWithTokenURI(to.trim(), tokenId, url, authorAddresses ? authorAddresses : [], cashbackValues ? cashbackValues : [], fixedValues ? fixedValues : []).encodeABI();
         if (signatureId) {
             return JSON.stringify({
                 chainId: network.chainId,
@@ -419,7 +419,7 @@ export const prepareCeloMintErc721ProvenanceSignedTransaction = async (testnet: 
  * Prepare a signed Celo mint multiple provenance cashback erc721 transaction with the private key locally. Nothing is broadcasted to the blockchain.
  * @returns raw transaction data in hex, to be broadcasted to blockchain.
  */
- export const prepareCeloMintMultipleErc721ProvenanceSignedTransaction = async (testnet: boolean, body: CeloMintMultipleErc721, provider?: string) => {
+export const prepareCeloMintMultipleErc721ProvenanceSignedTransaction = async (testnet: boolean, body: CeloMintMultipleErc721, provider?: string) => {
     await validateBody(body, CeloMintMultipleErc721)
     const {
         fromPrivateKey,
@@ -442,14 +442,14 @@ export const prepareCeloMintErc721ProvenanceSignedTransaction = async (testnet: 
 
     // @ts-ignore
     const contract = new (new Web3()).eth.Contract(erc721Provenance_abi, contractAddress.trim())
-    
+
     const cb: string[][] = []
-    const fv:string[][]=[]
-    if (cashbackValues){
-        for(let i=0;i<cashbackValues.length;i++){
+    const fv: string[][] = []
+    if (cashbackValues) {
+        for (let i = 0; i < cashbackValues.length; i++) {
             const cb2: string[] = []
-            const fv2:string[] = []
-            for(let j=0;j<cashbackValues[i].length;j++){
+            const fv2: string[] = []
+            for (let j = 0; j < cashbackValues[i].length; j++) {
                 cb2.push(`0x${new BigNumber(toWei(cashbackValues[i][j], 'ether')).toString(16)}`)
                 fv2.push(`0x${new BigNumber(toWei(fixedValues[i][j], 'ether')).toString(16)}`)
             }
@@ -457,7 +457,7 @@ export const prepareCeloMintErc721ProvenanceSignedTransaction = async (testnet: 
             fv.push(fv2)
         }
     }
-    const data=contract.methods.mintMultiple(to.map(t => t.trim()), tokenId, url, authorAddresses?authorAddresses:[], cb,fv).encodeABI();
+    const data = contract.methods.mintMultiple(to.map(t => t.trim()), tokenId, url, authorAddresses ? authorAddresses : [], cb, fv).encodeABI();
     if (signatureId) {
         return JSON.stringify({
             chainId: network.chainId,
@@ -469,7 +469,7 @@ export const prepareCeloMintErc721ProvenanceSignedTransaction = async (testnet: 
         })
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p)
-    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
+    const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
     const transaction = {
         chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
@@ -540,7 +540,7 @@ export const prepareCeloMintErc721SignedTransaction = async (testnet: boolean, b
  * Prepare a signed Celo transfer erc721 transaction with the private key locally. Nothing is broadcasted to the blockchain.
  * @returns raw transaction data in hex, to be broadcasted to blockchain.
  */
- export const prepareCeloTransferErc721SignedTransaction = async (testnet: boolean, body: CeloTransferErc721, provider?: string) => {
+export const prepareCeloTransferErc721SignedTransaction = async (testnet: boolean, body: CeloTransferErc721, provider?: string) => {
     await validateBody(body, CeloTransferErc721)
     const {
         fromPrivateKey,
@@ -561,8 +561,9 @@ export const prepareCeloMintErc721SignedTransaction = async (testnet: boolean, b
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
 
     // @ts-ignore
-    const contract = new (new Web3()).eth.Contract(provenance?erc721Provenance_abi:erc721_abi, contractAddress.trim())
-    const tokenData=provenance?contract.methods.safeTransfer(to.trim(), tokenId,data+"'''###'''"+dataValue).encodeABI():contract.methods.safeTransfer(to.trim(), tokenId).encodeABI()
+    const contract = new (new Web3()).eth.Contract(provenance ? erc721Provenance_abi : erc721_abi, contractAddress.trim())
+    // @ts-ignore
+    const tokenData = contract.methods.safeTransfer(to.trim(), tokenId, provenance ? data + "'''###'''" + dataValue : undefined).encodeABI()
     if (signatureId) {
         return JSON.stringify({
             chainId: network.chainId,
@@ -575,7 +576,7 @@ export const prepareCeloMintErc721SignedTransaction = async (testnet: boolean, b
         })
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p)
-    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
+    const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
     const transaction = {
         chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
@@ -603,8 +604,7 @@ export const prepareCeloBurnErc721SignedTransaction = async (testnet: boolean, b
         contractAddress,
         feeCurrency,
         nonce,
-        signatureId,
-        provenance
+        signatureId
     } = body
 
     const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
@@ -613,7 +613,7 @@ export const prepareCeloBurnErc721SignedTransaction = async (testnet: boolean, b
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
 
     // @ts-ignore
-    const contract = new (new Web3()).eth.Contract(provenance?erc721Provenance_abi:erc721_abi, contractAddress.trim())
+    const contract = new (new Web3()).eth.Contract(erc721_abi, contractAddress.trim())
 
     if (signatureId) {
         return JSON.stringify({
@@ -626,7 +626,7 @@ export const prepareCeloBurnErc721SignedTransaction = async (testnet: boolean, b
         })
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p)
-    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
+    const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
     const transaction = {
         chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
@@ -688,7 +688,7 @@ export const prepareCeloDeployErc20SignedTransaction = async (testnet: boolean, 
         })
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p)
-    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
+    const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
 
     const transaction = {
         chainId: network.chainId,
@@ -738,7 +738,7 @@ export const prepareCeloMintErc20SignedTransaction = async (testnet: boolean, bo
         })
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p)
-    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
+    const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
 
     const transaction = {
         chainId: network.chainId,
@@ -799,7 +799,7 @@ export const prepareCeloSmartContractWriteMethodInvocation = async (testnet: boo
     }
 
     const wallet = new CeloWallet(fromPrivateKey as string, p)
-    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
+    const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
 
     transaction.nonce = transaction.nonce || txCount
     transaction.from = from
@@ -825,7 +825,7 @@ export const sendCeloSmartContractReadMethodInvocationTransaction = async (testn
 
     // @ts-ignore
     const contract = new (new Web3(url)).eth.Contract([methodABI], contractAddress.trim())
-    return {data: await contract.methods[methodName as string](...params).call()}
+    return { data: await contract.methods[methodName as string](...params).call() }
 }
 export const sendCeloDeployErc20Transaction = async (testnet: boolean, body: DeployCeloErc20, provider?: string) =>
     celoBroadcast(await prepareCeloDeployErc20SignedTransaction(testnet, body, provider), body.signatureId)
@@ -900,7 +900,7 @@ export const prepareCeloTransferErc20SignedTransaction = async (testnet: boolean
         })
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p)
-    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
+    const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
 
     const transaction = {
         chainId: network.chainId,
@@ -951,7 +951,7 @@ export const prepareCeloBurnErc20SignedTransaction = async (testnet: boolean, bo
         })
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p)
-    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
+    const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
 
     const transaction = {
         chainId: network.chainId,
@@ -1014,7 +1014,7 @@ export const prepareCeloMintMultipleCashbackErc721SignedTransaction = async (tes
         })
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p)
-    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
+    const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
     const transaction = {
         chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
@@ -1065,7 +1065,7 @@ export const prepareCeloMintMultipleErc721SignedTransaction = async (testnet: bo
         })
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p)
-    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
+    const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
     const transaction = {
         chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
@@ -1093,8 +1093,7 @@ export const prepareCeloUpdateCashbackForAuthorErc721SignedTransaction = async (
         contractAddress,
         feeCurrency,
         nonce,
-        signatureId,
-        provenance
+        signatureId
     } = body
 
     const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
@@ -1103,7 +1102,7 @@ export const prepareCeloUpdateCashbackForAuthorErc721SignedTransaction = async (
     const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
 
     // @ts-ignore
-    const contract = new (new Web3()).eth.Contract(provenance?erc721Provenance_abi:erc721_abi, contractAddress.trim())
+    const contract = new (new Web3()).eth.Contract(erc721_abi, contractAddress.trim())
 
     if (signatureId) {
         return JSON.stringify({
@@ -1116,7 +1115,7 @@ export const prepareCeloUpdateCashbackForAuthorErc721SignedTransaction = async (
         })
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p)
-    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
+    const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
     const transaction = {
         chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
@@ -1166,7 +1165,7 @@ export const prepareCeloMintMultiTokenSignedTransaction = async (testnet: boolea
         })
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p)
-    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
+    const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
     const transaction = {
         chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
@@ -1218,7 +1217,7 @@ export const prepareCeloMintMultiTokenBatchSignedTransaction = async (testnet: b
         })
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p)
-    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
+    const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
     const transaction = {
         chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
@@ -1269,7 +1268,7 @@ export const prepareCeloTransferMultiTokenSignedTransaction = async (testnet: bo
         })
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p)
-    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
+    const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
     const transaction = {
         chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
@@ -1320,7 +1319,7 @@ export const prepareCeloBatchTransferMultiTokenSignedTransaction = async (testne
         })
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p)
-    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
+    const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
     const transaction = {
         chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
@@ -1371,7 +1370,7 @@ export const prepareCeloBurnMultiTokenBatchSignedTransaction = async (testnet: b
         })
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p)
-    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
+    const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
     const transaction = {
         chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
@@ -1422,7 +1421,7 @@ export const prepareCeloBurnMultiTokenSignedTransaction = async (testnet: boolea
         })
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p)
-    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
+    const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
     const transaction = {
         chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
@@ -1493,7 +1492,7 @@ export const prepareCeloOrCUsdSignedTransaction = async (testnet: boolean, body:
         })
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p)
-    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
+    const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
     const transaction = {
         chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
@@ -1546,7 +1545,7 @@ export const prepareCeloStoreDataSignedTransaction = async (testnet: boolean, bo
         })
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p)
-    const {txCount, gasPrice, from} = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
+    const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
     const transaction = {
         chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
@@ -1607,8 +1606,8 @@ export const sendCeloMintCashbackErc721Transaction = async (testnet: boolean, bo
  * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
- export const sendCeloMintErc721ProvenanceTransaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) =>
- celoBroadcast(await prepareCeloMintErc721ProvenanceSignedTransaction(testnet, body, provider), body.signatureId)
+export const sendCeloMintErc721ProvenanceTransaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) =>
+    celoBroadcast(await prepareCeloMintErc721ProvenanceSignedTransaction(testnet, body, provider), body.signatureId)
 /**
  * Send Celo mint multiple provenance erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
@@ -1617,17 +1616,17 @@ export const sendCeloMintCashbackErc721Transaction = async (testnet: boolean, bo
  * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
- export const sendCeloMintMultipleErc721ProvenanceTransaction = async (testnet: boolean, body: CeloMintMultipleErc721, provider?: string) =>
- celoBroadcast(await prepareCeloMintMultipleErc721ProvenanceSignedTransaction(testnet, body, provider), body.signatureId)
+export const sendCeloMintMultipleErc721ProvenanceTransaction = async (testnet: boolean, body: CeloMintMultipleErc721, provider?: string) =>
+    celoBroadcast(await prepareCeloMintMultipleErc721ProvenanceSignedTransaction(testnet, body, provider), body.signatureId)
 
- /**
- * Send Celo mint multiple erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
- * This operation is irreversible.
- * @param testnet mainnet or testnet version
- * @param body content of the transaction to broadcast
- * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
- * @returns transaction id of the transaction in the blockchain
- */
+/**
+* Send Celo mint multiple erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+* This operation is irreversible.
+* @param testnet mainnet or testnet version
+* @param body content of the transaction to broadcast
+* @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+* @returns transaction id of the transaction in the blockchain
+*/
 export const sendCeloMintMultipleErc721Transaction = async (testnet: boolean, body: CeloMintMultipleErc721, provider?: string) =>
     celoBroadcast(await prepareCeloMintMultipleErc721SignedTransaction(testnet, body, provider), body.signatureId)
 

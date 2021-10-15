@@ -1,8 +1,8 @@
-import {Type} from 'class-transformer'
-import {IsIn, IsNotEmpty, IsNumberString, IsOptional, Length, MaxLength, Min, ValidateNested} from 'class-validator'
-import {Currency} from './Currency'
-import {Fee} from './Fee'
-import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId'
+import { Type } from 'class-transformer'
+import { IsIn, IsNotEmpty, IsNumberString, IsOptional, Length, MaxLength, Min, ValidateNested } from 'class-validator'
+import { Currency } from './Currency'
+import { Fee } from './Fee'
+import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 
 export class UpdateCashbackErc721 extends PrivateKeyOrSignatureId {
 
@@ -31,6 +31,4 @@ export class UpdateCashbackErc721 extends PrivateKeyOrSignatureId {
     @ValidateNested()
     public fee?: Fee;
 
-    @IsOptional()
-    public provenance?: boolean;
 }
