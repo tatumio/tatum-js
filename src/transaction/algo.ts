@@ -1,6 +1,6 @@
 const algosdk = require('algosdk');
 const base32 = require('base32.js');
-import { algorandBroadcast } from 'src/blockchain';
+import { algorandBroadcast } from '../blockchain';
 import { TextEncoder } from 'util';
 import { TATUM_API_URL } from '../constants';
 import { AlgoTransaction, Currency, TransactionKMS } from '../model';

@@ -1,4 +1,6 @@
 // import {CeloProvider} from '@celo-tools/celo-ethers-wrapper';
+import { SmartContractReadMethodInvocation } from '../model/request/SmartContractReadMethodInvocation';
+import erc721Provenance_abi from '../contracts/erc721Provenance/erc721Provenance_abi';
 import {
     BurnCeloErc20,
     CeloBurnErc721,
@@ -28,11 +30,13 @@ import {
     prepareCeloTransferErc721SignedTransaction,
     prepareCeloUpdateCashbackForAuthorErc721SignedTransaction,
     sendCeloSmartContractMethodInvocationTransaction,
-    signCeloKMSTransaction
+    signCeloKMSTransaction,
+    prepareCeloMintMultipleErc721ProvenanceSignedTransaction,
+    prepareCeloMintErc721ProvenanceSignedTransaction,
+    sendCeloSmartContractReadMethodInvocationTransaction,
 } from './celo'
-
 describe('CELO transactions', () => {
-    jest.setTimeout(9999)
+    jest.setTimeout(99999)
     it('should test valid transaction CELO', async () => {
         const body = new TransferCeloOrCeloErc20Token()
         body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb'
@@ -79,7 +83,7 @@ describe('CELO transactions', () => {
         body.currency = Currency.CELO
         body.feeCurrency = Currency.CUSD
         body.to = '0x10168acf3231ccc7b16ba53f17dd4d8bdecf4e1a'
-        body.fee = {gasLimit: '150000', gasPrice: '1'}
+        body.fee = { gasLimit: '150000', gasPrice: '1' }
         const txData = await prepareCeloOrCUsdSignedTransaction(true, body, 'https://alfajores-forno.celo-testnet.org')
         expect(txData).toContain('0x')
 
@@ -340,71 +344,182 @@ describe('CELO transactions', () => {
     })
 
     it('should test read smart contract method invocation', async () => {
-      const body = {
-        contractAddress: '0xB7205685AABeB4092EBBa67Ed0443Af807AaC282',
-        methodName: 'balanceOf',
-        methodABI: {
-            constant: true,
-            inputs: [
-                {
-                    name: 'owner',
-                    type: 'address',
-                },
-            ],
-            name: 'balanceOf',
-            outputs: [
-                {
-                    name: '',
-                    type: 'uint256',
-                },
-            ],
-            payable: false,
-            stateMutability: 'view',
-            type: 'function',
-        },
-        params: ['0x10168acf3231ccc7b16ba53f17dd4d8bdecf4e1a'],
-      }
+        const body = {
+            contractAddress: '0xB7205685AABeB4092EBBa67Ed0443Af807AaC282',
+            methodName: 'balanceOf',
+            methodABI: {
+                constant: true,
+                inputs: [
+                    {
+                        name: 'owner',
+                        type: 'address',
+                    },
+                ],
+                name: 'balanceOf',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'uint256',
+                    },
+                ],
+                payable: false,
+                stateMutability: 'view',
+                type: 'function',
+            },
+            params: ['0x10168acf3231ccc7b16ba53f17dd4d8bdecf4e1a'],
+        }
 
-      const txData = await sendCeloSmartContractMethodInvocationTransaction(true, body, 'https://alfajores-forno.celo-testnet.org')
-      console.log(txData)
-      expect(txData).not.toBeNull()
-  })
+        const txData = await sendCeloSmartContractMethodInvocationTransaction(true, body, 'https://alfajores-forno.celo-testnet.org')
+        console.log(txData)
+        expect(txData).not.toBeNull()
+    })
 
-  it('should test write smart contract method invocation', async () => {
-    const body = {
-      fromPrivateKey: '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb',
-      contractAddress: '0xB7205685AABeB4092EBBa67Ed0443Af807AaC282',
-      feeCurrency: Currency.CUSD,
-      fee: {gasLimit: '40000', gasPrice: '200'},
-      methodName: 'transfer',
-      methodABI: {
-          constant: false,
-          inputs: [
-              {
-                  name: 'to',
-                  type: 'address',
-              },
-              {
-                  name: 'value',
-                  type: 'uint256',
-              },
-          ],
-          name: 'transfer',
-          outputs: [
-              {
-                  name: '',
-                  type: 'bool',
-              },
-          ],
-          payable: false,
-          stateMutability: 'nonpayable',
-          type: 'function',
-      },
-      params: ['0x10168acf3231ccc7b16ba53f17dd4d8bdecf4e1a', '1'],
-    }
+    it('should test write smart contract method invocation', async () => {
+        const body = {
+            fromPrivateKey: '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb',
+            contractAddress: '0xB7205685AABeB4092EBBa67Ed0443Af807AaC282',
+            feeCurrency: Currency.CUSD,
+            fee: { gasLimit: '40000', gasPrice: '200' },
+            methodName: 'transfer',
+            methodABI: {
+                constant: false,
+                inputs: [
+                    {
+                        name: 'to',
+                        type: 'address',
+                    },
+                    {
+                        name: 'value',
+                        type: 'uint256',
+                    },
+                ],
+                name: 'transfer',
+                outputs: [
+                    {
+                        name: '',
+                        type: 'bool',
+                    },
+                ],
+                payable: false,
+                stateMutability: 'nonpayable',
+                type: 'function',
+            },
+            params: ['0x10168acf3231ccc7b16ba53f17dd4d8bdecf4e1a', '1'],
+        }
 
-    const txData = await sendCeloSmartContractMethodInvocationTransaction(true, body, 'https://alfajores-forno.celo-testnet.org')
-    console.log(txData)
-    expect(txData).not.toBeNull()
-  })
+        const txData = await sendCeloSmartContractMethodInvocationTransaction(true, body, 'https://alfajores-forno.celo-testnet.org')
+        console.log(txData)
+        expect(txData).not.toBeNull()
+    })
+    // // ERC-721 Provenance
+    it('should test valid deploy 721 provenance transaction', async () => {
+        const body = new CeloDeployErc721()
+        body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb'
+        body.chain = Currency.CELO
+        body.name = 'Tatum'
+        body.symbol = 'TTM'
+        body.feeCurrency = Currency.CUSD
+        body.provenance = true
+        const txData = await prepareCeloDeployErc721SignedTransaction(true, body, 'https://alfajores-forno.celo-testnet.org')
+        expect(txData).toContain('0x')
+
+        // const provider = new CeloProvider('https://alfajores-forno.celo-testnet.org');
+        // await provider.ready;
+        // console.log(await provider.sendTransaction(txData));
+    })
+    it('should test valid mint 721 provenance transaction', async () => {
+        const body = new CeloMintErc721()
+        body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb'
+        body.chain = Currency.CELO
+        body.to = '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA'
+        body.contractAddress = '0x26daf61fc9b8e52970686c0e8b5d66c63d5cab54'
+        body.tokenId = '12355'
+        body.url = 'https://google.com'
+        body.provenance = true
+        body.feeCurrency = Currency.CUSD
+        const txData = await prepareCeloMintErc721ProvenanceSignedTransaction(true, body, 'https://alfajores-forno.celo-testnet.org')
+        expect(txData).toContain('0x')
+        // const provider = new CeloProvider('https://alfajores-forno.celo-testnet.org');
+        // await provider.ready;
+        // console.log(await provider.sendTransaction(txData));
+    })
+
+    it('should test valid mint 721 provenance with cashback transaction', async () => {
+        const body = new CeloMintErc721()
+        body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb'
+        body.chain = Currency.CELO
+        body.to = '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA'
+        body.contractAddress = '0x26daf61fc9b8e52970686c0e8b5d66c63d5cab54'
+        body.tokenId = '3451'
+        body.url = 'https://google.com'
+        body.authorAddresses = ["0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA", "0x10168acf3231ccc7b16ba53f17dd4d8bdecf4e1a"]
+        body.cashbackValues = ["1", "1"]
+        body.fixedValues = ["1", "1"]
+        body.provenance = true
+        body.feeCurrency = Currency.CUSD
+        const txData = await prepareCeloMintErc721ProvenanceSignedTransaction(true, body, 'https://alfajores-forno.celo-testnet.org')
+        expect(txData).toContain('0x')
+        // const provider = new CeloProvider('https://alfajores-forno.celo-testnet.org');
+        // await provider.ready;
+        // console.log(await provider.sendTransaction(txData));
+    })
+    it('should test valid mint multiple 721 Provenance transaction with cashback', async () => {
+        const body = new CeloMintMultipleErc721()
+        body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb'
+        body.chain = Currency.CELO
+        body.to = ['0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea', '0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea', '0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea']
+        body.contractAddress = '0x26daf61fc9b8e52970686c0e8b5d66c63d5cab54'
+        body.tokenId = ['11244', '12244', '13244']
+        body.url = ['https://google.com', 'https://google.com', 'https://google.com']
+        body.cashbackValues = [['3'], ['4'], ['5']]
+        body.authorAddresses = [['0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea'], ['0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea'], ['0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea']]
+        body.fixedValues = [['10'], ['10'], ['10']]
+        body.feeCurrency = Currency.CUSD
+        const txData = await prepareCeloMintMultipleErc721ProvenanceSignedTransaction(true, body, 'https://alfajores-forno.celo-testnet.org')
+        expect(txData).toContain('0x');
+        // const provider = new CeloProvider('https://alfajores-forno.celo-testnet.org');
+        // await provider.ready;
+        // console.log(await provider.sendTransaction(txData));
+    })
+    it('should test valid transfer 721 data transaction', async () => {
+        const body = new CeloTransferErc721()
+        body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb'
+        body.chain = Currency.CELO
+        body.contractAddress = '0x26daf61fc9b8e52970686c0e8b5d66c63d5cab54'
+        body.to = '0x10168acf3231ccc7b16ba53f17dd4d8bdecf4e1a'
+        body.tokenId = '11223'
+        body.feeCurrency = Currency.CUSD
+        body.provenance = true
+        body.data = "send token X"
+        body.dataValue = "123"
+        body.value = '1000'
+        const txData = await prepareCeloTransferErc721SignedTransaction(true, body, 'https://alfajores-forno.celo-testnet.org')
+        expect(txData).toContain('0x')
+    })
+
+    it('should test valid transfer with cashback 721 transaction', async () => {
+        const body = new CeloTransferErc721()
+        body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb'
+        body.chain = Currency.CELO
+        body.contractAddress = '0x26daf61fc9b8e52970686c0e8b5d66c63d5cab54'
+        body.to = '0x10168acf3231ccc7b16ba53f17dd4d8bdecf4e1a'
+        body.tokenId = '11223'
+        body.feeCurrency = Currency.CUSD
+        body.provenance = true
+        body.data = "send token X"
+        body.dataValue = "123"
+        body.value = '1000'
+        const txData = await prepareCeloTransferErc721SignedTransaction(true, body, 'https://alfajores-forno.celo-testnet.org')
+        expect(txData).toContain('0x')
+    })
+    it('should test valid transfer data 721 transaction', async () => {
+        const body = new SmartContractReadMethodInvocation()
+        body.contractAddress = '0x26daf61fc9b8e52970686c0e8b5d66c63d5cab54'
+        body.params = ['1324']
+        body.methodName = 'getTokenData'
+        body.methodABI = erc721Provenance_abi.find((a: any) => a.name === 'getTokenData')
+        const response = await sendCeloSmartContractReadMethodInvocationTransaction(true, body, 'https://alfajores-forno.celo-testnet.org');
+        // @ts-ignore
+        console.log(JSON.stringify(response))
+    })
 })

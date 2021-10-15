@@ -1,5 +1,7 @@
-import {ethEstimateGas} from '../blockchain';
-import {BurnErc20, Currency, DeployErc20, MintErc20, TransferErc20} from '../model';
+import { ethEstimateGas } from '../blockchain';
+import { BurnErc20, Currency, DeployErc20, MintErc20, TransferErc20 } from '../model';
+import { SmartContractReadMethodInvocation } from '../model/request/SmartContractReadMethodInvocation';
+import erc721Provenance_abi from '../contracts/erc721Provenance/erc721Provenance_abi';
 import {
   ethGetGasPriceInWei,
   prepareCustomErc20SignedTransaction,
@@ -13,6 +15,11 @@ import {
   sendMintErc721Transaction,
   sendMintMultipleErc721Transaction,
   sendSmartContractMethodInvocationTransaction,
+  prepareEthBurnErc721SignedTransaction,
+  prepareEthDeployErc721SignedTransaction,
+  prepareEthMintMultipleErc721ProvenanceSignedTransaction,
+  prepareEthMintErc721ProvenanceSignedTransaction,
+  sendSmartContractReadMethodInvocationTransaction
 } from './eth';
 
 describe('ETH transactions', () => {
@@ -136,7 +143,7 @@ describe('ETH transactions', () => {
   })
 
   it('should test read smart contract method invocation', async () => {
-    const result = await sendSmartContractMethodInvocationTransaction( {
+    const result = await sendSmartContractMethodInvocationTransaction({
       contractAddress: '0x595bad1621784e9b0161d909be0117f17a5d37ca',
       methodName: 'balanceOf',
       methodABI: {
@@ -204,21 +211,21 @@ describe('ETH transactions', () => {
 
   it('should test eth 721 mint transaction', async () => {
     try {
-    const tokenId = new Date().getTime().toString()
-    const mintedToken = await sendMintErc721Transaction({
-      to: '0x811dfbff13adfbc3cf653dcc373c03616d3471c9',
-      tokenId,
-      url: 'https://www.seznam.cz',
-      fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
-      chain: Currency.ETH,
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fee: {
-        gasLimit: '50000',
-        gasPrice: '110'
-      }
-    })
-    console.log(tokenId)
-    expect(mintedToken).not.toBeNull()
+      const tokenId = new Date().getTime().toString()
+      const mintedToken = await sendMintErc721Transaction({
+        to: '0x811dfbff13adfbc3cf653dcc373c03616d3471c9',
+        tokenId,
+        url: 'https://www.seznam.cz',
+        fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+        chain: Currency.ETH,
+        contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+        fee: {
+          gasLimit: '50000',
+          gasPrice: '110'
+        }
+      })
+      console.log(tokenId)
+      expect(mintedToken).not.toBeNull()
     } catch (e) {
       console.log(e)
     }
@@ -257,18 +264,18 @@ describe('ETH transactions', () => {
   })
 
   it('should test eth 721 send transaction', async () => {
-      const sendErc721Token = await sendErc721Transaction({
-        to: '0x811dfbff13adfbc3cf653dcc373c03616d3471c9',
-        tokenId: '1615546122766',
-        fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
-        chain: Currency.ETH,
-        contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-        fee: {
-          gasLimit: '5000000',
-          gasPrice: '100'
-        }
-      })
-      expect(sendErc721Token).not.toBeNull()
+    const sendErc721Token = await sendErc721Transaction({
+      to: '0x811dfbff13adfbc3cf653dcc373c03616d3471c9',
+      tokenId: '1615546122766',
+      fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+      chain: Currency.ETH,
+      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+      fee: {
+        gasLimit: '5000000',
+        gasPrice: '100'
+      }
+    })
+    expect(sendErc721Token).not.toBeNull()
   })
 
   it('should test eth 721 deploy transaction', async () => {
@@ -281,4 +288,95 @@ describe('ETH transactions', () => {
     expect(deployErc721Token).not.toBeNull()
   })
 
+  // ERC-721 Provenance
+
+  it('should test eth 721 deploy transaction', async () => {
+    const deployErc721Token = await prepareEthDeployErc721SignedTransaction({
+      symbol: '1oido3id3',
+      fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+      chain: Currency.ETH,
+      provenance: true,
+      name: '2123kd',
+    })
+    expect(deployErc721Token).not.toBeNull()
+    console.log(deployErc721Token)
+  })
+  it('should test eth 721 mint multiple transaction', async () => {
+    const mintedTokens = await prepareEthMintMultipleErc721ProvenanceSignedTransaction({
+      to: ['0x75Bd6dFA13C0086b9C8C4b510b1F758c720B79BF', '0x75Bd6dFA13C0086b9C8C4b510b1F758c720B79BF'],
+      tokenId: ['1765', '2231'],
+      url: ['https://www.seznam.cz', 'https://www.seznam.cz'],
+      fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+      chain: Currency.ETH,
+      contractAddress: '0xc788be3b6e035f2f8e56662540f5bb8c8b3e98b7',
+    })
+    console.log(mintedTokens)
+    expect(mintedTokens).not.toBeNull()
+  })
+  it('should test eth 721 mint multiple transaction with cashback', async () => {
+    const mintedTokens = await prepareEthMintMultipleErc721ProvenanceSignedTransaction({
+      to: ['0x75Bd6dFA13C0086b9C8C4b510b1F758c720B79BF', '0x75Bd6dFA13C0086b9C8C4b510b1F758c720B79BF'],
+      tokenId: ['1234', '4321'],
+      url: ['https://www.seznam.cz', 'https://www.seznam.cz'],
+      authorAddresses: [['0xD25031B1aB4D82e5fDFb700234b2a22e272232Be'], ['0xD25031B1aB4D82e5fDFb700234b2a22e272232Be']],
+      cashbackValues: [['1'], ['2']],
+      fixedValues: [['10'], ['10']],
+      fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+      chain: Currency.ETH,
+      contractAddress: '0x5ef08fba01e8d80ff18f4d98e31a43fbb01e7f8a',
+    })
+    expect(mintedTokens).not.toBeNull()
+  })
+  it('should test eth 721 mint transaction', async () => {
+    const mintedTokens = await prepareEthMintErc721ProvenanceSignedTransaction({
+      to: '0x75Bd6dFA13C0086b9C8C4b510b1F758c720B79BF',
+      tokenId: '12312',
+      url: 'https://www.seznam.cz',
+      authorAddresses: ['0xD25031B1aB4D82e5fDFb700234b2a22e272232Be'],
+      cashbackValues: ['1'],
+      fixedValues: ['10'],
+      fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+      chain: Currency.ETH,
+      contractAddress: '0x5ef08fba01e8d80ff18f4d98e31a43fbb01e7f8a',
+    })
+    expect(mintedTokens).not.toBeNull()
+  })
+  it('should test eth 721 burn transaction', async () => {
+    const burnErc721Token = await prepareEthBurnErc721SignedTransaction({
+      tokenId: '12312',
+      fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+      chain: Currency.ETH,
+      contractAddress: '0x5ef08fba01e8d80ff18f4d98e31a43fbb01e7f8a',
+      provenance: true,
+      fee: {
+        gasLimit: '5000000',
+        gasPrice: '110'
+      },
+    })
+    expect(burnErc721Token).not.toBeNull()
+  })
+  it('should test eth 721 send transaction', async () => {
+    const sendErc721Token = await sendErc721Transaction({
+      to: '0x811dfbff13adfbc3cf653dcc373c03616d3471c9',
+      tokenId: '12312',
+      provenance: true,
+      fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+      data: 'testing',
+      dataValue: '12',
+      value: '2',
+      chain: Currency.ETH,
+      contractAddress: '0x5ef08fba01e8d80ff18f4d98e31a43fbb01e7f8a',
+    })
+    expect(sendErc721Token).not.toBeNull()
+  })
+  it('should test valid transfer data 721 transaction', async () => {
+    const body = new SmartContractReadMethodInvocation()
+    body.contractAddress = '0x5ef08fba01e8d80ff18f4d98e31a43fbb01e7f8a'
+    body.params = ['10']
+    body.methodName = 'getTokenData'
+    body.methodABI = erc721Provenance_abi.find((a: any) => a.name === 'getTokenData')
+    const response = await sendSmartContractReadMethodInvocationTransaction(body);
+    // @ts-ignore
+    console.log(JSON.stringify(response))
+  })
 })

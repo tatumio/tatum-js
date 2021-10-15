@@ -1,4 +1,4 @@
-import {IsIn, IsNotEmpty, IsOptional, Length, Min} from 'class-validator'
+import { IsIn, IsNotEmpty, IsOptional, Length, Min, IsBoolean } from 'class-validator';
 import {Currency} from './Currency'
 import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId'
 
@@ -19,4 +19,9 @@ export class DeployErc721 extends PrivateKeyOrSignatureId {
     @Min(0)
     @IsOptional()
     public nonce?: number;
+    
+    @IsBoolean()
+    @IsOptional()
+    public provenance?: boolean;
+
 }

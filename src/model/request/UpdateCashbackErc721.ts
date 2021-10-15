@@ -31,4 +31,6 @@ export class UpdateCashbackErc721 extends PrivateKeyOrSignatureId {
     @ValidateNested()
     public fee?: Fee;
 
+    @IsOptional()
+    public provenance?: boolean;
 }

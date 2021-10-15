@@ -1,4 +1,4 @@
-import {IsArray, IsIn, IsNotEmpty, IsOptional, Length, Min} from 'class-validator'
+import {IsArray, IsIn, IsNotEmpty, IsOptional, Length, Min, ValidateIf} from 'class-validator'
 import {Currency} from './Currency'
 import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId'
 
@@ -30,9 +30,16 @@ export class MintMultipleErc721 extends PrivateKeyOrSignatureId {
 
     @IsArray()
     @IsOptional()
+    @ValidateIf(o => o.authorAddresses && o.cashbackValues)
     public authorAddresses?: string[][];
 
     @IsArray()
     @IsOptional()
+    @ValidateIf(o => o.authorAddresses && o.cashbackValues)
     public cashbackValues?: string[][];
+
+    @IsOptional()
+    @IsArray()
+    @ValidateIf(o => o.authorAddresses && o.cashbackValues && o.fixedValues)
+    public fixedValues?:string[][];
 }
