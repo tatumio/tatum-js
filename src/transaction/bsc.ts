@@ -94,18 +94,21 @@ const prepareBscSignedTransactionAbstraction = async (
  */
 export const signBscKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, provider?: string) => {
     if (tx.chain !== Currency.BSC) {
-        throw Error('Unsupported chain.')
+        throw Error('Unsupported chain.');
     }
-    const client = getBscClient(provider, fromPrivateKey)
-    const transactionConfig = JSON.parse(tx.serializedTransaction)
-    transactionConfig.gas = await client.eth.estimateGas(transactionConfig)
+    const client = getBscClient(provider, fromPrivateKey);
+    const transactionConfig = JSON.parse(tx.serializedTransaction);
+    const gas = await client.eth.estimateGas(transactionConfig);
+    if (!transactionConfig.gas) {
+        transactionConfig.gas = gas;
+    }
     if (!transactionConfig.nonce) {
-        transactionConfig.nonce = await bscGetTransactionsCount(client.eth.defaultAccount as string)
+        transactionConfig.nonce = await bscGetTransactionsCount(client.eth.defaultAccount as string);
     }
     if (!transactionConfig.gasPrice || transactionConfig.gasPrice === '0' || transactionConfig.gasPrice === 0 || transactionConfig.gasPrice === '0x0') {
-        transactionConfig.gasPrice = await bscGetGasPriceInWei()
+        transactionConfig.gasPrice = await bscGetGasPriceInWei();
     }
-    return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey as string)).rawTransaction as string
+    return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey as string)).rawTransaction as string;
 }
 
 export const getBscBep20ContractDecimals = async (testnet: boolean, contractAddress: string, provider?: string) => {

@@ -90,18 +90,21 @@ export const getClient = (provider?: string, privateKey?: string) => {
  */
 export const signEthKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, provider?: string) => {
     if (tx.chain !== Currency.ETH) {
-        throw Error('Unsupported chain.')
+        throw Error('Unsupported chain.');
     }
-    const client = getClient(provider, fromPrivateKey)
-    const transactionConfig = JSON.parse(tx.serializedTransaction)
-    transactionConfig.gas = await client.eth.estimateGas(transactionConfig)
+    const client = getClient(provider, fromPrivateKey);
+    const transactionConfig = JSON.parse(tx.serializedTransaction);
+    const gas = await client.eth.estimateGas(transactionConfig);
+    if (!transactionConfig.gas) {
+        transactionConfig.gas = gas;
+    }
     if (!transactionConfig.nonce) {
-        transactionConfig.nonce = await ethGetTransactionsCount(client.eth.defaultAccount as string)
+        transactionConfig.nonce = await ethGetTransactionsCount(client.eth.defaultAccount as string);
     }
     if (!transactionConfig.gasPrice || transactionConfig.gasPrice === '0' || transactionConfig.gasPrice === 0 || transactionConfig.gasPrice === '0x0') {
-        transactionConfig.gasPrice = await ethGetGasPriceInWei()
+        transactionConfig.gasPrice = await ethGetGasPriceInWei();
     }
-    return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey as string)).rawTransaction as string
+    return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey as string)).rawTransaction as string;
 }
 
 /**
