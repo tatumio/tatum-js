@@ -6,30 +6,31 @@ import {AlgoTransaction, Currency, TransactionKMS} from '../model';
 
 /**
  * Algod V2 Client
- * @param provider url of the algorand server endpoint with token and port seperate by comman (for example: '<baseurl>,<port>,<token>')
+ * @param testnet if the algorand node is testnet or not
+ * @param provider url of the algorand server endpoint
  * @returns algorand Client
  */
-export const getAlgoClient = (provider?: string) => {
+export const getAlgoClient = (testnet: boolean, provider?: string) => {
     if (provider) {
-        const params = provider.split(',');
-        return new algosdk.Algodv2(params[2], params[0], params[1]);
+        return new algosdk.Algodv2((testnet ? `${process.env.TATUM_ALGORAND_TESTNET_TOKEN}` : `${process.env.TATUM_ALGORAND_MAINNET_TOKEN}`) || "DUMMYTOKEN" , provider); 
     } else {
-        return new algosdk.Algodv2({'X-API-Key': `${process.env.ALGO_API_KEY}`}, `${process.env.ALGOD_API_URL}`, '');
+        return new algosdk.Algodv2({'X-API-Key': testnet ? `${process.env.TATUM_ALGORAND_TESTNET_THIRD_API_KEY}` : `${process.env.TATUM_ALGORAND_MAINNET_THIRD_API_KEY}`},
+            testnet ? `${process.env.TATUM_ALGORAND_TESTNET_THIRD_API_ALGOD_URL}` : `${process.env.TATUM_ALGORAND_MAINNET_THIRD_API_ALGOD_URL}`);
     }
-    
 }
 
 /**
  * Algo Indexer Client
- * @param provider url of the algorand server endpoint with token and port seperate by comman (for example: '<baseurl>,<port>,<token>')
+ * @param testnet if the algorand node is testnet or not
+ * @param provider url of the algorand server endpoint
  * @returns algorand Indexer Client
  */
-export const getAlgoIndexerClient = (provider?: string) => {
+export const getAlgoIndexerClient = (testnet: boolean, provider?: string) => {
     if (provider) {
-        const params = provider.split(',');
-        return algosdk.Indexer(params[2], params[0], params[1]);
+        return algosdk.Indexer((testnet ? `${process.env.TATUM_ALGORAND_TESTNET_TOKEN}` : `${process.env.TATUM_ALGORAND_MAINNET_TOKEN}`) || "DUMMYTOKEN" , provider);
     } else {
-        return new algosdk.Indexer({'X-API-Key': `${process.env.ALGO_API_KEY}`}, `${process.env.ALGO_INDEXER_API_URL}`, '');
+        return new algosdk.Indexer({'X-API-Key': testnet ? `${process.env.TATUM_ALGORAND_TESTNET_THIRD_API_KEY}` : `${process.env.TATUM_ALGORAND_MAINNET_THIRD_API_KEY}`},
+        testnet ? `${process.env.TATUM_ALGORAND_TESTNET_THIRD_API_INDEXER_URL}` : `${process.env.TATUM_ALGORAND_MAINNET_THIRD_API_INDEXER_URL}`);
     }
 }
 
@@ -42,7 +43,7 @@ export const getAlgoIndexerClient = (provider?: string) => {
  * @returns transaction id of the transaction in the blockchain
  */
 export const prepareAlgoSignedTransaction = async ( testnet: boolean, tx: AlgoTransaction, provider?: string) => {
-    const algodClient = getAlgoClient(provider);
+    const algodClient = getAlgoClient(testnet, provider);
     const params = await algodClient.getTransactionParams().do();
     const decoder = new base32.Decoder({type: "rfc4648"})
     const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
