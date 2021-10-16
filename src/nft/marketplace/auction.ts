@@ -55,6 +55,11 @@ export interface Auction {
      Actual highest bidder
      */
     bidder?: string;
+
+    /*
+     Actual highest bid
+     */
+    highestBid?: string;
 }
 
 /**
