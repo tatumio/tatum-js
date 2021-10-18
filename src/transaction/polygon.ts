@@ -1,10 +1,12 @@
-import {BigNumber} from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
+import erc721Provenance_abi from '../contracts/erc721Provenance/erc721Provenance_abi';
+import erc721Provenance_bytecode from '../contracts/erc721Provenance/erc721Provenance_bytecode';
 import Web3 from 'web3';
-import {TransactionConfig} from 'web3-core';
-import {isHex, stringToHex, toHex, toWei} from 'web3-utils';
-import {polygonBroadcast} from '../blockchain';
-import {axios, validateBody} from '../connector/tatum';
-import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
+import { TransactionConfig } from 'web3-core';
+import { isHex, stringToHex, toHex, toWei } from 'web3-utils';
+import { polygonBroadcast } from '../blockchain';
+import { axios, validateBody } from '../connector/tatum';
+import { CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI } from '../constants';
 import erc1155TokenABI from '../contracts/erc1155/erc1155_abi';
 import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode';
 import erc20_abi from '../contracts/erc20/token_abi';
@@ -12,7 +14,7 @@ import erc20TokenABI from '../contracts/erc20/token_abi';
 import erc20TokenBytecode from '../contracts/erc20/token_bytecode';
 import erc721TokenABI from '../contracts/erc721/erc721_abi';
 import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
-import {auction, listing} from '../contracts/marketplace';
+import { auction, listing } from '../contracts/marketplace';
 import {
     BurnErc20,
     BurnMultiToken,
@@ -42,19 +44,19 @@ import {
     TransferMultiTokenBatch,
     UpdateCashbackErc721,
 } from '../model';
-import {mintNFT} from '../nft';
-import {obtainCustodialAddressType} from '../wallet';
+import { mintNFT } from '../nft';
+import { obtainCustodialAddressType } from '../wallet';
 
 /**
  * Estimate Gas price for the transaction.
  */
 export const polygonGetGasPriceInWei = async () => {
-    const {data} = await axios.get('https://gasstation-mainnet.matic.network')
+    const { data } = await axios.get('https://gasstation-mainnet.matic.network')
     return Web3.utils.toWei(`${Math.max(30, Math.min(Math.ceil(data.fast / 10), 100))}`, 'gwei');
 }
 
 const prepareGeneralTx = async (client: Web3, testnet: boolean, fromPrivateKey?: string, signatureId?: string, to?: string, amount?: string, nonce?: number,
-                                data?: string, gasLimit?: string, gasPrice?: string) => {
+    data?: string, gasLimit?: string, gasPrice?: string) => {
     const tx: TransactionConfig = {
         from: 0,
         to,
@@ -68,7 +70,7 @@ const prepareGeneralTx = async (client: Web3, testnet: boolean, fromPrivateKey?:
     if (signatureId) {
         return JSON.stringify(tx)
     }
-    tx.gas = gasLimit || await client.eth.estimateGas({to, data: data || '', value: tx.value})
+    tx.gas = gasLimit || await client.eth.estimateGas({ to, data: data || '', value: tx.value })
     return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string
 }
 
@@ -109,9 +111,9 @@ export const signPolygonKMSTransaction = async (tx: TransactionKMS, fromPrivateK
     const client = preparePolygonClient(testnet, provider, fromPrivateKey)
     const transactionConfig = JSON.parse(tx.serializedTransaction)
     if (!transactionConfig.gas) {
-        transactionConfig.gas = await client.eth.estimateGas({to: transactionConfig.to, data: transactionConfig.data})
+        transactionConfig.gas = await client.eth.estimateGas({ to: transactionConfig.to, data: transactionConfig.data })
     }
-    if (!transactionConfig.gasPrice || transactionConfig.gasPrice === '0' ||transactionConfig.gasPrice === 0 || transactionConfig.gasPrice === '0x0') {
+    if (!transactionConfig.gasPrice || transactionConfig.gasPrice === '0' || transactionConfig.gasPrice === 0 || transactionConfig.gasPrice === '0x0') {
         transactionConfig.gasPrice = await polygonGetGasPriceInWei()
     }
     return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey)).rawTransaction as string
@@ -137,7 +139,7 @@ export const getPolygonErc20ContractDecimals = async (testnet: boolean, contract
 export const preparePolygonGenerateCustodialWalletSignedTransaction = async (testnet: boolean, body: GenerateCustodialAddress, provider?: string) => {
     await validateBody(body, GenerateCustodialAddress)
     const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
-    const {abi, code} = obtainCustodialAddressType(body)
+    const { abi, code } = obtainCustodialAddressType(body)
     // @ts-ignore
     const contract = new client.eth.Contract(abi)
     const data = contract.deploy({
@@ -289,7 +291,33 @@ export const preparePolygonMintErc721SignedTransaction = async (testnet: boolean
     }
     throw new Error('Contract address should not be empty!')
 }
-
+/**
+ * Sign Polygon mint cashback erc721 provenance transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const preparePolygonMintErc721ProvenanceSignedTransaction = async (testnet: boolean, body: EthMintErc721, provider?: string) => {
+    await validateBody(body, EthMintErc721)
+    const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
+    let cb: string[] = []
+    let fv: string[] = []
+    if (body.cashbackValues && body.fixedValues && body.authorAddresses) {
+        cb = body.cashbackValues.map(c => `0x${new BigNumber(c).toString(16)}`)
+        fv = body.fixedValues.map(c => `0x${new BigNumber(c).toString(16)}`)
+        // cb = body.cashbackValues.map(c => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
+        // fv = body.fixedValues.map(c => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
+    }
+    // @ts-ignore
+    const data = new (client).eth.Contract(erc721Provenance_abi, body.contractAddress.trim()).methods
+        .mintWithTokenURI(body.to.trim(), body.tokenId, body.url, body.authorAddresses ? body.authorAddresses : [], cb, fv).encodeABI()
+    if (body.contractAddress) {
+        return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), undefined, body.nonce, data,
+            body.fee?.gasLimit, body.fee?.gasPrice)
+    }
+    throw new Error('Contract address should not be empty!')
+}
 /**
  * Sign Polygon mint cashback erc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param testnet mainnet or testnet version
@@ -305,13 +333,43 @@ export const preparePolygonMintCashbackErc721SignedTransaction = async (testnet:
     // @ts-ignore
     const data = new (client).eth.Contract(erc721TokenABI, body.contractAddress.trim()).methods
         .mintWithCashback(body.to.trim(), body.tokenId, body.url, body.authorAddresses, cb).encodeABI()
-    if(body.contractAddress) {
+    if (body.contractAddress) {
         return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), undefined, body.nonce, data,
             body.fee?.gasLimit, body.fee?.gasPrice)
     }
     throw new Error('Contract address should not be empty!')
 }
-
+/**
+ * Sign Polygon mint multiple cashback erc721 provenance transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const preparePolygonMintMultipleErc721ProvenanceSignedTransaction = async (testnet: boolean, body: EthMintMultipleErc721, provider?: string) => {
+    await validateBody(body, EthMintMultipleErc721)
+    const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
+    const cb: string[][] = []
+    const fv: string[][] = []
+    if (body.cashbackValues && body.fixedValues && body.authorAddresses) {
+        for (let i = 0; i < body.cashbackValues.length; i++) {
+            const cb2: string[] = []
+            const fv2: string[] = []
+            for (let j = 0; j < body.cashbackValues[i].length; j++) {
+                cb2.push(`0x${new BigNumber(toWei(body.cashbackValues[i][j], 'ether')).toString(16)}`)
+                fv2.push(`0x${new BigNumber(toWei(body.fixedValues[i][j], 'ether')).toString(16)}`)
+            }
+            cb.push(cb2)
+            fv.push(fv2)
+        }
+    }
+    // @ts-ignore
+    const data = new (client).eth.Contract(erc721Provenance_abi, body.contractAddress.trim()).methods
+        .mintMultiple(body.to.map(t => t.trim()), body.tokenId, body.url,
+            body.authorAddresses ? body.authorAddresses : [], cb, fv).encodeABI()
+    return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), undefined, body.nonce, data,
+        body.fee?.gasLimit, body.fee?.gasPrice)
+}
 /**
  * Sign Polygon mint multiple cashback erc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param testnet mainnet or testnet version
@@ -376,8 +434,8 @@ export const preparePolygonTransferErc721SignedTransaction = async (testnet: boo
     await validateBody(body, EthTransferErc721)
     const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
     // @ts-ignore
-    const data = new (client).eth.Contract(erc721TokenABI, body.contractAddress.trim())
-        .methods.safeTransfer(body.to.trim(), body.tokenId).encodeABI()
+    const data = new (client).eth.Contract(body.provenance ? erc721Provenance_abi : erc721TokenABI, body.contractAddress.trim())
+        .methods.safeTransfer(body.to.trim(), body.tokenId, body.provenance ? body.provenanceData + "'''###'''" + body.tokenPrice : undefined).encodeABI()
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), body.value, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice)
 }
@@ -410,9 +468,9 @@ export const preparePolygonDeployErc721SignedTransaction = async (testnet: boole
     await validateBody(body, EthDeployErc721)
     const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
     // @ts-ignore
-    const data = new client.eth.Contract(erc721TokenABI).deploy({
+    const data = new client.eth.Contract(body.provenance ? erc721Provenance_abi : erc721TokenABI).deploy({
         arguments: [body.name, body.symbol],
-        data: erc721TokenBytecode,
+        data: body.provenance ? erc721Provenance_bytecode : erc721TokenBytecode,
     }).encodeABI()
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, undefined, undefined, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice)
@@ -615,7 +673,7 @@ export const sendPolygonSmartContractReadMethodInvocationTransaction = async (te
     } = body
     const client = preparePolygonClient(testnet, provider)
     const contract = new client.eth.Contract([methodABI], contractAddress)
-    return {data: await contract.methods[methodName as string](...params).call()}
+    return { data: await contract.methods[methodName as string](...params).call() }
 }
 
 /**
@@ -700,6 +758,17 @@ export const sendPolygonMintCashbackErc721SignedTransaction = async (testnet: bo
     polygonBroadcast(await preparePolygonMintCashbackErc721SignedTransaction(testnet, body, provider), body.signatureId)
 
 /**
+ * Send Polygon mint cashback erc721 provenance transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
+export const sendPolygonMintErc721ProvenanceSignedTransaction = async (testnet: boolean, body: EthMintErc721, provider?: string) =>
+    polygonBroadcast(await preparePolygonMintErc721ProvenanceSignedTransaction(testnet, body, provider), body.signatureId)
+
+/**
  * Send Polygon mint multiple erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
  * @param testnet
@@ -709,6 +778,17 @@ export const sendPolygonMintCashbackErc721SignedTransaction = async (testnet: bo
  */
 export const sendPolygonMintMultipleCashbackErc721SignedTransaction = async (testnet: boolean, body: EthMintMultipleErc721, provider?: string) =>
     polygonBroadcast(await preparePolygonMintMultipleCashbackErc721SignedTransaction(testnet, body, provider), body.signatureId)
+
+/**
+ * Send Polygon mint multiple erc721 Provenance transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
+export const sendPolygonMintMultipleErc721ProvenanceSignedTransaction = async (testnet: boolean, body: EthMintMultipleErc721, provider?: string) =>
+    polygonBroadcast(await preparePolygonMintMultipleErc721ProvenanceSignedTransaction(testnet, body, provider), body.signatureId)
 
 /**
  * Send Polygon mint multiple erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -862,7 +942,7 @@ export const sendPolygonGenerateCustodialWalletSignedTransaction = async (testne
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendPolygonSmartContractMethodInvocationTransaction = async (testnet: boolean,
-                                                                          body: SmartContractMethodInvocation | SmartContractReadMethodInvocation, provider?: string) => {
+    body: SmartContractMethodInvocation | SmartContractReadMethodInvocation, provider?: string) => {
     if (body.methodABI.stateMutability === 'view') {
         return sendPolygonSmartContractReadMethodInvocationTransaction(testnet, body as SmartContractReadMethodInvocation, provider)
     }

@@ -1,11 +1,13 @@
-import {HarmonyAddress} from '@harmony-js/crypto';
-import {BigNumber} from 'bignumber.js';
+import { HarmonyAddress } from '@harmony-js/crypto';
+import { BigNumber } from 'bignumber.js';
+import erc721Provenance_abi from '../contracts/erc721Provenance/erc721Provenance_abi';
+import erc721Provenance_bytecode from '../contracts/erc721Provenance/erc721Provenance_bytecode';
 import Web3 from 'web3';
-import {TransactionConfig} from 'web3-core';
-import {toWei} from 'web3-utils';
-import {oneBroadcast} from '../blockchain';
-import {validateBody} from '../connector/tatum';
-import {TATUM_API_URL} from '../constants';
+import { TransactionConfig } from 'web3-core';
+import { toWei } from 'web3-utils';
+import { oneBroadcast } from '../blockchain';
+import { validateBody } from '../connector/tatum';
+import { TATUM_API_URL } from '../constants';
 import erc1155TokenABI from '../contracts/erc1155/erc1155_abi';
 import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode';
 import erc20_abi from '../contracts/erc20/token_abi';
@@ -13,7 +15,7 @@ import erc20TokenABI from '../contracts/erc20/token_abi';
 import erc20TokenBytecode from '../contracts/erc20/token_bytecode';
 import erc721TokenABI from '../contracts/erc721/erc721_abi';
 import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
-import {auction, listing} from '../contracts/marketplace';
+import { auction, listing } from '../contracts/marketplace';
 import {
     CreateRecord,
     Currency,
@@ -42,11 +44,11 @@ import {
     SmartContractReadMethodInvocation,
     TransactionKMS,
 } from '../model';
-import {mintNFT} from '../nft';
-import {obtainCustodialAddressType} from '../wallet';
+import { mintNFT } from '../nft';
+import { obtainCustodialAddressType } from '../wallet';
 
 const prepareGeneralTx = async (client: Web3, testnet: boolean, fromPrivateKey?: string, signatureId?: string, to?: string, amount?: string, nonce?: number,
-                                data?: string, gasLimit?: string, gasPrice?: string) => {
+    data?: string, gasLimit?: string, gasPrice?: string) => {
     const recipient = to?.includes('one') ? new HarmonyAddress(to).basicHex : to
     const tx: TransactionConfig = {
         from: 0,
@@ -61,7 +63,7 @@ const prepareGeneralTx = async (client: Web3, testnet: boolean, fromPrivateKey?:
     if (signatureId) {
         return JSON.stringify(tx)
     }
-    tx.gas = gasLimit || await client.eth.estimateGas({to: recipient, data: data || '', value: tx.value})
+    tx.gas = gasLimit || await client.eth.estimateGas({ to: recipient, data: data || '', value: tx.value })
     return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string
 }
 
@@ -102,9 +104,9 @@ export const signOneKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
     const client = prepareOneClient(testnet, provider, fromPrivateKey)
     const transactionConfig = JSON.parse(tx.serializedTransaction)
     if (!transactionConfig.gas) {
-        transactionConfig.gas = await client.eth.estimateGas({to: transactionConfig.to, data: transactionConfig.data})
+        transactionConfig.gas = await client.eth.estimateGas({ to: transactionConfig.to, data: transactionConfig.data })
     }
-    if (!transactionConfig.gasPrice || transactionConfig.gasPrice === '0' ||transactionConfig.gasPrice === 0 || transactionConfig.gasPrice === '0x0') {
+    if (!transactionConfig.gasPrice || transactionConfig.gasPrice === '0' || transactionConfig.gasPrice === 0 || transactionConfig.gasPrice === '0x0') {
         transactionConfig.gasPrice = await client.eth.getGasPrice()
     }
     return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey)).rawTransaction as string
@@ -215,7 +217,7 @@ export const getOne20ContractDecimals = async (testnet: boolean, contractAddress
 export const prepareOneGenerateCustodialWalletSignedTransaction = async (testnet: boolean, body: GenerateCustodialAddress, provider?: string) => {
     await validateBody(body, GenerateCustodialAddress)
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
-    const {abi, code} = obtainCustodialAddressType(body)
+    const { abi, code } = obtainCustodialAddressType(body)
     // @ts-ignore
     const contract = new client.eth.Contract(abi)
     const data = contract.deploy({
@@ -307,10 +309,85 @@ export const prepareOneMint721SignedTransaction = async (testnet: boolean, body:
     if (body.contractAddress) {
         return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, undefined, body.nonce, data,
             body.fee?.gasLimit, body.fee?.gasPrice)
-        }
+    }
     throw new Error('Contract address should not be empty!')
 }
-
+/**
+ * Sign Harmony mint cashback erc721 provenance transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareOneMint721ProvenanceSignedTransaction = async (testnet: boolean, body: OneMint721, provider?: string) => {
+    await validateBody(body, OneMint721)
+    const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+    let cb: string[] = []
+    let fv: string[] = []
+    let authors: string[] = []
+    if (body.cashbackValues && body.fixedValues && body.authorAddresses) {
+        cb = body.cashbackValues.map(c => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
+        fv = body.fixedValues.map(c => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
+        authors = body.authorAddresses.map(a => new HarmonyAddress(a).basicHex)
+    }
+    // @ts-ignore
+    const data = new (client).eth.Contract(erc721Provenance_abi, new HarmonyAddress(body.contractAddress).basicHex).methods
+        .mintWithTokenURI(new HarmonyAddress(body.to).basicHex, body.tokenId, body.url, authors, cb, fv).encodeABI()
+    if (body.contractAddress) {
+        return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, undefined, body.nonce, data,
+            body.fee?.gasLimit, body.fee?.gasPrice)
+    }
+    throw new Error('Contract address should not be empty!')
+}
+/**
+ * Sign Harmony mint multiple cashback erc721 provenance transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareOneMintMultiple721ProvenanceSignedTransaction = async (testnet: boolean, body: OneMintMultiple721, provider?: string) => {
+    await validateBody(body, OneMintMultiple721)
+    const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+    const cb: string[][] = []
+    const fv: string[][] = []
+    if (body.cashbackValues && body.fixedValues) {
+        for (let i = 0; i < body.cashbackValues.length; i++) {
+            const cb2: string[] = []
+            const fv2: string[] = []
+            for (let j = 0; j < body.cashbackValues[i].length; j++) {
+                cb2.push(`0x${new BigNumber(toWei(body.cashbackValues[i][j], 'ether')).toString(16)}`)
+                fv2.push(`0x${new BigNumber(toWei(body.fixedValues[i][j], 'ether')).toString(16)}`)
+            }
+            cb.push(cb2)
+            fv.push(fv2)
+        }
+    }
+    // const cashbacks: string[][] = body.cashbackValues!
+    // const cb = cashbacks.map(cashback => cashback.map(c => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
+    // @ts-ignore
+    const data = new (client).eth.Contract(erc721Provenance_abi, new HarmonyAddress(body.contractAddress).basicHex).methods
+        .mintMultiple(body.to.map(t => new HarmonyAddress(t).basicHex), body.tokenId, body.url,
+            body.authorAddresses?.map(a => a.map(a1 => new HarmonyAddress(a1).basicHex)), cb, fv).encodeABI()
+    return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, undefined, body.nonce, data,
+        body.fee?.gasLimit, body.fee?.gasPrice)
+}
+/**
+ * Sign Harmony transfer erc721 provenance transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareOneTransfer721ProvenanceSignedTransaction = async (testnet: boolean, body: OneTransfer721, provider?: string) => {
+    await validateBody(body, OneTransfer721)
+    const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+    // @ts-ignore
+    const data = new (client).eth.Contract(erc721TokenABI, new HarmonyAddress(body.contractAddress).basicHex)
+        .methods.safeTransfer(new HarmonyAddress(body.to).basicHex, body.tokenId, body.provenance ? body.provenanceData + "'''###'''" + body.tokenPrice : undefined).encodeABI()
+    return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, body.value, body.nonce, data,
+        body.fee?.gasLimit, body.fee?.gasPrice)
+}
 /**
  * Sign Harmony mint cashback erc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param testnet mainnet or testnet version
@@ -326,7 +403,7 @@ export const prepareOneMintCashback721SignedTransaction = async (testnet: boolea
     // @ts-ignore
     const data = new (client).eth.Contract(erc721TokenABI, new HarmonyAddress(body.contractAddress).basicHex).methods
         .mintWithCashback(new HarmonyAddress(body.to).basicHex, body.tokenId, body.url, body.authorAddresses?.map(a => new HarmonyAddress(a).basicHex), cb).encodeABI()
-    if(body.contractAddress) {
+    if (body.contractAddress) {
         return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, undefined, body.nonce, data,
             body.fee?.gasLimit, body.fee?.gasPrice)
     }
@@ -397,8 +474,8 @@ export const prepareOneTransfer721SignedTransaction = async (testnet: boolean, b
     await validateBody(body, OneTransfer721)
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
     // @ts-ignore
-    const data = new (client).eth.Contract(erc721TokenABI, new HarmonyAddress(body.contractAddress).basicHex)
-        .methods.safeTransfer(new HarmonyAddress(body.to).basicHex, body.tokenId).encodeABI()
+    const data = new (client).eth.Contract(body.provenance ? erc721Provenance_abi : erc721TokenABI, new HarmonyAddress(body.contractAddress).basicHex)
+        .methods.safeTransfer(new HarmonyAddress(body.to).basicHex, body.tokenId, body.provenance ? body.provenanceData + "'''###'''" + body.tokenPrice : undefined).encodeABI()
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, body.value, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice)
 }
@@ -431,9 +508,9 @@ export const prepareOneDeploy721SignedTransaction = async (testnet: boolean, bod
     await validateBody(body, OneDeploy721)
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
     // @ts-ignore
-    const data = new client.eth.Contract(erc721TokenABI).deploy({
+    const data = new client.eth.Contract(body.provenance ? erc721Provenance_abi : erc721TokenABI).deploy({
         arguments: [body.name, body.symbol],
-        data: erc721TokenBytecode,
+        data: body.provenance ? erc721Provenance_bytecode : erc721TokenBytecode,
     }).encodeABI()
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, undefined, undefined, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice)
@@ -607,7 +684,7 @@ export const sendOneSmartContractReadMethodInvocationTransaction = async (testne
     } = body
     const client = prepareOneClient(testnet, provider)
     const contract = new client.eth.Contract([methodABI], contractAddress)
-    return {data: await contract.methods[methodName as string](...params).call()}
+    return { data: await contract.methods[methodName as string](...params).call() }
 }
 
 /**
@@ -679,6 +756,32 @@ export const sendOneMint721SignedTransaction = async (testnet: boolean, body: On
 
     return oneBroadcast(await prepareOneMint721SignedTransaction(testnet, body, provider))
 }
+
+/**
+ * Send Harmony mint erc721 Provenance transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
+export const sendOneMint721ProvenanceSignedTransaction = async (testnet: boolean, body: OneMint721, provider?: string) => {
+    if (!body.fromPrivateKey && !body.fromPrivateKey) {
+        return mintNFT(body)
+    }
+
+    return oneBroadcast(await prepareOneMint721ProvenanceSignedTransaction(testnet, body, provider))
+}
+/**
+ * Send Harmony mint multiple cashback erc721 provenance transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
+export const sendOneMintMultiple721ProvenanceSignedTransaction = async (testnet: boolean, body: OneMintMultiple721, provider?: string) =>
+    oneBroadcast(await prepareOneMintMultiple721ProvenanceSignedTransaction(testnet, body, provider))
 
 /**
  * Send Harmony mint cashback erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -865,7 +968,7 @@ export const sendOneDeployMarketplaceListingSignedTransaction = async (testnet: 
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendOneSmartContractMethodInvocationTransaction = async (testnet: boolean,
-                                                                      body: SmartContractMethodInvocation | SmartContractReadMethodInvocation, provider?: string) => {
+    body: SmartContractMethodInvocation | SmartContractReadMethodInvocation, provider?: string) => {
     if (body.methodABI.stateMutability === 'view') {
         return sendOneSmartContractReadMethodInvocationTransaction(testnet, body as SmartContractReadMethodInvocation, provider)
     }

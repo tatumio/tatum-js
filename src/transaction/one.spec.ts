@@ -17,6 +17,7 @@ import {
     OneTransferMultiToken,
     OneTransferMultiTokenBatch,
     OneUpdateCashback721,
+    SmartContractReadMethodInvocation
 } from '../model'
 import {
     prepareOneBatchTransferMultiTokenSignedTransaction,
@@ -37,8 +38,12 @@ import {
     prepareOneTransfer20SignedTransaction,
     prepareOneTransfer721SignedTransaction,
     prepareOneTransferMultiTokenSignedTransaction,
-    prepareOneUpdateCashbackForAuthor721SignedTransaction
+    prepareOneUpdateCashbackForAuthor721SignedTransaction,
+    prepareOneMint721ProvenanceSignedTransaction,
+    sendOneSmartContractReadMethodInvocationTransaction,
+    prepareOneMintMultiple721ProvenanceSignedTransaction
 } from './one'
+import erc721Provenance_abi from '../contracts/erc721Provenance/erc721Provenance_abi';
 
 const PROVIDER = 'https://api.s0.b.hmny.io'
 
@@ -116,7 +121,93 @@ describe('ONE transactions', () => {
             await processTx(txData)
         })
     })
+    describe('HRM 721 Provenance', () => {
+        it('should test valid Deploy 721', async () => {
+            const body = new OneDeploy721()
+            body.fromPrivateKey = '0x4cda6d2c33b0f9a041e46474a638ac59aee0734cf208aa9aa2f05ef887bd09e1'
+            body.name = 'Tatum'
+            body.symbol = 'TTM'
+            body.chain = Currency.ONE
+            body.provenance = true
+            const txData = await prepareOneDeploy721SignedTransaction(true, body, PROVIDER)
+            expect(txData).toContain('0x')
 
+            await processTx(txData)
+        })
+        it('should test valid 721 provenance mint', async () => {
+            const body = new OneMint721()
+            body.fromPrivateKey = '0x4cda6d2c33b0f9a041e46474a638ac59aee0734cf208aa9aa2f05ef887bd09e1'
+            body.tokenId = '1001'
+            body.contractAddress = '0x27c133a613f11870fa935ecbb03c0cf55f93e5de'
+            body.url = '14'
+            body.chain = Currency.ONE
+            body.to = 'one13t9ul0yvudlk7e60fwvxr5l0azfg3kyl474xmc'
+            body.provenance = true
+            const txData = await prepareOneMint721ProvenanceSignedTransaction(true, body, PROVIDER)
+            expect(txData).toContain('0x')
+
+            // await processTx(txData)
+        })
+        it('should test valid 721 provenance mint with cashback', async () => {
+            const body = new OneMint721()
+            body.fromPrivateKey = '0x4cda6d2c33b0f9a041e46474a638ac59aee0734cf208aa9aa2f05ef887bd09e1'
+            body.tokenId = '10211'
+            body.contractAddress = '0x27c133a613f11870fa935ecbb03c0cf55f93e5de'
+            body.url = '14'
+            body.chain = Currency.ONE
+            body.to = 'one13t9ul0yvudlk7e60fwvxr5l0azfg3kyl474xmc'
+            body.authorAddresses = ['one13t9ul0yvudlk7e60fwvxr5l0azfg3kyl474xmc']
+            body.cashbackValues = ['1']
+            body.provenance = true
+            const txData = await prepareOneMint721ProvenanceSignedTransaction(true, body, PROVIDER)
+            expect(txData).toContain('0x')
+
+            // await processTx(txData)
+        })
+        it('should test valid 721 transaction', async () => {
+            const body = new OneTransfer721()
+            body.fromPrivateKey = '0x4cda6d2c33b0f9a041e46474a638ac59aee0734cf208aa9aa2f05ef887bd09e1'
+            body.tokenId = '1021'
+            body.contractAddress = '0x27c133a613f11870fa935ecbb03c0cf55f93e5de'
+            body.chain = Currency.ONE
+            body.provenance = true
+            body.provenanceData = "test this"
+            body.tokenPrice = "10"
+            body.to = 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde'
+            const txData = await prepareOneTransfer721SignedTransaction(true, body, PROVIDER)
+            expect(txData).toContain('0x')
+
+            await processTx(txData)
+        })
+        it('should test valid transfer data 721 transaction', async () => {
+            const body = new SmartContractReadMethodInvocation()
+            body.contractAddress = '0x27c133a613f11870fa935ecbb03c0cf55f93e5de'
+            body.params = ['100']
+            body.methodName = 'getTokenData'
+            body.methodABI = erc721Provenance_abi.find((a: any) => a.name === 'getTokenData')
+            const response = await sendOneSmartContractReadMethodInvocationTransaction(true, body, PROVIDER);
+            // @ts-ignore
+            console.log(JSON.stringify(response))
+        })
+        it('should test valid 721 mint with cashback multiple', async () => {
+            const body = new OneMintMultiple721()
+            body.fromPrivateKey = '0x4cda6d2c33b0f9a041e46474a638ac59aee0734cf208aa9aa2f05ef887bd09e1'
+            body.tokenId = ['103212']
+            body.contractAddress = '0x27c133a613f11870fa935ecbb03c0cf55f93e5de'
+            body.url = ['14']
+            body.chain = Currency.ONE
+            body.to = ['one13t9ul0yvudlk7e60fwvxr5l0azfg3kyl474xmc']
+            body.authorAddresses = [['one13t9ul0yvudlk7e60fwvxr5l0azfg3kyl474xmc']]
+            body.cashbackValues = [['1']]
+            body.provenance = true
+            body.fixedValues = [['1']]
+            const txData = await prepareOneMintMultiple721ProvenanceSignedTransaction(true, body, PROVIDER)
+            expect(txData).toContain('0x')
+
+            await processTx(txData)
+        })
+
+    })
     describe('HRM 721', () => {
         it('should test valid Deploy 721', async () => {
             const body = new OneDeploy721()

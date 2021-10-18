@@ -490,8 +490,8 @@ describe('CELO transactions', () => {
         body.tokenId = '12355'
         body.feeCurrency = Currency.CUSD
         body.provenance = true
-        body.data = "send token X"
-        body.dataValue = "123"
+        body.provenanceData = "send token X"
+        body.tokenPrice = "123"
         body.value = '1000'
         const txData = await prepareCeloTransferErc721SignedTransaction(true, body, 'https://alfajores-forno.celo-testnet.org')
         expect(txData).toContain('0x')
@@ -509,8 +509,8 @@ describe('CELO transactions', () => {
         body.tokenId = '11223'
         body.feeCurrency = Currency.CUSD
         body.provenance = true
-        body.data = "send token X"
-        body.dataValue = "123"
+        body.provenanceData = "send token X"
+        body.tokenPrice = "123"
         body.value = '1000'
         const txData = await prepareCeloTransferErc721SignedTransaction(true, body, 'https://alfajores-forno.celo-testnet.org')
         expect(txData).toContain('0x')

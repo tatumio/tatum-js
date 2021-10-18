@@ -387,7 +387,13 @@ export const prepareCeloMintErc721ProvenanceSignedTransaction = async (testnet: 
         const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
         // @ts-ignore
         const contract = new (new Web3()).eth.Contract(erc721Provenance_abi, contractAddress.trim())
-        const data = contract.methods.mintWithTokenURI(to.trim(), tokenId, url, authorAddresses ? authorAddresses : [], cashbackValues ? cashbackValues : [], fixedValues ? fixedValues : []).encodeABI();
+        let cb: string[] = []
+        let fv: string[] = []
+        if (cashbackValues && fixedValues && authorAddresses) {
+            cb = cashbackValues.map(c => `0x${new BigNumber(toWei(c, 'ether')).toString(16)}`)
+            fv = fixedValues.map(c => `0x${new BigNumber(toWei(c, 'ether')).toString(16)}`)
+        }
+        const data = contract.methods.mintWithTokenURI(to.trim(), tokenId, url, authorAddresses ? authorAddresses : [], cb, fv).encodeABI();
         if (signatureId) {
             return JSON.stringify({
                 chainId: network.chainId,
@@ -552,8 +558,8 @@ export const prepareCeloTransferErc721SignedTransaction = async (testnet: boolea
         signatureId,
         value,
         provenance,
-        data,
-        dataValue
+        provenanceData,
+        tokenPrice
     } = body
 
     const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
@@ -563,7 +569,7 @@ export const prepareCeloTransferErc721SignedTransaction = async (testnet: boolea
     // @ts-ignore
     const contract = new (new Web3()).eth.Contract(provenance ? erc721Provenance_abi : erc721_abi, contractAddress.trim())
     // @ts-ignore
-    const tokenData = contract.methods.safeTransfer(to.trim(), tokenId, provenance ? data + "'''###'''" + dataValue : undefined).encodeABI()
+    const tokenData = contract.methods.safeTransfer(to.trim(), tokenId, provenance ? provenanceData + "'''###'''" + tokenPrice : undefined).encodeABI()
     if (signatureId) {
         return JSON.stringify({
             chainId: network.chainId,
@@ -1606,8 +1612,13 @@ export const sendCeloMintCashbackErc721Transaction = async (testnet: boolean, bo
  * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendCeloMintErc721ProvenanceTransaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) =>
+export const sendCeloMintErc721ProvenanceTransaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) =>{
+    if (!body.fromPrivateKey && !body.fromPrivateKey) {
+        return mintNFT(body)
+    }
     celoBroadcast(await prepareCeloMintErc721ProvenanceSignedTransaction(testnet, body, provider), body.signatureId)
+}
+    
 /**
  * Send Celo mint multiple provenance erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.

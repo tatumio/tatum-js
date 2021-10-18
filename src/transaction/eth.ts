@@ -477,11 +477,18 @@ export const prepareEthMintErc721ProvenanceSignedTransaction = async (body: EthM
 
     // @ts-ignore
     const contract = new (client).eth.Contract(erc721Provenance_abi, contractAddress)
+    let cb: string[] = []
+    let fv: string[] = []
+        if (cashbackValues && fixedValues && authorAddresses) {
+            cb = cashbackValues.map(c => `0x${new BigNumber(toWei(c, 'ether')).toString(16)}`)
+            fv = fixedValues.map(c => `0x${new BigNumber(toWei(c, 'ether')).toString(16)}`)
+        }
+    const data = contract.methods.mintWithTokenURI(to.trim(), tokenId, url, authorAddresses ? authorAddresses : [], cb, fv).encodeABI();
     if (contractAddress) {
         const tx: TransactionConfig = {
             from: 0,
             to: contractAddress.trim(),
-            data: contract.methods.mintWithTokenURI(to.trim(), tokenId, url, authorAddresses ? authorAddresses : [], cashbackValues ? cashbackValues : [], fixedValues ? fixedValues : []).encodeABI(),
+            data: data,
             nonce,
         }
         return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
@@ -756,8 +763,8 @@ export const prepareEthTransferErc721SignedTransaction = async (body: EthTransfe
         nonce,
         signatureId,
         value,
-        data,
-        dataValue,
+        provenanceData,
+        tokenPrice,
         provenance
     } = body
 
@@ -766,7 +773,7 @@ export const prepareEthTransferErc721SignedTransaction = async (body: EthTransfe
     // @ts-ignore
     const contract = new (client).eth.Contract(provenance ? erc721Provenance_abi : erc721TokenABI, contractAddress)
     // @ts-ignore
-    const tokenData = contract.methods.safeTransfer(to.trim(), tokenId, provenance ? data + "'''###'''" + dataValue : undefined).encodeABI()
+    const tokenData = contract.methods.safeTransfer(to.trim(), tokenId, provenance ? provenanceData + "'''###'''" + tokenPrice : undefined).encodeABI()
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),

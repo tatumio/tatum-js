@@ -29,16 +29,16 @@ export class TransferErc721 extends PrivateKeyOrSignatureId {
     public value?: string;
 
     @IsOptional()
-    @ValidateIf(o => o.data && o.dataValue && o.provenance)
+    @ValidateIf(o => o.provenanceData && o.tokenPrice && o.provenance)
     public provenance?: boolean;
 
     @IsOptional()
-    @ValidateIf(o => o.data && o.dataValue && o.provenance)
-    public data?: string;
+    @ValidateIf(o => o.provenanceData && o.tokenPrice && o.provenance)
+    public provenanceData?: string;
 
     @IsOptional()
     @IsNumberString()
-    @ValidateIf(o => o.data && o.dataValue && o.provenance)
-    public dataValue?: string;
+    @ValidateIf(o => o.provenanceData && o.tokenPrice && o.provenance)
+    public tokenPrice?: string;
 
 }

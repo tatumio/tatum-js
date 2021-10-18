@@ -322,9 +322,9 @@ describe('BSC transactions', () => {
             tokenId: '100',
             fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
             chain: Currency.BSC,
-            data: 'testing data',
-            dataValue: '12',
-            provenance:true,
+            provenanceData: "send token X",
+            tokenPrice: "123",
+            provenance: true,
             contractAddress: '0x5ef08fba01e8d80ff18f4d98e31a43fbb01e7f8a',
         })
         expect(sendBep721Token).not.toBeNull()
