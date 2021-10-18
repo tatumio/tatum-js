@@ -16,7 +16,8 @@ import {
     FlowDeployNft,
     FlowMintMultipleNft,
     FlowMintNft,
-    FlowTransferNft, OneMint721,
+    FlowTransferNft,
+    OneMint721,
     TransactionHash,
     TronBurnTrc721,
     TronDeployTrc721,
@@ -81,7 +82,7 @@ import {
     sendUpdateCashbackForAuthorErc721Transaction,
 } from '../transaction';
 
-export const mintNFT = (body: CeloMintErc721 | EthMintErc721 | OneMint721 ) => post(`/v3/nft/mint`, body)
+export const mintNFT = (body: CeloMintErc721 | EthMintErc721 | OneMint721): Promise<TransactionHash> => post(`/v3/nft/mint`, body);
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetBalanceErc721" target="_blank">Tatum API documentation</a>
@@ -201,7 +202,7 @@ export const createNFT = async (testnet: boolean, body: CeloMintErc721 | EthMint
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const mintNFTWithUri = async (testnet: boolean, body: CeloMintErc721 | EthMintErc721 | TronMintTrc721 | FlowMintNft, provider?: string) => {
+export const mintNFTWithUri = async (testnet: boolean, body: CeloMintErc721 | EthMintErc721 | TronMintTrc721 | FlowMintNft, provider?: string): Promise<TransactionHash> => {
     switch (body.chain) {
         case Currency.CELO:
             if ((body as CeloMintErc721).authorAddresses) {

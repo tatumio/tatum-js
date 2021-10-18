@@ -145,7 +145,86 @@ const convertEthPrivateKey = (testnet: boolean, privkey: string) => {
  * @returns blockchain address
  */
 export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xpub: string, i: number) => {
-    return generateEthAddress(testnet, xpub, i)
+    switch (currency) {
+        case Currency.BTC:
+            return generateBtcAddress(testnet, xpub, i)
+        case Currency.TRON:
+        case Currency.USDT_TRON:
+        case Currency.INRT_TRON:
+            return generateTronAddress(xpub, i)
+        case Currency.FLOW:
+        case Currency.FUSD:
+            return generateFlowPublicKey(xpub, i)
+        case Currency.LTC:
+            return generateLtcAddress(testnet, xpub, i)
+        case Currency.DOGE:
+            return generateDogeAddress(testnet, xpub, i)
+        case Currency.CELO:
+        case Currency.CEUR:
+        case Currency.CUSD:
+            return generateCeloAddress(testnet, xpub, i)
+        case Currency.BCH:
+            return generateBchAddress(testnet, xpub, i)
+        case Currency.QTUM:
+            return generateQtumAddress(testnet, xpub, i)
+        case Currency.USDT:
+        case Currency.WBTC:
+        case Currency.LEO:
+        case Currency.LINK:
+        case Currency.UNI:
+        case Currency.FREE:
+        case Currency.MKR:
+        case Currency.USDC:
+        case Currency.BAT:
+        case Currency.TUSD:
+        case Currency.PAX:
+        case Currency.PAXG:
+        case Currency.MATIC_ETH:
+        case Currency.PLTC:
+        case Currency.XCON:
+        case Currency.REVV:
+        case Currency.SAND:
+        case Currency.ETH:
+        case Currency.BSC:
+        case Currency.MATIC:
+        case Currency.USDT_MATIC:
+        case Currency.USDC_MATIC:
+        case Currency.LATOKEN:
+        case Currency.BETH:
+        case Currency.GAMEE:
+        case Currency.BUSD:
+        case Currency.USDC_BSC:
+        case Currency.B2U_BSC:
+        case Currency.CAKE:
+        case Currency.HAG:
+        case Currency.BUSD_BSC:
+        case Currency.GMC_BSC:
+        case Currency.GMC:
+        case Currency.BBTC:
+        case Currency.BADA:
+        case Currency.RMD:
+        case Currency.WBNB:
+        case Currency.BDOT:
+        case Currency.BXRP:
+        case Currency.BLTC:
+        case Currency.BBCH:
+        case Currency.MMY:
+            return generateEthAddress(testnet, xpub, i)
+        case Currency.ONE:
+            return generateOneAddress(testnet, xpub, i)
+        case Currency.XDC:
+            return generateXdcAddress(testnet, xpub, i)
+        case Currency.EGLD:
+            return generateEgldAddress(testnet, xpub, i)
+        case Currency.VET:
+            return generateVetAddress(testnet, xpub, i)
+        case Currency.LYRA:
+            return generateLyraAddress(testnet, xpub, i)
+        case Currency.ADA:
+            return cardano.generateAddress(testnet, xpub, i)
+        default:
+            throw new Error('Unsupported blockchain.')
+    }
 }
 
 /**
@@ -157,7 +236,87 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
  * @returns blockchain private key to the address
  */
 export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: boolean, mnemonic: string, i: number) => {
-    return generateEthPrivateKey(testnet, mnemonic, i)
+    switch (currency) {
+        case Currency.BTC:
+            return generateBtcPrivateKey(testnet, mnemonic, i)
+        case Currency.LTC:
+            return generateLtcPrivateKey(testnet, mnemonic, i)
+        case Currency.DOGE:
+            return generateDogePrivateKey(testnet, mnemonic, i)
+        case Currency.BCH:
+            return generateBchPrivateKey(testnet, mnemonic, i)
+        case Currency.TRON:
+        case Currency.USDT_TRON:
+        case Currency.INRT_TRON:
+            return generateTronPrivateKey(mnemonic, i)
+        case Currency.QTUM:
+            return generateQtumPrivateKey(testnet, mnemonic, i)
+        case Currency.MATIC:
+        case Currency.USDT_MATIC:
+        case Currency.USDC_MATIC:
+            return generatePolygonPrivateKey(testnet, mnemonic, i)
+        case Currency.FLOW:
+        case Currency.FUSD:
+            return generateFlowPrivateKey(mnemonic, i)
+        case Currency.CELO:
+        case Currency.CEUR:
+        case Currency.CUSD:
+            return generateCeloPrivateKey(testnet, mnemonic, i)
+        case Currency.USDT:
+        case Currency.WBTC:
+        case Currency.LEO:
+        case Currency.LINK:
+        case Currency.UNI:
+        case Currency.FREE:
+        case Currency.MKR:
+        case Currency.LATOKEN:
+        case Currency.USDC:
+        case Currency.RMD:
+        case Currency.BAT:
+        case Currency.TUSD:
+        case Currency.PAX:
+        case Currency.PAXG:
+        case Currency.PLTC:
+        case Currency.XCON:
+        case Currency.REVV:
+        case Currency.SAND:
+        case Currency.ETH:
+        case Currency.MATIC_ETH:
+        case Currency.BSC:
+        case Currency.BETH:
+        case Currency.GAMEE:
+        case Currency.BBTC:
+        case Currency.BADA:
+        case Currency.WBNB:
+        case Currency.BUSD:
+        case Currency.USDC_BSC:
+        case Currency.B2U_BSC:
+        case Currency.CAKE:
+        case Currency.HAG:
+        case Currency.BUSD_BSC:
+        case Currency.GMC:
+        case Currency.GMC_BSC:
+        case Currency.BDOT:
+        case Currency.BXRP:
+        case Currency.BLTC:
+        case Currency.BBCH:
+        case Currency.MMY:
+            return generateEthPrivateKey(testnet, mnemonic, i)
+        case Currency.ONE:
+            return generateOnePrivateKey(testnet, mnemonic, i)
+        case Currency.XDC:
+            return generateXdcPrivateKey(testnet, mnemonic, i)
+        case Currency.EGLD:
+            return generateEgldPrivateKey(testnet, mnemonic, i)
+        case Currency.VET:
+            return generateVetPrivateKey(testnet, mnemonic, i)
+        case Currency.LYRA:
+            return generateLyraPrivateKey(testnet, mnemonic, i)
+        case Currency.ADA:
+            return cardano.generatePrivateKey(mnemonic, i)
+        default:
+            throw new Error('Unsupported blockchain.')
+    }
 }
 
 /**

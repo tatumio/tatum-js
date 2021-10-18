@@ -9,6 +9,10 @@ export class EgldEsdtTransaction extends PrivateKeyOrSignatureId {
     public to?: string;
 
     @IsOptional()
+    @Length(62, 62)
+    public from?: string;
+
+    @IsOptional()
     @IsNumberString()
     public amount?: string;
 
