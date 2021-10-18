@@ -165,7 +165,7 @@ export const prepareAuctionCancelAbstraction = async (body: InvokeAuctionOperati
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareAuctionSettleAbstraction = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
+export const prepareAuctionSettleAbstraction = async (testnet: boolean, body: InvokeAuctionOperation) => {
     await validateBody(body, InvokeAuctionOperation);
     return [body.id];
 };

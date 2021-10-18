@@ -1,4 +1,4 @@
-import {auction, erc1155TokenABI, erc721TokenABI, prepareAuctionApproveNftTransferAbstraction, prepareAuctionBidAbstraction, prepareAuctionCancelAbstraction, prepareAuctionCreateAbstraction, prepareAuctionSettleAbstraction, prepareAuctionUpdateFeeAbstraction, prepareAuctionUpdateFeeRecipientAbstraction, validateBody} from '@tatumio/tatum-core';
+import {auction, erc1155TokenABI, erc721TokenABI, prepareAuctionApproveNftTransferAbstraction, prepareAuctionBidAbstraction, prepareAuctionCancelAbstraction, prepareAuctionCreateAbstraction, prepareAuctionSettleAbstraction, prepareAuctionUpdateFeeAbstraction, prepareAuctionUpdateFeeRecipientAbstraction} from '@tatumio/tatum-core';
 import {ApproveErc20, ApproveNftTransfer, CreateAuction, Currency, DeployNftAuction, InvokeAuctionOperation, UpdateAuctionFee, UpdateMarketplaceFeeRecipient,} from '@tatumio/tatum-core';
 import {
     prepareEthDeployAuctionSignedTransaction
@@ -49,7 +49,6 @@ export const prepareDeployAuction = async (testnet: boolean, body: DeployNftAuct
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareAuctionUpdateFee = async (testnet: boolean, body: UpdateAuctionFee, provider?: string) => {
-    await validateBody(body, UpdateAuctionFee);
     const params = await prepareAuctionUpdateFeeAbstraction(body)
     return await helperPrepareSCCall(testnet, body, UpdateAuctionFee, 'setAuctionFee', params, undefined, provider, auction.abi);
 };

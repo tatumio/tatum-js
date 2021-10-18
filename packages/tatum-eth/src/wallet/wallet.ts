@@ -1,24 +1,11 @@
-import { Currency } from '@tatumio/tatum-core';
 import {
     ETH_DERIVATION_PATH,
-    TESTNET_DERIVATION_PATH
-} from '@tatumio/tatum-core/dist/constants';
+    TESTNET_DERIVATION_PATH,
+    Currency,
+    Wallet
+} from '@tatumio/tatum-core';
 import { generateMnemonic, mnemonicToSeed } from 'bip39';
 import { hdkey as ethHdKey } from 'ethereumjs-wallet';
-
-export interface Wallet {
-
-    /**
-     * mnemonic seed
-     */
-    mnemonic: string;
-
-    /**
-     * extended public key to derive addresses from
-     */
-    xpub: string;
-}
-
 
 /**
  * Generate Ethereum or any other ERC20 wallet

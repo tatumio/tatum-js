@@ -1,9 +1,7 @@
-import {ApproveErc20} from '@tatumio/tatum-core/src/model';
-import {prepareApproveErc20Abstraction} from '@tatumio/tatum-core/src/fungible';
+import {ApproveErc20, Currency, prepareApproveErc20Abstraction} from '@tatumio/tatum-core';
 import {getEthErc20ContractDecimals} from '../transaction';
-import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from 'src/helpers';
+import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../helpers';
 import token_abi from '@tatumio/tatum-core/src/contracts/erc20/token_abi';
-import { Currency } from '@tatumio/tatum-core';
 
 /**
  * Approve ERC20 transfer for spender.
