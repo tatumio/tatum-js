@@ -1443,6 +1443,17 @@ export const sendCeloOrcUsdTransaction = async (testnet: boolean, body: Transfer
     celoBroadcast(await prepareCeloOrCUsdSignedTransaction(testnet, body, provider), body.signatureId)
 
 /**
+ * Send Celo or cUsd transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
+export const sendCeloErc20Transaction = async (testnet: boolean, body: TransferCeloOrCeloErc20Token, provider?: string) =>
+    celoBroadcast(await prepareCeloTransferErc20SignedTransaction(testnet, body, provider), body.signatureId)
+
+/**
  * Send Celo mint erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
  * @param testnet mainnet or testnet version
