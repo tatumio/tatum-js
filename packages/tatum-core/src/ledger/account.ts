@@ -26,9 +26,9 @@ export const createAccount = async (account: CreateAccount): Promise<Account> =>
  * @param testnet if we are using testnet or not
  * @param webhookUrl optional URL, where webhook will be post for every incoming blockchain transaction to the address
  */
-export const generateAccount = async (account: CreateAccount, generateNewWalletFn: (undefined | ((currency: Currency, testnet: boolean, mnemonic?: string) => Promise<Wallet>)) = undefined, testnet = true, webhookUrl?: string) => {
+export const generateAccount = async (account: CreateAccount, generateNewWalletFn: (undefined | ((currency: Currency, testnet: boolean, mnemonic?: string) => Promise<Wallet>)) = undefined, generateNewWallet = true, testnet = true, webhookUrl?: string) => {
     let w
-    if (generateNewWalletFn) {
+    if (generateNewWallet) {
         // @ts-ignore
         w = await generateNewWalletFn(account.currency, testnet)
         // @ts-ignore

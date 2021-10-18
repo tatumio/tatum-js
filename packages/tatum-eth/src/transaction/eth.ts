@@ -3,9 +3,8 @@ import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
 import {toWei} from 'web3-utils';
 import {ethBroadcast, ethGetTransactionsCount} from '../blockchain';
-import {auction, listing, axios, validateBody, erc1155TokenABI, erc1155TokenBytecode, erc20TokenABI, erc20TokenBytecode, erc721TokenABI, erc721TokenBytecode, obtainCustodialAddressType } from '@tatumio/tatum-core';
-import { CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI } from "@tatumio/tatum-core/dist/constants"
 import {
+    CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI, auction, listing, axios, validateBody, erc1155TokenABI, erc1155TokenBytecode, erc20TokenABI, erc20TokenBytecode, erc721TokenABI, erc721TokenBytecode, obtainCustodialAddressType,
     BurnErc20,
     CreateRecord,
     Currency,
