@@ -1,10 +1,13 @@
-import {Currency, MintMultiTokenBatch, TransferMultiToken, TransferMultiTokenBatch} from '@tatumio/tatum-core';
-import { MintMultiToken } from '@tatumio/tatum-core';
 import {
+    Currency, 
+    MintMultiTokenBatch, 
+    TransferMultiToken, 
+    TransferMultiTokenBatch,
     EthBurnMultiToken,
     EthBurnMultiTokenBatch,
     EthDeployMultiToken,
-} from '../model';
+    MintMultiToken
+} from '@tatumio/tatum-core';
 import {
     sendEthBurnBatchMultiTokenTransaction,
     sendEthBurnMultiTokenTransaction,

@@ -1,0 +1,111 @@
+import { EthMintErc721, EthDeployErc721, EthMintMultipleErc721, EthBurnErc721, EthTransferErc721, mintNFTRequest, TransactionHash, createNFTAbstraction, UpdateCashbackErc721 } from "@tatumio/tatum-core";
+import { sendPolygonBurnErc721SignedTransaction, sendPolygonDeployErc721SignedTransaction, sendPolygonMintCashbackErc721SignedTransaction, sendPolygonMintErc721SignedTransaction, sendPolygonMintMultipleCashbackErc721SignedTransaction, sendPolygonMintMultipleErc721SignedTransaction, sendPolygonTransferErc721SignedTransaction, sendPolygonUpdateCashbackForAuthorErc721SignedTransaction } from "../transaction";
+
+export const mintNFT = (body: EthMintErc721) => mintNFTRequest(body)
+
+/**
+ * Deploy new NFT smart contract, which will be used for later minting.
+ * @param testnet if we use testnet or not
+ * @param body body of the mint request
+ * @param provider optional provider do broadcast tx
+ */
+export const deployNFT = async (testnet: boolean, body: EthDeployErc721, provider?: string): Promise<TransactionHash> => {
+    return sendPolygonDeployErc721SignedTransaction(testnet, body as EthDeployErc721, provider);
+};
+
+/**
+ * Mint new NFT token with metadata stored on the IPFS.
+ * @param testnet if we use testnet or not
+ * @param body body of the mint request
+ * @param file file to be stored on the IPFS
+ * @param name name of the file
+ * @param description description of the file
+ * @param scheme optional JSON Metadata scheme
+ * @param provider optional provider do broadcast tx
+ */
+ export const createNFT = async (
+    body: EthMintErc721,
+    file: Buffer,
+    name: string,
+    description?: string,
+    scheme?: any, 
+    provider?: string) => {
+    
+    return await createNFTAbstraction(
+        () => mintNFTWithUri(false, body, provider),
+        false,
+        body,
+        file,
+        name,
+        description,
+        scheme,
+        provider
+    )
+}
+
+/**
+ * Mint new NFT token.
+ * @param testnet if we use testnet or not
+ * @param body body of the mint request
+ * @param provider optional provider do broadcast tx
+ */
+export const mintNFTWithUri = async (testnet: boolean, body: EthMintErc721, provider?: string): Promise<TransactionHash> => {
+    if ((body as EthMintErc721).authorAddresses) {
+        return sendPolygonMintCashbackErc721SignedTransaction(testnet, body as EthMintErc721, provider);
+    } else {
+        return sendPolygonMintErc721SignedTransaction(testnet, body as EthMintErc721, provider);
+    }
+
+};
+
+/**
+ * Mint multiple new NFT tokens.
+ * @param testnet if we use testnet or not
+ * @param body body of the mint request
+ * @param provider optional provider do broadcast tx
+ */
+export const mintMultipleNFTWithUri = async (testnet: boolean, body: EthMintMultipleErc721, provider?: string) => {
+    if ((body as EthMintMultipleErc721).authorAddresses) {
+        return sendPolygonMintMultipleCashbackErc721SignedTransaction(testnet, body as EthMintMultipleErc721, provider);
+    } else {
+        return sendPolygonMintMultipleErc721SignedTransaction(testnet, body as EthMintMultipleErc721, provider);
+    }
+};
+
+/**
+ * Burn new NFT token. Token will no longer exists.
+ * @param testnet if we use testnet or not
+ * @param body body of the mint request
+ * @param provider optional provider do broadcast tx
+ */
+export const burnNFT = async (testnet: boolean, body: EthBurnErc721, provider?: string) => {
+    return sendPolygonBurnErc721SignedTransaction(testnet, body, provider);
+};
+
+/**
+ * Update royalty cashback as author of the NFT token.
+ * @param testnet if we use testnet or not
+ * @param body body of the mint request
+ * @param provider optional provider do broadcast tx
+ */
+export const updateCashbackForAuthorNFT = async (testnet: boolean, body: UpdateCashbackErc721, provider?: string) => {
+    return sendPolygonUpdateCashbackForAuthorErc721SignedTransaction(testnet, body, provider);
+};
+
+/**
+ * Transfer new NFT token to new recipient.
+ * @param testnet if we use testnet or not
+ * @param body body of the mint request
+ * @param provider optional provider do broadcast tx
+ */
+export const transferNFT = async (testnet: boolean, body: EthTransferErc721, provider?: string) => {
+    return sendPolygonTransferErc721SignedTransaction(testnet, body, provider);
+};
+
+export { 
+    getNFTsByAddress,
+    getNFTContractAddress,
+    getNFTMetadataURI,
+    getNFTImage,
+    getNFTRoyalty,
+ } from "@tatumio/tatum-core"

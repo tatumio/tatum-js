@@ -1,0 +1,33 @@
+import { EthBurnMultiToken, EthBurnMultiTokenBatch, EthDeployMultiToken, MintMultiToken, MintMultiTokenBatch, TransferMultiToken, TransferMultiTokenBatch } from '@tatumio/tatum-core'
+import { sendPolygonDeployMultiTokenSignedTransaction, sendPolygonMintMultiTokenSignedTransaction, sendPolygonMintMultiTokenBatchSignedTransaction, sendPolygonBurnMultiTokenSignedTransaction, sendPolygonBurnMultiTokenBatchSignedTransaction, sendPolygonTransferMultiTokenSignedTransaction, preparePolygonBatchTransferMultiTokenSignedTransaction } from '../'
+
+export const deployMultiToken = async (testnet: boolean, body: EthDeployMultiToken, provider?: string) => {
+    return sendPolygonDeployMultiTokenSignedTransaction(testnet, body, provider)
+}
+export const mintMultiToken = async (testnet: boolean, body: MintMultiToken, provider?: string) => {
+    return sendPolygonMintMultiTokenSignedTransaction(testnet, body, provider)
+}
+export const mintMultiTokenBatch = async (testnet: boolean, body: MintMultiTokenBatch, provider?: string) => {
+    return sendPolygonMintMultiTokenBatchSignedTransaction(testnet, body, provider)
+}
+export const burnMultiToken = async (testnet: boolean, body: EthBurnMultiToken, provider?: string) => {
+    return sendPolygonBurnMultiTokenSignedTransaction(testnet, body, provider)
+}
+export const burnMultiTokenBatch = async (testnet: boolean, body: EthBurnMultiTokenBatch, provider?: string) => {
+    return sendPolygonBurnMultiTokenBatchSignedTransaction(testnet, body, provider)
+}
+
+export const transferMultiToken = async (testnet: boolean, body: TransferMultiToken, provider?: string) => {
+    return sendPolygonTransferMultiTokenSignedTransaction(testnet, body, provider)
+}
+export const transferMultiTokenBatch = async (testnet: boolean, body: TransferMultiTokenBatch, provider?: string) => {
+    return preparePolygonBatchTransferMultiTokenSignedTransaction(testnet, body, provider)
+}
+
+export {
+    getMultiTokenContractAddress,
+    getMultiTokensBalance,
+    getMultiTokensBatchBalance,
+    getMultiTokenTransaction,
+    getMultiTokenMetadata
+} from '@tatumio/tatum-core'

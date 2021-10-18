@@ -1,6 +1,7 @@
 import {Type} from 'class-transformer'
 import {IsOptional, ValidateNested,} from 'class-validator'
-import {Fee, BurnMultiToken } from '@tatumio/tatum-core'
+import { BurnMultiToken } from './BurnMultiToken'
+import { Fee } from './Fee';
 
 export class EthBurnMultiToken extends BurnMultiToken {
     @IsOptional()

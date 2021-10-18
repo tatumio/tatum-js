@@ -1,8 +1,9 @@
 import { Type } from 'class-transformer'
 import { IsOptional, ValidateNested } from 'class-validator'
-import {Fee, DeployMultiToken } from '@tatumio/tatum-core'
+import { DeployErc721 } from './DeployErc721';
+import { Fee } from './Fee';
 
-export class EthDeployMultiToken extends DeployMultiToken {
+export class EthDeployErc721 extends DeployErc721 {
   @IsOptional()
   @Type(() => Fee)
   @ValidateNested()

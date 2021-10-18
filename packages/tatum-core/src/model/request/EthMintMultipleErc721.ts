@@ -1,6 +1,7 @@
 import { Type } from 'class-transformer'
 import { IsOptional, ValidateNested } from 'class-validator'
-import { Fee, MintMultipleErc721 } from '@tatumio/tatum-core'
+import { Fee } from './Fee';
+import { MintMultipleErc721 } from './MintMultipleErc721';
 
 export class EthMintMultipleErc721 extends MintMultipleErc721 {
     @IsOptional()
