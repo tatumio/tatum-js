@@ -1,7 +1,7 @@
-import { EthMintErc721, EthDeployErc721, EthMintMultipleErc721, EthBurnErc721, EthTransferErc721, mintNFTRequest, TransactionHash, createNFTAbstraction, UpdateCashbackErc721 } from "@tatumio/tatum-core";
+import { MintErc721, DeployErc721, MintMultipleErc721, BurnErc721, TransferErc721, mintNFTRequest, TransactionHash, createNFTAbstraction, UpdateCashbackErc721 } from "@tatumio/tatum-core";
 import { sendPolygonBurnErc721SignedTransaction, sendPolygonDeployErc721SignedTransaction, sendPolygonMintCashbackErc721SignedTransaction, sendPolygonMintErc721SignedTransaction, sendPolygonMintMultipleCashbackErc721SignedTransaction, sendPolygonMintMultipleErc721SignedTransaction, sendPolygonTransferErc721SignedTransaction, sendPolygonUpdateCashbackForAuthorErc721SignedTransaction } from "../transaction";
 
-export const mintNFT = (body: EthMintErc721) => mintNFTRequest(body)
+export const mintNFT = (body: MintErc721) => mintNFTRequest(body)
 
 /**
  * Deploy new NFT smart contract, which will be used for later minting.
@@ -9,8 +9,8 @@ export const mintNFT = (body: EthMintErc721) => mintNFTRequest(body)
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const deployNFT = async (testnet: boolean, body: EthDeployErc721, provider?: string): Promise<TransactionHash> => {
-    return sendPolygonDeployErc721SignedTransaction(testnet, body as EthDeployErc721, provider);
+export const deployNFT = async (testnet: boolean, body: DeployErc721, provider?: string): Promise<TransactionHash> => {
+    return sendPolygonDeployErc721SignedTransaction(testnet, body as DeployErc721, provider);
 };
 
 /**
@@ -25,7 +25,7 @@ export const deployNFT = async (testnet: boolean, body: EthDeployErc721, provide
  */
  export const createNFT = async (
     testnet: boolean,
-    body: EthMintErc721,
+    body: MintErc721,
     file: Buffer,
     name: string,
     description?: string,
@@ -50,11 +50,11 @@ export const deployNFT = async (testnet: boolean, body: EthDeployErc721, provide
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const mintNFTWithUri = async (testnet: boolean, body: EthMintErc721, provider?: string): Promise<TransactionHash> => {
-    if ((body as EthMintErc721).authorAddresses) {
-        return sendPolygonMintCashbackErc721SignedTransaction(testnet, body as EthMintErc721, provider);
+export const mintNFTWithUri = async (testnet: boolean, body: MintErc721, provider?: string): Promise<TransactionHash> => {
+    if ((body as MintErc721).authorAddresses) {
+        return sendPolygonMintCashbackErc721SignedTransaction(testnet, body as MintErc721, provider);
     } else {
-        return sendPolygonMintErc721SignedTransaction(testnet, body as EthMintErc721, provider);
+        return sendPolygonMintErc721SignedTransaction(testnet, body as MintErc721, provider);
     }
 };
 
@@ -64,11 +64,11 @@ export const mintNFTWithUri = async (testnet: boolean, body: EthMintErc721, prov
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const mintMultipleNFTWithUri = async (testnet: boolean, body: EthMintMultipleErc721, provider?: string) => {
-    if ((body as EthMintMultipleErc721).authorAddresses) {
-        return sendPolygonMintMultipleCashbackErc721SignedTransaction(testnet, body as EthMintMultipleErc721, provider);
+export const mintMultipleNFTWithUri = async (testnet: boolean, body: MintMultipleErc721, provider?: string) => {
+    if ((body as MintMultipleErc721).authorAddresses) {
+        return sendPolygonMintMultipleCashbackErc721SignedTransaction(testnet, body as MintMultipleErc721, provider);
     } else {
-        return sendPolygonMintMultipleErc721SignedTransaction(testnet, body as EthMintMultipleErc721, provider);
+        return sendPolygonMintMultipleErc721SignedTransaction(testnet, body as MintMultipleErc721, provider);
     }
 };
 
@@ -78,7 +78,7 @@ export const mintMultipleNFTWithUri = async (testnet: boolean, body: EthMintMult
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const burnNFT = async (testnet: boolean, body: EthBurnErc721, provider?: string) => {
+export const burnNFT = async (testnet: boolean, body: BurnErc721, provider?: string) => {
     return sendPolygonBurnErc721SignedTransaction(testnet, body, provider);
 };
 
@@ -98,7 +98,7 @@ export const updateCashbackForAuthorNFT = async (testnet: boolean, body: UpdateC
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const transferNFT = async (testnet: boolean, body: EthTransferErc721, provider?: string) => {
+export const transferNFT = async (testnet: boolean, body: TransferErc721, provider?: string) => {
     return sendPolygonTransferErc721SignedTransaction(testnet, body, provider);
 };
 

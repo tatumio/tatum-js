@@ -1,4 +1,4 @@
-import { get, post, EthBlock, EthTx, EthEstimateGas, EstimateGasEth, TransactionHash } from '@tatumio/tatum-core'
+import { get, post, EthBlock, EthTx, EthEstimateGas, EstimateGas, TransactionHash } from '@tatumio/tatum-core'
 import BigNumber from 'bignumber.js'
 
 /**
@@ -35,4 +35,4 @@ export const polygonGetTransaction = async (hash: string): Promise<EthTx> => get
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/PolygonEstimateGas" target="_blank">Tatum API documentation</a>
  */
-export const polygonEstimateGas = (body: EstimateGasEth): Promise<EthEstimateGas> => post('/v3/polygon/gas', body, EstimateGasEth)
+export const polygonEstimateGas = (body: EstimateGas): Promise<EthEstimateGas> => post('/v3/polygon/gas', body, EstimateGas)

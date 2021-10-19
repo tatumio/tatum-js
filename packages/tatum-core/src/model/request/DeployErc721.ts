@@ -1,22 +1,11 @@
-import {IsIn, IsNotEmpty, IsOptional, Length, Min} from 'class-validator'
-import {Currency} from './Currency'
-import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId'
+import { Type } from 'class-transformer'
+import { IsOptional, ValidateNested } from 'class-validator'
+import { BaseDeployErc721 } from './BaseDeployErc721';
+import { Fee } from './Fee';
 
-export class DeployErc721 extends PrivateKeyOrSignatureId {
-
-    @IsNotEmpty()
-    @Length(1, 100)
-    public name: string;
-
-    @IsNotEmpty()
-    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC, Currency.TRON, Currency.ONE, Currency.MATIC])
-    public chain: Currency;
-
-    @IsNotEmpty()
-    @Length(1, 30)
-    public symbol: string;
-
-    @Min(0)
-    @IsOptional()
-    public nonce?: number;
+export class DeployErc721 extends BaseDeployErc721 {
+  @IsOptional()
+  @Type(() => Fee)
+  @ValidateNested()
+  public fee?: Fee;
 }

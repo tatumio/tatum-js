@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js'
 import {TransactionConfig} from 'web3-core'
 import {ethGetTransactionsCount} from '../blockchain'
-import {Currency, ETH_BASED_CURRENCIES, getAccountById, getVirtualCurrencyByName, TransactionKMS, validateBody, CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TransferEthOffchain} from '@tatumio/tatum-core'
+import {Currency, ETH_BASED_CURRENCIES, getAccountById, getVirtualCurrencyByName, TransactionKMS, validateBody, CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TransferOffchain} from '@tatumio/tatum-core'
 import {PrepareEthErc20SignedOffchainTransaction, PrepareEthSignedOffchainTransaction} from '../model'
 import {ethGetGasPriceInWei, getClient} from '../transaction'
 import {generatePrivateKeyFromMnemonic} from '../wallet'
@@ -16,11 +16,11 @@ import { offchainTransferEthKMS } from './kms'
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
-export const sendEthOffchainTransaction = async (testnet: boolean, body: TransferEthOffchain, provider?: string) => {
+export const sendEthOffchainTransaction = async (testnet: boolean, body: TransferOffchain, provider?: string) => {
     if (body.signatureId) {
         return offchainTransferEthKMS(body)
     }
-    await validateBody(body, TransferEthOffchain)
+    await validateBody(body, TransferOffchain)
     const {
         mnemonic, index, privateKey, nonce, ...withdrawal
     } = body
@@ -74,8 +74,8 @@ export const sendEthOffchainTransaction = async (testnet: boolean, body: Transfe
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
-export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: TransferEthOffchain, provider?: string) => {
-    await validateBody(body, TransferEthOffchain)
+export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: TransferOffchain, provider?: string) => {
+    await validateBody(body, TransferOffchain)
     const {
         mnemonic, index, privateKey, nonce, ...withdrawal
     } = body

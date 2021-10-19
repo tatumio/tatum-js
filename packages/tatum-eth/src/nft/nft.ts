@@ -4,11 +4,11 @@ import {
     UpdateCashbackErc721, 
     createNFTAbstraction, 
     mintNFTRequest, 
-    EthBurnErc721,
-    EthDeployErc721,
-    EthMintErc721,
-    EthMintMultipleErc721,
-    EthTransferErc721 
+    BurnErc721,
+    DeployErc721,
+    MintErc721,
+    MintMultipleErc721,
+    TransferErc721 
 } from '@tatumio/tatum-core';
 import {
     sendBurnErc721Transaction,
@@ -21,15 +21,15 @@ import {
     sendUpdateCashbackForAuthorErc721Transaction
 } from '../transaction';
 
-export const mintNFT = (body: EthMintErc721) => mintNFTRequest(body)
+export const mintNFT = (body: MintErc721) => mintNFTRequest(body)
 
 /**
  * Deploy new NFT smart contract, which will be used for later minting.
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const deployNFT = async (body: EthDeployErc721 & { chain: Currency.ETH}, provider?: string): Promise<TransactionHash> => {
-    return sendDeployErc721Transaction(body as EthDeployErc721, provider);
+export const deployNFT = async (body: DeployErc721 & { chain: Currency.ETH}, provider?: string): Promise<TransactionHash> => {
+    return sendDeployErc721Transaction(body as DeployErc721, provider);
 };
 
 /**
@@ -42,7 +42,7 @@ export const deployNFT = async (body: EthDeployErc721 & { chain: Currency.ETH}, 
  * @param provider optional provider do broadcast tx
  */
  export const createNFT = async (
-    body: EthMintErc721 & { chain: Currency.ETH },
+    body: MintErc721,
     file: Buffer,
     name: string,
     description?: string,
@@ -66,11 +66,11 @@ export const deployNFT = async (body: EthDeployErc721 & { chain: Currency.ETH}, 
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const mintNFTWithUri = async (_testnet: boolean, body: EthMintErc721 & { chain: Currency.ETH }, provider?: string) => {
-    if ((body as EthMintErc721).authorAddresses) {
-        return sendMintCashbackErc721Transaction(body as EthMintErc721, provider);
+export const mintNFTWithUri = async (_testnet: boolean, body: MintErc721, provider?: string) => {
+    if ((body as MintErc721).authorAddresses) {
+        return sendMintCashbackErc721Transaction(body as MintErc721, provider);
     } else {
-        return sendMintErc721Transaction(body as EthMintErc721, provider);
+        return sendMintErc721Transaction(body as MintErc721, provider);
     }
 };
 
@@ -79,11 +79,11 @@ export const mintNFTWithUri = async (_testnet: boolean, body: EthMintErc721 & { 
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const mintMultipleNFTWithUri = async (body: EthMintMultipleErc721 & { chain: Currency.ETH }, provider?: string) => {
-    if ((body as EthMintMultipleErc721).authorAddresses) {
-        return sendEthMintMultipleCashbackErc721SignedTransaction(body as EthMintMultipleErc721, provider);
+export const mintMultipleNFTWithUri = async (body: MintMultipleErc721, provider?: string) => {
+    if ((body as MintMultipleErc721).authorAddresses) {
+        return sendEthMintMultipleCashbackErc721SignedTransaction(body as MintMultipleErc721, provider);
     } else {
-        return sendMintMultipleErc721Transaction(body as EthMintMultipleErc721, provider);
+        return sendMintMultipleErc721Transaction(body as MintMultipleErc721, provider);
     }
 };
 
@@ -92,7 +92,7 @@ export const mintMultipleNFTWithUri = async (body: EthMintMultipleErc721 & { cha
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const burnNFT = async (body: EthBurnErc721 & { chain: Currency.ETH }, provider?: string) => {
+export const burnNFT = async (body: BurnErc721, provider?: string) => {
     return sendBurnErc721Transaction(body, provider);
 };
 
@@ -101,7 +101,7 @@ export const burnNFT = async (body: EthBurnErc721 & { chain: Currency.ETH }, pro
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const updateCashbackForAuthorNFT = async (body: UpdateCashbackErc721 & { chain: Currency.ETH }, provider?: string) => {
+export const updateCashbackForAuthorNFT = async (body: UpdateCashbackErc721, provider?: string) => {
     return sendUpdateCashbackForAuthorErc721Transaction(body, provider);
 };
 
@@ -110,7 +110,7 @@ export const updateCashbackForAuthorNFT = async (body: UpdateCashbackErc721 & { 
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const transferNFT = async (body: EthTransferErc721 & { chain: Currency.ETH }, provider?: string) => {
+export const transferNFT = async (body: TransferErc721, provider?: string) => {
     return sendErc721Transaction(body, provider);
 };
 

@@ -1,7 +1,7 @@
-import { EthBurnMultiToken, EthBurnMultiTokenBatch, EthDeployMultiToken, MintMultiToken, MintMultiTokenBatch, TransferMultiToken, TransferMultiTokenBatch } from '@tatumio/tatum-core'
+import { BurnMultiToken, BurnMultiTokenBatch, DeployMultiToken, MintMultiToken, MintMultiTokenBatch, TransferMultiToken, TransferMultiTokenBatch } from '@tatumio/tatum-core'
 import { sendPolygonDeployMultiTokenSignedTransaction, sendPolygonMintMultiTokenSignedTransaction, sendPolygonMintMultiTokenBatchSignedTransaction, sendPolygonBurnMultiTokenSignedTransaction, sendPolygonBurnMultiTokenBatchSignedTransaction, sendPolygonTransferMultiTokenSignedTransaction, preparePolygonBatchTransferMultiTokenSignedTransaction } from '../'
 
-export const deployMultiToken = async (testnet: boolean, body: EthDeployMultiToken, provider?: string) => {
+export const deployMultiToken = async (testnet: boolean, body: DeployMultiToken, provider?: string) => {
     return sendPolygonDeployMultiTokenSignedTransaction(testnet, body, provider)
 }
 export const mintMultiToken = async (testnet: boolean, body: MintMultiToken, provider?: string) => {
@@ -10,10 +10,10 @@ export const mintMultiToken = async (testnet: boolean, body: MintMultiToken, pro
 export const mintMultiTokenBatch = async (testnet: boolean, body: MintMultiTokenBatch, provider?: string) => {
     return sendPolygonMintMultiTokenBatchSignedTransaction(testnet, body, provider)
 }
-export const burnMultiToken = async (testnet: boolean, body: EthBurnMultiToken, provider?: string) => {
+export const burnMultiToken = async (testnet: boolean, body: BurnMultiToken, provider?: string) => {
     return sendPolygonBurnMultiTokenSignedTransaction(testnet, body, provider)
 }
-export const burnMultiTokenBatch = async (testnet: boolean, body: EthBurnMultiTokenBatch, provider?: string) => {
+export const burnMultiTokenBatch = async (testnet: boolean, body: BurnMultiTokenBatch, provider?: string) => {
     return sendPolygonBurnMultiTokenBatchSignedTransaction(testnet, body, provider)
 }
 

@@ -1,4 +1,4 @@
-import { Currency, offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal, validateBody, TransferEthOffchain } from '@tatumio/tatum-core'
+import { Currency, offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal, validateBody, TransferOffchain } from '@tatumio/tatum-core'
 import BigNumber from 'bignumber.js'
 import {fromWei, toWei} from 'web3-utils'
 import {getAccountById, getVirtualCurrencyByName} from '../ledger'
@@ -14,11 +14,11 @@ import { offchainTransferPolygonKMS } from './kms'
  * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
-export const sendPolygonOffchainTransaction = async (testnet: boolean, body: TransferEthOffchain, provider?: string) => {
+export const sendPolygonOffchainTransaction = async (testnet: boolean, body: TransferOffchain, provider?: string) => {
     if (body.signatureId) {
         return offchainTransferPolygonKMS(body)
     }
-    await validateBody(body, TransferEthOffchain)
+    await validateBody(body, TransferOffchain)
     const {
         mnemonic, index, privateKey, gasLimit, gasPrice, nonce, ...withdrawal
     } = body

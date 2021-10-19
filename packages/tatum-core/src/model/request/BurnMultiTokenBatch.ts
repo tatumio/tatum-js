@@ -1,30 +1,11 @@
-import {IsIn, IsInt, IsNotEmpty, IsOptional, Length, Min,} from 'class-validator'
-import {Currency} from './Currency'
-import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId'
+import {Type} from 'class-transformer'
+import {IsOptional, ValidateNested,} from 'class-validator'
+import { BaseBurnMultiTokenBatch } from './BaseBurnMultiTokenBatch'
+import { Fee } from './Fee';
 
-export class BurnMultiTokenBatch extends PrivateKeyOrSignatureId {
-
-    @IsNotEmpty()
-    @Length(42, 43)
-    public account: string;
-
-    @IsNotEmpty()
-    public tokenId: string[];
-
-    @IsNotEmpty()
-    public amounts: string[];
-
-    @IsNotEmpty()
-    @Length(42, 43)
-    public contractAddress: string;
-
-    @IsNotEmpty()
-    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC])
-    public chain: Currency;
-
-    @Min(0)
-    @IsInt()
+export class BurnMultiTokenBatch extends BaseBurnMultiTokenBatch {
     @IsOptional()
-    public nonce?: number;
-
+    @Type(() => Fee)
+    @ValidateNested()
+    public fee?: Fee;
 }

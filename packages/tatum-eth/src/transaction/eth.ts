@@ -4,7 +4,21 @@ import {TransactionConfig} from 'web3-core';
 import {toWei} from 'web3-utils';
 import {ethBroadcast, ethGetTransactionsCount} from '../blockchain';
 import {
-    CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI, auction, listing, axios, validateBody, erc1155TokenABI, erc1155TokenBytecode, erc20TokenABI, erc20TokenBytecode, erc721TokenABI, erc721TokenBytecode, obtainCustodialAddressType,
+    CONTRACT_ADDRESSES, 
+    CONTRACT_DECIMALS, 
+    TATUM_API_URL, 
+    TRANSFER_METHOD_ABI, 
+    auction, 
+    listing, 
+    axios, 
+    validateBody, 
+    erc1155TokenABI, 
+    erc1155TokenBytecode, 
+    erc20TokenABI, 
+    erc20TokenBytecode, 
+    erc721TokenABI, 
+    erc721TokenBytecode, 
+    obtainCustodialAddressType,
     BurnErc20,
     CreateRecord,
     Currency,
@@ -23,14 +37,14 @@ import {
     TransferMultiToken,
     TransferMultiTokenBatch,
     UpdateCashbackErc721,
-    EthBurnErc721,
-    EthBurnMultiToken,
-    EthBurnMultiTokenBatch,
-    EthDeployErc721,
-    EthDeployMultiToken,
-    EthMintErc721,
-    EthMintMultipleErc721,
-    EthTransferErc721,
+    BurnErc721,
+    BurnMultiToken,
+    BurnMultiTokenBatch,
+    DeployErc721,
+    DeployMultiToken,
+    MintErc721,
+    MintMultipleErc721,
+    TransferErc721,
 } from '@tatumio/tatum-core';
 import {mintNFT} from '../nft';
 
@@ -442,8 +456,8 @@ export const prepareEthDeployAuctionSignedTransaction = async (body: DeployNftAu
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEthMintErc721SignedTransaction = async (body: EthMintErc721, provider?: string) => {
-    await validateBody(body, EthMintErc721);
+export const prepareEthMintErc721SignedTransaction = async (body: MintErc721, provider?: string) => {
+    await validateBody(body, MintErc721);
     const {
         fromPrivateKey,
         to,
@@ -476,8 +490,8 @@ export const prepareEthMintErc721SignedTransaction = async (body: EthMintErc721,
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEthMintCashbackErc721SignedTransaction = async (body: EthMintErc721, provider?: string) => {
-    await validateBody(body, EthMintErc721)
+export const prepareEthMintCashbackErc721SignedTransaction = async (body: MintErc721, provider?: string) => {
+    await validateBody(body, MintErc721)
     const {
         fromPrivateKey,
         to,
@@ -515,8 +529,8 @@ export const prepareEthMintCashbackErc721SignedTransaction = async (body: EthMin
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEthMintMultipleCashbackErc721SignedTransaction = async (body: EthMintMultipleErc721, provider?: string) => {
-    await validateBody(body, EthMintMultipleErc721)
+export const prepareEthMintMultipleCashbackErc721SignedTransaction = async (body: MintMultipleErc721, provider?: string) => {
+    await validateBody(body, MintMultipleErc721)
     const {
         fromPrivateKey,
         to,
@@ -550,8 +564,8 @@ export const prepareEthMintMultipleCashbackErc721SignedTransaction = async (body
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEthMintMultipleErc721SignedTransaction = async (body: EthMintMultipleErc721, provider?: string) => {
-    await validateBody(body, EthMintMultipleErc721)
+export const prepareEthMintMultipleErc721SignedTransaction = async (body: MintMultipleErc721, provider?: string) => {
+    await validateBody(body, MintMultipleErc721)
     const {
         fromPrivateKey,
         to,
@@ -582,8 +596,8 @@ export const prepareEthMintMultipleErc721SignedTransaction = async (body: EthMin
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEthBurnErc721SignedTransaction = async (body: EthBurnErc721, provider?: string) => {
-    await validateBody(body, EthBurnErc721)
+export const prepareEthBurnErc721SignedTransaction = async (body: BurnErc721, provider?: string) => {
+    await validateBody(body, BurnErc721)
     const {
         fromPrivateKey,
         tokenId,
@@ -613,7 +627,7 @@ export const prepareEthBurnErc721SignedTransaction = async (body: EthBurnErc721,
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareEthUpdateCashbackForAuthorErc721SignedTransaction = async (body: UpdateCashbackErc721, provider?: string) => {
-    await validateBody(body, EthBurnErc721)
+    await validateBody(body, BurnErc721)
     const {
         fromPrivateKey,
         cashbackValue,
@@ -643,8 +657,8 @@ export const prepareEthUpdateCashbackForAuthorErc721SignedTransaction = async (b
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEthTransferErc721SignedTransaction = async (body: EthTransferErc721, provider?: string) => {
-    await validateBody(body, EthTransferErc721)
+export const prepareEthTransferErc721SignedTransaction = async (body: TransferErc721, provider?: string) => {
+    await validateBody(body, TransferErc721)
     const {
         fromPrivateKey,
         to,
@@ -742,8 +756,8 @@ export const prepareEthMintMultiTokenSignedTransaction = async (body: MintMultiT
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEthBurnBatchMultiTokenSignedTransaction = async (body: EthBurnMultiTokenBatch, provider?: string) => {
-    await validateBody(body, EthBurnMultiTokenBatch)
+export const prepareEthBurnBatchMultiTokenSignedTransaction = async (body: BurnMultiTokenBatch, provider?: string) => {
+    await validateBody(body, BurnMultiTokenBatch)
     const {
         fromPrivateKey,
         account,
@@ -773,8 +787,8 @@ export const prepareEthBurnBatchMultiTokenSignedTransaction = async (body: EthBu
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEthBurnMultiTokenSignedTransaction = async (body: EthBurnMultiToken, provider?: string) => {
-    await validateBody(body, EthBurnMultiToken)
+export const prepareEthBurnMultiTokenSignedTransaction = async (body: BurnMultiToken, provider?: string) => {
+    await validateBody(body, BurnMultiToken)
     const {
         fromPrivateKey,
         account,
@@ -841,7 +855,7 @@ export const prepareEthBatchTransferMultiTokenSignedTransaction = async (body: T
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareEthTransferMultiTokenSignedTransaction = async (body: TransferMultiToken, provider?: string) => {
-    await validateBody(body, EthTransferErc721)
+    await validateBody(body, TransferErc721)
     const {
         fromPrivateKey,
         to,
@@ -872,8 +886,8 @@ export const prepareEthTransferMultiTokenSignedTransaction = async (body: Transf
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEthDeployMultiTokenSignedTransaction = async (body: EthDeployMultiToken, provider?: string) => {
-    await validateBody(body, EthDeployMultiToken)
+export const prepareEthDeployMultiTokenSignedTransaction = async (body: DeployMultiToken, provider?: string) => {
+    await validateBody(body, DeployMultiToken)
     const {
         fromPrivateKey,
         fee,
@@ -907,8 +921,8 @@ export const prepareEthDeployMultiTokenSignedTransaction = async (body: EthDeplo
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEthDeployErc721SignedTransaction = async (body: EthDeployErc721, provider?: string) => {
-    await validateBody(body, EthDeployErc721)
+export const prepareEthDeployErc721SignedTransaction = async (body: DeployErc721, provider?: string) => {
+    await validateBody(body, DeployErc721)
     const {
         fromPrivateKey,
         fee,
@@ -1030,7 +1044,7 @@ export const sendSmartContractMethodInvocationTransaction = async (body: SmartCo
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendMintErc721Transaction = async (body: EthMintErc721, provider?: string) => {
+export const sendMintErc721Transaction = async (body: MintErc721, provider?: string) => {
     if (!body.fromPrivateKey && !body.fromPrivateKey) {
         return mintNFT(body)
     }
@@ -1044,7 +1058,7 @@ export const sendMintErc721Transaction = async (body: EthMintErc721, provider?: 
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendMintCashbackErc721Transaction = async (body: EthMintErc721, provider?: string) =>
+export const sendMintCashbackErc721Transaction = async (body: MintErc721, provider?: string) =>
     ethBroadcast(await prepareEthMintCashbackErc721SignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -1054,7 +1068,7 @@ export const sendMintCashbackErc721Transaction = async (body: EthMintErc721, pro
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendEthMintMultipleCashbackErc721SignedTransaction = async (body: EthMintMultipleErc721, provider?: string) =>
+export const sendEthMintMultipleCashbackErc721SignedTransaction = async (body: MintMultipleErc721, provider?: string) =>
     ethBroadcast(await prepareEthMintMultipleCashbackErc721SignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -1064,7 +1078,7 @@ export const sendEthMintMultipleCashbackErc721SignedTransaction = async (body: E
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendMintMultipleErc721Transaction = async (body: EthMintMultipleErc721, provider?: string) =>
+export const sendMintMultipleErc721Transaction = async (body: MintMultipleErc721, provider?: string) =>
     ethBroadcast(await prepareEthMintMultipleErc721SignedTransaction(body, provider), body.signatureId)
 /**
  * Send Ethereum ERC721 burn transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1073,7 +1087,7 @@ export const sendMintMultipleErc721Transaction = async (body: EthMintMultipleErc
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendBurnErc721Transaction = async (body: EthBurnErc721, provider?: string) =>
+export const sendBurnErc721Transaction = async (body: BurnErc721, provider?: string) =>
     ethBroadcast(await prepareEthBurnErc721SignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -1093,7 +1107,7 @@ export const sendUpdateCashbackForAuthorErc721Transaction = async (body: UpdateC
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendErc721Transaction = async (body: EthTransferErc721, provider?: string) =>
+export const sendErc721Transaction = async (body: TransferErc721, provider?: string) =>
     ethBroadcast(await prepareEthTransferErc721SignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -1103,7 +1117,7 @@ export const sendErc721Transaction = async (body: EthTransferErc721, provider?: 
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendDeployErc721Transaction = async (body: EthDeployErc721, provider?: string) =>
+export const sendDeployErc721Transaction = async (body: DeployErc721, provider?: string) =>
     ethBroadcast(await prepareEthDeployErc721SignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -1132,7 +1146,7 @@ export const sendEthMultiTokenBatchTransaction = async (body: TransferMultiToken
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendEthDeployMultiTokenTransaction = async (body: EthDeployMultiToken, provider?: string) =>
+export const sendEthDeployMultiTokenTransaction = async (body: DeployMultiToken, provider?: string) =>
     ethBroadcast(await prepareEthDeployMultiTokenSignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -1162,7 +1176,7 @@ export const sendEthMintMultiTokenBatchTransaction = async (body: MintMultiToken
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendEthBurnMultiTokenTransaction = async (body: EthBurnMultiToken, provider?: string) =>
+export const sendEthBurnMultiTokenTransaction = async (body: BurnMultiToken, provider?: string) =>
     ethBroadcast(await prepareEthBurnMultiTokenSignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -1172,7 +1186,7 @@ export const sendEthBurnMultiTokenTransaction = async (body: EthBurnMultiToken, 
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendEthBurnBatchMultiTokenTransaction = async (body: EthBurnMultiTokenBatch, provider?: string) =>
+export const sendEthBurnBatchMultiTokenTransaction = async (body: BurnMultiTokenBatch, provider?: string) =>
     ethBroadcast(await prepareEthBurnBatchMultiTokenSignedTransaction(body, provider), body.signatureId)
 
 /**

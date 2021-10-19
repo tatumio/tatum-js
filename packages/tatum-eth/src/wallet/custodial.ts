@@ -17,7 +17,7 @@ import {
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const generateCustodialWallet = async (testnet: boolean, body: GenerateCustodialAddress & { chain: Currency.ETH }, provider?: string) => {
+export const generateCustodialWallet = async (testnet: boolean, body: GenerateCustodialAddress, provider?: string) => {
     return await sendEthGenerateCustodialWalletSignedTransaction(body, provider);
 };
 
@@ -29,7 +29,7 @@ export const generateCustodialWallet = async (testnet: boolean, body: GenerateCu
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareCustodialWallet = async (testnet: boolean, body: GenerateCustodialAddress & { chain: Currency.ETH }, provider?: string) => {
+export const prepareCustodialWallet = async (testnet: boolean, body: GenerateCustodialAddress, provider?: string) => {
     return await prepareEthGenerateCustodialWalletSignedTransaction(body, provider);
 };
 
@@ -41,7 +41,7 @@ export const prepareCustodialWallet = async (testnet: boolean, body: GenerateCus
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendCustodialWallet = async (testnet: boolean, body: GenerateCustodialAddress & { chain: Currency.ETH }, provider?: string) => {
+export const sendCustodialWallet = async (testnet: boolean, body: GenerateCustodialAddress, provider?: string) => {
     const txData = await prepareEthGenerateCustodialWalletSignedTransaction(body, provider);
     return helperBroadcastTx(body.chain, txData, body.signatureId);
 };

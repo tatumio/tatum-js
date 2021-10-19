@@ -20,7 +20,7 @@ import { prepareApproveErc20 } from '../../fungible';
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const deployAuction = async (testnet: boolean, body: DeployNftAuction & { chain: Currency.ETH }, provider?: string) =>
+export const deployAuction = async (testnet: boolean, body: DeployNftAuction, provider?: string) =>
     helperBroadcastTx(body.chain, await prepareDeployAuction(testnet, body, provider), body.signatureId);
 
 /**
@@ -37,7 +37,7 @@ export const deployAuction = async (testnet: boolean, body: DeployNftAuction & {
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareDeployAuction = async (testnet: boolean, body: DeployNftAuction & { chain: Currency.ETH }, provider?: string) => {
+export const prepareDeployAuction = async (testnet: boolean, body: DeployNftAuction, provider?: string) => {
     return await prepareEthDeployAuctionSignedTransaction(body, provider);
 };
 
