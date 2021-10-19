@@ -1,11 +1,15 @@
-import { Currency, TransactionHash, UpdateCashbackErc721, createNFTAbstraction, mintNFTRequest } from '@tatumio/tatum-core';
-import {
+import { 
+    Currency, 
+    TransactionHash, 
+    UpdateCashbackErc721, 
+    createNFTAbstraction, 
+    mintNFTRequest, 
     EthBurnErc721,
     EthDeployErc721,
     EthMintErc721,
     EthMintMultipleErc721,
-    EthTransferErc721
-} from '../model';
+    EthTransferErc721 
+} from '@tatumio/tatum-core';
 import {
     sendBurnErc721Transaction,
     sendDeployErc721Transaction,

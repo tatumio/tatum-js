@@ -1,5 +1,5 @@
+import { CreateRecord, Currency, DeployErc20, TransferErc20 } from '@tatumio/tatum-core';
 import Web3 from 'web3';
-import {CreateRecord, Currency, DeployErc20, TransferErc20} from '../model';
 import {
     polygonGetGasPriceInWei,
     preparePolygonBurnErc721SignedTransaction,

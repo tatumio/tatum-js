@@ -1,6 +1,5 @@
+import { get, post, EthBlock, EthTx, EthEstimateGas, EstimateGasEth, TransactionHash } from '@tatumio/tatum-core'
 import BigNumber from 'bignumber.js'
-import {get, post} from '../connector/tatum'
-import {EstimateGasEth, EthBlock, EthEstimateGas, EthTx, TransactionHash} from '../model'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/PolygonBroadcast" target="_blank">Tatum API documentation</a>

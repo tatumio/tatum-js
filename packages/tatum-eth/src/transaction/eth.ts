@@ -23,8 +23,6 @@ import {
     TransferMultiToken,
     TransferMultiTokenBatch,
     UpdateCashbackErc721,
-} from '@tatumio/tatum-core';
-import {
     EthBurnErc721,
     EthBurnMultiToken,
     EthBurnMultiTokenBatch,
@@ -33,7 +31,7 @@ import {
     EthMintErc721,
     EthMintMultipleErc721,
     EthTransferErc721,
-} from '../model';
+} from '@tatumio/tatum-core';
 import {mintNFT} from '../nft';
 
 /**

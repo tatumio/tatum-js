@@ -1,4 +1,4 @@
-import { Currency } from '@tatumio/tatum-core';
+import { Currency, MintErc721 } from '@tatumio/tatum-core';
 import { readFileSync } from 'fs';
 import { createNFT, deployNFT, getNFTImage, mintMultipleNFTWithUri, mintNFTWithUri, transferNFT } from './nft';
 

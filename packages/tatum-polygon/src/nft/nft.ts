@@ -24,6 +24,7 @@ export const deployNFT = async (testnet: boolean, body: EthDeployErc721, provide
  * @param provider optional provider do broadcast tx
  */
  export const createNFT = async (
+    testnet: boolean,
     body: EthMintErc721,
     file: Buffer,
     name: string,
@@ -32,8 +33,8 @@ export const deployNFT = async (testnet: boolean, body: EthDeployErc721, provide
     provider?: string) => {
     
     return await createNFTAbstraction(
-        () => mintNFTWithUri(false, body, provider),
-        false,
+        () => mintNFTWithUri(testnet, body, provider),
+        testnet,
         body,
         file,
         name,
@@ -55,7 +56,6 @@ export const mintNFTWithUri = async (testnet: boolean, body: EthMintErc721, prov
     } else {
         return sendPolygonMintErc721SignedTransaction(testnet, body as EthMintErc721, provider);
     }
-
 };
 
 /**

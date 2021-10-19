@@ -1,5 +1,5 @@
 import { post, SignatureId } from '@tatumio/tatum-core'
-import {TransferEthOffchainKMS} from '../model/request/TransferEthOffchainKMS'
+import {TransferEthOffchainKMS} from '@tatumio/tatum-core/src/model/request/TransferEthOffchainKMS'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/EthTransfer" target="_blank">Tatum API documentation</a>

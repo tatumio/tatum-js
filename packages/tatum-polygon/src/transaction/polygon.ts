@@ -1,12 +1,10 @@
-import { EthMintErc721, EthMintMultipleErc721, EthBurnErc721, EthTransferErc721, EthDeployErc721, EthBurnMultiToken, EthBurnMultiTokenBatch, EthDeployMultiToken, auction, axios, BurnErc20, BurnMultiToken, BurnMultiTokenBatch, CreateRecord, Currency, DeployErc20, DeployMarketplaceListing, DeployNftAuction, erc1155TokenBytecode, erc20TokenBytecode, erc721TokenBytecode, GenerateCustodialAddress, listing, MintErc20, MintMultiToken, MintMultiTokenBatch, SmartContractMethodInvocation, SmartContractReadMethodInvocation, TransactionKMS, TransferErc20, TransferMultiToken, TransferMultiTokenBatch, UpdateCashbackErc721, validateBody } from '@tatumio/tatum-core';
+import { auction, axios, BurnErc20, BurnMultiToken, BurnMultiTokenBatch, CONTRACT_ADDRESSES, CONTRACT_DECIMALS, CreateRecord, Currency, DeployErc20, DeployMarketplaceListing, DeployNftAuction, erc1155TokenBytecode, erc20TokenBytecode, erc721TokenBytecode, GenerateCustodialAddress, listing, MintErc20, MintMultiToken, MintMultiTokenBatch, obtainCustodialAddressType, SmartContractMethodInvocation, SmartContractReadMethodInvocation, TATUM_API_URL, TransactionKMS, TransferErc20, TransferMultiToken, TransferMultiTokenBatch, UpdateCashbackErc721, validateBody, EthMintErc721, EthMintMultipleErc721, EthBurnErc721, EthTransferErc721, EthDeployErc721, EthBurnMultiToken, EthBurnMultiTokenBatch, EthDeployMultiToken } from '@tatumio/tatum-core';
 import {BigNumber} from 'bignumber.js';
 import Web3 from 'web3';
 import {TransactionConfig} from 'web3-core';
 import {isHex, stringToHex, toHex, toWei} from 'web3-utils';
 import {polygonBroadcast} from '../blockchain';
-import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
 import {mintNFT} from '../nft';
-import {obtainCustodialAddressType} from '../wallet';
 
 /**
  * Estimate Gas price for the transaction.

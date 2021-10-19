@@ -1,4 +1,5 @@
 export * from "./common"
+export * from "./eth"
 export * from "./kms"
 export * from "./ledger"
 export * from "./offchain"

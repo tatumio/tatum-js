@@ -1,3 +1,3 @@
 export * from './common'
-export * from './eth'
+export * from './polygon'
 export * from './kms'

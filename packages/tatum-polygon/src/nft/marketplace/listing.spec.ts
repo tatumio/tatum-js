@@ -1,5 +1,4 @@
-import { listing } from '@tatumio/tatum-core';
-import {ApproveErc20, CreateMarketplaceListing, Currency, DeployMarketplaceListing, InvokeMarketplaceListingOperation, SmartContractReadMethodInvocation} from '../../model';
+import { ApproveErc20, CreateMarketplaceListing, Currency, DeployMarketplaceListing, InvokeMarketplaceListingOperation, listing, SmartContractReadMethodInvocation } from '@tatumio/tatum-core';
 import {
     sendPolygonSmartContractMethodInvocationTransaction,
     sendPolygonSmartContractReadMethodInvocationTransaction
