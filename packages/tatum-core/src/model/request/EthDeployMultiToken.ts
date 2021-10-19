@@ -1,9 +1,9 @@
 import { Type } from 'class-transformer'
 import { IsOptional, ValidateNested } from 'class-validator'
-import { DeployMultiToken } from './DeployMultiToken'
+import { BaseDeployMultiToken } from './BaseDeployMultiToken'
 import { Fee } from './Fee';
 
-export class EthDeployMultiToken extends DeployMultiToken {
+export class DeployMultiToken extends BaseDeployMultiToken {
   @IsOptional()
   @Type(() => Fee)
   @ValidateNested()
