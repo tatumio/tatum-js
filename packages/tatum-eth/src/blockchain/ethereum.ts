@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js'
-import { get, post, TransactionHash, EstimateGasEth, EthBlock, EthEstimateGas, EthTx  } from '@tatumio/tatum-core'
+import { get, post, TransactionHash, EstimateGas, EthBlock, EthEstimateGas, EthTx  } from '@tatumio/tatum-core'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/EthBroadcast" target="_blank">Tatum API documentation</a>
@@ -47,4 +47,4 @@ export const ethGetAccountTransactions = async (address: string, pageSize = 50, 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/EthEstimateGas" target="_blank">Tatum API documentation</a>
  */
-export const ethEstimateGas = (body: EstimateGasEth): Promise<EthEstimateGas> => post('/v3/ethereum/gas', body, EstimateGasEth)
+export const ethEstimateGas = (body: EstimateGas): Promise<EthEstimateGas> => post('/v3/ethereum/gas', body, EstimateGas)

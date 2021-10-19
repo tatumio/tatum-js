@@ -1,12 +1,12 @@
 import {axios, get, post} from '../connector/tatum';
 import {
     Currency,
-    MintErc721,
+    BaseMintErc721,
     TransactionHash,
 } from '../model';
 import {ipfsUpload} from '../storage';
 
-export const mintNFTRequest = (body: MintErc721): Promise<TransactionHash> => post(`/v3/nft/mint`, body)
+export const mintNFTRequest = (body: BaseMintErc721): Promise<TransactionHash> => post(`/v3/nft/mint`, body)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetBalanceErc721" target="_blank">Tatum API documentation</a>
@@ -65,9 +65,9 @@ export const getNFTRoyalty = async (chain: Currency, contractAddress: string, to
  * @param provider optional provider do broadcast tx
  */
 export const createNFTAbstraction = async (
-                                mintNftWithUri: (testnet: boolean, body: MintErc721, provider?: string) => Promise<any>,
+                                mintNftWithUri: (testnet: boolean, body: BaseMintErc721, provider?: string) => Promise<any>,
                                 testnet: boolean, 
-                                body: MintErc721,
+                                body: BaseMintErc721,
                                 file: Buffer,
                                 name: string,
                                 description?: string,

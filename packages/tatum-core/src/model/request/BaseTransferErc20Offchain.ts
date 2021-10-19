@@ -1,6 +1,6 @@
 import {IsBoolean, IsInt, IsNotEmpty, IsNumberString, IsOptional, Length, Matches, Min,} from 'class-validator'
 
-export abstract class BaseTransferEthErc20Offchain {
+export abstract class BaseTransferErc20Offchain {
 
     @IsNotEmpty()
     @Length(24, 24)

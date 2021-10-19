@@ -1,7 +1,7 @@
 import {IsInt, IsNotEmpty, IsOptional, IsUUID, Length, Max, MaxLength, Min, ValidateIf,} from 'class-validator'
-import {BaseTransferEthErc20Offchain} from './BaseTransferEthErc20Offchain'
+import {BaseTransferErc20Offchain} from './BaseTransferErc20Offchain'
 
-export class TransferEthOffchain extends BaseTransferEthErc20Offchain {
+export class TransferOffchain extends BaseTransferErc20Offchain {
 
     @Length(1, 500)
     @ValidateIf(o => (o.mnemonic && o.index >= 0 && o.privateKey) || (o.index >= 0 && o.privateKey))

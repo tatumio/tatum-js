@@ -9,9 +9,9 @@ import {
 	Min,
 	ValidateIf,
 } from 'class-validator';
-import { BaseTransferEthErc20Offchain } from './BaseTransferEthErc20Offchain';
+import { BaseTransferErc20Offchain } from './BaseTransferErc20Offchain';
 
-export class TransferEthOffchainKMS extends BaseTransferEthErc20Offchain {
+export class TransferOffchainKMS extends BaseTransferErc20Offchain {
 	@ValidateIf((o) => !o.mnemonic && !o.privateKey)
 	@Length(36, 36)
 	@IsUUID('4')

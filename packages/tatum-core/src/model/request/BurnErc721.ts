@@ -1,23 +1,14 @@
-import {IsIn, IsInt, IsNotEmpty, IsOptional, Length, MaxLength, Min,} from 'class-validator'
-import {Currency} from './Currency'
-import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId'
+import { Type } from 'class-transformer'
+import {
+  IsOptional,
+  ValidateNested,
+} from 'class-validator'
+import { BaseBurnErc721 } from './BaseBurnErc721';
+import { Fee } from './Fee';
 
-export class BurnErc721 extends PrivateKeyOrSignatureId {
-
-    @IsNotEmpty()
-    @MaxLength(256)
-    public tokenId: string;
-
-    @IsNotEmpty()
-    @Length(42, 43)
-    public contractAddress: string;
-
-    @IsNotEmpty()
-    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC, Currency.TRON, Currency.ONE, Currency.MATIC])
-    public chain: Currency;
-
-    @Min(0)
-    @IsInt()
+export class BurnErc721 extends BaseBurnErc721 {
     @IsOptional()
-    public nonce?: number;
+    @Type(() => Fee)
+    @ValidateNested()
+    public fee?: Fee;
 }

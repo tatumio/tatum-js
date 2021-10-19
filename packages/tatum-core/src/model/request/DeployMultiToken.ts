@@ -1,17 +1,11 @@
-import {IsIn, IsNotEmpty, IsOptional, Min} from 'class-validator'
-import {Currency} from './Currency'
-import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId'
+import { Type } from 'class-transformer'
+import { IsOptional, ValidateNested } from 'class-validator'
+import { BaseDeployMultiToken } from './BaseDeployMultiToken'
+import { Fee } from './Fee';
 
-export class DeployMultiToken extends PrivateKeyOrSignatureId {
-
-    @IsNotEmpty()
-    public uri: string;
-
-    @IsNotEmpty()
-    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC])
-    public chain: Currency;
-
-    @Min(0)
-    @IsOptional()
-    public nonce?: number;
+export class DeployMultiToken extends BaseDeployMultiToken {
+  @IsOptional()
+  @Type(() => Fee)
+  @ValidateNested()
+  public fee?: Fee;
 }

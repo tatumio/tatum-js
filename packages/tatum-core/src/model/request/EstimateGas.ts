@@ -1,6 +1,6 @@
 import {IsHexadecimal, IsNotEmpty, IsNumberString, IsOptional, Length, Matches, MaxLength} from 'class-validator'
 
-export class EstimateGasEth {
+export class EstimateGas {
 
   @IsNotEmpty()
   @Length(42, 43)
