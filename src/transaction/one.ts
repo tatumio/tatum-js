@@ -322,13 +322,13 @@ export const prepareOneMint721SignedTransaction = async (testnet: boolean, body:
 export const prepareOneMint721ProvenanceSignedTransaction = async (testnet: boolean, body: OneMint721, provider?: string) => {
     await validateBody(body, OneMint721)
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
-    let cb: string[] = []
-    let fv: string[] = []
-    let authors: string[] = []
+    const cb: string[] = []
+    const fv: string[] = []
+    const authors: string[] = []
     if (body.cashbackValues && body.fixedValues && body.authorAddresses) {
-        cb = body.cashbackValues.map(c => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
-        fv = body.fixedValues.map(c => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
-        authors = body.authorAddresses.map(a => new HarmonyAddress(a).basicHex)
+        body.cashbackValues.map(c => cb.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
+        body.fixedValues.map(c => fv.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
+        body.authorAddresses.map(a => authors.push(new HarmonyAddress(a).basicHex))
     }
     // @ts-ignore
     const data = new (client).eth.Contract(erc721Provenance_abi, new HarmonyAddress(body.contractAddress).basicHex).methods
@@ -750,7 +750,7 @@ export const sendOneDeploy20SignedTransaction = async (testnet: boolean, body: O
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendOneMint721SignedTransaction = async (testnet: boolean, body: OneMint721, provider?: string) => {
-    if (!body.fromPrivateKey && !body.fromPrivateKey) {
+    if (!body.fromPrivateKey) {
         return mintNFT(body)
     }
 
@@ -766,7 +766,7 @@ export const sendOneMint721SignedTransaction = async (testnet: boolean, body: On
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendOneMint721ProvenanceSignedTransaction = async (testnet: boolean, body: OneMint721, provider?: string) => {
-    if (!body.fromPrivateKey && !body.fromPrivateKey) {
+    if (!body.fromPrivateKey) {
         return mintNFT(body)
     }
 

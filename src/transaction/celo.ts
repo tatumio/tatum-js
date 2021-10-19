@@ -387,11 +387,11 @@ export const prepareCeloMintErc721ProvenanceSignedTransaction = async (testnet: 
         const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
         // @ts-ignore
         const contract = new (new Web3()).eth.Contract(erc721Provenance_abi, contractAddress.trim())
-        let cb: string[] = []
-        let fv: string[] = []
+        const cb: string[] = []
+        const fv: string[] = []
         if (cashbackValues && fixedValues && authorAddresses) {
-            cb = cashbackValues.map(c => `0x${new BigNumber(toWei(c, 'ether')).toString(16)}`)
-            fv = fixedValues.map(c => `0x${new BigNumber(toWei(c, 'ether')).toString(16)}`)
+            cashbackValues.map(c => cb.push(`0x${new BigNumber(toWei(c, 'ether')).toString(16)}`))
+            fixedValues.map(c => fv.push(`0x${new BigNumber(toWei(c, 'ether')).toString(16)}`))
         }
         const data = contract.methods.mintWithTokenURI(to.trim(), tokenId, url, authorAddresses ? authorAddresses : [], cb, fv).encodeABI();
         if (signatureId) {
@@ -1587,7 +1587,7 @@ export const sendCeloOrcUsdTransaction = async (testnet: boolean, body: Transfer
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendCeloMintErc721Transaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) => {
-    if (!body.fromPrivateKey && !body.fromPrivateKey) {
+    if (!body.fromPrivateKey) {
         return mintNFT(body)
     }
     return celoBroadcast(await prepareCeloMintErc721SignedTransaction(testnet, body, provider), body.signatureId)
@@ -1613,7 +1613,7 @@ export const sendCeloMintCashbackErc721Transaction = async (testnet: boolean, bo
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendCeloMintErc721ProvenanceTransaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) =>{
-    if (!body.fromPrivateKey && !body.fromPrivateKey) {
+    if (!body.fromPrivateKey) {
         return mintNFT(body)
     }
     celoBroadcast(await prepareCeloMintErc721ProvenanceSignedTransaction(testnet, body, provider), body.signatureId)

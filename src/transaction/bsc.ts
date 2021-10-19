@@ -489,7 +489,7 @@ export const prepareBscMintMultipleBep721ProvenanceSignedTransaction = async (bo
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
-        data: contract.methods.mintMultiple(to.map(t => t.trim()), tokenId, url, authorAddresses, cb, fv).encodeABI(),
+        data: contract.methods.mintMultiple(to.map(t => t.trim()), tokenId, url, authorAddresses?authorAddresses:[], cb, fv).encodeABI(),
         nonce,
     }
     return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
@@ -521,11 +521,11 @@ export const prepareBscMintBep721ProvenanceSignedTransaction = async (body: EthM
 
     // @ts-ignore
     const contract = new (client).eth.Contract(erc721Provenance_abi, contractAddress)
-    let cb: string[] = []
-    let fval: string[] = []
+    const cb: string[] = []
+    const fval: string[] = []
     if (authorAddresses && cashbackValues && fixedValues) {
-        cb = cashbackValues.map(c => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
-        fval = fixedValues.map(c => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
+        cashbackValues.map(c => cb.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
+        fixedValues.map(c => fval.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
     }
     if (contractAddress) {
         const tx: TransactionConfig = {

@@ -477,11 +477,11 @@ export const prepareEthMintErc721ProvenanceSignedTransaction = async (body: EthM
 
     // @ts-ignore
     const contract = new (client).eth.Contract(erc721Provenance_abi, contractAddress)
-    let cb: string[] = []
-    let fv: string[] = []
+    const cb: string[] = []
+    const fv: string[] = []
         if (cashbackValues && fixedValues && authorAddresses) {
-            cb = cashbackValues.map(c => `0x${new BigNumber(toWei(c, 'ether')).toString(16)}`)
-            fv = fixedValues.map(c => `0x${new BigNumber(toWei(c, 'ether')).toString(16)}`)
+            cashbackValues.map(c => cb.push(`0x${new BigNumber(toWei(c, 'ether')).toString(16)}`))
+            fixedValues.map(c => fv.push(`0x${new BigNumber(toWei(c, 'ether')).toString(16)}`))
         }
     const data = contract.methods.mintWithTokenURI(to.trim(), tokenId, url, authorAddresses ? authorAddresses : [], cb, fv).encodeABI();
     if (contractAddress) {
@@ -1146,7 +1146,7 @@ export const sendSmartContractMethodInvocationTransaction = async (body: SmartCo
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendMintErc721Transaction = async (body: EthMintErc721, provider?: string) => {
-    if (!body.fromPrivateKey && !body.fromPrivateKey) {
+    if (!body.fromPrivateKey) {
         return mintNFT(body)
     }
     return ethBroadcast(await prepareEthMintErc721SignedTransaction(body, provider), body.signatureId)

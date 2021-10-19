@@ -301,13 +301,11 @@ export const preparePolygonMintErc721SignedTransaction = async (testnet: boolean
 export const preparePolygonMintErc721ProvenanceSignedTransaction = async (testnet: boolean, body: EthMintErc721, provider?: string) => {
     await validateBody(body, EthMintErc721)
     const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
-    let cb: string[] = []
-    let fv: string[] = []
+    const cb: string[] = []
+    const fv: string[] = []
     if (body.cashbackValues && body.fixedValues && body.authorAddresses) {
-        cb = body.cashbackValues.map(c => `0x${new BigNumber(c).toString(16)}`)
-        fv = body.fixedValues.map(c => `0x${new BigNumber(c).toString(16)}`)
-        // cb = body.cashbackValues.map(c => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
-        // fv = body.fixedValues.map(c => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
+        body.cashbackValues.map(c => cb.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
+        body.fixedValues.map(c => fv.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
     }
     // @ts-ignore
     const data = new (client).eth.Contract(erc721Provenance_abi, body.contractAddress.trim()).methods
@@ -740,7 +738,7 @@ export const sendPolygonDeployErc20SignedTransaction = async (testnet: boolean, 
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendPolygonMintErc721SignedTransaction = async (testnet: boolean, body: EthMintErc721, provider?: string) => {
-    if (!body.fromPrivateKey && !body.fromPrivateKey) {
+    if (!body.fromPrivateKey) {
         return mintNFT(body)
     }
     return polygonBroadcast(await preparePolygonMintErc721SignedTransaction(testnet, body, provider), body.signatureId)

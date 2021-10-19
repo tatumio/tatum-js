@@ -157,7 +157,9 @@ describe('ONE transactions', () => {
             body.chain = Currency.ONE
             body.to = 'one13t9ul0yvudlk7e60fwvxr5l0azfg3kyl474xmc'
             body.authorAddresses = ['one13t9ul0yvudlk7e60fwvxr5l0azfg3kyl474xmc']
+            body.provenance=true
             body.cashbackValues = ['1']
+            body.fixedValues= ['1']
             body.provenance = true
             const txData = await prepareOneMint721ProvenanceSignedTransaction(true, body, PROVIDER)
             expect(txData).toContain('0x')
@@ -173,11 +175,12 @@ describe('ONE transactions', () => {
             body.provenance = true
             body.provenanceData = "test this"
             body.tokenPrice = "10"
+            body.value="10"
             body.to = 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde'
             const txData = await prepareOneTransfer721SignedTransaction(true, body, PROVIDER)
             expect(txData).toContain('0x')
 
-            await processTx(txData)
+            // await processTx(txData)
         })
         it('should test valid transfer data 721 transaction', async () => {
             const body = new SmartContractReadMethodInvocation()
