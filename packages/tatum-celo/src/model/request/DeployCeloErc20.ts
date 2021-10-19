@@ -1,6 +1,5 @@
+import { DeployErc20, Currency } from '@tatumio/tatum-core';
 import {IsIn, IsNotEmpty } from 'class-validator'
-import {Currency} from './Currency'
-import { DeployErc20 } from './DeployErc20'
 
 export class DeployCeloErc20 extends DeployErc20 {
 

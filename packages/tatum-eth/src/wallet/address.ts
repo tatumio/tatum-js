@@ -53,50 +53,6 @@ const convertEthPrivateKey = (testnet: boolean, privkey: string) => {
  * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
-/**
- * TODO: Valid Currencies
- *  case Currency.USDT:
-    case Currency.WBTC:
-    case Currency.LEO:
-    case Currency.LINK:
-    case Currency.UNI:
-    case Currency.FREE:
-    case Currency.MKR:
-    case Currency.USDC:
-    case Currency.BAT:
-    case Currency.TUSD:
-    case Currency.PAX:
-    case Currency.PAXG:
-    case Currency.MATIC_ETH:
-    case Currency.PLTC:
-    case Currency.XCON:
-    case Currency.REVV:
-    case Currency.SAND:
-    case Currency.ETH:
-    case Currency.BSC:
-    case Currency.MATIC:
-    case Currency.USDT_MATIC:
-    case Currency.USDC_MATIC:
-    case Currency.LATOKEN:
-    case Currency.BETH:
-    case Currency.BUSD:
-    case Currency.USDC_BSC:
-    case Currency.B2U_BSC:
-    case Currency.CAKE:
-    case Currency.HAG:
-    case Currency.BUSD_BSC:
-    case Currency.GMC_BSC:
-    case Currency.GMC:
-    case Currency.BBTC:
-    case Currency.BADA:
-    case Currency.RMD:
-    case Currency.WBNB:
-    case Currency.BDOT:
-    case Currency.BXRP:
-    case Currency.BLTC:
-    case Currency.BBCH:
-    case Currency.MMY:
- */
 export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xpub: string, i: number) => {
     return generateEthAddress(testnet, xpub, i)
 }
@@ -109,47 +65,6 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
  * @param i derivation index of private key to generate.
  * @returns blockchain private key to the address
  */
-/**
- * TODO: Valid Currencies
- *  case Currency.USDT:
-    case Currency.WBTC:
-    case Currency.LEO:
-    case Currency.LINK:
-    case Currency.UNI:
-    case Currency.FREE:
-    case Currency.MKR:
-    case Currency.LATOKEN:
-    case Currency.USDC:
-    case Currency.RMD:
-    case Currency.BAT:
-    case Currency.TUSD:
-    case Currency.PAX:
-    case Currency.PAXG:
-    case Currency.PLTC:
-    case Currency.XCON:
-    case Currency.REVV:
-    case Currency.SAND:
-    case Currency.ETH:
-    case Currency.MATIC_ETH:
-    case Currency.BSC:
-    case Currency.BETH:
-    case Currency.BBTC:
-    case Currency.BADA:
-    case Currency.WBNB:
-    case Currency.BUSD:
-    case Currency.USDC_BSC:
-    case Currency.B2U_BSC:
-    case Currency.CAKE:
-    case Currency.HAG:
-    case Currency.BUSD_BSC:
-    case Currency.GMC:
-    case Currency.GMC_BSC:
-    case Currency.BDOT:
-    case Currency.BXRP:
-    case Currency.BLTC:
-    case Currency.BBCH:
-    case Currency.MMY:
- */
 export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: boolean, mnemonic: string, i: number) => {
     return generateEthPrivateKey(testnet, mnemonic, i)
 }
@@ -160,33 +75,6 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
  * @param testnet testnet or mainnet version of address
  * @param privateKey private key to use
  * @returns blockchain private key to the address
- */
-/**
- * TODO: Valid Currencies
- *  case Currency.ETH:
-    case Currency.USDT:
-    case Currency.GMC:
-    case Currency.GMC_BSC:
-    case Currency.RMD:
-    case Currency.WBTC:
-    case Currency.LEO:
-    case Currency.LINK:
-    case Currency.UNI:
-    case Currency.FREE:
-    case Currency.MKR:
-    case Currency.USDC:
-    case Currency.BAT:
-    case Currency.TUSD:
-    case Currency.PAX:
-    case Currency.PAXG:
-    case Currency.PLTC:
-    case Currency.XCON:
-    case Currency.REVV:
-    case Currency.SAND:
-    case Currency.MATIC_ETH:
-    case Currency.BSC:
-    case Currency.MMY:
-    case Currency.MATIC:
  */
 export const generateAddressFromPrivatekey = (currency: Currency, testnet: boolean, privateKey: string) => {
     return convertEthPrivateKey(testnet, privateKey)

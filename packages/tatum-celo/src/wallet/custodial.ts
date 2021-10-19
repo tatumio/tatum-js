@@ -1,6 +1,6 @@
-import { ApproveCustodialTransfer, ContractType, CustodialFullTokenWallet, GenerateCustodialAddress, prepareBatchTransferFromCustodialWalletAbstract, prepareTransferFromCustodialWalletAbstract, SmartContractMethodInvocation, TransferFromCustodialAddress, TransferFromCustodialAddressBatch, validateBody } from '@tatumio/tatum-core';
+import { ApproveCustodialTransfer, ContractType, Currency, CustodialFullTokenWallet, GenerateCustodialAddress, prepareBatchTransferFromCustodialWalletAbstract, prepareTransferFromCustodialWalletAbstract, TransferFromCustodialAddress, TransferFromCustodialAddressBatch, validateBody } from '@tatumio/tatum-core';
 import BigNumber from 'bignumber.js';
-import { sendPolygonGenerateCustodialWalletSignedTransaction, preparePolygonGenerateCustodialWalletSignedTransaction, getPolygonErc20ContractDecimals, preparePolygonSmartContractWriteMethodInvocation } from '../';
+import { sendCeloGenerateCustodialWalletSignedTransaction, prepareCeloGenerateCustodialWalletSignedTransaction, getCeloErc20ContractDecimals, prepareCeloSmartContractWriteMethodInvocation, CeloSmartContractMethodInvocation } from '../';
 import {getErc20Decimals} from '../fungible';
 import {helperBroadcastTx, helperPrepareSCCall} from '../helpers';
 
@@ -13,7 +13,7 @@ import {helperBroadcastTx, helperPrepareSCCall} from '../helpers';
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const generateCustodialWallet = async (testnet: boolean, body: GenerateCustodialAddress, provider?: string) => {
-    return await sendPolygonGenerateCustodialWalletSignedTransaction(testnet, body, provider);
+    return await sendCeloGenerateCustodialWalletSignedTransaction(testnet, body, provider);
 };
 
 /**
@@ -25,7 +25,7 @@ export const generateCustodialWallet = async (testnet: boolean, body: GenerateCu
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareCustodialWallet = async (testnet: boolean, body: GenerateCustodialAddress, provider?: string) => {
-    return await preparePolygonGenerateCustodialWalletSignedTransaction(testnet, body, provider);
+    return await prepareCeloGenerateCustodialWalletSignedTransaction(testnet, body, provider);
 };
 
 /**
@@ -37,7 +37,7 @@ export const prepareCustodialWallet = async (testnet: boolean, body: GenerateCus
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendCustodialWallet = async (testnet: boolean, body: GenerateCustodialAddress, provider?: string) => {
-    let txData = await preparePolygonGenerateCustodialWalletSignedTransaction(testnet, body, provider);
+    let txData = await prepareCeloGenerateCustodialWalletSignedTransaction(testnet, body, provider);
     return helperBroadcastTx(body.chain, txData, body.signatureId);
 };
 
@@ -48,7 +48,7 @@ export const sendCustodialWallet = async (testnet: boolean, body: GenerateCustod
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
- export const prepareTransferFromCustodialWallet = async (
+    export const prepareTransferFromCustodialWallet = async (
     testnet: boolean,
     body: TransferFromCustodialAddress,
     provider?: string
@@ -56,10 +56,10 @@ export const sendCustodialWallet = async (testnet: boolean, body: GenerateCustod
 return prepareTransferFromCustodialWalletAbstract(
     testnet,
     body,
-    getPolygonErc20ContractDecimals,
+    getCeloErc20ContractDecimals,
     (testnet, body, r, provider) =>
-    preparePolygonSmartContractWriteMethodInvocation(testnet, r, provider),
-    SmartContractMethodInvocation,
+    prepareCeloSmartContractWriteMethodInvocation(testnet, {...r, feeCurrency: body.feeCurrency || Currency.CELO}, provider),
+    CeloSmartContractMethodInvocation,
     18,
     TransferFromCustodialAddress,
     provider
@@ -84,23 +84,23 @@ export const sendTransferFromCustodialWallet = async (testnet: boolean, body: Tr
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
- export const prepareBatchTransferFromCustodialWallet = async (
+    export const prepareBatchTransferFromCustodialWallet = async (
     testnet: boolean,
     body: TransferFromCustodialAddressBatch,
     provider?: string
-  ) => {
+    ) => {
     return prepareBatchTransferFromCustodialWalletAbstract(
-      testnet,
-      body,
-      getPolygonErc20ContractDecimals,
-      (testnet, body, r, provider) =>
-        preparePolygonSmartContractWriteMethodInvocation(testnet, r, provider),
-      SmartContractMethodInvocation,
-      18,
-      TransferFromCustodialAddressBatch,
-      provider
+        testnet,
+        body,
+        getCeloErc20ContractDecimals,
+        (testnet, body, r, provider) =>
+        prepareCeloSmartContractWriteMethodInvocation(testnet, {...r, feeCurrency: body.feeCurrency || Currency.CELO}, provider),
+        CeloSmartContractMethodInvocation,
+        18,
+        TransferFromCustodialAddressBatch,
+        provider
     );
-  };
+    };
 
 /**
  * Send signed batch transaction from the custodial SC wallet.
@@ -110,8 +110,9 @@ export const sendTransferFromCustodialWallet = async (testnet: boolean, body: Tr
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendBatchTransferFromCustodialWallet = async (testnet: boolean,
-                                                           body: TransferFromCustodialAddressBatch, provider?: string) =>
+                                                            body: TransferFromCustodialAddressBatch, provider?: string) =>
     helperBroadcastTx(body.chain, await prepareBatchTransferFromCustodialWallet(testnet, body, provider), body.signatureId);
+
 
 /**
  * Prepare signed approve transaction from the custodial SC wallet.
@@ -141,3 +142,4 @@ export const prepareApproveFromCustodialWallet = async (testnet: boolean, body: 
  */
 export const sendApproveFromCustodialWallet = async (testnet: boolean, body: ApproveCustodialTransfer, provider?: string) =>
     helperBroadcastTx(body.chain, await prepareApproveFromCustodialWallet(testnet, body, provider), body.signatureId);
+    
