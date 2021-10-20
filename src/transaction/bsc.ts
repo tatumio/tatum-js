@@ -474,12 +474,12 @@ export const prepareBscMintMultipleBep721ProvenanceSignedTransaction = async (bo
     const contract = new (client).eth.Contract(erc721Provenance_abi, contractAddress)
     const cb: string[][] = []
     const fv: string[][] = []
-    if (cashbackValues && fixedValues) {
+    if (authorAddresses && cashbackValues && fixedValues) {
         for (let i = 0; i < cashbackValues.length; i++) {
             const cb2: string[] = []
             const fv2: string[] = []
             for (let j = 0; j < cashbackValues[i].length; j++) {
-                cb2.push(`0x${new BigNumber(toWei(cashbackValues[i][j], 'ether')).toString(16)}`)
+                cb2.push(`0x${new BigNumber(cashbackValues[i][j]).toString(16)}`)
                 fv2.push(`0x${new BigNumber(toWei(fixedValues[i][j], 'ether')).toString(16)}`)
             }
             cb.push(cb2)
@@ -489,7 +489,7 @@ export const prepareBscMintMultipleBep721ProvenanceSignedTransaction = async (bo
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
-        data: contract.methods.mintMultiple(to.map(t => t.trim()), tokenId, url, authorAddresses?authorAddresses:[], cb, fv).encodeABI(),
+        data: contract.methods.mintMultiple(to.map(t => t.trim()), tokenId, url, authorAddresses ? authorAddresses : [], cb, fv).encodeABI(),
         nonce,
     }
     return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
@@ -524,7 +524,7 @@ export const prepareBscMintBep721ProvenanceSignedTransaction = async (body: EthM
     const cb: string[] = []
     const fval: string[] = []
     if (authorAddresses && cashbackValues && fixedValues) {
-        cashbackValues.map(c => cb.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
+        cashbackValues.map(c => cb.push(`0x${new BigNumber(c).toString(16)}`))
         fixedValues.map(c => fval.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
     }
     if (contractAddress) {
@@ -704,7 +704,7 @@ export const prepareBscTransferBep721SignedTransaction = async (body: EthTransfe
     // @ts-ignore
     const contract = new (client).eth.Contract(provenance ? erc721Provenance_abi : erc721TokenABI, contractAddress)
     // @ts-ignore
-    const tokenData = contract.methods.safeTransfer(to.trim(), tokenId, provenance ? provenanceData + "'''###'''" + tokenPrice : undefined).encodeABI()
+    const tokenData = contract.methods.safeTransfer(to.trim(), tokenId, provenance ? provenanceData + "'''###'''" + toWei(tokenPrice, 'ether') : undefined).encodeABI()
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),

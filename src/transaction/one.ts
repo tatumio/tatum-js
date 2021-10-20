@@ -326,7 +326,7 @@ export const prepareOneMint721ProvenanceSignedTransaction = async (testnet: bool
     const fv: string[] = []
     const authors: string[] = []
     if (body.cashbackValues && body.fixedValues && body.authorAddresses) {
-        body.cashbackValues.map(c => cb.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
+        body.cashbackValues.map(c => cb.push(`0x${new BigNumber(c).toString(16)}`))
         body.fixedValues.map(c => fv.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
         body.authorAddresses.map(a => authors.push(new HarmonyAddress(a).basicHex))
     }
@@ -351,12 +351,12 @@ export const prepareOneMintMultiple721ProvenanceSignedTransaction = async (testn
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
     const cb: string[][] = []
     const fv: string[][] = []
-    if (body.cashbackValues && body.fixedValues) {
+    if (body.authorAddresses && body.cashbackValues && body.fixedValues) {
         for (let i = 0; i < body.cashbackValues.length; i++) {
             const cb2: string[] = []
             const fv2: string[] = []
             for (let j = 0; j < body.cashbackValues[i].length; j++) {
-                cb2.push(`0x${new BigNumber(toWei(body.cashbackValues[i][j], 'ether')).toString(16)}`)
+                cb2.push(`0x${new BigNumber(body.cashbackValues[i][j]).toString(16)}`)
                 fv2.push(`0x${new BigNumber(toWei(body.fixedValues[i][j], 'ether')).toString(16)}`)
             }
             cb.push(cb2)
@@ -372,22 +372,7 @@ export const prepareOneMintMultiple721ProvenanceSignedTransaction = async (testn
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, undefined, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice)
 }
-/**
- * Sign Harmony transfer erc721 provenance transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
- * @param body content of the transaction to broadcast
- * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
- * @returns transaction data to be broadcast to blockchain.
- */
-export const prepareOneTransfer721ProvenanceSignedTransaction = async (testnet: boolean, body: OneTransfer721, provider?: string) => {
-    await validateBody(body, OneTransfer721)
-    const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
-    // @ts-ignore
-    const data = new (client).eth.Contract(erc721TokenABI, new HarmonyAddress(body.contractAddress).basicHex)
-        .methods.safeTransfer(new HarmonyAddress(body.to).basicHex, body.tokenId, body.provenance ? body.provenanceData + "'''###'''" + body.tokenPrice : undefined).encodeABI()
-    return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, body.value, body.nonce, data,
-        body.fee?.gasLimit, body.fee?.gasPrice)
-}
+
 /**
  * Sign Harmony mint cashback erc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param testnet mainnet or testnet version
@@ -475,7 +460,7 @@ export const prepareOneTransfer721SignedTransaction = async (testnet: boolean, b
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
     // @ts-ignore
     const data = new (client).eth.Contract(body.provenance ? erc721Provenance_abi : erc721TokenABI, new HarmonyAddress(body.contractAddress).basicHex)
-        .methods.safeTransfer(new HarmonyAddress(body.to).basicHex, body.tokenId, body.provenance ? body.provenanceData + "'''###'''" + body.tokenPrice : undefined).encodeABI()
+        .methods.safeTransfer(new HarmonyAddress(body.to).basicHex, body.tokenId, body.provenance ? body.provenanceData + "'''###'''" + toWei(body.tokenPrice, 'ether'): undefined).encodeABI()
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, body.value, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice)
 }

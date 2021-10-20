@@ -390,7 +390,7 @@ export const prepareCeloMintErc721ProvenanceSignedTransaction = async (testnet: 
         const cb: string[] = []
         const fv: string[] = []
         if (cashbackValues && fixedValues && authorAddresses) {
-            cashbackValues.map(c => cb.push(`0x${new BigNumber(toWei(c, 'ether')).toString(16)}`))
+            cashbackValues.map(c => cb.push(`0x${new BigNumber(c).toString(16)}`))
             fixedValues.map(c => fv.push(`0x${new BigNumber(toWei(c, 'ether')).toString(16)}`))
         }
         const data = contract.methods.mintWithTokenURI(to.trim(), tokenId, url, authorAddresses ? authorAddresses : [], cb, fv).encodeABI();
@@ -451,12 +451,12 @@ export const prepareCeloMintMultipleErc721ProvenanceSignedTransaction = async (t
 
     const cb: string[][] = []
     const fv: string[][] = []
-    if (cashbackValues && fixedValues) {
+    if (authorAddresses && cashbackValues && fixedValues) {
         for (let i = 0; i < cashbackValues.length; i++) {
             const cb2: string[] = []
             const fv2: string[] = []
             for (let j = 0; j < cashbackValues[i].length; j++) {
-                cb2.push(`0x${new BigNumber(toWei(cashbackValues[i][j], 'ether')).toString(16)}`)
+                cb2.push(`0x${new BigNumber(cashbackValues[i][j]).toString(16)}`)
                 fv2.push(`0x${new BigNumber(toWei(fixedValues[i][j], 'ether')).toString(16)}`)
             }
             cb.push(cb2)
@@ -569,7 +569,7 @@ export const prepareCeloTransferErc721SignedTransaction = async (testnet: boolea
     // @ts-ignore
     const contract = new (new Web3()).eth.Contract(provenance ? erc721Provenance_abi : erc721_abi, contractAddress.trim())
     // @ts-ignore
-    const tokenData = contract.methods.safeTransfer(to.trim(), tokenId, provenance ? provenanceData + "'''###'''" + tokenPrice : undefined).encodeABI()
+    const tokenData = contract.methods.safeTransfer(to.trim(), tokenId, provenance ? provenanceData + "'''###'''" +  toWei(tokenPrice, 'ether') : undefined).encodeABI()
     if (signatureId) {
         return JSON.stringify({
             chainId: network.chainId,

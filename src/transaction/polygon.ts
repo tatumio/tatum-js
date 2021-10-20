@@ -304,7 +304,7 @@ export const preparePolygonMintErc721ProvenanceSignedTransaction = async (testne
     const cb: string[] = []
     const fv: string[] = []
     if (body.cashbackValues && body.fixedValues && body.authorAddresses) {
-        body.cashbackValues.map(c => cb.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
+        body.cashbackValues.map(c => cb.push(`0x${new BigNumber(c).toString(16)}`))
         body.fixedValues.map(c => fv.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
     }
     // @ts-ignore
@@ -354,7 +354,7 @@ export const preparePolygonMintMultipleErc721ProvenanceSignedTransaction = async
             const cb2: string[] = []
             const fv2: string[] = []
             for (let j = 0; j < body.cashbackValues[i].length; j++) {
-                cb2.push(`0x${new BigNumber(toWei(body.cashbackValues[i][j], 'ether')).toString(16)}`)
+                cb2.push(`0x${new BigNumber(body.cashbackValues[i][j]).toString(16)}`)
                 fv2.push(`0x${new BigNumber(toWei(body.fixedValues[i][j], 'ether')).toString(16)}`)
             }
             cb.push(cb2)
@@ -433,7 +433,7 @@ export const preparePolygonTransferErc721SignedTransaction = async (testnet: boo
     const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
     // @ts-ignore
     const data = new (client).eth.Contract(body.provenance ? erc721Provenance_abi : erc721TokenABI, body.contractAddress.trim())
-        .methods.safeTransfer(body.to.trim(), body.tokenId, body.provenance ? body.provenanceData + "'''###'''" + body.tokenPrice : undefined).encodeABI()
+        .methods.safeTransfer(body.to.trim(), body.tokenId, body.provenance ? body.provenanceData + "'''###'''" + toWei(body.tokenPrice, 'ether') : undefined).encodeABI()
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), body.value, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice)
 }
