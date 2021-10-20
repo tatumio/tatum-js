@@ -73,6 +73,7 @@
     "stellar-sdk": "^8.1.0",
     "thorify": "^1.5.2",
     "tronweb": "^3.2.2",
+    "url-parse": "^1.5.3",
     "web3": "1.4.0",
     "web3-eth": "1.4.0"
   },

@@ -95,7 +95,6 @@ export const ERC20_CURRENCIES = [
 
 export const BEP20_CURRENCIES = [
     Currency.BETH.toString(),
-    Currency.GAMEE.toString(),
     Currency.BBTC.toString(),
     Currency.RMD.toString(),
     Currency.USDC_BSC.toString(),
@@ -114,6 +113,7 @@ export const BEP20_CURRENCIES = [
 
 export const MATIC20_CURRENCIES = [
     Currency.USDC_MATIC.toString(),
+    Currency.GAMEE.toString(),
     Currency.USDT_MATIC.toString(),
 ]
 
