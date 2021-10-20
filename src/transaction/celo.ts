@@ -1616,7 +1616,7 @@ export const sendCeloMintErc721ProvenanceTransaction = async (testnet: boolean, 
     if (!body.fromPrivateKey) {
         return mintNFT(body)
     }
-    celoBroadcast(await prepareCeloMintErc721ProvenanceSignedTransaction(testnet, body, provider), body.signatureId)
+    return celoBroadcast(await prepareCeloMintErc721ProvenanceSignedTransaction(testnet, body, provider), body.signatureId)
 }
     
 /**
