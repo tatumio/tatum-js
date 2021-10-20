@@ -2,6 +2,7 @@ import {
     get,
     post,
     Currency,
+    createNFTAbstraction,
     BurnErc721,
     DeployErc721,
     MintErc721,
@@ -11,46 +12,26 @@ import {
     UpdateCashbackErc721,
 } from '@tatumio/tatum-core';
 
+import {
+  sendXdcDeployErc721Transaction,
+  sendXdcMintErc721Transaction,
+  sendXdcMintErcCashback721Transaction,
+  sendXdcMintMultipleErc721Transaction,
+  sendXdcMintMultipleCashbackErc721Transaction,
+  sendXdcBurnErc721Transaction,
+  sendXdcUpdateCashbackForAuthorErc721Transaction,
+  sendXdcErc721Transaction,
+} from '../transaction'
+
+export { 
+  getNFTsByAddress,
+  getNFTContractAddress,
+  getNFTMetadataURI,
+  getNFTImage,
+  getNFTRoyalty,
+} from "@tatumio/tatum-core"
+
 export const mintNFT = (body: MintErc721): Promise<TransactionHash> => post(`/v3/nft/mint`, body);
-
-/**
- * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetBalanceErc721" target="_blank">Tatum API documentation</a>
- */
-export const getNFTsByAddress = async (chain: Currency, contractAddress: string, address: string): Promise<string[]> =>
-    get(`/v3/nft/balance/${chain}/${contractAddress}/${address}`);
-
-/**
- * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetContractAddress" target="_blank">Tatum API documentation</a>
- */
-export const getNFTContractAddress = async (chain: Currency, txId: string): Promise<{ contractAddress: string }> =>
-    get(`/v3/nft/address/${chain}/${txId}`);
-
-/**
- * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetMetadataErc721" target="_blank">Tatum API documentation</a>
- */
-export const getNFTMetadataURI = async (chain: Currency, contractAddress: string, tokenId: string, account?: string): Promise<{ data: string }> => {
-    let url = `/v3/nft/metadata/${chain}/${contractAddress}/${tokenId}`;
-    if (account) {
-        url += `?account=${account}`;
-    }
-    return get(url);
-};
-
-/**
- * Get IPFS image URL from the NFT with the IPFS Metadata scheme. URL
- * @param chain chain where NFT token is
- * @param contractAddress contract address of the NFT token
- * @param tokenId ID of the token
- * @param account FLOW only - account where the token is minted
- */
-export const getNFTImage = async (chain: Currency, contractAddress: string, tokenId: string, account?: string): Promise<{ originalUrl: string, publicUrl: string }> => {
-  throw new Error(`Unsupported chain ${chain || 'blockchain'}`);
-};
-
-/**
- * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetRoyaltyErc721" target="_blank">Tatum API documentation</a>
- */
-export const getNFTRoyalty = async (chain: Currency, contractAddress: string, tokenId: string): Promise<{ data: string }> => get(`/v3/nft/royalty/${chain}/${contractAddress}/${tokenId}`);
 
 /**
  * Deploy new NFT smart contract, which will be used for later minting.
@@ -59,7 +40,7 @@ export const getNFTRoyalty = async (chain: Currency, contractAddress: string, to
  * @param provider optional provider do broadcast tx
  */
 export const deployNFT = async (testnet: boolean, body: DeployErc721, provider?: string): Promise<TransactionHash> => {
-  throw new Error(`Unsupported chain ${body.chain || 'blockchain'}`);
+  return sendXdcDeployErc721Transaction(body as DeployErc721, provider);
 };
 
 /**
@@ -77,7 +58,16 @@ export const createNFT = async (testnet: boolean, body: MintErc721,
                                 name: string,
                                 description?: string,
                                 scheme?: any, provider?: string) => {
-  throw new Error(`Unsupported chain ${body.chain || 'blockchain'}`);
+    return await createNFTAbstraction(
+        () => mintXdcNFTWithUri(false, body, provider),
+        false,
+        body,
+        file,
+        name,
+        description,
+        scheme,
+        provider
+    )
 };
 
 /**
@@ -86,8 +76,12 @@ export const createNFT = async (testnet: boolean, body: MintErc721,
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const mintNFTWithUri = async (testnet: boolean, body: MintErc721, provider?: string): Promise<TransactionHash> => {
-  throw new Error(`Unsupported chain ${body.chain || 'blockchain'}`);
+export const mintXdcNFTWithUri = async (testnet: boolean, body: MintErc721, provider?: string): Promise<TransactionHash> => {
+  if ((body as MintErc721).authorAddresses) {
+    return sendXdcMintErcCashback721Transaction(body as MintErc721, provider);
+} else {
+    return sendXdcMintErc721Transaction(body as MintErc721, provider);
+}
 };
 
 /**
@@ -97,7 +91,11 @@ export const mintNFTWithUri = async (testnet: boolean, body: MintErc721, provide
  * @param provider optional provider do broadcast tx
  */
 export const mintMultipleNFTWithUri = async (testnet: boolean, body: MintMultipleErc721, provider?: string) => {
-  throw new Error(`Unsupported chain ${body.chain || 'blockchain'}`);
+  if ((body as MintMultipleErc721).authorAddresses) {
+    return sendXdcMintMultipleCashbackErc721Transaction(body as MintMultipleErc721, provider);
+  } else {
+      return sendXdcMintMultipleErc721Transaction(body as MintMultipleErc721, provider);
+  }
 };
 
 /**
@@ -107,7 +105,7 @@ export const mintMultipleNFTWithUri = async (testnet: boolean, body: MintMultipl
  * @param provider optional provider do broadcast tx
  */
 export const burnNFT = async (testnet: boolean, body: BurnErc721, provider?: string) => {
-  throw new Error(`Unsupported chain ${body.chain || 'blockchain'}`);
+  return sendXdcBurnErc721Transaction(body, provider);
 };
 
 /**
@@ -117,7 +115,7 @@ export const burnNFT = async (testnet: boolean, body: BurnErc721, provider?: str
  * @param provider optional provider do broadcast tx
  */
 export const updateCashbackForAuthorNFT = async (testnet: boolean, body: UpdateCashbackErc721, provider?: string) => {
-  throw new Error(`Unsupported chain ${body.chain || 'blockchain'}`);
+  return sendXdcUpdateCashbackForAuthorErc721Transaction(body, provider);
 };
 
 /**
@@ -127,5 +125,5 @@ export const updateCashbackForAuthorNFT = async (testnet: boolean, body: UpdateC
  * @param provider optional provider do broadcast tx
  */
 export const transferNFT = async (testnet: boolean, body: TransferErc721, provider?: string) => {
-  throw new Error(`Unsupported chain ${body.chain || 'blockchain'}`);
+  return sendXdcErc721Transaction(body, provider);
 };
