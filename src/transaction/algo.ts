@@ -3,7 +3,7 @@ const base32 = require('base32.js');
 import {TextEncoder} from 'util';
 import {algorandBroadcast} from '../blockchain';
 import {AlgoTransaction, Currency, TransactionKMS} from '../model';
-
+const Url = require('url-parse');
 /**
  * Algod V2 Client
  * @param testnet if the algorand node is testnet or not
@@ -12,7 +12,7 @@ import {AlgoTransaction, Currency, TransactionKMS} from '../model';
  */
 export const getAlgoClient = (testnet: boolean, provider?: string) => {
     if (provider) {
-        return new algosdk.Algodv2((testnet ? `${process.env.TATUM_ALGORAND_TESTNET_TOKEN}` : `${process.env.TATUM_ALGORAND_MAINNET_TOKEN}`) || "DUMMYTOKEN" , provider); 
+        return new algosdk.Algodv2(`${(testnet ? process.env.TATUM_ALGORAND_TESTNET_TOKEN : process.env.TATUM_ALGORAND_MAINNET_TOKEN) || "DUMMYTOKEN"}`, provider, Url(provider).port); 
     } else {
         return new algosdk.Algodv2({'X-API-Key': testnet ? `${process.env.TATUM_ALGORAND_TESTNET_THIRD_API_KEY}` : `${process.env.TATUM_ALGORAND_MAINNET_THIRD_API_KEY}`},
             testnet ? `${process.env.TATUM_ALGORAND_TESTNET_THIRD_API_ALGOD_URL}` : `${process.env.TATUM_ALGORAND_MAINNET_THIRD_API_ALGOD_URL}`);
@@ -27,7 +27,7 @@ export const getAlgoClient = (testnet: boolean, provider?: string) => {
  */
 export const getAlgoIndexerClient = (testnet: boolean, provider?: string) => {
     if (provider) {
-        return algosdk.Indexer((testnet ? `${process.env.TATUM_ALGORAND_TESTNET_TOKEN}` : `${process.env.TATUM_ALGORAND_MAINNET_TOKEN}`) || "DUMMYTOKEN" , provider);
+        return new algosdk.Indexer(`${(testnet ? process.env.TATUM_ALGORAND_TESTNET_TOKEN : process.env.TATUM_ALGORAND_MAINNET_TOKEN) || "DUMMYTOKEN"}`, provider, Url(provider).port);
     } else {
         return new algosdk.Indexer({'X-API-Key': testnet ? `${process.env.TATUM_ALGORAND_TESTNET_THIRD_API_KEY}` : `${process.env.TATUM_ALGORAND_MAINNET_THIRD_API_KEY}`},
         testnet ? `${process.env.TATUM_ALGORAND_TESTNET_THIRD_API_INDEXER_URL}` : `${process.env.TATUM_ALGORAND_MAINNET_THIRD_API_INDEXER_URL}`);
