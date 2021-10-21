@@ -35,8 +35,10 @@ import {
     sendCeloBurnErc721Transaction,
     sendCeloDeployErc721Transaction,
     sendCeloMintCashbackErc721Transaction,
+    sendCeloMintErc721ProvenanceTransaction,
     sendCeloMintErc721Transaction,
     sendCeloMintMultipleCashbackErc721Transaction,
+    sendCeloMintMultipleErc721ProvenanceTransaction,
     sendCeloMintMultipleErc721Transaction,
     sendCeloTransferErc721Transaction,
     sendCeloUpdateCashbackForAuthorErc721Transaction,
@@ -48,17 +50,23 @@ import {
     sendFlowNftMintMultipleToken,
     sendFlowNftMintToken,
     sendFlowNftTransferToken,
+    sendMintBep721ProvenanceTransaction,
     sendMintBep721Transaction,
     sendMintBepCashback721Transaction,
     sendMintCashbackErc721Transaction,
+    sendMintErc721ProvenanceTransaction,
     sendMintErc721Transaction,
+    sendMintMultipleBep721ProvenanceTransaction,
     sendMintMultipleBep721Transaction,
     sendMintMultipleCashbackBep721Transaction,
+    sendMintMultipleErc721ProvenanceTransaction,
     sendMintMultipleErc721Transaction,
     sendOneBurn721SignedTransaction,
     sendOneDeploy721SignedTransaction,
+    sendOneMint721ProvenanceSignedTransaction,
     sendOneMint721SignedTransaction,
     sendOneMintCashback721SignedTransaction,
+    sendOneMintMultiple721ProvenanceSignedTransaction,
     sendOneMintMultiple721SignedTransaction,
     sendOneMintMultipleCashback721SignedTransaction,
     sendOneTransfer721SignedTransaction,
@@ -66,8 +74,10 @@ import {
     sendPolygonBurnErc721SignedTransaction,
     sendPolygonDeployErc721SignedTransaction,
     sendPolygonMintCashbackErc721SignedTransaction,
+    sendPolygonMintErc721ProvenanceSignedTransaction,
     sendPolygonMintErc721SignedTransaction,
     sendPolygonMintMultipleCashbackErc721SignedTransaction,
+    sendPolygonMintMultipleErc721ProvenanceSignedTransaction,
     sendPolygonMintMultipleErc721SignedTransaction,
     sendPolygonTransferErc721SignedTransaction,
     sendPolygonUpdateCashbackForAuthorErc721SignedTransaction,
@@ -89,6 +99,11 @@ export const mintNFT = (body: CeloMintErc721 | EthMintErc721 | OneMint721): Prom
  */
 export const getNFTsByAddress = async (chain: Currency, contractAddress: string, address: string): Promise<string[]> =>
     get(`/v3/nft/balance/${chain}/${contractAddress}/${address}`);
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/NftProvenanceReadData" target="_blank">Tatum API documentation</a>
+ */
+export const getNFTProvenanceData = async (chain: Currency, contractAddress: string, tokenId: string): Promise<{ ProvenanceData: string, tokenPrice: string }> =>
+    get(`/v3/nft/provenance/${chain}/${contractAddress}/${tokenId}`);
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetContractAddress" target="_blank">Tatum API documentation</a>
@@ -115,9 +130,9 @@ export const getNFTMetadataURI = async (chain: Currency, contractAddress: string
  * @param account FLOW only - account where the token is minted
  */
 export const getNFTImage = async (chain: Currency, contractAddress: string, tokenId: string, account?: string): Promise<{ originalUrl: string, publicUrl: string }> => {
-    const {data: metadata} = await getNFTMetadataURI(chain, contractAddress, tokenId, account);
+    const { data: metadata } = await getNFTMetadataURI(chain, contractAddress, tokenId, account);
     const metadataUrl = `https://gateway.pinata.cloud/ipfs/${metadata.replace('ipfs://', '')}`;
-    const {data} = await axios.get(metadataUrl);
+    const { data } = await axios.get(metadataUrl);
     const imageUrl = data.image;
     return {
         originalUrl: imageUrl,
@@ -168,18 +183,18 @@ export const deployNFT = async (testnet: boolean, body: CeloDeployErc721 | EthDe
  * @param provider optional provider do broadcast tx
  */
 export const createNFT = async (testnet: boolean, body: CeloMintErc721 | EthMintErc721 | TronMintTrc721 | FlowMintNft,
-                                file: Buffer,
-                                name: string,
-                                description?: string,
-                                scheme?: any, provider?: string) => {
+    file: Buffer,
+    name: string,
+    description?: string,
+    scheme?: any, provider?: string) => {
     const metadata = scheme || {};
     metadata.name = name;
     if (description) {
         metadata.description = description;
     }
-    const {ipfsHash} = await ipfsUpload(file, name);
+    const { ipfsHash } = await ipfsUpload(file, name);
     metadata.image = `ipfs://${ipfsHash}`;
-    const {ipfsHash: metadataHash} = await ipfsUpload(Buffer.from(JSON.stringify(metadata)), 'metadata.json');
+    const { ipfsHash: metadataHash } = await ipfsUpload(Buffer.from(JSON.stringify(metadata)), 'metadata.json');
     body.url = `ipfs://${metadataHash}`;
     if (body.chain === Currency.FLOW) {
         (body as any).privateKey = (body as any).privateKey || (body as any).fromPrivateKey;
@@ -205,28 +220,44 @@ export const createNFT = async (testnet: boolean, body: CeloMintErc721 | EthMint
 export const mintNFTWithUri = async (testnet: boolean, body: CeloMintErc721 | EthMintErc721 | TronMintTrc721 | FlowMintNft, provider?: string): Promise<TransactionHash> => {
     switch (body.chain) {
         case Currency.CELO:
-            if ((body as CeloMintErc721).authorAddresses) {
-                return sendCeloMintCashbackErc721Transaction(testnet, body as CeloMintErc721, provider);
+            if ((body as CeloMintErc721).provenance) {
+                return sendCeloMintErc721ProvenanceTransaction(testnet, body as CeloMintErc721, provider)
             } else {
-                return sendCeloMintErc721Transaction(testnet, body as CeloMintErc721, provider);
+                if ((body as CeloMintErc721).authorAddresses) {
+                    return sendCeloMintCashbackErc721Transaction(testnet, body as CeloMintErc721, provider);
+                } else {
+                    return sendCeloMintErc721Transaction(testnet, body as CeloMintErc721, provider);
+                }
             }
         case Currency.ETH:
-            if ((body as EthMintErc721).authorAddresses) {
-                return sendMintCashbackErc721Transaction(body as EthMintErc721, provider);
+            if ((body as EthMintErc721).provenance) {
+                return sendMintErc721ProvenanceTransaction(body as EthMintErc721, provider);
             } else {
-                return sendMintErc721Transaction(body as EthMintErc721, provider);
+                if ((body as EthMintErc721).authorAddresses) {
+                    return sendMintCashbackErc721Transaction(body as EthMintErc721, provider);
+                } else {
+                    return sendMintErc721Transaction(body as EthMintErc721, provider);
+                }
             }
         case Currency.MATIC:
-            if ((body as EthMintErc721).authorAddresses) {
-                return sendPolygonMintCashbackErc721SignedTransaction(testnet, body as EthMintErc721, provider);
+            if ((body as EthMintErc721).provenance) {
+                return sendPolygonMintErc721ProvenanceSignedTransaction(testnet, body as EthMintErc721, provider);
             } else {
-                return sendPolygonMintErc721SignedTransaction(testnet, body as EthMintErc721, provider);
+                if ((body as EthMintErc721).authorAddresses) {
+                    return sendPolygonMintCashbackErc721SignedTransaction(testnet, body as EthMintErc721, provider);
+                } else {
+                    return sendPolygonMintErc721SignedTransaction(testnet, body as EthMintErc721, provider);
+                }
             }
         case Currency.ONE:
-            if ((body as EthMintErc721).authorAddresses) {
-                return sendOneMintCashback721SignedTransaction(testnet, body as EthMintErc721, provider);
+            if ((body as EthMintErc721).provenance) {
+                return sendOneMint721ProvenanceSignedTransaction(testnet, body as EthMintErc721, provider);
             } else {
-                return sendOneMint721SignedTransaction(testnet, body as EthMintErc721, provider);
+                if ((body as EthMintErc721).authorAddresses) {
+                    return sendOneMintCashback721SignedTransaction(testnet, body as EthMintErc721, provider);
+                } else {
+                    return sendOneMint721SignedTransaction(testnet, body as EthMintErc721, provider);
+                }
             }
         case Currency.TRON:
             if ((body as TronMintTrc721).authorAddresses) {
@@ -235,10 +266,14 @@ export const mintNFTWithUri = async (testnet: boolean, body: CeloMintErc721 | Et
                 return sendTronMintTrc721SignedTransaction(testnet, body as TronMintTrc721);
             }
         case Currency.BSC:
-            if ((body as EthMintErc721).authorAddresses) {
-                return sendMintBepCashback721Transaction(body as EthMintErc721, provider);
+            if ((body as EthMintErc721).provenance) {
+                return sendMintBep721ProvenanceTransaction(body as EthMintErc721, provider);
+            } else {
+                if ((body as EthMintErc721).authorAddresses) {
+                    return sendMintBepCashback721Transaction(body as EthMintErc721, provider);
+                }
+                return sendMintBep721Transaction(body as EthMintErc721, provider);
             }
-            return sendMintBep721Transaction(body as EthMintErc721, provider);
         case Currency.FLOW:
             return sendFlowNftMintToken(testnet, body as FlowMintNft);
         default:
@@ -255,10 +290,14 @@ export const mintNFTWithUri = async (testnet: boolean, body: CeloMintErc721 | Et
 export const mintMultipleNFTWithUri = async (testnet: boolean, body: CeloMintMultipleErc721 | EthMintMultipleErc721 | FlowMintMultipleNft, provider?: string) => {
     switch (body.chain) {
         case Currency.CELO:
-            if ((body as CeloMintMultipleErc721).authorAddresses) {
-                return sendCeloMintMultipleCashbackErc721Transaction(testnet, body as CeloMintMultipleErc721, provider);
+            if ((body as CeloMintMultipleErc721).provenance) {
+                return sendCeloMintMultipleErc721ProvenanceTransaction(testnet, body as CeloMintMultipleErc721, provider);
             } else {
-                return sendCeloMintMultipleErc721Transaction(testnet, body as CeloMintMultipleErc721, provider);
+                if ((body as CeloMintMultipleErc721).authorAddresses) {
+                    return sendCeloMintMultipleCashbackErc721Transaction(testnet, body as CeloMintMultipleErc721, provider);
+                } else {
+                    return sendCeloMintMultipleErc721Transaction(testnet, body as CeloMintMultipleErc721, provider);
+                }
             }
         case Currency.TRON:
             if ((body as TronMintMultipleTrc721).authorAddresses) {
@@ -267,28 +306,45 @@ export const mintMultipleNFTWithUri = async (testnet: boolean, body: CeloMintMul
                 return sendTronMintMultipleTrc721SignedTransaction(testnet, body as TronMintMultipleTrc721);
             }
         case Currency.ETH:
-            if ((body as EthMintMultipleErc721).authorAddresses) {
-                return sendEthMintMultipleCashbackErc721SignedTransaction(body as EthMintMultipleErc721, provider);
+            if ((body as EthMintMultipleErc721).provenance) {
+                return sendMintMultipleErc721ProvenanceTransaction(body as EthMintMultipleErc721, provider);
             } else {
-                return sendMintMultipleErc721Transaction(body as EthMintMultipleErc721, provider);
+                if ((body as EthMintMultipleErc721).authorAddresses) {
+                    return sendEthMintMultipleCashbackErc721SignedTransaction(body as EthMintMultipleErc721, provider);
+                } else {
+                    return sendMintMultipleErc721Transaction(body as EthMintMultipleErc721, provider);
+                }
+
             }
         case Currency.MATIC:
             if ((body as EthMintMultipleErc721).authorAddresses) {
-                return sendPolygonMintMultipleCashbackErc721SignedTransaction(testnet, body as EthMintMultipleErc721, provider);
+                return sendPolygonMintMultipleErc721ProvenanceSignedTransaction(testnet, body as EthMintMultipleErc721, provider);
             } else {
-                return sendPolygonMintMultipleErc721SignedTransaction(testnet, body as EthMintMultipleErc721, provider);
+                if ((body as EthMintMultipleErc721).authorAddresses) {
+                    return sendPolygonMintMultipleCashbackErc721SignedTransaction(testnet, body as EthMintMultipleErc721, provider);
+                } else {
+                    return sendPolygonMintMultipleErc721SignedTransaction(testnet, body as EthMintMultipleErc721, provider);
+                }
             }
         case Currency.ONE:
-            if ((body as EthMintMultipleErc721).authorAddresses) {
-                return sendOneMintMultipleCashback721SignedTransaction(testnet, body as EthMintMultipleErc721, provider);
+            if ((body as EthMintMultipleErc721).provenance) {
+                return sendOneMintMultiple721ProvenanceSignedTransaction(testnet, body as EthMintMultipleErc721, provider);
             } else {
-                return sendOneMintMultiple721SignedTransaction(testnet, body as EthMintMultipleErc721, provider);
+                if ((body as EthMintMultipleErc721).authorAddresses) {
+                    return sendOneMintMultipleCashback721SignedTransaction(testnet, body as EthMintMultipleErc721, provider);
+                } else {
+                    return sendOneMintMultiple721SignedTransaction(testnet, body as EthMintMultipleErc721, provider);
+                }
             }
         case Currency.BSC:
             if ((body as EthMintMultipleErc721).authorAddresses) {
-                return sendMintMultipleCashbackBep721Transaction(body as EthMintMultipleErc721, provider);
+                return sendMintMultipleBep721ProvenanceTransaction(body as EthMintMultipleErc721, provider);
             } else {
-                return sendMintMultipleBep721Transaction(body as EthMintMultipleErc721, provider);
+                if ((body as EthMintMultipleErc721).authorAddresses) {
+                    return sendMintMultipleCashbackBep721Transaction(body as EthMintMultipleErc721, provider);
+                } else {
+                    return sendMintMultipleBep721Transaction(body as EthMintMultipleErc721, provider);
+                }
             }
         case Currency.FLOW:
             return sendFlowNftMintMultipleToken(testnet, body as FlowMintMultipleNft);
