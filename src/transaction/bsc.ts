@@ -1,10 +1,10 @@
-import { BigNumber } from 'bignumber.js';
+import {BigNumber} from 'bignumber.js';
 import Web3 from 'web3';
-import { TransactionConfig } from 'web3-core';
-import { toWei } from 'web3-utils';
-import { bscBroadcast, bscGetTransactionsCount } from '../blockchain';
-import { validateBody } from '../connector/tatum';
-import { CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI } from '../constants';
+import {TransactionConfig} from 'web3-core';
+import {toWei} from 'web3-utils';
+import {bscBroadcast, bscGetTransactionsCount} from '../blockchain';
+import {validateBody} from '../connector/tatum';
+import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
 import erc1155TokenABI from '../contracts/erc1155/erc1155_abi';
 import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode';
 import erc20_abi from '../contracts/erc20/token_abi';
@@ -14,7 +14,7 @@ import erc721TokenABI from '../contracts/erc721/erc721_abi';
 import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
 import erc721Provenance_abi from '../contracts/erc721Provenance/erc721Provenance_abi';
 import erc721Provenance_bytecode from '../contracts/erc721Provenance/erc721Provenance_bytecode';
-import { auction, listing } from '../contracts/marketplace';
+import {auction, listing} from '../contracts/marketplace';
 import {
     BurnErc20,
     CreateRecord,
@@ -44,8 +44,8 @@ import {
     TransferMultiTokenBatch,
     UpdateCashbackErc721
 } from '../model';
-import { mintNFT } from '../nft';
-import { obtainCustodialAddressType } from '../wallet';
+import {mintNFT} from '../nft';
+import {obtainCustodialAddressType} from '../wallet';
 
 /**
  * Estimate Gas price for the transaction.
@@ -461,7 +461,6 @@ export const prepareBscMintMultipleBep721ProvenanceSignedTransaction = async (bo
         url,
         nonce,
         signatureId,
-        provenance,
         authorAddresses,
         cashbackValues,
         fixedValues,
@@ -479,8 +478,8 @@ export const prepareBscMintMultipleBep721ProvenanceSignedTransaction = async (bo
             const cb2: string[] = []
             const fv2: string[] = []
             for (let j = 0; j < cashbackValues[i].length; j++) {
-                cb2.push(`0x${new BigNumber(cashbackValues[i][j]).toString(16)}`)
-                fv2.push(`0x${new BigNumber(toWei(fixedValues[i][j], 'ether')).toString(16)}`)
+                cb2.push(`0x${new BigNumber(cashbackValues[i][j]).multipliedBy(100).toString(16)}`);
+                fv2.push(`0x${new BigNumber(toWei(fixedValues[i][j], 'ether')).toString(16)}`);
             }
             cb.push(cb2)
             fv.push(fv2)
@@ -513,8 +512,7 @@ export const prepareBscMintBep721ProvenanceSignedTransaction = async (body: EthM
         signatureId,
         authorAddresses,
         cashbackValues,
-        fixedValues,
-        provenance
+        fixedValues
     } = body
 
     const client = getBscClient(provider, fromPrivateKey)
@@ -524,8 +522,8 @@ export const prepareBscMintBep721ProvenanceSignedTransaction = async (body: EthM
     const cb: string[] = []
     const fval: string[] = []
     if (authorAddresses && cashbackValues && fixedValues) {
-        cashbackValues.map(c => cb.push(`0x${new BigNumber(c).toString(16)}`))
-        fixedValues.map(c => fval.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
+        cashbackValues.map(c => cb.push(`0x${new BigNumber(c).multipliedBy(100).toString(16)}`));
+        fixedValues.map(c => fval.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`));
     }
     if (contractAddress) {
         const tx: TransactionConfig = {

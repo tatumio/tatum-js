@@ -1,12 +1,10 @@
-import { BigNumber } from 'bignumber.js';
-import erc721Provenance_abi from '../contracts/erc721Provenance/erc721Provenance_abi';
-import erc721Provenance_bytecode from '../contracts/erc721Provenance/erc721Provenance_bytecode';
+import {BigNumber} from 'bignumber.js';
 import Web3 from 'web3';
-import { TransactionConfig } from 'web3-core';
-import { isHex, stringToHex, toHex, toWei } from 'web3-utils';
-import { polygonBroadcast } from '../blockchain';
-import { axios, validateBody } from '../connector/tatum';
-import { CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI } from '../constants';
+import {TransactionConfig} from 'web3-core';
+import {isHex, stringToHex, toHex, toWei} from 'web3-utils';
+import {polygonBroadcast} from '../blockchain';
+import {axios, validateBody} from '../connector/tatum';
+import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
 import erc1155TokenABI from '../contracts/erc1155/erc1155_abi';
 import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode';
 import erc20_abi from '../contracts/erc20/token_abi';
@@ -14,7 +12,9 @@ import erc20TokenABI from '../contracts/erc20/token_abi';
 import erc20TokenBytecode from '../contracts/erc20/token_bytecode';
 import erc721TokenABI from '../contracts/erc721/erc721_abi';
 import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
-import { auction, listing } from '../contracts/marketplace';
+import erc721Provenance_abi from '../contracts/erc721Provenance/erc721Provenance_abi';
+import erc721Provenance_bytecode from '../contracts/erc721Provenance/erc721Provenance_bytecode';
+import {auction, listing} from '../contracts/marketplace';
 import {
     BurnErc20,
     BurnMultiToken,
@@ -44,16 +44,16 @@ import {
     TransferMultiTokenBatch,
     UpdateCashbackErc721,
 } from '../model';
-import { mintNFT } from '../nft';
-import { obtainCustodialAddressType } from '../wallet';
+import {mintNFT} from '../nft';
+import {obtainCustodialAddressType} from '../wallet';
 
 /**
  * Estimate Gas price for the transaction.
  */
 export const polygonGetGasPriceInWei = async () => {
-    const { data } = await axios.get('https://gasstation-mainnet.matic.network')
+    const {data} = await axios.get('https://gasstation-mainnet.matic.network');
     return Web3.utils.toWei(`${Math.max(30, Math.min(Math.ceil(data.fast / 10), 100))}`, 'gwei');
-}
+};
 
 const prepareGeneralTx = async (client: Web3, testnet: boolean, fromPrivateKey?: string, signatureId?: string, to?: string, amount?: string, nonce?: number,
     data?: string, gasLimit?: string, gasPrice?: string) => {
@@ -304,8 +304,8 @@ export const preparePolygonMintErc721ProvenanceSignedTransaction = async (testne
     const cb: string[] = []
     const fv: string[] = []
     if (body.cashbackValues && body.fixedValues && body.authorAddresses) {
-        body.cashbackValues.map(c => cb.push(`0x${new BigNumber(c).toString(16)}`))
-        body.fixedValues.map(c => fv.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
+        body.cashbackValues.map(c => cb.push(`0x${new BigNumber(c).multipliedBy(100).toString(16)}`));
+        body.fixedValues.map(c => fv.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`));
     }
     // @ts-ignore
     const data = new (client).eth.Contract(erc721Provenance_abi, body.contractAddress.trim()).methods
@@ -354,8 +354,8 @@ export const preparePolygonMintMultipleErc721ProvenanceSignedTransaction = async
             const cb2: string[] = []
             const fv2: string[] = []
             for (let j = 0; j < body.cashbackValues[i].length; j++) {
-                cb2.push(`0x${new BigNumber(body.cashbackValues[i][j]).toString(16)}`)
-                fv2.push(`0x${new BigNumber(toWei(body.fixedValues[i][j], 'ether')).toString(16)}`)
+                cb2.push(`0x${new BigNumber(body.cashbackValues[i][j]).multipliedBy(100).toString(16)}`);
+                fv2.push(`0x${new BigNumber(toWei(body.fixedValues[i][j], 'ether')).toString(16)}`);
             }
             cb.push(cb2)
             fv.push(fv2)

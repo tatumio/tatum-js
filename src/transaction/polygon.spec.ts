@@ -1,13 +1,15 @@
 import Web3 from 'web3';
-import { CreateRecord, Currency, DeployErc20, TransferErc20 } from '../model';
-import { preparePolygonMintErc721ProvenanceSignedTransaction, preparePolygonMintMultipleErc721ProvenanceSignedTransaction } from './polygon';
-import { SmartContractReadMethodInvocation } from '../model/request/SmartContractReadMethodInvocation';
+import erc721Provenance_abi from '../contracts/erc721Provenance/erc721Provenance_abi';
+import {CreateRecord, Currency, DeployErc20, TransferErc20} from '../model';
+import {SmartContractReadMethodInvocation} from '../model/request/SmartContractReadMethodInvocation';
 import {
     polygonGetGasPriceInWei,
     preparePolygonBurnErc721SignedTransaction,
     preparePolygonDeployErc20SignedTransaction,
     preparePolygonDeployErc721SignedTransaction,
+    preparePolygonMintErc721ProvenanceSignedTransaction,
     preparePolygonMintErc721SignedTransaction,
+    preparePolygonMintMultipleErc721ProvenanceSignedTransaction,
     preparePolygonMintMultipleErc721SignedTransaction,
     preparePolygonSignedTransaction,
     preparePolygonSmartContractWriteMethodInvocation,
@@ -16,7 +18,6 @@ import {
     preparePolygonTransferErc721SignedTransaction,
     sendPolygonSmartContractReadMethodInvocationTransaction
 } from './polygon';
-import erc721Provenance_abi from '../contracts/erc721Provenance/erc721Provenance_abi';
 
 describe('MATIC transactions', () => {
     jest.setTimeout(99999)
@@ -269,15 +270,15 @@ describe('MATIC transactions', () => {
         it('should test 721 provenance mint with cashback transaction', async () => {
             try {
                 const mintedToken = await preparePolygonMintErc721ProvenanceSignedTransaction(true, {
-                    to: '0x75Bd6dFA13C0086b9C8C4b510b1F758c720B79BF',
-                    tokenId: "11",
+                    to: '0x80D8BAc9a6901698b3749Fe336bBd1385C1f98f2',
+                    tokenId: '12',
                     url: 'https://www.seznam.cz',
-                    fromPrivateKey: '0xf17abcb517d759efee24bc4859183c7219c588540754318baebb3f9c31449564',
+                    fromPrivateKey: '0x37b091fc4ce46a56da643f021254612551dbe0944679a6e09cb5724d3085c9ab',
                     authorAddresses: ['0x75Bd6dFA13C0086b9C8C4b510b1F758c720B79BF'],
                     cashbackValues: ['2'],
-                    fixedValues: ['1'],
+                    fixedValues: ['0.01'],
                     chain: Currency.MATIC,
-                    contractAddress: '0x8D2A0dd3855ECA8591756a606DA9829f703cA26B'
+                    contractAddress: '0x44ef7a380c34E76a39Cb00410956dE2aeeaf3B1B'
                 }, 'https://matic-mumbai.chainstacklabs.com/')
                 expect(mintedToken).not.toBeNull()
                 console.log(await broadcast(mintedToken))
@@ -295,7 +296,7 @@ describe('MATIC transactions', () => {
                 fixedValues: [['1'], ['1']],
                 fromPrivateKey: '0xf17abcb517d759efee24bc4859183c7219c588540754318baebb3f9c31449564',
                 chain: Currency.MATIC,
-                contractAddress: '0x8D2A0dd3855ECA8591756a606DA9829f703cA26B'
+                contractAddress: '0xe54a147b6ebe25bda0eec07e8a0051c1b9d08338'
             }, 'https://matic-mumbai.chainstacklabs.com/')
             expect(mintedTokens).not.toBeNull()
             console.log(await broadcast(mintedTokens))
@@ -303,14 +304,18 @@ describe('MATIC transactions', () => {
         it('should test 721 send transaction', async () => {
             const senderc721Token = await preparePolygonTransferErc721SignedTransaction(true, {
                 to: '0xD25031B1aB4D82e5fDFb700234b2a22e272232Be',
-                tokenId: '5',
-                fromPrivateKey: '0xf17abcb517d759efee24bc4859183c7219c588540754318baebb3f9c31449564',
+                tokenId: '12',
+                fromPrivateKey: '0x37b091fc4ce46a56da643f021254612551dbe0944679a6e09cb5724d3085c9ab',
                 chain: Currency.MATIC,
                 provenance: true,
                 provenanceData: 'testMatic',
-                tokenPrice: '1',
+                tokenPrice: '1.5',
                 value: '2',
-                contractAddress: '0x8D2A0dd3855ECA8591756a606DA9829f703cA26B'
+                fee: {
+                    gasLimit: '1200000',
+                    gasPrice: '3'
+                },
+                contractAddress: '0x44ef7a380c34E76a39Cb00410956dE2aeeaf3B1B'
             }, 'https://matic-mumbai.chainstacklabs.com/')
             console.log(senderc721Token)
             expect(senderc721Token).not.toBeNull()
@@ -318,8 +323,8 @@ describe('MATIC transactions', () => {
         })
         it('should test valid transfer data 721 transaction', async () => {
             const body = new SmartContractReadMethodInvocation()
-            body.contractAddress = '0x8D2A0dd3855ECA8591756a606DA9829f703cA26B'
-            body.params = ['1634501273645']
+            body.contractAddress = '0xe54a147b6ebe25bda0eec07e8a0051c1b9d08338';
+            body.params = ['1634501273645'];
             body.methodName = 'getTokenData'
             body.methodABI = erc721Provenance_abi.find((a: any) => a.name === 'getTokenData')
             const response = await sendPolygonSmartContractReadMethodInvocationTransaction(true, body, 'https://matic-mumbai.chainstacklabs.com/');
@@ -331,7 +336,7 @@ describe('MATIC transactions', () => {
                 tokenId: '5',
                 fromPrivateKey: '0xf17abcb517d759efee24bc4859183c7219c588540754318baebb3f9c31449564',
                 chain: Currency.MATIC,
-                contractAddress: '0x8D2A0dd3855ECA8591756a606DA9829f703cA26B'
+                contractAddress: '0xe54a147b6ebe25bda0eec07e8a0051c1b9d08338'
             }, 'https://matic-mumbai.chainstacklabs.com/')
             expect(burnBep721Token).not.toBeNull()
             // console.log(await broadcast(burnBep721Token))
