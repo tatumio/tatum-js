@@ -263,11 +263,11 @@ export const prepareBscOrBep20SignedTransaction = async (body: TransferBscBep20,
         }
     } else {
         // @ts-ignore
-        const contract = new client.eth.Contract([TRANSFER_METHOD_ABI], CONTRACT_ADDRESSES[currency])
-        const digits = new BigNumber(10).pow(CONTRACT_DECIMALS[currency])
+        const contract = new client.eth.Contract([TRANSFER_METHOD_ABI], CONTRACT_ADDRESSES[currency]);
+        const digits = new BigNumber(10).pow(CONTRACT_DECIMALS[currency as string]);
         tx = {
             from: 0,
-            to: CONTRACT_ADDRESSES[currency],
+            to: CONTRACT_ADDRESSES[currency as string],
             data: contract.methods.transfer(to.trim(), `0x${new BigNumber(amount).multipliedBy(digits).toString(16)}`).encodeABI(),
             nonce,
         }

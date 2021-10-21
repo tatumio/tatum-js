@@ -1,8 +1,21 @@
 import {Type} from 'class-transformer'
-import {IsIn, IsNotEmpty, IsNumberString, IsOptional, Length, Matches, MaxLength, Min, ValidateIf, ValidateNested,} from 'class-validator'
+import {
+    IsIn,
+    IsNotEmpty,
+    IsNumberString,
+    IsOptional,
+    Length,
+    Matches,
+    Max,
+    MaxLength,
+    Min,
+    ValidateIf,
+    ValidateNested,
+} from 'class-validator'
 import {Currency} from './Currency'
 import {Fee} from './Fee'
 import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId'
+import { OneOf } from '../validation/OneOf'
 
 export class TransferCeloOrCeloErc20Token extends PrivateKeyOrSignatureId {
 
@@ -13,20 +26,20 @@ export class TransferCeloOrCeloErc20Token extends PrivateKeyOrSignatureId {
     @IsNotEmpty()
     @IsNumberString()
     @Matches(/^[+]?((\d+(\.\d*)?)|(\.\d+))$/)
+    @OneOf(['currency', 'contractAddress'])
     public amount: string;
 
     @MaxLength(130000)
     @IsOptional()
     public data?: string;
 
-    @ValidateIf(o => !o.contractAddress)
-    @IsNotEmpty()
+    @IsOptional()
     @IsIn([Currency.CELO, Currency.CUSD, Currency.CEUR])
     public currency?: Currency;
 
-    @ValidateIf(o => !o.currency)
-    @IsNotEmpty()
+    @IsOptional()
     @Length(42, 42)
+    @OneOf(['currency', 'contractAddress'])
     public contractAddress?: string;
 
     @IsNotEmpty()

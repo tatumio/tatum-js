@@ -316,8 +316,8 @@ export const generateAdaWallet = async (mnemonic: string): Promise<Wallet> => {
  * @param mnem mnemonic seed to use
  * @returns address and secret
  */
-export const generateAlgoWallet = async (mnem: string) => {
-    const account = algosdk.mnemonicToSecretKey(mnem);
+export const generateAlgoWallet = async (mnem?: string) => {
+    const account = mnem ? algosdk.mnemonicToSecretKey(mnem) : algosdk.generateAccount();
     const encoder = new base32.Encoder({type: "rfc4648"});
     const secret = encoder.write(account.sk).finalize();
     return {
@@ -421,7 +421,7 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
         case Currency.ADA:
             return generateAdaWallet(mnem)
         case Currency.ALGO:
-            return generateAlgoWallet(mnem)
+            return generateAlgoWallet(mnemonic)
         default:
             throw new Error('Unsupported blockchain.')
     }
