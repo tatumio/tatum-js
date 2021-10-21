@@ -99,6 +99,11 @@ export const mintNFT = (body: CeloMintErc721 | EthMintErc721 | OneMint721): Prom
  */
 export const getNFTsByAddress = async (chain: Currency, contractAddress: string, address: string): Promise<string[]> =>
     get(`/v3/nft/balance/${chain}/${contractAddress}/${address}`);
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/NftProvenanceReadData" target="_blank">Tatum API documentation</a>
+ */
+export const readProvenanceData = async (chain: Currency, contractAddress: string, tokenId: string): Promise<{ProvenanceData:string,tokenPrice:string}> =>
+    get(`/v3/nft/provenance/${chain}/${contractAddress}/${tokenId}`);
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetContractAddress" target="_blank">Tatum API documentation</a>
