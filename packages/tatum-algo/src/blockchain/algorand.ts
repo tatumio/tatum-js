@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
-import {get, post} from '@tatumio/tatum-core'
-import {AlgoBlock, AlgoTx, TransactionHash} from '../model'
+import {get, post, TransactionHash} from '@tatumio/tatum-core'
+import {AlgoBlock, AlgoTx} from '../model'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/AlgorandBroadcast" target="_blank">Tatum API documentation</a>

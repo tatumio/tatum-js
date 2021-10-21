@@ -2,7 +2,8 @@ const algosdk = require('algosdk');
 const base32 = require('base32.js');
 import {TextEncoder} from 'util';
 import {algorandBroadcast} from '../blockchain';
-import {AlgoTransaction, Currency, TransactionKMS} from '../model';
+import {TransactionKMS, Currency} from '@tatum/tatum-core';
+import {AlgoTransaction} from '../model';
 
 /**
  * Algod V2 Client
