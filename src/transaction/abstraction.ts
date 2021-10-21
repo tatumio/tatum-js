@@ -63,7 +63,7 @@ export const sendTransaction = async (testnet: boolean, chain: Currency,
         }
         case Currency.ONE: {
             const b = body as TransferErc20;
-            return b.contractAddress ? sendOneTransfer20SignedTransaction(testnet, b, provider) : sendPolygonTransaction(testnet, b, provider);
+            return b.contractAddress ? sendOneTransfer20SignedTransaction(testnet, b, provider) : sendOneTransaction(testnet, b, provider);
         }
         case Currency.TRON:
             // @ts-ignore
