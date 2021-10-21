@@ -564,12 +564,14 @@ export const prepareCeloTransferErc721SignedTransaction = async (testnet: boolea
 
     const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
     const network = await p.ready;
-    const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
+    const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet);
 
     // @ts-ignore
-    const contract = new (new Web3()).eth.Contract(provenance ? erc721Provenance_abi : erc721_abi, contractAddress.trim())
-    // @ts-ignore
-    const tokenData = contract.methods.safeTransfer(to.trim(), tokenId, provenance ? provenanceData + "'''###'''" +  toWei(tokenPrice!, 'ether') : undefined).encodeABI()
+    const contract = new (new Web3()).eth.Contract(provenance ? erc721Provenance_abi : erc721_abi, contractAddress.trim());
+    let tokenData = contract.methods.safeTransfer(to.trim(), tokenId).encodeABI();
+    if (provenance) {
+        tokenData = contract.methods.safeTransfer(to.trim(), tokenId, provenanceData + '\'\'\'###\'\'\'' + toWei(tokenPrice!, 'ether')).encodeABI();
+    }
     if (signatureId) {
         return JSON.stringify({
             chainId: network.chainId,
@@ -579,7 +581,7 @@ export const prepareCeloTransferErc721SignedTransaction = async (testnet: boolea
             to: contractAddress.trim(),
             data: tokenData,
             value: value ? `0x${new BigNumber(value).multipliedBy(1e18).toString(16)}` : undefined,
-        })
+        });
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p)
     const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
