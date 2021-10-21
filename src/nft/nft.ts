@@ -102,7 +102,7 @@ export const getNFTsByAddress = async (chain: Currency, contractAddress: string,
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/NftProvenanceReadData" target="_blank">Tatum API documentation</a>
  */
-export const readProvenanceData = async (chain: Currency, contractAddress: string, tokenId: string): Promise<{ProvenanceData:string,tokenPrice:string}> =>
+export const getProvenanceData = async (chain: Currency, contractAddress: string, tokenId: string): Promise<{ProvenanceData:string,tokenPrice:string}> =>
     get(`/v3/nft/provenance/${chain}/${contractAddress}/${tokenId}`);
 
 /**
