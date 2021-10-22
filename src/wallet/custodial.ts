@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import {celoBroadcast, polygonBroadcast} from '../blockchain';
+import {bscBroadcast, celoBroadcast, polygonBroadcast} from '../blockchain';
 import {get, validateBody} from '../connector/tatum';
 import {CUSTODIAL_PROXY_ABI} from '../constants';
 import {
@@ -123,6 +123,8 @@ const getCustodialFactoryContractAddress = (chain: Currency, testnet: boolean) =
             return testnet ? '0x7f6ECaef0d01De5D464B8c1Ca968b102ABd40Ca1' : '0xb1462fE8E9Cf82c0296022Cca7bEfA3Fd4c12B34';
         case Currency.MATIC:
             return testnet ? '0x1C129AE4BF1e6E6C9A0E5e567b8e97E2d41A9265' : '0x3485fdba44736859267789ac9c248cc4c1443956';
+        case Currency.BSC:
+            return testnet ? '0x8a29493C84a820882d7c2B8af6aA88BF5adD4A08' : '0x3485fDBa44736859267789AC9C248Cc4c1443956';
         default:
             throw new Error('Unsupported chain.');
     }
@@ -202,6 +204,8 @@ export const generateCustodialWalletBatch = async (testnet: boolean, body: Gener
             return await celoBroadcast(txData, body.signatureId);
         case Currency.MATIC:
             return await polygonBroadcast(txData, body.signatureId);
+        case Currency.BSC:
+            return await bscBroadcast(txData, body.signatureId);
         default:
             throw new Error('Unsupported chain');
     }
