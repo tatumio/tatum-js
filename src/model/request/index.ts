@@ -7,6 +7,7 @@ export * from './TransferEthOffchainKMS';
 export * from './TransferXlmOffchainKMS';
 export * from './TransferXrpOffchainKMS';
 export * from './TransferBchBlockchain';
+export * from './GenerateCustodialAddressBatch';
 export * from './TransferBtcBasedBlockchain';
 export * from './TransferErc20';
 export * from './TransferFlowCustomTx';
