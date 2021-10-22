@@ -21,6 +21,7 @@ import {
     ContractType,
     Currency,
     GenerateCustodialAddress,
+    GenerateCustodialAddressBatch,
     GenerateTronCustodialAddress,
     TransferFromCustodialAddress,
     TransferFromCustodialAddressBatch,
@@ -34,7 +35,13 @@ import {
     sendEthGenerateCustodialWalletSignedTransaction,
     sendTronGenerateCustodialWalletSignedTransaction
 } from '../transaction';
-import {obtainCustodialAddressType, prepareApproveFromCustodialWallet, prepareBatchTransferFromCustodialWallet, prepareTransferFromCustodialWallet} from './custodial';
+import {
+    generateCustodialWalletBatch,
+    obtainCustodialAddressType,
+    prepareApproveFromCustodialWallet,
+    prepareBatchTransferFromCustodialWallet,
+    prepareTransferFromCustodialWallet
+} from './custodial';
 
 describe('Custodial wallet tests', () => {
 
@@ -173,25 +180,50 @@ describe('Custodial wallet tests', () => {
         })
 
         it('should deploy 721_1155', () => {
-            const body = new GenerateCustodialAddress()
-            body.enableBatchTransactions = false
-            body.enableFungibleTokens = false
-            body.enableNonFungibleTokens = true
-            body.enableSemiFungibleTokens = true
-            const {abi} = obtainCustodialAddressType(body)
-            expect(abi).toBe(Custodial_721_1155_TokenWallet.abi)
+            const body = new GenerateCustodialAddress();
+            body.enableBatchTransactions = false;
+            body.enableFungibleTokens = false;
+            body.enableNonFungibleTokens = true;
+            body.enableSemiFungibleTokens = true;
+            const {abi} = obtainCustodialAddressType(body);
+            expect(abi).toBe(Custodial_721_1155_TokenWallet.abi);
         })
     })
 
+    describe('Deploy batch address', () => {
+        it('should create on CELO', async () => {
+            const body = new GenerateCustodialAddressBatch();
+            body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
+            body.chain = Currency.CELO;
+            body.feeCurrency = Currency.CUSD;
+            body.batchCount = 200;
+            body.owner = '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA';
+            const txData = await generateCustodialWalletBatch(true, body, 'https://alfajores-forno.celo-testnet.org');
+            expect(txData.txId).toContain('0x');
+            console.log(txData.txId);
+        });
+
+        it('should create on MATIC', async () => {
+            const body = new GenerateCustodialAddressBatch();
+            body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
+            body.chain = Currency.MATIC;
+            body.batchCount = 200;
+            body.owner = '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA';
+            const txData = await generateCustodialWalletBatch(true, body);
+            expect(txData.txId).toContain('0x');
+            console.log(txData.txId);
+        });
+    });
+
     describe('Deploy address', () => {
         it('should create on CELO no batch', async () => {
-            const body = new GenerateCustodialAddress()
-            body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb'
-            body.chain = Currency.CELO
-            body.feeCurrency = Currency.CUSD
-            body.enableFungibleTokens = true
-            body.enableNonFungibleTokens = true
-            body.enableSemiFungibleTokens = false
+            const body = new GenerateCustodialAddress();
+            body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb';
+            body.chain = Currency.CELO;
+            body.feeCurrency = Currency.CUSD;
+            body.enableFungibleTokens = true;
+            body.enableNonFungibleTokens = true;
+            body.enableSemiFungibleTokens = false;
             body.enableBatchTransactions = false
             const txData = await sendCeloGenerateCustodialWalletSignedTransaction(true, body, 'https://alfajores-forno.celo-testnet.org')
             expect(txData.txId).toContain('0x')

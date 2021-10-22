@@ -1,5 +1,7 @@
 import BigNumber from 'bignumber.js';
-import {validateBody} from '../connector/tatum';
+import {bscBroadcast, celoBroadcast, polygonBroadcast} from '../blockchain';
+import {get, validateBody} from '../connector/tatum';
+import {CUSTODIAL_PROXY_ABI} from '../constants';
 import {
     Custodial_1155_TokenWallet,
     Custodial_1155_TokenWalletWithBatch,
@@ -24,6 +26,7 @@ import {
     ContractType,
     Currency,
     GenerateCustodialAddress,
+    GenerateCustodialAddressBatch,
     GenerateTronCustodialAddress,
     SmartContractMethodInvocation,
     TransferFromCustodialAddress,
@@ -114,8 +117,24 @@ export const obtainCustodialAddressType = (body: GenerateCustodialAddress) => {
     return {abi, code};
 };
 
+const getCustodialFactoryContractAddress = (chain: Currency, testnet: boolean) => {
+    switch (chain) {
+        case Currency.CELO:
+            return testnet ? '0x7f6ECaef0d01De5D464B8c1Ca968b102ABd40Ca1' : '0xb1462fE8E9Cf82c0296022Cca7bEfA3Fd4c12B34';
+        case Currency.MATIC:
+            return testnet ? '0x1C129AE4BF1e6E6C9A0E5e567b8e97E2d41A9265' : '0x3485fdba44736859267789ac9c248cc4c1443956';
+        case Currency.BSC:
+            return testnet ? '0x8a29493C84a820882d7c2B8af6aA88BF5adD4A08' : '0x3485fDBa44736859267789AC9C248Cc4c1443956';
+        default:
+            throw new Error('Unsupported chain.');
+    }
+};
+
+export const getCustodialAddresses = (chain: Currency, txId: string): Promise<string[]> => get(`v3/blockchain/sc/custodial/${chain}/${txId}`);
+
 /**
- * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, btu transaction costs connected to the withdrawal
+ * This method is @Deprecated. Use @link{generateCustodialWalletBatch} instead
+ * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, but transaction costs connected to the withdrawal
  * of assets is covered by the deployer.
  * @param testnet chain to work with
  * @param body request data
@@ -123,6 +142,7 @@ export const obtainCustodialAddressType = (body: GenerateCustodialAddress) => {
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const generateCustodialWallet = async (testnet: boolean, body: GenerateCustodialAddress | GenerateTronCustodialAddress, provider?: string) => {
+    console.log('This method is deprecated. For better gas consumption, use generateCustodialWalletBatch.');
     switch (body.chain) {
         case Currency.CELO:
             return await sendCeloGenerateCustodialWalletSignedTransaction(testnet, body, provider);
@@ -142,7 +162,8 @@ export const generateCustodialWallet = async (testnet: boolean, body: GenerateCu
 };
 
 /**
- * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, btu transaction costs connected to the withdrawal
+ * This method is @Deprecated. Use @link{prepareCustodialWalletBatch} instead
+ * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, but transaction costs connected to the withdrawal
  * of assets is covered by the deployer.
  * @param testnet chain to work with
  * @param body request data
@@ -150,6 +171,7 @@ export const generateCustodialWallet = async (testnet: boolean, body: GenerateCu
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareCustodialWallet = async (testnet: boolean, body: GenerateCustodialAddress | GenerateTronCustodialAddress, provider?: string) => {
+    console.log('This method is deprecated. For better gas consumption, use prepareCustodialWalletBatch.');
     switch (body.chain) {
         case Currency.CELO:
             return await prepareCeloGenerateCustodialWalletSignedTransaction(testnet, body, provider);
@@ -167,9 +189,47 @@ export const prepareCustodialWallet = async (testnet: boolean, body: GenerateCus
             throw new Error('Unsupported chain');
     }
 };
+/**
+ * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, but transaction costs connected to the withdrawal
+ * of assets is covered by the deployer.
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const generateCustodialWalletBatch = async (testnet: boolean, body: GenerateCustodialAddressBatch, provider?: string) => {
+    const txData = await prepareCustodialWalletBatch(testnet, body, provider);
+    switch (body.chain) {
+        case Currency.CELO:
+            return await celoBroadcast(txData, body.signatureId);
+        case Currency.MATIC:
+            return await polygonBroadcast(txData, body.signatureId);
+        case Currency.BSC:
+            return await bscBroadcast(txData, body.signatureId);
+        default:
+            throw new Error('Unsupported chain');
+    }
+};
 
 /**
- * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, btu transaction costs connected to the withdrawal
+ * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, but transaction costs connected to the withdrawal
+ * of assets is covered by the deployer.
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const prepareCustodialWalletBatch = async (testnet: boolean, body: GenerateCustodialAddressBatch, provider?: string) => {
+    await validateBody(body, GenerateCustodialAddressBatch);
+    const params = [body.owner.trim(), `0x${new BigNumber(body.batchCount).toString(16)}`];
+    return await helperPrepareSCCall(testnet, {
+        ...body,
+        contractAddress: getCustodialFactoryContractAddress(body.chain, testnet)
+    }, GenerateCustodialAddressBatch, 'cloneNewWallet', params, undefined, provider, [CUSTODIAL_PROXY_ABI]);
+};
+
+/**
+ * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, but transaction costs connected to the withdrawal
  * of assets is covered by the deployer.
  * @param testnet chain to work with
  * @param body request data
