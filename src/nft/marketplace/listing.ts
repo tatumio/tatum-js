@@ -272,8 +272,13 @@ export const prepareMarketplaceCreateListing = async (testnet: boolean, body: Cr
 export const prepareMarketplaceBuyListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation | InvokeTronMarketplaceListingOperation, provider?: string) => {
     await validateBody(body, body.chain === Currency.TRON ? InvokeTronMarketplaceListingOperation : InvokeMarketplaceListingOperation);
     const params = [body.listingId, body.erc20Address || '0x0000000000000000000000000000000000000000'];
+    let methodName = 'buyAssetFromListing';
     if (body.erc20Address) {
         body.amount = undefined;
+        if (body.buyer) {
+            params.push(body.buyer.trim());
+            methodName = 'buyAssetFromListingForExternalBuyer';
+        }
     }
     if (body.chain === Currency.TRON) {
         throw new Error('Unsupported chain');
@@ -283,7 +288,7 @@ export const prepareMarketplaceBuyListing = async (testnet: boolean, body: Invok
         //         {type: 'address', value: convertAddressToHex(params[1])},
         //     ], 'buyAssetFromListing(string,address)', provider);
     } else {
-        return await helperPrepareSCCall(testnet, body, InvokeMarketplaceListingOperation, 'buyAssetFromListing', params, undefined, provider);
+        return await helperPrepareSCCall(testnet, body, InvokeMarketplaceListingOperation, methodName, params, undefined, provider);
     }
 };
 

@@ -429,13 +429,16 @@ export const preparePolygonBurnErc721SignedTransaction = async (testnet: boolean
  * @returns transaction data to be broadcast to blockchain.
  */
 export const preparePolygonTransferErc721SignedTransaction = async (testnet: boolean, body: EthTransferErc721, provider?: string) => {
-    await validateBody(body, EthTransferErc721)
-    const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
+    await validateBody(body, EthTransferErc721);
+    const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey);
     // @ts-ignore
-    const data = new (client).eth.Contract(body.provenance ? erc721Provenance_abi : erc721TokenABI, body.contractAddress.trim())
-        .methods.safeTransfer(body.to.trim(), body.tokenId, body.provenance ? body.provenanceData + "'''###'''" + toWei(body.tokenPrice!, 'ether') : undefined).encodeABI()
+    const contract = new (client).eth.Contract(body.provenance ? erc721Provenance_abi : erc721TokenABI, body.contractAddress.trim());
+    let data = contract.methods.safeTransfer(body.to.trim(), body.tokenId).encodeABI();
+    if (body.provenance) {
+        data = contract.methods.safeTransfer(body.to.trim(), body.tokenId, body.provenanceData + '\'\'\'###\'\'\'' + toWei(body.tokenPrice!, 'ether')).encodeABI();
+    }
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), body.value, body.nonce, data,
-        body.fee?.gasLimit, body.fee?.gasPrice)
+        body.fee?.gasLimit, body.fee?.gasPrice);
 }
 
 /**

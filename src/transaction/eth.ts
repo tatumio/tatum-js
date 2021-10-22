@@ -766,20 +766,22 @@ export const prepareEthTransferErc721SignedTransaction = async (body: EthTransfe
         provenance
     } = body
 
-    const client = await getClient(provider, fromPrivateKey)
+    const client = await getClient(provider, fromPrivateKey);
 
     // @ts-ignore
-    const contract = new (client).eth.Contract(provenance ? erc721Provenance_abi : erc721TokenABI, contractAddress)
-    // @ts-ignore
-    const tokenData = contract.methods.safeTransfer(to.trim(), tokenId, provenance ? provenanceData + "'''###'''" + toWei(tokenPrice!, 'ether') : undefined).encodeABI()
+    const contract = new (client).eth.Contract(provenance ? erc721Provenance_abi : erc721TokenABI, contractAddress);
+    let tokenData = contract.methods.safeTransfer(to.trim(), tokenId).encodeABI();
+    if (provenance) {
+        tokenData = contract.methods.safeTransfer(to.trim(), tokenId, provenanceData + '\'\'\'###\'\'\'' + toWei(tokenPrice!, 'ether')).encodeABI();
+    }
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
         data: tokenData,
         nonce,
         value: value ? `0x${new BigNumber(value).multipliedBy(1e18).toString(16)}` : undefined,
-    }
-    return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
+    };
+    return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 }
 /**
  * Sign Ethereum mint ERC 1155 transaction with private keys locally. Nothing is broadcast to the blockchain.

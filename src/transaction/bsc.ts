@@ -263,11 +263,11 @@ export const prepareBscOrBep20SignedTransaction = async (body: TransferBscBep20,
         }
     } else {
         // @ts-ignore
-        const contract = new client.eth.Contract([TRANSFER_METHOD_ABI], CONTRACT_ADDRESSES[currency])
-        const digits = new BigNumber(10).pow(CONTRACT_DECIMALS[currency])
+        const contract = new client.eth.Contract([TRANSFER_METHOD_ABI], CONTRACT_ADDRESSES[currency]);
+        const digits = new BigNumber(10).pow(CONTRACT_DECIMALS[currency as string]);
         tx = {
             from: 0,
-            to: CONTRACT_ADDRESSES[currency],
+            to: CONTRACT_ADDRESSES[currency as string],
             data: contract.methods.transfer(to.trim(), `0x${new BigNumber(amount).multipliedBy(digits).toString(16)}`).encodeABI(),
             nonce,
         }
@@ -697,21 +697,23 @@ export const prepareBscTransferBep721SignedTransaction = async (body: EthTransfe
         tokenPrice
     } = body
 
-    const client = await getBscClient(provider, fromPrivateKey)
+    const client = await getBscClient(provider, fromPrivateKey);
 
     // @ts-ignore
-    const contract = new (client).eth.Contract(provenance ? erc721Provenance_abi : erc721TokenABI, contractAddress)
-    // @ts-ignore
-    const tokenData = contract.methods.safeTransfer(to.trim(), tokenId, provenance ? provenanceData + "'''###'''" + toWei(tokenPrice!, 'ether') : undefined).encodeABI()
+    const contract = new (client).eth.Contract(provenance ? erc721Provenance_abi : erc721TokenABI, contractAddress);
+    let tokenData = contract.methods.safeTransfer(to.trim(), tokenId).encodeABI();
+    if (provenance) {
+        tokenData = contract.methods.safeTransfer(to.trim(), tokenId, provenanceData + '\'\'\'###\'\'\'' + toWei(tokenPrice!, 'ether')).encodeABI();
+    }
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
         data: tokenData,
         nonce,
         value: value ? `0x${new BigNumber(value).multipliedBy(1e18).toString(16)}` : undefined,
-    }
+    };
 
-    return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
+    return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee);
 }
 
 /**

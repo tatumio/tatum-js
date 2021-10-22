@@ -213,16 +213,25 @@ export const prepareAuctionBid = async (testnet: boolean, body: InvokeAuctionOpe
     // @ts-ignore
     const a = await (new web3.eth.Contract(auction.abi, body.contractAddress)).methods.getAuction(body.id).call();
     let decimals = 18;
+    let methodName = 'bid';
     const b: any = {...body};
     if (a[6] !== '0x0000000000000000000000000000000000000000') {
         // @ts-ignore
         decimals = await getErc20Decimals(testnet, body.chain, a[6], provider);
+        if (body.bidder) {
+            methodName = 'bidForExternalBidder';
+        }
+    } else if (body.bidder) {
+        throw new Error('Bidder could be present only for ERC20 based auctions.');
     } else {
         b.amount = body.bidValue;
     }
 
     const params = [body.id, `0x${new BigNumber(body.bidValue).multipliedBy(new BigNumber(10).pow(decimals)).toString(16)}`,];
-    return await helperPrepareSCCall(testnet, b, InvokeAuctionOperation, 'bid', params, undefined, provider, auction.abi);
+    if (body.bidder) {
+        params.push(body.bidder.trim());
+    }
+    return await helperPrepareSCCall(testnet, b, InvokeAuctionOperation, methodName, params, undefined, provider, auction.abi);
 };
 
 /**

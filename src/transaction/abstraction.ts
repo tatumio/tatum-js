@@ -1,10 +1,14 @@
 import {validateBody} from '../connector/tatum';
 import {CreateRecord, Currency, TransferBscBep20, TransferCeloOrCeloErc20Token, TransferErc20, TransferTron} from '../model';
-import {sendBscOrBep20Transaction, sendBscStoreDataTransaction} from './bsc';
-import {sendCeloOrcUsdTransaction, sendCeloStoreDataSignedTransaction} from './celo';
-import {sendEthOrErc20Transaction, sendStoreDataTransaction} from './eth';
-import {sendOneStoreDataTransaction, sendOneTransaction} from './one';
-import {sendPolygonStoreDataTransaction, sendPolygonTransaction} from './polygon';
+import { sendBscOrBep20Transaction, sendBscStoreDataTransaction, sendCustomBep20Transaction } from './bsc';
+import { sendCeloErc20Transaction, sendCeloOrcUsdTransaction, sendCeloStoreDataSignedTransaction } from './celo';
+import { sendCustomErc20Transaction, sendEthOrErc20Transaction, sendStoreDataTransaction } from './eth';
+import { sendOneStoreDataTransaction, sendOneTransaction, sendOneTransfer20SignedTransaction } from './one';
+import {
+    sendPolygonStoreDataTransaction,
+    sendPolygonTransaction,
+    sendPolygonTransferErc20SignedTransaction,
+} from './polygon';
 import {sendTronTransaction} from './tron';
 import {sendXdcStoreDataTransaction} from './xdc';
 
@@ -46,24 +50,31 @@ export const sendTransaction = async (testnet: boolean, chain: Currency,
     switch (chain) {
         case Currency.CELO: {
             const b = body as TransferCeloOrCeloErc20Token;
-            b.currency = Currency.CELO;
             b.feeCurrency = Currency.CELO;
-            return sendCeloOrcUsdTransaction(testnet, b, provider);
+            return b.contractAddress ? sendCeloErc20Transaction(testnet, b) : sendCeloOrcUsdTransaction(testnet, b, provider);
         }
-        case Currency.ETH:
-            (body as TransferErc20).currency = chain;
-            return sendEthOrErc20Transaction(body as TransferErc20, provider);
-        case Currency.MATIC:
-            (body as TransferErc20).currency = chain;
-            return sendPolygonTransaction(testnet, body as TransferErc20, provider);
-        case Currency.ONE:
-            (body as TransferErc20).currency = chain;
-            return sendOneTransaction(testnet, body as TransferErc20, provider);
+        case Currency.ETH: {
+            const b = body as TransferErc20;
+            return b.contractAddress ? sendCustomErc20Transaction(b, provider) : sendEthOrErc20Transaction(b, provider);
+        }
+        case Currency.MATIC: {
+            const b = body as TransferErc20;
+            return b.contractAddress ? sendPolygonTransferErc20SignedTransaction(testnet, b, provider) : sendPolygonTransaction(testnet, b, provider);
+        }
+        case Currency.ONE: {
+            const b = body as TransferErc20;
+            return b.contractAddress ? sendOneTransfer20SignedTransaction(testnet, b, provider) : sendOneTransaction(testnet, b, provider);
+        }
         case Currency.TRON:
+            // @ts-ignore
+            if (body.contractAddress) {
+                throw new Error('Cannot work with TRON and contract address');
+            }
             return sendTronTransaction(testnet, body as TransferTron);
-        case Currency.BSC:
-            (body as TransferBscBep20).currency = chain;
-            return sendBscOrBep20Transaction(body as TransferBscBep20, provider);
+        case Currency.BSC: {
+            const b = body as TransferBscBep20;
+            return b.contractAddress ? sendCustomBep20Transaction(b, provider) : sendBscOrBep20Transaction(b, provider);
+        }
         default:
             throw new Error('Unsupported blockchain.');
     }

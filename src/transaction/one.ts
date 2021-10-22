@@ -456,13 +456,16 @@ export const prepareOneBurn721SignedTransaction = async (testnet: boolean, body:
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareOneTransfer721SignedTransaction = async (testnet: boolean, body: OneTransfer721, provider?: string) => {
-    await validateBody(body, OneTransfer721)
-    const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+    await validateBody(body, OneTransfer721);
+    const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
     // @ts-ignore
-    const data = new (client).eth.Contract(body.provenance ? erc721Provenance_abi : erc721TokenABI, new HarmonyAddress(body.contractAddress).basicHex)
-        .methods.safeTransfer(new HarmonyAddress(body.to).basicHex, body.tokenId, body.provenance ? body.provenanceData + "'''###'''" + toWei(body.tokenPrice!, 'ether'): undefined).encodeABI()
+    const contract = new (client).eth.Contract(body.provenance ? erc721Provenance_abi : erc721TokenABI, new HarmonyAddress(body.contractAddress).basicHex);
+    let data = contract.methods.safeTransfer(new HarmonyAddress(body.to).basicHex, body.tokenId).encodeABI();
+    if (body.provenance) {
+        data = contract.methods.safeTransfer(new HarmonyAddress(body.to).basicHex, body.tokenId, body.provenanceData + '\'\'\'###\'\'\'' + toWei(body.tokenPrice!, 'ether')).encodeABI();
+    }
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, body.value, body.nonce, data,
-        body.fee?.gasLimit, body.fee?.gasPrice)
+        body.fee?.gasLimit, body.fee?.gasPrice);
 }
 
 /**

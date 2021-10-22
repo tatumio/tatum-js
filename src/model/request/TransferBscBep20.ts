@@ -13,6 +13,7 @@ import {
 import {BSC_BASED_CURRENCIES, Currency} from './Currency'
 import {Fee} from './Fee'
 import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId'
+import { OneOf } from '../validation/OneOf'
 
 export class TransferBscBep20 extends PrivateKeyOrSignatureId {
 
@@ -23,15 +24,16 @@ export class TransferBscBep20 extends PrivateKeyOrSignatureId {
     @IsNotEmpty()
     @IsNumberString()
     @Matches(/^[+]?((\d+(\.\d*)?)|(\.\d+))$/)
+    @OneOf(['currency', 'contractAddress'])
     public amount: string;
 
     @MaxLength(130000)
     @IsOptional()
     public data?: string;
 
-    @IsNotEmpty()
     @IsIn(BSC_BASED_CURRENCIES)
-    public currency: Currency;
+    @IsOptional()
+    public currency?: Currency;
 
     @IsOptional()
     @Type(() => Fee)
@@ -41,4 +43,8 @@ export class TransferBscBep20 extends PrivateKeyOrSignatureId {
     @Min(0)
     @IsOptional()
     public nonce?: number;
+
+    @Length(42, 42)
+    @IsOptional()
+    public contractAddress?: string;
 }
