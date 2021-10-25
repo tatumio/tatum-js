@@ -1,11 +1,11 @@
-import {HarmonyAddress} from '@harmony-js/crypto';
-import {BigNumber} from 'bignumber.js';
+import { HarmonyAddress } from '@harmony-js/crypto';
+import { BigNumber } from 'bignumber.js';
 import Web3 from 'web3';
-import {TransactionConfig} from 'web3-core';
-import {toWei} from 'web3-utils';
-import {oneBroadcast} from '../blockchain';
-import {validateBody} from '../connector/tatum';
-import {TATUM_API_URL} from '../constants';
+import { TransactionConfig } from 'web3-core';
+import { toWei } from 'web3-utils';
+import { oneBroadcast } from '../blockchain';
+import { validateBody } from '../connector/tatum';
+import { TATUM_API_URL } from '../constants';
 import erc1155TokenABI from '../contracts/erc1155/erc1155_abi';
 import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode';
 import erc20_abi from '../contracts/erc20/token_abi';
@@ -15,7 +15,7 @@ import erc721TokenABI from '../contracts/erc721/erc721_abi';
 import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
 import erc721Provenance_abi from '../contracts/erc721Provenance/erc721Provenance_abi';
 import erc721Provenance_bytecode from '../contracts/erc721Provenance/erc721Provenance_bytecode';
-import {auction, listing} from '../contracts/marketplace';
+import { auction, listing } from '../contracts/marketplace';
 import {
     CreateRecord,
     Currency,
@@ -44,11 +44,11 @@ import {
     SmartContractReadMethodInvocation,
     TransactionKMS,
 } from '../model';
-import {mintNFT} from '../nft';
-import {obtainCustodialAddressType} from '../wallet';
+import { mintNFT } from '../nft';
+import { obtainCustodialAddressType } from '../wallet';
 
 const prepareGeneralTx = async (client: Web3, testnet: boolean, fromPrivateKey?: string, signatureId?: string, to?: string, amount?: string, nonce?: number,
-                                data?: string, gasLimit?: string, gasPrice?: string) => {
+    data?: string, gasLimit?: string, gasPrice?: string) => {
     const recipient = to?.includes('one') ? new HarmonyAddress(to).basicHex : to;
     const tx: TransactionConfig = {
         from: 0,
@@ -460,7 +460,7 @@ export const prepareOneTransfer721SignedTransaction = async (testnet: boolean, b
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
     // @ts-ignore
     const contract = new (client).eth.Contract(body.provenance ? erc721Provenance_abi : erc721TokenABI, new HarmonyAddress(body.contractAddress).basicHex);
-    let data = body.provenance?contract.methods.safeTransfer(new HarmonyAddress(body.to).basicHex, body.tokenId, body.provenanceData + '\'\'\'###\'\'\'' + toWei(body.tokenPrice!, 'ether')).encodeABI():contract.methods.safeTransfer(new HarmonyAddress(body.to).basicHex, body.tokenId).encodeABI();
+    const data = body.provenance ? contract.methods.safeTransfer(new HarmonyAddress(body.to).basicHex, body.tokenId, body.provenanceData + '\'\'\'###\'\'\'' + toWei(body.tokenPrice!, 'ether')).encodeABI() : contract.methods.safeTransfer(new HarmonyAddress(body.to).basicHex, body.tokenId).encodeABI();
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, body.value, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice);
 }
