@@ -79,9 +79,9 @@ export const createNFT = async (testnet: boolean, body: MintErc721,
 export const mintXdcNFTWithUri = async (testnet: boolean, body: MintErc721, provider?: string): Promise<TransactionHash> => {
   if ((body as MintErc721).authorAddresses) {
     return sendXdcMintErcCashback721Transaction(body as MintErc721, provider);
-} else {
-    return sendXdcMintErc721Transaction(body as MintErc721, provider);
-}
+  } else {
+      return sendXdcMintErc721Transaction(body as MintErc721, provider);
+  }
 };
 
 /**
@@ -94,7 +94,7 @@ export const mintMultipleNFTWithUri = async (testnet: boolean, body: MintMultipl
   if ((body as MintMultipleErc721).authorAddresses) {
     return sendXdcMintMultipleCashbackErc721Transaction(body as MintMultipleErc721, provider);
   } else {
-      return sendXdcMintMultipleErc721Transaction(body as MintMultipleErc721, provider);
+    return sendXdcMintMultipleErc721Transaction(body as MintMultipleErc721, provider);
   }
 };
 
