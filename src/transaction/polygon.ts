@@ -1,10 +1,10 @@
-import {BigNumber} from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import Web3 from 'web3';
-import {TransactionConfig} from 'web3-core';
-import {isHex, stringToHex, toHex, toWei} from 'web3-utils';
-import {polygonBroadcast} from '../blockchain';
-import {axios, validateBody} from '../connector/tatum';
-import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
+import { TransactionConfig } from 'web3-core';
+import { isHex, stringToHex, toHex, toWei } from 'web3-utils';
+import { polygonBroadcast } from '../blockchain';
+import { axios, validateBody } from '../connector/tatum';
+import { CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI } from '../constants';
 import erc1155TokenABI from '../contracts/erc1155/erc1155_abi';
 import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode';
 import erc20_abi from '../contracts/erc20/token_abi';
@@ -14,7 +14,7 @@ import erc721TokenABI from '../contracts/erc721/erc721_abi';
 import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
 import erc721Provenance_abi from '../contracts/erc721Provenance/erc721Provenance_abi';
 import erc721Provenance_bytecode from '../contracts/erc721Provenance/erc721Provenance_bytecode';
-import {auction, listing} from '../contracts/marketplace';
+import { auction, listing } from '../contracts/marketplace';
 import {
     BurnErc20,
     BurnMultiToken,
@@ -44,14 +44,14 @@ import {
     TransferMultiTokenBatch,
     UpdateCashbackErc721,
 } from '../model';
-import {mintNFT} from '../nft';
-import {obtainCustodialAddressType} from '../wallet';
+import { mintNFT } from '../nft';
+import { obtainCustodialAddressType } from '../wallet';
 
 /**
  * Estimate Gas price for the transaction.
  */
 export const polygonGetGasPriceInWei = async () => {
-    const {data} = await axios.get('https://gasstation-mainnet.matic.network');
+    const { data } = await axios.get('https://gasstation-mainnet.matic.network');
     return Web3.utils.toWei(`${Math.max(30, Math.min(Math.ceil(data.fast / 10), 100))}`, 'gwei');
 };
 
@@ -433,10 +433,7 @@ export const preparePolygonTransferErc721SignedTransaction = async (testnet: boo
     const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey);
     // @ts-ignore
     const contract = new (client).eth.Contract(body.provenance ? erc721Provenance_abi : erc721TokenABI, body.contractAddress.trim());
-    let data = contract.methods.safeTransfer(body.to.trim(), body.tokenId).encodeABI();
-    if (body.provenance) {
-        data = contract.methods.safeTransfer(body.to.trim(), body.tokenId, body.provenanceData + '\'\'\'###\'\'\'' + toWei(body.tokenPrice!, 'ether')).encodeABI();
-    }
+    const data = body.provenance ? contract.methods.safeTransfer(body.to.trim(), body.tokenId, body.provenanceData + '\'\'\'###\'\'\'' + toWei(body.tokenPrice!, 'ether')).encodeABI() : contract.methods.safeTransfer(body.to.trim(), body.tokenId).encodeABI();
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), body.value, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice);
 }

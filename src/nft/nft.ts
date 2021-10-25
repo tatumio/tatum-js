@@ -1,4 +1,4 @@
-import {axios, get, post} from '../connector/tatum';
+import { axios, get, post } from '../connector/tatum';
 import {
     CeloBurnErc721,
     CeloDeployErc721,
@@ -27,18 +27,26 @@ import {
     TronUpdateCashbackTrc721,
     UpdateCashbackErc721,
 } from '../model';
-import {ipfsUpload} from '../storage';
+import { ipfsUpload } from '../storage';
 import {
+    sendMintBep721ProvenanceTransaction,
+    sendMintMultipleBep721ProvenanceTransaction,
+    sendMintErc721ProvenanceTransaction,
+    sendMintMultipleErc721ProvenanceTransaction,
+    sendCeloMintErc721ProvenanceTransaction,
+    sendCeloMintMultipleErc721ProvenanceTransaction,
+    sendOneMint721ProvenanceSignedTransaction,
+    sendOneMintMultiple721ProvenanceSignedTransaction,
+    sendPolygonMintErc721ProvenanceSignedTransaction,
+    sendPolygonMintMultipleErc721ProvenanceSignedTransaction,
     sendBep721Transaction,
     sendBurnBep721Transaction,
     sendBurnErc721Transaction,
     sendCeloBurnErc721Transaction,
     sendCeloDeployErc721Transaction,
     sendCeloMintCashbackErc721Transaction,
-    sendCeloMintErc721ProvenanceTransaction,
     sendCeloMintErc721Transaction,
     sendCeloMintMultipleCashbackErc721Transaction,
-    sendCeloMintMultipleErc721ProvenanceTransaction,
     sendCeloMintMultipleErc721Transaction,
     sendCeloTransferErc721Transaction,
     sendCeloUpdateCashbackForAuthorErc721Transaction,
@@ -50,23 +58,17 @@ import {
     sendFlowNftMintMultipleToken,
     sendFlowNftMintToken,
     sendFlowNftTransferToken,
-    sendMintBep721ProvenanceTransaction,
     sendMintBep721Transaction,
     sendMintBepCashback721Transaction,
     sendMintCashbackErc721Transaction,
-    sendMintErc721ProvenanceTransaction,
     sendMintErc721Transaction,
-    sendMintMultipleBep721ProvenanceTransaction,
     sendMintMultipleBep721Transaction,
     sendMintMultipleCashbackBep721Transaction,
-    sendMintMultipleErc721ProvenanceTransaction,
     sendMintMultipleErc721Transaction,
     sendOneBurn721SignedTransaction,
     sendOneDeploy721SignedTransaction,
-    sendOneMint721ProvenanceSignedTransaction,
     sendOneMint721SignedTransaction,
     sendOneMintCashback721SignedTransaction,
-    sendOneMintMultiple721ProvenanceSignedTransaction,
     sendOneMintMultiple721SignedTransaction,
     sendOneMintMultipleCashback721SignedTransaction,
     sendOneTransfer721SignedTransaction,
@@ -74,10 +76,8 @@ import {
     sendPolygonBurnErc721SignedTransaction,
     sendPolygonDeployErc721SignedTransaction,
     sendPolygonMintCashbackErc721SignedTransaction,
-    sendPolygonMintErc721ProvenanceSignedTransaction,
     sendPolygonMintErc721SignedTransaction,
     sendPolygonMintMultipleCashbackErc721SignedTransaction,
-    sendPolygonMintMultipleErc721ProvenanceSignedTransaction,
     sendPolygonMintMultipleErc721SignedTransaction,
     sendPolygonTransferErc721SignedTransaction,
     sendPolygonUpdateCashbackForAuthorErc721SignedTransaction,
@@ -102,7 +102,7 @@ export const getNFTsByAddress = async (chain: Currency, contractAddress: string,
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/NftProvenanceReadData" target="_blank">Tatum API documentation</a>
  */
-export const getNFTProvenanceData = async (chain: Currency, contractAddress: string, tokenId: string): Promise<{ ProvenanceData: string, tokenPrice: string }> =>
+export const getNFTProvenanceData = async (chain: Currency, contractAddress: string, tokenId: string): Promise<any> =>
     get(`/v3/nft/provenance/${chain}/${contractAddress}/${tokenId}`);
 
 /**

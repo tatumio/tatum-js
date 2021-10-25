@@ -1,11 +1,11 @@
-import {CeloProvider, CeloWallet} from '@celo-tools/celo-ethers-wrapper';
-import {BigNumber as BN} from '@ethersproject/bignumber';
-import {BigNumber} from 'bignumber.js';
+import { CeloProvider, CeloWallet } from '@celo-tools/celo-ethers-wrapper';
+import { BigNumber as BN } from '@ethersproject/bignumber';
+import { BigNumber } from 'bignumber.js';
 import Web3 from 'web3';
-import {isHex, stringToHex, toHex, toWei} from 'web3-utils';
-import {celoBroadcast} from '../blockchain';
-import {validateBody} from '../connector/tatum';
-import {CEUR_ADDRESS_MAINNET, CEUR_ADDRESS_TESTNET, CUSD_ADDRESS_MAINNET, CUSD_ADDRESS_TESTNET, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
+import { isHex, stringToHex, toHex, toWei } from 'web3-utils';
+import { celoBroadcast } from '../blockchain';
+import { validateBody } from '../connector/tatum';
+import { CEUR_ADDRESS_MAINNET, CEUR_ADDRESS_TESTNET, CUSD_ADDRESS_MAINNET, CUSD_ADDRESS_TESTNET, TATUM_API_URL, TRANSFER_METHOD_ABI } from '../constants';
 import erc1155_abi from '../contracts/erc1155/erc1155_abi';
 import erc1155_bytecode from '../contracts/erc1155/erc1155_bytecode';
 import erc20_abi from '../contracts/erc20/token_abi';
@@ -14,7 +14,7 @@ import erc721_abi from '../contracts/erc721/erc721_abi';
 import erc721_bytecode from '../contracts/erc721/erc721_bytecode';
 import erc721Provenance_abi from '../contracts/erc721Provenance/erc721Provenance_abi';
 import erc721Provenance_bytecode from '../contracts/erc721Provenance/erc721Provenance_bytecode';
-import {auction, listing} from '../contracts/marketplace';
+import { auction, listing } from '../contracts/marketplace';
 import {
     BurnCeloErc20,
     CeloBurnErc721,
@@ -42,8 +42,8 @@ import {
     TransactionKMS,
     TransferCeloOrCeloErc20Token
 } from '../model';
-import {mintNFT} from '../nft';
-import {obtainCustodialAddressType} from '../wallet/custodial';
+import { mintNFT } from '../nft';
+import { obtainCustodialAddressType } from '../wallet/custodial';
 
 const obtainWalletInformation = async (wallet: CeloWallet, feeCurrencyContractAddress?: string) => {
     const [txCount, gasPrice, from] = await Promise.all([
@@ -568,10 +568,7 @@ export const prepareCeloTransferErc721SignedTransaction = async (testnet: boolea
 
     // @ts-ignore
     const contract = new (new Web3()).eth.Contract(provenance ? erc721Provenance_abi : erc721_abi, contractAddress.trim());
-    let tokenData = contract.methods.safeTransfer(to.trim(), tokenId).encodeABI();
-    if (provenance) {
-        tokenData = contract.methods.safeTransfer(to.trim(), tokenId, provenanceData + '\'\'\'###\'\'\'' + toWei(tokenPrice!, 'ether')).encodeABI();
-    }
+    const tokenData = provenance ? contract.methods.safeTransfer(to.trim(), tokenId, provenanceData + '\'\'\'###\'\'\'' + toWei(tokenPrice!, 'ether')).encodeABI() : contract.methods.safeTransfer(to.trim(), tokenId).encodeABI();
     if (signatureId) {
         return JSON.stringify({
             chainId: network.chainId,
@@ -1625,7 +1622,7 @@ export const sendCeloMintCashbackErc721Transaction = async (testnet: boolean, bo
  * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendCeloMintErc721ProvenanceTransaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) =>{
+export const sendCeloMintErc721ProvenanceTransaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) => {
     if (!body.fromPrivateKey) {
         return mintNFT(body)
     }
