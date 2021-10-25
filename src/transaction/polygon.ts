@@ -433,10 +433,7 @@ export const preparePolygonTransferErc721SignedTransaction = async (testnet: boo
     const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey);
     // @ts-ignore
     const contract = new (client).eth.Contract(body.provenance ? erc721Provenance_abi : erc721TokenABI, body.contractAddress.trim());
-    let data = contract.methods.safeTransfer(body.to.trim(), body.tokenId).encodeABI();
-    if (body.provenance) {
-        data = contract.methods.safeTransfer(body.to.trim(), body.tokenId, body.provenanceData + '\'\'\'###\'\'\'' + toWei(body.tokenPrice!, 'ether')).encodeABI();
-    }
+    let data = body.provenance?contract.methods.safeTransfer(body.to.trim(), body.tokenId, body.provenanceData + '\'\'\'###\'\'\'' + toWei(body.tokenPrice!, 'ether')).encodeABI():contract.methods.safeTransfer(body.to.trim(), body.tokenId).encodeABI();
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), body.value, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice);
 }
