@@ -1,6 +1,6 @@
 import {Type} from 'class-transformer'
 import {ArrayNotEmpty, IsNotEmpty, IsNumberString, ValidateNested} from 'class-validator'
-import { FromUTXO } from '@tatumio/tatum-core'
+import { FromUTXO, To } from './TransferBtcBasedBlockchain';
 
 export class FromUTXOBcash extends FromUTXO {
     @IsNotEmpty()
@@ -9,7 +9,6 @@ export class FromUTXOBcash extends FromUTXO {
 }
 
 export class TransferBchBlockchain {
-
     @IsNotEmpty()
     @ValidateNested({each: true})
     @Type(() => FromUTXOBcash)

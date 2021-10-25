@@ -13,8 +13,11 @@
     "lint": "eslint ./src --ext .ts --fix"
   },
   "dependencies": {
-    "@tatum/tatum-core": "file:../tatum-core",
+    "@tatumio/tatum-core": "file:../tatum-core",
+    "bip32": "^2.0.5",
     "bip39": "^3.0.2",
+    "bitcoinjs-lib": "^5.2.0",
+    "coininfo": "^5.1.0",
     "ethereumjs-wallet": "^1.0.0"
   },
   "devDependencies": {

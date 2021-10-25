@@ -1,10 +1,10 @@
-import { Currency, TransactionKMS, validateBody } from '@tatum/tatum-core'
+import { Currency, TransactionKMS, validateBody } from '@tatumio/tatum-core'
 import BigNumber from 'bignumber.js'
 // @ts-ignore
 import coininfo from 'coininfo'
 import {bcashBroadcast, bcashGetTransaction} from '../blockchain'
 import {toLegacyAddress} from '../wallet'
-import { TransferBchBlockchain } from '../model'
+import { BchTx, TransferBchBlockchain } from '../model'
 
 const {
     ECSignature,

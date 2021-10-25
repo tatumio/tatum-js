@@ -1,4 +1,4 @@
-import { Currency } from '@tatum/tatum-core'
+import { Currency } from '@tatumio/tatum-core'
 import {generateAddressFromXPub, generatePrivateKeyFromMnemonic} from './address'
 describe('Address tests', () => {
 

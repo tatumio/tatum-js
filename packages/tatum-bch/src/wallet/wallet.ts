@@ -1,4 +1,4 @@
-import { Currency } from '@tatum/tatum-core';
+import { Currency, Wallet } from '@tatumio/tatum-core';
 import { generateMnemonic, mnemonicToSeed } from 'bip39';
 import { networks } from 'bitcoinjs-lib';
 // @ts-ignore
@@ -6,19 +6,6 @@ import hdkey from 'hdkey';
 import {
     BCH_DERIVATION_PATH
 } from '../constants';
-
-export interface Wallet {
-
-    /**
-     * mnemonic seed
-     */
-    mnemonic: string;
-
-    /**
-     * extended public key to derive addresses from
-     */
-    xpub: string;
-}
 
 /**
  * Generate Bitcoin Cash wallet

@@ -1,20 +1,16 @@
-import { Currency } from '@tatum/tatum-core';
+import { Currency } from '@tatumio/tatum-core';
 import { fromSeed } from 'bip32';
 import { mnemonicToSeed } from 'bip39';
 import { networks } from 'bitcoinjs-lib';
-import * as elliptic from 'elliptic';
 // @ts-ignore
 import {
     BCH_DERIVATION_PATH
 } from '../constants';
 
-const algosdk = require('algosdk');
-const base32 = require('base32.js');
 // tslint:disable:no-var-requires
 const bcash = require('@tatumio/bitcoincashjs2-lib');
 const cashaddr = require('cashaddrjs');
 const coininfo = require('coininfo');
-
 
 interface Hash {
     hash: Buffer;
@@ -49,15 +45,6 @@ const generateBchAddress = (testnet: boolean, xpub: string, i: number) => {
         decoded.type,
         decoded.hash
     )
-}
-
-/**
- * Generate FLOW or FUSD public key from private key
- * @returns blockchain address
- */
-export const generateFlowPublicKeyFromPrivateKey = (pk: string) => {
-    const s = new elliptic.ec('secp256k1').keyFromPrivate(pk).getPublic().encode('hex', false)
-    return s.slice(2)
 }
 
 /**
@@ -147,20 +134,6 @@ const _decode = (address: string): Decoded => {
     }
     return decoded
 }
-
-
-/**
- * Generate Algo Address From Private Key
- * @param privKey Private key to use
- * @returns blockchain address
- */
-export const generateAlgodAddressFromPrivatetKey = (privKey: string) => {
-    const decoder = new base32.Decoder({type: "rfc4648"})
-    const secretKey = decoder.write(privKey).buf;
-    const mn = algosdk.secretKeyToMnemonic(secretKey)
-    return algosdk.mnemonicToSecretKey(mn).addr;
-}
-
 
 /**
  * Generate address
