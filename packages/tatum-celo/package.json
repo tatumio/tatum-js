@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@celo-tools/celo-ethers-wrapper": "0.0.5",
-    "@tatum/tatum-core": "file:../tatum-core",
+    "@tatumio/tatum-core": "file:../tatum-core",
     "bignumber.js": "^9.0.0",
     "bip39": "^3.0.2",
     "class-validator": "0.13.0",
