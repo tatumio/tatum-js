@@ -748,7 +748,7 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@tatum/tatum-core@file:../tatum-core":
+"@tatumio/tatum-core@file:../tatum-core":
   version "0.0.1"
   dependencies:
     axios "^0.21.1"
