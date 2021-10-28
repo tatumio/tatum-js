@@ -1,7 +1,7 @@
 import { PrivateKeyOrSignatureId } from "./PrivateKeyOrSignatureId";
 import { IsBoolean, IsNotEmpty, IsNumberString, IsOptional, Length, Matches, MaxLength, } from 'class-validator';
 
-export class AlgoTransferFractionalNFTTransaction extends PrivateKeyOrSignatureId {
+export class AlgoTransferFT extends PrivateKeyOrSignatureId {
 
     @IsNotEmpty()
     @Length(58, 58)
@@ -10,14 +10,6 @@ export class AlgoTransferFractionalNFTTransaction extends PrivateKeyOrSignatureI
     @IsNotEmpty()
     @Length(58, 58)
     public to: string;
-
-    @IsOptional()
-    @Length(58, 58)
-    public closeRemainderTo: string;
-
-    @IsOptional()
-    @Length(58, 58)
-    public revocationTarget: string;
 
     @IsNotEmpty()
     @IsNumberString()
@@ -29,9 +21,5 @@ export class AlgoTransferFractionalNFTTransaction extends PrivateKeyOrSignatureI
 
     @IsNotEmpty()
     @IsNumberString()
-    public assetIndex: string;
-
-    @IsOptional()
-    @Length(58, 58)
-    public rekeyTo: string;
+    public contractAddress: string;
 }

@@ -1,7 +1,7 @@
 import { PrivateKeyOrSignatureId } from "./PrivateKeyOrSignatureId";
 import { IsBoolean, IsNotEmpty, IsNumberString, IsOptional, Length, Matches, MaxLength, } from 'class-validator';
 
-export class AlgoDestroyNFTTransaction extends PrivateKeyOrSignatureId {
+export class AlgoBurnFT extends PrivateKeyOrSignatureId {
 
     @IsNotEmpty()
     @Length(58, 58)
@@ -13,9 +13,5 @@ export class AlgoDestroyNFTTransaction extends PrivateKeyOrSignatureId {
 
     @IsNotEmpty()
     @IsNumberString()
-    public assetIndex: string;
-
-    @IsOptional()
-    @Length(58, 58)
-    public rekeyTo: string;
+    public contractAddress: string;
 }
