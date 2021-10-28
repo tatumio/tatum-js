@@ -1,15 +1,15 @@
 import { Currency, offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal, validateBody, TransferOffchain } from '@tatumio/tatum-core'
 import {prepareAlgoSignedTransaction} from '../transaction'
-import {generateAlgoWallet, generateAlgoAddressFromPrivatetKey} from '../wallet'
+import {generateAlgoWallet, generateAlgodAddressFromPrivatetKey} from '../wallet'
 import {offchainTransferAlgorandKMS} from './kms'
 import {TransferAlgoOffchain, AlgoTransaction} from '../model'
 
 /**
- * Send Polygon transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * Send Algo transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
  * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
- * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
+ * @param provider url of the Algorand Node Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendAlgorandOffchainTransaction = async (testnet: boolean, body: TransferAlgoOffchain, provider?: string) => {
@@ -23,11 +23,11 @@ export const sendAlgorandOffchainTransaction = async (testnet: boolean, body: Tr
     let key: string
     if (mnemonic) {
         let wallet = await generateAlgoWallet(mnemonic)
-        key = wallet.privateKey
+        key = wallet.secret
         from  = wallet.address
     } else {
         key = privateKey as string
-        from = await generateAlgoAddressFromPrivatetKey(key)
+        from = await generateAlgodAddressFromPrivatetKey(key)
     }
 
     let algotx: AlgoTransaction = new AlgoTransaction()

@@ -6,55 +6,19 @@ or [Github Pages](https://tatumio.github.io/tatum-js/) to see how to use other t
 ## Import required libraries
 
 ```typescript
-import { sendBitcoinTransaction } from '@tatumio/tatum';
+import { sendAlgoSignedTransaction } from '@tatumio/tatum-algo';
 ```
 
-## Send bitcoin transaction - from address
+## Send algo transaction - from address
 
 ```typescript
-const transactionHash = await sendBitcoinTransaction(false, {
-        fromAddress: [
-            {
-                address: "mhuKgqf7SLRWPX8Sfrqn68i5YcdWsFMRXF",
-                privateKey: "cNkXKkQ4YoNS2LmnvhtGqWBQKg7oo3BRaowPhSDPvTRjxXyGG6yr"
-            }
-        ],
-        to: [
-            {
-                address: "n1XD955iuticPuKoJJr8XfAjDw2gYadNrR",
-                value: 0.15991455
-            },
-            {
-                address: "mhuKgqf7SLRWPX8Sfrqn68i5YcdWsFMRXF",
-                value: 0.4
-            }
-        ]
+const transactionHash = await sendAlgoSignedTransaction(true, {
+        from:           'TMETT6BXL3QUH7AH5TS6IONU7LVTLKIGG54CFCNPMQXWGRIZFIESZBYWP4',
+        to:             'NTAESFCB3WOD7SAOL42KSPVARLB3JFA3MNX3AESWHYVT2RMYDVZI6YLG4Y',
+        fee:            '0.001',
+        amount:         '1',
+        note:           'string',
+        fromPrivateKey: '72TCV5BRQPBMSAFPYO3CPWVDBYWNGAYNMTW5QHENOMQF7I6QLNMJWCJZ7A3V5YKD7QD6ZZPEHG2PV2ZVVEDDO6BCRGXWIL3DIUMSUCI'
     }
 );
 ```
-
-## Send bitcoin transaction - from utxo
-
-```typescript
-const transactionHash = await sendBitcoinTransaction(false, {
-        fromUTXO: [
-            {
-                txHash: "887dd5221800c65ada2a2081e65a14b5421b30600d4ab112421a44b17ded6ed4",
-                index: 0,
-                privateKey: "cNkXKkQ4YoNS2LmnvhtGqWBQKg7oo3BRaowPhSDPvTRjxXyGG6yr"
-            }
-        ],
-        to: [
-            {
-                address: "n1XD955iuticPuKoJJr8XfAjDw2gYadNrR",
-                value: 0.15991455
-            },
-            {
-                address: "mhuKgqf7SLRWPX8Sfrqn68i5YcdWsFMRXF",
-                value: 0.4
-            }
-        ]
-    }
-);
-```
-
