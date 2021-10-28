@@ -1,7 +1,12 @@
 import { PrivateKeyOrSignatureId } from "./PrivateKeyOrSignatureId";
-import { IsBoolean, IsNotEmpty, IsNumberString, IsOptional, IsString, Length, Matches, MaxLength, } from 'class-validator';
+import {Currency} from './Currency'
+import { IsNotEmpty, IsOptional, IsString, Length, MaxLength, IsIn} from 'class-validator';
 
 export class AlgoCreateNFT extends PrivateKeyOrSignatureId {
+
+    @IsNotEmpty()
+    @IsIn([Currency.ALGO])
+    public chain: Currency;
 
     @IsNotEmpty()
     @Length(58, 58)
