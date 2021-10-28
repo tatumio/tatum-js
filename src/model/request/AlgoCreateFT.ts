@@ -23,8 +23,4 @@ export class AlgoCreateFT extends PrivateKeyOrSignatureId {
 
     @IsOptional()
     public url: string;
-
-    @IsOptional()
-    @MaxLength(30)
-    public note: string;
 }

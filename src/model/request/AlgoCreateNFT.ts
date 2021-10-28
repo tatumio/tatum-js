@@ -27,8 +27,4 @@ export class AlgoCreateNFT extends PrivateKeyOrSignatureId {
     @IsNotEmpty()
     @IsString()
     public assetMetadataHash: string;
-
-    @IsOptional()
-    @MaxLength(30)
-    public note: string;
 }

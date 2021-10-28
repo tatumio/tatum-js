@@ -15,10 +15,6 @@ export class AlgoTransferFT extends PrivateKeyOrSignatureId {
     @IsNumberString()
     public amount: string;
 
-    @IsOptional()
-    @MaxLength(30)
-    public note: string;
-
     @IsNotEmpty()
     @IsNumberString()
     public contractAddress: string;

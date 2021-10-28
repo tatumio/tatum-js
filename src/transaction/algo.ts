@@ -107,10 +107,9 @@ export const prepareAlgoCreateNFTSignedTransaction = async ( testnet: boolean, t
     const decoder = new base32.Decoder({type: 'rfc4648'})
     const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
     const enc = new TextEncoder();
-    const note = enc.encode(tx.note ? tx.note : '');
     const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
         tx.from,
-        note,
+        undefined,
         1, 0, false, 
         undefined, 
         undefined, 
@@ -141,14 +140,13 @@ export const prepareAlgoTransferNFTSignedTransaction = async (testnet: boolean, 
     const decoder = new base32.Decoder({type: 'rfc4648'})
     const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
     const enc = new TextEncoder();
-    const note = enc.encode(tx.note ? tx.note : '');
     const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
         tx.from,
         tx.to,
         undefined,
         undefined,
         1,
-        note,
+        undefined,
         Number(tx.contractAddress),
         params,
         undefined
@@ -172,10 +170,9 @@ export const prepareAlgoBurnNFTSignedTransaction = async (testnet: boolean, tx: 
     const decoder = new base32.Decoder({type: 'rfc4648'})
     const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
     const enc = new TextEncoder();
-    const note = enc.encode(tx.note ? tx.note : '');
     const txn = algosdk.makeAssetDestroyTxnWithSuggestedParams(
         tx.from,
-        note,
+        undefined,
         Number(tx.contractAddress),
         params,
         undefined
@@ -199,10 +196,9 @@ export const prepareAlgoCreateFTSignedTransaction = async ( testnet: boolean, tx
     const decoder = new base32.Decoder({type: 'rfc4648'})
     const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
     const enc = new TextEncoder();
-    const note = enc.encode(tx.note ? tx.note : '');
     const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
         tx.from,
-        note,
+        undefined,
         Number(tx.supply),
         Number(tx.decimals),
         false,
@@ -235,14 +231,13 @@ export const prepareAlgoTransferFTSignedTransaction = async (testnet: boolean, t
     const decoder = new base32.Decoder({type: 'rfc4648'})
     const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
     const enc = new TextEncoder();
-    const note = enc.encode(tx.note ? tx.note : '');
     const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
         tx.from,
         tx.to,
         undefined,
         undefined,
         tx.amount,
-        note,
+        undefined,
         Number(tx.contractAddress),
         params,
         undefined
@@ -266,10 +261,9 @@ export const prepareAlgoBurnFTSignedTransaction = async (testnet: boolean, tx: A
     const decoder = new base32.Decoder({type: 'rfc4648'})
     const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
     const enc = new TextEncoder();
-    const note = enc.encode(tx.note ? tx.note : '');
     const txn = algosdk.makeAssetDestroyTxnWithSuggestedParams(
         tx.from,
-        note,
+        undefined,
         Number(tx.contractAddress),
         params,
         undefined

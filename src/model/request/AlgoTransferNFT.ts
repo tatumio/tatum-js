@@ -16,10 +16,6 @@ export class AlgoTransferNFT extends PrivateKeyOrSignatureId {
     @Length(58, 58)
     public to: string;
 
-    @IsOptional()
-    @MaxLength(30)
-    public note: string;
-
     @IsNotEmpty()
     @IsNumberString()
     public contractAddress: string;
