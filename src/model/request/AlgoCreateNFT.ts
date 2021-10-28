@@ -1,4 +1,4 @@
-import { PrivateKeyOrSignatureId } from "./PrivateKeyOrSignatureId";
+import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId';
 import {Currency} from './Currency'
 import { IsNotEmpty, IsOptional, IsString, Length, MaxLength, IsIn} from 'class-validator';
 

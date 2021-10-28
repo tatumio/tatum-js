@@ -1,5 +1,5 @@
-import { PrivateKeyOrSignatureId } from "./PrivateKeyOrSignatureId";
-import { IsBoolean, IsNotEmpty, IsNumberString, IsOptional, Length, Matches, MaxLength, } from 'class-validator';
+import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId';
+import { IsNotEmpty, IsNumberString, IsOptional, Length, MaxLength, } from 'class-validator';
 
 export class AlgoBurnFT extends PrivateKeyOrSignatureId {
 
