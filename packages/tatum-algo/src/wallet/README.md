@@ -6,33 +6,19 @@ or [Github Pages](https://tatumio.github.io/tatum-js/) to see how to use other w
 ## Import required libraries
 
 ```typescript
-import { generateWallet } from '@tatumio/tatum';
+import { generateWallet } from '@tatumio/tatum-algo';
 ```
 
 ## Generate a wallet
 
 ```typescript
-const wallet = await generateWallet(Currency.BTC, false);
+const wallet = await generateWallet(Currency.ALGO, true);
 ```
 
 ## Generate an address
 
 ```typescript
-const address = await generateAddressFromXPub(
-    Currency.BTC,
-    false,
-    'tpubDFmuT6v3SjkMcChBVLmfYnn8j2AEAxmsCyMA3JUvWGhSxoutQw1L4rywLUzgfAdkE894gJrFqTqCvV6neUYXGQFmd61G6D6XsTr93tZi237',
-    1
-);
-```
-
-## Generate a private key
-
-```typescript
-const privateKey = await generatePrivateKeyFromMnemonic(
-    Currency.BTC,
-    false,
-    'critic spatial rug valley spawn grape humble motor burger direct jump galaxy still swim foot real vast tribe blast fence virtual away spice funny',
-    1
+const address = await generateAlgodAddressFromPrivatetKey(
+    '72TCV5BRQPBMSAFPYO3CPWVDBYWNGAYNMTW5QHENOMQF7I6QLNMJWCJZ7A3V5YKD7QD6ZZPEHG2PV2ZVVEDDO6BCRGXWIL3DIUMSUCI',
 );
 ```

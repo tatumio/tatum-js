@@ -3,30 +3,16 @@ const base32 = require('base32.js')
 import {Currency} from '@tatumio/tatum-core'
 /**
  * Generate Algo wallet
- * @param mnemonic mnemonic seed to use
- * @returns address and privateKey
+ * @param mnem mnemonic seed to use
+ * @returns address and secret
  */
-export const generateAlgoWallet = async (mnemonic: string) => {
-    const account = algosdk.mnemonicToSecretKey(mnemonic)
-    const encoder = new base32.Encoder({type: "rfc4648"})
-    const privateKey = encoder.write(account.sk).finalize()
+ export const generateAlgoWallet = async (mnem?: string) => {
+    const account = mnem ? algosdk.mnemonicToSecretKey(mnem) : algosdk.generateAccount();
+    const encoder = new base32.Encoder({type: "rfc4648"});
+    const secret = encoder.write(account.sk).finalize();
     return {
         address: account.addr,
-        privateKey: privateKey,
-    }
-}
-
-/**
- * Generate Algo New Wallet
- * @returns address and privateKey
- */
-export const generateAlgoNewWallet = async () => {
-    const account = algosdk.generateAccount()
-    const encoder = new base32.Encoder({type: "rfc4648"})
-    const privateKey = encoder.write(account.sk).finalize()
-    return {
-        address: account.addr,
-        privateKey: privateKey,
+        secret: secret,
     }
 }
 
@@ -38,5 +24,5 @@ export const generateAlgoNewWallet = async () => {
  * @returns wallet or a combination of address and private key
  */
  export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: string) => {
-    return mnemonic ? generateAlgoWallet(mnemonic) : generateAlgoNewWallet()
+    return generateAlgoWallet(mnemonic)
 }
