@@ -1,5 +1,5 @@
 import { sendAlgoSignedTransaction, sendAlgoCreateNFTSignedTransaction, sendAlgoCreateFTSignedTransaction } from './algo'
-import { AlgoTransaction, AlgoCreateNFT, AlgoCreateFT} from '../model';
+import { AlgoTransaction } from '../model';
 
 describe('Algo transaction', () => {
     jest.setTimeout(59999)
