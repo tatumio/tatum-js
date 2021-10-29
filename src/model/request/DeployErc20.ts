@@ -57,5 +57,5 @@ export class DeployErc20 extends PrivateKeyOrSignatureId {
 
     @ValidateIf(o => o.chain === Currency.ALGO)
     @IsNotEmpty()
-    public url: string;
+    public url?: string;
 }
