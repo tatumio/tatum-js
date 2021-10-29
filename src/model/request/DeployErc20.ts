@@ -9,6 +9,7 @@ import {
   MaxLength,
   Min,
   ValidateNested,
+  ValidateIf
 } from 'class-validator'
 import {Fee} from './Fee'
 import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
@@ -53,6 +54,7 @@ export class DeployErc20 extends PrivateKeyOrSignatureId {
     @Type(() => Fee)
     public fee?: Fee;
 
+    @ValidateIf(o => o.chain === Currency.ALGO)
     @IsOptional()
     public url: string;
 }
