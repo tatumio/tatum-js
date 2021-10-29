@@ -1,4 +1,4 @@
-import { IsIn, IsNotEmpty, IsOptional, Length, Min, IsBoolean } from 'class-validator';
+import { IsIn, IsNotEmpty, IsOptional, Length, Min, IsBoolean, ValidateIf } from 'class-validator';
 import {Currency} from './Currency'
 import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId'
 
@@ -9,7 +9,7 @@ export class DeployErc721 extends PrivateKeyOrSignatureId {
     public name: string;
 
     @IsNotEmpty()
-    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC, Currency.TRON, Currency.ONE, Currency.MATIC])
+    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC, Currency.TRON, Currency.ONE, Currency.MATIC, Currency.ALGO])
     public chain: Currency;
 
     @IsNotEmpty()
@@ -23,5 +23,9 @@ export class DeployErc721 extends PrivateKeyOrSignatureId {
     @IsBoolean()
     @IsOptional()
     public provenance?: boolean;
+
+    @ValidateIf(o => o.chain === Currency.ALGO)
+    @IsNotEmpty()
+    public url?: string;
 
 }

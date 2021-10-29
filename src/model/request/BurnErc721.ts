@@ -9,7 +9,7 @@ export class BurnErc721 extends PrivateKeyOrSignatureId {
     public tokenId: string;
 
     @IsNotEmpty()
-    @Length(42, 43)
+    @Length(1, 43)
     public contractAddress: string;
 
     @IsNotEmpty()

@@ -1,4 +1,4 @@
-import { PrivateKeyOrSignatureId } from "./PrivateKeyOrSignatureId";
+import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId';
 import { IsNotEmpty, IsNumberString, IsOptional, Length, Matches, MaxLength, } from 'class-validator';
 
 export class AlgoTransaction extends PrivateKeyOrSignatureId {
