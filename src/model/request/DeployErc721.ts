@@ -25,7 +25,7 @@ export class DeployErc721 extends PrivateKeyOrSignatureId {
     public provenance?: boolean;
 
     @ValidateIf(o => o.chain === Currency.ALGO)
-    @IsOptional()
+    @IsNotEmpty()
     public url?: string;
 
 }

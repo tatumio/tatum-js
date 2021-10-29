@@ -11,6 +11,7 @@ import {
   ValidateNested,
   ValidateIf
 } from 'class-validator'
+import {Currency} from './Currency'
 import {Fee} from './Fee'
 import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 
@@ -55,6 +56,6 @@ export class DeployErc20 extends PrivateKeyOrSignatureId {
     public fee?: Fee;
 
     @ValidateIf(o => o.chain === Currency.ALGO)
-    @IsOptional()
+    @IsNotEmpty()
     public url: string;
 }
