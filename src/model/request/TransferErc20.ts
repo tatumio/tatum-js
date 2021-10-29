@@ -22,7 +22,7 @@ export class TransferErc20 extends PrivateKeyOrSignatureId {
     public data?: string;
 
     @IsOptional()
-    @IsIn([...ETH_BASED_CURRENCIES, ...MATIC_BASED_CURRENCIES, Currency.XDC, Currency.ONE, ...BSC_BASED_CURRENCIES])
+    @IsIn([...ETH_BASED_CURRENCIES, ...MATIC_BASED_CURRENCIES, Currency.XDC, Currency.ONE, ...BSC_BASED_CURRENCIES, Currency.ALGO])
     public currency?: Currency;
 
     @OneOf(['currency', 'contractAddress'])

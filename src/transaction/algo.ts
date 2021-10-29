@@ -4,11 +4,11 @@ import { TextEncoder } from 'util';
 import { algorandBroadcast } from '../blockchain';
 import {
     AlgoTransaction,
-    AlgoCreateNFT,
-    AlgoTransferNFT,
+    DeployErc721,
+    TransferErc721,
     BurnErc721,
-    AlgoCreateFT,
-    AlgoTransferFT,
+    DeployErc20,
+    TransferErc20,
     BurnErc20,
     Currency,
     TransactionKMS
@@ -100,7 +100,7 @@ export const signAlgoKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
     return signedTxn.blob
 }
 
-export const prepareAlgoCreateNFTSignedTransaction = async (testnet: boolean, tx: AlgoCreateNFT, provider?: string) => {
+export const prepareAlgoCreateNFTSignedTransaction = async (testnet: boolean, tx: DeployErc721, provider?: string) => {
     const algodClient = getAlgoClient(testnet, provider);
     const params = await algodClient.getTransactionParams().do();
     params.fee = 1000;
@@ -108,57 +108,67 @@ export const prepareAlgoCreateNFTSignedTransaction = async (testnet: boolean, tx
     const decoder = new base32.Decoder({ type: 'rfc4648' })
     const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
     const enc = new TextEncoder();
-    const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
-        tx.from,
-        undefined,
-        1, 0, false,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        tx.symbol,
-        tx.name,
-        tx.url,
-        undefined,
-        params,
-    )
-    if (tx.signatureId) {
-        return JSON.stringify(txn);
+    if (tx.fromPrivateKey) {
+        const from = generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey);
+        const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
+            from,
+            undefined,
+            1, 0, false,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            tx.symbol,
+            tx.name,
+            tx.url,
+            undefined,
+            params,
+        )
+        if (tx.signatureId) {
+            return JSON.stringify(txn);
+        }
+        const signedTxn = txn.signTxn(secretKey).do();
+        return signedTxn;
+    } else {
+        throw Error('undefined fromPrivateKey')
     }
-    const signedTxn = txn.signTxn(secretKey).do();
-    return signedTxn;
 }
 
-export const sendAlgoCreateNFTSignedTransaction = async (testnet: boolean, tx: AlgoCreateNFT, provider?: string) => {
+export const sendAlgoCreateNFTSignedTransaction = async (testnet: boolean, tx: DeployErc721, provider?: string) => {
     return (await algorandBroadcast(await prepareAlgoCreateNFTSignedTransaction(testnet, tx, provider)))
 }
 
-export const prepareAlgoTransferNFTSignedTransaction = async (testnet: boolean, tx: AlgoTransferNFT, provider?: string) => {
+export const prepareAlgoTransferNFTSignedTransaction = async (testnet: boolean, tx: TransferErc721, provider?: string) => {
     const algodClient = getAlgoClient(testnet, provider);
     const params = await algodClient.getTransactionParams().do();
     params.fee = 1000;
     params.flatFee = true;
     const decoder = new base32.Decoder({ type: 'rfc4648' })
     const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
-    const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
-        tx.from,
-        tx.to,
-        undefined,
-        undefined,
-        1,
-        undefined,
-        Number(tx.contractAddress),
-        params,
-        undefined
-    )
-    if (tx.signatureId) {
-        return JSON.stringify(txn);
+    if (tx.fromPrivateKey) {
+        const from = generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey);
+        const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
+            from,
+            tx.to,
+            undefined,
+            undefined,
+            1,
+            undefined,
+            Number(tx.contractAddress),
+            params,
+            undefined
+        )
+        if (tx.signatureId) {
+            return JSON.stringify(txn);
+        }
+        const signedTxn = txn.signTxn(secretKey).do();
+        return signedTxn;
+    } else {
+        throw Error('undefined fromPrivateKey')
     }
-    const signedTxn = txn.signTxn(secretKey).do();
-    return signedTxn;
 }
 
-export const sendAlgoTransferNFTSignedTransaction = async (testnet: boolean, tx: AlgoTransferNFT, provider?: string) => {
+export const sendAlgoTransferNFTSignedTransaction = async (testnet: boolean, tx: TransferErc721, provider?: string) => {
     return (await algorandBroadcast(await prepareAlgoTransferNFTSignedTransaction(testnet, tx, provider)))
 }
 
@@ -192,7 +202,7 @@ export const sendAlgoBurnNFTSignedTransaction = async (testnet: boolean, tx: Bur
     return (await algorandBroadcast(await prepareAlgoBurnNFTSignedTransaction(testnet, tx, provider)))
 }
 
-export const prepareAlgoCreateFTSignedTransaction = async (testnet: boolean, tx: AlgoCreateFT, provider?: string) => {
+export const prepareAlgoCreateFTSignedTransaction = async (testnet: boolean, tx: DeployErc20, provider?: string) => {
     const algodClient = getAlgoClient(testnet, provider);
     const params = await algodClient.getTransactionParams().do();
     params.fee = 1000;
@@ -200,10 +210,10 @@ export const prepareAlgoCreateFTSignedTransaction = async (testnet: boolean, tx:
     const decoder = new base32.Decoder({ type: 'rfc4648' })
     const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
     const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
-        tx.from,
+        tx.address,
         undefined,
         Number(tx.supply),
-        Number(tx.decimals),
+        Number(tx.digits),
         false,
         undefined,
         undefined,
@@ -222,36 +232,41 @@ export const prepareAlgoCreateFTSignedTransaction = async (testnet: boolean, tx:
     return signedTxn;
 }
 
-export const sendAlgoCreateFTSignedTransaction = async (testnet: boolean, tx: AlgoCreateFT, provider?: string) => {
+export const sendAlgoCreateFTSignedTransaction = async (testnet: boolean, tx: DeployErc20, provider?: string) => {
     return (await algorandBroadcast(await prepareAlgoCreateFTSignedTransaction(testnet, tx, provider)))
 }
 
-export const prepareAlgoTransferFTSignedTransaction = async (testnet: boolean, tx: AlgoTransferFT, provider?: string) => {
+export const prepareAlgoTransferFTSignedTransaction = async (testnet: boolean, tx: TransferErc20, provider?: string) => {
     const algodClient = getAlgoClient(testnet, provider);
     const params = await algodClient.getTransactionParams().do();
     params.fee = 1000;
     params.flatFee = true;
     const decoder = new base32.Decoder({ type: 'rfc4648' })
     const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
-    const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
-        tx.from,
-        tx.to,
-        undefined,
-        undefined,
-        tx.amount,
-        undefined,
-        Number(tx.contractAddress),
-        params,
-        undefined
-    )
-    if (tx.signatureId) {
-        return JSON.stringify(txn);
+    if (tx.fromPrivateKey) {
+        const from = generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey);
+        const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
+            from,
+            tx.to,
+            undefined,
+            undefined,
+            tx.amount,
+            undefined,
+            Number(tx.contractAddress),
+            params,
+            undefined
+        )
+        if (tx.signatureId) {
+            return JSON.stringify(txn);
+        }
+        const signedTxn = txn.signTxn(secretKey).do();
+        return signedTxn;
+    } else {
+        throw Error('undefined fromPrivateKey')
     }
-    const signedTxn = txn.signTxn(secretKey).do();
-    return signedTxn;
 }
 
-export const sendAlgoTransferFTSignedTransaction = async (testnet: boolean, tx: AlgoTransferFT, provider?: string) => {
+export const sendAlgoTransferFTSignedTransaction = async (testnet: boolean, tx: TransferErc20, provider?: string) => {
     return (await algorandBroadcast(await prepareAlgoTransferFTSignedTransaction(testnet, tx, provider)))
 }
 

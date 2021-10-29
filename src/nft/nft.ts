@@ -26,6 +26,9 @@ import {
     TronTransferTrc721,
     TronUpdateCashbackTrc721,
     UpdateCashbackErc721,
+    BurnErc721,
+    TransferErc721,
+    DeployErc721
 } from '../model';
 import { ipfsUpload } from '../storage';
 import {
@@ -90,6 +93,9 @@ import {
     sendTronUpdateCashbackForAuthorTrc721SignedTransaction,
     sendUpdateCashbackForAuthorBep721Transaction,
     sendUpdateCashbackForAuthorErc721Transaction,
+    sendAlgoBurnNFTSignedTransaction,
+    sendAlgoTransferNFTSignedTransaction,
+    sendAlgoCreateNFTSignedTransaction
 } from '../transaction';
 
 export const mintNFT = (body: CeloMintErc721 | EthMintErc721 | OneMint721): Promise<TransactionHash> => post(`/v3/nft/mint`, body);
@@ -151,7 +157,7 @@ export const getNFTRoyalty = async (chain: Currency, contractAddress: string, to
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const deployNFT = async (testnet: boolean, body: CeloDeployErc721 | EthDeployErc721 | TronDeployTrc721 | FlowDeployNft, provider?: string): Promise<TransactionHash> => {
+export const deployNFT = async (testnet: boolean, body: CeloDeployErc721 | EthDeployErc721 | TronDeployTrc721 | FlowDeployNft | DeployErc721, provider?: string): Promise<TransactionHash> => {
     switch (body.chain) {
         case Currency.CELO:
             return sendCeloDeployErc721Transaction(testnet, body as CeloDeployErc721, provider);
@@ -167,6 +173,8 @@ export const deployNFT = async (testnet: boolean, body: CeloDeployErc721 | EthDe
             return sendDeployBep721Transaction(body as EthDeployErc721, provider);
         case Currency.FLOW:
             return post('/v3/nft/deploy', body, FlowDeployNft);
+        case Currency.ALGO:
+            return sendAlgoCreateNFTSignedTransaction(testnet, body as DeployErc721, provider);
         default:
             throw new Error('Unsupported currency');
     }
@@ -375,6 +383,8 @@ export const burnNFT = async (testnet: boolean, body: CeloBurnErc721 | EthBurnEr
             return sendBurnBep721Transaction(body, provider);
         case Currency.FLOW:
             return sendFlowNftBurnToken(testnet, body as FlowBurnNft);
+        case Currency.ALGO:
+            return sendAlgoBurnNFTSignedTransaction(testnet, body as BurnErc721, provider)
         default:
             throw new Error('Unsupported blockchain.');
     }
@@ -427,6 +437,8 @@ export const transferNFT = async (testnet: boolean, body: CeloTransferErc721 | E
             return sendBep721Transaction(body, provider);
         case Currency.FLOW:
             return sendFlowNftTransferToken(testnet, body as FlowTransferNft);
+        case Currency.ALGO:
+            return sendAlgoTransferNFTSignedTransaction(testnet, body as TransferErc721, provider);
         default:
             throw new Error('Unsupported blockchain.');
     }
