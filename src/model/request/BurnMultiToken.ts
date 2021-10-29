@@ -20,7 +20,7 @@ export class BurnMultiToken extends PrivateKeyOrSignatureId {
     public contractAddress: string;
 
     @IsNotEmpty()
-    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC])
+    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC, Currency.ALGO])
     public chain: Currency;
 
     @Min(0)
