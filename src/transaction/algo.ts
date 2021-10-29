@@ -11,7 +11,10 @@ import {
     TransferErc20,
     BurnErc20,
     Currency,
-    TransactionKMS
+    TransactionKMS,
+    MintMultiToken,
+    TransferMultiToken,
+    BurnMultiToken
 } from '../model';
 import { generateAlgodAddressFromPrivatetKey } from '../wallet'
 const Url = require('url-parse');
@@ -201,6 +204,118 @@ export const prepareAlgoBurnNFTSignedTransaction = async (testnet: boolean, tx: 
 export const sendAlgoBurnNFTSignedTransaction = async (testnet: boolean, tx: BurnErc721, provider?: string) => {
     return (await algorandBroadcast(await prepareAlgoBurnNFTSignedTransaction(testnet, tx, provider)))
 }
+
+
+
+
+export const prepareAlgoCreateFractionalNFTSignedTransaction = async (testnet: boolean, tx: MintMultiToken, provider?: string) => {
+    const algodClient = getAlgoClient(testnet, provider);
+    const params = await algodClient.getTransactionParams().do();
+    params.fee = 1000;
+    params.flatFee = true;
+    const decoder = new base32.Decoder({ type: 'rfc4648' })
+    const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
+    const enc = new TextEncoder();
+    if (tx.fromPrivateKey) {
+        const from = generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey);
+        const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
+            from,
+            undefined,
+            10 ** Math.floor(Math.log10(Number(tx.amount))), 
+            Math.floor(Math.log10(Number(tx.amount))),
+            false,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            tx.tokenId,
+            tx.contractAddress,
+            tx.url,
+            undefined,
+            params,
+        )
+        if (tx.signatureId) {
+            return JSON.stringify(txn);
+        }
+        const signedTxn = txn.signTxn(secretKey).do();
+        return signedTxn;
+    } else {
+        throw Error('undefined fromPrivateKey')
+    }
+}
+
+export const sendAlgoCreateFractionalNFTSignedTransaction = async (testnet: boolean, tx: MintMultiToken, provider?: string) => {
+    return (await algorandBroadcast(await prepareAlgoCreateFractionalNFTSignedTransaction(testnet, tx, provider)))
+}
+
+export const prepareAlgoTransferFractionalNFTSignedTransaction = async (testnet: boolean, tx: TransferMultiToken, provider?: string) => {
+    const algodClient = getAlgoClient(testnet, provider);
+    const params = await algodClient.getTransactionParams().do();
+    params.fee = 1000;
+    params.flatFee = true;
+    const decoder = new base32.Decoder({ type: 'rfc4648' })
+    const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
+    if (tx.fromPrivateKey) {
+        const from = generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey);
+        const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
+            from,
+            tx.to,
+            undefined,
+            undefined,
+            tx.amount,
+            undefined,
+            Number(tx.contractAddress),
+            params,
+            undefined
+        )
+        if (tx.signatureId) {
+            return JSON.stringify(txn);
+        }
+        const signedTxn = txn.signTxn(secretKey).do();
+        return signedTxn;
+    } else {
+        throw Error('undefined fromPrivateKey')
+    }
+}
+
+export const sendAlgoTransferFractionalNFTSignedTransaction = async (testnet: boolean, tx: TransferMultiToken, provider?: string) => {
+    return (await algorandBroadcast(await prepareAlgoTransferFractionalNFTSignedTransaction(testnet, tx, provider)))
+}
+
+export const prepareAlgoBurnFractionalNFTSignedTransaction = async (testnet: boolean, tx: BurnMultiToken, provider?: string) => {
+    const algodClient = getAlgoClient(testnet, provider);
+    const params = await algodClient.getTransactionParams().do();
+    params.fee = 1000;
+    params.flatFee = true;
+    const decoder = new base32.Decoder({ type: 'rfc4648' })
+    const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
+    if (tx.fromPrivateKey) {
+        const from = generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey);
+        const txn = algosdk.makeAssetDestroyTxnWithSuggestedParams(
+            from,
+            undefined,
+            Number(tx.contractAddress),
+            params,
+            undefined
+        )
+        if (tx.signatureId) {
+            return JSON.stringify(txn);
+        }
+        const signedTxn = txn.signTxn(secretKey).do();
+        return signedTxn;
+    } else {
+        throw Error('undefined fromPrivateKey')
+    }
+}
+
+export const sendAlgoBurnFractionalNFTSignedTransaction = async (testnet: boolean, tx: BurnMultiToken, provider?: string) => {
+    return (await algorandBroadcast(await prepareAlgoBurnFractionalNFTSignedTransaction(testnet, tx, provider)))
+}
+
+
+
+
+
 
 export const prepareAlgoCreateFTSignedTransaction = async (testnet: boolean, tx: DeployErc20, provider?: string) => {
     const algodClient = getAlgoClient(testnet, provider);

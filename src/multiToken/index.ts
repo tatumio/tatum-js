@@ -15,6 +15,7 @@ import {
     MintMultiTokenBatch,
     TransferMultiToken,
     TransferMultiTokenBatch,
+    BurnMultiToken
 } from '../model';
 import {
     prepareOneBatchTransferMultiTokenSignedTransaction,
@@ -51,7 +52,10 @@ import {
     sendPolygonDeployMultiTokenSignedTransaction,
     sendPolygonMintMultiTokenBatchSignedTransaction,
     sendPolygonMintMultiTokenSignedTransaction,
-    sendPolygonTransferMultiTokenSignedTransaction
+    sendPolygonTransferMultiTokenSignedTransaction,
+    sendAlgoCreateFractionalNFTSignedTransaction,
+    sendAlgoBurnFractionalNFTSignedTransaction,
+    sendAlgoTransferFractionalNFTSignedTransaction
 } from '../transaction';
 
 /**
@@ -112,6 +116,8 @@ export const mintMultiToken = async (testnet: boolean, body: MintMultiToken | Ce
             return sendOneMintMultiTokenSignedTransaction(testnet, body, provider)
         case Currency.BSC:
             return sendBscMintMultiTokenTransaction(body, provider)
+        case Currency.ALGO:
+            return sendAlgoCreateFractionalNFTSignedTransaction(testnet, body as MintMultiToken, provider)
     }
 }
 export const mintMultiTokenBatch = async (testnet: boolean, body: MintMultiTokenBatch | CeloMintMultiTokenBatch, provider?: string) => {
@@ -128,7 +134,7 @@ export const mintMultiTokenBatch = async (testnet: boolean, body: MintMultiToken
             return sendBscMintMultiTokenBatchTransaction(body, provider)
     }
 }
-export const burnMultiToken = async (testnet: boolean, body: CeloBurnMultiToken | EthBurnMultiToken, provider?: string) => {
+export const burnMultiToken = async (testnet: boolean, body: CeloBurnMultiToken | EthBurnMultiToken | BurnMultiToken, provider?: string) => {
     switch (body.chain) {
         case Currency.CELO:
             return sendCeloBurnMultiTokenTransaction(testnet, body as CeloBurnMultiToken, provider)
@@ -140,6 +146,8 @@ export const burnMultiToken = async (testnet: boolean, body: CeloBurnMultiToken 
             return sendOneBurnMultiTokenSignedTransaction(testnet, body, provider)
         case Currency.BSC:
             return sendBscBurnMultiTokenTransaction(body, provider)
+        case Currency.ALGO:
+            return sendAlgoBurnFractionalNFTSignedTransaction(testnet, body as BurnMultiToken, provider)
     }
 }
 export const burnMultiTokenBatch = async (testnet: boolean, body: CeloBurnMultiTokenBatch | EthBurnMultiTokenBatch, provider?: string) => {
@@ -169,6 +177,8 @@ export const transferMultiToken = async (testnet: boolean, body: CeloTransferMul
             return sendOneTransferMultiTokenSignedTransaction(testnet, body, provider)
         case Currency.BSC:
             return sendBscMultiTokenTransaction(body, provider)
+        case Currency.ALGO:
+            return sendAlgoTransferFractionalNFTSignedTransaction(testnet, body as TransferMultiToken, provider)
     }
 }
 export const transferMultiTokenBatch = async (testnet: boolean, body: CeloTransferMultiTokenBatch | TransferMultiTokenBatch, provider?: string) => {
