@@ -1,15 +1,7 @@
-import { readFileSync } from 'fs';
-import {
-    CeloBurnErc721,
-    CeloDeployErc721,
-    CeloMintErc721,
-    CeloMintMultipleErc721,
-    CeloTransferErc721,
-    Currency,
-    MintErc721,
-} from '../model';
-import { burnNFT, createNFT, deployNFT, getNFTImage, mintMultipleNFTWithUri, mintNFTWithUri, transferNFT } from './nft';
-import { sendCeloMintErc721Transaction } from '../transaction'
+import {readFileSync} from 'fs';
+import {CeloBurnErc721, CeloDeployErc721, CeloMintErc721, CeloMintMultipleErc721, CeloTransferErc721, Currency, MintErc721,} from '../model';
+import {sendCeloMintErc721Transaction} from '../transaction';
+import {burnNFT, createNFT, deployNFT, getNFTImage, mintMultipleNFTWithUri, mintNFTWithUri, sendAddNFTMinter, transferNFT} from './nft';
 
 describe('NFT tests', () => {
     jest.setTimeout(99999);
@@ -409,8 +401,20 @@ describe('NFT tests', () => {
                 to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
                 chain: Currency.CELO,
                 url: 'https://url',
-                fromPrivateKey: "0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb",
-                tokenId: "1",
+                fromPrivateKey: '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb',
+                tokenId: '1',
+                contractAddress: '0xdf82c2f74aa7b629bda65b1cfd258248c9c2b7d3',
+                feeCurrency: Currency.CELO,
+            });
+            console.log('response: ', sendErc721Token);
+            expect(sendErc721Token).not.toBeNull();
+        });
+
+        it('should test CELO send add minter transaction', async () => {
+            const sendErc721Token = await sendAddNFTMinter(true, {
+                minter: '0x80d8bac9a6901698b3749fe336bbd1385c1f98f2',
+                chain: Currency.CELO,
+                fromPrivateKey: '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb',
                 contractAddress: '0xdf82c2f74aa7b629bda65b1cfd258248c9c2b7d3',
                 feeCurrency: Currency.CELO,
             });

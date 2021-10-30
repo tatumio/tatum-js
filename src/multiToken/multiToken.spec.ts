@@ -1,5 +1,14 @@
 import {CeloBurnMultiToken, CeloBurnMultiTokenBatch, CeloDeployMultiToken, Currency} from '../model';
-import {burnMultiToken, burnMultiTokenBatch, deployMultiToken, mintMultiToken, mintMultiTokenBatch, transferMultiToken, transferMultiTokenBatch,} from './index';
+import {
+    burnMultiToken,
+    burnMultiTokenBatch,
+    deployMultiToken,
+    mintMultiToken,
+    mintMultiTokenBatch,
+    sendAddMultiTokenMinter,
+    transferMultiToken,
+    transferMultiTokenBatch,
+} from './index';
 
 describe('NFT tests', () => {
     jest.setTimeout(99999);
@@ -77,7 +86,7 @@ describe('NFT tests', () => {
             expect(burnMultiTokenToken).not.toBeNull()
         })
         it('should test eth 1155 mint batch transaction', async () => {
-            const tokenId = [['12101', '12102'],['12101', '12102']]
+            const tokenId = [['12101', '12102'], ['12101', '12102']];
             const mintedToken = await mintMultiTokenBatch(true, {
                 to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
                 chain: Currency.ETH,
@@ -129,20 +138,40 @@ describe('NFT tests', () => {
                 fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
                 contractAddress: '0xe2a8d7c5b2b4acad7e5b9aec0998cdbbeed45e49'
             })
-            console.log(tokenId)
-            expect(mintedToken).not.toBeNull()
+            console.log(tokenId);
+            expect(mintedToken).not.toBeNull();
         })
+        it('should test bsc 1155 add minter transaction', async () => {
+            const tx = await sendAddMultiTokenMinter(true, {
+                minter: '0x80d8bac9a6901698b3749fe336bbd1385c1f98f2',
+                chain: Currency.BSC,
+                fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+                contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14'
+            });
+            console.log(tx);
+            expect(tx).not.toBeNull();
+            const mintedToken = await mintMultiToken(true, {
+                to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+                chain: Currency.BSC,
+                tokenId: `${Date.now()}`,
+                data: '0x1234',
+                amount: '1000',
+                fromPrivateKey: '0x37b091fc4ce46a56da643f021254612551dbe0944679a6e09cb5724d3085c9ab',
+                contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14'
+            });
+            expect(mintedToken).not.toBeNull();
+        });
         it('should test bsc 1155 mint batch transaction', async () => {
-            const tokenId = [['12101', '12102'],['12101', '12102']]
+            const tokenId = [['12101', '12102'], ['12101', '12102']];
             const mintedToken = await mintMultiTokenBatch(true, {
-                to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f','0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
+                to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
                 chain: Currency.BSC,
                 tokenId,
                 data: '0x1234',
-                amounts: [['100', '100'],['100', '100']],
+                amounts: [['100', '100'], ['100', '100']],
                 fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
                 contractAddress: '0xe2a8d7c5b2b4acad7e5b9aec0998cdbbeed45e49'
-            })
+            });
             console.log(mintedToken)
             expect(mintedToken).not.toBeNull()
         })
@@ -322,16 +351,16 @@ describe('NFT tests', () => {
             expect(mintedTokens).not.toBeNull()
         })
         it('should test valid burn 1155 transaction', async () => {
-                const body = new CeloBurnMultiToken()
-                body.fromPrivateKey = '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236'
-            body.contractAddress = '0x8B98400E45288bDF05A39Ec791C09CBcd57c31F3'
-            body.account = '0x48d4bA7B2698A4b89635b9a2E391152350DB740f'
-            body.tokenId = '2'
-                body.feeCurrency = Currency.CUSD
-                body.chain = Currency.CELO
-                body.amount = '1'
-                expect(await burnMultiToken(true, body, 'https://alfajores-forno.celo-testnet.org')).toBeDefined()
-            })
+            const body = new CeloBurnMultiToken();
+            body.fromPrivateKey = '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236';
+            body.contractAddress = '0x8B98400E45288bDF05A39Ec791C09CBcd57c31F3';
+            body.account = '0x48d4bA7B2698A4b89635b9a2E391152350DB740f';
+            body.tokenId = '2';
+            body.feeCurrency = Currency.CUSD;
+            body.chain = Currency.CELO;
+            body.amount = '1';
+            expect(await burnMultiToken(true, body, 'https://alfajores-forno.celo-testnet.org')).toBeDefined();
+        })
         it('should test CELO MultiToken mint batch transaction', async () => {
             const tokenId = [['1', '2'], ['3', '4']]
             const mintedToken = await mintMultiTokenBatch(true, {
@@ -354,8 +383,8 @@ describe('NFT tests', () => {
             body.account = '0x48d4bA7B2698A4b89635b9a2E391152350DB740f'
             body.tokenId = ['1', '2']
             body.feeCurrency = Currency.CUSD
-            body.chain = Currency.CELO
-            body.amounts = ['1','1']
+            body.chain = Currency.CELO;
+            body.amounts = ['1', '1'];
 
             expect(await burnMultiTokenBatch(true, body, 'https://alfajores-forno.celo-testnet.org')).toBeDefined()
         })

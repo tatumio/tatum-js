@@ -1,5 +1,9 @@
-import { axios, get, post } from '../connector/tatum';
+import {axios, get, post, validateBody} from '../connector/tatum';
+import abi from '../contracts/erc721/erc721_abi';
+import {helperBroadcastTx, helperPrepareSCCall} from '../helpers';
 import {
+    AddMinter,
+    BurnErc721,
     CeloBurnErc721,
     CeloDeployErc721,
     CeloMintErc721,
@@ -7,6 +11,7 @@ import {
     CeloTransferErc721,
     CeloUpdateCashbackErc721,
     Currency,
+    DeployErc721,
     EthBurnErc721,
     EthDeployErc721,
     EthMintErc721,
@@ -19,37 +24,30 @@ import {
     FlowTransferNft,
     OneMint721,
     TransactionHash,
+    TransferErc721,
     TronBurnTrc721,
     TronDeployTrc721,
     TronMintMultipleTrc721,
     TronMintTrc721,
     TronTransferTrc721,
     TronUpdateCashbackTrc721,
-    UpdateCashbackErc721,
-    BurnErc721,
-    TransferErc721,
-    DeployErc721
+    UpdateCashbackErc721
 } from '../model';
-import { ipfsUpload } from '../storage';
+import {ipfsUpload} from '../storage';
 import {
-    sendMintBep721ProvenanceTransaction,
-    sendMintMultipleBep721ProvenanceTransaction,
-    sendMintErc721ProvenanceTransaction,
-    sendMintMultipleErc721ProvenanceTransaction,
-    sendCeloMintErc721ProvenanceTransaction,
-    sendCeloMintMultipleErc721ProvenanceTransaction,
-    sendOneMint721ProvenanceSignedTransaction,
-    sendOneMintMultiple721ProvenanceSignedTransaction,
-    sendPolygonMintErc721ProvenanceSignedTransaction,
-    sendPolygonMintMultipleErc721ProvenanceSignedTransaction,
+    sendAlgoBurnNFTSignedTransaction,
+    sendAlgoCreateNFTSignedTransaction,
+    sendAlgoTransferNFTSignedTransaction,
     sendBep721Transaction,
     sendBurnBep721Transaction,
     sendBurnErc721Transaction,
     sendCeloBurnErc721Transaction,
     sendCeloDeployErc721Transaction,
     sendCeloMintCashbackErc721Transaction,
+    sendCeloMintErc721ProvenanceTransaction,
     sendCeloMintErc721Transaction,
     sendCeloMintMultipleCashbackErc721Transaction,
+    sendCeloMintMultipleErc721ProvenanceTransaction,
     sendCeloMintMultipleErc721Transaction,
     sendCeloTransferErc721Transaction,
     sendCeloUpdateCashbackForAuthorErc721Transaction,
@@ -61,17 +59,23 @@ import {
     sendFlowNftMintMultipleToken,
     sendFlowNftMintToken,
     sendFlowNftTransferToken,
+    sendMintBep721ProvenanceTransaction,
     sendMintBep721Transaction,
     sendMintBepCashback721Transaction,
     sendMintCashbackErc721Transaction,
+    sendMintErc721ProvenanceTransaction,
     sendMintErc721Transaction,
+    sendMintMultipleBep721ProvenanceTransaction,
     sendMintMultipleBep721Transaction,
     sendMintMultipleCashbackBep721Transaction,
+    sendMintMultipleErc721ProvenanceTransaction,
     sendMintMultipleErc721Transaction,
     sendOneBurn721SignedTransaction,
     sendOneDeploy721SignedTransaction,
+    sendOneMint721ProvenanceSignedTransaction,
     sendOneMint721SignedTransaction,
     sendOneMintCashback721SignedTransaction,
+    sendOneMintMultiple721ProvenanceSignedTransaction,
     sendOneMintMultiple721SignedTransaction,
     sendOneMintMultipleCashback721SignedTransaction,
     sendOneTransfer721SignedTransaction,
@@ -79,8 +83,10 @@ import {
     sendPolygonBurnErc721SignedTransaction,
     sendPolygonDeployErc721SignedTransaction,
     sendPolygonMintCashbackErc721SignedTransaction,
+    sendPolygonMintErc721ProvenanceSignedTransaction,
     sendPolygonMintErc721SignedTransaction,
     sendPolygonMintMultipleCashbackErc721SignedTransaction,
+    sendPolygonMintMultipleErc721ProvenanceSignedTransaction,
     sendPolygonMintMultipleErc721SignedTransaction,
     sendPolygonTransferErc721SignedTransaction,
     sendPolygonUpdateCashbackForAuthorErc721SignedTransaction,
@@ -92,10 +98,7 @@ import {
     sendTronTransferTrc721SignedTransaction,
     sendTronUpdateCashbackForAuthorTrc721SignedTransaction,
     sendUpdateCashbackForAuthorBep721Transaction,
-    sendUpdateCashbackForAuthorErc721Transaction,
-    sendAlgoBurnNFTSignedTransaction,
-    sendAlgoTransferNFTSignedTransaction,
-    sendAlgoCreateNFTSignedTransaction
+    sendUpdateCashbackForAuthorErc721Transaction
 } from '../transaction';
 
 export const mintNFT = (body: CeloMintErc721 | EthMintErc721 | OneMint721): Promise<TransactionHash> => post(`/v3/nft/mint`, body);
@@ -443,3 +446,24 @@ export const transferNFT = async (testnet: boolean, body: CeloTransferErc721 | E
             throw new Error('Unsupported blockchain.');
     }
 };
+
+/**
+ * Prepare add new minter to the NFT contract transaction.
+ * @param testnet if we use testnet or not
+ * @param body body of the add minter request
+ * @param provider optional provider do broadcast tx
+ */
+export const prepareAddNFTMinter = async (testnet: boolean, body: AddMinter, provider?: string) => {
+    await validateBody(body, AddMinter);
+    const params = ['0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6', body.minter];
+    return await helperPrepareSCCall(testnet, body, AddMinter, 'grantRole', params, undefined, provider, abi);
+};
+
+/**
+ * Add new minter to the NFT contract.
+ * @param testnet if we use testnet or not
+ * @param body body of the add minter request
+ * @param provider optional provider do broadcast tx
+ */
+export const sendAddNFTMinter = async (testnet: boolean, body: AddMinter, provider?: string) =>
+    helperBroadcastTx(body.chain, await prepareAddNFTMinter(testnet, body, provider), body.signatureId);
