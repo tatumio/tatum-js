@@ -1,0 +1,5 @@
+export const HARDENED_THRESHOLD = 0x80000000
+
+export const ADA_DERIVATION_PATH = 'm/1852\'/1815\'/0\''
+
+export const ADA_DERIVATION_SCHEME = 2
