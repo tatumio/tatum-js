@@ -6,7 +6,7 @@ import BigNumber from 'bignumber.js'
  * For more details, see <a href="https://tatum.io/apidoc#operation/BscBroadcast" target="_blank">Tatum API documentation</a>
  */
 export const bscBroadcast = async (txData: string, signatureId?: string): Promise<TransactionHash> =>
-    post(`/v3/bsc/broadcast`, {txData, signatureId})
+  post(`/v3/bsc/broadcast`, { txData, signatureId })
 
 /**
  * Returns a number of outgoing BSC transactions for the address from Bsc blockchain. <br>
@@ -39,7 +39,7 @@ export const bscGetAccountBalance = async (address: string): Promise<BigNumber> 
  * For more details, see <a href="https://tatum.io/apidoc#operation/BscBep20GetBalance" target="_blank">Tatum API documentation</a>
  */
 export const bscGetAccountBep20Address = async (address: string, contractAddress: string): Promise<number> =>
-    get(`/v3/bsc/account/balance/bep20/${address}?contractAddress=${contractAddress}`)
+  get(`/v3/bsc/account/balance/bep20/${address}?contractAddress=${contractAddress}`)
 
 /**
  * Returns transaction by hash from Bsc blockchain. <br>

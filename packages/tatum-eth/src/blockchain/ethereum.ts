@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js'
-import { get, post, TransactionHash, EstimateGas, EthBlock, EthEstimateGas, EthTx  } from '@tatumio/tatum-core'
+import { get, post, TransactionHash, EstimateGas, EthBlock, EthEstimateGas, EthTx } from '@tatumio/tatum-core'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/EthBroadcast" target="_blank">Tatum API documentation</a>

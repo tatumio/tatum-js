@@ -1,9 +1,16 @@
-import { Currency, offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal, validateBody, TransferOffchain } from '@tatumio/tatum-core'
+import {
+  Currency,
+  offchainBroadcast,
+  offchainCancelWithdrawal,
+  offchainStoreWithdrawal,
+  validateBody,
+  TransferOffchain,
+} from '@tatumio/tatum-core'
 import BigNumber from 'bignumber.js'
-import {fromWei, toWei} from 'web3-utils'
-import {getAccountById, getVirtualCurrencyByName} from '../ledger'
-import {preparePolygonSignedTransaction, preparePolygonTransferErc20SignedTransaction} from '../transaction'
-import {generatePrivateKeyFromMnemonic} from '../wallet'
+import { fromWei, toWei } from 'web3-utils'
+import { getAccountById, getVirtualCurrencyByName } from '../ledger'
+import { preparePolygonSignedTransaction, preparePolygonTransferErc20SignedTransaction } from '../transaction'
+import { generatePrivateKeyFromMnemonic } from '../wallet'
 import { offchainTransferPolygonKMS } from './kms'
 
 /**
@@ -15,57 +22,66 @@ import { offchainTransferPolygonKMS } from './kms'
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendPolygonOffchainTransaction = async (testnet: boolean, body: TransferOffchain, provider?: string) => {
-    if (body.signatureId) {
-        return offchainTransferPolygonKMS(body)
-    }
-    await validateBody(body, TransferOffchain)
-    const {
-        mnemonic, index, privateKey, gasLimit, gasPrice, nonce, ...withdrawal
-    } = body
-    const {amount, address} = withdrawal
+  if (body.signatureId) {
+    return offchainTransferPolygonKMS(body)
+  }
+  await validateBody(body, TransferOffchain)
+  const { mnemonic, index, privateKey, gasLimit, gasPrice, nonce, ...withdrawal } = body
+  const { amount, address } = withdrawal
 
-    const fromPriv = mnemonic && index !== undefined ? await generatePrivateKeyFromMnemonic(Currency.MATIC, testnet, mnemonic, index) : privateKey as string
+  const fromPriv =
+    mnemonic && index !== undefined
+      ? await generatePrivateKeyFromMnemonic(Currency.MATIC, testnet, mnemonic, index)
+      : (privateKey as string)
 
-    const account = await getAccountById(withdrawal.senderAccountId)
-    let txData
-    const fee = {
-        gasLimit: gasLimit || '21000',
-        gasPrice: gasPrice || '20',
-    }
-    if (account.currency === Currency.MATIC) {
-        txData = await preparePolygonSignedTransaction(testnet, {
-            amount,
-            fromPrivateKey: fromPriv,
-            currency: account.currency,
-            fee,
-            nonce,
-            to: address
-        }, provider)
-    } else {
-        fee.gasLimit = '100000'
-        const vc = await getVirtualCurrencyByName(account.currency)
-        txData = await preparePolygonTransferErc20SignedTransaction(testnet, {
-            amount,
-            fee,
-            fromPrivateKey: fromPriv,
-            to: address,
-            digits: vc.precision as number,
-            nonce,
-            contractAddress: vc.erc20Address as string
-        }, provider)
-    }
-    // @ts-ignore
-    withdrawal.fee = fromWei(new BigNumber(fee.gasLimit).multipliedBy(toWei(fee.gasPrice, 'gwei')).toString(), 'ether')
-    const {id} = await offchainStoreWithdrawal(withdrawal)
+  const account = await getAccountById(withdrawal.senderAccountId)
+  let txData
+  const fee = {
+    gasLimit: gasLimit || '21000',
+    gasPrice: gasPrice || '20',
+  }
+  if (account.currency === Currency.MATIC) {
+    txData = await preparePolygonSignedTransaction(
+      testnet,
+      {
+        amount,
+        fromPrivateKey: fromPriv,
+        currency: account.currency,
+        fee,
+        nonce,
+        to: address,
+      },
+      provider
+    )
+  } else {
+    fee.gasLimit = '100000'
+    const vc = await getVirtualCurrencyByName(account.currency)
+    txData = await preparePolygonTransferErc20SignedTransaction(
+      testnet,
+      {
+        amount,
+        fee,
+        fromPrivateKey: fromPriv,
+        to: address,
+        digits: vc.precision as number,
+        nonce,
+        contractAddress: vc.erc20Address as string,
+      },
+      provider
+    )
+  }
+  // @ts-ignore
+  withdrawal.fee = fromWei(new BigNumber(fee.gasLimit).multipliedBy(toWei(fee.gasPrice, 'gwei')).toString(), 'ether')
+  const { id } = await offchainStoreWithdrawal(withdrawal)
+  try {
+    return { ...(await offchainBroadcast({ txData, withdrawalId: id, currency: Currency.MATIC })), id }
+  } catch (e) {
+    console.error(e)
     try {
-        return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.MATIC}), id}
-    } catch (e) {
-        console.error(e)
-        try {
-            await offchainCancelWithdrawal(id)
-        } catch (e1) {
-            console.log(e)
-            return {id}
-        }
+      await offchainCancelWithdrawal(id)
+    } catch (e1) {
+      console.log(e)
+      return { id }
     }
+  }
 }

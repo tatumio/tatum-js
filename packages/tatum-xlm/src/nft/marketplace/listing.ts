@@ -1,6 +1,1 @@
-export { 
-    getMarketplaceFee,
-    getMarketplaceListing,
-    getMarketplaceFeeRecipient,
-} from "@tatumio/tatum-core"
-    
+export { getMarketplaceFee, getMarketplaceListing, getMarketplaceFeeRecipient } from '@tatumio/tatum-core'

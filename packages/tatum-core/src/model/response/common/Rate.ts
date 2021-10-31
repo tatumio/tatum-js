@@ -1,15 +1,14 @@
-import {Currency} from '../../request'
-import {Fiat} from '../ledger/Fiat'
+import { Currency } from '../../request'
+import { Fiat } from '../ledger/Fiat'
 
 export class Rate {
+  public id: Fiat | Currency
 
-    public id: Fiat | Currency;
+  public value: string
 
-    public value: string;
+  public basePair: Fiat
 
-    public basePair: Fiat;
+  public timestamp: number
 
-    public timestamp: number;
-
-    public source: string;
+  public source: string
 }

@@ -1,7 +1,7 @@
-import {BncClient} from '@binance-chain/javascript-sdk'
-import {getAddressFromPrivateKey} from '@binance-chain/javascript-sdk/lib/crypto'
+import { BncClient } from '@binance-chain/javascript-sdk'
+import { getAddressFromPrivateKey } from '@binance-chain/javascript-sdk/lib/crypto'
 import { TransactionKMS, Currency } from '@tatumio/tatum-core'
-import {bnbGetAccount} from '../blockchain'
+import { bnbGetAccount } from '../blockchain'
 
 /**
  * Sign Bnb pending transaction from Tatum KMS
@@ -12,31 +12,27 @@ import {bnbGetAccount} from '../blockchain'
  * @returns transaction data to be broadcast to blockchain.
  */
 export const signBnbKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, testnet: boolean, provider?: string) => {
-    if (tx.chain !== Currency.BNB) {
-        throw Error('Unsupported chain.')
-    }
-    const bnbClient = new BncClient(provider ? provider : (testnet ? 'https://testnet-dex-atlantic.binance.org' : 'https://dex-european.binance.org'))
-    bnbClient.chooseNetwork(testnet ? 'testnet' : 'mainnet')
-    await bnbClient.setPrivateKey(fromPrivateKey, true)
-    await bnbClient.initChain()
-    const fromAddress = getAddressFromPrivateKey(fromPrivateKey, testnet ? 'tbnb' : 'bnb')
-    const account = await bnbGetAccount(fromAddress)
-    bnbClient.setAccountNumber(account.account_number)
-    const {msg, signMsg, memo} = JSON.parse(tx.serializedTransaction)
-    msg.inputs = msg.inputs.map((i: any) => {
-        i.address = Buffer.from(i.address.data)
-        return i
-    })
-    msg.outputs = msg.outputs.map((i: any) => {
-        i.address = Buffer.from(i.address.data)
-        return i
-    })
-    const signedTx = await bnbClient._prepareTransaction(
-        msg,
-        signMsg,
-        fromAddress,
-        account.sequence,
-        memo,
-    )
-    return signedTx.serialize()
+  if (tx.chain !== Currency.BNB) {
+    throw Error('Unsupported chain.')
+  }
+  const bnbClient = new BncClient(
+    provider ? provider : testnet ? 'https://testnet-dex-atlantic.binance.org' : 'https://dex-european.binance.org'
+  )
+  bnbClient.chooseNetwork(testnet ? 'testnet' : 'mainnet')
+  await bnbClient.setPrivateKey(fromPrivateKey, true)
+  await bnbClient.initChain()
+  const fromAddress = getAddressFromPrivateKey(fromPrivateKey, testnet ? 'tbnb' : 'bnb')
+  const account = await bnbGetAccount(fromAddress)
+  bnbClient.setAccountNumber(account.account_number)
+  const { msg, signMsg, memo } = JSON.parse(tx.serializedTransaction)
+  msg.inputs = msg.inputs.map((i: any) => {
+    i.address = Buffer.from(i.address.data)
+    return i
+  })
+  msg.outputs = msg.outputs.map((i: any) => {
+    i.address = Buffer.from(i.address.data)
+    return i
+  })
+  const signedTx = await bnbClient._prepareTransaction(msg, signMsg, fromAddress, account.sequence, memo)
+  return signedTx.serialize()
 }

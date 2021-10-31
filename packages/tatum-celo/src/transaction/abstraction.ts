@@ -1,6 +1,6 @@
-import { CreateRecord, validateBody, Currency } from "@tatumio/tatum-core";
-import { sendCeloStoreDataSignedTransaction, sendCeloOrcUsdTransaction } from "../transaction";
-import { TransferCeloOrCeloErc20Token } from "../model";
+import { CreateRecord, validateBody, Currency } from '@tatumio/tatum-core'
+import { sendCeloStoreDataSignedTransaction, sendCeloOrcUsdTransaction } from '../transaction'
+import { TransferCeloOrCeloErc20Token } from '../model'
 
 /**
  * Store any arbitrary data on the blockchain.
@@ -9,9 +9,9 @@ import { TransferCeloOrCeloErc20Token } from "../model";
  * @param provider Optional provider to use for broadcasting signed tx to the blockchain.
  */
 export const storeData = async (testnet: boolean, body: CreateRecord, provider?: string) => {
-    await validateBody(body, CreateRecord);
-    return await sendCeloStoreDataSignedTransaction(testnet, body, provider);
-};
+  await validateBody(body, CreateRecord)
+  return await sendCeloStoreDataSignedTransaction(testnet, body, provider)
+}
 
 /**
  * Perform any native asset transaction.
@@ -20,10 +20,9 @@ export const storeData = async (testnet: boolean, body: CreateRecord, provider?:
  * @param body Body of the transaction.
  * @param provider Optional provider to use for broadcasting signed tx to the blockchain.
  */
-export const sendTransaction = async (testnet: boolean, chain: Currency,
-                                      body: TransferCeloOrCeloErc20Token, provider?: string) => {
-    const b = body as TransferCeloOrCeloErc20Token;
-    b.currency = Currency.CELO;
-    b.feeCurrency = Currency.CELO;
-    return sendCeloOrcUsdTransaction(testnet, b, provider);
-};
+export const sendTransaction = async (testnet: boolean, chain: Currency, body: TransferCeloOrCeloErc20Token, provider?: string) => {
+  const b = body as TransferCeloOrCeloErc20Token
+  b.currency = Currency.CELO
+  b.feeCurrency = Currency.CELO
+  return sendCeloOrcUsdTransaction(testnet, b, provider)
+}

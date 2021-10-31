@@ -1,9 +1,4 @@
-import { 
-    post, 
-    Account,
-    Address,
-    CreateErc20Offchain,
-} from '@tatumio/tatum-core'
+import { post, Account, Address, CreateErc20Offchain } from '@tatumio/tatum-core'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/createErc20" target="_blank">Tatum API documentation</a>
@@ -28,6 +23,5 @@ export {
   offchainBroadcast,
   offchainStoreWithdrawal,
   offchainCancelWithdrawal,
-  offchainCompleteWithdrawal
+  offchainCompleteWithdrawal,
 } from '@tatumio/tatum-core'
-  

@@ -1,5 +1,5 @@
 import { TransactionHash, get, post, BlockHash } from '@tatumio/tatum-core'
-import {BchBlock, BchInfo, BchTx} from '../model'
+import { BchBlock, BchInfo, BchTx } from '../model'
 
 /**
  * Broadcasts signed transaction to the Bch blockchain. <br>

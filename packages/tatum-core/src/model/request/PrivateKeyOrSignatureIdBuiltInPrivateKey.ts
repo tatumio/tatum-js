@@ -3,13 +3,13 @@ import { Mint721BuiltInPrivateKeyValidator } from '../validation/Mint721BuiltInP
 
 export class PrivateKeyOrSignatureIdBuiltInPrivateKey {
   @Validate(Mint721BuiltInPrivateKeyValidator)
-  public fromPrivateKey?: string;
+  public fromPrivateKey?: string
 
   @Validate(Mint721BuiltInPrivateKeyValidator)
-  public signatureId?: string;
+  public signatureId?: string
 
-  @ValidateIf(o => o.signatureId)
+  @ValidateIf((o) => o.signatureId)
   @IsOptional()
   @Min(0)
-  public index?: number;
+  public index?: number
 }

@@ -1,7 +1,7 @@
-import { Currency, TESTNET_DERIVATION_PATH, Wallet } from '@tatumio/tatum-core';
-import {generateMnemonic, mnemonicToSeed} from 'bip39';
-import {hdkey as ethHdKey} from 'ethereumjs-wallet';
-import { MATIC_DERIVATION_PATH } from '../constants';
+import { Currency, TESTNET_DERIVATION_PATH, Wallet } from '@tatumio/tatum-core'
+import { generateMnemonic, mnemonicToSeed } from 'bip39'
+import { hdkey as ethHdKey } from 'ethereumjs-wallet'
+import { MATIC_DERIVATION_PATH } from '../constants'
 
 /**
  * Generate Polygon or any other ERC20 wallet
@@ -10,13 +10,13 @@ import { MATIC_DERIVATION_PATH } from '../constants';
  * @returns wallet
  */
 export const generatePolygonWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
-    const path = testnet ? TESTNET_DERIVATION_PATH : MATIC_DERIVATION_PATH
-    const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnem))
-    const derivePath = hdwallet.derivePath(path)
-    return {
-        xpub: derivePath.publicExtendedKey().toString(),
-        mnemonic: mnem
-    }
+  const path = testnet ? TESTNET_DERIVATION_PATH : MATIC_DERIVATION_PATH
+  const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnem))
+  const derivePath = hdwallet.derivePath(path)
+  return {
+    xpub: derivePath.publicExtendedKey().toString(),
+    mnemonic: mnem,
+  }
 }
 
 /**
@@ -27,6 +27,6 @@ export const generatePolygonWallet = async (testnet: boolean, mnem: string): Pro
  * @returns wallet or a combination of address and private key
  */
 export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: string) => {
-    const mnem = mnemonic ? mnemonic : generateMnemonic(256)
-    return generatePolygonWallet(testnet, mnem)
+  const mnem = mnemonic ? mnemonic : generateMnemonic(256)
+  return generatePolygonWallet(testnet, mnem)
 }

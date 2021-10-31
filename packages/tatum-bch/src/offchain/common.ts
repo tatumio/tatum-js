@@ -9,5 +9,5 @@ export {
   offchainBroadcast,
   offchainStoreWithdrawal,
   offchainCancelWithdrawal,
-  offchainCompleteWithdrawal
+  offchainCompleteWithdrawal,
 } from '@tatumio/tatum-core'

@@ -1,5 +1,5 @@
-import { BurnErc20, Currency, DeployErc20, MintErc20, TransferErc20} from '@tatumio/tatum-core';
-import { ethEstimateGas } from 'src/blockchain';
+import { BurnErc20, Currency, DeployErc20, MintErc20, TransferErc20 } from '@tatumio/tatum-core'
+import { ethEstimateGas } from 'src/blockchain'
 import {
   ethGetGasPriceInWei,
   prepareCustomErc20SignedTransaction,
@@ -13,11 +13,11 @@ import {
   sendMintErc721Transaction,
   sendMintMultipleErc721Transaction,
   sendSmartContractMethodInvocationTransaction,
-} from './eth';
+} from './eth'
 
 describe('ETH transactions', () => {
   it('should test valid transaction ETH data', async () => {
-    const body = new TransferErc20();
+    const body = new TransferErc20()
     body.fromPrivateKey = '0x2dedb85f2a87f17e143dbd5e51a589f27b4c6acf6bf29ebff8eb5c32b5e9de05'
     body.amount = '0'
     body.currency = Currency.ETH
@@ -27,7 +27,7 @@ describe('ETH transactions', () => {
   })
 
   it('should test valid transaction ERC20 data', async () => {
-    const body = new TransferErc20();
+    const body = new TransferErc20()
     body.fromPrivateKey = '0x2dedb85f2a87f17e143dbd5e51a589f27b4c6acf6bf29ebff8eb5c32b5e9de05'
     body.amount = '0'
     body.currency = Currency.PLTC
@@ -37,14 +37,14 @@ describe('ETH transactions', () => {
   })
 
   it('should test valid custom transaction ERC20 data', async () => {
-    const body = new TransferErc20();
-    body.fromPrivateKey = '0x37b091fc4ce46a56da643f021254612551dbe0944679a6e09cb5724d3085c9ab';
-    body.amount = '3';
-    body.contractAddress = '0xa089e2375e315a911816dcf9ad482bd3bfc8ec11';
-    body.to = '0xfb99F8aE9b70A0C8Cd96aE665BBaf85A7E01a2ef';
-    body.digits = 18;
-    const txData = await prepareCustomErc20SignedTransaction(body);
-    expect(txData).toContain('0x');
+    const body = new TransferErc20()
+    body.fromPrivateKey = '0x37b091fc4ce46a56da643f021254612551dbe0944679a6e09cb5724d3085c9ab'
+    body.amount = '3'
+    body.contractAddress = '0xa089e2375e315a911816dcf9ad482bd3bfc8ec11'
+    body.to = '0xfb99F8aE9b70A0C8Cd96aE665BBaf85A7E01a2ef'
+    body.digits = 18
+    const txData = await prepareCustomErc20SignedTransaction(body)
+    expect(txData).toContain('0x')
   })
 
   it('should test valid custom deployment ERC20', async () => {
@@ -95,7 +95,7 @@ describe('ETH transactions', () => {
   })
 
   it('should test invalid custom transaction ERC20 data, missing digits', async () => {
-    const body = new TransferErc20();
+    const body = new TransferErc20()
     body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb'
     body.amount = '0'
     body.contractAddress = '0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea'
@@ -109,7 +109,7 @@ describe('ETH transactions', () => {
   })
 
   it('should not test valid transaction data, missing currency', async () => {
-    const body = new TransferErc20();
+    const body = new TransferErc20()
     body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb'
     body.amount = '0'
     body.to = '0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea'
@@ -136,7 +136,7 @@ describe('ETH transactions', () => {
   })
 
   it('should test read smart contract method invocation', async () => {
-    const result = await sendSmartContractMethodInvocationTransaction( {
+    const result = await sendSmartContractMethodInvocationTransaction({
       contractAddress: '0x595bad1621784e9b0161d909be0117f17a5d37ca',
       methodName: 'balanceOf',
       methodABI: {
@@ -204,21 +204,21 @@ describe('ETH transactions', () => {
 
   it('should test eth 721 mint transaction', async () => {
     try {
-    const tokenId = new Date().getTime().toString()
-    const mintedToken = await sendMintErc721Transaction({
-      to: '0x811dfbff13adfbc3cf653dcc373c03616d3471c9',
-      tokenId,
-      url: 'https://www.seznam.cz',
-      fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
-      chain: Currency.ETH,
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fee: {
-        gasLimit: '50000',
-        gasPrice: '110'
-      }
-    })
-    console.log(tokenId)
-    expect(mintedToken).not.toBeNull()
+      const tokenId = new Date().getTime().toString()
+      const mintedToken = await sendMintErc721Transaction({
+        to: '0x811dfbff13adfbc3cf653dcc373c03616d3471c9',
+        tokenId,
+        url: 'https://www.seznam.cz',
+        fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+        chain: Currency.ETH,
+        contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+        fee: {
+          gasLimit: '50000',
+          gasPrice: '110',
+        },
+      })
+      console.log(tokenId)
+      expect(mintedToken).not.toBeNull()
     } catch (e) {
       console.log(e)
     }
@@ -236,8 +236,8 @@ describe('ETH transactions', () => {
       contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
       fee: {
         gasLimit: '50000',
-        gasPrice: '100'
-      }
+        gasPrice: '100',
+      },
     })
     expect(mintedTokens).not.toBeNull()
   })
@@ -250,25 +250,25 @@ describe('ETH transactions', () => {
       contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
       fee: {
         gasLimit: '5000000',
-        gasPrice: '110'
+        gasPrice: '110',
       },
     })
     expect(burnErc721Token).not.toBeNull()
   })
 
   it('should test eth 721 send transaction', async () => {
-      const sendErc721Token = await sendErc721Transaction({
-        to: '0x811dfbff13adfbc3cf653dcc373c03616d3471c9',
-        tokenId: '1615546122766',
-        fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
-        chain: Currency.ETH,
-        contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-        fee: {
-          gasLimit: '5000000',
-          gasPrice: '100'
-        }
-      })
-      expect(sendErc721Token).not.toBeNull()
+    const sendErc721Token = await sendErc721Transaction({
+      to: '0x811dfbff13adfbc3cf653dcc373c03616d3471c9',
+      tokenId: '1615546122766',
+      fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+      chain: Currency.ETH,
+      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+      fee: {
+        gasLimit: '5000000',
+        gasPrice: '100',
+      },
+    })
+    expect(sendErc721Token).not.toBeNull()
   })
 
   it('should test eth 721 deploy transaction', async () => {
@@ -280,5 +280,4 @@ describe('ETH transactions', () => {
     })
     expect(deployErc721Token).not.toBeNull()
   })
-
 })

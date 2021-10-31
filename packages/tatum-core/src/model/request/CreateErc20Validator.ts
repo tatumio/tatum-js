@@ -1,15 +1,14 @@
-import {ValidationArguments, ValidatorConstraint, ValidatorConstraintInterface} from 'class-validator'
-import {CreateErc20Offchain} from './CreateErc20Offchain'
+import { ValidationArguments, ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator'
+import { CreateErc20Offchain } from './CreateErc20Offchain'
 
-@ValidatorConstraint({name: 'xpubAddress', async: false})
+@ValidatorConstraint({ name: 'xpubAddress', async: false })
 export class CreateErc20Validator implements ValidatorConstraintInterface {
-    public defaultMessage(validationArguments?: ValidationArguments) {
-        return 'Either xpub, or address must be present.'
-    }
+  public defaultMessage(validationArguments?: ValidationArguments) {
+    return 'Either xpub, or address must be present.'
+  }
 
-    public validate(value: any, validationArguments?: ValidationArguments) {
-        const data = validationArguments?.object as CreateErc20Offchain
-        return !(data.xpub && data.address)
-    }
-
+  public validate(value: any, validationArguments?: ValidationArguments) {
+    const data = validationArguments?.object as CreateErc20Offchain
+    return !(data.xpub && data.address)
+  }
 }

@@ -1,8 +1,8 @@
 // @ts-ignore
 import coininfo from 'coininfo'
 import { Currency, TransactionKMS, validateBody, WithdrawalResponseData } from '@tatumio/tatum-core'
-import {generateAddressFromXPub, generateBchWallet, generatePrivateKeyFromMnemonic, toLegacyAddress} from '../wallet'
-import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common'
+import { generateAddressFromXPub, generateBchWallet, generatePrivateKeyFromMnemonic, toLegacyAddress } from '../wallet'
+import { offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal } from './common'
 import { offchainTransferBcashKMS } from './kms'
 import { KeyPair, TransferBtcBasedOffchain } from '../model'
 import BigNumber from 'bignumber.js'
@@ -18,40 +18,45 @@ const bcash = require('@tatumio/bitcoincashjs2-lib')
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendBitcoinCashOffchainTransaction = async (testnet: boolean, body: TransferBtcBasedOffchain) => {
-    if(body.signatureId) {
-        return offchainTransferBcashKMS(body)
-    }
-    await validateBody(body, TransferBtcBasedOffchain)
-    const {
-        mnemonic, keyPair, attr: changeAddress, ...withdrawal
-    } = body
-    if (!withdrawal.fee) {
-        withdrawal.fee = '0.00005'
-    }
-    const {id, data} = await offchainStoreWithdrawal(withdrawal)
-    const {
-        amount, address,
-    } = withdrawal
-    let txData
+  if (body.signatureId) {
+    return offchainTransferBcashKMS(body)
+  }
+  await validateBody(body, TransferBtcBasedOffchain)
+  const { mnemonic, keyPair, attr: changeAddress, ...withdrawal } = body
+  if (!withdrawal.fee) {
+    withdrawal.fee = '0.00005'
+  }
+  const { id, data } = await offchainStoreWithdrawal(withdrawal)
+  const { amount, address } = withdrawal
+  let txData
+  try {
+    txData = await prepareBitcoinCashSignedOffchainTransaction(
+      testnet,
+      data,
+      amount,
+      address,
+      mnemonic,
+      keyPair,
+      changeAddress,
+      withdrawal.multipleAmounts
+    )
+  } catch (e) {
+    console.error(e)
+    await offchainCancelWithdrawal(id)
+    throw e
+  }
+  try {
+    return { ...(await offchainBroadcast({ txData, withdrawalId: id, currency: Currency.BCH })), id }
+  } catch (e) {
+    console.error(e)
     try {
-        txData = await prepareBitcoinCashSignedOffchainTransaction(testnet, data, amount, address, mnemonic, keyPair, changeAddress, withdrawal.multipleAmounts)
-    } catch (e) {
-        console.error(e)
-        await offchainCancelWithdrawal(id)
-        throw e
+      await offchainCancelWithdrawal(id)
+    } catch (e1) {
+      console.log(e)
+      return { id }
     }
-    try {
-        return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.BCH}), id}
-    } catch (e) {
-        console.error(e)
-        try {
-            await offchainCancelWithdrawal(id)
-        } catch (e1) {
-            console.log(e)
-            return {id}
-        }
-        throw e
-    }
+    throw e
+  }
 }
 
 /**
@@ -62,30 +67,33 @@ export const sendBitcoinCashOffchainTransaction = async (testnet: boolean, body:
  * @returns transaction data to be broadcast to blockchain.
  */
 export const signBitcoinCashOffchainKMSTransaction = async (tx: TransactionKMS, mnemonic: string, testnet: boolean) => {
-    if (tx.chain !== Currency.BCH || !tx.withdrawalResponses) {
-        throw Error('Unsupported chain.')
+  if (tx.chain !== Currency.BCH || !tx.withdrawalResponses) {
+    throw Error('Unsupported chain.')
+  }
+  const [data, amountsToDecode] = tx.serializedTransaction.split(':')
+  const transaction = bcash.Transaction.fromHex(data)
+  const amountsToSign = JSON.parse(amountsToDecode) as number[]
+  const network = testnet ? coininfo.bitcoincash.test.toBitcoinJS() : coininfo.bitcoincash.main.toBitcoinJS()
+  const builder = bcash.TransactionBuilder.fromTransaction(transaction, network)
+  for (const [i, response] of tx.withdrawalResponses.entries()) {
+    if (response.vIn === '-1') {
+      continue
     }
-    const [data, amountsToDecode] = tx.serializedTransaction.split(':')
-    const transaction = bcash.Transaction.fromHex(data)
-    const amountsToSign = JSON.parse(amountsToDecode) as number[]
-    const network = testnet ? coininfo.bitcoincash.test.toBitcoinJS() : coininfo.bitcoincash.main.toBitcoinJS()
-    const builder = bcash.TransactionBuilder.fromTransaction(transaction, network)
-    for (const [i, response] of tx.withdrawalResponses.entries()) {
-        if (response.vIn === '-1') {
-            continue
-        }
-        const ecPair = bcash.ECPair.fromWIF(await generatePrivateKeyFromMnemonic(Currency.BCH, testnet, mnemonic, response.address?.derivationKey || 0), network)
-        builder.sign(i, ecPair, undefined, 0x01, amountsToSign[i], undefined, bcash.ECSignature.SCHNORR)
-    }
-    return builder.build().toHex()
+    const ecPair = bcash.ECPair.fromWIF(
+      await generatePrivateKeyFromMnemonic(Currency.BCH, testnet, mnemonic, response.address?.derivationKey || 0),
+      network
+    )
+    builder.sign(i, ecPair, undefined, 0x01, amountsToSign[i], undefined, bcash.ECSignature.SCHNORR)
+  }
+  return builder.build().toHex()
 }
 
 const getAddress = (address: string) => {
-    try {
-        return toLegacyAddress(address)
-    } catch (e) {
-        return address
-    }
+  try {
+    return toLegacyAddress(address)
+  } catch (e) {
+    return address
+  }
 }
 
 /**
@@ -100,57 +108,72 @@ const getAddress = (address: string) => {
  * @param multipleAmounts if multiple recipients are present in the address separated by ',', this should be list of amounts to send
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareBitcoinCashSignedOffchainTransaction =
-    async (testnet: boolean, data: WithdrawalResponseData[], amount: string, address: string, mnemonic?: string, keyPair?: KeyPair[],
-           changeAddress?: string, multipleAmounts?: string[]) => {
-        const network = testnet ? coininfo.bitcoincash.test.toBitcoinJS() : coininfo.bitcoincash.main.toBitcoinJS()
-        const tx = new bcash.TransactionBuilder(network)
+export const prepareBitcoinCashSignedOffchainTransaction = async (
+  testnet: boolean,
+  data: WithdrawalResponseData[],
+  amount: string,
+  address: string,
+  mnemonic?: string,
+  keyPair?: KeyPair[],
+  changeAddress?: string,
+  multipleAmounts?: string[]
+) => {
+  const network = testnet ? coininfo.bitcoincash.test.toBitcoinJS() : coininfo.bitcoincash.main.toBitcoinJS()
+  const tx = new bcash.TransactionBuilder(network)
 
-        data.forEach((input) => {
-            if (input.vIn !== '-1') {
-                tx.addInput(input.vIn, input.vInIndex, 0xffffffff, null)
-            }
-        })
-
-        const lastVin = data.find(d => d.vIn === '-1') as WithdrawalResponseData
-        if (multipleAmounts?.length) {
-            for (const [i, multipleAmount] of multipleAmounts.entries()) {
-                tx.addOutput(getAddress(address.split(',')[i]), Number(new BigNumber(multipleAmount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)))
-            }
-        } else {
-            tx.addOutput(getAddress(address), Number(new BigNumber(amount).multipliedBy(100000000).toFixed(0, BigNumber.ROUND_FLOOR)))
-        }
-        if (new BigNumber(lastVin.amount).isGreaterThan(0)) {
-            if (mnemonic && !changeAddress) {
-                const {xpub} = await generateBchWallet(testnet, mnemonic)
-                tx.addOutput(getAddress(generateAddressFromXPub(Currency.BCH, testnet, xpub, 0)),
-                    Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(0, BigNumber.ROUND_FLOOR)))
-            } else if (changeAddress) {
-                tx.addOutput(getAddress(changeAddress), Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(0, BigNumber.ROUND_FLOOR)))
-            } else {
-                throw new Error('Impossible to prepare transaction. Either mnemonic or keyPair and attr must be present.')
-            }
-        }
-        for (const [i, input] of data.entries()) {
-            // when there is no address field present, input is pool transfer to 0
-            if (input.vIn === '-1') {
-                continue
-            }
-            const value = Number(new BigNumber(data[i].amount).multipliedBy(100000000).toFixed(0, BigNumber.ROUND_FLOOR))
-            if (mnemonic) {
-                const derivationKey = input.address && input.address.derivationKey ? input.address.derivationKey : 0
-                const privateKey = await generatePrivateKeyFromMnemonic(Currency.BCH, testnet, mnemonic, derivationKey)
-                const ecPair = bcash.ECPair.fromWIF(privateKey, network)
-                tx.sign(i, ecPair, undefined, 0x01, value, undefined, bcash.ECSignature.SCHNORR)
-            } else if (keyPair) {
-                // @ts-ignore
-                const privateKey = keyPair.find(k => k.address === input.address.address)
-                if (privateKey) {
-                    const ecPair = bcash.ECPair.fromWIF(privateKey.privateKey, network)
-                    tx.sign(i, ecPair, undefined, 0x01, value, undefined, bcash.ECSignature.SCHNORR)
-                }
-            }
-        }
-
-        return tx.build().toHex()
+  data.forEach((input) => {
+    if (input.vIn !== '-1') {
+      tx.addInput(input.vIn, input.vInIndex, 0xffffffff, null)
     }
+  })
+
+  const lastVin = data.find((d) => d.vIn === '-1') as WithdrawalResponseData
+  if (multipleAmounts?.length) {
+    for (const [i, multipleAmount] of multipleAmounts.entries()) {
+      tx.addOutput(
+        getAddress(address.split(',')[i]),
+        Number(new BigNumber(multipleAmount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR))
+      )
+    }
+  } else {
+    tx.addOutput(getAddress(address), Number(new BigNumber(amount).multipliedBy(100000000).toFixed(0, BigNumber.ROUND_FLOOR)))
+  }
+  if (new BigNumber(lastVin.amount).isGreaterThan(0)) {
+    if (mnemonic && !changeAddress) {
+      const { xpub } = await generateBchWallet(testnet, mnemonic)
+      tx.addOutput(
+        getAddress(generateAddressFromXPub(Currency.BCH, testnet, xpub, 0)),
+        Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(0, BigNumber.ROUND_FLOOR))
+      )
+    } else if (changeAddress) {
+      tx.addOutput(
+        getAddress(changeAddress),
+        Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(0, BigNumber.ROUND_FLOOR))
+      )
+    } else {
+      throw new Error('Impossible to prepare transaction. Either mnemonic or keyPair and attr must be present.')
+    }
+  }
+  for (const [i, input] of data.entries()) {
+    // when there is no address field present, input is pool transfer to 0
+    if (input.vIn === '-1') {
+      continue
+    }
+    const value = Number(new BigNumber(data[i].amount).multipliedBy(100000000).toFixed(0, BigNumber.ROUND_FLOOR))
+    if (mnemonic) {
+      const derivationKey = input.address && input.address.derivationKey ? input.address.derivationKey : 0
+      const privateKey = await generatePrivateKeyFromMnemonic(Currency.BCH, testnet, mnemonic, derivationKey)
+      const ecPair = bcash.ECPair.fromWIF(privateKey, network)
+      tx.sign(i, ecPair, undefined, 0x01, value, undefined, bcash.ECSignature.SCHNORR)
+    } else if (keyPair) {
+      // @ts-ignore
+      const privateKey = keyPair.find((k) => k.address === input.address.address)
+      if (privateKey) {
+        const ecPair = bcash.ECPair.fromWIF(privateKey.privateKey, network)
+        tx.sign(i, ecPair, undefined, 0x01, value, undefined, bcash.ECSignature.SCHNORR)
+      }
+    }
+  }
+
+  return tx.build().toHex()
+}

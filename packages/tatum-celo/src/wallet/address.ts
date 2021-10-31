@@ -1,7 +1,7 @@
-import { Currency, TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core';
-import {mnemonicToSeed} from 'bip39';
-import ethWallet, {hdkey as ethHdKey} from 'ethereumjs-wallet';
-import { CELO_DERIVATION_PATH } from 'src/constants';
+import { Currency, TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
+import { mnemonicToSeed } from 'bip39'
+import ethWallet, { hdkey as ethHdKey } from 'ethereumjs-wallet'
+import { CELO_DERIVATION_PATH } from 'src/constants'
 
 /**
  * Generate Celo or any other ERC20 address
@@ -10,10 +10,10 @@ import { CELO_DERIVATION_PATH } from 'src/constants';
  * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
- const generateCeloAddress = (testnet: boolean, xpub: string, i: number) => {
-    const w = ethHdKey.fromExtendedKey(xpub)
-    const wallet = w.deriveChild(i).getWallet()
-    return '0x' + wallet.getAddress().toString('hex').toLowerCase()
+const generateCeloAddress = (testnet: boolean, xpub: string, i: number) => {
+  const w = ethHdKey.fromExtendedKey(xpub)
+  const wallet = w.deriveChild(i).getWallet()
+  return '0x' + wallet.getAddress().toString('hex').toLowerCase()
 }
 
 /**
@@ -25,7 +25,7 @@ import { CELO_DERIVATION_PATH } from 'src/constants';
  * @returns blockchain address
  */
 export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xpub: string, i: number) => {
-    return generateCeloAddress(testnet, xpub, i)
+  return generateCeloAddress(testnet, xpub, i)
 }
 
 /**
@@ -37,7 +37,7 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
  * @returns blockchain private key to the address
  */
 export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: boolean, mnemonic: string, i: number) => {
-    return generateCeloPrivateKey(testnet, mnemonic, i)
+  return generateCeloPrivateKey(testnet, mnemonic, i)
 }
 
 /**
@@ -47,9 +47,9 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
  * @param i derivation index of private key to generate.
  * @returns blockchain private key to the address
  */
- const generateCeloPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
-    const path = testnet ? TESTNET_DERIVATION_PATH : CELO_DERIVATION_PATH
-    const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnemonic))
-    const derivePath = hdwallet.derivePath(path).deriveChild(i)
-    return derivePath.getWallet().getPrivateKeyString()
+const generateCeloPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
+  const path = testnet ? TESTNET_DERIVATION_PATH : CELO_DERIVATION_PATH
+  const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnemonic))
+  const derivePath = hdwallet.derivePath(path).deriveChild(i)
+  return derivePath.getWallet().getPrivateKeyString()
 }

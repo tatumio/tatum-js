@@ -1,3 +1,3 @@
 export interface BlockHash {
-    hash: string;
+  hash: string
 }

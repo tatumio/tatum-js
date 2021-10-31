@@ -1,5 +1,5 @@
 import { get, post, TransactionHash } from '@tatumio/tatum-core'
-import {EstimateGasVet, VetBlock, VetEstimateGas, VetTx, VetTxReceipt} from '../model'
+import { EstimateGasVet, VetBlock, VetEstimateGas, VetTx, VetTxReceipt } from '../model'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/VetBroadcast" target="_blank">Tatum API documentation</a>
@@ -10,7 +10,8 @@ export const vetBroadcast = async (txData: string, signatureId?: string): Promis
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/VetEstimateGas" target="_blank">Tatum API documentation</a>
  */
-export const vetEstimateGas = async (body: EstimateGasVet): Promise<VetEstimateGas> => post(`/v3/vet/broadcast/transaction/gas`, body, EstimateGasVet)
+export const vetEstimateGas = async (body: EstimateGasVet): Promise<VetEstimateGas> =>
+  post(`/v3/vet/broadcast/transaction/gas`, body, EstimateGasVet)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/VetGetCurrentBlock" target="_blank">Tatum API documentation</a>

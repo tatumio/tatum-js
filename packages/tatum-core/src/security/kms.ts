@@ -1,6 +1,6 @@
 import { get, httpDelete, put } from '../connector/tatum'
-import {Currency} from '../model'
-import {TransactionKMS} from '../model'
+import { Currency } from '../model'
+import { TransactionKMS } from '../model'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/GetPendingTransactionToSign" target="_blank">Tatum API documentation</a>

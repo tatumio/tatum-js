@@ -5,7 +5,7 @@ import BigNumber from 'bignumber.js'
  * For more details, see <a href="https://tatum.io/apidoc#operation/PolygonBroadcast" target="_blank">Tatum API documentation</a>
  */
 export const polygonBroadcast = async (txData: string, signatureId?: string): Promise<TransactionHash> =>
-    post(`/v3/polygon/broadcast`, {txData, signatureId})
+  post(`/v3/polygon/broadcast`, { txData, signatureId })
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/PolygonGetTransactionCount" target="_blank">Tatum API documentation</a>

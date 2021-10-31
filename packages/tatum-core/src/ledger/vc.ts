@@ -1,9 +1,9 @@
 import { get, post, put } from '../connector/tatum'
-import {Account} from '../model'
-import {CreateCurrency} from '../model/request/CreateCurrency'
-import {CurrencyOperation} from '../model/request/CurrencyOperation'
-import {UpdateCurrency} from '../model/request/UpdateCurrency'
-import {VC} from '../model/response/ledger/VC'
+import { Account } from '../model'
+import { CreateCurrency } from '../model/request/CreateCurrency'
+import { CurrencyOperation } from '../model/request/CurrencyOperation'
+import { UpdateCurrency } from '../model/request/UpdateCurrency'
+import { VC } from '../model/response/ledger/VC'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/getCurrency" target="_blank">Tatum API documentation</a>
@@ -13,7 +13,8 @@ export const getVirtualCurrencyByName = async (name: string): Promise<VC> => get
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/createCurrency" target="_blank">Tatum API documentation</a>
  */
-export const createVirtualCurrency = async (data: CreateCurrency): Promise<Account> => post(`/v3/ledger/virtualCurrency`, data, CreateCurrency)
+export const createVirtualCurrency = async (data: CreateCurrency): Promise<Account> =>
+  post(`/v3/ledger/virtualCurrency`, data, CreateCurrency)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/updateCurrency" target="_blank">Tatum API documentation</a>

@@ -1,9 +1,9 @@
-import BigNumber from 'bignumber.js';
-import {fromWei, toWei} from 'web3-utils';
-import {Currency, TransferOffchain, validateBody} from '@tatumio/tatum-core';
-import {prepareXdcOrErc20SignedTransaction} from '../transaction';
-import {generatePrivateKeyFromMnemonic} from '../wallet';
-import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
+import BigNumber from 'bignumber.js'
+import { fromWei, toWei } from 'web3-utils'
+import { Currency, TransferOffchain, validateBody } from '@tatumio/tatum-core'
+import { prepareXdcOrErc20SignedTransaction } from '../transaction'
+import { generatePrivateKeyFromMnemonic } from '../wallet'
+import { offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal } from './common'
 import { offchainTransferXdcKMS } from './kms'
 
 /**
@@ -15,40 +15,42 @@ import { offchainTransferXdcKMS } from './kms'
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendXdcOffchainTransaction = async (testnet: boolean, body: TransferOffchain, provider?: string) => {
-    if (body.signatureId) {
-        return offchainTransferXdcKMS(body)
-    }
-    await validateBody(body, TransferOffchain)
-    const {
-        mnemonic, index, privateKey, gasLimit, gasPrice, nonce, ...withdrawal
-    } = body
-    const {amount, address} = withdrawal
+  if (body.signatureId) {
+    return offchainTransferXdcKMS(body)
+  }
+  await validateBody(body, TransferOffchain)
+  const { mnemonic, index, privateKey, gasLimit, gasPrice, nonce, ...withdrawal } = body
+  const { amount, address } = withdrawal
 
-    const fromPriv = mnemonic && index !== undefined ? await generatePrivateKeyFromMnemonic(Currency.XDC, testnet, mnemonic, index) : privateKey as string
+  const fromPriv =
+    mnemonic && index !== undefined ? await generatePrivateKeyFromMnemonic(Currency.XDC, testnet, mnemonic, index) : (privateKey as string)
 
-    const fee = {
-        gasLimit: gasLimit || '21000',
-        gasPrice: gasPrice || '5',
-    }
-    const txData = await prepareXdcOrErc20SignedTransaction({
-        amount,
-        fromPrivateKey: fromPriv,
-        fee,
-        nonce,
-        to: address,
-    }, provider)
-    // @ts-ignore
-    withdrawal.fee = fromWei(new BigNumber(fee.gasLimit).multipliedBy(toWei(fee.gasPrice, 'kwei')).toString(), 'ether')
-    const {id} = await offchainStoreWithdrawal(withdrawal)
+  const fee = {
+    gasLimit: gasLimit || '21000',
+    gasPrice: gasPrice || '5',
+  }
+  const txData = await prepareXdcOrErc20SignedTransaction(
+    {
+      amount,
+      fromPrivateKey: fromPriv,
+      fee,
+      nonce,
+      to: address,
+    },
+    provider
+  )
+  // @ts-ignore
+  withdrawal.fee = fromWei(new BigNumber(fee.gasLimit).multipliedBy(toWei(fee.gasPrice, 'kwei')).toString(), 'ether')
+  const { id } = await offchainStoreWithdrawal(withdrawal)
+  try {
+    return { ...(await offchainBroadcast({ txData, withdrawalId: id, currency: Currency.XDC })), id }
+  } catch (e) {
+    console.error(e)
     try {
-        return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.XDC}), id}
-    } catch (e) {
-        console.error(e)
-        try {
-            await offchainCancelWithdrawal(id)
-        } catch (e1) {
-            console.log(e)
-            return {id}
-        }
+      await offchainCancelWithdrawal(id)
+    } catch (e1) {
+      console.log(e)
+      return { id }
     }
+  }
 }

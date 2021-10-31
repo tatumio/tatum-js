@@ -1,12 +1,8 @@
-import { Currency } from '@tatumio/tatum-core';
-import {fromBase58, fromSeed} from 'bip32';
-import {mnemonicToSeed} from 'bip39';
-import {ECPair, payments} from 'bitcoinjs-lib';
-import {
-    LYRA_DERIVATION_PATH,
-    LYRA_NETWORK,
-    LYRA_TEST_NETWORK,
-} from '../constants';
+import { Currency } from '@tatumio/tatum-core'
+import { fromBase58, fromSeed } from 'bip32'
+import { mnemonicToSeed } from 'bip39'
+import { ECPair, payments } from 'bitcoinjs-lib'
+import { LYRA_DERIVATION_PATH, LYRA_NETWORK, LYRA_TEST_NETWORK } from '../constants'
 
 /**
  * Generate Bitcoin address
@@ -15,10 +11,10 @@ import {
  * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
- const generateLyraAddress = (testnet: boolean, xpub: string, i: number) => {
-    const network = testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK
-    const w = fromBase58(xpub, network).derivePath(String(i))
-    return payments.p2pkh({pubkey: w.publicKey, network}).address as string
+const generateLyraAddress = (testnet: boolean, xpub: string, i: number) => {
+  const network = testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK
+  const w = fromBase58(xpub, network).derivePath(String(i))
+  return payments.p2pkh({ pubkey: w.publicKey, network }).address as string
 }
 
 /**
@@ -29,11 +25,11 @@ import {
  * @returns blockchain private key to the address
  */
 const generateLyraPrivateKey = async (testnet: boolean, mnemonic: string, i: number) => {
-    const network = testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK
-    return fromSeed(await mnemonicToSeed(mnemonic), network)
-        .derivePath(LYRA_DERIVATION_PATH)
-        .derive(i)
-        .toWIF()
+  const network = testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK
+  return fromSeed(await mnemonicToSeed(mnemonic), network)
+    .derivePath(LYRA_DERIVATION_PATH)
+    .derive(i)
+    .toWIF()
 }
 
 /**
@@ -43,9 +39,9 @@ const generateLyraPrivateKey = async (testnet: boolean, mnemonic: string, i: num
  * @returns blockchain address
  */
 const convertLyraPrivateKey = (testnet: boolean, privkey: string) => {
-    const network = testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK
-    const keyPair = ECPair.fromWIF(privkey, network)
-    return payments.p2pkh({pubkey: keyPair.publicKey, network}).address as string
+  const network = testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK
+  const keyPair = ECPair.fromWIF(privkey, network)
+  return payments.p2pkh({ pubkey: keyPair.publicKey, network }).address as string
 }
 
 /**
@@ -57,7 +53,7 @@ const convertLyraPrivateKey = (testnet: boolean, privkey: string) => {
  * @returns blockchain address
  */
 export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xpub: string, i: number) => {
-    return generateLyraAddress(testnet, xpub, i)
+  return generateLyraAddress(testnet, xpub, i)
 }
 
 /**
@@ -69,7 +65,7 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
  * @returns blockchain private key to the address
  */
 export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: boolean, mnemonic: string, i: number) => {
-    return generateLyraPrivateKey(testnet, mnemonic, i)
+  return generateLyraPrivateKey(testnet, mnemonic, i)
 }
 
 /**
@@ -80,5 +76,5 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
  * @returns blockchain private key to the address
  */
 export const generateAddressFromPrivatekey = (currency: Currency, testnet: boolean, privateKey: string) => {
-    return convertLyraPrivateKey(testnet, privateKey)
+  return convertLyraPrivateKey(testnet, privateKey)
 }
