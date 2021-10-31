@@ -1,5 +1,5 @@
-import {get} from '../connector/tatum'
-import {Currency} from '../model'
+import { get } from '../connector/tatum'
+import { Currency } from '../model'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/GetLog" target="_blank">Tatum API documentation</a>

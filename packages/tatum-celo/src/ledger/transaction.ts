@@ -6,5 +6,5 @@ export {
   getTransactionsByLedger,
   countTransactionsByAccount,
   countTransactionsByCustomer,
-  countTransactionsByLedger
+  countTransactionsByLedger,
 } from '@tatumio/tatum-core'

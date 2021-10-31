@@ -1,10 +1,11 @@
 import { get, post } from '../connector/tatum'
-import {CreateTransaction, Transaction, TransactionFilter} from '../model'
+import { CreateTransaction, Transaction, TransactionFilter } from '../model'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/getTransactionsByReference" target="_blank">Tatum API documentation</a>
  */
-export const getTransactionsByReference = async (reference: string): Promise<Transaction[]> => get(`/v3/ledger/transaction/reference/${reference}`)
+export const getTransactionsByReference = async (reference: string): Promise<Transaction[]> =>
+  get(`/v3/ledger/transaction/reference/${reference}`)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/sendTransaction" target="_blank">Tatum API documentation</a>

@@ -1,11 +1,11 @@
-import {Type} from 'class-transformer'
-import {IsOptional, ValidateNested,} from 'class-validator'
+import { Type } from 'class-transformer'
+import { IsOptional, ValidateNested } from 'class-validator'
 import { BaseBurnMultiToken } from './BaseBurnMultiToken'
-import { Fee } from './Fee';
+import { Fee } from './Fee'
 
 export class BurnMultiToken extends BaseBurnMultiToken {
-    @IsOptional()
-    @Type(() => Fee)
-    @ValidateNested()
-    public fee?: Fee;
+  @IsOptional()
+  @Type(() => Fee)
+  @ValidateNested()
+  public fee?: Fee
 }

@@ -1,5 +1,5 @@
-import {generatePrivateKey, getAddressFromPrivateKey} from '@binance-chain/javascript-sdk/lib/crypto';
-import { Currency, Wallet } from '@tatumio/tatum-core';
+import { generatePrivateKey, getAddressFromPrivateKey } from '@binance-chain/javascript-sdk/lib/crypto'
+import { Currency, Wallet } from '@tatumio/tatum-core'
 
 /**
  * Generate BnB wallet
@@ -7,13 +7,13 @@ import { Currency, Wallet } from '@tatumio/tatum-core';
  * @returns wallet
  */
 export const generateBnbWallet = async (testnet: boolean) => {
-    const privateKey = generatePrivateKey()
-    const prefix = testnet ? 'tbnb' : 'bnb'
-    return {
-        // FIXME: Should be probably Wallet interface? TBD
-        address: getAddressFromPrivateKey(privateKey, prefix),
-        privateKey,
-    }
+  const privateKey = generatePrivateKey()
+  const prefix = testnet ? 'tbnb' : 'bnb'
+  return {
+    // FIXME: Should be probably Wallet interface? TBD
+    address: getAddressFromPrivateKey(privateKey, prefix),
+    privateKey,
+  }
 }
 
 /**
@@ -24,5 +24,5 @@ export const generateBnbWallet = async (testnet: boolean) => {
  * @returns wallet or a combination of address and private key
  */
 export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: string) => {
-    return generateBnbWallet(testnet)
+  return generateBnbWallet(testnet)
 }

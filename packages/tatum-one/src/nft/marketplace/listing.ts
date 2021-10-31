@@ -1,10 +1,19 @@
-import { DeployMarketplaceListing, UpdateMarketplaceFee, prepareMarketplaceUpdateFeeAbstraction, UpdateMarketplaceFeeRecipient, prepareMarketplaceUpdateFeeRecipientAbstraction, ApproveErc20, CreateMarketplaceListing, prepareMarketplaceCreateListingAbstraction, InvokeMarketplaceListingOperation, prepareMarketplaceBuyListingAbstraction, prepareMarketplaceCancelListingAbstraction } from '@tatumio/tatum-core';
-import {prepareApproveErc20} from '../../fungible';
-import {helperBroadcastTx, helperPrepareSCCall} from '../../helpers';
 import {
-    prepareOneDeployMarketplaceListingSignedTransaction,
-    sendOneDeployMarketplaceListingSignedTransaction,
-} from '../../transaction';
+  DeployMarketplaceListing,
+  UpdateMarketplaceFee,
+  prepareMarketplaceUpdateFeeAbstraction,
+  UpdateMarketplaceFeeRecipient,
+  prepareMarketplaceUpdateFeeRecipientAbstraction,
+  ApproveErc20,
+  CreateMarketplaceListing,
+  prepareMarketplaceCreateListingAbstraction,
+  InvokeMarketplaceListingOperation,
+  prepareMarketplaceBuyListingAbstraction,
+  prepareMarketplaceCancelListingAbstraction,
+} from '@tatumio/tatum-core'
+import { prepareApproveErc20 } from '../../fungible'
+import { helperBroadcastTx, helperPrepareSCCall } from '../../helpers'
+import { prepareOneDeployMarketplaceListingSignedTransaction, sendOneDeployMarketplaceListingSignedTransaction } from '../../transaction'
 
 /**
  * Deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
@@ -21,8 +30,8 @@ import {
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const deployMarketplaceListing = async (testnet: boolean, body: DeployMarketplaceListing, provider?: string) => {
-    return await sendOneDeployMarketplaceListingSignedTransaction(testnet, body, provider);
-};
+  return await sendOneDeployMarketplaceListingSignedTransaction(testnet, body, provider)
+}
 
 /**
  * Prepare signed transaction for deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
@@ -39,8 +48,8 @@ export const deployMarketplaceListing = async (testnet: boolean, body: DeployMar
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareDeployMarketplaceListing = async (testnet: boolean, body: DeployMarketplaceListing, provider?: string) => {
-    return await prepareOneDeployMarketplaceListingSignedTransaction(testnet, body, provider);
-};
+  return await prepareOneDeployMarketplaceListingSignedTransaction(testnet, body, provider)
+}
 
 /**
  * Update marketplace fee.
@@ -50,9 +59,9 @@ export const prepareDeployMarketplaceListing = async (testnet: boolean, body: De
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceUpdateFee = async (testnet: boolean, body: UpdateMarketplaceFee, provider?: string) => {
-    const params = await prepareMarketplaceUpdateFeeAbstraction(body)
-    return await helperPrepareSCCall(testnet, body, UpdateMarketplaceFee, 'setMarketplaceFee', params, undefined, provider);
-};
+  const params = await prepareMarketplaceUpdateFeeAbstraction(body)
+  return await helperPrepareSCCall(testnet, body, UpdateMarketplaceFee, 'setMarketplaceFee', params, undefined, provider)
+}
 
 /**
  * Update marketplace fee recipient.
@@ -62,9 +71,9 @@ export const prepareMarketplaceUpdateFee = async (testnet: boolean, body: Update
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceUpdateFeeRecipient = async (testnet: boolean, body: UpdateMarketplaceFeeRecipient, provider?: string) => {
-    const params = await prepareMarketplaceUpdateFeeRecipientAbstraction(body)
-    return await helperPrepareSCCall(testnet, body, UpdateMarketplaceFeeRecipient, 'setMarketplaceFeeRecipient', params, undefined, provider);
-};
+  const params = await prepareMarketplaceUpdateFeeRecipientAbstraction(body)
+  return await helperPrepareSCCall(testnet, body, UpdateMarketplaceFeeRecipient, 'setMarketplaceFeeRecipient', params, undefined, provider)
+}
 
 /**
  * Approve ERC20 spending for marketplace to perform buy with ERC20 token.
@@ -74,8 +83,8 @@ export const prepareMarketplaceUpdateFeeRecipient = async (testnet: boolean, bod
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceApproveErc20Spending = async (testnet: boolean, body: ApproveErc20, provider?: string) => {
-    return prepareApproveErc20(testnet, body, provider);
-};
+  return prepareApproveErc20(testnet, body, provider)
+}
 
 /**
  * Create new listing on the marketplace.
@@ -87,9 +96,9 @@ export const prepareMarketplaceApproveErc20Spending = async (testnet: boolean, b
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceCreateListing = async (testnet: boolean, body: CreateMarketplaceListing, provider?: string) => {
-    const { body: validatedBody, params } = await prepareMarketplaceCreateListingAbstraction(body)
-    return await helperPrepareSCCall(testnet, validatedBody, CreateMarketplaceListing, 'createListing', params, undefined, provider);
-};
+  const { body: validatedBody, params } = await prepareMarketplaceCreateListingAbstraction(body)
+  return await helperPrepareSCCall(testnet, validatedBody, CreateMarketplaceListing, 'createListing', params, undefined, provider)
+}
 
 /**
  * Buy listing on the marketplace. Buyer must either send native assets with this operation, or approve ERC20 token spending before.
@@ -100,9 +109,17 @@ export const prepareMarketplaceCreateListing = async (testnet: boolean, body: Cr
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceBuyListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation, provider?: string) => {
-    const { body: validatedBody, params} = await prepareMarketplaceBuyListingAbstraction(body)
-    return await helperPrepareSCCall(testnet, validatedBody, InvokeMarketplaceListingOperation, 'buyAssetFromListing', params, undefined, provider);
-};
+  const { body: validatedBody, params } = await prepareMarketplaceBuyListingAbstraction(body)
+  return await helperPrepareSCCall(
+    testnet,
+    validatedBody,
+    InvokeMarketplaceListingOperation,
+    'buyAssetFromListing',
+    params,
+    undefined,
+    provider
+  )
+}
 
 /**
  * Cancel listing on the marketplace. Only possible for the seller or the operator. There must be no buyer present for that listing. NFT asset is sent back to the seller.
@@ -112,9 +129,9 @@ export const prepareMarketplaceBuyListing = async (testnet: boolean, body: Invok
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceCancelListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation, provider?: string) => {
-    const params = await prepareMarketplaceCancelListingAbstraction(body)
-    return await helperPrepareSCCall(testnet, body, InvokeMarketplaceListingOperation, 'cancelListing', params, undefined, provider);
-};
+  const params = await prepareMarketplaceCancelListingAbstraction(body)
+  return await helperPrepareSCCall(testnet, body, InvokeMarketplaceListingOperation, 'cancelListing', params, undefined, provider)
+}
 
 /**
  * Update marketplace fee.
@@ -124,7 +141,7 @@ export const prepareMarketplaceCancelListing = async (testnet: boolean, body: In
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendMarketplaceUpdateFee = async (testnet: boolean, body: UpdateMarketplaceFee, provider?: string) =>
-    helperBroadcastTx(body.chain, await prepareMarketplaceUpdateFee(testnet, body, provider), body.signatureId);
+  helperBroadcastTx(body.chain, await prepareMarketplaceUpdateFee(testnet, body, provider), body.signatureId)
 /**
  * Update marketplace fee recipient.
  * @param testnet chain to work with
@@ -133,7 +150,7 @@ export const sendMarketplaceUpdateFee = async (testnet: boolean, body: UpdateMar
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendMarketplaceUpdateFeeRecipient = async (testnet: boolean, body: UpdateMarketplaceFeeRecipient, provider?: string) =>
-    helperBroadcastTx(body.chain, await prepareMarketplaceUpdateFeeRecipient(testnet, body, provider), body.signatureId);
+  helperBroadcastTx(body.chain, await prepareMarketplaceUpdateFeeRecipient(testnet, body, provider), body.signatureId)
 /**
  * Approve ERC20 spending for marketplace to perform buy with ERC20 token.
  * @param testnet chain to work with
@@ -142,7 +159,7 @@ export const sendMarketplaceUpdateFeeRecipient = async (testnet: boolean, body: 
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendMarketplaceApproveErc20Spending = async (testnet: boolean, body: ApproveErc20, provider?: string) =>
-    helperBroadcastTx(body.chain, await prepareMarketplaceApproveErc20Spending(testnet, body, provider), body.signatureId);
+  helperBroadcastTx(body.chain, await prepareMarketplaceApproveErc20Spending(testnet, body, provider), body.signatureId)
 /**
  * Create new listing on the marketplace.
  * After listing is created, seller must send the asset to the marketplace smart contract.
@@ -153,7 +170,7 @@ export const sendMarketplaceApproveErc20Spending = async (testnet: boolean, body
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendMarketplaceCreateListing = async (testnet: boolean, body: CreateMarketplaceListing, provider?: string) =>
-    helperBroadcastTx(body.chain, await prepareMarketplaceCreateListing(testnet, body, provider), body.signatureId);
+  helperBroadcastTx(body.chain, await prepareMarketplaceCreateListing(testnet, body, provider), body.signatureId)
 /**
  * Buy listing on the marketplace. Buyer must either send native assets with this operation, or approve ERC20 token spending before.
  * After listing is sold, it's in a pending state to be processed by the marketplace. Noone receives the assets unless the marketplace operator processes that.
@@ -163,7 +180,7 @@ export const sendMarketplaceCreateListing = async (testnet: boolean, body: Creat
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendMarketplaceBuyListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation, provider?: string) =>
-    helperBroadcastTx(body.chain, await prepareMarketplaceBuyListing(testnet, body, provider), body.signatureId);
+  helperBroadcastTx(body.chain, await prepareMarketplaceBuyListing(testnet, body, provider), body.signatureId)
 /**
  * Cancel listing on the marketplace. Only possible for the seller or the operator. There must be no buyer present for that listing. NFT asset is sent back to the seller.
  * @param testnet chain to work with
@@ -172,11 +189,6 @@ export const sendMarketplaceBuyListing = async (testnet: boolean, body: InvokeMa
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendMarketplaceCancelListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation, provider?: string) =>
-    helperBroadcastTx(body.chain, await prepareMarketplaceCancelListing(testnet, body, provider), body.signatureId);
+  helperBroadcastTx(body.chain, await prepareMarketplaceCancelListing(testnet, body, provider), body.signatureId)
 
-export { 
-    getMarketplaceFee,
-    getMarketplaceListing,
-    getMarketplaceFeeRecipient,
-} from "@tatumio/tatum-core"
-        
+export { getMarketplaceFee, getMarketplaceListing, getMarketplaceFeeRecipient } from '@tatumio/tatum-core'

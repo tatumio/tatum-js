@@ -1,5 +1,5 @@
 import { BlockHash, get, post, TransactionHash } from '@tatumio/tatum-core'
-import {ScryptaBlock, ScryptaInfo, ScryptaTx, ScryptaUTXO} from '../model'
+import { ScryptaBlock, ScryptaInfo, ScryptaTx, ScryptaUTXO } from '../model'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/BroadcastsignedScryptatransaction" target="_blank">Tatum API documentation</a>

@@ -1,5 +1,24 @@
-import { MintErc721, DeployErc721, MintMultipleErc721, BurnErc721, TransferErc721, mintNFTRequest, TransactionHash, createNFTAbstraction, UpdateCashbackErc721 } from "@tatumio/tatum-core";
-import { sendPolygonBurnErc721SignedTransaction, sendPolygonDeployErc721SignedTransaction, sendPolygonMintCashbackErc721SignedTransaction, sendPolygonMintErc721SignedTransaction, sendPolygonMintMultipleCashbackErc721SignedTransaction, sendPolygonMintMultipleErc721SignedTransaction, sendPolygonTransferErc721SignedTransaction, sendPolygonUpdateCashbackForAuthorErc721SignedTransaction } from "../transaction";
+import {
+  MintErc721,
+  DeployErc721,
+  MintMultipleErc721,
+  BurnErc721,
+  TransferErc721,
+  mintNFTRequest,
+  TransactionHash,
+  createNFTAbstraction,
+  UpdateCashbackErc721,
+} from '@tatumio/tatum-core'
+import {
+  sendPolygonBurnErc721SignedTransaction,
+  sendPolygonDeployErc721SignedTransaction,
+  sendPolygonMintCashbackErc721SignedTransaction,
+  sendPolygonMintErc721SignedTransaction,
+  sendPolygonMintMultipleCashbackErc721SignedTransaction,
+  sendPolygonMintMultipleErc721SignedTransaction,
+  sendPolygonTransferErc721SignedTransaction,
+  sendPolygonUpdateCashbackForAuthorErc721SignedTransaction,
+} from '../transaction'
 
 export const mintNFT = (body: MintErc721) => mintNFTRequest(body)
 
@@ -10,8 +29,8 @@ export const mintNFT = (body: MintErc721) => mintNFTRequest(body)
  * @param provider optional provider do broadcast tx
  */
 export const deployNFT = async (testnet: boolean, body: DeployErc721, provider?: string): Promise<TransactionHash> => {
-    return sendPolygonDeployErc721SignedTransaction(testnet, body as DeployErc721, provider);
-};
+  return sendPolygonDeployErc721SignedTransaction(testnet, body as DeployErc721, provider)
+}
 
 /**
  * Mint new NFT token with metadata stored on the IPFS.
@@ -23,25 +42,16 @@ export const deployNFT = async (testnet: boolean, body: DeployErc721, provider?:
  * @param scheme optional JSON Metadata scheme
  * @param provider optional provider do broadcast tx
  */
- export const createNFT = async (
-    testnet: boolean,
-    body: MintErc721,
-    file: Buffer,
-    name: string,
-    description?: string,
-    scheme?: any, 
-    provider?: string) => {
-    
-    return await createNFTAbstraction(
-        () => mintNFTWithUri(testnet, body, provider),
-        testnet,
-        body,
-        file,
-        name,
-        description,
-        scheme,
-        provider
-    )
+export const createNFT = async (
+  testnet: boolean,
+  body: MintErc721,
+  file: Buffer,
+  name: string,
+  description?: string,
+  scheme?: any,
+  provider?: string
+) => {
+  return await createNFTAbstraction(() => mintNFTWithUri(testnet, body, provider), testnet, body, file, name, description, scheme, provider)
 }
 
 /**
@@ -51,12 +61,12 @@ export const deployNFT = async (testnet: boolean, body: DeployErc721, provider?:
  * @param provider optional provider do broadcast tx
  */
 export const mintNFTWithUri = async (testnet: boolean, body: MintErc721, provider?: string): Promise<TransactionHash> => {
-    if ((body as MintErc721).authorAddresses) {
-        return sendPolygonMintCashbackErc721SignedTransaction(testnet, body as MintErc721, provider);
-    } else {
-        return sendPolygonMintErc721SignedTransaction(testnet, body as MintErc721, provider);
-    }
-};
+  if ((body as MintErc721).authorAddresses) {
+    return sendPolygonMintCashbackErc721SignedTransaction(testnet, body as MintErc721, provider)
+  } else {
+    return sendPolygonMintErc721SignedTransaction(testnet, body as MintErc721, provider)
+  }
+}
 
 /**
  * Mint multiple new NFT tokens.
@@ -65,12 +75,12 @@ export const mintNFTWithUri = async (testnet: boolean, body: MintErc721, provide
  * @param provider optional provider do broadcast tx
  */
 export const mintMultipleNFTWithUri = async (testnet: boolean, body: MintMultipleErc721, provider?: string) => {
-    if ((body as MintMultipleErc721).authorAddresses) {
-        return sendPolygonMintMultipleCashbackErc721SignedTransaction(testnet, body as MintMultipleErc721, provider);
-    } else {
-        return sendPolygonMintMultipleErc721SignedTransaction(testnet, body as MintMultipleErc721, provider);
-    }
-};
+  if ((body as MintMultipleErc721).authorAddresses) {
+    return sendPolygonMintMultipleCashbackErc721SignedTransaction(testnet, body as MintMultipleErc721, provider)
+  } else {
+    return sendPolygonMintMultipleErc721SignedTransaction(testnet, body as MintMultipleErc721, provider)
+  }
+}
 
 /**
  * Burn new NFT token. Token will no longer exists.
@@ -79,8 +89,8 @@ export const mintMultipleNFTWithUri = async (testnet: boolean, body: MintMultipl
  * @param provider optional provider do broadcast tx
  */
 export const burnNFT = async (testnet: boolean, body: BurnErc721, provider?: string) => {
-    return sendPolygonBurnErc721SignedTransaction(testnet, body, provider);
-};
+  return sendPolygonBurnErc721SignedTransaction(testnet, body, provider)
+}
 
 /**
  * Update royalty cashback as author of the NFT token.
@@ -89,8 +99,8 @@ export const burnNFT = async (testnet: boolean, body: BurnErc721, provider?: str
  * @param provider optional provider do broadcast tx
  */
 export const updateCashbackForAuthorNFT = async (testnet: boolean, body: UpdateCashbackErc721, provider?: string) => {
-    return sendPolygonUpdateCashbackForAuthorErc721SignedTransaction(testnet, body, provider);
-};
+  return sendPolygonUpdateCashbackForAuthorErc721SignedTransaction(testnet, body, provider)
+}
 
 /**
  * Transfer new NFT token to new recipient.
@@ -99,13 +109,7 @@ export const updateCashbackForAuthorNFT = async (testnet: boolean, body: UpdateC
  * @param provider optional provider do broadcast tx
  */
 export const transferNFT = async (testnet: boolean, body: TransferErc721, provider?: string) => {
-    return sendPolygonTransferErc721SignedTransaction(testnet, body, provider);
-};
+  return sendPolygonTransferErc721SignedTransaction(testnet, body, provider)
+}
 
-export { 
-    getNFTsByAddress,
-    getNFTContractAddress,
-    getNFTMetadataURI,
-    getNFTImage,
-    getNFTRoyalty,
- } from "@tatumio/tatum-core"
+export { getNFTsByAddress, getNFTContractAddress, getNFTMetadataURI, getNFTImage, getNFTRoyalty } from '@tatumio/tatum-core'

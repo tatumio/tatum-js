@@ -1,6 +1,6 @@
 import { get, put } from '../connector/tatum'
-import {CustomerUpdate} from '../model/request/CustomerUpdate'
-import {Customer} from '../model/response/ledger/Customer'
+import { CustomerUpdate } from '../model/request/CustomerUpdate'
+import { Customer } from '../model/response/ledger/Customer'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/getCustomerByExternalId" target="_blank">Tatum API documentation</a>
@@ -10,12 +10,14 @@ export const getCustomer = async (id: string): Promise<Customer> => get(`/v3/led
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/findAllCustomers" target="_blank">Tatum API documentation</a>
  */
-export const getAllCustomers = async (pageSize = 50, offset = 0): Promise<Customer[]> => get(`/v3/ledger/customer?pageSize=${pageSize}&offset=${offset}`)
+export const getAllCustomers = async (pageSize = 50, offset = 0): Promise<Customer[]> =>
+  get(`/v3/ledger/customer?pageSize=${pageSize}&offset=${offset}`)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/updateCustomer" target="_blank">Tatum API documentation</a>
  */
-export const updateCustomer = async (id: string, data: CustomerUpdate): Promise<{ id: string }> => put(`/v3/ledger/customer/${id}`, data, CustomerUpdate)
+export const updateCustomer = async (id: string, data: CustomerUpdate): Promise<{ id: string }> =>
+  put(`/v3/ledger/customer/${id}`, data, CustomerUpdate)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/activateAccount" target="_blank">Tatum API documentation</a>

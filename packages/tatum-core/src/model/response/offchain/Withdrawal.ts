@@ -1,31 +1,29 @@
 export class Withdrawal {
+  public id: string
 
-    public id: string;
+  public reference: string
 
+  public amount: string
 
-    public reference: string;
+  public fee: string
 
-    public amount: string;
+  public txId?: string
 
-    public fee: string;
+  public address: string
 
-    public txId?: string;
+  public status: string
 
-    public address: string;
+  public currency: string
 
-    public status: string;
+  public accountId: string
 
-    public currency: string;
+  public date = Date.now()
 
-    public accountId: string;
+  public senderNote?: string
 
-    public date = Date.now();
+  public paymentId?: string
 
-    public senderNote?: string;
+  public multipleAmounts?: string[]
 
-    public paymentId?: string;
-
-    public multipleAmounts?: string[];
-
-    public attr?: string;
+  public attr?: string
 }

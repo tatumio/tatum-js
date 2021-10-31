@@ -1,10 +1,10 @@
 import { TransactionKMS, Currency, validateBody } from '@tatumio/tatum-core'
 import { TransferVet } from '../model'
-import {thorify} from 'thorify'
+import { thorify } from 'thorify'
 import Web3 from 'web3'
-import {TransactionConfig} from 'web3-core'
-import {vetBroadcast} from '../blockchain'
-import {TEST_VET_URL, VET_URL} from '../constants'
+import { TransactionConfig } from 'web3-core'
+import { vetBroadcast } from '../blockchain'
+import { TEST_VET_URL, VET_URL } from '../constants'
 
 /**
  * Send VeChain transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -15,7 +15,7 @@ import {TEST_VET_URL, VET_URL} from '../constants'
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendVetTransaction = async (testnet: boolean, body: TransferVet, provider?: string) => {
-    return vetBroadcast(await prepareVetSignedTransaction(testnet, body, provider))
+  return vetBroadcast(await prepareVetSignedTransaction(testnet, body, provider))
 }
 
 /**
@@ -27,16 +27,16 @@ export const sendVetTransaction = async (testnet: boolean, body: TransferVet, pr
  * @returns transaction data to be broadcast to blockchain.
  */
 export const signVetKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, testnet: boolean, provider?: string) => {
-    if (tx.chain !== Currency.VET) {
-        throw Error('Unsupported chain.')
-    }
-    const client = thorify(new Web3(), provider || (testnet ? TEST_VET_URL : VET_URL))
-    client.eth.accounts.wallet.clear()
-    client.eth.accounts.wallet.add(fromPrivateKey)
-    client.eth.defaultAccount = client.eth.accounts.wallet[0].address
-    const transactionConfig = JSON.parse(tx.serializedTransaction)
-    transactionConfig.gas = await client.eth.estimateGas(transactionConfig)
-    return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey)).rawTransaction
+  if (tx.chain !== Currency.VET) {
+    throw Error('Unsupported chain.')
+  }
+  const client = thorify(new Web3(), provider || (testnet ? TEST_VET_URL : VET_URL))
+  client.eth.accounts.wallet.clear()
+  client.eth.accounts.wallet.add(fromPrivateKey)
+  client.eth.defaultAccount = client.eth.accounts.wallet[0].address
+  const transactionConfig = JSON.parse(tx.serializedTransaction)
+  transactionConfig.gas = await client.eth.estimateGas(transactionConfig)
+  return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey)).rawTransaction
 }
 
 /**
@@ -47,31 +47,25 @@ export const signVetKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareVetSignedTransaction = async (testnet: boolean, body: TransferVet, provider?: string) => {
-    await validateBody(body, TransferVet)
-    const {
-        fromPrivateKey,
-        to,
-        amount,
-        data,
-        fee,
-    } = body
+  await validateBody(body, TransferVet)
+  const { fromPrivateKey, to, amount, data, fee } = body
 
-    const client = thorify(new Web3(), provider || (testnet ? TEST_VET_URL : VET_URL))
-    client.eth.accounts.wallet.clear()
-    client.eth.accounts.wallet.add(fromPrivateKey)
-    client.eth.defaultAccount = client.eth.accounts.wallet[0].address
+  const client = thorify(new Web3(), provider || (testnet ? TEST_VET_URL : VET_URL))
+  client.eth.accounts.wallet.clear()
+  client.eth.accounts.wallet.add(fromPrivateKey)
+  client.eth.defaultAccount = client.eth.accounts.wallet[0].address
 
-    const tx: TransactionConfig = {
-        from: 0,
-        to: to.trim(),
-        data: data ? client.utils.toHex(data) : undefined,
-        value: client.utils.toWei(`${amount}`, 'ether'),
-    }
+  const tx: TransactionConfig = {
+    from: 0,
+    to: to.trim(),
+    data: data ? client.utils.toHex(data) : undefined,
+    value: client.utils.toWei(`${amount}`, 'ether'),
+  }
 
-    if (fee) {
-        tx.gas = fee.gasLimit
-    } else {
-        tx.gas = await client.eth.estimateGas(tx)
-    }
-    return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction
+  if (fee) {
+    tx.gas = fee.gasLimit
+  } else {
+    tx.gas = await client.eth.estimateGas(tx)
+  }
+  return (await client.eth.accounts.signTransaction(tx, fromPrivateKey)).rawTransaction
 }

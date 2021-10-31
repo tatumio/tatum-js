@@ -1,6 +1,6 @@
-import { Currency, ETH_DERIVATION_PATH, TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core';
-import {mnemonicToSeed} from 'bip39';
-import ethWallet, {hdkey as ethHdKey} from 'ethereumjs-wallet';
+import { Currency, ETH_DERIVATION_PATH, TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
+import { mnemonicToSeed } from 'bip39'
+import ethWallet, { hdkey as ethHdKey } from 'ethereumjs-wallet'
 /**
  * Generate Ethereum or any other ERC20 address
  * @param testnet testnet or mainnet version of address
@@ -9,9 +9,9 @@ import ethWallet, {hdkey as ethHdKey} from 'ethereumjs-wallet';
  * @returns blockchain address
  */
 const generateEthAddress = (testnet: boolean, xpub: string, i: number) => {
-    const w = ethHdKey.fromExtendedKey(xpub)
-    const wallet = w.deriveChild(i).getWallet()
-    return '0x' + wallet.getAddress().toString('hex').toLowerCase()
+  const w = ethHdKey.fromExtendedKey(xpub)
+  const wallet = w.deriveChild(i).getWallet()
+  return '0x' + wallet.getAddress().toString('hex').toLowerCase()
 }
 
 /**
@@ -22,10 +22,10 @@ const generateEthAddress = (testnet: boolean, xpub: string, i: number) => {
  * @returns blockchain private key to the address
  */
 const generateEthPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
-    const path = testnet ? TESTNET_DERIVATION_PATH : ETH_DERIVATION_PATH
-    const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnemonic))
-    const derivePath = hdwallet.derivePath(path).deriveChild(i)
-    return derivePath.getWallet().getPrivateKeyString()
+  const path = testnet ? TESTNET_DERIVATION_PATH : ETH_DERIVATION_PATH
+  const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnemonic))
+  const derivePath = hdwallet.derivePath(path).deriveChild(i)
+  return derivePath.getWallet().getPrivateKeyString()
 }
 
 /**
@@ -36,7 +36,7 @@ const generateEthPrivateKey = async (testnet: boolean, mnemonic: string, i: numb
  * @returns blockchain private key to the address
  */
 export const generateBscPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
-    return generateEthPrivateKey(testnet, mnemonic, i)
+  return generateEthPrivateKey(testnet, mnemonic, i)
 }
 
 /**
@@ -48,7 +48,7 @@ export const generateBscPrivateKey = async (testnet: boolean, mnemonic: string, 
  * @returns blockchain address
  */
 export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xpub: string, i: number) => {
-    return generateEthAddress(testnet, xpub, i)
+  return generateEthAddress(testnet, xpub, i)
 }
 
 /**
@@ -60,7 +60,7 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
  * @returns blockchain private key to the address
  */
 export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: boolean, mnemonic: string, i: number) => {
-    return generateBscPrivateKey(testnet, mnemonic, i)
+  return generateBscPrivateKey(testnet, mnemonic, i)
 }
 
 /**
@@ -69,9 +69,9 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
  * @param privkey private key to use
  * @returns blockchain address
  */
- const convertEthPrivateKey = (testnet: boolean, privkey: string) => {
-    const wallet = ethWallet.fromPrivateKey(Buffer.from(privkey.replace('0x', ''), 'hex'))
-    return wallet.getAddressString() as string
+const convertEthPrivateKey = (testnet: boolean, privkey: string) => {
+  const wallet = ethWallet.fromPrivateKey(Buffer.from(privkey.replace('0x', ''), 'hex'))
+  return wallet.getAddressString() as string
 }
 
 /**
@@ -82,5 +82,5 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
  * @returns blockchain private key to the address
  */
 export const generateAddressFromPrivatekey = (currency: Currency, testnet: boolean, privateKey: string) => {
-    return convertEthPrivateKey(testnet, privateKey)
+  return convertEthPrivateKey(testnet, privateKey)
 }
