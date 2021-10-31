@@ -2,7 +2,7 @@ import { TransactionKMS, Currency, validateBody } from '@tatumio/tatum-core'
 import BigNumber from 'bignumber.js'
 import {RippleAPI} from 'ripple-lib'
 import {Payment} from 'ripple-lib/dist/npm/transaction/payment'
-import { TransferXrp } from 'src'
+import { TransferXrp } from '../model'
 import {xrpBroadcast, xrpGetAccountInfo, xrpGetFee} from '../blockchain'
 
 /**

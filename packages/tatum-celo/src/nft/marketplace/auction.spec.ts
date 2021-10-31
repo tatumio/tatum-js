@@ -1,4 +1,4 @@
-import { DeployNftAuction, Currency, CreateAuction, InvokeAuctionOperation, ApproveErc20, auction, SmartContractReadMethodInvocation } from '@tatum/tatum-core';
+import { DeployNftAuction, Currency, CreateAuction, InvokeAuctionOperation, ApproveErc20, auction, SmartContractReadMethodInvocation } from '@tatumio/tatum-core';
 import { CeloMintErc721, sendCeloSmartContractReadMethodInvocationTransaction } from 'src';
 import { celoGetCurrentBlock } from '../../blockchain';
 import {mintNFTWithUri} from '../nft';

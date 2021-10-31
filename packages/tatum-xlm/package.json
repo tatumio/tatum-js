@@ -15,6 +15,7 @@
   "dependencies": {
     "@tatumio/tatum-core": "file:../tatum-core",
     "bip39": "^3.0.2",
+    "class-validator": "0.13.0",
     "ethereumjs-wallet": "^1.0.0",
     "stellar-sdk": "^8.1.0"
   },

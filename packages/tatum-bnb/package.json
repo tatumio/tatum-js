@@ -14,9 +14,7 @@
   },
   "dependencies": {
     "@binance-chain/javascript-sdk": "^4.1.1",
-    "@tatumio/tatum-core": "file:../tatum-core",
-    "bip39": "^3.0.2",
-    "ethereumjs-wallet": "^1.0.0"
+    "@tatumio/tatum-core": "file:../tatum-core"
   },
   "devDependencies": {
     "@types/jest": "^27.0.2",

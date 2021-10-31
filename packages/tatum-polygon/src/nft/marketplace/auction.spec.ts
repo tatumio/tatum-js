@@ -1,4 +1,4 @@
-import { DeployNftAuction, Currency, MintErc721, CreateAuction, InvokeAuctionOperation, ApproveErc20 } from '@tatum/tatum-core';
+import { DeployNftAuction, Currency, MintErc721, CreateAuction, InvokeAuctionOperation, ApproveErc20 } from '@tatumio/tatum-core';
 import { polygonGetCurrentBlock } from '../../blockchain';
 import {mintNFTWithUri} from '../nft';
 import {deployAuction, sendAuctionApproveErc20Transfer, sendAuctionApproveNftTransfer, sendAuctionBid, sendAuctionCreate, sendAuctionSettle} from './auction';

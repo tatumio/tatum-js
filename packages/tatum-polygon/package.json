@@ -16,7 +16,11 @@
     "@tatumio/tatum-core": "file:../tatum-core",
     "bip39": "^3.0.2",
     "bignumber.js": "^9.0.0",
-    "ethereumjs-wallet": "^1.0.0"
+    "class-transformer": "^0.2.3",
+    "ethereumjs-wallet": "^1.0.0",
+    "web3": "1.4.0",
+    "web3-core": "^1.6.0",
+    "web3-utils": "^1.6.0"
   },
   "devDependencies": {
     "@types/jest": "^27.0.2",

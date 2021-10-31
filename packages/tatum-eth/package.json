@@ -14,8 +14,16 @@
   },
   "dependencies": {
     "@tatumio/tatum-core": "file:../tatum-core",
+    "bignumber.js": "^9.0.0",
     "bip39": "^3.0.2",
-    "ethereumjs-wallet": "^1.0.0"
+    "class-transformer": "^0.2.3",
+    "class-validator": "0.13.0",
+    "ethereumjs-wallet": "^1.0.0",
+    "reflect-metadata": "^0.1.13",
+    "web3": "1.4.0",
+    "web3-core": "^1.6.0",
+    "web3-eth": "1.4.0",
+    "web3-utils": "^1.6.0"
   },
   "devDependencies": {
     "@types/jest": "^27.0.2",
