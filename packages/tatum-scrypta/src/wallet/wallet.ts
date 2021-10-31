@@ -1,12 +1,8 @@
-import { Currency, Wallet } from '@tatumio/tatum-core';
-import {generateMnemonic, mnemonicToSeed} from 'bip39';
+import { Currency, Wallet } from '@tatumio/tatum-core'
+import { generateMnemonic, mnemonicToSeed } from 'bip39'
 // @ts-ignore
-import hdkey from 'hdkey';
-import {
-    LYRA_DERIVATION_PATH,
-    LYRA_NETWORK,
-    LYRA_TEST_NETWORK,
-} from '../constants';
+import hdkey from 'hdkey'
+import { LYRA_DERIVATION_PATH, LYRA_NETWORK, LYRA_TEST_NETWORK } from '../constants'
 
 /**
  * Generate Scrypta wallet
@@ -15,8 +11,8 @@ import {
  * @returns wallet
  */
 export const generateLyraWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
-    const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? LYRA_TEST_NETWORK.bip32 : LYRA_NETWORK.bip32)
-    return {mnemonic: mnem, xpub: hdwallet.derive(LYRA_DERIVATION_PATH).toJSON().xpub}
+  const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? LYRA_TEST_NETWORK.bip32 : LYRA_NETWORK.bip32)
+  return { mnemonic: mnem, xpub: hdwallet.derive(LYRA_DERIVATION_PATH).toJSON().xpub }
 }
 
 /**
@@ -27,6 +23,6 @@ export const generateLyraWallet = async (testnet: boolean, mnem: string): Promis
  * @returns wallet or a combination of address and private key
  */
 export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: string) => {
-    const mnem = mnemonic ? mnemonic : generateMnemonic(256)
-    return generateLyraWallet(testnet, mnem)
+  const mnem = mnemonic ? mnemonic : generateMnemonic(256)
+  return generateLyraWallet(testnet, mnem)
 }

@@ -1,4 +1,4 @@
-import { get, post, TransactionHash } from "@tatumio/tatum-core"
+import { get, post, TransactionHash } from '@tatumio/tatum-core'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/XrpGetFee" target="_blank">Tatum API documentation</a>
@@ -8,7 +8,7 @@ export const xrpGetFee = async (): Promise<{ drops: { base_fee: number } }> => g
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/XrpGetAccountInfo" target="_blank">Tatum API documentation</a>
  */
-export const xrpGetAccountInfo = async (account: string): Promise<{ ledger_current_index: number, account_data: { Sequence: number } }> =>
+export const xrpGetAccountInfo = async (account: string): Promise<{ ledger_current_index: number; account_data: { Sequence: number } }> =>
   get(`/v3/xrp/account/${account}`)
 
 /**

@@ -3,5 +3,5 @@ export {
   createVirtualCurrency,
   updateVirtualCurrency,
   mintVirtualCurrency,
-  revokeVirtualCurrency
+  revokeVirtualCurrency,
 } from '@tatumio/tatum-core'

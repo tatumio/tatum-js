@@ -1,7 +1,1 @@
-export { 
-    Auction,
-    getAuctionFee,
-    getAuction,
-    getAuctionFeeRecipient,
-} from "@tatumio/tatum-core"
-        
+export { Auction, getAuctionFee, getAuction, getAuctionFeeRecipient } from '@tatumio/tatum-core'

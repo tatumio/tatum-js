@@ -1,15 +1,16 @@
 import { get, post, TransactionHash } from '@tatumio/tatum-core'
 import BigNumber from 'bignumber.js'
-import {Block, Transaction} from 'web3-eth'
+import { Block, Transaction } from 'web3-eth'
 
 /**
  * Broadcasts signed transaction to the Celo blockchain. <br>
  * For more details, see <a href="https://tatum.io/apidoc#operation/CeloBroadcast" target="_blank">Tatum API documentation</a>
  */
-export const celoBroadcast = async (txData: string, signatureId?: string): Promise<TransactionHash> => post(`/v3/celo/broadcast`, {
+export const celoBroadcast = async (txData: string, signatureId?: string): Promise<TransactionHash> =>
+  post(`/v3/celo/broadcast`, {
     txData,
-    signatureId
-})
+    signatureId,
+  })
 
 /**
  * Returns a number of outgoing transactions for the address from Celo blockchain. <br>
@@ -34,8 +35,8 @@ export const celoGetBlock = async (hash: string): Promise<Block> => get(`/v3/cel
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/CeloGetBalance" target="_blank">Tatum API documentation</a>
  */
-export const celoGetAccountBalance = async (address: string): Promise<{ celo: BigNumber, cUsd: BigNumber }> => {
-    return await get(`/v3/celo/account/balance/${address}`)
+export const celoGetAccountBalance = async (address: string): Promise<{ celo: BigNumber; cUsd: BigNumber }> => {
+  return await get(`/v3/celo/account/balance/${address}`)
 }
 
 /**

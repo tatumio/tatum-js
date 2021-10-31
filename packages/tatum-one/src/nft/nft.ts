@@ -1,15 +1,25 @@
-import { BurnErc721, createNFTAbstraction, DeployErc721, MintErc721, MintMultipleErc721, mintNFTRequest, TransactionHash, TransferErc721, UpdateCashbackErc721 } from '@tatumio/tatum-core';
-import { OneMint721 } from '../model/request';
 import {
-    sendOneBurn721SignedTransaction,
-    sendOneDeploy721SignedTransaction,
-    sendOneMint721SignedTransaction,
-    sendOneMintCashback721SignedTransaction,
-    sendOneMintMultiple721SignedTransaction,
-    sendOneMintMultipleCashback721SignedTransaction,
-    sendOneTransfer721SignedTransaction,
-    sendOneUpdateCashbackForAuthor721SignedTransaction,
-} from '../transaction';
+  BurnErc721,
+  createNFTAbstraction,
+  DeployErc721,
+  MintErc721,
+  MintMultipleErc721,
+  mintNFTRequest,
+  TransactionHash,
+  TransferErc721,
+  UpdateCashbackErc721,
+} from '@tatumio/tatum-core'
+import { OneMint721 } from '../model/request'
+import {
+  sendOneBurn721SignedTransaction,
+  sendOneDeploy721SignedTransaction,
+  sendOneMint721SignedTransaction,
+  sendOneMintCashback721SignedTransaction,
+  sendOneMintMultiple721SignedTransaction,
+  sendOneMintMultipleCashback721SignedTransaction,
+  sendOneTransfer721SignedTransaction,
+  sendOneUpdateCashbackForAuthor721SignedTransaction,
+} from '../transaction'
 
 export const mintNFT = (body: OneMint721) => mintNFTRequest(body)
 
@@ -20,8 +30,8 @@ export const mintNFT = (body: OneMint721) => mintNFTRequest(body)
  * @param provider optional provider do broadcast tx
  */
 export const deployNFT = async (testnet: boolean, body: DeployErc721, provider?: string): Promise<TransactionHash> => {
-    return sendOneDeploy721SignedTransaction(testnet, body, provider);
-};
+  return sendOneDeploy721SignedTransaction(testnet, body, provider)
+}
 
 /**
  * Mint new NFT token with metadata stored on the IPFS.
@@ -33,25 +43,16 @@ export const deployNFT = async (testnet: boolean, body: DeployErc721, provider?:
  * @param scheme optional JSON Metadata scheme
  * @param provider optional provider do broadcast tx
  */
- export const createNFT = async (
-    testnet: boolean,
-    body: MintErc721,
-    file: Buffer,
-    name: string,
-    description?: string,
-    scheme?: any, 
-    provider?: string) => {
-    
-    return await createNFTAbstraction(
-        () => mintNFTWithUri(testnet, body, provider),
-        testnet,
-        body,
-        file,
-        name,
-        description,
-        scheme,
-        provider
-    )
+export const createNFT = async (
+  testnet: boolean,
+  body: MintErc721,
+  file: Buffer,
+  name: string,
+  description?: string,
+  scheme?: any,
+  provider?: string
+) => {
+  return await createNFTAbstraction(() => mintNFTWithUri(testnet, body, provider), testnet, body, file, name, description, scheme, provider)
 }
 
 /**
@@ -61,12 +62,12 @@ export const deployNFT = async (testnet: boolean, body: DeployErc721, provider?:
  * @param provider optional provider do broadcast tx
  */
 export const mintNFTWithUri = async (testnet: boolean, body: MintErc721, provider?: string): Promise<TransactionHash> => {
-    if (body.authorAddresses) {
-        return sendOneMintCashback721SignedTransaction(testnet, body, provider);
-    } else {
-        return sendOneMint721SignedTransaction(testnet, body, provider);
-    }
-};
+  if (body.authorAddresses) {
+    return sendOneMintCashback721SignedTransaction(testnet, body, provider)
+  } else {
+    return sendOneMint721SignedTransaction(testnet, body, provider)
+  }
+}
 
 /**
  * Mint multiple new NFT tokens.
@@ -75,12 +76,12 @@ export const mintNFTWithUri = async (testnet: boolean, body: MintErc721, provide
  * @param provider optional provider do broadcast tx
  */
 export const mintMultipleNFTWithUri = async (testnet: boolean, body: MintMultipleErc721, provider?: string) => {
-    if (body.authorAddresses) {
-        return sendOneMintMultipleCashback721SignedTransaction(testnet, body, provider);
-    } else {
-        return sendOneMintMultiple721SignedTransaction(testnet, body, provider);
-    }
-};
+  if (body.authorAddresses) {
+    return sendOneMintMultipleCashback721SignedTransaction(testnet, body, provider)
+  } else {
+    return sendOneMintMultiple721SignedTransaction(testnet, body, provider)
+  }
+}
 
 /**
  * Burn new NFT token. Token will no longer exists.
@@ -89,8 +90,8 @@ export const mintMultipleNFTWithUri = async (testnet: boolean, body: MintMultipl
  * @param provider optional provider do broadcast tx
  */
 export const burnNFT = async (testnet: boolean, body: BurnErc721, provider?: string) => {
-    return sendOneBurn721SignedTransaction(testnet, body, provider);
-};
+  return sendOneBurn721SignedTransaction(testnet, body, provider)
+}
 
 /**
  * Update royalty cashback as author of the NFT token.
@@ -99,8 +100,8 @@ export const burnNFT = async (testnet: boolean, body: BurnErc721, provider?: str
  * @param provider optional provider do broadcast tx
  */
 export const updateCashbackForAuthorNFT = async (testnet: boolean, body: UpdateCashbackErc721, provider?: string) => {
-    return sendOneUpdateCashbackForAuthor721SignedTransaction(testnet, body, provider);
-};
+  return sendOneUpdateCashbackForAuthor721SignedTransaction(testnet, body, provider)
+}
 
 /**
  * Transfer new NFT token to new recipient.
@@ -109,13 +110,7 @@ export const updateCashbackForAuthorNFT = async (testnet: boolean, body: UpdateC
  * @param provider optional provider do broadcast tx
  */
 export const transferNFT = async (testnet: boolean, body: TransferErc721, provider?: string) => {
-    return sendOneTransfer721SignedTransaction(testnet, body, provider);
-};
+  return sendOneTransfer721SignedTransaction(testnet, body, provider)
+}
 
-export { 
-    getNFTsByAddress,
-    getNFTContractAddress,
-    getNFTMetadataURI,
-    getNFTImage,
-    getNFTRoyalty,
- } from "@tatumio/tatum-core"
+export { getNFTsByAddress, getNFTContractAddress, getNFTMetadataURI, getNFTImage, getNFTRoyalty } from '@tatumio/tatum-core'

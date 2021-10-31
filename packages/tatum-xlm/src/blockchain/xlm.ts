@@ -1,4 +1,4 @@
-import { TransactionHash, get, post } from "@tatumio/tatum-core"
+import { TransactionHash, get, post } from '@tatumio/tatum-core'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/XlmGetAccountInfo" target="_blank">Tatum API documentation</a>

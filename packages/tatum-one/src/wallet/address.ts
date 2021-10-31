@@ -1,11 +1,9 @@
-import {HarmonyAddress} from '@harmony-js/crypto';
-import { Currency, TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core';
-import {mnemonicToSeed} from 'bip39';
-import ethWallet, {hdkey as ethHdKey} from 'ethereumjs-wallet';
+import { HarmonyAddress } from '@harmony-js/crypto'
+import { Currency, TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
+import { mnemonicToSeed } from 'bip39'
+import ethWallet, { hdkey as ethHdKey } from 'ethereumjs-wallet'
 // @ts-ignore
-import {
-    ONE_DERIVATION_PATH,
-} from '../constants';
+import { ONE_DERIVATION_PATH } from '../constants'
 
 /**
  * Generate ONE address
@@ -15,10 +13,10 @@ import {
  * @returns blockchain address
  */
 const generateOneAddress = (testnet: boolean, xpub: string, i: number) => {
-    const w = ethHdKey.fromExtendedKey(xpub)
-    const wallet = w.deriveChild(i).getWallet()
-    const harmonyAddress = new HarmonyAddress('0x' + wallet.getAddress().toString('hex'))
-    return harmonyAddress.basicHex
+  const w = ethHdKey.fromExtendedKey(xpub)
+  const wallet = w.deriveChild(i).getWallet()
+  const harmonyAddress = new HarmonyAddress('0x' + wallet.getAddress().toString('hex'))
+  return harmonyAddress.basicHex
 }
 
 /**
@@ -29,10 +27,10 @@ const generateOneAddress = (testnet: boolean, xpub: string, i: number) => {
  * @returns blockchain private key to the address
  */
 const generateOnePrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
-    const path = testnet ? TESTNET_DERIVATION_PATH : ONE_DERIVATION_PATH
-    const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnemonic))
-    const derivePath = hdwallet.derivePath(path).deriveChild(i)
-    return derivePath.getWallet().getPrivateKeyString()
+  const path = testnet ? TESTNET_DERIVATION_PATH : ONE_DERIVATION_PATH
+  const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnemonic))
+  const derivePath = hdwallet.derivePath(path).deriveChild(i)
+  return derivePath.getWallet().getPrivateKeyString()
 }
 
 /**
@@ -42,8 +40,8 @@ const generateOnePrivateKey = async (testnet: boolean, mnemonic: string, i: numb
  * @returns blockchain address
  */
 const convertOnePrivateKey = (testnet: boolean, privKey: string) => {
-    const wallet = ethWallet.fromPrivateKey(Buffer.from(privKey.replace('0x', ''), 'hex'))
-    return wallet.getAddressString() as string
+  const wallet = ethWallet.fromPrivateKey(Buffer.from(privKey.replace('0x', ''), 'hex'))
+  return wallet.getAddressString() as string
 }
 
 /**
@@ -55,7 +53,7 @@ const convertOnePrivateKey = (testnet: boolean, privKey: string) => {
  * @returns blockchain address
  */
 export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xpub: string, i: number) => {
-    return generateOneAddress(testnet, xpub, i)
+  return generateOneAddress(testnet, xpub, i)
 }
 
 /**
@@ -67,7 +65,7 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
  * @returns blockchain private key to the address
  */
 export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: boolean, mnemonic: string, i: number) => {
-    return generateOnePrivateKey(testnet, mnemonic, i)
+  return generateOnePrivateKey(testnet, mnemonic, i)
 }
 
 /**
@@ -78,5 +76,5 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
  * @returns blockchain private key to the address
  */
 export const generateAddressFromPrivatekey = (currency: Currency, testnet: boolean, privateKey: string) => {
-    return convertOnePrivateKey(testnet, privateKey)
+  return convertOnePrivateKey(testnet, privateKey)
 }

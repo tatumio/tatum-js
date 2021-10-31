@@ -1,8 +1,8 @@
 import { validateBody, Currency, TransactionKMS } from '@tatumio/tatum-core'
 import { TransferXlmOffchain } from '../model'
-import {Account, Asset, Keypair, Memo, Networks, Operation, TransactionBuilder} from 'stellar-sdk'
-import {xlmGetAccountInfo} from '../blockchain'
-import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common'
+import { Account, Asset, Keypair, Memo, Networks, Operation, TransactionBuilder } from 'stellar-sdk'
+import { xlmGetAccountInfo } from '../blockchain'
+import { offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal } from './common'
 
 /**
  * Send Stellar transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -12,40 +12,36 @@ import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} fr
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendXlmOffchainTransaction = async (testnet: boolean, body: TransferXlmOffchain) => {
-    await validateBody(body, TransferXlmOffchain)
-    const {
-        secret, ...withdrawal
-    } = body
-    if (!withdrawal.fee) {
-        withdrawal.fee = '0.00001'
-    }
-    const memo = withdrawal.attr ? withdrawal.attr.length > 28 ? Memo.hash(withdrawal.attr) : Memo.text(withdrawal.attr) : undefined
-    const account = await xlmGetAccountInfo(Keypair.fromSecret(secret).publicKey())
-    const {id} = await offchainStoreWithdrawal(withdrawal)
-    const {
-        amount, address,
-    } = withdrawal
+  await validateBody(body, TransferXlmOffchain)
+  const { secret, ...withdrawal } = body
+  if (!withdrawal.fee) {
+    withdrawal.fee = '0.00001'
+  }
+  const memo = withdrawal.attr ? (withdrawal.attr.length > 28 ? Memo.hash(withdrawal.attr) : Memo.text(withdrawal.attr)) : undefined
+  const account = await xlmGetAccountInfo(Keypair.fromSecret(secret).publicKey())
+  const { id } = await offchainStoreWithdrawal(withdrawal)
+  const { amount, address } = withdrawal
 
-    let txData
+  let txData
+  try {
+    txData = await prepareXlmSignedOffchainTransaction(testnet, account, amount, address, secret, memo)
+  } catch (e) {
+    console.error(e)
+    await offchainCancelWithdrawal(id)
+    throw e
+  }
+  try {
+    return { ...(await offchainBroadcast({ txData, withdrawalId: id, currency: Currency.XLM })), id }
+  } catch (e) {
+    console.error(e)
     try {
-        txData = await prepareXlmSignedOffchainTransaction(testnet, account, amount, address, secret, memo)
-    } catch (e) {
-        console.error(e)
-        await offchainCancelWithdrawal(id)
-        throw e
+      await offchainCancelWithdrawal(id)
+    } catch (e1) {
+      console.log(e)
+      return { id }
     }
-    try {
-        return {...await offchainBroadcast({txData, withdrawalId: id, currency: Currency.XLM}), id}
-    } catch (e) {
-        console.error(e)
-        try {
-            await offchainCancelWithdrawal(id)
-        } catch (e1) {
-            console.log(e)
-            return {id}
-        }
-        throw e
-    }
+    throw e
+  }
 }
 
 /**
@@ -56,12 +52,12 @@ export const sendXlmOffchainTransaction = async (testnet: boolean, body: Transfe
  * @returns transaction data to be broadcast to blockchain.
  */
 export const signXlmOffchainKMSTransaction = async (tx: TransactionKMS, secret: string, testnet: boolean) => {
-    if (tx.chain !== Currency.XLM) {
-        throw Error('Unsupported chain.')
-    }
-    const transaction = TransactionBuilder.fromXDR(tx.serializedTransaction, testnet ? Networks.TESTNET : Networks.PUBLIC)
-    transaction.sign(Keypair.fromSecret(secret))
-    return transaction.toEnvelope().toXDR().toString('base64')
+  if (tx.chain !== Currency.XLM) {
+    throw Error('Unsupported chain.')
+  }
+  const transaction = TransactionBuilder.fromXDR(tx.serializedTransaction, testnet ? Networks.TESTNET : Networks.PUBLIC)
+  transaction.sign(Keypair.fromSecret(secret))
+  return transaction.toEnvelope().toXDR().toString('base64')
 }
 
 /**
@@ -74,19 +70,29 @@ export const signXlmOffchainKMSTransaction = async (tx: TransactionKMS, secret: 
  * @param memo short memo to include in transaction
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareXlmSignedOffchainTransaction =
-    async (testnet: boolean, account: any, amount: string, address: string, secret: string, memo?: Memo) => {
-        const builder = new TransactionBuilder(new Account(account.account_id, account.sequence), {
-            fee: '100',
-            networkPassphrase: testnet ? Networks.TESTNET : Networks.PUBLIC,
-            memo,
-        }).setTimeout(300)
+export const prepareXlmSignedOffchainTransaction = async (
+  testnet: boolean,
+  account: any,
+  amount: string,
+  address: string,
+  secret: string,
+  memo?: Memo
+) => {
+  const builder = new TransactionBuilder(new Account(account.account_id, account.sequence), {
+    fee: '100',
+    networkPassphrase: testnet ? Networks.TESTNET : Networks.PUBLIC,
+    memo,
+  }).setTimeout(300)
 
-        const tx = builder.addOperation(Operation.payment({
-            destination: address,
-            asset: Asset.native(),
-            amount,
-        })).build()
-        tx.sign(Keypair.fromSecret(secret))
-        return tx.toEnvelope().toXDR().toString('base64')
-    }
+  const tx = builder
+    .addOperation(
+      Operation.payment({
+        destination: address,
+        asset: Asset.native(),
+        amount,
+      })
+    )
+    .build()
+  tx.sign(Keypair.fromSecret(secret))
+  return tx.toEnvelope().toXDR().toString('base64')
+}

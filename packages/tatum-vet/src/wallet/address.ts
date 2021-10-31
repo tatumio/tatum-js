@@ -1,10 +1,8 @@
-import { Currency, TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core';
-import {mnemonicToSeed} from 'bip39';
-import {hdkey as ethHdKey} from 'ethereumjs-wallet';
+import { Currency, TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
+import { mnemonicToSeed } from 'bip39'
+import { hdkey as ethHdKey } from 'ethereumjs-wallet'
 // @ts-ignore
-import {
-    VET_DERIVATION_PATH,
-} from '../constants';
+import { VET_DERIVATION_PATH } from '../constants'
 
 /**
  * Generate VeChain address
@@ -14,9 +12,9 @@ import {
  * @returns blockchain address
  */
 const generateVetAddress = (testnet: boolean, xpub: string, i: number) => {
-    const w = ethHdKey.fromExtendedKey(xpub)
-    const wallet = w.deriveChild(i).getWallet()
-    return '0x' + wallet.getAddress().toString('hex').toLowerCase()
+  const w = ethHdKey.fromExtendedKey(xpub)
+  const wallet = w.deriveChild(i).getWallet()
+  return '0x' + wallet.getAddress().toString('hex').toLowerCase()
 }
 
 /**
@@ -27,10 +25,10 @@ const generateVetAddress = (testnet: boolean, xpub: string, i: number) => {
  * @returns blockchain private key to the address
  */
 const generateVetPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
-    const path = testnet ? TESTNET_DERIVATION_PATH : VET_DERIVATION_PATH
-    const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnemonic))
-    const derivePath = hdwallet.derivePath(path).deriveChild(i)
-    return derivePath.getWallet().getPrivateKeyString()
+  const path = testnet ? TESTNET_DERIVATION_PATH : VET_DERIVATION_PATH
+  const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnemonic))
+  const derivePath = hdwallet.derivePath(path).deriveChild(i)
+  return derivePath.getWallet().getPrivateKeyString()
 }
 
 /**
@@ -42,7 +40,7 @@ const generateVetPrivateKey = async (testnet: boolean, mnemonic: string, i: numb
  * @returns blockchain address
  */
 export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xpub: string, i: number) => {
-    return generateVetAddress(testnet, xpub, i)
+  return generateVetAddress(testnet, xpub, i)
 }
 
 /**
@@ -54,5 +52,5 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
  * @returns blockchain private key to the address
  */
 export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: boolean, mnemonic: string, i: number) => {
-    return generateVetPrivateKey(testnet, mnemonic, i)
+  return generateVetPrivateKey(testnet, mnemonic, i)
 }

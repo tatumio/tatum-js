@@ -1,7 +1,7 @@
 /**
  * Subscription
  */
-import {SubscriptionType} from './SubscriptionType'
+import { SubscriptionType } from './SubscriptionType'
 
 export interface Subscription {
   /**

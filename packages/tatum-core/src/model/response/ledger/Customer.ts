@@ -5,21 +5,20 @@ import { Fiat } from './Fiat'
  * Customer
  */
 export class Customer {
+  public id: string
 
-    public id: string;
+  public externalId: string
 
-    public externalId: string;
+  /**
+   * Country of the Customer
+   */
+  public customerCountry?: Country
 
-    /**
-     * Country of the Customer
-     */
-    public customerCountry?: Country;
+  public accountingCurrency?: Fiat
 
-    public accountingCurrency?: Fiat;
+  public providerCountry?: Country
 
-    public providerCountry?: Country;
+  public active: boolean
 
-    public active: boolean;
-
-    public enabled: boolean;
+  public enabled: boolean
 }

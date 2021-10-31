@@ -1,9 +1,9 @@
-export { 
+export {
   getCustomer,
   getAllCustomers,
   updateCustomer,
   activateCustomer,
   deactivateCustomer,
   enableCustomer,
-  disableCustomer
+  disableCustomer,
 } from '@tatumio/tatum-core'

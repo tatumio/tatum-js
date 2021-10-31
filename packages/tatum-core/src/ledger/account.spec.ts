@@ -12,7 +12,7 @@ describe('Ledger accounts tests', () => {
 
   it('should test update of ledger account', async () => {
     const account = await updateAccount('603fa11157e40033fd59c715', {
-      accountCode: '132'
+      accountCode: '132',
     })
     console.log(account)
     expect(account).not.toBeNull()
@@ -29,5 +29,4 @@ describe('Ledger accounts tests', () => {
     console.log(account)
     expect(account).not.toBeNull()
   })
-
 })
