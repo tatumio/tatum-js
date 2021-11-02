@@ -1,5 +1,5 @@
-import {Currency} from '@tatumio/tatum-core'
-import cardano from './cardano.crypto';
+import { Currency } from '@tatumio/tatum-core'
+import cardano from './cardano.crypto'
 
 export * from './cardano.crypto'
 
@@ -12,17 +12,17 @@ export * from './cardano.crypto'
  * @returns blockchain address
  */
 export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xpub: string, i: number) => {
-    return cardano.generateAddress(testnet, xpub, i)
+  return cardano.generateAddress(testnet, xpub, i)
 }
- 
+
 /**
-  * Generate private key from mnemonic seed
-  * @param currency type of blockchain
-  * @param testnet testnet or mainnet version of address
-  * @param mnemonic mnemonic to generate private key from
-  * @param i derivation index of private key to generate.
-  * @returns blockchain private key to the address
-  */
+ * Generate private key from mnemonic seed
+ * @param currency type of blockchain
+ * @param testnet testnet or mainnet version of address
+ * @param mnemonic mnemonic to generate private key from
+ * @param i derivation index of private key to generate.
+ * @returns blockchain private key to the address
+ */
 export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: boolean, mnemonic: string, i: number) => {
-    return cardano.generatePrivateKey(mnemonic, i)
+  return cardano.generatePrivateKey(mnemonic, i)
 }

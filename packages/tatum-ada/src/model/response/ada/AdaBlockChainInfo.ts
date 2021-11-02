@@ -1,8 +1,8 @@
 export interface AdaBlockChainInfo {
-  testnet: boolean;
+  testnet: boolean
   tip: {
-    number: number,
-    slotNo: number,
+    number: number
+    slotNo: number
     epoch: { number: number }
-  };
+  }
 }

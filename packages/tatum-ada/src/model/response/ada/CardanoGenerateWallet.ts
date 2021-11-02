@@ -1,4 +1,4 @@
 export interface CardanoGenerateWallet {
-  mnemonic: string;
-  xpub: string;
+  mnemonic: string
+  xpub: string
 }

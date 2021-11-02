@@ -1,5 +1,5 @@
-import {get, post, TransactionHash} from '@tatumio/tatum-core'
-import {AdaBlock, AdaBlockChainInfo, AdaTransaction, AdaUtxo, AdaAccount} from '../model'
+import { get, post, TransactionHash } from '@tatumio/tatum-core'
+import { AdaBlock, AdaBlockChainInfo, AdaTransaction, AdaUtxo, AdaAccount } from '../model'
 
 /**
  * Broadcasts signed transaction to the Ada blockchain. <br>
@@ -9,7 +9,7 @@ import {AdaBlock, AdaBlockChainInfo, AdaTransaction, AdaUtxo, AdaAccount} from '
  * @param signatureId
  */
 export const adaBroadcast = async (txData: string, signatureId?: string): Promise<TransactionHash> =>
-    post(`/v3/ada/broadcast`, {txData, signatureId})
+  post(`/v3/ada/broadcast`, { txData, signatureId })
 
 /**
  * Returns information about Ada blockchain. <br>
@@ -49,7 +49,7 @@ export const adaGetUtxos = async (address: string): Promise<AdaUtxo[]> => get(`/
 
 /**
  * Returns account balances for a given address <br>
- * 
+ *
  * For more details, see <a href="https://tatum.io/apidoc#operation/AdaGetAccount" target="_blank">Tatum API documentation</a>
  */
 export const adaGetAccountsByAddress = async (address: string): Promise<AdaAccount[]> => get(`/v3/ada/account/${address}`)
