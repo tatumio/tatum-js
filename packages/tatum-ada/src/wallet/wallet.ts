@@ -1,6 +1,6 @@
-import {generateMnemonic} from 'bip39';
-import {Currency, Wallet} from '@tatumio/tatum-core';
-import cardano from './cardano.crypto';
+import { generateMnemonic } from 'bip39'
+import { Currency, Wallet } from '@tatumio/tatum-core'
+import cardano from './cardano.crypto'
 
 /**
  * Generate ADA wallet
@@ -8,7 +8,7 @@ import cardano from './cardano.crypto';
  * @returns wallet
  */
 export const generateAdaWallet = async (mnemonic: string): Promise<Wallet> => {
-    return {mnemonic, xpub: await cardano.generateXPublicKey(mnemonic)}
+  return { mnemonic, xpub: await cardano.generateXPublicKey(mnemonic) }
 }
 
 /**
@@ -19,6 +19,6 @@ export const generateAdaWallet = async (mnemonic: string): Promise<Wallet> => {
  * @returns wallet or a combination of address and private key
  */
 export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: string) => {
-    const mnem = mnemonic ? mnemonic : generateMnemonic(256)
-    return generateAdaWallet(mnem)
+  const mnem = mnemonic ? mnemonic : generateMnemonic(256)
+  return generateAdaWallet(mnem)
 }
