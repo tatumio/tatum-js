@@ -1,4 +1,5 @@
-import { TransactionHash, TronAccount, TronBlock, TronTransaction, TronTrc10 } from '../model'
+import { TronAccount, TronBlock, TronTransaction, TronTrc10 } from '../model'
+import { TransactionHash } from '@tatumio/tatum-core'
 import {get,post} from "../../../tatum-core/src";
 
 /**
