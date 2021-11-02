@@ -1,4 +1,5 @@
-import { Currency, TransferTron} from '../model';
+import {TransferTron} from '../model';
+import {Currency} from '@tatumio/tatum-core';
 import {sendTronTransaction} from './tron';
 
 /**

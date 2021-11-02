@@ -1,8 +1,7 @@
 import {
     SignatureId,
-    TransferTrxOffchain,
-} from '../model';
-import {post} from "../../../tatum-core/src";
+    TransferTrxOffchain, post
+} from '@tatumio/tatum-core';
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/TronTransferOffchain" target="_blank">Tatum API documentation</a>

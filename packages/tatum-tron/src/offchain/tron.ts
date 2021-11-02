@@ -1,10 +1,9 @@
 import {getAccountById, getVirtualCurrencyByName} from '../ledger'
-import {Currency, TransferTrxOffchain, TrcType} from '../model/request'
+import {validateBody, Currency, TransferTrxOffchain, TrcType} from '@tatumio/tatum-core'
 import {prepareTronSignedTransaction, prepareTronTrc10SignedTransaction, prepareTronTrc20SignedTransaction} from '../transaction'
 import {generatePrivateKeyFromMnemonic} from '../wallet'
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common'
 import { offchainTransferTronKMS } from './kms'
-import {validateBody} from "../../../tatum-core/src";
 import {CONTRACT_ADDRESSES} from "../constants";
 
 /**
