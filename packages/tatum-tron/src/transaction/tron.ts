@@ -1,21 +1,18 @@
-import { axios } from 'packages/tatum-core/src'
+import {axios} from 'packages/tatum-core/src'
 import abi from '../../../../packages/tatum-core/src/contracts/trc20/token_abi';
 import bytecode from '../../../../packages/tatum-core/src/contracts/trc20/token_bytecode';
 import trc721_abi from '../../../../packages/tatum-core/src/contracts/trc721/trc721_abi';
 import trc721_bytecode from '../../../../packages/tatum-core/src/contracts/trc721/trc721_bytecode';
-import { listing } from '../../../../packages/tatum-core/src/contracts/marketplace';
-import { AxiosRequestConfig } from 'axios';
+import {listing} from '../../../../packages/tatum-core/src/contracts/marketplace';
+import {AxiosRequestConfig} from 'axios';
 import BigNumber from 'bignumber.js';
-import { tronBroadcast } from '../blockchain';
+import {tronBroadcast} from '../blockchain';
 import {
     CreateTronTrc10,
     CreateTronTrc20,
-    Currency,
     DeployTronMarketplaceListing,
     FreezeTron,
     GenerateTronCustodialAddress,
-    SmartContractMethodInvocation,
-    TransactionKMS,
     TransferTron,
     TransferTronTrc10,
     TransferTronTrc20,
@@ -26,7 +23,12 @@ import {
     TronTransferTrc721,
     TronUpdateCashbackTrc721
 } from '../model';
-import { obtainCustodialAddressType } from '../wallet';
+import {
+    Currency,
+    SmartContractMethodInvocation,
+    TransactionKMS
+} from '@tatumio/tatum-core';
+import {obtainCustodialAddressType} from '../wallet';
 import {validateBody} from "../../../tatum-core/src";
 import {TATUM_API_URL} from "../constants";
 
@@ -305,18 +307,18 @@ export const prepareTronTrc10SignedTransaction = async (testnet: boolean, body: 
  * @param provider
  */
 export const tronGetAccountTrc20Address = async (
-	testnet: boolean,
+    testnet: boolean,
     address: string,
-	contractAddress: string,
-	provider?: string,
+    contractAddress: string,
+    provider?: string,
 ) => {
-	if (!contractAddress) {
-		throw new Error('Contract address not set.');
-	}
-	const tronWeb = prepareTronWeb(testnet, provider);
-	tronWeb.setAddress(contractAddress);
-	const contractInstance = await tronWeb.contract().at(contractAddress);
-	return await contractInstance.balanceOf(address).call();
+    if (!contractAddress) {
+        throw new Error('Contract address not set.');
+    }
+    const tronWeb = prepareTronWeb(testnet, provider);
+    tronWeb.setAddress(contractAddress);
+    const contractInstance = await tronWeb.contract().at(contractAddress);
+    return await contractInstance.balanceOf(address).call();
 };
 
 export const getTronTrc20ContractDecimals = async (testnet: boolean, contractAddress: string, provider?: string) => {
@@ -1088,7 +1090,7 @@ const getTrc10Precision = async (testnet: boolean, tokenId: string): Promise<num
             'TRON-PRO-API-KEY': process.env.TRON_PRO_API_KEY,
         },
     }
-    const { data } = (await axios.request(config as AxiosRequestConfig)).data
+    const {data} = (await axios.request(config as AxiosRequestConfig)).data
     if (!data?.length) {
         throw new Error('No such asset.')
     }
