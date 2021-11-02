@@ -1,4 +1,3 @@
-import {axios} from 'packages/tatum-core/src'
 import abi from '../../../../packages/tatum-core/src/contracts/trc20/token_abi';
 import bytecode from '../../../../packages/tatum-core/src/contracts/trc20/token_bytecode';
 import trc721_abi from '../../../../packages/tatum-core/src/contracts/trc721/trc721_abi';

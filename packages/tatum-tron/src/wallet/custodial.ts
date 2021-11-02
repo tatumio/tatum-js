@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js';
 import {
+    validateBody,
     Custodial_1155_TokenWallet,
     Custodial_1155_TokenWalletWithBatch,
     Custodial_20_1155_TokenWallet,
@@ -14,18 +15,14 @@ import {
     Custodial_721_TokenWalletWithBatch,
     CustodialFullTokenWallet,
     CustodialFullTokenWalletWithBatch,
-} from '../../../tatum-core/src/contracts/custodial';
-import {helperBroadcastTx} from '../helpers';
-import {
-    ApproveCustodialTransfer,
-    CeloSmartContractMethodInvocation,
-    ContractType,
     Currency,
     GenerateCustodialAddress,
-    GenerateTronCustodialAddress,
     SmartContractMethodInvocation,
-    TransferFromCustodialAddress,
-    TransferFromCustodialAddressBatch,
+    TransferFromCustodialAddress
+} from '@tatumio/tatum-core';
+import {helperBroadcastTx} from '../helpers';
+import {
+    GenerateTronCustodialAddress,
     TransferFromTronCustodialAddress,
     TransferFromTronCustodialAddressBatch
 } from '../model';
@@ -37,8 +34,6 @@ import {
     prepareTronSmartContractInvocation,
     sendTronGenerateCustodialWalletSignedTransaction
 } from '../transaction';
-import {validateBody} from "../../../tatum-core/src";
-import {getErc20Decimals} from "../../dist/tatum-tron/src";
 
 export const obtainCustodialAddressType = (body: GenerateCustodialAddress) => {
     if (body.chain === Currency.TRON && body.enableSemiFungibleTokens) {
@@ -138,8 +133,8 @@ export const sendCustodialWallet = async (testnet: boolean, body: GenerateCustod
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareTransferFromCustodialWallet = async (testnet: boolean, body: TransferFromCustodialAddress | TransferFromTronCustodialAddress, provider?: string) => {
-    let r: SmartContractMethodInvocation | CeloSmartContractMethodInvocation;
+export const prepareTransferFromCustodialWallet = async (testnet: boolean, body: TransferFromTronCustodialAddress, provider?: string) => {
+    let r: SmartContractMethodInvocation;
     let decimals;
     if (body.chain === Currency.TRON) {
         decimals = 6;
@@ -252,5 +247,5 @@ export const prepareBatchTransferFromCustodialWallet = async (testnet: boolean,
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendBatchTransferFromCustodialWallet = async (testnet: boolean,
-                                                           body: TransferFromCustodialAddressBatch | TransferFromTronCustodialAddressBatch, provider?: string) =>
+                                                           body: TransferFromTronCustodialAddressBatch, provider?: string) =>
     helperBroadcastTx(body.chain, await prepareBatchTransferFromCustodialWallet(testnet, body, provider), body.signatureId);

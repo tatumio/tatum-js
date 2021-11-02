@@ -4,7 +4,7 @@ import {bip32} from 'bitcoinjs-lib';
 import {
     TRON_DERIVATION_PATH,
 } from '../constants';
-import {Currency} from '../model';
+import {Currency} from '@tatumio/tatum-core';
 
 export interface Wallet {
 
