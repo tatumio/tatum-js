@@ -10,5 +10,5 @@ export {
     offchainStoreWithdrawal,
     offchainCancelWithdrawal,
     offchainCompleteWithdrawal
-} from '../../../tatum-core/src/offchain'
+} from '@tatumio/tatum-core'
   

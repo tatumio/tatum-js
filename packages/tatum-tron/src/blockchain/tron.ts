@@ -1,12 +1,10 @@
-import { TronAccount, TronBlock, TronTransaction, TronTrc10 } from '../model'
-import { TransactionHash } from '@tatumio/tatum-core'
-import {get,post} from "../../../tatum-core/src";
+import {TronAccount, TronBlock, TronTransaction, TronTrc10, get, post, TransactionHash} from '@tatumio/tatum-core'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/TronBroadcast" target="_blank">Tatum API documentation</a>
  */
 export const tronBroadcast = async (txData: string, signatureId?: string): Promise<TransactionHash> =>
-  post(`/v3/tron/broadcast`, { txData, signatureId })
+    post(`/v3/tron/broadcast`, {txData, signatureId})
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/TronGetCurrentBlock" target="_blank">Tatum API documentation</a>

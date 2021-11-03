@@ -18,14 +18,13 @@ import {
     Currency,
     GenerateCustodialAddress,
     SmartContractMethodInvocation,
-    TransferFromCustodialAddress
-} from '@tatumio/tatum-core';
-import {helperBroadcastTx} from '../helpers';
-import {
+    TransferFromCustodialAddress,
+    ContractType,
     GenerateTronCustodialAddress,
     TransferFromTronCustodialAddress,
     TransferFromTronCustodialAddressBatch
-} from '../model';
+} from '@tatumio/tatum-core';
+import {helperBroadcastTx} from '../helpers';
 import {
     convertAddressToHex,
     getTronTrc20ContractDecimals,
@@ -134,20 +133,9 @@ export const sendCustodialWallet = async (testnet: boolean, body: GenerateCustod
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareTransferFromCustodialWallet = async (testnet: boolean, body: TransferFromTronCustodialAddress, provider?: string) => {
-    let r: SmartContractMethodInvocation;
-    let decimals;
-    if (body.chain === Currency.TRON) {
-        decimals = 6;
-        await validateBody(body, TransferFromTronCustodialAddress);
-    } else {
-        decimals = 18;
-        await validateBody(body, TransferFromCustodialAddress);
-    }
-    if (body.chain === Currency.CELO) {
-        r = new CeloSmartContractMethodInvocation();
-    } else {
-        r = new SmartContractMethodInvocation();
-    }
+    await validateBody(body, TransferFromTronCustodialAddress);
+    const decimals = 6;
+    const r = new SmartContractMethodInvocation();
     r.fee = body.fee;
     r.nonce = body.nonce;
     r.fromPrivateKey = body.fromPrivateKey;
@@ -195,21 +183,10 @@ export const sendTransferFromCustodialWallet = async (testnet: boolean, body: Tr
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareBatchTransferFromCustodialWallet = async (testnet: boolean,
-                                                              body: TransferFromCustodialAddressBatch | TransferFromTronCustodialAddressBatch, provider?: string) => {
-    let r: SmartContractMethodInvocation | CeloSmartContractMethodInvocation;
-    let decimals;
-    if (body.chain === Currency.TRON) {
-        await validateBody(body, TransferFromTronCustodialAddressBatch);
-        decimals = 6;
-    } else {
-        await validateBody(body, TransferFromCustodialAddressBatch);
-        decimals = 18;
-    }
-    if (body.chain === Currency.CELO) {
-        r = new CeloSmartContractMethodInvocation();
-    } else {
-        r = new SmartContractMethodInvocation();
-    }
+                                                              body: TransferFromTronCustodialAddressBatch, provider?: string) => {
+    await validateBody(body, TransferFromTronCustodialAddressBatch);
+    const decimals = 6;
+    const r = new SmartContractMethodInvocation();
     r.fee = body.fee;
     r.nonce = body.nonce;
     r.fromPrivateKey = body.fromPrivateKey;
