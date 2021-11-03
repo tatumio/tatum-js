@@ -1,4 +1,5 @@
-import {TronAccount, TronBlock, TronTransaction, TronTrc10, get, post, TransactionHash} from '@tatumio/tatum-core'
+import {get, post, TransactionHash} from '@tatumio/tatum-core'
+import {TronAccount, TronBlock, TronTransaction, TronTrc10} from "src/model";
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/TronBroadcast" target="_blank">Tatum API documentation</a>

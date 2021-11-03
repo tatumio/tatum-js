@@ -1,9 +1,7 @@
 import {tronBroadcast} from '../blockchain'
 import {
-    token_bytecode,
     CreateTronTrc10,
     CreateTronTrc20,
-    Currency,
     FreezeTron,
     TransferTron,
     TransferTronTrc10,
@@ -14,7 +12,12 @@ import {
     TronMintTrc721,
     TronTransferTrc721,
     TronUpdateCashbackTrc721
+} from 'src/model'
+import {
+    token_bytecode,
+    Currency,
 } from '@tatumio/tatum-core'
+
 import {
     prepareTronBurnTrc721SignedTransaction,
     prepareTronCreateTrc10SignedTransaction,

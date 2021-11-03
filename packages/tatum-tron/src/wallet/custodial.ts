@@ -1,5 +1,11 @@
 import BigNumber from 'bignumber.js';
 import {
+    GenerateTronCustodialAddress,
+    TransferFromTronCustodialAddress,
+    TransferFromTronCustodialAddressBatch
+} from 'src/model';
+
+import {
     validateBody,
     Custodial_1155_TokenWallet,
     Custodial_1155_TokenWalletWithBatch,
@@ -20,9 +26,6 @@ import {
     SmartContractMethodInvocation,
     TransferFromCustodialAddress,
     ContractType,
-    GenerateTronCustodialAddress,
-    TransferFromTronCustodialAddress,
-    TransferFromTronCustodialAddressBatch
 } from '@tatumio/tatum-core';
 import {helperBroadcastTx} from '../helpers';
 import {

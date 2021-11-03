@@ -1,5 +1,6 @@
-import {Currency, TransferTron} from '@tatumio/tatum-core';
+import {Currency} from '@tatumio/tatum-core';
 import {sendTronTransaction} from './tron';
+import {TransferTron} from "src/model";
 
 /**
  * Perform any native asset transaction.
