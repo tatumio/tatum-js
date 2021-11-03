@@ -13,7 +13,7 @@
     "lint": "eslint ./src --ext .ts --fix"
   },
   "dependencies": {
-    "@tatum/tatum-core": "file:../tatum-core",
+    "@tatumio/tatum-core": "file:../tatum-core",
     "algosdk": "^1.12.0",
     "base32.js": "^0.1.0"
   },
