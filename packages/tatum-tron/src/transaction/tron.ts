@@ -2,20 +2,6 @@ import axios, {AxiosRequestConfig} from 'axios';
 import BigNumber from 'bignumber.js';
 import {tronBroadcast} from '../blockchain';
 import {
-    CreateTronTrc10,
-    CreateTronTrc20,
-    DeployTronMarketplaceListing,
-    FreezeTron,
-    GenerateTronCustodialAddress,
-    TransferTron,
-    TransferTronTrc10,
-    TransferTronTrc20,
-    TronBurnTrc721,
-    TronDeployTrc721,
-    TronMintMultipleTrc721,
-    TronMintTrc721,
-    TronTransferTrc721,
-    TronUpdateCashbackTrc721,
     bytecode,
     trc721_abi,
     trc721_bytecode,
@@ -28,6 +14,22 @@ import {
 } from '@tatumio/tatum-core';
 import {obtainCustodialAddressType} from '../wallet';
 import {TATUM_API_URL} from "../constants";
+import {
+    CreateTronTrc10,
+    CreateTronTrc20,
+    DeployTronMarketplaceListing,
+    FreezeTron,
+    TransferTron,
+    TransferTronTrc10,
+    TransferTronTrc20,
+    TronBurnTrc721,
+    TronDeployTrc721,
+    TronMintMultipleTrc721,
+    TronMintTrc721,
+    TronTransferTrc721,
+    TronUpdateCashbackTrc721
+} from "src/model";
+import {GenerateTronCustodialAddress} from "src/model/request/GenerateTronCustodialAddress";
 
 
 // tslint:disable-next-line:no-var-requires
