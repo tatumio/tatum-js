@@ -1,9 +1,4 @@
-import abi from '../../../../packages/tatum-core/src/contracts/trc20/token_abi';
-import bytecode from '../../../../packages/tatum-core/src/contracts/trc20/token_bytecode';
-import trc721_abi from '../../../../packages/tatum-core/src/contracts/trc721/trc721_abi';
-import trc721_bytecode from '../../../../packages/tatum-core/src/contracts/trc721/trc721_bytecode';
-import {listing} from '../../../../packages/tatum-core/src/contracts/marketplace';
-import {AxiosRequestConfig} from 'axios';
+import axios, {AxiosRequestConfig} from 'axios';
 import BigNumber from 'bignumber.js';
 import {tronBroadcast} from '../blockchain';
 import {
@@ -20,15 +15,18 @@ import {
     TronMintMultipleTrc721,
     TronMintTrc721,
     TronTransferTrc721,
-    TronUpdateCashbackTrc721
-} from '../model';
-import {
+    TronUpdateCashbackTrc721,
+    bytecode,
+    trc721_abi,
+    trc721_bytecode,
+    listing,
+    abi,
+    validateBody,
     Currency,
     SmartContractMethodInvocation,
     TransactionKMS
 } from '@tatumio/tatum-core';
 import {obtainCustodialAddressType} from '../wallet';
-import {validateBody} from "../../../tatum-core/src";
 import {TATUM_API_URL} from "../constants";
 
 
