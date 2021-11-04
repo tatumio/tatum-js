@@ -1,12 +1,12 @@
 import { generatePrivateKey, getAddressFromPrivateKey } from '@binance-chain/javascript-sdk/lib/crypto'
-import { Currency, Wallet } from '@tatumio/tatum-core'
+import { Currency, WalletWithMnemonic } from '@tatumio/tatum-core'
 
 /**
  * Generate BnB wallet
  * @param testnet testnet or mainnet version of address
  * @returns wallet
  */
-export const generateBnbWallet = async (testnet: boolean): Promise<Wallet> => {
+export const generateBnbWallet = async (testnet: boolean): Promise<WalletWithMnemonic> => {
   const privateKey = generatePrivateKey()
   const prefix = testnet ? 'tbnb' : 'bnb'
   return {

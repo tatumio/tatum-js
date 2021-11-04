@@ -1,4 +1,4 @@
-import { Currency, Wallet } from '@tatumio/tatum-core'
+import { Currency, WalletWithMnemonic } from '@tatumio/tatum-core'
 import { generateMnemonic, mnemonicToSeed } from 'bip39'
 import { networks } from 'bitcoinjs-lib'
 // @ts-ignore
@@ -11,7 +11,7 @@ import { BCH_DERIVATION_PATH } from '../constants'
  * @param mnem mnemonic seed to use
  * @returns wallet
  */
-export const generateBchWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
+export const generateBchWallet = async (testnet: boolean, mnem: string): Promise<WalletWithMnemonic> => {
   const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? networks.testnet.bip32 : networks.bitcoin.bip32)
   return {
     mnemonic: mnem,

@@ -18,7 +18,8 @@
     "bip39": "^3.0.2",
     "class-validator": "0.13.0",
     "ethereumjs-wallet": "^1.0.0",
-    "ripple-lib": "^1.7.1"
+    "ripple-lib": "^1.7.1",
+    "xrpl": "^2.0.1"
   },
   "devDependencies": {
     "@types/jest": "^27.0.2",
