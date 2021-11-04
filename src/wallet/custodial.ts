@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import {bscBroadcast, celoBroadcast, polygonBroadcast} from '../blockchain';
+import {bscBroadcast, celoBroadcast, ethBroadcast, polygonBroadcast} from '../blockchain';
 import {get, validateBody} from '../connector/tatum';
 import {CUSTODIAL_PROXY_ABI} from '../constants';
 import {
@@ -121,6 +121,8 @@ const getCustodialFactoryContractAddress = (chain: Currency, testnet: boolean) =
     switch (chain) {
         case Currency.CELO:
             return testnet ? '0x7f6ECaef0d01De5D464B8c1Ca968b102ABd40Ca1' : '0xb1462fE8E9Cf82c0296022Cca7bEfA3Fd4c12B34';
+        case Currency.ETH:
+            return testnet ? (process.env.TESTNET_TYPE === 'ethereum-rinkeby' ? '0x664F97470654e8f00E42433CFFC0d08a5f4f7BC7' : '0x9120093df23a6b1486ded257b1cd0ce651fe1323') : '0x183363CE6418Fad855255B6681711eD56b0C442A';
         case Currency.MATIC:
             return testnet ? '0x1C129AE4BF1e6E6C9A0E5e567b8e97E2d41A9265' : '0x3485fdba44736859267789ac9c248cc4c1443956';
         case Currency.BSC:
@@ -202,6 +204,8 @@ export const generateCustodialWalletBatch = async (testnet: boolean, body: Gener
     switch (body.chain) {
         case Currency.CELO:
             return await celoBroadcast(txData, body.signatureId);
+        case Currency.ETH:
+            return await ethBroadcast(txData, body.signatureId);
         case Currency.MATIC:
             return await polygonBroadcast(txData, body.signatureId);
         case Currency.BSC:
