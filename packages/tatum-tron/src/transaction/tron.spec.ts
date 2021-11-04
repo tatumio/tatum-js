@@ -13,8 +13,7 @@ import {
     TronTransferTrc721,
     TronUpdateCashbackTrc721
 } from 'src/model'
-import {
-    token_bytecode,
+import token_bytecode, {
     Currency,
 } from '@tatumio/tatum-core'
 
