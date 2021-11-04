@@ -1,5 +1,5 @@
 import { generateMnemonic } from 'bip39'
-import { Currency, Wallet } from '@tatumio/tatum-core'
+import { Currency, WalletWithMnemonic } from '@tatumio/tatum-core'
 import cardano from './cardano.crypto'
 
 /**
@@ -7,7 +7,7 @@ import cardano from './cardano.crypto'
  * @param mnemonic mnemonic seed to use
  * @returns wallet
  */
-export const generateAdaWallet = async (mnemonic: string): Promise<Wallet> => {
+export const generateAdaWallet = async (mnemonic: string): Promise<WalletWithMnemonic> => {
   return { mnemonic, xpub: await cardano.generateXPublicKey(mnemonic) }
 }
 

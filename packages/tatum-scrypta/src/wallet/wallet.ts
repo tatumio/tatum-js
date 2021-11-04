@@ -1,4 +1,4 @@
-import { Currency, Wallet } from '@tatumio/tatum-core'
+import { Currency, WalletWithMnemonic } from '@tatumio/tatum-core'
 import { generateMnemonic, mnemonicToSeed } from 'bip39'
 // @ts-ignore
 import hdkey from 'hdkey'
@@ -10,7 +10,7 @@ import { LYRA_DERIVATION_PATH, LYRA_NETWORK, LYRA_TEST_NETWORK } from '../consta
  * @param mnem mnemonic seed to use
  * @returns wallet
  */
-export const generateLyraWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
+export const generateLyraWallet = async (testnet: boolean, mnem: string): Promise<WalletWithMnemonic> => {
   const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? LYRA_TEST_NETWORK.bip32 : LYRA_NETWORK.bip32)
   return { mnemonic: mnem, xpub: hdwallet.derive(LYRA_DERIVATION_PATH).toJSON().xpub }
 }

@@ -1,11 +1,11 @@
 import { Keypair } from 'stellar-sdk'
-import { Currency, Wallet } from '@tatumio/tatum-core'
+import { Currency, WalletWithAddress } from '@tatumio/tatum-core'
 
 /**
  * Generate Stellar address and secret.
  * @param secret secret of the account to generate address
  */
-export const generateXlmWallet = async (secret?: string): Promise<Wallet> => {
+export const generateXlmWallet = async (secret?: string): Promise<WalletWithAddress> => {
   const keypair = secret ? Keypair.fromSecret(secret) : Keypair.random()
   return { address: keypair.publicKey(), privateKey: keypair.secret() }
 }

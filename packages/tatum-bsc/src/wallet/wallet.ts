@@ -1,4 +1,4 @@
-import { Wallet, TESTNET_DERIVATION_PATH, ETH_DERIVATION_PATH, Currency } from '@tatumio/tatum-core'
+import { WalletWithMnemonic, TESTNET_DERIVATION_PATH, ETH_DERIVATION_PATH, Currency } from '@tatumio/tatum-core'
 import { generateMnemonic, mnemonicToSeed } from 'bip39'
 import { hdkey as ethHdKey } from 'ethereumjs-wallet'
 
@@ -8,7 +8,7 @@ import { hdkey as ethHdKey } from 'ethereumjs-wallet'
  * @param mnem mnemonic seed to use
  * @returns wallet
  */
-export const generateEthWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
+export const generateEthWallet = async (testnet: boolean, mnem: string): Promise<WalletWithMnemonic> => {
   const path = testnet ? TESTNET_DERIVATION_PATH : ETH_DERIVATION_PATH
   const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnem))
   const derivePath = hdwallet.derivePath(path)
@@ -24,7 +24,7 @@ export const generateEthWallet = async (testnet: boolean, mnem: string): Promise
  * @param mnem mnemonic seed to use
  * @returns wallet
  */
-export const generateBscWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
+export const generateBscWallet = async (testnet: boolean, mnem: string): Promise<WalletWithMnemonic> => {
   return generateEthWallet(testnet, mnem)
 }
 
