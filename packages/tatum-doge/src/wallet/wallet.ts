@@ -1,12 +1,7 @@
-import {generateMnemonic, mnemonicToSeed} from 'bip39';
+import { generateMnemonic, mnemonicToSeed } from 'bip39'
 // @ts-ignore
-import hdkey from 'hdkey';
-import {
-    DOGE_DERIVATION_PATH,
-    DOGE_NETWORK,
-    DOGE_TEST_NETWORK,
-    TESTNET_DERIVATION_PATH,
-} from '../constants';
+import hdkey from 'hdkey'
+import { DOGE_DERIVATION_PATH, DOGE_NETWORK, DOGE_TEST_NETWORK, TESTNET_DERIVATION_PATH } from '../constants'
 import { Currency, Wallet } from '@tatumio/tatum-core'
 
 /**
@@ -16,11 +11,11 @@ import { Currency, Wallet } from '@tatumio/tatum-core'
  * @returns wallet
  */
 export const generateDogeWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
-    const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? DOGE_TEST_NETWORK.bip32 : DOGE_NETWORK.bip32)
-    return {
-        mnemonic: mnem,
-        xpub: hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : DOGE_DERIVATION_PATH).toJSON().xpub
-    }
+  const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? DOGE_TEST_NETWORK.bip32 : DOGE_NETWORK.bip32)
+  return {
+    mnemonic: mnem,
+    xpub: hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : DOGE_DERIVATION_PATH).toJSON().xpub,
+  }
 }
 
 /**
@@ -31,6 +26,6 @@ export const generateDogeWallet = async (testnet: boolean, mnem: string): Promis
  * @returns wallet or a combination of address and private key
  */
 export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: string) => {
-    const mnem = mnemonic ? mnemonic : generateMnemonic(256)
-    return generateDogeWallet(testnet, mnem)
+  const mnem = mnemonic ? mnemonic : generateMnemonic(256)
+  return generateDogeWallet(testnet, mnem)
 }

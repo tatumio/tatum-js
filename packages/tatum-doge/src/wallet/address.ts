@@ -1,13 +1,8 @@
-import {fromBase58, fromSeed} from 'bip32';
-import {mnemonicToSeed} from 'bip39';
-import {payments} from 'bitcoinjs-lib';
+import { fromBase58, fromSeed } from 'bip32'
+import { mnemonicToSeed } from 'bip39'
+import { payments } from 'bitcoinjs-lib'
 // @ts-ignore
-import {
-    DOGE_DERIVATION_PATH,
-    DOGE_NETWORK,
-    DOGE_TEST_NETWORK,
-    TESTNET_DERIVATION_PATH,
-} from '../constants';
+import { DOGE_DERIVATION_PATH, DOGE_NETWORK, DOGE_TEST_NETWORK, TESTNET_DERIVATION_PATH } from '../constants'
 import { Currency } from '@tatumio/tatum-core'
 
 /**
@@ -20,9 +15,8 @@ import { Currency } from '@tatumio/tatum-core'
 const generateDogeAddress = (testnet: boolean, xpub: string, i: number) => {
   const network = testnet ? DOGE_TEST_NETWORK : DOGE_NETWORK
   const w = fromBase58(xpub, network).derivePath(String(i))
-  return payments.p2pkh({pubkey: w.publicKey, network}).address as string
+  return payments.p2pkh({ pubkey: w.publicKey, network }).address as string
 }
-
 
 /**
  * Generate Dogecoin private key from mnemonic seed
@@ -34,9 +28,9 @@ const generateDogeAddress = (testnet: boolean, xpub: string, i: number) => {
 const generateDogePrivateKey = async (testnet: boolean, mnemonic: string, i: number) => {
   const network = testnet ? DOGE_TEST_NETWORK : DOGE_NETWORK
   return fromSeed(await mnemonicToSeed(mnemonic), network)
-      .derivePath(testnet ? TESTNET_DERIVATION_PATH : DOGE_DERIVATION_PATH)
-      .derive(i)
-      .toWIF()
+    .derivePath(testnet ? TESTNET_DERIVATION_PATH : DOGE_DERIVATION_PATH)
+    .derive(i)
+    .toWIF()
 }
 
 /**

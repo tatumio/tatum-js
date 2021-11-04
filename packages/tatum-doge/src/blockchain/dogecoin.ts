@@ -5,8 +5,7 @@ import { DogeBlock, DogeInfo, DogeTx, DogeUTXO } from '../model'
  * For more details, see <a href="https://tatum.io/apidoc#operation/DogeBroadcast" target="_blank">Tatum API documentation</a>
  */
 export const dogeBroadcast = async (txData: string, signatureId?: string): Promise<TransactionHash> =>
-    post(`/v3/dogecoin/broadcast`, {txData, signatureId})
-
+  post(`/v3/dogecoin/broadcast`, { txData, signatureId })
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/DogeGetBlockChainInfo" target="_blank">Tatum API documentation</a>
