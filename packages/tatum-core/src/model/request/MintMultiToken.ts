@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer'
-import { IsIn, IsNotEmpty, IsOptional, Length, MaxLength, Min, ValidateNested } from 'class-validator'
+import { IsIn, IsNotEmpty, IsOptional, Length, MaxLength, Min, ValidateNested, ValidateIf } from 'class-validator'
 import { Currency } from './Currency'
 import { Fee } from './Fee'
 import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
@@ -14,7 +14,7 @@ export class MintMultiToken extends PrivateKeyOrSignatureId {
   public tokenId: string
 
   @IsNotEmpty()
-  @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC])
+  @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC, Currency.ALGO])
   public chain: Currency
 
   @IsNotEmpty()
@@ -35,4 +35,8 @@ export class MintMultiToken extends PrivateKeyOrSignatureId {
   @Type(() => Fee)
   @ValidateNested()
   public fee?: Fee
+
+  @ValidateIf(o => o.chain === Currency.ALGO)
+  @IsNotEmpty()
+  public url?: string;
 }
