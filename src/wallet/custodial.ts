@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import {bscBroadcast, celoBroadcast, ethBroadcast, polygonBroadcast} from '../blockchain';
+import {bscBroadcast, celoBroadcast, ethBroadcast, polygonBroadcast, tronBroadcast} from '../blockchain';
 import {get, validateBody} from '../connector/tatum';
 import {CUSTODIAL_PROXY_ABI} from '../constants';
 import {
@@ -121,6 +121,8 @@ const getCustodialFactoryContractAddress = (chain: Currency, testnet: boolean) =
     switch (chain) {
         case Currency.CELO:
             return testnet ? '0x7f6ECaef0d01De5D464B8c1Ca968b102ABd40Ca1' : '0xb1462fE8E9Cf82c0296022Cca7bEfA3Fd4c12B34';
+        case Currency.TRON:
+            return testnet ? 'TJMnJy7ZR5XtYzM3LSzAhAgXtrk5yjPcF4' : 'TWdxxUWtu9Q5GaX1qrAGsvURXu6ziLerkX';
         case Currency.ETH:
             return testnet ? (process.env.TESTNET_TYPE === 'ethereum-rinkeby' ? '0x664F97470654e8f00E42433CFFC0d08a5f4f7BC7' : '0x9120093df23a6b1486ded257b1cd0ce651fe1323') : '0x183363CE6418Fad855255B6681711eD56b0C442A';
         case Currency.MATIC:
@@ -204,6 +206,8 @@ export const generateCustodialWalletBatch = async (testnet: boolean, body: Gener
     switch (body.chain) {
         case Currency.CELO:
             return await celoBroadcast(txData, body.signatureId);
+        case Currency.TRON:
+            return await tronBroadcast(txData, body.signatureId);
         case Currency.ETH:
             return await ethBroadcast(txData, body.signatureId);
         case Currency.MATIC:
@@ -225,11 +229,17 @@ export const generateCustodialWalletBatch = async (testnet: boolean, body: Gener
  */
 export const prepareCustodialWalletBatch = async (testnet: boolean, body: GenerateCustodialAddressBatch, provider?: string) => {
     await validateBody(body, GenerateCustodialAddressBatch);
-    const params = [body.owner.trim(), `0x${new BigNumber(body.batchCount).toString(16)}`];
+    const params =
+        body.chain === Currency.TRON
+            ? [{type: 'address', value: convertAddressToHex(body.owner.trim())},
+                {type: 'uint256', value: `0x${new BigNumber(body.batchCount).toString(16)}`}]
+            : [body.owner.trim(), `0x${new BigNumber(body.batchCount).toString(16)}`];
+
+    const methodName = body.chain === Currency.TRON ? 'cloneNewWallet(address,uint256)' : 'cloneNewWallet';
     return await helperPrepareSCCall(testnet, {
         ...body,
         contractAddress: getCustodialFactoryContractAddress(body.chain, testnet)
-    }, GenerateCustodialAddressBatch, 'cloneNewWallet', params, undefined, provider, [CUSTODIAL_PROXY_ABI]);
+    }, GenerateCustodialAddressBatch, methodName, params, body.chain === Currency.TRON ? methodName : undefined, provider, [CUSTODIAL_PROXY_ABI]);
 };
 
 /**

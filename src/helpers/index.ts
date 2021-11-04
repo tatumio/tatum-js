@@ -13,7 +13,8 @@ import {
     prepareOneSmartContractWriteMethodInvocation,
     preparePolygonClient,
     preparePolygonSmartContractWriteMethodInvocation,
-    prepareSmartContractWriteMethodInvocation
+    prepareSmartContractWriteMethodInvocation,
+    prepareTronSmartContractInvocation
 } from '../transaction';
 
 export const helperBroadcastTx = async (chain: Currency, txData: string, signatureId?: string) => {
@@ -82,9 +83,9 @@ export const helperPrepareSCCall = async (testnet: boolean, body: any, clazz: Cl
             return await prepareBscSmartContractWriteMethodInvocation(r, provider);
         case Currency.MATIC:
             return await preparePolygonSmartContractWriteMethodInvocation(testnet, r, provider);
-        // case Currency.TRON:
-        //     r.methodName = methodSig as string
-        //     return await prepareTronSmartContractInvocation(testnet, r, body.feeLimit, body.from, provider)
+        case Currency.TRON:
+            r.methodName = methodSig as string;
+            return await prepareTronSmartContractInvocation(testnet, r, body.feeLimit, body.from, provider);
         default:
             throw new Error('Unsupported combination of inputs.');
     }

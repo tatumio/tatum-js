@@ -258,25 +258,41 @@ describe('Custodial wallet tests', () => {
 
         it('should create on ETH no batch KMS', async () => {
             const body = new GenerateCustodialAddress()
-            body.signatureId = '96e13f7f-393e-4f64-8fde-17bd90ce2c5b'
-            body.chain = Currency.ETH
-            body.enableFungibleTokens = true
-            body.enableNonFungibleTokens = true
-            body.enableSemiFungibleTokens = false
-            body.enableBatchTransactions = false
-            const txData = await prepareEthGenerateCustodialWalletSignedTransaction(body)
-            expect(txData).toContain('0x')
+            body.signatureId = '96e13f7f-393e-4f64-8fde-17bd90ce2c5b';
+            body.chain = Currency.ETH;
+            body.enableFungibleTokens = true;
+            body.enableNonFungibleTokens = true;
+            body.enableSemiFungibleTokens = false;
+            body.enableBatchTransactions = false;
+            const txData = await prepareEthGenerateCustodialWalletSignedTransaction(body);
+            expect(txData).toContain('0x');
         })
 
+        it('should create on TRON', async () => {
+            const body = new GenerateCustodialAddressBatch();
+            body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701';
+            body.chain = Currency.TRON;
+            body.feeLimit = 500;
+            body.owner = 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh';
+            body.batchCount = 10;
+            try {
+                const txData = await generateCustodialWalletBatch(true, body);
+                expect(txData.txId).toBeDefined();
+                console.log(txData.txId);
+            } catch (e) {
+                console.error(e);
+            }
+        });
+
         it('should create on TRON no batch', async () => {
-            const body = new GenerateTronCustodialAddress()
-            body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701'
-            body.chain = Currency.TRON
-            body.enableFungibleTokens = true
-            body.enableNonFungibleTokens = true
-            body.feeLimit = 500
-            body.enableSemiFungibleTokens = false
-            body.enableBatchTransactions = true
+            const body = new GenerateTronCustodialAddress();
+            body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701';
+            body.chain = Currency.TRON;
+            body.enableFungibleTokens = true;
+            body.enableNonFungibleTokens = true;
+            body.feeLimit = 500;
+            body.enableSemiFungibleTokens = false;
+            body.enableBatchTransactions = true;
             const txData = await sendTronGenerateCustodialWalletSignedTransaction(true, body)
             expect(txData.txId).toBeDefined()
             console.log(txData.txId)
