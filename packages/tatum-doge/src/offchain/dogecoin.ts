@@ -1,8 +1,7 @@
 import BigNumber from 'bignumber.js'
 // @ts-ignore
 import { PrivateKey, Script, Transaction } from 'bitcore-lib-doge'
-import { validateBody, Currency, TransactionKMS, WithdrawalResponseData } from '@tatumio/tatum-core'
-import { KeyPair, TransferBtcBasedOffchain } from '../model'
+import { validateBody, Currency, TransactionKMS, WithdrawalResponseData, KeyPair, TransferBtcBasedOffchain } from '@tatumio/tatum-core'
 import { generateAddressFromXPub, generatePrivateKeyFromMnemonic } from '../wallet'
 import { offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal } from './common'
 import { offchainTransferDogeKMS } from './kms'

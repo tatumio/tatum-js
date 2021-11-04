@@ -8,8 +8,7 @@ import {
   Vkeywitnesses,
 } from '@emurgo/cardano-serialization-lib-nodejs'
 import BigNumber from 'bignumber.js'
-import { validateBody, Currency, TransactionKMS, WithdrawalResponseData } from '@tatumio/tatum-core'
-import { KeyPair, TransferBtcBasedOffchain } from '../model'
+import { validateBody, Currency, TransactionKMS, WithdrawalResponseData, KeyPair, TransferBtcBasedOffchain } from '@tatumio/tatum-core'
 import {
   adaToLovelace,
   addAddressInputsWithoutPrivateKey,

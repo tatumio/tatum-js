@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsUUID, Length, Validate, ValidateIf } from 'class-validator'
-import { SignatureIdValidator } from '@tatumio/tatum-core'
+import { SignatureIdValidator } from '../validation'
 
 export class PrivateKeyOrSignatureIdBtcBased {
   @ValidateIf((o) => o.privateKey || !o.signatureId)

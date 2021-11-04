@@ -1,5 +1,4 @@
-import { post, SignatureId } from '@tatumio/tatum-core'
-import { TransferBtcBasedOffchainKMS } from '../model'
+import { post, SignatureId, TransferBtcBasedOffchainKMS } from '@tatumio/tatum-core'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/AdaTransferOffchain" target="_blank">Tatum API documentation</a>

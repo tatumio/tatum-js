@@ -1,7 +1,7 @@
 import { Type } from 'class-transformer'
 import { IsNotEmpty, IsUUID, Length, Validate, ValidateIf, ValidateNested } from 'class-validator'
-import { TransferBtcOffchainValidator } from '../validation/TransferBtcOffchainValidator'
-import { CreateWithdrawal } from '@tatumio/tatum-core'
+import { TransferBtcOffchainValidator } from '../validation'
+import { CreateWithdrawal } from './CreateWithdrawal'
 
 export class KeyPair {
   @IsNotEmpty()

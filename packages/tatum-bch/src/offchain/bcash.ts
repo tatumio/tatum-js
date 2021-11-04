@@ -1,10 +1,9 @@
 // @ts-ignore
 import coininfo from 'coininfo'
-import { Currency, TransactionKMS, validateBody, WithdrawalResponseData } from '@tatumio/tatum-core'
+import { Currency, KeyPair, TransactionKMS, TransferBtcBasedOffchain, validateBody, WithdrawalResponseData } from '@tatumio/tatum-core'
 import { generateAddressFromXPub, generateBchWallet, generatePrivateKeyFromMnemonic, toLegacyAddress } from '../wallet'
 import { offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal } from './common'
 import { offchainTransferBcashKMS } from './kms'
-import { KeyPair, TransferBtcBasedOffchain } from '../model'
 import BigNumber from 'bignumber.js'
 
 // tslint:disable-next-line:no-var-requires

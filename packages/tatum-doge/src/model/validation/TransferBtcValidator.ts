@@ -1,5 +1,5 @@
+import { TransferBtcBasedBlockchain } from '@tatumio/tatum-core'
 import { ValidationArguments, ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator'
-import { TransferBtcBasedBlockchain } from '../index'
 
 @ValidatorConstraint({ name: 'fromAddressFromUTXO', async: false })
 export class TransferBtcValidator implements ValidatorConstraintInterface {
