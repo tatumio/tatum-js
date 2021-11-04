@@ -812,7 +812,7 @@ export const prepareEthDeployErc721SignedTransaction = async (body: DeployErc721
   return await prepareEthSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
 }
 
-export const getEthErc20ContractDecimals = async (testnet: boolean, contractAddress: string, provider?: string) => {
+export const getEthErc20ContractDecimals = async (contractAddress: string, provider?: string) => {
   if (!contractAddress) {
     throw new Error('Contract address not set.')
   }

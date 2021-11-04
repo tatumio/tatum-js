@@ -13,7 +13,7 @@ describe('NFT tests', () => {
   jest.setTimeout(99999)
   describe('NFT MultiToken transactions', () => {
     it('should test eth 1155 deploy transaction', async () => {
-      const deployMultiTokenToken = await deployMultiToken(true, {
+      const deployMultiTokenToken = await deployMultiToken({
         chain: Currency.ETH,
         fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
         uri: 'tatum',
@@ -27,7 +27,7 @@ describe('NFT tests', () => {
     })
     it('should test eth 1155 mint transaction', async () => {
       const tokenId = '1'
-      const mintedToken = await mintMultiToken(true, {
+      const mintedToken = await mintMultiToken({
         to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
         chain: Currency.ETH,
         tokenId,
@@ -44,7 +44,7 @@ describe('NFT tests', () => {
       expect(mintedToken).not.toBeNull()
     })
     it('should test eth 1155 send batch transaction', async () => {
-      const sendMultiTokenToken = await transferMultiTokenBatch(true, {
+      const sendMultiTokenToken = await transferMultiTokenBatch({
         to: '0x6c4A48886b77D1197eCFBDaA3D3f35d81d584342',
         chain: Currency.ETH,
         tokenId: ['12101', '12102'],
@@ -61,7 +61,7 @@ describe('NFT tests', () => {
       expect(sendMultiTokenToken).not.toBeNull()
     })
     it('should test eth 1155 burn transaction', async () => {
-      const burnMultiTokenToken = await burnMultiToken(true, {
+      const burnMultiTokenToken = await burnMultiToken({
         account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
         tokenId: '12101',
         amount: '1',
@@ -73,7 +73,7 @@ describe('NFT tests', () => {
       expect(burnMultiTokenToken).not.toBeNull()
     })
     it('should test eth 1155 burn batch transaction', async () => {
-      const burnMultiTokenToken = await burnMultiTokenBatch(true, {
+      const burnMultiTokenToken = await burnMultiTokenBatch({
         account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
         tokenId: ['1', '2'],
         amounts: ['1', '1'],
@@ -88,7 +88,7 @@ describe('NFT tests', () => {
         ['12101', '12102'],
         ['12101', '12102'],
       ]
-      const mintedToken = await mintMultiTokenBatch(true, {
+      const mintedToken = await mintMultiTokenBatch({
         to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
         chain: Currency.ETH,
         tokenId,
@@ -108,7 +108,7 @@ describe('NFT tests', () => {
       expect(mintedToken).not.toBeNull()
     })
     it('should test eth 1155 send transaction', async () => {
-      const sendMultiTokenToken = await transferMultiToken(true, {
+      const sendMultiTokenToken = await transferMultiToken({
         to: '0x31a19a9E4BDd33982188BCb058a7E2a3515a8136',
         chain: Currency.ETH,
         tokenId: '12101',

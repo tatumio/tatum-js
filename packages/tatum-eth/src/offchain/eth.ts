@@ -36,7 +36,7 @@ export const sendEthOffchainTransaction = async (testnet: boolean, body: Transfe
 
   let fromPriv: string
   if (mnemonic && index !== undefined) {
-    fromPriv = mnemonic && index ? await generatePrivateKeyFromMnemonic(Currency.ETH, testnet, mnemonic, index) : (privateKey as string)
+    fromPriv = mnemonic && index ? await generatePrivateKeyFromMnemonic(testnet, mnemonic, index) : (privateKey as string)
   } else if (privateKey) {
     fromPriv = privateKey
   } else {
@@ -91,7 +91,7 @@ export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: Tr
 
   let fromPriv
   if (mnemonic && index !== undefined) {
-    fromPriv = mnemonic && index ? await generatePrivateKeyFromMnemonic(Currency.ETH, testnet, mnemonic, index) : (privateKey as string)
+    fromPriv = mnemonic && index ? await generatePrivateKeyFromMnemonic(testnet, mnemonic, index) : (privateKey as string)
   } else if (privateKey) {
     fromPriv = privateKey
   } else {
@@ -143,7 +143,7 @@ export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: Tr
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signEthOffchainKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, testnet: boolean, provider?: string) => {
+export const signEthOffchainKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, provider?: string) => {
   if (tx.chain !== Currency.ETH) {
     throw Error('Unsupported chain.')
   }
