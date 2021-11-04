@@ -6,11 +6,10 @@ import { Currency, Wallet } from '@tatumio/tatum-core'
  * @param testnet testnet or mainnet version of address
  * @returns wallet
  */
-export const generateBnbWallet = async (testnet: boolean) => {
+export const generateBnbWallet = async (testnet: boolean): Promise<Wallet> => {
   const privateKey = generatePrivateKey()
   const prefix = testnet ? 'tbnb' : 'bnb'
   return {
-    // FIXME: Should be probably Wallet interface? TBD
     address: getAddressFromPrivateKey(privateKey, prefix),
     privateKey,
   }

@@ -1,13 +1,12 @@
-import { Currency } from '@tatumio/tatum-core'
-import { generateMnemonic, mnemonicToSeed } from 'bip39'
+import { Currency, Wallet } from '@tatumio/tatum-core'
 import { RippleAPI } from 'ripple-lib'
 
 /**
  * Generate Xrp address and secret.
  */
-export const generateXrpWallet = () => {
+export const generateXrpWallet = async (): Promise<Wallet> => {
   const { address, secret } = new RippleAPI().generateAddress()
-  return { address, secret }
+  return { address, privateKey: secret }
 }
 
 /**
