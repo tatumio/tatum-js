@@ -1,5 +1,5 @@
 export const DOGE_DERIVATION_PATH = "m/44'/3'/0'/0"
-export const TESTNET_DERIVATION_PATH = "m/44'/1'/0'/0"
+
 export const DOGE_TEST_NETWORK = {
   messagePrefix: '\x18Dogecoin Signed Message:\n',
   bech32: '',

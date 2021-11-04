@@ -1,4 +1,3 @@
-import { generatePrivateKeyFromMnemonic } from './address'
 import { generateDogeWallet } from './wallet'
 
 describe('Wallet tests', () => {
