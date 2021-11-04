@@ -6,7 +6,7 @@ import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 
 export class MintMultiToken extends PrivateKeyOrSignatureId {
   @IsNotEmpty()
-  @Length(42, 43)
+  @Length(42, 58)
   public to: string
 
   @IsNotEmpty()
@@ -18,7 +18,7 @@ export class MintMultiToken extends PrivateKeyOrSignatureId {
   public chain: Currency
 
   @IsNotEmpty()
-  @Length(42, 43)
+  @Length(1, 43)
   public contractAddress: string
 
   @Min(0)
