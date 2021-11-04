@@ -1,12 +1,11 @@
 import {AxiosRequestConfig} from 'axios';
 import BigNumber from 'bignumber.js';
 import {tronBroadcast} from '../blockchain';
-import {
-    bytecode,
-    trc721_abi,
-    trc721_bytecode,
+import bytecode, {
     listing,
-    abi,
+    trc721TokenABI as trc721_abi,
+    trc721TokenBytecode as trc721_bytecode,
+    trc721TokenABI as abi,
     validateBody,
     Currency,
     SmartContractMethodInvocation,

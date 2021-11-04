@@ -63,11 +63,13 @@ export const sendCustodialWallet = async (testnet: boolean, body: GenerateTronCu
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareTransferFromCustodialWallet = async (testnet: boolean, body: TransferFromTronCustodialAddress, provider?: string) => {
+    const {feeLimit, from} = body;
     return prepareTransferFromCustodialWalletAbstract(
         testnet,
         body,
         getTronTrc20ContractDecimals,
-        prepareTronSmartContractInvocation,
+        (testnet, body, r, provider) =>
+            prepareTronSmartContractInvocation(testnet, r, feeLimit as number, from, provider),
         SmartContractMethodInvocation,
         18,
         TransferFromCustodialAddress,
@@ -94,11 +96,13 @@ export const sendTransferFromCustodialWallet = async (testnet: boolean, body: Tr
  */
 export const prepareBatchTransferFromCustodialWallet = async (testnet: boolean,
                                                               body: TransferFromTronCustodialAddressBatch, provider?: string) => {
+    const {feeLimit, from} = body;
     return prepareBatchTransferFromCustodialWalletAbstract(
         testnet,
         body,
         getTronTrc20ContractDecimals,
-        prepareTronCustodialTransferBatch,
+        (testnet, body, r, provider) =>
+            prepareTronCustodialTransferBatch(testnet, r, feeLimit as number, from, provider),
         SmartContractMethodInvocation,
         18,
         TransferFromTronCustodialAddressBatch,
