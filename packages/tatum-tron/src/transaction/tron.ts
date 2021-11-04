@@ -1,4 +1,4 @@
-import axios, {AxiosRequestConfig} from 'axios';
+import {AxiosRequestConfig} from 'axios';
 import BigNumber from 'bignumber.js';
 import {tronBroadcast} from '../blockchain';
 import {
@@ -10,10 +10,11 @@ import {
     validateBody,
     Currency,
     SmartContractMethodInvocation,
-    TransactionKMS
+    TransactionKMS,
+    TATUM_API_URL,
+    axios,
+    obtainCustodialAddressType
 } from '@tatumio/tatum-core';
-import {obtainCustodialAddressType} from '../wallet';
-import {TATUM_API_URL} from "../constants";
 import {
     CreateTronTrc10,
     CreateTronTrc20,
@@ -27,10 +28,9 @@ import {
     TronMintMultipleTrc721,
     TronMintTrc721,
     TronTransferTrc721,
-    TronUpdateCashbackTrc721
+    TronUpdateCashbackTrc721,
+    GenerateTronCustodialAddress
 } from "src/model";
-import {GenerateTronCustodialAddress} from "src/model/request/GenerateTronCustodialAddress";
-
 
 // tslint:disable-next-line:no-var-requires
 const TronWeb = require('tronweb');

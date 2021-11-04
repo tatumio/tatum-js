@@ -5,7 +5,6 @@ export * from './ledger';
 export * from './offchain';
 export * from './blockchain';
 export * from './transaction';
-export * from './constants'
 export * from './nft'
 export * from './multiToken'
 export * from './model'

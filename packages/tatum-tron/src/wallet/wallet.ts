@@ -1,23 +1,9 @@
-import {wallet} from '@cityofzion/neon-js';
 import {generateMnemonic, mnemonicToSeed} from 'bip39';
 import {bip32} from 'bitcoinjs-lib';
 import {
     TRON_DERIVATION_PATH,
-} from '../constants';
-import {Currency} from '@tatumio/tatum-core';
-
-export interface Wallet {
-
-    /**
-     * mnemonic seed
-     */
-    mnemonic: string;
-
-    /**
-     * extended public key to derive addresses from
-     */
-    xpub: string;
-}
+    Currency
+} from '@tatumio/tatum-core';
 
 /**
  * Generate Tron wallet

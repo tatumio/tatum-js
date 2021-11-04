@@ -2,8 +2,8 @@ import {fromPublicKey, fromSeed} from 'bip32';
 import {mnemonicToSeed} from 'bip39';
 import {
     TRON_DERIVATION_PATH,
-} from '../constants';
-import {Currency} from '@tatumio/tatum-core';
+    Currency
+} from '@tatumio/tatum-core';
 import {generateAddress} from './tron.crypto';
 
 const TronWeb = require('tronweb');

@@ -1,7 +1,6 @@
 import {
   ApproveCustodialTransfer,
   ContractType,
-  Currency,
   CustodialFullTokenWallet,
   GenerateCustodialAddress,
   prepareBatchTransferFromCustodialWalletAbstract,
