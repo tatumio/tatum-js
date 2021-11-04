@@ -1,10 +1,9 @@
 import {getAccountById, getVirtualCurrencyByName} from '../ledger'
-import {validateBody, Currency, TransferTrxOffchain, TrcType} from '@tatumio/tatum-core'
+import {CONTRACT_ADDRESSES, validateBody, Currency, TransferTrxOffchain, TrcType} from '@tatumio/tatum-core'
 import {prepareTronSignedTransaction, prepareTronTrc10SignedTransaction, prepareTronTrc20SignedTransaction} from '../transaction'
 import {generatePrivateKeyFromMnemonic} from '../wallet'
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common'
 import { offchainTransferTronKMS } from './kms'
-import {CONTRACT_ADDRESSES} from "../constants";
 
 /**
  * Send Tron transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
