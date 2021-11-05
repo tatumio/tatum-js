@@ -1,4 +1,4 @@
-import {createNFTAbstraction, TransactionHash, post, MintErc721} from '@tatumio/tatum-core';
+import {mintNFTRequest, createNFTAbstraction, TransactionHash, post, MintErc721} from '@tatumio/tatum-core';
 import {
     FlowBurnNft,
     FlowDeployNft,
@@ -13,7 +13,7 @@ import {
     sendFlowNftTransferToken,
 } from '../transaction';
 
-export const mintNFT = (body: MintErc721): Promise<TransactionHash> => post(`/v3/nft/mint`, body);
+export const mintNFT = (body: MintErc721) => mintNFTRequest(body)
 
 /**
  * Deploy new NFT smart contract, which will be used for later minting.
