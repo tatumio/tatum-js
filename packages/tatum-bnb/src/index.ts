@@ -1,5 +1,4 @@
 export * from './blockchain'
-export * from './multiToken'
 export * from './offchain'
 export * from './transaction'
 export * from './wallet'
