@@ -18,7 +18,7 @@ import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 
 export class TransferErc20 extends PrivateKeyOrSignatureId {
   @IsNotEmpty()
-  @Length(42, 43)
+  @Length(42, 58)
   public to: string
 
   @IsNotEmpty()
@@ -32,12 +32,12 @@ export class TransferErc20 extends PrivateKeyOrSignatureId {
 
   @ValidateIf((o) => !o.contractAddress)
   @IsNotEmpty()
-  @IsIn([...ETH_BASED_CURRENCIES, ...MATIC_BASED_CURRENCIES, Currency.XDC, Currency.ONE])
+  @IsIn([...ETH_BASED_CURRENCIES, ...MATIC_BASED_CURRENCIES, Currency.XDC, Currency.ONE, Currency.ALGO])
   public currency?: Currency
 
   @ValidateIf((o) => !o.currency)
   @IsNotEmpty()
-  @Length(42, 43)
+  @Length(1, 43)
   public contractAddress?: string
 
   @IsOptional()

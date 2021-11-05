@@ -6,7 +6,7 @@ import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 
 export class TransferMultiToken extends PrivateKeyOrSignatureId {
   @IsNotEmpty()
-  @Length(42, 43)
+  @Length(42, 58)
   public to: string
 
   @IsNotEmpty()
@@ -14,11 +14,11 @@ export class TransferMultiToken extends PrivateKeyOrSignatureId {
   public tokenId: string
 
   @IsNotEmpty()
-  @Length(42, 43)
+  @Length(1, 43)
   public contractAddress: string
 
   @IsNotEmpty()
-  @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC])
+  @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC, Currency.ALGO])
   public chain: Currency
 
   @IsNotEmpty()
