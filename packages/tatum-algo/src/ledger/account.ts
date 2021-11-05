@@ -1,11 +1,19 @@
 import { 
-    CreateAccount, 
-    generateAccount as generateAccountCore
-  } from '@tatumio/tatum-core'  
-import { generateWallet } from '../wallet'
+    CreateAccount,
+    createAccount, 
+    generateDepositAddress
+} from '@tatumio/tatum-core'  
+import { generateAlgoWallet } from '../wallet'
 
 export const generateAccount = async (account: CreateAccount, generateNewWallet = true, testnet = true, webhookUrl?: string) => {
-    return generateAccountCore(account, generateWallet, generateNewWallet, testnet, webhookUrl)
+    let w;
+    if (generateNewWallet) {
+        w = await generateAlgoWallet();
+        account.xpub = w.address;
+    }
+    const a = await createAccount(account)
+    const address = await generateDepositAddress(a.id)
+    return { account: a, address, wallet: w }
 }
   
 export {
