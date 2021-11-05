@@ -1,5 +1,5 @@
-import { TransferBtcBasedBlockchain } from '../model'
-import { prepareBitcoinSignedTransaction, sendBitcoinTransaction } from './bitcoin'
+import { TransferBtcBasedBlockchain } from '@tatumio/tatum-core/src/model'
+import { prepareBitcoinSignedTransaction, sendBitcoinTransaction, } from './bitcoin'
 
 describe('BTC transactions', () => {
   it('should test BTC transaction data', async () => {

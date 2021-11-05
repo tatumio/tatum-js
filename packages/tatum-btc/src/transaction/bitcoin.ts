@@ -3,7 +3,8 @@ import BigNumber from 'bignumber.js';
 import { PrivateKey, Script, Transaction } from 'bitcore-lib';
 import { btcBroadcast, btcGetTransaction, btcGetTxForAccount, btcGetUTXO, } from '../blockchain';
 import { validateBody, Currency, TransactionKMS } from '@tatumio/tatum-core'
-import { BtcTxOutputs, TransferBtcBasedBlockchain } from '../model';
+import { BtcTxOutputs } from '../model';
+import { TransferBtcBasedBlockchain } from '@tatumio/tatum-core/src/model';
 
 /**
  * Prepare a signed Btc transaction with the private key locally. Nothing is broadcasted to the blockchain.
