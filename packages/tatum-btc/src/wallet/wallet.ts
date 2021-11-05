@@ -1,28 +1,11 @@
 import { generateMnemonic, mnemonicToSeed } from 'bip39';
-import { bip32, networks } from 'bitcoinjs-lib';
+import { networks } from 'bitcoinjs-lib';
 
 // @ts-ignore
 import hdkey from 'hdkey';
 
-import { Currency } from '@tatumio/tatum-core'
-import { TESTNET_DERIVATION_PATH, BTC_DERIVATION_PATH } from '../constants';
-
-const algosdk = require('algosdk');
-const base32 = require('base32.js');
-
-export interface Wallet {
-
-    /**
-     * mnemonic seed
-     */
-    mnemonic: string;
-
-    /**
-     * extended public key to derive addresses from
-     */
-    xpub: string;
-}
-
+import { TESTNET_DERIVATION_PATH, Currency, Wallet } from '@tatumio/tatum-core'
+import { BTC_DERIVATION_PATH } from '../constants';
 
 /**
  * Generate Bitcoin wallet
