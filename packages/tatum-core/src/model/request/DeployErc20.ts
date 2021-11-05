@@ -41,4 +41,7 @@ export class DeployErc20 extends PrivateKeyOrSignatureId {
   @ValidateNested()
   @Type(() => Fee)
   public fee?: Fee
+
+  @IsOptional()
+  public url?: string;
 }
