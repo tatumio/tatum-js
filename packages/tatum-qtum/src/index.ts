@@ -4,7 +4,6 @@ export * from './blockchain'
 export * from './constants'
 export * from './ledger'
 export * from './model'
-export * from './nft'
 export * from './offchain'
 export * from './wallet'
 
