@@ -4,7 +4,7 @@ import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 
 export class BaseBurnMultiToken extends PrivateKeyOrSignatureId {
   @IsNotEmpty()
-  @Length(42, 43)
+  @Length(42, 58)
   public account: string
 
   @IsNotEmpty()
@@ -15,7 +15,7 @@ export class BaseBurnMultiToken extends PrivateKeyOrSignatureId {
   public amount: string
 
   @IsNotEmpty()
-  @Length(42, 43)
+  @Length(1, 43)
   public contractAddress: string
 
   @IsNotEmpty()
