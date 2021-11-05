@@ -1,6 +1,7 @@
 const algosdk = require('algosdk')
 const base32 = require('base32.js')
-import { Currency, WalletWithAddress } from '@tatumio/tatum-core'
+import { WalletWithAddress } from '@tatumio/tatum-core'
+
 /**
  * Generate Algo wallet
  * @param mnem mnemonic seed to use
@@ -23,6 +24,6 @@ export const generateAlgoWallet = async (mnem?: string): Promise<WalletWithAddre
  * @param mnemonic mnemonic seed to use. If not present, new one will be generated
  * @returns wallet or a combination of address and private key
  */
-export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: string) => {
+export const generateWallet = (mnemonic?: string) => {
   return generateAlgoWallet(mnemonic)
 }

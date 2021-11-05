@@ -1,4 +1,3 @@
-import { Currency } from '@tatumio/tatum-core'
 import { fromSeed } from 'bip32'
 import { mnemonicToSeed } from 'bip39'
 import { networks } from 'bitcoinjs-lib'
@@ -137,7 +136,7 @@ const _decode = (address: string): Decoded => {
  * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
-export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xpub: string, i: number) => {
+export const generateAddressFromXPub = (testnet: boolean, xpub: string, i: number) => {
   return generateBchAddress(testnet, xpub, i)
 }
 
@@ -149,6 +148,6 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
  * @param i derivation index of private key to generate.
  * @returns blockchain private key to the address
  */
-export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: boolean, mnemonic: string, i: number) => {
+export const generatePrivateKeyFromMnemonic = (testnet: boolean, mnemonic: string, i: number) => {
   return generateBchPrivateKey(testnet, mnemonic, i)
 }

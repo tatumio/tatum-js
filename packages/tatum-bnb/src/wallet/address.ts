@@ -1,5 +1,4 @@
 import { getAddressFromPrivateKey } from '@binance-chain/javascript-sdk/lib/crypto'
-import { Currency } from '@tatumio/tatum-core'
 
 /**
  * Generate address from private key
@@ -8,6 +7,6 @@ import { Currency } from '@tatumio/tatum-core'
  * @param privateKey private key to use
  * @returns blockchain private key to the address
  */
-export const generateAddressFromPrivatekey = (currency: Currency, testnet: boolean, privateKey: string) => {
+export const generateAddressFromPrivatekey = (testnet: boolean, privateKey: string) => {
   return getAddressFromPrivateKey(privateKey, testnet ? 'tbnb' : 'bnb')
 }

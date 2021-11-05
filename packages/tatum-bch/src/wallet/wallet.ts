@@ -26,7 +26,7 @@ export const generateBchWallet = async (testnet: boolean, mnem: string): Promise
  * @param mnemonic mnemonic seed to use. If not present, new one will be generated
  * @returns wallet or a combination of address and private key
  */
-export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: string) => {
+export const generateWallet = (_currency: Currency, testnet: boolean, mnemonic?: string) => {
   const mnem = mnemonic ? mnemonic : generateMnemonic(256)
   return generateBchWallet(testnet, mnem)
 }

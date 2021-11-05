@@ -79,7 +79,7 @@ export const signBitcoinCashOffchainKMSTransaction = async (tx: TransactionKMS, 
       continue
     }
     const ecPair = bcash.ECPair.fromWIF(
-      await generatePrivateKeyFromMnemonic(Currency.BCH, testnet, mnemonic, response.address?.derivationKey || 0),
+      await generatePrivateKeyFromMnemonic(testnet, mnemonic, response.address?.derivationKey || 0),
       network
     )
     builder.sign(i, ecPair, undefined, 0x01, amountsToSign[i], undefined, bcash.ECSignature.SCHNORR)
@@ -141,7 +141,7 @@ export const prepareBitcoinCashSignedOffchainTransaction = async (
     if (mnemonic && !changeAddress) {
       const { xpub } = await generateBchWallet(testnet, mnemonic)
       tx.addOutput(
-        getAddress(generateAddressFromXPub(Currency.BCH, testnet, xpub, 0)),
+        getAddress(generateAddressFromXPub(testnet, xpub, 0)),
         Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(0, BigNumber.ROUND_FLOOR))
       )
     } else if (changeAddress) {
@@ -161,7 +161,7 @@ export const prepareBitcoinCashSignedOffchainTransaction = async (
     const value = Number(new BigNumber(data[i].amount).multipliedBy(100000000).toFixed(0, BigNumber.ROUND_FLOOR))
     if (mnemonic) {
       const derivationKey = input.address && input.address.derivationKey ? input.address.derivationKey : 0
-      const privateKey = await generatePrivateKeyFromMnemonic(Currency.BCH, testnet, mnemonic, derivationKey)
+      const privateKey = await generatePrivateKeyFromMnemonic(testnet, mnemonic, derivationKey)
       const ecPair = bcash.ECPair.fromWIF(privateKey, network)
       tx.sign(i, ecPair, undefined, 0x01, value, undefined, bcash.ECSignature.SCHNORR)
     } else if (keyPair) {

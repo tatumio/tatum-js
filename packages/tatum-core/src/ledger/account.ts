@@ -28,7 +28,7 @@ export const createAccount = async (account: CreateAccount): Promise<Account> =>
  */
 export const generateAccount = async (
   account: CreateAccount,
-  generateNewWalletFn: undefined | ((currency: Currency, testnet: boolean, mnemonic?: string) => Promise<Wallet>) = undefined,
+  generateNewWalletFn: undefined | ((testnet: boolean, mnemonic?: string) => Promise<Wallet>) = undefined,
   generateNewWallet = true,
   testnet = true,
   webhookUrl?: string
@@ -36,7 +36,7 @@ export const generateAccount = async (
   let w
   if (generateNewWallet) {
     // @ts-ignore
-    w = await generateNewWalletFn(account.currency, testnet)
+    w = await generateNewWalletFn(testnet)
     // @ts-ignore
     account.xpub = w.xpub || w.address
   }

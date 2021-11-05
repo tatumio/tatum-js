@@ -99,7 +99,7 @@ const prepareAdaSignedOffchainTransaction = async (
   const lastVin = data.find((d) => d.vIn === '-1') as WithdrawalResponseData
   if (new BigNumber(lastVin.amount).isGreaterThan(0)) {
     if (xpub) {
-      const zeroAddress = await generateAddressFromXPub(Currency.ADA, testnet, xpub, 0)
+      const zeroAddress = await generateAddressFromXPub(testnet, xpub, 0)
       addOutputAda(txBuilder, zeroAddress, lastVin.amount)
     } else if (changeAddress) {
       addOutputAda(txBuilder, changeAddress, lastVin.amount)
@@ -125,7 +125,7 @@ const prepareAdaSignedOffchainTransaction = async (
 
     if (mnemonic) {
       const derivationKey = input.address?.derivationKey || 0
-      const privateKey = await generatePrivateKeyFromMnemonic(Currency.ADA, testnet, mnemonic, derivationKey)
+      const privateKey = await generatePrivateKeyFromMnemonic(mnemonic, derivationKey)
       makeWitness(privateKey, txHash, vKeyWitnesses)
     } else if (keyPair) {
       const { privateKey } = keyPair.find((k) => k.address === input.address.address) as KeyPair
@@ -177,7 +177,7 @@ export const signAdaOffchainKMSTransaction = async (tx: TransactionKMS, mnemonic
     if (response.vIn === '-1') {
       continue
     }
-    const privateKey = await generatePrivateKeyFromMnemonic(Currency.ADA, testnet, mnemonic, response.address?.derivationKey || 0)
+    const privateKey = await generatePrivateKeyFromMnemonic(mnemonic, response.address?.derivationKey || 0)
     makeWitness(privateKey, txHash, vKeyWitnesses)
   }
   const witnesses = TransactionWitnessSet.new()

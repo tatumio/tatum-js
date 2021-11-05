@@ -124,7 +124,7 @@ export const sendAlgoSignedTransaction = async (testnet: boolean, tx: AlgoTransa
  * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signAlgoKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, testnet: boolean, provider?: string) => {
+export const signAlgoKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string) => {
   if (tx.chain !== Currency.ALGO) {
     throw Error('Unsupported chain.')
   }

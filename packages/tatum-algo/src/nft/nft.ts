@@ -1,11 +1,6 @@
-import { DeployErc721, BurnErc721, TransferErc721 } from "@tatumio/tatum-core";
+import { DeployErc721, BurnErc721, TransferErc721 } from '@tatumio/tatum-core'
 
-import { 
-    sendAlgoCreateNFTSignedTransaction, 
-    sendAlgoTransferNFTSignedTransaction, 
-    sendAlgoBurnNFTSignedTransaction, 
-} from "../transaction";
-
+import { sendAlgoCreateNFTSignedTransaction, sendAlgoTransferNFTSignedTransaction, sendAlgoBurnNFTSignedTransaction } from '../transaction'
 
 /**
  * Create new NFT token.
@@ -14,9 +9,8 @@ import {
  * @param provider optional provider do broadcast tx
  */
 export const deployNFT = async (testnet: boolean, body: DeployErc721, provider?: string) => {
-    return sendAlgoCreateNFTSignedTransaction(testnet, body, provider);
-};
-
+  return sendAlgoCreateNFTSignedTransaction(testnet, body, provider)
+}
 
 /**
  * Burn new NFT token. Token will no longer exists.
@@ -25,8 +19,8 @@ export const deployNFT = async (testnet: boolean, body: DeployErc721, provider?:
  * @param provider optional provider do broadcast tx
  */
 export const burnNFT = async (testnet: boolean, body: BurnErc721, provider?: string) => {
-    return sendAlgoBurnNFTSignedTransaction(testnet, body, provider);
-};
+  return sendAlgoBurnNFTSignedTransaction(testnet, body, provider)
+}
 
 /**
  * Transfer new NFT token to new recipient.
@@ -35,13 +29,7 @@ export const burnNFT = async (testnet: boolean, body: BurnErc721, provider?: str
  * @param provider optional provider do broadcast tx
  */
 export const transferNFT = async (testnet: boolean, body: TransferErc721, provider?: string) => {
-    return sendAlgoTransferNFTSignedTransaction(testnet, body, provider);
-};
+  return sendAlgoTransferNFTSignedTransaction(testnet, body, provider)
+}
 
-export { 
-    getNFTsByAddress,
-    getNFTContractAddress,
-    getNFTMetadataURI,
-    getNFTImage,
-    getNFTRoyalty,
- } from "@tatumio/tatum-core"
+export { getNFTsByAddress, getNFTContractAddress, getNFTMetadataURI, getNFTImage, getNFTRoyalty } from '@tatumio/tatum-core'

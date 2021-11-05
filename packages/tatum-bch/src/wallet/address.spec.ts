@@ -3,7 +3,6 @@ import { generateAddressFromXPub, generatePrivateKeyFromMnemonic } from './addre
 describe('Address tests', () => {
   it('should generate address 1 for BCH mainnet', () => {
     const address = generateAddressFromXPub(
-      Currency.BCH,
       false,
       'xpub6EafivSZvqR8ysLKS52NDKfn16sB9uhCEfCKdYi7PpGqqK3fJGdd53DzUnWYvFRZKAC7pB8FVnvuJKkJparfjjfVPTQTmC7dfC6aVvw6f98',
       1
@@ -13,7 +12,6 @@ describe('Address tests', () => {
 
   it('should generate address 1 for BCH testnet', () => {
     const address = generateAddressFromXPub(
-      Currency.BCH,
       true,
       'tpubDExJFAGFe7NbFfXAtG1TRF19LDxq9JCFnHncz6mFjj2jabiNNVUiDUtpipbLSkNo74j2Rke82tkwzWEvDShudB7nT49mSimsF9gzFwTf4nw',
       1
@@ -23,7 +21,6 @@ describe('Address tests', () => {
 
   it('should generate private key 1 for BCH mainnet', async () => {
     const privateKey = await generatePrivateKeyFromMnemonic(
-      Currency.BCH,
       false,
       'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten',
       1
@@ -33,7 +30,6 @@ describe('Address tests', () => {
 
   it('should generate private key 1 for BCH testnet', async () => {
     const privateKey = await generatePrivateKeyFromMnemonic(
-      Currency.BCH,
       true,
       'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten',
       1

@@ -3,140 +3,140 @@
  * @export
  * @interface AlgoTx
  */
- export interface AlgoTx {
-    /**
-     * [rc] rewards applied to close-remainder-to account.
-     * @type {number}
-     * @memberof AlgoTx
-     */
-    closeRewards: number;
+export interface AlgoTx {
+  /**
+   * [rc] rewards applied to close-remainder-to account.
+   * @type {number}
+   * @memberof AlgoTx
+   */
+  closeRewards: number
 
-    /**
-     * [ca]closing amount for transaction.
-     * @type {number}
-     * @memberof AlgoTx
-     */
-    closingAmount: number;
+  /**
+   * [ca]closing amount for transaction.
+   * @type {number}
+   * @memberof AlgoTx
+   */
+  closingAmount: number
 
-    /**
-     * Round when the transaction was confirmed.
-     * @type {number}
-     * @memberof AlgoTx
-     */
-    confirmedRound: number;
+  /**
+   * Round when the transaction was confirmed.
+   * @type {number}
+   * @memberof AlgoTx
+   */
+  confirmedRound: number
 
-     /**
-     * [fee] Transaction fee.
-     * @type {number}
-     * @memberof AlgoTx
-     */
-    fee: number;
+  /**
+   * [fee] Transaction fee.
+   * @type {number}
+   * @memberof AlgoTx
+   */
+  fee: number
 
-    /**
-     * [fv] First valid round for this transaction.
-     * @type {number}
-     * @memberof AlgoTx
-     */
-    firstValid: number;
+  /**
+   * [fv] First valid round for this transaction.
+   * @type {number}
+   * @memberof AlgoTx
+   */
+  firstValid: number
 
-    /**
-     * [gh] Hash of genesis block.
-     * @type {string}
-     * @memberof AlgoTx
-     */
-    
-    genisisHash: string;
+  /**
+   * [gh] Hash of genesis block.
+   * @type {string}
+   * @memberof AlgoTx
+   */
 
-    /**
-     * [gen] genesis block ID.
-     * @type {string}
-     * @memberof AlgoTx
-     */
-    genesisId: string;
+  genisisHash: string
 
-    /**
-     * Transaction ID.
-     * @type {string}
-     * @memberof AlgoTx
-     */
-    id: string;
+  /**
+   * [gen] genesis block ID.
+   * @type {string}
+   * @memberof AlgoTx
+   */
+  genesisId: string
 
-    /**
-     * Offset into the round where this transaction was confirmed.
-     * @type {number}
-     * @memberof AlgoTx
-     */
-    intraRoundOffset: number;
+  /**
+   * Transaction ID.
+   * @type {string}
+   * @memberof AlgoTx
+   */
+  id: string
 
-    /**
-     * [lv] Last valid round for this transation.
-     * @type {number}
-     * @memberof AlgoTx
-     */
-    lastValid: number;
+  /**
+   * Offset into the round where this transaction was confirmed.
+   * @type {number}
+   * @memberof AlgoTx
+   */
+  intraRoundOffset: number
 
-    /**
-     * [note] Free form data.
-     * @type {string}
-     * @memberof AlgoTx
-     */
-    note: string;
+  /**
+   * [lv] Last valid round for this transation.
+   * @type {number}
+   * @memberof AlgoTx
+   */
+  lastValid: number
 
-    /**
-     * optional
-     * @type {any}
-     * @memberof AlgoTx
-     */
-    paymentTransaction: any;
+  /**
+   * [note] Free form data.
+   * @type {string}
+   * @memberof AlgoTx
+   */
+  note: string
 
-    /**
-     * [rr] rewards applied to receiver account
-     * @type {number}
-     * @memberof AlgoTx
-     */
-    receiverRewards: number;
+  /**
+   * optional
+   * @type {any}
+   * @memberof AlgoTx
+   */
+  paymentTransaction: any
 
-    /**
-     * Time when the block this transaction is in was confirmed.
-     * @type {number}
-     * @memberof AlgoTx
-     */
-    roundTime: number;
+  /**
+   * [rr] rewards applied to receiver account
+   * @type {number}
+   * @memberof AlgoTx
+   */
+  receiverRewards: number
 
-    /**
-     * [snd] Sender's address
-     * @type {string}
-     * @memberof AlgoTx
-     */
-    sender: string;
+  /**
+   * Time when the block this transaction is in was confirmed.
+   * @type {number}
+   * @memberof AlgoTx
+   */
+  roundTime: number
 
-    /**
-     * [rs] rewards applied to sender account
-     * @type {number}
-     * @memberof AlgoTx
-     */
-    senderRewards: number;
+  /**
+   * [snd] Sender's address
+   * @type {string}
+   * @memberof AlgoTx
+   */
+  sender: string
 
-    /**
-     * signature
-     * @type {any}
-     * @memberof AlgoTx
-     */
-    signature: any;
+  /**
+   * [rs] rewards applied to sender account
+   * @type {number}
+   * @memberof AlgoTx
+   */
+  senderRewards: number
 
-    /**
-     * [type] Indicates what type of transaction this is. Different types have different fields.
-     * 
-     * Valid types, and where their fields are stored:
-     * [pay] payment-transaction
-     * [keyreg] keyreg-transaction
-     * [acfg] asset-config-transaction
-     * [axfer] asset-transfer-transaction
-     * [afrz] asset-freeze-transaction
-     * [appl] application-transaction
-     * 
-     * @type {string}
-     * @memberof AlgoTx
-     */
-    txType: string;
+  /**
+   * signature
+   * @type {any}
+   * @memberof AlgoTx
+   */
+  signature: any
+
+  /**
+   * [type] Indicates what type of transaction this is. Different types have different fields.
+   *
+   * Valid types, and where their fields are stored:
+   * [pay] payment-transaction
+   * [keyreg] keyreg-transaction
+   * [acfg] asset-config-transaction
+   * [axfer] asset-transfer-transaction
+   * [afrz] asset-freeze-transaction
+   * [appl] application-transaction
+   *
+   * @type {string}
+   * @memberof AlgoTx
+   */
+  txType: string
 }

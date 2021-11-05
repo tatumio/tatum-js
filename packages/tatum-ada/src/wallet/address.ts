@@ -1,4 +1,3 @@
-import { Currency } from '@tatumio/tatum-core'
 import cardano from './cardano.crypto'
 
 export * from './cardano.crypto'
@@ -11,7 +10,7 @@ export * from './cardano.crypto'
  * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
-export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xpub: string, i: number) => {
+export const generateAddressFromXPub = (testnet: boolean, xpub: string, i: number) => {
   return cardano.generateAddress(testnet, xpub, i)
 }
 
@@ -23,6 +22,6 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
  * @param i derivation index of private key to generate.
  * @returns blockchain private key to the address
  */
-export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: boolean, mnemonic: string, i: number) => {
+export const generatePrivateKeyFromMnemonic = (mnemonic: string, i: number) => {
   return cardano.generatePrivateKey(mnemonic, i)
 }
