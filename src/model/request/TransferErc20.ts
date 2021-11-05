@@ -8,7 +8,7 @@ import { OneOf } from '../validation/OneOf'
 export class TransferErc20 extends PrivateKeyOrSignatureId {
 
     @IsNotEmpty()
-    @Length(42, 43)
+    @Length(42, 58)
     public to: string;
 
     @IsNotEmpty()
@@ -27,7 +27,7 @@ export class TransferErc20 extends PrivateKeyOrSignatureId {
 
     @OneOf(['currency', 'contractAddress'])
     @IsOptional()
-    @Length(42, 43)
+    @Length(1, 43)
     public contractAddress?: string;
 
     @IsOptional()
