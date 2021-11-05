@@ -7,6 +7,7 @@ import {
     getBscClient,
     getCeloClient,
     getClient,
+    getXdcClient,
     prepareBscSmartContractWriteMethodInvocation,
     prepareCeloSmartContractWriteMethodInvocation,
     prepareOneClient,
@@ -42,6 +43,8 @@ export const helperGetWeb3Client = (testnet: boolean, chain: Currency, provider?
             return getCeloClient(provider);
         case Currency.ONE:
             return prepareOneClient(testnet, provider);
+        case Currency.XDC:
+            return getXdcClient(provider);
         case Currency.ETH:
             return getClient(provider);
         case Currency.BSC:
