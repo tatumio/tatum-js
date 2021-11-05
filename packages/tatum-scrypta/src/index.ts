@@ -1,6 +1,5 @@
 export * from './blockchain'
 export * from './model'
-export * from './multiToken'
 export * from './nft'
 export * from './offchain'
 export * from './transaction'
