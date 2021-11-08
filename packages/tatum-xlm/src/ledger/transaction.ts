@@ -7,4 +7,4 @@ export {
   countTransactionsByAccount,
   countTransactionsByCustomer,
   countTransactionsByLedger,
-} from '@tatumio/tatum-core'
+} from '@tatumio/tatum-ledger'

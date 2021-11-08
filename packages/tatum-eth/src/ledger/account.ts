@@ -1,4 +1,5 @@
-import { CreateAccount, generateAccount as generateAccountCore } from '@tatumio/tatum-core'
+import { CreateAccount } from '@tatumio/tatum-core'
+import { generateAccount as generateAccountCore } from '@tatumio/tatum-ledger'
 import { generateWallet } from '../wallet'
 
 /**
@@ -10,7 +11,13 @@ import { generateWallet } from '../wallet'
  * @param webhookUrl optional URL, where webhook will be post for every incoming blockchain transaction to the address
  */
 export const generateAccount = async (account: CreateAccount, generateNewWallet = true, testnet = true, webhookUrl?: string) => {
-  return generateAccountCore(account, (_currency, testnet, mnemonic?) => generateWallet(testnet, mnemonic), generateNewWallet, testnet, webhookUrl)
+  return generateAccountCore(
+    account,
+    (_currency, testnet, mnemonic?) => generateWallet(testnet, mnemonic),
+    generateNewWallet,
+    testnet,
+    webhookUrl
+  )
 }
 
 export {
@@ -30,4 +37,4 @@ export {
   getAccountsByCustomerId,
   getAllAccounts,
   getAccountBalance,
-} from '@tatumio/tatum-core'
+} from '@tatumio/tatum-ledger'

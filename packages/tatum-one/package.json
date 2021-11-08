@@ -15,6 +15,7 @@
   "dependencies": {
     "@harmony-js/crypto": "^0.1.56",
     "@tatumio/tatum-core": "file:../tatum-core",
+    "@tatumio/tatum-ledger": "file:../tatum-ledger",
     "bignumber.js": "^9.0.0",
     "class-transformer": "^0.2.3",
     "class-validator": "0.13.0",

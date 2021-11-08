@@ -4,4 +4,4 @@ export {
     updateVirtualCurrency,
     mintVirtualCurrency,
     revokeVirtualCurrency
-} from '@tatumio/tatum-core'
+} from '@tatumio/tatum-ledger'
