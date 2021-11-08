@@ -47,7 +47,7 @@ const nftRoyalty = await getNFTRoyalty(
 const transactionHash = await deployNFT(false, {
     name: 'MY_NFT',
     chain: Currency.ETH,
-    symbil: 'NFT_SYMBOL'
+    symbol: 'NFT_SYMBOL'
 });
 ```
 
