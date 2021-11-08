@@ -656,7 +656,6 @@ export const generateAlgodAddressFromPrivatetKey = (privKey: string) => {
     return algosdk.mnemonicToSecretKey(mn).addr;
 }
 
-
 /**
  * Generate address
  * @param currency type of blockchain

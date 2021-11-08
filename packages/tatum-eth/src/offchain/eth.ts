@@ -4,8 +4,6 @@ import { ethGetTransactionsCount } from '../blockchain'
 import {
   Currency,
   ETH_BASED_CURRENCIES,
-  getAccountById,
-  getVirtualCurrencyByName,
   TransactionKMS,
   validateBody,
   CONTRACT_ADDRESSES,
@@ -17,6 +15,7 @@ import { ethGetGasPriceInWei, getClient } from '../transaction'
 import { generatePrivateKeyFromMnemonic } from '../wallet'
 import { offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal } from './common'
 import { offchainTransferEthKMS } from './kms'
+import { getAccountById, getVirtualCurrencyByName } from '@tatumio/tatum-ledger'
 
 /**
  * Send Ethereum transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.

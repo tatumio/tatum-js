@@ -763,7 +763,7 @@
 "@tatumio/tatum-ledger@file:../tatum-ledger":
   version "0.0.1"
   dependencies:
-    "@tatumio/tatum-core" "file:../../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-ledger-0.0.1-ee5b296f-e404-4108-810f-a6b8684de7c8-1636363397784/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-core" "file:../../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-ledger-0.0.1-e562462e-49a3-4f13-9d40-1d1ad92e7d7a-1636398443320/node_modules/@tatumio/tatum-core"
 
 "@tootallnate/once@1":
   version "1.1.2"

@@ -1,12 +1,10 @@
-import {fromPublicKey, fromSeed} from 'bip32';
-import {mnemonicToSeed} from 'bip39';
-import {
-    TRON_DERIVATION_PATH,
-    Currency
-} from '@tatumio/tatum-core';
-import {generateAddress} from './tron.crypto';
+import { fromPublicKey, fromSeed } from 'bip32'
+import { mnemonicToSeed } from 'bip39'
+import { Currency } from '@tatumio/tatum-core'
+import { generateAddress } from './tron.crypto'
+import { TRON_DERIVATION_PATH } from '../constants'
 
-const TronWeb = require('tronweb');
+const TronWeb = require('tronweb')
 
 /**
  * Generate Tron address
@@ -15,8 +13,8 @@ const TronWeb = require('tronweb');
  * @returns blockchain address
  */
 const generateTronAddress = (xpub: string, i: number) => {
-    const w = fromPublicKey(Buffer.from(xpub.slice(0, 66), 'hex'), Buffer.from(xpub.slice(-64), 'hex'))
-    return TronWeb.address.fromHex(generateAddress(w.derive(i).publicKey))
+  const w = fromPublicKey(Buffer.from(xpub.slice(0, 66), 'hex'), Buffer.from(xpub.slice(-64), 'hex'))
+  return TronWeb.address.fromHex(generateAddress(w.derive(i).publicKey))
 }
 
 /**
@@ -26,10 +24,12 @@ const generateTronAddress = (xpub: string, i: number) => {
  * @returns blockchain private key to the address
  */
 const generateTronPrivateKey = async (mnemonic: string, i: number) => {
-    return fromSeed(await mnemonicToSeed(mnemonic))
-        .derivePath(TRON_DERIVATION_PATH)
-        .derive(i)
-        .privateKey?.toString('hex') ?? ''
+  return (
+    fromSeed(await mnemonicToSeed(mnemonic))
+      .derivePath(TRON_DERIVATION_PATH)
+      .derive(i)
+      .privateKey?.toString('hex') ?? ''
+  )
 }
 
 /**
@@ -41,7 +41,7 @@ const generateTronPrivateKey = async (mnemonic: string, i: number) => {
  * @returns blockchain address
  */
 export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xpub: string, i: number) => {
-    return generateTronAddress(xpub, i)
+  return generateTronAddress(xpub, i)
 }
 
 /**
@@ -53,7 +53,7 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
  * @returns blockchain private key to the address
  */
 export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: boolean, mnemonic: string, i: number) => {
-    return generateTronPrivateKey(mnemonic, i)
+  return generateTronPrivateKey(mnemonic, i)
 }
 
 /**
@@ -64,5 +64,5 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
  * @returns blockchain private key to the address
  */
 export const generateAddressFromPrivatekey = (currency: Currency, testnet: boolean, privateKey: string) => {
-    return TronWeb.address.fromPrivateKey(privateKey)
+  return TronWeb.address.fromPrivateKey(privateKey)
 }

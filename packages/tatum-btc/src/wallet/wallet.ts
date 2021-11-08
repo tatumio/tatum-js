@@ -1,11 +1,9 @@
-import { generateMnemonic, mnemonicToSeed } from 'bip39';
-import { networks } from 'bitcoinjs-lib';
-
+import { generateMnemonic, mnemonicToSeed } from 'bip39'
+import { networks } from 'bitcoinjs-lib'
 // @ts-ignore
-import hdkey from 'hdkey';
-
-import { TESTNET_DERIVATION_PATH, Currency, Wallet } from '@tatumio/tatum-core'
-import { BTC_DERIVATION_PATH } from '../constants';
+import hdkey from 'hdkey'
+import { TESTNET_DERIVATION_PATH, WalletWithMnemonic } from '@tatumio/tatum-core'
+import { BTC_DERIVATION_PATH } from '../constants'
 
 /**
  * Generate Bitcoin wallet
@@ -13,21 +11,21 @@ import { BTC_DERIVATION_PATH } from '../constants';
  * @param mnem mnemonic seed to use
  * @returns wallet
  */
-export const generateBtcWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
-    const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? networks.testnet.bip32 : networks.bitcoin.bip32)
-    return {
-        mnemonic: mnem,
-        xpub: hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : BTC_DERIVATION_PATH).toJSON().xpub
-    }
+export const generateBtcWallet = async (testnet: boolean, mnem: string): Promise<WalletWithMnemonic> => {
+  const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? networks.testnet.bip32 : networks.bitcoin.bip32)
+  return {
+    mnemonic: mnem,
+    xpub: hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : BTC_DERIVATION_PATH).toJSON().xpub,
+  }
 }
+
 /**
  * Generate wallet
- * @param currency blockchain to generate wallet for
  * @param testnet testnet or mainnet version of address
  * @param mnemonic mnemonic seed to use. If not present, new one will be generated
  * @returns wallet or a combination of address and private key
  */
-export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: string) => {
-    const mnem = mnemonic ? mnemonic : generateMnemonic(256)
-    return generateBtcWallet(testnet, mnem)
+export const generateWallet = (testnet: boolean, mnemonic?: string) => {
+  const mnem = mnemonic ? mnemonic : generateMnemonic(256)
+  return generateBtcWallet(testnet, mnem)
 }
