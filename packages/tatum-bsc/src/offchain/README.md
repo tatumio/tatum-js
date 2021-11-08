@@ -5,12 +5,12 @@ or [Github Pages](https://tatumio.github.io/tatum-js/) to see how to use other o
 
 ## Import required libraries
 ```typescript
-import { sendBitcoinOffchainTransaction } from '@tatumio/tatum';
+import { sendBscOffchainTransaction } from '@tatumio/tatum-bsc';
 ```
 
 ## Send bitcoin offchain transaction
 ```typescript
-const txHash = await sendBitcoinOffchainTransaction(false, {
+const txHash = await sendBscOffchainTransaction(false, {
     mnemonic: 'sorry convince space length yard nation fitness trade act identify live exclude toast category weather news gain game public amateur crisp great seek odor',
     xpub: 'tpubDFm2ZWx6ehiBFvA3bfLJTpPa8aGRnMb69VFrf8n5sjWJ8fspa9qwzGXo3w8DgnMgmnsGBf7whE6qqzp9sVxzn3dBFCmXq4HqYzB45SEZFSE',
     senderAccountId: '60f990befd2f551040f512c0',

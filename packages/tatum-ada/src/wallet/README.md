@@ -12,7 +12,7 @@ import { generateWallet } from '@tatumio/tatum-ada';
 ## Generate a cardano wallet
 
 ```typescript
-const wallet = await generateAdaWallet(Currency.ADA, false);
+const wallet = await generateAdaWallet('critic spatial rug valley spawn grape humble motor burger direct jump galaxy still swim foot real vast tribe blast fence virtual away spice funny');
 ```
 
 ## Generate an address

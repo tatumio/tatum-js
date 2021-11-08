@@ -1,7 +1,6 @@
 # Blockchain API guide
 
 In following guide we will show how to work with ADA blockchain endpoints.
-Just browse source code or [Github Pages](https://tatumio.github.io/tatum-js/) to see how to use other blockchains.
 
 ## Import required libraries
 

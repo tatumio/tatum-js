@@ -197,7 +197,7 @@ await enableCustomer('5e6f30625dfb246430ddaca7');
 ### Disable a customer
 
 ```typescript
-await enableCustomer('5e6f30625dfb246430ddaca7');
+await disableCustomer('5e6f30625dfb246430ddaca7');
 ```
 
 ## Transaction endpoints
