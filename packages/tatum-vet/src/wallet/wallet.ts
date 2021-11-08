@@ -1,4 +1,4 @@
-import { Currency, TESTNET_DERIVATION_PATH, WalletWithMnemonic } from '@tatumio/tatum-core'
+import { TESTNET_DERIVATION_PATH, WalletWithMnemonic } from '@tatumio/tatum-core'
 import { generateMnemonic, mnemonicToSeed } from 'bip39'
 import { hdkey as ethHdKey } from 'ethereumjs-wallet'
 import { VET_DERIVATION_PATH } from '../constants'
@@ -21,12 +21,11 @@ export const generateVetWallet = async (testnet: boolean, mnem: string): Promise
 
 /**
  * Generate wallet
- * @param currency blockchain to generate wallet for
  * @param testnet testnet or mainnet version of address
  * @param mnemonic mnemonic seed to use. If not present, new one will be generated
  * @returns wallet or a combination of address and private key
  */
-export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: string) => {
+export const generateWallet = (testnet: boolean, mnemonic?: string) => {
   const mnem = mnemonic ? mnemonic : generateMnemonic(256)
   return generateVetWallet(testnet, mnem)
 }

@@ -17,6 +17,8 @@ import {
 } from '@tatumio/tatum-core'
 import { createNewSubscription } from './subscription'
 
+export type GenerateWalletFn = ((testnet: boolean, mnemonic?: string) => Promise<Wallet>) | ((mnemonic: string) => Promise<Wallet>)
+
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/getAccountByAccountId" target="_blank">Tatum API documentation</a>
  */
@@ -37,7 +39,7 @@ export const createAccount = async (account: CreateAccount): Promise<Account> =>
  */
 export const generateAccount = async (
   account: CreateAccount,
-  generateNewWalletFn: undefined | ((testnet: boolean, mnemonic?: string) => Promise<Wallet>) = undefined,
+  generateNewWalletFn: GenerateWalletFn,
   generateNewWallet = true,
   testnet = true,
   webhookUrl?: string
