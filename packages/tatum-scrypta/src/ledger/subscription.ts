@@ -3,4 +3,4 @@ export {
   listActiveSubscriptions,
   cancelExistingSubscription,
   obtainReportForSubscription,
-} from '@tatumio/tatum-core'
+} from '@tatumio/tatum-ledger'

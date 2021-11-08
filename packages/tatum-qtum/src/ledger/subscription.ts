@@ -1,6 +1,6 @@
 export {
-    createNewSubscription,
-    listActiveSubscriptions,
-    cancelExistingSubscription,
-    obtainReportForSubscription,
-} from '@tatumio/tatum-core'
+  createNewSubscription,
+  listActiveSubscriptions,
+  cancelExistingSubscription,
+  obtainReportForSubscription,
+} from '@tatumio/tatum-ledger'

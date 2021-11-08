@@ -6,4 +6,4 @@ export {
   deactivateCustomer,
   enableCustomer,
   disableCustomer,
-} from '@tatumio/tatum-core'
+} from '@tatumio/tatum-ledger'

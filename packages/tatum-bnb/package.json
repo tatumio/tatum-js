@@ -14,7 +14,8 @@
   },
   "dependencies": {
     "@binance-chain/javascript-sdk": "^4.1.1",
-    "@tatumio/tatum-core": "file:../tatum-core"
+    "@tatumio/tatum-core": "file:../tatum-core",
+    "@tatumio/tatum-ledger": "file:../tatum-ledger"
   },
   "devDependencies": {
     "@types/jest": "^27.0.2",

@@ -1,4 +1,5 @@
-import { CreateAccount, generateAccount as generateAccountCore } from '@tatumio/tatum-core'
+import { CreateAccount } from '@tatumio/tatum-core'
+import { generateAccount as generateAccountCore } from '@tatumio/tatum-ledger'
 import { generateWallet } from '../wallet'
 
 export const generateAccount = async (account: CreateAccount, generateNewWallet = true, testnet = true, webhookUrl?: string) => {
@@ -22,4 +23,4 @@ export {
   getAccountsByCustomerId,
   getAllAccounts,
   getAccountBalance,
-} from '@tatumio/tatum-core'
+} from '@tatumio/tatum-ledger'

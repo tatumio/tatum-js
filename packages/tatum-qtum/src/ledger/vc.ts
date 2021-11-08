@@ -1,7 +1,7 @@
 export {
-    getVirtualCurrencyByName,
-    createVirtualCurrency,
-    updateVirtualCurrency,
-    mintVirtualCurrency,
-    revokeVirtualCurrency,
-} from '@tatumio/tatum-core'
+  getVirtualCurrencyByName,
+  createVirtualCurrency,
+  updateVirtualCurrency,
+  mintVirtualCurrency,
+  revokeVirtualCurrency,
+} from '@tatumio/tatum-ledger'
