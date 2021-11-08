@@ -1,8 +1,8 @@
-import * as bech32 from 'bech32';
-import {mnemonicToSeed} from 'bip39';
-import {derivePath, getPublicKey} from 'ed25519-hd-key';
-import {EGLD_DERIVATION_PATH} from '../constants';
-import {Currency, TESTNET_DERIVATION_PATH} from '@tatumio/tatum-core';
+import * as bech32 from 'bech32'
+import { mnemonicToSeed } from 'bip39'
+import { derivePath, getPublicKey } from 'ed25519-hd-key'
+import { EGLD_DERIVATION_PATH } from '../constants'
+import { Currency, TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
 
 /**
  * Generate EGLD address
@@ -12,12 +12,12 @@ import {Currency, TESTNET_DERIVATION_PATH} from '@tatumio/tatum-core';
  * @returns blockchain address
  */
 export const generateEgldAddress = async (testnet: boolean, mnem: string, i: number): Promise<string> => {
-    const path = (testnet ? TESTNET_DERIVATION_PATH + '\'' : EGLD_DERIVATION_PATH) + `/${i}'`
-    const seed = await mnemonicToSeed(mnem);
-    const {key} = derivePath(path, seed.toString('hex'))
-    const words = bech32.toWords(getPublicKey(key, false))
-    const address = bech32.encode('erd', words)
-    return address
+  const path = (testnet ? TESTNET_DERIVATION_PATH + "'" : EGLD_DERIVATION_PATH) + `/${i}'`
+  const seed = await mnemonicToSeed(mnem)
+  const { key } = derivePath(path, seed.toString('hex'))
+  const words = bech32.toWords(getPublicKey(key, false))
+  const address = bech32.encode('erd', words)
+  return address
 }
 
 /**
@@ -28,10 +28,10 @@ export const generateEgldAddress = async (testnet: boolean, mnem: string, i: num
  * @returns blockchain private key to the address
  */
 const generateEgldPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
-    const path = (testnet ? TESTNET_DERIVATION_PATH + '\'' : EGLD_DERIVATION_PATH) + `/${i}'`
-    const seed = await mnemonicToSeed(mnemonic)
-    const {key} = derivePath(path, seed.toString('hex'))
-    return key.toString('hex')
+  const path = (testnet ? TESTNET_DERIVATION_PATH + "'" : EGLD_DERIVATION_PATH) + `/${i}'`
+  const seed = await mnemonicToSeed(mnemonic)
+  const { key } = derivePath(path, seed.toString('hex'))
+  return key.toString('hex')
 }
 
 /**
@@ -41,10 +41,10 @@ const generateEgldPrivateKey = async (testnet: boolean, mnemonic: string, i: num
  * @returns blockchain address
  */
 const convertEgldPrivateKey = (testnet: boolean, privKey: string) => {
-    const publicKey = getPublicKey(Buffer.from(privKey, 'hex'), false).toString('hex')
-    const words = bech32.toWords(Buffer.from(publicKey.slice(-64), 'hex'))
-    const address = bech32.encode('erd', words)
-    return address
+  const publicKey = getPublicKey(Buffer.from(privKey, 'hex'), false).toString('hex')
+  const words = bech32.toWords(Buffer.from(publicKey.slice(-64), 'hex'))
+  const address = bech32.encode('erd', words)
+  return address
 }
 
 /**
@@ -56,7 +56,7 @@ const convertEgldPrivateKey = (testnet: boolean, privKey: string) => {
  * @returns blockchain address
  */
 export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xpub: string, i: number) => {
-    return generateEgldAddress(testnet, xpub, i)
+  return generateEgldAddress(testnet, xpub, i)
 }
 
 /**
@@ -68,7 +68,7 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
  * @returns blockchain private key to the address
  */
 export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: boolean, mnemonic: string, i: number) => {
-    return generateEgldPrivateKey(testnet, mnemonic, i)
+  return generateEgldPrivateKey(testnet, mnemonic, i)
 }
 
 /**
@@ -79,5 +79,5 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
  * @returns blockchain private key to the address
  */
 export const generateAddressFromPrivatekey = (currency: Currency, testnet: boolean, privateKey: string) => {
-    return convertEgldPrivateKey(testnet, privateKey)
+  return convertEgldPrivateKey(testnet, privateKey)
 }
