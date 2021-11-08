@@ -1,6 +1,4 @@
-import { get, httpDelete, post } from '../connector/tatum'
-import { CreateSubscription } from '../model'
-import { Account, Subscription, Transaction } from '../model'
+import { CreateSubscription, get, post, Subscription, httpDelete, Transaction, Account } from '@tatumio/tatum-core'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/createSubscription" target="_blank">Tatum API documentation</a>

@@ -1,5 +1,4 @@
-import { get, post } from '../connector/tatum'
-import { CreateTransaction, Transaction, TransactionFilter } from '../model'
+import { Transaction, CreateTransaction, get, post, TransactionFilter } from '@tatumio/tatum-core'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/getTransactionsByReference" target="_blank">Tatum API documentation</a>

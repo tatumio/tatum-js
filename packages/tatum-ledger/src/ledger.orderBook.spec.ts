@@ -1,4 +1,4 @@
-import { TradeType } from '../model/request/TradeType'
+import { TradeType } from '@tatumio/tatum-core'
 import { storeTrade } from './orderBook'
 
 describe('LEDGER TESTS: Trades test suite', () => {

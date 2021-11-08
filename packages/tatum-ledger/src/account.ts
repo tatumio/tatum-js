@@ -1,11 +1,20 @@
-import { get, httpDelete, post, put } from '../connector/tatum'
-import { Account, AccountBalance, Blockage, BlockAmount, CreateAccount, Currency } from '../model'
-import { BlockageTransaction } from '../model/request/BlockageTransaction'
-import { CreateAccountsBatch } from '../model/request/CreateAccountsBatch'
-import { UpdateAccount } from '../model/request/UpdateAccount'
-import { SubscriptionType } from '../model/response/ledger/SubscriptionType'
-import { generateDepositAddress } from '../offchain'
-import { Wallet } from '../wallet/wallet'
+import {
+  Account,
+  CreateAccount,
+  get,
+  post,
+  Wallet,
+  generateDepositAddress,
+  SubscriptionType,
+  UpdateAccount,
+  put,
+  CreateAccountsBatch,
+  Blockage,
+  BlockAmount,
+  httpDelete,
+  BlockageTransaction,
+  AccountBalance,
+} from '@tatumio/tatum-core'
 import { createNewSubscription } from './subscription'
 
 /**

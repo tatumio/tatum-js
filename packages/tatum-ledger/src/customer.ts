@@ -1,6 +1,4 @@
-import { get, put } from '../connector/tatum'
-import { CustomerUpdate } from '../model/request/CustomerUpdate'
-import { Customer } from '../model/response/ledger/Customer'
+import { Customer, CustomerUpdate, get, put } from '@tatumio/tatum-core'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/getCustomerByExternalId" target="_blank">Tatum API documentation</a>

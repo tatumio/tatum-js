@@ -1,7 +1,5 @@
-import { Currency } from '../model/request/Currency'
-import { Fiat } from '../model/response/ledger/Fiat'
+import { Currency, Fiat } from '@tatumio/tatum-core'
 import { createVirtualCurrency, getVirtualCurrencyByName, mintVirtualCurrency, revokeVirtualCurrency, updateVirtualCurrency } from './index'
-// import { updateVirtualCurrency } from './vc';
 
 describe('LEDGER TESTS: Virtual Currency test suite', () => {
   // declaring global variables which have larger scope

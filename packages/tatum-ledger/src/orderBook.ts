@@ -1,6 +1,4 @@
-import { get, httpDelete, post } from '../connector/tatum'
-import { OrderBookRequest } from '../model/request/OrderBook'
-import { OrderBookResponse } from '../model/response/ledger/OrderBook'
+import { OrderBookResponse, OrderBookRequest, get, post, httpDelete } from '@tatumio/tatum-core'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/getHistoricalTrades" target="_blank">Tatum API documentation</a>
