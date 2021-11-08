@@ -1,9 +1,4 @@
-import { get, post, put } from '../connector/tatum'
-import { Account } from '../model'
-import { CreateCurrency } from '../model/request/CreateCurrency'
-import { CurrencyOperation } from '../model/request/CurrencyOperation'
-import { UpdateCurrency } from '../model/request/UpdateCurrency'
-import { VC } from '../model/response/ledger/VC'
+import { VC, CreateCurrency, Account, get, post, UpdateCurrency, put, CurrencyOperation } from '@tatumio/tatum-core'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/getCurrency" target="_blank">Tatum API documentation</a>

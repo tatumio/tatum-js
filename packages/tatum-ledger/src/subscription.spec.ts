@@ -1,4 +1,4 @@
-import { SubscriptionType } from '../model/response/ledger/SubscriptionType'
+import { SubscriptionType } from '@tatumio/tatum-core'
 import { createNewSubscription } from './subscription'
 
 describe('Subscription tests', () => {
