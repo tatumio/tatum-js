@@ -1,5 +1,5 @@
-import {generateMnemonic} from 'bip39';
-import {Currency, Wallet} from '@tatumio/tatum-core';
+import { generateMnemonic } from 'bip39'
+import { WalletWithMnemonic } from '@tatumio/tatum-core'
 
 /**
  * Generate EGLD wallet
@@ -7,11 +7,11 @@ import {Currency, Wallet} from '@tatumio/tatum-core';
  * @param mnem mnemonic seed to use
  * @returns wallet
  */
-export const generateEgldWallet = async (mnem: string): Promise<Wallet> => {
-    return {
-        mnemonic: mnem,
-        xpub: ''
-    } as Wallet
+export const generateEgldWallet = async (mnem: string): Promise<WalletWithMnemonic> => {
+  return {
+    mnemonic: mnem,
+    xpub: '',
+  }
 }
 
 /**
@@ -21,7 +21,7 @@ export const generateEgldWallet = async (mnem: string): Promise<Wallet> => {
  * @param mnemonic mnemonic seed to use. If not present, new one will be generated
  * @returns wallet or a combination of address and private key
  */
-export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: string) => {
-    const mnem = mnemonic ? mnemonic : generateMnemonic(256)
-    return generateEgldWallet(mnem)
+export const generateWallet = (mnemonic?: string) => {
+  const mnem = mnemonic ? mnemonic : generateMnemonic(256)
+  return generateEgldWallet(mnem)
 }

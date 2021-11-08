@@ -15,6 +15,7 @@
   "dependencies": {
     "@elrondnetwork/erdjs": "^7.0.0",
     "@tatumio/tatum-core": "file:../tatum-core",
+    "@tatumio/tatum-ledger": "file:../tatum-ledger",
     "axios": "^0.21.1",
     "axios-retry": "^3.1.9",
     "base32.js": "^0.1.0",

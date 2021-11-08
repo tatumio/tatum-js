@@ -18,6 +18,7 @@
     ],
     "esModuleInterop": true,
     "inlineSourceMap": true,
+    "skipLibCheck": true,
     "experimentalDecorators": true,
     "resolveJsonModule": true,
     "emitDecoratorMetadata": true,
