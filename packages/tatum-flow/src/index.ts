@@ -7,7 +7,6 @@ export * from './blockchain'
 export * from './transaction'
 export * from './constants'
 export * from './nft'
-export * from './multiToken'
 
 export * from '@tatumio/tatum-core/src/record'
 export * from '@tatumio/tatum-core/src/security'
