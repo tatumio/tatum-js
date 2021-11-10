@@ -14,11 +14,16 @@
   },
   "dependencies": {
     "@tatumio/tatum-core": "file:../tatum-core",
+    "@tatumio/tatum-algo": "file:../tatum-algo",
+    "@tatumio/tatum-bch": "file:../tatum-bch",
     "@tatumio/tatum-bsc": "file:../tatum-bsc",
     "@tatumio/tatum-celo": "file:../tatum-celo",
     "@tatumio/tatum-eth": "file:../tatum-eth",
+    "@tatumio/tatum-flow": "file:../tatum-flow",
     "@tatumio/tatum-one": "file:../tatum-one",
-    "@tatumio/tatum-polygon": "file:../tatum-polygon"
+    "@tatumio/tatum-polygon": "file:../tatum-polygon",
+    "@tatumio/tatum-qtum": "file:../tatum-qtum",
+    "@tatumio/tatum-xdc": "file:../tatum-xdc"
   },
   "devDependencies": {
     "eslint": "^7.32.0",

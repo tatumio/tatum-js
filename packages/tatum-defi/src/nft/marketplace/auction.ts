@@ -6,57 +6,7 @@ import {
     UpdateAuctionFee,
     UpdateMarketplaceFeeRecipient
 } from "@tatumio/tatum-core";
-
-type AuctionFn =
-    'deployAuction'
-    | 'prepareDeployAuction'
-    | 'prepareAuctionUpdateFee'
-    | 'prepareAuctionUpdateFeeRecipient'
-    | 'prepareAuctionApproveNftTransfer'
-    | 'prepareAuctionApproveErc20Transfer'
-    | 'prepareAuctionCreate'
-    | 'prepareAuctionBid'
-    | 'prepareAuctionCancel'
-    | 'prepareAuctionSettle'
-    | 'sendAuctionUpdateFee'
-    | 'sendAuctionUpdateFeeRecipient'
-    | 'sendAuctionApproveNftTransfer'
-    | 'sendAuctionApproveErc20Transfer'
-    | 'sendAuctionCreate'
-    | 'sendAuctionBid'
-    | 'sendAuctionCancel'
-    | 'sendAuctionSettle'
-
-async function getImplementationFor(currency: Currency, functionName: AuctionFn) {
-    let chain
-    switch (currency) {
-        case Currency.BSC:
-            chain = 'bsc'
-            break
-        case Currency.CELO:
-            chain = 'celo'
-            break
-        case Currency.ETH:
-            chain = 'eth'
-            break
-        case Currency.ONE:
-            chain = 'one'
-            break
-        case Currency.MATIC:
-            chain = 'polygon'
-            break
-        default:
-            throw new Error(`Not defined for ${currency} blockchain`)
-    }
-    try {
-        const module = await import(`@tatumio/tatum-${chain}`)
-        return module[functionName]
-    } catch (e) {
-        console.error(`Importing ${functionName} function for ${currency} currency failed`)
-        console.error(e)
-        throw new Error(e)
-    }
-}
+import {getImplementationFor} from "src/utils";
 
 /**
  * Deploy new smart contract for NFT auction logic. Smart contract enables auction operator to create new auction for NFT (ERC-721/1155).
@@ -312,4 +262,4 @@ export const sendAuctionSettle = async (currency: Currency, testnet: boolean, bo
     return await blockchainSendAuctionSettle(testnet, body, provider)
 }
 
-export { getAuctionFee, getAuction, getAuctionFeeRecipient, } from "@tatumio/tatum-core";
+export { Auction, getAuctionFee, getAuction, getAuctionFeeRecipient,} from "@tatumio/tatum-core";
