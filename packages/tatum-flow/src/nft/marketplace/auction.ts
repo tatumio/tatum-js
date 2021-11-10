@@ -1,4 +1,5 @@
 export {
+    Auction,
     getAuctionFee,
     getAuction,
     getAuctionFeeRecipient,
