@@ -1,35 +1,7 @@
 import {Currency} from "@tatumio/tatum-core";
+import {AuctionFn, NFTFn, CustodialWalletFn} from "src/utils/types";
 
-type AuctionFn =
-    'deployAuction'
-    | 'prepareDeployAuction'
-    | 'prepareAuctionUpdateFee'
-    | 'prepareAuctionUpdateFeeRecipient'
-    | 'prepareAuctionApproveNftTransfer'
-    | 'prepareAuctionApproveErc20Transfer'
-    | 'prepareAuctionCreate'
-    | 'prepareAuctionBid'
-    | 'prepareAuctionCancel'
-    | 'prepareAuctionSettle'
-    | 'sendAuctionUpdateFee'
-    | 'sendAuctionUpdateFeeRecipient'
-    | 'sendAuctionApproveNftTransfer'
-    | 'sendAuctionApproveErc20Transfer'
-    | 'sendAuctionCreate'
-    | 'sendAuctionBid'
-    | 'sendAuctionCancel'
-    | 'sendAuctionSettle'
-
-type NFTFn = 'mintNFT'
-    | 'deployNFT'
-    | 'createNFT'
-    | 'mintNFTWithUri'
-    | 'mintMultipleNFTWithUri'
-    | 'burnNFT'
-    | 'updateCashbackForAuthorNFT'
-    | 'transferNFT'
-
-export async function getImplementationFor(currency: Currency, functionName: AuctionFn | NFTFn) {
+export async function getImplementationFor(currency: Currency, functionName: AuctionFn | NFTFn | CustodialWalletFn) {
     let chain
     switch (currency) {
         case Currency.ALGO:
