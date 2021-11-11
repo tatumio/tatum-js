@@ -1,4 +1,4 @@
-import { generateBnbWallet, generateAddressFromPrivatekey } from 'src'
+import { generateBnbWallet, generateAddressFromPrivatekey } from '../'
 
 describe('Address tests', () => {
   it('should generate address from private key for BNB testnet', async () => {

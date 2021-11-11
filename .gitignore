@@ -39,3 +39,5 @@ lerna-debug.log*
 
 .yalc
 yalc.lock
+
+tsconfig.tsbuildinfo

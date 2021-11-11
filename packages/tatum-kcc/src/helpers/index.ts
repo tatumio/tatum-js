@@ -1,6 +1,6 @@
 import { buildSmartContractMethodInvocation, Currency, listing } from '@tatumio/tatum-core'
 import { ClassType } from 'class-transformer/ClassTransformer'
-import { prepareKccClient, prepareKccSmartContractWriteMethodInvocation } from 'src'
+import { prepareKccClient, prepareKccSmartContractWriteMethodInvocation } from '../transaction'
 import { kccBroadcast } from '../blockchain/kcc'
 import Web3 from 'web3'
 

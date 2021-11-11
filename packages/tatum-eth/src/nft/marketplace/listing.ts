@@ -13,11 +13,8 @@ import {
   UpdateMarketplaceFee,
   UpdateMarketplaceFeeRecipient,
 } from '@tatumio/tatum-core'
-import {
-  prepareEthDeployMarketplaceListingSignedTransaction,
-  sendEthDeployMarketplaceListingSignedTransaction
-} from '../../transaction'
-import { helperBroadcastTx, helperPrepareSCCall } from 'src/helpers'
+import { prepareEthDeployMarketplaceListingSignedTransaction, sendEthDeployMarketplaceListingSignedTransaction } from '../../transaction'
+import { helperBroadcastTx, helperPrepareSCCall } from '../../helpers'
 import { prepareApproveErc20 } from '../../fungible'
 
 /**
@@ -98,12 +95,7 @@ export const prepareMarketplaceCreateListing = async (body: CreateMarketplaceLis
  */
 export const prepareMarketplaceBuyListing = async (body: InvokeMarketplaceListingOperation, provider?: string) => {
   const { body: validatedBody, params } = await prepareMarketplaceBuyListingAbstraction(body)
-  return await helperPrepareSCCall(
-    validatedBody,
-    'buyAssetFromListing',
-    params,
-    provider
-  )
+  return await helperPrepareSCCall(validatedBody, 'buyAssetFromListing', params, provider)
 }
 
 /**

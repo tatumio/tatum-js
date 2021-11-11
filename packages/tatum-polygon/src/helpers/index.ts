@@ -1,6 +1,6 @@
 import { buildSmartContractMethodInvocation, Currency, listing } from '@tatumio/tatum-core'
 import { ClassType } from 'class-transformer/ClassTransformer'
-import { preparePolygonClient, preparePolygonSmartContractWriteMethodInvocation } from 'src'
+import { preparePolygonClient, preparePolygonSmartContractWriteMethodInvocation } from '../'
 import { polygonBroadcast } from '../blockchain/polygon'
 import Web3 from 'web3'
 
@@ -16,6 +16,7 @@ export const helperGetWeb3Client = (testnet: boolean, chain: Currency, provider?
 export const helperPrepareSCCall = async (
   testnet: boolean,
   body: any,
+  // eslint-disable-next-line @typescript-eslint/ban-types
   clazz: ClassType<object>,
   methodName: string,
   params: any[],

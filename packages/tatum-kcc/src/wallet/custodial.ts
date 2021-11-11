@@ -10,12 +10,7 @@ import {
 } from '@tatumio/tatum-core'
 import { prepareBatchTransferFromCustodialWalletAbstract, prepareTransferFromCustodialWalletAbstract } from '@tatumio/tatum-defi'
 import BigNumber from 'bignumber.js'
-import {
-  sendKccGenerateCustodialWalletSignedTransaction,
-  prepareKccGenerateCustodialWalletSignedTransaction,
-  getKccErc20ContractDecimals,
-  prepareKccSmartContractWriteMethodInvocation,
-} from '../'
+import { getKccErc20ContractDecimals, prepareKccGenerateCustodialWalletSignedTransaction, prepareKccSmartContractWriteMethodInvocation, sendKccGenerateCustodialWalletSignedTransaction } from '../transaction'
 import { getErc20Decimals } from '../fungible'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
 

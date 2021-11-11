@@ -29,7 +29,7 @@ import {
   TronTransferTrc721,
   TronUpdateCashbackTrc721,
   GenerateTronCustodialAddress,
-} from 'src/model'
+} from '../model'
 
 // tslint:disable-next-line:no-var-requires
 const TronWeb = require('tronweb')

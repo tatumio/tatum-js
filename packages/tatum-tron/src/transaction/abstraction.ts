@@ -1,6 +1,6 @@
-import {Currency} from '@tatumio/tatum-core';
-import {sendTronTransaction} from './tron';
-import {TransferTron} from "src/model";
+import { Currency } from '@tatumio/tatum-core'
+import { sendTronTransaction } from './tron'
+import { TransferTron } from '../model'
 
 /**
  * Perform any native asset transaction.
@@ -9,7 +9,6 @@ import {TransferTron} from "src/model";
  * @param body Body of the transaction.
  * @param provider Optional provider to use for broadcasting signed tx to the blockchain.
  */
-export const sendTransaction = async (testnet: boolean, chain: Currency,
-                                      body: TransferTron, provider?: string) => {
-    return sendTronTransaction(testnet, body as TransferTron);
-};
+export const sendTransaction = async (testnet: boolean, chain: Currency, body: TransferTron, provider?: string) => {
+  return sendTronTransaction(testnet, body as TransferTron)
+}

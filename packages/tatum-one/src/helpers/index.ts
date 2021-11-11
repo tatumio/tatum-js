@@ -1,6 +1,6 @@
 import { buildSmartContractMethodInvocation, Currency, listing } from '@tatumio/tatum-core'
 import { ClassType } from 'class-transformer/ClassTransformer'
-import { oneBroadcast } from 'src'
+import { oneBroadcast } from '../'
 import Web3 from 'web3'
 import { prepareOneClient, prepareOneSmartContractWriteMethodInvocation } from '../transaction'
 

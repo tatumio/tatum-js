@@ -1,10 +1,8 @@
-import {fromBase58, fromSeed} from 'bip32';
-import {mnemonicToSeed} from 'bip39';
-import * as elliptic from 'elliptic';
-import {
-    Currency,
-} from '@tatumio/tatum-core';
-import {FLOW_DERIVATION_PATH} from "src/constants";
+import { fromBase58, fromSeed } from 'bip32'
+import { mnemonicToSeed } from 'bip39'
+import * as elliptic from 'elliptic'
+import { Currency } from '@tatumio/tatum-core'
+import { FLOW_DERIVATION_PATH } from '../constants'
 
 /**
  * Generate FLOW or FUSD public key
@@ -13,9 +11,9 @@ import {FLOW_DERIVATION_PATH} from "src/constants";
  * @returns blockchain address
  */
 const generateFlowPublicKey = (xpub: string, i: number) => {
-    const w = fromBase58(xpub).derivePath(String(i))
-    const s = new elliptic.ec('secp256k1').keyFromPublic(w.publicKey).getPublic().encode('hex', false)
-    return s.slice(2)
+  const w = fromBase58(xpub).derivePath(String(i))
+  const s = new elliptic.ec('secp256k1').keyFromPublic(w.publicKey).getPublic().encode('hex', false)
+  return s.slice(2)
 }
 
 /**
@@ -23,8 +21,8 @@ const generateFlowPublicKey = (xpub: string, i: number) => {
  * @returns blockchain address
  */
 export const generateFlowPublicKeyFromPrivateKey = (pk: string) => {
-    const s = new elliptic.ec('secp256k1').keyFromPrivate(pk).getPublic().encode('hex', false)
-    return s.slice(2)
+  const s = new elliptic.ec('secp256k1').keyFromPrivate(pk).getPublic().encode('hex', false)
+  return s.slice(2)
 }
 
 /**
@@ -32,11 +30,10 @@ export const generateFlowPublicKeyFromPrivateKey = (pk: string) => {
  * @returns blockchain private key to the address
  */
 const generateFlowPrivateKey = async (mnemonic: string, i: number, alg = 'secp256k1') => {
-    const key = fromSeed(await mnemonicToSeed(mnemonic))
-        .derivePath(FLOW_DERIVATION_PATH)
-        .derive(i)
-        .privateKey as Buffer
-    return new elliptic.ec(alg).keyFromPrivate(key).getPrivate().toString(16)
+  const key = fromSeed(await mnemonicToSeed(mnemonic))
+    .derivePath(FLOW_DERIVATION_PATH)
+    .derive(i).privateKey as Buffer
+  return new elliptic.ec(alg).keyFromPrivate(key).getPrivate().toString(16)
 }
 
 /**
@@ -48,7 +45,7 @@ const generateFlowPrivateKey = async (mnemonic: string, i: number, alg = 'secp25
  * @returns blockchain address
  */
 export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xpub: string, i: number) => {
-    return generateFlowPublicKey(xpub, i)
+  return generateFlowPublicKey(xpub, i)
 }
 
 /**
@@ -60,5 +57,5 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
  * @returns blockchain private key to the address
  */
 export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: boolean, mnemonic: string, i: number) => {
-    return generateFlowPrivateKey(mnemonic, i)
+  return generateFlowPrivateKey(mnemonic, i)
 }
