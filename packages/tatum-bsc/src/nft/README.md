@@ -83,7 +83,7 @@ const transactionHash = await transferNFT(false, {
 
 ## Update cashback for an author NFT
 ```typescript
-const transactionHash = await updateCashbackForAuthorNFT(false, {
+const transactionHash = await updateCashbackForAuthorNFT({
     to: '0x0ff64c166a462b31ed657c9d88c5ac4fef6b88b6',
     tokenId: '12',
     chain: Currency.ETH,
