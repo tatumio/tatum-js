@@ -30,12 +30,11 @@ import { helperBroadcastTx, helperPrepareSCCall, helperGetWeb3Client } from '../
  * Buyer of the auction must perform approval for the smart contract to access ERC20 token, before the actual bid() method is called.
  * Once there is higher bid than the actual one, the previous bidder's funds will be returned to him and new bidder will be the current winning one.
  * When auction ends, anyone can settle the auction - NFT will be sent to the bidder, assets to the seller and fee to the operator.
- * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const deployAuction = async (testnet: boolean, body: DeployNftAuction, provider?: string) =>
+export const deployAuction = async (body: DeployNftAuction, provider?: string) =>
   helperBroadcastTx(await prepareDeployAuction(body, provider), body.signatureId)
 
 /**

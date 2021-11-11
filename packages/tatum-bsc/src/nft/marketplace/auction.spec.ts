@@ -25,7 +25,7 @@ describe('Auction  tests', () => {
       body.feeRecipient = '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'
       body.auctionFee = 150
       body.chain = Currency.BSC
-      const test = await deployAuction(true, body, 'https://data-seed-prebsc-2-s1.binance.org:8545')
+      const test = await deployAuction(body, 'https://data-seed-prebsc-2-s1.binance.org:8545')
       console.log(test)
       expect(test).toBeDefined()
     })
