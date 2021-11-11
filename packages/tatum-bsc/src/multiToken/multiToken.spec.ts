@@ -14,7 +14,7 @@ describe('NFT tests', () => {
 
   describe('NFT BSC 1155 transactions', () => {
     it('should test bsc 1155 deploy transaction', async () => {
-      const deployMultiTokenToken = await deployMultiToken(true, {
+      const deployMultiTokenToken = await deployMultiToken({
         chain: Currency.BSC,
         fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
         uri: 'tatum',
