@@ -20,7 +20,7 @@ describe('Marketplace Listing tests', () => {
       body.feeRecipient = '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'
       body.marketplaceFee = 150
       body.chain = Currency.BSC
-      const test = await deployMarketplaceListing(true, body, 'https://data-seed-prebsc-2-s1.binance.org:8545')
+      const test = await deployMarketplaceListing(body, 'https://data-seed-prebsc-2-s1.binance.org:8545')
       console.log(test)
       expect(test).toBeDefined()
     })
