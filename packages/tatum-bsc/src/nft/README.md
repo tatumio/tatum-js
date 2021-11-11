@@ -73,7 +73,7 @@ const transactionHash = await burnNFT({
 
 ## Transfer NFT
 ```typescript
-const transactionHash = await transferNFT(false, {
+const transactionHash = await transferNFT({
     to: '0x0ff64c166a462b31ed657c9d88c5ac4fef6b88b6',
     tokenId: '12',
     chain: Currency.ETH,

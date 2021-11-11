@@ -69,7 +69,7 @@ describe('NFT tests', () => {
       console.log(await createNFT(true, body, readFileSync('/Users/ssramko/Downloads/logo_tatum.png'), 'Tatum LOGO', 'description'))
     })
     it('should test BSC send transaction', async () => {
-      const sendErc721Token = await transferNFT(true, {
+      const sendErc721Token = await transferNFT({
         to: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
         chain: Currency.BSC,
         tokenId: '1',

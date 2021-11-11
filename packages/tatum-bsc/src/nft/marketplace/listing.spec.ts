@@ -40,7 +40,7 @@ describe('Marketplace Listing tests', () => {
 
       await new Promise((r) => setTimeout(r, 10000))
       console.log(
-        await transferNFT(true, {
+        await transferNFT({
           to: '0xc4585ec777bA6dc5d33524Ca72c425D512780C31',
           chain: Currency.BSC,
           tokenId: '2',
