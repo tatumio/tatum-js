@@ -53,7 +53,7 @@ const transactionHash = await deployNFT({
 
 ## Mint NFT
 ```typescript
-const transactionHash = await mintNFTWithUri(false, {
+const transactionHash = await mintNFTWithUri({
     to: '0x0ff64c166a462b31ed657c9d88c5ac4fef6b88b6',
     url: 'https://my-token-metadata-url',
     tokenId: '12',

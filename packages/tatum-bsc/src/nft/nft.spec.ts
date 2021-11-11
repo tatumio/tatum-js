@@ -41,7 +41,7 @@ describe('NFT tests', () => {
     })
     it('should test bep 721 mint transaction', async () => {
       try {
-        const mintedToken = await mintNFTWithUri(true, {
+        const mintedToken = await mintNFTWithUri({
           to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
           chain: Currency.BSC,
           tokenId: '1',
