@@ -179,12 +179,10 @@ export const prepareAuctionCancelAbstraction = async (body: InvokeAuctionOperati
 
 /**
  * Settle auction. There must be buyer present for that auction. NFT will be sent to the bidder, assets to the seller and fee to the operator.
- * @param testnet chain to work with
  * @param body request data
- * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareAuctionSettleAbstraction = async (testnet: boolean, body: InvokeAuctionOperation) => {
+export const prepareAuctionSettleAbstraction = async (body: InvokeAuctionOperation) => {
   await validateBody(body, InvokeAuctionOperation)
   return [body.id]
 }

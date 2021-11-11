@@ -2,11 +2,11 @@ import { ValidationArguments, ValidatorConstraint, ValidatorConstraintInterface 
 
 @ValidatorConstraint({ name: 'mnemonicIndexPrivateKey', async: false })
 export class TransferEthOffchainValidator implements ValidatorConstraintInterface {
-  public defaultMessage(validationArguments?: ValidationArguments) {
+  public defaultMessage(_validationArguments?: ValidationArguments) {
     return 'Either mnemonic and index, or privateKey a must be present.'
   }
 
-  public validate(value: any, validationArguments?: ValidationArguments) {
+  public validate(_value: any, validationArguments?: ValidationArguments) {
     const data = validationArguments?.object as any
     return !(data.mnemonic && data.index >= 0 && data.privateKey)
   }
