@@ -155,10 +155,9 @@ export const prepareApproveFromCustodialWallet = async (body: ApproveCustodialTr
 
 /**
  * Send signed approve transaction from the custodial SC wallet.
- * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendApproveFromCustodialWallet = async (testnet: boolean, body: ApproveCustodialTransfer, provider?: string) =>
+export const sendApproveFromCustodialWallet = async (body: ApproveCustodialTransfer, provider?: string) =>
   helperBroadcastTx(await prepareApproveFromCustodialWallet(body, provider), body.signatureId)
