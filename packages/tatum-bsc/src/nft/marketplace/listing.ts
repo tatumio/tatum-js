@@ -117,12 +117,11 @@ export const prepareMarketplaceBuyListing = async (body: InvokeMarketplaceListin
 
 /**
  * Cancel listing on the marketplace. Only possible for the seller or the operator. There must be no buyer present for that listing. NFT asset is sent back to the seller.
- * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareMarketplaceCancelListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation, provider?: string) => {
+export const prepareMarketplaceCancelListing = async (body: InvokeMarketplaceListingOperation, provider?: string) => {
   const params = await prepareMarketplaceCancelListingAbstraction(body)
   return await helperPrepareSCCall(body, 'cancelListing', params, provider)
 }
@@ -173,12 +172,11 @@ export const sendMarketplaceBuyListing = async (body: InvokeMarketplaceListingOp
   helperBroadcastTx(await prepareMarketplaceBuyListing(body, provider), body.signatureId)
 /**
  * Cancel listing on the marketplace. Only possible for the seller or the operator. There must be no buyer present for that listing. NFT asset is sent back to the seller.
- * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendMarketplaceCancelListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation, provider?: string) =>
-  helperBroadcastTx(await prepareMarketplaceCancelListing(testnet, body, provider), body.signatureId)
+export const sendMarketplaceCancelListing = async (body: InvokeMarketplaceListingOperation, provider?: string) =>
+  helperBroadcastTx(await prepareMarketplaceCancelListing(body, provider), body.signatureId)
 
 export { getMarketplaceFee, getMarketplaceListing, getMarketplaceFeeRecipient } from '@tatumio/tatum-core'
