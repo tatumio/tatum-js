@@ -81,11 +81,10 @@ export const mintMultipleNFTWithUri = async (body: MintMultipleErc721, provider?
 
 /**
  * Burn new NFT token. Token will no longer exists.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const burnNFT = async (testnet: boolean, body: BurnErc721, provider?: string) => {
+export const burnNFT = async (body: BurnErc721, provider?: string) => {
   return sendBurnBep721Transaction(body, provider)
 }
 

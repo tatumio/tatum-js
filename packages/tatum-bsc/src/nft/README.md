@@ -64,7 +64,7 @@ const transactionHash = await mintNFTWithUri({
 
 ## Burn NFT
 ```typescript
-const transactionHash = await burnNFT(false, {
+const transactionHash = await burnNFT({
     tokenId: '12',
     chain: Currency.ETH,
     contractAddress: '0x7060694f5ce1feb5a255d06fdcf6e4f7a3507492',
