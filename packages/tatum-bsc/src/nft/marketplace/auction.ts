@@ -56,12 +56,11 @@ export const prepareDeployAuction = async (body: DeployNftAuction, provider?: st
 
 /**
  * Update auction fee.
- * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareAuctionUpdateFee = async (testnet: boolean, body: UpdateAuctionFee, provider?: string) => {
+export const prepareAuctionUpdateFee = async (body: UpdateAuctionFee, provider?: string) => {
   const params = await prepareAuctionUpdateFeeAbstraction(body)
   return await helperPrepareSCCall(body, 'setAuctionFee', params, provider, auction.abi)
 }
@@ -172,7 +171,7 @@ export const prepareAuctionSettle = async (testnet: boolean, body: InvokeAuction
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendAuctionUpdateFee = async (testnet: boolean, body: UpdateAuctionFee, provider?: string) =>
-  helperBroadcastTx(await prepareAuctionUpdateFee(testnet, body, provider), body.signatureId)
+  helperBroadcastTx(await prepareAuctionUpdateFee(body, provider), body.signatureId)
 /**
  * Update auction fee recipient.
  * @param testnet chain to work with
