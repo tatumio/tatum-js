@@ -3,7 +3,7 @@ import { generateMnemonic, mnemonicToSeed } from 'bip39'
 import hdkey from 'hdkey'
 import { QTUM_DERIVATION_PATH, QTUM_NETWORK_MAINNET, QTUM_NETWORK_TESTNET } from '../constants'
 import { TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
-import { WalletWithMnemonic } from '@tatumio/tatum-defi'
+import { WalletWithMnemonic } from '@tatumio/tatum-ledger'
 
 /**
  * Generate Qtum wallet

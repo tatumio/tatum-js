@@ -1,5 +1,5 @@
 import { generateMnemonic } from 'bip39'
-import { WalletWithMnemonic } from '@tatumio/tatum-defi'
+import { WalletWithMnemonic } from '@tatumio/tatum-ledger'
 import cardano from './cardano.crypto'
 
 /**

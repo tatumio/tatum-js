@@ -3,7 +3,7 @@ import { networks } from 'bitcoinjs-lib'
 // @ts-ignore
 import hdkey from 'hdkey'
 import { TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
-import { WalletWithMnemonic } from '@tatumio/tatum-defi'
+import { WalletWithMnemonic } from '@tatumio/tatum-ledger'
 import { BTC_DERIVATION_PATH } from '../constants'
 
 /**
