@@ -20,6 +20,7 @@ export enum Currency {
   BUSD_BSC = 'BUSD_BSC',
   B2U_BSC = 'B2U_BSC',
   BETH = 'BETH',
+  GAMEE = 'GAMEE',
   BBTC = 'BBTC',
   BADA = 'BADA',
   RMD = 'RMD',

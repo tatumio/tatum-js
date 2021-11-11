@@ -1,7 +1,5 @@
+import { auction, Currency, erc1155TokenABI, erc721TokenABI } from '@tatumio/tatum-core'
 import {
-  auction,
-  erc1155TokenABI,
-  erc721TokenABI,
   prepareAuctionApproveNftTransferAbstraction,
   prepareAuctionBidAbstraction,
   prepareAuctionCancelAbstraction,
@@ -9,7 +7,7 @@ import {
   prepareAuctionSettleAbstraction,
   prepareAuctionUpdateFeeAbstraction,
   prepareAuctionUpdateFeeRecipientAbstraction,
-} from '@tatumio/tatum-core'
+} from '@tatumio/tatum-defi'
 import {
   ApproveErc20,
   ApproveNftTransfer,
@@ -21,11 +19,11 @@ import {
 } from '@tatumio/tatum-core'
 import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../../helpers'
 import { prepareApproveErc20 } from '../../fungible'
-import { prepareDeployAuction as prepareCeloDeployAuctionSignedTransaction } from '@tatumio/tatum-celo'
-import { prepareDeployAuction as prepareOneDeployAuctionSignedTransaction } from '@tatumio/tatum-one'
-import { prepareDeployAuction as prepareEthDeployAuctionSignedTransaction } from '@tatumio/tatum-eth'
-import { prepareDeployAuction as prepareBscDeployAuctionSignedTransaction } from '@tatumio/tatum-bsc'
-import { prepareDeployAuction as preparePolygonDeployAuctionSignedTransaction } from '@tatumio/tatum-polygon'
+import { prepareDeployAuction as prepareCeloDeployAuctionSignedTransaction } from '@tatumio/tatum-celo/src'
+import { prepareDeployAuction as prepareOneDeployAuctionSignedTransaction } from '@tatumio/tatum-one/src'
+import { prepareDeployAuction as prepareEthDeployAuctionSignedTransaction } from '@tatumio/tatum-eth/src'
+import { prepareDeployAuction as prepareBscDeployAuctionSignedTransaction } from '@tatumio/tatum-bsc/src'
+import { prepareDeployAuction as preparePolygonDeployAuctionSignedTransaction } from '@tatumio/tatum-polygon/src'
 
 /**
  * Deploy new smart contract for NFT auction logic. Smart contract enables auction operator to create new auction for NFT (ERC-721/1155).
@@ -67,7 +65,7 @@ export const prepareDeployAuction = async (testnet: boolean, body: DeployNftAuct
     case Currency.ETH:
       return await prepareEthDeployAuctionSignedTransaction(body, provider)
     case Currency.BSC:
-      return await prepareBscDeployAuctionSignedTransaction(body, provider)
+      return await prepareBscDeployAuctionSignedTransaction(testnet, body, provider)
     case Currency.MATIC:
       return await preparePolygonDeployAuctionSignedTransaction(testnet, body, provider)
     default:
@@ -274,4 +272,4 @@ export const sendAuctionCancel = async (testnet: boolean, body: InvokeAuctionOpe
 export const sendAuctionSettle = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) =>
   helperBroadcastTx(body.chain, await prepareAuctionSettle(testnet, body, provider), body.signatureId)
 
-export { Auction, getAuctionFee, getAuction, getAuctionFeeRecipient } from '@tatumio/tatum-core'
+export { Auction, getAuctionFee, getAuction, getAuctionFeeRecipient } from '@tatumio/tatum-defi'
