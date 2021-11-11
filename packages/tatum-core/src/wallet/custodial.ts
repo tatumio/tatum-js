@@ -104,7 +104,7 @@ export const obtainCustodialAddressType = (body: GenerateCustodialAddress) => {
 export const prepareTransferFromCustodialWalletAbstract = async (
   testnet: boolean,
   body: TransferFromCustodialAddress,
-  getContractDecimals: (testnet: boolean, contractAddress: string, provider?: string) => Promise<any>,
+  getContractDecimals: (contractAddress: string, provider?: string, testnet?: boolean) => Promise<any>,
   prepareSmartContractWriteMethodInvocation: (
     testnet: boolean,
     body: TransferFromCustodialAddress,
@@ -131,7 +131,7 @@ export const prepareTransferFromCustodialWalletAbstract = async (
     amount = amount.multipliedBy(new BigNumber(10).pow(decimals))
   } else if (body.contractType === ContractType.FUNGIBLE_TOKEN) {
     tokenId = new BigNumber(0)
-    amount = amount.multipliedBy(new BigNumber(10).pow(await getContractDecimals(testnet, body.tokenAddress, provider)))
+    amount = amount.multipliedBy(new BigNumber(10).pow(await getContractDecimals(body.tokenAddress, provider, testnet)))
   }
   r.params = [
     body.tokenAddress || '0x000000000000000000000000000000000000dEaD',
