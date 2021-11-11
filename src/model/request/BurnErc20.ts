@@ -1,6 +1,7 @@
 import {Type} from 'class-transformer'
-import {IsInt, IsNotEmpty, IsNumberString, IsOptional, Length, Min, ValidateNested,} from 'class-validator'
+import {IsInt, IsNotEmpty, IsNumberString, IsOptional, Length, Min, ValidateNested, ValidateIf} from 'class-validator'
 import {Fee} from './Fee'
+import {Currency} from './Currency'
 import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId'
 
 export class BurnErc20 extends PrivateKeyOrSignatureId {
@@ -21,4 +22,9 @@ export class BurnErc20 extends PrivateKeyOrSignatureId {
     @Type(() => Fee)
     @ValidateNested()
     public fee?: Fee;
+
+    @ValidateIf(o => o.chain === Currency.ALGO && o.signatureId)
+    @IsNotEmpty()
+    @Length(42, 58)
+    public from?: string;
 }
