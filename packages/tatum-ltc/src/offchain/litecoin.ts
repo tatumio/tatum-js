@@ -66,7 +66,7 @@ export const signLitecoinOffchainKMSTransaction = async (tx: TransactionKMS, mne
         if (response.vIn === '-1') {
             continue;
         }
-        builder.sign(PrivateKey.fromWIF(await generatePrivateKeyFromMnemonic(Currency.LTC, testnet, mnemonic, response.address?.derivationKey || 0)));
+        builder.sign(PrivateKey.fromWIF(await generatePrivateKeyFromMnemonic(testnet, mnemonic, response.address?.derivationKey || 0)));
     }
     return builder.serialize(true);
 };
@@ -111,7 +111,7 @@ export const prepareLitecoinSignedOffchainTransaction =
         }
         if (new BigNumber(lastVin.amount).isGreaterThan(0)) {
             if (xpub) {
-                tx.to(generateAddressFromXPub(Currency.LTC, testnet, xpub, 0),
+                tx.to(generateAddressFromXPub(testnet, xpub, 0),
                     Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
             } else if (changeAddress) {
                 tx.to(changeAddress, Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)));
@@ -131,7 +131,7 @@ export const prepareLitecoinSignedOffchainTransaction =
             }
             if (mnemonic) {
                 const derivationKey = input.address?.derivationKey || 0;
-                tx.sign(PrivateKey.fromWIF(await generatePrivateKeyFromMnemonic(Currency.LTC, testnet, mnemonic, derivationKey)));
+                tx.sign(PrivateKey.fromWIF(await generatePrivateKeyFromMnemonic(testnet, mnemonic, derivationKey)));
             } else if (keyPair) {
                 const { privateKey } = keyPair.find(k => k.address === input.address.address) as KeyPair;
                 tx.sign(PrivateKey.fromWIF(privateKey));
