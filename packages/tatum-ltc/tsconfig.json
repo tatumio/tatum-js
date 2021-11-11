@@ -22,7 +22,9 @@
     "resolveJsonModule": true,
     "emitDecoratorMetadata": true,
     "strictPropertyInitialization": false,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true
   },
   "exclude": [
     "node_modules",
