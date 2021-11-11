@@ -274,4 +274,4 @@ export const sendAuctionCancel = async (testnet: boolean, body: InvokeAuctionOpe
 export const sendAuctionSettle = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) =>
   helperBroadcastTx(body.chain, await prepareAuctionSettle(testnet, body, provider), body.signatureId)
 
-export { Auction, getAuctionFee, getAuction, getAuctionFeeRecipient } from '@tatumio/tatum-core'
+export { Auction, getAuctionFee, getAuction, getAuctionFeeRecipient } from '@tatumio/tatum-defi'
