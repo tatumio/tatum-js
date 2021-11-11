@@ -11,7 +11,7 @@ import {
   CeloMintMultipleErc721,
   CeloTransferErc721,
   CeloUpdateCashbackErc721,
-} from '@tatumio/tatum-celo'
+} from '@tatumio/tatum-celo/src'
 import {
   mintNFTWithUri as ethMintNFTWithUri,
   deployNFT as ethDeployNFT,
@@ -41,7 +41,7 @@ import {
   updateCashbackForAuthorNFT as oneUpdateCashbackForAuthorNFT,
   transferNFT as oneTransferNFT,
   OneMint721,
-} from '@tatumio/tatum-one'
+} from '@tatumio/tatum-one/src'
 import {
   mintNFTWithUri as tronMintNFTWithUri,
   deployNFT as tronDeployNFT,
@@ -54,7 +54,7 @@ import {
   TronMintTrc721,
   TronTransferTrc721,
   TronUpdateCashbackTrc721,
-} from '@tatumio/tatum-tron'
+} from '@tatumio/tatum-tron/src'
 import {
   mintNFTWithUri as bscMintNFTWithUri,
   deployNFT as bscDeployNFT,
@@ -74,8 +74,10 @@ import {
   FlowMintMultipleNft,
   FlowMintNft,
   FlowTransferNft,
-} from '@tatumio/tatum-flow'
-import { mintNFTRequest, TransactionHash, Currency, createNFTAbstraction, UpdateCashbackErc721 } from '@tatumio/tatum-core'
+} from '@tatumio/tatum-flow/src'
+import { TransactionHash, Currency, UpdateCashbackErc721, MintMultipleErc721 } from '@tatumio/tatum-core'
+import { mintNFTRequest, createNFTAbstraction } from '@tatumio/tatum-defi'
+import { TronMintMultipleTrc721 } from '@tatumio/tatum-tron'
 
 export const mintNFT = (body: CeloMintErc721 | EthMintErc721 | OneMint721) => mintNFTRequest(body)
 

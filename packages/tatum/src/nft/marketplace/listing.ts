@@ -35,13 +35,14 @@ import {
 import {
   deployMarketplaceListing as sendPolygonDeployMarketplaceListingSignedTransaction,
   prepareDeployMarketplaceListing as preparePolygonDeployMarketplaceListingSignedTransaction,
-} from '@tatumio/tatum-polygon'
+} from '@tatumio/tatum-polygon/src'
 import {
   DeployTronMarketplaceListing,
   UpdateTronMarketplaceFee,
   UpdateTronMarketplaceFeeRecipient,
   CreateTronMarketplaceListing,
-} from '@tatumio/tatum-tron'
+  InvokeTronMarketplaceListingOperation,
+} from '@tatumio/tatum-tron/src'
 
 /**
  * Deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
@@ -208,7 +209,15 @@ export const prepareMarketplaceBuyListing = async (
   }
 
   const { body: validatedBody, params } = await prepareMarketplaceBuyListingAbstraction(body)
-  return await helperPrepareSCCall(testnet, body, InvokeMarketplaceListingOperation, 'buyAssetFromListing', params, undefined, provider)
+  return await helperPrepareSCCall(
+    testnet,
+    validatedBody,
+    InvokeMarketplaceListingOperation,
+    'buyAssetFromListing',
+    params,
+    undefined,
+    provider
+  )
 }
 
 /**

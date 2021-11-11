@@ -5,43 +5,43 @@ import {
   helperBroadcastTx as celoBroadcast,
   helperGetWeb3Client as getCeloClient,
   helperPrepareSCCall as celoHelperPrepareSCCall,
-} from '@tatumio/tatum-celo'
+} from '@tatumio/tatum-celo/src'
 import {
   helperBroadcastTx as oneBroadcast,
   helperGetWeb3Client as prepareOneClient,
   helperPrepareSCCall as oneHelperPrepareSCCall,
-} from '@tatumio/tatum-one'
+} from '@tatumio/tatum-one/src'
 import {
   helperBroadcastTx as ethBroadcast,
   helperGetWeb3Client as getClient,
   helperPrepareSCCall as ethHelperPrepareSCCall,
-} from '@tatumio/tatum-eth'
+} from '@tatumio/tatum-eth/src'
 import {
   helperBroadcastTx as bscBroadcast,
   helperGetWeb3Client as getBscClient,
   helperPrepareSCCall as bscHelperPrepareSCCall,
-} from '@tatumio/tatum-bsc'
+} from '@tatumio/tatum-bsc/src'
 import {
   helperBroadcastTx as polygonBroadcast,
   helperGetWeb3Client as preparePolygonClient,
   helperPrepareSCCall as polygonHelperPrepareSCCall,
-} from '@tatumio/tatum-polygon'
-import { helperBroadcastTx as tronBroadcast } from '@tatumio/tatum-tron'
+} from '@tatumio/tatum-polygon/src'
+import { helperBroadcastTx as tronBroadcast } from '@tatumio/tatum-tron/src'
 
 export const helperBroadcastTx = async (chain: Currency, txData: string, signatureId?: string) => {
   switch (chain) {
     case Currency.CELO:
-      return await celoBroadcast(txData, signatureId)
+      return await celoBroadcast(chain, txData, signatureId)
     case Currency.ONE:
-      return await oneBroadcast(txData, signatureId)
+      return await oneBroadcast(chain, txData, signatureId)
     case Currency.ETH:
       return await ethBroadcast(txData, signatureId)
     case Currency.BSC:
-      return await bscBroadcast(txData, signatureId)
+      return await bscBroadcast(chain, txData, signatureId)
     case Currency.MATIC:
-      return await polygonBroadcast(txData, signatureId)
+      return await polygonBroadcast(chain, txData, signatureId)
     case Currency.TRON:
-      return await tronBroadcast(txData, signatureId)
+      return await tronBroadcast(chain, txData, signatureId)
     default:
       throw new Error('Unsupported chain')
   }
