@@ -36,7 +36,7 @@ export const burnMultiTokenBatch = async (body: BurnMultiTokenBatch, provider?: 
 export const transferMultiToken = async (body: TransferMultiToken, provider?: string) => {
   return sendBscMultiTokenTransaction(body, provider)
 }
-export const transferMultiTokenBatch = async (testnet: boolean, body: TransferMultiTokenBatch, provider?: string) => {
+export const transferMultiTokenBatch = async (body: TransferMultiTokenBatch, provider?: string) => {
   return sendBscMultiTokenBatchTransaction(body, provider)
 }
 

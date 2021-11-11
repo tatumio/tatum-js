@@ -57,7 +57,7 @@ describe('NFT tests', () => {
       expect(mintedToken).not.toBeNull()
     })
     it('should test bsc 1155 send batch transaction', async () => {
-      const sendMultiTokenToken = await transferMultiTokenBatch(true, {
+      const sendMultiTokenToken = await transferMultiTokenBatch({
         to: '0x6c4A48886b77D1197eCFBDaA3D3f35d81d584342',
         chain: Currency.BSC,
         tokenId: ['1', '2'],
