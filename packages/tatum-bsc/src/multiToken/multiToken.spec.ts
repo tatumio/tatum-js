@@ -41,7 +41,7 @@ describe('NFT tests', () => {
         ['12101', '12102'],
         ['12101', '12102'],
       ]
-      const mintedToken = await mintMultiTokenBatch(true, {
+      const mintedToken = await mintMultiTokenBatch({
         to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
         chain: Currency.BSC,
         tokenId,
