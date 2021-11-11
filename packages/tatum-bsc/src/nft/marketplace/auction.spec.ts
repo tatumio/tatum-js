@@ -83,7 +83,7 @@ describe('Auction  tests', () => {
       settle.contractAddress = '0x568bf1e6849e250f4705347a9cff717b5dcfc4ad'
       settle.id = tokenId
       settle.chain = Currency.BSC
-      console.log(await sendAuctionSettle(true, settle, 'https://data-seed-prebsc-2-s1.binance.org:8545'))
+      console.log(await sendAuctionSettle(settle, 'https://data-seed-prebsc-2-s1.binance.org:8545'))
     })
 
     it('should get auction', async () => {
