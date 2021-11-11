@@ -4,7 +4,7 @@ import { bscBroadcast } from '../blockchain'
 import Web3 from 'web3'
 import { getBscClient, prepareBscSmartContractWriteMethodInvocation } from '../transaction'
 
-export const helperBroadcastTx = async (chain: Currency, txData: string, signatureId?: string) => {
+export const helperBroadcastTx = async (txData: string, signatureId?: string) => {
   return await bscBroadcast(txData, signatureId)
 }
 
