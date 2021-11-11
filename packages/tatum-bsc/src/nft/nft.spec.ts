@@ -6,7 +6,7 @@ describe('NFT tests', () => {
   jest.setTimeout(99999)
   describe('NFT BSC transactions', () => {
     it('should test eth 721 deploy transaction', async () => {
-      const deployErc721Token = await deployNFT(true, {
+      const deployErc721Token = await deployNFT({
         symbol: 'TatumToken',
         chain: Currency.BSC,
         fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',

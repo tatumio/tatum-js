@@ -44,7 +44,7 @@ const nftRoyalty = await getNFTRoyalty(
 
 ## Deploy NFT
 ```typescript
-const transactionHash = await deployNFT(false, {
+const transactionHash = await deployNFT({
     name: 'MY_NFT',
     chain: Currency.ETH,
     symbil: 'NFT_SYMBOL'
