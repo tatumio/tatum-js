@@ -160,12 +160,11 @@ export const prepareAuctionSettle = async (body: InvokeAuctionOperation, provide
 
 /**
  * Update auction fee.
- * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendAuctionUpdateFee = async (testnet: boolean, body: UpdateAuctionFee, provider?: string) =>
+export const sendAuctionUpdateFee = async (body: UpdateAuctionFee, provider?: string) =>
   helperBroadcastTx(await prepareAuctionUpdateFee(body, provider), body.signatureId)
 /**
  * Update auction fee recipient.
