@@ -769,11 +769,6 @@
     reflect-metadata "^0.1.13"
     web3 "1.4.0"
 
-"@tatumio/tatum-ledger@file:../tatum-ledger":
-  version "0.0.1"
-  dependencies:
-    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-ledger-0.0.1-1461720a-3b1f-4ce3-9852-b9a0c29601c1-1636632235134/node_modules/@tatumio/tatum-core"
-
 "@tootallnate/once@1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"
