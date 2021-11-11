@@ -1,27 +1,27 @@
 import {
-    prepareAuctionApproveNftTransferAbstraction,
-    prepareAuctionBidAbstraction,
-    prepareAuctionCancelAbstraction,
-    prepareAuctionCreateAbstraction,
-    prepareAuctionSettleAbstraction,
-    prepareAuctionUpdateFeeAbstraction,
-    prepareAuctionUpdateFeeRecipientAbstraction,
+  prepareAuctionApproveNftTransferAbstraction,
+  prepareAuctionBidAbstraction,
+  prepareAuctionCancelAbstraction,
+  prepareAuctionCreateAbstraction,
+  prepareAuctionSettleAbstraction,
+  prepareAuctionUpdateFeeAbstraction,
+  prepareAuctionUpdateFeeRecipientAbstraction,
 } from '@tatumio/tatum-defi'
 import {
-    auction,
-    ApproveErc20,
-    ApproveNftTransfer,
-    CreateAuction,
-    DeployNftAuction,
-    erc1155TokenABI,
-    erc721TokenABI,
-    InvokeAuctionOperation,
-    UpdateAuctionFee,
-    UpdateMarketplaceFeeRecipient,
+  auction,
+  ApproveErc20,
+  ApproveNftTransfer,
+  CreateAuction,
+  DeployNftAuction,
+  erc1155TokenABI,
+  erc721TokenABI,
+  InvokeAuctionOperation,
+  UpdateAuctionFee,
+  UpdateMarketplaceFeeRecipient,
 } from '@tatumio/tatum-core'
-import {helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall} from '../../helpers'
-import {prepareApproveErc20} from '../../fungible'
-import {prepareCeloDeployAuctionSignedTransaction} from '../../transaction'
+import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../../helpers'
+import { prepareApproveErc20 } from '../../fungible'
+import { prepareCeloDeployAuctionSignedTransaction } from '../../transaction'
 
 /**
  * Deploy new smart contract for NFT auction logic. Smart contract enables auction operator to create new auction for NFT (ERC-721/1155).
