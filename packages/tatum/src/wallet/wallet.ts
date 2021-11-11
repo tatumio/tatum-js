@@ -1,5 +1,5 @@
 import { Currency } from '@tatumio/tatum-core'
-import { generateMnemonic, mnemonicToSeed } from 'bip39'
+import { generateMnemonic } from 'bip39'
 
 import { generateWallet as generateBtcWallet } from '@tatumio/tatum-btc'
 import { generateWallet as generateDogeWallet } from '@tatumio/tatum-doge'
@@ -19,7 +19,7 @@ import { generateWallet as generateXlmWallet } from '@tatumio/tatum-xlm'
 import { generateWallet as generateVetWallet } from '@tatumio/tatum-vet'
 // import { generateWallet as generateNeoWallet } from '@tatumio/tatum-neo'
 import { generateWallet as generateBnbWallet } from '@tatumio/tatum-bnb'
-// import { generateWallet as generateLyraWallet } from '@tatumio/tatum-lyra'
+import { generateWallet as generateLyraWallet } from '@tatumio/tatum-scrypta'
 import { generateWallet as generateAdaWallet } from '@tatumio/tatum-ada'
 import { generateWallet as generateAlgoWallet } from '@tatumio/tatum-algo'
 
