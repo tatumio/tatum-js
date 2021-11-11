@@ -1,5 +1,5 @@
-import { Currency } from '@tatumio/tatum-core'
 import { generateAddressFromXPub, generatePrivateKeyFromMnemonic } from './address'
+
 describe('Address tests', () => {
   it('should generate address 1 for BCH mainnet', () => {
     const address = generateAddressFromXPub(
