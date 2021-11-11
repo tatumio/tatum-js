@@ -66,7 +66,7 @@ describe('Auction  tests', () => {
       body.isErc721 = true
       body.seller = '0x80d8bac9a6901698b3749fe336bbd1385c1f98f2'
       body.chain = Currency.BSC
-      console.log(await sendAuctionCreate(true, body, 'https://data-seed-prebsc-2-s1.binance.org:8545'))
+      console.log(await sendAuctionCreate(body, 'https://data-seed-prebsc-2-s1.binance.org:8545'))
 
       await sleep(10000)
       const bid = new InvokeAuctionOperation()
