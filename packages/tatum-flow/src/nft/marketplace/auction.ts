@@ -3,4 +3,4 @@ export {
     getAuctionFee,
     getAuction,
     getAuctionFeeRecipient,
-} from "@tatumio/tatum-core"
+} from "@tatumio/tatum-defi"

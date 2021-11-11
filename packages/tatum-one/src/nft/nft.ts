@@ -1,10 +1,12 @@
 import {
-  BurnErc721,
   createNFTAbstraction,
+  mintNFTRequest,
+} from '@tatumio/tatum-defi'
+import {
+  BurnErc721,
   DeployErc721,
   MintErc721,
   MintMultipleErc721,
-  mintNFTRequest,
   TransactionHash,
   TransferErc721,
   UpdateCashbackErc721,
@@ -113,4 +115,4 @@ export const transferNFT = async (testnet: boolean, body: TransferErc721, provid
   return sendOneTransfer721SignedTransaction(testnet, body, provider)
 }
 
-export { getNFTsByAddress, getNFTContractAddress, getNFTMetadataURI, getNFTImage, getNFTRoyalty } from '@tatumio/tatum-core'
+export { getNFTsByAddress, getNFTContractAddress, getNFTMetadataURI, getNFTImage, getNFTRoyalty } from '@tatumio/tatum-defi'

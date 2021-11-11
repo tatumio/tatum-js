@@ -1,4 +1,4 @@
-import { Currency, WalletWithMnemonic, TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
+import { WalletWithMnemonic, TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
 import { generateMnemonic, mnemonicToSeed } from 'bip39'
 // @ts-ignore
 import hdkey from 'hdkey'

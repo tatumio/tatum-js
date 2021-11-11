@@ -1,4 +1,4 @@
-import { WalletWithAddress } from '@tatumio/tatum-core'
+import { WalletWithAddress } from '@tatumio/tatum-defi'
 import { RippleAPI } from 'ripple-lib'
 
 /**

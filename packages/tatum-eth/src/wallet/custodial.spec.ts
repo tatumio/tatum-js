@@ -15,9 +15,14 @@ import {
   Custodial_721_TokenWallet,
   Custodial_721_TokenWalletWithBatch,
   GenerateCustodialAddress,
-  obtainCustodialAddressType,
 } from '@tatumio/tatum-core'
-import { prepareEthGenerateCustodialWalletSignedTransaction, sendEthGenerateCustodialWalletSignedTransaction } from 'src/transaction'
+import {
+  obtainCustodialAddressType,
+} from '@tatumio/tatum-defi'
+import {
+  prepareEthGenerateCustodialWalletSignedTransaction,
+  sendEthGenerateCustodialWalletSignedTransaction
+} from 'src/transaction'
 
 describe('Custodial wallet tests', () => {
   process.env.TRON_PRO_API_KEY = 'b35409b4-7d11-491e-8760-32d2506a90b5'

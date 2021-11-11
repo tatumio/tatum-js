@@ -14,12 +14,15 @@
   },
   "dependencies": {
     "@tatumio/tatum-core": "file:../tatum-core",
+    "@tatumio/tatum-defi": "file:../tatum-defi",
     "@tatumio/tatum-ledger": "file:../tatum-ledger",
     "bignumber.js": "^9.0.0",
     "bip39": "^3.0.2",
     "class-transformer": "^0.2.3",
     "class-validator": "0.13.0",
-    "reflect-metadata": "^0.1.13"
+    "reflect-metadata": "^0.1.13",
+    "bip32": "^2.0.5",
+    "bitcoinjs-lib": "^5.2.0"
   },
   "devDependencies": {
     "@types/jest": "^27.0.2",

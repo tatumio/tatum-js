@@ -1,14 +1,16 @@
 import {
+    prepareTransferFromCustodialWalletAbstract,
+    prepareBatchTransferFromCustodialWalletAbstract
+} from '@tatumio/tatum-defi';
+
+import {
     GenerateTronCustodialAddress,
     TransferFromTronCustodialAddress,
     TransferFromTronCustodialAddressBatch
 } from 'src/model';
-
 import {
     SmartContractMethodInvocation,
     TransferFromCustodialAddress,
-    prepareTransferFromCustodialWalletAbstract,
-    prepareBatchTransferFromCustodialWalletAbstract
 } from '@tatumio/tatum-core';
 import {helperBroadcastTx} from '../helpers';
 import {

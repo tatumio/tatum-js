@@ -1,20 +1,21 @@
-import { MintErc721, mintNFTRequest, TransactionHash, createNFTAbstraction } from '@tatumio/tatum-core'
+import {mintNFTRequest, createNFTAbstraction} from '@tatumio/tatum-defi'
+import {MintErc721, TransactionHash} from '@tatumio/tatum-core'
 import {
-  CeloDeployErc721,
-  sendCeloDeployErc721Transaction,
-  CeloMintErc721,
-  sendCeloMintCashbackErc721Transaction,
-  sendCeloMintErc721Transaction,
-  CeloMintMultipleErc721,
-  sendCeloMintMultipleCashbackErc721Transaction,
-  sendCeloMintMultipleErc721Transaction,
-  CeloBurnErc721,
-  sendCeloBurnErc721Transaction,
-  CeloUpdateCashbackErc721,
-  sendCeloUpdateCashbackForAuthorErc721Transaction,
-  CeloTransferErc721,
-  sendCeloTransferErc721Transaction,
-} from 'src'
+    CeloDeployErc721,
+    sendCeloDeployErc721Transaction,
+    CeloMintErc721,
+    sendCeloMintCashbackErc721Transaction,
+    sendCeloMintErc721Transaction,
+    CeloMintMultipleErc721,
+    sendCeloMintMultipleCashbackErc721Transaction,
+    sendCeloMintMultipleErc721Transaction,
+    CeloBurnErc721,
+    sendCeloBurnErc721Transaction,
+    CeloUpdateCashbackErc721,
+    sendCeloUpdateCashbackForAuthorErc721Transaction,
+    CeloTransferErc721,
+    sendCeloTransferErc721Transaction,
+} from '..'
 
 export const mintNFT = (body: MintErc721) => mintNFTRequest(body)
 
@@ -25,7 +26,7 @@ export const mintNFT = (body: MintErc721) => mintNFTRequest(body)
  * @param provider optional provider do broadcast tx
  */
 export const deployNFT = async (testnet: boolean, body: CeloDeployErc721, provider?: string): Promise<TransactionHash> => {
-  return sendCeloDeployErc721Transaction(testnet, body, provider)
+    return sendCeloDeployErc721Transaction(testnet, body, provider)
 }
 
 /**
@@ -39,15 +40,15 @@ export const deployNFT = async (testnet: boolean, body: CeloDeployErc721, provid
  * @param provider optional provider do broadcast tx
  */
 export const createNFT = async (
-  testnet: boolean,
-  body: CeloMintErc721,
-  file: Buffer,
-  name: string,
-  description?: string,
-  scheme?: any,
-  provider?: string
+    testnet: boolean,
+    body: CeloMintErc721,
+    file: Buffer,
+    name: string,
+    description?: string,
+    scheme?: any,
+    provider?: string
 ) => {
-  return await createNFTAbstraction(() => mintNFTWithUri(testnet, body, provider), testnet, body, file, name, description, scheme, provider)
+    return await createNFTAbstraction(() => mintNFTWithUri(testnet, body, provider), testnet, body, file, name, description, scheme, provider)
 }
 
 /**
@@ -57,11 +58,11 @@ export const createNFT = async (
  * @param provider optional provider do broadcast tx
  */
 export const mintNFTWithUri = async (testnet: boolean, body: CeloMintErc721, provider?: string): Promise<TransactionHash> => {
-  if (body.authorAddresses) {
-    return sendCeloMintCashbackErc721Transaction(testnet, body, provider)
-  } else {
-    return sendCeloMintErc721Transaction(testnet, body, provider)
-  }
+    if (body.authorAddresses) {
+        return sendCeloMintCashbackErc721Transaction(testnet, body, provider)
+    } else {
+        return sendCeloMintErc721Transaction(testnet, body, provider)
+    }
 }
 
 /**
@@ -71,11 +72,11 @@ export const mintNFTWithUri = async (testnet: boolean, body: CeloMintErc721, pro
  * @param provider optional provider do broadcast tx
  */
 export const mintMultipleNFTWithUri = async (testnet: boolean, body: CeloMintMultipleErc721, provider?: string) => {
-  if (body.authorAddresses) {
-    return sendCeloMintMultipleCashbackErc721Transaction(testnet, body, provider)
-  } else {
-    return sendCeloMintMultipleErc721Transaction(testnet, body, provider)
-  }
+    if (body.authorAddresses) {
+        return sendCeloMintMultipleCashbackErc721Transaction(testnet, body, provider)
+    } else {
+        return sendCeloMintMultipleErc721Transaction(testnet, body, provider)
+    }
 }
 
 /**
@@ -85,7 +86,7 @@ export const mintMultipleNFTWithUri = async (testnet: boolean, body: CeloMintMul
  * @param provider optional provider do broadcast tx
  */
 export const burnNFT = async (testnet: boolean, body: CeloBurnErc721, provider?: string) => {
-  return sendCeloBurnErc721Transaction(testnet, body, provider)
+    return sendCeloBurnErc721Transaction(testnet, body, provider)
 }
 
 /**
@@ -95,7 +96,7 @@ export const burnNFT = async (testnet: boolean, body: CeloBurnErc721, provider?:
  * @param provider optional provider do broadcast tx
  */
 export const updateCashbackForAuthorNFT = async (testnet: boolean, body: CeloUpdateCashbackErc721, provider?: string) => {
-  return sendCeloUpdateCashbackForAuthorErc721Transaction(testnet, body, provider)
+    return sendCeloUpdateCashbackForAuthorErc721Transaction(testnet, body, provider)
 }
 
 /**
@@ -105,7 +106,9 @@ export const updateCashbackForAuthorNFT = async (testnet: boolean, body: CeloUpd
  * @param provider optional provider do broadcast tx
  */
 export const transferNFT = async (testnet: boolean, body: CeloTransferErc721, provider?: string) => {
-  return sendCeloTransferErc721Transaction(testnet, body, provider)
+    return sendCeloTransferErc721Transaction(testnet, body, provider)
 }
 
-export { getNFTsByAddress, getNFTContractAddress, getNFTMetadataURI, getNFTImage, getNFTRoyalty } from '@tatumio/tatum-core'
+export {
+    getNFTsByAddress, getNFTContractAddress, getNFTMetadataURI, getNFTImage, getNFTRoyalty
+} from '@tatumio/tatum-defi'

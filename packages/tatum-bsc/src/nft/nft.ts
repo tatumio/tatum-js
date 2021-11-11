@@ -1,10 +1,12 @@
 import {
-  BurnErc721,
   createNFTAbstraction,
+  mintNFTRequest,
+} from '@tatumio/tatum-defi'
+import {
+  BurnErc721,
   DeployErc721,
   MintErc721,
   MintMultipleErc721,
-  mintNFTRequest,
   TransactionHash,
   TransferErc721,
   UpdateCashbackErc721,
