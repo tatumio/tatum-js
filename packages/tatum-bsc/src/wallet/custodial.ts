@@ -35,12 +35,11 @@ export const generateCustodialWallet = async (body: GenerateCustodialAddress, pr
 /**
  * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, btu transaction costs connected to the withdrawal
  * of assets is covered by the deployer.
- * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareCustodialWallet = async (testnet: boolean, body: GenerateCustodialAddress, provider?: string) => {
+export const prepareCustodialWallet = async (body: GenerateCustodialAddress, provider?: string) => {
   return await prepareBscGenerateCustodialWalletSignedTransaction(body, provider)
 }
 
