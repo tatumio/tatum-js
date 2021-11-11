@@ -146,15 +146,12 @@ export const prepareApproveFromCustodialWallet = async (testnet: boolean, body: 
   ]
   delete body.amount
   return await helperPrepareSCCall(
-    testnet,
     {
       ...body,
       contractAddress: body.custodialAddress,
     },
-    ApproveCustodialTransfer,
     'approve',
     params,
-    undefined,
     provider,
     CustodialFullTokenWallet.abi
   )
