@@ -36,7 +36,7 @@ describe('Marketplace Listing tests', () => {
       body.price = '1'
       body.seller = '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'
       body.chain = Currency.BSC
-      console.log(await sendMarketplaceCreateListing(true, body, 'https://data-seed-prebsc-2-s1.binance.org:8545'))
+      console.log(await sendMarketplaceCreateListing(body, 'https://data-seed-prebsc-2-s1.binance.org:8545'))
 
       await new Promise((r) => setTimeout(r, 10000))
       console.log(

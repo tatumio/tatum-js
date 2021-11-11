@@ -89,12 +89,11 @@ export const prepareMarketplaceApproveErc20Spending = async (testnet: boolean, b
  * Create new listing on the marketplace.
  * After listing is created, seller must send the asset to the marketplace smart contract.
  * Only listing for existing NFTs can be created - seller must be owner of the NFT asset.
- * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareMarketplaceCreateListing = async (testnet: boolean, body: CreateMarketplaceListing, provider?: string) => {
+export const prepareMarketplaceCreateListing = async (body: CreateMarketplaceListing, provider?: string) => {
   const { body: validatedBody, params } = await prepareMarketplaceCreateListingAbstraction(body)
   return await helperPrepareSCCall(validatedBody, 'createListing', params, provider)
 }
@@ -158,13 +157,12 @@ export const sendMarketplaceApproveErc20Spending = async (testnet: boolean, body
  * Create new listing on the marketplace.
  * After listing is created, seller must send the asset to the marketplace smart contract.
  * Only listing for existing NFTs can be created - seller must be owner of the NFT asset.
- * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendMarketplaceCreateListing = async (testnet: boolean, body: CreateMarketplaceListing, provider?: string) =>
-  helperBroadcastTx(await prepareMarketplaceCreateListing(testnet, body, provider), body.signatureId)
+export const sendMarketplaceCreateListing = async (body: CreateMarketplaceListing, provider?: string) =>
+  helperBroadcastTx(await prepareMarketplaceCreateListing(body, provider), body.signatureId)
 /**
  * Buy listing on the marketplace. Buyer must either send native assets with this operation, or approve ERC20 token spending before.
  * After listing is sold, it's in a pending state to be processed by the marketplace. Noone receives the assets unless the marketplace operator processes that.
