@@ -1,4 +1,4 @@
-import { buildSmartContractMethodInvocation, Currency, listing } from '@tatumio/tatum-core'
+import { buildSmartContractMethodInvocation, listing } from '@tatumio/tatum-core'
 import { ClassType } from 'class-transformer/ClassTransformer'
 import { bscBroadcast } from '../blockchain'
 import Web3 from 'web3'
@@ -8,7 +8,7 @@ export const helperBroadcastTx = async (txData: string, signatureId?: string) =>
   return await bscBroadcast(txData, signatureId)
 }
 
-export const helperGetWeb3Client = (testnet: boolean, chain: Currency, provider?: string): Web3 => {
+export const helperGetWeb3Client = (provider?: string): Web3 => {
   return getBscClient(provider)
 }
 
