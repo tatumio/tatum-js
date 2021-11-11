@@ -14,10 +14,14 @@
   },
   "dependencies": {
     "@tatumio/tatum-core": "file:../tatum-core",
+    "@tatumio/tatum-ledger": "file:../tatum-ledger",
     "bignumber.js": "^9.0.0",
     "web3": "1.4.0"
   },
   "devDependencies": {
+    "@types/jest": "^27.0.2",
+    "jest": "^27.2.2",
+    "ts-jest": "^27.0.5",
     "eslint": "^7.32.0",
     "rimraf": "^3.0.2",
     "typedoc": "^0.21.5",

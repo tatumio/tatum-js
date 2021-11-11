@@ -760,10 +760,18 @@
     reflect-metadata "^0.1.13"
     web3 "1.4.0"
 
+"@tatumio/tatum-defi@file:../tatum-defi":
+  version "0.0.1"
+  dependencies:
+    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-defi-0.0.1-467dd895-3e47-4a7f-8f9a-c01f5543cd80-1636638333868/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-ledger" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-defi-0.0.1-467dd895-3e47-4a7f-8f9a-c01f5543cd80-1636638333868/node_modules/@tatumio/tatum-ledger"
+    bignumber.js "^9.0.0"
+    web3 "1.4.0"
+
 "@tatumio/tatum-ledger@file:../tatum-ledger":
   version "0.0.1"
   dependencies:
-    "@tatumio/tatum-core" "file:../../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-ledger-0.0.1-38b224f1-2e30-4697-b38e-c0cf393863a9-1636398875766/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-ledger-0.0.1-184626eb-a75f-421d-b127-c76170a3e888-1636638333872/node_modules/@tatumio/tatum-core"
 
 "@tootallnate/once@1":
   version "1.1.2"

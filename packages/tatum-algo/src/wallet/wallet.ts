@@ -1,6 +1,6 @@
 const algosdk = require('algosdk')
 const base32 = require('base32.js')
-import { WalletWithAddress } from '@tatumio/tatum-core'
+import { WalletWithAddress } from '@tatumio/tatum-defi'
 
 /**
  * Generate Algo wallet

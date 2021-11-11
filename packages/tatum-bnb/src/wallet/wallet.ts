@@ -1,5 +1,5 @@
 import { generatePrivateKey, getAddressFromPrivateKey } from '@binance-chain/javascript-sdk/lib/crypto'
-import { WalletWithAddress } from '@tatumio/tatum-core'
+import { WalletWithAddress } from '@tatumio/tatum-defi'
 
 /**
  * Generate BnB wallet

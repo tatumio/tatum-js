@@ -1,4 +1,4 @@
-import { WalletWithMnemonic } from '@tatumio/tatum-core'
+import { WalletWithMnemonic } from '@tatumio/tatum-defi'
 import { generateMnemonic, mnemonicToSeed } from 'bip39'
 import { networks } from 'bitcoinjs-lib'
 // @ts-ignore

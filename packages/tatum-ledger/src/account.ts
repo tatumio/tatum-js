@@ -3,7 +3,6 @@ import {
   CreateAccount,
   get,
   post,
-  Wallet,
   generateDepositAddress,
   SubscriptionType,
   UpdateAccount,
@@ -16,6 +15,7 @@ import {
   AccountBalance,
 } from '@tatumio/tatum-core'
 import { createNewSubscription } from './subscription'
+import { Wallet } from './wallet'
 
 export type GenerateWalletFn = ((testnet: boolean, mnemonic?: string) => Promise<Wallet>) | ((mnemonic: string) => Promise<Wallet>)
 

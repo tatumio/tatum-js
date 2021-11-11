@@ -1,7 +1,7 @@
 import { generateMnemonic, mnemonicToSeed } from 'bip39'
 // @ts-ignore
 import hdkey from 'hdkey'
-import { WalletWithMnemonic } from '@tatumio/tatum-core'
+import { WalletWithMnemonic } from '@tatumio/tatum-defi'
 import { FLOW_DERIVATION_PATH } from 'src/constants'
 
 /**
