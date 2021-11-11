@@ -54,12 +54,11 @@ export const prepareDeployMarketplaceListing = async (body: DeployMarketplaceLis
 
 /**
  * Update marketplace fee.
- * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareMarketplaceUpdateFee = async (testnet: boolean, body: UpdateMarketplaceFee, provider?: string) => {
+export const prepareMarketplaceUpdateFee = async (body: UpdateMarketplaceFee, provider?: string) => {
   const params = await prepareMarketplaceUpdateFeeAbstraction(body)
   return await helperPrepareSCCall(body, 'setMarketplaceFee', params, provider)
 }
@@ -133,13 +132,12 @@ export const prepareMarketplaceCancelListing = async (testnet: boolean, body: In
 
 /**
  * Update marketplace fee.
- * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendMarketplaceUpdateFee = async (testnet: boolean, body: UpdateMarketplaceFee, provider?: string) =>
-  helperBroadcastTx(await prepareMarketplaceUpdateFee(testnet, body, provider), body.signatureId)
+export const sendMarketplaceUpdateFee = async (body: UpdateMarketplaceFee, provider?: string) =>
+  helperBroadcastTx(await prepareMarketplaceUpdateFee(body, provider), body.signatureId)
 /**
  * Update marketplace fee recipient.
  * @param testnet chain to work with
