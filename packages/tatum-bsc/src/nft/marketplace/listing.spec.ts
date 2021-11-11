@@ -75,7 +75,7 @@ describe('Marketplace Listing tests', () => {
       body.listingId = '8'
       body.amount = '1.015'
       body.chain = Currency.BSC
-      console.log(await sendMarketplaceBuyListing(true, body, 'https://data-seed-prebsc-2-s1.binance.org:8545'))
+      console.log(await sendMarketplaceBuyListing(body, 'https://data-seed-prebsc-2-s1.binance.org:8545'))
     })
   })
 })

@@ -101,12 +101,11 @@ export const prepareMarketplaceCreateListing = async (body: CreateMarketplaceLis
 /**
  * Buy listing on the marketplace. Buyer must either send native assets with this operation, or approve ERC20 token spending before.
  * After listing is sold, it's in a pending state to be processed by the marketplace. Noone receives the assets unless the marketplace operator processes that.
- * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareMarketplaceBuyListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation, provider?: string) => {
+export const prepareMarketplaceBuyListing = async (body: InvokeMarketplaceListingOperation, provider?: string) => {
   const { body: validatedBody, params } = await prepareMarketplaceBuyListingAbstraction(body)
   return await helperPrepareSCCall(
     validatedBody,
@@ -166,13 +165,12 @@ export const sendMarketplaceCreateListing = async (body: CreateMarketplaceListin
 /**
  * Buy listing on the marketplace. Buyer must either send native assets with this operation, or approve ERC20 token spending before.
  * After listing is sold, it's in a pending state to be processed by the marketplace. Noone receives the assets unless the marketplace operator processes that.
- * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendMarketplaceBuyListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation, provider?: string) =>
-  helperBroadcastTx(await prepareMarketplaceBuyListing(testnet, body, provider), body.signatureId)
+export const sendMarketplaceBuyListing = async (body: InvokeMarketplaceListingOperation, provider?: string) =>
+  helperBroadcastTx(await prepareMarketplaceBuyListing(body, provider), body.signatureId)
 /**
  * Cancel listing on the marketplace. Only possible for the seller or the operator. There must be no buyer present for that listing. NFT asset is sent back to the seller.
  * @param testnet chain to work with
