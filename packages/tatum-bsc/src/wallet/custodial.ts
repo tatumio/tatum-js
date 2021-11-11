@@ -136,7 +136,7 @@ export const prepareApproveFromCustodialWallet = async (testnet: boolean, body: 
   await validateBody(body, ApproveCustodialTransfer)
 
   const decimals =
-    body.contractType === ContractType.FUNGIBLE_TOKEN ? await getErc20Decimals(testnet, body.chain, body.tokenAddress, provider) : 0
+    body.contractType === ContractType.FUNGIBLE_TOKEN ? await getErc20Decimals(body.tokenAddress, provider) : 0
   const params = [
     body.tokenAddress.trim(),
     body.contractType,
