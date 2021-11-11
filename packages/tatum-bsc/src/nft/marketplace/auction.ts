@@ -114,12 +114,11 @@ export const prepareAuctionApproveErc20Transfer = async (testnet: boolean, body:
  * Create new auction on the auction contract. Before auction, seller must approve spending of the NFT token for the Auction contract.
  * After auction is created, auction contract transfers the asset to the auction smart contract.
  * Only auction for existing NFTs can be created - seller must be owner of the NFT asset.
- * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareAuctionCreate = async (testnet: boolean, body: CreateAuction, provider?: string) => {
+export const prepareAuctionCreate = async (body: CreateAuction, provider?: string) => {
   const { body: validatedBody, params } = await prepareAuctionCreateAbstraction(body)
   return await helperPrepareSCCall(validatedBody, 'createAuction', params, provider, auction.abi)
 }
@@ -207,7 +206,7 @@ export const sendAuctionApproveErc20Transfer = async (testnet: boolean, body: Ap
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendAuctionCreate = async (testnet: boolean, body: CreateAuction, provider?: string) =>
-  helperBroadcastTx(await prepareAuctionCreate(testnet, body, provider), body.signatureId)
+  helperBroadcastTx(await prepareAuctionCreate(body, provider), body.signatureId)
 /**
  * Bid auction on the auction. Buyer must either send native assets with this operation, or approve ERC20 token spending before.
  * After auction is sold, it's in a pending state to be processed by the auction. Noone receives the assets unless the auction operator processes that.
