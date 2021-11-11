@@ -65,12 +65,11 @@ export const prepareMarketplaceUpdateFee = async (body: UpdateMarketplaceFee, pr
 
 /**
  * Update marketplace fee recipient.
- * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareMarketplaceUpdateFeeRecipient = async (testnet: boolean, body: UpdateMarketplaceFeeRecipient, provider?: string) => {
+export const prepareMarketplaceUpdateFeeRecipient = async (body: UpdateMarketplaceFeeRecipient, provider?: string) => {
   const params = await prepareMarketplaceUpdateFeeRecipientAbstraction(body)
   return await helperPrepareSCCall(body, 'setMarketplaceFeeRecipient', params, provider)
 }
@@ -140,13 +139,12 @@ export const sendMarketplaceUpdateFee = async (body: UpdateMarketplaceFee, provi
   helperBroadcastTx(await prepareMarketplaceUpdateFee(body, provider), body.signatureId)
 /**
  * Update marketplace fee recipient.
- * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendMarketplaceUpdateFeeRecipient = async (testnet: boolean, body: UpdateMarketplaceFeeRecipient, provider?: string) =>
-  helperBroadcastTx(await prepareMarketplaceUpdateFeeRecipient(testnet, body, provider), body.signatureId)
+export const sendMarketplaceUpdateFeeRecipient = async (body: UpdateMarketplaceFeeRecipient, provider?: string) =>
+  helperBroadcastTx(await prepareMarketplaceUpdateFeeRecipient(body, provider), body.signatureId)
 /**
  * Approve ERC20 spending for marketplace to perform buy with ERC20 token.
  * @param testnet chain to work with
