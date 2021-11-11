@@ -14,8 +14,8 @@
   },
   "dependencies": {
     "@tatumio/tatum-core": "file:../tatum-core",
-    "@tatumio/tatum-defi": "file:../tatum-core",
-    "@tatumio/tatum-ledger": "file:../tatum-core",
+    "@tatumio/tatum-defi": "file:../tatum-defi",
+    "@tatumio/tatum-ledger": "file:../tatum-ledger",
     "@tatumio/tatum-ada": "file:../tatum-ada",
     "@tatumio/tatum-algo": "file:../tatum-algo",
     "@tatumio/tatum-bch": "file:../tatum-bch",
