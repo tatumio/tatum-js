@@ -1,6 +1,6 @@
 const algosdk = require('algosdk')
 const base32 = require('base32.js')
-import {WalletWithAddress} from '@tatumio/tatum-core'
+import { WalletWithAddress } from '@tatumio/tatum-core'
 
 /**
  * Generate Algo wallet
@@ -8,13 +8,13 @@ import {WalletWithAddress} from '@tatumio/tatum-core'
  * @returns address and secret
  */
 export const generateAlgoWallet = async (mnem?: string): Promise<WalletWithAddress> => {
-    const account = mnem ? algosdk.mnemonicToSecretKey(mnem) : algosdk.generateAccount()
-    const encoder = new base32.Encoder({type: 'rfc4648'})
-    const secret = encoder.write(account.sk).finalize()
-    return {
-        address: account.addr,
-        privateKey: secret,
-    }
+  const account = mnem ? algosdk.mnemonicToSecretKey(mnem) : algosdk.generateAccount()
+  const encoder = new base32.Encoder({ type: 'rfc4648' })
+  const secret = encoder.write(account.sk).finalize()
+  return {
+    address: account.addr,
+    privateKey: secret,
+  }
 }
 
 /**
@@ -25,5 +25,5 @@ export const generateAlgoWallet = async (mnem?: string): Promise<WalletWithAddre
  * @returns wallet or a combination of address and private key
  */
 export const generateWallet = (mnemonic?: string) => {
-    return generateAlgoWallet(mnemonic)
+  return generateAlgoWallet(mnemonic)
 }
