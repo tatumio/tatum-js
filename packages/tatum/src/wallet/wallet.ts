@@ -1,5 +1,5 @@
 import { Currency } from '@tatumio/tatum-core'
-import { generateMnemonic, mnemonicToSeed } from 'bip39'
+import { generateMnemonic } from 'bip39'
 
 import { generateWallet as generateBtcWallet } from '@tatumio/tatum-btc/src'
 import { generateWallet as generateDogeWallet } from '@tatumio/tatum-doge/src'
@@ -19,7 +19,7 @@ import { generateWallet as generateXlmWallet } from '@tatumio/tatum-xlm/src'
 import { generateWallet as generateVetWallet } from '@tatumio/tatum-vet/src'
 // import { generateWallet as generateNeoWallet } from '@tatumio/tatum-neo'
 import { generateWallet as generateBnbWallet } from '@tatumio/tatum-bnb/src'
-// import { generateWallet as generateLyraWallet } from '@tatumio/tatum-lyra'
+import { generateWallet as generateLyraWallet } from '@tatumio/tatum-scrypta/src'
 import { generateWallet as generateAdaWallet } from '@tatumio/tatum-ada/src'
 import { generateWallet as generateAlgoWallet } from '@tatumio/tatum-algo/src'
 
@@ -109,8 +109,9 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
       return generateXlmWallet()
     case Currency.VET:
       return generateVetWallet(testnet, mnem)
-    case Currency.NEO:
-      return generateNeoWallet()
+    // case Currency.NEO:
+    // no submodule for NEO
+    //   return generateNeoWallet()
     case Currency.BNB:
       return generateBnbWallet(testnet)
     case Currency.LYRA:
