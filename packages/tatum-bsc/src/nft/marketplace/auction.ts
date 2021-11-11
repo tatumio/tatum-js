@@ -138,12 +138,11 @@ export const prepareAuctionBid = async (testnet: boolean, body: InvokeAuctionOpe
 
 /**
  * Cancel auction on the auction. Only possible for the seller or the operator. There must be no buyer present for that auction. NFT asset is sent back to the seller.
- * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareAuctionCancel = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
+export const prepareAuctionCancel = async (body: InvokeAuctionOperation, provider?: string) => {
   const params = await prepareAuctionCancelAbstraction(body)
   return await helperPrepareSCCall(body, 'cancelAuction', params, provider, auction.abi)
 }
@@ -225,7 +224,7 @@ export const sendAuctionBid = async (testnet: boolean, body: InvokeAuctionOperat
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendAuctionCancel = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) =>
-  helperBroadcastTx(await prepareAuctionCancel(testnet, body, provider), body.signatureId)
+  helperBroadcastTx(await prepareAuctionCancel(body, provider), body.signatureId)
 
 /**
  * Settle auction. There must be buyer present for that auction. NFT will be sent to the bidder, assets to the seller and fee to the operator.
