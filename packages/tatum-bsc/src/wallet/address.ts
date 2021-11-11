@@ -61,11 +61,10 @@ export const generatePrivateKeyFromMnemonic = (testnet: boolean, mnemonic: strin
 
 /**
  * Convert Ethereum Private Key to Address
- * @param testnet testnet or mainnet version of address
  * @param privkey private key to use
  * @returns blockchain address
  */
-const convertEthPrivateKey = (testnet: boolean, privkey: string) => {
+const convertEthPrivateKey = (privkey: string) => {
   const wallet = ethWallet.fromPrivateKey(Buffer.from(privkey.replace('0x', ''), 'hex'))
   return wallet.getAddressString() as string
 }
@@ -78,5 +77,5 @@ const convertEthPrivateKey = (testnet: boolean, privkey: string) => {
  * @returns blockchain private key to the address
  */
 export const generateAddressFromPrivatekey = (currency: Currency, testnet: boolean, privateKey: string) => {
-  return convertEthPrivateKey(testnet, privateKey)
+  return convertEthPrivateKey(privateKey)
 }
