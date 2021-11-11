@@ -1,5 +1,5 @@
-import {ClassType} from 'class-transformer/ClassTransformer';
-import Web3 from 'web3';
+import { ClassType } from 'class-transformer/ClassTransformer'
+import Web3 from 'web3'
 import { Currency, listing } from '@tatumio/tatum-core'
 import {
   helperBroadcastTx as celoBroadcast,
@@ -31,17 +31,17 @@ import { helperBroadcastTx as tronBroadcast } from '@tatumio/tatum-tron'
 export const helperBroadcastTx = async (chain: Currency, txData: string, signatureId?: string) => {
   switch (chain) {
     case Currency.CELO:
-      return await celoBroadcast(chain, txData, signatureId)
+      return await celoBroadcast(txData, signatureId)
     case Currency.ONE:
-      return await oneBroadcast(chain, txData, signatureId)
+      return await oneBroadcast(txData, signatureId)
     case Currency.ETH:
       return await ethBroadcast(txData, signatureId)
     case Currency.BSC:
-      return await bscBroadcast(chain, txData, signatureId)
+      return await bscBroadcast(txData, signatureId)
     case Currency.MATIC:
-      return await polygonBroadcast(chain, txData, signatureId)
+      return await polygonBroadcast(txData, signatureId)
     case Currency.TRON:
-      return await tronBroadcast(chain, txData, signatureId)
+      return await tronBroadcast(txData, signatureId)
     default:
       throw new Error('Unsupported chain')
   }

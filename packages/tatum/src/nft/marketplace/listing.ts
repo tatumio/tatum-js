@@ -1,7 +1,6 @@
 import {
   ApproveErc20,
-} from '@tatumio/tatum-core'
-import {
+  Currency,
   CreateMarketplaceListing,
   DeployMarketplaceListing,
   InvokeMarketplaceListingOperation,
@@ -36,14 +35,13 @@ import {
 import {
   deployMarketplaceListing as sendPolygonDeployMarketplaceListingSignedTransaction,
   prepareDeployMarketplaceListing as preparePolygonDeployMarketplaceListingSignedTransaction,
-} from '@tatumio/tatum-polygon/src'
+} from '@tatumio/tatum-polygon'
 import {
   DeployTronMarketplaceListing,
   UpdateTronMarketplaceFee,
   UpdateTronMarketplaceFeeRecipient,
   CreateTronMarketplaceListing,
-  InvokeTronMarketplaceListingOperation,
-} from '@tatumio/tatum-tron/src'
+} from '@tatumio/tatum-tron'
 
 /**
  * Deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).

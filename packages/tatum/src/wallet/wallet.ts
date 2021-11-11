@@ -17,10 +17,10 @@ import { generateWallet as generateXrpWallet } from '@tatumio/tatum-xrp'
 import { generateWallet as generateXlmWallet } from '@tatumio/tatum-xlm'
 import { generateWallet as generateVetWallet } from '@tatumio/tatum-vet'
 // import { generateWallet as generateNeoWallet } from '@tatumio/tatum-neo'
-import { generateWallet as generateBnbWallet } from '@tatumio/tatum-bnb/src'
-import { generateWallet as generateLyraWallet } from '@tatumio/tatum-scrypta/src'
-import { generateWallet as generateAdaWallet } from '@tatumio/tatum-ada/src'
-import { generateWallet as generateAlgoWallet } from '@tatumio/tatum-algo/src'
+import { generateWallet as generateBnbWallet } from '@tatumio/tatum-bnb'
+// import { generateWallet as generateLyraWallet } from '@tatumio/tatum-lyra'
+import { generateWallet as generateAdaWallet } from '@tatumio/tatum-ada'
+import { generateWallet as generateAlgoWallet } from '@tatumio/tatum-algo'
 
 /**
  * Generate wallet

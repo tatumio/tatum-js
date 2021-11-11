@@ -1,11 +1,18 @@
 import { ApproveErc20, Currency, prepareApproveErc20Abstraction } from '@tatumio/tatum-core'
 import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../helpers'
+import {
+  getBscBep20ContractDecimals,
+  getCeloErc20ContractDecimals,
+  getEthErc20ContractDecimals,
+  getOne20ContractDecimals,
+  getPolygonErc20ContractDecimals,
+} from '../transaction'
 import token_abi from '@tatumio/tatum-core/src/contracts/erc20/token_abi'
-import { getOne20ContractDecimals } from '@tatumio/tatum-one/src'
-import { getEthErc20ContractDecimals } from '@tatumio/tatum-eth/src'
-import { getCeloErc20ContractDecimals } from '@tatumio/tatum-celo/src'
-import { getBscBep20ContractDecimals } from '@tatumio/tatum-bsc/src'
-import { getPolygonErc20ContractDecimals } from '@tatumio/tatum-polygon/src'
+import { getOne20ContractDecimals } from '@tatumio/tatum-one'
+import { getEthErc20ContractDecimals } from '@tatumio/tatum-eth'
+import { getCeloErc20ContractDecimals } from '@tatumio/tatum-celo'
+import { getBscBep20ContractDecimals } from '@tatumio/tatum-bsc'
+import { getPolygonErc20ContractDecimals } from '@tatumio/tatum-polygon'
 
 /**
  * Approve ERC20 transfer for spender.
@@ -24,7 +31,7 @@ export const sendApproveErc20 = async (testnet: boolean, body: ApproveErc20, pro
  * @param provider optional Web3 provider
  */
 export const prepareApproveErc20 = async (testnet: boolean, body: ApproveErc20, provider?: string) => {
-    let getErc20ContractDecimalsFn: (testnet: boolean, contractAddress: string, provider?: string | undefined) => Promise<any>
+  let getErc20ContractDecimalsFn: (testnet: boolean, contractAddress: string, provider?: string | undefined) => Promise<any>
 
   switch (body.chain) {
     case Currency.CELO:
@@ -34,7 +41,7 @@ export const prepareApproveErc20 = async (testnet: boolean, body: ApproveErc20, 
       getErc20ContractDecimalsFn = getOne20ContractDecimals
       break
     case Currency.ETH:
-      getErc20ContractDecimalsFn = (testnet, contractAddress, provider) => getEthErc20ContractDecimals(contractAddress, provider)
+      getErc20ContractDecimalsFn = getEthErc20ContractDecimals
       break
     case Currency.BSC:
       getErc20ContractDecimalsFn = getBscBep20ContractDecimals
@@ -46,9 +53,14 @@ export const prepareApproveErc20 = async (testnet: boolean, body: ApproveErc20, 
       throw new Error('Unsupported combination of inputs.')
   }
 
-    const { body: validatedBody, params } = await prepareApproveErc20Abstraction((testnet, contractAddress, provider?) => getErc20ContractDecimalsFn(testnet, contractAddress, provider), testnet, body, provider)
-    return await helperPrepareSCCall(testnet, validatedBody, ApproveErc20, 'approve', params, undefined, provider, token_abi);
-};
+  const { body: validatedBody, params } = await prepareApproveErc20Abstraction(
+    (testnet, contractAddress, provider?) => getErc20ContractDecimalsFn(testnet, contractAddress, provider),
+    testnet,
+    body,
+    provider
+  )
+  return await helperPrepareSCCall(testnet, validatedBody, ApproveErc20, 'approve', params, undefined, provider, token_abi)
+}
 
 /**
  * Get Decimals for the ERC20 token
@@ -58,7 +70,7 @@ export const prepareApproveErc20 = async (testnet: boolean, body: ApproveErc20, 
  * @param provider optional provider
  */
 export const getErc20Decimals = async (testnet: boolean, chain: Currency, contractAddress: string, provider?: string) => {
-    const web3 = helperGetWeb3Client(testnet, chain, provider);
-    // @ts-ignore
-    return (new web3.eth.Contract(token_abi, contractAddress)).methods.decimals().call();
-};
+  const web3 = helperGetWeb3Client(testnet, chain, provider)
+  // @ts-ignore
+  return new web3.eth.Contract(token_abi, contractAddress).methods.decimals().call()
+}
