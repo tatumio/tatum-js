@@ -1,13 +1,11 @@
 import { ApproveErc20, Currency, prepareApproveErc20Abstraction } from '@tatumio/tatum-core'
 import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../helpers'
-import {
-  getBscBep20ContractDecimals,
-  getCeloErc20ContractDecimals,
-  getEthErc20ContractDecimals,
-  getOne20ContractDecimals,
-  getPolygonErc20ContractDecimals,
-} from '../transaction'
 import token_abi from '@tatumio/tatum-core/src/contracts/erc20/token_abi'
+import { getOne20ContractDecimals } from '@tatumio/tatum-one/src'
+import { getEthErc20ContractDecimals } from '@tatumio/tatum-eth/src'
+import { getCeloErc20ContractDecimals } from '@tatumio/tatum-celo/src'
+import { getBscBep20ContractDecimals } from '@tatumio/tatum-bsc/src'
+import { getPolygonErc20ContractDecimals } from '@tatumio/tatum-polygon/src'
 
 /**
  * Approve ERC20 transfer for spender.
@@ -36,7 +34,7 @@ export const prepareApproveErc20 = async (testnet: boolean, body: ApproveErc20, 
       getErc20ContractDecimalsFn = getOne20ContractDecimals
       break
     case Currency.ETH:
-      getErc20ContractDecimalsFn = getEthErc20ContractDecimals
+      getErc20ContractDecimalsFn = (testnet, contractAddress, provider) => getEthErc20ContractDecimals(contractAddress, provider)
       break
     case Currency.BSC:
       getErc20ContractDecimalsFn = getBscBep20ContractDecimals

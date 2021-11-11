@@ -1,10 +1,9 @@
 export {
-    getHistoricalTrades,
-    getActiveBuyTrades,
-    getActiveSellTrades,
-    storeTrade,
-    getTradeById,
-    deleteTrade,
-    deleteAccountTrades,
-  } from '@tatumio/tatum-ledger'
-  
+  getHistoricalTrades,
+  getActiveBuyTrades,
+  getActiveSellTrades,
+  storeTrade,
+  getTradeById,
+  deleteTrade,
+  deleteAccountTrades,
+} from '@tatumio/tatum-ledger'

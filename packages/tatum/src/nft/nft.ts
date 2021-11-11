@@ -11,36 +11,41 @@ import {
   CeloMintMultipleErc721,
   CeloTransferErc721,
   CeloUpdateCashbackErc721,
-} from '@tatumio/tatum-celo'
+} from '@tatumio/tatum-celo/src'
 import {
   mintNFTWithUri as ethMintNFTWithUri,
   deployNFT as ethDeployNFT,
-  mintNFTWithUri as ethMintMultipleNFTWithUri,
+  mintMultipleNFTWithUri as ethMintMultipleNFTWithUri,
   burnNFT as ethBurnNFT,
   updateCashbackForAuthorNFT as ethUpdateCashbackForAuthorNFT,
   transferNFT as ethTransferNFT,
-} from '@tatumio/tatum-eth'
+  EthMintErc721,
+  EthDeployErc721,
+  EthMintMultipleErc721,
+  EthBurnErc721,
+  EthTransferErc721,
+} from '@tatumio/tatum-eth/src'
 import {
   mintNFTWithUri as polygonMintNFTWithUri,
   deployNFT as polygonDeployNFT,
-  mintNFTWithUri as polygonMintMultipleNFTWithUri,
+  mintMultipleNFTWithUri as polygonMintMultipleNFTWithUri,
   burnNFT as polygonBurnNFT,
   updateCashbackForAuthorNFT as polygonUpdateCashbackForAuthorNFT,
   transferNFT as polygonTransferNFT,
-} from '@tatumio/tatum-polygon'
+} from '@tatumio/tatum-polygon/src'
 import {
   mintNFTWithUri as oneMintNFTWithUri,
   deployNFT as oneDeployNFT,
-  mintNFTWithUri as oneMintMultipleNFTWithUri,
+  mintMultipleNFTWithUri as oneMintMultipleNFTWithUri,
   burnNFT as oneBurnNFT,
   updateCashbackForAuthorNFT as oneUpdateCashbackForAuthorNFT,
   transferNFT as oneTransferNFT,
   OneMint721,
-} from '@tatumio/tatum-one'
+} from '@tatumio/tatum-one/src'
 import {
   mintNFTWithUri as tronMintNFTWithUri,
   deployNFT as tronDeployNFT,
-  mintNFTWithUri as tronMintMultipleNFTWithUri,
+  mintMultipleNFTWithUri as tronMintMultipleNFTWithUri,
   burnNFT as tronBurnNFT,
   updateCashbackForAuthorNFT as tronUpdateCashbackForAuthorNFT,
   transferNFT as tronTransferNFT,
@@ -49,7 +54,7 @@ import {
   TronMintTrc721,
   TronTransferTrc721,
   TronUpdateCashbackTrc721,
-} from '@tatumio/tatum-tron'
+} from '@tatumio/tatum-tron/src'
 import {
   mintNFTWithUri as bscMintNFTWithUri,
   deployNFT as bscDeployNFT,
@@ -57,11 +62,11 @@ import {
   burnNFT as bscBurnNFT,
   updateCashbackForAuthorNFT as bscUpdateCashbackForAuthorNFT,
   transferNFT as bscTransferNFT,
-} from '@tatumio/tatum-bsc'
+} from '@tatumio/tatum-bsc/src'
 import {
   mintNFTWithUri as flowMintNFTWithUri,
   deployNFT as flowDeployNFT,
-  mintNFTWithUri as flowMintMultipleNFTWithUri,
+  mintMultipleNFTWithUri as flowMintMultipleNFTWithUri,
   burnNFT as flowBurnNFT,
   transferNFT as flowTransferNFT,
   FlowBurnNft,
@@ -69,8 +74,10 @@ import {
   FlowMintMultipleNft,
   FlowMintNft,
   FlowTransferNft,
-} from '@tatumio/tatum-flow'
-import { mintNFTRequest, TransactionHash, Currency, createNFTAbstraction, UpdateCashbackErc721 } from '@tatumio/tatum-core'
+} from '@tatumio/tatum-flow/src'
+import { TransactionHash, Currency, UpdateCashbackErc721, MintMultipleErc721 } from '@tatumio/tatum-core'
+import { mintNFTRequest, createNFTAbstraction } from '@tatumio/tatum-defi'
+import { TronMintMultipleTrc721 } from '@tatumio/tatum-tron'
 
 export const mintNFT = (body: CeloMintErc721 | EthMintErc721 | OneMint721) => mintNFTRequest(body)
 
@@ -89,7 +96,7 @@ export const deployNFT = async (
     case Currency.CELO:
       return celoDeployNFT(testnet, body as CeloDeployErc721, provider)
     case Currency.ETH:
-      return ethDeployNFT(body as EthDeployErc721, provider)
+      return ethDeployNFT(body as EthDeployErc721 & { chain: Currency.ETH }, provider)
     case Currency.MATIC:
       return polygonDeployNFT(testnet, body as EthDeployErc721, provider)
     case Currency.ONE:
@@ -97,9 +104,9 @@ export const deployNFT = async (
     case Currency.TRON:
       return tronDeployNFT(testnet, body as TronDeployTrc721)
     case Currency.BSC:
-      return bscDeployNFT(body as EthDeployErc721, provider)
+      return bscDeployNFT(testnet, body as EthDeployErc721, provider)
     case Currency.FLOW:
-      return flowDeployNFT(body as FlowDeployNft, provider)
+      return flowDeployNFT(testnet, body as FlowDeployNft, provider)
     default:
       throw new Error('Unsupported currency')
   }
@@ -148,11 +155,11 @@ export const mintNFTWithUri = async (
     case Currency.ONE:
       return oneMintNFTWithUri(testnet, body, provider)
     case Currency.TRON:
-      return tronMintNFTWithUri(testnet, body, provider)
+      return tronMintNFTWithUri(testnet, body as TronMintTrc721, provider)
     case Currency.BSC:
       return bscMintNFTWithUri(testnet, body, provider)
     case Currency.FLOW:
-      return flowMintNFTWithUri(testnet, body, provider)
+      return flowMintNFTWithUri(testnet, body as FlowMintNft, provider)
     default:
       throw new Error('Unsupported blockchain.')
   }
@@ -166,24 +173,24 @@ export const mintNFTWithUri = async (
  */
 export const mintMultipleNFTWithUri = async (
   testnet: boolean,
-  body: CeloMintMultipleErc721 | EthMintMultipleErc721 | FlowMintMultipleNft,
+  body: CeloMintMultipleErc721 | EthMintMultipleErc721 | FlowMintMultipleNft | TronMintMultipleTrc721,
   provider?: string
 ) => {
   switch (body.chain) {
     case Currency.CELO:
       return celoMintMultipleNFTWithUri(testnet, body, provider)
     case Currency.TRON:
-      return tronMintMultipleNFTWithUri(testnet, body, provider)
+      return tronMintMultipleNFTWithUri(testnet, body as TronMintMultipleTrc721, provider)
     case Currency.ETH:
-      return ethMintMultipleNFTWithUri(testnet, body, provider)
+      return ethMintMultipleNFTWithUri(body as EthMintMultipleErc721, provider)
     case Currency.MATIC:
-      return polygonMintMultipleNFTWithUri(testnet, body, provider)
+      return polygonMintMultipleNFTWithUri(testnet, body as MintMultipleErc721, provider)
     case Currency.ONE:
-      return oneMintMultipleNFTWithUri(testnet, body, provider)
+      return oneMintMultipleNFTWithUri(testnet, body as MintMultipleErc721, provider)
     case Currency.BSC:
       return bscMintMultipleNFTWithUri(testnet, body, provider)
     case Currency.FLOW:
-      return flowMintMultipleNFTWithUri(testnet, body, provider)
+      return flowMintMultipleNFTWithUri(testnet, body as FlowMintMultipleNft, provider)
     default:
       throw new Error('Unsupported blockchain.')
   }
@@ -200,9 +207,9 @@ export const burnNFT = async (testnet: boolean, body: CeloBurnErc721 | EthBurnEr
     case Currency.CELO:
       return celoBurnNFT(testnet, body, provider)
     case Currency.TRON:
-      return tronBurnNFT(testnet, body, provider)
+      return tronBurnNFT(testnet, body as TronBurnTrc721, provider)
     case Currency.ETH:
-      return ethBurnNFT(testnet, body, provider)
+      return ethBurnNFT(body, provider)
     case Currency.MATIC:
       return polygonBurnNFT(testnet, body, provider)
     case Currency.ONE:
@@ -210,7 +217,7 @@ export const burnNFT = async (testnet: boolean, body: CeloBurnErc721 | EthBurnEr
     case Currency.BSC:
       return bscBurnNFT(testnet, body, provider)
     case Currency.FLOW:
-      return flowBurnNFT(testnet, body, provider)
+      return flowBurnNFT(testnet, body as FlowBurnNft, provider)
     default:
       throw new Error('Unsupported blockchain.')
   }
@@ -231,13 +238,13 @@ export const updateCashbackForAuthorNFT = async (
     case Currency.CELO:
       return celoUpdateCashbackForAuthorNFT(testnet, body, provider)
     case Currency.ETH:
-      return ethUpdateCashbackForAuthorNFT(testnet, body)
+      return ethUpdateCashbackForAuthorNFT(body, provider)
     case Currency.MATIC:
       return polygonUpdateCashbackForAuthorNFT(testnet, body, provider)
     case Currency.ONE:
       return oneUpdateCashbackForAuthorNFT(testnet, body, provider)
     case Currency.TRON:
-      return tronUpdateCashbackForAuthorNFT(testnet, body, provider)
+      return tronUpdateCashbackForAuthorNFT(testnet, body as TronUpdateCashbackTrc721, provider)
     case Currency.BSC:
       return bscUpdateCashbackForAuthorNFT(testnet, body, provider)
     default:
@@ -260,20 +267,20 @@ export const transferNFT = async (
     case Currency.CELO:
       return celoTransferNFT(testnet, body, provider)
     case Currency.ETH:
-      return ethTransferNFT(testnet, body, provider)
+      return ethTransferNFT(body, provider)
     case Currency.MATIC:
       return polygonTransferNFT(testnet, body, provider)
     case Currency.ONE:
       return oneTransferNFT(testnet, body, provider)
     case Currency.TRON:
-      return tronTransferNFT(testnet, body, provider)
+      return tronTransferNFT(testnet, body as TronTransferTrc721, provider)
     case Currency.BSC:
       return bscTransferNFT(testnet, body, provider)
     case Currency.FLOW:
-      return flowTransferNFT(testnet, body, provider)
+      return flowTransferNFT(testnet, body as FlowTransferNft, provider)
     default:
       throw new Error('Unsupported blockchain.')
   }
 }
 
-export { getNFTsByAddress, getNFTContractAddress, getNFTMetadataURI, getNFTImage, getNFTRoyalty } from '@tatumio/tatum-core'
+export { getNFTsByAddress, getNFTContractAddress, getNFTMetadataURI, getNFTImage, getNFTRoyalty } from '@tatumio/tatum-defi'
