@@ -43,7 +43,6 @@ describe('Auction  tests', () => {
       await sleep()
       console.log(
         await sendAuctionApproveNftTransfer(
-          true,
           {
             fromPrivateKey: '0x37b091fc4ce46a56da643f021254612551dbe0944679a6e09cb5724d3085c9ab',
             chain: Currency.BSC,
