@@ -162,10 +162,9 @@ const addOffchainInputs = (transactionBuilder: TransactionBuilder, inputs: Withd
  * Sign Ada pending transaction from Tatum KMS
  * @param tx pending transaction from KMS
  * @param mnemonic mnemonic to generate private keys to sign transaction with.
- * @param testnet mainnet or testnet version
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signAdaOffchainKMSTransaction = async (tx: TransactionKMS, mnemonic: string, testnet: boolean) => {
+export const signAdaOffchainKMSTransaction = async (tx: TransactionKMS, mnemonic: string) => {
   if (tx.chain !== Currency.ADA || !tx.withdrawalResponses) {
     throw Error('Unsupported chain.')
   }
