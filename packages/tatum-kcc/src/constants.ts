@@ -1,1 +1,1 @@
-export const MATIC_DERIVATION_PATH = "m/44'/966'/0'/0"
+export const KCS_DERIVATION_PATH = "m/44'/60'/0'/0"

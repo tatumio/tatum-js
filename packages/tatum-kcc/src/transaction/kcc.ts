@@ -49,8 +49,7 @@ import { mintNFT } from '../nft'
  * Estimate Gas price for the transaction.
  */
 export const kccGetGasPriceInWei = async () => {
-  const { data } = await axios.get('https://gasstation-mainnet.matic.network')
-  return Web3.utils.toWei(`${Math.max(30, Math.min(Math.ceil(data.fast / 10), 100))}`, 'gwei')
+  return Web3.utils.toWei('1', 'gwei');
 }
 
 const prepareGeneralTx = async (
