@@ -1,6 +1,7 @@
 import {
   ApproveErc20,
-  Currency,
+} from '@tatumio/tatum-core'
+import {
   CreateMarketplaceListing,
   DeployMarketplaceListing,
   InvokeMarketplaceListingOperation,
