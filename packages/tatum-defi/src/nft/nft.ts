@@ -1,4 +1,4 @@
-import {axios, get, post, ipfsUpload, Currency, BaseMintErc721, TransactionHash} from '@tatumio/tatum-core'
+import { axios, get, post, ipfsUpload, Currency, BaseMintErc721, TransactionHash } from '@tatumio/tatum-core'
 
 export const mintNFTRequest = (body: BaseMintErc721): Promise<TransactionHash> => post(`/v3/nft/mint`, body)
 
@@ -6,28 +6,28 @@ export const mintNFTRequest = (body: BaseMintErc721): Promise<TransactionHash> =
  * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetBalanceErc721" target="_blank">Tatum API documentation</a>
  */
 export const getNFTsByAddress = async (chain: Currency, contractAddress: string, address: string): Promise<string[]> =>
-    get(`/v3/nft/balance/${chain}/${contractAddress}/${address}`)
+  get(`/v3/nft/balance/${chain}/${contractAddress}/${address}`)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetContractAddress" target="_blank">Tatum API documentation</a>
  */
 export const getNFTContractAddress = async (chain: Currency, txId: string): Promise<{ contractAddress: string }> =>
-    get(`/v3/nft/address/${chain}/${txId}`)
+  get(`/v3/nft/address/${chain}/${txId}`)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetMetadataErc721" target="_blank">Tatum API documentation</a>
  */
 export const getNFTMetadataURI = async (
-    chain: Currency,
-    contractAddress: string,
-    tokenId: string,
-    account?: string
+  chain: Currency,
+  contractAddress: string,
+  tokenId: string,
+  account?: string
 ): Promise<{ data: string }> => {
-    let url = `/v3/nft/metadata/${chain}/${contractAddress}/${tokenId}`
-    if (account) {
-        url += `?account=${account}`
-    }
-    return get(url)
+  let url = `/v3/nft/metadata/${chain}/${contractAddress}/${tokenId}`
+  if (account) {
+    url += `?account=${account}`
+  }
+  return get(url)
 }
 
 /**
@@ -38,26 +38,26 @@ export const getNFTMetadataURI = async (
  * @param account FLOW only - account where the token is minted
  */
 export const getNFTImage = async (
-    chain: Currency,
-    contractAddress: string,
-    tokenId: string,
-    account?: string
+  chain: Currency,
+  contractAddress: string,
+  tokenId: string,
+  account?: string
 ): Promise<{ originalUrl: string; publicUrl: string }> => {
-    const {data: metadata} = await getNFTMetadataURI(chain, contractAddress, tokenId, account)
-    const metadataUrl = `https://gateway.pinata.cloud/ipfs/${metadata.replace('ipfs://', '')}`
-    const {data} = await axios.get(metadataUrl)
-    const imageUrl = data.image
-    return {
-        originalUrl: imageUrl,
-        publicUrl: `https://gateway.pinata.cloud/ipfs/${imageUrl.replace('ipfs://', '')}`,
-    }
+  const { data: metadata } = await getNFTMetadataURI(chain, contractAddress, tokenId, account)
+  const metadataUrl = `https://gateway.pinata.cloud/ipfs/${metadata.replace('ipfs://', '')}`
+  const { data } = await axios.get(metadataUrl)
+  const imageUrl = data.image
+  return {
+    originalUrl: imageUrl,
+    publicUrl: `https://gateway.pinata.cloud/ipfs/${imageUrl.replace('ipfs://', '')}`,
+  }
 }
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetRoyaltyErc721" target="_blank">Tatum API documentation</a>
  */
 export const getNFTRoyalty = async (chain: Currency, contractAddress: string, tokenId: string): Promise<{ data: string }> =>
-    get(`/v3/nft/royalty/${chain}/${contractAddress}/${tokenId}`)
+  get(`/v3/nft/royalty/${chain}/${contractAddress}/${tokenId}`)
 
 /**
  * Mint new NFT token with metadata stored on the IPFS.
@@ -70,35 +70,35 @@ export const getNFTRoyalty = async (chain: Currency, contractAddress: string, to
  * @param provider optional provider do broadcast tx
  */
 export const createNFTAbstraction = async (
-    mintNftWithUri: (testnet: boolean, body: BaseMintErc721, provider?: string) => Promise<any>,
-    testnet: boolean,
-    body: BaseMintErc721,
-    file: Buffer,
-    name: string,
-    description?: string,
-    scheme?: any,
-    provider?: string
+  mintNftWithUri: (testnet: boolean, body: BaseMintErc721, provider?: string) => Promise<any>,
+  testnet: boolean,
+  body: BaseMintErc721,
+  file: Buffer,
+  name: string,
+  description?: string,
+  scheme?: any,
+  provider?: string
 ) => {
-    const metadata = scheme || {}
-    metadata.name = name
-    if (description) {
-        metadata.description = description
-    }
-    const {ipfsHash} = await ipfsUpload(file, name)
-    metadata.image = `ipfs://${ipfsHash}`
-    const {ipfsHash: metadataHash} = await ipfsUpload(Buffer.from(JSON.stringify(metadata)), 'metadata.json')
-    body.url = `ipfs://${metadataHash}`
-    if (body.chain === Currency.FLOW) {
-        ;(body as any).privateKey = (body as any).privateKey || (body as any).fromPrivateKey
-    }
-    const result = await mintNftWithUri(testnet, body, provider)
-    return {
-        tokenId: (body as any).tokenId,
-        // @ts-ignore
-        ...result,
-        metadataUrl: body.url,
-        metadataPublicUrl: `https://gateway.pinata.cloud/ipfs/${metadataHash}`,
-        imageUrl: `ipfs://${ipfsHash}`,
-        imagePublicUrl: `https://gateway.pinata.cloud/ipfs/${ipfsHash}`,
-    }
+  const metadata = scheme || {}
+  metadata.name = name
+  if (description) {
+    metadata.description = description
+  }
+  const { ipfsHash } = await ipfsUpload(file, name)
+  metadata.image = `ipfs://${ipfsHash}`
+  const { ipfsHash: metadataHash } = await ipfsUpload(Buffer.from(JSON.stringify(metadata)), 'metadata.json')
+  body.url = `ipfs://${metadataHash}`
+  if (body.chain === Currency.FLOW) {
+    ;(body as any).privateKey = (body as any).privateKey || (body as any).fromPrivateKey
+  }
+  const result = await mintNftWithUri(testnet, body, provider)
+  return {
+    tokenId: (body as any).tokenId,
+    // @ts-ignore
+    ...result,
+    metadataUrl: body.url,
+    metadataPublicUrl: `https://gateway.pinata.cloud/ipfs/${metadataHash}`,
+    imageUrl: `ipfs://${ipfsHash}`,
+    imagePublicUrl: `https://gateway.pinata.cloud/ipfs/${ipfsHash}`,
+  }
 }

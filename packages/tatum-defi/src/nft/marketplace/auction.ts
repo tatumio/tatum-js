@@ -1,77 +1,77 @@
 import BigNumber from 'bignumber.js'
 import {
-    auction,
-    get,
-    validateBody,
-    ApproveNftTransfer,
-    CreateAuction,
-    Currency,
-    InvokeAuctionOperation,
-    UpdateAuctionFee,
-    UpdateMarketplaceFeeRecipient,
+  auction,
+  get,
+  validateBody,
+  ApproveNftTransfer,
+  CreateAuction,
+  Currency,
+  InvokeAuctionOperation,
+  UpdateAuctionFee,
+  UpdateMarketplaceFeeRecipient,
 } from '@tatumio/tatum-core'
 import Web3 from 'web3'
 
 export interface Auction {
-    /*
-       address of the seller
-       */
-    seller: string
-    /*
-       address of the token to sale
-       */
-    nftAddress: string
-    /*
-       ID of the NFT
-       */
-    tokenId: string
-    /*
-       if the auction is for ERC721 - true - or ERC1155 - false
-       */
-    isErc721: boolean
-    /*
-       Block height of end of auction
-       */
-    endedAt: string
-    /*
-       Block height, in which the auction started.
-       */
-    startedAt: string
-    /*
-       optional - if the auction is settled in the ERC20 token or in native currency
-       */
-    erc20Address?: string
-    /*
-       for ERC-1155 - how many tokens are for sale
-       */
-    amount: string
-    /*
-       Ending price of the asset at the end of the auction
-       */
-    endingPrice: string
-    /*
-       Actual highest bidder
-       */
-    bidder?: string
+  /*
+     address of the seller
+     */
+  seller: string
+  /*
+     address of the token to sale
+     */
+  nftAddress: string
+  /*
+     ID of the NFT
+     */
+  tokenId: string
+  /*
+     if the auction is for ERC721 - true - or ERC1155 - false
+     */
+  isErc721: boolean
+  /*
+     Block height of end of auction
+     */
+  endedAt: string
+  /*
+     Block height, in which the auction started.
+     */
+  startedAt: string
+  /*
+     optional - if the auction is settled in the ERC20 token or in native currency
+     */
+  erc20Address?: string
+  /*
+     for ERC-1155 - how many tokens are for sale
+     */
+  amount: string
+  /*
+     Ending price of the asset at the end of the auction
+     */
+  endingPrice: string
+  /*
+     Actual highest bidder
+     */
+  bidder?: string
 }
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/MPAuctionFee" target="_blank">Tatum API documentation</a>
  */
 export const getAuctionFee = async (chain: Currency, contractAddress: string): Promise<number> =>
-    get(`/v3/blockchain/auction/auction/${chain}/${contractAddress}/fee`)
+  get(`/v3/blockchain/auction/auction/${chain}/${contractAddress}/fee`)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/MPAuction" target="_blank">Tatum API documentation</a>
  */
 export const getAuction = async (chain: Currency, contractAddress: string, auctionId: string): Promise<Auction> =>
-    get(`/v3/blockchain/auction/auction/${chain}/${contractAddress}/auction/${auctionId}`)
+  get(`/v3/blockchain/auction/auction/${chain}/${contractAddress}/auction/${auctionId}`)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/MPAuctionRecipient" target="_blank">Tatum API documentation</a>
  */
 export const getAuctionFeeRecipient = async (chain: Currency, contractAddress: string): Promise<{ address: string }> =>
-    get(`/v3/blockchain/auction/auction/${chain}/${contractAddress}/recipient`)
+  get(`/v3/blockchain/auction/auction/${chain}/${contractAddress}/recipient`)
 
 /**
  * Update auction fee.
@@ -81,8 +81,8 @@ export const getAuctionFeeRecipient = async (chain: Currency, contractAddress: s
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareAuctionUpdateFeeAbstraction = async (body: UpdateAuctionFee) => {
-    await validateBody(body, UpdateAuctionFee)
-    return [`0x${new BigNumber(body.auctionFee).toString(16)}`]
+  await validateBody(body, UpdateAuctionFee)
+  return [`0x${new BigNumber(body.auctionFee).toString(16)}`]
 }
 
 /**
@@ -93,8 +93,8 @@ export const prepareAuctionUpdateFeeAbstraction = async (body: UpdateAuctionFee)
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareAuctionUpdateFeeRecipientAbstraction = async (body: UpdateMarketplaceFeeRecipient) => {
-    await validateBody(body, UpdateMarketplaceFeeRecipient)
-    return [body.feeRecipient]
+  await validateBody(body, UpdateMarketplaceFeeRecipient)
+  return [body.feeRecipient]
 }
 
 /**
@@ -105,8 +105,8 @@ export const prepareAuctionUpdateFeeRecipientAbstraction = async (body: UpdateMa
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareAuctionApproveNftTransferAbstraction = async (body: ApproveNftTransfer) => {
-    await validateBody(body, ApproveNftTransfer)
-    return body.isErc721 ? [body.spender, `0x${new BigNumber(body.tokenId).toString(16)}`] : [body.spender, true]
+  await validateBody(body, ApproveNftTransfer)
+  return body.isErc721 ? [body.spender, `0x${new BigNumber(body.tokenId).toString(16)}`] : [body.spender, true]
 }
 
 /**
@@ -119,19 +119,19 @@ export const prepareAuctionApproveNftTransferAbstraction = async (body: ApproveN
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareAuctionCreateAbstraction = async (body: CreateAuction) => {
-    await validateBody(body, CreateAuction)
-    const params = [
-        body.id,
-        body.isErc721,
-        body.nftAddress.trim(),
-        `0x${new BigNumber(body.tokenId).toString(16)}`,
-        body.seller.trim(),
-        `0x${new BigNumber(body.amount || 0).toString(16)}`,
-        `0x${new BigNumber(body.endedAt).toString(16)}`,
-        body.erc20Address || '0x0000000000000000000000000000000000000000',
-    ]
-    body.amount = undefined
-    return {body, params}
+  await validateBody(body, CreateAuction)
+  const params = [
+    body.id,
+    body.isErc721,
+    body.nftAddress.trim(),
+    `0x${new BigNumber(body.tokenId).toString(16)}`,
+    body.seller.trim(),
+    `0x${new BigNumber(body.amount || 0).toString(16)}`,
+    `0x${new BigNumber(body.endedAt).toString(16)}`,
+    body.erc20Address || '0x0000000000000000000000000000000000000000',
+  ]
+  body.amount = undefined
+  return { body, params }
 }
 
 /**
@@ -143,27 +143,27 @@ export const prepareAuctionCreateAbstraction = async (body: CreateAuction) => {
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareAuctionBidAbstraction = async (
-    helperGetWeb3Client: (testnet: boolean, chain: Currency, provider?: string | undefined) => Web3,
-    testnet: boolean,
-    body: InvokeAuctionOperation,
-    provider?: string
+  helperGetWeb3Client: (testnet: boolean, chain: Currency, provider?: string | undefined) => Web3,
+  testnet: boolean,
+  body: InvokeAuctionOperation,
+  provider?: string
 ) => {
-    await validateBody(body, InvokeAuctionOperation)
+  await validateBody(body, InvokeAuctionOperation)
 
-    const web3 = helperGetWeb3Client(testnet, body.chain, provider)
+  const web3 = helperGetWeb3Client(testnet, body.chain, provider)
+  // @ts-ignore
+  const a = await new web3.eth.Contract(auction.abi, body.contractAddress).methods.getAuction(body.id).call()
+  let decimals = 18
+  const b: any = { ...body }
+  if (a[6] !== '0x0000000000000000000000000000000000000000') {
     // @ts-ignore
-    const a = await new web3.eth.Contract(auction.abi, body.contractAddress).methods.getAuction(body.id).call()
-    let decimals = 18
-    const b: any = {...body}
-    if (a[6] !== '0x0000000000000000000000000000000000000000') {
-        // @ts-ignore
-        decimals = await getErc20Decimals(testnet, body.chain, a[6], provider)
-    } else {
-        b.amount = body.bidValue
-    }
+    decimals = await getErc20Decimals(testnet, body.chain, a[6], provider)
+  } else {
+    b.amount = body.bidValue
+  }
 
-    const params = [body.id, `0x${new BigNumber(body.bidValue).multipliedBy(new BigNumber(10).pow(decimals)).toString(16)}`]
-    return {b, params}
+  const params = [body.id, `0x${new BigNumber(body.bidValue).multipliedBy(new BigNumber(10).pow(decimals)).toString(16)}`]
+  return { b, params }
 }
 
 /**
@@ -174,8 +174,8 @@ export const prepareAuctionBidAbstraction = async (
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareAuctionCancelAbstraction = async (body: InvokeAuctionOperation) => {
-    await validateBody(body, InvokeAuctionOperation)
-    return [body.id]
+  await validateBody(body, InvokeAuctionOperation)
+  return [body.id]
 }
 
 /**
@@ -186,6 +186,6 @@ export const prepareAuctionCancelAbstraction = async (body: InvokeAuctionOperati
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareAuctionSettleAbstraction = async (testnet: boolean, body: InvokeAuctionOperation) => {
-    await validateBody(body, InvokeAuctionOperation)
-    return [body.id]
+  await validateBody(body, InvokeAuctionOperation)
+  return [body.id]
 }
