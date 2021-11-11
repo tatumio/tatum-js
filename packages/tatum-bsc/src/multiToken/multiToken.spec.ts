@@ -74,7 +74,7 @@ describe('NFT tests', () => {
       expect(sendMultiTokenToken).not.toBeNull()
     })
     it('should test bsc 1155 burn transaction', async () => {
-      const burnMultiTokenToken = await burnMultiToken(true, {
+      const burnMultiTokenToken = await burnMultiToken({
         account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
         tokenId: '2',
         amount: '1',
