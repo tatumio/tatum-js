@@ -749,7 +749,7 @@
     defer-to-connect "^1.0.1"
 
 "@tatumio/tatum-core@file:../tatum-core":
-  version "0.0.2"
+  version "2.0.0-alpha.0"
   dependencies:
     axios "^0.21.1"
     axios-retry "^3.1.9"
@@ -761,16 +761,16 @@
     web3 "1.4.0"
 
 "@tatumio/tatum-defi@file:../tatum-defi":
-  version "0.0.1"
+  version "2.0.0-alpha.0"
   dependencies:
-    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-defi-0.0.1-c87b7d46-dbf6-44b0-9c57-c1fdb95f576f-1636592123596/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-core" "file:../../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-defi-2.0.0-alpha.0-46169c09-7aa3-4d46-837f-7315433302e1-1636648018128/node_modules/@tatumio/tatum-core"
     bignumber.js "^9.0.0"
     web3 "1.4.0"
 
 "@tatumio/tatum-ledger@file:../tatum-ledger":
-  version "0.0.1"
+  version "2.0.0-alpha.0"
   dependencies:
-    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-ledger-0.0.1-aca46d31-af3b-454e-b17d-f5b084da2aa1-1636592123599/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-core" "file:../../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-ledger-2.0.0-alpha.0-e6c37d00-ef62-446b-ae3d-7bcd0c3ab955-1636648018139/node_modules/@tatumio/tatum-core"
 
 "@tootallnate/once@1":
   version "1.1.2"

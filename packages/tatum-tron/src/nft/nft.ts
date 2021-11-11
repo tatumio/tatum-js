@@ -1,7 +1,1 @@
-export {
-    getNFTsByAddress,
-    getNFTContractAddress,
-    getNFTMetadataURI,
-    getNFTImage,
-    getNFTRoyalty,
-} from "@tatumio/tatum-defi"
+export { getNFTsByAddress, getNFTContractAddress, getNFTMetadataURI, getNFTImage, getNFTRoyalty } from '@tatumio/tatum-defi'

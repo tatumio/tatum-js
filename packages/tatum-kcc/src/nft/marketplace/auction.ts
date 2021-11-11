@@ -7,6 +7,10 @@ import {
   erc1155TokenABI,
   erc721TokenABI,
   InvokeAuctionOperation,
+  UpdateAuctionFee,
+  UpdateMarketplaceFeeRecipient,
+} from '@tatumio/tatum-core'
+import {
   prepareAuctionApproveNftTransferAbstraction,
   prepareAuctionBidAbstraction,
   prepareAuctionCancelAbstraction,
@@ -14,10 +18,7 @@ import {
   prepareAuctionSettleAbstraction,
   prepareAuctionUpdateFeeAbstraction,
   prepareAuctionUpdateFeeRecipientAbstraction,
-  UpdateAuctionFee,
-  UpdateMarketplaceFeeRecipient,
-} from '@tatumio/tatum-core'
-import BigNumber from 'bignumber.js'
+} from '@tatumio/tatum-defi'
 import { prepareKccDeployAuctionSignedTransaction } from '../../transaction'
 import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../../helpers'
 import { prepareApproveErc20 } from '../../fungible'
@@ -251,4 +252,4 @@ export const sendAuctionCancel = async (testnet: boolean, body: InvokeAuctionOpe
 export const sendAuctionSettle = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) =>
   helperBroadcastTx(body.chain, await prepareAuctionSettle(testnet, body, provider), body.signatureId)
 
-export { Auction, getAuctionFee, getAuction, getAuctionFeeRecipient } from '@tatumio/tatum-core'
+export { Auction, getAuctionFee, getAuction, getAuctionFeeRecipient } from '@tatumio/tatum-defi'

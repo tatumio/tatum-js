@@ -17,7 +17,7 @@ import {
   sendCeloTransferErc721Transaction,
 } from '..'
 
-export const mintNFT = (body: MintErc721) => mintNFTRequest(body)
+export const mintNFT = (body: MintErc721): Promise<TransactionHash> => mintNFTRequest(body)
 
 /**
  * Deploy new NFT smart contract, which will be used for later minting.

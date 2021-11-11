@@ -1,7 +1,4 @@
-import {
-  mintNFTRequest,
-  createNFTAbstraction,
-} from '@tatumio/tatum-defi'
+import { mintNFTRequest, createNFTAbstraction } from '@tatumio/tatum-defi'
 import {
   MintErc721,
   DeployErc721,
@@ -22,7 +19,7 @@ import {
   sendPolygonUpdateCashbackForAuthorErc721SignedTransaction,
 } from '../transaction'
 
-export const mintNFT = (body: MintErc721) => mintNFTRequest(body)
+export const mintNFT = (body: MintErc721): Promise<TransactionHash> => mintNFTRequest(body)
 
 /**
  * Deploy new NFT smart contract, which will be used for later minting.

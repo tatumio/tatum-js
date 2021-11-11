@@ -14,6 +14,8 @@
   },
   "dependencies": {
     "@tatumio/tatum-core": "file:../tatum-core",
+    "@tatumio/tatum-ledger": "file:../tatum-ledger",
+    "@tatumio/tatum-defi": "file:../tatum-defi",
     "bip39": "^3.0.2",
     "bignumber.js": "^9.0.0",
     "class-transformer": "^0.2.3",

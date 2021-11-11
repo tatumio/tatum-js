@@ -13,11 +13,17 @@ import {
   httpDelete,
   BlockageTransaction,
   AccountBalance,
+  Address,
 } from '@tatumio/tatum-core'
 import { createNewSubscription } from './subscription'
 import { Wallet } from './wallet'
 
 export type GenerateWalletFn = ((testnet: boolean, mnemonic?: string) => Promise<Wallet>) | ((mnemonic: string) => Promise<Wallet>)
+export interface GeneratedAccount {
+  account: Account
+  address: Address
+  wallet?: Wallet
+}
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/getAccountByAccountId" target="_blank">Tatum API documentation</a>
@@ -43,7 +49,7 @@ export const generateAccount = async (
   generateNewWallet = true,
   testnet = true,
   webhookUrl?: string
-) => {
+): Promise<GeneratedAccount> => {
   let w
   if (generateNewWallet) {
     // @ts-ignore

@@ -3,13 +3,12 @@ import {
   ContractType,
   CustodialFullTokenWallet,
   GenerateCustodialAddress,
-  prepareBatchTransferFromCustodialWalletAbstract,
-  prepareTransferFromCustodialWalletAbstract,
   SmartContractMethodInvocation,
   TransferFromCustodialAddress,
   TransferFromCustodialAddressBatch,
   validateBody,
 } from '@tatumio/tatum-core'
+import { prepareBatchTransferFromCustodialWalletAbstract, prepareTransferFromCustodialWalletAbstract } from '@tatumio/tatum-defi'
 import BigNumber from 'bignumber.js'
 import {
   sendKccGenerateCustodialWalletSignedTransaction,
