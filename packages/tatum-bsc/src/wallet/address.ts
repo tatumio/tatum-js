@@ -3,12 +3,11 @@ import { mnemonicToSeed } from 'bip39'
 import ethWallet, { hdkey as ethHdKey } from 'ethereumjs-wallet'
 /**
  * Generate Ethereum or any other ERC20 address
- * @param testnet testnet or mainnet version of address
  * @param xpub extended public key to generate address from
  * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
-const generateEthAddress = (testnet: boolean, xpub: string, i: number) => {
+const generateEthAddress = (xpub: string, i: number) => {
   const w = ethHdKey.fromExtendedKey(xpub)
   const wallet = w.deriveChild(i).getWallet()
   return '0x' + wallet.getAddress().toString('hex').toLowerCase()
@@ -48,7 +47,7 @@ export const generateBscPrivateKey = async (testnet: boolean, mnemonic: string, 
  * @returns blockchain address
  */
 export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xpub: string, i: number) => {
-  return generateEthAddress(testnet, xpub, i)
+  return generateEthAddress(xpub, i)
 }
 
 /**
