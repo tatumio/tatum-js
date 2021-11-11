@@ -1,265 +1,191 @@
+import BigNumber from 'bignumber.js'
 import {
-    ApproveErc20,
-    ApproveNftTransfer, CreateAuction,
+    auction,
+    get,
+    validateBody,
+    ApproveNftTransfer,
+    CreateAuction,
     Currency,
-    DeployNftAuction, InvokeAuctionOperation,
+    InvokeAuctionOperation,
     UpdateAuctionFee,
-    UpdateMarketplaceFeeRecipient
-} from "@tatumio/tatum-core";
-import {getImplementationFor} from "src/utils";
+    UpdateMarketplaceFeeRecipient,
+} from '@tatumio/tatum-core'
+import Web3 from 'web3'
 
-/**
- * Deploy new smart contract for NFT auction logic. Smart contract enables auction operator to create new auction for NFT (ERC-721/1155).
- * Operator can set a fee in percentage, which will be paid on top of the price of the asset.
- * can be offered for native asset - ETH, BSC, etc. - or any ERC20 token - this is configurable during auction creation.
- * Before auction is created, seller must approve transfer of the NFT to the auction contract.
- * Buyer will bid for the asset from the auction using native asset - send assets along the gid() smart contract call, or via ERC20 token.
- * Buyer of the auction must perform approval for the smart contract to access ERC20 token, before the actual bid() method is called.
- * Once there is higher bid than the actual one, the previous bidder's funds will be returned to him and new bidder will be the current winning one.
- * When auction ends, anyone can settle the auction - NFT will be sent to the bidder, assets to the seller and fee to the operator.
- * @param currency chain to work with
- * @param testnet if we are on testnet or not
- * @param body request data
- * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
- * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
- */
-export async function deployAuction(currency: Currency, testnet: boolean, body: DeployNftAuction, provider?: string) {
-    const blockchainDeployAuction = await getImplementationFor(currency, 'deployAuction')
-    return await blockchainDeployAuction(testnet, body, provider)
+export interface Auction {
+    /*
+       address of the seller
+       */
+    seller: string
+    /*
+       address of the token to sale
+       */
+    nftAddress: string
+    /*
+       ID of the NFT
+       */
+    tokenId: string
+    /*
+       if the auction is for ERC721 - true - or ERC1155 - false
+       */
+    isErc721: boolean
+    /*
+       Block height of end of auction
+       */
+    endedAt: string
+    /*
+       Block height, in which the auction started.
+       */
+    startedAt: string
+    /*
+       optional - if the auction is settled in the ERC20 token or in native currency
+       */
+    erc20Address?: string
+    /*
+       for ERC-1155 - how many tokens are for sale
+       */
+    amount: string
+    /*
+       Ending price of the asset at the end of the auction
+       */
+    endingPrice: string
+    /*
+       Actual highest bidder
+       */
+    bidder?: string
 }
 
 /**
- * Prepare signed transaction for NFT auction logic. Smart contract enables auction operator to create new auction for NFT (ERC-721/1155).
- * Operator can set a fee in percentage, which will be paid on top of the price of the asset.
- * can be offered for native asset - ETH, BSC, etc. - or any ERC20 token - this is configurable during auction creation.
- * Before auction is created, seller must approve transfer of the NFT to the auction contract.
- * Buyer will bid for the asset from the auction using native asset - send assets along the gid() smart contract call, or via ERC20 token.
- * Buyer of the auction must perform approval for the smart contract to access ERC20 token, before the actual bid() method is called.
- * Once there is higher bid than the actual one, the previous bidder's funds will be returned to him and new bidder will be the current winning one.
- * When auction ends, anyone can settle the auction - NFT will be sent to the bidder, assets to the seller and fee to the operator.
- * @param currency chain to work with
- * @param testnet if we are on testnet or not
- * @param body request data
- * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
- * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MPAuctionFee" target="_blank">Tatum API documentation</a>
  */
-export async function prepareDeployAuction(currency: Currency, testnet: boolean, body: DeployNftAuction, provider?: string) {
-    const blockchainPrepareDeployAuction = await getImplementationFor(currency, 'prepareDeployAuction')
-    return await blockchainPrepareDeployAuction(testnet, body, provider)
-}
+export const getAuctionFee = async (chain: Currency, contractAddress: string): Promise<number> =>
+    get(`/v3/blockchain/auction/auction/${chain}/${contractAddress}/fee`)
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MPAuction" target="_blank">Tatum API documentation</a>
+ */
+export const getAuction = async (chain: Currency, contractAddress: string, auctionId: string): Promise<Auction> =>
+    get(`/v3/blockchain/auction/auction/${chain}/${contractAddress}/auction/${auctionId}`)
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MPAuctionRecipient" target="_blank">Tatum API documentation</a>
+ */
+export const getAuctionFeeRecipient = async (chain: Currency, contractAddress: string): Promise<{ address: string }> =>
+    get(`/v3/blockchain/auction/auction/${chain}/${contractAddress}/recipient`)
 
 /**
  * Update auction fee.
- * @param currency chain to work with
- * @param testnet if we are on testnet or not
+ * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareAuctionUpdateFee = async (currency: Currency, testnet: boolean, body: UpdateAuctionFee, provider?: string) => {
-    const blockchainPrepareAuctionUpdateFee = await getImplementationFor(currency, 'prepareAuctionUpdateFee')
-    return await blockchainPrepareAuctionUpdateFee(testnet, body, provider)
+export const prepareAuctionUpdateFeeAbstraction = async (body: UpdateAuctionFee) => {
+    await validateBody(body, UpdateAuctionFee)
+    return [`0x${new BigNumber(body.auctionFee).toString(16)}`]
 }
 
 /**
  * Update auction fee recipient.
- * @param currency chain to work with
- * @param testnet if we are on testnet or not
+ * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareAuctionUpdateFeeRecipient = async (currency: Currency, testnet: boolean, body: UpdateMarketplaceFeeRecipient, provider?: string) => {
-    const blockchainPrepareAuctionUpdateFeeRecipient = await getImplementationFor(currency, 'prepareAuctionUpdateFeeRecipient')
-    return await blockchainPrepareAuctionUpdateFeeRecipient(testnet, body, provider)
+export const prepareAuctionUpdateFeeRecipientAbstraction = async (body: UpdateMarketplaceFeeRecipient) => {
+    await validateBody(body, UpdateMarketplaceFeeRecipient)
+    return [body.feeRecipient]
 }
 
 /**
  * Approve NFT transfer for auction to perform listing of the asset.
- * @param currency chain to work with
- * @param testnet if we are on testnet or not
+ * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareAuctionApproveNftTransfer = async (currency: Currency, testnet: boolean, body: ApproveNftTransfer, provider?: string) => {
-    const blockchainPrepareAuctionApproveNftTransfer = await getImplementationFor(currency, 'prepareAuctionApproveNftTransfer')
-    return await blockchainPrepareAuctionApproveNftTransfer(testnet, body, provider)
-}
-
-/**
- * Approve ERC20 transfer for auction to perform bidding on the asset in the auction.
- * @param currency chain to work with
- * @param testnet if we are on testnet or not
- * @param body request data
- * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
- * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
- */
-export const prepareAuctionApproveErc20Transfer = async (currency: Currency, testnet: boolean, body: ApproveErc20, provider?: string) => {
-    const blockchainPrepareAuctionApproveErc20Transfer = await getImplementationFor(currency, 'prepareAuctionApproveErc20Transfer')
-    return await blockchainPrepareAuctionApproveErc20Transfer(testnet, body, provider)
+export const prepareAuctionApproveNftTransferAbstraction = async (body: ApproveNftTransfer) => {
+    await validateBody(body, ApproveNftTransfer)
+    return body.isErc721 ? [body.spender, `0x${new BigNumber(body.tokenId).toString(16)}`] : [body.spender, true]
 }
 
 /**
  * Create new auction on the auction contract. Before auction, seller must approve spending of the NFT token for the Auction contract.
  * After auction is created, auction contract transfers the asset to the auction smart contract.
  * Only auction for existing NFTs can be created - seller must be owner of the NFT asset.
- * @param currency chain to work with
- * @param testnet if we are on testnet or not
+ * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareAuctionCreate = async (currency: Currency, testnet: boolean, body: CreateAuction, provider?: string) => {
-    const blockchainPrepareAuctionCreate = await getImplementationFor(currency, 'prepareAuctionCreate')
-    return await blockchainPrepareAuctionCreate(testnet, body, provider)
+export const prepareAuctionCreateAbstraction = async (body: CreateAuction) => {
+    await validateBody(body, CreateAuction)
+    const params = [
+        body.id,
+        body.isErc721,
+        body.nftAddress.trim(),
+        `0x${new BigNumber(body.tokenId).toString(16)}`,
+        body.seller.trim(),
+        `0x${new BigNumber(body.amount || 0).toString(16)}`,
+        `0x${new BigNumber(body.endedAt).toString(16)}`,
+        body.erc20Address || '0x0000000000000000000000000000000000000000',
+    ]
+    body.amount = undefined
+    return {body, params}
 }
 
 /**
  * Bid on the auction. Buyer must either send native assets with this operation, or approve ERC20 token spending before.
  * After auction is sold, it's in a pending state to be processed by the auction. Noone receives the assets unless the auction operator processes that.
- * @param currency chain to work with
- * @param testnet if we are on testnet or not
+ * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareAuctionBid = async (currency: Currency, testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
-    const blockchainPrepareAuctionBid = await getImplementationFor(currency, 'prepareAuctionBid')
-    return await blockchainPrepareAuctionBid(testnet, body, provider)
+export const prepareAuctionBidAbstraction = async (
+    helperGetWeb3Client: (testnet: boolean, chain: Currency, provider?: string | undefined) => Web3,
+    testnet: boolean,
+    body: InvokeAuctionOperation,
+    provider?: string
+) => {
+    await validateBody(body, InvokeAuctionOperation)
+
+    const web3 = helperGetWeb3Client(testnet, body.chain, provider)
+    // @ts-ignore
+    const a = await new web3.eth.Contract(auction.abi, body.contractAddress).methods.getAuction(body.id).call()
+    let decimals = 18
+    const b: any = {...body}
+    if (a[6] !== '0x0000000000000000000000000000000000000000') {
+        // @ts-ignore
+        decimals = await getErc20Decimals(testnet, body.chain, a[6], provider)
+    } else {
+        b.amount = body.bidValue
+    }
+
+    const params = [body.id, `0x${new BigNumber(body.bidValue).multipliedBy(new BigNumber(10).pow(decimals)).toString(16)}`]
+    return {b, params}
 }
 
 /**
  * Cancel auction on the auction. Only possible for the seller or the operator. There must be no buyer present for that auction. NFT asset is sent back to the seller.
- * @param currency chain to work with
- * @param testnet if we are on testnet or not
+ * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareAuctionCancel = async (currency: Currency, testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
-    const blockchainPrepareAuctionCancel = await getImplementationFor(currency, 'prepareAuctionCancel')
-    return await blockchainPrepareAuctionCancel(testnet, body, provider)
+export const prepareAuctionCancelAbstraction = async (body: InvokeAuctionOperation) => {
+    await validateBody(body, InvokeAuctionOperation)
+    return [body.id]
 }
 
 /**
  * Settle auction. There must be buyer present for that auction. NFT will be sent to the bidder, assets to the seller and fee to the operator.
- * @param currency chain to work with
- * @param testnet if we are on testnet or not
+ * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareAuctionSettle = async (currency: Currency, testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
-    const blockchainPrepareAuctionSettle = await getImplementationFor(currency, 'prepareAuctionSettle')
-    return await blockchainPrepareAuctionSettle(testnet, body, provider)
+export const prepareAuctionSettleAbstraction = async (testnet: boolean, body: InvokeAuctionOperation) => {
+    await validateBody(body, InvokeAuctionOperation)
+    return [body.id]
 }
-
-/**
- * Update auction fee.
- * @param currency chain to work with
- * @param testnet if we are on testnet or not
- * @param body request data
- * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
- * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
- */
-export const sendAuctionUpdateFee = async (currency: Currency, testnet: boolean, body: UpdateAuctionFee, provider?: string) => {
-    const blockchainSendAuctionUpdateFee = await getImplementationFor(currency, 'sendAuctionUpdateFee')
-    return await blockchainSendAuctionUpdateFee(testnet, body, provider)
-}
-
-/**
- * Update auction fee recipient.
- * @param currency chain to work with
- * @param testnet if we are on testnet or not
- * @param body request data
- * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
- * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
- */
-export const sendAuctionUpdateFeeRecipient = async (currency: Currency, testnet: boolean, body: UpdateMarketplaceFeeRecipient, provider?: string) => {
-    const blockchainSendAuctionUpdateFeeRecipient = await getImplementationFor(currency, 'sendAuctionUpdateFeeRecipient')
-    return await blockchainSendAuctionUpdateFeeRecipient(testnet, body, provider)
-}
-
-/**
- * Approve NFT transfer for auction to perform listing of the asset.
- * @param currency chain to work with
- * @param testnet if we are on testnet or not
- * @param body request data
- * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
- * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
- */
-export const sendAuctionApproveNftTransfer = async (currency: Currency, testnet: boolean, body: ApproveNftTransfer, provider?: string) => {
-    const blockchainSendAuctionApproveNftTransfer = await getImplementationFor(currency, 'sendAuctionApproveNftTransfer')
-    return await blockchainSendAuctionApproveNftTransfer(testnet, body, provider)
-}
-
-/**
- * Approve ERC20 transfer for auction to perform bidding on the asset in the auction.
- * @param currency chain to work with
- * @param testnet if we are on testnet or not
- * @param body request data
- * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
- * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
- */
-export const sendAuctionApproveErc20Transfer = async (currency: Currency, testnet: boolean, body: ApproveErc20, provider?: string) => {
-    const blockchainSendAuctionApproveErc20Transfer = await getImplementationFor(currency, 'sendAuctionApproveErc20Transfer')
-    return await blockchainSendAuctionApproveErc20Transfer(testnet, body, provider)
-}
-
-/**
- * Create new auction on the auction contract. Before auction, seller must approve spending of the NFT token for the Auction contract.
- * After auction is created, auction contract transfers the asset to the auction smart contract.
- * Only auction for existing NFTs can be created - seller must be owner of the NFT asset.
- * @param currency chain to work with
- * @param testnet if we are on testnet or not
- * @param body request data
- * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
- * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
- */
-export const sendAuctionCreate = async (currency: Currency, testnet: boolean, body: CreateAuction, provider?: string) => {
-    const blockchainSendAuctionCreate = await getImplementationFor(currency, 'sendAuctionCreate')
-    return await blockchainSendAuctionCreate(testnet, body, provider)
-}
-
-/**
- * Bid auction on the auction. Buyer must either send native assets with this operation, or approve ERC20 token spending before.
- * After auction is sold, it's in a pending state to be processed by the auction. Noone receives the assets unless the auction operator processes that.
- * @param currency chain to work with
- * @param testnet if we are on testnet or not
- * @param body request data
- * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
- * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
- */
-export const sendAuctionBid = async (currency: Currency, testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
-    const blockchainSendAuctionBid = await getImplementationFor(currency, 'sendAuctionBid')
-    return await blockchainSendAuctionBid(testnet, body, provider)
-}
-
-/**
- * Cancel auction on the auction. Only possible for the seller or the operator. There must be no buyer present for that auction. NFT asset is sent back to the seller.
- * @param currency chain to work with
- * @param testnet if we are on testnet or not
- * @param body request data
- * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
- * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
- */
-export const sendAuctionCancel = async (currency: Currency, testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
-    const blockchainSendAuctionCancel = await getImplementationFor(currency, 'sendAuctionCancel')
-    return await blockchainSendAuctionCancel(testnet, body, provider)
-}
-
-/**
- * Settle auction. There must be buyer present for that auction. NFT will be sent to the bidder, assets to the seller and fee to the operator.
- * @param currency chain to work with
- * @param testnet if we are on testnet or not
- * @param body request data
- * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
- * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
- */
-export const sendAuctionSettle = async (currency: Currency, testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
-    const blockchainSendAuctionSettle = await getImplementationFor(currency, 'sendAuctionSettle')
-    return await blockchainSendAuctionSettle(testnet, body, provider)
-}
-
-export { Auction, getAuctionFee, getAuction, getAuctionFeeRecipient,} from "@tatumio/tatum-core";

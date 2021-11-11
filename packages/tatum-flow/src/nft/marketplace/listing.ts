@@ -2,4 +2,4 @@ export {
     getMarketplaceFee,
     getMarketplaceListing,
     getMarketplaceFeeRecipient,
-} from "@tatumio/tatum-core"
+} from "@tatumio/tatum-defi"

@@ -1,8 +1,8 @@
 import {
-  get,
-  post,
-  Currency,
   createNFTAbstraction,
+} from '@tatumio/tatum-defi'
+import {
+  post,
   BurnErc721,
   DeployErc721,
   MintErc721,
@@ -23,7 +23,9 @@ import {
   sendXdcErc721Transaction,
 } from '../transaction'
 
-export { getNFTsByAddress, getNFTContractAddress, getNFTMetadataURI, getNFTImage, getNFTRoyalty } from '@tatumio/tatum-core'
+export {
+  getNFTsByAddress, getNFTContractAddress, getNFTMetadataURI, getNFTImage, getNFTRoyalty
+} from '@tatumio/tatum-defi'
 
 export const mintNFT = (body: MintErc721): Promise<TransactionHash> => post(`/v3/nft/mint`, body)
 

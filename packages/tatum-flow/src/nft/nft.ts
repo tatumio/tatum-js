@@ -1,4 +1,5 @@
-import {mintNFTRequest, createNFTAbstraction, TransactionHash, post, MintErc721} from '@tatumio/tatum-core';
+import {mintNFTRequest, createNFTAbstraction} from '@tatumio/tatum-defi';
+import {post, TransactionHash, MintErc721} from '@tatumio/tatum-core';
 import {
     FlowBurnNft,
     FlowDeployNft,
@@ -89,4 +90,4 @@ export {
     getNFTMetadataURI,
     getNFTImage,
     getNFTRoyalty,
-} from "@tatumio/tatum-core"
+} from "@tatumio/tatum-defi"

@@ -4,4 +4,4 @@ export {
     getNFTMetadataURI,
     getNFTImage,
     getNFTRoyalty,
-} from "@tatumio/tatum-core"
+} from "@tatumio/tatum-defi"

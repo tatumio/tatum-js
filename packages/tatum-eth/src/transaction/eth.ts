@@ -18,7 +18,6 @@ import {
   erc20TokenBytecode,
   erc721TokenABI,
   erc721TokenBytecode,
-  obtainCustodialAddressType,
   BurnErc20,
   CreateRecord,
   Currency,
@@ -46,6 +45,7 @@ import {
   MintMultipleErc721,
   TransferErc721,
 } from '@tatumio/tatum-core'
+import { obtainCustodialAddressType } from '@tatumio/tatum-defi'
 import { mintNFT } from '../nft'
 
 /**

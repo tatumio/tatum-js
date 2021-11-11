@@ -1,13 +1,15 @@
 import {
-  ApproveCustodialTransfer,
-  ContractType,
-  CustodialFullTokenWallet,
-  GenerateCustodialAddress,
   prepareBatchTransferFromCustodialWalletAbstract,
   prepareTransferFromCustodialWalletAbstract,
-  SmartContractMethodInvocation,
+} from '@tatumio/tatum-defi'
+import {
+  ApproveCustodialTransfer,
+  GenerateCustodialAddress,
   TransferFromCustodialAddress,
   TransferFromCustodialAddressBatch,
+  ContractType,
+  CustodialFullTokenWallet,
+  SmartContractMethodInvocation,
   validateBody,
 } from '@tatumio/tatum-core'
 import BigNumber from 'bignumber.js'

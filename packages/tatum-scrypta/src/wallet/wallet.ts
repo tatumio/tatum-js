@@ -1,4 +1,4 @@
-import { Currency, WalletWithMnemonic } from '@tatumio/tatum-core'
+import { WalletWithMnemonic } from '@tatumio/tatum-defi'
 import { generateMnemonic, mnemonicToSeed } from 'bip39'
 // @ts-ignore
 import hdkey from 'hdkey'

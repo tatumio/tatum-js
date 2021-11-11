@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@tatumio/tatum-core": "file:../tatum-core",
+    "@tatumio/tatum-defi": "file:../tatum-defi",
     "@tatumio/tatum-ledger": "file:../tatum-ledger",
     "algosdk": "^1.12.0",
     "base32.js": "^0.1.0"
