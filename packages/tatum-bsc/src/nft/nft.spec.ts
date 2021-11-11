@@ -19,7 +19,7 @@ describe('NFT tests', () => {
     it('should test bep 721 mint multiple transaction with cashback', async () => {
       const firstTokenId = new Date().getTime()
       const secondTokenId = firstTokenId + 1
-      const mintedTokens = await mintMultipleNFTWithUri(true, {
+      const mintedTokens = await mintMultipleNFTWithUri({
         to: ['0x811dfbff13adfbc3cf653dcc373c03616d3471c9', '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'],
         chain: Currency.BSC,
         tokenId: [firstTokenId.toString(), secondTokenId.toString()],
