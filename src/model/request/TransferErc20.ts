@@ -43,4 +43,9 @@ export class TransferErc20 extends PrivateKeyOrSignatureId {
     @Min(0)
     @IsOptional()
     public nonce?: number;
+
+    @ValidateIf(o => o.chain === Currency.ALGO && o.signatureId)
+    @IsNotEmpty()
+    @Length(42, 58)
+    public from?: string;
 }

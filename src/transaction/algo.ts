@@ -58,26 +58,27 @@ export const getAlgoIndexerClient = (testnet: boolean, provider?: string) => {
 export const prepareAlgoSignedTransaction = async (testnet: boolean, tx: AlgoTransaction, provider?: string) => {
     const algodClient = getAlgoClient(testnet, provider);
     const params = await algodClient.getTransactionParams().do();
-    const decoder = new base32.Decoder({ type: 'rfc4648' })
+    const decoder = new base32.Decoder({ type: 'rfc4648' });
     const enc = new TextEncoder();
     const note = enc.encode(tx.note ? tx.note : '');
-    const txn = {
-        from: tx.from,
-        to: tx.to,
-        fee: Number(tx.fee) * 1000000,
-        amount: BigInt(Number(tx.amount) * 1000000),
-        firstRound: params.firstRound,
-        lastRound: params.lastRound,
-        genesisID: params.genesisID,
-        genesisHash: params.genesisHash,
-        note: note
-    }
+    const txn = algosdk.makePaymentTxnWithSuggestedParams(
+        tx.from, 
+        tx.to, 
+        Number(tx.amount) * 1000000, 
+        undefined, 
+        note, 
+        {
+            ...params, 
+            fee: Number(tx.fee) * 1000000, 
+            flatFee: true
+        }
+    );
     if (tx.signatureId) {
         return JSON.stringify(txn);
     }
     const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
-    const signedTxn = algosdk.signTransaction(txn, secretKey);
-    return signedTxn.blob;
+    const signedTxn = txn.signTxn(secretKey);
+    return signedTxn;
 }
 
 /**
@@ -107,11 +108,8 @@ export const signAlgoKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
     const decoder = new base32.Decoder({ type: 'rfc4648' })
     const txn = JSON.parse(tx.serializedTransaction);
     const secretKey = new Uint8Array(decoder.write(fromPrivateKey).buf);    
-    const signedTxn = algosdk.signTransaction({
-        from: txn.from == ''? generateAlgodAddressFromPrivatetKey(fromPrivateKey) : txn.from, 
-        ...txn
-    }, secretKey);
-    return signedTxn.blob
+    const signedTxn = txn.signTxn(secretKey);
+    return signedTxn;
 }
 
 /**
@@ -126,10 +124,10 @@ export const prepareAlgoCreateNFTSignedTransaction = async (testnet: boolean, tx
     const params = await algodClient.getTransactionParams().do();
     const decoder = new base32.Decoder({ type: 'rfc4648' })
     const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
-        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : '',
+        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
         undefined,
         1, 0, false,
-        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : '',
+        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
         undefined,
         undefined,
         undefined,
@@ -170,7 +168,7 @@ export const prepareAlgoTransferNFTSignedTransaction = async (testnet: boolean, 
     const params = await algodClient.getTransactionParams().do();
     const decoder = new base32.Decoder({ type: 'rfc4648' })
     const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
-        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : '',
+        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
         tx.to,
         undefined,
         undefined,
@@ -211,7 +209,7 @@ export const prepareAlgoBurnNFTSignedTransaction = async (testnet: boolean, tx: 
     const params = await algodClient.getTransactionParams().do();
     const decoder = new base32.Decoder({ type: 'rfc4648' })
     const txn = algosdk.makeAssetDestroyTxnWithSuggestedParams(
-        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : '',
+        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
         undefined,
         Number(tx.contractAddress),
         params,
@@ -248,12 +246,12 @@ export const prepareAlgoCreateFractionalNFTSignedTransaction = async (testnet: b
     const params = await algodClient.getTransactionParams().do();
     const decoder = new base32.Decoder({ type: 'rfc4648' })
     const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
-        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : '',
+        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
         undefined,
         10 ** Math.floor(Math.log10(Number(tx.amount))), 
         Math.floor(Math.log10(Number(tx.amount))),
         false,
-        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : '',
+        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
         undefined,
         undefined,
         undefined,
@@ -294,7 +292,7 @@ export const prepareAlgoTransferFractionalNFTSignedTransaction = async (testnet:
     const params = await algodClient.getTransactionParams().do();
     const decoder = new base32.Decoder({ type: 'rfc4648' })    
     const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
-        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : '',
+        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
         tx.to,
         undefined,
         undefined,
@@ -335,7 +333,7 @@ export const prepareAlgoBurnFractionalNFTSignedTransaction = async (testnet: boo
     const params = await algodClient.getTransactionParams().do();
     const decoder = new base32.Decoder({ type: 'rfc4648' })
     const txn = algosdk.makeAssetDestroyTxnWithSuggestedParams(
-        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : '',
+        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
         undefined,
         Number(tx.contractAddress),
         params,
@@ -372,12 +370,12 @@ export const prepareAlgoCreateFTSignedTransaction = async (testnet: boolean, tx:
     const params = await algodClient.getTransactionParams().do();
     const decoder = new base32.Decoder({ type: 'rfc4648' })    
     const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
-        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : '',
+        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
         undefined,
         Number(tx.supply),
         Number(tx.digits),
         false,
-        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : '',
+        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
         undefined,
         undefined,
         undefined,
@@ -418,7 +416,7 @@ export const prepareAlgoTransferFTSignedTransaction = async (testnet: boolean, t
     const params = await algodClient.getTransactionParams().do();
     const decoder = new base32.Decoder({ type: 'rfc4648' })
     const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
-        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : '',
+        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
         tx.to,
         undefined,
         undefined,
@@ -459,7 +457,7 @@ export const prepareAlgoBurnFTSignedTransaction = async (testnet: boolean, tx: B
     const params = await algodClient.getTransactionParams().do();
     const decoder = new base32.Decoder({ type: 'rfc4648' })
     const txn = algosdk.makeAssetDestroyTxnWithSuggestedParams(
-        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : '',
+        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
         undefined,
         Number(tx.contractAddress),
         params,
