@@ -1,41 +1,45 @@
 import {
-    prepareMarketplaceCancelListingAbstraction,
-    prepareMarketplaceBuyListingAbstraction,
-    prepareMarketplaceCreateListingAbstraction,
-    prepareMarketplaceUpdateFeeAbstraction,
-    prepareMarketplaceUpdateFeeRecipientAbstraction,
-    ApproveErc20,
-  } from '@tatumio/tatum-core'
-  import {
-    CreateMarketplaceListing,
-    DeployMarketplaceListing,
-    InvokeMarketplaceListingOperation,
-    UpdateMarketplaceFee,
-    UpdateMarketplaceFeeRecipient,
-  } from '@tatumio/tatum-core'
-  import { helperBroadcastTx, helperPrepareSCCall } from 'src/helpers'
-  import { prepareApproveErc20 } from '../../fungible'
-  
-  import { 
-      deployMarketplaceListing as sendCeloDeployMarketplaceListingSignedTransaction,
-      prepareDeployMarketplaceListing as prepareCeloDeployMarketplaceListingSignedTransaction
+  prepareMarketplaceCancelListingAbstraction,
+  prepareMarketplaceBuyListingAbstraction,
+  prepareMarketplaceCreateListingAbstraction,
+  prepareMarketplaceUpdateFeeAbstraction,
+  prepareMarketplaceUpdateFeeRecipientAbstraction,
+  ApproveErc20,
+  Currency,
+  CreateMarketplaceListing,
+  DeployMarketplaceListing,
+  InvokeMarketplaceListingOperation,
+  UpdateMarketplaceFee,
+  UpdateMarketplaceFeeRecipient,
+} from '@tatumio/tatum-core'
+import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
+import { prepareApproveErc20 } from '../../fungible'
+import {
+  deployMarketplaceListing as sendCeloDeployMarketplaceListingSignedTransaction,
+  prepareDeployMarketplaceListing as prepareCeloDeployMarketplaceListingSignedTransaction,
 } from '@tatumio/tatum-celo'
-  import { 
-      deployMarketplaceListing as sendOneDeployMarketplaceListingSignedTransaction,
-      prepareDeployMarketplaceListing as prepareOneDeployMarketplaceListingSignedTransaction
+import {
+  deployMarketplaceListing as sendOneDeployMarketplaceListingSignedTransaction,
+  prepareDeployMarketplaceListing as prepareOneDeployMarketplaceListingSignedTransaction,
 } from '@tatumio/tatum-one'
-  import { 
-      deployMarketplaceListing as sendEthDeployMarketplaceListingSignedTransaction,
-      prepareDeployMarketplaceListing as prepareEthDeployMarketplaceListingSignedTransaction
+import {
+  deployMarketplaceListing as sendEthDeployMarketplaceListingSignedTransaction,
+  prepareDeployMarketplaceListing as prepareEthDeployMarketplaceListingSignedTransaction,
 } from '@tatumio/tatum-eth'
-  import { 
-      deployMarketplaceListing as sendBscDeployMarketplaceListingSignedTransaction,
-      prepareDeployMarketplaceListing as prepareBscDeployMarketplaceListingSignedTransaction
+import {
+  deployMarketplaceListing as sendBscDeployMarketplaceListingSignedTransaction,
+  prepareDeployMarketplaceListing as prepareBscDeployMarketplaceListingSignedTransaction,
 } from '@tatumio/tatum-bsc'
-  import { 
-      deployMarketplaceListing as sendPolygonDeployMarketplaceListingSignedTransaction,
-      prepareDeployMarketplaceListing as preparePolygonDeployMarketplaceListingSignedTransaction
+import {
+  deployMarketplaceListing as sendPolygonDeployMarketplaceListingSignedTransaction,
+  prepareDeployMarketplaceListing as preparePolygonDeployMarketplaceListingSignedTransaction,
 } from '@tatumio/tatum-polygon'
+import {
+  DeployTronMarketplaceListing,
+  UpdateTronMarketplaceFee,
+  UpdateTronMarketplaceFeeRecipient,
+  CreateTronMarketplaceListing,
+} from '@tatumio/tatum-tron'
 
 /**
  * Deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
@@ -51,24 +55,28 @@ import {
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const deployMarketplaceListing = async (testnet: boolean, body: DeployMarketplaceListing | DeployTronMarketplaceListing, provider?: string) => {
-    switch (body.chain) {
-        case Currency.CELO:
-            return await sendCeloDeployMarketplaceListingSignedTransaction(testnet, body, provider);
-        case Currency.ONE:
-            return await sendOneDeployMarketplaceListingSignedTransaction(testnet, body, provider);
-        case Currency.ETH:
-            return await sendEthDeployMarketplaceListingSignedTransaction(body, provider);
-        case Currency.BSC:
-            return await sendBscDeployMarketplaceListingSignedTransaction(body, provider);
-        case Currency.MATIC:
-            return await sendPolygonDeployMarketplaceListingSignedTransaction(testnet, body, provider);
-        // case Currency.TRON:
-        //     return await sendTronDeployMarketplaceListingSignedTransaction(testnet, body as DeployTronMarketplaceListing, provider)
-        default:
-            throw new Error('Unsupported chain');
-    }
-};
+export const deployMarketplaceListing = async (
+  testnet: boolean,
+  body: DeployMarketplaceListing | DeployTronMarketplaceListing,
+  provider?: string
+) => {
+  switch (body.chain) {
+    case Currency.CELO:
+      return await sendCeloDeployMarketplaceListingSignedTransaction(testnet, body, provider)
+    case Currency.ONE:
+      return await sendOneDeployMarketplaceListingSignedTransaction(testnet, body, provider)
+    case Currency.ETH:
+      return await sendEthDeployMarketplaceListingSignedTransaction(body, provider)
+    case Currency.BSC:
+      return await sendBscDeployMarketplaceListingSignedTransaction(body, provider)
+    case Currency.MATIC:
+      return await sendPolygonDeployMarketplaceListingSignedTransaction(testnet, body, provider)
+    // case Currency.TRON:
+    //     return await sendTronDeployMarketplaceListingSignedTransaction(testnet, body as DeployTronMarketplaceListing, provider)
+    default:
+      throw new Error('Unsupported chain')
+  }
+}
 
 /**
  * Prepare signed transaction for deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
@@ -84,24 +92,28 @@ export const deployMarketplaceListing = async (testnet: boolean, body: DeployMar
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareDeployMarketplaceListing = async (testnet: boolean, body: DeployMarketplaceListing | DeployTronMarketplaceListing, provider?: string) => {
-    switch (body.chain) {
-        case Currency.CELO:
-            return await prepareCeloDeployMarketplaceListingSignedTransaction(testnet, body, provider);
-        case Currency.ONE:
-            return await prepareOneDeployMarketplaceListingSignedTransaction(testnet, body, provider);
-        case Currency.ETH:
-            return await prepareEthDeployMarketplaceListingSignedTransaction(body, provider);
-        case Currency.BSC:
-            return await prepareBscDeployMarketplaceListingSignedTransaction(body, provider);
-        case Currency.MATIC:
-            return await preparePolygonDeployMarketplaceListingSignedTransaction(testnet, body, provider);
-        // case Currency.TRON:
-        //     return await prepareTronDeployMarketplaceListingSignedTransaction(testnet, body as DeployTronMarketplaceListing, provider)
-        default:
-            throw new Error('Unsupported chain');
-    }
-};
+export const prepareDeployMarketplaceListing = async (
+  testnet: boolean,
+  body: DeployMarketplaceListing | DeployTronMarketplaceListing,
+  provider?: string
+) => {
+  switch (body.chain) {
+    case Currency.CELO:
+      return await prepareCeloDeployMarketplaceListingSignedTransaction(testnet, body, provider)
+    case Currency.ONE:
+      return await prepareOneDeployMarketplaceListingSignedTransaction(testnet, body, provider)
+    case Currency.ETH:
+      return await prepareEthDeployMarketplaceListingSignedTransaction(body, provider)
+    case Currency.BSC:
+      return await prepareBscDeployMarketplaceListingSignedTransaction(body, provider)
+    case Currency.MATIC:
+      return await preparePolygonDeployMarketplaceListingSignedTransaction(testnet, body, provider)
+    // case Currency.TRON:
+    //     return await prepareTronDeployMarketplaceListingSignedTransaction(testnet, body as DeployTronMarketplaceListing, provider)
+    default:
+      throw new Error('Unsupported chain')
+  }
+}
 
 /**
  * Update marketplace fee.
@@ -110,14 +122,18 @@ export const prepareDeployMarketplaceListing = async (testnet: boolean, body: De
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareMarketplaceUpdateFee = async (testnet: boolean, body: UpdateMarketplaceFee | UpdateTronMarketplaceFee, provider?: string) => {
-    if (body.chain === Currency.TRON) {
-        throw new Error('Unsupported chain');
-    }
+export const prepareMarketplaceUpdateFee = async (
+  testnet: boolean,
+  body: UpdateMarketplaceFee | UpdateTronMarketplaceFee,
+  provider?: string
+) => {
+  if (body.chain === Currency.TRON) {
+    throw new Error('Unsupported chain')
+  }
 
-    const params = await prepareMarketplaceUpdateFeeAbstraction(body)
-    return await helperPrepareSCCall(testnet, body, UpdateMarketplaceFee, 'setMarketplaceFee', params, undefined, provider);
-};
+  const params = await prepareMarketplaceUpdateFeeAbstraction(body)
+  return await helperPrepareSCCall(testnet, body, UpdateMarketplaceFee, 'setMarketplaceFee', params, undefined, provider)
+}
 
 /**
  * Update marketplace fee recipient.
@@ -126,14 +142,18 @@ export const prepareMarketplaceUpdateFee = async (testnet: boolean, body: Update
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareMarketplaceUpdateFeeRecipient = async (testnet: boolean, body: UpdateMarketplaceFeeRecipient | UpdateTronMarketplaceFeeRecipient, provider?: string) => {
-    if (body.chain === Currency.TRON) {
-        throw new Error('Unsupported chain');
-    }
+export const prepareMarketplaceUpdateFeeRecipient = async (
+  testnet: boolean,
+  body: UpdateMarketplaceFeeRecipient | UpdateTronMarketplaceFeeRecipient,
+  provider?: string
+) => {
+  if (body.chain === Currency.TRON) {
+    throw new Error('Unsupported chain')
+  }
 
-    const params = await prepareMarketplaceUpdateFeeRecipientAbstraction(body)
-    return await helperPrepareSCCall(testnet, body, UpdateMarketplaceFeeRecipient, 'setMarketplaceFeeRecipient', params, undefined, provider);   
-};
+  const params = await prepareMarketplaceUpdateFeeRecipientAbstraction(body)
+  return await helperPrepareSCCall(testnet, body, UpdateMarketplaceFeeRecipient, 'setMarketplaceFeeRecipient', params, undefined, provider)
+}
 
 /**
  * Approve ERC20 spending for marketplace to perform buy with ERC20 token.
@@ -143,8 +163,8 @@ export const prepareMarketplaceUpdateFeeRecipient = async (testnet: boolean, bod
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceApproveErc20Spending = async (testnet: boolean, body: ApproveErc20, provider?: string) => {
-    return prepareApproveErc20(testnet, body, provider);
-};
+  return prepareApproveErc20(testnet, body, provider)
+}
 
 /**
  * Create new listing on the marketplace.
@@ -155,14 +175,18 @@ export const prepareMarketplaceApproveErc20Spending = async (testnet: boolean, b
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareMarketplaceCreateListing = async (testnet: boolean, body: CreateMarketplaceListing | CreateTronMarketplaceListing, provider?: string) => {
-    if (body.chain === Currency.TRON) {
-        throw new Error('Unsupported chain');
-    }
+export const prepareMarketplaceCreateListing = async (
+  testnet: boolean,
+  body: CreateMarketplaceListing | CreateTronMarketplaceListing,
+  provider?: string
+) => {
+  if (body.chain === Currency.TRON) {
+    throw new Error('Unsupported chain')
+  }
 
-    const { body: validatedBody, params } = await prepareMarketplaceCreateListingAbstraction(body)
-    return await helperPrepareSCCall(validatedBody, 'createListing', params, provider)
-};
+  const { body: validatedBody, params } = await prepareMarketplaceCreateListingAbstraction(body)
+  return await helperPrepareSCCall(validatedBody, 'createListing', params, provider)
+}
 
 /**
  * Buy listing on the marketplace. Buyer must either send native assets with this operation, or approve ERC20 token spending before.
@@ -172,15 +196,18 @@ export const prepareMarketplaceCreateListing = async (testnet: boolean, body: Cr
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareMarketplaceBuyListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation | InvokeTronMarketplaceListingOperation, provider?: string) => {
-    if (body.chain === Currency.TRON) {
-        throw new Error('Unsupported chain');
-    }
+export const prepareMarketplaceBuyListing = async (
+  testnet: boolean,
+  body: InvokeMarketplaceListingOperation | InvokeTronMarketplaceListingOperation,
+  provider?: string
+) => {
+  if (body.chain === Currency.TRON) {
+    throw new Error('Unsupported chain')
+  }
 
-    const { body: validatedBody, params } = await prepareMarketplaceBuyListingAbstraction(body)
-    return await helperPrepareSCCall(testnet, body, InvokeMarketplaceListingOperation, 'buyAssetFromListing', params, undefined, provider);
-    
-};
+  const { body: validatedBody, params } = await prepareMarketplaceBuyListingAbstraction(body)
+  return await helperPrepareSCCall(testnet, body, InvokeMarketplaceListingOperation, 'buyAssetFromListing', params, undefined, provider)
+}
 
 /**
  * Cancel listing on the marketplace. Only possible for the seller or the operator. There must be no buyer present for that listing. NFT asset is sent back to the seller.
@@ -189,13 +216,17 @@ export const prepareMarketplaceBuyListing = async (testnet: boolean, body: Invok
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareMarketplaceCancelListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation | InvokeTronMarketplaceListingOperation, provider?: string) => {
-    if (body.chain === Currency.TRON) {
-        throw new Error('Unsupported chain');
-    }
-    const params = await prepareMarketplaceCancelListingAbstraction(body)
-    return await helperPrepareSCCall(testnet, body, InvokeMarketplaceListingOperation, 'cancelListing', params, undefined, provider);
-};
+export const prepareMarketplaceCancelListing = async (
+  testnet: boolean,
+  body: InvokeMarketplaceListingOperation | InvokeTronMarketplaceListingOperation,
+  provider?: string
+) => {
+  if (body.chain === Currency.TRON) {
+    throw new Error('Unsupported chain')
+  }
+  const params = await prepareMarketplaceCancelListingAbstraction(body)
+  return await helperPrepareSCCall(testnet, body, InvokeMarketplaceListingOperation, 'cancelListing', params, undefined, provider)
+}
 
 /**
  * Update marketplace fee.
@@ -204,8 +235,11 @@ export const prepareMarketplaceCancelListing = async (testnet: boolean, body: In
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendMarketplaceUpdateFee = async (testnet: boolean, body: UpdateMarketplaceFee | UpdateTronMarketplaceFee, provider?: string) =>
-    helperBroadcastTx(body.chain, await prepareMarketplaceUpdateFee(testnet, body, provider), body.signatureId);
+export const sendMarketplaceUpdateFee = async (
+  testnet: boolean,
+  body: UpdateMarketplaceFee | UpdateTronMarketplaceFee,
+  provider?: string
+) => helperBroadcastTx(body.chain, await prepareMarketplaceUpdateFee(testnet, body, provider), body.signatureId)
 
 /**
  * Update marketplace fee recipient.
@@ -214,8 +248,11 @@ export const sendMarketplaceUpdateFee = async (testnet: boolean, body: UpdateMar
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendMarketplaceUpdateFeeRecipient = async (testnet: boolean, body: UpdateMarketplaceFeeRecipient | UpdateTronMarketplaceFeeRecipient, provider?: string) =>
-    helperBroadcastTx(body.chain, await prepareMarketplaceUpdateFeeRecipient(testnet, body, provider), body.signatureId);
+export const sendMarketplaceUpdateFeeRecipient = async (
+  testnet: boolean,
+  body: UpdateMarketplaceFeeRecipient | UpdateTronMarketplaceFeeRecipient,
+  provider?: string
+) => helperBroadcastTx(body.chain, await prepareMarketplaceUpdateFeeRecipient(testnet, body, provider), body.signatureId)
 
 /**
  * Approve ERC20 spending for marketplace to perform buy with ERC20 token.
@@ -225,7 +262,7 @@ export const sendMarketplaceUpdateFeeRecipient = async (testnet: boolean, body: 
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendMarketplaceApproveErc20Spending = async (testnet: boolean, body: ApproveErc20, provider?: string) =>
-    helperBroadcastTx(body.chain, await prepareMarketplaceApproveErc20Spending(testnet, body, provider), body.signatureId);
+  helperBroadcastTx(body.chain, await prepareMarketplaceApproveErc20Spending(testnet, body, provider), body.signatureId)
 
 /**
  * Create new listing on the marketplace.
@@ -236,8 +273,11 @@ export const sendMarketplaceApproveErc20Spending = async (testnet: boolean, body
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendMarketplaceCreateListing = async (testnet: boolean, body: CreateMarketplaceListing | CreateTronMarketplaceListing, provider?: string) =>
-    helperBroadcastTx(body.chain, await prepareMarketplaceCreateListing(testnet, body, provider), body.signatureId);
+export const sendMarketplaceCreateListing = async (
+  testnet: boolean,
+  body: CreateMarketplaceListing | CreateTronMarketplaceListing,
+  provider?: string
+) => helperBroadcastTx(body.chain, await prepareMarketplaceCreateListing(testnet, body, provider), body.signatureId)
 
 /**
  * Buy listing on the marketplace. Buyer must either send native assets with this operation, or approve ERC20 token spending before.
@@ -247,8 +287,11 @@ export const sendMarketplaceCreateListing = async (testnet: boolean, body: Creat
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendMarketplaceBuyListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation | InvokeTronMarketplaceListingOperation, provider?: string) =>
-    helperBroadcastTx(body.chain, await prepareMarketplaceBuyListing(testnet, body, provider), body.signatureId);
+export const sendMarketplaceBuyListing = async (
+  testnet: boolean,
+  body: InvokeMarketplaceListingOperation | InvokeTronMarketplaceListingOperation,
+  provider?: string
+) => helperBroadcastTx(body.chain, await prepareMarketplaceBuyListing(testnet, body, provider), body.signatureId)
 
 /**
  * Cancel listing on the marketplace. Only possible for the seller or the operator. There must be no buyer present for that listing. NFT asset is sent back to the seller.
@@ -257,8 +300,10 @@ export const sendMarketplaceBuyListing = async (testnet: boolean, body: InvokeMa
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendMarketplaceCancelListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation | InvokeTronMarketplaceListingOperation, provider?: string) =>
-    helperBroadcastTx(body.chain, await prepareMarketplaceCancelListing(testnet, body, provider), body.signatureId);
-
+export const sendMarketplaceCancelListing = async (
+  testnet: boolean,
+  body: InvokeMarketplaceListingOperation | InvokeTronMarketplaceListingOperation,
+  provider?: string
+) => helperBroadcastTx(body.chain, await prepareMarketplaceCancelListing(testnet, body, provider), body.signatureId)
 
 export { getMarketplaceFee, getMarketplaceListing, getMarketplaceFeeRecipient } from '@tatumio/tatum-core'
