@@ -168,12 +168,11 @@ export const sendAuctionUpdateFee = async (body: UpdateAuctionFee, provider?: st
   helperBroadcastTx(await prepareAuctionUpdateFee(body, provider), body.signatureId)
 /**
  * Update auction fee recipient.
- * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendAuctionUpdateFeeRecipient = async (testnet: boolean, body: UpdateMarketplaceFeeRecipient, provider?: string) =>
+export const sendAuctionUpdateFeeRecipient = async (body: UpdateMarketplaceFeeRecipient, provider?: string) =>
   helperBroadcastTx(await prepareAuctionUpdateFeeRecipient(body, provider), body.signatureId)
 /**
  * Approve NFT transfer for auction to perform listing of the asset.
