@@ -71,11 +71,9 @@ const convertEthPrivateKey = (privkey: string) => {
 
 /**
  * Generate address from private key
- * @param currency type of blockchain
- * @param testnet testnet or mainnet version of address
  * @param privateKey private key to use
  * @returns blockchain private key to the address
  */
-export const generateAddressFromPrivatekey = (currency: Currency, testnet: boolean, privateKey: string) => {
+export const generateAddressFromPrivatekey = (privateKey: string) => {
   return convertEthPrivateKey(privateKey)
 }
