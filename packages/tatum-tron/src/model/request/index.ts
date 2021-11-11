@@ -4,10 +4,10 @@ export * from './TronMintTrc721'
 export * from './TronMintMultipleTrc721'
 export * from './TronTransferTrc721'
 export * from './TronUpdateCashbackTrc721'
-export * from './DeployTronMarketplaceListing';
-export * from './CreateTronMarketplaceListing';
-export * from './UpdateTronMarketplaceFee';
-export * from './UpdateTronMarketplaceFeeRecipient';
+export * from './DeployTronMarketplaceListing'
+export * from './CreateTronMarketplaceListing'
+export * from './UpdateTronMarketplaceFee'
+export * from './UpdateTronMarketplaceFeeRecipient'
 export * from './TransferFromTronCustodialAddress'
 export * from './TransferFromTronCustodialAddressBatch'
 export * from './TransferTron'
@@ -17,3 +17,4 @@ export * from './CreateTronTrc10'
 export * from './CreateTronTrc20'
 export * from './FreezeTron'
 export * from './GenerateTronCustodialAddress'
+export * from './InvokeTronMarketplaceListingOperation'

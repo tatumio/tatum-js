@@ -1,5 +1,6 @@
 import { Currency } from '@tatumio/tatum-core'
 import { generateMnemonic, mnemonicToSeed } from 'bip39'
+
 import { generateWallet as generateBtcWallet } from '@tatumio/tatum-btc'
 import { generateWallet as generateDogeWallet } from '@tatumio/tatum-doge'
 import { generateWallet as generateLtcWallet } from '@tatumio/tatum-ltc'

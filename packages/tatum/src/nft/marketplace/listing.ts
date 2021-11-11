@@ -1,9 +1,4 @@
 import {
-  prepareMarketplaceCancelListingAbstraction,
-  prepareMarketplaceBuyListingAbstraction,
-  prepareMarketplaceCreateListingAbstraction,
-  prepareMarketplaceUpdateFeeAbstraction,
-  prepareMarketplaceUpdateFeeRecipientAbstraction,
   ApproveErc20,
   Currency,
   CreateMarketplaceListing,
@@ -12,34 +7,42 @@ import {
   UpdateMarketplaceFee,
   UpdateMarketplaceFeeRecipient,
 } from '@tatumio/tatum-core'
+import {
+  prepareMarketplaceCancelListingAbstraction,
+  prepareMarketplaceBuyListingAbstraction,
+  prepareMarketplaceCreateListingAbstraction,
+  prepareMarketplaceUpdateFeeAbstraction,
+  prepareMarketplaceUpdateFeeRecipientAbstraction,
+} from '@tatumio/tatum-defi'
 import { helperBroadcastTx, helperPrepareSCCall } from '../../helpers'
 import { prepareApproveErc20 } from '../../fungible'
 import {
   deployMarketplaceListing as sendCeloDeployMarketplaceListingSignedTransaction,
   prepareDeployMarketplaceListing as prepareCeloDeployMarketplaceListingSignedTransaction,
-} from '@tatumio/tatum-celo'
+} from '@tatumio/tatum-celo/src'
 import {
   deployMarketplaceListing as sendOneDeployMarketplaceListingSignedTransaction,
   prepareDeployMarketplaceListing as prepareOneDeployMarketplaceListingSignedTransaction,
-} from '@tatumio/tatum-one'
+} from '@tatumio/tatum-one/src'
 import {
   deployMarketplaceListing as sendEthDeployMarketplaceListingSignedTransaction,
   prepareDeployMarketplaceListing as prepareEthDeployMarketplaceListingSignedTransaction,
-} from '@tatumio/tatum-eth'
+} from '@tatumio/tatum-eth/src'
 import {
   deployMarketplaceListing as sendBscDeployMarketplaceListingSignedTransaction,
   prepareDeployMarketplaceListing as prepareBscDeployMarketplaceListingSignedTransaction,
-} from '@tatumio/tatum-bsc'
+} from '@tatumio/tatum-bsc/src'
 import {
   deployMarketplaceListing as sendPolygonDeployMarketplaceListingSignedTransaction,
   prepareDeployMarketplaceListing as preparePolygonDeployMarketplaceListingSignedTransaction,
-} from '@tatumio/tatum-polygon'
+} from '@tatumio/tatum-polygon/src'
 import {
   DeployTronMarketplaceListing,
   UpdateTronMarketplaceFee,
   UpdateTronMarketplaceFeeRecipient,
   CreateTronMarketplaceListing,
-} from '@tatumio/tatum-tron'
+  InvokeTronMarketplaceListingOperation,
+} from '@tatumio/tatum-tron/src'
 
 /**
  * Deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
@@ -68,7 +71,7 @@ export const deployMarketplaceListing = async (
     case Currency.ETH:
       return await sendEthDeployMarketplaceListingSignedTransaction(body, provider)
     case Currency.BSC:
-      return await sendBscDeployMarketplaceListingSignedTransaction(body, provider)
+      return await sendBscDeployMarketplaceListingSignedTransaction(testnet, body, provider)
     case Currency.MATIC:
       return await sendPolygonDeployMarketplaceListingSignedTransaction(testnet, body, provider)
     // case Currency.TRON:
@@ -105,7 +108,7 @@ export const prepareDeployMarketplaceListing = async (
     case Currency.ETH:
       return await prepareEthDeployMarketplaceListingSignedTransaction(body, provider)
     case Currency.BSC:
-      return await prepareBscDeployMarketplaceListingSignedTransaction(body, provider)
+      return await prepareBscDeployMarketplaceListingSignedTransaction(testnet, body, provider)
     case Currency.MATIC:
       return await preparePolygonDeployMarketplaceListingSignedTransaction(testnet, body, provider)
     // case Currency.TRON:
@@ -185,7 +188,7 @@ export const prepareMarketplaceCreateListing = async (
   }
 
   const { body: validatedBody, params } = await prepareMarketplaceCreateListingAbstraction(body)
-  return await helperPrepareSCCall(validatedBody, 'createListing', params, provider)
+  return await helperPrepareSCCall(testnet, validatedBody, CreateMarketplaceListing, 'createListing', params, undefined, provider)
 }
 
 /**
@@ -206,7 +209,15 @@ export const prepareMarketplaceBuyListing = async (
   }
 
   const { body: validatedBody, params } = await prepareMarketplaceBuyListingAbstraction(body)
-  return await helperPrepareSCCall(testnet, body, InvokeMarketplaceListingOperation, 'buyAssetFromListing', params, undefined, provider)
+  return await helperPrepareSCCall(
+    testnet,
+    validatedBody,
+    InvokeMarketplaceListingOperation,
+    'buyAssetFromListing',
+    params,
+    undefined,
+    provider
+  )
 }
 
 /**
@@ -306,4 +317,4 @@ export const sendMarketplaceCancelListing = async (
   provider?: string
 ) => helperBroadcastTx(body.chain, await prepareMarketplaceCancelListing(testnet, body, provider), body.signatureId)
 
-export { getMarketplaceFee, getMarketplaceListing, getMarketplaceFeeRecipient } from '@tatumio/tatum-core'
+export { getMarketplaceFee, getMarketplaceListing, getMarketplaceFeeRecipient } from '@tatumio/tatum-defi'

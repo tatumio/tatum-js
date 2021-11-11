@@ -2,6 +2,7 @@ import 'reflect-metadata'
 
 export * from './constants'
 export * from './wallet'
+export * from './helpers'
 export * from './ledger'
 export * from './offchain'
 export * from './blockchain'
