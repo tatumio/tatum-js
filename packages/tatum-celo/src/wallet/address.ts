@@ -1,6 +1,6 @@
-import { Currency, TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
+import { TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
 import { mnemonicToSeed } from 'bip39'
-import ethWallet, { hdkey as ethHdKey } from 'ethereumjs-wallet'
+import { hdkey as ethHdKey } from 'ethereumjs-wallet'
 import { CELO_DERIVATION_PATH } from 'src/constants'
 
 /**

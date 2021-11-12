@@ -1,4 +1,3 @@
-import { Currency } from '@tatumio/tatum-core'
 import { generatePrivateKeyFromMnemonic } from './address'
 import { generateCeloWallet } from './wallet'
 
