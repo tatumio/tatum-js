@@ -35,13 +35,12 @@ const generateDogePrivateKey = async (testnet: boolean, mnemonic: string, i: num
 
 /**
  * Generate address
- * @param currency type of blockchain
  * @param testnet testnet or mainnet version of address
  * @param xpub extended public key to generate address from
  * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
-export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xpub: string, i: number) => {
+export const generateAddressFromXPub = (testnet: boolean, xpub: string, i: number) => {
   return generateDogeAddress(testnet, xpub, i)
 }
 

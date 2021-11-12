@@ -4,7 +4,6 @@ import { generateAddressFromXPub, generatePrivateKeyFromMnemonic } from './addre
 describe('Address tests', () => {
   it('should generate address 1 for DOGE mainnet', () => {
     const address = generateAddressFromXPub(
-      Currency.DOGE,
       false,
       'xpub6EKTDXEVtTZR3sZoujGEnp9arodxCxHzTrN6G1PEFV7d8bt7CER3fLg8sz8G81LLAkz5C46FCtj4tppA7zd592gs4kCyKvqrMoQK6DQnD5r',
       1
@@ -14,7 +13,6 @@ describe('Address tests', () => {
 
   it('should generate address 1 for DOGE testnet', () => {
     const address = generateAddressFromXPub(
-      Currency.DOGE,
       true,
       'tpubDFjLw3ykn4aB7fFt96FaqRjSnvtDsU2wpVr8GQk3Eo612LS9jo9JgMkQRfYVG248J3pTBsxGg3PYUXFd7pReNLTeUzxFcUDL3zCvrp3H34a',
       1
