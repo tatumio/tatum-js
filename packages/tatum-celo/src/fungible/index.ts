@@ -11,7 +11,7 @@ import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendApproveErc20 = async (testnet: boolean, body: ApproveErc20, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareApproveErc20(testnet, body, provider), body.signatureId)
+  helperBroadcastTx(await prepareApproveErc20(testnet, body, provider), body.signatureId)
 
 /**
  * Prepare approve ERC20 signed transaction.

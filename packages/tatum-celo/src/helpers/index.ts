@@ -5,7 +5,7 @@ import { getCeloClient, prepareCeloSmartContractWriteMethodInvocation } from '..
 import { celoBroadcast } from '../blockchain'
 import Web3 from 'web3'
 
-export const helperBroadcastTx = async (chain: Currency, txData: string, signatureId?: string) => {
+export const helperBroadcastTx = async (txData: string, signatureId?: string) => {
   return await celoBroadcast(txData, signatureId)
 }
 
