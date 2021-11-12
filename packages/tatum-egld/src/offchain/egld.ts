@@ -11,10 +11,9 @@ import { offchainTransferEgldKMS } from './kms'
  * This operation is irreversible.
  * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
- * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
-export const sendEgldOffchainTransaction = async (testnet: boolean, body: EgldTransferOffchain, provider?: string) => {
+export const sendEgldOffchainTransaction = async (testnet: boolean, body: EgldTransferOffchain) => {
     if (body.signatureId) {
         return offchainTransferEgldKMS(body)
     }
