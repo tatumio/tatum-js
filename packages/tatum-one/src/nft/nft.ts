@@ -1,10 +1,9 @@
+import { createNFTAbstraction, mintNFTRequest } from '@tatumio/tatum-defi'
 import {
   BurnErc721,
-  createNFTAbstraction,
   DeployErc721,
   MintErc721,
   MintMultipleErc721,
-  mintNFTRequest,
   TransactionHash,
   TransferErc721,
   UpdateCashbackErc721,
@@ -21,7 +20,7 @@ import {
   sendOneUpdateCashbackForAuthor721SignedTransaction,
 } from '../transaction'
 
-export const mintNFT = (body: OneMint721) => mintNFTRequest(body)
+export const mintNFT = (body: OneMint721): Promise<TransactionHash> => mintNFTRequest(body)
 
 /**
  * Deploy new NFT smart contract, which will be used for later minting.
@@ -113,4 +112,4 @@ export const transferNFT = async (testnet: boolean, body: TransferErc721, provid
   return sendOneTransfer721SignedTransaction(testnet, body, provider)
 }
 
-export { getNFTsByAddress, getNFTContractAddress, getNFTMetadataURI, getNFTImage, getNFTRoyalty } from '@tatumio/tatum-core'
+export { getNFTsByAddress, getNFTContractAddress, getNFTMetadataURI, getNFTImage, getNFTRoyalty } from '@tatumio/tatum-defi'

@@ -1,19 +1,21 @@
 import {
-  DeployNftAuction,
-  UpdateAuctionFee,
   prepareAuctionUpdateFeeAbstraction,
-  auction,
-  UpdateMarketplaceFeeRecipient,
   prepareAuctionUpdateFeeRecipientAbstraction,
-  ApproveNftTransfer,
   prepareAuctionApproveNftTransferAbstraction,
-  ApproveErc20,
-  CreateAuction,
   prepareAuctionCreateAbstraction,
-  InvokeAuctionOperation,
   prepareAuctionBidAbstraction,
   prepareAuctionCancelAbstraction,
   prepareAuctionSettleAbstraction,
+} from '@tatumio/tatum-defi'
+import {
+  auction,
+  UpdateMarketplaceFeeRecipient,
+  DeployNftAuction,
+  UpdateAuctionFee,
+  ApproveNftTransfer,
+  ApproveErc20,
+  CreateAuction,
+  InvokeAuctionOperation,
 } from '@tatumio/tatum-core'
 import erc1155_abi from '@tatumio/tatum-core/dist/contracts/erc1155/erc1155_abi'
 import erc721_abi from '@tatumio/tatum-core/dist/contracts/erc721/erc721_abi'
@@ -249,4 +251,4 @@ export const sendAuctionCancel = async (testnet: boolean, body: InvokeAuctionOpe
 export const sendAuctionSettle = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) =>
   helperBroadcastTx(body.chain, await prepareAuctionSettle(testnet, body, provider), body.signatureId)
 
-export { Auction, getAuctionFee, getAuction, getAuctionFeeRecipient } from '@tatumio/tatum-core'
+export { Auction, getAuctionFee, getAuction, getAuctionFeeRecipient } from '@tatumio/tatum-defi'

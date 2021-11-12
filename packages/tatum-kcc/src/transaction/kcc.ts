@@ -19,7 +19,6 @@ import {
   MintErc20,
   MintMultiToken,
   MintMultiTokenBatch,
-  obtainCustodialAddressType,
   SmartContractMethodInvocation,
   SmartContractReadMethodInvocation,
   TATUM_API_URL,
@@ -38,6 +37,7 @@ import {
   BurnMultiTokenBatch,
   DeployMultiToken,
 } from '@tatumio/tatum-core'
+import { obtainCustodialAddressType } from '@tatumio/tatum-defi'
 import { BigNumber } from 'bignumber.js'
 import Web3 from 'web3'
 import { TransactionConfig } from 'web3-core'
@@ -49,7 +49,7 @@ import { mintNFT } from '../nft'
  * Estimate Gas price for the transaction.
  */
 export const kccGetGasPriceInWei = async () => {
-  return Web3.utils.toWei('1', 'gwei');
+  return Web3.utils.toWei('1', 'gwei')
 }
 
 const prepareGeneralTx = async (
@@ -714,11 +714,7 @@ export const prepareKccBurnMultiTokenSignedTransaction = async (testnet: boolean
  * @param provider url of the Kcc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareKccBurnMultiTokenBatchSignedTransaction = async (
-  testnet: boolean,
-  body: BurnMultiTokenBatch,
-  provider?: string
-) => {
+export const prepareKccBurnMultiTokenBatchSignedTransaction = async (testnet: boolean, body: BurnMultiTokenBatch, provider?: string) => {
   await validateBody(body, BurnMultiTokenBatch)
   const client = await prepareKccClient(testnet, provider, body.fromPrivateKey)
   // @ts-ignore
@@ -840,11 +836,7 @@ export const prepareKccMintMultiTokenSignedTransaction = async (testnet: boolean
  * @param provider url of the Kcc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareKccMintMultiTokenBatchSignedTransaction = async (
-  testnet: boolean,
-  body: MintMultiTokenBatch,
-  provider?: string
-) => {
+export const prepareKccMintMultiTokenBatchSignedTransaction = async (testnet: boolean, body: MintMultiTokenBatch, provider?: string) => {
   await validateBody(body, MintMultiTokenBatch)
   const client = await prepareKccClient(testnet, provider, body.fromPrivateKey)
   const batchAmounts = body.amounts.map((amts) => amts.map((amt) => `0x${new BigNumber(amt).toString(16)}`))
@@ -1029,11 +1021,8 @@ export const sendKccMintCashbackErc721SignedTransaction = async (testnet: boolea
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendKccMintMultipleCashbackErc721SignedTransaction = async (
-  testnet: boolean,
-  body: MintMultipleErc721,
-  provider?: string
-) => kccBroadcast(await prepareKccMintMultipleCashbackErc721SignedTransaction(testnet, body, provider), body.signatureId)
+export const sendKccMintMultipleCashbackErc721SignedTransaction = async (testnet: boolean, body: MintMultipleErc721, provider?: string) =>
+  kccBroadcast(await prepareKccMintMultipleCashbackErc721SignedTransaction(testnet, body, provider), body.signatureId)
 
 /**
  * Send Kcc mint multiple erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1134,11 +1123,8 @@ export const sendKccTransferMultiTokenSignedTransaction = async (testnet: boolea
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendKccBatchTransferMultiTokenSignedTransaction = async (
-  testnet: boolean,
-  body: TransferMultiTokenBatch,
-  provider?: string
-) => kccBroadcast(await prepareKccBatchTransferMultiTokenSignedTransaction(testnet, body, provider), body.signatureId)
+export const sendKccBatchTransferMultiTokenSignedTransaction = async (testnet: boolean, body: TransferMultiTokenBatch, provider?: string) =>
+  kccBroadcast(await prepareKccBatchTransferMultiTokenSignedTransaction(testnet, body, provider), body.signatureId)
 
 /**
  * Send Kcc mint multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.

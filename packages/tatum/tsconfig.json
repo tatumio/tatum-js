@@ -1,31 +1,44 @@
 {
+  "extends": "../../tsconfig",
   "compilerOptions": {
-    "target": "es2017",
-    "lib": [
-      "es2017"
-    ],
-    "module": "commonjs",
-    "outDir": "./dist",
-    "strict": true,
-    "baseUrl": "./",
-    "declaration": true,
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "types": [
-      "node",
-      "jest"
-    ],
-    "esModuleInterop": true,
-    "inlineSourceMap": true,
-    "experimentalDecorators": true,
-    "resolveJsonModule": true,
-    "emitDecoratorMetadata": true,
-    "strictPropertyInitialization": false,
-    "allowSyntheticDefaultImports":true
+    "rootDir": "./src",
+    "outDir": "./dist"
   },
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"],
+  "references": [
+    { "path": "../tatum-ada" },
+    { "path": "../tatum-algo" },
+    { "path": "../tatum-bch" },
+    { "path": "../tatum-bnb" },
+    { "path": "../tatum-bsc" },
+    { "path": "../tatum-btc" },
+    { "path": "../tatum-celo" },
+    { "path": "../tatum-core" },
+    { "path": "../tatum-defi" },
+    { "path": "../tatum-doge" },
+    { "path": "../tatum-egld" },
+    { "path": "../tatum-eth" },
+    { "path": "../tatum-flow" },
+    { "path": "../tatum-kcc" },
+    { "path": "../tatum-ledger" },
+    { "path": "../tatum-ltc" },
+    { "path": "../tatum-one" },
+    { "path": "../tatum-polygon" },
+    { "path": "../tatum-qtum" },
+    { "path": "../tatum-quorum" },
+    { "path": "../tatum-scrypta" },
+    { "path": "../tatum-tron" },
+    { "path": "../tatum-vet" },
+    { "path": "../tatum-xdc" },
+    { "path": "../tatum-xlm" },
+    { "path": "../tatum-xrp" }
+  ],
+  "typeRoots": [
+    "node_modules/@types"
+  ],
+  "types": [
+    "node",
+    "jest"
+  ],
 }

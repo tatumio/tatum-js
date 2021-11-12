@@ -209,7 +209,15 @@ export const prepareMarketplaceBuyListing = async (
   }
 
   const { body: validatedBody, params } = await prepareMarketplaceBuyListingAbstraction(body)
-  return await helperPrepareSCCall(testnet, body, InvokeMarketplaceListingOperation, 'buyAssetFromListing', params, undefined, provider)
+  return await helperPrepareSCCall(
+    testnet,
+    validatedBody,
+    InvokeMarketplaceListingOperation,
+    'buyAssetFromListing',
+    params,
+    undefined,
+    provider
+  )
 }
 
 /**

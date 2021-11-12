@@ -15,7 +15,7 @@ import {
   sendKccBurnMultiTokenBatchSignedTransaction,
   sendKccTransferMultiTokenSignedTransaction,
   prepareKccBatchTransferMultiTokenSignedTransaction,
-} from '../'
+} from '../transaction'
 
 export const deployMultiToken = async (testnet: boolean, body: DeployMultiToken, provider?: string) => {
   return sendKccDeployMultiTokenSignedTransaction(testnet, body, provider)

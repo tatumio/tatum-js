@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-egld",
-  "version": "0.0.1",
+  "version": "2.0.0-alpha.0",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -15,6 +15,7 @@
   "dependencies": {
     "@elrondnetwork/erdjs": "^8.0.1-alpha.11",
     "@tatumio/tatum-core": "file:../tatum-core",
+    "@tatumio/tatum-defi": "file:../tatum-defi",
     "@tatumio/tatum-ledger": "file:../tatum-ledger",
     "axios": "^0.21.1",
     "bech32": "^1.1.4",

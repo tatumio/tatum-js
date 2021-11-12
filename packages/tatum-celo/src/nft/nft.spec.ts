@@ -12,7 +12,7 @@ import {
   burnNFT,
   CeloTransferErc721,
   transferNFT,
-} from 'src'
+} from '../'
 
 describe('NFT tests', () => {
   jest.setTimeout(99999)

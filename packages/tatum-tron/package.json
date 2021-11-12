@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-tron",
-  "version": "0.0.1",
+  "version": "2.0.0-alpha.0",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -15,10 +15,16 @@
   },
   "dependencies": {
     "@tatumio/tatum-core": "file:../tatum-core",
+    "@tatumio/tatum-defi": "file:../tatum-defi",
     "@tatumio/tatum-ledger": "file:../tatum-ledger",
     "bip39": "^3.0.2",
+    "bip32": "^2.0.5",
     "ethereumjs-wallet": "^1.0.0",
-    "bitcoinjs-lib": "^5.2.0"
+    "bitcoinjs-lib": "^5.2.0",
+    "class-validator": "0.13.0",
+    "axios": "^0.21.1",
+    "bignumber.js": "^9.0.0",
+    "elliptic": "^6.5.4"
   },
   "devDependencies": {
     "@types/jest": "^26.0.4",

@@ -17,8 +17,10 @@ import {
   TransactionKMS,
   SmartContractReadMethodInvocation,
   CreateRecord,
-  obtainCustodialAddressType,
 } from '@tatumio/tatum-core'
+import {
+  obtainCustodialAddressType
+} from '@tatumio/tatum-defi'
 import {
   CeloDeployMultiToken,
   CeloDeployErc721,

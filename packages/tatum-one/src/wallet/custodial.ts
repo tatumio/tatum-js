@@ -1,14 +1,16 @@
 import {
-  GenerateCustodialAddress,
-  TransferFromCustodialAddress,
   prepareTransferFromCustodialWalletAbstract,
-  SmartContractMethodInvocation,
-  TransferFromCustodialAddressBatch,
   prepareBatchTransferFromCustodialWalletAbstract,
-  ApproveCustodialTransfer,
+} from '@tatumio/tatum-defi'
+import {
+  SmartContractMethodInvocation,
   validateBody,
   ContractType,
   CustodialFullTokenWallet,
+  GenerateCustodialAddress,
+  TransferFromCustodialAddress,
+  TransferFromCustodialAddressBatch,
+  ApproveCustodialTransfer,
 } from '@tatumio/tatum-core'
 import BigNumber from 'bignumber.js'
 import { getErc20Decimals } from '../fungible'
