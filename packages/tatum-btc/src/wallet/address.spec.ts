@@ -17,12 +17,12 @@ describe('Address tests', () => {
         expect(privateKey).toBe('cQ1YZMep3CiAnMTA9y62ha6BjGaaTFsTvtDuGmucGvpAVmS89khV')
     })
     it('should generate an address from a mainnet BTC private key', async () => {
-        const address = await generateAddressFromPrivatekey(Currency.BTC, false, 'KwREvx76g7QAp5dow1ab2Mg8K6Ta4SH5kR5ASjhwoDcNj2bPvgG3')
+        const address = await generateAddressFromPrivatekey(false, 'KwREvx76g7QAp5dow1ab2Mg8K6Ta4SH5kR5ASjhwoDcNj2bPvgG3')
         expect(address).toBe('18w9N93bAn13wDnEXFKLGTGeYN9CQoJAqV')
     })
 
     it('should generate an address from a testnet BTC private key', async () => {
-        const address = await generateAddressFromPrivatekey(Currency.BTC, true, 'cNvyq4JM4DnPyXNNkkxf47baCuyVesCrw5AtkALKy7ELTrBLrGBK')
+        const address = await generateAddressFromPrivatekey(true, 'cNvyq4JM4DnPyXNNkkxf47baCuyVesCrw5AtkALKy7ELTrBLrGBK')
         expect(address).toBe('n4EUn9z1zXK1824mTHj9hEV91L3KdNPnpY')
     })
 })
