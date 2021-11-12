@@ -42,10 +42,9 @@ const prepareSignedTransaction = async (body: TransferDogeBlockchain) => {
  * Sign Dogecoin pending transaction from Tatum KMS
  * @param tx pending transaction from KMS
  * @param privateKeys private keys to sign transaction with.
- * @param testnet mainnet or testnet version
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signDogecoinKMSTransaction = async (tx: TransactionKMS, privateKeys: string[], testnet: boolean) => {
+export const signDogecoinKMSTransaction = async (tx: TransactionKMS, privateKeys: string[]) => {
   if (tx.chain !== Currency.DOGE) {
     throw Error('Unsupported chain.')
   }
