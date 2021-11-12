@@ -155,10 +155,9 @@ export const prepareBatchTransferFromCustodialWalletAbstract = async (
   body: TransferFromCustodialAddressBatch,
   getContractDecimals: (contractAddress: string, provider?: string, testnet?: boolean) => Promise<any>,
   prepareSmartContractWriteMethodInvocation: (
-    testnet: boolean,
-    body: TransferFromCustodialAddressBatch,
     r: SmartContractMethodInvocation,
-    provider?: string
+    provider?: string,
+    testnet?: boolean,
   ) => Promise<string>,
   SmartContractMethodInvocationCtor: any,
   decimals: number,
@@ -204,5 +203,5 @@ export const prepareBatchTransferFromCustodialWalletAbstract = async (
     tokenIds,
   ]
   r.methodABI = CustodialFullTokenWalletWithBatch.abi.find((a) => a.name === 'transferBatch')
-  return await prepareSmartContractWriteMethodInvocation(testnet, body, r, provider)
+  return await prepareSmartContractWriteMethodInvocation(r, provider, testnet)
 }
