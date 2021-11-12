@@ -1,0 +1,26 @@
+name: Deploy multiple package to NPM
+
+on:
+  push:
+    branches:
+      - feature/deploy-pipeline-v2
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install deployment deps
+        working-directory: ./deployment/
+        run: yarn
+
+
+      - name: Build deployment script
+        working-directory: ./deployment/
+        run: yarn build
+
+
+      - run: echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}" > ~/.npmrc
+      - uses: ./deployment/
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
