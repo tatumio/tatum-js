@@ -11,7 +11,7 @@ import {
   CeloMintMultipleErc721,
   CeloTransferErc721,
   CeloUpdateCashbackErc721,
-} from '@tatumio/tatum-celo/src'
+} from '@tatumio/tatum-celo'
 import {
   mintNFTWithUri as ethMintNFTWithUri,
   deployNFT as ethDeployNFT,
@@ -24,7 +24,7 @@ import {
   EthMintMultipleErc721,
   EthBurnErc721,
   EthTransferErc721,
-} from '@tatumio/tatum-eth/src'
+} from '@tatumio/tatum-eth'
 import {
   mintNFTWithUri as polygonMintNFTWithUri,
   deployNFT as polygonDeployNFT,
@@ -32,7 +32,7 @@ import {
   burnNFT as polygonBurnNFT,
   updateCashbackForAuthorNFT as polygonUpdateCashbackForAuthorNFT,
   transferNFT as polygonTransferNFT,
-} from '@tatumio/tatum-polygon/src'
+} from '@tatumio/tatum-polygon'
 import {
   mintNFTWithUri as oneMintNFTWithUri,
   deployNFT as oneDeployNFT,
@@ -41,7 +41,7 @@ import {
   updateCashbackForAuthorNFT as oneUpdateCashbackForAuthorNFT,
   transferNFT as oneTransferNFT,
   OneMint721,
-} from '@tatumio/tatum-one/src'
+} from '@tatumio/tatum-one'
 import {
   mintNFTWithUri as tronMintNFTWithUri,
   deployNFT as tronDeployNFT,
@@ -54,15 +54,16 @@ import {
   TronMintTrc721,
   TronTransferTrc721,
   TronUpdateCashbackTrc721,
-} from '@tatumio/tatum-tron/src'
+  TronMintMultipleTrc721,
+} from '@tatumio/tatum-tron'
 import {
   mintNFTWithUri as bscMintNFTWithUri,
   deployNFT as bscDeployNFT,
-  mintNFTWithUri as bscMintMultipleNFTWithUri,
+  mintMultipleNFTWithUri as bscMintMultipleNFTWithUri,
   burnNFT as bscBurnNFT,
   updateCashbackForAuthorNFT as bscUpdateCashbackForAuthorNFT,
   transferNFT as bscTransferNFT,
-} from '@tatumio/tatum-bsc/src'
+} from '@tatumio/tatum-bsc'
 import {
   mintNFTWithUri as flowMintNFTWithUri,
   deployNFT as flowDeployNFT,
@@ -74,10 +75,9 @@ import {
   FlowMintMultipleNft,
   FlowMintNft,
   FlowTransferNft,
-} from '@tatumio/tatum-flow/src'
+} from '@tatumio/tatum-flow'
 import { TransactionHash, Currency, UpdateCashbackErc721, MintMultipleErc721 } from '@tatumio/tatum-core'
 import { mintNFTRequest, createNFTAbstraction } from '@tatumio/tatum-defi'
-import { TronMintMultipleTrc721 } from '@tatumio/tatum-tron'
 
 export const mintNFT = (body: CeloMintErc721 | EthMintErc721 | OneMint721) => mintNFTRequest(body)
 
@@ -178,7 +178,7 @@ export const mintMultipleNFTWithUri = async (
 ) => {
   switch (body.chain) {
     case Currency.CELO:
-      return celoMintMultipleNFTWithUri(testnet, body, provider)
+      return celoMintMultipleNFTWithUri(testnet, body as CeloMintMultipleErc721, provider)
     case Currency.TRON:
       return tronMintMultipleNFTWithUri(testnet, body as TronMintMultipleTrc721, provider)
     case Currency.ETH:
@@ -188,7 +188,7 @@ export const mintMultipleNFTWithUri = async (
     case Currency.ONE:
       return oneMintMultipleNFTWithUri(testnet, body as MintMultipleErc721, provider)
     case Currency.BSC:
-      return bscMintMultipleNFTWithUri(testnet, body, provider)
+      return bscMintMultipleNFTWithUri(testnet, body as MintMultipleErc721, provider)
     case Currency.FLOW:
       return flowMintMultipleNFTWithUri(testnet, body as FlowMintMultipleNft, provider)
     default:
@@ -205,7 +205,7 @@ export const mintMultipleNFTWithUri = async (
 export const burnNFT = async (testnet: boolean, body: CeloBurnErc721 | EthBurnErc721 | TronBurnTrc721 | FlowBurnNft, provider?: string) => {
   switch (body.chain) {
     case Currency.CELO:
-      return celoBurnNFT(testnet, body, provider)
+      return celoBurnNFT(testnet, body as CeloBurnErc721, provider)
     case Currency.TRON:
       return tronBurnNFT(testnet, body as TronBurnTrc721, provider)
     case Currency.ETH:
@@ -236,7 +236,7 @@ export const updateCashbackForAuthorNFT = async (
 ) => {
   switch (body.chain) {
     case Currency.CELO:
-      return celoUpdateCashbackForAuthorNFT(testnet, body, provider)
+      return celoUpdateCashbackForAuthorNFT(testnet, body as CeloUpdateCashbackErc721, provider)
     case Currency.ETH:
       return ethUpdateCashbackForAuthorNFT(body, provider)
     case Currency.MATIC:
@@ -265,7 +265,7 @@ export const transferNFT = async (
 ) => {
   switch (body.chain) {
     case Currency.CELO:
-      return celoTransferNFT(testnet, body, provider)
+      return celoTransferNFT(testnet, body as CeloTransferErc721, provider)
     case Currency.ETH:
       return ethTransferNFT(body, provider)
     case Currency.MATIC:

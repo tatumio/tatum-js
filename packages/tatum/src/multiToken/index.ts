@@ -2,6 +2,10 @@ import {
   CeloDeployMultiToken,
   CeloMintMultiToken,
   CeloMintMultiTokenBatch,
+  CeloBurnMultiToken,
+  CeloBurnMultiTokenBatch,
+  CeloTransferMultiToken,
+  CeloTransferMultiTokenBatch,
   deployMultiToken as deployCeloMultiToken,
   mintMultiToken as mintCeloMultiToken,
   mintMultiTokenBatch as mintCeloMultiTokenBatch,
@@ -9,7 +13,7 @@ import {
   burnMultiTokenBatch as burnCeloMultiTokenBatchTransaction,
   transferMultiToken as transferCeloMultiTokenTransaction,
   transferMultiTokenBatch as transferCeloMultiTokenBatchTransaction,
-} from '@tatumio/tatum-celo/src'
+} from '@tatumio/tatum-celo'
 import {
   deployMultiToken as deployPolygonMultiToken,
   mintMultiToken as mintPolygonMultiToken,
@@ -18,7 +22,7 @@ import {
   burnMultiTokenBatch as burnPolygonMultiTokenBatchSignedTransaction,
   transferMultiToken as transferPolygonMultiTokenSignedTransaction,
   transferMultiTokenBatch as transferPolygonMultiTokenSignedBatchTransaction,
-} from '@tatumio/tatum-polygon/src'
+} from '@tatumio/tatum-polygon'
 import {
   deployMultiToken as deployOneMultiToken,
   mintMultiToken as mintOneMultiToken,
@@ -27,7 +31,7 @@ import {
   burnMultiTokenBatch as burnOneMultiTokenBatchSignedTransaction,
   transferMultiToken as transferOneMultiTokenSignedTransaction,
   transferMultiTokenBatch as transferOneMultiTokenSignedBatchTransaction,
-} from '@tatumio/tatum-one/src'
+} from '@tatumio/tatum-one'
 import {
   deployMultiToken as deployEthMultiToken,
   EthDeployMultiToken,
@@ -39,7 +43,7 @@ import {
   burnMultiTokenBatch as burnEthBatchMultiTokenTransaction,
   transferMultiToken as transferEthMultiTokenTransaction,
   transferMultiTokenBatch as transferEthMultiTokenBatchTransaction,
-} from '@tatumio/tatum-eth/src'
+} from '@tatumio/tatum-eth'
 import {
   deployMultiToken as deployBscMultiToken,
   mintMultiToken as mintBscMultiToken,
@@ -48,7 +52,7 @@ import {
   burnMultiTokenBatch as burnBscBatchMultiTokenTransaction,
   transferMultiToken as transferBscMultiTokenTransaction,
   transferMultiTokenBatch as transferBscMultiTokenBatchTransaction,
-} from '@tatumio/tatum-bsc/src'
+} from '@tatumio/tatum-bsc'
 import {
   Currency,
   DeployMultiToken,
@@ -57,7 +61,6 @@ import {
   TransferMultiToken,
   TransferMultiTokenBatch,
 } from '@tatumio/tatum-core'
-import { CeloBurnMultiToken, CeloBurnMultiTokenBatch, CeloTransferMultiToken, CeloTransferMultiTokenBatch } from '@tatumio/tatum-celo'
 
 export const deployMultiToken = async (
   testnet: boolean,

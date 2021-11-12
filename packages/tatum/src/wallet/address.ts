@@ -55,7 +55,7 @@ import {
   generateAddressFromPrivatekey as convertLyraPrivateKey,
 } from '@tatumio/tatum-scrypta'
 import { generatePrivateKeyFromMnemonic as generatePolygonPrivateKey } from '@tatumio/tatum-polygon'
-import cardano from '@tatumio/tatum-ada'
+import { generateAddress as generateCardanoAddress, generatePrivateKey as generateCardanoPrivateKey } from '@tatumio/tatum-ada'
 
 const TronWeb = require('tronweb')
 
@@ -79,9 +79,9 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
     case Currency.FUSD:
       return generateFlowPublicKey(currency, testnet, xpub, i)
     case Currency.LTC:
-      return generateLtcAddress(currency, testnet, testnet, xpub, i)
+      return generateLtcAddress(currency, testnet, xpub, i)
     case Currency.DOGE:
-      return generateDogeAddress(currency, testnet, testnet, xpub, i)
+      return generateDogeAddress(currency, testnet, xpub, i)
     case Currency.CELO:
     case Currency.CEUR:
     case Currency.CUSD:
@@ -144,7 +144,7 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
     case Currency.LYRA:
       return generateLyraAddress(currency, testnet, xpub, i)
     case Currency.ADA:
-      return cardano.generateAddress(testnet, xpub, i)
+      return generateCardanoAddress(testnet, xpub, i)
     default:
       throw new Error('Unsupported blockchain.')
   }
@@ -236,7 +236,7 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
     case Currency.LYRA:
       return generateLyraPrivateKey(currency, testnet, mnemonic, i)
     case Currency.ADA:
-      return cardano.generatePrivateKey(mnemonic, i)
+      return generateCardanoPrivateKey(mnemonic, i)
     default:
       throw new Error('Unsupported blockchain.')
   }
@@ -299,4 +299,4 @@ export const generateAddressFromPrivatekey = (currency: Currency, testnet: boole
   }
 }
 
-export { generateAlgodAddressFromPrivatetKey } from '@tatumio/tatum-algo/src'
+export { generateAlgodAddressFromPrivatetKey } from '@tatumio/tatum-algo'

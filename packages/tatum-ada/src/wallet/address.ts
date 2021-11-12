@@ -1,5 +1,6 @@
-import cardano from './cardano.crypto'
-export * from './cardano.crypto'
+import * as cardano from './cardano.crypto'
+
+export { generatePrivateKey, generateXPublicKey, generateAddress } from './cardano.crypto'
 
 /**
  * Generate address
