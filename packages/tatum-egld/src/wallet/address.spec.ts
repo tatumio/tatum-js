@@ -3,7 +3,7 @@ import {generateAddressFromPrivatekey, generateAddressFromXPub, generatePrivateK
 describe('Address tests', () => {
 
     it('should generate private key 1 for EGLD mainnet', async () => {
-        const privateKey = await generatePrivateKeyFromMnemonic(Currency.EGLD, false, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1)
+        const privateKey = await generatePrivateKeyFromMnemonic(false, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1)
         expect(privateKey).toBe('3ae733827921c526de0f497ccad602b58b287e33611a66ebdc7b13104b021282')
     })
 
@@ -28,7 +28,7 @@ describe('Address tests', () => {
     })
 
     it('should generate private key for EGLD testnet', async () => {
-        const privateKey = await generatePrivateKeyFromMnemonic(Currency.EGLD, true, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 0)
+        const privateKey = await generatePrivateKeyFromMnemonic(true, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 0)
         expect(privateKey).toBe('9bfb8dacf1d625acea5805b5306f0ba26d42bc1eb114ce00fec57fc638c2bfb5')
     })
 

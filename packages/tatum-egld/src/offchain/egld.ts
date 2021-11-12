@@ -23,7 +23,7 @@ export const sendEgldOffchainTransaction = async (testnet: boolean, body: EgldTr
     } = body
     const {value, receiver} = withdrawal
 
-    const fromPriv = mnemonic && index !== undefined ? await generatePrivateKeyFromMnemonic(Currency.EGLD, testnet, mnemonic, index) : fromPrivateKey as string
+    const fromPriv = mnemonic && index !== undefined ? await generatePrivateKeyFromMnemonic(testnet, mnemonic, index) : fromPrivateKey as string
 
     const fee = {
         gasLimit: `${gasLimit || '50000'}`,
