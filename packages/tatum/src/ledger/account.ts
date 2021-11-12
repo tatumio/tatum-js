@@ -1,4 +1,5 @@
 export {
+  generateAccount,
   getAccountById,
   createAccount,
   updateAccount,
@@ -15,5 +16,4 @@ export {
   getAccountsByCustomerId,
   getAllAccounts,
   getAccountBalance,
-  generateAccount,
 } from '@tatumio/tatum-ledger'
