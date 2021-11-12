@@ -217,5 +217,5 @@ npx react-native run-android
 ## Contributing
 
 Contributions to the Tatum API client are welcome. Please ensure
-that you have tested the changes with a local client and have added unit test
+that you have tested your changes with a local client and have added unit test
 coverage for your code.

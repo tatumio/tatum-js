@@ -5,7 +5,7 @@ export class AdaUtxo {
   public txHash: string // transactionHash
 
   @IsNotEmpty()
-  public index: number
+  public index: number // index of transaction
 
   @IsNotEmpty()
   public value: string

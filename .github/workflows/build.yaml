@@ -1,0 +1,25 @@
+name: Build all packages
+
+on:
+  push:
+    branches:
+      - feature/deploy-pipeline-v2
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        working-directory: ./build/
+        run: yarn
+
+
+      - name: Build script
+        working-directory: ./build/
+        run: yarn build
+
+
+      - run: echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}" > ~/.npmrc
+      - uses: ./build/
+
