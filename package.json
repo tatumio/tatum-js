@@ -12,8 +12,6 @@
     "lint": "eslint ./src ./packages --ext .ts --fix"
   },
   "private": true,
-  "workspaces": ["packages/*"],
-  "types": "dist/src/index.d.ts",
   "keywords": [
     "Tatum",
     "Blockchain",

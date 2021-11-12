@@ -1,19 +1,19 @@
 {
   "extends": "../../tsconfig",
   "compilerOptions": {
-    "rootDir": "./src",
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "types": [
+      "node",
+      "jest"
+    ],
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"],
   "references": [
     { "path": "../tatum-core" }
-  ],
-  "typeRoots": [
-    "node_modules/@types"
-  ],
-  "types": [
-    "node",
-    "jest"
   ],
 }
