@@ -113,8 +113,8 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
     //   return generateNeoWallet()
     case Currency.BNB:
       return generateBnbWallet(testnet)
-    case Currency.LYRA:
-      return generateLyraWallet(testnet, mnem)
+    // case Currency.LYRA:
+    //   return generateLyraWallet(testnet, mnem)
     case Currency.ADA:
       return generateAdaWallet(mnem)
     case Currency.ALGO:

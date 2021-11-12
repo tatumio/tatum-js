@@ -1,11 +1,11 @@
 import { ApproveErc20, Currency, prepareApproveErc20Abstraction } from '@tatumio/tatum-core'
 import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../helpers'
 import token_abi from '@tatumio/tatum-core/src/contracts/erc20/token_abi'
-import { getOne20ContractDecimals } from '@tatumio/tatum-one/src'
-import { getEthErc20ContractDecimals } from '@tatumio/tatum-eth/src'
-import { getCeloErc20ContractDecimals } from '@tatumio/tatum-celo/src'
-import { getBscBep20ContractDecimals } from '@tatumio/tatum-bsc/src'
-import { getPolygonErc20ContractDecimals } from '@tatumio/tatum-polygon/src'
+import { getOne20ContractDecimals } from '@tatumio/tatum-one'
+import { getEthErc20ContractDecimals } from '@tatumio/tatum-eth'
+import { getCeloErc20ContractDecimals } from '@tatumio/tatum-celo'
+import { getBscBep20ContractDecimals } from '@tatumio/tatum-bsc'
+import { getPolygonErc20ContractDecimals } from '@tatumio/tatum-polygon'
 
 /**
  * Approve ERC20 transfer for spender.

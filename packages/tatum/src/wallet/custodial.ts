@@ -19,31 +19,31 @@ import {
   getCeloErc20ContractDecimals,
   prepareCeloSmartContractWriteMethodInvocation,
   prepareCustodialWallet as prepareCeloGenerateCustodialWalletSignedTransaction,
-} from '@tatumio/tatum-celo/src'
+} from '@tatumio/tatum-celo'
 import {
   generateCustodialWallet as sendOneGenerateCustodialWalletSignedTransaction,
   getOne20ContractDecimals,
   prepareCustodialWallet as prepareOneGenerateCustodialWalletSignedTransaction,
   prepareOneSmartContractWriteMethodInvocation,
-} from '@tatumio/tatum-one/src'
+} from '@tatumio/tatum-one'
 import {
   generateCustodialWallet as sendEthGenerateCustodialWalletSignedTransaction,
   getEthErc20ContractDecimals,
   prepareCustodialWallet as prepareEthGenerateCustodialWalletSignedTransaction,
   prepareSmartContractWriteMethodInvocation,
-} from '@tatumio/tatum-eth/src'
+} from '@tatumio/tatum-eth'
 import {
   generateCustodialWallet as sendBscGenerateCustodialWalletSignedTransaction,
   getBscBep20ContractDecimals,
   prepareBscSmartContractWriteMethodInvocation,
   prepareCustodialWallet as prepareBscGenerateCustodialWalletSignedTransaction,
-} from '@tatumio/tatum-bsc/src'
+} from '@tatumio/tatum-bsc'
 import {
   generateCustodialWallet as sendPolygonGenerateCustodialWalletSignedTransaction,
   getPolygonErc20ContractDecimals,
   prepareCustodialWallet as preparePolygonGenerateCustodialWalletSignedTransaction,
   preparePolygonSmartContractWriteMethodInvocation,
-} from '@tatumio/tatum-polygon/src'
+} from '@tatumio/tatum-polygon'
 import {
   generateCustodialWallet as sendTronGenerateCustodialWalletSignedTransaction,
   prepareCustodialWallet as prepareTronGenerateCustodialWalletSignedTransaction,
@@ -54,7 +54,7 @@ import {
   getTronTrc20ContractDecimals,
   prepareTronSmartContractInvocation,
   convertAddressToHex,
-} from '@tatumio/tatum-tron/src'
+} from '@tatumio/tatum-tron'
 
 /**
  * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, btu transaction costs connected to the withdrawal
