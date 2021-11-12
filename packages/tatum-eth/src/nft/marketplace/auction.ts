@@ -151,12 +151,11 @@ export const prepareAuctionCancel = async (body: InvokeAuctionOperation, provide
 
 /**
  * Settle auction. There must be buyer present for that auction. NFT will be sent to the bidder, assets to the seller and fee to the operator.
- * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareAuctionSettle = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
+export const prepareAuctionSettle = async (body: InvokeAuctionOperation, provider?: string) => {
   const params = await prepareAuctionSettleAbstraction(body)
   return await helperPrepareSCCall(body, 'settleAuction', params, provider, auction.abi)
 }
@@ -225,12 +224,11 @@ export const sendAuctionCancel = async (body: InvokeAuctionOperation, provider?:
 
 /**
  * Settle auction. There must be buyer present for that auction. NFT will be sent to the bidder, assets to the seller and fee to the operator.
- * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendAuctionSettle = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) =>
-  helperBroadcastTx(await prepareAuctionSettle(testnet, body, provider), body.signatureId)
+export const sendAuctionSettle = async (body: InvokeAuctionOperation, provider?: string) =>
+  helperBroadcastTx(await prepareAuctionSettle(body, provider), body.signatureId)
 
 export { Auction, getAuctionFee, getAuction, getAuctionFeeRecipient } from '@tatumio/tatum-core'
