@@ -16,11 +16,10 @@ export const storeData = async (testnet: boolean, body: CreateRecord, provider?:
 /**
  * Perform any native asset transaction.
  * @param testnet if we are on testnet or not
- * @param chain Blockchain to work with. ETH,CELO,MATIC,ONE,TRON,BSC supported now.
  * @param body Body of the transaction.
  * @param provider Optional provider to use for broadcasting signed tx to the blockchain.
  */
-export const sendTransaction = async (testnet: boolean, chain: Currency, body: TransferCeloOrCeloErc20Token, provider?: string) => {
+export const sendTransaction = async (testnet: boolean, body: TransferCeloOrCeloErc20Token, provider?: string) => {
   const b = body as TransferCeloOrCeloErc20Token
   b.currency = Currency.CELO
   b.feeCurrency = Currency.CELO
