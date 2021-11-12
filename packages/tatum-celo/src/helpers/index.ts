@@ -9,7 +9,7 @@ export const helperBroadcastTx = async (chain: Currency, txData: string, signatu
   return await celoBroadcast(txData, signatureId)
 }
 
-export const helperGetWeb3Client = (testnet: boolean, chain: Currency, provider?: string): Web3 => {
+export const helperGetWeb3Client = (provider?: string): Web3 => {
   return getCeloClient(provider)
 }
 

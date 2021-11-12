@@ -689,7 +689,7 @@ export const sendCeloSmartContractMethodInvocationTransaction = async (
   return celoBroadcast(await prepareCeloSmartContractWriteMethodInvocation(testnet, celoBody, provider), celoBody.signatureId)
 }
 
-export const getCeloErc20ContractDecimals = async (testnet: boolean, contractAddress: string, provider?: string) => {
+export const getCeloErc20ContractDecimals = async (contractAddress: string, provider?: string) => {
   if (!contractAddress) {
     throw new Error('Contract address not set.')
   }

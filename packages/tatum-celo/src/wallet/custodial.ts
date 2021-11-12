@@ -70,7 +70,8 @@ export const prepareTransferFromCustodialWallet = async (testnet: boolean, body:
     testnet,
     body,
     getCeloErc20ContractDecimals,
-    (testnet, body, r, provider) =>
+    (r, provider, testnet) =>
+      // @ts-ignore
       prepareCeloSmartContractWriteMethodInvocation(testnet, { ...r, feeCurrency: body.feeCurrency || Currency.CELO }, provider),
     CeloSmartContractMethodInvocation,
     18,
@@ -105,7 +106,8 @@ export const prepareBatchTransferFromCustodialWallet = async (
     testnet,
     body,
     getCeloErc20ContractDecimals,
-    (testnet, body, r, provider) =>
+    (r, provider, testnet) =>
+      // @ts-ignore
       prepareCeloSmartContractWriteMethodInvocation(testnet, { ...r, feeCurrency: body.feeCurrency || Currency.CELO }, provider),
     CeloSmartContractMethodInvocation,
     18,

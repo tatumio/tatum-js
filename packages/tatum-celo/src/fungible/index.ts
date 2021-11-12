@@ -32,7 +32,7 @@ export const prepareApproveErc20 = async (testnet: boolean, body: ApproveErc20, 
  * @param provider optional provider
  */
 export const getErc20Decimals = async (testnet: boolean, chain: Currency, contractAddress: string, provider?: string) => {
-  const web3 = helperGetWeb3Client(testnet, chain, provider)
+  const web3 = helperGetWeb3Client(provider)
   // @ts-ignore
   return new web3.eth.Contract(token_abi, contractAddress).methods.decimals().call()
 }
