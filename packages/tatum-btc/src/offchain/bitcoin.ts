@@ -74,7 +74,7 @@ export const signBitcoinOffchainKMSTransaction = async (tx: TransactionKMS, mnem
         if (response.vIn === '-1') {
             continue
         }
-        builder.sign(PrivateKey.fromWIF(await generatePrivateKeyFromMnemonic(Currency.BTC, testnet, mnemonic, response.address?.derivationKey || 0)))
+        builder.sign(PrivateKey.fromWIF(await generatePrivateKeyFromMnemonic(testnet, mnemonic, response.address?.derivationKey || 0)))
     }
     return builder.serialize(true)
 }
@@ -139,7 +139,7 @@ export const prepareBitcoinSignedOffchainTransaction =
             }
             if (mnemonic) {
                 const derivationKey = input.address?.derivationKey || 0
-                tx.sign(PrivateKey.fromWIF(await generatePrivateKeyFromMnemonic(Currency.BTC, testnet, mnemonic, derivationKey)))
+                tx.sign(PrivateKey.fromWIF(await generatePrivateKeyFromMnemonic(testnet, mnemonic, derivationKey)))
             } else if (keyPair) {
                 const { privateKey } = keyPair.find(k => k.address === input.address.address) as KeyPair
                 tx.sign(PrivateKey.fromWIF(privateKey))

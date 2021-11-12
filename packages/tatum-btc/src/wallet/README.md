@@ -29,7 +29,6 @@ const address = await generateAddressFromXPub(
 
 ```typescript
 const privateKey = await generatePrivateKeyFromMnemonic(
-    Currency.BTC,
     false,
     'critic spatial rug valley spawn grape humble motor burger direct jump galaxy still swim foot real vast tribe blast fence virtual away spice funny',
     1
