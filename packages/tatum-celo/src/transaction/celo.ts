@@ -218,11 +218,10 @@ export const prepareCeloDeployAuctionSignedTransaction = async (testnet: boolean
  * Sign Celo pending transaction from Tatum KMS
  * @param tx pending transaction from KMS
  * @param fromPrivateKey private key to sign transaction with.
- * @param testnet mainnet or testnet version
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
  */
-export const signCeloKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, testnet: boolean, provider?: string) => {
+export const signCeloKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, provider?: string) => {
   if (tx.chain !== Currency.CELO) {
     throw Error('Unsupported chain.')
   }
