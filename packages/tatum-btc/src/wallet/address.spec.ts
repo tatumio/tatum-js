@@ -4,7 +4,7 @@ import { generateAddressFromPrivatekey, generateAddressFromXPub, generatePrivate
 const TronWeb = require('tronweb')
 describe('Address tests', () => {
     it('should generate address 1 for BTC testnet', () => {
-        const address = generateAddressFromXPub(Currency.BTC, true, 'tpubDFjLw3ykn4aB7fFt96FaqRjSnvtDsU2wpVr8GQk3Eo612LS9jo9JgMkQRfYVG248J3pTBsxGg3PYUXFd7pReNLTeUzxFcUDL3zCvrp3H34a', 1)
+        const address = generateAddressFromXPub(true, 'tpubDFjLw3ykn4aB7fFt96FaqRjSnvtDsU2wpVr8GQk3Eo612LS9jo9JgMkQRfYVG248J3pTBsxGg3PYUXFd7pReNLTeUzxFcUDL3zCvrp3H34a', 1)
         expect(address).toBe('mjJotvHmzEuyXZJGJXXknS6N3PWQnw6jf5')
     })
     it('should generate private key 1 for BTC mainnet', async () => {

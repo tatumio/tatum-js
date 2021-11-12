@@ -119,7 +119,7 @@ export const prepareBitcoinSignedOffchainTransaction =
         }
         if (new BigNumber(lastVin.amount).isGreaterThan(0)) {
             if (xpub) {
-                tx.to(generateAddressFromXPub(Currency.BTC, testnet, xpub, 0),
+                tx.to(generateAddressFromXPub(testnet, xpub, 0),
                     Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)))
             } else if (changeAddress) {
                 tx.to(changeAddress, Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)))
