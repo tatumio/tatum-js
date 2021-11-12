@@ -25,7 +25,6 @@ export const deployNFT = async (body: FlowDeployNft): Promise<TransactionHash> =
 
 /**
  * Mint new NFT token with metadata stored on the IPFS.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
  * @param file file to be stored on the IPFS
  * @param name name of the file
@@ -33,12 +32,12 @@ export const deployNFT = async (body: FlowDeployNft): Promise<TransactionHash> =
  * @param scheme optional JSON Metadata scheme
  * @param provider optional provider do broadcast tx
  */
-export const createNFT = async (testnet: boolean, body: FlowMintNft,
+export const createNFT = async (body: FlowMintNft,
                                 file: Buffer,
                                 name: string,
                                 description?: string,
                                 scheme?: any, provider?: string) => {
-    return await createNFTAbstraction(() => mintNFTWithUri(false, body, provider), false, body, file, name, description, scheme, provider)
+    return await createNFTAbstraction((body: any) => mintNFTWithUri(false, body), false, body, file, name, description, scheme, provider)
 };
 
 /**
