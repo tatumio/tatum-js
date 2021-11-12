@@ -1,10 +1,6 @@
 import {Currency} from '@tatumio/tatum-core';
-import { EgldSendTransaction, EgldEsdtTransaction, EsdtToken, EsdtIssue, EsdtIssueNftOrSft} from '../model'
 import {generateAddressFromPrivatekey} from '../wallet/address'
-import {
-    egldGetConfig, egldGetGasPrice, signEgldTransaction, prepareEgldDeployEsdtSignedTransaction,
-    prepareEgldDeployNftOrSftSignedTransaction, prepareEgldStopNftCreateSignedTransaction,
-} from './egld'
+import { egldGetConfig, egldGetGasPrice } from './egld'
 
 describe('Elrond EGLD tests', () => {
 
