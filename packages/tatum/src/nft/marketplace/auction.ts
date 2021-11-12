@@ -1,7 +1,5 @@
+import { auction, Currency, erc1155TokenABI, erc721TokenABI } from '@tatumio/tatum-core'
 import {
-  auction,
-  erc1155TokenABI,
-  erc721TokenABI,
   prepareAuctionApproveNftTransferAbstraction,
   prepareAuctionBidAbstraction,
   prepareAuctionCancelAbstraction,
@@ -9,7 +7,7 @@ import {
   prepareAuctionSettleAbstraction,
   prepareAuctionUpdateFeeAbstraction,
   prepareAuctionUpdateFeeRecipientAbstraction,
-} from '@tatumio/tatum-core'
+} from '@tatumio/tatum-defi'
 import {
   ApproveErc20,
   ApproveNftTransfer,
@@ -67,7 +65,7 @@ export const prepareDeployAuction = async (testnet: boolean, body: DeployNftAuct
     case Currency.ETH:
       return await prepareEthDeployAuctionSignedTransaction(body, provider)
     case Currency.BSC:
-      return await prepareBscDeployAuctionSignedTransaction(body, provider)
+      return await prepareBscDeployAuctionSignedTransaction(testnet, body, provider)
     case Currency.MATIC:
       return await preparePolygonDeployAuctionSignedTransaction(testnet, body, provider)
     default:
@@ -274,4 +272,4 @@ export const sendAuctionCancel = async (testnet: boolean, body: InvokeAuctionOpe
 export const sendAuctionSettle = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) =>
   helperBroadcastTx(body.chain, await prepareAuctionSettle(testnet, body, provider), body.signatureId)
 
-export { Auction, getAuctionFee, getAuction, getAuctionFeeRecipient } from '@tatumio/tatum-core'
+export { Auction, getAuctionFee, getAuction, getAuctionFeeRecipient } from '@tatumio/tatum-defi'

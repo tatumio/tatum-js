@@ -1,7 +1,6 @@
-import { ApproveErc20, prepareApproveErc20Abstraction } from '@tatumio/tatum-core'
+import { ApproveErc20, prepareApproveErc20Abstraction, erc20TokenABI as token_abi } from '@tatumio/tatum-core'
 import { getEthErc20ContractDecimals } from '../transaction'
 import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../helpers'
-import token_abi from '@tatumio/tatum-core/src/contracts/erc20/token_abi'
 
 /**
  * Approve ERC20 transfer for spender.

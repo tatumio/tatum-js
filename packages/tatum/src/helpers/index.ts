@@ -31,17 +31,17 @@ import { helperBroadcastTx as tronBroadcast } from '@tatumio/tatum-tron'
 export const helperBroadcastTx = async (chain: Currency, txData: string, signatureId?: string) => {
   switch (chain) {
     case Currency.CELO:
-      return await celoBroadcast(txData, signatureId)
+      return await celoBroadcast(chain, txData, signatureId)
     case Currency.ONE:
-      return await oneBroadcast(txData, signatureId)
+      return await oneBroadcast(chain, txData, signatureId)
     case Currency.ETH:
       return await ethBroadcast(txData, signatureId)
     case Currency.BSC:
-      return await bscBroadcast(txData, signatureId)
+      return await bscBroadcast(chain, txData, signatureId)
     case Currency.MATIC:
-      return await polygonBroadcast(txData, signatureId)
+      return await polygonBroadcast(chain, txData, signatureId)
     case Currency.TRON:
-      return await tronBroadcast(txData, signatureId)
+      return await tronBroadcast(chain, txData, signatureId)
     default:
       throw new Error('Unsupported chain')
   }
@@ -50,15 +50,15 @@ export const helperBroadcastTx = async (chain: Currency, txData: string, signatu
 export const helperGetWeb3Client = (testnet: boolean, chain: Currency, provider?: string): Web3 => {
   switch (chain) {
     case Currency.CELO:
-      return getCeloClient(provider)
+      return getCeloClient(testnet, chain, provider)
     case Currency.ONE:
-      return prepareOneClient(testnet, provider)
+      return prepareOneClient(testnet, chain, provider)
     case Currency.ETH:
       return getClient(provider)
     case Currency.BSC:
-      return getBscClient(provider)
+      return getBscClient(testnet, chain, provider)
     case Currency.MATIC:
-      return preparePolygonClient(testnet, provider)
+      return preparePolygonClient(testnet, chain, provider)
     default:
       throw new Error('Unsupported chain')
   }
@@ -68,6 +68,7 @@ export const helperGetWeb3Client = (testnet: boolean, chain: Currency, provider?
 export const helperPrepareSCCall = async (
   testnet: boolean,
   body: any,
+  // eslint-disable-next-line @typescript-eslint/ban-types
   clazz: ClassType<object>,
   methodName: string,
   params: any[],
@@ -77,15 +78,15 @@ export const helperPrepareSCCall = async (
 ) => {
   switch (body.chain) {
     case Currency.CELO:
-      return await celoHelperPrepareSCCall(body, methodName, params, provider, abi)
+      return await celoHelperPrepareSCCall(testnet, body, clazz, methodName, params, methodSig, provider, abi)
     case Currency.ONE:
-      return await oneHelperPrepareSCCall(body, methodName, params, provider, abi)
+      return await oneHelperPrepareSCCall(testnet, body, clazz, methodName, params, provider, provider, abi)
     case Currency.ETH:
       return await ethHelperPrepareSCCall(body, methodName, params, provider, abi)
     case Currency.BSC:
-      return await bscHelperPrepareSCCall(body, methodName, params, provider, abi)
+      return await bscHelperPrepareSCCall(testnet, body, clazz, methodName, params, methodSig, provider, abi)
     case Currency.MATIC:
-      return await polygonHelperPrepareSCCall(body, methodName, params, provider, abi)
+      return await polygonHelperPrepareSCCall(testnet, body, clazz, methodName, params, methodSig, provider, abi)
     default:
       throw new Error('Unsupported combination of inputs.')
   }

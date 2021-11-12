@@ -1,9 +1,4 @@
 import {
-  prepareMarketplaceCancelListingAbstraction,
-  prepareMarketplaceBuyListingAbstraction,
-  prepareMarketplaceCreateListingAbstraction,
-  prepareMarketplaceUpdateFeeAbstraction,
-  prepareMarketplaceUpdateFeeRecipientAbstraction,
   ApproveErc20,
   Currency,
   CreateMarketplaceListing,
@@ -12,7 +7,14 @@ import {
   UpdateMarketplaceFee,
   UpdateMarketplaceFeeRecipient,
 } from '@tatumio/tatum-core'
-import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
+import {
+  prepareMarketplaceCancelListingAbstraction,
+  prepareMarketplaceBuyListingAbstraction,
+  prepareMarketplaceCreateListingAbstraction,
+  prepareMarketplaceUpdateFeeAbstraction,
+  prepareMarketplaceUpdateFeeRecipientAbstraction,
+} from '@tatumio/tatum-defi'
+import { helperBroadcastTx, helperPrepareSCCall } from '../../helpers'
 import { prepareApproveErc20 } from '../../fungible'
 import {
   deployMarketplaceListing as sendCeloDeployMarketplaceListingSignedTransaction,
@@ -39,6 +41,7 @@ import {
   UpdateTronMarketplaceFee,
   UpdateTronMarketplaceFeeRecipient,
   CreateTronMarketplaceListing,
+  InvokeTronMarketplaceListingOperation,
 } from '@tatumio/tatum-tron'
 
 /**
@@ -68,7 +71,7 @@ export const deployMarketplaceListing = async (
     case Currency.ETH:
       return await sendEthDeployMarketplaceListingSignedTransaction(body, provider)
     case Currency.BSC:
-      return await sendBscDeployMarketplaceListingSignedTransaction(body, provider)
+      return await sendBscDeployMarketplaceListingSignedTransaction(testnet, body, provider)
     case Currency.MATIC:
       return await sendPolygonDeployMarketplaceListingSignedTransaction(testnet, body, provider)
     // case Currency.TRON:
@@ -105,7 +108,7 @@ export const prepareDeployMarketplaceListing = async (
     case Currency.ETH:
       return await prepareEthDeployMarketplaceListingSignedTransaction(body, provider)
     case Currency.BSC:
-      return await prepareBscDeployMarketplaceListingSignedTransaction(body, provider)
+      return await prepareBscDeployMarketplaceListingSignedTransaction(testnet, body, provider)
     case Currency.MATIC:
       return await preparePolygonDeployMarketplaceListingSignedTransaction(testnet, body, provider)
     // case Currency.TRON:
@@ -185,7 +188,7 @@ export const prepareMarketplaceCreateListing = async (
   }
 
   const { body: validatedBody, params } = await prepareMarketplaceCreateListingAbstraction(body)
-  return await helperPrepareSCCall(validatedBody, 'createListing', params, provider)
+  return await helperPrepareSCCall(testnet, validatedBody, CreateMarketplaceListing, 'createListing', params, undefined, provider)
 }
 
 /**
@@ -206,7 +209,15 @@ export const prepareMarketplaceBuyListing = async (
   }
 
   const { body: validatedBody, params } = await prepareMarketplaceBuyListingAbstraction(body)
-  return await helperPrepareSCCall(testnet, body, InvokeMarketplaceListingOperation, 'buyAssetFromListing', params, undefined, provider)
+  return await helperPrepareSCCall(
+    testnet,
+    validatedBody,
+    InvokeMarketplaceListingOperation,
+    'buyAssetFromListing',
+    params,
+    undefined,
+    provider
+  )
 }
 
 /**
@@ -306,4 +317,4 @@ export const sendMarketplaceCancelListing = async (
   provider?: string
 ) => helperBroadcastTx(body.chain, await prepareMarketplaceCancelListing(testnet, body, provider), body.signatureId)
 
-export { getMarketplaceFee, getMarketplaceListing, getMarketplaceFeeRecipient } from '@tatumio/tatum-core'
+export { getMarketplaceFee, getMarketplaceListing, getMarketplaceFeeRecipient } from '@tatumio/tatum-defi'
