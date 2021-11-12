@@ -118,7 +118,7 @@ export const signEgldKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
 export const prepareEgldStoreDataTransaction = async (body: CreateRecord) => {
   await validateBody(body, CreateRecord)
   const { fromPrivateKey, signatureId, from, data } = body
-  const address = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const address = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
   if (!address) {
     throw new Error('Recipient must be provided.')
   }
@@ -365,7 +365,7 @@ const prepareSignedTransactionAbstraction = async (
   signatureId: string | undefined,
   fromPrivateKey: string | undefined
 ): Promise<string> => {
-  const sender = (transaction.from as string) || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = (transaction.from as string) || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const { data } = await egldGetConfig()
   const { config } = data
@@ -425,7 +425,7 @@ export const prepareEgldDeployEsdtSignedTransaction = async (body: EgldEsdtTrans
   const { fromPrivateKey, signatureId, from, amount, fee, ...data } = body
 
   const value = amount ? new BigNumber(amount).toNumber() : 0.05
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -448,7 +448,7 @@ export const prepareEgldTransferEsdtSignedTransaction = async (body: EgldEsdtTra
   await validateBody(body, EgldEsdtTransaction)
   const { fromPrivateKey, signatureId, from, to, fee, ...data } = body
 
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -470,7 +470,7 @@ export const prepareEgldMintEsdtSignedTransaction = async (body: EgldEsdtTransac
   await validateBody(body, EgldEsdtTransaction)
   const { fromPrivateKey, signatureId, from, fee, amount, ...data } = body
 
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -497,7 +497,7 @@ export const prepareEgldBurnEsdtSignedTransaction = async (body: EgldEsdtTransac
   await validateBody(body, EgldEsdtTransaction)
   const { fromPrivateKey, signatureId, from, fee, ...data } = body
 
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -519,7 +519,7 @@ export const prepareEgldPauseEsdtSignedTransaction = async (body: EgldEsdtTransa
   await validateBody(body, EgldEsdtTransaction)
   const { fromPrivateKey, signatureId, from, fee, ...data } = body
 
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -541,7 +541,7 @@ export const prepareEgldSpecialRoleEsdtOrNftSignedTransaction = async (body: Egl
   await validateBody(body, EgldEsdtTransaction)
   const { fromPrivateKey, signatureId, from, fee, ...data } = body
 
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -569,7 +569,7 @@ export const prepareEgldFreezeOrWipeOrOwvershipEsdtSignedTransaction = async (bo
   await validateBody(body, EgldEsdtTransaction)
   const { fromPrivateKey, signatureId, from, fee, ...data } = body
 
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -594,7 +594,7 @@ export const prepareEgldControlChangesEsdtSignedTransaction = async (body: EgldE
   await validateBody(body, EgldEsdtTransaction)
   const { fromPrivateKey, signatureId, from, fee, ...data } = body
 
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -620,7 +620,7 @@ export const prepareEgldDeployNftOrSftSignedTransaction = async (body: EgldEsdtT
   const { fromPrivateKey, signatureId, from, amount, fee, ...data } = body
 
   const value = amount ? new BigNumber(amount).toNumber() : 0.05
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   // @ts-ignore
   const tx: TransactionConfig = {
@@ -648,7 +648,7 @@ export const prepareEgldCreateNftOrSftSignedTransaction = async (body: EgldEsdtT
   const { fromPrivateKey, signatureId, from, amount, fee, ...data } = body
 
   const value = amount ? new BigNumber(amount).toNumber() : 0
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -678,7 +678,7 @@ export const prepareEgldTransferNftCreateRoleSignedTransaction = async (body: Eg
   const { fromPrivateKey, signatureId, from, amount, fee, ...data } = body
 
   const value = amount ? new BigNumber(amount).toNumber() : 0
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -708,7 +708,7 @@ export const prepareEgldStopNftCreateSignedTransaction = async (body: EgldEsdtTr
   const { fromPrivateKey, signatureId, from, amount, fee, ...data } = body
 
   const value = amount ? new BigNumber(amount).toNumber() : 0
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -732,7 +732,7 @@ export const prepareEgldAddOrBurnNftQuantitySignedTransaction = async (body: Egl
   const { fromPrivateKey, signatureId, from, amount, fee, ...data } = body
 
   const value = amount ? new BigNumber(amount).toNumber() : 0
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -759,7 +759,7 @@ export const prepareEgldFreezeNftSignedTransaction = async (body: EgldEsdtTransa
   const { fromPrivateKey, signatureId, from, amount, fee, ...data } = body
 
   const value = amount ? new BigNumber(amount).toNumber() : 0
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -786,7 +786,7 @@ export const prepareEgldWipeNftSignedTransaction = async (body: EgldEsdtTransact
   const { fromPrivateKey, signatureId, from, amount, fee, ...data } = body
 
   const value = amount ? new BigNumber(amount).toNumber() : 0
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -813,7 +813,7 @@ export const prepareEgldTransferNftSignedTransaction = async (body: EgldEsdtTran
   const { fromPrivateKey, signatureId, from, amount, fee, ...data } = body
 
   const value = amount ? new BigNumber(amount).toNumber() : 0
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,

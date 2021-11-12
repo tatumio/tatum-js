@@ -1,4 +1,3 @@
-import {Currency} from '@tatumio/tatum-core'
 import {generateAddressFromPrivatekey, generateAddressFromXPub, generatePrivateKeyFromMnemonic} from './address'
 describe('Address tests', () => {
 
@@ -8,7 +7,7 @@ describe('Address tests', () => {
     })
 
     it('should generate an address from a mainnet EGLD private key', async () => {
-        const address = await generateAddressFromPrivatekey(Currency.EGLD, false, '3ae733827921c526de0f497ccad602b58b287e33611a66ebdc7b13104b021282')
+        const address = await generateAddressFromPrivatekey('3ae733827921c526de0f497ccad602b58b287e33611a66ebdc7b13104b021282')
         expect(address.length).toBe(62)
         expect(address).toBe('erd1v4jp3x4ykjqphfy53w8aw7r30gqc74qv9extcr50am3qqn5y9zqsxef44a')
     })
@@ -33,7 +32,7 @@ describe('Address tests', () => {
     })
 
     it('should generate an address from a testnet EGLD private key', async () => {
-        const address = await generateAddressFromPrivatekey(Currency.EGLD, true, '9bfb8dacf1d625acea5805b5306f0ba26d42bc1eb114ce00fec57fc638c2bfb5')
+        const address = await generateAddressFromPrivatekey('9bfb8dacf1d625acea5805b5306f0ba26d42bc1eb114ce00fec57fc638c2bfb5')
         expect(address.length).toBe(62)
         expect(address).toBe('erd10j7rvtrpejsquz98ccrcysp7g44r0fpk0w3uey40v9wf3yfdztcqahhvz9')
     })

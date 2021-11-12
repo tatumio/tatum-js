@@ -2,7 +2,7 @@ import * as bech32 from 'bech32'
 import { mnemonicToSeed } from 'bip39'
 import { derivePath, getPublicKey } from 'ed25519-hd-key'
 import { EGLD_DERIVATION_PATH } from '../constants'
-import { Currency, TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
+import { TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
 
 /**
  * Generate EGLD address
@@ -70,11 +70,9 @@ export const generatePrivateKeyFromMnemonic = (testnet: boolean, mnemonic: strin
 
 /**
  * Generate address from private key
- * @param currency type of blockchain
- * @param testnet testnet or mainnet version of address
  * @param privateKey private key to use
  * @returns blockchain private key to the address
  */
-export const generateAddressFromPrivatekey = (currency: Currency, testnet: boolean, privateKey: string) => {
+export const generateAddressFromPrivatekey = (privateKey: string) => {
   return convertEgldPrivateKey(privateKey)
 }
