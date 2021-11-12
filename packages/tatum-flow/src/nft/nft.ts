@@ -17,11 +17,9 @@ export const mintNFT = (body: MintErc721) => mintNFTRequest(body)
 
 /**
  * Deploy new NFT smart contract, which will be used for later minting.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
- * @param provider optional provider do broadcast tx
  */
-export const deployNFT = async (testnet: boolean, body: FlowDeployNft, provider?: string): Promise<TransactionHash> => {
+export const deployNFT = async (body: FlowDeployNft): Promise<TransactionHash> => {
     return post('/v3/nft/deploy', body, FlowDeployNft);
 };
 
