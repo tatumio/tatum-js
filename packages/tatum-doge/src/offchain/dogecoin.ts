@@ -73,7 +73,7 @@ export const signDogecoinOffchainKMSTransaction = async (tx: TransactionKMS, mne
       continue
     }
     builder.sign(
-      PrivateKey.fromWIF(await generatePrivateKeyFromMnemonic(Currency.DOGE, testnet, mnemonic, response.address?.derivationKey || 0))
+      PrivateKey.fromWIF(await generatePrivateKeyFromMnemonic(testnet, mnemonic, response.address?.derivationKey || 0))
     )
   }
   return builder.serialize(true)
@@ -150,7 +150,7 @@ export const prepareDogecoinSignedOffchainTransaction = async (
     }
     if (mnemonic) {
       const derivationKey = input.address?.derivationKey || 0
-      tx.sign(PrivateKey.fromWIF(await generatePrivateKeyFromMnemonic(Currency.DOGE, testnet, mnemonic, derivationKey)))
+      tx.sign(PrivateKey.fromWIF(await generatePrivateKeyFromMnemonic(testnet, mnemonic, derivationKey)))
     } else if (keyPair) {
       const { privateKey } = keyPair.find((k) => k.address === input.address.address) as KeyPair
       tx.sign(PrivateKey.fromWIF(privateKey))
