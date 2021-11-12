@@ -2,7 +2,7 @@
   "root": true,
   "parser": "@typescript-eslint/parser",
   "plugins": [
-    "@typescript-eslint", 
+    "@typescript-eslint",
     "prettier"
   ],
   "extends": [
@@ -32,10 +32,16 @@
   },
   "overrides": [
     {
-      "files": ["./src/**/*"],
+      "files": [
+        "./src/**/*"
+      ],
       "rules": {
         "prettier/prettier": "off"
       }
     }
   ],
+  "env": {
+    "browser": true,
+    "node": true
+  }
 }
