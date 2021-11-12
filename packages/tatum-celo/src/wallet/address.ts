@@ -5,12 +5,11 @@ import { CELO_DERIVATION_PATH } from 'src/constants'
 
 /**
  * Generate Celo or any other ERC20 address
- * @param testnet testnet or mainnet version of address
  * @param xpub extended public key to generate address from
  * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
-const generateCeloAddress = (testnet: boolean, xpub: string, i: number) => {
+const generateCeloAddress = (xpub: string, i: number) => {
   const w = ethHdKey.fromExtendedKey(xpub)
   const wallet = w.deriveChild(i).getWallet()
   return '0x' + wallet.getAddress().toString('hex').toLowerCase()
@@ -24,7 +23,7 @@ const generateCeloAddress = (testnet: boolean, xpub: string, i: number) => {
  * @returns blockchain address
  */
 export const generateAddressFromXPub = (testnet: boolean, xpub: string, i: number) => {
-  return generateCeloAddress(testnet, xpub, i)
+  return generateCeloAddress(xpub, i)
 }
 
 /**
