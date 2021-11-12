@@ -66,8 +66,8 @@ export const prepareTransferFromCustodialWallet = async (testnet: boolean, body:
   return prepareTransferFromCustodialWalletAbstract(
     testnet,
     body,
-    (_testnet, contractAddress, provider?) => getEthErc20ContractDecimals(contractAddress, provider),
-    (_testnet, _body, r, provider) => prepareSmartContractWriteMethodInvocation(r, provider),
+    getEthErc20ContractDecimals,
+    prepareSmartContractWriteMethodInvocation,
     SmartContractMethodInvocation,
     18,
     TransferFromCustodialAddress,
@@ -100,8 +100,8 @@ export const prepareBatchTransferFromCustodialWallet = async (
   return prepareBatchTransferFromCustodialWalletAbstract(
     testnet,
     body,
-    (_testnet, contractAddress, provider?) => getEthErc20ContractDecimals(contractAddress, provider),
-    (_testnet, _body, r, provider) => prepareSmartContractWriteMethodInvocation(r, provider),
+    getEthErc20ContractDecimals,
+    prepareSmartContractWriteMethodInvocation,
     SmartContractMethodInvocation,
     18,
     TransferFromCustodialAddressBatch,

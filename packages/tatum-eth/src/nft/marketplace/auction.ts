@@ -134,7 +134,7 @@ export const prepareAuctionCreate = async (body: CreateAuction, provider?: strin
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareAuctionBid = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
-  const { b: validatedBody, params } = await prepareAuctionBidAbstraction((_testnet, _chain, provider?) => helperGetWeb3Client(provider), testnet, body, provider)
+  const { b: validatedBody, params } = await prepareAuctionBidAbstraction(helperGetWeb3Client, testnet, body, provider)
   return await helperPrepareSCCall(validatedBody, 'bid', params, provider, auction.abi)
 }
 
@@ -157,7 +157,7 @@ export const prepareAuctionCancel = async (body: InvokeAuctionOperation, provide
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareAuctionSettle = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
-  const params = await prepareAuctionSettleAbstraction(testnet, body)
+  const params = await prepareAuctionSettleAbstraction(body)
   return await helperPrepareSCCall(body, 'settleAuction', params, provider, auction.abi)
 }
 
