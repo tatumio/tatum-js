@@ -50,15 +50,15 @@ export const helperBroadcastTx = async (chain: Currency, txData: string, signatu
 export const helperGetWeb3Client = (testnet: boolean, chain: Currency, provider?: string): Web3 => {
   switch (chain) {
     case Currency.CELO:
-      return getCeloClient(testnet, chain, provider)
+      return getCeloClient(provider)
     case Currency.ONE:
-      return prepareOneClient(testnet, chain, provider)
+      return prepareOneClient(testnet, provider)
     case Currency.ETH:
       return getClient(provider)
     case Currency.BSC:
-      return getBscClient(testnet, chain, provider)
+      return getBscClient(provider)
     case Currency.MATIC:
-      return preparePolygonClient(testnet, chain, provider)
+      return preparePolygonClient(testnet, provider)
     default:
       throw new Error('Unsupported chain')
   }

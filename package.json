@@ -5,15 +5,13 @@
   "repository": "https://github.com/tatumio/tatum-js",
   "scripts": {
     "test": "jest",
-    "clean": "rimraf dist*",
+    "clean": "rimraf dist* tsconfig.tsbuildinfo",
     "build": "tsc",
     "prepublish": "npm run clean && npm run build",
     "docs": "typedoc",
     "lint": "eslint ./src ./packages --ext .ts --fix"
   },
   "private": true,
-  "workspaces": ["packages/*"],
-  "types": "dist/src/index.d.ts",
   "keywords": [
     "Tatum",
     "Blockchain",
