@@ -14,14 +14,14 @@ describe('Address tests', () => {
     })
 
     it('should generate address for EGLD mainnet index 1', async () => {
-        const address = await generateAddressFromXPub(Currency.EGLD, false, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1)
+        const address = await generateAddressFromXPub(false, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1)
         // console.log(address, address.length)
         expect(address.length).toBe(62)
         expect(address).toBe('erd1v4jp3x4ykjqphfy53w8aw7r30gqc74qv9extcr50am3qqn5y9zqsxef44a')
     })
 
     it('should generate address for EGLD mainnet index 0', async () => {
-        const address = await generateAddressFromXPub(Currency.EGLD, false, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 0)
+        const address = await generateAddressFromXPub(false, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 0)
         // console.log(address, address.length)
         expect(address.length).toBe(62)
         expect(address).not.toBe('erd1v4jp3x4ykjqphfy53w8aw7r30gqc74qv9extcr50am3qqn5y9zqsxef44a')
@@ -39,14 +39,14 @@ describe('Address tests', () => {
     })
 
     it('should generate address for EGLD testnet index 0', async () => {
-        const address = await generateAddressFromXPub(Currency.EGLD, true, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 0)
+        const address = await generateAddressFromXPub(true, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 0)
         // console.log(address, address.length)
         expect(address.length).toBe(62)
         expect(address).toBe('erd10j7rvtrpejsquz98ccrcysp7g44r0fpk0w3uey40v9wf3yfdztcqahhvz9')
     })
 
     it('should generate address for EGLD testnet index 1', async () => {
-        const address = await generateAddressFromXPub(Currency.EGLD, true, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1)
+        const address = await generateAddressFromXPub(true, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1)
         // console.log(address, address.length)
         expect(address.length).toBe(62)
         expect(address).not.toBe('erd10j7rvtrpejsquz98ccrcysp7g44r0fpk0w3uey40v9wf3yfdztcqahhvz9')
