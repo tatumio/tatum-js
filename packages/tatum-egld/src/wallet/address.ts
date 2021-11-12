@@ -36,11 +36,10 @@ const generateEgldPrivateKey = async (testnet: boolean, mnemonic: string, i: num
 
 /**
  * Convert EGLD Private Key to Address
- * @param testnet testnet or mainnet version of address
  * @param privKey private key to use
  * @returns blockchain address
  */
-const convertEgldPrivateKey = (testnet: boolean, privKey: string) => {
+const convertEgldPrivateKey = (privKey: string) => {
   const publicKey = getPublicKey(Buffer.from(privKey, 'hex'), false).toString('hex')
   const words = bech32.toWords(Buffer.from(publicKey.slice(-64), 'hex'))
   const address = bech32.encode('erd', words)
@@ -79,5 +78,5 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
  * @returns blockchain private key to the address
  */
 export const generateAddressFromPrivatekey = (currency: Currency, testnet: boolean, privateKey: string) => {
-  return convertEgldPrivateKey(testnet, privateKey)
+  return convertEgldPrivateKey(privateKey)
 }
