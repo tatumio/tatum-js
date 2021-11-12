@@ -35,7 +35,7 @@ export const sendEgldOffchainTransaction = async (testnet: boolean, body: EgldTr
         fromPrivateKey: fromPriv,
         fee,
         to: receiver
-    }, provider)
+    })
     // @ts-ignore
     withdrawal.fee = new BigNumber(fee.gasLimit).multipliedBy(fee.gasPrice).toString()
     const {id} = await offchainStoreWithdrawal(withdrawal)
