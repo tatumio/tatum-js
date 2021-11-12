@@ -1,7 +1,6 @@
-import { Currency } from '@tatumio/tatum-core'
 import { generateAddressFromPrivatekey, generateAddressFromXPub, generatePrivateKeyFromMnemonic } from './address'
 // tslint:disable-next-line:no-var-requires
-const TronWeb = require('tronweb')
+
 describe('Address tests', () => {
     it('should generate address 1 for BTC testnet', () => {
         const address = generateAddressFromXPub(true, 'tpubDFjLw3ykn4aB7fFt96FaqRjSnvtDsU2wpVr8GQk3Eo612LS9jo9JgMkQRfYVG248J3pTBsxGg3PYUXFd7pReNLTeUzxFcUDL3zCvrp3H34a', 1)

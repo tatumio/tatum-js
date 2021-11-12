@@ -5,7 +5,7 @@ import { ECPair, networks, payments } from 'bitcoinjs-lib';
 import {
     BTC_DERIVATION_PATH
 } from '../constants';
-import { Currency, TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
+import { TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
 
 /**
  * Generate Bitcoin address
