@@ -650,7 +650,6 @@ export const prepareCeloSmartContractWriteMethodInvocation = async (
  * @returns raw transaction data in hex, to be broadcasted to blockchain.
  */
 export const sendCeloSmartContractReadMethodInvocationTransaction = async (
-  testnet: boolean,
   body: SmartContractReadMethodInvocation,
   provider?: string
 ) => {
@@ -682,7 +681,7 @@ export const sendCeloSmartContractMethodInvocationTransaction = async (
   provider?: string
 ) => {
   if (body.methodABI.stateMutability === 'view') {
-    return sendCeloSmartContractReadMethodInvocationTransaction(testnet, body, provider)
+    return sendCeloSmartContractReadMethodInvocationTransaction(body, provider)
   }
   const celoBody = body as CeloSmartContractMethodInvocation
   return celoBroadcast(await prepareCeloSmartContractWriteMethodInvocation(testnet, celoBody, provider), celoBody.signatureId)

@@ -68,7 +68,7 @@ describe('Marketplace Listing tests', () => {
       r.methodName = 'getListing'
       r.methodABI = listing.abi.find((a) => a.name === r.methodName)
       r.params = ['1']
-      console.log(await sendCeloSmartContractReadMethodInvocationTransaction(true, r, 'https://alfajores-forno.celo-testnet.org'))
+      console.log(await sendCeloSmartContractReadMethodInvocationTransaction(r, 'https://alfajores-forno.celo-testnet.org'))
     })
 
     it('should get marketplace fee', async () => {
@@ -77,7 +77,7 @@ describe('Marketplace Listing tests', () => {
       r.methodName = 'getMarketplaceFee'
       r.methodABI = listing.abi.find((a) => a.name === r.methodName)
       r.params = []
-      console.log(await sendCeloSmartContractReadMethodInvocationTransaction(true, r, 'https://alfajores-forno.celo-testnet.org'))
+      console.log(await sendCeloSmartContractReadMethodInvocationTransaction(r, 'https://alfajores-forno.celo-testnet.org'))
     })
 
     it('should buy listing native', async () => {
