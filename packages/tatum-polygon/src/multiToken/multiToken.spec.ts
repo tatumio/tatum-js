@@ -121,7 +121,6 @@ describe('NFT tests', () => {
 
     it('should test polygon 1155 send transaction', async () => {
       const sendMultiTokenToken = await transferMultiToken(
-        true,
         {
           to: '0x31a19a9E4BDd33982188BCb058a7E2a3515a8136',
           chain: Currency.MATIC,

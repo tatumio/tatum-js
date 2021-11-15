@@ -33,8 +33,8 @@ export const burnMultiTokenBatch = async (body: BurnMultiTokenBatch, provider?: 
   return sendPolygonBurnMultiTokenBatchSignedTransaction(body, provider)
 }
 
-export const transferMultiToken = async (testnet: boolean, body: TransferMultiToken, provider?: string) => {
-  return sendPolygonTransferMultiTokenSignedTransaction(testnet, body, provider)
+export const transferMultiToken = async (body: TransferMultiToken, provider?: string) => {
+  return sendPolygonTransferMultiTokenSignedTransaction(body, provider)
 }
 export const transferMultiTokenBatch = async (testnet: boolean, body: TransferMultiTokenBatch, provider?: string) => {
   return preparePolygonBatchTransferMultiTokenSignedTransaction(testnet, body, provider)
