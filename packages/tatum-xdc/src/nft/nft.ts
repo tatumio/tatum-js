@@ -100,10 +100,9 @@ export const updateCashbackForAuthorNFT = async (body: UpdateCashbackErc721, pro
 
 /**
  * Transfer new NFT token to new recipient.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const transferNFT = async (testnet: boolean, body: TransferErc721, provider?: string) => {
+export const transferNFT = async (body: TransferErc721, provider?: string) => {
   return sendXdcErc721Transaction(body, provider)
 }
