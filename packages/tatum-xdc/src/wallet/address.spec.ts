@@ -4,8 +4,6 @@ import { generateAddressFromPrivatekey, generateAddressFromXPub, generatePrivate
 describe('Address tests', () => {
   it('should generate address 1 for XDC testnet', () => {
     const address = generateAddressFromXPub(
-      Currency.XDC,
-      true,
       'xpub6FMiQpA54nciqs52guGVdWQ5TonZt5XtGsFpurgtttL7H3mSfaJDXv5aBdThjX6tW9HYaJSQ8wZVnLm1ixaQUu1MRQCwvwZ6U2cX6mwWT25',
       1
     )
