@@ -865,13 +865,11 @@ export const prepareOneSmartContractWriteMethodInvocation = async (
 /**
  * Send Harmony smart contract read method invocation transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param testnet
  * @param body content of the transaction to broadcast
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendOneSmartContractReadMethodInvocationTransaction = async (
-  testnet: boolean,
   body: SmartContractReadMethodInvocation,
   provider?: string
 ) => {
@@ -1114,18 +1112,16 @@ export const sendOneDeployMarketplaceListingSignedTransaction = async (
 /**
  * Send Harmony smart contract method invocation transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param testnet
  * @param body content of the transaction to broadcast
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendOneSmartContractMethodInvocationTransaction = async (
-  testnet: boolean,
   body: SmartContractMethodInvocation | SmartContractReadMethodInvocation,
   provider?: string
 ) => {
   if (body.methodABI.stateMutability === 'view') {
-    return sendOneSmartContractReadMethodInvocationTransaction(testnet, body as SmartContractReadMethodInvocation, provider)
+    return sendOneSmartContractReadMethodInvocationTransaction(body as SmartContractReadMethodInvocation, provider)
   }
   return oneBroadcast(
     await prepareOneSmartContractWriteMethodInvocation(body, provider),
