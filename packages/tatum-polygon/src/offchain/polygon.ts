@@ -42,7 +42,6 @@ export const sendPolygonOffchainTransaction = async (testnet: boolean, body: Tra
   }
   if (account.currency === Currency.MATIC) {
     txData = await preparePolygonSignedTransaction(
-      testnet,
       {
         amount,
         fromPrivateKey: fromPriv,

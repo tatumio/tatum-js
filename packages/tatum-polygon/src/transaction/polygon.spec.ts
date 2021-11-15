@@ -34,7 +34,7 @@ describe('MATIC transactions', () => {
       body.amount = '0.0001'
       body.currency = Currency.MATIC
       body.to = '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
-      const txData = await preparePolygonSignedTransaction(true, body, 'https://matic-mumbai.chainstacklabs.com/')
+      const txData = await preparePolygonSignedTransaction(body, 'https://matic-mumbai.chainstacklabs.com/')
       expect(txData).toContain('0x')
 
       console.log(await broadcast(txData))

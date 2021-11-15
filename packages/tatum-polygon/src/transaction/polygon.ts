@@ -84,13 +84,12 @@ const prepareGeneralTx = async (
 /**
  * Send Polygon transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendPolygonTransaction = async (testnet: boolean, body: TransferErc20, provider?: string) => {
-  return polygonBroadcast(await preparePolygonSignedTransaction(testnet, body, provider))
+export const sendPolygonTransaction = async (body: TransferErc20, provider?: string) => {
+  return polygonBroadcast(await preparePolygonSignedTransaction(body, provider))
 }
 
 export const preparePolygonClient = (provider?: string, fromPrivateKey?: string) => {
@@ -175,12 +174,11 @@ export const preparePolygonGenerateCustodialWalletSignedTransaction = async (
 
 /**
  * Sign Polygon transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const preparePolygonSignedTransaction = async (testnet: boolean, body: TransferErc20, provider?: string) => {
+export const preparePolygonSignedTransaction = async (body: TransferErc20, provider?: string) => {
   await validateBody(body, TransferErc20)
   const client = await preparePolygonClient(provider, body.fromPrivateKey)
   let data
