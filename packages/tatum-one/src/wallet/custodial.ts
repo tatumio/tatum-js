@@ -69,7 +69,8 @@ export const prepareTransferFromCustodialWallet = async (testnet: boolean, body:
     testnet,
     body,
     getOne20ContractDecimals,
-    (testnet, body, r, provider) => prepareOneSmartContractWriteMethodInvocation(testnet, r, provider),
+    // @ts-ignore
+    (r, provider, testnet) => prepareOneSmartContractWriteMethodInvocation(testnet, r, provider),
     SmartContractMethodInvocation,
     18,
     TransferFromCustodialAddress,
@@ -103,7 +104,8 @@ export const prepareBatchTransferFromCustodialWallet = async (
     testnet,
     body,
     getOne20ContractDecimals,
-    (testnet, body, r, provider) => prepareOneSmartContractWriteMethodInvocation(testnet, r, provider),
+    // @ts-ignore
+    (r, provider, testnet) => prepareOneSmartContractWriteMethodInvocation(testnet, r, provider),
     SmartContractMethodInvocation,
     18,
     TransferFromCustodialAddressBatch,
