@@ -23,7 +23,7 @@ export const sendXdcOffchainTransaction = async (testnet: boolean, body: Transfe
   const { amount, address } = withdrawal
 
   const fromPriv =
-    mnemonic && index !== undefined ? await generatePrivateKeyFromMnemonic(Currency.XDC, testnet, mnemonic, index) : (privateKey as string)
+    mnemonic && index !== undefined ? await generatePrivateKeyFromMnemonic(testnet, mnemonic, index) : (privateKey as string)
 
   const fee = {
     gasLimit: gasLimit || '21000',

@@ -1,4 +1,3 @@
-import { Currency } from '@tatumio/tatum-core'
 import { generateAddressFromPrivatekey, generateAddressFromXPub, generatePrivateKeyFromMnemonic } from './address'
 // tslint:disable-next-line:no-var-requires
 describe('Address tests', () => {
@@ -12,7 +11,6 @@ describe('Address tests', () => {
 
   it('should generate private key 1 for XDC testnet', async () => {
     const privateKey = await generatePrivateKeyFromMnemonic(
-      Currency.XDC,
       true,
       'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten',
       1
