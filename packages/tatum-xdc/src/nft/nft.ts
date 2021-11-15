@@ -36,7 +36,6 @@ export const deployNFT = async (body: DeployErc721, provider?: string): Promise<
 
 /**
  * Mint new NFT token with metadata stored on the IPFS.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
  * @param file file to be stored on the IPFS
  * @param name name of the file
@@ -45,7 +44,6 @@ export const deployNFT = async (body: DeployErc721, provider?: string): Promise<
  * @param provider optional provider do broadcast tx
  */
 export const createNFT = async (
-  testnet: boolean,
   body: MintErc721,
   file: Buffer,
   name: string,
