@@ -23,8 +23,8 @@ export const deployMultiToken = async (testnet: boolean, body: DeployMultiToken,
 export const mintMultiToken = async (body: MintMultiToken, provider?: string) => {
   return sendPolygonMintMultiTokenSignedTransaction(body, provider)
 }
-export const mintMultiTokenBatch = async (testnet: boolean, body: MintMultiTokenBatch, provider?: string) => {
-  return sendPolygonMintMultiTokenBatchSignedTransaction(testnet, body, provider)
+export const mintMultiTokenBatch = async (body: MintMultiTokenBatch, provider?: string) => {
+  return sendPolygonMintMultiTokenBatchSignedTransaction(body, provider)
 }
 export const burnMultiToken = async (body: BurnMultiToken, provider?: string) => {
   return sendPolygonBurnMultiTokenSignedTransaction(body, provider)
