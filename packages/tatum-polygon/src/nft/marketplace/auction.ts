@@ -17,7 +17,6 @@ import {
   UpdateAuctionFee,
   UpdateMarketplaceFeeRecipient,
 } from '@tatumio/tatum-core'
-import BigNumber from 'bignumber.js'
 import { preparePolygonDeployAuctionSignedTransaction } from '../../transaction'
 import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../../helpers'
 import { prepareApproveErc20 } from '../../fungible'
