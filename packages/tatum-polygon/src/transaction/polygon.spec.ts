@@ -191,7 +191,6 @@ describe('MATIC transactions', () => {
       try {
         const tokenId = new Date().getTime().toString()
         const mintedToken = await preparePolygonMintErc721SignedTransaction(
-          true,
           {
             to: '0x811dfbff13adfbc3cf653dcc373c03616d3471c9',
             tokenId,
