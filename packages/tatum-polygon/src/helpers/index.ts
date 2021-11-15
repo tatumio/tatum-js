@@ -24,5 +24,5 @@ export const helperPrepareSCCall = async (
   abi: any[] = listing.abi
 ) => {
   const r = buildSmartContractMethodInvocation(body, params, methodName, abi)
-  return await preparePolygonSmartContractWriteMethodInvocation(testnet, r, provider)
+  return await preparePolygonSmartContractWriteMethodInvocation(r, provider)
 }

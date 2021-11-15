@@ -55,7 +55,6 @@ export const polygonGetGasPriceInWei = async () => {
 
 const prepareGeneralTx = async (
   client: Web3,
-  testnet: boolean,
   fromPrivateKey?: string,
   signatureId?: string,
   to?: string,
@@ -166,7 +165,6 @@ export const preparePolygonGenerateCustodialWalletSignedTransaction = async (
     .encodeABI()
   return prepareGeneralTx(
     client,
-    testnet,
     body.fromPrivateKey,
     body.signatureId,
     undefined,
@@ -201,7 +199,6 @@ export const preparePolygonSignedTransaction = async (testnet: boolean, body: Tr
   }
   return prepareGeneralTx(
     client,
-    testnet,
     body.fromPrivateKey,
     body.signatureId,
     body.to,
@@ -226,7 +223,6 @@ export const preparePolygonStoreDataTransaction = async (testnet: boolean, body:
   const hexData = isHex(body.data) ? stringToHex(body.data) : toHex(body.data)
   return prepareGeneralTx(
     client,
-    testnet,
     body.fromPrivateKey,
     body.signatureId,
     body.to || client.eth.accounts.wallet[0].address,
@@ -254,7 +250,6 @@ export const preparePolygonMintErc20SignedTransaction = async (testnet: boolean,
   const data = contract.methods.mint(body.to.trim(), `0x${new BigNumber(body.amount).multipliedBy(digits).toString(16)}`).encodeABI()
   return prepareGeneralTx(
     client,
-    testnet,
     body.fromPrivateKey,
     body.signatureId,
     body.contractAddress.trim(),
@@ -282,7 +277,6 @@ export const preparePolygonBurnErc20SignedTransaction = async (testnet: boolean,
   const data = contract.methods.burn(`0x${new BigNumber(body.amount).multipliedBy(digits).toString(16)}`).encodeABI()
   return prepareGeneralTx(
     client,
-    testnet,
     body.fromPrivateKey,
     body.signatureId,
     body.contractAddress.trim(),
@@ -311,7 +305,6 @@ export const preparePolygonTransferErc20SignedTransaction = async (testnet: bool
     .encodeABI()
   return prepareGeneralTx(
     client,
-    testnet,
     body.fromPrivateKey,
     body.signatureId,
     (body.contractAddress as string).trim(),
@@ -350,7 +343,6 @@ export const preparePolygonDeployErc20SignedTransaction = async (testnet: boolea
     .encodeABI()
   return prepareGeneralTx(
     client,
-    testnet,
     body.fromPrivateKey,
     body.signatureId,
     undefined,
@@ -379,7 +371,6 @@ export const preparePolygonMintErc721SignedTransaction = async (testnet: boolean
   if (body.contractAddress) {
     return prepareGeneralTx(
       client,
-      testnet,
       body.fromPrivateKey,
       body.signatureId,
       body.contractAddress.trim(),
@@ -412,7 +403,6 @@ export const preparePolygonMintCashbackErc721SignedTransaction = async (testnet:
   if (body.contractAddress) {
     return prepareGeneralTx(
       client,
-      testnet,
       body.fromPrivateKey,
       body.signatureId,
       body.contractAddress.trim(),
@@ -454,7 +444,6 @@ export const preparePolygonMintMultipleCashbackErc721SignedTransaction = async (
     .encodeABI()
   return prepareGeneralTx(
     client,
-    testnet,
     body.fromPrivateKey,
     body.signatureId,
     body.contractAddress.trim(),
@@ -486,7 +475,6 @@ export const preparePolygonMintMultipleErc721SignedTransaction = async (testnet:
     .encodeABI()
   return prepareGeneralTx(
     client,
-    testnet,
     body.fromPrivateKey,
     body.signatureId,
     body.contractAddress.trim(),
@@ -512,7 +500,6 @@ export const preparePolygonBurnErc721SignedTransaction = async (testnet: boolean
   const data = new client.eth.Contract(erc721TokenABI, body.contractAddress.trim()).methods.burn(body.tokenId).encodeABI()
   return prepareGeneralTx(
     client,
-    testnet,
     body.fromPrivateKey,
     body.signatureId,
     body.contractAddress.trim(),
@@ -540,7 +527,6 @@ export const preparePolygonTransferErc721SignedTransaction = async (testnet: boo
     .encodeABI()
   return prepareGeneralTx(
     client,
-    testnet,
     body.fromPrivateKey,
     body.signatureId,
     body.contractAddress.trim(),
@@ -572,7 +558,6 @@ export const preparePolygonUpdateCashbackForAuthorErc721SignedTransaction = asyn
     .encodeABI()
   return prepareGeneralTx(
     client,
-    testnet,
     body.fromPrivateKey,
     body.signatureId,
     body.contractAddress.trim(),
@@ -603,7 +588,6 @@ export const preparePolygonDeployErc721SignedTransaction = async (testnet: boole
     .encodeABI()
   return prepareGeneralTx(
     client,
-    testnet,
     body.fromPrivateKey,
     body.signatureId,
     undefined,
@@ -638,7 +622,6 @@ export const preparePolygonDeployMarketplaceListingSignedTransaction = async (
     .encodeABI()
   return prepareGeneralTx(
     client,
-    testnet,
     body.fromPrivateKey,
     body.signatureId,
     undefined,
@@ -668,7 +651,6 @@ export const preparePolygonDeployAuctionSignedTransaction = async (testnet: bool
     .encodeABI()
   return prepareGeneralTx(
     client,
-    testnet,
     body.fromPrivateKey,
     body.signatureId,
     undefined,
@@ -696,7 +678,6 @@ export const preparePolygonBurnMultiTokenSignedTransaction = async (testnet: boo
     .encodeABI()
   return prepareGeneralTx(
     client,
-    testnet,
     body.fromPrivateKey,
     body.signatureId,
     body.contractAddress.trim(),
@@ -728,7 +709,6 @@ export const preparePolygonBurnMultiTokenBatchSignedTransaction = async (
     .encodeABI()
   return prepareGeneralTx(
     client,
-    testnet,
     body.fromPrivateKey,
     body.signatureId,
     body.contractAddress.trim(),
@@ -756,7 +736,6 @@ export const preparePolygonTransferMultiTokenSignedTransaction = async (testnet:
     .encodeABI()
   return prepareGeneralTx(
     client,
-    testnet,
     body.fromPrivateKey,
     body.signatureId,
     body.contractAddress.trim(),
@@ -794,7 +773,6 @@ export const preparePolygonBatchTransferMultiTokenSignedTransaction = async (
     .encodeABI()
   return prepareGeneralTx(
     client,
-    testnet,
     body.fromPrivateKey,
     body.signatureId,
     body.contractAddress.trim(),
@@ -822,7 +800,6 @@ export const preparePolygonMintMultiTokenSignedTransaction = async (testnet: boo
     .encodeABI()
   return prepareGeneralTx(
     client,
-    testnet,
     body.fromPrivateKey,
     body.signatureId,
     body.contractAddress.trim(),
@@ -855,7 +832,6 @@ export const preparePolygonMintMultiTokenBatchSignedTransaction = async (
     .encodeABI()
   return prepareGeneralTx(
     client,
-    testnet,
     body.fromPrivateKey,
     body.signatureId,
     body.contractAddress.trim(),
@@ -886,7 +862,6 @@ export const preparePolygonDeployMultiTokenSignedTransaction = async (testnet: b
     .encodeABI()
   return prepareGeneralTx(
     client,
-    testnet,
     body.fromPrivateKey,
     body.signatureId,
     undefined,
@@ -900,13 +875,11 @@ export const preparePolygonDeployMultiTokenSignedTransaction = async (testnet: b
 
 /**
  * Sign Polygon smart contract write method invocation transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
 export const preparePolygonSmartContractWriteMethodInvocation = async (
-  testnet: boolean,
   body: SmartContractMethodInvocation,
   provider?: string
 ) => {
@@ -917,7 +890,6 @@ export const preparePolygonSmartContractWriteMethodInvocation = async (
   const data = new client.eth.Contract([methodABI]).methods[methodName as string](...params).encodeABI()
   return prepareGeneralTx(
     client,
-    testnet,
     fromPrivateKey,
     signatureId,
     contractAddress.trim(),
@@ -1205,7 +1177,7 @@ export const sendPolygonSmartContractMethodInvocationTransaction = async (
     return sendPolygonSmartContractReadMethodInvocationTransaction(testnet, body as SmartContractReadMethodInvocation, provider)
   }
   return polygonBroadcast(
-    await preparePolygonSmartContractWriteMethodInvocation(testnet, body, provider),
+    await preparePolygonSmartContractWriteMethodInvocation(body, provider),
     (body as SmartContractMethodInvocation).signatureId
   )
 }

@@ -91,7 +91,6 @@ describe('MATIC transactions', () => {
 
     it('should test write smart contract method invocation', async () => {
       const result = await preparePolygonSmartContractWriteMethodInvocation(
-        true,
         {
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
           contractAddress: '0x0b9808fce74030c87aae334a30f6c8f6c66b090d',
