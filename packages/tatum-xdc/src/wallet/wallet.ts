@@ -1,7 +1,7 @@
 import { generateMnemonic, mnemonicToSeed } from 'bip39'
 import { hdkey as ethHdKey } from 'ethereumjs-wallet'
 import { XDC_DERIVATION_PATH } from '../constants'
-import { Currency, TESTNET_DERIVATION_PATH, WalletWithMnemonic } from '@tatumio/tatum-core'
+import { TESTNET_DERIVATION_PATH, WalletWithMnemonic } from '@tatumio/tatum-core'
 
 /**
  * Generate XDC wallet
