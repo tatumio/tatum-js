@@ -1,4 +1,4 @@
-import Web3 from 'web3'
+// import Web3 from 'web3'
 import { Currency, DeployErc20, TransferErc20 } from '@tatumio/tatum-core'
 import {
   prepareXdcCustomErc20SignedTransaction,
@@ -16,17 +16,17 @@ import {
 
 describe('XDC transactions', () => {
   jest.setTimeout(19999)
-  const providerAddr = 'https://rpc.apothem.network/'
-  const broadcast = async (txData: string) => {
-    const client = new Web3(providerAddr)
-    const result: { txId: string } = await new Promise((resolve, reject) => {
-      client.eth
-        .sendSignedTransaction(txData)
-        .once('transactionHash', (txId) => resolve({ txId }))
-        .on('error', (e) => reject(new Error(`Unable to broadcast transaction due to ${e.message}.`)))
-    })
-    return result
-  }
+  // const providerAddr = 'https://rpc.apothem.network/'
+  // const broadcast = async (txData: string) => {
+  //   const client = new Web3(providerAddr)
+  //   const result: { txId: string } = await new Promise((resolve, reject) => {
+  //     client.eth
+  //       .sendSignedTransaction(txData)
+  //       .once('transactionHash', (txId) => resolve({ txId }))
+  //       .on('error', (e) => reject(new Error(`Unable to broadcast transaction due to ${e.message}.`)))
+  //   })
+  //   return result
+  // }
 
   it('should test valid transaction XDC data', async () => {
     const body = new TransferErc20()
