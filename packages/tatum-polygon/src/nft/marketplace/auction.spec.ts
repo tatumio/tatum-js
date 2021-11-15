@@ -24,7 +24,7 @@ describe('Auction  tests', () => {
       body.feeRecipient = '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'
       body.auctionFee = 150
       body.chain = Currency.MATIC
-      const test = await deployAuction(true, body, 'https://rpc-mumbai.maticvigil.com')
+      const test = await deployAuction(body, 'https://rpc-mumbai.maticvigil.com')
       console.log(test)
       expect(test).toBeDefined()
     })

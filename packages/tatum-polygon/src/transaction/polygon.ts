@@ -612,12 +612,11 @@ export const preparePolygonDeployMarketplaceListingSignedTransaction = async (
 }
 /**
  * Sign Polygon deploy NFT Auction contract transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet
  * @param body content of the transaction to broadcast
  * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
  */
-export const preparePolygonDeployAuctionSignedTransaction = async (testnet: boolean, body: DeployNftAuction, provider?: string) => {
+export const preparePolygonDeployAuctionSignedTransaction = async (body: DeployNftAuction, provider?: string) => {
   await validateBody(body, DeployNftAuction)
   const client = await preparePolygonClient(provider, body.fromPrivateKey)
   // @ts-ignore
