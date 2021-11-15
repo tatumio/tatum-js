@@ -45,7 +45,7 @@ describe('Marketplace Listing tests', () => {
       body.price = '0.001'
       body.seller = '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'
       body.chain = Currency.MATIC
-      console.log(await sendMarketplaceCreateListing(true, body, 'https://rpc-mumbai.matic.today'))
+      console.log(await sendMarketplaceCreateListing(body, 'https://rpc-mumbai.matic.today'))
 
       await new Promise((r) => setTimeout(r, 5000))
       console.log(
@@ -84,7 +84,7 @@ describe('Marketplace Listing tests', () => {
       body.listingId = '111'
       body.amount = '0.0015'
       body.chain = Currency.MATIC
-      console.log(await sendMarketplaceBuyListing(true, body, 'https://rpc-mumbai.matic.today'))
+      console.log(await sendMarketplaceBuyListing(body, 'https://rpc-mumbai.matic.today'))
     })
 
     it('should approve erc20', async () => {
