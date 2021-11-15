@@ -406,13 +406,11 @@ export const preparePolygonMintCashbackErc721SignedTransaction = async (body: Mi
 
 /**
  * Sign Polygon mint multiple cashback erc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
 export const preparePolygonMintMultipleCashbackErc721SignedTransaction = async (
-  testnet: boolean,
   body: MintMultipleErc721,
   provider?: string
 ) => {
@@ -978,16 +976,14 @@ export const sendPolygonMintCashbackErc721SignedTransaction = async (body: MintE
 /**
  * Send Polygon mint multiple erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param testnet
  * @param body content of the transaction to broadcast
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendPolygonMintMultipleCashbackErc721SignedTransaction = async (
-  testnet: boolean,
   body: MintMultipleErc721,
   provider?: string
-) => polygonBroadcast(await preparePolygonMintMultipleCashbackErc721SignedTransaction(testnet, body, provider), body.signatureId)
+) => polygonBroadcast(await preparePolygonMintMultipleCashbackErc721SignedTransaction(body, provider), body.signatureId)
 
 /**
  * Send Polygon mint multiple erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.

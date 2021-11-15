@@ -75,7 +75,7 @@ export const mintNFTWithUri = async (body: MintErc721, provider?: string): Promi
  */
 export const mintMultipleNFTWithUri = async (testnet: boolean, body: MintMultipleErc721, provider?: string) => {
   if ((body as MintMultipleErc721).authorAddresses) {
-    return sendPolygonMintMultipleCashbackErc721SignedTransaction(testnet, body as MintMultipleErc721, provider)
+    return sendPolygonMintMultipleCashbackErc721SignedTransaction(body as MintMultipleErc721, provider)
   } else {
     return sendPolygonMintMultipleErc721SignedTransaction(testnet, body as MintMultipleErc721, provider)
   }
