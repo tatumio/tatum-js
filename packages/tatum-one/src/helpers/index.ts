@@ -13,7 +13,6 @@ export const helperGetWeb3Client = (provider?: string): Web3 => {
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const helperPrepareSCCall = async (
-  testnet: boolean,
   body: any,
   methodName: string,
   params: any[],

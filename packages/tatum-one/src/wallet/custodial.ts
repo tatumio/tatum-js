@@ -23,13 +23,12 @@ import {
 /**
  * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, btu transaction costs connected to the withdrawal
  * of assets is covered by the deployer.
- * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const generateCustodialWallet = async (testnet: boolean, body: GenerateCustodialAddress, provider?: string) => {
-  return await sendOneGenerateCustodialWalletSignedTransaction(testnet, body, provider)
+export const generateCustodialWallet = async (body: GenerateCustodialAddress, provider?: string) => {
+  return await sendOneGenerateCustodialWalletSignedTransaction(body, provider)
 }
 
 /**
@@ -121,12 +120,11 @@ export const sendBatchTransferFromCustodialWallet = async (testnet: boolean, bod
 
 /**
  * Prepare signed approve transaction from the custodial SC wallet.
- * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareApproveFromCustodialWallet = async (testnet: boolean, body: ApproveCustodialTransfer, provider?: string) => {
+export const prepareApproveFromCustodialWallet = async (body: ApproveCustodialTransfer, provider?: string) => {
   await validateBody(body, ApproveCustodialTransfer)
 
   const decimals =
@@ -140,7 +138,6 @@ export const prepareApproveFromCustodialWallet = async (testnet: boolean, body: 
   ]
   delete body.amount
   return await helperPrepareSCCall(
-    testnet,
     {
       ...body,
       contractAddress: body.custodialAddress,
@@ -153,10 +150,9 @@ export const prepareApproveFromCustodialWallet = async (testnet: boolean, body: 
 }
 /**
  * Send signed approve transaction from the custodial SC wallet.
- * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendApproveFromCustodialWallet = async (testnet: boolean, body: ApproveCustodialTransfer, provider?: string) =>
-  helperBroadcastTx(await prepareApproveFromCustodialWallet(testnet, body, provider), body.signatureId)
+export const sendApproveFromCustodialWallet = async (body: ApproveCustodialTransfer, provider?: string) =>
+  helperBroadcastTx(await prepareApproveFromCustodialWallet(body, provider), body.signatureId)

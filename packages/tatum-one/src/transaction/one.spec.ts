@@ -57,7 +57,7 @@ describe('ONE transactions', () => {
       body.fromPrivateKey = '0x4cda6d2c33b0f9a041e46474a638ac59aee0734cf208aa9aa2f05ef887bd09e1'
       body.amount = '1'
       body.to = 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde'
-      const txData = await prepareOneSignedTransaction(true, body, PROVIDER)
+      const txData = await prepareOneSignedTransaction(body, PROVIDER)
       expect(txData).toContain('0x')
 
       await processTx(txData)
@@ -70,7 +70,7 @@ describe('ONE transactions', () => {
       body.fromShardID = 0
       body.toShardID = 0
       body.to = 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde'
-      const txData = await prepareOneSignedTransaction(true, body, PROVIDER)
+      const txData = await prepareOneSignedTransaction(body, PROVIDER)
       console.log(txData)
       expect(txData).toContain('0x')
     })
@@ -86,7 +86,7 @@ describe('ONE transactions', () => {
       body.supply = '100'
       body.symbol = 'TTM'
       body.address = 'one13t9ul0yvudlk7e60fwvxr5l0azfg3kyl474xmc'
-      const txData = await prepareOneDeploy20SignedTransaction(true, body, PROVIDER)
+      const txData = await prepareOneDeploy20SignedTransaction(body, PROVIDER)
       expect(txData).toContain('0x')
 
       await processTx(txData)
@@ -99,7 +99,7 @@ describe('ONE transactions', () => {
       body.contractAddress = '0xF60dE853111e0E3A1fB3E703D9Bed83b470c73D5'
       body.digits = 14
       body.to = 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde'
-      const txData = await prepareOneTransfer20SignedTransaction(true, body, PROVIDER)
+      const txData = await prepareOneTransfer20SignedTransaction(body, PROVIDER)
       expect(txData).toContain('0x')
 
       await processTx(txData)
@@ -110,7 +110,7 @@ describe('ONE transactions', () => {
       body.fromPrivateKey = '0x4cda6d2c33b0f9a041e46474a638ac59aee0734cf208aa9aa2f05ef887bd09e1'
       body.amount = '1.564'
       body.contractAddress = '0xF60dE853111e0E3A1fB3E703D9Bed83b470c73D5'
-      const txData = await prepareOneBurn20SignedTransaction(true, body, PROVIDER)
+      const txData = await prepareOneBurn20SignedTransaction(body, PROVIDER)
       expect(txData).toContain('0x')
 
       await processTx(txData)
@@ -124,7 +124,7 @@ describe('ONE transactions', () => {
       body.name = 'Tatum'
       body.symbol = 'TTM'
       body.chain = Currency.ONE
-      const txData = await prepareOneDeploy721SignedTransaction(true, body, PROVIDER)
+      const txData = await prepareOneDeploy721SignedTransaction(body, PROVIDER)
       expect(txData).toContain('0x')
 
       await processTx(txData)
@@ -138,7 +138,7 @@ describe('ONE transactions', () => {
       body.url = '14'
       body.chain = Currency.ONE
       body.to = 'one13t9ul0yvudlk7e60fwvxr5l0azfg3kyl474xmc'
-      const txData = await prepareOneMint721SignedTransaction(true, body, PROVIDER)
+      const txData = await prepareOneMint721SignedTransaction(body, PROVIDER)
       expect(txData).toContain('0x')
 
       await processTx(txData)
@@ -151,7 +151,7 @@ describe('ONE transactions', () => {
       body.contractAddress = '0x3a45a4E2441a4A53e5A10bE3A15EC7Dc9eb902B7'
       body.chain = Currency.ONE
       body.to = 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde'
-      const txData = await prepareOneTransfer721SignedTransaction(true, body, PROVIDER)
+      const txData = await prepareOneTransfer721SignedTransaction(body, PROVIDER)
       expect(txData).toContain('0x')
 
       await processTx(txData)
@@ -167,7 +167,7 @@ describe('ONE transactions', () => {
       body.to = 'one13t9ul0yvudlk7e60fwvxr5l0azfg3kyl474xmc'
       body.authorAddresses = ['one13t9ul0yvudlk7e60fwvxr5l0azfg3kyl474xmc']
       body.cashbackValues = ['1']
-      const txData = await prepareOneMintCashback721SignedTransaction(true, body, PROVIDER)
+      const txData = await prepareOneMintCashback721SignedTransaction(body, PROVIDER)
       expect(txData).toContain('0x')
 
       await processTx(txData)
@@ -183,7 +183,7 @@ describe('ONE transactions', () => {
       body.to = ['one13t9ul0yvudlk7e60fwvxr5l0azfg3kyl474xmc']
       body.authorAddresses = [['one13t9ul0yvudlk7e60fwvxr5l0azfg3kyl474xmc']]
       body.cashbackValues = [['1']]
-      const txData = await prepareOneMintMultipleCashback721SignedTransaction(true, body, PROVIDER)
+      const txData = await prepareOneMintMultipleCashback721SignedTransaction(body, PROVIDER)
       expect(txData).toContain('0x')
 
       await processTx(txData)
@@ -197,7 +197,7 @@ describe('ONE transactions', () => {
       body.chain = Currency.ONE
       body.value = '1'
       body.to = 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde'
-      const txData = await prepareOneTransfer721SignedTransaction(true, body, PROVIDER)
+      const txData = await prepareOneTransfer721SignedTransaction(body, PROVIDER)
       expect(txData).toContain('0x')
 
       await processTx(txData)
@@ -210,7 +210,7 @@ describe('ONE transactions', () => {
       body.contractAddress = '0xeDB704d5d5940559C53FfB5CBCC38E6b0AdA3Bc3'
       body.chain = Currency.ONE
       body.cashbackValue = '2'
-      const txData = await prepareOneUpdateCashbackForAuthor721SignedTransaction(true, body, PROVIDER)
+      const txData = await prepareOneUpdateCashbackForAuthor721SignedTransaction(body, PROVIDER)
       expect(txData).toContain('0x')
 
       await processTx(txData)
@@ -222,7 +222,7 @@ describe('ONE transactions', () => {
       body.tokenId = '100'
       body.contractAddress = '0x3a45a4E2441a4A53e5A10bE3A15EC7Dc9eb902B7'
       body.chain = Currency.ONE
-      const txData = await prepareOneBurn721SignedTransaction(true, body, PROVIDER)
+      const txData = await prepareOneBurn721SignedTransaction(body, PROVIDER)
       expect(txData).toContain('0x')
 
       await processTx(txData)
@@ -235,7 +235,7 @@ describe('ONE transactions', () => {
       body.fromPrivateKey = '0x4cda6d2c33b0f9a041e46474a638ac59aee0734cf208aa9aa2f05ef887bd09e1'
       body.uri = 'Tatum'
       body.chain = Currency.ONE
-      const txData = await prepareOneDeployMultiTokenSignedTransaction(true, body, PROVIDER)
+      const txData = await prepareOneDeployMultiTokenSignedTransaction(body, PROVIDER)
       expect(txData).toContain('0x')
 
       await processTx(txData)
@@ -249,7 +249,7 @@ describe('ONE transactions', () => {
       body.chain = Currency.ONE
       body.amount = '100'
       body.to = 'one13t9ul0yvudlk7e60fwvxr5l0azfg3kyl474xmc'
-      const txData = await prepareOneMintMultiTokenSignedTransaction(true, body, PROVIDER)
+      const txData = await prepareOneMintMultiTokenSignedTransaction(body, PROVIDER)
       expect(txData).toContain('0x')
 
       await processTx(txData)
@@ -263,7 +263,7 @@ describe('ONE transactions', () => {
       body.chain = Currency.ONE
       body.amounts = [['100']]
       body.to = ['one13t9ul0yvudlk7e60fwvxr5l0azfg3kyl474xmc']
-      const txData = await prepareOneMintMultiTokenBatchSignedTransaction(true, body, PROVIDER)
+      const txData = await prepareOneMintMultiTokenBatchSignedTransaction(body, PROVIDER)
       expect(txData).toContain('0x')
 
       await processTx(txData)
@@ -277,7 +277,7 @@ describe('ONE transactions', () => {
       body.contractAddress = '0x3b0b77e149aF684a1a4636eb1cffEeF910845D24'
       body.chain = Currency.ONE
       body.to = 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde'
-      const txData = await prepareOneTransferMultiTokenSignedTransaction(true, body, PROVIDER)
+      const txData = await prepareOneTransferMultiTokenSignedTransaction(body, PROVIDER)
       expect(txData).toContain('0x')
 
       await processTx(txData)
@@ -291,7 +291,7 @@ describe('ONE transactions', () => {
       body.contractAddress = '0x3b0b77e149aF684a1a4636eb1cffEeF910845D24'
       body.chain = Currency.ONE
       body.to = 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde'
-      const txData = await prepareOneBatchTransferMultiTokenSignedTransaction(true, body, PROVIDER)
+      const txData = await prepareOneBatchTransferMultiTokenSignedTransaction(body, PROVIDER)
       expect(txData).toContain('0x')
 
       await processTx(txData)
@@ -305,7 +305,7 @@ describe('ONE transactions', () => {
       body.account = 'one13t9ul0yvudlk7e60fwvxr5l0azfg3kyl474xmc'
       body.contractAddress = '0x3b0b77e149aF684a1a4636eb1cffEeF910845D24'
       body.chain = Currency.ONE
-      const txData = await prepareOneBurnMultiTokenSignedTransaction(true, body, PROVIDER)
+      const txData = await prepareOneBurnMultiTokenSignedTransaction(body, PROVIDER)
       expect(txData).toContain('0x')
 
       await processTx(txData)
@@ -319,7 +319,7 @@ describe('ONE transactions', () => {
       body.account = 'one13t9ul0yvudlk7e60fwvxr5l0azfg3kyl474xmc'
       body.contractAddress = '0x3b0b77e149aF684a1a4636eb1cffEeF910845D24'
       body.chain = Currency.ONE
-      const txData = await prepareOneBurnMultiTokenBatchSignedTransaction(true, body, PROVIDER)
+      const txData = await prepareOneBurnMultiTokenBatchSignedTransaction(body, PROVIDER)
       expect(txData).toContain('0x')
 
       await processTx(txData)
