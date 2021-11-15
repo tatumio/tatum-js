@@ -53,4 +53,8 @@ export class TransferErc20 extends PrivateKeyOrSignatureId {
   @Min(0)
   @IsOptional()
   public nonce?: number
+
+  @IsOptional()
+  @Length(42, 58)
+  public from?: string;
 }
