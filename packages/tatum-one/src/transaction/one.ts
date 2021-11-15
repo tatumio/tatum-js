@@ -98,11 +98,10 @@ export const prepareOneClient = (provider?: string, fromPrivateKey?: string) => 
  * Sign Harmony pending transaction from Tatum KMS
  * @param tx pending transaction from KMS
  * @param fromPrivateKey private key to sign transaction with.
- * @param testnet mainnet or testnet version
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signOneKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, testnet: boolean, provider?: string) => {
+export const signOneKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, provider?: string) => {
   if (tx.chain !== Currency.ONE) {
     throw Error('Unsupported chain.')
   }
