@@ -309,12 +309,11 @@ export const preparePolygonTransferErc20SignedTransaction = async (body: Transfe
 
 /**
  * Sign Polygon deploy erc20 transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const preparePolygonDeployErc20SignedTransaction = async (testnet: boolean, body: DeployErc20, provider?: string) => {
+export const preparePolygonDeployErc20SignedTransaction = async (body: DeployErc20, provider?: string) => {
   await validateBody(body, DeployErc20)
   const client = await preparePolygonClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -947,13 +946,12 @@ export const sendPolygonTransferErc20SignedTransaction = async (body: TransferEr
 /**
  * Send Polygon deploy erc20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param testnet
  * @param body content of the transaction to broadcast
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendPolygonDeployErc20SignedTransaction = async (testnet: boolean, body: DeployErc20, provider?: string) =>
-  polygonBroadcast(await preparePolygonDeployErc20SignedTransaction(testnet, body, provider), body.signatureId)
+export const sendPolygonDeployErc20SignedTransaction = async (body: DeployErc20, provider?: string) =>
+  polygonBroadcast(await preparePolygonDeployErc20SignedTransaction(body, provider), body.signatureId)
 
 /**
  * Send Polygon mint erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.

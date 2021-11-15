@@ -150,7 +150,7 @@ describe('MATIC transactions', () => {
       body.supply = '100'
       body.address = '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       body.digits = 10
-      const txData = await preparePolygonDeployErc20SignedTransaction(true, body, 'https://matic-mumbai.chainstacklabs.com/')
+      const txData = await preparePolygonDeployErc20SignedTransaction(body, 'https://matic-mumbai.chainstacklabs.com/')
       expect(txData).toContain('0x')
       console.log(await broadcast(txData))
     })
@@ -163,7 +163,7 @@ describe('MATIC transactions', () => {
       body.address = '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       body.digits = 10
       try {
-        await preparePolygonDeployErc20SignedTransaction(true, body, 'https://matic-mumbai.chainstacklabs.com/')
+        await preparePolygonDeployErc20SignedTransaction(body, 'https://matic-mumbai.chainstacklabs.com/')
         fail('Validation did not pass.')
       } catch (e) {
         console.error(e)
