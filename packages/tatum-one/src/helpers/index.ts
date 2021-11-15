@@ -9,7 +9,7 @@ export const helperBroadcastTx = async (chain: Currency, txData: string, signatu
 }
 
 export const helperGetWeb3Client = (testnet: boolean, chain: Currency, provider?: string): Web3 => {
-  return prepareOneClient(testnet, provider)
+  return prepareOneClient(provider)
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types

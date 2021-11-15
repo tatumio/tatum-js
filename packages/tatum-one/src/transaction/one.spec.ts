@@ -46,7 +46,7 @@ describe('ONE transactions', () => {
   jest.setTimeout(99999)
 
   async function processTx(txData: string) {
-    const client = prepareOneClient(true, PROVIDER, '0x4cda6d2c33b0f9a041e46474a638ac59aee0734cf208aa9aa2f05ef887bd09e1')
+    const client = prepareOneClient(PROVIDER, '0x4cda6d2c33b0f9a041e46474a638ac59aee0734cf208aa9aa2f05ef887bd09e1')
     const signedTxn = await client.eth.sendSignedTransaction(txData)
     console.log(signedTxn.transactionHash)
   }

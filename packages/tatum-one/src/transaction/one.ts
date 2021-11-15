@@ -86,7 +86,7 @@ export const sendOneTransaction = async (testnet: boolean, body: OneTransfer, pr
   return oneBroadcast(await prepareOneSignedTransaction(testnet, body, provider))
 }
 
-export const prepareOneClient = (testnet: boolean, provider?: string, fromPrivateKey?: string) => {
+export const prepareOneClient = (provider?: string, fromPrivateKey?: string) => {
   const client = new Web3(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/one/web3/${process.env.TATUM_API_KEY}`)
   if (fromPrivateKey) {
     client.eth.accounts.wallet.clear()
@@ -108,7 +108,7 @@ export const signOneKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
   if (tx.chain !== Currency.ONE) {
     throw Error('Unsupported chain.')
   }
-  const client = prepareOneClient(testnet, provider, fromPrivateKey)
+  const client = prepareOneClient(provider, fromPrivateKey)
   const transactionConfig = JSON.parse(tx.serializedTransaction)
   if (!transactionConfig.gas) {
     transactionConfig.gas = await client.eth.estimateGas({ to: transactionConfig.to, data: transactionConfig.data })
@@ -133,7 +133,7 @@ export const signOneKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
  */
 export const prepareOneSignedTransaction = async (testnet: boolean, body: OneTransfer, provider?: string) => {
   await validateBody(body, OneTransfer)
-  const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+  const client = await prepareOneClient(provider, body.fromPrivateKey)
   return prepareGeneralTx(
     client,
     testnet,
@@ -157,7 +157,7 @@ export const prepareOneSignedTransaction = async (testnet: boolean, body: OneTra
  */
 export const prepareOneStoreDataTransaction = async (testnet: boolean, body: CreateRecord, provider?: string) => {
   await validateBody(body, CreateRecord)
-  const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+  const client = await prepareOneClient(provider, body.fromPrivateKey)
   const hexData = client.utils.isHex(body.data) ? client.utils.stringToHex(body.data) : client.utils.toHex(body.data)
   return prepareGeneralTx(
     client,
@@ -182,7 +182,7 @@ export const prepareOneStoreDataTransaction = async (testnet: boolean, body: Cre
  */
 export const prepareOneMint20SignedTransaction = async (testnet: boolean, body: OneMint20, provider?: string) => {
   await validateBody(body, OneMint20)
-  const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+  const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const contract = new client.eth.Contract(erc20TokenABI, new HarmonyAddress(body.contractAddress).basicHex.trim())
   const digits = new BigNumber(10).pow(await contract.methods.decimals().call())
@@ -212,7 +212,7 @@ export const prepareOneMint20SignedTransaction = async (testnet: boolean, body: 
  */
 export const prepareOneBurn20SignedTransaction = async (testnet: boolean, body: OneBurn20, provider?: string) => {
   await validateBody(body, OneBurn20)
-  const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+  const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const contract = new client.eth.Contract(erc20TokenABI, new HarmonyAddress(body.contractAddress).basicHex.trim())
   const digits = new BigNumber(10).pow(await contract.methods.decimals().call())
@@ -240,7 +240,7 @@ export const prepareOneBurn20SignedTransaction = async (testnet: boolean, body: 
  */
 export const prepareOneTransfer20SignedTransaction = async (testnet: boolean, body: OneTransfer20, provider?: string) => {
   await validateBody(body, OneTransfer20)
-  const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+  const client = await prepareOneClient(provider, body.fromPrivateKey)
   const decimals = new BigNumber(10).pow(body.digits as number)
   // @ts-ignore
   const data = new client.eth.Contract(erc20TokenABI, new HarmonyAddress(body.contractAddress).basicHex.trim()).methods
@@ -260,11 +260,11 @@ export const prepareOneTransfer20SignedTransaction = async (testnet: boolean, bo
   )
 }
 
-export const getOne20ContractDecimals = async (testnet: boolean, contractAddress: string, provider?: string) => {
+export const getOne20ContractDecimals = async (contractAddress: string, provider?: string, testnet?: boolean) => {
   if (!contractAddress) {
     throw new Error('Contract address not set.')
   }
-  const client = await prepareOneClient(testnet, provider)
+  const client = await prepareOneClient(provider)
   // @ts-ignore
   const contract = new client.eth.Contract(erc20_abi, contractAddress.trim())
   return await contract.methods.decimals().call()
@@ -283,7 +283,7 @@ export const prepareOneGenerateCustodialWalletSignedTransaction = async (
   provider?: string
 ) => {
   await validateBody(body, GenerateCustodialAddress)
-  const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+  const client = await prepareOneClient(provider, body.fromPrivateKey)
   const { abi, code } = obtainCustodialAddressType(body)
   // @ts-ignore
   const contract = new client.eth.Contract(abi)
@@ -319,7 +319,7 @@ export const prepareOneDeployMarketplaceListingSignedTransaction = async (
   provider?: string
 ) => {
   await validateBody(body, DeployMarketplaceListing)
-  const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+  const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const contract = new client.eth.Contract(auction.abi)
   const data = contract
@@ -350,7 +350,7 @@ export const prepareOneDeployMarketplaceListingSignedTransaction = async (
  */
 export const prepareOneDeployAuctionSignedTransaction = async (testnet: boolean, body: DeployNftAuction, provider?: string) => {
   await validateBody(body, DeployNftAuction)
-  const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+  const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const contract = new client.eth.Contract(listing.abi)
   const data = contract
@@ -382,7 +382,7 @@ export const prepareOneDeployAuctionSignedTransaction = async (testnet: boolean,
  */
 export const prepareOneDeploy20SignedTransaction = async (testnet: boolean, body: OneDeploy20, provider?: string) => {
   await validateBody(body, OneDeploy20)
-  const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+  const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const contract = new client.eth.Contract(erc20TokenABI)
   const data = contract
@@ -421,7 +421,7 @@ export const prepareOneDeploy20SignedTransaction = async (testnet: boolean, body
  */
 export const prepareOneMint721SignedTransaction = async (testnet: boolean, body: OneMint721, provider?: string) => {
   await validateBody(body, OneMint721)
-  const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+  const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const data = new client.eth.Contract(erc721TokenABI, new HarmonyAddress(body.contractAddress).basicHex).methods
     .mintWithTokenURI(new HarmonyAddress(body.to).basicHex, body.tokenId, body.url)
@@ -452,7 +452,7 @@ export const prepareOneMint721SignedTransaction = async (testnet: boolean, body:
  */
 export const prepareOneMintCashback721SignedTransaction = async (testnet: boolean, body: OneMint721, provider?: string) => {
   await validateBody(body, OneMint721)
-  const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+  const client = await prepareOneClient(provider, body.fromPrivateKey)
   const cashbacks: string[] = body.cashbackValues!
   const cb = cashbacks.map((c) => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
   // @ts-ignore
@@ -491,7 +491,7 @@ export const prepareOneMintCashback721SignedTransaction = async (testnet: boolea
  */
 export const prepareOneMintMultipleCashback721SignedTransaction = async (testnet: boolean, body: OneMintMultiple721, provider?: string) => {
   await validateBody(body, OneMintMultiple721)
-  const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+  const client = await prepareOneClient(provider, body.fromPrivateKey)
   const cashbacks: string[][] = body.cashbackValues!
   const cb = cashbacks.map((cashback) => cashback.map((c) => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
   // @ts-ignore
@@ -527,7 +527,7 @@ export const prepareOneMintMultipleCashback721SignedTransaction = async (testnet
  */
 export const prepareOneMintMultiple721SignedTransaction = async (testnet: boolean, body: OneMintMultiple721, provider?: string) => {
   await validateBody(body, OneMintMultiple721)
-  const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+  const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const data = new client.eth.Contract(erc721TokenABI, new HarmonyAddress(body.contractAddress).basicHex).methods
     .mintMultiple(
@@ -559,7 +559,7 @@ export const prepareOneMintMultiple721SignedTransaction = async (testnet: boolea
  */
 export const prepareOneBurn721SignedTransaction = async (testnet: boolean, body: OneBurn721, provider?: string) => {
   await validateBody(body, OneBurn721)
-  const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+  const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const data = new client.eth.Contract(erc721TokenABI, new HarmonyAddress(body.contractAddress).basicHex).methods
     .burn(body.tokenId)
@@ -587,7 +587,7 @@ export const prepareOneBurn721SignedTransaction = async (testnet: boolean, body:
  */
 export const prepareOneTransfer721SignedTransaction = async (testnet: boolean, body: OneTransfer721, provider?: string) => {
   await validateBody(body, OneTransfer721)
-  const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+  const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const data = new client.eth.Contract(erc721TokenABI, new HarmonyAddress(body.contractAddress).basicHex).methods
     .safeTransfer(new HarmonyAddress(body.to).basicHex, body.tokenId)
@@ -619,7 +619,7 @@ export const prepareOneUpdateCashbackForAuthor721SignedTransaction = async (
   provider?: string
 ) => {
   await validateBody(body, OneUpdateCashback721)
-  const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+  const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const data = new client.eth.Contract(erc721TokenABI, new HarmonyAddress(body.contractAddress).basicHex).methods
     .updateCashbackForAuthor(body.tokenId, `0x${new BigNumber(toWei(body.cashbackValue, 'ether')).toString(16)}`)
@@ -647,7 +647,7 @@ export const prepareOneUpdateCashbackForAuthor721SignedTransaction = async (
  */
 export const prepareOneDeploy721SignedTransaction = async (testnet: boolean, body: OneDeploy721, provider?: string) => {
   await validateBody(body, OneDeploy721)
-  const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+  const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const data = new client.eth.Contract(erc721TokenABI)
     .deploy({
@@ -678,7 +678,7 @@ export const prepareOneDeploy721SignedTransaction = async (testnet: boolean, bod
  */
 export const prepareOneBurnMultiTokenSignedTransaction = async (testnet: boolean, body: OneBurnMultiToken, provider?: string) => {
   await validateBody(body, OneBurnMultiToken)
-  const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+  const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const data = new client.eth.Contract(erc1155TokenABI, new HarmonyAddress(body.contractAddress).basicHex).methods
     .burn(new HarmonyAddress(body.account).basicHex, body.tokenId, body.amount)
@@ -706,7 +706,7 @@ export const prepareOneBurnMultiTokenSignedTransaction = async (testnet: boolean
  */
 export const prepareOneBurnMultiTokenBatchSignedTransaction = async (testnet: boolean, body: OneBurnMultiTokenBatch, provider?: string) => {
   await validateBody(body, OneBurnMultiTokenBatch)
-  const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+  const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const data = new client.eth.Contract(erc1155TokenABI, new HarmonyAddress(body.contractAddress).basicHex).methods
     .burnBatch(new HarmonyAddress(body.account).basicHex, body.tokenId, body.amounts)
@@ -734,7 +734,7 @@ export const prepareOneBurnMultiTokenBatchSignedTransaction = async (testnet: bo
  */
 export const prepareOneTransferMultiTokenSignedTransaction = async (testnet: boolean, body: OneTransferMultiToken, provider?: string) => {
   await validateBody(body, OneTransferMultiToken)
-  const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+  const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const data = new client.eth.Contract(erc1155TokenABI, new HarmonyAddress(body.contractAddress).basicHex).methods
     .safeTransfer(
@@ -771,7 +771,7 @@ export const prepareOneBatchTransferMultiTokenSignedTransaction = async (
   provider?: string
 ) => {
   await validateBody(body, OneTransferMultiTokenBatch)
-  const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+  const client = await prepareOneClient(provider, body.fromPrivateKey)
   const amts = body.amounts.map((amt) => `0x${new BigNumber(amt).toString(16)}`)
   // @ts-ignore
   const data = new client.eth.Contract(erc1155TokenABI, new HarmonyAddress(body.contractAddress).basicHex).methods
@@ -805,7 +805,7 @@ export const prepareOneBatchTransferMultiTokenSignedTransaction = async (
  */
 export const prepareOneMintMultiTokenSignedTransaction = async (testnet: boolean, body: OneMintMultiToken, provider?: string) => {
   await validateBody(body, OneMintMultiToken)
-  const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+  const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const data = new client.eth.Contract(erc1155TokenABI, new HarmonyAddress(body.contractAddress).basicHex).methods
     .mint(new HarmonyAddress(body.to).basicHex, body.tokenId, `0x${new BigNumber(body.amount).toString(16)}`, body.data ? body.data : '0x0')
@@ -833,7 +833,7 @@ export const prepareOneMintMultiTokenSignedTransaction = async (testnet: boolean
  */
 export const prepareOneMintMultiTokenBatchSignedTransaction = async (testnet: boolean, body: OneMintMultiTokenBatch, provider?: string) => {
   await validateBody(body, OneMintMultiTokenBatch)
-  const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+  const client = await prepareOneClient(provider, body.fromPrivateKey)
   const batchAmounts = body.amounts.map((amts) => amts.map((amt) => `0x${new BigNumber(amt).toString(16)}`))
   // @ts-ignore
   const data = new client.eth.Contract(erc1155TokenABI, new HarmonyAddress(body.contractAddress).basicHex).methods
@@ -867,7 +867,7 @@ export const prepareOneMintMultiTokenBatchSignedTransaction = async (testnet: bo
  */
 export const prepareOneDeployMultiTokenSignedTransaction = async (testnet: boolean, body: OneDeployMultiToken, provider?: string) => {
   await validateBody(body, OneDeployMultiToken)
-  const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+  const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const data = new client.eth.Contract(erc1155TokenABI)
     .deploy({
@@ -903,7 +903,7 @@ export const prepareOneSmartContractWriteMethodInvocation = async (
 ) => {
   await validateBody(body, SmartContractMethodInvocation)
   const { fromPrivateKey, fee, params, methodName, methodABI, amount, contractAddress, nonce, signatureId } = body
-  const client = await prepareOneClient(testnet, provider, fromPrivateKey)
+  const client = await prepareOneClient(provider, fromPrivateKey)
 
   const data = new client.eth.Contract([methodABI]).methods[methodName as string](...params).encodeABI()
   return prepareGeneralTx(
@@ -935,7 +935,7 @@ export const sendOneSmartContractReadMethodInvocationTransaction = async (
 ) => {
   await validateBody(body, SmartContractReadMethodInvocation)
   const { params, methodName, methodABI, contractAddress } = body
-  const client = prepareOneClient(testnet, provider)
+  const client = prepareOneClient(provider)
   const contract = new client.eth.Contract([methodABI], contractAddress)
   return { data: await contract.methods[methodName as string](...params).call() }
 }
