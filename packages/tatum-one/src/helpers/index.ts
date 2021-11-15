@@ -1,9 +1,9 @@
-import { buildSmartContractMethodInvocation, Currency, listing } from '@tatumio/tatum-core'
+import { buildSmartContractMethodInvocation, listing } from '@tatumio/tatum-core'
 import { oneBroadcast } from 'src'
 import Web3 from 'web3'
 import { prepareOneClient, prepareOneSmartContractWriteMethodInvocation } from '../transaction'
 
-export const helperBroadcastTx = async (chain: Currency, txData: string, signatureId?: string) => {
+export const helperBroadcastTx = async (txData: string, signatureId?: string) => {
   return await oneBroadcast(txData, signatureId)
 }
 
