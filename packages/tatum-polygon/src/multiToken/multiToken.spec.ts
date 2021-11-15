@@ -106,7 +106,6 @@ describe('NFT tests', () => {
     })
     it('should test polygon 1155 burn batch transaction', async () => {
       const burnMultiTokenToken = await burnMultiTokenBatch(
-        true,
         {
           account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
           tokenId: ['12101', '12102'],
