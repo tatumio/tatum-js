@@ -757,12 +757,11 @@ export const preparePolygonBatchTransferMultiTokenSignedTransaction = async (
 
 /**
  * Sign Polygon mint multiple tokens transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const preparePolygonMintMultiTokenSignedTransaction = async (testnet: boolean, body: MintMultiToken, provider?: string) => {
+export const preparePolygonMintMultiTokenSignedTransaction = async (body: MintMultiToken, provider?: string) => {
   await validateBody(body, MintMultiToken)
   const client = await preparePolygonClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -1067,13 +1066,12 @@ export const sendPolygonBatchTransferMultiTokenSignedTransaction = async (
 /**
  * Send Polygon mint multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param testnet
  * @param body content of the transaction to broadcast
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendPolygonMintMultiTokenSignedTransaction = async (testnet: boolean, body: MintMultiToken, provider?: string) =>
-  polygonBroadcast(await preparePolygonMintMultiTokenSignedTransaction(testnet, body, provider), body.signatureId)
+export const sendPolygonMintMultiTokenSignedTransaction = async (body: MintMultiToken, provider?: string) =>
+  polygonBroadcast(await preparePolygonMintMultiTokenSignedTransaction(body, provider), body.signatureId)
 
 /**
  * Send Polygon mint multiple tokens batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.

@@ -29,7 +29,6 @@ describe('NFT tests', () => {
     it('should test polygon 1155 mint transaction', async () => {
       const tokenId = '2'
       const mintedToken = await mintMultiToken(
-        true,
         {
           to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
           chain: Currency.MATIC,
