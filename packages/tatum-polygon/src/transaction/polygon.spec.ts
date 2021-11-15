@@ -174,7 +174,6 @@ describe('MATIC transactions', () => {
   describe('MATIC 721 transactions', () => {
     it('should test 721 deploy transaction', async () => {
       const deployBep721Token = await preparePolygonDeployErc721SignedTransaction(
-        true,
         {
           symbol: '1oido3id3',
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',

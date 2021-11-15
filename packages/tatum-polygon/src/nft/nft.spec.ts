@@ -8,7 +8,6 @@ describe('NFT tests', () => {
   describe('NFT POLYGON transactions', () => {
     it('should test MATIC 721 deploy transaction', async () => {
       const deployErc721Token = await deployNFT(
-        true,
         {
           symbol: 'TatumToken',
           chain: Currency.MATIC,
