@@ -58,7 +58,6 @@ describe('MATIC transactions', () => {
 
     it('should test read smart contract method invocation', async () => {
       const result = await sendPolygonSmartContractReadMethodInvocationTransaction(
-        true,
         {
           contractAddress: '0x0b9808fce74030c87aae334a30f6c8f6c66b090d',
           methodName: 'balanceOf',

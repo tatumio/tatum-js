@@ -65,7 +65,7 @@ describe('Marketplace Listing tests', () => {
       r.methodName = 'getListing'
       r.methodABI = listing.abi.find((a) => a.name === r.methodName)
       r.params = ['8']
-      console.log(await sendPolygonSmartContractMethodInvocationTransaction(true, r, 'https://rpc-mumbai.matic.today'))
+      console.log(await sendPolygonSmartContractMethodInvocationTransaction(r, 'https://rpc-mumbai.matic.today'))
     })
 
     it('should get marketplace fee', async () => {
@@ -74,7 +74,7 @@ describe('Marketplace Listing tests', () => {
       r.methodName = 'getMarketplaceFee'
       r.methodABI = listing.abi.find((a) => a.name === r.methodName)
       r.params = []
-      console.log(await sendPolygonSmartContractReadMethodInvocationTransaction(true, r, 'https://rpc-mumbai.matic.today'))
+      console.log(await sendPolygonSmartContractReadMethodInvocationTransaction(r, 'https://rpc-mumbai.matic.today'))
     })
 
     it('should buy listing native', async () => {

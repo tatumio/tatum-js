@@ -869,7 +869,6 @@ export const preparePolygonSmartContractWriteMethodInvocation = async (
 }
 
 export const sendPolygonSmartContractReadMethodInvocationTransaction = async (
-  testnet: boolean,
   body: SmartContractReadMethodInvocation,
   provider?: string
 ) => {
@@ -1105,18 +1104,16 @@ export const sendPolygonGenerateCustodialWalletSignedTransaction = async (
 /**
  * Send Polygon smart contract method invocation transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param testnet
  * @param body content of the transaction to broadcast
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendPolygonSmartContractMethodInvocationTransaction = async (
-  testnet: boolean,
   body: SmartContractMethodInvocation | SmartContractReadMethodInvocation,
   provider?: string
 ) => {
   if (body.methodABI.stateMutability === 'view') {
-    return sendPolygonSmartContractReadMethodInvocationTransaction(testnet, body as SmartContractReadMethodInvocation, provider)
+    return sendPolygonSmartContractReadMethodInvocationTransaction(body as SmartContractReadMethodInvocation, provider)
   }
   return polygonBroadcast(
     await preparePolygonSmartContractWriteMethodInvocation(body, provider),
