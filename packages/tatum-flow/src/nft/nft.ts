@@ -71,9 +71,8 @@ export const burnNFT = async (testnet: boolean, body: FlowBurnNft) => {
  * Transfer new NFT token to new recipient.
  * @param testnet if we use testnet or not
  * @param body body of the mint request
- * @param provider optional provider do broadcast tx
  */
-export const transferNFT = async (testnet: boolean, body: FlowTransferNft, provider?: string) => {
+export const transferNFT = async (testnet: boolean, body: FlowTransferNft) => {
     return sendFlowNftTransferToken(testnet, body as FlowTransferNft);
 };
 
