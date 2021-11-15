@@ -3,13 +3,12 @@ import { sendPolygonStoreDataTransaction, sendPolygonTransaction } from './polyg
 
 /**
  * Store any arbitrary data on the blockchain.
- * @param testnet if we are on testnet or not
  * @param body Body of the transaction.
  * @param provider Optional provider to use for broadcasting signed tx to the blockchain.
  */
-export const storeData = async (testnet: boolean, body: CreateRecord, provider?: string) => {
+export const storeData = async (body: CreateRecord, provider?: string) => {
   await validateBody(body, CreateRecord)
-  return await sendPolygonStoreDataTransaction(testnet, body, provider)
+  return await sendPolygonStoreDataTransaction(body, provider)
 }
 
 /**
