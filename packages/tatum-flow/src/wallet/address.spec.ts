@@ -1,4 +1,3 @@
-import {Currency} from '@tatumio/tatum-core'
 import {generateAddressFromXPub, generatePrivateKeyFromMnemonic} from './address'
 
 describe('Address tests', () => {
@@ -9,7 +8,7 @@ describe('Address tests', () => {
     })
 
     it('should generate private key 1 for FLOW mainnet', async () => {
-        const privateKey = await generatePrivateKeyFromMnemonic(Currency.FLOW, false, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1)
+        const privateKey = await generatePrivateKeyFromMnemonic('quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1)
         expect(privateKey).toBe('37afa218d41d9cd6a2c6f2b96d9eaa3ad96c598252bc50e4d45d62f9356a51f8')
     })
 
