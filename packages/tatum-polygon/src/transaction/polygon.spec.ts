@@ -243,7 +243,6 @@ describe('MATIC transactions', () => {
 
     it('should test 721 send transaction', async () => {
       const sendBep721Token = await preparePolygonTransferErc721SignedTransaction(
-        true,
         {
           to: '0x811dfbff13adfbc3cf653dcc373c03616d3471c9',
           tokenId: '1626437745973',

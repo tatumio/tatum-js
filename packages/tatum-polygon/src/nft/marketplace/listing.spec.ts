@@ -49,7 +49,7 @@ describe('Marketplace Listing tests', () => {
 
       await new Promise((r) => setTimeout(r, 5000))
       console.log(
-        await transferNFT(true, {
+        await transferNFT({
           to: '0xc4585ec777ba6dc5d33524ca72c425d512780c31',
           chain: Currency.MATIC,
           tokenId: '121',

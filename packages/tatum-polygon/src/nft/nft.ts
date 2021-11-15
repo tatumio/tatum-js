@@ -101,12 +101,11 @@ export const updateCashbackForAuthorNFT = async (testnet: boolean, body: UpdateC
 
 /**
  * Transfer new NFT token to new recipient.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const transferNFT = async (testnet: boolean, body: TransferErc721, provider?: string) => {
-  return sendPolygonTransferErc721SignedTransaction(testnet, body, provider)
+export const transferNFT = async (body: TransferErc721, provider?: string) => {
+  return sendPolygonTransferErc721SignedTransaction(body, provider)
 }
 
 export { getNFTsByAddress, getNFTContractAddress, getNFTMetadataURI, getNFTImage, getNFTRoyalty } from '@tatumio/tatum-core'
