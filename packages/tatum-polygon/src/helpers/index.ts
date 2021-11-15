@@ -1,10 +1,10 @@
-import { buildSmartContractMethodInvocation, Currency, listing } from '@tatumio/tatum-core'
+import { buildSmartContractMethodInvocation, listing } from '@tatumio/tatum-core'
 import { ClassType } from 'class-transformer/ClassTransformer'
 import { preparePolygonClient, preparePolygonSmartContractWriteMethodInvocation } from 'src'
 import { polygonBroadcast } from '../blockchain/polygon'
 import Web3 from 'web3'
 
-export const helperBroadcastTx = async (chain: Currency, txData: string, signatureId?: string) => {
+export const helperBroadcastTx = async (txData: string, signatureId?: string) => {
   return await polygonBroadcast(txData, signatureId)
 }
 

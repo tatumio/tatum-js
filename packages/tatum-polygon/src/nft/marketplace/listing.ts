@@ -133,7 +133,7 @@ export const prepareMarketplaceCancelListing = async (testnet: boolean, body: In
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendMarketplaceUpdateFee = async (testnet: boolean, body: UpdateMarketplaceFee, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareMarketplaceUpdateFee(testnet, body, provider), body.signatureId)
+  helperBroadcastTx(await prepareMarketplaceUpdateFee(testnet, body, provider), body.signatureId)
 /**
  * Update marketplace fee recipient.
  * @param testnet chain to work with
@@ -142,7 +142,7 @@ export const sendMarketplaceUpdateFee = async (testnet: boolean, body: UpdateMar
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendMarketplaceUpdateFeeRecipient = async (testnet: boolean, body: UpdateMarketplaceFeeRecipient, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareMarketplaceUpdateFeeRecipient(testnet, body, provider), body.signatureId)
+  helperBroadcastTx(await prepareMarketplaceUpdateFeeRecipient(testnet, body, provider), body.signatureId)
 /**
  * Approve ERC20 spending for marketplace to perform buy with ERC20 token.
  * @param testnet chain to work with
@@ -151,7 +151,7 @@ export const sendMarketplaceUpdateFeeRecipient = async (testnet: boolean, body: 
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendMarketplaceApproveErc20Spending = async (testnet: boolean, body: ApproveErc20, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareMarketplaceApproveErc20Spending(testnet, body, provider), body.signatureId)
+  helperBroadcastTx(await prepareMarketplaceApproveErc20Spending(testnet, body, provider), body.signatureId)
 
 /**
  * Approve ERC20 spending for marketplace to perform buy with ERC20 token.
@@ -174,7 +174,7 @@ export const prepareMarketplaceApproveErc20Spending = async (testnet: boolean, b
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendMarketplaceCreateListing = async (testnet: boolean, body: CreateMarketplaceListing, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareMarketplaceCreateListing(testnet, body, provider), body.signatureId)
+  helperBroadcastTx(await prepareMarketplaceCreateListing(testnet, body, provider), body.signatureId)
 /**
  * Buy listing on the marketplace. Buyer must either send native assets with this operation, or approve ERC20 token spending before.
  * After listing is sold, it's in a pending state to be processed by the marketplace. Noone receives the assets unless the marketplace operator processes that.
@@ -184,7 +184,7 @@ export const sendMarketplaceCreateListing = async (testnet: boolean, body: Creat
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendMarketplaceBuyListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareMarketplaceBuyListing(testnet, body, provider), body.signatureId)
+  helperBroadcastTx(await prepareMarketplaceBuyListing(testnet, body, provider), body.signatureId)
 /**
  * Cancel listing on the marketplace. Only possible for the seller or the operator. There must be no buyer present for that listing. NFT asset is sent back to the seller.
  * @param testnet chain to work with
@@ -193,6 +193,6 @@ export const sendMarketplaceBuyListing = async (testnet: boolean, body: InvokeMa
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendMarketplaceCancelListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareMarketplaceCancelListing(testnet, body, provider), body.signatureId)
+  helperBroadcastTx(await prepareMarketplaceCancelListing(testnet, body, provider), body.signatureId)
 
 export { getMarketplaceFee, getMarketplaceListing, getMarketplaceFeeRecipient } from '@tatumio/tatum-core'

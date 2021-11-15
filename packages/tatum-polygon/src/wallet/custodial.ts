@@ -54,7 +54,7 @@ export const prepareCustodialWallet = async (testnet: boolean, body: GenerateCus
  */
 export const sendCustodialWallet = async (testnet: boolean, body: GenerateCustodialAddress, provider?: string) => {
   const txData = await preparePolygonGenerateCustodialWalletSignedTransaction(testnet, body, provider)
-  return helperBroadcastTx(body.chain, txData, body.signatureId)
+  return helperBroadcastTx(txData, body.signatureId)
 }
 
 /**
@@ -85,7 +85,7 @@ export const prepareTransferFromCustodialWallet = async (testnet: boolean, body:
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendTransferFromCustodialWallet = async (testnet: boolean, body: TransferFromCustodialAddress, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareTransferFromCustodialWallet(testnet, body, provider), body.signatureId)
+  helperBroadcastTx(await prepareTransferFromCustodialWallet(testnet, body, provider), body.signatureId)
 
 /**
  * Prepare signed batch transaction from the custodial SC wallet.
@@ -119,7 +119,7 @@ export const prepareBatchTransferFromCustodialWallet = async (
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendBatchTransferFromCustodialWallet = async (testnet: boolean, body: TransferFromCustodialAddressBatch, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareBatchTransferFromCustodialWallet(testnet, body, provider), body.signatureId)
+  helperBroadcastTx(await prepareBatchTransferFromCustodialWallet(testnet, body, provider), body.signatureId)
 
 /**
  * Prepare signed approve transaction from the custodial SC wallet.
@@ -163,4 +163,4 @@ export const prepareApproveFromCustodialWallet = async (testnet: boolean, body: 
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendApproveFromCustodialWallet = async (testnet: boolean, body: ApproveCustodialTransfer, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareApproveFromCustodialWallet(testnet, body, provider), body.signatureId)
+  helperBroadcastTx(await prepareApproveFromCustodialWallet(testnet, body, provider), body.signatureId)
