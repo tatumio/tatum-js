@@ -44,10 +44,9 @@ export const createNFT = async (body: FlowMintNft,
  * Mint new NFT token.
  * @param testnet if we use testnet or not
  * @param body body of the mint request
- * @param provider optional provider do broadcast tx
  */
-export const mintNFTWithUri = async (testnet: boolean, body: FlowMintNft, provider?: string): Promise<TransactionHash> => {
-    return sendFlowNftMintToken(testnet, body as FlowMintNft);
+export const mintNFTWithUri = async (testnet: boolean, body: FlowMintNft): Promise<TransactionHash> => {
+    return sendFlowNftMintToken(testnet, body);
 };
 
 /**
