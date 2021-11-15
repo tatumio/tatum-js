@@ -53,9 +53,8 @@ export const mintNFTWithUri = async (testnet: boolean, body: FlowMintNft): Promi
  * Mint multiple new NFT tokens.
  * @param testnet if we use testnet or not
  * @param body body of the mint request
- * @param provider optional provider do broadcast tx
  */
-export const mintMultipleNFTWithUri = async (testnet: boolean, body: FlowMintMultipleNft, provider?: string) => {
+export const mintMultipleNFTWithUri = async (testnet: boolean, body: FlowMintMultipleNft) => {
     return sendFlowNftMintMultipleToken(testnet, body as FlowMintMultipleNft);
 };
 
