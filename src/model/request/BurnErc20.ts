@@ -23,8 +23,7 @@ export class BurnErc20 extends PrivateKeyOrSignatureId {
     @ValidateNested()
     public fee?: Fee;
 
-    @ValidateIf(o => o.chain === Currency.ALGO && o.signatureId)
-    @IsNotEmpty()
+    @IsOptional()
     @Length(42, 58)
     public from?: string;
 }
