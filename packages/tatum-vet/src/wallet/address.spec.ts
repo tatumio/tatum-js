@@ -4,8 +4,6 @@ import { generateAddressFromXPub, generatePrivateKeyFromMnemonic } from 'src'
 describe('Address tests', () => {
   it('should generate address 1 for VET mainnet', () => {
     const address = generateAddressFromXPub(
-      Currency.VET,
-      false,
       'xpub6EzJLu3Hi5hEFAkiZAxCTaXqXoS95seTnG1tdYdF8fBcVZCfR8GQP8UGvfF52szpwZqiiGHJw5694emxSpYBE5qDxAZUgiHLzbVhb5ErRMa',
       1
     )
@@ -14,8 +12,6 @@ describe('Address tests', () => {
 
   it('should generate address 1 for VET testnet', () => {
     const address = generateAddressFromXPub(
-      Currency.VET,
-      true,
       'xpub6FMiQpA54nciqs52guGVdWQ5TonZt5XtGsFpurgtttL7H3mSfaJDXv5aBdThjX6tW9HYaJSQ8wZVnLm1ixaQUu1MRQCwvwZ6U2cX6mwWT25',
       1
     )
