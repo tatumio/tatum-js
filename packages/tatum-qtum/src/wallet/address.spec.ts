@@ -12,7 +12,7 @@ describe('Address tests', () => {
         expect(address).toBe('qWpEineYmtc2Ea25GqDYhvuzCjTiu5hMYA')
     })
     it('should generate address from XPub for QTUM testnet', async () => {
-        const address = await generateAddressFromXPub(Currency.QTUM, true, 'tpubDEPswwDHtxcS3q3K81iRgcxRKinjdEBM6dKer3HjeVPRgL44fFpJpttdDxQLLAxLoZLu69c6bMeyGqCPihUdCZedYu9vqah2gbP1wkLUvzB', 1)
+        const address = await generateAddressFromXPub(true, 'tpubDEPswwDHtxcS3q3K81iRgcxRKinjdEBM6dKer3HjeVPRgL44fFpJpttdDxQLLAxLoZLu69c6bMeyGqCPihUdCZedYu9vqah2gbP1wkLUvzB', 1)
         console.log(address)
         expect(address).toBe('qZ4oBnNAyQBEsy5G7VRUCJXZsiQKkTU3KL')
     })
