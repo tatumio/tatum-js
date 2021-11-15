@@ -31,7 +31,7 @@ export const sendPolygonOffchainTransaction = async (testnet: boolean, body: Tra
 
   const fromPriv =
     mnemonic && index !== undefined
-      ? await generatePrivateKeyFromMnemonic(Currency.MATIC, testnet, mnemonic, index)
+      ? await generatePrivateKeyFromMnemonic(testnet, mnemonic, index)
       : (privateKey as string)
 
   const account = await getAccountById(withdrawal.senderAccountId)
