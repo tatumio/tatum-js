@@ -1,4 +1,4 @@
-import { IsIn, IsNotEmpty, IsNumberString, IsOptional, Length, MaxLength, Min } from 'class-validator'
+import { IsIn, IsNotEmpty, IsNumberString, IsOptional, Length, MaxLength, Min, ValidateIf } from 'class-validator'
 import { Currency } from './Currency'
 import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 
@@ -26,4 +26,9 @@ export class BaseTransferErc721 extends PrivateKeyOrSignatureId {
   @IsOptional()
   @IsNumberString()
   public value?: string
+
+  @ValidateIf(o => o.chain === Currency.ALGO && o.signatureId)
+  @IsNotEmpty()
+  @Length(42, 58)
+  public from?: string;
 }

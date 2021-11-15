@@ -44,4 +44,8 @@ export class DeployErc20 extends PrivateKeyOrSignatureId {
 
   @IsOptional()
   public url?: string;
+
+  @IsOptional()
+  @Length(42, 58)
+  public from?: string;
 }
