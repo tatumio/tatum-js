@@ -69,11 +69,10 @@ export const mintXdcNFTWithUri = async (body: MintErc721, provider?: string): Pr
 
 /**
  * Mint multiple new NFT tokens.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const mintMultipleNFTWithUri = async (testnet: boolean, body: MintMultipleErc721, provider?: string) => {
+export const mintMultipleNFTWithUri = async (body: MintMultipleErc721, provider?: string) => {
   if ((body as MintMultipleErc721).authorAddresses) {
     return sendXdcMintMultipleCashbackErc721Transaction(body as MintMultipleErc721, provider)
   } else {
