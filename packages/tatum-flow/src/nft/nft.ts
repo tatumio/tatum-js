@@ -62,9 +62,8 @@ export const mintMultipleNFTWithUri = async (testnet: boolean, body: FlowMintMul
  * Burn new NFT token. Token will no longer exists.
  * @param testnet if we use testnet or not
  * @param body body of the mint request
- * @param provider optional provider do broadcast tx
  */
-export const burnNFT = async (testnet: boolean, body: FlowBurnNft, provider?: string) => {
+export const burnNFT = async (testnet: boolean, body: FlowBurnNft) => {
     return sendFlowNftBurnToken(testnet, body as FlowBurnNft);
 };
 
