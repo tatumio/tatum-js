@@ -213,7 +213,6 @@ describe('MATIC transactions', () => {
       const firstTokenId = new Date().getTime()
       const secondTokenId = firstTokenId + 1
       const mintedTokens = await preparePolygonMintMultipleErc721SignedTransaction(
-        true,
         {
           to: ['0x811dfbff13adfbc3cf653dcc373c03616d3471c9', '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'],
           tokenId: [firstTokenId.toString(), secondTokenId.toString()],

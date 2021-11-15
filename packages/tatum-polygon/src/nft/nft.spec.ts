@@ -25,7 +25,6 @@ describe('NFT tests', () => {
       const firstTokenId = new Date().getTime()
       const secondTokenId = firstTokenId + 1
       const mintedTokens = await mintMultipleNFTWithUri(
-        true,
         {
           to: ['0x811dfbff13adfbc3cf653dcc373c03616d3471c9', '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'],
           chain: Currency.MATIC,
