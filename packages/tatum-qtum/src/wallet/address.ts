@@ -6,7 +6,7 @@ import {
     QTUM_NETWORK_MAINNET,
     QTUM_NETWORK_TESTNET,
 } from '../constants';
-import {Currency, TESTNET_DERIVATION_PATH} from '@tatumio/tatum-core';
+import {TESTNET_DERIVATION_PATH} from '@tatumio/tatum-core';
 
 /**
  * Generate QTUM address
