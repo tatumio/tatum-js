@@ -4,7 +4,7 @@ import {generateAddressFromPrivatekey, generateAddressFromXPub, generatePrivateK
 describe('Address tests', () => {
 
     it('should generate private key for QTUM testnet', async () => {
-        const privateKey = await generatePrivateKeyFromMnemonic(Currency.QTUM, true, 'unable stone luggage syrup soul country hammer fee private coyote phrase brisk', 1)
+        const privateKey = await generatePrivateKeyFromMnemonic(true, 'unable stone luggage syrup soul country hammer fee private coyote phrase brisk', 1)
         expect(privateKey).toBe('cPtkzH8zCxWgyaqMiLJ7sJmZBgmLUb2kBMBrWzhKP9BVUHJfbg5w')
     })
     it('should generate address from private key for QTUM testnet', async () => {
