@@ -91,12 +91,11 @@ export const burnNFT = async (body: BurnErc721, provider?: string) => {
 
 /**
  * Update royalty cashback as author of the NFT token.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const updateCashbackForAuthorNFT = async (testnet: boolean, body: UpdateCashbackErc721, provider?: string) => {
-  return sendPolygonUpdateCashbackForAuthorErc721SignedTransaction(testnet, body, provider)
+export const updateCashbackForAuthorNFT = async (body: UpdateCashbackErc721, provider?: string) => {
+  return sendPolygonUpdateCashbackForAuthorErc721SignedTransaction(body, provider)
 }
 
 /**

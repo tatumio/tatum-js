@@ -523,13 +523,11 @@ export const preparePolygonTransferErc721SignedTransaction = async (body: Transf
 
 /**
  * Sign Polygon update cashback for author erc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
 export const preparePolygonUpdateCashbackForAuthorErc721SignedTransaction = async (
-  testnet: boolean,
   body: UpdateCashbackErc721,
   provider?: string
 ) => {
@@ -1015,16 +1013,14 @@ export const sendPolygonTransferErc721SignedTransaction = async (body: TransferE
 /**
  * Send Polygon update cashback for author erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param testnet
  * @param body content of the transaction to broadcast
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendPolygonUpdateCashbackForAuthorErc721SignedTransaction = async (
-  testnet: boolean,
   body: UpdateCashbackErc721,
   provider?: string
-) => polygonBroadcast(await preparePolygonUpdateCashbackForAuthorErc721SignedTransaction(testnet, body, provider), body.signatureId)
+) => polygonBroadcast(await preparePolygonUpdateCashbackForAuthorErc721SignedTransaction(body, provider), body.signatureId)
 
 /**
  * Send Polygon deploy erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
