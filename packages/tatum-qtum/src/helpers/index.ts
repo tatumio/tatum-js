@@ -1,6 +1,5 @@
 import {qtumBroadcast} from '../blockchain';
-import {Currency} from '@tatumio/tatum-core'
 
-export const helperBroadcastTx = async (chain: Currency, txData: string, signatureId?: string) => {
+export const helperBroadcastTx = async (txData: string) => {
     return await qtumBroadcast(txData)
 };
