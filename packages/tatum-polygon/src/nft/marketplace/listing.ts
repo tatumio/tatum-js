@@ -27,13 +27,12 @@ import { helperBroadcastTx, helperPrepareSCCall } from '../../helpers'
  * Buyer of the listing must perform approval for the smart contract to access ERC20 token, before the actual buyAssetFromListing() method is called.
  * Once both assets - from buyer and seller - are in the smart contract, NFT is sent to the buyer, price is sent to the seller
  * and marketplace fee is set to the operator.
- * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const deployMarketplaceListing = async (testnet: boolean, body: DeployMarketplaceListing, provider?: string) => {
-  return await sendPolygonDeployMarketplaceListingSignedTransaction(testnet, body, provider)
+export const deployMarketplaceListing = async (body: DeployMarketplaceListing, provider?: string) => {
+  return await sendPolygonDeployMarketplaceListingSignedTransaction(body, provider)
 }
 
 /**
@@ -45,13 +44,12 @@ export const deployMarketplaceListing = async (testnet: boolean, body: DeployMar
  * Buyer of the listing must perform approval for the smart contract to access ERC20 token, before the actual buyAssetFromListing() method is called.
  * Once both assets - from buyer and seller - are in the smart contract, NFT is sent to the buyer, price is sent to the seller
  * and marketplace fee is set to the operator.
- * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareDeployMarketplaceListing = async (testnet: boolean, body: DeployMarketplaceListing, provider?: string) => {
-  return await preparePolygonDeployMarketplaceListingSignedTransaction(testnet, body, provider)
+export const prepareDeployMarketplaceListing = async (body: DeployMarketplaceListing, provider?: string) => {
+  return await preparePolygonDeployMarketplaceListingSignedTransaction(body, provider)
 }
 
 /**

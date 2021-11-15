@@ -29,7 +29,7 @@ describe('Marketplace Listing tests', () => {
       body.feeRecipient = '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'
       body.marketplaceFee = 150
       body.chain = Currency.MATIC
-      const test = await deployMarketplaceListing(true, body, 'https://rpc-mumbai.matic.today')
+      const test = await deployMarketplaceListing(body, 'https://rpc-mumbai.matic.today')
       console.log(test)
       expect(test).toBeDefined()
     })

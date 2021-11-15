@@ -581,13 +581,11 @@ export const preparePolygonDeployErc721SignedTransaction = async (body: DeployEr
 
 /**
  * Sign Polygon generate custodial wallet address transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet
  * @param body content of the transaction to broadcast
  * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
  */
 export const preparePolygonDeployMarketplaceListingSignedTransaction = async (
-  testnet: boolean,
   body: DeployMarketplaceListing,
   provider?: string
 ) => {
@@ -1146,13 +1144,11 @@ export const sendPolygonSmartContractMethodInvocationTransaction = async (
 }
 /**
  * Deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
- * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendPolygonDeployMarketplaceListingSignedTransaction = async (
-  testnet: boolean,
   body: DeployMarketplaceListing,
   provider?: string
-) => polygonBroadcast(await preparePolygonDeployMarketplaceListingSignedTransaction(testnet, body, provider), body.signatureId)
+) => polygonBroadcast(await preparePolygonDeployMarketplaceListingSignedTransaction(body, provider), body.signatureId)
