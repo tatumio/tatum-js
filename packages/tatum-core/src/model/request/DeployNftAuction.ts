@@ -7,7 +7,7 @@ import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 
 export class DeployNftAuction extends PrivateKeyOrSignatureId {
   @IsNotEmpty()
-  @IsIn([Currency.ETH, Currency.MATIC, Currency.BSC, Currency.ONE, Currency.CELO])
+  @IsIn([Currency.ETH, Currency.MATIC, Currency.BSC, Currency.ONE, Currency.CELO, Currency.KCS])
   public chain: Currency
 
   @IsNotEmpty()

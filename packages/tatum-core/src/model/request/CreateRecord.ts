@@ -33,6 +33,7 @@ export class CreateRecord {
     Currency.XDC,
     Currency.ONE,
     Currency.EGLD,
+    Currency.KCS
   ])
   public chain: string
 

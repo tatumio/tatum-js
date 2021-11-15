@@ -7,7 +7,7 @@ export class BaseDeployMultiToken extends PrivateKeyOrSignatureId {
   public uri: string
 
   @IsNotEmpty()
-  @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC])
+  @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC, Currency.KCS])
   public chain: Currency
 
   @Min(0)

@@ -32,7 +32,7 @@ export class TransferErc20 extends PrivateKeyOrSignatureId {
 
   @ValidateIf((o) => !o.contractAddress)
   @IsNotEmpty()
-  @IsIn([...ETH_BASED_CURRENCIES, ...MATIC_BASED_CURRENCIES, Currency.XDC, Currency.ONE, Currency.ALGO])
+  @IsIn([...ETH_BASED_CURRENCIES, ...MATIC_BASED_CURRENCIES, Currency.XDC, Currency.ONE, Currency.ALGO, Currency.KCS])
   public currency?: Currency
 
   @ValidateIf((o) => !o.currency)
