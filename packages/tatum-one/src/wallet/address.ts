@@ -34,11 +34,10 @@ const generateOnePrivateKey = async (testnet: boolean, mnemonic: string, i: numb
 
 /**
  * Convert Harmony Private Key to Address
- * @param testnet testnet or mainnet version of address
  * @param privKey private key to use
  * @returns blockchain address
  */
-const convertOnePrivateKey = (testnet: boolean, privKey: string) => {
+const convertOnePrivateKey = (privKey: string) => {
   const wallet = ethWallet.fromPrivateKey(Buffer.from(privKey.replace('0x', ''), 'hex'))
   return wallet.getAddressString() as string
 }
@@ -67,11 +66,9 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
 
 /**
  * Generate address from private key
- * @param currency type of blockchain
- * @param testnet testnet or mainnet version of address
  * @param privateKey private key to use
  * @returns blockchain private key to the address
  */
-export const generateAddressFromPrivatekey = (currency: Currency, testnet: boolean, privateKey: string) => {
-  return convertOnePrivateKey(testnet, privateKey)
+export const generateAddressFromPrivatekey = (privateKey: string) => {
+  return convertOnePrivateKey(privateKey)
 }

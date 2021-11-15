@@ -40,8 +40,6 @@ describe('Address tests', () => {
 
   it('should generate an address from a mainnet ONE private key', async () => {
     const address = await generateAddressFromPrivatekey(
-      Currency.ONE,
-      false,
       '0xac12f9a2d0d1f06c7dc33a3e9c18f60fe1ca65c592d1e9345c994740f9e1971e'
     )
     expect(address).toBe('0xefc395c295a90023d3e9afacb4399da3d332947b')
@@ -49,8 +47,6 @@ describe('Address tests', () => {
 
   it('should generate an address from a testnet ONE private key', async () => {
     const address = await generateAddressFromPrivatekey(
-      Currency.ONE,
-      true,
       '0x4cda6d2c33b0f9a041e46474a638ac59aee0734cf208aa9aa2f05ef887bd09e1'
     )
     expect(address).toBe('0x8acbcfbc8ce37f6f674f4b9861d3efe89288d89f')
