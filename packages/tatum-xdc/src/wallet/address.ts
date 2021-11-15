@@ -32,11 +32,10 @@ const generateXdcAddress = (xpub: string, i: number) => {
 
 /**
  * Convert XDCress
- * @param testnet testnet or mainnet version of address
  * @param privkey private key to use
  * @returns blockchain address
  */
-const convertXdcPrivateKey = (testnet: boolean, privkey: string) => {
+const convertXdcPrivateKey = (privkey: string) => {
   const wallet = ethWallet.fromPrivateKey(Buffer.from(privkey.replace('0x', ''), 'hex'))
   return wallet.getAddressString() as string
 }
@@ -65,11 +64,9 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
 
 /**
  * Generate address from private key
- * @param currency type of blockchain
- * @param testnet testnet or mainnet version of address
  * @param privateKey private key to use
  * @returns blockchain private key to the address
  */
-export const generateAddressFromPrivatekey = (currency: Currency, testnet: boolean, privateKey: string) => {
-  return convertXdcPrivateKey(testnet, privateKey)
+export const generateAddressFromPrivatekey = (privateKey: string) => {
+  return convertXdcPrivateKey(privateKey)
 }
