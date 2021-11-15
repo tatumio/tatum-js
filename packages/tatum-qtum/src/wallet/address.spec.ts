@@ -8,7 +8,7 @@ describe('Address tests', () => {
         expect(privateKey).toBe('cPtkzH8zCxWgyaqMiLJ7sJmZBgmLUb2kBMBrWzhKP9BVUHJfbg5w')
     })
     it('should generate address from private key for QTUM testnet', async () => {
-        const address = await generateAddressFromPrivatekey(Currency.QTUM, true, 'cNR1n1EuzzaWHD7xcmAo71mwxyVV3uJUbLoamQFiXzaJhjTfCF2P')
+        const address = await generateAddressFromPrivatekey(true, 'cNR1n1EuzzaWHD7xcmAo71mwxyVV3uJUbLoamQFiXzaJhjTfCF2P')
         expect(address).toBe('qWpEineYmtc2Ea25GqDYhvuzCjTiu5hMYA')
     })
     it('should generate address from XPub for QTUM testnet', async () => {
