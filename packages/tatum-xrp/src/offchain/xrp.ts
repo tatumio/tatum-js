@@ -8,11 +8,10 @@ import { RippleAPI } from 'ripple-lib'
 /**
  * Send Xrp transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
-export const sendXrpOffchainTransaction = async (testnet: boolean, body: TransferXrpOffchain) => {
+export const sendXrpOffchainTransaction = async (body: TransferXrpOffchain) => {
   await validateBody(body, TransferXrpOffchain)
   const { account, secret, ...withdrawal } = body
   if (!withdrawal.fee) {
@@ -24,7 +23,7 @@ export const sendXrpOffchainTransaction = async (testnet: boolean, body: Transfe
 
   let txData
   try {
-    txData = await prepareXrpSignedOffchainTransaction(testnet, amount, address, secret, acc, fee, withdrawal.sourceTag, withdrawal.attr)
+    txData = await prepareXrpSignedOffchainTransaction(amount, address, secret, acc, fee, withdrawal.sourceTag, withdrawal.attr)
   } catch (e) {
     console.error(e)
     await offchainCancelWithdrawal(id)
@@ -60,7 +59,6 @@ export const signXrpOffchainKMSTransaction = async (tx: TransactionKMS, secret: 
 
 /**
  * Sign Xrp transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param amount amount to send
  * @param address recipient address
  * @param secret secret to sign transaction with
@@ -71,7 +69,6 @@ export const signXrpOffchainKMSTransaction = async (tx: TransactionKMS, secret: 
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareXrpSignedOffchainTransaction = async (
-  testnet: boolean,
   amount: string,
   address: string,
   secret: string,
