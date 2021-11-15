@@ -1,5 +1,5 @@
 import { HarmonyAddress } from '@harmony-js/crypto'
-import { Currency, TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
+import { TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
 import { mnemonicToSeed } from 'bip39'
 import ethWallet, { hdkey as ethHdKey } from 'ethereumjs-wallet'
 // @ts-ignore

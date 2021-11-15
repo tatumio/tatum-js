@@ -1,4 +1,4 @@
-import { ApproveErc20, Currency, prepareApproveErc20Abstraction } from '@tatumio/tatum-core'
+import { ApproveErc20, prepareApproveErc20Abstraction } from '@tatumio/tatum-core'
 import { getOne20ContractDecimals } from 'src'
 import token_abi from '@tatumio/tatum-core/src/contracts/erc20/token_abi'
 import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../helpers'

@@ -1,9 +1,7 @@
 import {
   BurnMultiToken,
   BurnMultiTokenBatch,
-  Currency,
   DeployMultiToken,
-  get,
   MintMultiToken,
   MintMultiTokenBatch,
   TransferMultiToken,
