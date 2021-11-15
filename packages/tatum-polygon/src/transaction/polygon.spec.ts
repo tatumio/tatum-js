@@ -229,7 +229,6 @@ describe('MATIC transactions', () => {
 
     it('should test 721 burn transaction', async () => {
       const burnBep721Token = await preparePolygonBurnErc721SignedTransaction(
-        true,
         {
           tokenId: '1626437687633',
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
