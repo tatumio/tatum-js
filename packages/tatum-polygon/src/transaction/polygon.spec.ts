@@ -136,7 +136,7 @@ describe('MATIC transactions', () => {
       body.contractAddress = '0x0b9808fce74030c87aae334a30f6c8f6c66b090d'
       body.to = '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       body.digits = 10
-      const txData = await preparePolygonTransferErc20SignedTransaction(true, body, 'https://matic-mumbai.chainstacklabs.com/')
+      const txData = await preparePolygonTransferErc20SignedTransaction(body, 'https://matic-mumbai.chainstacklabs.com/')
       expect(txData).toContain('0x')
 
       console.log(await broadcast(txData))

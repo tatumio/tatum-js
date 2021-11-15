@@ -56,7 +56,6 @@ export const sendPolygonOffchainTransaction = async (testnet: boolean, body: Tra
     fee.gasLimit = '100000'
     const vc = await getVirtualCurrencyByName(account.currency)
     txData = await preparePolygonTransferErc20SignedTransaction(
-      testnet,
       {
         amount,
         fee,
