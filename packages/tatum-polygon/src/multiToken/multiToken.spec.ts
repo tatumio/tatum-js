@@ -15,7 +15,6 @@ describe('NFT tests', () => {
   describe('NFT POLYGON 1155 transactions', () => {
     it('should test polygon 1155 deploy transaction', async () => {
       const deployMultiTokenToken = await deployMultiToken(
-        true,
         {
           chain: Currency.MATIC,
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',

@@ -813,12 +813,11 @@ export const preparePolygonMintMultiTokenBatchSignedTransaction = async (
 
 /**
  * Sign Polygon deploy multiple tokens transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const preparePolygonDeployMultiTokenSignedTransaction = async (testnet: boolean, body: DeployMultiToken, provider?: string) => {
+export const preparePolygonDeployMultiTokenSignedTransaction = async (body: DeployMultiToken, provider?: string) => {
   await validateBody(body, DeployMultiToken)
   const client = await preparePolygonClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -1084,13 +1083,12 @@ export const sendPolygonMintMultiTokenBatchSignedTransaction = async (body: Mint
 /**
  * Send Polygon deploy multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param testnet
  * @param body content of the transaction to broadcast
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendPolygonDeployMultiTokenSignedTransaction = async (testnet: boolean, body: DeployMultiToken, provider?: string) =>
-  polygonBroadcast(await preparePolygonDeployMultiTokenSignedTransaction(testnet, body, provider), body.signatureId)
+export const sendPolygonDeployMultiTokenSignedTransaction = async (body: DeployMultiToken, provider?: string) =>
+  polygonBroadcast(await preparePolygonDeployMultiTokenSignedTransaction(body, provider), body.signatureId)
 
 /**
  * Send Polygon generate custodial wallet transaction to the blockchain. This method broadcasts signed transaction to the blockchain.

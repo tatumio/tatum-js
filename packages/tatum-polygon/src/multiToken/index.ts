@@ -17,8 +17,8 @@ import {
   preparePolygonBatchTransferMultiTokenSignedTransaction,
 } from '../'
 
-export const deployMultiToken = async (testnet: boolean, body: DeployMultiToken, provider?: string) => {
-  return sendPolygonDeployMultiTokenSignedTransaction(testnet, body, provider)
+export const deployMultiToken = async (body: DeployMultiToken, provider?: string) => {
+  return sendPolygonDeployMultiTokenSignedTransaction(body, provider)
 }
 export const mintMultiToken = async (body: MintMultiToken, provider?: string) => {
   return sendPolygonMintMultiTokenSignedTransaction(body, provider)
