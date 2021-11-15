@@ -375,12 +375,11 @@ export const preparePolygonMintErc721SignedTransaction = async (body: MintErc721
 
 /**
  * Sign Polygon mint cashback erc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const preparePolygonMintCashbackErc721SignedTransaction = async (testnet: boolean, body: MintErc721, provider?: string) => {
+export const preparePolygonMintCashbackErc721SignedTransaction = async (body: MintErc721, provider?: string) => {
   await validateBody(body, MintErc721)
   const client = await preparePolygonClient(provider, body.fromPrivateKey)
   const cashbacks: string[] = body.cashbackValues!
@@ -969,13 +968,12 @@ export const sendPolygonMintErc721SignedTransaction = async (body: MintErc721, p
 /**
  * Send Polygon mint cashback erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param testnet
  * @param body content of the transaction to broadcast
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendPolygonMintCashbackErc721SignedTransaction = async (testnet: boolean, body: MintErc721, provider?: string) =>
-  polygonBroadcast(await preparePolygonMintCashbackErc721SignedTransaction(testnet, body, provider), body.signatureId)
+export const sendPolygonMintCashbackErc721SignedTransaction = async (body: MintErc721, provider?: string) =>
+  polygonBroadcast(await preparePolygonMintCashbackErc721SignedTransaction(body, provider), body.signatureId)
 
 /**
  * Send Polygon mint multiple erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.

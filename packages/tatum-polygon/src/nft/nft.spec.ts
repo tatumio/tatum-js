@@ -82,7 +82,6 @@ describe('NFT tests', () => {
     it('should test MATIC 721 mint transaction', async () => {
       try {
         const mintedToken = await mintNFTWithUri(
-          true,
           {
             to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
             chain: Currency.MATIC,
