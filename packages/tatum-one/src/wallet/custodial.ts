@@ -149,10 +149,8 @@ export const prepareApproveFromCustodialWallet = async (testnet: boolean, body: 
       ...body,
       contractAddress: body.custodialAddress,
     },
-    ApproveCustodialTransfer,
     'approve',
     params,
-    undefined,
     provider,
     CustodialFullTokenWallet.abi
   )

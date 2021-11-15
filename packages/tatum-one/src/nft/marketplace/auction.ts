@@ -65,7 +65,7 @@ export const prepareDeployAuction = async (testnet: boolean, body: DeployNftAuct
  */
 export const prepareAuctionUpdateFee = async (testnet: boolean, body: UpdateAuctionFee, provider?: string) => {
   const params = await prepareAuctionUpdateFeeAbstraction(body)
-  return await helperPrepareSCCall(testnet, body, UpdateAuctionFee, 'setAuctionFee', params, undefined, provider, auction.abi)
+  return await helperPrepareSCCall(testnet, body, 'setAuctionFee', params, provider, auction.abi)
 }
 
 /**
@@ -80,10 +80,8 @@ export const prepareAuctionUpdateFeeRecipient = async (testnet: boolean, body: U
   return await helperPrepareSCCall(
     testnet,
     body,
-    UpdateMarketplaceFeeRecipient,
     'setAuctionFeeRecipient',
     params,
-    undefined,
     provider,
     auction.abi
   )
@@ -101,10 +99,8 @@ export const prepareAuctionApproveNftTransfer = async (testnet: boolean, body: A
   return await helperPrepareSCCall(
     testnet,
     body,
-    ApproveNftTransfer,
     body.isErc721 ? 'approve' : 'setApprovalForAll',
     params,
-    undefined,
     provider,
     body.isErc721 ? erc721_abi : erc1155_abi
   )
@@ -132,7 +128,7 @@ export const prepareAuctionApproveErc20Transfer = async (testnet: boolean, body:
  */
 export const prepareAuctionCreate = async (testnet: boolean, body: CreateAuction, provider?: string) => {
   const { body: validatedBody, params } = await prepareAuctionCreateAbstraction(body)
-  return await helperPrepareSCCall(testnet, validatedBody, CreateAuction, 'createAuction', params, undefined, provider, auction.abi)
+  return await helperPrepareSCCall(testnet, validatedBody, 'createAuction', params, provider, auction.abi)
 }
 
 /**
@@ -145,7 +141,7 @@ export const prepareAuctionCreate = async (testnet: boolean, body: CreateAuction
  */
 export const prepareAuctionBid = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
   const { b: validatedBody, params } = await prepareAuctionBidAbstraction(helperGetWeb3Client, testnet, body, provider)
-  return await helperPrepareSCCall(testnet, validatedBody, InvokeAuctionOperation, 'bid', params, undefined, provider, auction.abi)
+  return await helperPrepareSCCall(testnet, validatedBody, 'bid', params, provider, auction.abi)
 }
 
 /**
@@ -157,7 +153,7 @@ export const prepareAuctionBid = async (testnet: boolean, body: InvokeAuctionOpe
  */
 export const prepareAuctionCancel = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
   const params = await prepareAuctionCancelAbstraction(body)
-  return await helperPrepareSCCall(testnet, body, InvokeAuctionOperation, 'cancelAuction', params, undefined, provider, auction.abi)
+  return await helperPrepareSCCall(testnet, body, 'cancelAuction', params, provider, auction.abi)
 }
 
 /**
@@ -169,7 +165,7 @@ export const prepareAuctionCancel = async (testnet: boolean, body: InvokeAuction
  */
 export const prepareAuctionSettle = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
   const params = await prepareAuctionSettleAbstraction(body)
-  return await helperPrepareSCCall(testnet, body, InvokeAuctionOperation, 'settleAuction', params, undefined, provider, auction.abi)
+  return await helperPrepareSCCall(testnet, body, 'settleAuction', params, provider, auction.abi)
 }
 
 /**
