@@ -94,7 +94,7 @@ export const sendPolygonTransaction = async (testnet: boolean, body: TransferErc
   return polygonBroadcast(await preparePolygonSignedTransaction(testnet, body, provider))
 }
 
-export const preparePolygonClient = (testnet: boolean, provider?: string, fromPrivateKey?: string) => {
+export const preparePolygonClient = (provider?: string, fromPrivateKey?: string) => {
   const client = new Web3(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/polygon/web3/${process.env.TATUM_API_KEY}`)
   if (fromPrivateKey) {
     client.eth.accounts.wallet.clear()
@@ -116,7 +116,7 @@ export const signPolygonKMSTransaction = async (tx: TransactionKMS, fromPrivateK
   if (tx.chain !== Currency.MATIC) {
     throw Error('Unsupported chain.')
   }
-  const client = preparePolygonClient(testnet, provider, fromPrivateKey)
+  const client = preparePolygonClient(provider, fromPrivateKey)
   const transactionConfig = JSON.parse(tx.serializedTransaction)
   if (!transactionConfig.gas) {
     transactionConfig.gas = await client.eth.estimateGas({ to: transactionConfig.to, data: transactionConfig.data })
@@ -132,11 +132,11 @@ export const signPolygonKMSTransaction = async (tx: TransactionKMS, fromPrivateK
   return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey)).rawTransaction as string
 }
 
-export const getPolygonErc20ContractDecimals = async (testnet: boolean, contractAddress: string, provider?: string) => {
+export const getPolygonErc20ContractDecimals = async (contractAddress: string, provider?: string) => {
   if (!contractAddress) {
     throw new Error('Contract address not set.')
   }
-  const client = await preparePolygonClient(testnet, provider)
+  const client = await preparePolygonClient(provider)
   // @ts-ignore
   const contract = new client.eth.Contract(erc20_abi, contractAddress.trim())
   return await contract.methods.decimals().call()
@@ -155,7 +155,7 @@ export const preparePolygonGenerateCustodialWalletSignedTransaction = async (
   provider?: string
 ) => {
   await validateBody(body, GenerateCustodialAddress)
-  const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
+  const client = await preparePolygonClient(provider, body.fromPrivateKey)
   const { abi, code } = obtainCustodialAddressType(body)
   // @ts-ignore
   const contract = new client.eth.Contract(abi)
@@ -187,7 +187,7 @@ export const preparePolygonGenerateCustodialWalletSignedTransaction = async (
  */
 export const preparePolygonSignedTransaction = async (testnet: boolean, body: TransferErc20, provider?: string) => {
   await validateBody(body, TransferErc20)
-  const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
+  const client = await preparePolygonClient(provider, body.fromPrivateKey)
   let data
   let to = body.to
   if (body.currency === Currency.MATIC) {
@@ -222,7 +222,7 @@ export const preparePolygonSignedTransaction = async (testnet: boolean, body: Tr
  */
 export const preparePolygonStoreDataTransaction = async (testnet: boolean, body: CreateRecord, provider?: string) => {
   await validateBody(body, CreateRecord)
-  const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
+  const client = await preparePolygonClient(provider, body.fromPrivateKey)
   const hexData = isHex(body.data) ? stringToHex(body.data) : toHex(body.data)
   return prepareGeneralTx(
     client,
@@ -247,7 +247,7 @@ export const preparePolygonStoreDataTransaction = async (testnet: boolean, body:
  */
 export const preparePolygonMintErc20SignedTransaction = async (testnet: boolean, body: MintErc20, provider?: string) => {
   await validateBody(body, MintErc20)
-  const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
+  const client = await preparePolygonClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const contract = new client.eth.Contract(erc20TokenABI, body.contractAddress.trim().trim())
   const digits = new BigNumber(10).pow(await contract.methods.decimals().call())
@@ -275,7 +275,7 @@ export const preparePolygonMintErc20SignedTransaction = async (testnet: boolean,
  */
 export const preparePolygonBurnErc20SignedTransaction = async (testnet: boolean, body: BurnErc20, provider?: string) => {
   await validateBody(body, BurnErc20)
-  const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
+  const client = await preparePolygonClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const contract = new client.eth.Contract(erc20TokenABI, body.contractAddress.trim().trim())
   const digits = new BigNumber(10).pow(await contract.methods.decimals().call())
@@ -303,7 +303,7 @@ export const preparePolygonBurnErc20SignedTransaction = async (testnet: boolean,
  */
 export const preparePolygonTransferErc20SignedTransaction = async (testnet: boolean, body: TransferErc20, provider?: string) => {
   await validateBody(body, TransferErc20)
-  const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
+  const client = await preparePolygonClient(provider, body.fromPrivateKey)
   const decimals = new BigNumber(10).pow(body.digits as number)
   // @ts-ignore
   const data = new client.eth.Contract(erc20TokenABI, body.contractAddress.trim().trim()).methods
@@ -332,7 +332,7 @@ export const preparePolygonTransferErc20SignedTransaction = async (testnet: bool
  */
 export const preparePolygonDeployErc20SignedTransaction = async (testnet: boolean, body: DeployErc20, provider?: string) => {
   await validateBody(body, DeployErc20)
-  const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
+  const client = await preparePolygonClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const contract = new client.eth.Contract(erc20TokenABI)
   const data = contract
@@ -371,7 +371,7 @@ export const preparePolygonDeployErc20SignedTransaction = async (testnet: boolea
  */
 export const preparePolygonMintErc721SignedTransaction = async (testnet: boolean, body: MintErc721, provider?: string) => {
   await validateBody(body, MintErc721)
-  const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
+  const client = await preparePolygonClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const data = new client.eth.Contract(erc721TokenABI, body.contractAddress.trim()).methods
     .mintWithTokenURI(body.to.trim(), body.tokenId, body.url)
@@ -402,7 +402,7 @@ export const preparePolygonMintErc721SignedTransaction = async (testnet: boolean
  */
 export const preparePolygonMintCashbackErc721SignedTransaction = async (testnet: boolean, body: MintErc721, provider?: string) => {
   await validateBody(body, MintErc721)
-  const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
+  const client = await preparePolygonClient(provider, body.fromPrivateKey)
   const cashbacks: string[] = body.cashbackValues!
   const cb = cashbacks.map((c) => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
   // @ts-ignore
@@ -439,7 +439,7 @@ export const preparePolygonMintMultipleCashbackErc721SignedTransaction = async (
   provider?: string
 ) => {
   await validateBody(body, MintMultipleErc721)
-  const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
+  const client = await preparePolygonClient(provider, body.fromPrivateKey)
   const cashbacks: string[][] = body.cashbackValues!
   const cb = cashbacks.map((cashback) => cashback.map((c) => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
   // @ts-ignore
@@ -475,7 +475,7 @@ export const preparePolygonMintMultipleCashbackErc721SignedTransaction = async (
  */
 export const preparePolygonMintMultipleErc721SignedTransaction = async (testnet: boolean, body: MintMultipleErc721, provider?: string) => {
   await validateBody(body, MintMultipleErc721)
-  const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
+  const client = await preparePolygonClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const data = new client.eth.Contract(erc721TokenABI, body.contractAddress.trim()).methods
     .mintMultiple(
@@ -507,7 +507,7 @@ export const preparePolygonMintMultipleErc721SignedTransaction = async (testnet:
  */
 export const preparePolygonBurnErc721SignedTransaction = async (testnet: boolean, body: BurnErc721, provider?: string) => {
   await validateBody(body, BurnErc721)
-  const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
+  const client = await preparePolygonClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const data = new client.eth.Contract(erc721TokenABI, body.contractAddress.trim()).methods.burn(body.tokenId).encodeABI()
   return prepareGeneralTx(
@@ -533,7 +533,7 @@ export const preparePolygonBurnErc721SignedTransaction = async (testnet: boolean
  */
 export const preparePolygonTransferErc721SignedTransaction = async (testnet: boolean, body: TransferErc721, provider?: string) => {
   await validateBody(body, TransferErc721)
-  const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
+  const client = await preparePolygonClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const data = new client.eth.Contract(erc721TokenABI, body.contractAddress.trim()).methods
     .safeTransfer(body.to.trim(), body.tokenId)
@@ -565,7 +565,7 @@ export const preparePolygonUpdateCashbackForAuthorErc721SignedTransaction = asyn
   provider?: string
 ) => {
   await validateBody(body, UpdateCashbackErc721)
-  const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
+  const client = await preparePolygonClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const data = new client.eth.Contract(erc721TokenABI, body.contractAddress.trim()).methods
     .updateCashbackForAuthor(body.tokenId, `0x${new BigNumber(toWei(body.cashbackValue, 'ether')).toString(16)}`)
@@ -593,7 +593,7 @@ export const preparePolygonUpdateCashbackForAuthorErc721SignedTransaction = asyn
  */
 export const preparePolygonDeployErc721SignedTransaction = async (testnet: boolean, body: DeployErc721, provider?: string) => {
   await validateBody(body, DeployErc721)
-  const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
+  const client = await preparePolygonClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const data = new client.eth.Contract(erc721TokenABI)
     .deploy({
@@ -628,7 +628,7 @@ export const preparePolygonDeployMarketplaceListingSignedTransaction = async (
   provider?: string
 ) => {
   await validateBody(body, DeployMarketplaceListing)
-  const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
+  const client = await preparePolygonClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const data = new client.eth.Contract(listing.abi)
     .deploy({
@@ -658,7 +658,7 @@ export const preparePolygonDeployMarketplaceListingSignedTransaction = async (
  */
 export const preparePolygonDeployAuctionSignedTransaction = async (testnet: boolean, body: DeployNftAuction, provider?: string) => {
   await validateBody(body, DeployNftAuction)
-  const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
+  const client = await preparePolygonClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const data = new client.eth.Contract(auction.abi)
     .deploy({
@@ -689,7 +689,7 @@ export const preparePolygonDeployAuctionSignedTransaction = async (testnet: bool
  */
 export const preparePolygonBurnMultiTokenSignedTransaction = async (testnet: boolean, body: BurnMultiToken, provider?: string) => {
   await validateBody(body, BurnMultiToken)
-  const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
+  const client = await preparePolygonClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const data = new client.eth.Contract(erc1155TokenABI, body.contractAddress.trim()).methods
     .burn(body.account.trim(), body.tokenId, body.amount)
@@ -721,7 +721,7 @@ export const preparePolygonBurnMultiTokenBatchSignedTransaction = async (
   provider?: string
 ) => {
   await validateBody(body, BurnMultiTokenBatch)
-  const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
+  const client = await preparePolygonClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const data = new client.eth.Contract(erc1155TokenABI, body.contractAddress.trim()).methods
     .burnBatch(body.account.trim(), body.tokenId, body.amounts)
@@ -749,7 +749,7 @@ export const preparePolygonBurnMultiTokenBatchSignedTransaction = async (
  */
 export const preparePolygonTransferMultiTokenSignedTransaction = async (testnet: boolean, body: TransferMultiToken, provider?: string) => {
   await validateBody(body, TransferMultiToken)
-  const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
+  const client = await preparePolygonClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const data = new client.eth.Contract(erc1155TokenABI, body.contractAddress.trim()).methods
     .safeTransfer(body.to.trim(), body.tokenId, `0x${new BigNumber(body.amount).toString(16)}`, body.data ? body.data : '0x0')
@@ -781,7 +781,7 @@ export const preparePolygonBatchTransferMultiTokenSignedTransaction = async (
   provider?: string
 ) => {
   await validateBody(body, TransferMultiTokenBatch)
-  const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
+  const client = await preparePolygonClient(provider, body.fromPrivateKey)
   const amts = body.amounts.map((amt) => `0x${new BigNumber(amt).toString(16)}`)
   // @ts-ignore
   const data = new client.eth.Contract(erc1155TokenABI, body.contractAddress.trim()).methods
@@ -815,7 +815,7 @@ export const preparePolygonBatchTransferMultiTokenSignedTransaction = async (
  */
 export const preparePolygonMintMultiTokenSignedTransaction = async (testnet: boolean, body: MintMultiToken, provider?: string) => {
   await validateBody(body, MintMultiToken)
-  const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
+  const client = await preparePolygonClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const data = new client.eth.Contract(erc1155TokenABI, body.contractAddress.trim()).methods
     .mint(body.to.trim(), body.tokenId, `0x${new BigNumber(body.amount).toString(16)}`, body.data ? body.data : '0x0')
@@ -847,7 +847,7 @@ export const preparePolygonMintMultiTokenBatchSignedTransaction = async (
   provider?: string
 ) => {
   await validateBody(body, MintMultiTokenBatch)
-  const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
+  const client = await preparePolygonClient(provider, body.fromPrivateKey)
   const batchAmounts = body.amounts.map((amts) => amts.map((amt) => `0x${new BigNumber(amt).toString(16)}`))
   // @ts-ignore
   const data = new client.eth.Contract(erc1155TokenABI, body.contractAddress.trim()).methods
@@ -876,7 +876,7 @@ export const preparePolygonMintMultiTokenBatchSignedTransaction = async (
  */
 export const preparePolygonDeployMultiTokenSignedTransaction = async (testnet: boolean, body: DeployMultiToken, provider?: string) => {
   await validateBody(body, DeployMultiToken)
-  const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
+  const client = await preparePolygonClient(provider, body.fromPrivateKey)
   // @ts-ignore
   const data = new client.eth.Contract(erc1155TokenABI)
     .deploy({
@@ -912,7 +912,7 @@ export const preparePolygonSmartContractWriteMethodInvocation = async (
 ) => {
   await validateBody(body, SmartContractMethodInvocation)
   const { fromPrivateKey, fee, params, methodName, methodABI, contractAddress, nonce, amount, signatureId } = body
-  const client = await preparePolygonClient(testnet, provider, fromPrivateKey)
+  const client = await preparePolygonClient(provider, fromPrivateKey)
 
   const data = new client.eth.Contract([methodABI]).methods[methodName as string](...params).encodeABI()
   return prepareGeneralTx(
@@ -936,7 +936,7 @@ export const sendPolygonSmartContractReadMethodInvocationTransaction = async (
 ) => {
   await validateBody(body, SmartContractReadMethodInvocation)
   const { params, methodName, methodABI, contractAddress } = body
-  const client = preparePolygonClient(testnet, provider)
+  const client = preparePolygonClient(provider)
   const contract = new client.eth.Contract([methodABI], contractAddress)
   return { data: await contract.methods[methodName as string](...params).call() }
 }

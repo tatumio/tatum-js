@@ -8,8 +8,8 @@ export const helperBroadcastTx = async (chain: Currency, txData: string, signatu
   return await polygonBroadcast(txData, signatureId)
 }
 
-export const helperGetWeb3Client = (testnet: boolean, chain: Currency, provider?: string): Web3 => {
-  return preparePolygonClient(testnet, provider)
+export const helperGetWeb3Client = (provider?: string): Web3 => {
+  return preparePolygonClient(provider)
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types

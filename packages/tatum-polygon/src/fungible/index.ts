@@ -1,4 +1,4 @@
-import { ApproveErc20, Currency, prepareApproveErc20Abstraction } from '@tatumio/tatum-core'
+import { ApproveErc20, prepareApproveErc20Abstraction } from '@tatumio/tatum-core'
 import token_abi from '@tatumio/tatum-core/dist/contracts/erc20/token_abi'
 import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../helpers'
 import { getPolygonErc20ContractDecimals } from '../transaction'
@@ -26,13 +26,11 @@ export const prepareApproveErc20 = async (testnet: boolean, body: ApproveErc20, 
 
 /**
  * Get Decimals for the ERC20 token
- * @param testnet if we are using testnet or mainnet
- * @param chain chain to query for the token
  * @param contractAddress address of the token
  * @param provider optional provider
  */
-export const getErc20Decimals = async (testnet: boolean, chain: Currency, contractAddress: string, provider?: string) => {
-  const web3 = helperGetWeb3Client(testnet, chain, provider)
+export const getErc20Decimals = async (contractAddress: string, provider?: string) => {
+  const web3 = helperGetWeb3Client(provider)
   // @ts-ignore
   return new web3.eth.Contract(token_abi, contractAddress).methods.decimals().call()
 }

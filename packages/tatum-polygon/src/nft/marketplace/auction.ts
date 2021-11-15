@@ -169,7 +169,7 @@ export const prepareAuctionCancel = async (testnet: boolean, body: InvokeAuction
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareAuctionSettle = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
-  const params = await prepareAuctionSettleAbstraction(testnet, body)
+  const params = await prepareAuctionSettleAbstraction(body)
   return await helperPrepareSCCall(testnet, body, InvokeAuctionOperation, 'settleAuction', params, undefined, provider, auction.abi)
 }
 
