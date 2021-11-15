@@ -1,4 +1,3 @@
-import { Currency } from '@tatumio/tatum-core'
 import { generateAddressFromXPub, generatePrivateKeyFromMnemonic } from 'src'
 
 describe('Address tests', () => {
@@ -20,7 +19,6 @@ describe('Address tests', () => {
 
   it('should generate private key 1 for VET mainnet', async () => {
     const privateKey = await generatePrivateKeyFromMnemonic(
-      Currency.VET,
       false,
       'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten',
       1
@@ -30,7 +28,6 @@ describe('Address tests', () => {
 
   it('should generate private key 1 for VET testnet', async () => {
     const privateKey = await generatePrivateKeyFromMnemonic(
-      Currency.VET,
       true,
       'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten',
       1
