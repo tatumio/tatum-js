@@ -4,8 +4,6 @@ import { generateAddressFromPrivatekey, generateAddressFromXPub, generatePrivate
 describe('Address tests', () => {
   it('should generate address 1 for ONE mainnet', () => {
     const address = generateAddressFromXPub(
-      Currency.ONE,
-      false,
       'xpub6EiLaLx7QvbzXKLr8AmyHCEDss5gM5mW3XuTEFCYVH7HHCVA7dyrbzE7YawQ4yTxRtZyjgX1sTgbjEWaMKxYMrhhk8rjtVvhbhPH3wrw8Ei',
       1
     )
@@ -14,8 +12,6 @@ describe('Address tests', () => {
 
   it('should generate address 1 for ONE testnet', () => {
     const address = generateAddressFromXPub(
-      Currency.ONE,
-      true,
       'xpub6FMiQpA54nciqs52guGVdWQ5TonZt5XtGsFpurgtttL7H3mSfaJDXv5aBdThjX6tW9HYaJSQ8wZVnLm1ixaQUu1MRQCwvwZ6U2cX6mwWT25',
       2
     )
