@@ -9,7 +9,18 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run:
+          git config --global user.email "lukas.kotol@gmail.com"
+      - run:
+          git config --global user.name "Hathoriel"
       - uses: actions/checkout@v2
       - run: yarn -f
       - run: yarn lerna bootstrap
-      - run: yarn lerna publish from-package --yes
+      - name: Publish New Version and Release
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        run: yarn lerna publish prerelease --no-verify-access --yes
