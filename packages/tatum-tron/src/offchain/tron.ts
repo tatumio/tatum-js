@@ -23,7 +23,7 @@ export const sendTronOffchainTransaction = async (testnet: boolean, body: Transf
   let fromPriv: string
   if (mnemonic && index !== undefined) {
     fromPriv =
-      mnemonic && index ? await generatePrivateKeyFromMnemonic(Currency.TRON, testnet, mnemonic, index) : (fromPrivateKey as string)
+      mnemonic && index ? await generatePrivateKeyFromMnemonic(mnemonic, index) : (fromPrivateKey as string)
   } else if (fromPrivateKey) {
     fromPriv = fromPrivateKey
   } else {
