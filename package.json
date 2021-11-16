@@ -14,7 +14,9 @@
     "test:deployment": "node deployment/dist/index.js"
   },
   "private": true,
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "keywords": [
     "Tatum",
     "Blockchain",
