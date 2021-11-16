@@ -14,9 +14,9 @@
   },
   "dependencies": {
     "@elrondnetwork/erdjs": "^8.0.1-alpha.11",
-    "@tatumio/tatum-core": "file:../tatum-core",
-    "@tatumio/tatum-defi": "file:../tatum-defi",
-    "@tatumio/tatum-ledger": "file:../tatum-ledger",
+    "@tatumio/tatum-core": "^2.0.0-alpha.5",
+    "@tatumio/tatum-defi": "^2.0.0-alpha.5",
+    "@tatumio/tatum-ledger": "^2.0.0-alpha.5",
     "axios": "^0.21.1",
     "bech32": "^1.1.4",
     "bignumber.js": "^9.0.0",
@@ -37,5 +37,6 @@
     "ts-jest": "^27.0.5",
     "typedoc": "^0.21.5",
     "typescript": "^4.4.3"
-  }
+  },
+  "gitHead": "b38a4f55d98d9b2a96fa76425c853decaecf2cc2"
 }

@@ -14,9 +14,9 @@
   },
   "dependencies": {
     "@harmony-js/crypto": "^0.1.56",
-    "@tatumio/tatum-core": "file:../tatum-core",
-    "@tatumio/tatum-defi": "file:../tatum-defi",
-    "@tatumio/tatum-ledger": "file:../tatum-ledger",
+    "@tatumio/tatum-core": "^2.0.0-alpha.5",
+    "@tatumio/tatum-defi": "^2.0.0-alpha.5",
+    "@tatumio/tatum-ledger": "^2.0.0-alpha.5",
     "bignumber.js": "^9.0.0",
     "bip39": "^3.0.2",
     "class-transformer": "^0.2.3",
@@ -35,5 +35,6 @@
     "ts-jest": "^27.0.5",
     "typedoc": "^0.21.5",
     "typescript": "^4.4.3"
-  }
+  },
+  "gitHead": "b38a4f55d98d9b2a96fa76425c853decaecf2cc2"
 }
