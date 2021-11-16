@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-bch",
-  "version": "2.0.0-alpha.3",
+  "version": "2.0.0-alpha.5",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,10 +13,10 @@
     "lint": "eslint ./src --ext .ts --fix"
   },
   "dependencies": {
+    "@tatumio/bitcoincashjs2-lib": "4.1.2",
     "@tatumio/tatum-core": "file:../tatum-core",
     "@tatumio/tatum-defi": "file:../tatum-defi",
     "@tatumio/tatum-ledger": "file:../tatum-ledger",
-    "@tatumio/bitcoincashjs2-lib": "4.1.2",
     "bignumber.js": "^9.0.0",
     "bip32": "^2.0.5",
     "bip39": "^3.0.2",

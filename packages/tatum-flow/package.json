@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-flow",
-  "version": "2.0.0-alpha.3",
+  "version": "2.0.0-alpha.5",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,20 +13,20 @@
     "lint": "eslint ./src --ext .ts --fix"
   },
   "dependencies": {
+    "@onflow/fcl": "^0.0.73",
+    "@onflow/types": "^0.0.4",
+    "@onflow/util-encode-key": "^0.0.2",
     "@tatumio/tatum-core": "file:../tatum-core",
     "@tatumio/tatum-defi": "file:../tatum-defi",
     "@tatumio/tatum-ledger": "file:../tatum-ledger",
-    "class-validator": "0.13.0",
-    "reflect-metadata": "^0.1.13",
-    "@onflow/util-encode-key": "^0.0.2",
-    "@onflow/types": "^0.0.4",
-    "@onflow/fcl": "^0.0.73",
-    "sha3": "^2.1.4",
-    "dedent-js": "^1.0.1",
     "bip32": "^2.0.5",
     "bip39": "^3.0.2",
+    "class-validator": "0.13.0",
+    "dedent-js": "^1.0.1",
+    "elliptic": "^6.5.4",
     "hdkey": "^2.0.1",
-    "elliptic": "^6.5.4"
+    "reflect-metadata": "^0.1.13",
+    "sha3": "^2.1.4"
   },
   "devDependencies": {
     "@types/jest": "^27.0.2",

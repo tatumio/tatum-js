@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-xdc",
-  "version": "2.0.0-alpha.3",
+  "version": "2.0.0-alpha.5",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -16,8 +16,8 @@
     "@tatumio/tatum-core": "file:../tatum-core",
     "@tatumio/tatum-defi": "file:../tatum-defi",
     "@tatumio/tatum-ledger": "file:../tatum-ledger",
-    "bip39": "^3.0.2",
     "bignumber.js": "^9.0.0",
+    "bip39": "^3.0.2",
     "ethereumjs-wallet": "^1.0.0",
     "web3": "1.4.0",
     "web3-core": "^1.6.0",
