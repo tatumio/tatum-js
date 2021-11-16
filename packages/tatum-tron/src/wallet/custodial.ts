@@ -52,7 +52,7 @@ export const prepareCustodialWallet = async (testnet: boolean, body: GenerateTro
  */
 export const sendCustodialWallet = async (testnet: boolean, body: GenerateTronCustodialAddress, provider?: string) => {
     const txData = await prepareTronGenerateCustodialWalletSignedTransaction(testnet, body, provider);
-    return helperBroadcastTx(body.chain, txData, body.signatureId);
+    return helperBroadcastTx(txData, body.signatureId);
 };
 
 /**
@@ -86,7 +86,7 @@ export const prepareTransferFromCustodialWallet = async (testnet: boolean, body:
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendTransferFromCustodialWallet = async (testnet: boolean, body: TransferFromTronCustodialAddress, provider?: string) =>
-    helperBroadcastTx(body.chain, await prepareTransferFromCustodialWallet(testnet, body, provider), body.signatureId);
+    helperBroadcastTx(await prepareTransferFromCustodialWallet(testnet, body, provider), body.signatureId);
 
 /**
  * Prepare signed batch transaction from the custodial SC wallet.
@@ -121,4 +121,4 @@ export const prepareBatchTransferFromCustodialWallet = async (testnet: boolean,
  */
 export const sendBatchTransferFromCustodialWallet = async (testnet: boolean,
                                                            body: TransferFromTronCustodialAddressBatch, provider?: string) =>
-    helperBroadcastTx(body.chain, await prepareBatchTransferFromCustodialWallet(testnet, body, provider), body.signatureId);
+    helperBroadcastTx(await prepareBatchTransferFromCustodialWallet(testnet, body, provider), body.signatureId);
