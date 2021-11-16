@@ -12,6 +12,7 @@
     "docs": "typedoc",
     "lint": "eslint ./src --ext .ts --fix"
   },
+  "private": true,
   "dependencies": {
     "@tatumio/tatum-ada": "file:../tatum-ada",
     "@tatumio/tatum-algo": "file:../tatum-algo",
