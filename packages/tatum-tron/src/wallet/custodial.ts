@@ -67,9 +67,10 @@ export const prepareTransferFromCustodialWallet = async (testnet: boolean, body:
     return prepareTransferFromCustodialWalletAbstract(
         testnet,
         body,
-        getTronTrc20ContractDecimals,
-        (testnet, body, r, provider) =>
-            prepareTronSmartContractInvocation(testnet, r, feeLimit as number, from, provider),
+        // @ts-ignore
+        (contractAddress, provider, testnet) => getTronTrc20ContractDecimals(testnet, contractAddress, provider),
+        // @ts-ignore
+        (r, provider, testnet) => prepareTronSmartContractInvocation(testnet, r, feeLimit as number, from, provider),
         SmartContractMethodInvocation,
         18,
         TransferFromCustodialAddress,
