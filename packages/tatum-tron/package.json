@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-tron",
-  "version": "2.0.0-alpha.5",
+  "version": "2.0.0-alpha.6",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -14,9 +14,9 @@
     "lint": "eslint ./src --ext .ts --fix"
   },
   "dependencies": {
-    "@tatumio/tatum-core": "^2.0.0-alpha.5",
-    "@tatumio/tatum-defi": "^2.0.0-alpha.5",
-    "@tatumio/tatum-ledger": "^2.0.0-alpha.5",
+    "@tatumio/tatum-core": "^2.0.0-alpha.6",
+    "@tatumio/tatum-defi": "^2.0.0-alpha.6",
+    "@tatumio/tatum-ledger": "^2.0.0-alpha.6",
     "axios": "^0.21.1",
     "bignumber.js": "^9.0.0",
     "bip32": "^2.0.5",

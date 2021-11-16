@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-defi",
-  "version": "2.0.0-alpha.5",
+  "version": "2.0.0-alpha.6",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,7 +13,7 @@
     "lint": "eslint ./src --ext .ts --fix"
   },
   "dependencies": {
-    "@tatumio/tatum-core": "^2.0.0-alpha.5",
+    "@tatumio/tatum-core": "^2.0.0-alpha.6",
     "bignumber.js": "^9.0.0",
     "web3": "1.4.0"
   },

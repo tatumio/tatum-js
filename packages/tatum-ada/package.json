@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-ada",
-  "version": "2.0.0-alpha.5",
+  "version": "2.0.0-alpha.6",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -14,9 +14,9 @@
   },
   "dependencies": {
     "@emurgo/cardano-serialization-lib-nodejs": "^6.0.0",
-    "@tatumio/tatum-core": "^2.0.0-alpha.5",
-    "@tatumio/tatum-defi": "^2.0.0-alpha.5",
-    "@tatumio/tatum-ledger": "^2.0.0-alpha.5",
+    "@tatumio/tatum-core": "^2.0.0-alpha.6",
+    "@tatumio/tatum-defi": "^2.0.0-alpha.6",
+    "@tatumio/tatum-ledger": "^2.0.0-alpha.6",
     "bignumber.js": "^9.0.0",
     "bip39": "^3.0.2",
     "cardano-crypto.js": "^6.0.0",

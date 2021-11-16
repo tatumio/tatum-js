@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-algo",
-  "version": "2.0.0-alpha.5",
+  "version": "2.0.0-alpha.6",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,9 +13,9 @@
     "lint": "eslint ./src --ext .ts --fix"
   },
   "dependencies": {
-    "@tatumio/tatum-core": "^2.0.0-alpha.5",
-    "@tatumio/tatum-defi": "^2.0.0-alpha.5",
-    "@tatumio/tatum-ledger": "^2.0.0-alpha.5",
+    "@tatumio/tatum-core": "^2.0.0-alpha.6",
+    "@tatumio/tatum-defi": "^2.0.0-alpha.6",
+    "@tatumio/tatum-ledger": "^2.0.0-alpha.6",
     "algosdk": "^1.12.0",
     "base32.js": "^0.1.0"
   },
