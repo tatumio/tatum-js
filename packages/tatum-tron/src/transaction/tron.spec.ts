@@ -33,7 +33,6 @@ import {
     prepareTronUpdateCashbackForAuthorTrc721SignedTransaction,
 } from './tron'
 
-const IS_TESTNET = true
 const API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd'
 const PRIVATE_KEY = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701'
 const RECEIVER_ADDR = 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh'
@@ -50,7 +49,7 @@ describe('Tron transactions', () => {
         body.fromPrivateKey = PRIVATE_KEY
         body.amount = '0.000001'
         body.to = RECEIVER_ADDR
-        const txData = await prepareTronSignedTransaction(IS_TESTNET, body)
+        const txData = await prepareTronSignedTransaction(body)
         expect(JSON.parse(txData).raw_data.contract[0].parameter.value.amount).toBe(1)
     })
 
@@ -61,7 +60,7 @@ describe('Tron transactions', () => {
         body.resource = 'ENERGY'
         body.duration = 3
         body.receiver = SENDER_ADDR
-        const txData = await prepareTronFreezeTransaction(IS_TESTNET, body)
+        const txData = await prepareTronFreezeTransaction(body)
         expect(JSON.parse(txData).raw_data.contract[0].parameter.value.frozen_balance).toBe(1000000)
     })
 
@@ -73,7 +72,7 @@ describe('Tron transactions', () => {
         body.recipient = RECEIVER_ADDR
         body.name = 'TatumToken'
         body.totalSupply = 10
-        const txData = await prepareTronCreateTrc20SignedTransaction(IS_TESTNET, body)
+        const txData = await prepareTronCreateTrc20SignedTransaction(body)
         expect(JSON.parse(txData).raw_data.contract[0].parameter.value.new_contract.bytecode).toContain(token_bytecode)
     })
 
@@ -94,7 +93,7 @@ describe('Tron transactions', () => {
         body.amount = '1'
         body.feeLimit = 100
         body.to = RECEIVER_ADDR
-        const txData = await prepareTronTrc20SignedTransaction(IS_TESTNET, body)
+        const txData = await prepareTronTrc20SignedTransaction(body)
         expect(JSON.parse(txData).raw_data.contract[0].parameter.value.data).toBe('a9059cbb000000000000000000000000f4a376310e3b26a57b30d5ff230dcbc8758b84bc00000000000000000000000000000000000000000000000000000000000f4240')
     })
 
@@ -108,7 +107,7 @@ describe('Tron transactions', () => {
         body.name = 'TTM'
         body.description = 'TTM'
         body.decimals = 5
-        const txData = await prepareTronCreateTrc10SignedTransaction(true, body)
+        const txData = await prepareTronCreateTrc10SignedTransaction(body)
         expect(JSON.parse(txData).raw_data.contract[0].parameter.value.amount).toBe(1)
     })
 
@@ -118,7 +117,7 @@ describe('Tron transactions', () => {
         body.amount = '1'
         body.to = 'TFnpwE8jCgtq3QpAhFfF2QpXzdBGmKvKMe'
         try {
-            await prepareTronSignedTransaction(IS_TESTNET, body)
+            await prepareTronSignedTransaction(body)
             fail('Validation did not pass.')
         } catch (e) {
             // console.error(e);
@@ -137,7 +136,7 @@ describe('Tron transactions', () => {
         body.symbol = 'TTM'
         body.feeLimit = 600
         try {
-            const txData = await prepareTronDeployTrc721SignedTransaction(true, body)
+            const txData = await prepareTronDeployTrc721SignedTransaction(body)
             expect(JSON.parse(txData).txID).toBeDefined()
             console.log(await tronBroadcast(txData))
         } catch (e) {
@@ -156,7 +155,7 @@ describe('Tron transactions', () => {
         body.tokenId = '3'
         body.url = 'https://google.com'
         body.feeLimit = 50
-        const txData = await prepareTronMintTrc721SignedTransaction(true, body)
+        const txData = await prepareTronMintTrc721SignedTransaction(body)
         expect(JSON.parse(txData).txID).toBeDefined()
         console.log(await tronBroadcast(txData))
     })
@@ -174,7 +173,7 @@ describe('Tron transactions', () => {
         body.tokenId = '3000'
         body.url = 'https://google.com'
         body.feeLimit = 50
-        const txData = await prepareTronMintCashbackTrc721SignedTransaction(true, body)
+        const txData = await prepareTronMintCashbackTrc721SignedTransaction(body)
         expect(JSON.parse(txData).txID).toBeDefined()
         console.log(await tronBroadcast(txData))
     })
@@ -190,7 +189,7 @@ describe('Tron transactions', () => {
         body.tokenId = ['40', '50']
         body.url = ['https://google.com', 'https://google.com']
         body.feeLimit = 50
-        const txData = await prepareTronMintMultipleTrc721SignedTransaction(true, body)
+        const txData = await prepareTronMintMultipleTrc721SignedTransaction(body)
         expect(JSON.parse(txData).txID).toBeDefined()
         console.log(await tronBroadcast(txData))
     })
@@ -205,7 +204,7 @@ describe('Tron transactions', () => {
         body.cashbackValue = '0'
         body.tokenId = '11'
         body.feeLimit = 50
-        const txData = await prepareTronUpdateCashbackForAuthorTrc721SignedTransaction(true, body)
+        const txData = await prepareTronUpdateCashbackForAuthorTrc721SignedTransaction(body)
         expect(JSON.parse(txData).txID).toBeDefined()
         console.log(await tronBroadcast(txData))
     })
@@ -219,7 +218,7 @@ describe('Tron transactions', () => {
         body.contractAddress = 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ'
         body.tokenId = '3'
         body.feeLimit = 50
-        const txData = await prepareTronBurnTrc721SignedTransaction(true, body)
+        const txData = await prepareTronBurnTrc721SignedTransaction(body)
         expect(JSON.parse(txData).txID).toBeDefined()
         console.log(await tronBroadcast(txData))
     })
@@ -235,7 +234,7 @@ describe('Tron transactions', () => {
         body.tokenId = '50'
         body.value = '0'
         body.feeLimit = 50
-        const txData = await prepareTronTransferTrc721SignedTransaction(true, body)
+        const txData = await prepareTronTransferTrc721SignedTransaction(body)
         expect(JSON.parse(txData).txID).toBeDefined()
         console.log(await tronBroadcast(txData))
     })
@@ -251,7 +250,7 @@ describe('Tron transactions', () => {
         body.tokenId = '3000'
         body.value = '30'
         body.feeLimit = 50
-        const txData = await prepareTronTransferTrc721SignedTransaction(true, body)
+        const txData = await prepareTronTransferTrc721SignedTransaction(body)
         expect(JSON.parse(txData).txID).toBeDefined()
         console.log(await tronBroadcast(txData))
     })

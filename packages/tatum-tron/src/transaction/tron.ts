@@ -34,7 +34,7 @@ import {
 // tslint:disable-next-line:no-var-requires
 const TronWeb = require('tronweb');
 
-const prepareTronWeb = (testnet: boolean, provider?: string) => {
+const prepareTronWeb = (provider?: string) => {
     const HttpProvider = TronWeb.providers.HttpProvider;
     const url = provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/tron/node/${process.env.TATUM_API_KEY}`;
     const fullNode = new HttpProvider(url);
@@ -48,23 +48,21 @@ const prepareTronWeb = (testnet: boolean, provider?: string) => {
 /**
  * Send Tron transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendTronTransaction = async (testnet: boolean, body: TransferTron) => {
-    return tronBroadcast(await prepareTronSignedTransaction(testnet, body), body.signatureId)
+export const sendTronTransaction = async (body: TransferTron) => {
+    return tronBroadcast(await prepareTronSignedTransaction(body), body.signatureId)
 }
 
 /**
  * Send Tron Freeze balance transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const freezeTronTransaction = async (testnet: boolean, body: FreezeTron) => {
-    return tronBroadcast(await prepareTronFreezeTransaction(testnet, body), body.signatureId)
+export const freezeTronTransaction = async (body: FreezeTron) => {
+    return tronBroadcast(await prepareTronFreezeTransaction(body), body.signatureId)
 }
 
 /**
@@ -81,48 +79,44 @@ export const sendTronTrc10Transaction = async (testnet: boolean, body: TransferT
 /**
  * Send Tron TRC20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendTronTrc20Transaction = async (testnet: boolean, body: TransferTronTrc20) => {
-    return tronBroadcast(await prepareTronTrc20SignedTransaction(testnet, body), body.signatureId)
+export const sendTronTrc20Transaction = async (body: TransferTronTrc20) => {
+    return tronBroadcast(await prepareTronTrc20SignedTransaction(body), body.signatureId)
 }
 
 /**
  * Create Tron TRC10 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const createTronTrc10Transaction = async (testnet: boolean, body: CreateTronTrc10) => {
-    return tronBroadcast(await prepareTronCreateTrc10SignedTransaction(testnet, body), body.signatureId)
+export const createTronTrc10Transaction = async (body: CreateTronTrc10) => {
+    return tronBroadcast(await prepareTronCreateTrc10SignedTransaction(body), body.signatureId)
 }
 
 /**
  * Create Tron TRC20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const createTronTrc20Transaction = async (testnet: boolean, body: CreateTronTrc20) => {
-    return tronBroadcast(await prepareTronCreateTrc20SignedTransaction(testnet, body), body.signatureId)
+export const createTronTrc20Transaction = async (body: CreateTronTrc20) => {
+    return tronBroadcast(await prepareTronCreateTrc20SignedTransaction(body), body.signatureId)
 }
 
 /**
  * Sign Tron pending transaction from Tatum KMS
  * @param tx pending transaction from KMS
  * @param fromPrivateKey private key to sign transaction with.
- * @param testnet mainnet or testnet version
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signTronKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, testnet: boolean) => {
+export const signTronKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string) => {
     if (tx.chain !== Currency.TRON) {
         throw Error('Unsupported chain.')
     }
-    const tronWeb = prepareTronWeb(testnet)
+    const tronWeb = prepareTronWeb()
     const transactionConfig = JSON.parse(tx.serializedTransaction)
     return JSON.stringify(await tronWeb.trx.sign(transactionConfig, fromPrivateKey))
 }
@@ -134,101 +128,91 @@ export const convertAddressToHex = (address: string) => TronWeb.address.toHex(ad
 /**
  * Send Tron deploy trc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param testnet
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendTronDeployTrc721SignedTransaction = async (testnet: boolean, body: TronDeployTrc721) =>
-    await tronBroadcast(await prepareTronDeployTrc721SignedTransaction(testnet, body), body.signatureId)
+export const sendTronDeployTrc721SignedTransaction = async (body: TronDeployTrc721) =>
+    await tronBroadcast(await prepareTronDeployTrc721SignedTransaction(body), body.signatureId)
 
 /**
  * Send Tron generate custodial wallet transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param testnet
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendTronGenerateCustodialWalletSignedTransaction = async (testnet: boolean, body: GenerateTronCustodialAddress, provider?: string) =>
-    await tronBroadcast(await prepareTronGenerateCustodialWalletSignedTransaction(testnet, body, provider), body.signatureId)
+export const sendTronGenerateCustodialWalletSignedTransaction = async (body: GenerateTronCustodialAddress, provider?: string) =>
+    await tronBroadcast(await prepareTronGenerateCustodialWalletSignedTransaction(body, provider), body.signatureId)
 
 /**
  * Deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
- * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum provider will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendTronDeployMarketplaceListingSignedTransaction = async (testnet: boolean, body: DeployTronMarketplaceListing, provider?: string) =>
-    await tronBroadcast(await prepareTronDeployMarketplaceListingSignedTransaction(testnet, body, provider), body.signatureId)
+export const sendTronDeployMarketplaceListingSignedTransaction = async (body: DeployTronMarketplaceListing, provider?: string) =>
+    await tronBroadcast(await prepareTronDeployMarketplaceListingSignedTransaction(body, provider), body.signatureId)
 
 /**
  * Send Tron mint cashback trc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param testnet
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendTronMintCashbackTrc721SignedTransaction = async (testnet: boolean, body: TronMintTrc721) =>
-    await tronBroadcast(await prepareTronMintCashbackTrc721SignedTransaction(testnet, body), body.signatureId)
+export const sendTronMintCashbackTrc721SignedTransaction = async (body: TronMintTrc721) =>
+    await tronBroadcast(await prepareTronMintCashbackTrc721SignedTransaction(body), body.signatureId)
 
 /**
  * Send Tron mint trc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param testnet
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendTronMintTrc721SignedTransaction = async (testnet: boolean, body: TronMintTrc721) =>
-    await tronBroadcast(await prepareTronMintTrc721SignedTransaction(testnet, body), body.signatureId)
+export const sendTronMintTrc721SignedTransaction = async (body: TronMintTrc721) =>
+    await tronBroadcast(await prepareTronMintTrc721SignedTransaction(body), body.signatureId)
 
 /**
  * Send Tron transfer trc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param testnet
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendTronTransferTrc721SignedTransaction = async (testnet: boolean, body: TronTransferTrc721) =>
-    await tronBroadcast(await prepareTronTransferTrc721SignedTransaction(testnet, body), body.signatureId)
+export const sendTronTransferTrc721SignedTransaction = async (body: TronTransferTrc721) =>
+    await tronBroadcast(await prepareTronTransferTrc721SignedTransaction(body), body.signatureId)
 
 /**
  * Send Tron burn trc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param testnet
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendTronBurnTrc721SignedTransaction = async (testnet: boolean, body: TronBurnTrc721) =>
-    await tronBroadcast(await prepareTronBurnTrc721SignedTransaction(testnet, body), body.signatureId)
+export const sendTronBurnTrc721SignedTransaction = async (body: TronBurnTrc721) =>
+    await tronBroadcast(await prepareTronBurnTrc721SignedTransaction(body), body.signatureId)
 
 /**
  * Send Tron mint multiple trc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param testnet
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendTronMintMultipleTrc721SignedTransaction = async (testnet: boolean, body: TronMintMultipleTrc721) =>
-    await tronBroadcast(await prepareTronMintMultipleTrc721SignedTransaction(testnet, body), body.signatureId)
+export const sendTronMintMultipleTrc721SignedTransaction = async (body: TronMintMultipleTrc721) =>
+    await tronBroadcast(await prepareTronMintMultipleTrc721SignedTransaction(body), body.signatureId)
 
 /**
  * Send Tron update cashback for author trc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param testnet
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendTronUpdateCashbackForAuthorTrc721SignedTransaction = async (testnet: boolean, body: TronUpdateCashbackTrc721) =>
-    await tronBroadcast(await prepareTronUpdateCashbackForAuthorTrc721SignedTransaction(testnet, body), body.signatureId)
+export const sendTronUpdateCashbackForAuthorTrc721SignedTransaction = async (body: TronUpdateCashbackTrc721) =>
+    await tronBroadcast(await prepareTronUpdateCashbackForAuthorTrc721SignedTransaction(body), body.signatureId)
 
 /**
  * Sign Tron transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronSignedTransaction = async (testnet: boolean, body: TransferTron, provider?: string) => {
+export const prepareTronSignedTransaction = async (body: TransferTron, provider?: string) => {
     await validateBody(body, TransferTron)
     const {
         fromPrivateKey,
@@ -236,7 +220,7 @@ export const prepareTronSignedTransaction = async (testnet: boolean, body: Trans
         amount,
     } = body
 
-    const tronWeb = prepareTronWeb(testnet, provider)
+    const tronWeb = prepareTronWeb(provider)
     const tx = await tronWeb.transactionBuilder.sendTrx(
         to,
         tronWeb.toSun(amount),
@@ -246,12 +230,11 @@ export const prepareTronSignedTransaction = async (testnet: boolean, body: Trans
 
 /**
  * Sign Tron Freeze balance transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider optional provider to enter. if not present, Tatum provider will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronFreezeTransaction = async (testnet: boolean, body: FreezeTron, provider?: string) => {
+export const prepareTronFreezeTransaction = async (body: FreezeTron, provider?: string) => {
     await validateBody(body, FreezeTron)
     const {
         fromPrivateKey,
@@ -261,7 +244,7 @@ export const prepareTronFreezeTransaction = async (testnet: boolean, body: Freez
         duration,
     } = body
 
-    const tronWeb = prepareTronWeb(testnet, provider)
+    const tronWeb = prepareTronWeb(provider)
     const tx = await tronWeb.transactionBuilder.freezeBalance(
         tronWeb.toSun(parseFloat(amount)),
         duration,
@@ -288,7 +271,7 @@ export const prepareTronTrc10SignedTransaction = async (testnet: boolean, body: 
         amount,
     } = body
 
-    const tronWeb = prepareTronWeb(testnet, provider)
+    const tronWeb = prepareTronWeb(provider)
     const tx = await tronWeb.transactionBuilder.sendToken(
         to,
         new BigNumber(amount).multipliedBy(new BigNumber(10).pow(precision || await getTrc10Precision(testnet, tokenId))),
@@ -299,13 +282,11 @@ export const prepareTronTrc10SignedTransaction = async (testnet: boolean, body: 
 
 /**
  * Get TRC20 balance for the given tron address.
- * @param testnet mainnet or testnet version
  * @param address the address whose balance is returned
  * @param contractAddress the TRC20 contract address
  * @param provider
  */
 export const tronGetAccountTrc20Address = async (
-    testnet: boolean,
     address: string,
     contractAddress: string,
     provider?: string,
@@ -313,17 +294,17 @@ export const tronGetAccountTrc20Address = async (
     if (!contractAddress) {
         throw new Error('Contract address not set.');
     }
-    const tronWeb = prepareTronWeb(testnet, provider);
+    const tronWeb = prepareTronWeb(provider);
     tronWeb.setAddress(contractAddress);
     const contractInstance = await tronWeb.contract().at(contractAddress);
     return await contractInstance.balanceOf(address).call();
 };
 
-export const getTronTrc20ContractDecimals = async (testnet: boolean, contractAddress: string, provider?: string) => {
+export const getTronTrc20ContractDecimals = async (contractAddress: string, provider?: string) => {
     if (!contractAddress) {
         throw new Error('Contract address not set.')
     }
-    const tronWeb = prepareTronWeb(testnet, provider)
+    const tronWeb = prepareTronWeb(provider)
     tronWeb.setAddress(contractAddress)
     const contractInstance = await tronWeb.contract().at(contractAddress)
     return await contractInstance.decimals().call()
@@ -331,15 +312,14 @@ export const getTronTrc20ContractDecimals = async (testnet: boolean, contractAdd
 
 /**
  * Sign Tron custodial transfer transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param feeLimit
  * @param from
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronSmartContractInvocation = async (testnet: boolean, body: SmartContractMethodInvocation, feeLimit: number, from?: string, provider?: string) => {
-    const tronWeb = prepareTronWeb(testnet, provider)
+export const prepareTronSmartContractInvocation = async (body: SmartContractMethodInvocation, feeLimit: number, from?: string, provider?: string) => {
+    const tronWeb = prepareTronWeb(provider)
     tronWeb.setAddress(body.contractAddress)
     const sender = from || tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(body.fromPrivateKey))
     const {transaction} = await tronWeb.transactionBuilder.triggerSmartContract(
@@ -361,15 +341,14 @@ export const prepareTronSmartContractInvocation = async (testnet: boolean, body:
 
 /**
  * Sign Tron custodial transfer batch transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param feeLimit
  * @param from
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronCustodialTransferBatch = async (testnet: boolean, body: SmartContractMethodInvocation, feeLimit: number, from?: string, provider?: string) => {
-    const tronWeb = prepareTronWeb(testnet, provider)
+export const prepareTronCustodialTransferBatch = async (body: SmartContractMethodInvocation, feeLimit: number, from?: string, provider?: string) => {
+    const tronWeb = prepareTronWeb(provider)
     tronWeb.setAddress(body.contractAddress)
     const sender = from || tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(body.fromPrivateKey))
     const {transaction} = await tronWeb.transactionBuilder.triggerSmartContract(
@@ -396,12 +375,11 @@ export const prepareTronCustodialTransferBatch = async (testnet: boolean, body: 
 
 /**
  * Sign Tron TRC20 transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronTrc20SignedTransaction = async (testnet: boolean, body: TransferTronTrc20, provider?: string) => {
+export const prepareTronTrc20SignedTransaction = async (body: TransferTronTrc20, provider?: string) => {
     await validateBody(body, TransferTronTrc20)
     const {
         fromPrivateKey,
@@ -411,7 +389,7 @@ export const prepareTronTrc20SignedTransaction = async (testnet: boolean, body: 
         feeLimit,
     } = body
 
-    const tronWeb = prepareTronWeb(testnet, provider)
+    const tronWeb = prepareTronWeb(provider)
     tronWeb.setAddress(tokenAddress)
     const contractInstance = await tronWeb.contract().at(tokenAddress)
     const decimals = await contractInstance.decimals().call()
@@ -433,11 +411,10 @@ export const prepareTronTrc20SignedTransaction = async (testnet: boolean, body: 
 
 /**
  * Sign create Tron TRC10 transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronCreateTrc10SignedTransaction = async (testnet: boolean, body: CreateTronTrc10, provider?: string) => {
+export const prepareTronCreateTrc10SignedTransaction = async (body: CreateTronTrc10, provider?: string) => {
     await validateBody(body, CreateTronTrc10)
     const {
         fromPrivateKey,
@@ -449,7 +426,7 @@ export const prepareTronCreateTrc10SignedTransaction = async (testnet: boolean, 
         decimals,
     } = body
 
-    const tronWeb = prepareTronWeb(testnet, provider)
+    const tronWeb = prepareTronWeb(provider)
     const tx = await tronWeb.transactionBuilder.createToken({
         name,
         abbreviation,
@@ -471,11 +448,10 @@ export const prepareTronCreateTrc10SignedTransaction = async (testnet: boolean, 
 
 /**
  * Sign create Tron TRC20 transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronCreateTrc20SignedTransaction = async (testnet: boolean, body: CreateTronTrc20, provider?: string) => {
+export const prepareTronCreateTrc20SignedTransaction = async (body: CreateTronTrc20, provider?: string) => {
     await validateBody(body, CreateTronTrc20)
     const {
         fromPrivateKey,
@@ -486,7 +462,7 @@ export const prepareTronCreateTrc20SignedTransaction = async (testnet: boolean, 
         totalSupply,
     } = body
 
-    const tronWeb = prepareTronWeb(testnet, provider)
+    const tronWeb = prepareTronWeb(provider)
     const tx = await tronWeb.transactionBuilder.createSmartContract({
         feeLimit: 1000000000,
         callValue: 0,
@@ -508,12 +484,11 @@ export const prepareTronCreateTrc20SignedTransaction = async (testnet: boolean, 
 
 /**
  * Prepare Tron transaction for KMS. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronSignedKMSTransaction = async (testnet: boolean, body: TransferTron, provider?: string) => {
+export const prepareTronSignedKMSTransaction = async (body: TransferTron, provider?: string) => {
     await validateBody(body, TransferTron)
     const {
         from,
@@ -521,7 +496,7 @@ export const prepareTronSignedKMSTransaction = async (testnet: boolean, body: Tr
         amount,
     } = body
 
-    const tronWeb = prepareTronWeb(testnet, provider)
+    const tronWeb = prepareTronWeb(provider)
     const tx = await tronWeb.transactionBuilder.sendTrx(
         to,
         tronWeb.toSun(amount),
@@ -531,12 +506,11 @@ export const prepareTronSignedKMSTransaction = async (testnet: boolean, body: Tr
 
 /**
  * Prepare Tron Freeze balance transaction for KMS. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronFreezeKMSTransaction = async (testnet: boolean, body: FreezeTron, provider?: string) => {
+export const prepareTronFreezeKMSTransaction = async (body: FreezeTron, provider?: string) => {
     await validateBody(body, FreezeTron)
     const {
         from,
@@ -546,7 +520,7 @@ export const prepareTronFreezeKMSTransaction = async (testnet: boolean, body: Fr
         duration,
     } = body
 
-    const tronWeb = prepareTronWeb(testnet, provider)
+    const tronWeb = prepareTronWeb(provider)
     const tx = await tronWeb.transactionBuilder.freezeBalance(
         tronWeb.toSun(parseFloat(amount)),
         duration,
@@ -574,7 +548,7 @@ export const prepareTronTrc10SignedKMSTransaction = async (testnet: boolean, bod
         amount,
     } = body
 
-    const tronWeb = prepareTronWeb(testnet, provider)
+    const tronWeb = prepareTronWeb(provider)
     const tx = await tronWeb.transactionBuilder.sendToken(
         to,
         new BigNumber(amount).multipliedBy(new BigNumber(10).pow(precision || await getTrc10Precision(testnet, tokenId))),
@@ -585,12 +559,11 @@ export const prepareTronTrc10SignedKMSTransaction = async (testnet: boolean, bod
 
 /**
  * Prepare Tron TRC20 transaction for KMS. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronTrc20SignedKMSTransaction = async (testnet: boolean, body: TransferTronTrc20, provider?: string) => {
+export const prepareTronTrc20SignedKMSTransaction = async (body: TransferTronTrc20, provider?: string) => {
     await validateBody(body, TransferTronTrc20)
     const {
         from,
@@ -600,7 +573,7 @@ export const prepareTronTrc20SignedKMSTransaction = async (testnet: boolean, bod
         feeLimit,
     } = body
 
-    const tronWeb = prepareTronWeb(testnet, provider)
+    const tronWeb = prepareTronWeb(provider)
     tronWeb.setAddress(tokenAddress)
     const contractInstance = await tronWeb.contract().at(tokenAddress)
     const decimals = await contractInstance.decimals().call()
@@ -622,12 +595,11 @@ export const prepareTronTrc20SignedKMSTransaction = async (testnet: boolean, bod
 
 /**
  * Prepare create Tron TRC10 transaction for KMS. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronCreateTrc10SignedKMSTransaction = async (testnet: boolean, body: CreateTronTrc10, provider?: string) => {
+export const prepareTronCreateTrc10SignedKMSTransaction = async (body: CreateTronTrc10, provider?: string) => {
     await validateBody(body, CreateTronTrc10)
     const {
         from,
@@ -639,7 +611,7 @@ export const prepareTronCreateTrc10SignedKMSTransaction = async (testnet: boolea
         decimals,
     } = body
 
-    const tronWeb = prepareTronWeb(testnet, provider)
+    const tronWeb = prepareTronWeb(provider)
     const tx = await tronWeb.transactionBuilder.createToken({
         name,
         abbreviation,
@@ -661,12 +633,11 @@ export const prepareTronCreateTrc10SignedKMSTransaction = async (testnet: boolea
 
 /**
  * Prepare create Tron TRC20 transaction for KMS. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronCreateTrc20SignedKMSTransaction = async (testnet: boolean, body: CreateTronTrc20, provider?: string) => {
+export const prepareTronCreateTrc20SignedKMSTransaction = async (body: CreateTronTrc20, provider?: string) => {
     await validateBody(body, CreateTronTrc20)
     const {
         from,
@@ -677,7 +648,7 @@ export const prepareTronCreateTrc20SignedKMSTransaction = async (testnet: boolea
         totalSupply,
     } = body
 
-    const tronWeb = prepareTronWeb(testnet, provider)
+    const tronWeb = prepareTronWeb(provider)
     const tx = await tronWeb.transactionBuilder.createSmartContract({
         feeLimit: 1000000000,
         callValue: 0,
@@ -699,12 +670,11 @@ export const prepareTronCreateTrc20SignedKMSTransaction = async (testnet: boolea
 
 /**
  * Sign Tron deploy trc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronDeployTrc721SignedTransaction = async (testnet: boolean, body: TronDeployTrc721, provider?: string) => {
+export const prepareTronDeployTrc721SignedTransaction = async (body: TronDeployTrc721, provider?: string) => {
     await validateBody(body, TronDeployTrc721)
     const {
         fromPrivateKey,
@@ -715,7 +685,7 @@ export const prepareTronDeployTrc721SignedTransaction = async (testnet: boolean,
         from,
     } = body
 
-    const tronWeb = prepareTronWeb(testnet, provider)
+    const tronWeb = prepareTronWeb(provider)
     const tx = await tronWeb.transactionBuilder.createSmartContract({
         feeLimit: tronWeb.toSun(feeLimit),
         callValue: 0,
@@ -737,14 +707,13 @@ export const prepareTronDeployTrc721SignedTransaction = async (testnet: boolean,
 
 /**
  * Sign Tron generate custodial wallet transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronGenerateCustodialWalletSignedTransaction = async (testnet: boolean, body: GenerateTronCustodialAddress, provider?: string) => {
+export const prepareTronGenerateCustodialWalletSignedTransaction = async (body: GenerateTronCustodialAddress, provider?: string) => {
     await validateBody(body, GenerateTronCustodialAddress)
-    const tronWeb = prepareTronWeb(testnet, provider)
+    const tronWeb = prepareTronWeb(provider)
     const {abi, code} = obtainCustodialAddressType(body)
     const tx = await tronWeb.transactionBuilder.createSmartContract({
         feeLimit: tronWeb.toSun(body.feeLimit || 100),
@@ -764,14 +733,13 @@ export const prepareTronGenerateCustodialWalletSignedTransaction = async (testne
 
 /**
  * Sign TRON deploy new smart contract for NFT marketplace transaction. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
- * @param testnet chain to work with
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum provider will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareTronDeployMarketplaceListingSignedTransaction = async (testnet: boolean, body: DeployTronMarketplaceListing, provider?: string) => {
+export const prepareTronDeployMarketplaceListingSignedTransaction = async (body: DeployTronMarketplaceListing, provider?: string) => {
     await validateBody(body, DeployTronMarketplaceListing)
-    const tronWeb = prepareTronWeb(testnet, provider)
+    const tronWeb = prepareTronWeb(provider)
     const tx = await tronWeb.transactionBuilder.createSmartContract({
         feeLimit: tronWeb.toSun(body.feeLimit || 300),
         callValue: 0,
@@ -793,12 +761,11 @@ export const prepareTronDeployMarketplaceListingSignedTransaction = async (testn
 
 /**
  * Sign Tron deploy trc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronMintCashbackTrc721SignedTransaction = async (testnet: boolean, body: TronMintTrc721, provider?: string) => {
+export const prepareTronMintCashbackTrc721SignedTransaction = async (body: TronMintTrc721, provider?: string) => {
     await validateBody(body, TronMintTrc721)
     const {
         fromPrivateKey,
@@ -813,7 +780,7 @@ export const prepareTronMintCashbackTrc721SignedTransaction = async (testnet: bo
         cashbackValues
     } = body
 
-    const tronWeb = prepareTronWeb(testnet, provider)
+    const tronWeb = prepareTronWeb(provider)
     tronWeb.setAddress(contractAddress)
     const sender = from || tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(fromPrivateKey))
     const cb: string[] = []
@@ -851,12 +818,11 @@ export const prepareTronMintCashbackTrc721SignedTransaction = async (testnet: bo
 
 /**
  * Sign Tron mint trc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronMintTrc721SignedTransaction = async (testnet: boolean, body: TronMintTrc721, provider?: string) => {
+export const prepareTronMintTrc721SignedTransaction = async (body: TronMintTrc721, provider?: string) => {
     await validateBody(body, TronMintTrc721)
     const {
         fromPrivateKey,
@@ -869,7 +835,7 @@ export const prepareTronMintTrc721SignedTransaction = async (testnet: boolean, b
         signatureId,
     } = body
 
-    const tronWeb = prepareTronWeb(testnet, provider)
+    const tronWeb = prepareTronWeb(provider)
     tronWeb.setAddress(contractAddress)
     const sender = from || tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(fromPrivateKey))
     const {transaction} = await tronWeb.transactionBuilder.triggerSmartContract(
@@ -895,12 +861,11 @@ export const prepareTronMintTrc721SignedTransaction = async (testnet: boolean, b
 
 /**
  * Sign Tron transfer trc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronTransferTrc721SignedTransaction = async (testnet: boolean, body: TronTransferTrc721, provider?: string) => {
+export const prepareTronTransferTrc721SignedTransaction = async (body: TronTransferTrc721, provider?: string) => {
     await validateBody(body, TronTransferTrc721)
     const {
         fromPrivateKey,
@@ -913,7 +878,7 @@ export const prepareTronTransferTrc721SignedTransaction = async (testnet: boolea
         value
     } = body
 
-    const tronWeb = prepareTronWeb(testnet, provider)
+    const tronWeb = prepareTronWeb(provider)
     tronWeb.setAddress(contractAddress)
     const sender = from || tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(fromPrivateKey))
     const {transaction} = await tronWeb.transactionBuilder.triggerSmartContract(
@@ -936,12 +901,11 @@ export const prepareTronTransferTrc721SignedTransaction = async (testnet: boolea
 
 /**
  * Sign Tron burn trc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronBurnTrc721SignedTransaction = async (testnet: boolean, body: TronBurnTrc721, provider?: string) => {
+export const prepareTronBurnTrc721SignedTransaction = async (body: TronBurnTrc721, provider?: string) => {
     await validateBody(body, TronBurnTrc721)
     const {
         fromPrivateKey,
@@ -952,7 +916,7 @@ export const prepareTronBurnTrc721SignedTransaction = async (testnet: boolean, b
         signatureId,
     } = body
 
-    const tronWeb = prepareTronWeb(testnet, provider)
+    const tronWeb = prepareTronWeb(provider)
     tronWeb.setAddress(contractAddress)
     const sender = from || tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(fromPrivateKey))
     const {transaction} = await tronWeb.transactionBuilder.triggerSmartContract(
@@ -973,12 +937,11 @@ export const prepareTronBurnTrc721SignedTransaction = async (testnet: boolean, b
 
 /**
  * Sign Tron mint multiple trc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronMintMultipleTrc721SignedTransaction = async (testnet: boolean, body: TronMintMultipleTrc721, provider?: string) => {
+export const prepareTronMintMultipleTrc721SignedTransaction = async (body: TronMintMultipleTrc721, provider?: string) => {
     await validateBody(body, TronMintMultipleTrc721)
     const {
         fromPrivateKey,
@@ -991,7 +954,7 @@ export const prepareTronMintMultipleTrc721SignedTransaction = async (testnet: bo
         signatureId,
     } = body
 
-    const tronWeb = prepareTronWeb(testnet, provider)
+    const tronWeb = prepareTronWeb(provider)
     tronWeb.setAddress(contractAddress)
     const sender = from || tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(fromPrivateKey))
     const {transaction} = await tronWeb.transactionBuilder.triggerSmartContract(
@@ -1020,12 +983,11 @@ export const prepareTronMintMultipleTrc721SignedTransaction = async (testnet: bo
 
 /**
  * Sign Tron update cashback for author trc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronUpdateCashbackForAuthorTrc721SignedTransaction = async (testnet: boolean, body: TronUpdateCashbackTrc721, provider?: string) => {
+export const prepareTronUpdateCashbackForAuthorTrc721SignedTransaction = async (body: TronUpdateCashbackTrc721, provider?: string) => {
     await validateBody(body, TronUpdateCashbackTrc721)
     const {
         fromPrivateKey,
@@ -1037,7 +999,7 @@ export const prepareTronUpdateCashbackForAuthorTrc721SignedTransaction = async (
         signatureId,
     } = body
 
-    const tronWeb = prepareTronWeb(testnet, provider)
+    const tronWeb = prepareTronWeb(provider)
     tronWeb.setAddress(contractAddress)
     const sender = from || tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(fromPrivateKey))
     const {transaction} = await tronWeb.transactionBuilder.triggerSmartContract(
@@ -1064,15 +1026,14 @@ export const prepareTronUpdateCashbackForAuthorTrc721SignedTransaction = async (
  * Sign Tron pending transaction from Tatum KMS
  * @param tx pending transaction from KMS
  * @param fromPrivateKey private key to sign transaction with.
- * @param testnet mainnet or testnet version
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signTrxKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, testnet: boolean) => {
+export const signTrxKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string) => {
     if (tx.chain !== Currency.TRON) {
         throw Error('Unsupported chain.')
     }
     const transactionConfig = JSON.parse(tx.serializedTransaction)
-    const tronWeb = prepareTronWeb(testnet)
+    const tronWeb = prepareTronWeb()
     return JSON.stringify(await tronWeb.trx.sign(transactionConfig, fromPrivateKey))
 }
 
