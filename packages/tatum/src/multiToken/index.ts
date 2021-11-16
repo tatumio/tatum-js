@@ -54,14 +54,27 @@ import {
   transferMultiTokenBatch as transferBscMultiTokenBatchTransaction,
 } from '@tatumio/tatum-bsc'
 import {
+  erc1155TokenABI as abi,
+  AddMinter,
+  BurnMultiToken,
   Currency,
   DeployMultiToken,
   MintMultiToken,
   MintMultiTokenBatch,
+  prepareAddMultiTokenMinterAbstraction,
   TransferMultiToken,
   TransferMultiTokenBatch,
 } from '@tatumio/tatum-core'
+import { sendAlgoCreateFractionalNFTSignedTransaction, sendAlgoTransferFractionalNFTSignedTransaction } from '@tatumio/tatum-algo'
+import { sendAlgoBurnFractionalNFTSignedTransaction } from '@tatumio/tatum-algo'
+import { helperBroadcastTx, helperPrepareSCCall } from 'src/helpers'
 
+/**
+ * Deploy MultiTokens (1155) contract.
+ * @param testnet if we use testnet or not
+ * @param body body of the request
+ * @param provider optional provider do broadcast tx
+ */
 export const deployMultiToken = async (
   testnet: boolean,
   body: DeployMultiToken | CeloDeployMultiToken | EthDeployMultiToken,
@@ -80,6 +93,13 @@ export const deployMultiToken = async (
       return deployBscMultiToken(testnet, body, provider)
   }
 }
+
+/**
+ * Mint MultiTokens (1155)
+ * @param testnet if we use testnet or not
+ * @param body body of the request
+ * @param provider optional provider do broadcast tx
+ */
 export const mintMultiToken = async (testnet: boolean, body: MintMultiToken | CeloMintMultiToken, provider?: string) => {
   switch (body.chain) {
     case Currency.CELO:
@@ -92,8 +112,17 @@ export const mintMultiToken = async (testnet: boolean, body: MintMultiToken | Ce
       return mintOneMultiToken(testnet, body, provider)
     case Currency.BSC:
       return mintBscMultiToken(testnet, body, provider)
+    case Currency.ALGO:
+      return sendAlgoCreateFractionalNFTSignedTransaction(testnet, body as MintMultiToken, provider)
   }
 }
+
+/**
+ * Mint MultiTokens (1155) in a batch call.
+ * @param testnet if we use testnet or not
+ * @param body body of the request
+ * @param provider optional provider do broadcast tx
+ */
 export const mintMultiTokenBatch = async (testnet: boolean, body: MintMultiTokenBatch | CeloMintMultiTokenBatch, provider?: string) => {
   switch (body.chain) {
     case Currency.CELO:
@@ -108,6 +137,13 @@ export const mintMultiTokenBatch = async (testnet: boolean, body: MintMultiToken
       return mintBscMultiTokenBatch(testnet, body, provider)
   }
 }
+
+/**
+ * Burn MultiTokens (1155).
+ * @param testnet if we use testnet or not
+ * @param body body of the request
+ * @param provider optional provider do broadcast tx
+ */
 export const burnMultiToken = async (testnet: boolean, body: CeloBurnMultiToken | EthBurnMultiToken, provider?: string) => {
   switch (body.chain) {
     case Currency.CELO:
@@ -120,8 +156,17 @@ export const burnMultiToken = async (testnet: boolean, body: CeloBurnMultiToken 
       return burnOneMultiTokenSignedTransaction(testnet, body, provider)
     case Currency.BSC:
       return burnBscMultiTokenTransaction(testnet, body, provider)
+    case Currency.ALGO:
+      return sendAlgoBurnFractionalNFTSignedTransaction(testnet, body as BurnMultiToken, provider)
   }
 }
+
+/**
+ * Burn MultiTokens (1155) in a batch call.
+ * @param testnet if we use testnet or not
+ * @param body body of the request
+ * @param provider optional provider do broadcast tx
+ */
 export const burnMultiTokenBatch = async (testnet: boolean, body: CeloBurnMultiTokenBatch | EthBurnMultiTokenBatch, provider?: string) => {
   switch (body.chain) {
     case Currency.CELO:
@@ -137,6 +182,12 @@ export const burnMultiTokenBatch = async (testnet: boolean, body: CeloBurnMultiT
   }
 }
 
+/**
+ * Transfer MultiTokens (1155).
+ * @param testnet if we use testnet or not
+ * @param body body of the request
+ * @param provider optional provider do broadcast tx
+ */
 export const transferMultiToken = async (testnet: boolean, body: CeloTransferMultiToken | TransferMultiToken, provider?: string) => {
   switch (body.chain) {
     case Currency.CELO:
@@ -149,9 +200,17 @@ export const transferMultiToken = async (testnet: boolean, body: CeloTransferMul
       return transferOneMultiTokenSignedTransaction(testnet, body, provider)
     case Currency.BSC:
       return transferBscMultiTokenTransaction(testnet, body, provider)
+    case Currency.ALGO:
+      return sendAlgoTransferFractionalNFTSignedTransaction(testnet, body as TransferMultiToken, provider)
   }
 }
 
+/**
+ * Transfer MultiTokens (1155) in a batch call.
+ * @param testnet if we use testnet or not
+ * @param body body of the request
+ * @param provider optional provider do broadcast tx
+ */
 export const transferMultiTokenBatch = async (
   testnet: boolean,
   body: CeloTransferMultiTokenBatch | TransferMultiTokenBatch,
@@ -170,6 +229,26 @@ export const transferMultiTokenBatch = async (
       return transferBscMultiTokenBatchTransaction(testnet, body, provider)
   }
 }
+
+/**
+ * Prepare add new minter to the MultiToken (1155) contract transaction.
+ * @param testnet if we use testnet or not
+ * @param body body of the add minter request
+ * @param provider optional provider do broadcast tx
+ */
+export const prepareAddMultiTokenMinter = async (testnet: boolean, body: AddMinter, provider?: string) => {
+  const params = await prepareAddMultiTokenMinterAbstraction(body)
+  return await helperPrepareSCCall(testnet, body, AddMinter, 'grantRole', params, undefined, provider, abi)
+}
+
+/**
+ * Add new minter to the MultiToken (1155) contract.
+ * @param testnet if we use testnet or not
+ * @param body body of the add minter request
+ * @param provider optional provider do broadcast tx
+ */
+export const sendAddMultiTokenMinter = async (testnet: boolean, body: AddMinter, provider?: string) =>
+  helperBroadcastTx(body.chain, await prepareAddMultiTokenMinter(testnet, body, provider), body.signatureId)
 
 export {
   getMultiTokenContractAddress,

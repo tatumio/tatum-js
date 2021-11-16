@@ -13,6 +13,7 @@ import {
   SmartContractMethodInvocation,
   UpdateCashbackErc721,
   erc721TokenBytecode,
+  erc721Provenance_bytecode,
   DeployMarketplaceListing,
   listing,
   DeployNftAuction,
@@ -34,6 +35,8 @@ import {
   TransferErc721,
   BurnMultiTokenBatch,
   DeployMultiToken,
+  EthMintMultipleErc721,
+  EthMintErc721,
 } from '@tatumio/tatum-core'
 import { obtainCustodialAddressType } from '@tatumio/tatum-defi'
 import { BigNumber } from 'bignumber.js'
@@ -47,8 +50,8 @@ import { mintNFT } from '../nft'
 /**
  * Estimate Gas price for the transaction.
  */
-export const bscGetGasPriceInWei = async (testnet = false) => {
-  return Web3.utils.toWei(testnet ? '10' : '5', 'gwei')
+export const bscGetGasPriceInWei = async () => {
+  return Web3.utils.toWei('10', 'gwei')
 }
 
 /**
@@ -243,10 +246,10 @@ export const prepareBscOrBep20SignedTransaction = async (body: TransferBscBep20,
   } else {
     // @ts-ignore
     const contract = new client.eth.Contract([TRANSFER_METHOD_ABI], CONTRACT_ADDRESSES[currency])
-    const digits = new BigNumber(10).pow(CONTRACT_DECIMALS[currency])
+    const digits = new BigNumber(10).pow(CONTRACT_DECIMALS[currency as string])
     tx = {
       from: 0,
-      to: CONTRACT_ADDRESSES[currency],
+      to: CONTRACT_ADDRESSES[currency as string],
       data: contract.methods.transfer(to.trim(), `0x${new BigNumber(amount).multipliedBy(digits).toString(16)}`).encodeABI(),
       nonce,
     }
@@ -386,6 +389,83 @@ export const prepareBscMintBep721SignedTransaction = async (body: MintErc721, pr
   throw new Error('Contract address should not be empty')
 }
 /**
+ * Sign Bsc mint multiple ERC 721 Cashback transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareBscMintMultipleBep721ProvenanceSignedTransaction = async (body: EthMintMultipleErc721, provider?: string) => {
+  await validateBody(body, EthMintMultipleErc721)
+  const { fromPrivateKey, to, tokenId, contractAddress, url, nonce, signatureId, authorAddresses, cashbackValues, fixedValues, fee } = body
+
+  const client = await getBscClient(provider, fromPrivateKey)
+
+  // @ts-ignore
+  const contract = new client.eth.Contract(erc721Provenance_abi, contractAddress)
+  const cb: string[][] = []
+  const fv: string[][] = []
+  if (authorAddresses && cashbackValues && fixedValues) {
+    for (let i = 0; i < cashbackValues.length; i++) {
+      const cb2: string[] = []
+      const fv2: string[] = []
+      for (let j = 0; j < cashbackValues[i].length; j++) {
+        cb2.push(`0x${new BigNumber(cashbackValues[i][j]).multipliedBy(100).toString(16)}`)
+        fv2.push(`0x${new BigNumber(toWei(fixedValues[i][j], 'ether')).toString(16)}`)
+      }
+      cb.push(cb2)
+      fv.push(fv2)
+    }
+  }
+  const tx: TransactionConfig = {
+    from: 0,
+    to: contractAddress.trim(),
+    data: contract.methods
+      .mintMultiple(
+        to.map((t) => t.trim()),
+        tokenId,
+        url,
+        authorAddresses ? authorAddresses : [],
+        cb,
+        fv
+      )
+      .encodeABI(),
+    nonce,
+  }
+  return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
+}
+/**
+ * Sign Bsc mint ERC 721 provenance transaction with cashback via private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareBscMintBep721ProvenanceSignedTransaction = async (body: EthMintErc721, provider?: string) => {
+  await validateBody(body, EthMintErc721)
+  const { fromPrivateKey, to, tokenId, contractAddress, nonce, fee, url, signatureId, authorAddresses, cashbackValues, fixedValues } = body
+
+  const client = getBscClient(provider, fromPrivateKey)
+
+  // @ts-ignore
+  const contract = new client.eth.Contract(erc721Provenance_abi, contractAddress)
+  const cb: string[] = []
+  const fval: string[] = []
+  if (authorAddresses && cashbackValues && fixedValues) {
+    cashbackValues.map((c) => cb.push(`0x${new BigNumber(c).multipliedBy(100).toString(16)}`))
+    fixedValues.map((c) => fval.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
+  }
+  if (contractAddress) {
+    const tx: TransactionConfig = {
+      from: 0,
+      to: contractAddress.trim(),
+      data: contract.methods.mintWithTokenURI(to.trim(), tokenId, url, authorAddresses ? authorAddresses : [], cb, fval).encodeABI(),
+      nonce,
+    }
+
+    return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
+  }
+  throw new Error('Contract address should not be empty!')
+}
+/**
  * Sign Bsc mint ERC 721 transaction with cashback via private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
@@ -507,17 +587,20 @@ export const prepareBscBurnBep721SignedTransaction = async (body: BurnErc721, pr
  */
 export const prepareBscTransferBep721SignedTransaction = async (body: TransferErc721, provider?: string) => {
   await validateBody(body, TransferErc721)
-  const { fromPrivateKey, to, tokenId, fee, contractAddress, nonce, signatureId, value } = body
+  const { fromPrivateKey, to, tokenId, fee, contractAddress, nonce, signatureId, value, provenance, provenanceData, tokenPrice } = body
 
   const client = await getBscClient(provider, fromPrivateKey)
 
   // @ts-ignore
-  const contract = new client.eth.Contract(erc721TokenABI, contractAddress)
+  const contract = new client.eth.Contract(provenance ? erc721Provenance_abi : erc721TokenABI, contractAddress)
+  const tokenData = provenance
+    ? contract.methods.safeTransfer(to.trim(), tokenId, provenanceData + "'''###'''" + toWei(tokenPrice!, 'ether')).encodeABI()
+    : contract.methods.safeTransfer(to.trim(), tokenId).encodeABI()
 
   const tx: TransactionConfig = {
     from: 0,
     to: contractAddress.trim(),
-    data: contract.methods.safeTransfer(to.trim(), tokenId).encodeABI(),
+    data: tokenData,
     nonce,
     value: value ? `0x${new BigNumber(value).multipliedBy(1e18).toString(16)}` : undefined,
   }
@@ -557,13 +640,13 @@ export const prepareBscUpdateCashbackForAuthorErc721SignedTransaction = async (b
  */
 export const prepareBscDeployBep721SignedTransaction = async (body: DeployErc721, provider?: string) => {
   await validateBody(body, DeployErc721)
-  const { fromPrivateKey, fee, name, symbol, nonce, signatureId } = body
+  const { fromPrivateKey, fee, name, symbol, nonce, signatureId, provenance } = body
 
   const client = await getBscClient(provider, fromPrivateKey)
 
   // @ts-ignore
-  const contract = new client.eth.Contract(erc721TokenABI, null, {
-    data: erc721TokenBytecode,
+  const contract = new client.eth.Contract(provenance ? erc721Provenance_abi : erc721TokenABI, null, {
+    data: provenance ? erc721Provenance_bytecode : erc721TokenBytecode,
   })
 
   // @ts-ignore
@@ -934,6 +1017,25 @@ export const sendMintMultipleCashbackBep721Transaction = async (body: MintMultip
 export const sendMintMultipleBep721Transaction = async (body: MintMultipleErc721, provider?: string) =>
   bscBroadcast(await prepareBscMintMultipleBep721SignedTransaction(body, provider), body.signatureId)
 
+/**
+ * Send Bsc BEP721 mint multiple provenance transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
+export const sendMintMultipleBep721ProvenanceTransaction = async (body: EthMintMultipleErc721, provider?: string) =>
+  bscBroadcast(await prepareBscMintMultipleBep721ProvenanceSignedTransaction(body, provider), body.signatureId)
+/**
+ * Send Bsc BEP721 mint provenance transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
+export const sendMintBep721ProvenanceTransaction = async (body: EthMintErc721, provider?: string) => {
+  return bscBroadcast(await prepareBscMintBep721ProvenanceSignedTransaction(body, provider), body.signatureId)
+}
 /**
  * Send Bsc BEP721 burn transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.

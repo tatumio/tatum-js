@@ -1,5 +1,5 @@
-import { mintNFTRequest, createNFTAbstraction } from '@tatumio/tatum-defi'
-import { MintErc721, TransactionHash } from '@tatumio/tatum-core'
+import { mintNFTRequest, createNFTAbstraction, prepareAddNFTMinterAbstraction } from '@tatumio/tatum-defi'
+import { AddMinter, MintErc721, TransactionHash, erc721TokenABI as abi } from '@tatumio/tatum-core'
 import {
   CeloDeployErc721,
   sendCeloDeployErc721Transaction,
@@ -15,6 +15,8 @@ import {
   sendCeloUpdateCashbackForAuthorErc721Transaction,
   CeloTransferErc721,
   sendCeloTransferErc721Transaction,
+  helperPrepareSCCall,
+  helperBroadcastTx,
 } from '..'
 
 export const mintNFT = (body: MintErc721): Promise<TransactionHash> => mintNFTRequest(body)
@@ -109,4 +111,31 @@ export const transferNFT = async (testnet: boolean, body: CeloTransferErc721, pr
   return sendCeloTransferErc721Transaction(testnet, body, provider)
 }
 
-export { getNFTsByAddress, getNFTContractAddress, getNFTMetadataURI, getNFTImage, getNFTRoyalty } from '@tatumio/tatum-defi'
+/**
+ * Prepare add new minter to the NFT contract transaction.
+ * @param testnet if we use testnet or not
+ * @param body body of the add minter request
+ * @param provider optional provider do broadcast tx
+ */
+export const prepareAddNFTMinter = async (testnet: boolean, body: AddMinter, provider?: string) => {
+  const params = await prepareAddNFTMinterAbstraction(testnet, body, provider)
+  return await helperPrepareSCCall(testnet, body, AddMinter, 'grantRole', params, undefined, provider, abi)
+}
+
+/**
+ * Add new minter to the NFT contract.
+ * @param testnet if we use testnet or not
+ * @param body body of the add minter request
+ * @param provider optional provider do broadcast tx
+ */
+export const sendAddNFTMinter = async (testnet: boolean, body: AddMinter, provider?: string) =>
+  helperBroadcastTx(body.chain, await prepareAddNFTMinter(testnet, body, provider), body.signatureId)
+
+export {
+  getNFTsByAddress,
+  getNFTProvenanceData,
+  getNFTContractAddress,
+  getNFTMetadataURI,
+  getNFTImage,
+  getNFTRoyalty,
+} from '@tatumio/tatum-defi'

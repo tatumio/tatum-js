@@ -1,5 +1,5 @@
 import { CreateRecord, validateBody, Currency, TransferErc20 } from '@tatumio/tatum-core'
-import { sendOneStoreDataTransaction, sendOneTransaction } from '../'
+import { sendOneStoreDataTransaction, sendOneTransaction, sendOneTransfer20SignedTransaction } from '../'
 
 /**
  * Store any arbitrary data on the blockchain.
@@ -20,6 +20,6 @@ export const storeData = async (testnet: boolean, body: CreateRecord, provider?:
  * @param provider Optional provider to use for broadcasting signed tx to the blockchain.
  */
 export const sendTransaction = async (testnet: boolean, chain: Currency, body: TransferErc20, provider?: string) => {
-  ;(body as TransferErc20).currency = chain
-  return sendOneTransaction(testnet, body as TransferErc20, provider)
+  const b = body as TransferErc20
+  return b.contractAddress ? sendOneTransfer20SignedTransaction(testnet, b, provider) : sendOneTransaction(testnet, b, provider)
 }

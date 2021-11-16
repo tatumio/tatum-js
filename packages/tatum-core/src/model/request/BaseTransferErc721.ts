@@ -27,8 +27,21 @@ export class BaseTransferErc721 extends PrivateKeyOrSignatureId {
   @IsNumberString()
   public value?: string
 
-  @ValidateIf(o => o.chain === Currency.ALGO && o.signatureId)
+  @IsOptional()
+  @ValidateIf((o) => o.provenanceData && o.tokenPrice && o.provenance)
+  public provenance?: boolean
+
+  @IsOptional()
+  @ValidateIf((o) => o.provenanceData && o.tokenPrice && o.provenance)
+  public provenanceData?: string
+
+  @IsOptional()
+  @IsNumberString()
+  @ValidateIf((o) => o.provenanceData && o.tokenPrice && o.provenance)
+  public tokenPrice?: string
+
+  @ValidateIf((o) => o.chain === Currency.ALGO && o.signatureId)
   @IsNotEmpty()
   @Length(42, 58)
-  public from?: string;
+  public from?: string
 }

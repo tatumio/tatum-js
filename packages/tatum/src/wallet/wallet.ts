@@ -118,7 +118,7 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
     case Currency.ADA:
       return generateAdaWallet(mnem)
     case Currency.ALGO:
-      return generateAlgoWallet(mnem)
+      return generateAlgoWallet(mnemonic)
     default:
       throw new Error('Unsupported blockchain.')
   }

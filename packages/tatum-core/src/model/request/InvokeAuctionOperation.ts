@@ -22,6 +22,10 @@ export class InvokeAuctionOperation extends PrivateKeyOrSignatureId {
   public bidValue: string
 
   @IsOptional()
+  @Length(34, 43)
+  public bidder?: string
+
+  @IsOptional()
   @Min(0)
   public nonce?: number
 

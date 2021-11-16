@@ -208,16 +208,8 @@ export const prepareMarketplaceBuyListing = async (
     throw new Error('Unsupported chain')
   }
 
-  const { body: validatedBody, params } = await prepareMarketplaceBuyListingAbstraction(body)
-  return await helperPrepareSCCall(
-    testnet,
-    validatedBody,
-    InvokeMarketplaceListingOperation,
-    'buyAssetFromListing',
-    params,
-    undefined,
-    provider
-  )
+  const { body: validatedBody, params, methodName } = await prepareMarketplaceBuyListingAbstraction(body)
+  return await helperPrepareSCCall(testnet, validatedBody, InvokeMarketplaceListingOperation, methodName, params, undefined, provider)
 }
 
 /**

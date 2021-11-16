@@ -26,7 +26,8 @@ import {
   helperGetWeb3Client as preparePolygonClient,
   helperPrepareSCCall as polygonHelperPrepareSCCall,
 } from '@tatumio/tatum-polygon'
-import { helperBroadcastTx as tronBroadcast } from '@tatumio/tatum-tron'
+import { helperBroadcastTx as tronBroadcast, helperPrepareSCCall as tronHelperPrepareSCCall } from '@tatumio/tatum-tron'
+import { getXdcClient } from '@tatumio/tatum-xdc'
 
 export const helperBroadcastTx = async (chain: Currency, txData: string, signatureId?: string) => {
   switch (chain) {
@@ -53,6 +54,8 @@ export const helperGetWeb3Client = (testnet: boolean, chain: Currency, provider?
       return getCeloClient(testnet, chain, provider)
     case Currency.ONE:
       return prepareOneClient(testnet, chain, provider)
+    case Currency.XDC:
+      return getXdcClient(provider)
     case Currency.ETH:
       return getClient(provider)
     case Currency.BSC:
@@ -87,6 +90,8 @@ export const helperPrepareSCCall = async (
       return await bscHelperPrepareSCCall(testnet, body, clazz, methodName, params, methodSig, provider, abi)
     case Currency.MATIC:
       return await polygonHelperPrepareSCCall(testnet, body, clazz, methodName, params, methodSig, provider, abi)
+    case Currency.TRON:
+      return await tronHelperPrepareSCCall(testnet, body, clazz, methodName, params, methodSig, provider, abi)
     default:
       throw new Error('Unsupported combination of inputs.')
   }

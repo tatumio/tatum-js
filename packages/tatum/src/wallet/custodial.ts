@@ -6,6 +6,7 @@ import {
   CustodialFullTokenWallet,
   CustodialFullTokenWalletWithBatch,
   GenerateCustodialAddress,
+  GenerateCustodialAddressBatch,
   SmartContractMethodInvocation,
   TransferFromCustodialAddress,
   TransferFromCustodialAddressBatch,
@@ -19,6 +20,8 @@ import {
   getCeloErc20ContractDecimals,
   prepareCeloSmartContractWriteMethodInvocation,
   prepareCustodialWallet as prepareCeloGenerateCustodialWalletSignedTransaction,
+  generateCustodialWalletBatch as celoGenerateCustodialWalletBatch,
+  prepareCustodialWalletBatch as celoPrepareCustodialWalletBatch,
 } from '@tatumio/tatum-celo'
 import {
   generateCustodialWallet as sendOneGenerateCustodialWalletSignedTransaction,
@@ -31,18 +34,24 @@ import {
   getEthErc20ContractDecimals,
   prepareCustodialWallet as prepareEthGenerateCustodialWalletSignedTransaction,
   prepareSmartContractWriteMethodInvocation,
+  generateCustodialWalletBatch as ethGenerateCustodialWalletBatch,
+  prepareCustodialWalletBatch as ethPrepareCustodialWalletBatch,
 } from '@tatumio/tatum-eth'
 import {
   generateCustodialWallet as sendBscGenerateCustodialWalletSignedTransaction,
   getBscBep20ContractDecimals,
   prepareBscSmartContractWriteMethodInvocation,
   prepareCustodialWallet as prepareBscGenerateCustodialWalletSignedTransaction,
+  generateCustodialWalletBatch as bscGenerateCustodialWalletBatch,
+  prepareCustodialWalletBatch as bscPrepareCustodialWalletBatch,
 } from '@tatumio/tatum-bsc'
 import {
   generateCustodialWallet as sendPolygonGenerateCustodialWalletSignedTransaction,
   getPolygonErc20ContractDecimals,
   prepareCustodialWallet as preparePolygonGenerateCustodialWalletSignedTransaction,
   preparePolygonSmartContractWriteMethodInvocation,
+  generateCustodialWalletBatch as polygonGenerateCustodialWalletBatch,
+  prepareCustodialWalletBatch as polygonPrepareCustodialWalletBatch,
 } from '@tatumio/tatum-polygon'
 import {
   generateCustodialWallet as sendTronGenerateCustodialWalletSignedTransaction,
@@ -54,9 +63,12 @@ import {
   getTronTrc20ContractDecimals,
   prepareTronSmartContractInvocation,
   convertAddressToHex,
+  generateCustodialWalletBatch as tronGenerateCustodialWalletBatch,
+  prepareCustodialWalletBatch as tronPrepareCustodialWalletBatch,
 } from '@tatumio/tatum-tron'
 
 /**
+ * This method is @Deprecated. Use @link{generateCustodialWalletBatch} instead
  * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, btu transaction costs connected to the withdrawal
  * of assets is covered by the deployer.
  * @param testnet chain to work with
@@ -69,6 +81,7 @@ export const generateCustodialWallet = async (
   body: GenerateCustodialAddress | GenerateTronCustodialAddress,
   provider?: string
 ) => {
+  console.log('This method is deprecated. For better gas consumption, use generateCustodialWalletBatch.')
   switch (body.chain) {
     case Currency.CELO:
       return await sendCeloGenerateCustodialWalletSignedTransaction(testnet, body, provider)
@@ -88,6 +101,7 @@ export const generateCustodialWallet = async (
 }
 
 /**
+ * This method is @Deprecated. Use @link{prepareCustodialWalletBatch} instead
  * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, btu transaction costs connected to the withdrawal
  * of assets is covered by the deployer.
  * @param testnet chain to work with
@@ -100,6 +114,7 @@ export const prepareCustodialWallet = async (
   body: GenerateCustodialAddress | GenerateTronCustodialAddress,
   provider?: string
 ) => {
+  console.log('This method is deprecated. For better gas consumption, use prepareCustodialWalletBatch.')
   switch (body.chain) {
     case Currency.CELO:
       return await prepareCeloGenerateCustodialWalletSignedTransaction(testnet, body, provider)
@@ -440,4 +455,54 @@ export const prepareApproveFromCustodialWallet = async (testnet: boolean, body: 
 export const sendApproveFromCustodialWallet = async (testnet: boolean, body: ApproveCustodialTransfer, provider?: string) =>
   helperBroadcastTx(body.chain, await prepareApproveFromCustodialWallet(testnet, body, provider), body.signatureId)
 
-export { obtainCustodialAddressType } from '@tatumio/tatum-defi'
+/**
+ * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, but transaction costs connected to the withdrawal
+ * of assets is covered by the deployer.
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const generateCustodialWalletBatch = async (testnet: boolean, body: GenerateCustodialAddressBatch, provider?: string) => {
+  switch (body.chain) {
+    case Currency.CELO:
+      return await celoGenerateCustodialWalletBatch(testnet, body, provider)
+    case Currency.TRON:
+      return await tronGenerateCustodialWalletBatch(testnet, body, provider)
+    case Currency.ETH:
+      return await ethGenerateCustodialWalletBatch(testnet, body, provider)
+    case Currency.MATIC:
+      return await polygonGenerateCustodialWalletBatch(testnet, body, provider)
+    case Currency.BSC:
+      return await bscGenerateCustodialWalletBatch(testnet, body, provider)
+    default:
+      throw new Error('Unsupported chain')
+  }
+}
+
+/**
+ * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, but transaction costs connected to the withdrawal
+ * of assets is covered by the deployer.
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const prepareCustodialWalletBatch = async (testnet: boolean, body: GenerateCustodialAddressBatch, provider?: string) => {
+  switch (body.chain) {
+    case Currency.CELO:
+      return await celoPrepareCustodialWalletBatch(testnet, body, provider)
+    case Currency.TRON:
+      return await tronPrepareCustodialWalletBatch(testnet, body, provider)
+    case Currency.ETH:
+      return await ethPrepareCustodialWalletBatch(testnet, body, provider)
+    case Currency.MATIC:
+      return await polygonPrepareCustodialWalletBatch(testnet, body, provider)
+    case Currency.BSC:
+      return await bscPrepareCustodialWalletBatch(testnet, body, provider)
+    default:
+      throw new Error('Unsupported chain')
+  }
+}
+
+export { obtainCustodialAddressType, getCustodialAddresses } from '@tatumio/tatum-defi'

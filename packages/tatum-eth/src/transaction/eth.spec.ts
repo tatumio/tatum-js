@@ -1,11 +1,23 @@
-import { BurnErc20, Currency, DeployErc20, MintErc20, TransferErc20 } from '@tatumio/tatum-core'
+import {
+  BurnErc20,
+  Currency,
+  DeployErc20,
+  erc721Provenance_abi,
+  MintErc20,
+  SmartContractReadMethodInvocation,
+  TransferErc20,
+} from '@tatumio/tatum-core'
 import { ethEstimateGas } from '../blockchain'
 import {
   ethGetGasPriceInWei,
   prepareCustomErc20SignedTransaction,
   prepareDeployErc20SignedTransaction,
   prepareEthBurnErc20SignedTransaction,
+  prepareEthBurnErc721SignedTransaction,
+  prepareEthDeployErc721SignedTransaction,
   prepareEthMintErc20SignedTransaction,
+  prepareEthMintErc721ProvenanceSignedTransaction,
+  prepareEthMintMultipleErc721ProvenanceSignedTransaction,
   prepareEthOrErc20SignedTransaction,
   sendBurnErc721Transaction,
   sendDeployErc721Transaction,
@@ -13,6 +25,7 @@ import {
   sendMintErc721Transaction,
   sendMintMultipleErc721Transaction,
   sendSmartContractMethodInvocationTransaction,
+  sendSmartContractReadMethodInvocationTransaction,
 } from './eth'
 
 describe('ETH transactions', () => {
@@ -279,5 +292,96 @@ describe('ETH transactions', () => {
       name: '2123kd',
     })
     expect(deployErc721Token).not.toBeNull()
+  })
+
+  // ERC-721 Provenance
+
+  it('should test eth 721 deploy transaction', async () => {
+    const deployErc721Token = await prepareEthDeployErc721SignedTransaction({
+      symbol: '1oido3id3',
+      fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+      chain: Currency.ETH,
+      provenance: true,
+      name: '2123kd',
+    })
+    expect(deployErc721Token).not.toBeNull()
+    console.log(deployErc721Token)
+  })
+  it('should test eth 721 mint multiple transaction', async () => {
+    const mintedTokens = await prepareEthMintMultipleErc721ProvenanceSignedTransaction({
+      to: ['0x75Bd6dFA13C0086b9C8C4b510b1F758c720B79BF', '0x75Bd6dFA13C0086b9C8C4b510b1F758c720B79BF'],
+      tokenId: ['1765', '2231'],
+      url: ['https://www.seznam.cz', 'https://www.seznam.cz'],
+      fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+      chain: Currency.ETH,
+      contractAddress: '0xc788be3b6e035f2f8e56662540f5bb8c8b3e98b7',
+    })
+    console.log(mintedTokens)
+    expect(mintedTokens).not.toBeNull()
+  })
+  it('should test eth 721 mint multiple transaction with cashback', async () => {
+    const mintedTokens = await prepareEthMintMultipleErc721ProvenanceSignedTransaction({
+      to: ['0x75Bd6dFA13C0086b9C8C4b510b1F758c720B79BF', '0x75Bd6dFA13C0086b9C8C4b510b1F758c720B79BF'],
+      tokenId: ['1234', '4321'],
+      url: ['https://www.seznam.cz', 'https://www.seznam.cz'],
+      authorAddresses: [['0xD25031B1aB4D82e5fDFb700234b2a22e272232Be'], ['0xD25031B1aB4D82e5fDFb700234b2a22e272232Be']],
+      cashbackValues: [['1'], ['2']],
+      fixedValues: [['10'], ['10']],
+      fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+      chain: Currency.ETH,
+      contractAddress: '0x5ef08fba01e8d80ff18f4d98e31a43fbb01e7f8a',
+    })
+    expect(mintedTokens).not.toBeNull()
+  })
+  it('should test eth 721 mint transaction', async () => {
+    const mintedTokens = await prepareEthMintErc721ProvenanceSignedTransaction({
+      to: '0x75Bd6dFA13C0086b9C8C4b510b1F758c720B79BF',
+      tokenId: '12312',
+      url: 'https://www.seznam.cz',
+      authorAddresses: ['0xD25031B1aB4D82e5fDFb700234b2a22e272232Be'],
+      cashbackValues: ['1'],
+      fixedValues: ['10'],
+      fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+      chain: Currency.ETH,
+      contractAddress: '0x5ef08fba01e8d80ff18f4d98e31a43fbb01e7f8a',
+    })
+    expect(mintedTokens).not.toBeNull()
+  })
+  it('should test eth 721 burn transaction', async () => {
+    const burnErc721Token = await prepareEthBurnErc721SignedTransaction({
+      tokenId: '12312',
+      fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+      chain: Currency.ETH,
+      contractAddress: '0x5ef08fba01e8d80ff18f4d98e31a43fbb01e7f8a',
+      fee: {
+        gasLimit: '5000000',
+        gasPrice: '110',
+      },
+    })
+    expect(burnErc721Token).not.toBeNull()
+  })
+  it('should test eth 721 send transaction', async () => {
+    const sendErc721Token = await sendErc721Transaction({
+      to: '0x811dfbff13adfbc3cf653dcc373c03616d3471c9',
+      tokenId: '12312',
+      provenance: true,
+      fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+      provenanceData: 'send token X',
+      tokenPrice: '12',
+      value: '2',
+      chain: Currency.ETH,
+      contractAddress: '0x5ef08fba01e8d80ff18f4d98e31a43fbb01e7f8a',
+    })
+    expect(sendErc721Token).not.toBeNull()
+  })
+  it('should test valid transfer data 721 transaction', async () => {
+    const body = new SmartContractReadMethodInvocation()
+    body.contractAddress = '0x5ef08fba01e8d80ff18f4d98e31a43fbb01e7f8a'
+    body.params = ['10']
+    body.methodName = 'getTokenData'
+    body.methodABI = erc721Provenance_abi.find((a: any) => a.name === 'getTokenData')
+    const response = await sendSmartContractReadMethodInvocationTransaction(body)
+    // @ts-ignore
+    console.log(JSON.stringify(response))
   })
 })

@@ -7,6 +7,7 @@ import {
   mintMultiTokenBatch,
   transferMultiToken,
   transferMultiTokenBatch,
+  sendAddMultiTokenMinter,
 } from './index'
 
 describe('NFT tests', () => {
@@ -34,6 +35,26 @@ describe('NFT tests', () => {
         contractAddress: '0xe2a8d7c5b2b4acad7e5b9aec0998cdbbeed45e49',
       })
       console.log(tokenId)
+      expect(mintedToken).not.toBeNull()
+    })
+    it('should test bsc 1155 add minter transaction', async () => {
+      const tx = await sendAddMultiTokenMinter(true, {
+        minter: '0x80d8bac9a6901698b3749fe336bbd1385c1f98f2',
+        chain: Currency.BSC,
+        fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+        contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+      })
+      console.log(tx)
+      expect(tx).not.toBeNull()
+      const mintedToken = await mintMultiToken(true, {
+        to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+        chain: Currency.BSC,
+        tokenId: `${Date.now()}`,
+        data: '0x1234',
+        amount: '1000',
+        fromPrivateKey: '0x37b091fc4ce46a56da643f021254612551dbe0944679a6e09cb5724d3085c9ab',
+        contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+      })
       expect(mintedToken).not.toBeNull()
     })
     it('should test bsc 1155 mint batch transaction', async () => {

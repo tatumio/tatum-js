@@ -1,4 +1,4 @@
-import { sendAlgoSignedTransaction } from './algo'
+import { sendAlgoSignedTransaction, sendAlgoCreateNFTSignedTransaction, sendAlgoCreateFTSignedTransaction } from './algo'
 import { AlgoTransaction } from '../model'
 
 describe('Algo transaction', () => {
@@ -11,7 +11,41 @@ describe('Algo transaction', () => {
     tx.amount = '1'
     tx.note = 'Helloworld'
     tx.fromPrivateKey = '72TCV5BRQPBMSAFPYO3CPWVDBYWNGAYNMTW5QHENOMQF7I6QLNMJWCJZ7A3V5YKD7QD6ZZPEHG2PV2ZVVEDDO6BCRGXWIL3DIUMSUCI'
-    const txId = String(await sendAlgoSignedTransaction(true, tx, 'https://testnet-algorand.api.purestake.io/ps2'))
+    const txId = String(await sendAlgoSignedTransaction(true, tx))
     expect(txId.length).toBe(52)
   })
 })
+
+// describe('Algo NFT transaction', () => {
+//     jest.setTimeout(59999)
+//     it('should test NFT create', async () => {
+//         const tx = new AlgoCreateNFT();
+//         tx.from = 'TMETT6BXL3QUH7AH5TS6IONU7LVTLKIGG54CFCNPMQXWGRIZFIESZBYWP4';
+//         tx.defaultFrozen = false;
+//         tx.uintName = 'ALICEART';
+//         tx.assetName = 'Artwork@arc3';
+//         tx.note = 'TestNFT';
+//         tx.assetURL = 'https://tatum.io/images/logo.svg'
+//         tx.fromPrivateKey = '72TCV5BRQPBMSAFPYO3CPWVDBYWNGAYNMTW5QHENOMQF7I6QLNMJWCJZ7A3V5YKD7QD6ZZPEHG2PV2ZVVEDDO6BCRGXWIL3DIUMSUCI';
+//         const txId = String(await sendAlgoCreateNFTSignedTransaction(true, tx));
+//         expect(txId.length).toBe(52);
+//     })
+// })
+
+// describe('Algo FT transaction', () => {
+//     jest.setTimeout(59999)
+//     it('should test FT create', async () => {
+//         const tx = new AlgoCreateFT();
+//         tx.from = 'TMETT6BXL3QUH7AH5TS6IONU7LVTLKIGG54CFCNPMQXWGRIZFIESZBYWP4';
+//         tx.total = 200;
+//         tx.decimal = 2;
+//         tx.defaultFrozen = false;
+//         tx.uintName = 'ALICEART';
+//         tx.assetName = 'Artwork@arc3';
+//         tx.note = 'TestNFT';
+//         tx.assetURL = 'https://tatum.io/images/logo.svg'
+//         tx.fromPrivateKey = '72TCV5BRQPBMSAFPYO3CPWVDBYWNGAYNMTW5QHENOMQF7I6QLNMJWCJZ7A3V5YKD7QD6ZZPEHG2PV2ZVVEDDO6BCRGXWIL3DIUMSUCI';
+//         const txId = String(await sendAlgoCreateFTSignedTransaction(true, tx));
+//         expect(txId.length).toBe(52);
+//     })
+// })

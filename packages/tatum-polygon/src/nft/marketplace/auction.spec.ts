@@ -20,7 +20,7 @@ describe('Auction  tests', () => {
 
     it('should deploy auction', async () => {
       const body = new DeployNftAuction()
-      body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29'
+      body.fromPrivateKey = '0x37b091fc4ce46a56da643f021254612551dbe0944679a6e09cb5724d3085c9ab'
       body.feeRecipient = '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'
       body.auctionFee = 150
       body.chain = Currency.MATIC

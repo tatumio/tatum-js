@@ -1,4 +1,4 @@
-import { IsArray, IsIn, IsNotEmpty, IsOptional, Length, Min } from 'class-validator'
+import { IsArray, IsBoolean, IsIn, IsNotEmpty, IsOptional, Length, Min, ValidateIf } from 'class-validator'
 import { Currency } from './Currency'
 import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 
@@ -27,11 +27,23 @@ export class BaseMintMultipleErc721 extends PrivateKeyOrSignatureId {
   @IsOptional()
   public nonce?: number
 
+  @IsBoolean()
+  @IsOptional()
+  @ValidateIf((o) => o.provenance && o.fixedValues)
+  public provenance?: boolean
+
   @IsArray()
   @IsOptional()
+  @ValidateIf((o) => o.authorAddresses && o.cashbackValues)
   public authorAddresses?: string[][]
 
   @IsArray()
   @IsOptional()
+  @ValidateIf((o) => o.authorAddresses && o.cashbackValues)
   public cashbackValues?: string[][]
+
+  @IsOptional()
+  @IsArray()
+  @ValidateIf((o) => o.provenance && o.fixedValues)
+  public fixedValues?: string[][]
 }

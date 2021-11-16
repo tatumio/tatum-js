@@ -87,24 +87,17 @@ export const prepareAlgoSignedTransaction = async (testnet: boolean, tx: AlgoTra
   const decoder = new base32.Decoder({ type: 'rfc4648' })
   const enc = new TextEncoder()
   const note = enc.encode(tx.note ? tx.note : '')
-  const txn = algosdk.makePaymentTxnWithSuggestedParams(
-    tx.from,
-    tx.to,
-    Number(tx.amount) * 1000000,
-    undefined,
-    note,
-    {
-      ...params,
-      fee: Number(tx.fee) * 1000000,
-      flatFee: true
-    }
-  );
+  const txn = algosdk.makePaymentTxnWithSuggestedParams(tx.from, tx.to, Number(tx.amount) * 1000000, undefined, note, {
+    ...params,
+    fee: Number(tx.fee) * 1000000,
+    flatFee: true,
+  })
   if (tx.signatureId) {
-    return JSON.stringify(txn);
+    return JSON.stringify(txn)
   }
-  const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
-  const signedTxn = txn.signTxn(secretKey);
-  return signedTxn;
+  const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf)
+  const signedTxn = txn.signTxn(secretKey)
+  return signedTxn
 }
 
 /**
@@ -132,10 +125,10 @@ export const signAlgoKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
     throw Error('Unsupported chain.')
   }
   const decoder = new base32.Decoder({ type: 'rfc4648' })
-  const txn = JSON.parse(tx.serializedTransaction);
-  const secretKey = new Uint8Array(decoder.write(fromPrivateKey).buf);    
-  const signedTxn = txn.signTxn(secretKey);
-  return signedTxn;
+  const txn = JSON.parse(tx.serializedTransaction)
+  const secretKey = new Uint8Array(decoder.write(fromPrivateKey).buf)
+  const signedTxn = txn.signTxn(secretKey)
+  return signedTxn
 }
 
 /**

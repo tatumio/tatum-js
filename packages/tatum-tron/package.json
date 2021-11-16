@@ -24,7 +24,8 @@
     "class-validator": "0.13.0",
     "axios": "^0.21.1",
     "bignumber.js": "^9.0.0",
-    "elliptic": "^6.5.4"
+    "elliptic": "^6.5.4",
+    "class-transformer": "^0.2.3"
   },
   "devDependencies": {
     "@types/jest": "^26.0.4",

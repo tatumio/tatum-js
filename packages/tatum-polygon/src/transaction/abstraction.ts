@@ -1,5 +1,5 @@
 import { CreateRecord, validateBody, Currency, TransferErc20 } from '@tatumio/tatum-core'
-import { sendPolygonStoreDataTransaction, sendPolygonTransaction } from './polygon'
+import { sendPolygonStoreDataTransaction, sendPolygonTransaction, sendPolygonTransferErc20SignedTransaction } from './polygon'
 
 /**
  * Store any arbitrary data on the blockchain.
@@ -20,6 +20,6 @@ export const storeData = async (testnet: boolean, body: CreateRecord, provider?:
  * @param provider Optional provider to use for broadcasting signed tx to the blockchain.
  */
 export const sendTransaction = async (testnet: boolean, chain: Currency, body: TransferErc20, provider?: string) => {
-  ;(body as TransferErc20).currency = chain
-  return sendPolygonTransaction(testnet, body as TransferErc20, provider)
+  const b = body as TransferErc20
+  return b.contractAddress ? sendPolygonTransferErc20SignedTransaction(testnet, b, provider) : sendPolygonTransaction(testnet, b, provider)
 }

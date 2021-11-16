@@ -1,4 +1,4 @@
-import { IsIn, IsNotEmpty, IsOptional, Length, Min, ValidateIf  } from 'class-validator'
+import { IsBoolean, IsIn, IsNotEmpty, IsOptional, Length, Min, ValidateIf } from 'class-validator'
 import { Currency } from './Currency'
 import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 
@@ -18,13 +18,17 @@ export class BaseDeployErc721 extends PrivateKeyOrSignatureId {
   @Min(0)
   @IsOptional()
   public nonce?: number
-  
-  @ValidateIf(o => o.chain === Currency.ALGO)
-  @IsNotEmpty()
-  public url?: string;
 
-  @ValidateIf(o => o.chain === Currency.ALGO && o.signatureId)
+  @IsBoolean()
+  @IsOptional()
+  public provenance?: boolean
+
+  @ValidateIf((o) => o.chain === Currency.ALGO)
+  @IsNotEmpty()
+  public url?: string
+
+  @ValidateIf((o) => o.chain === Currency.ALGO && o.signatureId)
   @IsNotEmpty()
   @Length(42, 58)
-  public from?: string;
+  public from?: string
 }

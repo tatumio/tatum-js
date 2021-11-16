@@ -18,9 +18,7 @@ import {
   SmartContractReadMethodInvocation,
   CreateRecord,
 } from '@tatumio/tatum-core'
-import {
-  obtainCustodialAddressType
-} from '@tatumio/tatum-defi'
+import { obtainCustodialAddressType } from '@tatumio/tatum-defi'
 import {
   CeloDeployMultiToken,
   CeloDeployErc721,
@@ -45,6 +43,7 @@ import { CUSD_ADDRESS_MAINNET, CUSD_ADDRESS_TESTNET, CEUR_ADDRESS_TESTNET, CEUR_
 import erc1155_bytecode from '@tatumio/tatum-core/src/contracts/erc1155/erc1155_bytecode'
 import erc721_bytecode from '@tatumio/tatum-core/src/contracts/erc721/erc721_bytecode'
 import erc20_bytecode from '@tatumio/tatum-core/src/contracts/erc20/token_bytecode'
+import erc721Provenance_bytecode from '@tatumio/tatum-core'
 
 const obtainWalletInformation = async (wallet: CeloWallet, feeCurrencyContractAddress?: string) => {
   const [txCount, gasPrice, from] = await Promise.all([
@@ -292,16 +291,16 @@ export const prepareCeloDeployMultiTokenSignedTransaction = async (testnet: bool
  */
 export const prepareCeloDeployErc721SignedTransaction = async (testnet: boolean, body: CeloDeployErc721, provider?: string) => {
   await validateBody(body, CeloDeployErc721)
-  const { fromPrivateKey, name, symbol, feeCurrency, nonce, signatureId } = body
+  const { fromPrivateKey, name, symbol, feeCurrency, nonce, signatureId, provenance } = body
 
   const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
   const network = await p.ready
   const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
 
   // @ts-ignore
-  const contract = new new Web3().eth.Contract(erc721_abi)
+  const contract = new new Web3().eth.Contract(provenance ? erc721Provenance_abi : erc721_abi)
   const deploy = contract.deploy({
-    data: erc721_bytecode,
+    data: provenance ? erc721Provenance_bytecode : erc721_bytecode,
     arguments: [name, symbol],
   })
 
@@ -375,7 +374,290 @@ export const prepareCeloMintCashbackErc721SignedTransaction = async (testnet: bo
   }
   throw new Error('Contract address and fee currency should not be empty!')
 }
+/**
+ * Prepare a signed Celo mint provenance erc732 transaction with the private key locally. Nothing is broadcasted to the blockchain.
+ * @returns raw transaction data in hex, to be broadcasted to blockchain.
+ */
+export const prepareCeloMintErc721ProvenanceSignedTransaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) => {
+  await validateBody(body, CeloMintErc721)
+  const {
+    fromPrivateKey,
+    url,
+    to,
+    tokenId,
+    contractAddress,
+    feeCurrency,
+    nonce,
+    signatureId,
+    cashbackValues,
+    authorAddresses,
+    fixedValues,
+  } = body
 
+  const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
+  const network = await p.ready
+
+  if (contractAddress && feeCurrency) {
+    const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
+    // @ts-ignore
+    const contract = new new Web3().eth.Contract(erc721Provenance_abi, contractAddress.trim())
+    const cb: string[] = []
+    const fv: string[] = []
+    if (cashbackValues && fixedValues && authorAddresses) {
+      cashbackValues.map((c) => cb.push(`0x${new BigNumber(c).multipliedBy(100).toString(16)}`))
+      fixedValues.map((c) => fv.push(`0x${new BigNumber(toWei(c, 'ether')).toString(16)}`))
+    }
+    const data = contract.methods.mintWithTokenURI(to.trim(), tokenId, url, authorAddresses ? authorAddresses : [], cb, fv).encodeABI()
+    if (signatureId) {
+      return JSON.stringify({
+        chainId: network.chainId,
+        feeCurrency: feeCurrencyContractAddress,
+        nonce,
+        to: contractAddress.trim(),
+        gasLimit: '0',
+        data: data,
+      })
+    }
+    const wallet = new CeloWallet(fromPrivateKey as string, p)
+    const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
+    const transaction = {
+      chainId: network.chainId,
+      feeCurrency: feeCurrencyContractAddress,
+      nonce: nonce || txCount,
+      gasLimit: '0',
+      to: contractAddress.trim(),
+      gasPrice,
+      data: data,
+      from,
+    }
+    transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString()
+    return wallet.signTransaction(transaction)
+  }
+  throw new Error('Contract address and fee currency should not be empty!')
+}
+/**
+ * Prepare a signed Celo mint multiple provenance cashback erc721 transaction with the private key locally. Nothing is broadcasted to the blockchain.
+ * @returns raw transaction data in hex, to be broadcasted to blockchain.
+ */
+export const prepareCeloMintMultipleErc721ProvenanceSignedTransaction = async (
+  testnet: boolean,
+  body: CeloMintMultipleErc721,
+  provider?: string
+) => {
+  await validateBody(body, CeloMintMultipleErc721)
+  const {
+    fromPrivateKey,
+    to,
+    tokenId,
+    contractAddress,
+    url,
+    feeCurrency,
+    nonce,
+    signatureId,
+    authorAddresses,
+    cashbackValues,
+    fixedValues,
+  } = body
+
+  const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
+  const network = await p.ready
+
+  const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
+
+  // @ts-ignore
+  const contract = new new Web3().eth.Contract(erc721Provenance_abi, contractAddress.trim())
+
+  const cb: string[][] = []
+  const fv: string[][] = []
+  if (authorAddresses && cashbackValues && fixedValues) {
+    for (let i = 0; i < cashbackValues.length; i++) {
+      const cb2: string[] = []
+      const fv2: string[] = []
+      for (let j = 0; j < cashbackValues[i].length; j++) {
+        cb2.push(`0x${new BigNumber(cashbackValues[i][j]).multipliedBy(100).toString(16)}`)
+        fv2.push(`0x${new BigNumber(toWei(fixedValues[i][j], 'ether')).toString(16)}`)
+      }
+      cb.push(cb2)
+      fv.push(fv2)
+    }
+  }
+  const data = contract.methods
+    .mintMultiple(
+      to.map((t) => t.trim()),
+      tokenId,
+      url,
+      authorAddresses ? authorAddresses : [],
+      cb,
+      fv
+    )
+    .encodeABI()
+  if (signatureId) {
+    return JSON.stringify({
+      chainId: network.chainId,
+      feeCurrency: feeCurrencyContractAddress,
+      nonce,
+      gasLimit: '0',
+      to: contractAddress.trim(),
+      data: data,
+    })
+  }
+  const wallet = new CeloWallet(fromPrivateKey as string, p)
+  const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
+  const transaction = {
+    chainId: network.chainId,
+    feeCurrency: feeCurrencyContractAddress,
+    nonce: nonce || txCount,
+    gasLimit: '0',
+    to: contractAddress.trim(),
+    gasPrice,
+    data: data,
+    from,
+  }
+  transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString()
+  return wallet.signTransaction(transaction)
+}
+/**
+ * Prepare a signed Celo mint provenance erc732 transaction with the private key locally. Nothing is broadcasted to the blockchain.
+ * @returns raw transaction data in hex, to be broadcasted to blockchain.
+ */
+export const prepareCeloMintErc721ProvenanceSignedTransaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) => {
+  await validateBody(body, CeloMintErc721)
+  const {
+    fromPrivateKey,
+    url,
+    to,
+    tokenId,
+    contractAddress,
+    feeCurrency,
+    nonce,
+    signatureId,
+    cashbackValues,
+    authorAddresses,
+    fixedValues,
+  } = body
+
+  const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
+  const network = await p.ready
+
+  if (contractAddress && feeCurrency) {
+    const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
+    // @ts-ignore
+    const contract = new new Web3().eth.Contract(erc721Provenance_abi, contractAddress.trim())
+    const cb: string[] = []
+    const fv: string[] = []
+    if (cashbackValues && fixedValues && authorAddresses) {
+      cashbackValues.map((c) => cb.push(`0x${new BigNumber(c).multipliedBy(100).toString(16)}`))
+      fixedValues.map((c) => fv.push(`0x${new BigNumber(toWei(c, 'ether')).toString(16)}`))
+    }
+    const data = contract.methods.mintWithTokenURI(to.trim(), tokenId, url, authorAddresses ? authorAddresses : [], cb, fv).encodeABI()
+    if (signatureId) {
+      return JSON.stringify({
+        chainId: network.chainId,
+        feeCurrency: feeCurrencyContractAddress,
+        nonce,
+        to: contractAddress.trim(),
+        gasLimit: '0',
+        data: data,
+      })
+    }
+    const wallet = new CeloWallet(fromPrivateKey as string, p)
+    const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
+    const transaction = {
+      chainId: network.chainId,
+      feeCurrency: feeCurrencyContractAddress,
+      nonce: nonce || txCount,
+      gasLimit: '0',
+      to: contractAddress.trim(),
+      gasPrice,
+      data: data,
+      from,
+    }
+    transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString()
+    return wallet.signTransaction(transaction)
+  }
+  throw new Error('Contract address and fee currency should not be empty!')
+}
+/**
+ * Prepare a signed Celo mint multiple provenance cashback erc721 transaction with the private key locally. Nothing is broadcasted to the blockchain.
+ * @returns raw transaction data in hex, to be broadcasted to blockchain.
+ */
+export const prepareCeloMintMultipleErc721ProvenanceSignedTransaction = async (
+  testnet: boolean,
+  body: CeloMintMultipleErc721,
+  provider?: string
+) => {
+  await validateBody(body, CeloMintMultipleErc721)
+  const {
+    fromPrivateKey,
+    to,
+    tokenId,
+    contractAddress,
+    url,
+    feeCurrency,
+    nonce,
+    signatureId,
+    authorAddresses,
+    cashbackValues,
+    fixedValues,
+  } = body
+
+  const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
+  const network = await p.ready
+
+  const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
+
+  // @ts-ignore
+  const contract = new new Web3().eth.Contract(erc721Provenance_abi, contractAddress.trim())
+
+  const cb: string[][] = []
+  const fv: string[][] = []
+  if (authorAddresses && cashbackValues && fixedValues) {
+    for (let i = 0; i < cashbackValues.length; i++) {
+      const cb2: string[] = []
+      const fv2: string[] = []
+      for (let j = 0; j < cashbackValues[i].length; j++) {
+        cb2.push(`0x${new BigNumber(cashbackValues[i][j]).multipliedBy(100).toString(16)}`)
+        fv2.push(`0x${new BigNumber(toWei(fixedValues[i][j], 'ether')).toString(16)}`)
+      }
+      cb.push(cb2)
+      fv.push(fv2)
+    }
+  }
+  const data = contract.methods
+    .mintMultiple(
+      to.map((t) => t.trim()),
+      tokenId,
+      url,
+      authorAddresses ? authorAddresses : [],
+      cb,
+      fv
+    )
+    .encodeABI()
+  if (signatureId) {
+    return JSON.stringify({
+      chainId: network.chainId,
+      feeCurrency: feeCurrencyContractAddress,
+      nonce,
+      gasLimit: '0',
+      to: contractAddress.trim(),
+      data: data,
+    })
+  }
+  const wallet = new CeloWallet(fromPrivateKey as string, p)
+  const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
+  const transaction = {
+    chainId: network.chainId,
+    feeCurrency: feeCurrencyContractAddress,
+    nonce: nonce || txCount,
+    gasLimit: '0',
+    to: contractAddress.trim(),
+    gasPrice,
+    data: data,
+    from,
+  }
+  transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString()
+  return wallet.signTransaction(transaction)
+}
 /**
  * Prepare a signed Celo mint erc732 transaction with the private key locally. Nothing is broadcasted to the blockchain.
  * @returns raw transaction data in hex, to be broadcasted to blockchain.
@@ -426,14 +708,18 @@ export const prepareCeloMintErc721SignedTransaction = async (testnet: boolean, b
  */
 export const prepareCeloTransferErc721SignedTransaction = async (testnet: boolean, body: CeloTransferErc721, provider?: string) => {
   await validateBody(body, CeloTransferErc721)
-  const { fromPrivateKey, to, tokenId, contractAddress, feeCurrency, nonce, signatureId, value } = body
+  const { fromPrivateKey, to, tokenId, contractAddress, feeCurrency, nonce, signatureId, value, provenance, provenanceData, tokenPrice } =
+    body
 
   const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
   const network = await p.ready
   const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
 
   // @ts-ignore
-  const contract = new new Web3().eth.Contract(erc721_abi, contractAddress.trim())
+  const contract = new new Web3().eth.Contract(provenance ? erc721Provenance_abi : erc721_abi, contractAddress.trim())
+  const tokenData = provenance
+    ? contract.methods.safeTransfer(to.trim(), tokenId, provenanceData + "'''###'''" + toWei(tokenPrice!, 'ether')).encodeABI()
+    : contract.methods.safeTransfer(to.trim(), tokenId).encodeABI()
 
   if (signatureId) {
     return JSON.stringify({
@@ -442,7 +728,7 @@ export const prepareCeloTransferErc721SignedTransaction = async (testnet: boolea
       gasLimit: '0',
       nonce,
       to: contractAddress.trim(),
-      data: contract.methods.safeTransfer(to.trim(), tokenId).encodeABI(),
+      data: tokenData,
       value: value ? `0x${new BigNumber(value).multipliedBy(1e18).toString(16)}` : undefined,
     })
   }
@@ -1378,6 +1664,17 @@ export const sendCeloOrcUsdTransaction = async (testnet: boolean, body: Transfer
   celoBroadcast(await prepareCeloOrCUsdSignedTransaction(testnet, body, provider), body.signatureId)
 
 /**
+ * Send Celo or cUsd transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
+export const sendCeloErc20Transaction = async (testnet: boolean, body: TransferCeloOrCeloErc20Token, provider?: string) =>
+  celoBroadcast(await prepareCeloTransferErc20SignedTransaction(testnet, body, provider), body.signatureId)
+
+/**
  * Send Celo mint erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
  * @param testnet mainnet or testnet version
@@ -1386,7 +1683,7 @@ export const sendCeloOrcUsdTransaction = async (testnet: boolean, body: Transfer
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendCeloMintErc721Transaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) => {
-  if (!body.fromPrivateKey && !body.fromPrivateKey) {
+  if (!body.fromPrivateKey) {
     return mintNFT(body)
   }
   return celoBroadcast(await prepareCeloMintErc721SignedTransaction(testnet, body, provider), body.signatureId)
@@ -1402,6 +1699,32 @@ export const sendCeloMintErc721Transaction = async (testnet: boolean, body: Celo
  */
 export const sendCeloMintCashbackErc721Transaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) =>
   celoBroadcast(await prepareCeloMintCashbackErc721SignedTransaction(testnet, body, provider), body.signatureId)
+
+/**
+ * Send Celo mint provenance cashback erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
+export const sendCeloMintErc721ProvenanceTransaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) => {
+  if (!body.fromPrivateKey) {
+    return mintNFT(body)
+  }
+  return celoBroadcast(await prepareCeloMintErc721ProvenanceSignedTransaction(testnet, body, provider), body.signatureId)
+}
+
+/**
+ * Send Celo mint multiple provenance erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param testnet mainnet or testnet version
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
+export const sendCeloMintMultipleErc721ProvenanceTransaction = async (testnet: boolean, body: CeloMintMultipleErc721, provider?: string) =>
+  celoBroadcast(await prepareCeloMintMultipleErc721ProvenanceSignedTransaction(testnet, body, provider), body.signatureId)
 
 /**
  * Send Celo mint multiple erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.

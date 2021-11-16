@@ -1,7 +1,4 @@
-import {
-  prepareTransferFromCustodialWalletAbstract,
-  prepareBatchTransferFromCustodialWalletAbstract,
-} from '@tatumio/tatum-defi'
+import { prepareTransferFromCustodialWalletAbstract, prepareBatchTransferFromCustodialWalletAbstract } from '@tatumio/tatum-defi'
 import {
   SmartContractMethodInvocation,
   validateBody,
@@ -23,6 +20,7 @@ import {
 } from '../transaction'
 
 /**
+ * This method is @Deprecated. Use @link{generateCustodialWalletBatch} instead
  * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, btu transaction costs connected to the withdrawal
  * of assets is covered by the deployer.
  * @param testnet chain to work with
@@ -31,10 +29,12 @@ import {
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const generateCustodialWallet = async (testnet: boolean, body: GenerateCustodialAddress, provider?: string) => {
+  console.log('This method is deprecated. For better gas consumption, use generateCustodialWalletBatch.')
   return await sendOneGenerateCustodialWalletSignedTransaction(testnet, body, provider)
 }
 
 /**
+ * This method is @Deprecated. Use @link{prepareCustodialWalletBatch} instead
  * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, btu transaction costs connected to the withdrawal
  * of assets is covered by the deployer.
  * @param testnet chain to work with
@@ -43,6 +43,7 @@ export const generateCustodialWallet = async (testnet: boolean, body: GenerateCu
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareCustodialWallet = async (testnet: boolean, body: GenerateCustodialAddress, provider?: string) => {
+  console.log('This method is deprecated. For better gas consumption, use prepareCustodialWalletBatch.')
   return await prepareOneGenerateCustodialWalletSignedTransaction(testnet, body, provider)
 }
 

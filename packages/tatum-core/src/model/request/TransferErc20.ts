@@ -15,6 +15,7 @@ import {
 import { Currency, ETH_BASED_CURRENCIES, MATIC_BASED_CURRENCIES } from './Currency'
 import { Fee } from './Fee'
 import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
+import { OneOf } from '../validation/OneOf'
 
 export class TransferErc20 extends PrivateKeyOrSignatureId {
   @IsNotEmpty()
@@ -24,14 +25,14 @@ export class TransferErc20 extends PrivateKeyOrSignatureId {
   @IsNotEmpty()
   @IsNumberString()
   @Matches(/^[+]?((\d+(\.\d*)?)|(\.\d+))$/)
+  @OneOf(['currency', 'contractAddress'])
   public amount: string
 
   @MaxLength(130000)
   @IsOptional()
   public data?: string
 
-  @ValidateIf((o) => !o.contractAddress)
-  @IsNotEmpty()
+  @IsOptional()
   @IsIn([...ETH_BASED_CURRENCIES, ...MATIC_BASED_CURRENCIES, Currency.XDC, Currency.ONE, Currency.ALGO, Currency.KCS])
   public currency?: Currency
 
@@ -56,5 +57,5 @@ export class TransferErc20 extends PrivateKeyOrSignatureId {
 
   @IsOptional()
   @Length(42, 58)
-  public from?: string;
+  public from?: string
 }

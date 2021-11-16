@@ -1,5 +1,4 @@
 import { Currency } from '@tatumio/tatum-core'
-import { sendTronTransaction } from './tron'
 import { TransferTron } from '../model'
 
 /**
@@ -10,5 +9,8 @@ import { TransferTron } from '../model'
  * @param provider Optional provider to use for broadcasting signed tx to the blockchain.
  */
 export const sendTransaction = async (testnet: boolean, chain: Currency, body: TransferTron, provider?: string) => {
-  return sendTronTransaction(testnet, body as TransferTron)
+  // @ts-ignore
+  if (body.contractAddress) {
+    throw new Error('Cannot work with TRON and contract address')
+  }
 }

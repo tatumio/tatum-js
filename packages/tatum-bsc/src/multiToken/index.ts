@@ -6,6 +6,9 @@ import {
   BurnMultiTokenBatch,
   TransferMultiToken,
   TransferMultiTokenBatch,
+  prepareAddMultiTokenMinterAbstraction,
+  AddMinter,
+  listing,
 } from '@tatumio/tatum-core'
 import {
   sendBscDeployMultiTokenTransaction,
@@ -15,6 +18,8 @@ import {
   sendBscBurnBatchMultiTokenTransaction,
   sendBscMultiTokenTransaction,
   sendBscMultiTokenBatchTransaction,
+  helperPrepareSCCall,
+  helperBroadcastTx,
 } from '../'
 
 export const deployMultiToken = async (testnet: boolean, body: DeployMultiToken, provider?: string) => {
@@ -39,6 +44,26 @@ export const transferMultiToken = async (testnet: boolean, body: TransferMultiTo
 export const transferMultiTokenBatch = async (testnet: boolean, body: TransferMultiTokenBatch, provider?: string) => {
   return sendBscMultiTokenBatchTransaction(body, provider)
 }
+
+/**
+ * Prepare add new minter to the MultiToken (1155) contract transaction.
+ * @param testnet if we use testnet or not
+ * @param body body of the add minter request
+ * @param provider optional provider do broadcast tx
+ */
+export const prepareAddMultiTokenMinter = async (testnet: boolean, body: AddMinter, provider?: string) => {
+  const params = await prepareAddMultiTokenMinterAbstraction(body)
+  return await helperPrepareSCCall(testnet, body, AddMinter, 'grantRole', params, undefined, provider, listing.abi)
+}
+
+/**
+ * Add new minter to the MultiToken (1155) contract.
+ * @param testnet if we use testnet or not
+ * @param body body of the add minter request
+ * @param provider optional provider do broadcast tx
+ */
+export const sendAddMultiTokenMinter = async (testnet: boolean, body: AddMinter, provider?: string) =>
+  helperBroadcastTx(body.chain, await prepareAddMultiTokenMinter(testnet, body, provider), body.signatureId)
 
 export {
   getMultiTokenContractAddress,

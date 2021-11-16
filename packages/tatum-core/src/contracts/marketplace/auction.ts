@@ -44,7 +44,7 @@ export const abi = [
     anonymous: false,
     inputs: [
       {
-        indexed: true,
+        indexed: false,
         internalType: 'string',
         name: 'id',
         type: 'string',
@@ -185,6 +185,29 @@ export const abi = [
         name: 'id',
         type: 'string',
       },
+      {
+        internalType: 'uint256',
+        name: 'bidValue',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: 'bidder',
+        type: 'address',
+      },
+    ],
+    name: 'bidForExternalBidder',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'string',
+        name: 'id',
+        type: 'string',
+      },
     ],
     name: 'cancelAuction',
     outputs: [],
@@ -300,6 +323,11 @@ export const abi = [
             internalType: 'address',
             name: 'bidder',
             type: 'address',
+          },
+          {
+            internalType: 'uint256',
+            name: 'highestBid',
+            type: 'uint256',
           },
         ],
         internalType: 'struct NftAuction.Auction',

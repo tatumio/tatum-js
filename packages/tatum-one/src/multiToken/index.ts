@@ -1,4 +1,5 @@
 import {
+  AddMinter,
   BurnMultiToken,
   BurnMultiTokenBatch,
   Currency,
@@ -6,8 +7,10 @@ import {
   get,
   MintMultiToken,
   MintMultiTokenBatch,
+  prepareAddMultiTokenMinterAbstraction,
   TransferMultiToken,
   TransferMultiTokenBatch,
+  listing,
 } from '@tatumio/tatum-core'
 import {
   prepareOneBatchTransferMultiTokenSignedTransaction,
@@ -18,6 +21,7 @@ import {
   sendOneMintMultiTokenSignedTransaction,
   sendOneTransferMultiTokenSignedTransaction,
 } from '../transaction'
+import { helperBroadcastTx, helperPrepareSCCall } from 'src/helpers'
 
 export const deployMultiToken = async (testnet: boolean, body: DeployMultiToken, provider?: string) => {
   return sendOneDeployMultiTokenSignedTransaction(testnet, body, provider)
@@ -41,6 +45,26 @@ export const transferMultiToken = async (testnet: boolean, body: TransferMultiTo
 export const transferMultiTokenBatch = async (testnet: boolean, body: TransferMultiTokenBatch, provider?: string) => {
   return prepareOneBatchTransferMultiTokenSignedTransaction(testnet, body, provider)
 }
+
+/**
+ * Prepare add new minter to the MultiToken (1155) contract transaction.
+ * @param testnet if we use testnet or not
+ * @param body body of the add minter request
+ * @param provider optional provider do broadcast tx
+ */
+export const prepareAddMultiTokenMinter = async (testnet: boolean, body: AddMinter, provider?: string) => {
+  const params = await prepareAddMultiTokenMinterAbstraction(body)
+  return await helperPrepareSCCall(testnet, body, AddMinter, 'grantRole', params, undefined, provider, listing.abi)
+}
+
+/**
+ * Add new minter to the MultiToken (1155) contract.
+ * @param testnet if we use testnet or not
+ * @param body body of the add minter request
+ * @param provider optional provider do broadcast tx
+ */
+export const sendAddMultiTokenMinter = async (testnet: boolean, body: AddMinter, provider?: string) =>
+  helperBroadcastTx(body.chain, await prepareAddMultiTokenMinter(testnet, body, provider), body.signatureId)
 
 export {
   getMultiTokenContractAddress,

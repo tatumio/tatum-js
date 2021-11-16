@@ -5,6 +5,8 @@ import {
   burnNFT as celoBurnNFT,
   updateCashbackForAuthorNFT as celoUpdateCashbackForAuthorNFT,
   transferNFT as celoTransferNFT,
+  prepareAddNFTMinter as celoPrepareAddNFTMinter,
+  sendAddNFTMinter as celoSendAddNFTMinter,
   CeloBurnErc721,
   CeloDeployErc721,
   CeloMintErc721,
@@ -19,11 +21,10 @@ import {
   burnNFT as ethBurnNFT,
   updateCashbackForAuthorNFT as ethUpdateCashbackForAuthorNFT,
   transferNFT as ethTransferNFT,
-  EthMintErc721,
+  prepareAddNFTMinter as ethPrepareAddNFTMinter,
+  sendAddNFTMinter as ethSendAddNFTMinter,
   EthDeployErc721,
-  EthMintMultipleErc721,
   EthBurnErc721,
-  EthTransferErc721,
 } from '@tatumio/tatum-eth'
 import {
   mintNFTWithUri as polygonMintNFTWithUri,
@@ -32,6 +33,8 @@ import {
   burnNFT as polygonBurnNFT,
   updateCashbackForAuthorNFT as polygonUpdateCashbackForAuthorNFT,
   transferNFT as polygonTransferNFT,
+  prepareAddNFTMinter as polygonPrepareAddNFTMinter,
+  sendAddNFTMinter as polygonSendAddNFTMinter,
 } from '@tatumio/tatum-polygon'
 import {
   mintNFTWithUri as oneMintNFTWithUri,
@@ -40,6 +43,8 @@ import {
   burnNFT as oneBurnNFT,
   updateCashbackForAuthorNFT as oneUpdateCashbackForAuthorNFT,
   transferNFT as oneTransferNFT,
+  prepareAddNFTMinter as onePrepareAddNFTMinter,
+  sendAddNFTMinter as oneSendAddNFTMinter,
   OneMint721,
 } from '@tatumio/tatum-one'
 import {
@@ -49,6 +54,8 @@ import {
   burnNFT as tronBurnNFT,
   updateCashbackForAuthorNFT as tronUpdateCashbackForAuthorNFT,
   transferNFT as tronTransferNFT,
+  prepareAddNFTMinter as tronPrepareAddNFTMinter,
+  sendAddNFTMinter as tronSendAddNFTMinter,
   TronBurnTrc721,
   TronDeployTrc721,
   TronMintTrc721,
@@ -63,6 +70,8 @@ import {
   burnNFT as bscBurnNFT,
   updateCashbackForAuthorNFT as bscUpdateCashbackForAuthorNFT,
   transferNFT as bscTransferNFT,
+  prepareAddNFTMinter as bscPrepareAddNFTMinter,
+  sendAddNFTMinter as bscSendAddNFTMinter,
 } from '@tatumio/tatum-bsc'
 import {
   mintNFTWithUri as flowMintNFTWithUri,
@@ -76,7 +85,20 @@ import {
   FlowMintNft,
   FlowTransferNft,
 } from '@tatumio/tatum-flow'
-import { TransactionHash, Currency, UpdateCashbackErc721, MintMultipleErc721 } from '@tatumio/tatum-core'
+import { deployNFT as algoDeployNFT, burnNFT as algoBurnNFT, transferNFT as algoTransferNFT } from '@tatumio/tatum-algo'
+import {
+  TransactionHash,
+  Currency,
+  UpdateCashbackErc721,
+  MintMultipleErc721,
+  DeployErc721,
+  BurnErc721,
+  TransferErc721,
+  EthMintErc721,
+  EthMintMultipleErc721,
+  EthTransferErc721,
+  AddMinter,
+} from '@tatumio/tatum-core'
 import { mintNFTRequest, createNFTAbstraction } from '@tatumio/tatum-defi'
 
 export const mintNFT = (body: CeloMintErc721 | EthMintErc721 | OneMint721) => mintNFTRequest(body)
@@ -89,7 +111,7 @@ export const mintNFT = (body: CeloMintErc721 | EthMintErc721 | OneMint721) => mi
  */
 export const deployNFT = async (
   testnet: boolean,
-  body: CeloDeployErc721 | EthDeployErc721 | TronDeployTrc721 | FlowDeployNft,
+  body: DeployErc721 | CeloDeployErc721 | EthDeployErc721 | TronDeployTrc721 | FlowDeployNft,
   provider?: string
 ): Promise<TransactionHash> => {
   switch (body.chain) {
@@ -107,6 +129,8 @@ export const deployNFT = async (
       return bscDeployNFT(testnet, body as EthDeployErc721, provider)
     case Currency.FLOW:
       return flowDeployNFT(testnet, body as FlowDeployNft, provider)
+    case Currency.ALGO:
+      return algoDeployNFT(testnet, body as DeployErc721, provider)
     default:
       throw new Error('Unsupported currency')
   }
@@ -202,7 +226,11 @@ export const mintMultipleNFTWithUri = async (
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const burnNFT = async (testnet: boolean, body: CeloBurnErc721 | EthBurnErc721 | TronBurnTrc721 | FlowBurnNft, provider?: string) => {
+export const burnNFT = async (
+  testnet: boolean,
+  body: BurnErc721 | CeloBurnErc721 | EthBurnErc721 | TronBurnTrc721 | FlowBurnNft,
+  provider?: string
+) => {
   switch (body.chain) {
     case Currency.CELO:
       return celoBurnNFT(testnet, body as CeloBurnErc721, provider)
@@ -218,6 +246,8 @@ export const burnNFT = async (testnet: boolean, body: CeloBurnErc721 | EthBurnEr
       return bscBurnNFT(testnet, body, provider)
     case Currency.FLOW:
       return flowBurnNFT(testnet, body as FlowBurnNft, provider)
+    case Currency.ALGO:
+      return algoBurnNFT(testnet, body as BurnErc721, provider)
     default:
       throw new Error('Unsupported blockchain.')
   }
@@ -260,7 +290,7 @@ export const updateCashbackForAuthorNFT = async (
  */
 export const transferNFT = async (
   testnet: boolean,
-  body: CeloTransferErc721 | EthTransferErc721 | TronTransferTrc721 | FlowTransferNft,
+  body: TransferErc721 | CeloTransferErc721 | EthTransferErc721 | TronTransferTrc721 | FlowTransferNft,
   provider?: string
 ) => {
   switch (body.chain) {
@@ -278,9 +308,68 @@ export const transferNFT = async (
       return bscTransferNFT(testnet, body, provider)
     case Currency.FLOW:
       return flowTransferNFT(testnet, body as FlowTransferNft, provider)
+    case Currency.ALGO:
+      return algoTransferNFT(testnet, body as TransferErc721, provider)
     default:
       throw new Error('Unsupported blockchain.')
   }
 }
 
-export { getNFTsByAddress, getNFTContractAddress, getNFTMetadataURI, getNFTImage, getNFTRoyalty } from '@tatumio/tatum-defi'
+/**
+ * Prepare add new minter to the NFT contract transaction.
+ * @param testnet if we use testnet or not
+ * @param body body of the add minter request
+ * @param provider optional provider do broadcast tx
+ */
+export const prepareAddNFTMinter = async (testnet: boolean, body: AddMinter, provider?: string) => {
+  switch (body.chain) {
+    case Currency.CELO:
+      return celoPrepareAddNFTMinter(testnet, body, provider)
+    case Currency.ETH:
+      return ethPrepareAddNFTMinter(testnet, body, provider)
+    case Currency.MATIC:
+      return polygonPrepareAddNFTMinter(testnet, body, provider)
+    case Currency.ONE:
+      return onePrepareAddNFTMinter(testnet, body, provider)
+    case Currency.TRON:
+      return tronPrepareAddNFTMinter(testnet, body, provider)
+    case Currency.BSC:
+      return bscPrepareAddNFTMinter(testnet, body, provider)
+    default:
+      throw new Error('Unsupported blockchain.')
+  }
+}
+
+/**
+ * Add new minter to the NFT contract.
+ * @param testnet if we use testnet or not
+ * @param body body of the add minter request
+ * @param provider optional provider do broadcast tx
+ */
+export const sendAddNFTMinter = async (testnet: boolean, body: AddMinter, provider?: string) => {
+  switch (body.chain) {
+    case Currency.CELO:
+      return celoSendAddNFTMinter(testnet, body, provider)
+    case Currency.ETH:
+      return ethSendAddNFTMinter(testnet, body, provider)
+    case Currency.MATIC:
+      return polygonSendAddNFTMinter(testnet, body, provider)
+    case Currency.ONE:
+      return oneSendAddNFTMinter(testnet, body, provider)
+    case Currency.TRON:
+      return tronSendAddNFTMinter(testnet, body, provider)
+    case Currency.BSC:
+      return bscSendAddNFTMinter(testnet, body, provider)
+    default:
+      throw new Error('Unsupported blockchain.')
+  }
+}
+
+export {
+  getNFTsByAddress,
+  getNFTProvenanceData,
+  getNFTContractAddress,
+  getNFTMetadataURI,
+  getNFTImage,
+  getNFTRoyalty,
+} from '@tatumio/tatum-defi'
