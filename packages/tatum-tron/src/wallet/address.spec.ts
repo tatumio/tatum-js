@@ -1,4 +1,3 @@
-import {Currency} from '@tatumio/tatum-core'
 import {generateAddressFromXPub, generatePrivateKeyFromMnemonic} from './address'
 import {generateTronWallet} from './wallet'
 // tslint:disable-next-line:no-var-requires
