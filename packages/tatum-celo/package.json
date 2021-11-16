@@ -15,9 +15,9 @@
   "dependencies": {
     "@celo-tools/celo-ethers-wrapper": "0.0.5",
     "@ethersproject/bignumber": "^5.5.0",
-    "@tatumio/tatum-core": "^2.0.0-alpha.6",
-    "@tatumio/tatum-defi": "^2.0.0-alpha.6",
-    "@tatumio/tatum-ledger": "^2.0.0-alpha.6",
+    "@tatumio/tatum-core": "file:../tatum-core",
+    "@tatumio/tatum-defi": "file:../tatum-defi",
+    "@tatumio/tatum-ledger": "file:../tatum-ledger",
     "bignumber.js": "^9.0.0",
     "bip39": "^3.0.2",
     "class-transformer": "^0.2.3",

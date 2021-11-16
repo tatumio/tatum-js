@@ -13,9 +13,9 @@
     "lint": "eslint ./src --ext .ts --fix"
   },
   "dependencies": {
-    "@tatumio/tatum-core": "^2.0.0-alpha.6",
-    "@tatumio/tatum-defi": "^2.0.0-alpha.6",
-    "@tatumio/tatum-ledger": "^2.0.0-alpha.6",
+    "@tatumio/tatum-core": "file:../tatum-core",
+    "@tatumio/tatum-defi": "file:../tatum-defi",
+    "@tatumio/tatum-ledger": "file:../tatum-ledger",
     "bignumber.js": "^9.0.0",
     "bip32": "^2.0.6",
     "bip39": "^3.0.2",

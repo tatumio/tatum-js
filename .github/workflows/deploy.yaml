@@ -10,17 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install deployment deps
-        working-directory: ./deployment/
-        run: yarn
-
-
-      - name: Build deployment script
-        working-directory: ./deployment/
-        run: yarn build
-
-
-      - run: echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}" > ~/.npmrc
-      - uses: ./deployment/
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+      - run: yarn -f
+      - run: yarn lerna bootstrap
+      - run: yarn lerna publish from-package --yes

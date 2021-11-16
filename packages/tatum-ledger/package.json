@@ -13,7 +13,7 @@
     "lint": "eslint ./src --ext .ts --fix"
   },
   "dependencies": {
-    "@tatumio/tatum-core": "^2.0.0-alpha.6"
+    "@tatumio/tatum-core": "file:../tatum-core"
   },
   "devDependencies": {
     "@types/jest": "^27.0.2",

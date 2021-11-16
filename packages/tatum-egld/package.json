@@ -14,9 +14,9 @@
   },
   "dependencies": {
     "@elrondnetwork/erdjs": "^8.0.1-alpha.11",
-    "@tatumio/tatum-core": "^2.0.0-alpha.6",
-    "@tatumio/tatum-defi": "^2.0.0-alpha.6",
-    "@tatumio/tatum-ledger": "^2.0.0-alpha.6",
+    "@tatumio/tatum-core": "file:../tatum-core",
+    "@tatumio/tatum-defi": "file:../tatum-defi",
+    "@tatumio/tatum-ledger": "file:../tatum-ledger",
     "axios": "^0.21.1",
     "bech32": "^1.1.4",
     "bignumber.js": "^9.0.0",

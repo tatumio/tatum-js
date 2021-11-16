@@ -14,9 +14,9 @@
   },
   "dependencies": {
     "@tatumio/bitcoincashjs2-lib": "4.1.2",
-    "@tatumio/tatum-core": "^2.0.0-alpha.6",
-    "@tatumio/tatum-defi": "^2.0.0-alpha.6",
-    "@tatumio/tatum-ledger": "^2.0.0-alpha.6",
+    "@tatumio/tatum-core": "file:../tatum-core",
+    "@tatumio/tatum-defi": "file:../tatum-defi",
+    "@tatumio/tatum-ledger": "file:../tatum-ledger",
     "bignumber.js": "^9.0.0",
     "bip32": "^2.0.5",
     "bip39": "^3.0.2",
