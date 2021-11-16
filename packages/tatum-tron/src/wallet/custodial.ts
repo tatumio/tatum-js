@@ -101,9 +101,10 @@ export const prepareBatchTransferFromCustodialWallet = async (testnet: boolean,
     return prepareBatchTransferFromCustodialWalletAbstract(
         testnet,
         body,
-        getTronTrc20ContractDecimals,
-        (testnet, body, r, provider) =>
-            prepareTronCustodialTransferBatch(testnet, r, feeLimit as number, from, provider),
+        // @ts-ignore
+        (contractAddress, provider, testnet) => getTronTrc20ContractDecimals(testnet, contractAddress, provider),
+        // @ts-ignore
+        (testnet, r, provider) => prepareTronCustodialTransferBatch(testnet, r, feeLimit as number, from, provider),
         SmartContractMethodInvocation,
         18,
         TransferFromTronCustodialAddressBatch,
