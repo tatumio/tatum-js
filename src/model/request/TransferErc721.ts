@@ -41,4 +41,8 @@ export class TransferErc721 extends PrivateKeyOrSignatureId {
     @ValidateIf(o => o.provenanceData && o.tokenPrice && o.provenance)
     public tokenPrice?: string;
 
+    @ValidateIf(o => o.chain === Currency.ALGO && o.signatureId)
+    @IsNotEmpty()
+    @Length(42, 58)
+    public from?: string;
 }

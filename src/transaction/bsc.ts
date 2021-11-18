@@ -1,10 +1,10 @@
-import { BigNumber } from 'bignumber.js';
+import {BigNumber} from 'bignumber.js';
 import Web3 from 'web3';
-import { TransactionConfig } from 'web3-core';
-import { toWei } from 'web3-utils';
-import { bscBroadcast, bscGetTransactionsCount } from '../blockchain';
-import { validateBody } from '../connector/tatum';
-import { CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI } from '../constants';
+import {TransactionConfig} from 'web3-core';
+import {toWei} from 'web3-utils';
+import {bscBroadcast, bscGetTransactionsCount} from '../blockchain';
+import {validateBody} from '../connector/tatum';
+import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
 import erc1155TokenABI from '../contracts/erc1155/erc1155_abi';
 import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode';
 import erc20_abi from '../contracts/erc20/token_abi';
@@ -14,7 +14,7 @@ import erc721TokenABI from '../contracts/erc721/erc721_abi';
 import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
 import erc721Provenance_abi from '../contracts/erc721Provenance/erc721Provenance_abi';
 import erc721Provenance_bytecode from '../contracts/erc721Provenance/erc721Provenance_bytecode';
-import { auction, listing } from '../contracts/marketplace';
+import {auction, listing} from '../contracts/marketplace';
 import {
     BurnErc20,
     CreateRecord,
@@ -44,14 +44,14 @@ import {
     TransferMultiTokenBatch,
     UpdateCashbackErc721
 } from '../model';
-import { mintNFT } from '../nft';
-import { obtainCustodialAddressType } from '../wallet';
+import {mintNFT} from '../nft';
+import {obtainCustodialAddressType} from '../wallet';
 
 /**
  * Estimate Gas price for the transaction.
  */
-export const bscGetGasPriceInWei = async (testnet = false) => {
-    return Web3.utils.toWei(testnet ? '10' : '5', 'gwei');
+export const bscGetGasPriceInWei = async () => {
+    return Web3.utils.toWei('10', 'gwei');
 };
 
 /**
