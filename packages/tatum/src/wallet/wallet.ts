@@ -16,11 +16,11 @@ import { generateWallet as generateXdcWallet } from '@tatumio/tatum-xdc'
 import { generateWallet as generateXrpWallet } from '@tatumio/tatum-xrp'
 import { generateWallet as generateXlmWallet } from '@tatumio/tatum-xlm'
 import { generateWallet as generateVetWallet } from '@tatumio/tatum-vet'
-// import { generateWallet as generateNeoWallet } from '@tatumio/tatum-neo'
-// import { generateWallet as generateLyraWallet } from '@tatumio/tatum-lyra'
+import { generateWallet as generateLyraWallet } from '@tatumio/tatum-scrypta'
 import { generateWallet as generateBnbWallet } from '@tatumio/tatum-bnb'
 import { generateWallet as generateAdaWallet } from '@tatumio/tatum-ada'
 import { generateWallet as generateAlgoWallet } from '@tatumio/tatum-algo'
+import { generateNeoWallet } from '@tatumio/tatum-neo'
 
 /**
  * Generate wallet
@@ -108,13 +108,12 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
       return generateXlmWallet()
     case Currency.VET:
       return generateVetWallet(testnet, mnem)
-    // case Currency.NEO:
-    // no submodule for NEO
-    //   return generateNeoWallet()
+    case Currency.NEO:
+      return generateNeoWallet()
     case Currency.BNB:
       return generateBnbWallet(testnet)
-    // case Currency.LYRA:
-    //   return generateLyraWallet(testnet, mnem)
+    case Currency.LYRA:
+      return generateLyraWallet(testnet, mnem)
     case Currency.ADA:
       return generateAdaWallet(mnem)
     case Currency.ALGO:
