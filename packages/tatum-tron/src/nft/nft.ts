@@ -1,4 +1,4 @@
-import { post, TransactionHash, Currency, ipfsUpload, erc721TokenABI as abi, AddMinter } from '@tatumio/tatum-core'
+import { post, TransactionHash, erc721TokenABI as abi, AddMinter } from '@tatumio/tatum-core'
 import {
   TronBurnTrc721,
   TronDeployTrc721,
@@ -17,7 +17,7 @@ import {
   sendTronUpdateCashbackForAuthorTrc721SignedTransaction,
 } from '../transaction'
 import { helperBroadcastTx, helperPrepareSCCall } from 'src/helpers'
-import { prepareAddNFTMinterAbstraction } from '@tatumio/tatum-defi'
+import { createNFTAbstraction, prepareAddNFTMinterAbstraction } from '@tatumio/tatum-defi'
 
 export const mintNFT = (body: TronMintTrc721): Promise<TransactionHash> => post(`/v3/nft/mint`, body)
 
@@ -50,28 +50,7 @@ export const createNFT = async (
   scheme?: any,
   provider?: string
 ) => {
-  const metadata = scheme || {}
-  metadata.name = name
-  if (description) {
-    metadata.description = description
-  }
-  const { ipfsHash } = await ipfsUpload(file, name)
-  metadata.image = `ipfs://${ipfsHash}`
-  const { ipfsHash: metadataHash } = await ipfsUpload(Buffer.from(JSON.stringify(metadata)), 'metadata.json')
-  body.url = `ipfs://${metadataHash}`
-  if (body.chain === Currency.FLOW) {
-    ;(body as any).privateKey = (body as any).privateKey || (body as any).fromPrivateKey
-  }
-  const result = await mintNFTWithUri(testnet, body, provider)
-  return {
-    tokenId: (body as any).tokenId,
-    // @ts-ignore
-    ...result,
-    metadataUrl: body.url,
-    metadataPublicUrl: `https://gateway.pinata.cloud/ipfs/${metadataHash}`,
-    imageUrl: `ipfs://${ipfsHash}`,
-    imagePublicUrl: `https://gateway.pinata.cloud/ipfs/${ipfsHash}`,
-  }
+  return await createNFTAbstraction(() => mintNFTWithUri(testnet, body, provider), testnet, body, file, name, description, scheme, provider)
 }
 
 /**
