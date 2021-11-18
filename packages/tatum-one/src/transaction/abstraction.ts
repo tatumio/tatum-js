@@ -1,4 +1,4 @@
-import { CreateRecord, validateBody, Currency, TransferErc20 } from '@tatumio/tatum-core'
+import { CreateRecord, validateBody, TransferErc20 } from '@tatumio/tatum-core'
 import { sendOneStoreDataTransaction, sendOneTransaction, sendOneTransfer20SignedTransaction } from '../'
 
 /**
@@ -13,11 +13,10 @@ export const storeData = async (body: CreateRecord, provider?: string) => {
 
 /**
  * Perform any native asset transaction.
- * @param chain Blockchain to work with. ETH,CELO,MATIC,ONE,TRON,BSC supported now.
  * @param body Body of the transaction.
  * @param provider Optional provider to use for broadcasting signed tx to the blockchain.
  */
-export const sendTransaction = async (chain: Currency, body: TransferErc20, provider?: string) => {
+export const sendTransaction = async (body: TransferErc20, provider?: string) => {
   const b = body as TransferErc20
   return b.contractAddress ? sendOneTransfer20SignedTransaction(b, provider) : sendOneTransaction(b, provider)
 }

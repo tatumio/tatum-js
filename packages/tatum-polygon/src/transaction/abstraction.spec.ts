@@ -3,7 +3,7 @@ import { sendTransaction } from '.'
 
 describe('Abstraction MATIC erc20', () => {
   it('should send erc20 abstraction - currency and contractAddress', async () => {
-    await sendTransaction(true, Currency.MATIC, {
+    await sendTransaction({
       amount: '10',
       to: '0xc6c02b874bf5efad3a0deeee72a56a50d81b6a61',
       currency: Currency.BAT,
@@ -13,7 +13,7 @@ describe('Abstraction MATIC erc20', () => {
   })
 
   it('should send erc20 abstraction - currency', async () => {
-    await sendTransaction(true, Currency.MATIC, {
+    await sendTransaction({
       amount: '10',
       to: '0xc6c02b874bf5efad3a0deeee72a56a50d81b6a61',
       currency: Currency.BAT,
@@ -22,7 +22,7 @@ describe('Abstraction MATIC erc20', () => {
   })
 
   it('should send erc20 abstraction - contractAddress', async () => {
-    const tx = await sendTransaction(true, Currency.MATIC, {
+    const tx = await sendTransaction({
       amount: '10',
       to: '0xc6c02b874bf5efad3a0deeee72a56a50d81b6a61',
       contractAddress: '0xFe00cF02cA45CFB5e333c72aD643301Cf8D053EF',

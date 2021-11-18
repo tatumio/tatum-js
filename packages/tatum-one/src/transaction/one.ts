@@ -266,10 +266,7 @@ export const getOne20ContractDecimals = async (contractAddress: string, provider
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareOneGenerateCustodialWalletSignedTransaction = async (
-  body: GenerateCustodialAddress,
-  provider?: string
-) => {
+export const prepareOneGenerateCustodialWalletSignedTransaction = async (body: GenerateCustodialAddress, provider?: string) => {
   await validateBody(body, GenerateCustodialAddress)
   const client = await prepareOneClient(provider, body.fromPrivateKey)
   const { abi, code } = obtainCustodialAddressType(body)
@@ -299,10 +296,7 @@ export const prepareOneGenerateCustodialWalletSignedTransaction = async (
  * @param provider url of the One Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
  */
-export const prepareOneDeployMarketplaceListingSignedTransaction = async (
-  body: DeployMarketplaceListing,
-  provider?: string
-) => {
+export const prepareOneDeployMarketplaceListingSignedTransaction = async (body: DeployMarketplaceListing, provider?: string) => {
   await validateBody(body, DeployMarketplaceListing)
   const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -422,14 +416,13 @@ export const prepareOneMint721SignedTransaction = async (body: OneMint721, provi
 }
 /**
  * Sign Harmony mint cashback erc721 provenance transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareOneMint721ProvenanceSignedTransaction = async (testnet: boolean, body: OneMint721, provider?: string) => {
+export const prepareOneMint721ProvenanceSignedTransaction = async (body: OneMint721, provider?: string) => {
   await validateBody(body, OneMint721)
-  const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+  const client = await prepareOneClient(provider, body.fromPrivateKey)
   const cb: string[] = []
   const fv: string[] = []
   const authors: string[] = []
@@ -682,10 +675,7 @@ export const prepareOneTransfer721SignedTransaction = async (body: OneTransfer72
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareOneUpdateCashbackForAuthor721SignedTransaction = async (
-  body: OneUpdateCashback721,
-  provider?: string
-) => {
+export const prepareOneUpdateCashbackForAuthor721SignedTransaction = async (body: OneUpdateCashback721, provider?: string) => {
   await validateBody(body, OneUpdateCashback721)
   const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -823,10 +813,7 @@ export const prepareOneTransferMultiTokenSignedTransaction = async (body: OneTra
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareOneBatchTransferMultiTokenSignedTransaction = async (
-  body: OneTransferMultiTokenBatch,
-  provider?: string
-) => {
+export const prepareOneBatchTransferMultiTokenSignedTransaction = async (body: OneTransferMultiTokenBatch, provider?: string) => {
   await validateBody(body, OneTransferMultiTokenBatch)
   const client = await prepareOneClient(provider, body.fromPrivateKey)
   const amts = body.amounts.map((amt) => `0x${new BigNumber(amt).toString(16)}`)
@@ -945,10 +932,7 @@ export const prepareOneDeployMultiTokenSignedTransaction = async (body: OneDeplo
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareOneSmartContractWriteMethodInvocation = async (
-  body: SmartContractMethodInvocation,
-  provider?: string
-) => {
+export const prepareOneSmartContractWriteMethodInvocation = async (body: SmartContractMethodInvocation, provider?: string) => {
   await validateBody(body, SmartContractMethodInvocation)
   const { fromPrivateKey, fee, params, methodName, methodABI, amount, contractAddress, nonce, signatureId } = body
   const client = await prepareOneClient(provider, fromPrivateKey)
@@ -974,10 +958,7 @@ export const prepareOneSmartContractWriteMethodInvocation = async (
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendOneSmartContractReadMethodInvocationTransaction = async (
-  body: SmartContractReadMethodInvocation,
-  provider?: string
-) => {
+export const sendOneSmartContractReadMethodInvocationTransaction = async (body: SmartContractReadMethodInvocation, provider?: string) => {
   await validateBody(body, SmartContractReadMethodInvocation)
   const { params, methodName, methodABI, contractAddress } = body
   const client = prepareOneClient(provider)
@@ -1052,17 +1033,16 @@ export const sendOneMint721SignedTransaction = async (body: OneMint721, provider
 /**
  * Send Harmony mint erc721 Provenance transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param testnet
  * @param body content of the transaction to broadcast
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendOneMint721ProvenanceSignedTransaction = async (testnet: boolean, body: OneMint721, provider?: string) => {
+export const sendOneMint721ProvenanceSignedTransaction = async (body: OneMint721, provider?: string) => {
   if (!body.fromPrivateKey) {
     return mintNFT(body)
   }
 
-  return oneBroadcast(await prepareOneMint721ProvenanceSignedTransaction(testnet, body, provider))
+  return oneBroadcast(await prepareOneMint721ProvenanceSignedTransaction(body, provider))
 }
 /**
  * Send Harmony mint multiple cashback erc721 provenance transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1182,10 +1162,8 @@ export const sendOneTransferMultiTokenSignedTransaction = async (body: OneTransf
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendOneBatchTransferMultiTokenSignedTransaction = async (
-  body: OneTransferMultiTokenBatch,
-  provider?: string
-) => oneBroadcast(await prepareOneBatchTransferMultiTokenSignedTransaction(body, provider))
+export const sendOneBatchTransferMultiTokenSignedTransaction = async (body: OneTransferMultiTokenBatch, provider?: string) =>
+  oneBroadcast(await prepareOneBatchTransferMultiTokenSignedTransaction(body, provider))
 
 /**
  * Send Harmony mint multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1224,10 +1202,8 @@ export const sendOneDeployMultiTokenSignedTransaction = async (body: OneDeployMu
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendOneGenerateCustodialWalletSignedTransaction = async (
-  body: GenerateCustodialAddress,
-  provider?: string
-) => oneBroadcast(await prepareOneGenerateCustodialWalletSignedTransaction(body, provider), body.signatureId)
+export const sendOneGenerateCustodialWalletSignedTransaction = async (body: GenerateCustodialAddress, provider?: string) =>
+  oneBroadcast(await prepareOneGenerateCustodialWalletSignedTransaction(body, provider), body.signatureId)
 
 /**
  * Deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
@@ -1235,10 +1211,8 @@ export const sendOneGenerateCustodialWalletSignedTransaction = async (
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendOneDeployMarketplaceListingSignedTransaction = async (
-  body: DeployMarketplaceListing,
-  provider?: string
-) => oneBroadcast(await prepareOneDeployMarketplaceListingSignedTransaction(body, provider), body.signatureId)
+export const sendOneDeployMarketplaceListingSignedTransaction = async (body: DeployMarketplaceListing, provider?: string) =>
+  oneBroadcast(await prepareOneDeployMarketplaceListingSignedTransaction(body, provider), body.signatureId)
 
 /**
  * Send Harmony smart contract method invocation transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
