@@ -1,7 +1,6 @@
 import { fromBase58, fromSeed } from 'bip32'
 import { mnemonicToSeed } from 'bip39'
 import * as elliptic from 'elliptic'
-import { Currency } from '@tatumio/tatum-core'
 import { FLOW_DERIVATION_PATH } from '../constants'
 
 /**
