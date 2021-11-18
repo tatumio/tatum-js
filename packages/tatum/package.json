@@ -29,6 +29,7 @@
     "@tatumio/tatum-kcc": "file:../tatum-kcc",
     "@tatumio/tatum-ledger": "file:../tatum-ledger",
     "@tatumio/tatum-ltc": "file:../tatum-ltc",
+    "@tatumio/tatum-neo": "file:../tatum-neo",
     "@tatumio/tatum-one": "file:../tatum-one",
     "@tatumio/tatum-polygon": "file:../tatum-polygon",
     "@tatumio/tatum-qtum": "file:../tatum-qtum",
