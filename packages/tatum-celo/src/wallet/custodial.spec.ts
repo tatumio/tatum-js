@@ -6,7 +6,7 @@ import {
   GenerateCustodialAddressBatch,
 } from '@tatumio/tatum-core'
 import { sendCeloGenerateCustodialWalletSignedTransaction } from '../transaction'
-import { prepareTransferFromCustodialWallet } from './custodial'
+import { generateCustodialWalletBatch, prepareTransferFromCustodialWallet } from './custodial'
 import { CeloProvider } from '@celo-tools/celo-ethers-wrapper'
 
 describe('Custodial wallet tests', () => {

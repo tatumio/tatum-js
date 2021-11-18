@@ -40,10 +40,12 @@ import {
   CeloBurnMultiToken,
 } from '../'
 import { CUSD_ADDRESS_MAINNET, CUSD_ADDRESS_TESTNET, CEUR_ADDRESS_TESTNET, CEUR_ADDRESS_MAINNET } from '../constants'
-import erc1155_bytecode from '@tatumio/tatum-core/src/contracts/erc1155/erc1155_bytecode'
-import erc721_bytecode from '@tatumio/tatum-core/src/contracts/erc721/erc721_bytecode'
-import erc20_bytecode from '@tatumio/tatum-core/src/contracts/erc20/token_bytecode'
-import erc721Provenance_bytecode from '@tatumio/tatum-core'
+import {
+  erc721Provenance_bytecode,
+  erc721TokenBytecode as erc721_bytecode,
+  erc1155TokenBytecode as erc1155_bytecode,
+  erc20TokenBytecode as erc20_bytecode,
+} from '@tatumio/tatum-core'
 
 const obtainWalletInformation = async (wallet: CeloWallet, feeCurrencyContractAddress?: string) => {
   const [txCount, gasPrice, from] = await Promise.all([
@@ -373,148 +375,6 @@ export const prepareCeloMintCashbackErc721SignedTransaction = async (testnet: bo
     return wallet.signTransaction(transaction)
   }
   throw new Error('Contract address and fee currency should not be empty!')
-}
-/**
- * Prepare a signed Celo mint provenance erc732 transaction with the private key locally. Nothing is broadcasted to the blockchain.
- * @returns raw transaction data in hex, to be broadcasted to blockchain.
- */
-export const prepareCeloMintErc721ProvenanceSignedTransaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) => {
-  await validateBody(body, CeloMintErc721)
-  const {
-    fromPrivateKey,
-    url,
-    to,
-    tokenId,
-    contractAddress,
-    feeCurrency,
-    nonce,
-    signatureId,
-    cashbackValues,
-    authorAddresses,
-    fixedValues,
-  } = body
-
-  const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
-  const network = await p.ready
-
-  if (contractAddress && feeCurrency) {
-    const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
-    // @ts-ignore
-    const contract = new new Web3().eth.Contract(erc721Provenance_abi, contractAddress.trim())
-    const cb: string[] = []
-    const fv: string[] = []
-    if (cashbackValues && fixedValues && authorAddresses) {
-      cashbackValues.map((c) => cb.push(`0x${new BigNumber(c).multipliedBy(100).toString(16)}`))
-      fixedValues.map((c) => fv.push(`0x${new BigNumber(toWei(c, 'ether')).toString(16)}`))
-    }
-    const data = contract.methods.mintWithTokenURI(to.trim(), tokenId, url, authorAddresses ? authorAddresses : [], cb, fv).encodeABI()
-    if (signatureId) {
-      return JSON.stringify({
-        chainId: network.chainId,
-        feeCurrency: feeCurrencyContractAddress,
-        nonce,
-        to: contractAddress.trim(),
-        gasLimit: '0',
-        data: data,
-      })
-    }
-    const wallet = new CeloWallet(fromPrivateKey as string, p)
-    const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
-    const transaction = {
-      chainId: network.chainId,
-      feeCurrency: feeCurrencyContractAddress,
-      nonce: nonce || txCount,
-      gasLimit: '0',
-      to: contractAddress.trim(),
-      gasPrice,
-      data: data,
-      from,
-    }
-    transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString()
-    return wallet.signTransaction(transaction)
-  }
-  throw new Error('Contract address and fee currency should not be empty!')
-}
-/**
- * Prepare a signed Celo mint multiple provenance cashback erc721 transaction with the private key locally. Nothing is broadcasted to the blockchain.
- * @returns raw transaction data in hex, to be broadcasted to blockchain.
- */
-export const prepareCeloMintMultipleErc721ProvenanceSignedTransaction = async (
-  testnet: boolean,
-  body: CeloMintMultipleErc721,
-  provider?: string
-) => {
-  await validateBody(body, CeloMintMultipleErc721)
-  const {
-    fromPrivateKey,
-    to,
-    tokenId,
-    contractAddress,
-    url,
-    feeCurrency,
-    nonce,
-    signatureId,
-    authorAddresses,
-    cashbackValues,
-    fixedValues,
-  } = body
-
-  const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
-  const network = await p.ready
-
-  const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
-
-  // @ts-ignore
-  const contract = new new Web3().eth.Contract(erc721Provenance_abi, contractAddress.trim())
-
-  const cb: string[][] = []
-  const fv: string[][] = []
-  if (authorAddresses && cashbackValues && fixedValues) {
-    for (let i = 0; i < cashbackValues.length; i++) {
-      const cb2: string[] = []
-      const fv2: string[] = []
-      for (let j = 0; j < cashbackValues[i].length; j++) {
-        cb2.push(`0x${new BigNumber(cashbackValues[i][j]).multipliedBy(100).toString(16)}`)
-        fv2.push(`0x${new BigNumber(toWei(fixedValues[i][j], 'ether')).toString(16)}`)
-      }
-      cb.push(cb2)
-      fv.push(fv2)
-    }
-  }
-  const data = contract.methods
-    .mintMultiple(
-      to.map((t) => t.trim()),
-      tokenId,
-      url,
-      authorAddresses ? authorAddresses : [],
-      cb,
-      fv
-    )
-    .encodeABI()
-  if (signatureId) {
-    return JSON.stringify({
-      chainId: network.chainId,
-      feeCurrency: feeCurrencyContractAddress,
-      nonce,
-      gasLimit: '0',
-      to: contractAddress.trim(),
-      data: data,
-    })
-  }
-  const wallet = new CeloWallet(fromPrivateKey as string, p)
-  const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
-  const transaction = {
-    chainId: network.chainId,
-    feeCurrency: feeCurrencyContractAddress,
-    nonce: nonce || txCount,
-    gasLimit: '0',
-    to: contractAddress.trim(),
-    gasPrice,
-    data: data,
-    from,
-  }
-  transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString()
-  return wallet.signTransaction(transaction)
 }
 /**
  * Prepare a signed Celo mint provenance erc732 transaction with the private key locally. Nothing is broadcasted to the blockchain.

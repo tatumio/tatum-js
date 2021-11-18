@@ -60,8 +60,8 @@ export const prepareAddMultiTokenMinter = async (testnet: boolean, body: AddMint
  * @param body body of the add minter request
  * @param provider optional provider do broadcast tx
  */
-export const sendAddMultiTokenMinter = async (body: AddMinter, provider?: string) =>
-  helperBroadcastTx(await prepareAddMultiTokenMinter(body, provider), body.signatureId)
+export const sendAddMultiTokenMinter = async (testnet: boolean, body: AddMinter, provider?: string) =>
+  helperBroadcastTx(await prepareAddMultiTokenMinter(testnet, body, provider), body.signatureId)
 
 export {
   getMultiTokenContractAddress,
