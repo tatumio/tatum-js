@@ -19,7 +19,7 @@ import {
   sendEthMultiTokenBatchTransaction,
   sendEthMultiTokenTransaction,
 } from '../transaction'
-import { helperBroadcastTx, helperPrepareSCCall } from 'src/helpers'
+import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
 
 export const deployMultiToken = async (body: DeployMultiToken, provider?: string) => {
   return sendEthDeployMultiTokenTransaction(body, provider)
@@ -46,11 +46,10 @@ export const transferMultiTokenBatch = async (body: TransferMultiTokenBatch, pro
 
 /**
  * Prepare add new minter to the MultiToken (1155) contract transaction.
- * @param testnet if we use testnet or not
  * @param body body of the add minter request
  * @param provider optional provider do broadcast tx
  */
-export const prepareAddMultiTokenMinter = async (testnet: boolean, body: AddMinter, provider?: string) => {
+export const prepareAddMultiTokenMinter = async (body: AddMinter, provider?: string) => {
   const params = await prepareAddMultiTokenMinterAbstraction(body)
   return await helperPrepareSCCall(body, 'grantRole', params, provider, listing.abi)
 }
@@ -60,8 +59,8 @@ export const prepareAddMultiTokenMinter = async (testnet: boolean, body: AddMint
  * @param body body of the add minter request
  * @param provider optional provider do broadcast tx
  */
-export const sendAddMultiTokenMinter = async (testnet: boolean, body: AddMinter, provider?: string) =>
-  helperBroadcastTx(await prepareAddMultiTokenMinter(testnet, body, provider), body.signatureId)
+export const sendAddMultiTokenMinter = async (body: AddMinter, provider?: string) =>
+  helperBroadcastTx(await prepareAddMultiTokenMinter(body, provider), body.signatureId)
 
 export {
   getMultiTokenContractAddress,

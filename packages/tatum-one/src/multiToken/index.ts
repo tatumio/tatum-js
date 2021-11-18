@@ -2,9 +2,7 @@ import {
   AddMinter,
   BurnMultiToken,
   BurnMultiTokenBatch,
-  Currency,
   DeployMultiToken,
-  get,
   MintMultiToken,
   MintMultiTokenBatch,
   prepareAddMultiTokenMinterAbstraction,
@@ -21,7 +19,7 @@ import {
   sendOneMintMultiTokenSignedTransaction,
   sendOneTransferMultiTokenSignedTransaction,
 } from '../transaction'
-import { helperBroadcastTx, helperPrepareSCCall } from 'src/helpers'
+import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
 
 export const deployMultiToken = async (testnet: boolean, body: DeployMultiToken, provider?: string) => {
   return sendOneDeployMultiTokenSignedTransaction(testnet, body, provider)

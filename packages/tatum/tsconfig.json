@@ -3,6 +3,7 @@
   "compilerOptions": {
     "outDir": "./dist",
     "baseUrl": "./",
+    "rootDir": "./src",
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"],
@@ -24,6 +25,7 @@
     { "path": "../tatum-ledger" },
     { "path": "../tatum-ltc" },
     { "path": "../tatum-one" },
+    { "path": "../tatum-neo" },
     { "path": "../tatum-polygon" },
     { "path": "../tatum-qtum" },
     { "path": "../tatum-quorum" },

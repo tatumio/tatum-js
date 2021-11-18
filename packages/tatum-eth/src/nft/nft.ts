@@ -21,7 +21,7 @@ import {
   sendMintMultipleErc721Transaction,
   sendUpdateCashbackForAuthorErc721Transaction,
 } from '../transaction'
-import { helperBroadcastTx, helperPrepareSCCall } from 'src/helpers'
+import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
 
 export const mintNFT = (body: MintErc721): Promise<TransactionHash> => mintNFTRequest(body)
 
@@ -118,7 +118,7 @@ export const prepareAddNFTMinter = async (testnet: boolean, body: AddMinter, pro
  * @param provider optional provider do broadcast tx
  */
 export const sendAddNFTMinter = async (testnet: boolean, body: AddMinter, provider?: string) =>
-  helperBroadcastTx(await prepareAddNFTMinter(testnet, body, provider), body.signatureId)
+  helperBroadcastTx((await prepareAddNFTMinter(testnet, body, provider)) as string, body.signatureId as string)
 
 export {
   getNFTsByAddress,
