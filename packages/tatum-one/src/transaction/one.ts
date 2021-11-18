@@ -683,8 +683,8 @@ export const prepareOneBurn721SignedTransaction = async (testnet: boolean, body:
 export const prepareOneTransfer721SignedTransaction = async (testnet: boolean, body: OneTransfer721, provider?: string) => {
   await validateBody(body, OneTransfer721)
   const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
-  // @ts-ignore
   const contract = new client.eth.Contract(
+    // @ts-ignore
     body.provenance ? erc721Provenance_abi : erc721TokenABI,
     new HarmonyAddress(body.contractAddress).basicHex
   )
