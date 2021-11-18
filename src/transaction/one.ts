@@ -460,7 +460,8 @@ export const prepareOneTransfer721SignedTransaction = async (testnet: boolean, b
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
     // @ts-ignore
     const contract = new (client).eth.Contract(body.provenance ? erc721Provenance_abi : erc721TokenABI, new HarmonyAddress(body.contractAddress).basicHex);
-    const data = body.provenance ? contract.methods.safeTransfer(new HarmonyAddress(body.to).basicHex, body.tokenId, body.provenanceData + '\'\'\'###\'\'\'' + toWei(body.tokenPrice!, 'ether')).encodeABI() : contract.methods.safeTransfer(new HarmonyAddress(body.to).basicHex, body.tokenId).encodeABI();
+    const dataBytes= body.provenance? Buffer.from(body.provenanceData + '\'\'\'###\'\'\'' + toWei(body.tokenPrice!, 'ether'), 'utf8'):'';
+    const data = body.provenance ? contract.methods.safeTransfer(new HarmonyAddress(body.to).basicHex, body.tokenId,`0x${dataBytes.toString('hex')}`).encodeABI() : contract.methods.safeTransfer(new HarmonyAddress(body.to).basicHex, body.tokenId).encodeABI();
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, body.value, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice);
 }

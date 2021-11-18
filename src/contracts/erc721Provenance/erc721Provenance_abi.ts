@@ -226,6 +226,30 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
+				"name": "a",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "t",
+				"type": "uint256"
+			}
+		],
+		"name": "allowance",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
 				"name": "to",
 				"type": "address"
 			},
@@ -595,9 +619,9 @@ export default [
 				"type": "uint256"
 			},
 			{
-				"internalType": "string",
-				"name": "data",
-				"type": "string"
+				"internalType": "bytes",
+				"name": "dataBytes",
+				"type": "bytes"
 			}
 		],
 		"name": "safeTransfer",
@@ -625,7 +649,7 @@ export default [
 		],
 		"name": "safeTransferFrom",
 		"outputs": [],
-		"stateMutability": "nonpayable",
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
@@ -647,13 +671,13 @@ export default [
 			},
 			{
 				"internalType": "bytes",
-				"name": "_data",
+				"name": "dataBytes",
 				"type": "bytes"
 			}
 		],
 		"name": "safeTransferFrom",
 		"outputs": [],
-		"stateMutability": "nonpayable",
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{

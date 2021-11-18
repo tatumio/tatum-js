@@ -701,7 +701,8 @@ export const prepareBscTransferBep721SignedTransaction = async (body: EthTransfe
 
     // @ts-ignore
     const contract = new (client).eth.Contract(provenance ? erc721Provenance_abi : erc721TokenABI, contractAddress);
-    const tokenData = provenance ? contract.methods.safeTransfer(to.trim(), tokenId, provenanceData + '\'\'\'###\'\'\'' + toWei(tokenPrice!, 'ether')).encodeABI() : contract.methods.safeTransfer(to.trim(), tokenId).encodeABI();
+    const dataBytes= provenance? Buffer.from(provenanceData + '\'\'\'###\'\'\'' + toWei(tokenPrice!, 'ether'), 'utf8'):'';
+    const tokenData = provenance ? contract.methods.safeTransfer(to.trim(), tokenId,`0x${dataBytes.toString('hex')}`).encodeABI() : contract.methods.safeTransfer(to.trim(), tokenId).encodeABI();
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),

@@ -568,7 +568,8 @@ export const prepareCeloTransferErc721SignedTransaction = async (testnet: boolea
 
     // @ts-ignore
     const contract = new (new Web3()).eth.Contract(provenance ? erc721Provenance_abi : erc721_abi, contractAddress.trim());
-    const tokenData = provenance ? contract.methods.safeTransfer(to.trim(), tokenId, provenanceData + '\'\'\'###\'\'\'' + toWei(tokenPrice!, 'ether')).encodeABI() : contract.methods.safeTransfer(to.trim(), tokenId).encodeABI();
+    const dataBytes=  provenance?Buffer.from(provenanceData + '\'\'\'###\'\'\'' + toWei(tokenPrice!, 'ether'), 'utf8'):'';
+    const tokenData = provenance ? contract.methods.safeTransfer(to.trim(), tokenId, `0x${dataBytes.toString('hex')}`).encodeABI() : contract.methods.safeTransfer(to.trim(), tokenId).encodeABI();
     if (signatureId) {
         return JSON.stringify({
             chainId: network.chainId,
