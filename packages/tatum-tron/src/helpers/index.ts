@@ -7,7 +7,6 @@ export const helperBroadcastTx = async (chain: Currency, txData: string, signatu
   return await tronBroadcast(txData, signatureId)
 }
 
-// TODO should be used anywhere?
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const helperPrepareSCCall = async (
   testnet: boolean,
