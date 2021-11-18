@@ -1,0 +1,8 @@
+name: 'NPM deploy'
+description: 'Action will perform deployment'
+author: 'Lukas Kotol'
+
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
+

@@ -9,34 +9,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Build
-        run: |
-          cd ./packages/tatum
-          cd ../tatum-core && yarn
-          cd ../tatum-ledger && yarn
-          cd ../tatum-defi && yarn
-          cd ../tatum-ada && yarn
-          cd ../tatum-algo && yarn
-          cd ../tatum-bch && yarn
-          cd ../tatum-bnb && yarn
-          cd ../tatum-bsc && yarn
-          cd ../tatum-btc && yarn
-          cd ../tatum-celo && yarn
-          cd ../tatum-doge && yarn
-          cd ../tatum-egld && yarn
-          cd ../tatum-eth && yarn
-          cd ../tatum-flow && yarn
-          cd ../tatum-kcc && yarn
-          cd ../tatum-ltc && yarn
-          cd ../tatum-one && yarn
-          cd ../tatum-polygon && yarn
-          cd ../tatum-qtum && yarn
-          cd ../tatum-quorum && yarn
-          cd ../tatum-scrypta && yarn
-          cd ../tatum-tron && yarn
-          cd ../tatum-vet && yarn
-          cd ../tatum-xdc && yarn
-          cd ../tatum-xlm && yarn
-          cd ../tatum-xrp && yarn
-          cd ../tatum && yarn
+      - uses: actions/checkout@v2
+      - name: Install deployment deps
+        working-directory: ./deployment/
+        run: yarn
+
+
+      - name: Build deployment script
+        working-directory: ./deployment/
+        run: yarn build
+
+
+      - run: echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}" > ~/.npmrc
+      - uses: ./deployment/
 
