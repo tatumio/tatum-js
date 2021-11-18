@@ -140,10 +140,8 @@ export const sendTronDeployTrc721SignedTransaction = async (body: TronDeployTrc7
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendTronGenerateCustodialWalletSignedTransaction = async (
-  body: GenerateTronCustodialAddress,
-  provider?: string
-) => await tronBroadcast(await prepareTronGenerateCustodialWalletSignedTransaction(body, provider), body.signatureId)
+export const sendTronGenerateCustodialWalletSignedTransaction = async (body: GenerateTronCustodialAddress, provider?: string) =>
+  await tronBroadcast(await prepareTronGenerateCustodialWalletSignedTransaction(body, provider), body.signatureId)
 
 /**
  * Deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
@@ -151,10 +149,8 @@ export const sendTronGenerateCustodialWalletSignedTransaction = async (
  * @param provider optional provider to enter. if not present, Tatum provider will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendTronDeployMarketplaceListingSignedTransaction = async (
-  body: DeployTronMarketplaceListing,
-  provider?: string
-) => await tronBroadcast(await prepareTronDeployMarketplaceListingSignedTransaction(body, provider), body.signatureId)
+export const sendTronDeployMarketplaceListingSignedTransaction = async (body: DeployTronMarketplaceListing, provider?: string) =>
+  await tronBroadcast(await prepareTronDeployMarketplaceListingSignedTransaction(body, provider), body.signatureId)
 
 /**
  * Send Tron mint cashback trc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -595,7 +591,7 @@ export const prepareTronCreateTrc10SignedKMSTransaction = async (body: CreateTro
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronCreateTrc20SignedKMSTransaction = async (testnet: boolean, body: CreateTronTrc20, provider?: string) => {
+export const prepareTronCreateTrc20SignedKMSTransaction = async (body: CreateTronTrc20, provider?: string) => {
   await validateBody(body, CreateTronTrc20)
   const { from, name, decimals, recipient, symbol, totalSupply } = body
 
@@ -652,10 +648,7 @@ export const prepareTronDeployTrc721SignedTransaction = async (body: TronDeployT
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronGenerateCustodialWalletSignedTransaction = async (
-  body: GenerateTronCustodialAddress,
-  provider?: string
-) => {
+export const prepareTronGenerateCustodialWalletSignedTransaction = async (body: GenerateTronCustodialAddress, provider?: string) => {
   await validateBody(body, GenerateTronCustodialAddress)
   const tronWeb = prepareTronWeb(provider)
   const { abi, code } = obtainCustodialAddressType(body)
@@ -684,10 +677,7 @@ export const prepareTronGenerateCustodialWalletSignedTransaction = async (
  * @param provider optional provider to enter. if not present, Tatum provider will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareTronDeployMarketplaceListingSignedTransaction = async (
-  body: DeployTronMarketplaceListing,
-  provider?: string
-) => {
+export const prepareTronDeployMarketplaceListingSignedTransaction = async (body: DeployTronMarketplaceListing, provider?: string) => {
   await validateBody(body, DeployTronMarketplaceListing)
   const tronWeb = prepareTronWeb(provider)
   const tx = await tronWeb.transactionBuilder.createSmartContract(
@@ -902,10 +892,7 @@ export const prepareTronMintMultipleTrc721SignedTransaction = async (body: TronM
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronUpdateCashbackForAuthorTrc721SignedTransaction = async (
-  body: TronUpdateCashbackTrc721,
-  provider?: string
-) => {
+export const prepareTronUpdateCashbackForAuthorTrc721SignedTransaction = async (body: TronUpdateCashbackTrc721, provider?: string) => {
   await validateBody(body, TronUpdateCashbackTrc721)
   const { fromPrivateKey, cashbackValue, tokenId, contractAddress, feeLimit, from, signatureId } = body
 
