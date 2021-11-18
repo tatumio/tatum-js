@@ -14,7 +14,7 @@ describe('LTC transactions', () => {
             address: 'mfh8kjy36ppH7bGXTzUwhWbKGgZziq4CbF',
             value: 0.2969944
         }];
-        const txData = await prepareLitecoinSignedTransaction(true, body);
+        const txData = await prepareLitecoinSignedTransaction(body);
         expect(txData).toBe('010000000107b82207b41ce255ba227719f93ff426dd49fb53986b843145d496ca07c770660100000000ffffffff01702dc501000000001976a91401ece42befef00eb643febc32cb0764563fb4e6988ac00000000');
     });
 
@@ -30,7 +30,7 @@ describe('LTC transactions', () => {
             address: 'mfh8kjy36ppH7bGXTzUwhWbKGgZziq4CbF',
             value: 0.2969944
         }];
-        const txData = await sendLitecoinTransaction(true, body);
+        const txData = await sendLitecoinTransaction(body);
         console.log(txData);
         expect(txData).toHaveProperty('txId');
     });
@@ -51,7 +51,7 @@ describe('LTC transactions', () => {
             value: 0.02969944
         }];
         try {
-            await prepareLitecoinSignedTransaction(true, body);
+            await prepareLitecoinSignedTransaction(body);
             fail('Validation did not pass.');
         } catch (e) {
             console.error(e);

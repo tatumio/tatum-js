@@ -6,7 +6,7 @@ describe('NFT tests', () => {
   jest.setTimeout(99999)
   describe('NFT BSC transactions', () => {
     it('should test eth 721 deploy transaction', async () => {
-      const deployErc721Token = await deployNFT(true, {
+      const deployErc721Token = await deployNFT({
         symbol: 'TatumToken',
         chain: Currency.BSC,
         fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
@@ -19,7 +19,7 @@ describe('NFT tests', () => {
     it('should test bep 721 mint multiple transaction with cashback', async () => {
       const firstTokenId = new Date().getTime()
       const secondTokenId = firstTokenId + 1
-      const mintedTokens = await mintMultipleNFTWithUri(true, {
+      const mintedTokens = await mintMultipleNFTWithUri({
         to: ['0x811dfbff13adfbc3cf653dcc373c03616d3471c9', '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'],
         chain: Currency.BSC,
         tokenId: [firstTokenId.toString(), secondTokenId.toString()],
@@ -41,7 +41,7 @@ describe('NFT tests', () => {
     })
     it('should test bep 721 mint transaction', async () => {
       try {
-        const mintedToken = await mintNFTWithUri(true, {
+        const mintedToken = await mintNFTWithUri({
           to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
           chain: Currency.BSC,
           tokenId: '1',
@@ -69,7 +69,7 @@ describe('NFT tests', () => {
       console.log(await createNFT(true, body, readFileSync('/Users/ssramko/Downloads/logo_tatum.png'), 'Tatum LOGO', 'description'))
     })
     it('should test BSC send transaction', async () => {
-      const sendErc721Token = await transferNFT(true, {
+      const sendErc721Token = await transferNFT({
         to: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
         chain: Currency.BSC,
         tokenId: '1',

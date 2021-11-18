@@ -2,7 +2,7 @@ import * as bech32 from 'bech32'
 import { mnemonicToSeed } from 'bip39'
 import { derivePath, getPublicKey } from 'ed25519-hd-key'
 import { EGLD_DERIVATION_PATH } from '../constants'
-import { Currency, TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
+import { TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
 
 /**
  * Generate EGLD address
@@ -36,11 +36,10 @@ const generateEgldPrivateKey = async (testnet: boolean, mnemonic: string, i: num
 
 /**
  * Convert EGLD Private Key to Address
- * @param testnet testnet or mainnet version of address
  * @param privKey private key to use
  * @returns blockchain address
  */
-const convertEgldPrivateKey = (testnet: boolean, privKey: string) => {
+const convertEgldPrivateKey = (privKey: string) => {
   const publicKey = getPublicKey(Buffer.from(privKey, 'hex'), false).toString('hex')
   const words = bech32.toWords(Buffer.from(publicKey.slice(-64), 'hex'))
   const address = bech32.encode('erd', words)
@@ -49,35 +48,31 @@ const convertEgldPrivateKey = (testnet: boolean, privKey: string) => {
 
 /**
  * Generate address
- * @param currency type of blockchain
  * @param testnet testnet or mainnet version of address
  * @param xpub extended public key to generate address from
  * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
-export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xpub: string, i: number) => {
+export const generateAddressFromXPub = (testnet: boolean, xpub: string, i: number) => {
   return generateEgldAddress(testnet, xpub, i)
 }
 
 /**
  * Generate private key from mnemonic seed
- * @param currency type of blockchain
  * @param testnet testnet or mainnet version of address
  * @param mnemonic mnemonic to generate private key from
  * @param i derivation index of private key to generate.
  * @returns blockchain private key to the address
  */
-export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: boolean, mnemonic: string, i: number) => {
+export const generatePrivateKeyFromMnemonic = (testnet: boolean, mnemonic: string, i: number) => {
   return generateEgldPrivateKey(testnet, mnemonic, i)
 }
 
 /**
  * Generate address from private key
- * @param currency type of blockchain
- * @param testnet testnet or mainnet version of address
  * @param privateKey private key to use
  * @returns blockchain private key to the address
  */
-export const generateAddressFromPrivatekey = (currency: Currency, testnet: boolean, privateKey: string) => {
-  return convertEgldPrivateKey(testnet, privateKey)
+export const generateAddressFromPrivatekey = (privateKey: string) => {
+  return convertEgldPrivateKey(privateKey)
 }

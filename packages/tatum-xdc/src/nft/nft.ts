@@ -25,17 +25,15 @@ export const mintNFT = (body: MintErc721): Promise<TransactionHash> => post(`/v3
 
 /**
  * Deploy new NFT smart contract, which will be used for later minting.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const deployNFT = async (testnet: boolean, body: DeployErc721, provider?: string): Promise<TransactionHash> => {
+export const deployNFT = async (body: DeployErc721, provider?: string): Promise<TransactionHash> => {
   return sendXdcDeployErc721Transaction(body as DeployErc721, provider)
 }
 
 /**
  * Mint new NFT token with metadata stored on the IPFS.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
  * @param file file to be stored on the IPFS
  * @param name name of the file
@@ -44,7 +42,6 @@ export const deployNFT = async (testnet: boolean, body: DeployErc721, provider?:
  * @param provider optional provider do broadcast tx
  */
 export const createNFT = async (
-  testnet: boolean,
   body: MintErc721,
   file: Buffer,
   name: string,
@@ -52,16 +49,15 @@ export const createNFT = async (
   scheme?: any,
   provider?: string
 ) => {
-  return await createNFTAbstraction(() => mintXdcNFTWithUri(false, body, provider), false, body, file, name, description, scheme, provider)
+  return await createNFTAbstraction(mintXdcNFTWithUri, false, body, file, name, description, scheme, provider)
 }
 
 /**
  * Mint new NFT token.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const mintXdcNFTWithUri = async (testnet: boolean, body: MintErc721, provider?: string): Promise<TransactionHash> => {
+export const mintXdcNFTWithUri = async (body: MintErc721, provider?: string): Promise<TransactionHash> => {
   if ((body as MintErc721).authorAddresses) {
     return sendXdcMintErcCashback721Transaction(body as MintErc721, provider)
   } else {
@@ -71,11 +67,10 @@ export const mintXdcNFTWithUri = async (testnet: boolean, body: MintErc721, prov
 
 /**
  * Mint multiple new NFT tokens.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const mintMultipleNFTWithUri = async (testnet: boolean, body: MintMultipleErc721, provider?: string) => {
+export const mintMultipleNFTWithUri = async (body: MintMultipleErc721, provider?: string) => {
   if ((body as MintMultipleErc721).authorAddresses) {
     return sendXdcMintMultipleCashbackErc721Transaction(body as MintMultipleErc721, provider)
   } else {
@@ -85,31 +80,28 @@ export const mintMultipleNFTWithUri = async (testnet: boolean, body: MintMultipl
 
 /**
  * Burn new NFT token. Token will no longer exists.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const burnNFT = async (testnet: boolean, body: BurnErc721, provider?: string) => {
+export const burnNFT = async (body: BurnErc721, provider?: string) => {
   return sendXdcBurnErc721Transaction(body, provider)
 }
 
 /**
  * Update royalty cashback as author of the NFT token.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const updateCashbackForAuthorNFT = async (testnet: boolean, body: UpdateCashbackErc721, provider?: string) => {
+export const updateCashbackForAuthorNFT = async (body: UpdateCashbackErc721, provider?: string) => {
   return sendXdcUpdateCashbackForAuthorErc721Transaction(body, provider)
 }
 
 /**
  * Transfer new NFT token to new recipient.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const transferNFT = async (testnet: boolean, body: TransferErc721, provider?: string) => {
+export const transferNFT = async (body: TransferErc721, provider?: string) => {
   return sendXdcErc721Transaction(body, provider)
 }
 

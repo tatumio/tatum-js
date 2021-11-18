@@ -9,14 +9,14 @@ import { ApproveErc20 } from '../model'
  * @param provider optional Web3 provider
  */
 export const prepareApproveErc20Abstraction = async (
-  getErc20ContractDecimalsFn: (tesnet: boolean, contractAddress: string, provider?: string) => Promise<any>,
+  getErc20ContractDecimalsFn: (contractAddress: string, provider?: string, tesnet?: boolean) => Promise<any>,
   testnet: boolean,
   body: ApproveErc20,
   provider?: string
 ) => {
   await validateBody(body, ApproveErc20)
   const amount = new BigNumber(body.amount)
-    .multipliedBy(new BigNumber(10).pow(await getErc20ContractDecimalsFn(testnet, body.contractAddress, provider)))
+    .multipliedBy(new BigNumber(10).pow(await getErc20ContractDecimalsFn(body.contractAddress, provider, testnet)))
     .toString(16)
   const params = [body.spender.trim(), `0x${amount}`]
   body.amount = '0'

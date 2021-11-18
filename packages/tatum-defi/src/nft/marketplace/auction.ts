@@ -147,14 +147,14 @@ export const prepareAuctionCreateAbstraction = async (body: CreateAuction) => {
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareAuctionBidAbstraction = async (
-  helperGetWeb3Client: (testnet: boolean, chain: Currency, provider?: string | undefined) => Web3,
+  helperGetWeb3Client: (provider?: string | undefined, testnet?: boolean) => Web3,
   testnet: boolean,
   body: InvokeAuctionOperation,
   provider?: string
 ) => {
   await validateBody(body, InvokeAuctionOperation)
 
-  const web3 = helperGetWeb3Client(testnet, body.chain, provider)
+  const web3 = helperGetWeb3Client(provider, testnet)
   // @ts-ignore
   const a = await new web3.eth.Contract(auction.abi, body.contractAddress).methods.getAuction(body.id).call()
   let decimals = 18
@@ -193,12 +193,10 @@ export const prepareAuctionCancelAbstraction = async (body: InvokeAuctionOperati
 
 /**
  * Settle auction. There must be buyer present for that auction. NFT will be sent to the bidder, assets to the seller and fee to the operator.
- * @param testnet chain to work with
  * @param body request data
- * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareAuctionSettleAbstraction = async (testnet: boolean, body: InvokeAuctionOperation) => {
+export const prepareAuctionSettleAbstraction = async (body: InvokeAuctionOperation) => {
   await validateBody(body, InvokeAuctionOperation)
   return [body.id]
 }

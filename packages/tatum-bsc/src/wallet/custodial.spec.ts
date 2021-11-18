@@ -94,7 +94,7 @@ describe('Custodial wallet tests', () => {
       body.tokenAddress = '0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867'
       body.spender = '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA'
       body.amount = '1'
-      const txData = await prepareApproveFromCustodialWallet(true, body)
+      const txData = await prepareApproveFromCustodialWallet(body)
       expect(txData).toContain('0x')
       console.log(await bscBroadcast(txData))
     })
@@ -108,7 +108,7 @@ describe('Custodial wallet tests', () => {
       body.tokenAddress = '0x9b0eea3aa1e61b8ecb7d1c8260cd426eb2a9a698'
       body.spender = '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA'
       body.tokenId = '10'
-      const txData = await prepareApproveFromCustodialWallet(true, body)
+      const txData = await prepareApproveFromCustodialWallet(body)
       expect(txData).toContain('0x')
       console.log(await bscBroadcast(txData))
     })
@@ -123,7 +123,7 @@ describe('Custodial wallet tests', () => {
       body.spender = '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA'
       body.tokenId = '1'
       body.amount = '1'
-      const txData = await prepareApproveFromCustodialWallet(true, body)
+      const txData = await prepareApproveFromCustodialWallet(body)
       expect(txData).toContain('0x')
       console.log(await bscBroadcast(txData))
     })

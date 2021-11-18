@@ -15,7 +15,6 @@ describe('NFT tests', () => {
   describe('NFT POLYGON 1155 transactions', () => {
     it('should test polygon 1155 deploy transaction', async () => {
       const deployMultiTokenToken = await deployMultiToken(
-        true,
         {
           chain: Currency.MATIC,
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
@@ -29,7 +28,6 @@ describe('NFT tests', () => {
     it('should test polygon 1155 mint transaction', async () => {
       const tokenId = '2'
       const mintedToken = await mintMultiToken(
-        true,
         {
           to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
           chain: Currency.MATIC,
@@ -50,7 +48,6 @@ describe('NFT tests', () => {
         ['12101', '12102'],
       ]
       const mintedToken = await mintMultiTokenBatch(
-        true,
         {
           to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
           chain: Currency.MATIC,
@@ -70,7 +67,6 @@ describe('NFT tests', () => {
     })
     it('should test polygon 1155 send batch transaction', async () => {
       const sendMultiTokenToken = await transferMultiTokenBatch(
-        true,
         {
           to: '0x6c4A48886b77D1197eCFBDaA3D3f35d81d584342',
           chain: Currency.MATIC,
@@ -91,7 +87,6 @@ describe('NFT tests', () => {
     })
     it('should test polygon 1155 burn transaction', async () => {
       const burnMultiTokenToken = await burnMultiToken(
-        true,
         {
           account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
           tokenId: '2',
@@ -107,7 +102,6 @@ describe('NFT tests', () => {
     })
     it('should test polygon 1155 burn batch transaction', async () => {
       const burnMultiTokenToken = await burnMultiTokenBatch(
-        true,
         {
           account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
           tokenId: ['12101', '12102'],
@@ -123,7 +117,6 @@ describe('NFT tests', () => {
 
     it('should test polygon 1155 send transaction', async () => {
       const sendMultiTokenToken = await transferMultiToken(
-        true,
         {
           to: '0x31a19a9E4BDd33982188BCb058a7E2a3515a8136',
           chain: Currency.MATIC,

@@ -221,11 +221,10 @@ export const prepareCeloDeployAuctionSignedTransaction = async (testnet: boolean
  * Sign Celo pending transaction from Tatum KMS
  * @param tx pending transaction from KMS
  * @param fromPrivateKey private key to sign transaction with.
- * @param testnet mainnet or testnet version
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
  */
-export const signCeloKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, testnet: boolean, provider?: string) => {
+export const signCeloKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, provider?: string) => {
   if (tx.chain !== Currency.CELO) {
     throw Error('Unsupported chain.')
   }
@@ -799,7 +798,6 @@ export const prepareCeloSmartContractWriteMethodInvocation = async (
  * @returns raw transaction data in hex, to be broadcasted to blockchain.
  */
 export const sendCeloSmartContractReadMethodInvocationTransaction = async (
-  testnet: boolean,
   body: SmartContractReadMethodInvocation,
   provider?: string
 ) => {
@@ -831,13 +829,13 @@ export const sendCeloSmartContractMethodInvocationTransaction = async (
   provider?: string
 ) => {
   if (body.methodABI.stateMutability === 'view') {
-    return sendCeloSmartContractReadMethodInvocationTransaction(testnet, body, provider)
+    return sendCeloSmartContractReadMethodInvocationTransaction(body, provider)
   }
   const celoBody = body as CeloSmartContractMethodInvocation
   return celoBroadcast(await prepareCeloSmartContractWriteMethodInvocation(testnet, celoBody, provider), celoBody.signatureId)
 }
 
-export const getCeloErc20ContractDecimals = async (testnet: boolean, contractAddress: string, provider?: string) => {
+export const getCeloErc20ContractDecimals = async (contractAddress: string, provider?: string) => {
   if (!contractAddress) {
     throw new Error('Contract address not set.')
   }

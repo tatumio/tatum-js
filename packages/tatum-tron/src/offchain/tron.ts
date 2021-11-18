@@ -23,7 +23,7 @@ export const sendTronOffchainTransaction = async (testnet: boolean, body: Transf
   let fromPriv: string
   if (mnemonic && index !== undefined) {
     fromPriv =
-      mnemonic && index ? await generatePrivateKeyFromMnemonic(Currency.TRON, testnet, mnemonic, index) : (fromPrivateKey as string)
+      mnemonic && index ? await generatePrivateKeyFromMnemonic(mnemonic, index) : (fromPrivateKey as string)
   } else if (fromPrivateKey) {
     fromPriv = fromPrivateKey
   } else {
@@ -34,9 +34,9 @@ export const sendTronOffchainTransaction = async (testnet: boolean, body: Transf
   const account = await getAccountById(withdrawal.senderAccountId)
   let txData
   if (account.currency === Currency.TRON) {
-    txData = await prepareTronSignedTransaction(testnet, { amount, fromPrivateKey: fromPriv, to: address })
+    txData = await prepareTronSignedTransaction({ amount, fromPrivateKey: fromPriv, to: address })
   } else if (account.currency === Currency.USDT_TRON || account.currency === Currency.INRT_TRON) {
-    txData = await prepareTronTrc20SignedTransaction(testnet, {
+    txData = await prepareTronTrc20SignedTransaction({
       amount,
       fromPrivateKey: fromPriv,
       to: address,
@@ -57,7 +57,7 @@ export const sendTronOffchainTransaction = async (testnet: boolean, body: Transf
         vc.precision
       )
     } else if (vc.trcType === TrcType.TRC20) {
-      txData = await prepareTronTrc20SignedTransaction(testnet, {
+      txData = await prepareTronTrc20SignedTransaction({
         amount,
         feeLimit: parseFloat(withdrawal.fee),
         fromPrivateKey: fromPriv,

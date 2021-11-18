@@ -44,7 +44,7 @@ const nftRoyalty = await getNFTRoyalty(
 
 ## Deploy NFT
 ```typescript
-const transactionHash = await deployNFT(false, {
+const transactionHash = await deployNFT({
     name: 'MY_NFT',
     chain: Currency.ETH,
     symbil: 'NFT_SYMBOL'
@@ -53,7 +53,7 @@ const transactionHash = await deployNFT(false, {
 
 ## Mint NFT
 ```typescript
-const transactionHash = await mintNFTWithUri(false, {
+const transactionHash = await mintNFTWithUri({
     to: '0x0ff64c166a462b31ed657c9d88c5ac4fef6b88b6',
     url: 'https://my-token-metadata-url',
     tokenId: '12',
@@ -64,7 +64,7 @@ const transactionHash = await mintNFTWithUri(false, {
 
 ## Burn NFT
 ```typescript
-const transactionHash = await burnNFT(false, {
+const transactionHash = await burnNFT({
     tokenId: '12',
     chain: Currency.ETH,
     contractAddress: '0x7060694f5ce1feb5a255d06fdcf6e4f7a3507492',
@@ -73,7 +73,7 @@ const transactionHash = await burnNFT(false, {
 
 ## Transfer NFT
 ```typescript
-const transactionHash = await transferNFT(false, {
+const transactionHash = await transferNFT({
     to: '0x0ff64c166a462b31ed657c9d88c5ac4fef6b88b6',
     tokenId: '12',
     chain: Currency.ETH,
@@ -83,7 +83,7 @@ const transactionHash = await transferNFT(false, {
 
 ## Update cashback for an author NFT
 ```typescript
-const transactionHash = await updateCashbackForAuthorNFT(false, {
+const transactionHash = await updateCashbackForAuthorNFT({
     to: '0x0ff64c166a462b31ed657c9d88c5ac4fef6b88b6',
     tokenId: '12',
     chain: Currency.ETH,

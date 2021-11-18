@@ -335,7 +335,7 @@ export const sendFlowNftMintToken = async (testnet: boolean, body: FlowMintNft, 
     const code = mintFlowNftTokenTxTemplate(testnet);
     const {url, contractAddress: tokenType, to, mnemonic, index, account, privateKey} = body;
     const args = [{type: 'Address', value: to}, {type: 'String', value: url}, {type: 'String', value: tokenType}];
-    const pk = (mnemonic && index && index >= 0) ? await generatePrivateKeyFromMnemonic(Currency.FLOW, testnet, mnemonic, index as number) : privateKey as string;
+    const pk = (mnemonic && index && index >= 0) ? await generatePrivateKeyFromMnemonic(mnemonic, index as number) : privateKey as string;
     const auth = getFlowSigner(pk, account).signer;
     const {signer: proposalSigner, keyHash} = proposer ? proposer(false) : getFlowApiSigner(false);
     const result = await sendTransaction(testnet, {
@@ -373,7 +373,7 @@ export const sendFlowNftMintMultipleToken = async (testnet: boolean, body: FlowM
         subType: 'String',
         value: url
     }, {type: 'String', value: tokenType}];
-    const pk = (mnemonic && index && index >= 0) ? await generatePrivateKeyFromMnemonic(Currency.FLOW, testnet, mnemonic, index as number) : privateKey as string;
+    const pk = (mnemonic && index && index >= 0) ? await generatePrivateKeyFromMnemonic(mnemonic, index as number) : privateKey as string;
     const {signer: proposalSigner, keyHash} = proposer ? proposer(false) : getFlowApiSigner(false);
     const auth = getFlowSigner(pk, account).signer;
     const result = await sendTransaction(testnet, {
@@ -405,7 +405,7 @@ export const sendFlowNftTransferToken = async (testnet: boolean, body: FlowTrans
     const code = transferFlowNftTokenTxTemplate(testnet);
     const {tokenId, to, mnemonic, index, account, privateKey} = body;
     const args = [{type: 'Address', value: to}, {type: 'UInt64', value: tokenId}];
-    const pk = (mnemonic && index && index >= 0) ? await generatePrivateKeyFromMnemonic(Currency.FLOW, testnet, mnemonic, index as number) : privateKey as string;
+    const pk = (mnemonic && index && index >= 0) ? await generatePrivateKeyFromMnemonic(mnemonic, index as number) : privateKey as string;
     const {signer: proposalSigner, keyHash} = proposer ? proposer(false) : getFlowApiSigner(false);
     const auth = getFlowSigner(pk, account).signer;
     const result = await sendTransaction(testnet, {
@@ -434,7 +434,7 @@ export const sendFlowNftBurnToken = async (testnet: boolean, body: FlowBurnNft, 
     const code = burnFlowNftTokenTxTemplate(testnet);
     const {tokenId, contractAddress: tokenType, mnemonic, index, account, privateKey} = body;
     const args = [{type: 'UInt64', value: tokenId}, {type: 'String', value: tokenType}];
-    const pk = (mnemonic && index && index >= 0) ? await generatePrivateKeyFromMnemonic(Currency.FLOW, testnet, mnemonic, index as number) : privateKey as string;
+    const pk = (mnemonic && index && index >= 0) ? await generatePrivateKeyFromMnemonic(mnemonic, index as number) : privateKey as string;
     const {signer: proposalSigner, keyHash} = proposer ? proposer(false) : getFlowApiSigner(false);
     const auth = getFlowSigner(pk, account).signer;
     const result = await sendTransaction(testnet, {
@@ -459,7 +459,7 @@ export const sendFlowNftBurnToken = async (testnet: boolean, body: FlowBurnNft, 
 export const flowSendCustomTransaction = async (testnet: boolean, body: TransferFlowCustomTx, proposer?: (isPayer: boolean) => any, payer?: (isPayer: boolean) => any):
     Promise<{ txId: string, events: any[] }> => {
     await validateBody(body, TransferFlowCustomTx);
-    const pk = body.privateKey || await generatePrivateKeyFromMnemonic(Currency.FLOW, testnet, body.mnemonic as string, body.index as number);
+    const pk = body.privateKey || await generatePrivateKeyFromMnemonic(body.mnemonic as string, body.index as number);
     const auth = getFlowSigner(pk, body.account).signer;
     const {signer: proposalSigner, keyHash} = proposer ? proposer(false) : getFlowApiSigner(false);
     const result = await sendTransaction(testnet, {
@@ -500,7 +500,7 @@ export const flowSendTransaction = async (testnet: boolean, body: TransferFlow, 
     }
     const code = prepareTransferFlowTxTemplate(testnet, tokenAddress, tokenName, tokenStorage);
     const args = [{value: parseFloat(body.amount).toFixed(8), type: 'UFix64'}, {value: body.to, type: 'Address'}];
-    const pk = body.privateKey || await generatePrivateKeyFromMnemonic(Currency.FLOW, testnet, body.mnemonic as string, body.index as number);
+    const pk = body.privateKey || await generatePrivateKeyFromMnemonic(body.mnemonic as string, body.index as number);
     const {signer: proposalSigner, keyHash} = proposer ? proposer(false) : getFlowApiSigner(false);
     const auth = getFlowSigner(pk, body.account).signer;
     const result = await sendTransaction(testnet, {

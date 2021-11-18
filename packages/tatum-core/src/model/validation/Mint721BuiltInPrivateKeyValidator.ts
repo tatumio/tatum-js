@@ -6,14 +6,14 @@ import { SignatureIdValidator } from './SignatureIdValidator'
 export class Mint721BuiltInPrivateKeyValidator implements ValidatorConstraintInterface {
   private message: string | null = null
 
-  public defaultMessage(validationArguments?: ValidationArguments) {
+  public defaultMessage(_validationArguments?: ValidationArguments) {
     if (this.message) {
       return this.message
     }
     return 'If you fill signatureId or privateKey/secret/fromPrivateKey, then tokenId, contractAddress must be present.'
   }
 
-  public validate(value: any, validationArguments?: ValidationArguments) {
+  public validate(_value: any, validationArguments?: ValidationArguments) {
     const data = validationArguments?.object as any
     const isAllowedChain = [Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC, Currency.KCS].includes(data.chain)
 

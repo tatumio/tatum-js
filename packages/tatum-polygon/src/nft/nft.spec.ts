@@ -8,7 +8,6 @@ describe('NFT tests', () => {
   describe('NFT POLYGON transactions', () => {
     it('should test MATIC 721 deploy transaction', async () => {
       const deployErc721Token = await deployNFT(
-        true,
         {
           symbol: 'TatumToken',
           chain: Currency.MATIC,
@@ -25,7 +24,6 @@ describe('NFT tests', () => {
       const firstTokenId = new Date().getTime()
       const secondTokenId = firstTokenId + 1
       const mintedTokens = await mintMultipleNFTWithUri(
-        true,
         {
           to: ['0x811dfbff13adfbc3cf653dcc373c03616d3471c9', '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'],
           chain: Currency.MATIC,
@@ -82,7 +80,6 @@ describe('NFT tests', () => {
     it('should test MATIC 721 mint transaction', async () => {
       try {
         const mintedToken = await mintNFTWithUri(
-          true,
           {
             to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
             chain: Currency.MATIC,
@@ -103,7 +100,6 @@ describe('NFT tests', () => {
     })
     it('should test MATIC send transaction', async () => {
       const sendErc721Token = await transferNFT(
-        true,
         {
           to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
           chain: Currency.MATIC,

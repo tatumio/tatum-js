@@ -21,27 +21,27 @@ import {
 } from '../transaction'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
 
-export const deployMultiToken = async (testnet: boolean, body: DeployMultiToken, provider?: string) => {
-  return sendOneDeployMultiTokenSignedTransaction(testnet, body, provider)
+export const deployMultiToken = async (body: DeployMultiToken, provider?: string) => {
+  return sendOneDeployMultiTokenSignedTransaction(body, provider)
 }
-export const mintMultiToken = async (testnet: boolean, body: MintMultiToken, provider?: string) => {
-  return sendOneMintMultiTokenSignedTransaction(testnet, body, provider)
+export const mintMultiToken = async (body: MintMultiToken, provider?: string) => {
+  return sendOneMintMultiTokenSignedTransaction(body, provider)
 }
-export const mintMultiTokenBatch = async (testnet: boolean, body: MintMultiTokenBatch, provider?: string) => {
-  return sendOneMintMultiTokenBatchSignedTransaction(testnet, body, provider)
+export const mintMultiTokenBatch = async (body: MintMultiTokenBatch, provider?: string) => {
+  return sendOneMintMultiTokenBatchSignedTransaction(body, provider)
 }
-export const burnMultiToken = async (testnet: boolean, body: BurnMultiToken, provider?: string) => {
-  return sendOneBurnMultiTokenSignedTransaction(testnet, body, provider)
+export const burnMultiToken = async (body: BurnMultiToken, provider?: string) => {
+  return sendOneBurnMultiTokenSignedTransaction(body, provider)
 }
-export const burnMultiTokenBatch = async (testnet: boolean, body: BurnMultiTokenBatch, provider?: string) => {
-  return sendOneBurnMultiTokenBatchSignedTransaction(testnet, body, provider)
+export const burnMultiTokenBatch = async (body: BurnMultiTokenBatch, provider?: string) => {
+  return sendOneBurnMultiTokenBatchSignedTransaction(body, provider)
 }
 
-export const transferMultiToken = async (testnet: boolean, body: TransferMultiToken, provider?: string) => {
-  return sendOneTransferMultiTokenSignedTransaction(testnet, body, provider)
+export const transferMultiToken = async (body: TransferMultiToken, provider?: string) => {
+  return sendOneTransferMultiTokenSignedTransaction(body, provider)
 }
-export const transferMultiTokenBatch = async (testnet: boolean, body: TransferMultiTokenBatch, provider?: string) => {
-  return prepareOneBatchTransferMultiTokenSignedTransaction(testnet, body, provider)
+export const transferMultiTokenBatch = async (body: TransferMultiTokenBatch, provider?: string) => {
+  return prepareOneBatchTransferMultiTokenSignedTransaction(body, provider)
 }
 
 /**

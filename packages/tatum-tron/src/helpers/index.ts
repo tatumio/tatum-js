@@ -3,8 +3,8 @@ import { ClassType } from 'class-transformer/ClassTransformer'
 import { buildSmartContractMethodInvocation, Currency, listing } from '@tatumio/tatum-core'
 import { prepareTronSmartContractInvocation } from '../transaction'
 
-export const helperBroadcastTx = async (chain: Currency, txData: string, signatureId?: string) => {
-  return await tronBroadcast(txData, signatureId)
+export const helperBroadcastTx = async (txData: string, signatureId?: string) => {
+  return await tronBroadcast(txData, signatureId);
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types

@@ -1,4 +1,3 @@
-import { Currency } from '@tatumio/tatum-core'
 import { generatePrivateKeyFromMnemonic } from './address'
 import { generateCeloWallet } from './wallet'
 
@@ -31,7 +30,6 @@ describe('Wallet tests', () => {
 
   it('should generate private key for Celo mainnet', async () => {
     const wallet = await generatePrivateKeyFromMnemonic(
-      Currency.CELO,
       false,
       'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten',
       1
@@ -41,7 +39,6 @@ describe('Wallet tests', () => {
 
   it('should generate private key for Celo testnet', async () => {
     const wallet = await generatePrivateKeyFromMnemonic(
-      Currency.CELO,
       true,
       'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten',
       1

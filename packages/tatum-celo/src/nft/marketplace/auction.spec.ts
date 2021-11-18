@@ -207,7 +207,7 @@ describe('Auction  tests', () => {
       r.methodName = 'get'
       r.methodABI = auction.abi.find((a: any) => a.name === r.methodName)
       r.params = [tokenId]
-      console.log(await sendCeloSmartContractReadMethodInvocationTransaction(true, r, 'https://alfajores-forno.celo-testnet.org'))
+      console.log(await sendCeloSmartContractReadMethodInvocationTransaction(r, 'https://alfajores-forno.celo-testnet.org'))
     })
 
     it('should get auction fee', async () => {
@@ -216,7 +216,7 @@ describe('Auction  tests', () => {
       r.methodName = 'getAuctionFee'
       r.methodABI = auction.abi.find((a: any) => a.name === r.methodName)
       r.params = []
-      console.log(await sendCeloSmartContractReadMethodInvocationTransaction(true, r, 'https://alfajores-forno.celo-testnet.org'))
+      console.log(await sendCeloSmartContractReadMethodInvocationTransaction(r, 'https://alfajores-forno.celo-testnet.org'))
     })
   })
 })

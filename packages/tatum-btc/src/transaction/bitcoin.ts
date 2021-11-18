@@ -87,21 +87,19 @@ export const signBitcoinKMSTransaction = async (tx: TransactionKMS, privateKeys:
 
 /**
  * Sign Bitcoin transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareBitcoinSignedTransaction = async (testnet: boolean, body: TransferBtcBasedBlockchain) => {
+export const prepareBitcoinSignedTransaction = async (body: TransferBtcBasedBlockchain) => {
     return prepareSignedTransaction(body);
 }
 
 /**
  * Send Bitcoin transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendBitcoinTransaction = async (testnet: boolean, body: TransferBtcBasedBlockchain) => {
-    return btcBroadcast(await prepareBitcoinSignedTransaction(testnet, body))
+export const sendBitcoinTransaction = async (body: TransferBtcBasedBlockchain) => {
+    return btcBroadcast(await prepareBitcoinSignedTransaction(body))
 }

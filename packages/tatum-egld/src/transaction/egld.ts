@@ -100,29 +100,25 @@ export const getEgldClient = (provider?: string) => {
  * Sign EGLD pending transaction from Tatum KMS
  * @param tx pending transaction from KMS
  * @param fromPrivateKey private key to sign transaction with.
- * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signEgldKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, provider?: string) => {
+export const signEgldKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string) => {
   if (tx.chain !== Currency.EGLD) {
     throw Error('Unsupported chain.')
   }
-  const client = getEgldClient(provider)
   const transaction = JSON.parse(tx.serializedTransaction)
-  return await prepareSignedTransactionAbstraction(client, transaction, undefined, fromPrivateKey)
+  return await prepareSignedTransactionAbstraction(transaction, undefined, fromPrivateKey)
 }
 
 /**
  * Sign EGLD Store data transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
- * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEgldStoreDataTransaction = async (body: CreateRecord, provider?: string) => {
+export const prepareEgldStoreDataTransaction = async (body: CreateRecord) => {
   await validateBody(body, CreateRecord)
   const { fromPrivateKey, signatureId, from, data } = body
-  const client = getEgldClient(provider)
-  const address = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const address = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
   if (!address) {
     throw new Error('Recipient must be provided.')
   }
@@ -134,7 +130,7 @@ export const prepareEgldStoreDataTransaction = async (body: CreateRecord, provid
     data,
   }
 
-  return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
+  return await prepareSignedTransactionAbstraction(tx, signatureId, fromPrivateKey)
 }
 
 /**
@@ -358,7 +354,6 @@ const prepareEgldTransferNftData = async (data: EsdtTransferNft): Promise<string
 
 /**
  * Sign transaction abstraction. Nothing is broadcast to the blockchain.
- * @param client Web3 client of the EGLD Server to connect to. If not set, default public server will be used.
  * @param transaction content of the transaction to broadcast
  * @param signatureId signature ID
  * @param fromPrivateKey private key
@@ -366,12 +361,11 @@ const prepareEgldTransferNftData = async (data: EsdtTransferNft): Promise<string
  * @returns transaction data to be broadcast to blockchain.
  */
 const prepareSignedTransactionAbstraction = async (
-  client: string,
   transaction: TransactionConfig,
   signatureId: string | undefined,
   fromPrivateKey: string | undefined
 ): Promise<string> => {
-  const sender = (transaction.from as string) || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = (transaction.from as string) || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const { data } = await egldGetConfig()
   const { config } = data
@@ -424,17 +418,14 @@ const prepareSignedTransactionAbstraction = async (
 /**
  * Sign ESDT transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
- * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEgldDeployEsdtSignedTransaction = async (body: EgldEsdtTransaction, provider?: string) => {
+export const prepareEgldDeployEsdtSignedTransaction = async (body: EgldEsdtTransaction) => {
   await validateBody(body, EgldEsdtTransaction)
   const { fromPrivateKey, signatureId, from, amount, fee, ...data } = body
 
-  const client = getEgldClient(provider)
-
   const value = amount ? new BigNumber(amount).toNumber() : 0.05
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -445,21 +436,19 @@ export const prepareEgldDeployEsdtSignedTransaction = async (body: EgldEsdtTrans
     data: await prepareEgldEsdtIssuanceData({ ...(data as EsdtIssue), service: (data as EsdtIssue).service || 'issue' }),
   }
 
-  return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
+  return await prepareSignedTransactionAbstraction(tx, signatureId, fromPrivateKey)
 }
 
 /**
  * Sign ESDT transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
- * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEgldTransferEsdtSignedTransaction = async (body: EgldEsdtTransaction, provider?: string) => {
+export const prepareEgldTransferEsdtSignedTransaction = async (body: EgldEsdtTransaction) => {
   await validateBody(body, EgldEsdtTransaction)
   const { fromPrivateKey, signatureId, from, to, fee, ...data } = body
 
-  const client = getEgldClient(provider)
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -469,21 +458,19 @@ export const prepareEgldTransferEsdtSignedTransaction = async (body: EgldEsdtTra
     data: await prepareEgldEsdtTransferData({ ...(data as EsdtTransfer), service: (data as EsdtTransfer).service || 'ESDTTransfer' }),
   }
 
-  return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
+  return await prepareSignedTransactionAbstraction(tx, signatureId, fromPrivateKey)
 }
 
 /**
  * Sign ESDT mint transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
- * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEgldMintEsdtSignedTransaction = async (body: EgldEsdtTransaction, provider?: string) => {
+export const prepareEgldMintEsdtSignedTransaction = async (body: EgldEsdtTransaction) => {
   await validateBody(body, EgldEsdtTransaction)
   const { fromPrivateKey, signatureId, from, fee, amount, ...data } = body
 
-  const client = getEgldClient(provider)
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -498,21 +485,19 @@ export const prepareEgldMintEsdtSignedTransaction = async (body: EgldEsdtTransac
     }),
   }
 
-  return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
+  return await prepareSignedTransactionAbstraction(tx, signatureId, fromPrivateKey)
 }
 
 /**
  * Sign ESDT burn transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
- * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEgldBurnEsdtSignedTransaction = async (body: EgldEsdtTransaction, provider?: string) => {
+export const prepareEgldBurnEsdtSignedTransaction = async (body: EgldEsdtTransaction) => {
   await validateBody(body, EgldEsdtTransaction)
   const { fromPrivateKey, signatureId, from, fee, ...data } = body
 
-  const client = getEgldClient(provider)
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -522,21 +507,19 @@ export const prepareEgldBurnEsdtSignedTransaction = async (body: EgldEsdtTransac
     data: await prepareEgldEsdtMintOrBurnData({ ...(data as EsdtMint), service: (data as EsdtMint).service || 'localBurn' }),
   }
 
-  return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
+  return await prepareSignedTransactionAbstraction(tx, signatureId, fromPrivateKey)
 }
 
 /**
  * Sign ESDT pause transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
- * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEgldPauseEsdtSignedTransaction = async (body: EgldEsdtTransaction, provider?: string) => {
+export const prepareEgldPauseEsdtSignedTransaction = async (body: EgldEsdtTransaction) => {
   await validateBody(body, EgldEsdtTransaction)
   const { fromPrivateKey, signatureId, from, fee, ...data } = body
 
-  const client = getEgldClient(provider)
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -546,21 +529,19 @@ export const prepareEgldPauseEsdtSignedTransaction = async (body: EgldEsdtTransa
     data: await prepareEgldEsdtPauseData({ ...(data as EsdtToken), service: (data as EsdtToken).service || 'pause' }),
   }
 
-  return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
+  return await prepareSignedTransactionAbstraction(tx, signatureId, fromPrivateKey)
 }
 
 /**
  * Sign ESDT special role transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
- * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
- * @returns transaction data to be broadcast to blockchain.
+ * @returns transaction data tos be broadcast to blockchain.
  */
-export const prepareEgldSpecialRoleEsdtOrNftSignedTransaction = async (body: EgldEsdtTransaction, provider?: string) => {
+export const prepareEgldSpecialRoleEsdtOrNftSignedTransaction = async (body: EgldEsdtTransaction) => {
   await validateBody(body, EgldEsdtTransaction)
   const { fromPrivateKey, signatureId, from, fee, ...data } = body
 
-  const client = getEgldClient(provider)
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -573,24 +554,22 @@ export const prepareEgldSpecialRoleEsdtOrNftSignedTransaction = async (body: Egl
     }),
   }
 
-  return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
+  return await prepareSignedTransactionAbstraction(tx, signatureId, fromPrivateKey)
 }
 
-export const sendEgldSpecialRoleEsdtOrNftTransaction = async (body: EgldEsdtTransaction, provider?: string) =>
-  egldBroadcast(await prepareEgldSpecialRoleEsdtOrNftSignedTransaction(body, provider), body.signatureId)
+export const sendEgldSpecialRoleEsdtOrNftTransaction = async (body: EgldEsdtTransaction) =>
+  egldBroadcast(await prepareEgldSpecialRoleEsdtOrNftSignedTransaction(body), body.signatureId)
 
 /**
  * Sign ESDT freze | wipe | transfer ownership transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
- * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEgldFreezeOrWipeOrOwvershipEsdtSignedTransaction = async (body: EgldEsdtTransaction, provider?: string) => {
+export const prepareEgldFreezeOrWipeOrOwvershipEsdtSignedTransaction = async (body: EgldEsdtTransaction) => {
   await validateBody(body, EgldEsdtTransaction)
   const { fromPrivateKey, signatureId, from, fee, ...data } = body
 
-  const client = getEgldClient(provider)
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -603,21 +582,19 @@ export const prepareEgldFreezeOrWipeOrOwvershipEsdtSignedTransaction = async (bo
     }),
   }
 
-  return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
+  return await prepareSignedTransactionAbstraction(tx, signatureId, fromPrivateKey)
 }
 
 /**
  * Sign ESDT control changes (upgrading props) transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
- * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEgldControlChangesEsdtSignedTransaction = async (body: EgldEsdtTransaction, provider?: string) => {
+export const prepareEgldControlChangesEsdtSignedTransaction = async (body: EgldEsdtTransaction) => {
   await validateBody(body, EgldEsdtTransaction)
   const { fromPrivateKey, signatureId, from, fee, ...data } = body
 
-  const client = getEgldClient(provider)
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -630,23 +607,20 @@ export const prepareEgldControlChangesEsdtSignedTransaction = async (body: EgldE
     }),
   }
 
-  return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
+  return await prepareSignedTransactionAbstraction(tx, signatureId, fromPrivateKey)
 }
 
 /**
  * Sign ESDT issue transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
- * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEgldDeployNftOrSftSignedTransaction = async (body: EgldEsdtTransaction, provider?: string) => {
+export const prepareEgldDeployNftOrSftSignedTransaction = async (body: EgldEsdtTransaction) => {
   await validateBody(body, EgldEsdtTransaction)
   const { fromPrivateKey, signatureId, from, amount, fee, ...data } = body
 
-  const client = getEgldClient(provider)
-
   const value = amount ? new BigNumber(amount).toNumber() : 0.05
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   // @ts-ignore
   const tx: TransactionConfig = {
@@ -661,23 +635,20 @@ export const prepareEgldDeployNftOrSftSignedTransaction = async (body: EgldEsdtT
     }),
   }
 
-  return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
+  return await prepareSignedTransactionAbstraction(tx, signatureId, fromPrivateKey)
 }
 
 /**
  * Sign ESDT create NFT/SFT transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
- * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEgldCreateNftOrSftSignedTransaction = async (body: EgldEsdtTransaction, provider?: string) => {
+export const prepareEgldCreateNftOrSftSignedTransaction = async (body: EgldEsdtTransaction) => {
   await validateBody(body, EgldEsdtTransaction)
   const { fromPrivateKey, signatureId, from, amount, fee, ...data } = body
 
-  const client = getEgldClient(provider)
-
   const value = amount ? new BigNumber(amount).toNumber() : 0
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -694,23 +665,20 @@ export const prepareEgldCreateNftOrSftSignedTransaction = async (body: EgldEsdtT
   // gas limit = 60000000 + (1500 * data.length) + (50000 * NFT size)
   // const gasLimit = fee?.gasLimit ? fee.gasLimit : new BigNumber('60000000').plus((tx.data as string).length).multipliedBy(1500).toString()
 
-  return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
+  return await prepareSignedTransactionAbstraction(tx, signatureId, fromPrivateKey)
 }
 
 /**
  * Sign ESDT transfer NFT create role transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
- * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEgldTransferNftCreateRoleSignedTransaction = async (body: EgldEsdtTransaction, provider?: string) => {
+export const prepareEgldTransferNftCreateRoleSignedTransaction = async (body: EgldEsdtTransaction) => {
   await validateBody(body, EgldEsdtTransaction)
   const { fromPrivateKey, signatureId, from, amount, fee, ...data } = body
 
-  const client = getEgldClient(provider)
-
   const value = amount ? new BigNumber(amount).toNumber() : 0
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -727,23 +695,20 @@ export const prepareEgldTransferNftCreateRoleSignedTransaction = async (body: Eg
   // gas limit = 60000000 + (1500 * data.length)
   // const gasLimit = fee?.gasLimit ? fee.gasLimit : new BigNumber('60000000').plus((tx.data as string).length).multipliedBy(1500).toString()
 
-  return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
+  return await prepareSignedTransactionAbstraction(tx, signatureId, fromPrivateKey)
 }
 
 /**
  * Sign ESDT stop NFT create transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
- * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEgldStopNftCreateSignedTransaction = async (body: EgldEsdtTransaction, provider?: string) => {
+export const prepareEgldStopNftCreateSignedTransaction = async (body: EgldEsdtTransaction) => {
   await validateBody(body, EgldEsdtTransaction)
   const { fromPrivateKey, signatureId, from, amount, fee, ...data } = body
 
-  const client = getEgldClient(provider)
-
   const value = amount ? new BigNumber(amount).toNumber() : 0
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -754,23 +719,20 @@ export const prepareEgldStopNftCreateSignedTransaction = async (body: EgldEsdtTr
     data: await prepareEgldStopNftCreateData({ ...(data as EsdtToken), service: (data as EsdtToken).service || 'stopNFTCreate' }),
   }
 
-  return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
+  return await prepareSignedTransactionAbstraction(tx, signatureId, fromPrivateKey)
 }
 
 /**
  * Sign ESDT Burn or Add quantity (SFT only) transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
- * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEgldAddOrBurnNftQuantitySignedTransaction = async (body: EgldEsdtTransaction, provider?: string) => {
+export const prepareEgldAddOrBurnNftQuantitySignedTransaction = async (body: EgldEsdtTransaction) => {
   await validateBody(body, EgldEsdtTransaction)
   const { fromPrivateKey, signatureId, from, amount, fee, ...data } = body
 
-  const client = getEgldClient(provider)
-
   const value = amount ? new BigNumber(amount).toNumber() : 0
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -784,23 +746,20 @@ export const prepareEgldAddOrBurnNftQuantitySignedTransaction = async (body: Egl
     }),
   }
 
-  return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
+  return await prepareSignedTransactionAbstraction(tx, signatureId, fromPrivateKey)
 }
 
 /**
  * Sign ESDT freeze NFT transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
- * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEgldFreezeNftSignedTransaction = async (body: EgldEsdtTransaction, provider?: string) => {
+export const prepareEgldFreezeNftSignedTransaction = async (body: EgldEsdtTransaction) => {
   await validateBody(body, EgldEsdtTransaction)
   const { fromPrivateKey, signatureId, from, amount, fee, ...data } = body
 
-  const client = getEgldClient(provider)
-
   const value = amount ? new BigNumber(amount).toNumber() : 0
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -814,23 +773,20 @@ export const prepareEgldFreezeNftSignedTransaction = async (body: EgldEsdtTransa
     }),
   }
 
-  return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
+  return await prepareSignedTransactionAbstraction(tx, signatureId, fromPrivateKey)
 }
 
 /**
  * Sign ESDT freeze NFT transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
- * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEgldWipeNftSignedTransaction = async (body: EgldEsdtTransaction, provider?: string) => {
+export const prepareEgldWipeNftSignedTransaction = async (body: EgldEsdtTransaction) => {
   await validateBody(body, EgldEsdtTransaction)
   const { fromPrivateKey, signatureId, from, amount, fee, ...data } = body
 
-  const client = getEgldClient(provider)
-
   const value = amount ? new BigNumber(amount).toNumber() : 0
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -844,23 +800,20 @@ export const prepareEgldWipeNftSignedTransaction = async (body: EgldEsdtTransact
     }),
   }
 
-  return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
+  return await prepareSignedTransactionAbstraction(tx, signatureId, fromPrivateKey)
 }
 
 /**
  * Sign ESDT transfer NFT transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
- * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEgldTransferNftSignedTransaction = async (body: EgldEsdtTransaction, provider?: string) => {
+export const prepareEgldTransferNftSignedTransaction = async (body: EgldEsdtTransaction) => {
   await validateBody(body, EgldEsdtTransaction)
   const { fromPrivateKey, signatureId, from, amount, fee, ...data } = body
 
-  const client = getEgldClient(provider)
-
   const value = amount ? new BigNumber(amount).toNumber() : 0
-  const sender = from || (await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string))
+  const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
   const tx: TransactionConfig = {
     from: sender,
@@ -878,20 +831,17 @@ export const prepareEgldTransferNftSignedTransaction = async (body: EgldEsdtTran
   // TRANSFER TO SMART CONTRACT: GasLimit: 1000000 + extra for smart contract call
   // const gasLimit = fee?.gasLimit ? fee.gasLimit : new BigNumber('1000000').plus((tx.data as string).length).multipliedBy(1500).toString()
 
-  return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
+  return await prepareSignedTransactionAbstraction(tx, signatureId, fromPrivateKey)
 }
 
 /**
  * Sign EGLD transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
- * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEgldSignedTransaction = async (body: EgldEsdtTransaction, provider?: string) => {
+export const prepareEgldSignedTransaction = async (body: EgldEsdtTransaction) => {
   await validateBody(body, EgldEsdtTransaction)
   const { fromPrivateKey, signatureId, from, to, amount, fee, data } = body
-
-  const client = getEgldClient(provider)
 
   const tx: TransactionConfig = {
     from: from || 0,
@@ -902,68 +852,62 @@ export const prepareEgldSignedTransaction = async (body: EgldEsdtTransaction, pr
     data,
   }
 
-  return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey)
+  return await prepareSignedTransactionAbstraction(tx, signatureId, fromPrivateKey)
 }
 
 /**
  * Send EGLD store data transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
  * @param body content of the transaction to broadcast
- * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendEgldStoreDataTransaction = async (body: CreateRecord, provider?: string) =>
-  egldBroadcast(await prepareEgldStoreDataTransaction(body, provider), body.signatureId)
+export const sendEgldStoreDataTransaction = async (body: CreateRecord) =>
+  egldBroadcast(await prepareEgldStoreDataTransaction(body), body.signatureId)
 
 /**
  * Send EGLD or supported ERC20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
  * @param body content of the transaction to broadcast
- * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendEgldTransaction = async (body: EgldEsdtTransaction, provider?: string) =>
-  egldBroadcast(await prepareEgldSignedTransaction(body, provider), body.signatureId)
+export const sendEgldTransaction = async (body: EgldEsdtTransaction) =>
+  egldBroadcast(await prepareEgldSignedTransaction(body), body.signatureId)
 
 /**
  * Send EGLD deploy ESDT transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
  * @param body content of the transaction to broadcast
- * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendEgldDeployEsdtTransaction = async (body: EgldEsdtTransaction, provider?: string) =>
-  egldBroadcast(await prepareEgldDeployEsdtSignedTransaction(body, provider), body.signatureId)
+export const sendEgldDeployEsdtTransaction = async (body: EgldEsdtTransaction) =>
+  egldBroadcast(await prepareEgldDeployEsdtSignedTransaction(body), body.signatureId)
 
 /**
  * Send EGLD invoke smart contract transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
  * @param body content of the transaction to broadcast
- * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendEgldSmartContractMethodInvocationTransaction = async (body: EgldEsdtTransaction, provider?: string) => {
-  return egldBroadcast(await prepareEgldTransferEsdtSignedTransaction(body, provider), body.signatureId)
+export const sendEgldSmartContractMethodInvocationTransaction = async (body: EgldEsdtTransaction) => {
+  return egldBroadcast(await prepareEgldTransferEsdtSignedTransaction(body), body.signatureId)
 }
 
 /**
  * Send EGLD ERC721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
  * @param body content of the transaction to broadcast
- * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendEgldTransferNftTransaction = async (body: EgldEsdtTransaction, provider?: string) =>
-  egldBroadcast(await prepareEgldTransferNftSignedTransaction(body, provider), body.signatureId)
+export const sendEgldTransferNftTransaction = async (body: EgldEsdtTransaction) =>
+  egldBroadcast(await prepareEgldTransferNftSignedTransaction(body), body.signatureId)
 
 /**
  * Send EGLD NFT deploy to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
  * @param body content of the transaction to broadcast
- * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendEgldDeployNftTransaction = async (body: EgldEsdtTransaction, provider?: string) =>
-  egldBroadcast(await prepareEgldDeployNftOrSftSignedTransaction(body, provider), body.signatureId)
+export const sendEgldDeployNftTransaction = async (body: EgldEsdtTransaction) =>
+  egldBroadcast(await prepareEgldDeployNftOrSftSignedTransaction(body), body.signatureId)
 
 // TODO: add ERC-1155 support

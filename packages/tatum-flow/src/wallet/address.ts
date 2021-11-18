@@ -1,7 +1,6 @@
 import { fromBase58, fromSeed } from 'bip32'
 import { mnemonicToSeed } from 'bip39'
 import * as elliptic from 'elliptic'
-import { Currency } from '@tatumio/tatum-core'
 import { FLOW_DERIVATION_PATH } from '../constants'
 
 /**
@@ -38,24 +37,20 @@ const generateFlowPrivateKey = async (mnemonic: string, i: number, alg = 'secp25
 
 /**
  * Generate address
- * @param currency type of blockchain
- * @param testnet testnet or mainnet version of address
  * @param xpub extended public key to generate address from
  * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
-export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xpub: string, i: number) => {
+export const generateAddressFromXPub = (xpub: string, i: number) => {
   return generateFlowPublicKey(xpub, i)
 }
 
 /**
  * Generate private key from mnemonic seed
- * @param currency type of blockchain
- * @param testnet testnet or mainnet version of address
  * @param mnemonic mnemonic to generate private key from
  * @param i derivation index of private key to generate.
  * @returns blockchain private key to the address
  */
-export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: boolean, mnemonic: string, i: number) => {
+export const generatePrivateKeyFromMnemonic = (mnemonic: string, i: number) => {
   return generateFlowPrivateKey(mnemonic, i)
 }

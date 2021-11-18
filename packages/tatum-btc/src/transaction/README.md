@@ -12,7 +12,7 @@ import { sendBitcoinTransaction } from '@tatumio/tatum';
 ## Send bitcoin transaction - from address
 
 ```typescript
-const transactionHash = await sendBitcoinTransaction(false, {
+const transactionHash = await sendBitcoinTransaction({
         fromAddress: [
             {
                 address: "mhuKgqf7SLRWPX8Sfrqn68i5YcdWsFMRXF",
@@ -36,7 +36,7 @@ const transactionHash = await sendBitcoinTransaction(false, {
 ## Send bitcoin transaction - from utxo
 
 ```typescript
-const transactionHash = await sendBitcoinTransaction(false, {
+const transactionHash = await sendBitcoinTransaction({
         fromUTXO: [
             {
                 txHash: "887dd5221800c65ada2a2081e65a14b5421b30600d4ab112421a44b17ded6ed4",

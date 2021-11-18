@@ -334,7 +334,6 @@ describe('CELO transactions', () => {
     const txData = await signCeloKMSTransaction(
       tx,
       '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb',
-      true,
       'https://alfajores-forno.celo-testnet.org'
     )
     expect(txData).toContain('0x')

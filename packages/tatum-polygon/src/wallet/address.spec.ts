@@ -1,10 +1,8 @@
-import { Currency } from '@tatumio/tatum-core'
 import { generatePrivateKeyFromMnemonic } from './address'
 
 describe('Address tests', () => {
   it('should generate private key 1 for MATIC testnet', async () => {
     const privateKey = await generatePrivateKeyFromMnemonic(
-      Currency.MATIC,
       true,
       'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten',
       1
@@ -14,7 +12,6 @@ describe('Address tests', () => {
 
   it('should generate private key 1 for MATIC mainnet', async () => {
     const privateKey = await generatePrivateKeyFromMnemonic(
-      Currency.MATIC,
       false,
       'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten',
       1

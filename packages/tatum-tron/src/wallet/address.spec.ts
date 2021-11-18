@@ -1,4 +1,3 @@
-import { Currency } from '@tatumio/tatum-core'
 import { generateAddressFromXPub, generatePrivateKeyFromMnemonic } from './address'
 import { generateTronWallet } from './wallet'
 
@@ -7,8 +6,6 @@ const TronWeb = require('tronweb')
 describe('Address tests', () => {
   it('should generate address 1 for TRON mainnet', () => {
     const address = generateAddressFromXPub(
-      Currency.TRON,
-      false,
       '0244b3f40c6e570ae0032f6d7be87737a6c4e5314a4a1a82e22d0460a0d0cd794936c61f0c80dc74ace4cd04690d4eeb1aa6555883be006e1748306faa7ed3a26a',
       1
     )
@@ -17,8 +14,6 @@ describe('Address tests', () => {
 
   it('should generate private key 1 for TRON mainnet', async () => {
     const privateKey = await generatePrivateKeyFromMnemonic(
-      Currency.TRON,
-      false,
       'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten',
       1
     )
@@ -29,8 +24,8 @@ describe('Address tests', () => {
     const wallet = await generateTronWallet(
       'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten'
     )
-    const address = await generateAddressFromXPub(Currency.TRON, false, wallet.xpub, 1)
-    const privateKey = await generatePrivateKeyFromMnemonic(Currency.TRON, false, wallet.mnemonic, 1)
+    const address = await generateAddressFromXPub(wallet.xpub, 1)
+    const privateKey = await generatePrivateKeyFromMnemonic(wallet.mnemonic, 1)
     expect(address).toBe(TronWeb.address.fromPrivateKey(privateKey))
   })
 })

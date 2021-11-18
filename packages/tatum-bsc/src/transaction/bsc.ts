@@ -120,7 +120,7 @@ export const signBscKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
   return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey as string)).rawTransaction as string
 }
 
-export const getBscBep20ContractDecimals = async (testnet: boolean, contractAddress: string, provider?: string) => {
+export const getBscBep20ContractDecimals = async (contractAddress: string, provider?: string) => {
   if (!contractAddress) {
     throw new Error('Contract address not set.')
   }

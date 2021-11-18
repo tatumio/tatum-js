@@ -76,7 +76,7 @@ export const getNFTRoyalty = async (chain: Currency, contractAddress: string, to
  * @param provider optional provider do broadcast tx
  */
 export const createNFTAbstraction = async (
-  mintNftWithUri: (testnet: boolean, body: BaseMintErc721, provider?: string) => Promise<any>,
+  mintNftWithUri: (body: BaseMintErc721, provider?: string, testnet?: boolean) => Promise<any>,
   testnet: boolean,
   body: BaseMintErc721,
   file: Buffer,
@@ -97,7 +97,7 @@ export const createNFTAbstraction = async (
   if (body.chain === Currency.FLOW) {
     ;(body as any).privateKey = (body as any).privateKey || (body as any).fromPrivateKey
   }
-  const result = await mintNftWithUri(testnet, body, provider)
+  const result = await mintNftWithUri(body, provider, testnet)
   return {
     tokenId: (body as any).tokenId,
     // @ts-ignore

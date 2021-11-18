@@ -38,7 +38,7 @@ import { prepareCeloDeployAuctionSignedTransaction } from '../../transaction'
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const deployAuction = async (testnet: boolean, body: DeployNftAuction, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareDeployAuction(testnet, body, provider), body.signatureId)
+  helperBroadcastTx(await prepareDeployAuction(testnet, body, provider), body.signatureId)
 
 /**
  * Prepare signed transaction for NFT auction logic. Smart contract enables auction operator to create new auction for NFT (ERC-721/1155).
@@ -67,7 +67,7 @@ export const prepareDeployAuction = async (testnet: boolean, body: DeployNftAuct
  */
 export const prepareAuctionUpdateFee = async (testnet: boolean, body: UpdateAuctionFee, provider?: string) => {
   const params = await prepareAuctionUpdateFeeAbstraction(body)
-  return await helperPrepareSCCall(testnet, body, UpdateAuctionFee, 'setAuctionFee', params, undefined, provider, auction.abi)
+  return await helperPrepareSCCall(testnet, body, 'setAuctionFee', params, provider, auction.abi)
 }
 
 /**
@@ -82,10 +82,8 @@ export const prepareAuctionUpdateFeeRecipient = async (testnet: boolean, body: U
   return await helperPrepareSCCall(
     testnet,
     body,
-    UpdateMarketplaceFeeRecipient,
     'setAuctionFeeRecipient',
     params,
-    undefined,
     provider,
     auction.abi
   )
@@ -103,10 +101,8 @@ export const prepareAuctionApproveNftTransfer = async (testnet: boolean, body: A
   return await helperPrepareSCCall(
     testnet,
     body,
-    ApproveNftTransfer,
     body.isErc721 ? 'approve' : 'setApprovalForAll',
     params,
-    undefined,
     provider,
     body.isErc721 ? erc721TokenABI : erc1155TokenABI
   )
@@ -134,7 +130,7 @@ export const prepareAuctionApproveErc20Transfer = async (testnet: boolean, body:
  */
 export const prepareAuctionCreate = async (testnet: boolean, body: CreateAuction, provider?: string) => {
   const { body: validatedBody, params } = await prepareAuctionCreateAbstraction(body)
-  return await helperPrepareSCCall(testnet, validatedBody, CreateAuction, 'createAuction', params, undefined, provider, auction.abi)
+  return await helperPrepareSCCall(testnet, validatedBody, 'createAuction', params, provider, auction.abi)
 }
 
 /**
@@ -147,7 +143,7 @@ export const prepareAuctionCreate = async (testnet: boolean, body: CreateAuction
  */
 export const prepareAuctionBid = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
   const { b: validatedBody, params, methodName } = await prepareAuctionBidAbstraction(helperGetWeb3Client, testnet, body, provider)
-  return await helperPrepareSCCall(testnet, validatedBody, InvokeAuctionOperation, methodName, params, undefined, provider, auction.abi)
+  return await helperPrepareSCCall(testnet, validatedBody, methodName, params, provider, auction.abi)
 }
 
 /**
@@ -159,7 +155,7 @@ export const prepareAuctionBid = async (testnet: boolean, body: InvokeAuctionOpe
  */
 export const prepareAuctionCancel = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
   const params = await prepareAuctionCancelAbstraction(body)
-  return await helperPrepareSCCall(testnet, body, InvokeAuctionOperation, 'cancelAuction', params, undefined, provider, auction.abi)
+  return await helperPrepareSCCall(testnet, body, 'cancelAuction', params, provider, auction.abi)
 }
 
 /**
@@ -170,8 +166,8 @@ export const prepareAuctionCancel = async (testnet: boolean, body: InvokeAuction
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareAuctionSettle = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
-  const params = await prepareAuctionSettleAbstraction(testnet, body)
-  return await helperPrepareSCCall(testnet, body, InvokeAuctionOperation, 'settleAuction', params, undefined, provider, auction.abi)
+  const params = await prepareAuctionSettleAbstraction(body)
+  return await helperPrepareSCCall(testnet, body, 'settleAuction', params, provider, auction.abi)
 }
 
 /**
@@ -182,7 +178,7 @@ export const prepareAuctionSettle = async (testnet: boolean, body: InvokeAuction
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendAuctionUpdateFee = async (testnet: boolean, body: UpdateAuctionFee, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareAuctionUpdateFee(testnet, body, provider), body.signatureId)
+  helperBroadcastTx( await prepareAuctionUpdateFee(testnet, body, provider), body.signatureId)
 
 /**
  * Update auction fee recipient.
@@ -192,7 +188,7 @@ export const sendAuctionUpdateFee = async (testnet: boolean, body: UpdateAuction
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendAuctionUpdateFeeRecipient = async (testnet: boolean, body: UpdateMarketplaceFeeRecipient, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareAuctionUpdateFeeRecipient(testnet, body, provider), body.signatureId)
+  helperBroadcastTx( await prepareAuctionUpdateFeeRecipient(testnet, body, provider), body.signatureId)
 /**
  * Approve NFT transfer for auction to perform listing of the asset.
  * @param testnet chain to work with
@@ -201,7 +197,7 @@ export const sendAuctionUpdateFeeRecipient = async (testnet: boolean, body: Upda
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendAuctionApproveNftTransfer = async (testnet: boolean, body: ApproveNftTransfer, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareAuctionApproveNftTransfer(testnet, body, provider), body.signatureId)
+  helperBroadcastTx( await prepareAuctionApproveNftTransfer(testnet, body, provider), body.signatureId)
 /**
  * Approve ERC20 transfer for auction to perform bidding on the asset in the auction.
  * @param testnet chain to work with
@@ -210,7 +206,7 @@ export const sendAuctionApproveNftTransfer = async (testnet: boolean, body: Appr
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendAuctionApproveErc20Transfer = async (testnet: boolean, body: ApproveErc20, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareAuctionApproveErc20Transfer(testnet, body, provider), body.signatureId)
+  helperBroadcastTx( await prepareAuctionApproveErc20Transfer(testnet, body, provider), body.signatureId)
 /**
  * Create new auction on the auction contract. Before auction, seller must approve spending of the NFT token for the Auction contract.
  * After auction is created, auction contract transfers the asset to the auction smart contract.
@@ -221,7 +217,7 @@ export const sendAuctionApproveErc20Transfer = async (testnet: boolean, body: Ap
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendAuctionCreate = async (testnet: boolean, body: CreateAuction, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareAuctionCreate(testnet, body, provider), body.signatureId)
+  helperBroadcastTx( await prepareAuctionCreate(testnet, body, provider), body.signatureId)
 /**
  * Bid auction on the auction. Buyer must either send native assets with this operation, or approve ERC20 token spending before.
  * After auction is sold, it's in a pending state to be processed by the auction. Noone receives the assets unless the auction operator processes that.
@@ -231,7 +227,7 @@ export const sendAuctionCreate = async (testnet: boolean, body: CreateAuction, p
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendAuctionBid = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareAuctionBid(testnet, body, provider), body.signatureId)
+  helperBroadcastTx( await prepareAuctionBid(testnet, body, provider), body.signatureId)
 /**
  * Cancel auction on the auction. Only possible for the seller or the operator. There must be no buyer present for that auction. NFT asset is sent back to the seller.
  * @param testnet chain to work with
@@ -240,7 +236,7 @@ export const sendAuctionBid = async (testnet: boolean, body: InvokeAuctionOperat
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendAuctionCancel = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareAuctionCancel(testnet, body, provider), body.signatureId)
+  helperBroadcastTx( await prepareAuctionCancel(testnet, body, provider), body.signatureId)
 
 /**
  * Settle auction. There must be buyer present for that auction. NFT will be sent to the bidder, assets to the seller and fee to the operator.
@@ -250,6 +246,6 @@ export const sendAuctionCancel = async (testnet: boolean, body: InvokeAuctionOpe
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendAuctionSettle = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareAuctionSettle(testnet, body, provider), body.signatureId)
+  helperBroadcastTx( await prepareAuctionSettle(testnet, body, provider), body.signatureId)
 
 export { Auction, getAuctionFee, getAuction, getAuctionFeeRecipient } from '@tatumio/tatum-defi'

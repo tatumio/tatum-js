@@ -19,8 +19,6 @@ const wallet = await generateWallet(Currency.BTC, false);
 
 ```typescript
 const address = await generateAddressFromXPub(
-    Currency.BTC,
-    false,
     'tpubDFmuT6v3SjkMcChBVLmfYnn8j2AEAxmsCyMA3JUvWGhSxoutQw1L4rywLUzgfAdkE894gJrFqTqCvV6neUYXGQFmd61G6D6XsTr93tZi237',
     1
 );
@@ -30,7 +28,6 @@ const address = await generateAddressFromXPub(
 
 ```typescript
 const privateKey = await generatePrivateKeyFromMnemonic(
-    Currency.BTC,
     false,
     'critic spatial rug valley spawn grape humble motor burger direct jump galaxy still swim foot real vast tribe blast fence virtual away spice funny',
     1

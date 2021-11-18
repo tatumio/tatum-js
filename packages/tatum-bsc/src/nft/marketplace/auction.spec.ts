@@ -25,7 +25,7 @@ describe('Auction  tests', () => {
       body.feeRecipient = '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'
       body.auctionFee = 150
       body.chain = Currency.BSC
-      const test = await deployAuction(true, body, 'https://data-seed-prebsc-2-s1.binance.org:8545')
+      const test = await deployAuction(body, 'https://data-seed-prebsc-2-s1.binance.org:8545')
       console.log(test)
       expect(test).toBeDefined()
     })
@@ -38,12 +38,11 @@ describe('Auction  tests', () => {
       mint.tokenId = tokenId
       mint.url = 'https://google.com'
       mint.chain = Currency.BSC
-      console.log(await mintNFTWithUri(true, mint, 'https://data-seed-prebsc-2-s1.binance.org:8545'))
+      console.log(await mintNFTWithUri(mint, 'https://data-seed-prebsc-2-s1.binance.org:8545'))
 
       await sleep()
       console.log(
         await sendAuctionApproveNftTransfer(
-          true,
           {
             fromPrivateKey: '0x37b091fc4ce46a56da643f021254612551dbe0944679a6e09cb5724d3085c9ab',
             chain: Currency.BSC,
@@ -67,7 +66,7 @@ describe('Auction  tests', () => {
       body.isErc721 = true
       body.seller = '0x80d8bac9a6901698b3749fe336bbd1385c1f98f2'
       body.chain = Currency.BSC
-      console.log(await sendAuctionCreate(true, body, 'https://data-seed-prebsc-2-s1.binance.org:8545'))
+      console.log(await sendAuctionCreate(body, 'https://data-seed-prebsc-2-s1.binance.org:8545'))
 
       await sleep(10000)
       const bid = new InvokeAuctionOperation()
@@ -84,7 +83,7 @@ describe('Auction  tests', () => {
       settle.contractAddress = '0x568bf1e6849e250f4705347a9cff717b5dcfc4ad'
       settle.id = tokenId
       settle.chain = Currency.BSC
-      console.log(await sendAuctionSettle(true, settle, 'https://data-seed-prebsc-2-s1.binance.org:8545'))
+      console.log(await sendAuctionSettle(settle, 'https://data-seed-prebsc-2-s1.binance.org:8545'))
     })
 
     it('should get auction', async () => {

@@ -24,7 +24,7 @@ export const sendBscOffchainTransaction = async (testnet: boolean, body: Transfe
   const { amount, address } = withdrawal
 
   const fromPriv =
-    mnemonic && index !== undefined ? await generatePrivateKeyFromMnemonic(Currency.BSC, testnet, mnemonic, index) : (privateKey as string)
+    mnemonic && index !== undefined ? await generatePrivateKeyFromMnemonic(testnet, mnemonic, index) : (privateKey as string)
 
   const account = await getAccountById(withdrawal.senderAccountId)
   let txData

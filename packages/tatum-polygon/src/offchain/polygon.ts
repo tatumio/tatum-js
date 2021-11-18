@@ -31,7 +31,7 @@ export const sendPolygonOffchainTransaction = async (testnet: boolean, body: Tra
 
   const fromPriv =
     mnemonic && index !== undefined
-      ? await generatePrivateKeyFromMnemonic(Currency.MATIC, testnet, mnemonic, index)
+      ? await generatePrivateKeyFromMnemonic(testnet, mnemonic, index)
       : (privateKey as string)
 
   const account = await getAccountById(withdrawal.senderAccountId)
@@ -42,7 +42,6 @@ export const sendPolygonOffchainTransaction = async (testnet: boolean, body: Tra
   }
   if (account.currency === Currency.MATIC) {
     txData = await preparePolygonSignedTransaction(
-      testnet,
       {
         amount,
         fromPrivateKey: fromPriv,
@@ -57,7 +56,6 @@ export const sendPolygonOffchainTransaction = async (testnet: boolean, body: Tra
     fee.gasLimit = '100000'
     const vc = await getVirtualCurrencyByName(account.currency)
     txData = await preparePolygonTransferErc20SignedTransaction(
-      testnet,
       {
         amount,
         fee,

@@ -23,12 +23,10 @@ export const mintNFT = (body: TronMintTrc721): Promise<TransactionHash> => post(
 
 /**
  * Deploy new NFT smart contract, which will be used for later minting.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
- * @param provider optional provider do broadcast tx
  */
-export const deployNFT = async (testnet: boolean, body: TronDeployTrc721, provider?: string): Promise<TransactionHash> => {
-  return sendTronDeployTrc721SignedTransaction(testnet, body as TronDeployTrc721)
+export const deployNFT = async (body: TronDeployTrc721): Promise<TransactionHash> => {
+  return sendTronDeployTrc721SignedTransaction(body as TronDeployTrc721)
 }
 
 /**
@@ -50,65 +48,55 @@ export const createNFT = async (
   scheme?: any,
   provider?: string
 ) => {
-  return await createNFTAbstraction(() => mintNFTWithUri(testnet, body, provider), testnet, body, file, name, description, scheme, provider)
+  return await createNFTAbstraction(() => mintNFTWithUri(body), testnet, body, file, name, description, scheme, provider)
 }
 
 /**
  * Mint new NFT token.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
- * @param provider optional provider do broadcast tx
  */
-export const mintNFTWithUri = async (testnet: boolean, body: TronMintTrc721, provider?: string): Promise<TransactionHash> => {
+export const mintNFTWithUri = async (body: TronMintTrc721): Promise<TransactionHash> => {
   if ((body as TronMintTrc721).authorAddresses) {
-    return sendTronMintCashbackTrc721SignedTransaction(testnet, body as TronMintTrc721)
+    return sendTronMintCashbackTrc721SignedTransaction(body as TronMintTrc721)
   } else {
-    return sendTronMintTrc721SignedTransaction(testnet, body as TronMintTrc721)
+    return sendTronMintTrc721SignedTransaction(body as TronMintTrc721)
   }
 }
 
 /**
  * Mint multiple new NFT tokens.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
- * @param provider optional provider do broadcast tx
  */
-export const mintMultipleNFTWithUri = async (testnet: boolean, body: TronMintMultipleTrc721, provider?: string) => {
+export const mintMultipleNFTWithUri = async (body: TronMintMultipleTrc721) => {
   if ((body as TronMintMultipleTrc721).authorAddresses) {
     throw new Error('Unsupported operation.')
   } else {
-    return sendTronMintMultipleTrc721SignedTransaction(testnet, body as TronMintMultipleTrc721)
+    return sendTronMintMultipleTrc721SignedTransaction(body as TronMintMultipleTrc721)
   }
 }
 
 /**
  * Burn new NFT token. Token will no longer exists.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
- * @param provider optional provider do broadcast tx
  */
-export const burnNFT = async (testnet: boolean, body: TronBurnTrc721, provider?: string) => {
-  return sendTronBurnTrc721SignedTransaction(testnet, body as TronBurnTrc721)
+export const burnNFT = async (body: TronBurnTrc721) => {
+  return sendTronBurnTrc721SignedTransaction(body as TronBurnTrc721)
 }
 
 /**
  * Update royalty cashback as author of the NFT token.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
- * @param provider optional provider do broadcast tx
  */
-export const updateCashbackForAuthorNFT = async (testnet: boolean, body: TronUpdateCashbackTrc721, provider?: string) => {
-  return sendTronUpdateCashbackForAuthorTrc721SignedTransaction(testnet, body as TronUpdateCashbackTrc721)
+export const updateCashbackForAuthorNFT = async (body: TronUpdateCashbackTrc721) => {
+  return sendTronUpdateCashbackForAuthorTrc721SignedTransaction(body as TronUpdateCashbackTrc721)
 }
 
 /**
  * Transfer new NFT token to new recipient.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
- * @param provider optional provider do broadcast tx
  */
-export const transferNFT = async (testnet: boolean, body: TronTransferTrc721, provider?: string) => {
-  return sendTronTransferTrc721SignedTransaction(testnet, body as TronTransferTrc721)
+export const transferNFT = async (body: TronTransferTrc721) => {
+  return sendTronTransferTrc721SignedTransaction(body as TronTransferTrc721)
 }
 
 /**

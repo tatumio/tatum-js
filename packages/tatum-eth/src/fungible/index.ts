@@ -19,7 +19,7 @@ export const sendApproveErc20 = async (testnet: boolean, body: ApproveErc20, pro
  * @param provider optional Web3 provider
  */
 export const prepareApproveErc20 = async (testnet: boolean, body: ApproveErc20, provider?: string) => {
-  const { body: validatedBody, params } = await prepareApproveErc20Abstraction((_testnet, contractAddress, provider?) => getEthErc20ContractDecimals(contractAddress, provider), testnet, body, provider)
+  const { body: validatedBody, params } = await prepareApproveErc20Abstraction(getEthErc20ContractDecimals, testnet, body, provider)
   return await helperPrepareSCCall(validatedBody, 'approve', params, provider, token_abi)
 }
 

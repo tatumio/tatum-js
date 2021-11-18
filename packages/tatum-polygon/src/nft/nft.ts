@@ -26,12 +26,11 @@ export const mintNFT = (body: MintErc721): Promise<TransactionHash> => mintNFTRe
 
 /**
  * Deploy new NFT smart contract, which will be used for later minting.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const deployNFT = async (testnet: boolean, body: DeployErc721, provider?: string): Promise<TransactionHash> => {
-  return sendPolygonDeployErc721SignedTransaction(testnet, body as DeployErc721, provider)
+export const deployNFT = async (body: DeployErc721, provider?: string): Promise<TransactionHash> => {
+  return sendPolygonDeployErc721SignedTransaction(body as DeployErc721, provider)
 }
 
 /**
@@ -53,65 +52,60 @@ export const createNFT = async (
   scheme?: any,
   provider?: string
 ) => {
-  return await createNFTAbstraction(() => mintNFTWithUri(testnet, body, provider), testnet, body, file, name, description, scheme, provider)
+  return await createNFTAbstraction(mintNFTWithUri, testnet, body, file, name, description, scheme, provider)
 }
 
 /**
  * Mint new NFT token.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const mintNFTWithUri = async (testnet: boolean, body: MintErc721, provider?: string): Promise<TransactionHash> => {
+export const mintNFTWithUri = async (body: MintErc721, provider?: string): Promise<TransactionHash> => {
   if ((body as MintErc721).authorAddresses) {
-    return sendPolygonMintCashbackErc721SignedTransaction(testnet, body as MintErc721, provider)
+    return sendPolygonMintCashbackErc721SignedTransaction(body as MintErc721, provider)
   } else {
-    return sendPolygonMintErc721SignedTransaction(testnet, body as MintErc721, provider)
+    return sendPolygonMintErc721SignedTransaction(body as MintErc721, provider)
   }
 }
 
 /**
  * Mint multiple new NFT tokens.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const mintMultipleNFTWithUri = async (testnet: boolean, body: MintMultipleErc721, provider?: string) => {
+export const mintMultipleNFTWithUri = async (body: MintMultipleErc721, provider?: string) => {
   if ((body as MintMultipleErc721).authorAddresses) {
-    return sendPolygonMintMultipleCashbackErc721SignedTransaction(testnet, body as MintMultipleErc721, provider)
+    return sendPolygonMintMultipleCashbackErc721SignedTransaction(body as MintMultipleErc721, provider)
   } else {
-    return sendPolygonMintMultipleErc721SignedTransaction(testnet, body as MintMultipleErc721, provider)
+    return sendPolygonMintMultipleErc721SignedTransaction(body as MintMultipleErc721, provider)
   }
 }
 
 /**
  * Burn new NFT token. Token will no longer exists.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const burnNFT = async (testnet: boolean, body: BurnErc721, provider?: string) => {
-  return sendPolygonBurnErc721SignedTransaction(testnet, body, provider)
+export const burnNFT = async (body: BurnErc721, provider?: string) => {
+  return sendPolygonBurnErc721SignedTransaction(body, provider)
 }
 
 /**
  * Update royalty cashback as author of the NFT token.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const updateCashbackForAuthorNFT = async (testnet: boolean, body: UpdateCashbackErc721, provider?: string) => {
-  return sendPolygonUpdateCashbackForAuthorErc721SignedTransaction(testnet, body, provider)
+export const updateCashbackForAuthorNFT = async (body: UpdateCashbackErc721, provider?: string) => {
+  return sendPolygonUpdateCashbackForAuthorErc721SignedTransaction(body, provider)
 }
 
 /**
  * Transfer new NFT token to new recipient.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const transferNFT = async (testnet: boolean, body: TransferErc721, provider?: string) => {
-  return sendPolygonTransferErc721SignedTransaction(testnet, body, provider)
+export const transferNFT = async (body: TransferErc721, provider?: string) => {
+  return sendPolygonTransferErc721SignedTransaction(body, provider)
 }
 
 /**

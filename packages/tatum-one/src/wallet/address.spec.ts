@@ -1,11 +1,8 @@
-import { Currency } from '@tatumio/tatum-core'
 import { generateAddressFromPrivatekey, generateAddressFromXPub, generatePrivateKeyFromMnemonic } from './address'
 
 describe('Address tests', () => {
   it('should generate address 1 for ONE mainnet', () => {
     const address = generateAddressFromXPub(
-      Currency.ONE,
-      false,
       'xpub6EiLaLx7QvbzXKLr8AmyHCEDss5gM5mW3XuTEFCYVH7HHCVA7dyrbzE7YawQ4yTxRtZyjgX1sTgbjEWaMKxYMrhhk8rjtVvhbhPH3wrw8Ei',
       1
     )
@@ -14,8 +11,6 @@ describe('Address tests', () => {
 
   it('should generate address 1 for ONE testnet', () => {
     const address = generateAddressFromXPub(
-      Currency.ONE,
-      true,
       'xpub6FMiQpA54nciqs52guGVdWQ5TonZt5XtGsFpurgtttL7H3mSfaJDXv5aBdThjX6tW9HYaJSQ8wZVnLm1ixaQUu1MRQCwvwZ6U2cX6mwWT25',
       2
     )
@@ -24,7 +19,6 @@ describe('Address tests', () => {
 
   it('should generate private key 1 for ONE testnet', async () => {
     const privateKey = await generatePrivateKeyFromMnemonic(
-      Currency.ONE,
       true,
       'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten',
       1
@@ -34,7 +28,6 @@ describe('Address tests', () => {
 
   it('should generate private key 1 for ONE mainnet', async () => {
     const privateKey = await generatePrivateKeyFromMnemonic(
-      Currency.ONE,
       false,
       'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten',
       1
@@ -44,8 +37,6 @@ describe('Address tests', () => {
 
   it('should generate an address from a mainnet ONE private key', async () => {
     const address = await generateAddressFromPrivatekey(
-      Currency.ONE,
-      false,
       '0xac12f9a2d0d1f06c7dc33a3e9c18f60fe1ca65c592d1e9345c994740f9e1971e'
     )
     expect(address).toBe('0xefc395c295a90023d3e9afacb4399da3d332947b')
@@ -53,8 +44,6 @@ describe('Address tests', () => {
 
   it('should generate an address from a testnet ONE private key', async () => {
     const address = await generateAddressFromPrivatekey(
-      Currency.ONE,
-      true,
       '0x4cda6d2c33b0f9a041e46474a638ac59aee0734cf208aa9aa2f05ef887bd09e1'
     )
     expect(address).toBe('0x8acbcfbc8ce37f6f674f4b9861d3efe89288d89f')

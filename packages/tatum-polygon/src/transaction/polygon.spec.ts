@@ -43,7 +43,7 @@ describe('MATIC transactions', () => {
       body.amount = '0.0001'
       body.currency = Currency.MATIC
       body.to = '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
-      const txData = await preparePolygonSignedTransaction(true, body, 'https://matic-mumbai.chainstacklabs.com/')
+      const txData = await preparePolygonSignedTransaction(body, 'https://matic-mumbai.chainstacklabs.com/')
       expect(txData).toContain('0x')
 
       console.log(await broadcast(txData))
@@ -54,7 +54,7 @@ describe('MATIC transactions', () => {
       body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29'
       body.data = 'Hello hi'
       body.chain = Currency.MATIC
-      const txData = await preparePolygonStoreDataTransaction(true, body, 'https://matic-mumbai.chainstacklabs.com/')
+      const txData = await preparePolygonStoreDataTransaction(body, 'https://matic-mumbai.chainstacklabs.com/')
       expect(txData).toContain('0x')
 
       console.log(await broadcast(txData))
@@ -67,7 +67,6 @@ describe('MATIC transactions', () => {
 
     it('should test read smart contract method invocation', async () => {
       const result = await sendPolygonSmartContractReadMethodInvocationTransaction(
-        true,
         {
           contractAddress: '0x0b9808fce74030c87aae334a30f6c8f6c66b090d',
           methodName: 'balanceOf',
@@ -100,7 +99,6 @@ describe('MATIC transactions', () => {
 
     it('should test write smart contract method invocation', async () => {
       const result = await preparePolygonSmartContractWriteMethodInvocation(
-        true,
         {
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
           contractAddress: '0x0b9808fce74030c87aae334a30f6c8f6c66b090d',
@@ -146,7 +144,7 @@ describe('MATIC transactions', () => {
       body.contractAddress = '0x0b9808fce74030c87aae334a30f6c8f6c66b090d'
       body.to = '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       body.digits = 10
-      const txData = await preparePolygonTransferErc20SignedTransaction(true, body, 'https://matic-mumbai.chainstacklabs.com/')
+      const txData = await preparePolygonTransferErc20SignedTransaction(body, 'https://matic-mumbai.chainstacklabs.com/')
       expect(txData).toContain('0x')
 
       console.log(await broadcast(txData))
@@ -160,7 +158,7 @@ describe('MATIC transactions', () => {
       body.supply = '100'
       body.address = '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       body.digits = 10
-      const txData = await preparePolygonDeployErc20SignedTransaction(true, body, 'https://matic-mumbai.chainstacklabs.com/')
+      const txData = await preparePolygonDeployErc20SignedTransaction(body, 'https://matic-mumbai.chainstacklabs.com/')
       expect(txData).toContain('0x')
       console.log(await broadcast(txData))
     })
@@ -173,7 +171,7 @@ describe('MATIC transactions', () => {
       body.address = '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       body.digits = 10
       try {
-        await preparePolygonDeployErc20SignedTransaction(true, body, 'https://matic-mumbai.chainstacklabs.com/')
+        await preparePolygonDeployErc20SignedTransaction(body, 'https://matic-mumbai.chainstacklabs.com/')
         fail('Validation did not pass.')
       } catch (e) {
         console.error(e)
@@ -184,7 +182,6 @@ describe('MATIC transactions', () => {
   describe('MATIC 721 transactions', () => {
     it('should test 721 deploy transaction', async () => {
       const deployBep721Token = await preparePolygonDeployErc721SignedTransaction(
-        true,
         {
           symbol: '1oido3id3',
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
@@ -201,7 +198,6 @@ describe('MATIC transactions', () => {
       try {
         const tokenId = new Date().getTime().toString()
         const mintedToken = await preparePolygonMintErc721SignedTransaction(
-          true,
           {
             to: '0x811dfbff13adfbc3cf653dcc373c03616d3471c9',
             tokenId,
@@ -224,7 +220,6 @@ describe('MATIC transactions', () => {
       const firstTokenId = new Date().getTime()
       const secondTokenId = firstTokenId + 1
       const mintedTokens = await preparePolygonMintMultipleErc721SignedTransaction(
-        true,
         {
           to: ['0x811dfbff13adfbc3cf653dcc373c03616d3471c9', '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'],
           tokenId: [firstTokenId.toString(), secondTokenId.toString()],
@@ -241,7 +236,6 @@ describe('MATIC transactions', () => {
 
     it('should test 721 burn transaction', async () => {
       const burnBep721Token = await preparePolygonBurnErc721SignedTransaction(
-        true,
         {
           tokenId: '1626437687633',
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
@@ -256,7 +250,6 @@ describe('MATIC transactions', () => {
 
     it('should test 721 send transaction', async () => {
       const sendBep721Token = await preparePolygonTransferErc721SignedTransaction(
-        true,
         {
           to: '0x811dfbff13adfbc3cf653dcc373c03616d3471c9',
           tokenId: '1626437745973',

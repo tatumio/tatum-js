@@ -11,10 +11,9 @@ import { offchainTransferEgldKMS } from './kms'
  * This operation is irreversible.
  * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
- * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
-export const sendEgldOffchainTransaction = async (testnet: boolean, body: EgldTransferOffchain, provider?: string) => {
+export const sendEgldOffchainTransaction = async (testnet: boolean, body: EgldTransferOffchain) => {
     if (body.signatureId) {
         return offchainTransferEgldKMS(body)
     }
@@ -24,7 +23,7 @@ export const sendEgldOffchainTransaction = async (testnet: boolean, body: EgldTr
     } = body
     const {value, receiver} = withdrawal
 
-    const fromPriv = mnemonic && index !== undefined ? await generatePrivateKeyFromMnemonic(Currency.EGLD, testnet, mnemonic, index) : fromPrivateKey as string
+    const fromPriv = mnemonic && index !== undefined ? await generatePrivateKeyFromMnemonic(testnet, mnemonic, index) : fromPrivateKey as string
 
     const fee = {
         gasLimit: `${gasLimit || '50000'}`,
@@ -35,7 +34,7 @@ export const sendEgldOffchainTransaction = async (testnet: boolean, body: EgldTr
         fromPrivateKey: fromPriv,
         fee,
         to: receiver
-    }, provider)
+    })
     // @ts-ignore
     withdrawal.fee = new BigNumber(fee.gasLimit).multipliedBy(fee.gasPrice).toString()
     const {id} = await offchainStoreWithdrawal(withdrawal)

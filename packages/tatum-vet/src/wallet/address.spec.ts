@@ -1,11 +1,8 @@
-import { Currency } from '@tatumio/tatum-core'
 import { generateAddressFromXPub, generatePrivateKeyFromMnemonic } from './'
 
 describe('Address tests', () => {
   it('should generate address 1 for VET mainnet', () => {
     const address = generateAddressFromXPub(
-      Currency.VET,
-      false,
       'xpub6EzJLu3Hi5hEFAkiZAxCTaXqXoS95seTnG1tdYdF8fBcVZCfR8GQP8UGvfF52szpwZqiiGHJw5694emxSpYBE5qDxAZUgiHLzbVhb5ErRMa',
       1
     )
@@ -14,8 +11,6 @@ describe('Address tests', () => {
 
   it('should generate address 1 for VET testnet', () => {
     const address = generateAddressFromXPub(
-      Currency.VET,
-      true,
       'xpub6FMiQpA54nciqs52guGVdWQ5TonZt5XtGsFpurgtttL7H3mSfaJDXv5aBdThjX6tW9HYaJSQ8wZVnLm1ixaQUu1MRQCwvwZ6U2cX6mwWT25',
       1
     )
@@ -24,7 +19,6 @@ describe('Address tests', () => {
 
   it('should generate private key 1 for VET mainnet', async () => {
     const privateKey = await generatePrivateKeyFromMnemonic(
-      Currency.VET,
       false,
       'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten',
       1
@@ -34,7 +28,6 @@ describe('Address tests', () => {
 
   it('should generate private key 1 for VET testnet', async () => {
     const privateKey = await generatePrivateKeyFromMnemonic(
-      Currency.VET,
       true,
       'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten',
       1
