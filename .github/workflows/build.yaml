@@ -3,7 +3,7 @@ name: Build all packages
 on:
   push:
     branches:
-      - '*'
+      - feature/deploy-pipeline-v2
 
 jobs:
   build:
