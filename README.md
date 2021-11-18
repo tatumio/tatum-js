@@ -66,7 +66,7 @@ resent again. Default value is 1000 milliseconds.
 
 ```process.env.TATUM_RETRY_DELAY=1000```
 
-Variable process.env.TATUM_RETRIES specifies the maximum number of how many times failed request is resent again.
+Variable process.env.TATUM_RETRIES specifies the max number of how many times failed request is resent again.
 Default value is 5.
 
 ```process.env.TATUM_RETRIES=5```
