@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Build
         run: |
-          cd packages/tatum
+          cd ./packages/tatum
           cd ../tatum-core && yarn
           cd ../tatum-ledger && yarn
           cd ../tatum-defi && yarn
