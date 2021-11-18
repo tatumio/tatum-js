@@ -1,12 +1,12 @@
 {
   "name": "@tatumio/tatum-one",
-  "version": "0.0.1",
+  "version": "2.0.0-alpha.0",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
-    "clean": "rimraf dist*",
+    "clean": "rimraf dist* tsconfig.tsbuildinfo",
     "build": "tsc",
     "prepublish": "npm run clean && npm run build",
     "docs": "typedoc",
@@ -15,6 +15,7 @@
   "dependencies": {
     "@harmony-js/crypto": "^0.1.56",
     "@tatumio/tatum-core": "file:../tatum-core",
+    "@tatumio/tatum-defi": "file:../tatum-defi",
     "@tatumio/tatum-ledger": "file:../tatum-ledger",
     "bignumber.js": "^9.0.0",
     "class-transformer": "^0.2.3",

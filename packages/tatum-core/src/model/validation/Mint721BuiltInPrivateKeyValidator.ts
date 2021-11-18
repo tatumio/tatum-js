@@ -15,7 +15,7 @@ export class Mint721BuiltInPrivateKeyValidator implements ValidatorConstraintInt
 
   public validate(_value: any, validationArguments?: ValidationArguments) {
     const data = validationArguments?.object as any
-    const isAllowedChain = [Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC].includes(data.chain)
+    const isAllowedChain = [Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC, Currency.KCS].includes(data.chain)
 
     if (!data.fromPrivateKey && !data.signatureId) {
       if (isAllowedChain) {

@@ -1,27 +1,17 @@
-import {mintNFTRequest, createNFTAbstraction, TransactionHash, post, MintErc721} from '@tatumio/tatum-core';
-import {
-    FlowBurnNft,
-    FlowDeployNft,
-    FlowMintMultipleNft,
-    FlowMintNft,
-    FlowTransferNft,
-} from '../model';
-import {
-    sendFlowNftBurnToken,
-    sendFlowNftMintMultipleToken,
-    sendFlowNftMintToken,
-    sendFlowNftTransferToken,
-} from '../transaction';
+import { mintNFTRequest, createNFTAbstraction } from '@tatumio/tatum-defi'
+import { post, TransactionHash, MintErc721 } from '@tatumio/tatum-core'
+import { FlowBurnNft, FlowDeployNft, FlowMintMultipleNft, FlowMintNft, FlowTransferNft } from '../model'
+import { sendFlowNftBurnToken, sendFlowNftMintMultipleToken, sendFlowNftMintToken, sendFlowNftTransferToken } from '../transaction'
 
-export const mintNFT = (body: MintErc721) => mintNFTRequest(body)
+export const mintNFT = (body: MintErc721): Promise<TransactionHash> => mintNFTRequest(body)
 
 /**
  * Deploy new NFT smart contract, which will be used for later minting.
  * @param body body of the mint request
  */
 export const deployNFT = async (body: FlowDeployNft): Promise<TransactionHash> => {
-    return post('/v3/nft/deploy', body, FlowDeployNft);
-};
+  return post('/v3/nft/deploy', body, FlowDeployNft)
+}
 
 /**
  * Mint new NFT token with metadata stored on the IPFS.
@@ -32,13 +22,16 @@ export const deployNFT = async (body: FlowDeployNft): Promise<TransactionHash> =
  * @param scheme optional JSON Metadata scheme
  * @param provider optional provider do broadcast tx
  */
-export const createNFT = async (body: FlowMintNft,
-                                file: Buffer,
-                                name: string,
-                                description?: string,
-                                scheme?: any, provider?: string) => {
-    return await createNFTAbstraction((body: any) => mintNFTWithUri(false, body), false, body, file, name, description, scheme, provider)
-};
+export const createNFT = async (
+  body: FlowMintNft,
+  file: Buffer,
+  name: string,
+  description?: string,
+  scheme?: any,
+  provider?: string
+) => {
+  return await createNFTAbstraction(() => mintNFTWithUri(false, body), false, body, file, name, description, scheme, provider)
+}
 
 /**
  * Mint new NFT token.
@@ -46,8 +39,8 @@ export const createNFT = async (body: FlowMintNft,
  * @param body body of the mint request
  */
 export const mintNFTWithUri = async (testnet: boolean, body: FlowMintNft): Promise<TransactionHash> => {
-    return sendFlowNftMintToken(testnet, body);
-};
+  return sendFlowNftMintToken(testnet, body as FlowMintNft)
+}
 
 /**
  * Mint multiple new NFT tokens.
@@ -55,8 +48,8 @@ export const mintNFTWithUri = async (testnet: boolean, body: FlowMintNft): Promi
  * @param body body of the mint request
  */
 export const mintMultipleNFTWithUri = async (testnet: boolean, body: FlowMintMultipleNft) => {
-    return sendFlowNftMintMultipleToken(testnet, body as FlowMintMultipleNft);
-};
+  return sendFlowNftMintMultipleToken(testnet, body as FlowMintMultipleNft)
+}
 
 /**
  * Burn new NFT token. Token will no longer exists.
@@ -64,8 +57,8 @@ export const mintMultipleNFTWithUri = async (testnet: boolean, body: FlowMintMul
  * @param body body of the mint request
  */
 export const burnNFT = async (testnet: boolean, body: FlowBurnNft) => {
-    return sendFlowNftBurnToken(testnet, body as FlowBurnNft);
-};
+  return sendFlowNftBurnToken(testnet, body as FlowBurnNft)
+}
 
 /**
  * Transfer new NFT token to new recipient.
@@ -73,13 +66,7 @@ export const burnNFT = async (testnet: boolean, body: FlowBurnNft) => {
  * @param body body of the mint request
  */
 export const transferNFT = async (testnet: boolean, body: FlowTransferNft) => {
-    return sendFlowNftTransferToken(testnet, body as FlowTransferNft);
-};
+  return sendFlowNftTransferToken(testnet, body as FlowTransferNft)
+}
 
-export {
-    getNFTsByAddress,
-    getNFTContractAddress,
-    getNFTMetadataURI,
-    getNFTImage,
-    getNFTRoyalty,
-} from "@tatumio/tatum-core"
+export { getNFTsByAddress, getNFTContractAddress, getNFTMetadataURI, getNFTImage, getNFTRoyalty } from '@tatumio/tatum-defi'

@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "composite": true,
     "target": "es2017",
     "lib": [
       "es2017"
@@ -9,6 +10,7 @@
     "strict": true,
     "baseUrl": "./",
     "declaration": true,
+    "declarationMap": true,
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -22,7 +24,12 @@
     "resolveJsonModule": true,
     "emitDecoratorMetadata": true,
     "strictPropertyInitialization": false,
-    "allowSyntheticDefaultImports":true
+    "allowSyntheticDefaultImports":true,
+    "removeComments": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true
   },
   "exclude": [
     "node_modules",

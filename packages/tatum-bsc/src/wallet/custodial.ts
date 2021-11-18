@@ -1,11 +1,13 @@
 import {
+  prepareTransferFromCustodialWalletAbstract,
+  prepareBatchTransferFromCustodialWalletAbstract,
+} from '@tatumio/tatum-defi'
+import {
   GenerateCustodialAddress,
   TransferFromCustodialAddress,
-  prepareTransferFromCustodialWalletAbstract,
   SmartContractMethodInvocation,
   TransferFromTronCustodialAddress,
   TransferFromCustodialAddressBatch,
-  prepareBatchTransferFromCustodialWalletAbstract,
   ApproveCustodialTransfer,
   validateBody,
   ContractType,

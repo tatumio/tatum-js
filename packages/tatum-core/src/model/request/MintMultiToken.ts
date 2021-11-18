@@ -14,7 +14,7 @@ export class MintMultiToken extends PrivateKeyOrSignatureId {
   public tokenId: string
 
   @IsNotEmpty()
-  @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC, Currency.ALGO])
+  @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC, Currency.ALGO, Currency.KCS])
   public chain: Currency
 
   @IsNotEmpty()
@@ -39,4 +39,9 @@ export class MintMultiToken extends PrivateKeyOrSignatureId {
   @ValidateIf(o => o.chain === Currency.ALGO)
   @IsNotEmpty()
   public url?: string;
+
+  @ValidateIf(o => o.chain === Currency.ALGO && o.signatureId)
+  @IsNotEmpty()
+  @Length(42, 58)
+  public from?: string;
 }

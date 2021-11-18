@@ -1,5 +1,5 @@
 import { buildSmartContractMethodInvocation, listing } from '@tatumio/tatum-core'
-import { oneBroadcast } from 'src'
+import { oneBroadcast } from '../'
 import Web3 from 'web3'
 import { prepareOneClient, prepareOneSmartContractWriteMethodInvocation } from '../transaction'
 

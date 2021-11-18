@@ -1,4 +1,4 @@
-import { generateAddressFromXPub, generatePrivateKeyFromMnemonic } from 'src'
+import { generateAddressFromXPub, generatePrivateKeyFromMnemonic } from './'
 
 describe('Address tests', () => {
   it('should generate address 1 for VET mainnet', () => {

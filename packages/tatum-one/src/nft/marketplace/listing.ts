@@ -1,15 +1,17 @@
 import {
-  DeployMarketplaceListing,
-  UpdateMarketplaceFee,
   prepareMarketplaceUpdateFeeAbstraction,
-  UpdateMarketplaceFeeRecipient,
   prepareMarketplaceUpdateFeeRecipientAbstraction,
-  ApproveErc20,
-  CreateMarketplaceListing,
   prepareMarketplaceCreateListingAbstraction,
-  InvokeMarketplaceListingOperation,
   prepareMarketplaceBuyListingAbstraction,
   prepareMarketplaceCancelListingAbstraction,
+} from '@tatumio/tatum-defi'
+import {
+  DeployMarketplaceListing,
+  UpdateMarketplaceFee,
+  UpdateMarketplaceFeeRecipient,
+  ApproveErc20,
+  CreateMarketplaceListing,
+  InvokeMarketplaceListingOperation,
 } from '@tatumio/tatum-core'
 import { prepareApproveErc20 } from '../../fungible'
 import { helperBroadcastTx, helperPrepareSCCall } from '../../helpers'
@@ -176,4 +178,4 @@ export const sendMarketplaceBuyListing = async (body: InvokeMarketplaceListingOp
 export const sendMarketplaceCancelListing = async (body: InvokeMarketplaceListingOperation, provider?: string) =>
   helperBroadcastTx(await prepareMarketplaceCancelListing(body, provider), body.signatureId)
 
-export { getMarketplaceFee, getMarketplaceListing, getMarketplaceFeeRecipient } from '@tatumio/tatum-core'
+export { getMarketplaceFee, getMarketplaceListing, getMarketplaceFeeRecipient } from '@tatumio/tatum-defi'

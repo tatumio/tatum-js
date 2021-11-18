@@ -1,6 +1,6 @@
 import { generateMnemonic } from 'bip39'
-import { WalletWithMnemonic } from '@tatumio/tatum-core'
-import cardano from './cardano.crypto'
+import { WalletWithMnemonic } from '@tatumio/tatum-ledger'
+import * as cardano from './cardano.crypto'
 
 /**
  * Generate ADA wallet

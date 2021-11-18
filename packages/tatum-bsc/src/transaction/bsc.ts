@@ -34,8 +34,8 @@ import {
   TransferErc721,
   BurnMultiTokenBatch,
   DeployMultiToken,
-  obtainCustodialAddressType,
 } from '@tatumio/tatum-core'
+import { obtainCustodialAddressType } from '@tatumio/tatum-defi'
 import { BigNumber } from 'bignumber.js'
 import Web3 from 'web3'
 import { TransactionConfig } from 'web3-core'

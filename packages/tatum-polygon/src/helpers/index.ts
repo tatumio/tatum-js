@@ -1,5 +1,5 @@
 import { buildSmartContractMethodInvocation, listing } from '@tatumio/tatum-core'
-import { preparePolygonClient, preparePolygonSmartContractWriteMethodInvocation } from 'src'
+import { preparePolygonClient, preparePolygonSmartContractWriteMethodInvocation } from '../'
 import { polygonBroadcast } from '../blockchain/polygon'
 import Web3 from 'web3'
 

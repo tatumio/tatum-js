@@ -1,4 +1,4 @@
-import { IsIn, IsInt, IsNotEmpty, IsOptional, Length, MaxLength, Min } from 'class-validator'
+import { IsIn, IsInt, IsNotEmpty, IsOptional, Length, MaxLength, Min, ValidateIf } from 'class-validator'
 import { Currency } from './Currency'
 import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 
@@ -12,11 +12,16 @@ export class BaseBurnErc721 extends PrivateKeyOrSignatureId {
   public contractAddress: string
 
   @IsNotEmpty()
-  @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC, Currency.TRON, Currency.ONE, Currency.MATIC, Currency.ALGO])
+  @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC, Currency.TRON, Currency.ONE, Currency.MATIC, Currency.ALGO, Currency.KCS])
   public chain: Currency
 
   @Min(0)
   @IsInt()
   @IsOptional()
   public nonce?: number
+
+  @ValidateIf(o => o.chain === Currency.ALGO && o.signatureId)
+  @IsNotEmpty()
+  @Length(42, 58)
+  public from?: string;
 }

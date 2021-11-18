@@ -20,6 +20,7 @@ export enum Currency {
   BUSD_BSC = 'BUSD_BSC',
   B2U_BSC = 'B2U_BSC',
   BETH = 'BETH',
+  GAMEE = 'GAMEE',
   BBTC = 'BBTC',
   BADA = 'BADA',
   RMD = 'RMD',
@@ -66,6 +67,7 @@ export enum Currency {
   QTUM = 'QTUM',
   EGLD = 'EGLD',
   ALGO = 'ALGO',
+  KCS = 'KCS'
 }
 
 export const ERC20_CURRENCIES = [

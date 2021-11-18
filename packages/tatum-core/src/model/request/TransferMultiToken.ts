@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer'
-import { IsIn, IsNotEmpty, IsOptional, Length, MaxLength, Min, ValidateNested } from 'class-validator'
+import { IsIn, IsNotEmpty, IsOptional, Length, MaxLength, Min, ValidateNested, ValidateIf } from 'class-validator'
 import { Currency } from './Currency'
 import { Fee } from './Fee'
 import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
@@ -18,7 +18,7 @@ export class TransferMultiToken extends PrivateKeyOrSignatureId {
   public contractAddress: string
 
   @IsNotEmpty()
-  @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC, Currency.ALGO])
+  @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC, Currency.ALGO, Currency.KCS])
   public chain: Currency
 
   @IsNotEmpty()
@@ -35,4 +35,9 @@ export class TransferMultiToken extends PrivateKeyOrSignatureId {
   @Type(() => Fee)
   @ValidateNested()
   public fee?: Fee
+
+  @ValidateIf(o => o.chain === Currency.ALGO && o.signatureId)
+  @IsNotEmpty()
+  @Length(42, 58)
+  public from?: string;
 }

@@ -8,7 +8,7 @@ export class BaseDeployErc721 extends PrivateKeyOrSignatureId {
   public name: string
 
   @IsNotEmpty()
-  @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC, Currency.TRON, Currency.ONE, Currency.MATIC, Currency.ALGO])
+  @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC, Currency.TRON, Currency.ONE, Currency.MATIC, Currency.ALGO, Currency.KCS])
   public chain: Currency
 
   @IsNotEmpty()
@@ -22,4 +22,9 @@ export class BaseDeployErc721 extends PrivateKeyOrSignatureId {
   @ValidateIf(o => o.chain === Currency.ALGO)
   @IsNotEmpty()
   public url?: string;
+
+  @ValidateIf(o => o.chain === Currency.ALGO && o.signatureId)
+  @IsNotEmpty()
+  @Length(42, 58)
+  public from?: string;
 }

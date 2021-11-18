@@ -1,12 +1,12 @@
 {
   "name": "@tatumio/tatum-celo",
-  "version": "0.0.1",
+  "version": "2.0.0-alpha.0",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
-    "clean": "rimraf dist*",
+    "clean": "rimraf dist* tsconfig.tsbuildinfo",
     "build": "tsc",
     "prepublish": "npm run clean && npm run build",
     "docs": "typedoc",
@@ -16,6 +16,7 @@
     "@celo-tools/celo-ethers-wrapper": "0.0.5",
     "@ethersproject/bignumber": "^5.5.0",
     "@tatumio/tatum-core": "file:../tatum-core",
+    "@tatumio/tatum-defi": "file:../tatum-defi",
     "@tatumio/tatum-ledger": "file:../tatum-ledger",
     "bignumber.js": "^9.0.0",
     "bip39": "^3.0.2",
