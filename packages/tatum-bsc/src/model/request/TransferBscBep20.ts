@@ -1,7 +1,7 @@
 import { PrivateKeyOrSignatureId, BSC_BASED_CURRENCIES, Currency, Fee } from '@tatumio/tatum-core'
 import { Type } from 'class-transformer'
 import { IsIn, IsNotEmpty, IsNumberString, IsOptional, Length, Matches, MaxLength, Min, ValidateNested } from 'class-validator'
-import { OneOf } from '../validation/OneOf'
+import { OneOf } from '@tatumio/tatum-core'
 
 export class TransferBscBep20 extends PrivateKeyOrSignatureId {
   @IsNotEmpty()
