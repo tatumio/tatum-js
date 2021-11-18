@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build
-        run:
+        run: |
           cd packages/tatum
           cd ../tatum-core && yarn
           cd ../tatum-ledger && yarn
