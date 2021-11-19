@@ -9,27 +9,19 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
+      - name: checkout
+        uses: actions/checkout@v1
 
-      # 1. provide Personal Access Token for checkout@v2
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          submodules: recursive
-          token: ${{ secrets.PAT_GITHUB }}
-
-      # 2. setup .npmrc it uses NODE_AUTH_TOKEN
-      - name: Setup .npmrc file for publish
-        uses: actions/setup-node@v2
-        with:
-          node-version: '12.x'
-          registry-url: 'https://registry.npmjs.org'
-
-      # 3. configure git user used to push tag
-      - name: Configure Git User
+      - name: Configure CI Git User
         run: |
-          git config --global user.email "lukas.kotol@gmail.com"
-          git config --global user.name "ci@$GITHUB_ACTOR"
+          git config --global user.name 'Hathoriel'
+          git config --global user.email 'lukas.kotol@gmail.com'
+          git remote set-url origin https://$GITHUB_ACTOR:$GITHUB_PAT@github.com/tatumio/tatum-js
+        env:
+          GITHUB_PAT: ${{ secrets.PAT_GITHUB }}
 
+      - name: Checkout and pull branch
+        run: git checkout "${GITHUB_REF:11}" && git pull
 
       - name: Install root package dependencies
         run: yarn
@@ -48,9 +40,54 @@ jobs:
         run: yarn bootstrap
 
       - name: Publish packages
-        run: yarn publish:prerelease
+        run: yarn lerna publish prerelease --yes --no-verify-access
         env:
           GH_TOKEN: ${{ secrets.PAT_GITHUB }}
           GITHUB_TOKEN: ${{ secrets.PAT_GITHUB }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+#      # 1. provide Personal Access Token for checkout@v2
+#      - name: Checkout
+#        uses: actions/checkout@v2
+#        with:
+#          submodules: recursive
+#          token: ${{ secrets.PAT_GITHUB }}
+#
+#      # 2. setup .npmrc it uses NODE_AUTH_TOKEN
+#      - name: Setup .npmrc file for publish
+#        uses: actions/setup-node@v2
+#        with:
+#          node-version: '14.x'
+#          registry-url: 'https://registry.npmjs.org'
+#
+#      # 3. configure git user used to push tag
+#      - name: Configure Git User
+#        run: |
+#          git config --global user.email "lukas.kotol@gmail.com"
+#          git config --global user.name "ci@$GITHUB_ACTOR"
+#
+#
+#      - name: Install root package dependencies
+#        run: yarn
+#
+#      - name: Authenticate with Registry
+#        run: |
+#          yarn logout
+#          echo "@tatumio:registry=http://registry.npmjs.org/" > .npmrc
+#          echo "registry=http://registry.npmjs.org/" >> .npmrc
+#          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
+#          npm whoami
+#        env:
+#          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+#
+#      - name: Install subpackages dependencies
+#        run: yarn bootstrap
+#
+#      - name: Publish packages
+#        run: yarn lerna publish prerelease --yes --no-verify-access
+#        env:
+#          GH_TOKEN: ${{ secrets.PAT_GITHUB }}
+#          GITHUB_TOKEN: ${{ secrets.PAT_GITHUB }}
+#          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
 
