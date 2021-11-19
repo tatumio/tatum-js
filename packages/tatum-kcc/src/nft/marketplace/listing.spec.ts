@@ -29,7 +29,7 @@ describe('Marketplace Listing tests', () => {
       body.feeRecipient = '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'
       body.marketplaceFee = 150
       body.chain = Currency.KCS
-      const test = await deployMarketplaceListing(true, body, 'https://rpc-testnet.kcc.network')
+      const test = await deployMarketplaceListing(body, 'https://rpc-testnet.kcc.network')
       console.log(test)
       expect(test).toBeDefined()
     })
@@ -45,11 +45,11 @@ describe('Marketplace Listing tests', () => {
       body.price = '0.001'
       body.seller = '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'
       body.chain = Currency.KCS
-      console.log(await sendMarketplaceCreateListing(true, body, 'https://rpc-testnet.kcc.network'))
+      console.log(await sendMarketplaceCreateListing(body, 'https://rpc-testnet.kcc.network'))
 
       await new Promise((r) => setTimeout(r, 5000))
       console.log(
-        await transferNFT(true, {
+        await transferNFT({
           to: '0xc4585ec777ba6dc5d33524ca72c425d512780c31',
           chain: Currency.KCS,
           tokenId: '121',
@@ -65,7 +65,7 @@ describe('Marketplace Listing tests', () => {
       r.methodName = 'getListing'
       r.methodABI = listing.abi.find((a) => a.name === r.methodName)
       r.params = ['8']
-      console.log(await sendKccSmartContractMethodInvocationTransaction(true, r, 'https://rpc-testnet.kcc.network'))
+      console.log(await sendKccSmartContractMethodInvocationTransaction(r, 'https://rpc-testnet.kcc.network'))
     })
 
     it('should get marketplace fee', async () => {
@@ -74,7 +74,7 @@ describe('Marketplace Listing tests', () => {
       r.methodName = 'getMarketplaceFee'
       r.methodABI = listing.abi.find((a) => a.name === r.methodName)
       r.params = []
-      console.log(await sendKccSmartContractReadMethodInvocationTransaction(true, r, 'https://rpc-testnet.kcc.network'))
+      console.log(await sendKccSmartContractReadMethodInvocationTransaction(r, 'https://rpc-testnet.kcc.network'))
     })
 
     it('should buy listing native', async () => {
@@ -84,7 +84,7 @@ describe('Marketplace Listing tests', () => {
       body.listingId = '111'
       body.amount = '0.0015'
       body.chain = Currency.KCS
-      console.log(await sendMarketplaceBuyListing(true, body, 'https://rpc-testnet.kcc.network'))
+      console.log(await sendMarketplaceBuyListing(body, 'https://rpc-testnet.kcc.network'))
     })
 
     it('should approve erc20', async () => {

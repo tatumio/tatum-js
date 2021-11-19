@@ -24,7 +24,7 @@ describe('Auction  tests', () => {
       body.feeRecipient = '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'
       body.auctionFee = 150
       body.chain = Currency.KCS
-      const test = await deployAuction(true, body, 'https://rpc-testnet.kcc.network')
+      const test = await deployAuction(body, 'https://rpc-testnet.kcc.network')
       console.log(test)
       expect(test).toBeDefined()
     })
@@ -37,12 +37,11 @@ describe('Auction  tests', () => {
       mint.tokenId = tokenId
       mint.url = 'https://google.com'
       mint.chain = Currency.KCS
-      console.log(await mintNFTWithUri(true, mint, 'https://rpc-testnet.kcc.network'))
+      console.log(await mintNFTWithUri(mint, 'https://rpc-testnet.kcc.network'))
 
       await sleep()
       console.log(
         await sendAuctionApproveNftTransfer(
-          true,
           {
             fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
             chain: Currency.KCS,
@@ -66,7 +65,7 @@ describe('Auction  tests', () => {
       body.isErc721 = true
       body.seller = '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'
       body.chain = Currency.KCS
-      console.log(await sendAuctionCreate(true, body, 'https://rpc-testnet.kcc.network'))
+      console.log(await sendAuctionCreate(body, 'https://rpc-testnet.kcc.network'))
 
       await sleep(2000)
       const bid = new InvokeAuctionOperation()
@@ -83,7 +82,7 @@ describe('Auction  tests', () => {
       settle.contractAddress = '0x7a2cc5a4788a15d5705b1d31e0ff5cfc4465d073'
       settle.id = tokenId
       settle.chain = Currency.KCS
-      console.log(await sendAuctionSettle(true, settle, 'https://rpc-testnet.kcc.network'))
+      console.log(await sendAuctionSettle(settle, 'https://rpc-testnet.kcc.network'))
     })
 
     it('should create auction ERC20 asset', async () => {
@@ -102,12 +101,11 @@ describe('Auction  tests', () => {
       mint.tokenId = tokenId
       mint.url = 'https://google.com'
       mint.chain = Currency.KCS
-      console.log(await mintNFTWithUri(true, mint, 'https://rpc-testnet.kcc.network'))
+      console.log(await mintNFTWithUri(mint, 'https://rpc-testnet.kcc.network'))
 
       await sleep()
       console.log(
         await sendAuctionApproveNftTransfer(
-          true,
           {
             fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
             chain: Currency.KCS,
@@ -132,7 +130,7 @@ describe('Auction  tests', () => {
       body.erc20Address = '0x326c977e6efc84e512bb9c30f76e30c160ed06fb'
       body.seller = '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'
       body.chain = Currency.KCS
-      console.log(await sendAuctionCreate(true, body, 'https://rpc-testnet.kcc.network'))
+      console.log(await sendAuctionCreate(body, 'https://rpc-testnet.kcc.network'))
 
       await sleep(2000)
       const bid = new InvokeAuctionOperation()
@@ -153,7 +151,7 @@ describe('Auction  tests', () => {
       settle.contractAddress = '0x7a2cc5a4788a15d5705b1d31e0ff5cfc4465d073'
       settle.id = tokenId
       settle.chain = Currency.KCS
-      console.log(await sendAuctionSettle(true, settle, 'https://rpc-testnet.kcc.network'))
+      console.log(await sendAuctionSettle(settle, 'https://rpc-testnet.kcc.network'))
     })
   })
 })

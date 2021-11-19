@@ -31,7 +31,7 @@ export const sendKccOffchainTransaction = async (testnet: boolean, body: Transfe
 
   const fromPriv =
     mnemonic && index !== undefined
-      ? await generatePrivateKeyFromMnemonic(Currency.MATIC, testnet, mnemonic, index)
+      ? await generatePrivateKeyFromMnemonic(testnet, mnemonic, index)
       : (privateKey as string)
 
   const account = await getAccountById(withdrawal.senderAccountId)
@@ -42,7 +42,6 @@ export const sendKccOffchainTransaction = async (testnet: boolean, body: Transfe
   }
   if (account.currency === Currency.MATIC) {
     txData = await prepareKccSignedTransaction(
-      testnet,
       {
         amount,
         fromPrivateKey: fromPriv,
@@ -57,7 +56,6 @@ export const sendKccOffchainTransaction = async (testnet: boolean, body: Transfe
     fee.gasLimit = '100000'
     const vc = await getVirtualCurrencyByName(account.currency)
     txData = await prepareKccTransferErc20SignedTransaction(
-      testnet,
       {
         amount,
         fee,
