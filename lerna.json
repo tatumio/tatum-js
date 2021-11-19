@@ -19,7 +19,7 @@
       ]
     },
     "publish": {
-      "ignore": [
+      "ignoreChanges": [
         "@tatumio/tatum",
         "@tatumio/tatum-kcc"
       ]
