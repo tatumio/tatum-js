@@ -1,5 +1,5 @@
 import { WalletWithMnemonic } from '@tatumio/tatum-ledger'
-import { Currency, TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
+import { TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
 import { generateMnemonic, mnemonicToSeed } from 'bip39'
 import { hdkey as ethHdKey } from 'ethereumjs-wallet'
 import { KCS_DERIVATION_PATH } from '../constants'
@@ -22,7 +22,6 @@ export const generateKccWallet = async (testnet: boolean, mnem: string): Promise
 
 /**
  * Generate wallet
- * @param currency blockchain to generate wallet for
  * @param testnet testnet or mainnet version of address
  * @param mnemonic mnemonic seed to use. If not present, new one will be generated
  * @returns wallet or a combination of address and private key
