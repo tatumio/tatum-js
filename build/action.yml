@@ -1,8 +1,0 @@
-name: 'NPM build'
-description: 'Action will perform build'
-author: 'Lukas Kotol'
-
-runs:
-  using: 'node12'
-  main: 'dist/index.js'
-
