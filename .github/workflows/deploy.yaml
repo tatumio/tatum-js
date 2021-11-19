@@ -17,4 +17,4 @@ jobs:
         run: yarn bootstrap
 
       - name: Publish packages
-        run: yarn publish
+        run: yarn publish:prerelease
