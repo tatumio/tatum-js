@@ -1,5 +1,5 @@
 import Web3 from 'web3'
-import { Currency, listing } from '@tatumio/tatum-core'
+import { Currency, listing, TransactionHash } from '@tatumio/tatum-core'
 import {
   helperBroadcastTx as celoBroadcast,
   helperGetWeb3Client as getCeloClient,
@@ -28,7 +28,7 @@ import {
 import { helperBroadcastTx as tronBroadcast, helperPrepareSCCall as tronHelperPrepareSCCall } from '@tatumio/tatum-tron'
 import { getXdcClient } from '@tatumio/tatum-xdc'
 
-export const helperBroadcastTx = async (chain: Currency, txData: string, signatureId?: string) => {
+export const helperBroadcastTx = async (chain: Currency, txData: string, signatureId?: string): Promise<TransactionHash> => {
   switch (chain) {
     case Currency.CELO:
       return await celoBroadcast(txData, signatureId)

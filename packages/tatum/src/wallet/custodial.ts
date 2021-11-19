@@ -80,7 +80,7 @@ export const generateCustodialWallet = async (
   testnet: boolean,
   body: GenerateCustodialAddress | GenerateTronCustodialAddress,
   provider?: string
-) => {
+): Promise<{ txId: string }> => {
   console.log('This method is deprecated. For better gas consumption, use generateCustodialWalletBatch.')
   switch (body.chain) {
     case Currency.CELO:
@@ -145,7 +145,7 @@ export const sendCustodialWallet = async (
   testnet: boolean,
   body: GenerateCustodialAddress | GenerateTronCustodialAddress,
   provider?: string
-) => {
+): Promise<{ txId: string }> => {
   let txData
   switch (body.chain) {
     case Currency.CELO:
@@ -288,7 +288,8 @@ export const sendTransferFromCustodialWallet = async (
   testnet: boolean,
   body: TransferFromCustodialAddress | TransferFromTronCustodialAddress,
   provider?: string
-) => helperBroadcastTx(body.chain, await prepareTransferFromCustodialWallet(testnet, body, provider), body.signatureId)
+): Promise<{ txId: string }> =>
+  helperBroadcastTx(body.chain, await prepareTransferFromCustodialWallet(testnet, body, provider), body.signatureId)
 
 /**
  * Prepare signed batch transaction from the custodial SC wallet.
@@ -406,7 +407,8 @@ export const sendBatchTransferFromCustodialWallet = async (
   testnet: boolean,
   body: TransferFromCustodialAddressBatch | TransferFromTronCustodialAddressBatch,
   provider?: string
-) => helperBroadcastTx(body.chain, await prepareBatchTransferFromCustodialWallet(testnet, body, provider), body.signatureId)
+): Promise<{ txId: string }> =>
+  helperBroadcastTx(body.chain, await prepareBatchTransferFromCustodialWallet(testnet, body, provider), body.signatureId)
 
 /**
  * Prepare signed approve transaction from the custodial SC wallet.
@@ -448,7 +450,11 @@ export const prepareApproveFromCustodialWallet = async (testnet: boolean, body: 
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendApproveFromCustodialWallet = async (testnet: boolean, body: ApproveCustodialTransfer, provider?: string) =>
+export const sendApproveFromCustodialWallet = async (
+  testnet: boolean,
+  body: ApproveCustodialTransfer,
+  provider?: string
+): Promise<{ txId: string }> =>
   helperBroadcastTx(body.chain, await prepareApproveFromCustodialWallet(testnet, body, provider), body.signatureId)
 
 /**
@@ -459,7 +465,11 @@ export const sendApproveFromCustodialWallet = async (testnet: boolean, body: App
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const generateCustodialWalletBatch = async (testnet: boolean, body: GenerateCustodialAddressBatch, provider?: string) => {
+export const generateCustodialWalletBatch = async (
+  testnet: boolean,
+  body: GenerateCustodialAddressBatch,
+  provider?: string
+): Promise<{ txId: string }> => {
   switch (body.chain) {
     case Currency.CELO:
       return await celoGenerateCustodialWalletBatch(testnet, body, provider)

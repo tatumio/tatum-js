@@ -64,6 +64,7 @@ import {
   prepareAddMultiTokenMinterAbstraction,
   TransferMultiToken,
   TransferMultiTokenBatch,
+  TransactionHash,
 } from '@tatumio/tatum-core'
 import { sendAlgoCreateFractionalNFTSignedTransaction, sendAlgoTransferFractionalNFTSignedTransaction } from '@tatumio/tatum-algo'
 import { sendAlgoBurnFractionalNFTSignedTransaction } from '@tatumio/tatum-algo'
@@ -79,7 +80,7 @@ export const deployMultiToken = async (
   testnet: boolean,
   body: DeployMultiToken | CeloDeployMultiToken | EthDeployMultiToken,
   provider?: string
-) => {
+): Promise<TransactionHash | string | undefined> => {
   switch (body.chain) {
     case Currency.CELO:
       return deployCeloMultiToken(testnet, body as CeloDeployMultiToken, provider)
@@ -100,7 +101,11 @@ export const deployMultiToken = async (
  * @param body body of the request
  * @param provider optional provider do broadcast tx
  */
-export const mintMultiToken = async (testnet: boolean, body: MintMultiToken | CeloMintMultiToken, provider?: string) => {
+export const mintMultiToken = async (
+  testnet: boolean,
+  body: MintMultiToken | CeloMintMultiToken,
+  provider?: string
+): Promise<TransactionHash | undefined> => {
   switch (body.chain) {
     case Currency.CELO:
       return mintCeloMultiToken(testnet, body as CeloMintMultiToken, provider)
@@ -123,7 +128,11 @@ export const mintMultiToken = async (testnet: boolean, body: MintMultiToken | Ce
  * @param body body of the request
  * @param provider optional provider do broadcast tx
  */
-export const mintMultiTokenBatch = async (testnet: boolean, body: MintMultiTokenBatch | CeloMintMultiTokenBatch, provider?: string) => {
+export const mintMultiTokenBatch = async (
+  testnet: boolean,
+  body: MintMultiTokenBatch | CeloMintMultiTokenBatch,
+  provider?: string
+): Promise<TransactionHash | undefined> => {
   switch (body.chain) {
     case Currency.CELO:
       return mintCeloMultiTokenBatch(testnet, body as CeloMintMultiTokenBatch, provider)
@@ -144,7 +153,11 @@ export const mintMultiTokenBatch = async (testnet: boolean, body: MintMultiToken
  * @param body body of the request
  * @param provider optional provider do broadcast tx
  */
-export const burnMultiToken = async (testnet: boolean, body: CeloBurnMultiToken | EthBurnMultiToken, provider?: string) => {
+export const burnMultiToken = async (
+  testnet: boolean,
+  body: CeloBurnMultiToken | EthBurnMultiToken,
+  provider?: string
+): Promise<TransactionHash | undefined> => {
   switch (body.chain) {
     case Currency.CELO:
       return burnCeloMultiTokenTransaction(testnet, body as CeloBurnMultiToken, provider)
@@ -167,7 +180,11 @@ export const burnMultiToken = async (testnet: boolean, body: CeloBurnMultiToken 
  * @param body body of the request
  * @param provider optional provider do broadcast tx
  */
-export const burnMultiTokenBatch = async (testnet: boolean, body: CeloBurnMultiTokenBatch | EthBurnMultiTokenBatch, provider?: string) => {
+export const burnMultiTokenBatch = async (
+  testnet: boolean,
+  body: CeloBurnMultiTokenBatch | EthBurnMultiTokenBatch,
+  provider?: string
+): Promise<TransactionHash | undefined> => {
   switch (body.chain) {
     case Currency.CELO:
       return burnCeloMultiTokenBatchTransaction(testnet, body as CeloBurnMultiTokenBatch, provider)
@@ -188,7 +205,11 @@ export const burnMultiTokenBatch = async (testnet: boolean, body: CeloBurnMultiT
  * @param body body of the request
  * @param provider optional provider do broadcast tx
  */
-export const transferMultiToken = async (testnet: boolean, body: CeloTransferMultiToken | TransferMultiToken, provider?: string) => {
+export const transferMultiToken = async (
+  testnet: boolean,
+  body: CeloTransferMultiToken | TransferMultiToken,
+  provider?: string
+): Promise<TransactionHash | string | undefined> => {
   switch (body.chain) {
     case Currency.CELO:
       return transferCeloMultiTokenTransaction(testnet, body as CeloTransferMultiToken, provider)
@@ -215,7 +236,7 @@ export const transferMultiTokenBatch = async (
   testnet: boolean,
   body: CeloTransferMultiTokenBatch | TransferMultiTokenBatch,
   provider?: string
-) => {
+): Promise<TransactionHash | string | undefined> => {
   switch (body.chain) {
     case Currency.CELO:
       return transferCeloMultiTokenBatchTransaction(testnet, body as CeloTransferMultiTokenBatch, provider)

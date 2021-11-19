@@ -101,7 +101,7 @@ import {
 } from '@tatumio/tatum-core'
 import { mintNFTRequest, createNFTAbstraction } from '@tatumio/tatum-defi'
 
-export const mintNFT = (body: CeloMintErc721 | EthMintErc721 | OneMint721) => mintNFTRequest(body)
+export const mintNFT = (body: CeloMintErc721 | EthMintErc721 | OneMint721): Promise<TransactionHash> => mintNFTRequest(body)
 
 /**
  * Deploy new NFT smart contract, which will be used for later minting.
@@ -199,7 +199,7 @@ export const mintMultipleNFTWithUri = async (
   testnet: boolean,
   body: CeloMintMultipleErc721 | EthMintMultipleErc721 | FlowMintMultipleNft | TronMintMultipleTrc721,
   provider?: string
-) => {
+): Promise<TransactionHash> => {
   switch (body.chain) {
     case Currency.CELO:
       return celoMintMultipleNFTWithUri(testnet, body as CeloMintMultipleErc721, provider)
@@ -230,7 +230,7 @@ export const burnNFT = async (
   testnet: boolean,
   body: BurnErc721 | CeloBurnErc721 | EthBurnErc721 | TronBurnTrc721 | FlowBurnNft,
   provider?: string
-) => {
+): Promise<TransactionHash> => {
   switch (body.chain) {
     case Currency.CELO:
       return celoBurnNFT(testnet, body as CeloBurnErc721, provider)
@@ -263,7 +263,7 @@ export const updateCashbackForAuthorNFT = async (
   testnet: boolean,
   body: UpdateCashbackErc721 | TronUpdateCashbackTrc721 | CeloUpdateCashbackErc721,
   provider?: string
-) => {
+): Promise<TransactionHash> => {
   switch (body.chain) {
     case Currency.CELO:
       return celoUpdateCashbackForAuthorNFT(testnet, body as CeloUpdateCashbackErc721, provider)
@@ -292,7 +292,7 @@ export const transferNFT = async (
   testnet: boolean,
   body: TransferErc721 | CeloTransferErc721 | EthTransferErc721 | TronTransferTrc721 | FlowTransferNft,
   provider?: string
-) => {
+): Promise<TransactionHash> => {
   switch (body.chain) {
     case Currency.CELO:
       return celoTransferNFT(testnet, body as CeloTransferErc721, provider)
@@ -346,7 +346,7 @@ export const prepareAddNFTMinter = async (testnet: boolean, body: AddMinter, pro
  * @param body body of the add minter request
  * @param provider optional provider do broadcast tx
  */
-export const sendAddNFTMinter = async (testnet: boolean, body: AddMinter, provider?: string) => {
+export const sendAddNFTMinter = async (testnet: boolean, body: AddMinter, provider?: string): Promise<TransactionHash> => {
   switch (body.chain) {
     case Currency.CELO:
       return celoSendAddNFTMinter(testnet, body, provider)

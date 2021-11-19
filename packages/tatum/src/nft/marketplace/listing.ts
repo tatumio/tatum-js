@@ -6,6 +6,7 @@ import {
   InvokeMarketplaceListingOperation,
   UpdateMarketplaceFee,
   UpdateMarketplaceFeeRecipient,
+  TransactionHash,
 } from '@tatumio/tatum-core'
 import {
   prepareMarketplaceCancelListingAbstraction,
@@ -62,7 +63,7 @@ export const deployMarketplaceListing = async (
   testnet: boolean,
   body: DeployMarketplaceListing | DeployTronMarketplaceListing,
   provider?: string
-) => {
+): Promise<TransactionHash> => {
   switch (body.chain) {
     case Currency.CELO:
       return await sendCeloDeployMarketplaceListingSignedTransaction(testnet, body, provider)
