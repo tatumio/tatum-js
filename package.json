@@ -10,8 +10,8 @@
     "prepublish": "npm run clean && npm run build",
     "docs": "typedoc",
     "lint": "eslint ./src ./packages --ext .ts --fix",
-    "clean:all": "find . -name 'node_modules' -type d -prune -print -exec rm -rf '{}' \\;\nfind . -name '.yalc' -type d -prune -print -exec rm -rf '{}' \\;\nfind . -name 'dist' -type d -prune -print -exec rm -rf '{}' \\;",
-    "test:deployment": "node build/dist/index.js"
+    "clean:all": "yarn lerna clean --yes",
+    "bootstrap": "yarn lerna bootstrap && yarn lerna exec yarn install"
   },
   "private": true,
   "workspaces": [

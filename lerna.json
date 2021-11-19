@@ -4,5 +4,19 @@
   ],
   "version": "2.0.0-alpha.19",
   "npmClient": "yarn",
-  "useWorkspaces": true
+  "useWorkspaces": true,
+  "command": {
+    "bootstrap": {
+      "ignore": [
+        "@tatumio/tatum",
+        "@tatumio/tatum-kcc"
+      ]
+    },
+    "exec": {
+      "ignore": [
+        "@tatumio/tatum",
+        "@tatumio/tatum-kcc"
+      ]
+    }
+  }
 }

@@ -10,16 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install dependencies
-        working-directory: ./build/
+      - name: Install root package dependencies
         run: yarn
 
+      - name: Install subpackages dependencies
+        run: yarn bootstrap
 
-      - name: Build script
-        working-directory: ./build/
-        run: yarn build
-
-
-      - run: echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}" > ~/.npmrc
-      - uses: ./build/
 
