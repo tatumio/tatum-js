@@ -9,7 +9,7 @@ export const OneOf = (oneOfFields: string[], validationOptions?: ValidationOptio
     constraints: [oneOfFields],
     options: validationOptions,
     validator: {
-      validate(value: any, args: ValidationArguments) {
+      validate(_value: any, args: ValidationArguments) {
         let isSet = false
         for (const oneOfField in args.object) {
           if (oneOfFields.includes(oneOfField)) {

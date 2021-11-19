@@ -102,23 +102,21 @@ export const transferNFT = async (body: TransferErc721, provider?: string) => {
 
 /**
  * Prepare add new minter to the NFT contract transaction.
- * @param testnet if we use testnet or not
  * @param body body of the add minter request
  * @param provider optional provider do broadcast tx
  */
-export const prepareAddNFTMinter = async (testnet: boolean, body: AddMinter, provider?: string) => {
-  const params = await prepareAddNFTMinterAbstraction(testnet, body, provider)
+export const prepareAddNFTMinter = async (body: AddMinter, provider?: string) => {
+  const params = await prepareAddNFTMinterAbstraction(body)
   return await helperPrepareSCCall(body, 'grantRole', params, provider, abi)
 }
 
 /**
  * Add new minter to the NFT contract.
- * @param testnet if we use testnet or not
  * @param body body of the add minter request
  * @param provider optional provider do broadcast tx
  */
-export const sendAddNFTMinter = async (testnet: boolean, body: AddMinter, provider?: string) =>
-  helperBroadcastTx((await prepareAddNFTMinter(testnet, body, provider)) as string, body.signatureId as string)
+export const sendAddNFTMinter = async (body: AddMinter, provider?: string) =>
+  helperBroadcastTx((await prepareAddNFTMinter(body, provider)) as string, body.signatureId as string)
 
 export {
   getNFTsByAddress,

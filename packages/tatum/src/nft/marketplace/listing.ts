@@ -67,13 +67,13 @@ export const deployMarketplaceListing = async (
     case Currency.CELO:
       return await sendCeloDeployMarketplaceListingSignedTransaction(testnet, body, provider)
     case Currency.ONE:
-      return await sendOneDeployMarketplaceListingSignedTransaction(testnet, body, provider)
+      return await sendOneDeployMarketplaceListingSignedTransaction(body, provider)
     case Currency.ETH:
       return await sendEthDeployMarketplaceListingSignedTransaction(body, provider)
     case Currency.BSC:
-      return await sendBscDeployMarketplaceListingSignedTransaction(testnet, body, provider)
+      return await sendBscDeployMarketplaceListingSignedTransaction(body, provider)
     case Currency.MATIC:
-      return await sendPolygonDeployMarketplaceListingSignedTransaction(testnet, body, provider)
+      return await sendPolygonDeployMarketplaceListingSignedTransaction(body, provider)
     // case Currency.TRON:
     //     return await sendTronDeployMarketplaceListingSignedTransaction(testnet, body as DeployTronMarketplaceListing, provider)
     default:
@@ -104,13 +104,13 @@ export const prepareDeployMarketplaceListing = async (
     case Currency.CELO:
       return await prepareCeloDeployMarketplaceListingSignedTransaction(testnet, body, provider)
     case Currency.ONE:
-      return await prepareOneDeployMarketplaceListingSignedTransaction(testnet, body, provider)
+      return await prepareOneDeployMarketplaceListingSignedTransaction(body, provider)
     case Currency.ETH:
       return await prepareEthDeployMarketplaceListingSignedTransaction(body, provider)
     case Currency.BSC:
-      return await prepareBscDeployMarketplaceListingSignedTransaction(testnet, body, provider)
+      return await prepareBscDeployMarketplaceListingSignedTransaction(body, provider)
     case Currency.MATIC:
-      return await preparePolygonDeployMarketplaceListingSignedTransaction(testnet, body, provider)
+      return await preparePolygonDeployMarketplaceListingSignedTransaction(body, provider)
     // case Currency.TRON:
     //     return await prepareTronDeployMarketplaceListingSignedTransaction(testnet, body as DeployTronMarketplaceListing, provider)
     default:
@@ -135,7 +135,7 @@ export const prepareMarketplaceUpdateFee = async (
   }
 
   const params = await prepareMarketplaceUpdateFeeAbstraction(body)
-  return await helperPrepareSCCall(testnet, body, UpdateMarketplaceFee, 'setMarketplaceFee', params, undefined, provider)
+  return await helperPrepareSCCall(testnet, body, 'setMarketplaceFee', params, undefined, provider)
 }
 
 /**
@@ -155,7 +155,7 @@ export const prepareMarketplaceUpdateFeeRecipient = async (
   }
 
   const params = await prepareMarketplaceUpdateFeeRecipientAbstraction(body)
-  return await helperPrepareSCCall(testnet, body, UpdateMarketplaceFeeRecipient, 'setMarketplaceFeeRecipient', params, undefined, provider)
+  return await helperPrepareSCCall(testnet, body, 'setMarketplaceFeeRecipient', params, undefined, provider)
 }
 
 /**
@@ -188,7 +188,7 @@ export const prepareMarketplaceCreateListing = async (
   }
 
   const { body: validatedBody, params } = await prepareMarketplaceCreateListingAbstraction(body)
-  return await helperPrepareSCCall(testnet, validatedBody, CreateMarketplaceListing, 'createListing', params, undefined, provider)
+  return await helperPrepareSCCall(testnet, validatedBody, 'createListing', params, undefined, provider)
 }
 
 /**
@@ -209,7 +209,7 @@ export const prepareMarketplaceBuyListing = async (
   }
 
   const { body: validatedBody, params, methodName } = await prepareMarketplaceBuyListingAbstraction(body)
-  return await helperPrepareSCCall(testnet, validatedBody, InvokeMarketplaceListingOperation, methodName, params, undefined, provider)
+  return await helperPrepareSCCall(testnet, validatedBody, methodName, params, undefined, provider)
 }
 
 /**
@@ -228,7 +228,7 @@ export const prepareMarketplaceCancelListing = async (
     throw new Error('Unsupported chain')
   }
   const params = await prepareMarketplaceCancelListingAbstraction(body)
-  return await helperPrepareSCCall(testnet, body, InvokeMarketplaceListingOperation, 'cancelListing', params, undefined, provider)
+  return await helperPrepareSCCall(testnet, body, 'cancelListing', params, undefined, provider)
 }
 
 /**

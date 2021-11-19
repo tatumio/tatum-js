@@ -1,4 +1,4 @@
-import { sendAlgoSignedTransaction, sendAlgoCreateNFTSignedTransaction, sendAlgoCreateFTSignedTransaction } from './algo'
+import { sendAlgoSignedTransaction } from './algo'
 import { AlgoTransaction } from '../model'
 
 describe('Algo transaction', () => {

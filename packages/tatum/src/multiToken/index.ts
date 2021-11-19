@@ -84,13 +84,13 @@ export const deployMultiToken = async (
     case Currency.CELO:
       return deployCeloMultiToken(testnet, body as CeloDeployMultiToken, provider)
     case Currency.MATIC:
-      return deployPolygonMultiToken(testnet, body as DeployMultiToken, provider)
+      return deployPolygonMultiToken(body as DeployMultiToken, provider)
     case Currency.ONE:
-      return deployOneMultiToken(testnet, body as DeployMultiToken, provider)
+      return deployOneMultiToken(body as DeployMultiToken, provider)
     case Currency.ETH:
       return deployEthMultiToken(body as DeployMultiToken, provider)
     case Currency.BSC:
-      return deployBscMultiToken(testnet, body, provider)
+      return deployBscMultiToken(body, provider)
   }
 }
 
@@ -107,11 +107,11 @@ export const mintMultiToken = async (testnet: boolean, body: MintMultiToken | Ce
     case Currency.ETH:
       return mintEhtMultiToken(body, provider)
     case Currency.MATIC:
-      return mintPolygonMultiToken(testnet, body, provider)
+      return mintPolygonMultiToken(body, provider)
     case Currency.ONE:
-      return mintOneMultiToken(testnet, body, provider)
+      return mintOneMultiToken(body, provider)
     case Currency.BSC:
-      return mintBscMultiToken(testnet, body, provider)
+      return mintBscMultiToken(body, provider)
     case Currency.ALGO:
       return sendAlgoCreateFractionalNFTSignedTransaction(testnet, body as MintMultiToken, provider)
   }
@@ -130,11 +130,11 @@ export const mintMultiTokenBatch = async (testnet: boolean, body: MintMultiToken
     case Currency.ETH:
       return mintEthMultiTokenBatch(body, provider)
     case Currency.MATIC:
-      return mintPolygonMultiTokenBatchSigned(testnet, body, provider)
+      return mintPolygonMultiTokenBatchSigned(body, provider)
     case Currency.ONE:
-      return mintOneMintMultiTokenBatchSigned(testnet, body, provider)
+      return mintOneMintMultiTokenBatchSigned(body, provider)
     case Currency.BSC:
-      return mintBscMultiTokenBatch(testnet, body, provider)
+      return mintBscMultiTokenBatch(body, provider)
   }
 }
 
@@ -151,11 +151,11 @@ export const burnMultiToken = async (testnet: boolean, body: CeloBurnMultiToken 
     case Currency.ETH:
       return burnEthMultiTokenTransaction(body, provider)
     case Currency.MATIC:
-      return burnPolygonMultiTokenSignedTransaction(testnet, body, provider)
+      return burnPolygonMultiTokenSignedTransaction(body, provider)
     case Currency.ONE:
-      return burnOneMultiTokenSignedTransaction(testnet, body, provider)
+      return burnOneMultiTokenSignedTransaction(body, provider)
     case Currency.BSC:
-      return burnBscMultiTokenTransaction(testnet, body, provider)
+      return burnBscMultiTokenTransaction(body, provider)
     case Currency.ALGO:
       return sendAlgoBurnFractionalNFTSignedTransaction(testnet, body as BurnMultiToken, provider)
   }
@@ -174,11 +174,11 @@ export const burnMultiTokenBatch = async (testnet: boolean, body: CeloBurnMultiT
     case Currency.ETH:
       return burnEthBatchMultiTokenTransaction(body, provider)
     case Currency.MATIC:
-      return burnPolygonMultiTokenBatchSignedTransaction(testnet, body, provider)
+      return burnPolygonMultiTokenBatchSignedTransaction(body, provider)
     case Currency.ONE:
-      return burnOneMultiTokenBatchSignedTransaction(testnet, body, provider)
+      return burnOneMultiTokenBatchSignedTransaction(body, provider)
     case Currency.BSC:
-      return burnBscBatchMultiTokenTransaction(testnet, body, provider)
+      return burnBscBatchMultiTokenTransaction(body, provider)
   }
 }
 
@@ -195,11 +195,11 @@ export const transferMultiToken = async (testnet: boolean, body: CeloTransferMul
     case Currency.ETH:
       return transferEthMultiTokenTransaction(body, provider)
     case Currency.MATIC:
-      return transferPolygonMultiTokenSignedTransaction(testnet, body, provider)
+      return transferPolygonMultiTokenSignedTransaction(body, provider)
     case Currency.ONE:
-      return transferOneMultiTokenSignedTransaction(testnet, body, provider)
+      return transferOneMultiTokenSignedTransaction(body, provider)
     case Currency.BSC:
-      return transferBscMultiTokenTransaction(testnet, body, provider)
+      return transferBscMultiTokenTransaction(body, provider)
     case Currency.ALGO:
       return sendAlgoTransferFractionalNFTSignedTransaction(testnet, body as TransferMultiToken, provider)
   }
@@ -222,11 +222,11 @@ export const transferMultiTokenBatch = async (
     case Currency.ETH:
       return transferEthMultiTokenBatchTransaction(body, provider)
     case Currency.MATIC:
-      return transferPolygonMultiTokenSignedBatchTransaction(testnet, body, provider)
+      return transferPolygonMultiTokenSignedBatchTransaction(body, provider)
     case Currency.ONE:
-      return transferOneMultiTokenSignedBatchTransaction(testnet, body, provider)
+      return transferOneMultiTokenSignedBatchTransaction(body, provider)
     case Currency.BSC:
-      return transferBscMultiTokenBatchTransaction(testnet, body, provider)
+      return transferBscMultiTokenBatchTransaction(body, provider)
   }
 }
 
@@ -238,7 +238,7 @@ export const transferMultiTokenBatch = async (
  */
 export const prepareAddMultiTokenMinter = async (testnet: boolean, body: AddMinter, provider?: string) => {
   const params = await prepareAddMultiTokenMinterAbstraction(body)
-  return await helperPrepareSCCall(testnet, body, AddMinter, 'grantRole', params, undefined, provider, abi)
+  return await helperPrepareSCCall(testnet, body, 'grantRole', params, undefined, provider, abi)
 }
 
 /**

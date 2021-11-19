@@ -86,15 +86,15 @@ export const generateCustodialWallet = async (
     case Currency.CELO:
       return await sendCeloGenerateCustodialWalletSignedTransaction(testnet, body, provider)
     case Currency.ONE:
-      return await sendOneGenerateCustodialWalletSignedTransaction(testnet, body, provider)
+      return await sendOneGenerateCustodialWalletSignedTransaction(body, provider)
     case Currency.ETH:
       return await sendEthGenerateCustodialWalletSignedTransaction(body, provider)
     case Currency.BSC:
-      return await sendBscGenerateCustodialWalletSignedTransaction(testnet, body, provider)
+      return await sendBscGenerateCustodialWalletSignedTransaction(body, provider)
     case Currency.MATIC:
-      return await sendPolygonGenerateCustodialWalletSignedTransaction(testnet, body, provider)
+      return await sendPolygonGenerateCustodialWalletSignedTransaction(body, provider)
     case Currency.TRON:
-      return await sendTronGenerateCustodialWalletSignedTransaction(testnet, body as GenerateTronCustodialAddress, provider)
+      return await sendTronGenerateCustodialWalletSignedTransaction(body as GenerateTronCustodialAddress, provider)
     default:
       throw new Error('Unsupported chain')
   }
@@ -119,15 +119,15 @@ export const prepareCustodialWallet = async (
     case Currency.CELO:
       return await prepareCeloGenerateCustodialWalletSignedTransaction(testnet, body, provider)
     case Currency.ONE:
-      return await prepareOneGenerateCustodialWalletSignedTransaction(testnet, body, provider)
+      return await prepareOneGenerateCustodialWalletSignedTransaction(body, provider)
     case Currency.ETH:
       return await prepareEthGenerateCustodialWalletSignedTransaction(body, provider)
     case Currency.BSC:
-      return await prepareBscGenerateCustodialWalletSignedTransaction(testnet, body, provider)
+      return await prepareBscGenerateCustodialWalletSignedTransaction(body, provider)
     case Currency.MATIC:
-      return await preparePolygonGenerateCustodialWalletSignedTransaction(testnet, body, provider)
+      return await preparePolygonGenerateCustodialWalletSignedTransaction(body, provider)
     case Currency.TRON:
-      return await prepareTronGenerateCustodialWalletSignedTransaction(testnet, body as GenerateTronCustodialAddress, provider)
+      return await prepareTronGenerateCustodialWalletSignedTransaction(body as GenerateTronCustodialAddress, provider)
     default:
       throw new Error('Unsupported chain')
   }
@@ -152,19 +152,19 @@ export const sendCustodialWallet = async (
       txData = await prepareCeloGenerateCustodialWalletSignedTransaction(testnet, body, provider)
       break
     case Currency.ONE:
-      txData = await prepareOneGenerateCustodialWalletSignedTransaction(testnet, body, provider)
+      txData = await prepareOneGenerateCustodialWalletSignedTransaction(body, provider)
       break
     case Currency.ETH:
       txData = await prepareEthGenerateCustodialWalletSignedTransaction(body, provider)
       break
     case Currency.BSC:
-      txData = await prepareBscGenerateCustodialWalletSignedTransaction(testnet, body, provider)
+      txData = await prepareBscGenerateCustodialWalletSignedTransaction(body, provider)
       break
     case Currency.MATIC:
-      txData = await preparePolygonGenerateCustodialWalletSignedTransaction(testnet, body, provider)
+      txData = await preparePolygonGenerateCustodialWalletSignedTransaction(body, provider)
       break
     case Currency.TRON:
-      txData = await prepareTronGenerateCustodialWalletSignedTransaction(testnet, body, provider)
+      txData = await prepareTronGenerateCustodialWalletSignedTransaction(body, provider)
       break
     default:
       throw new Error('Unsupported chain')
@@ -213,22 +213,22 @@ export const prepareTransferFromCustodialWallet = async (
     tokenId = new BigNumber(0)
     switch (body.chain) {
       case Currency.CELO:
-        amount = amount.multipliedBy(new BigNumber(10).pow(await getCeloErc20ContractDecimals(testnet, body.tokenAddress, provider)))
+        amount = amount.multipliedBy(new BigNumber(10).pow(await getCeloErc20ContractDecimals(body.tokenAddress, provider)))
         break
       case Currency.ONE:
-        amount = amount.multipliedBy(new BigNumber(10).pow(await getOne20ContractDecimals(testnet, body.tokenAddress, provider)))
+        amount = amount.multipliedBy(new BigNumber(10).pow(await getOne20ContractDecimals(body.tokenAddress, provider)))
         break
       case Currency.ETH:
         amount = amount.multipliedBy(new BigNumber(10).pow(await getEthErc20ContractDecimals(body.tokenAddress, provider)))
         break
       case Currency.BSC:
-        amount = amount.multipliedBy(new BigNumber(10).pow(await getBscBep20ContractDecimals(testnet, body.tokenAddress, provider)))
+        amount = amount.multipliedBy(new BigNumber(10).pow(await getBscBep20ContractDecimals(body.tokenAddress, provider)))
         break
       case Currency.MATIC:
-        amount = amount.multipliedBy(new BigNumber(10).pow(await getPolygonErc20ContractDecimals(testnet, body.tokenAddress, provider)))
+        amount = amount.multipliedBy(new BigNumber(10).pow(await getPolygonErc20ContractDecimals(body.tokenAddress, provider)))
         break
       case Currency.TRON:
-        amount = amount.multipliedBy(new BigNumber(10).pow(await getTronTrc20ContractDecimals(testnet, body.tokenAddress, provider)))
+        amount = amount.multipliedBy(new BigNumber(10).pow(await getTronTrc20ContractDecimals(body.tokenAddress, provider)))
         break
       default:
         throw new Error('Unsupported combination of inputs.')
@@ -253,13 +253,13 @@ export const prepareTransferFromCustodialWallet = async (
         provider
       )
     case Currency.ONE:
-      return await prepareOneSmartContractWriteMethodInvocation(testnet, r, provider)
+      return await prepareOneSmartContractWriteMethodInvocation(r, provider)
     case Currency.ETH:
       return await prepareSmartContractWriteMethodInvocation(r, provider)
     case Currency.BSC:
       return await prepareBscSmartContractWriteMethodInvocation(r, provider)
     case Currency.MATIC:
-      return await preparePolygonSmartContractWriteMethodInvocation(testnet, r, provider)
+      return await preparePolygonSmartContractWriteMethodInvocation(r, provider)
     case Currency.TRON: {
       const { feeLimit, from } = body as TransferFromTronCustodialAddress
       r.methodName = 'transfer(address,uint256,address,uint256,uint256)'
@@ -270,7 +270,7 @@ export const prepareTransferFromCustodialWallet = async (
         { type: 'uint256', value: r.params[3] },
         { type: 'uint256', value: r.params[4] },
       ]
-      return await prepareTronSmartContractInvocation(testnet, r, feeLimit as number, from, provider)
+      return await prepareTronSmartContractInvocation(r, feeLimit as number, from, provider)
     }
     default:
       throw new Error('Unsupported combination of inputs.')
@@ -336,24 +336,22 @@ export const prepareBatchTransferFromCustodialWallet = async (
       tokenId = new BigNumber(0)
       switch (body.chain) {
         case Currency.CELO:
-          amount = amount.multipliedBy(new BigNumber(10).pow(await getCeloErc20ContractDecimals(testnet, body.tokenAddress[i], provider)))
+          amount = amount.multipliedBy(new BigNumber(10).pow(await getCeloErc20ContractDecimals(body.tokenAddress[i], provider)))
           break
         case Currency.ONE:
-          amount = amount.multipliedBy(new BigNumber(10).pow(await getOne20ContractDecimals(testnet, body.tokenAddress[i], provider)))
+          amount = amount.multipliedBy(new BigNumber(10).pow(await getOne20ContractDecimals(body.tokenAddress[i], provider)))
           break
         case Currency.ETH:
           amount = amount.multipliedBy(new BigNumber(10).pow(await getEthErc20ContractDecimals(body.tokenAddress[i], provider)))
           break
         case Currency.BSC:
-          amount = amount.multipliedBy(new BigNumber(10).pow(await getBscBep20ContractDecimals(testnet, body.tokenAddress[i], provider)))
+          amount = amount.multipliedBy(new BigNumber(10).pow(await getBscBep20ContractDecimals(body.tokenAddress[i], provider)))
           break
         case Currency.MATIC:
-          amount = amount.multipliedBy(
-            new BigNumber(10).pow(await getPolygonErc20ContractDecimals(testnet, body.tokenAddress[i], provider))
-          )
+          amount = amount.multipliedBy(new BigNumber(10).pow(await getPolygonErc20ContractDecimals(body.tokenAddress[i], provider)))
           break
         case Currency.TRON:
-          amount = amount.multipliedBy(new BigNumber(10).pow(await getTronTrc20ContractDecimals(testnet, body.tokenAddress[i], provider)))
+          amount = amount.multipliedBy(new BigNumber(10).pow(await getTronTrc20ContractDecimals(body.tokenAddress[i], provider)))
           break
         default:
           throw new Error('Unsupported combination of inputs.')
@@ -381,16 +379,16 @@ export const prepareBatchTransferFromCustodialWallet = async (
         provider
       )
     case Currency.ONE:
-      return await prepareOneSmartContractWriteMethodInvocation(testnet, r, provider)
+      return await prepareOneSmartContractWriteMethodInvocation(r, provider)
     case Currency.ETH:
       return await prepareSmartContractWriteMethodInvocation(r, provider)
     case Currency.BSC:
       return await prepareBscSmartContractWriteMethodInvocation(r, provider)
     case Currency.MATIC:
-      return await preparePolygonSmartContractWriteMethodInvocation(testnet, r, provider)
+      return await preparePolygonSmartContractWriteMethodInvocation(r, provider)
     case Currency.TRON: {
       const body1 = body as TransferFromTronCustodialAddressBatch
-      return await prepareTronCustodialTransferBatch(testnet, r, body1.feeLimit as number, body1.from, provider)
+      return await prepareTronCustodialTransferBatch(r, body1.feeLimit as number, body1.from, provider)
     }
     default:
       throw new Error('Unsupported combination of inputs.')
@@ -420,8 +418,7 @@ export const sendBatchTransferFromCustodialWallet = async (
 export const prepareApproveFromCustodialWallet = async (testnet: boolean, body: ApproveCustodialTransfer, provider?: string) => {
   await validateBody(body, ApproveCustodialTransfer)
 
-  const decimals =
-    body.contractType === ContractType.FUNGIBLE_TOKEN ? await getErc20Decimals(testnet, body.chain, body.tokenAddress, provider) : 0
+  const decimals = body.contractType === ContractType.FUNGIBLE_TOKEN ? await getErc20Decimals(body.chain, body.tokenAddress, provider) : 0
   const params = [
     body.tokenAddress.trim(),
     body.contractType,
@@ -436,7 +433,6 @@ export const prepareApproveFromCustodialWallet = async (testnet: boolean, body: 
       ...body,
       contractAddress: body.custodialAddress,
     },
-    ApproveCustodialTransfer,
     'approve',
     params,
     undefined,

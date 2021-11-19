@@ -136,8 +136,7 @@ export const sendBatchTransferFromCustodialWallet = async (testnet: boolean, bod
 export const prepareApproveFromCustodialWallet = async (body: ApproveCustodialTransfer, provider?: string) => {
   await validateBody(body, ApproveCustodialTransfer)
 
-  const decimals =
-    body.contractType === ContractType.FUNGIBLE_TOKEN ? await getErc20Decimals(body.tokenAddress, provider) : 0
+  const decimals = body.contractType === ContractType.FUNGIBLE_TOKEN ? await getErc20Decimals(body.tokenAddress, provider) : 0
   const params = [
     body.tokenAddress.trim(),
     body.contractType,
@@ -177,7 +176,7 @@ export const sendApproveFromCustodialWallet = async (body: ApproveCustodialTrans
  */
 export const generateCustodialWalletBatch = async (testnet: boolean, body: GenerateCustodialAddressBatch, provider?: string) => {
   const txData = await prepareCustodialWalletBatch(testnet, body, provider)
-  return helperBroadcastTx(body.chain, txData, body.signatureId)
+  return helperBroadcastTx(txData, body.signatureId)
 }
 
 /**
@@ -189,21 +188,12 @@ export const generateCustodialWalletBatch = async (testnet: boolean, body: Gener
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareCustodialWalletBatch = async (testnet: boolean, body: GenerateCustodialAddressBatch, provider?: string) => {
-  const { params, methodName, methodSig, bodyWithContractAddress } = await prepareCustodialWalletBatchAbstract(
+  const { params, methodName, bodyWithContractAddress } = await prepareCustodialWalletBatchAbstract(
     testnet,
     body,
     getCustodialFactoryContractAddress
   )
-  return await helperPrepareSCCall(
-    testnet,
-    bodyWithContractAddress,
-    GenerateCustodialAddressBatch,
-    methodName,
-    params,
-    methodSig,
-    provider,
-    [CUSTODIAL_PROXY_ABI]
-  )
+  return await helperPrepareSCCall(bodyWithContractAddress, methodName, params, provider, [CUSTODIAL_PROXY_ABI])
 }
 
 const getCustodialFactoryContractAddress = (testnet: boolean) => {

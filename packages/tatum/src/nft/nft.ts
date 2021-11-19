@@ -120,15 +120,15 @@ export const deployNFT = async (
     case Currency.ETH:
       return ethDeployNFT(body as EthDeployErc721 & { chain: Currency.ETH }, provider)
     case Currency.MATIC:
-      return polygonDeployNFT(testnet, body as EthDeployErc721, provider)
+      return polygonDeployNFT(body as EthDeployErc721)
     case Currency.ONE:
-      return oneDeployNFT(testnet, body as EthDeployErc721, provider)
+      return oneDeployNFT(body as EthDeployErc721)
     case Currency.TRON:
-      return tronDeployNFT(testnet, body as TronDeployTrc721)
+      return tronDeployNFT(body as TronDeployTrc721)
     case Currency.BSC:
-      return bscDeployNFT(testnet, body as EthDeployErc721, provider)
+      return bscDeployNFT(body as EthDeployErc721)
     case Currency.FLOW:
-      return flowDeployNFT(testnet, body as FlowDeployNft, provider)
+      return flowDeployNFT(body as FlowDeployNft)
     case Currency.ALGO:
       return algoDeployNFT(testnet, body as DeployErc721, provider)
     default:
@@ -175,15 +175,15 @@ export const mintNFTWithUri = async (
     case Currency.ETH:
       return ethMintNFTWithUri(testnet, body, provider)
     case Currency.MATIC:
-      return polygonMintNFTWithUri(testnet, body, provider)
+      return polygonMintNFTWithUri(body)
     case Currency.ONE:
-      return oneMintNFTWithUri(testnet, body, provider)
+      return oneMintNFTWithUri(body)
     case Currency.TRON:
-      return tronMintNFTWithUri(testnet, body as TronMintTrc721, provider)
+      return tronMintNFTWithUri(body as TronMintTrc721)
     case Currency.BSC:
-      return bscMintNFTWithUri(testnet, body, provider)
+      return bscMintNFTWithUri(body)
     case Currency.FLOW:
-      return flowMintNFTWithUri(testnet, body as FlowMintNft, provider)
+      return flowMintNFTWithUri(testnet, body as FlowMintNft)
     default:
       throw new Error('Unsupported blockchain.')
   }
@@ -204,17 +204,17 @@ export const mintMultipleNFTWithUri = async (
     case Currency.CELO:
       return celoMintMultipleNFTWithUri(testnet, body as CeloMintMultipleErc721, provider)
     case Currency.TRON:
-      return tronMintMultipleNFTWithUri(testnet, body as TronMintMultipleTrc721, provider)
+      return tronMintMultipleNFTWithUri(body as TronMintMultipleTrc721)
     case Currency.ETH:
       return ethMintMultipleNFTWithUri(body as EthMintMultipleErc721, provider)
     case Currency.MATIC:
-      return polygonMintMultipleNFTWithUri(testnet, body as MintMultipleErc721, provider)
+      return polygonMintMultipleNFTWithUri(body as MintMultipleErc721)
     case Currency.ONE:
-      return oneMintMultipleNFTWithUri(testnet, body as MintMultipleErc721, provider)
+      return oneMintMultipleNFTWithUri(body as MintMultipleErc721)
     case Currency.BSC:
-      return bscMintMultipleNFTWithUri(testnet, body as MintMultipleErc721, provider)
+      return bscMintMultipleNFTWithUri(body as MintMultipleErc721)
     case Currency.FLOW:
-      return flowMintMultipleNFTWithUri(testnet, body as FlowMintMultipleNft, provider)
+      return flowMintMultipleNFTWithUri(testnet, body as FlowMintMultipleNft)
     default:
       throw new Error('Unsupported blockchain.')
   }
@@ -235,17 +235,17 @@ export const burnNFT = async (
     case Currency.CELO:
       return celoBurnNFT(testnet, body as CeloBurnErc721, provider)
     case Currency.TRON:
-      return tronBurnNFT(testnet, body as TronBurnTrc721, provider)
+      return tronBurnNFT(body as TronBurnTrc721)
     case Currency.ETH:
       return ethBurnNFT(body, provider)
     case Currency.MATIC:
-      return polygonBurnNFT(testnet, body, provider)
+      return polygonBurnNFT(body, provider)
     case Currency.ONE:
-      return oneBurnNFT(testnet, body, provider)
+      return oneBurnNFT(body, provider)
     case Currency.BSC:
-      return bscBurnNFT(testnet, body, provider)
+      return bscBurnNFT(body, provider)
     case Currency.FLOW:
-      return flowBurnNFT(testnet, body as FlowBurnNft, provider)
+      return flowBurnNFT(testnet, body as FlowBurnNft)
     case Currency.ALGO:
       return algoBurnNFT(testnet, body as BurnErc721, provider)
     default:
@@ -270,13 +270,13 @@ export const updateCashbackForAuthorNFT = async (
     case Currency.ETH:
       return ethUpdateCashbackForAuthorNFT(body, provider)
     case Currency.MATIC:
-      return polygonUpdateCashbackForAuthorNFT(testnet, body, provider)
+      return polygonUpdateCashbackForAuthorNFT(body, provider)
     case Currency.ONE:
-      return oneUpdateCashbackForAuthorNFT(testnet, body, provider)
+      return oneUpdateCashbackForAuthorNFT(body, provider)
     case Currency.TRON:
-      return tronUpdateCashbackForAuthorNFT(testnet, body as TronUpdateCashbackTrc721, provider)
+      return tronUpdateCashbackForAuthorNFT(body as TronUpdateCashbackTrc721)
     case Currency.BSC:
-      return bscUpdateCashbackForAuthorNFT(testnet, body, provider)
+      return bscUpdateCashbackForAuthorNFT(body, provider)
     default:
       throw new Error('Unsupported blockchain.')
   }
@@ -299,15 +299,15 @@ export const transferNFT = async (
     case Currency.ETH:
       return ethTransferNFT(body, provider)
     case Currency.MATIC:
-      return polygonTransferNFT(testnet, body, provider)
+      return polygonTransferNFT(body, provider)
     case Currency.ONE:
-      return oneTransferNFT(testnet, body, provider)
+      return oneTransferNFT(body, provider)
     case Currency.TRON:
-      return tronTransferNFT(testnet, body as TronTransferTrc721, provider)
+      return tronTransferNFT(body as TronTransferTrc721)
     case Currency.BSC:
-      return bscTransferNFT(testnet, body, provider)
+      return bscTransferNFT(body, provider)
     case Currency.FLOW:
-      return flowTransferNFT(testnet, body as FlowTransferNft, provider)
+      return flowTransferNFT(testnet, body as FlowTransferNft)
     case Currency.ALGO:
       return algoTransferNFT(testnet, body as TransferErc721, provider)
     default:
@@ -326,15 +326,15 @@ export const prepareAddNFTMinter = async (testnet: boolean, body: AddMinter, pro
     case Currency.CELO:
       return celoPrepareAddNFTMinter(testnet, body, provider)
     case Currency.ETH:
-      return ethPrepareAddNFTMinter(testnet, body, provider)
+      return ethPrepareAddNFTMinter(body, provider)
     case Currency.MATIC:
-      return polygonPrepareAddNFTMinter(testnet, body, provider)
+      return polygonPrepareAddNFTMinter(body, provider)
     case Currency.ONE:
-      return onePrepareAddNFTMinter(testnet, body, provider)
+      return onePrepareAddNFTMinter(body, provider)
     case Currency.TRON:
-      return tronPrepareAddNFTMinter(testnet, body, provider)
+      return tronPrepareAddNFTMinter(body, provider)
     case Currency.BSC:
-      return bscPrepareAddNFTMinter(testnet, body, provider)
+      return bscPrepareAddNFTMinter(body, provider)
     default:
       throw new Error('Unsupported blockchain.')
   }
@@ -351,15 +351,15 @@ export const sendAddNFTMinter = async (testnet: boolean, body: AddMinter, provid
     case Currency.CELO:
       return celoSendAddNFTMinter(testnet, body, provider)
     case Currency.ETH:
-      return ethSendAddNFTMinter(testnet, body, provider)
+      return ethSendAddNFTMinter(body, provider)
     case Currency.MATIC:
-      return polygonSendAddNFTMinter(testnet, body, provider)
+      return polygonSendAddNFTMinter(body, provider)
     case Currency.ONE:
-      return oneSendAddNFTMinter(testnet, body, provider)
+      return oneSendAddNFTMinter(body, provider)
     case Currency.TRON:
-      return tronSendAddNFTMinter(testnet, body, provider)
+      return tronSendAddNFTMinter(body, provider)
     case Currency.BSC:
-      return bscSendAddNFTMinter(testnet, body, provider)
+      return bscSendAddNFTMinter(body, provider)
     default:
       throw new Error('Unsupported blockchain.')
   }

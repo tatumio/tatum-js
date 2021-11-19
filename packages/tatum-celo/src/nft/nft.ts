@@ -118,8 +118,8 @@ export const transferNFT = async (testnet: boolean, body: CeloTransferErc721, pr
  * @param provider optional provider do broadcast tx
  */
 export const prepareAddNFTMinter = async (testnet: boolean, body: AddMinter, provider?: string) => {
-  const params = await prepareAddNFTMinterAbstraction(testnet, body, provider)
-  return await helperPrepareSCCall(testnet, body, AddMinter, 'grantRole', params, undefined, provider, abi)
+  const params = await prepareAddNFTMinterAbstraction(body)
+  return await helperPrepareSCCall(testnet, body, 'grantRole', params, provider, abi)
 }
 
 /**
@@ -129,7 +129,7 @@ export const prepareAddNFTMinter = async (testnet: boolean, body: AddMinter, pro
  * @param provider optional provider do broadcast tx
  */
 export const sendAddNFTMinter = async (testnet: boolean, body: AddMinter, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareAddNFTMinter(testnet, body, provider), body.signatureId)
+  helperBroadcastTx(await prepareAddNFTMinter(testnet, body, provider), body.signatureId)
 
 export {
   getNFTsByAddress,

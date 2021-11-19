@@ -1,4 +1,3 @@
-import { Currency } from '@tatumio/tatum-core'
 import { TransferTron } from '../model'
 
 /**

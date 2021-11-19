@@ -111,12 +111,9 @@ export const createNFTAbstraction = async (
 
 /**
  * Prepare add new minter to the NFT contract transaction.
- * @param testnet if we use testnet or not
  * @param body body of the add minter request
- * @param provider optional provider do broadcast tx
  */
-export const prepareAddNFTMinterAbstraction = async (testnet: boolean, body: AddMinter, provider?: string) => {
+export const prepareAddNFTMinterAbstraction = async (body: AddMinter) => {
   await validateBody(body, AddMinter)
-  const params = ['0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6', body.minter]
-  return params
+  return ['0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6', body.minter]
 }

@@ -266,7 +266,6 @@ describe('MATIC transactions', () => {
   describe('MATIC 721 provenance transactions', () => {
     it('should test 721 deploy transaction', async () => {
       const deployBep721Token = await preparePolygonDeployErc721SignedTransaction(
-        true,
         {
           symbol: '1oido3id3',
           fromPrivateKey: '0xf17abcb517d759efee24bc4859183c7219c588540754318baebb3f9c31449564',
@@ -283,7 +282,6 @@ describe('MATIC transactions', () => {
       try {
         const tokenId = new Date().getTime().toString()
         const mintedToken = await preparePolygonMintErc721ProvenanceSignedTransaction(
-          true,
           {
             to: '0x75Bd6dFA13C0086b9C8C4b510b1F758c720B79BF',
             tokenId,
@@ -304,7 +302,6 @@ describe('MATIC transactions', () => {
     it('should test 721 provenance mint with cashback transaction', async () => {
       try {
         const mintedToken = await preparePolygonMintErc721ProvenanceSignedTransaction(
-          true,
           {
             to: '0x80D8BAc9a6901698b3749Fe336bBd1385C1f98f2',
             tokenId: '12',
@@ -326,7 +323,6 @@ describe('MATIC transactions', () => {
     })
     it('should test 721 mint multiple with cashback transaction', async () => {
       const mintedTokens = await preparePolygonMintMultipleErc721ProvenanceSignedTransaction(
-        true,
         {
           to: ['0x75Bd6dFA13C0086b9C8C4b510b1F758c720B79BF', '0x75Bd6dFA13C0086b9C8C4b510b1F758c720B79BF'],
           tokenId: ['5', '6'],
@@ -345,7 +341,6 @@ describe('MATIC transactions', () => {
     })
     it('should test 721 send transaction', async () => {
       const senderc721Token = await preparePolygonTransferErc721SignedTransaction(
-        true,
         {
           to: '0xD25031B1aB4D82e5fDFb700234b2a22e272232Be',
           tokenId: '12',
@@ -373,13 +368,12 @@ describe('MATIC transactions', () => {
       body.params = ['1634501273645']
       body.methodName = 'getTokenData'
       body.methodABI = erc721Provenance_abi.find((a: any) => a.name === 'getTokenData')
-      const response = await sendPolygonSmartContractReadMethodInvocationTransaction(true, body, 'https://matic-mumbai.chainstacklabs.com/')
+      const response = await sendPolygonSmartContractReadMethodInvocationTransaction(body, 'https://matic-mumbai.chainstacklabs.com/')
       // @ts-ignore
       console.log(JSON.stringify(response))
     })
     it('should test 721 burn transaction', async () => {
       const burnBep721Token = await preparePolygonBurnErc721SignedTransaction(
-        true,
         {
           tokenId: '5',
           fromPrivateKey: '0xf17abcb517d759efee24bc4859183c7219c588540754318baebb3f9c31449564',

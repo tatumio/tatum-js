@@ -135,7 +135,7 @@ export const sendBatchTransferFromCustodialWallet = async (
  */
 export const generateCustodialWalletBatch = async (testnet: boolean, body: GenerateCustodialAddressBatch, provider?: string) => {
   const txData = await prepareCustodialWalletBatch(testnet, body, provider)
-  return helperBroadcastTx(body.chain, txData, body.signatureId)
+  return helperBroadcastTx(txData, body.signatureId)
 }
 
 /**
@@ -153,16 +153,7 @@ export const prepareCustodialWalletBatch = async (testnet: boolean, body: Genera
     getCustodialFactoryContractAddress,
     convertAddressToHex
   )
-  return await helperPrepareSCCall(
-    testnet,
-    bodyWithContractAddress,
-    GenerateCustodialAddressBatch,
-    methodName,
-    params,
-    methodSig,
-    provider,
-    [CUSTODIAL_PROXY_ABI]
-  )
+  return await helperPrepareSCCall(bodyWithContractAddress, methodName, params, methodSig, provider, [CUSTODIAL_PROXY_ABI])
 }
 
 const getCustodialFactoryContractAddress = (testnet: boolean) => {

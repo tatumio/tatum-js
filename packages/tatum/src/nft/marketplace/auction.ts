@@ -61,13 +61,13 @@ export const prepareDeployAuction = async (testnet: boolean, body: DeployNftAuct
     case Currency.CELO:
       return await prepareCeloDeployAuctionSignedTransaction(testnet, body, provider)
     case Currency.ONE:
-      return await prepareOneDeployAuctionSignedTransaction(testnet, body, provider)
+      return await prepareOneDeployAuctionSignedTransaction(body, provider)
     case Currency.ETH:
       return await prepareEthDeployAuctionSignedTransaction(body, provider)
     case Currency.BSC:
-      return await prepareBscDeployAuctionSignedTransaction(testnet, body, provider)
+      return await prepareBscDeployAuctionSignedTransaction(body, provider)
     case Currency.MATIC:
-      return await preparePolygonDeployAuctionSignedTransaction(testnet, body, provider)
+      return await preparePolygonDeployAuctionSignedTransaction(body, provider)
     default:
       throw new Error('Unsupported chain')
   }
@@ -82,7 +82,7 @@ export const prepareDeployAuction = async (testnet: boolean, body: DeployNftAuct
  */
 export const prepareAuctionUpdateFee = async (testnet: boolean, body: UpdateAuctionFee, provider?: string) => {
   const params = await prepareAuctionUpdateFeeAbstraction(body)
-  return await helperPrepareSCCall(testnet, body, UpdateAuctionFee, 'setAuctionFee', params, undefined, provider, auction.abi)
+  return await helperPrepareSCCall(testnet, body, 'setAuctionFee', params, undefined, provider, auction.abi)
 }
 
 /**
@@ -94,16 +94,7 @@ export const prepareAuctionUpdateFee = async (testnet: boolean, body: UpdateAuct
  */
 export const prepareAuctionUpdateFeeRecipient = async (testnet: boolean, body: UpdateMarketplaceFeeRecipient, provider?: string) => {
   const params = await prepareAuctionUpdateFeeRecipientAbstraction(body)
-  return await helperPrepareSCCall(
-    testnet,
-    body,
-    UpdateMarketplaceFeeRecipient,
-    'setAuctionFeeRecipient',
-    params,
-    undefined,
-    provider,
-    auction.abi
-  )
+  return await helperPrepareSCCall(testnet, body, 'setAuctionFeeRecipient', params, undefined, provider, auction.abi)
 }
 
 /**
@@ -118,7 +109,6 @@ export const prepareAuctionApproveNftTransfer = async (testnet: boolean, body: A
   return await helperPrepareSCCall(
     testnet,
     body,
-    ApproveNftTransfer,
     body.isErc721 ? 'approve' : 'setApprovalForAll',
     params,
     undefined,
@@ -149,7 +139,7 @@ export const prepareAuctionApproveErc20Transfer = async (testnet: boolean, body:
  */
 export const prepareAuctionCreate = async (testnet: boolean, body: CreateAuction, provider?: string) => {
   const { body: validatedBody, params } = await prepareAuctionCreateAbstraction(body)
-  return await helperPrepareSCCall(testnet, validatedBody, CreateAuction, 'createAuction', params, undefined, provider, auction.abi)
+  return await helperPrepareSCCall(testnet, validatedBody, 'createAuction', params, undefined, provider, auction.abi)
 }
 
 /**
@@ -161,17 +151,8 @@ export const prepareAuctionCreate = async (testnet: boolean, body: CreateAuction
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareAuctionBid = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
-  const {
-    b: validatedBody,
-    params,
-    methodName,
-  } = await prepareAuctionBidAbstraction(
-    (testnet, chain, provider?) => helperGetWeb3Client(testnet, chain, provider),
-    testnet,
-    body,
-    provider
-  )
-  return await helperPrepareSCCall(testnet, validatedBody, InvokeAuctionOperation, methodName, params, undefined, provider, auction.abi)
+  const { b: validatedBody, params, methodName } = await prepareAuctionBidAbstraction(helperGetWeb3Client, testnet, body, provider)
+  return await helperPrepareSCCall(testnet, validatedBody, methodName, params, undefined, provider, auction.abi)
 }
 
 /**
@@ -183,7 +164,7 @@ export const prepareAuctionBid = async (testnet: boolean, body: InvokeAuctionOpe
  */
 export const prepareAuctionCancel = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
   const params = await prepareAuctionCancelAbstraction(body)
-  return await helperPrepareSCCall(testnet, body, InvokeAuctionOperation, 'cancelAuction', params, undefined, provider, auction.abi)
+  return await helperPrepareSCCall(testnet, body, 'cancelAuction', params, undefined, provider, auction.abi)
 }
 
 /**
@@ -194,8 +175,8 @@ export const prepareAuctionCancel = async (testnet: boolean, body: InvokeAuction
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareAuctionSettle = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
-  const params = await prepareAuctionSettleAbstraction(testnet, body)
-  return await helperPrepareSCCall(testnet, body, InvokeAuctionOperation, 'settleAuction', params, undefined, provider, auction.abi)
+  const params = await prepareAuctionSettleAbstraction(body)
+  return await helperPrepareSCCall(testnet, body, 'settleAuction', params, undefined, provider, auction.abi)
 }
 
 /**

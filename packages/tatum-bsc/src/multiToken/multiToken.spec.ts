@@ -38,7 +38,7 @@ describe('NFT tests', () => {
       expect(mintedToken).not.toBeNull()
     })
     it('should test bsc 1155 add minter transaction', async () => {
-      const tx = await sendAddMultiTokenMinter(true, {
+      const tx = await sendAddMultiTokenMinter({
         minter: '0x80d8bac9a6901698b3749fe336bbd1385c1f98f2',
         chain: Currency.BSC,
         fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
@@ -46,7 +46,7 @@ describe('NFT tests', () => {
       })
       console.log(tx)
       expect(tx).not.toBeNull()
-      const mintedToken = await mintMultiToken(true, {
+      const mintedToken = await mintMultiToken({
         to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
         chain: Currency.BSC,
         tokenId: `${Date.now()}`,

@@ -532,7 +532,7 @@ describe('CELO transactions', () => {
     body.params = ['1324']
     body.methodName = 'getTokenData'
     body.methodABI = erc721Provenance_abi.find((a: any) => a.name === 'getTokenData')
-    const response = await sendCeloSmartContractReadMethodInvocationTransaction(true, body, 'https://alfajores-forno.celo-testnet.org')
+    const response = await sendCeloSmartContractReadMethodInvocationTransaction(body, 'https://alfajores-forno.celo-testnet.org')
     // @ts-ignore
     console.log(JSON.stringify(response))
   })

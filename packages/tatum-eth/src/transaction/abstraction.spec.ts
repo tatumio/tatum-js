@@ -3,7 +3,7 @@ import { sendTransaction } from './abstraction'
 
 describe('Abstraction ETH erc20', () => {
   it('should send erc20 abstraction - currency and contractAddress', async () => {
-    await sendTransaction(Currency.ETH, {
+    await sendTransaction({
       amount: '10',
       to: '0xc6c02b874bf5efad3a0deeee72a56a50d81b6a61',
       currency: Currency.BAT,
@@ -13,7 +13,7 @@ describe('Abstraction ETH erc20', () => {
   })
 
   it('should send erc20 abstraction - currency', async () => {
-    await sendTransaction(Currency.ETH, {
+    await sendTransaction({
       amount: '10',
       to: '0xc6c02b874bf5efad3a0deeee72a56a50d81b6a61',
       currency: Currency.BAT,
@@ -22,7 +22,7 @@ describe('Abstraction ETH erc20', () => {
   })
 
   it('should send erc20 abstraction - contractAddress', async () => {
-    const tx = await sendTransaction(Currency.ETH, {
+    const tx = await sendTransaction({
       amount: '10',
       to: '0xc6c02b874bf5efad3a0deeee72a56a50d81b6a61',
       contractAddress: '0xd683f13658bBFf28cFda4a432d3533640D138d6E',

@@ -147,14 +147,14 @@ export const prepareAuctionCreateAbstraction = async (body: CreateAuction) => {
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareAuctionBidAbstraction = async (
-  helperGetWeb3Client: (provider?: string | undefined, testnet?: boolean) => Web3,
+  helperGetWeb3Client: (chain: Currency, provider?: string | undefined) => Web3,
   testnet: boolean,
   body: InvokeAuctionOperation,
   provider?: string
 ) => {
   await validateBody(body, InvokeAuctionOperation)
 
-  const web3 = helperGetWeb3Client(provider, testnet)
+  const web3 = helperGetWeb3Client(body.chain, provider)
   // @ts-ignore
   const a = await new web3.eth.Contract(auction.abi, body.contractAddress).methods.getAuction(body.id).call()
   let decimals = 18

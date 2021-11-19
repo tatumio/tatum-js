@@ -3,7 +3,7 @@ import { sendTransaction } from './abstraction'
 
 describe('Abstraction BSC erc20', () => {
   it('should send erc20 abstraction - no address and currency', async () => {
-    const tx = await sendTransaction(true, Currency.BSC, {
+    const tx = await sendTransaction({
       amount: '10',
       to: '0xc6c02b874bf5efad3a0deeee72a56a50d81b6a61',
       fromPrivateKey: '0x89f09a62c9601d660dcdbeab15fbecfc07933971465fab3ba9fe1354035d805d',
@@ -13,7 +13,7 @@ describe('Abstraction BSC erc20', () => {
   })
 
   it('should send erc20 abstraction - currency and contractAddress', async () => {
-    await sendTransaction(true, Currency.BSC, {
+    await sendTransaction({
       amount: '10',
       to: '0xc6c02b874bf5efad3a0deeee72a56a50d81b6a61',
       currency: Currency.BAT,
@@ -23,7 +23,7 @@ describe('Abstraction BSC erc20', () => {
   })
 
   it('should send erc20 abstraction - currency', async () => {
-    await sendTransaction(true, Currency.BSC, {
+    await sendTransaction({
       amount: '10',
       to: '0xc6c02b874bf5efad3a0deeee72a56a50d81b6a61',
       currency: Currency.BETH,
@@ -32,7 +32,7 @@ describe('Abstraction BSC erc20', () => {
   })
 
   it('should send erc20 abstraction - contractAddress', async () => {
-    const tx = await sendTransaction(true, Currency.BSC, {
+    const tx = await sendTransaction({
       amount: '10',
       to: '0xc6c02b874bf5efad3a0deeee72a56a50d81b6a61',
       contractAddress: '0x97F2Ffb3E50957Ad615807455277a680fbB08976',

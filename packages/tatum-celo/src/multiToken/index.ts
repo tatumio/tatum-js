@@ -17,7 +17,7 @@ import {
   sendCeloTransferMultiTokenTransaction,
 } from '../transaction'
 import { AddMinter, prepareAddMultiTokenMinterAbstraction, listing } from '@tatumio/tatum-core'
-import { helperBroadcastTx, helperPrepareSCCall } from 'src/helpers'
+import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
 
 export const deployMultiToken = async (testnet: boolean, body: CeloDeployMultiToken, provider?: string) => {
   return sendCeloDeployMultiTokenTransaction(testnet, body as CeloDeployMultiToken, provider)
@@ -55,7 +55,7 @@ export const transferMultiTokenBatch = async (testnet: boolean, body: CeloTransf
  */
 export const prepareAddMultiTokenMinter = async (testnet: boolean, body: AddMinter, provider?: string) => {
   const params = await prepareAddMultiTokenMinterAbstraction(body)
-  return await helperPrepareSCCall(testnet, body, AddMinter, 'grantRole', params, undefined, provider, listing.abi)
+  return await helperPrepareSCCall(testnet, body, 'grantRole', params, provider, listing.abi)
 }
 
 /**
@@ -65,7 +65,7 @@ export const prepareAddMultiTokenMinter = async (testnet: boolean, body: AddMint
  * @param provider optional provider do broadcast tx
  */
 export const sendAddMultiTokenMinter = async (testnet: boolean, body: AddMinter, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareAddMultiTokenMinter(testnet, body, provider), body.signatureId)
+  helperBroadcastTx(await prepareAddMultiTokenMinter(testnet, body, provider), body.signatureId)
 
 export {
   getMultiTokenContractAddress,

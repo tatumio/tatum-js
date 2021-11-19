@@ -70,26 +70,26 @@ const TronWeb = require('tronweb')
 export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xpub: string, i: number) => {
   switch (currency) {
     case Currency.BTC:
-      return generateBtcAddress(currency, testnet, xpub, i)
+      return generateBtcAddress(testnet, xpub, i)
     case Currency.TRON:
     case Currency.USDT_TRON:
     case Currency.INRT_TRON:
-      return generateTronAddress(currency, testnet, xpub, i)
+      return generateTronAddress(xpub, i)
     case Currency.FLOW:
     case Currency.FUSD:
-      return generateFlowPublicKey(currency, testnet, xpub, i)
+      return generateFlowPublicKey(xpub, i)
     case Currency.LTC:
-      return generateLtcAddress(currency, testnet, xpub, i)
+      return generateLtcAddress(testnet, xpub, i)
     case Currency.DOGE:
-      return generateDogeAddress(currency, testnet, xpub, i)
+      return generateDogeAddress(testnet, xpub, i)
     case Currency.CELO:
     case Currency.CEUR:
     case Currency.CUSD:
-      return generateCeloAddress(currency, testnet, xpub, i)
+      return generateCeloAddress(xpub, i)
     case Currency.BCH:
       return generateBchAddress(testnet, xpub, i)
     case Currency.QTUM:
-      return generateQtumAddress(currency, testnet, xpub, i)
+      return generateQtumAddress(testnet, xpub, i)
     case Currency.USDT:
     case Currency.WBTC:
     case Currency.LEO:
@@ -134,15 +134,15 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
     case Currency.MMY:
       return generateEthAddress(xpub, i)
     case Currency.ONE:
-      return generateOneAddress(currency, testnet, xpub, i)
+      return generateOneAddress(xpub, i)
     case Currency.XDC:
-      return generateXdcAddress(currency, testnet, xpub, i)
+      return generateXdcAddress(xpub, i)
     case Currency.EGLD:
-      return generateEgldAddress(currency, testnet, xpub, i)
+      return generateEgldAddress(testnet, xpub, i)
     case Currency.VET:
-      return generateVetAddress(currency, testnet, xpub, i)
+      return generateVetAddress(xpub, i)
     case Currency.LYRA:
-      return generateLyraAddress(currency, testnet, xpub, i)
+      return generateLyraAddress(testnet, xpub, i)
     case Currency.ADA:
       return generateCardanoAddress(testnet, xpub, i)
     default:
@@ -161,30 +161,30 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
 export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: boolean, mnemonic: string, i: number) => {
   switch (currency) {
     case Currency.BTC:
-      return generateBtcPrivateKey(currency, testnet, mnemonic, i)
+      return generateBtcPrivateKey(testnet, mnemonic, i)
     case Currency.LTC:
-      return generateLtcPrivateKey(currency, testnet, mnemonic, i)
+      return generateLtcPrivateKey(testnet, mnemonic, i)
     case Currency.DOGE:
-      return generateDogePrivateKey(currency, testnet, mnemonic, i)
+      return generateDogePrivateKey(testnet, mnemonic, i)
     case Currency.BCH:
       return generateBchPrivateKey(testnet, mnemonic, i)
     case Currency.TRON:
     case Currency.USDT_TRON:
     case Currency.INRT_TRON:
-      return generateTronPrivateKey(currency, testnet, mnemonic, i)
+      return generateTronPrivateKey(mnemonic, i)
     case Currency.QTUM:
-      return generateQtumPrivateKey(currency, testnet, mnemonic, i)
+      return generateQtumPrivateKey(testnet, mnemonic, i)
     case Currency.MATIC:
     case Currency.USDT_MATIC:
     case Currency.USDC_MATIC:
-      return generatePolygonPrivateKey(currency, testnet, mnemonic, i)
+      return generatePolygonPrivateKey(testnet, mnemonic, i)
     case Currency.FLOW:
     case Currency.FUSD:
-      return generateFlowPrivateKey(currency, testnet, mnemonic, i)
+      return generateFlowPrivateKey(mnemonic, i)
     case Currency.CELO:
     case Currency.CEUR:
     case Currency.CUSD:
-      return generateCeloPrivateKey(currency, testnet, mnemonic, i)
+      return generateCeloPrivateKey(testnet, mnemonic, i)
     case Currency.USDT:
     case Currency.WBTC:
     case Currency.LEO:
@@ -226,15 +226,15 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
     case Currency.MMY:
       return generateEthPrivateKey(testnet, mnemonic, i)
     case Currency.ONE:
-      return generateOnePrivateKey(currency, testnet, mnemonic, i)
+      return generateOnePrivateKey(testnet, mnemonic, i)
     case Currency.XDC:
-      return generateXdcPrivateKey(currency, testnet, mnemonic, i)
+      return generateXdcPrivateKey(testnet, mnemonic, i)
     case Currency.EGLD:
-      return generateEgldPrivateKey(currency, testnet, mnemonic, i)
+      return generateEgldPrivateKey(testnet, mnemonic, i)
     case Currency.VET:
-      return generateVetPrivateKey(currency, testnet, mnemonic, i)
+      return generateVetPrivateKey(testnet, mnemonic, i)
     case Currency.LYRA:
-      return generateLyraPrivateKey(currency, testnet, mnemonic, i)
+      return generateLyraPrivateKey(testnet, mnemonic, i)
     case Currency.ADA:
       return generateCardanoPrivateKey(mnemonic, i)
     default:
@@ -252,11 +252,11 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
 export const generateAddressFromPrivatekey = (currency: Currency, testnet: boolean, privateKey: string) => {
   switch (currency) {
     case Currency.BTC:
-      return convertBtcPrivateKey(currency, testnet, privateKey)
+      return convertBtcPrivateKey(testnet, privateKey)
     case Currency.QTUM:
-      return convertQTUMPrivateKey(currency, testnet, privateKey)
+      return convertQTUMPrivateKey(testnet, privateKey)
     case Currency.LYRA:
-      return convertLyraPrivateKey(currency, testnet, privateKey)
+      return convertLyraPrivateKey(testnet, privateKey)
     case Currency.BNB:
       return getAddressFromPrivateKey(testnet, privateKey)
     case Currency.TRON:
@@ -289,11 +289,11 @@ export const generateAddressFromPrivatekey = (currency: Currency, testnet: boole
     case Currency.MATIC:
       return convertEthPrivateKey(privateKey)
     case Currency.ONE:
-      return convertOnePrivateKey(currency, testnet, privateKey)
+      return convertOnePrivateKey(privateKey)
     case Currency.XDC:
-      return convertXdcPrivateKey(currency, testnet, privateKey)
+      return convertXdcPrivateKey(privateKey)
     case Currency.EGLD:
-      return convertEgldPrivateKey(currency, testnet, privateKey)
+      return convertEgldPrivateKey(privateKey)
     default:
       throw new Error('Unsupported blockchain.')
   }

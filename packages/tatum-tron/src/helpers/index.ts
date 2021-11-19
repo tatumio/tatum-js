@@ -1,17 +1,14 @@
 import { tronBroadcast } from '../blockchain'
-import { ClassType } from 'class-transformer/ClassTransformer'
-import { buildSmartContractMethodInvocation, Currency, listing } from '@tatumio/tatum-core'
+import { buildSmartContractMethodInvocation, listing } from '@tatumio/tatum-core'
 import { prepareTronSmartContractInvocation } from '../transaction'
 
 export const helperBroadcastTx = async (txData: string, signatureId?: string) => {
-  return await tronBroadcast(txData, signatureId);
+  return await tronBroadcast(txData, signatureId)
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const helperPrepareSCCall = async (
-  testnet: boolean,
   body: any,
-  clazz: ClassType<object>,
   methodName: string,
   params: any[],
   methodSig?: string,
@@ -20,5 +17,5 @@ export const helperPrepareSCCall = async (
 ) => {
   const r = buildSmartContractMethodInvocation(body, params, methodName, abi)
   r.methodName = methodSig as string
-  return await prepareTronSmartContractInvocation(testnet, r, body.feeLimit, body.from, provider)
+  return await prepareTronSmartContractInvocation(body, body.feeLimit, body.from, provider)
 }

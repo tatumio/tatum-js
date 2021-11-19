@@ -27,7 +27,7 @@ import {
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const generateCustodialWallet = async (boolean, body: GenerateCustodialAddress, provider?: string) => {
+export const generateCustodialWallet = async (body: GenerateCustodialAddress, provider?: string) => {
   console.log('This method is deprecated. For better gas consumption, use generateCustodialWalletBatch.')
   return await sendOneGenerateCustodialWalletSignedTransaction(body, provider)
 }
@@ -130,8 +130,7 @@ export const sendBatchTransferFromCustodialWallet = async (testnet: boolean, bod
 export const prepareApproveFromCustodialWallet = async (body: ApproveCustodialTransfer, provider?: string) => {
   await validateBody(body, ApproveCustodialTransfer)
 
-  const decimals =
-    body.contractType === ContractType.FUNGIBLE_TOKEN ? await getErc20Decimals(body.tokenAddress, provider) : 0
+  const decimals = body.contractType === ContractType.FUNGIBLE_TOKEN ? await getErc20Decimals(body.tokenAddress, provider) : 0
   const params = [
     body.tokenAddress.trim(),
     body.contractType,

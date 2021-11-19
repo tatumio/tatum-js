@@ -438,7 +438,6 @@ export const prepareOneMint721ProvenanceSignedTransaction = async (body: OneMint
   if (body.contractAddress) {
     return prepareGeneralTx(
       client,
-      testnet,
       body.fromPrivateKey,
       body.signatureId,
       new HarmonyAddress(body.contractAddress).basicHex,
@@ -453,18 +452,13 @@ export const prepareOneMint721ProvenanceSignedTransaction = async (body: OneMint
 }
 /**
  * Sign Harmony mint multiple cashback erc721 provenance transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareOneMintMultiple721ProvenanceSignedTransaction = async (
-  testnet: boolean,
-  body: OneMintMultiple721,
-  provider?: string
-) => {
+export const prepareOneMintMultiple721ProvenanceSignedTransaction = async (body: OneMintMultiple721, provider?: string) => {
   await validateBody(body, OneMintMultiple721)
-  const client = await prepareOneClient(testnet, provider, body.fromPrivateKey)
+  const client = await prepareOneClient(provider, body.fromPrivateKey)
   const cb: string[][] = []
   const fv: string[][] = []
   if (body.authorAddresses && body.cashbackValues && body.fixedValues) {
@@ -494,7 +488,6 @@ export const prepareOneMintMultiple721ProvenanceSignedTransaction = async (
     .encodeABI()
   return prepareGeneralTx(
     client,
-    testnet,
     body.fromPrivateKey,
     body.signatureId,
     new HarmonyAddress(body.contractAddress).basicHex,
@@ -1047,13 +1040,12 @@ export const sendOneMint721ProvenanceSignedTransaction = async (body: OneMint721
 /**
  * Send Harmony mint multiple cashback erc721 provenance transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param testnet
  * @param body content of the transaction to broadcast
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendOneMintMultiple721ProvenanceSignedTransaction = async (testnet: boolean, body: OneMintMultiple721, provider?: string) =>
-  oneBroadcast(await prepareOneMintMultiple721ProvenanceSignedTransaction(testnet, body, provider))
+export const sendOneMintMultiple721ProvenanceSignedTransaction = async (body: OneMintMultiple721, provider?: string) =>
+  oneBroadcast(await prepareOneMintMultiple721ProvenanceSignedTransaction(body, provider))
 
 /**
  * Send Harmony mint cashback erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
