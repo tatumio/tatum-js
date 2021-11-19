@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "clean": "rimraf dist* tsconfig.tsbuildinfo",
-    "build": "yarn lerna exec yarn build",
+    "build": "tsc",
     "prepublish": "yarn run clean && yarn run build",
     "docs": "typedoc",
     "lint": "eslint ./src ./packages --ext .ts --fix",
