@@ -1,4 +1,4 @@
-name: Deploy all packages
+name: Publish all packages
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - feature/deploy-pipeline-v2
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
