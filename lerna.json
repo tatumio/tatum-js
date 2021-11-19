@@ -2,22 +2,25 @@
   "packages": [
     "packages/*"
   ],
-  "version": "2.0.0-alpha.28",
+  "version": "2.0.0-alpha.31",
   "npmClient": "yarn",
   "useWorkspaces": true,
   "command": {
     "bootstrap": {
       "ignore": [
+        "@tatumio/tatum",
         "@tatumio/tatum-kcc"
       ]
     },
     "exec": {
       "ignore": [
+        "@tatumio/tatum",
         "@tatumio/tatum-kcc"
       ]
     },
     "publish": {
       "ignoreChanges": [
+        "@tatumio/tatum",
         "@tatumio/tatum-kcc"
       ]
     }

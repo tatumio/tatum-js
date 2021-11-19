@@ -1,20 +1,34 @@
-name: Deploy all packages
+name: Publish all packages
 
 on:
   push:
     branches:
-      - feature/deploy-pipeline-v2
+      - feature/submodule
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
+      - run: echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}" > ~/.npmrc
+
       - name: Install root package dependencies
         run: yarn
 
       - name: Install subpackages dependencies
         run: yarn bootstrap
 
+      - name: Config git email
+        run: git config --global user.email "lukas.kotol@tatum.io"
+
+      - name: Config git name
+        run: git config --global user.name "Hathoriel"
+
       - name: Publish packages
-        run: yarn publish
+        run: yarn publish:prerelease
+        env:
+          GH_TOKEN: ${{ secrets.PAT_GITHUB }}
+          GITHUB_TOKEN: ${{ secrets.PAT_GITHUB }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
