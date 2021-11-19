@@ -9,6 +9,8 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
+      - run: echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}" > ~/.npmrc
+
       # 1. provide Personal Access Token for checkout@v2
       - name: Checkout
         uses: actions/checkout@v2
