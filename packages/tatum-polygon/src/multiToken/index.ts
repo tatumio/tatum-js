@@ -1,11 +1,14 @@
 import {
+  AddMinter,
   BurnMultiToken,
   BurnMultiTokenBatch,
   DeployMultiToken,
   MintMultiToken,
   MintMultiTokenBatch,
+  prepareAddMultiTokenMinterAbstraction,
   TransferMultiToken,
   TransferMultiTokenBatch,
+  listing,
 } from '@tatumio/tatum-core'
 import {
   sendPolygonDeployMultiTokenSignedTransaction,
@@ -15,6 +18,8 @@ import {
   sendPolygonBurnMultiTokenBatchSignedTransaction,
   sendPolygonTransferMultiTokenSignedTransaction,
   preparePolygonBatchTransferMultiTokenSignedTransaction,
+  helperPrepareSCCall,
+  helperBroadcastTx,
 } from '../'
 
 export const deployMultiToken = async (body: DeployMultiToken, provider?: string) => {
@@ -39,6 +44,24 @@ export const transferMultiToken = async (body: TransferMultiToken, provider?: st
 export const transferMultiTokenBatch = async (body: TransferMultiTokenBatch, provider?: string) => {
   return preparePolygonBatchTransferMultiTokenSignedTransaction(body, provider)
 }
+
+/**
+ * Prepare add new minter to the MultiToken (1155) contract transaction.
+ * @param body body of the add minter request
+ * @param provider optional provider do broadcast tx
+ */
+export const prepareAddMultiTokenMinter = async (body: AddMinter, provider?: string) => {
+  const params = await prepareAddMultiTokenMinterAbstraction(body)
+  return await helperPrepareSCCall(body, 'grantRole', params, provider, listing.abi)
+}
+
+/**
+ * Add new minter to the MultiToken (1155) contract.
+ * @param body body of the add minter request
+ * @param provider optional provider do broadcast tx
+ */
+export const sendAddMultiTokenMinter = async (body: AddMinter, provider?: string) =>
+  helperBroadcastTx(await prepareAddMultiTokenMinter(body, provider), body.signatureId)
 
 export {
   getMultiTokenContractAddress,

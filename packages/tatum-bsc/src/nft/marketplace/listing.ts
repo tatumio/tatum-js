@@ -108,10 +108,10 @@ export const prepareMarketplaceCreateListing = async (body: CreateMarketplaceLis
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceBuyListing = async (body: InvokeMarketplaceListingOperation, provider?: string) => {
-  const { body: validatedBody, params } = await prepareMarketplaceBuyListingAbstraction(body)
+  const { body: validatedBody, params, methodName } = await prepareMarketplaceBuyListingAbstraction(body)
   return await helperPrepareSCCall(
     validatedBody,
-    'buyAssetFromListing',
+    methodName,
     params,
     provider
   )

@@ -23,7 +23,7 @@ export const sendApproveErc20 = async (testnet: boolean, body: ApproveErc20, pro
  * @param provider optional Web3 provider
  */
 export const prepareApproveErc20 = async (testnet: boolean, body: ApproveErc20, provider?: string) => {
-  let getErc20ContractDecimalsFn: (testnet: boolean, contractAddress: string, provider?: string | undefined) => Promise<any>
+  let getErc20ContractDecimalsFn: (contractAddress: string, provider?: string | undefined) => Promise<any>
 
   switch (body.chain) {
     case Currency.CELO:
@@ -33,7 +33,7 @@ export const prepareApproveErc20 = async (testnet: boolean, body: ApproveErc20, 
       getErc20ContractDecimalsFn = getOne20ContractDecimals
       break
     case Currency.ETH:
-      getErc20ContractDecimalsFn = (testnet, contractAddress, provider) => getEthErc20ContractDecimals(contractAddress, provider)
+      getErc20ContractDecimalsFn = getEthErc20ContractDecimals
       break
     case Currency.BSC:
       getErc20ContractDecimalsFn = getBscBep20ContractDecimals
@@ -46,23 +46,22 @@ export const prepareApproveErc20 = async (testnet: boolean, body: ApproveErc20, 
   }
 
   const { body: validatedBody, params } = await prepareApproveErc20Abstraction(
-    (testnet, contractAddress, provider?) => getErc20ContractDecimalsFn(testnet, contractAddress, provider),
+    (contractAddress, provider?) => getErc20ContractDecimalsFn(contractAddress, provider),
     testnet,
     body,
     provider
   )
-  return await helperPrepareSCCall(testnet, validatedBody, ApproveErc20, 'approve', params, undefined, provider, token_abi)
+  return await helperPrepareSCCall(testnet, validatedBody, 'approve', params, undefined, provider, token_abi)
 }
 
 /**
  * Get Decimals for the ERC20 token
- * @param testnet if we are using testnet or mainnet
  * @param chain chain to query for the token
  * @param contractAddress address of the token
  * @param provider optional provider
  */
-export const getErc20Decimals = async (testnet: boolean, chain: Currency, contractAddress: string, provider?: string) => {
-  const web3 = helperGetWeb3Client(testnet, chain, provider)
+export const getErc20Decimals = async (chain: Currency, contractAddress: string, provider?: string) => {
+  const web3 = helperGetWeb3Client(chain, provider)
   // @ts-ignore
   return new web3.eth.Contract(token_abi, contractAddress).methods.decimals().call()
 }

@@ -1,5 +1,6 @@
-import { createNFTAbstraction, mintNFTRequest } from '@tatumio/tatum-defi'
+import { createNFTAbstraction, mintNFTRequest, prepareAddNFTMinterAbstraction } from '@tatumio/tatum-defi'
 import {
+  AddMinter,
   BurnErc721,
   DeployErc721,
   MintErc721,
@@ -7,6 +8,7 @@ import {
   TransactionHash,
   TransferErc721,
   UpdateCashbackErc721,
+  erc721TokenABI as abi,
 } from '@tatumio/tatum-core'
 import {
   sendDeployBep721Transaction,
@@ -17,6 +19,8 @@ import {
   sendBurnBep721Transaction,
   sendUpdateCashbackForAuthorBep721Transaction,
   sendBep721Transaction,
+  helperBroadcastTx,
+  helperPrepareSCCall,
 } from '../'
 
 export const mintNFT = (body: MintErc721): Promise<TransactionHash> => mintNFTRequest(body)
@@ -104,3 +108,30 @@ export const updateCashbackForAuthorNFT = async (body: UpdateCashbackErc721, pro
 export const transferNFT = async (body: TransferErc721, provider?: string) => {
   return sendBep721Transaction(body, provider)
 }
+
+/**
+ * Prepare add new minter to the NFT contract transaction.
+ * @param body body of the add minter request
+ * @param provider optional provider do broadcast tx
+ */
+export const prepareAddNFTMinter = async (body: AddMinter, provider?: string) => {
+  const params = await prepareAddNFTMinterAbstraction(body)
+  return await helperPrepareSCCall(body, 'grantRole', params, provider, abi)
+}
+
+/**
+ * Add new minter to the NFT contract.
+ * @param body body of the add minter request
+ * @param provider optional provider do broadcast tx
+ */
+export const sendAddNFTMinter = async (body: AddMinter, provider?: string) =>
+  helperBroadcastTx(await prepareAddNFTMinter(body, provider), body.signatureId)
+
+export {
+  getNFTsByAddress,
+  getNFTProvenanceData,
+  getNFTContractAddress,
+  getNFTMetadataURI,
+  getNFTImage,
+  getNFTRoyalty,
+} from '@tatumio/tatum-defi'

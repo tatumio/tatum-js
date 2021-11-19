@@ -145,11 +145,16 @@ export const prepareMarketplaceCreateListingAbstraction = async (body: CreateMar
 export const prepareMarketplaceBuyListingAbstraction = async (body: InvokeMarketplaceListingOperation) => {
   await validateBody(body, InvokeMarketplaceListingOperation)
   const params = [body.listingId, body.erc20Address || '0x0000000000000000000000000000000000000000']
+  let methodName = 'buyAssetFromListing'
   if (body.erc20Address) {
     body.amount = undefined
+    if (body.buyer) {
+      params.push(body.buyer.trim())
+      methodName = 'buyAssetFromListingForExternalBuyer'
+    }
   }
 
-  return { body, params }
+  return { body, params, methodName }
 }
 
 /**

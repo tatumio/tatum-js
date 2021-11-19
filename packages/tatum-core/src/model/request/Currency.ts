@@ -67,7 +67,7 @@ export enum Currency {
   QTUM = 'QTUM',
   EGLD = 'EGLD',
   ALGO = 'ALGO',
-  KCS = 'KCS'
+  KCS = 'KCS',
 }
 
 export const ERC20_CURRENCIES = [
@@ -112,7 +112,7 @@ export const BEP20_CURRENCIES = [
   Currency.BUSD_BSC.toString(),
 ]
 
-export const MATIC20_CURRENCIES = [Currency.USDC_MATIC.toString(), Currency.USDT_MATIC.toString()]
+export const MATIC20_CURRENCIES = [Currency.USDC_MATIC.toString(), Currency.GAMEE.toString(), Currency.USDT_MATIC.toString()]
 
 export const ETH_BASED_CURRENCIES = [Currency.ETH.toString(), ...ERC20_CURRENCIES]
 

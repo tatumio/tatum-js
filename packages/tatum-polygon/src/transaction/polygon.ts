@@ -14,6 +14,7 @@ import {
   erc1155TokenBytecode,
   erc20TokenBytecode,
   erc721TokenBytecode,
+  erc721Provenance_bytecode,
   GenerateCustodialAddress,
   listing,
   MintErc20,
@@ -36,6 +37,8 @@ import {
   BurnMultiToken,
   BurnMultiTokenBatch,
   DeployMultiToken,
+  EthMintErc721,
+  EthMintMultipleErc721,
 } from '@tatumio/tatum-core'
 import { obtainCustodialAddressType } from '@tatumio/tatum-defi'
 import { BigNumber } from 'bignumber.js'
@@ -145,10 +148,7 @@ export const getPolygonErc20ContractDecimals = async (contractAddress: string, p
  * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const preparePolygonGenerateCustodialWalletSignedTransaction = async (
-  body: GenerateCustodialAddress,
-  provider?: string
-) => {
+export const preparePolygonGenerateCustodialWalletSignedTransaction = async (body: GenerateCustodialAddress, provider?: string) => {
   await validateBody(body, GenerateCustodialAddress)
   const client = await preparePolygonClient(provider, body.fromPrivateKey)
   const { abi, code } = obtainCustodialAddressType(body)
@@ -372,6 +372,40 @@ export const preparePolygonMintErc721SignedTransaction = async (body: MintErc721
   }
   throw new Error('Contract address should not be empty!')
 }
+/**
+ * Sign Polygon mint cashback erc721 provenance transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const preparePolygonMintErc721ProvenanceSignedTransaction = async (body: EthMintErc721, provider?: string) => {
+  await validateBody(body, EthMintErc721)
+  const client = await preparePolygonClient(provider, body.fromPrivateKey)
+  const cb: string[] = []
+  const fv: string[] = []
+  if (body.cashbackValues && body.fixedValues && body.authorAddresses) {
+    body.cashbackValues.map((c) => cb.push(`0x${new BigNumber(c).multipliedBy(100).toString(16)}`))
+    body.fixedValues.map((c) => fv.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
+  }
+  // @ts-ignore
+  const data = new client.eth.Contract(erc721Provenance_abi, body.contractAddress.trim()).methods
+    .mintWithTokenURI(body.to.trim(), body.tokenId, body.url, body.authorAddresses ? body.authorAddresses : [], cb, fv)
+    .encodeABI()
+  if (body.contractAddress) {
+    return prepareGeneralTx(
+      client,
+      body.fromPrivateKey,
+      body.signatureId,
+      body.contractAddress.trim(),
+      undefined,
+      body.nonce,
+      data,
+      body.fee?.gasLimit,
+      body.fee?.gasPrice
+    )
+  }
+  throw new Error('Contract address should not be empty!')
+}
 
 /**
  * Sign Polygon mint cashback erc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -403,6 +437,52 @@ export const preparePolygonMintCashbackErc721SignedTransaction = async (body: Mi
   }
   throw new Error('Contract address should not be empty!')
 }
+/**
+ * Sign Polygon mint multiple cashback erc721 provenance transaction with private keys locally. Nothing is broadcast to the blockchain.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const preparePolygonMintMultipleErc721ProvenanceSignedTransaction = async (body: EthMintMultipleErc721, provider?: string) => {
+  await validateBody(body, EthMintMultipleErc721)
+  const client = await preparePolygonClient(provider, body.fromPrivateKey)
+  const cb: string[][] = []
+  const fv: string[][] = []
+  if (body.cashbackValues && body.fixedValues && body.authorAddresses) {
+    for (let i = 0; i < body.cashbackValues.length; i++) {
+      const cb2: string[] = []
+      const fv2: string[] = []
+      for (let j = 0; j < body.cashbackValues[i].length; j++) {
+        cb2.push(`0x${new BigNumber(body.cashbackValues[i][j]).multipliedBy(100).toString(16)}`)
+        fv2.push(`0x${new BigNumber(toWei(body.fixedValues[i][j], 'ether')).toString(16)}`)
+      }
+      cb.push(cb2)
+      fv.push(fv2)
+    }
+  }
+  // @ts-ignore
+  const data = new client.eth.Contract(erc721Provenance_abi, body.contractAddress.trim()).methods
+    .mintMultiple(
+      body.to.map((t) => t.trim()),
+      body.tokenId,
+      body.url,
+      body.authorAddresses ? body.authorAddresses : [],
+      cb,
+      fv
+    )
+    .encodeABI()
+  return prepareGeneralTx(
+    client,
+    body.fromPrivateKey,
+    body.signatureId,
+    body.contractAddress.trim(),
+    undefined,
+    body.nonce,
+    data,
+    body.fee?.gasLimit,
+    body.fee?.gasPrice
+  )
+}
 
 /**
  * Sign Polygon mint multiple cashback erc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -410,10 +490,7 @@ export const preparePolygonMintCashbackErc721SignedTransaction = async (body: Mi
  * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const preparePolygonMintMultipleCashbackErc721SignedTransaction = async (
-  body: MintMultipleErc721,
-  provider?: string
-) => {
+export const preparePolygonMintMultipleCashbackErc721SignedTransaction = async (body: MintMultipleErc721, provider?: string) => {
   await validateBody(body, MintMultipleErc721)
   const client = await preparePolygonClient(provider, body.fromPrivateKey)
   const cashbacks: string[][] = body.cashbackValues!
@@ -505,9 +582,12 @@ export const preparePolygonTransferErc721SignedTransaction = async (body: Transf
   await validateBody(body, TransferErc721)
   const client = await preparePolygonClient(provider, body.fromPrivateKey)
   // @ts-ignore
-  const data = new client.eth.Contract(erc721TokenABI, body.contractAddress.trim()).methods
-    .safeTransfer(body.to.trim(), body.tokenId)
-    .encodeABI()
+  const contract = new client.eth.Contract(body.provenance ? erc721Provenance_abi : erc721TokenABI, body.contractAddress.trim())
+  const data = body.provenance
+    ? contract.methods
+        .safeTransfer(body.to.trim(), body.tokenId, body.provenanceData + "'''###'''" + toWei(body.tokenPrice!, 'ether'))
+        .encodeABI()
+    : contract.methods.safeTransfer(body.to.trim(), body.tokenId).encodeABI()
   return prepareGeneralTx(
     client,
     body.fromPrivateKey,
@@ -527,10 +607,7 @@ export const preparePolygonTransferErc721SignedTransaction = async (body: Transf
  * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const preparePolygonUpdateCashbackForAuthorErc721SignedTransaction = async (
-  body: UpdateCashbackErc721,
-  provider?: string
-) => {
+export const preparePolygonUpdateCashbackForAuthorErc721SignedTransaction = async (body: UpdateCashbackErc721, provider?: string) => {
   await validateBody(body, UpdateCashbackErc721)
   const client = await preparePolygonClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -560,10 +637,10 @@ export const preparePolygonDeployErc721SignedTransaction = async (body: DeployEr
   await validateBody(body, DeployErc721)
   const client = await preparePolygonClient(provider, body.fromPrivateKey)
   // @ts-ignore
-  const data = new client.eth.Contract(erc721TokenABI)
+  const data = new client.eth.Contract(body.provenance ? erc721Provenance_abi : erc721TokenABI)
     .deploy({
       arguments: [body.name, body.symbol],
-      data: erc721TokenBytecode,
+      data: body.provenance ? erc721Provenance_bytecode : erc721TokenBytecode,
     })
     .encodeABI()
   return prepareGeneralTx(
@@ -585,10 +662,7 @@ export const preparePolygonDeployErc721SignedTransaction = async (body: DeployEr
  * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
  */
-export const preparePolygonDeployMarketplaceListingSignedTransaction = async (
-  body: DeployMarketplaceListing,
-  provider?: string
-) => {
+export const preparePolygonDeployMarketplaceListingSignedTransaction = async (body: DeployMarketplaceListing, provider?: string) => {
   await validateBody(body, DeployMarketplaceListing)
   const client = await preparePolygonClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -671,10 +745,7 @@ export const preparePolygonBurnMultiTokenSignedTransaction = async (body: BurnMu
  * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const preparePolygonBurnMultiTokenBatchSignedTransaction = async (
-  body: BurnMultiTokenBatch,
-  provider?: string
-) => {
+export const preparePolygonBurnMultiTokenBatchSignedTransaction = async (body: BurnMultiTokenBatch, provider?: string) => {
   await validateBody(body, BurnMultiTokenBatch)
   const client = await preparePolygonClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -726,10 +797,7 @@ export const preparePolygonTransferMultiTokenSignedTransaction = async (body: Tr
  * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const preparePolygonBatchTransferMultiTokenSignedTransaction = async (
-  body: TransferMultiTokenBatch,
-  provider?: string
-) => {
+export const preparePolygonBatchTransferMultiTokenSignedTransaction = async (body: TransferMultiTokenBatch, provider?: string) => {
   await validateBody(body, TransferMultiTokenBatch)
   const client = await preparePolygonClient(provider, body.fromPrivateKey)
   const amts = body.amounts.map((amt) => `0x${new BigNumber(amt).toString(16)}`)
@@ -787,10 +855,7 @@ export const preparePolygonMintMultiTokenSignedTransaction = async (body: MintMu
  * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const preparePolygonMintMultiTokenBatchSignedTransaction = async (
-  body: MintMultiTokenBatch,
-  provider?: string
-) => {
+export const preparePolygonMintMultiTokenBatchSignedTransaction = async (body: MintMultiTokenBatch, provider?: string) => {
   await validateBody(body, MintMultiTokenBatch)
   const client = await preparePolygonClient(provider, body.fromPrivateKey)
   const batchAmounts = body.amounts.map((amts) => amts.map((amt) => `0x${new BigNumber(amt).toString(16)}`))
@@ -846,26 +911,13 @@ export const preparePolygonDeployMultiTokenSignedTransaction = async (body: Depl
  * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const preparePolygonSmartContractWriteMethodInvocation = async (
-  body: SmartContractMethodInvocation,
-  provider?: string
-) => {
+export const preparePolygonSmartContractWriteMethodInvocation = async (body: SmartContractMethodInvocation, provider?: string) => {
   await validateBody(body, SmartContractMethodInvocation)
   const { fromPrivateKey, fee, params, methodName, methodABI, contractAddress, nonce, amount, signatureId } = body
   const client = await preparePolygonClient(provider, fromPrivateKey)
 
   const data = new client.eth.Contract([methodABI]).methods[methodName as string](...params).encodeABI()
-  return prepareGeneralTx(
-    client,
-    fromPrivateKey,
-    signatureId,
-    contractAddress.trim(),
-    amount,
-    nonce,
-    data,
-    fee?.gasLimit,
-    fee?.gasPrice
-  )
+  return prepareGeneralTx(client, fromPrivateKey, signatureId, contractAddress.trim(), amount, nonce, data, fee?.gasLimit, fee?.gasPrice)
 }
 
 export const sendPolygonSmartContractReadMethodInvocationTransaction = async (
@@ -937,7 +989,7 @@ export const sendPolygonDeployErc20SignedTransaction = async (body: DeployErc20,
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendPolygonMintErc721SignedTransaction = async (body: MintErc721, provider?: string) => {
-  if (!body.fromPrivateKey && !body.fromPrivateKey) {
+  if (!body.fromPrivateKey) {
     return mintNFT(body)
   }
   return polygonBroadcast(await preparePolygonMintErc721SignedTransaction(body, provider), body.signatureId)
@@ -954,16 +1006,34 @@ export const sendPolygonMintCashbackErc721SignedTransaction = async (body: MintE
   polygonBroadcast(await preparePolygonMintCashbackErc721SignedTransaction(body, provider), body.signatureId)
 
 /**
+ * Send Polygon mint cashback erc721 provenance transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
+export const sendPolygonMintErc721ProvenanceSignedTransaction = async (body: EthMintErc721, provider?: string) =>
+  polygonBroadcast(await preparePolygonMintErc721ProvenanceSignedTransaction(body, provider), body.signatureId)
+
+/**
  * Send Polygon mint multiple erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
  * @param body content of the transaction to broadcast
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendPolygonMintMultipleCashbackErc721SignedTransaction = async (
-  body: MintMultipleErc721,
-  provider?: string
-) => polygonBroadcast(await preparePolygonMintMultipleCashbackErc721SignedTransaction(body, provider), body.signatureId)
+export const sendPolygonMintMultipleCashbackErc721SignedTransaction = async (body: MintMultipleErc721, provider?: string) =>
+  polygonBroadcast(await preparePolygonMintMultipleCashbackErc721SignedTransaction(body, provider), body.signatureId)
+
+/**
+ * Send Polygon mint multiple erc721 Provenance transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * This operation is irreversible.
+ * @param body content of the transaction to broadcast
+ * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain
+ */
+export const sendPolygonMintMultipleErc721ProvenanceSignedTransaction = async (body: EthMintMultipleErc721, provider?: string) =>
+  polygonBroadcast(await preparePolygonMintMultipleErc721ProvenanceSignedTransaction(body, provider), body.signatureId)
 
 /**
  * Send Polygon mint multiple erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1002,10 +1072,8 @@ export const sendPolygonTransferErc721SignedTransaction = async (body: TransferE
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendPolygonUpdateCashbackForAuthorErc721SignedTransaction = async (
-  body: UpdateCashbackErc721,
-  provider?: string
-) => polygonBroadcast(await preparePolygonUpdateCashbackForAuthorErc721SignedTransaction(body, provider), body.signatureId)
+export const sendPolygonUpdateCashbackForAuthorErc721SignedTransaction = async (body: UpdateCashbackErc721, provider?: string) =>
+  polygonBroadcast(await preparePolygonUpdateCashbackForAuthorErc721SignedTransaction(body, provider), body.signatureId)
 
 /**
  * Send Polygon deploy erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1054,10 +1122,8 @@ export const sendPolygonTransferMultiTokenSignedTransaction = async (body: Trans
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendPolygonBatchTransferMultiTokenSignedTransaction = async (
-  body: TransferMultiTokenBatch,
-  provider?: string
-) => polygonBroadcast(await preparePolygonBatchTransferMultiTokenSignedTransaction(body, provider), body.signatureId)
+export const sendPolygonBatchTransferMultiTokenSignedTransaction = async (body: TransferMultiTokenBatch, provider?: string) =>
+  polygonBroadcast(await preparePolygonBatchTransferMultiTokenSignedTransaction(body, provider), body.signatureId)
 
 /**
  * Send Polygon mint multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1096,10 +1162,8 @@ export const sendPolygonDeployMultiTokenSignedTransaction = async (body: DeployM
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendPolygonGenerateCustodialWalletSignedTransaction = async (
-  body: GenerateCustodialAddress,
-  provider?: string
-) => polygonBroadcast(await preparePolygonGenerateCustodialWalletSignedTransaction(body, provider), body.signatureId)
+export const sendPolygonGenerateCustodialWalletSignedTransaction = async (body: GenerateCustodialAddress, provider?: string) =>
+  polygonBroadcast(await preparePolygonGenerateCustodialWalletSignedTransaction(body, provider), body.signatureId)
 
 /**
  * Send Polygon smart contract method invocation transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1126,7 +1190,5 @@ export const sendPolygonSmartContractMethodInvocationTransaction = async (
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendPolygonDeployMarketplaceListingSignedTransaction = async (
-  body: DeployMarketplaceListing,
-  provider?: string
-) => polygonBroadcast(await preparePolygonDeployMarketplaceListingSignedTransaction(body, provider), body.signatureId)
+export const sendPolygonDeployMarketplaceListingSignedTransaction = async (body: DeployMarketplaceListing, provider?: string) =>
+  polygonBroadcast(await preparePolygonDeployMarketplaceListingSignedTransaction(body, provider), body.signatureId)

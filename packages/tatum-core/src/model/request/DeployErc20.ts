@@ -14,7 +14,7 @@ export class DeployErc20 extends PrivateKeyOrSignatureId {
   public symbol: string
 
   @IsNotEmpty()
-  @Length(42, 43)
+  @Length(42, 58)
   public address: string
 
   @IsNotEmpty()
@@ -43,9 +43,9 @@ export class DeployErc20 extends PrivateKeyOrSignatureId {
   public fee?: Fee
 
   @IsOptional()
-  public url?: string;
+  public url?: string
 
   @IsOptional()
   @Length(42, 58)
-  public from?: string;
+  public from?: string
 }

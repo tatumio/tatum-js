@@ -18,6 +18,10 @@ export class InvokeMarketplaceListingOperation extends PrivateKeyOrSignatureId {
 
   @IsOptional()
   @Length(34, 43)
+  public buyer?: string
+
+  @IsOptional()
+  @Length(34, 43)
   public erc20Address?: string
 
   @IsOptional()

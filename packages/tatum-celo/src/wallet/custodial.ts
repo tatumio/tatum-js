@@ -1,5 +1,6 @@
 import {
   prepareBatchTransferFromCustodialWalletAbstract,
+  prepareCustodialWalletBatchAbstract,
   prepareTransferFromCustodialWalletAbstract,
 } from '@tatumio/tatum-defi'
 import {
@@ -11,6 +12,8 @@ import {
   ContractType,
   CustodialFullTokenWallet,
   validateBody,
+  GenerateCustodialAddressBatch,
+  CUSTODIAL_PROXY_ABI,
 } from '@tatumio/tatum-core'
 import BigNumber from 'bignumber.js'
 import {
@@ -24,6 +27,7 @@ import { getErc20Decimals } from '../fungible'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
 
 /**
+ * This method is @Deprecated. Use @link{generateCustodialWalletBatch} instead
  * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, btu transaction costs connected to the withdrawal
  * of assets is covered by the deployer.
  * @param testnet chain to work with
@@ -32,10 +36,12 @@ import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const generateCustodialWallet = async (testnet: boolean, body: GenerateCustodialAddress, provider?: string) => {
+  console.log('This method is deprecated. For better gas consumption, use generateCustodialWalletBatch.')
   return await sendCeloGenerateCustodialWalletSignedTransaction(testnet, body, provider)
 }
 
 /**
+ * This method is @Deprecated. Use @link{prepareCustodialWalletBatch} instead
  * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, btu transaction costs connected to the withdrawal
  * of assets is covered by the deployer.
  * @param testnet chain to work with
@@ -44,7 +50,12 @@ export const generateCustodialWallet = async (testnet: boolean, body: GenerateCu
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareCustodialWallet = async (testnet: boolean, body: GenerateCustodialAddress, provider?: string) => {
+  console.log('This method is deprecated. For better gas consumption, use prepareCustodialWalletBatch.')
   return await prepareCeloGenerateCustodialWalletSignedTransaction(testnet, body, provider)
+}
+
+const getCustodialFactoryContractAddress = (testnet: boolean) => {
+  return testnet ? '0x6C4B2ed1EaBcE4925f0F3d5Cf36e432C28d8A6dd' : '0x3b0B6734AC81252dD1d2B26FA3A4605e7eB96997'
 }
 
 /**
@@ -138,8 +149,7 @@ export const sendBatchTransferFromCustodialWallet = async (testnet: boolean, bod
 export const prepareApproveFromCustodialWallet = async (testnet: boolean, body: ApproveCustodialTransfer, provider?: string) => {
   await validateBody(body, ApproveCustodialTransfer)
 
-  const decimals =
-    body.contractType === ContractType.FUNGIBLE_TOKEN ? await getErc20Decimals(body.tokenAddress, provider) : 0
+  const decimals = body.contractType === ContractType.FUNGIBLE_TOKEN ? await getErc20Decimals(body.tokenAddress, provider) : 0
   const params = [
     body.tokenAddress.trim(),
     body.contractType,
@@ -169,3 +179,33 @@ export const prepareApproveFromCustodialWallet = async (testnet: boolean, body: 
  */
 export const sendApproveFromCustodialWallet = async (testnet: boolean, body: ApproveCustodialTransfer, provider?: string) =>
   helperBroadcastTx(await prepareApproveFromCustodialWallet(testnet, body, provider), body.signatureId)
+
+/**
+ * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, but transaction costs connected to the withdrawal
+ * of assets is covered by the deployer.
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const generateCustodialWalletBatch = async (testnet: boolean, body: GenerateCustodialAddressBatch, provider?: string) => {
+  const txData = await prepareCustodialWalletBatch(testnet, body, provider)
+  return helperBroadcastTx(txData, body.signatureId)
+}
+
+/**
+ * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, but transaction costs connected to the withdrawal
+ * of assets is covered by the deployer.
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const prepareCustodialWalletBatch = async (testnet: boolean, body: GenerateCustodialAddressBatch, provider?: string) => {
+  const { params, methodName, bodyWithContractAddress } = await prepareCustodialWalletBatchAbstract(
+    testnet,
+    body,
+    getCustodialFactoryContractAddress
+  )
+  return await helperPrepareSCCall(testnet, bodyWithContractAddress, methodName, params, provider, [CUSTODIAL_PROXY_ABI])
+}

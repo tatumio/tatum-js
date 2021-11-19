@@ -1,4 +1,4 @@
-import { axios, get, post, ipfsUpload, Currency, BaseMintErc721, TransactionHash } from '@tatumio/tatum-core'
+import { axios, get, post, ipfsUpload, Currency, BaseMintErc721, TransactionHash, validateBody, AddMinter } from '@tatumio/tatum-core'
 
 export const mintNFTRequest = (body: BaseMintErc721): Promise<TransactionHash> => post(`/v3/nft/mint`, body)
 
@@ -7,6 +7,12 @@ export const mintNFTRequest = (body: BaseMintErc721): Promise<TransactionHash> =
  */
 export const getNFTsByAddress = async (chain: Currency, contractAddress: string, address: string): Promise<string[]> =>
   get(`/v3/nft/balance/${chain}/${contractAddress}/${address}`)
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/NftProvenanceReadData" target="_blank">Tatum API documentation</a>
+ */
+export const getNFTProvenanceData = async (chain: Currency, contractAddress: string, tokenId: string): Promise<any> =>
+  get(`/v3/nft/provenance/${chain}/${contractAddress}/${tokenId}`)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetContractAddress" target="_blank">Tatum API documentation</a>
@@ -101,4 +107,13 @@ export const createNFTAbstraction = async (
     imageUrl: `ipfs://${ipfsHash}`,
     imagePublicUrl: `https://gateway.pinata.cloud/ipfs/${ipfsHash}`,
   }
+}
+
+/**
+ * Prepare add new minter to the NFT contract transaction.
+ * @param body body of the add minter request
+ */
+export const prepareAddNFTMinterAbstraction = async (body: AddMinter) => {
+  await validateBody(body, AddMinter)
+  return ['0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6', body.minter]
 }

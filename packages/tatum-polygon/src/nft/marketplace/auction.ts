@@ -134,8 +134,8 @@ export const prepareAuctionCreate = async (body: CreateAuction, provider?: strin
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareAuctionBid = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
-  const { b: validatedBody, params } = await prepareAuctionBidAbstraction(helperGetWeb3Client, testnet, body, provider)
-  return await helperPrepareSCCall(validatedBody, 'bid', params, provider, auction.abi)
+  const { b: validatedBody, params, methodName } = await prepareAuctionBidAbstraction(helperGetWeb3Client, testnet, body, provider)
+  return await helperPrepareSCCall(validatedBody, methodName, params, provider, auction.abi)
 }
 
 /**

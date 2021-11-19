@@ -21,8 +21,6 @@ import {
   sendXdcErc721Transaction,
 } from '../transaction'
 
-export { getNFTsByAddress, getNFTContractAddress, getNFTMetadataURI, getNFTImage, getNFTRoyalty } from '@tatumio/tatum-defi'
-
 export const mintNFT = (body: MintErc721): Promise<TransactionHash> => post(`/v3/nft/mint`, body)
 
 /**
@@ -106,3 +104,12 @@ export const updateCashbackForAuthorNFT = async (body: UpdateCashbackErc721, pro
 export const transferNFT = async (body: TransferErc721, provider?: string) => {
   return sendXdcErc721Transaction(body, provider)
 }
+
+export {
+  getNFTsByAddress,
+  getNFTProvenanceData,
+  getNFTContractAddress,
+  getNFTMetadataURI,
+  getNFTImage,
+  getNFTRoyalty,
+} from '@tatumio/tatum-defi'

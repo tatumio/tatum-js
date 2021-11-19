@@ -94,6 +94,25 @@ export const CONTRACT_DECIMALS = {
   [Currency.BBCH.toString()]: 18,
 }
 
+export const CUSTODIAL_PROXY_ABI = {
+  inputs: [
+    {
+      internalType: 'address',
+      name: 'owner',
+      type: 'address',
+    },
+    {
+      internalType: 'uint256',
+      name: 'count',
+      type: 'uint256',
+    },
+  ],
+  name: 'cloneNewWallet',
+  outputs: [],
+  stateMutability: 'nonpayable',
+  type: 'function',
+}
+
 export const TRANSFER_METHOD_ABI = {
   constant: false,
   inputs: [

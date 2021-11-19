@@ -1,5 +1,5 @@
 import { CreateRecord, validateBody, Currency } from '@tatumio/tatum-core'
-import { sendCeloStoreDataSignedTransaction, sendCeloOrcUsdTransaction } from '../transaction'
+import { sendCeloStoreDataSignedTransaction, sendCeloOrcUsdTransaction, sendCeloErc20Transaction } from '../transaction'
 import { TransferCeloOrCeloErc20Token } from '../model'
 
 /**
@@ -21,7 +21,6 @@ export const storeData = async (testnet: boolean, body: CreateRecord, provider?:
  */
 export const sendTransaction = async (testnet: boolean, body: TransferCeloOrCeloErc20Token, provider?: string) => {
   const b = body as TransferCeloOrCeloErc20Token
-  b.currency = Currency.CELO
   b.feeCurrency = Currency.CELO
-  return sendCeloOrcUsdTransaction(testnet, b, provider)
+  return b.contractAddress ? sendCeloErc20Transaction(testnet, b) : sendCeloOrcUsdTransaction(testnet, b, provider)
 }

@@ -21,6 +21,7 @@ import { generateWallet as generateBnbWallet } from '@tatumio/tatum-bnb'
 import { generateWallet as generateAdaWallet } from '@tatumio/tatum-ada'
 import { generateWallet as generateAlgoWallet } from '@tatumio/tatum-algo'
 import { generateNeoWallet } from '@tatumio/tatum-neo'
+import { WalletWithAddress, WalletWithMnemonic } from '@tatumio/tatum-ledger'
 
 /**
  * Generate wallet
@@ -29,7 +30,11 @@ import { generateNeoWallet } from '@tatumio/tatum-neo'
  * @param mnemonic mnemonic seed to use. If not present, new one will be generated
  * @returns wallet or a combination of address and private key
  */
-export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: string) => {
+export const generateWallet = (
+  currency: Currency,
+  testnet: boolean,
+  mnemonic?: string
+): Promise<WalletWithAddress> | Promise<WalletWithMnemonic> | WalletWithAddress => {
   const mnem = mnemonic ? mnemonic : generateMnemonic(256)
   switch (currency) {
     case Currency.BTC:
@@ -117,7 +122,7 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
     case Currency.ADA:
       return generateAdaWallet(mnem)
     case Currency.ALGO:
-      return generateAlgoWallet(mnem)
+      return generateAlgoWallet(mnemonic)
     default:
       throw new Error('Unsupported blockchain.')
   }

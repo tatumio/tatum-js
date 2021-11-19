@@ -69,4 +69,11 @@ export const transferNFT = async (testnet: boolean, body: FlowTransferNft) => {
   return sendFlowNftTransferToken(testnet, body as FlowTransferNft)
 }
 
-export { getNFTsByAddress, getNFTContractAddress, getNFTMetadataURI, getNFTImage, getNFTRoyalty } from '@tatumio/tatum-defi'
+export {
+  getNFTsByAddress,
+  getNFTProvenanceData,
+  getNFTContractAddress,
+  getNFTMetadataURI,
+  getNFTImage,
+  getNFTRoyalty,
+} from '@tatumio/tatum-defi'

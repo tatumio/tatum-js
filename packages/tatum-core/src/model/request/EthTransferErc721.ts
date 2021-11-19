@@ -1,4 +1,4 @@
-import { Fee, TransferErc721 } from '@tatumio/tatum-core'
+import { Fee, TransferErc721 } from '.'
 import { Type } from 'class-transformer'
 import { IsOptional, ValidateNested } from 'class-validator'
 

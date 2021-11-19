@@ -21,6 +21,8 @@ import {
   SmartContractMethodInvocation,
   TransferFromCustodialAddress,
   TransferFromCustodialAddressBatch,
+  get,
+  GenerateCustodialAddressBatch,
 } from '@tatumio/tatum-core'
 
 export const obtainCustodialAddressType = (body: GenerateCustodialAddress) => {
@@ -202,4 +204,32 @@ export const prepareBatchTransferFromCustodialWalletAbstract = async (
   ]
   r.methodABI = CustodialFullTokenWalletWithBatch.abi.find((a) => a.name === 'transferBatch')
   return await prepareSmartContractWriteMethodInvocation(r, provider, testnet)
+}
+
+export const getCustodialAddresses = (chain: Currency, txId: string): Promise<string[]> =>
+  get(`v3/blockchain/sc/custodial/${chain}/${txId}`)
+
+export const prepareCustodialWalletBatchAbstract = async (
+  testnet: boolean,
+  body: GenerateCustodialAddressBatch,
+  getCustodialFactoryContractAddress: (testnet: boolean) => string,
+  convertAddressToHex?: (address: string) => any
+) => {
+  await validateBody(body, GenerateCustodialAddressBatch)
+  const params =
+    body.chain === Currency.TRON
+      ? [
+          // @ts-ignore
+          { type: 'address', value: convertAddressToHex(body.owner.trim()) },
+          { type: 'uint256', value: `0x${new BigNumber(body.batchCount).toString(16)}` },
+        ]
+      : [body.owner.trim(), `0x${new BigNumber(body.batchCount).toString(16)}`]
+
+  const methodName = body.chain === Currency.TRON ? 'cloneNewWallet(address,uint256)' : 'cloneNewWallet'
+  const methodSig = body.chain === Currency.TRON ? methodName : undefined
+  const bodyWithContractAddress = {
+    ...body,
+    contractAddress: getCustodialFactoryContractAddress(testnet),
+  }
+  return { params, methodName, methodSig, bodyWithContractAddress }
 }

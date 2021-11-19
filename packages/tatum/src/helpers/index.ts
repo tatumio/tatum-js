@@ -1,6 +1,5 @@
-import { ClassType } from 'class-transformer/ClassTransformer'
 import Web3 from 'web3'
-import { Currency, listing } from '@tatumio/tatum-core'
+import { Currency, listing, TransactionHash } from '@tatumio/tatum-core'
 import {
   helperBroadcastTx as celoBroadcast,
   helperGetWeb3Client as getCeloClient,
@@ -26,39 +25,42 @@ import {
   helperGetWeb3Client as preparePolygonClient,
   helperPrepareSCCall as polygonHelperPrepareSCCall,
 } from '@tatumio/tatum-polygon'
-import { helperBroadcastTx as tronBroadcast } from '@tatumio/tatum-tron'
+import { helperBroadcastTx as tronBroadcast, helperPrepareSCCall as tronHelperPrepareSCCall } from '@tatumio/tatum-tron'
+import { getXdcClient } from '@tatumio/tatum-xdc'
 
-export const helperBroadcastTx = async (chain: Currency, txData: string, signatureId?: string) => {
+export const helperBroadcastTx = async (chain: Currency, txData: string, signatureId?: string): Promise<TransactionHash> => {
   switch (chain) {
     case Currency.CELO:
-      return await celoBroadcast(chain, txData, signatureId)
+      return await celoBroadcast(txData, signatureId)
     case Currency.ONE:
-      return await oneBroadcast(chain, txData, signatureId)
+      return await oneBroadcast(txData, signatureId)
     case Currency.ETH:
       return await ethBroadcast(txData, signatureId)
     case Currency.BSC:
-      return await bscBroadcast(chain, txData, signatureId)
+      return await bscBroadcast(txData, signatureId)
     case Currency.MATIC:
-      return await polygonBroadcast(chain, txData, signatureId)
+      return await polygonBroadcast(txData, signatureId)
     case Currency.TRON:
-      return await tronBroadcast(chain, txData, signatureId)
+      return await tronBroadcast(txData, signatureId)
     default:
       throw new Error('Unsupported chain')
   }
 }
 
-export const helperGetWeb3Client = (testnet: boolean, chain: Currency, provider?: string): Web3 => {
+export const helperGetWeb3Client = (chain: Currency, provider?: string): Web3 => {
   switch (chain) {
     case Currency.CELO:
-      return getCeloClient(testnet, chain, provider)
+      return getCeloClient(provider)
     case Currency.ONE:
-      return prepareOneClient(testnet, chain, provider)
+      return prepareOneClient(provider)
+    case Currency.XDC:
+      return getXdcClient(provider)
     case Currency.ETH:
       return getClient(provider)
     case Currency.BSC:
-      return getBscClient(testnet, chain, provider)
+      return getBscClient(provider)
     case Currency.MATIC:
-      return preparePolygonClient(testnet, chain, provider)
+      return preparePolygonClient(provider)
     default:
       throw new Error('Unsupported chain')
   }
@@ -68,8 +70,6 @@ export const helperGetWeb3Client = (testnet: boolean, chain: Currency, provider?
 export const helperPrepareSCCall = async (
   testnet: boolean,
   body: any,
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  clazz: ClassType<object>,
   methodName: string,
   params: any[],
   methodSig?: string,
@@ -78,15 +78,17 @@ export const helperPrepareSCCall = async (
 ) => {
   switch (body.chain) {
     case Currency.CELO:
-      return await celoHelperPrepareSCCall(testnet, body, clazz, methodName, params, methodSig, provider, abi)
+      return await celoHelperPrepareSCCall(testnet, body, methodName, params, provider, abi)
     case Currency.ONE:
-      return await oneHelperPrepareSCCall(testnet, body, clazz, methodName, params, provider, provider, abi)
+      return await oneHelperPrepareSCCall(body, methodName, params, provider, abi)
     case Currency.ETH:
       return await ethHelperPrepareSCCall(body, methodName, params, provider, abi)
     case Currency.BSC:
-      return await bscHelperPrepareSCCall(testnet, body, clazz, methodName, params, methodSig, provider, abi)
+      return await bscHelperPrepareSCCall(body, methodName, params, provider, abi)
     case Currency.MATIC:
-      return await polygonHelperPrepareSCCall(testnet, body, clazz, methodName, params, methodSig, provider, abi)
+      return await polygonHelperPrepareSCCall(body, methodName, params, provider, abi)
+    case Currency.TRON:
+      return await tronHelperPrepareSCCall(body, methodName, params, methodSig, provider, abi)
     default:
       throw new Error('Unsupported combination of inputs.')
   }

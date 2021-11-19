@@ -1,4 +1,3 @@
-import { sendTronTransaction } from './tron'
 import { TransferTron } from '../model'
 
 /**
@@ -6,5 +5,8 @@ import { TransferTron } from '../model'
  * @param body Body of the transaction.
  */
 export const sendTransaction = async (body: TransferTron) => {
-  return sendTronTransaction(body as TransferTron)
+  // @ts-ignore
+  if (body.contractAddress) {
+    throw new Error('Cannot work with TRON and contract address')
+  }
 }

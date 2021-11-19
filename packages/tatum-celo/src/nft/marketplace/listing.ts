@@ -13,10 +13,7 @@ import {
   UpdateMarketplaceFee,
   UpdateMarketplaceFeeRecipient,
 } from '@tatumio/tatum-core'
-import {
-  sendCeloDeployMarketplaceListingSignedTransaction,
-  prepareCeloDeployMarketplaceListingSignedTransaction
-} from '../..'
+import { sendCeloDeployMarketplaceListingSignedTransaction, prepareCeloDeployMarketplaceListingSignedTransaction } from '../..'
 import { prepareApproveErc20 } from '../../fungible'
 import { helperBroadcastTx, helperPrepareSCCall } from '../../helpers'
 
@@ -103,11 +100,11 @@ export const prepareMarketplaceCreateListing = async (testnet: boolean, body: Cr
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceBuyListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation, provider?: string) => {
-  const { body: validatedBody, params } = await prepareMarketplaceBuyListingAbstraction(body)
+  const { body: validatedBody, params, methodName } = await prepareMarketplaceBuyListingAbstraction(body)
   return await helperPrepareSCCall(
     testnet,
     validatedBody,
-    'buyAssetFromListing',
+    methodName,
     params,
     provider
   )

@@ -1,6 +1,12 @@
-import { GenerateCustodialAddress, Currency, TransferFromCustodialAddress, ContractType } from '@tatumio/tatum-core'
+import {
+  GenerateCustodialAddress,
+  Currency,
+  TransferFromCustodialAddress,
+  ContractType,
+  GenerateCustodialAddressBatch,
+} from '@tatumio/tatum-core'
 import { sendCeloGenerateCustodialWalletSignedTransaction } from '../transaction'
-import { prepareTransferFromCustodialWallet } from './custodial'
+import { generateCustodialWalletBatch, prepareTransferFromCustodialWallet } from './custodial'
 import { CeloProvider } from '@celo-tools/celo-ethers-wrapper'
 
 describe('Custodial wallet tests', () => {
@@ -38,6 +44,20 @@ describe('Custodial wallet tests', () => {
       const provider = new CeloProvider('https://alfajores-forno.celo-testnet.org')
       await provider.ready
       console.log(await provider.sendTransaction(txData))
+    })
+  })
+
+  describe('Deploy batch address', () => {
+    it('should create on CELO', async () => {
+      const body = new GenerateCustodialAddressBatch()
+      body.fromPrivateKey = '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb'
+      body.chain = Currency.CELO
+      body.feeCurrency = Currency.CUSD
+      body.batchCount = 200
+      body.owner = '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA'
+      const txData = await generateCustodialWalletBatch(true, body, 'https://alfajores-forno.celo-testnet.org')
+      expect(txData.txId).toContain('0x')
+      console.log(txData.txId)
     })
   })
 })

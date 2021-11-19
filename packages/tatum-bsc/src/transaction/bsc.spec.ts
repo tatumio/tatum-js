@@ -67,7 +67,7 @@ describe('BSC transactions', () => {
 
   it('should test valid custom deployment ERC20', async () => {
     const body = new DeployErc20()
-    body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29'
+    body.fromPrivateKey = '0xf17abcb517d759efee24bc4859183c7219c588540754318baebb3f9c31449564'
     body.symbol = 'SYMBOL'
     body.name = 'Test_ERC20'
     body.supply = '100'
@@ -203,13 +203,9 @@ describe('BSC transactions', () => {
         to: '0x811dfbff13adfbc3cf653dcc373c03616d3471c9',
         tokenId,
         url: 'https://www.seznam.cz',
-        fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+        fromPrivateKey: '0xf17abcb517d759efee24bc4859183c7219c588540754318baebb3f9c31449564',
         chain: Currency.BSC,
         contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-        fee: {
-          gasLimit: '50000',
-          gasPrice: '110',
-        },
       })
       console.log(tokenId)
       expect(mintedToken).not.toBeNull()

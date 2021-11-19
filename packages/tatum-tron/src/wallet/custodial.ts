@@ -1,8 +1,18 @@
-import { prepareTransferFromCustodialWalletAbstract, prepareBatchTransferFromCustodialWalletAbstract } from '@tatumio/tatum-defi'
-import { GenerateTronCustodialAddress, TransferFromTronCustodialAddress, TransferFromTronCustodialAddressBatch } from '../model'
-import { SmartContractMethodInvocation, TransferFromCustodialAddress } from '@tatumio/tatum-core'
-import { helperBroadcastTx } from '../helpers'
 import {
+  prepareTransferFromCustodialWalletAbstract,
+  prepareBatchTransferFromCustodialWalletAbstract,
+  prepareCustodialWalletBatchAbstract,
+} from '@tatumio/tatum-defi'
+import { GenerateTronCustodialAddress, TransferFromTronCustodialAddress, TransferFromTronCustodialAddressBatch } from '../model'
+import {
+  CUSTODIAL_PROXY_ABI,
+  GenerateCustodialAddressBatch,
+  SmartContractMethodInvocation,
+  TransferFromCustodialAddress,
+} from '@tatumio/tatum-core'
+import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
+import {
+  convertAddressToHex,
   getTronTrc20ContractDecimals,
   prepareTronCustodialTransferBatch,
   prepareTronGenerateCustodialWalletSignedTransaction,
@@ -11,6 +21,7 @@ import {
 } from '../transaction'
 
 /**
+ * This method is @Deprecated. Use @link{generateCustodialWalletBatch} instead
  * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, btu transaction costs connected to the withdrawal
  * of assets is covered by the deployer.
  * @param body request data
@@ -18,10 +29,11 @@ import {
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const generateCustodialWallet = async (body: GenerateTronCustodialAddress, provider?: string) => {
+  console.log('This method is deprecated. For better gas consumption, use prepareCustodialWalletBatch.')
   return await sendTronGenerateCustodialWalletSignedTransaction(body as GenerateTronCustodialAddress, provider)
 }
-
 /**
+ * This method is @Deprecated. Use @link{prepareCustodialWalletBatch} instead
  * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, btu transaction costs connected to the withdrawal
  * of assets is covered by the deployer.
  * @param body request data
@@ -29,6 +41,7 @@ export const generateCustodialWallet = async (body: GenerateTronCustodialAddress
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareCustodialWallet = async (body: GenerateTronCustodialAddress, provider?: string) => {
+  console.log('This method is deprecated. For better gas consumption, use prepareCustodialWalletBatch.')
   return await prepareTronGenerateCustodialWalletSignedTransaction(body as GenerateTronCustodialAddress, provider)
 }
 
@@ -112,3 +125,37 @@ export const sendBatchTransferFromCustodialWallet = async (
   body: TransferFromTronCustodialAddressBatch,
   provider?: string
 ) => helperBroadcastTx(await prepareBatchTransferFromCustodialWallet(testnet, body, provider), body.signatureId)
+/**
+ * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, but transaction costs connected to the withdrawal
+ * of assets is covered by the deployer.
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const generateCustodialWalletBatch = async (testnet: boolean, body: GenerateCustodialAddressBatch, provider?: string) => {
+  const txData = await prepareCustodialWalletBatch(testnet, body, provider)
+  return helperBroadcastTx(txData, body.signatureId)
+}
+
+/**
+ * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, but transaction costs connected to the withdrawal
+ * of assets is covered by the deployer.
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const prepareCustodialWalletBatch = async (testnet: boolean, body: GenerateCustodialAddressBatch, provider?: string) => {
+  const { params, methodName, methodSig, bodyWithContractAddress } = await prepareCustodialWalletBatchAbstract(
+    testnet,
+    body,
+    getCustodialFactoryContractAddress,
+    convertAddressToHex
+  )
+  return await helperPrepareSCCall(bodyWithContractAddress, methodName, params, methodSig, provider, [CUSTODIAL_PROXY_ABI])
+}
+
+const getCustodialFactoryContractAddress = (testnet: boolean) => {
+  return testnet ? 'TH8SiZrN3GFs932ATPZdkyJ2e1NQaSsJ9c' : 'TLLfWsi4VBDZyLCsrFgrmnazvJmoeyGA9H'
+}

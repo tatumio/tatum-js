@@ -1,6 +1,7 @@
 import { PrivateKeyOrSignatureId, BSC_BASED_CURRENCIES, Currency, Fee } from '@tatumio/tatum-core'
 import { Type } from 'class-transformer'
 import { IsIn, IsNotEmpty, IsNumberString, IsOptional, Length, Matches, MaxLength, Min, ValidateNested } from 'class-validator'
+import { OneOf } from '@tatumio/tatum-core'
 
 export class TransferBscBep20 extends PrivateKeyOrSignatureId {
   @IsNotEmpty()
@@ -10,15 +11,16 @@ export class TransferBscBep20 extends PrivateKeyOrSignatureId {
   @IsNotEmpty()
   @IsNumberString()
   @Matches(/^[+]?((\d+(\.\d*)?)|(\.\d+))$/)
+  @OneOf(['currency', 'contractAddress'])
   public amount: string
 
   @MaxLength(130000)
   @IsOptional()
   public data?: string
 
-  @IsNotEmpty()
   @IsIn(BSC_BASED_CURRENCIES)
-  public currency: Currency
+  @IsOptional()
+  public currency?: Currency
 
   @IsOptional()
   @Type(() => Fee)
@@ -28,4 +30,8 @@ export class TransferBscBep20 extends PrivateKeyOrSignatureId {
   @Min(0)
   @IsOptional()
   public nonce?: number
+
+  @Length(42, 42)
+  @IsOptional()
+  public contractAddress?: string
 }

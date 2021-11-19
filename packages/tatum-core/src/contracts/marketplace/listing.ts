@@ -140,6 +140,29 @@ export const abi = [
         name: 'listingId',
         type: 'string',
       },
+      {
+        internalType: 'address',
+        name: 'erc20Address',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'buyer',
+        type: 'address',
+      },
+    ],
+    name: 'buyAssetFromListingForExternalBuyer',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'string',
+        name: 'listingId',
+        type: 'string',
+      },
     ],
     name: 'cancelListing',
     outputs: [],

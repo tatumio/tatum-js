@@ -19,7 +19,7 @@ export class BaseBurnMultiToken extends PrivateKeyOrSignatureId {
   public contractAddress: string
 
   @IsNotEmpty()
-  @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC, Currency.KCS])
+  @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC, Currency.ALGO, Currency.KCS])
   public chain: Currency
 
   @Min(0)
@@ -27,8 +27,8 @@ export class BaseBurnMultiToken extends PrivateKeyOrSignatureId {
   @IsOptional()
   public nonce?: number
 
-  @ValidateIf(o => o.chain === Currency.ALGO && o.signatureId)
+  @ValidateIf((o) => o.chain === Currency.ALGO && o.signatureId)
   @IsNotEmpty()
   @Length(42, 58)
-  public from?: string;
+  public from?: string
 }

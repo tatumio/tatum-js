@@ -1,4 +1,4 @@
-import { IsIn, IsNotEmpty, IsOptional, Length, MaxLength, Min, Validate } from 'class-validator'
+import { IsBoolean, IsIn, IsNotEmpty, IsOptional, Length, MaxLength, Min, Validate, ValidateIf } from 'class-validator'
 import { Currency } from './Currency'
 import { PrivateKeyOrSignatureIdBuiltInPrivateKey } from './PrivateKeyOrSignatureIdBuiltInPrivateKey'
 import { Mint721BuiltInPrivateKeyValidator } from '../validation/Mint721BuiltInPrivateKeyValidator'
@@ -26,7 +26,20 @@ export class BaseMintErc721 extends PrivateKeyOrSignatureIdBuiltInPrivateKey {
   @IsOptional()
   public nonce?: number
 
+  @IsOptional()
+  @ValidateIf((o) => o.provenance && o.fixedValues)
+  @IsBoolean()
+  public provenance?: boolean
+
+  @IsOptional()
+  @ValidateIf((o) => o.authorAddresses && o.cashbackValues && o.fixedValues)
   public authorAddresses?: string[]
 
+  @IsOptional()
+  @ValidateIf((o) => o.authorAddresses && o.cashbackValues && o.fixedValues)
   public cashbackValues?: string[]
+
+  @IsOptional()
+  @ValidateIf((o) => o.provenance && o.fixedValues)
+  public fixedValues?: string[]
 }
