@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum",
-  "version": "2.0.0",
+  "version": "2.0.0-alpha.20",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -12,6 +12,7 @@
     "docs": "typedoc",
     "lint": "eslint ./src --ext .ts --fix"
   },
+  "private": true,
   "dependencies": {
     "@tatumio/tatum-ada": "file:../tatum-ada",
     "@tatumio/tatum-algo": "file:../tatum-algo",
@@ -46,10 +47,10 @@
     "class-validator": "0.13.0",
     "ethereumjs-wallet": "^1.0.0",
     "reflect-metadata": "^0.1.13",
-    "web3": "1.4.0",
-    "web3-core": "^1.6.0",
-    "web3-eth": "1.4.0",
-    "web3-utils": "^1.6.0",
+    "web3": "^1.4.0",
+    "web3-core": "^1.4.0",
+    "web3-eth": "^1.4.0",
+    "web3-utils": "^1.4.0",
     "@solana/spl-token": "^0.1.8",
     "@solana/web3.js": "^1.30.2",
     "bn.js": "^5.2.0",

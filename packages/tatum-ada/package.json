@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-ada",
-  "version": "2.0.0-alpha.0",
+  "version": "2.0.0-alpha.20",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -17,8 +17,8 @@
     "@tatumio/tatum-core": "file:../tatum-core",
     "@tatumio/tatum-defi": "file:../tatum-defi",
     "@tatumio/tatum-ledger": "file:../tatum-ledger",
-    "bip39": "^3.0.2",
     "bignumber.js": "^9.0.0",
+    "bip39": "^3.0.2",
     "cardano-crypto.js": "^6.0.0",
     "ethereumjs-wallet": "^1.0.0"
   },
@@ -31,5 +31,6 @@
     "ts-jest": "^27.0.5",
     "typedoc": "^0.21.5",
     "typescript": "^4.4.3"
-  }
+  },
+  "gitHead": "b38a4f55d98d9b2a96fa76425c853decaecf2cc2"
 }

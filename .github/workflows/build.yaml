@@ -1,0 +1,19 @@
+name: Build all packages
+
+on:
+  push:
+    branches:
+      - feature/submodule
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install root package dependencies
+        run: yarn
+
+      - name: Install subpackages dependencies
+        run: yarn bootstrap
+
+

@@ -1,0 +1,28 @@
+{
+  "packages": [
+    "packages/*"
+  ],
+  "version": "2.0.0-alpha.20",
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "command": {
+    "bootstrap": {
+      "ignore": [
+        "@tatumio/tatum",
+        "@tatumio/tatum-kcc"
+      ]
+    },
+    "exec": {
+      "ignore": [
+        "@tatumio/tatum",
+        "@tatumio/tatum-kcc"
+      ]
+    },
+    "publish": {
+      "ignore": [
+        "@tatumio/tatum",
+        "@tatumio/tatum-kcc"
+      ]
+    }
+  }
+}

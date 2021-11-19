@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-neo",
-  "version": "2.0.0-alpha.0",
+  "version": "2.0.0-alpha.20",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,11 +13,11 @@
     "lint": "eslint ./src --ext .ts --fix"
   },
   "dependencies": {
+    "@cityofzion/neon-js": "^4.8.0",
     "@tatumio/tatum-core": "file:../tatum-core",
     "@tatumio/tatum-defi": "file:../tatum-defi",
     "@tatumio/tatum-ledger": "file:../tatum-ledger",
-    "reflect-metadata": "^0.1.13",
-    "@cityofzion/neon-js": "^4.8.0"
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "@types/jest": "^27.0.2",

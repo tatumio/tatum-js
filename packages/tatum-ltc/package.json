@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-ltc",
-  "version": "2.0.0-alpha.0",
+  "version": "2.0.0-alpha.20",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -61,5 +61,6 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  }
+  },
+  "gitHead": "b38a4f55d98d9b2a96fa76425c853decaecf2cc2"
 }
