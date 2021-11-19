@@ -5,6 +5,7 @@ on:
     branches:
       - feature/deploy-pipeline-v2
 
+
 jobs:
   publish:
     runs-on: ubuntu-latest
