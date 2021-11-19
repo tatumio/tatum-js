@@ -17,6 +17,12 @@
         "@tatumio/tatum",
         "@tatumio/tatum-kcc"
       ]
+    },
+    "publish": {
+      "ignore": [
+        "@tatumio/tatum",
+        "@tatumio/tatum-kcc"
+      ]
     }
   }
 }
