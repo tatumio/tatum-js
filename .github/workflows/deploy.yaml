@@ -9,7 +9,6 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}" > ~/.npmrc
 
       # 1. provide Personal Access Token for checkout@v2
       - name: Checkout
@@ -34,6 +33,16 @@ jobs:
 
       - name: Install root package dependencies
         run: yarn
+
+      - name: Authenticate with Registry
+        run: |
+          yarn logout
+          echo "@tatumio:registry=http://registry.npmjs.org/" > .npmrc
+          echo "registry=http://registry.npmjs.org/" >> .npmrc
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
+          npm whoami
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Install subpackages dependencies
         run: yarn bootstrap
