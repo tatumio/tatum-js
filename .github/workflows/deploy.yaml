@@ -16,5 +16,16 @@ jobs:
       - name: Install subpackages dependencies
         run: yarn bootstrap
 
+      - name: Config git email
+        run: git config --global user.email "lukas.kotol@tatum.io"
+
+      - name: Config git name
+        run: git config --global user.name "Hathoriel"
+
       - name: Publish packages
         run: yarn publish:prerelease
+        env:
+          GH_TOKEN: ${{ secrets.PAT_GITHUB }}
+          GITHUB_TOKEN: ${{ secrets.PAT_GITHUB }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
