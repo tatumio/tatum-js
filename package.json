@@ -12,7 +12,6 @@
     "lint": "eslint ./src ./packages --ext .ts --fix",
     "clean:all": "yarn lerna clean --yes",
     "bootstrap": "yarn lerna bootstrap && yarn lerna exec yarn install",
-    "version": "yarn version prerelease --yes",
     "publish": "yarn publish prerelease --yes"
   },
   "private": true,
