@@ -21,7 +21,7 @@
     "ethereumjs-wallet": "^1.0.0",
     "thorify": "^1.5.2",
     "web3": "1.4.0",
-    "web3-core": "^1.6.0"
+    "web3-core": "1.4.0"
   },
   "devDependencies": {
     "@types/jest": "^27.0.2",
