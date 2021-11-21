@@ -120,15 +120,15 @@ export const obtainCustodialAddressType = (body: GenerateCustodialAddress) => {
 const getCustodialFactoryContractAddress = (chain: Currency, testnet: boolean) => {
     switch (chain) {
         case Currency.CELO:
-            return testnet ? '0x7f6ECaef0d01De5D464B8c1Ca968b102ABd40Ca1' : '0xb1462fE8E9Cf82c0296022Cca7bEfA3Fd4c12B34';
+            return testnet ? '0x6C4B2ed1EaBcE4925f0F3d5Cf36e432C28d8A6dd' : '0x3b0B6734AC81252dD1d2B26FA3A4605e7eB96997';
         case Currency.TRON:
-            return testnet ? 'TJMnJy7ZR5XtYzM3LSzAhAgXtrk5yjPcF4' : 'TWdxxUWtu9Q5GaX1qrAGsvURXu6ziLerkX';
+            return testnet ? 'TH8SiZrN3GFs932ATPZdkyJ2e1NQaSsJ9c' : 'TLLfWsi4VBDZyLCsrFgrmnazvJmoeyGA9H';
         case Currency.ETH:
-            return testnet ? (process.env.TESTNET_TYPE === 'ethereum-rinkeby' ? '0x664F97470654e8f00E42433CFFC0d08a5f4f7BC7' : '0x9120093df23a6b1486ded257b1cd0ce651fe1323') : '0x183363CE6418Fad855255B6681711eD56b0C442A';
+            return testnet ? (process.env.TESTNET_TYPE === 'ethereum-rinkeby' ? '0xbe7433f3373c8486B3FE1693D2A61870F73eFCf7' : '0xBe318B50BcE15C40f6AaFC2042882C987339Bf94') : '0x9fd03ec6c02d2b4a92644a4dbfc23f22efe8ea11';
         case Currency.MATIC:
-            return testnet ? '0x1C129AE4BF1e6E6C9A0E5e567b8e97E2d41A9265' : '0x3485fdba44736859267789ac9c248cc4c1443956';
+            return testnet ? '0x7E53D8ccE7d55bDEFfb057cC3b7e95448b26E697' : '0x6B422BC77e7848b628fd89Ffc6D702e3f39a580A';
         case Currency.BSC:
-            return testnet ? '0x8a29493C84a820882d7c2B8af6aA88BF5adD4A08' : '0x3485fDBa44736859267789AC9C248Cc4c1443956';
+            return testnet ? '0x6709Bdda623aF7EB152cB2fE2562aB7e031e564f' : '0x1cfc7878Cf6Ae32A50F84481690F6fB04574de21';
         default:
             throw new Error('Unsupported chain.');
     }

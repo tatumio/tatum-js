@@ -55,7 +55,10 @@ export class DeployErc20 extends PrivateKeyOrSignatureId {
     @Type(() => Fee)
     public fee?: Fee;
 
-    @ValidateIf(o => o.chain === Currency.ALGO)
-    @IsNotEmpty()
+    @IsOptional()
     public url?: string;
+
+    @IsOptional()
+    @Length(42, 58)
+    public from?: string;
 }

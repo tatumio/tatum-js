@@ -23,4 +23,9 @@ export interface TronTransaction {
         fee_limit: number;
         timestamp: number;
     };
+    log?: [{
+        address:string;
+        topics: string[];
+        data?: string;
+    }]
 }
