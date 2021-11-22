@@ -37,7 +37,10 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
-.yalc
-yalc.lock
-
 tsconfig.tsbuildinfo
+
+# ignore yarn.lock in case we're in a monorepo
+**/yarn.lock
+
+# do not use package-lock.json in yarn workspace
+**/package-lock.json
