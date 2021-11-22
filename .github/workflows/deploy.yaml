@@ -2,8 +2,8 @@ name: Publish all packages
 
 on:
   push:
-    branches:
-      - feature/submodule
+    tags:
+      - 'v*'
 
 jobs:
   publish:
