@@ -1,9 +1,6 @@
 name: Build all packages
 
-on:
-  push:
-    branches:
-      - feature/submodule
+on: push
 
 jobs:
   build:
