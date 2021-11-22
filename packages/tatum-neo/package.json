@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-neo",
-  "version": "2.0.0-alpha.28",
+  "version": "2.0.0-alpha.32",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -28,5 +28,8 @@
     "ts-jest": "^27.0.5",
     "typedoc": "^0.21.5",
     "typescript": "^4.4.3"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
