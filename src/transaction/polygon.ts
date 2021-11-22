@@ -307,14 +307,26 @@ export const preparePolygonMintErc721ProvenanceSignedTransaction = async (testne
         body.cashbackValues.map(c => cb.push(`0x${new BigNumber(c).multipliedBy(100).toString(16)}`));
         body.fixedValues.map(c => fv.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`));
     }
-    // @ts-ignore
-    const data = new (client).eth.Contract(erc721Provenance_abi, body.contractAddress.trim()).methods
-        .mintWithTokenURI(body.to.trim(), body.tokenId, body.url, body.authorAddresses ? body.authorAddresses : [], cb, fv).encodeABI()
-    if (body.contractAddress) {
+    if(body.erc20){
+        // @ts-ignore
+        const data = new (client).eth.Contract(erc721Provenance_abi, body.contractAddress.trim()).methods
+        .mintWithTokenURI(body.to.trim(), body.tokenId, body.url, body.authorAddresses ? body.authorAddresses : [], cb, fv, body.erc20).encodeABI()
+        if (body.contractAddress) {
         return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), undefined, body.nonce, data,
             body.fee?.gasLimit, body.fee?.gasPrice)
+        }
+        throw new Error('Contract address should not be empty!')
+    }else{
+        // @ts-ignore
+        const data = new (client).eth.Contract(erc721Provenance_abi, body.contractAddress.trim()).methods
+        .mintWithTokenURI(body.to.trim(), body.tokenId, body.url, body.authorAddresses ? body.authorAddresses : [], cb, fv).encodeABI()
+        if (body.contractAddress) {
+            return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), undefined, body.nonce, data,
+                body.fee?.gasLimit, body.fee?.gasPrice)
+        }
+        throw new Error('Contract address should not be empty!')
     }
-    throw new Error('Contract address should not be empty!')
+    
 }
 /**
  * Sign Polygon mint cashback erc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -328,14 +340,26 @@ export const preparePolygonMintCashbackErc721SignedTransaction = async (testnet:
     const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
     const cashbacks: string[] = body.cashbackValues!
     const cb = cashbacks.map(c => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
-    // @ts-ignore
-    const data = new (client).eth.Contract(erc721TokenABI, body.contractAddress.trim()).methods
-        .mintWithCashback(body.to.trim(), body.tokenId, body.url, body.authorAddresses, cb).encodeABI()
-    if (body.contractAddress) {
+    if(body.erc20){
+        // @ts-ignore
+        const data = new (client).eth.Contract(erc721TokenABI, body.contractAddress.trim()).methods
+        .mintWithCashback(body.to.trim(), body.tokenId, body.url, body.authorAddresses, cb, body.erc20).encodeABI()
+        if (body.contractAddress) {
         return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), undefined, body.nonce, data,
             body.fee?.gasLimit, body.fee?.gasPrice)
+        }
+        throw new Error('Contract address should not be empty!')
+    }else{
+        // @ts-ignore
+        const data = new (client).eth.Contract(erc721TokenABI, body.contractAddress.trim()).methods
+        .mintWithCashback(body.to.trim(), body.tokenId, body.url, body.authorAddresses, cb).encodeABI()
+        if (body.contractAddress) {
+        return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), undefined, body.nonce, data,
+            body.fee?.gasLimit, body.fee?.gasPrice)
+        }
+        throw new Error('Contract address should not be empty!')
     }
-    throw new Error('Contract address should not be empty!')
+    
 }
 /**
  * Sign Polygon mint multiple cashback erc721 provenance transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -361,12 +385,22 @@ export const preparePolygonMintMultipleErc721ProvenanceSignedTransaction = async
             fv.push(fv2)
         }
     }
-    // @ts-ignore
-    const data = new (client).eth.Contract(erc721Provenance_abi, body.contractAddress.trim()).methods
+    if(body.erc20){
+        // @ts-ignore
+        const data = new (client).eth.Contract(erc721Provenance_abi, body.contractAddress.trim()).methods
+        .mintMultiple(body.to.map(t => t.trim()), body.tokenId, body.url,
+            body.authorAddresses ? body.authorAddresses : [], cb, fv, body.erc20).encodeABI()
+        return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), undefined, body.nonce, data,
+        body.fee?.gasLimit, body.fee?.gasPrice)
+    }else{
+        // @ts-ignore
+        const data = new (client).eth.Contract(erc721Provenance_abi, body.contractAddress.trim()).methods
         .mintMultiple(body.to.map(t => t.trim()), body.tokenId, body.url,
             body.authorAddresses ? body.authorAddresses : [], cb, fv).encodeABI()
-    return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), undefined, body.nonce, data,
+        return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), undefined, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice)
+    }
+    
 }
 /**
  * Sign Polygon mint multiple cashback erc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -380,12 +414,22 @@ export const preparePolygonMintMultipleCashbackErc721SignedTransaction = async (
     const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
     const cashbacks: string[][] = body.cashbackValues!
     const cb = cashbacks.map(cashback => cashback.map(c => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
-    // @ts-ignore
-    const data = new (client).eth.Contract(erc721TokenABI, body.contractAddress.trim()).methods
+    if(body.erc20){
+        // @ts-ignore
+        const data = new (client).eth.Contract(erc721TokenABI, body.contractAddress.trim()).methods
+        .mintMultipleCashback(body.to.map(t => t.trim()), body.tokenId, body.url,
+            body.authorAddresses, cb, body.erc20).encodeABI()
+        return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), undefined, body.nonce, data,
+        body.fee?.gasLimit, body.fee?.gasPrice)
+    }else{
+        // @ts-ignore
+        const data = new (client).eth.Contract(erc721TokenABI, body.contractAddress.trim()).methods
         .mintMultipleCashback(body.to.map(t => t.trim()), body.tokenId, body.url,
             body.authorAddresses, cb).encodeABI()
-    return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), undefined, body.nonce, data,
+        return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), undefined, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice)
+    }
+    
 }
 
 /**
@@ -433,7 +477,7 @@ export const preparePolygonTransferErc721SignedTransaction = async (testnet: boo
     const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey);
     // @ts-ignore
     const contract = new (client).eth.Contract(body.provenance ? erc721Provenance_abi : erc721TokenABI, body.contractAddress.trim());
-    const dataBytes= body.provenance? Buffer.from(body.provenanceData + '\'\'\'###\'\'\'' + toWei(body.tokenPrice!, 'ether'), 'utf8'):'';
+    const dataBytes = body.provenance ? Buffer.from(body.provenanceData + '\'\'\'###\'\'\'' + toWei(body.tokenPrice!, 'ether'), 'utf8') : '';
     const data = body.provenance ? contract.methods.safeTransfer(body.to.trim(), body.tokenId, `0x${dataBytes.toString('hex')}`).encodeABI() : contract.methods.safeTransfer(body.to.trim(), body.tokenId).encodeABI();
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), body.value, body.nonce, data,
         body.fee?.gasLimit, body.fee?.gasPrice);

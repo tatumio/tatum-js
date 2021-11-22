@@ -483,6 +483,50 @@ export default [
 	{
 		"inputs": [
 			{
+				"internalType": "address[]",
+				"name": "to",
+				"type": "address[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "tokenId",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "string[]",
+				"name": "uri",
+				"type": "string[]"
+			},
+			{
+				"internalType": "address[][]",
+				"name": "recipientAddresses",
+				"type": "address[][]"
+			},
+			{
+				"internalType": "uint256[][]",
+				"name": "cashbackValues",
+				"type": "uint256[][]"
+			},
+			{
+				"internalType": "address",
+				"name": "erc20",
+				"type": "address"
+			}
+		],
+		"name": "mintMultipleCashback",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "address",
 				"name": "to",
 				"type": "address"
@@ -506,6 +550,50 @@ export default [
 				"internalType": "uint256[]",
 				"name": "cashbackValues",
 				"type": "uint256[]"
+			}
+		],
+		"name": "mintWithCashback",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "uri",
+				"type": "string"
+			},
+			{
+				"internalType": "address[]",
+				"name": "recipientAddresses",
+				"type": "address[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "cashbackValues",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "address",
+				"name": "erc20",
+				"type": "address"
 			}
 		],
 		"name": "mintWithCashback",
