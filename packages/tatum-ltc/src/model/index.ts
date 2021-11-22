@@ -1,2 +1,2 @@
-import 'reflect-metadata';
-export * from './response';
+import 'reflect-metadata'
+export * from './response'

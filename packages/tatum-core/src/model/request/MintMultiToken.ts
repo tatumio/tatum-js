@@ -36,12 +36,12 @@ export class MintMultiToken extends PrivateKeyOrSignatureId {
   @ValidateNested()
   public fee?: Fee
 
-  @ValidateIf(o => o.chain === Currency.ALGO)
+  @ValidateIf((o) => o.chain === Currency.ALGO)
   @IsNotEmpty()
-  public url?: string;
+  public url?: string
 
-  @ValidateIf(o => o.chain === Currency.ALGO && o.signatureId)
+  @ValidateIf((o) => o.chain === Currency.ALGO && o.signatureId)
   @IsNotEmpty()
   @Length(42, 58)
-  public from?: string;
+  public from?: string
 }

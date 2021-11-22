@@ -1,4 +1,4 @@
-import {IsIn, IsOptional, Length, ValidateIf} from 'class-validator';
+import { IsIn, IsOptional, Length, ValidateIf } from 'class-validator'
 
 export enum EgldServiceType {
   issue = 'issue',
@@ -28,13 +28,13 @@ export enum EgldServiceType {
 }
 
 export class EsdtToken {
-    @IsOptional()
-    @Length(1, 63)
-    @IsIn(Object.keys(EgldServiceType))
-    public service?: string;
+  @IsOptional()
+  @Length(1, 63)
+  @IsIn(Object.keys(EgldServiceType))
+  public service?: string
 
-    @ValidateIf(o => !['issue', 'issueNonFungible', 'issueSemiFungible'].includes(o.service))
-    @IsOptional()
-    @Length(10, 17)
-    public tokenId?: string;
+  @ValidateIf((o) => !['issue', 'issueNonFungible', 'issueSemiFungible'].includes(o.service))
+  @IsOptional()
+  @Length(10, 17)
+  public tokenId?: string
 }

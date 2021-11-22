@@ -29,10 +29,7 @@ export const sendKccOffchainTransaction = async (testnet: boolean, body: Transfe
   const { mnemonic, index, privateKey, gasLimit, gasPrice, nonce, ...withdrawal } = body
   const { amount, address } = withdrawal
 
-  const fromPriv =
-    mnemonic && index !== undefined
-      ? await generatePrivateKeyFromMnemonic(testnet, mnemonic, index)
-      : (privateKey as string)
+  const fromPriv = mnemonic && index !== undefined ? await generatePrivateKeyFromMnemonic(testnet, mnemonic, index) : (privateKey as string)
 
   const account = await getAccountById(withdrawal.senderAccountId)
   let txData

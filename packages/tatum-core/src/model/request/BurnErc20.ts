@@ -21,8 +21,8 @@ export class BurnErc20 extends PrivateKeyOrSignatureId {
   @Type(() => Fee)
   @ValidateNested()
   public fee?: Fee
-  
+
   @IsOptional()
   @Length(42, 58)
-  public from?: string;
+  public from?: string
 }

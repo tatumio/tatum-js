@@ -1,1 +1,1 @@
-export * from "./algorand"
+export * from './algorand'

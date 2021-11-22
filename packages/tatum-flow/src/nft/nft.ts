@@ -22,14 +22,7 @@ export const deployNFT = async (body: FlowDeployNft): Promise<TransactionHash> =
  * @param scheme optional JSON Metadata scheme
  * @param provider optional provider do broadcast tx
  */
-export const createNFT = async (
-  body: FlowMintNft,
-  file: Buffer,
-  name: string,
-  description?: string,
-  scheme?: any,
-  provider?: string
-) => {
+export const createNFT = async (body: FlowMintNft, file: Buffer, name: string, description?: string, scheme?: any, provider?: string) => {
   return await createNFTAbstraction(() => mintNFTWithUri(false, body), false, body, file, name, description, scheme, provider)
 }
 

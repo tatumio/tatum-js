@@ -36,8 +36,8 @@ export class TransferMultiToken extends PrivateKeyOrSignatureId {
   @ValidateNested()
   public fee?: Fee
 
-  @ValidateIf(o => o.chain === Currency.ALGO && o.signatureId)
+  @ValidateIf((o) => o.chain === Currency.ALGO && o.signatureId)
   @IsNotEmpty()
   @Length(42, 58)
-  public from?: string;
+  public from?: string
 }

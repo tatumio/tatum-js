@@ -1,6 +1,6 @@
 import { get, post } from '@tatumio/tatum-core'
-import {QuorumBlock, QuorumTx, QuorumTxReceipt} from '../model'
-import {AccountPassword} from '../model'
+import { QuorumBlock, QuorumTx, QuorumTxReceipt } from '../model'
+import { AccountPassword } from '../model'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/QuorumGetCurrentBlock" target="_blank">Tatum API documentation</a>
@@ -25,7 +25,8 @@ export const quorumGetTransactionReceipt = async (hash: string): Promise<QuorumT
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/QuorumGenerateAccount" target="_blank">Tatum API documentation</a>
  */
-export const quorumCreateAccount = async (body: AccountPassword): Promise<{ success: boolean }> => post(`/v3/quorum/account`, body, AccountPassword)
+export const quorumCreateAccount = async (body: AccountPassword): Promise<{ success: boolean }> =>
+  post(`/v3/quorum/account`, body, AccountPassword)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/QuorumUnlockAccount" target="_blank">Tatum API documentation</a>

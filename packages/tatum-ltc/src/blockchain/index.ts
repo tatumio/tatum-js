@@ -1,1 +1,1 @@
-export * from './litecoin';
+export * from './litecoin'

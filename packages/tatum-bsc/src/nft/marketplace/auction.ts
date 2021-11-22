@@ -75,13 +75,7 @@ export const prepareAuctionUpdateFee = async (body: UpdateAuctionFee, provider?:
  */
 export const prepareAuctionUpdateFeeRecipient = async (body: UpdateMarketplaceFeeRecipient, provider?: string) => {
   const params = await prepareAuctionUpdateFeeRecipientAbstraction(body)
-  return await helperPrepareSCCall(
-    body,
-    'setAuctionFeeRecipient',
-    params,
-    provider,
-    auction.abi
-  )
+  return await helperPrepareSCCall(body, 'setAuctionFeeRecipient', params, provider, auction.abi)
 }
 
 /**

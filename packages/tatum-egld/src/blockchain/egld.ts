@@ -1,12 +1,12 @@
 import BigNumber from 'bignumber.js'
-import {get, post, TransactionHash} from '@tatumio/tatum-core'
-import {EgldSendTransaction, EgldBlock, EgldTransaction} from '../model'
+import { get, post, TransactionHash } from '@tatumio/tatum-core'
+import { EgldSendTransaction, EgldBlock, EgldTransaction } from '../model'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/EgldBroadcast" target="_blank">Tatum API documentation</a>
  */
 export const egldBroadcast = async (txData: string, signatureId?: string): Promise<TransactionHash> =>
-    post(`/v3/egld/broadcast`, {txData, signatureId})
+  post(`/v3/egld/broadcast`, { txData, signatureId })
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/EgldGetTransactionCount" target="_blank">Tatum API documentation</a>
@@ -32,7 +32,7 @@ export const egldGetAccountBalance = async (address: string): Promise<BigNumber>
  * For more details, see <a href="https://tatum.io/apidoc" target="_blank">Tatum API documentation</a>
  */
 export const egldGetAccountErc20Balance = async (address: string, tokenId: string): Promise<number> =>
-    get(`/v3/egld/account/esdt/balance/${address}/${tokenId}`)
+  get(`/v3/egld/account/esdt/balance/${address}/${tokenId}`)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/EgldGetTransaction" target="_blank">Tatum API documentation</a>

@@ -1,12 +1,8 @@
-import {fromBase58, fromSeed} from 'bip32';
-import {mnemonicToSeed} from 'bip39';
-import {ECPair, payments} from 'bitcoinjs-lib';
-import {
-    QTUM_DERIVATION_PATH,
-    QTUM_NETWORK_MAINNET,
-    QTUM_NETWORK_TESTNET,
-} from '../constants';
-import {TESTNET_DERIVATION_PATH} from '@tatumio/tatum-core';
+import { fromBase58, fromSeed } from 'bip32'
+import { mnemonicToSeed } from 'bip39'
+import { ECPair, payments } from 'bitcoinjs-lib'
+import { QTUM_DERIVATION_PATH, QTUM_NETWORK_MAINNET, QTUM_NETWORK_TESTNET } from '../constants'
+import { TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
 
 /**
  * Generate QTUM address
@@ -16,9 +12,9 @@ import {TESTNET_DERIVATION_PATH} from '@tatumio/tatum-core';
  * @returns blockchain address
  */
 const generateQtumAddress = (testnet: boolean, xpub: string, i: number) => {
-    const network = testnet ? QTUM_NETWORK_TESTNET : QTUM_NETWORK_MAINNET
-    const w = fromBase58(xpub, network).derivePath(String(i))
-    return payments.p2pkh({pubkey: w.publicKey, network}).address as string
+  const network = testnet ? QTUM_NETWORK_TESTNET : QTUM_NETWORK_MAINNET
+  const w = fromBase58(xpub, network).derivePath(String(i))
+  return payments.p2pkh({ pubkey: w.publicKey, network }).address as string
 }
 
 /**
@@ -28,11 +24,11 @@ const generateQtumAddress = (testnet: boolean, xpub: string, i: number) => {
  * @returns blockchain private key to the address
  */
 const generateQtumPrivateKey = async (testnet: boolean, mnem: string, i: number) => {
-    const network = testnet ? QTUM_NETWORK_TESTNET : QTUM_NETWORK_MAINNET
-    return fromSeed(await mnemonicToSeed(mnem), network)
-        .derivePath(testnet ? TESTNET_DERIVATION_PATH : QTUM_DERIVATION_PATH)
-        .derive(i)
-        .toWIF()
+  const network = testnet ? QTUM_NETWORK_TESTNET : QTUM_NETWORK_MAINNET
+  return fromSeed(await mnemonicToSeed(mnem), network)
+    .derivePath(testnet ? TESTNET_DERIVATION_PATH : QTUM_DERIVATION_PATH)
+    .derive(i)
+    .toWIF()
 }
 
 /**
@@ -43,9 +39,9 @@ const generateQtumPrivateKey = async (testnet: boolean, mnem: string, i: number)
  * @returns blockchain private key to the address
  */
 const convertQTUMPrivateKey = (testnet: boolean, privkey: string) => {
-    const network = testnet ? QTUM_NETWORK_TESTNET : QTUM_NETWORK_MAINNET
-    const keyPair = ECPair.fromWIF(privkey, network)
-    return payments.p2pkh({pubkey: keyPair.publicKey, network}).address as string
+  const network = testnet ? QTUM_NETWORK_TESTNET : QTUM_NETWORK_MAINNET
+  const keyPair = ECPair.fromWIF(privkey, network)
+  return payments.p2pkh({ pubkey: keyPair.publicKey, network }).address as string
 }
 
 /**
@@ -56,7 +52,7 @@ const convertQTUMPrivateKey = (testnet: boolean, privkey: string) => {
  * @returns blockchain address
  */
 export const generateAddressFromXPub = (testnet: boolean, xpub: string, i: number) => {
-    return generateQtumAddress(testnet, xpub, i)
+  return generateQtumAddress(testnet, xpub, i)
 }
 
 /**
@@ -67,7 +63,7 @@ export const generateAddressFromXPub = (testnet: boolean, xpub: string, i: numbe
  * @returns blockchain private key to the address
  */
 export const generatePrivateKeyFromMnemonic = (testnet: boolean, mnemonic: string, i: number) => {
-    return generateQtumPrivateKey(testnet, mnemonic, i)
+  return generateQtumPrivateKey(testnet, mnemonic, i)
 }
 
 /**
@@ -77,5 +73,5 @@ export const generatePrivateKeyFromMnemonic = (testnet: boolean, mnemonic: strin
  * @returns blockchain private key to the address
  */
 export const generateAddressFromPrivatekey = (testnet: boolean, privateKey: string) => {
-    return convertQTUMPrivateKey(testnet, privateKey)
+  return convertQTUMPrivateKey(testnet, privateKey)
 }

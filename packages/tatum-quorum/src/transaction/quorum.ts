@@ -1,6 +1,6 @@
-import {isHex, stringToHex, toHex} from 'web3-utils';
-import {axios, validateBody, CreateRecord} from '@tatumio/tatum-core';
-import {TransferQuorum} from '../model';
+import { isHex, stringToHex, toHex } from 'web3-utils'
+import { axios, validateBody, CreateRecord } from '@tatumio/tatum-core'
+import { TransferQuorum } from '../model'
 
 /**
  * Send Quorum store data transaction to the blockchain.
@@ -10,22 +10,26 @@ import {TransferQuorum} from '../model';
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendStoreDataQuorumTransaction = async (body: CreateRecord, provider: string) => {
-    await validateBody(body, CreateRecord);
-    const data = (await axios.post(provider, {
-        'jsonrpc': '2.0',
-        'method': 'eth_sendTransaction',
-        'params': [{
-            from: body.from,
-            to: body.to,
-            nonce: body.nonce,
-            data: body.data ? (isHex(body.data) ? stringToHex(body.data) : toHex(body.data)) : undefined,
-        }],
-        'id': 1
-    })).data
-    if (data.result) {
-        return {txId: data.result}
-    }
-    throw new Error(data.error.message)
+  await validateBody(body, CreateRecord)
+  const data = (
+    await axios.post(provider, {
+      jsonrpc: '2.0',
+      method: 'eth_sendTransaction',
+      params: [
+        {
+          from: body.from,
+          to: body.to,
+          nonce: body.nonce,
+          data: body.data ? (isHex(body.data) ? stringToHex(body.data) : toHex(body.data)) : undefined,
+        },
+      ],
+      id: 1,
+    })
+  ).data
+  if (data.result) {
+    return { txId: data.result }
+  }
+  throw new Error(data.error.message)
 }
 
 /**
@@ -36,15 +40,17 @@ export const sendStoreDataQuorumTransaction = async (body: CreateRecord, provide
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendQuorumTransaction = async (body: TransferQuorum, provider: string) => {
-    await validateBody(body, TransferQuorum)
-    const data = (await axios.post(provider, {
-        'jsonrpc': '2.0',
-        'method': 'eth_sendTransaction',
-        'params': [body],
-        'id': 1
-    })).data
-    if (data.result) {
-        return {txId: data.result}
-    }
-    throw new Error(data.error.message)
+  await validateBody(body, TransferQuorum)
+  const data = (
+    await axios.post(provider, {
+      jsonrpc: '2.0',
+      method: 'eth_sendTransaction',
+      params: [body],
+      id: 1,
+    })
+  ).data
+  if (data.result) {
+    return { txId: data.result }
+  }
+  throw new Error(data.error.message)
 }

@@ -1,8 +1,7 @@
-import {IsNotEmpty, MaxLength} from 'class-validator'
+import { IsNotEmpty, MaxLength } from 'class-validator'
 
 export class AccountPassword {
-
-    @IsNotEmpty()
-    @MaxLength(500)
-    public password: string;
+  @IsNotEmpty()
+  @MaxLength(500)
+  public password: string
 }

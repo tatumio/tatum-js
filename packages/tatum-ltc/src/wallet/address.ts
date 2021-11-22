@@ -1,13 +1,9 @@
 // @ts-ignore
-import { fromBase58, fromSeed } from 'bip32';
-import { mnemonicToSeed } from 'bip39';
-import { payments } from 'bitcoinjs-lib';
-import {
-    LTC_DERIVATION_PATH,
-    LTC_NETWORK,
-    LTC_TEST_NETWORK
-} from '../constants';
-import { TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core';
+import { fromBase58, fromSeed } from 'bip32'
+import { mnemonicToSeed } from 'bip39'
+import { payments } from 'bitcoinjs-lib'
+import { LTC_DERIVATION_PATH, LTC_NETWORK, LTC_TEST_NETWORK } from '../constants'
+import { TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
 
 /**
  * Generate Litecoin address
@@ -17,10 +13,10 @@ import { TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core';
  * @returns blockchain address
  */
 const generateLtcAddress = (testnet: boolean, xpub: string, i: number) => {
-    const network = testnet ? LTC_TEST_NETWORK : LTC_NETWORK;
-    const w = fromBase58(xpub, network).derivePath(String(i));
-    return payments.p2pkh({ pubkey: w.publicKey, network }).address as string;
-};
+  const network = testnet ? LTC_TEST_NETWORK : LTC_NETWORK
+  const w = fromBase58(xpub, network).derivePath(String(i))
+  return payments.p2pkh({ pubkey: w.publicKey, network }).address as string
+}
 
 /**
  * Generate Litecoin private key from mnemonic seed
@@ -30,12 +26,12 @@ const generateLtcAddress = (testnet: boolean, xpub: string, i: number) => {
  * @returns blockchain private key to the address
  */
 const generateLtcPrivateKey = async (testnet: boolean, mnemonic: string, i: number) => {
-    const network = testnet ? LTC_TEST_NETWORK : LTC_NETWORK;
-    return fromSeed(await mnemonicToSeed(mnemonic), network)
-        .derivePath(testnet ? TESTNET_DERIVATION_PATH : LTC_DERIVATION_PATH)
-        .derive(i)
-        .toWIF();
-};
+  const network = testnet ? LTC_TEST_NETWORK : LTC_NETWORK
+  return fromSeed(await mnemonicToSeed(mnemonic), network)
+    .derivePath(testnet ? TESTNET_DERIVATION_PATH : LTC_DERIVATION_PATH)
+    .derive(i)
+    .toWIF()
+}
 
 /**
  * Generate address
@@ -45,8 +41,8 @@ const generateLtcPrivateKey = async (testnet: boolean, mnemonic: string, i: numb
  * @returns blockchain address
  */
 export const generateAddressFromXPub = (testnet: boolean, xpub: string, i: number) => {
-    return generateLtcAddress(testnet, xpub, i);
-};
+  return generateLtcAddress(testnet, xpub, i)
+}
 
 /**
  * Generate private key from mnemonic seed
@@ -56,5 +52,5 @@ export const generateAddressFromXPub = (testnet: boolean, xpub: string, i: numbe
  * @returns blockchain private key to the address
  */
 export const generatePrivateKeyFromMnemonic = (testnet: boolean, mnemonic: string, i: number) => {
-    return generateLtcPrivateKey(testnet, mnemonic, i);
-};
+  return generateLtcPrivateKey(testnet, mnemonic, i)
+}

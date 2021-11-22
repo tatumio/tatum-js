@@ -12,13 +12,7 @@ export const helperGetWeb3Client = (provider?: string): Web3 => {
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-export const helperPrepareSCCall = async (
-  body: any,
-  methodName: string,
-  params: any[],
-  provider?: string,
-  abi: any[] = listing.abi
-) => {
+export const helperPrepareSCCall = async (body: any, methodName: string, params: any[], provider?: string, abi: any[] = listing.abi) => {
   const r = buildSmartContractMethodInvocation(body, params, methodName, abi)
   return await prepareBscSmartContractWriteMethodInvocation(r, provider)
 }

@@ -20,8 +20,8 @@ export class BaseBurnErc721 extends PrivateKeyOrSignatureId {
   @IsOptional()
   public nonce?: number
 
-  @ValidateIf(o => o.chain === Currency.ALGO && o.signatureId)
+  @ValidateIf((o) => o.chain === Currency.ALGO && o.signatureId)
   @IsNotEmpty()
   @Length(42, 58)
-  public from?: string;
+  public from?: string
 }

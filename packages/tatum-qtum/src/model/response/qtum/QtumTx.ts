@@ -1,10 +1,10 @@
-export class QtumIRawTransactions{
-    totalItems: number
-    from: number
-    to: number
-    items: QtumTransactionObj[]
+export class QtumIRawTransactions {
+  totalItems: number
+  from: number
+  to: number
+  items: QtumTransactionObj[]
 }
-export class QtumTransactionObj{
+export class QtumTransactionObj {
   txid: string
   version: number
   locktime: number
@@ -21,7 +21,7 @@ export class QtumTransactionObj{
   valueIn: string
   fees: string
 }
-export class VInput{
+export class VInput {
   txid: string
   vout: number
   sequence: number
@@ -31,19 +31,19 @@ export class VInput{
   value: string
   doubleSpentTxID: string
   scriptSig: {
-      hex: string
-      asm: string
+    hex: string
+    asm: string
   }
 }
-export class VOutput{
+export class VOutput {
   value: string
   n: number
   spentTxId: string
   spentIndex: string
   spentHeight: string
   scriptPubKey: {
-      hex: string
-      asm: string
+    hex: string
+    asm: string
   }
 }
 export class QtumIRawTransactionInfo {
@@ -83,9 +83,9 @@ export interface IOutput {
   address?: string
   script?: Buffer
   scriptPubKey: {
-    hex: string,
-    asm: string,
-    addresses: string[],
+    hex: string
+    asm: string
+    addresses: string[]
     type: string
   }
 }

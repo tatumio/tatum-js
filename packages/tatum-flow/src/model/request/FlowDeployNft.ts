@@ -1,9 +1,9 @@
-import {IsIn, IsNotEmpty} from 'class-validator'
-import {Currency} from '@tatumio/tatum-core'
-import {FlowMnemonicOrPrivateKeyOrSignatureId} from './FlowMnemonicOrPrivateKeyOrSignatureId'
+import { IsIn, IsNotEmpty } from 'class-validator'
+import { Currency } from '@tatumio/tatum-core'
+import { FlowMnemonicOrPrivateKeyOrSignatureId } from './FlowMnemonicOrPrivateKeyOrSignatureId'
 
 export class FlowDeployNft extends FlowMnemonicOrPrivateKeyOrSignatureId {
-    @IsNotEmpty()
-    @IsIn([Currency.FLOW])
-    public chain: Currency;
+  @IsNotEmpty()
+  @IsIn([Currency.FLOW])
+  public chain: Currency
 }

@@ -6,4 +6,4 @@ export {
   getTradeById,
   deleteTrade,
   deleteAccountTrades,
-} from '@tatumio/tatum-ledger';
+} from '@tatumio/tatum-ledger'

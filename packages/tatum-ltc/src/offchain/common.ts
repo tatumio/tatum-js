@@ -10,4 +10,4 @@ export {
   offchainStoreWithdrawal,
   offchainCancelWithdrawal,
   offchainCompleteWithdrawal,
-} from '@tatumio/tatum-core';
+} from '@tatumio/tatum-core'

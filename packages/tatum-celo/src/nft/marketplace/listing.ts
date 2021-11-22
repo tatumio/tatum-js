@@ -101,13 +101,7 @@ export const prepareMarketplaceCreateListing = async (testnet: boolean, body: Cr
  */
 export const prepareMarketplaceBuyListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation, provider?: string) => {
   const { body: validatedBody, params, methodName } = await prepareMarketplaceBuyListingAbstraction(body)
-  return await helperPrepareSCCall(
-    testnet,
-    validatedBody,
-    methodName,
-    params,
-    provider
-  )
+  return await helperPrepareSCCall(testnet, validatedBody, methodName, params, provider)
 }
 
 /**

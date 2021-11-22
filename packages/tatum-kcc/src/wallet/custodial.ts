@@ -1,7 +1,4 @@
-import {
-  prepareBatchTransferFromCustodialWalletAbstract,
-  prepareTransferFromCustodialWalletAbstract
-} from '@tatumio/tatum-defi'
+import { prepareBatchTransferFromCustodialWalletAbstract, prepareTransferFromCustodialWalletAbstract } from '@tatumio/tatum-defi'
 
 import {
   ContractType,
@@ -18,7 +15,7 @@ import {
   getKccErc20ContractDecimals,
   prepareKccGenerateCustodialWalletSignedTransaction,
   prepareKccSmartContractWriteMethodInvocation,
-  sendKccGenerateCustodialWalletSignedTransaction
+  sendKccGenerateCustodialWalletSignedTransaction,
 } from '../transaction'
 import { getErc20Decimals } from '../fungible'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
@@ -130,8 +127,7 @@ export const sendBatchTransferFromCustodialWallet = async (testnet: boolean, bod
 export const prepareApproveFromCustodialWallet = async (body: ApproveCustodialTransfer, provider?: string) => {
   await validateBody(body, ApproveCustodialTransfer)
 
-  const decimals =
-    body.contractType === ContractType.FUNGIBLE_TOKEN ? await getErc20Decimals(body.tokenAddress, provider) : 0
+  const decimals = body.contractType === ContractType.FUNGIBLE_TOKEN ? await getErc20Decimals(body.tokenAddress, provider) : 0
   const params = [
     body.tokenAddress.trim(),
     body.contractType,

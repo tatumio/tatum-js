@@ -7,10 +7,7 @@ import {
   listing,
   SmartContractReadMethodInvocation,
 } from '@tatumio/tatum-core'
-import {
-  sendKccSmartContractMethodInvocationTransaction,
-  sendKccSmartContractReadMethodInvocationTransaction,
-} from '../../transaction'
+import { sendKccSmartContractMethodInvocationTransaction, sendKccSmartContractReadMethodInvocationTransaction } from '../../transaction'
 import { transferNFT } from '../nft'
 import {
   deployMarketplaceListing,

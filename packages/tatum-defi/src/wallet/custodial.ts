@@ -105,11 +105,7 @@ export const prepareTransferFromCustodialWalletAbstract = async (
   testnet: boolean,
   body: TransferFromCustodialAddress,
   getContractDecimals: (contractAddress: string, provider?: string, testnet?: boolean) => Promise<any>,
-  prepareSmartContractWriteMethodInvocation: (
-    r: SmartContractMethodInvocation,
-    provider?: string,
-    testnet?: boolean
-  ) => Promise<string>,
+  prepareSmartContractWriteMethodInvocation: (r: SmartContractMethodInvocation, provider?: string, testnet?: boolean) => Promise<string>,
   SmartContractMethodInvocationCtor: any,
   decimals: number,
   validateClass: any,
@@ -154,11 +150,7 @@ export const prepareBatchTransferFromCustodialWalletAbstract = async (
   testnet: boolean,
   body: TransferFromCustodialAddressBatch,
   getContractDecimals: (contractAddress: string, provider?: string, testnet?: boolean) => Promise<any>,
-  prepareSmartContractWriteMethodInvocation: (
-    r: SmartContractMethodInvocation,
-    provider?: string,
-    testnet?: boolean,
-  ) => Promise<string>,
+  prepareSmartContractWriteMethodInvocation: (r: SmartContractMethodInvocation, provider?: string, testnet?: boolean) => Promise<string>,
   SmartContractMethodInvocationCtor: any,
   decimals: number,
   validateClass: any,

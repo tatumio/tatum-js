@@ -25,8 +25,7 @@ export const sendCeloOffchainTransaction = async (testnet: boolean, body: Transf
   const { mnemonic, index, privateKey, gasLimit, gasPrice, nonce, feeCurrency, ...withdrawal } = body
   const { amount, address } = withdrawal
 
-  const fromPriv =
-    mnemonic && index !== undefined ? await generatePrivateKeyFromMnemonic(testnet, mnemonic, index) : (privateKey as string)
+  const fromPriv = mnemonic && index !== undefined ? await generatePrivateKeyFromMnemonic(testnet, mnemonic, index) : (privateKey as string)
 
   const account = await getAccountById(withdrawal.senderAccountId)
   let txData

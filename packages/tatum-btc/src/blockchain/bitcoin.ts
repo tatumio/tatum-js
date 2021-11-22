@@ -18,7 +18,8 @@ export const btcGetCurrentBlock = async (): Promise<BtcInfo> => get('/v3/bitcoin
  * Returns balance on address from Btc blockchain. <br>
  * For more details, see <a href="https://tatum.io/apidoc#operation/BtcGetBalanceOfAddress" target="_blank">Tatum API documentation</a>
  */
-export const btcGetBalance = async (address: string): Promise<{ incoming: string, outgoing: string }> => get(`/v3/bitcoin/address/balance/${address}`)
+export const btcGetBalance = async (address: string): Promise<{ incoming: string; outgoing: string }> =>
+  get(`/v3/bitcoin/address/balance/${address}`)
 
 /**
  * Returns block by its hash from Btc blockchain. <br>

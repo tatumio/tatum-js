@@ -4,97 +4,97 @@
  * @interface BtcTx
  */
 export interface BtcTx {
-    /**
-     * Transaction hash.
-     * @type {string}
-     * @memberof BtcTx
-     */
-    hash: string;
-    /**
-     * Witness hash in case of a SegWit transaction.
-     * @type {string}
-     * @memberof BtcTx
-     */
-    witnessHash: string;
-    /**
-     * Fee paid for this transaction, in satoshis.
-     * @type {number}
-     * @memberof BtcTx
-     */
-    fee: number;
-    /**
-     *
-     * @type {number}
-     * @memberof BtcTx
-     */
-    rate: number;
-    /**
-     *
-     * @type {number}
-     * @memberof BtcTx
-     */
-    mtime: number;
-    /**
-     * Height of the block this transaction belongs to.
-     * @type {number}
-     * @memberof BtcTx
-     */
-    height: number;
-    /**
-     * Hash of the block this transaction belongs to.
-     * @type {string}
-     * @memberof BtcTx
-     */
-    block: string;
-    /**
-     * Time of the transaction.
-     * @type {number}
-     * @memberof BtcTx
-     */
-    time: number;
-    /**
-     * Index of the transaction in the block.
-     * @type {number}
-     * @memberof BtcTx
-     */
-    index: number;
-    /**
-     * Index of the transaction.
-     * @type {number}
-     * @memberof BtcTx
-     */
-    version: number;
-    /**
-     *
-     * @type {Array<BtcTxInputs>}
-     * @memberof BtcTx
-     */
-    inputs?: BtcTxInputs[];
-    /**
-     *
-     * @type {Array<BtcTxOutputs>}
-     * @memberof BtcTx
-     */
-    outputs?: BtcTxOutputs[];
+  /**
+   * Transaction hash.
+   * @type {string}
+   * @memberof BtcTx
+   */
+  hash: string
+  /**
+   * Witness hash in case of a SegWit transaction.
+   * @type {string}
+   * @memberof BtcTx
+   */
+  witnessHash: string
+  /**
+   * Fee paid for this transaction, in satoshis.
+   * @type {number}
+   * @memberof BtcTx
+   */
+  fee: number
+  /**
+   *
+   * @type {number}
+   * @memberof BtcTx
+   */
+  rate: number
+  /**
+   *
+   * @type {number}
+   * @memberof BtcTx
+   */
+  mtime: number
+  /**
+   * Height of the block this transaction belongs to.
+   * @type {number}
+   * @memberof BtcTx
+   */
+  height: number
+  /**
+   * Hash of the block this transaction belongs to.
+   * @type {string}
+   * @memberof BtcTx
+   */
+  block: string
+  /**
+   * Time of the transaction.
+   * @type {number}
+   * @memberof BtcTx
+   */
+  time: number
+  /**
+   * Index of the transaction in the block.
+   * @type {number}
+   * @memberof BtcTx
+   */
+  index: number
+  /**
+   * Index of the transaction.
+   * @type {number}
+   * @memberof BtcTx
+   */
+  version: number
+  /**
+   *
+   * @type {Array<BtcTxInputs>}
+   * @memberof BtcTx
+   */
+  inputs?: BtcTxInputs[]
+  /**
+   *
+   * @type {Array<BtcTxOutputs>}
+   * @memberof BtcTx
+   */
+  outputs?: BtcTxOutputs[]
 
-    vin?: {
-        txid: string,
-        vout: number,
-    }[];
+  vin?: {
+    txid: string
+    vout: number
+  }[]
 
-    vout?: {
-        value: number,
-        n: number,
-        scriptPubKey: {
-            addresses: string[]
-        }
-    }[];
-    /**
-     * Block this transaction was included in.
-     * @type {number}
-     * @memberof BtcTx
-     */
-    locktime: number;
+  vout?: {
+    value: number
+    n: number
+    scriptPubKey: {
+      addresses: string[]
+    }
+  }[]
+  /**
+   * Block this transaction was included in.
+   * @type {number}
+   * @memberof BtcTx
+   */
+  locktime: number
 }
 
 /**
@@ -103,42 +103,42 @@ export interface BtcTx {
  * @interface BtcTxCoin
  */
 export interface BtcTxCoin {
-    /**
-     *
-     * @type {number}
-     * @memberof BtcTxCoin
-     */
-    version: number;
-    /**
-     *
-     * @type {number}
-     * @memberof BtcTxCoin
-     */
-    height: number;
-    /**
-     *
-     * @type {number}
-     * @memberof BtcTxCoin
-     */
-    value: number;
-    /**
-     *
-     * @type {string}
-     * @memberof BtcTxCoin
-     */
-    script: string;
-    /**
-     * Sender address.
-     * @type {string}
-     * @memberof BtcTxCoin
-     */
-    address: string;
-    /**
-     * Coinbase transaction - miner fee.
-     * @type {boolean}
-     * @memberof BtcTxCoin
-     */
-    coinbase: boolean;
+  /**
+   *
+   * @type {number}
+   * @memberof BtcTxCoin
+   */
+  version: number
+  /**
+   *
+   * @type {number}
+   * @memberof BtcTxCoin
+   */
+  height: number
+  /**
+   *
+   * @type {number}
+   * @memberof BtcTxCoin
+   */
+  value: number
+  /**
+   *
+   * @type {string}
+   * @memberof BtcTxCoin
+   */
+  script: string
+  /**
+   * Sender address.
+   * @type {string}
+   * @memberof BtcTxCoin
+   */
+  address: string
+  /**
+   * Coinbase transaction - miner fee.
+   * @type {boolean}
+   * @memberof BtcTxCoin
+   */
+  coinbase: boolean
 }
 
 /**
@@ -147,36 +147,36 @@ export interface BtcTxCoin {
  * @interface BtcTxInputs
  */
 export interface BtcTxInputs {
-    /**
-     *
-     * @type {BtcTxPrevout}
-     * @memberof BtcTxInputs
-     */
-    prevout: BtcTxPrevout;
-    /**
-     * Data generated by a spender which is almost always used as variables to satisfy a pubkey script.
-     * @type {string}
-     * @memberof BtcTxInputs
-     */
-    script: string;
-    /**
-     * Transaction witness.
-     * @type {string}
-     * @memberof BtcTxInputs
-     */
-    witness: string;
-    /**
-     *
-     * @type {number}
-     * @memberof BtcTxInputs
-     */
-    sequence: number;
-    /**
-     *
-     * @type {BtcTxCoin}
-     * @memberof BtcTxInputs
-     */
-    coin: BtcTxCoin;
+  /**
+   *
+   * @type {BtcTxPrevout}
+   * @memberof BtcTxInputs
+   */
+  prevout: BtcTxPrevout
+  /**
+   * Data generated by a spender which is almost always used as variables to satisfy a pubkey script.
+   * @type {string}
+   * @memberof BtcTxInputs
+   */
+  script: string
+  /**
+   * Transaction witness.
+   * @type {string}
+   * @memberof BtcTxInputs
+   */
+  witness: string
+  /**
+   *
+   * @type {number}
+   * @memberof BtcTxInputs
+   */
+  sequence: number
+  /**
+   *
+   * @type {BtcTxCoin}
+   * @memberof BtcTxInputs
+   */
+  coin: BtcTxCoin
 }
 
 /**
@@ -185,24 +185,24 @@ export interface BtcTxInputs {
  * @interface BtcTxOutputs
  */
 export interface BtcTxOutputs {
-    /**
-     * Sent amount in satoshis.
-     * @type {number}
-     * @memberof BtcTxOutputs
-     */
-    value: number;
-    /**
-     * Transaction script.
-     * @type {string}
-     * @memberof BtcTxOutputs
-     */
-    script: string;
-    /**
-     * Recipient address.
-     * @type {string}
-     * @memberof BtcTxOutputs
-     */
-    address: string;
+  /**
+   * Sent amount in satoshis.
+   * @type {number}
+   * @memberof BtcTxOutputs
+   */
+  value: number
+  /**
+   * Transaction script.
+   * @type {string}
+   * @memberof BtcTxOutputs
+   */
+  script: string
+  /**
+   * Recipient address.
+   * @type {string}
+   * @memberof BtcTxOutputs
+   */
+  address: string
 }
 
 /**
@@ -211,16 +211,16 @@ export interface BtcTxOutputs {
  * @interface BtcTxPrevout
  */
 export interface BtcTxPrevout {
-    /**
-     * Transaction hash of the input.
-     * @type {string}
-     * @memberof BtcTxPrevout
-     */
-    hash: string;
-    /**
-     * Transaction index of the input.
-     * @type {number}
-     * @memberof BtcTxPrevout
-     */
-    index: number;
+  /**
+   * Transaction hash of the input.
+   * @type {string}
+   * @memberof BtcTxPrevout
+   */
+  hash: string
+  /**
+   * Transaction index of the input.
+   * @type {number}
+   * @memberof BtcTxPrevout
+   */
+  index: number
 }

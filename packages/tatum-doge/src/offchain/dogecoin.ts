@@ -72,9 +72,7 @@ export const signDogecoinOffchainKMSTransaction = async (tx: TransactionKMS, mne
     if (response.vIn === '-1') {
       continue
     }
-    builder.sign(
-      PrivateKey.fromWIF(await generatePrivateKeyFromMnemonic(testnet, mnemonic, response.address?.derivationKey || 0))
-    )
+    builder.sign(PrivateKey.fromWIF(await generatePrivateKeyFromMnemonic(testnet, mnemonic, response.address?.derivationKey || 0)))
   }
   return builder.serialize(true)
 }

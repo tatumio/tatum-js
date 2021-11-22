@@ -75,13 +75,7 @@ export const prepareAuctionUpdateFee = async (body: UpdateAuctionFee, provider?:
  */
 export const prepareAuctionUpdateFeeRecipient = async (body: UpdateMarketplaceFeeRecipient, provider?: string) => {
   const params = await prepareAuctionUpdateFeeRecipientAbstraction(body)
-  return await helperPrepareSCCall(
-    body,
-    'setAuctionFeeRecipient',
-    params,
-    provider,
-    auction.abi
-  )
+  return await helperPrepareSCCall(body, 'setAuctionFeeRecipient', params, provider, auction.abi)
 }
 
 /**
@@ -167,7 +161,7 @@ export const prepareAuctionSettle = async (body: InvokeAuctionOperation, provide
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendAuctionUpdateFee = async (body: UpdateAuctionFee, provider?: string) =>
-  helperBroadcastTx(await prepareAuctionUpdateFee( body, provider), body.signatureId)
+  helperBroadcastTx(await prepareAuctionUpdateFee(body, provider), body.signatureId)
 
 /**
  * Update auction fee recipient.

@@ -3,7 +3,8 @@ import { QtumIUTXO, QtumIGetInfo, QtumBlock, QtumIRawTransactionInfo, QtumIRawTr
 
 export const getQtumUTXOs = async (address: string): Promise<QtumIUTXO> => get(`/v3/qtum/utxo/${address}`)
 export const getQtumTransaction = async (id: string): Promise<QtumIRawTransactionInfo> => get(`/v3/qtum/transaction/${id}`)
-export const getQtumTransactions = async (address: string, pageSize = 50, offset = 0): Promise<QtumIRawTransactions> => get(`/v3/qtum/transactions/address/${address}/?pageSize=${pageSize}&offset=${offset}`)
+export const getQtumTransactions = async (address: string, pageSize = 50, offset = 0): Promise<QtumIRawTransactions> =>
+  get(`/v3/qtum/transactions/address/${address}/?pageSize=${pageSize}&offset=${offset}`)
 
 export const getQtumBalance = async (address: string): Promise<QtumIGetInfo> => get(`v3/qtum/account/balance/${address}`)
 export const getQtumCurrentBlock = async (): Promise<string> => get(`/v3/qtum/block/current`)
