@@ -8,20 +8,17 @@
   "command": {
     "bootstrap": {
       "ignore": [
-        "@tatumio/tatum",
-        "@tatumio/tatum-kcc"
+        "@tatumio/tatum"
       ]
     },
     "exec": {
       "ignore": [
-        "@tatumio/tatum",
-        "@tatumio/tatum-kcc"
+        "@tatumio/tatum"
       ]
     },
     "publish": {
       "ignoreChanges": [
-        "@tatumio/tatum",
-        "@tatumio/tatum-kcc"
+        "@tatumio/tatum"
       ]
     }
   }
