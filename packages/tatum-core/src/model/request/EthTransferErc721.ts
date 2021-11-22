@@ -1,4 +1,5 @@
-import { Fee, TransferErc721 } from '.'
+import { Fee } from './Fee'
+import { TransferErc721 } from './TransferErc721'
 import { Type } from 'class-transformer'
 import { IsOptional, ValidateNested } from 'class-validator'
 

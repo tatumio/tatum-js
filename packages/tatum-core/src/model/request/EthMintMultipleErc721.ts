@@ -1,4 +1,5 @@
-import { Fee, MintMultipleErc721 } from '.'
+import { Fee } from './Fee'
+import { MintMultipleErc721 } from './MintMultipleErc721'
 import { Type } from 'class-transformer'
 import { IsOptional, ValidateNested } from 'class-validator'
 
