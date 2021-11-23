@@ -13,11 +13,11 @@ export const generateAdaWallet = async (mnemonic: string): Promise<WalletWithMne
 
 /**
  * Generate wallet
- * @param testnet testnet or mainnet version of address
- * @param mnemonic mnemonic seed to use. If not present, new one will be generated
+ * @param options.mnemonic mnemonic seed to use. If not present, new one will be generated
  * @returns wallet or a combination of address and private key
  */
-export const generateWallet = (mnemonic?: string) => {
+export const generateWallet = (options: { mnemonic?: string }) => {
+  const mnemonic = options?.mnemonic
   const mnem = mnemonic ? mnemonic : generateMnemonic(256)
   return generateAdaWallet(mnem)
 }

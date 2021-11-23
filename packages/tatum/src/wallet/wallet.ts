@@ -38,30 +38,30 @@ export const generateWallet = (
   const mnem = mnemonic ? mnemonic : generateMnemonic(256)
   switch (currency) {
     case Currency.BTC:
-      return generateBtcWallet(testnet, mnem)
+      return generateBtcWallet({ testnet, mnemonic: mnem })
     case Currency.DOGE:
-      return generateDogeWallet(testnet, mnem)
+      return generateDogeWallet({ testnet, mnemonic: mnem })
     case Currency.LTC:
-      return generateLtcWallet(testnet, mnem)
+      return generateLtcWallet({ testnet, mnemonic: mnem })
     case Currency.BCH:
-      return generateBchWallet(testnet, mnem)
+      return generateBchWallet({ testnet, mnemonic: mnem })
     case Currency.TRON:
     case Currency.USDT_TRON:
     case Currency.INRT_TRON:
-      return generateTronWallet(mnem)
+      return generateTronWallet({ mnemonic: mnem })
     case Currency.FLOW:
     case Currency.FUSD:
-      return generateFlowWallet(mnem)
+      return generateFlowWallet({ mnemonic: mnem })
     case Currency.CELO:
     case Currency.CEUR:
     case Currency.CUSD:
-      return generateCeloWallet(testnet, mnem)
+      return generateCeloWallet({ testnet, mnemonic: mnem })
     case Currency.ONE:
-      return generateOneWallet(testnet, mnem)
+      return generateOneWallet({ testnet, mnemonic: mnem })
     case Currency.QTUM:
-      return generateQtumWallet(testnet, mnem)
+      return generateQtumWallet({ testnet, mnemonic: mnem })
     case Currency.EGLD:
-      return generateEgldWallet(mnem)
+      return generateEgldWallet({ mnemonic: mnem })
     case Currency.USDT:
     case Currency.WBTC:
     case Currency.LEO:
@@ -100,29 +100,29 @@ export const generateWallet = (
     case Currency.BLTC:
     case Currency.BBCH:
     case Currency.MMY:
-      return generateEthWallet(testnet, mnem)
+      return generateEthWallet({ testnet, mnemonic: mnem })
     case Currency.MATIC:
     case Currency.USDC_MATIC:
     case Currency.USDT_MATIC:
-      return generatePolygonWallet(testnet, mnem)
+      return generatePolygonWallet({ testnet, mnemonic: mnem })
     case Currency.XDC:
-      return generateXdcWallet(testnet, mnem)
+      return generateXdcWallet({ testnet, mnemonic: mnem })
     case Currency.XRP:
       return generateXrpWallet()
     case Currency.XLM:
       return generateXlmWallet()
     case Currency.VET:
-      return generateVetWallet(testnet, mnem)
+      return generateVetWallet({ testnet, mnemonic: mnem })
     case Currency.NEO:
       return generateNeoWallet()
     case Currency.BNB:
-      return generateBnbWallet(testnet)
+      return generateBnbWallet({ testnet })
     case Currency.LYRA:
-      return generateLyraWallet(testnet, mnem)
+      return generateLyraWallet({ testnet, mnemonic: mnem })
     case Currency.ADA:
-      return generateAdaWallet(mnem)
+      return generateAdaWallet({ mnemonic: mnem })
     case Currency.ALGO:
-      return generateAlgoWallet(mnemonic)
+      return generateAlgoWallet({ mnemonic })
     default:
       throw new Error('Unsupported blockchain.')
   }

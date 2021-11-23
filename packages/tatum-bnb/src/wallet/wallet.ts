@@ -17,11 +17,9 @@ export const generateBnbWallet = async (testnet: boolean): Promise<WalletWithAdd
 
 /**
  * Generate wallet
- * @param currency blockchain to generate wallet for
- * @param testnet testnet or mainnet version of address
- * @param mnemonic mnemonic seed to use. If not present, new one will be generated
+ * @param options.testnet testnet or mainnet version of address
  * @returns wallet or a combination of address and private key
  */
-export const generateWallet = (testnet: boolean) => {
-  return generateBnbWallet(testnet)
+export const generateWallet = (options: { testnet?: boolean }) => {
+  return generateBnbWallet(options.testnet as boolean)
 }
