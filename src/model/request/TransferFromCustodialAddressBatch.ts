@@ -20,7 +20,7 @@ export class TransferFromCustodialAddressBatch extends PrivateKeyOrSignatureId {
     @ValidateIf(o => o.contractType !== ContractType.NATIVE_ASSET)
     @IsArray()
     @IsNotEmpty()
-    public tokenAddress: string[];
+    public tokenAddress?: string[];
 
     @Validate(CustodialBatchTransferValidator)
     @IsArray()
@@ -36,13 +36,13 @@ export class TransferFromCustodialAddressBatch extends PrivateKeyOrSignatureId {
     @ValidateIf(o => o.contractType !== ContractType.NON_FUNGIBLE_TOKEN)
     @IsNotEmpty()
     @IsArray()
-    public amount: string[];
+    public amount?: string[];
 
     @ValidateIf(o => o.contractType !== ContractType.NATIVE_ASSET && o.contractType !== ContractType.FUNGIBLE_TOKEN)
     @IsNotEmpty()
     @Validate(CustodialBatchTransferValidator)
     @IsArray()
-    public tokenId: string[];
+    public tokenId?: string[];
 
     @IsOptional()
     @Min(0)
