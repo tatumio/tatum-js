@@ -1,4 +1,6 @@
 {
-  "packages": ".",
-  "includeVersion": true
+  "packages": "./packages",
+  "includeVersion": true,
+  "external-modulemap": ".*packages\/(@namespace\/[^\/]+)\/.*",
+  "excludeExternals": false
 }

@@ -32,6 +32,7 @@
   "author": "Tatum, hello@tatum.io",
   "license": "MIT",
   "devDependencies": {
+    "@strictsoftware/typedoc-plugin-monorepo": "^0.4.2",
     "@typescript-eslint/eslint-plugin": "^4.29.1",
     "@typescript-eslint/parser": "^4.29.1",
     "dotenv": "^8.2.0",
