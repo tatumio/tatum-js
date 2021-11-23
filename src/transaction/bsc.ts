@@ -1,10 +1,10 @@
-import {BigNumber} from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import Web3 from 'web3';
-import {TransactionConfig} from 'web3-core';
-import {toWei} from 'web3-utils';
-import {bscBroadcast, bscGetTransactionsCount} from '../blockchain';
-import {validateBody} from '../connector/tatum';
-import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI} from '../constants';
+import { TransactionConfig } from 'web3-core';
+import { toWei } from 'web3-utils';
+import { bscBroadcast, bscGetTransactionsCount } from '../blockchain';
+import { validateBody } from '../connector/tatum';
+import { CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI } from '../constants';
 import erc1155TokenABI from '../contracts/erc1155/erc1155_abi';
 import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode';
 import erc20_abi from '../contracts/erc20/token_abi';
@@ -14,7 +14,7 @@ import erc721TokenABI from '../contracts/erc721/erc721_abi';
 import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
 import erc721Provenance_abi from '../contracts/erc721Provenance/erc721Provenance_abi';
 import erc721Provenance_bytecode from '../contracts/erc721Provenance/erc721Provenance_bytecode';
-import {auction, listing} from '../contracts/marketplace';
+import { auction, listing } from '../contracts/marketplace';
 import {
     BurnErc20,
     CreateRecord,
@@ -44,8 +44,8 @@ import {
     TransferMultiTokenBatch,
     UpdateCashbackErc721
 } from '../model';
-import {mintNFT} from '../nft';
-import {obtainCustodialAddressType} from '../wallet';
+import { mintNFT } from '../nft';
+import { obtainCustodialAddressType } from '../wallet';
 
 /**
  * Estimate Gas price for the transaction.
@@ -464,6 +464,7 @@ export const prepareBscMintMultipleBep721ProvenanceSignedTransaction = async (bo
         authorAddresses,
         cashbackValues,
         fixedValues,
+        erc20,
         fee
     } = body
 
@@ -488,7 +489,7 @@ export const prepareBscMintMultipleBep721ProvenanceSignedTransaction = async (bo
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
-        data: contract.methods.mintMultiple(to.map(t => t.trim()), tokenId, url, authorAddresses ? authorAddresses : [], cb, fv).encodeABI(),
+        data: erc20 ? contract.methods.mintMultiple(to.map(t => t.trim()), tokenId, url, authorAddresses ? authorAddresses : [], cb, fv, erc20).encodeABI() : contract.methods.mintMultiple(to.map(t => t.trim()), tokenId, url, authorAddresses ? authorAddresses : [], cb, fv).encodeABI(),
         nonce,
     }
     return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
@@ -512,7 +513,8 @@ export const prepareBscMintBep721ProvenanceSignedTransaction = async (body: EthM
         signatureId,
         authorAddresses,
         cashbackValues,
-        fixedValues
+        fixedValues,
+        erc20
     } = body
 
     const client = getBscClient(provider, fromPrivateKey)
@@ -529,7 +531,7 @@ export const prepareBscMintBep721ProvenanceSignedTransaction = async (body: EthM
         const tx: TransactionConfig = {
             from: 0,
             to: contractAddress.trim(),
-            data: contract.methods.mintWithTokenURI(to.trim(), tokenId, url, authorAddresses ? authorAddresses : [], cb, fval).encodeABI(),
+            data: contract.methods.mintWithTokenURI(to.trim(), tokenId, url, authorAddresses ? authorAddresses : [], cb, fval, erc20 ? erc20 : null).encodeABI(),
             nonce,
         }
 
@@ -555,7 +557,8 @@ export const prepareBscMintBepCashback721SignedTransaction = async (body: EthMin
         url,
         signatureId,
         authorAddresses,
-        cashbackValues
+        cashbackValues,
+        erc20
     } = body
 
     const client = getBscClient(provider, fromPrivateKey)
@@ -568,7 +571,7 @@ export const prepareBscMintBepCashback721SignedTransaction = async (body: EthMin
         const tx: TransactionConfig = {
             from: 0,
             to: contractAddress.trim(),
-            data: contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb).encodeABI(),
+            data: erc20 ? contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb, erc20).encodeABI() : contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb).encodeABI(),
             nonce,
         }
 
@@ -594,7 +597,8 @@ export const prepareBscMintMultipleCashbackBep721SignedTransaction = async (body
         signatureId,
         authorAddresses,
         cashbackValues,
-        fee
+        fee,
+        erc20
     } = body
 
     const client = await getBscClient(provider, fromPrivateKey)
@@ -606,7 +610,7 @@ export const prepareBscMintMultipleCashbackBep721SignedTransaction = async (body
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),
-        data: contract.methods.mintMultipleCashback(to.map(t => t.trim()), tokenId, url, authorAddresses, cb).encodeABI(),
+        data: erc20 ? contract.methods.mintMultipleCashback(to.map(t => t.trim()), tokenId, url, authorAddresses, cb, erc20).encodeABI() : contract.methods.mintMultipleCashback(to.map(t => t.trim()), tokenId, url, authorAddresses, cb).encodeABI(),
         nonce,
     }
     return await prepareBscSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
@@ -701,7 +705,9 @@ export const prepareBscTransferBep721SignedTransaction = async (body: EthTransfe
 
     // @ts-ignore
     const contract = new (client).eth.Contract(provenance ? erc721Provenance_abi : erc721TokenABI, contractAddress);
-    const tokenData = provenance ? contract.methods.safeTransfer(to.trim(), tokenId, provenanceData + '\'\'\'###\'\'\'' + toWei(tokenPrice!, 'ether')).encodeABI() : contract.methods.safeTransfer(to.trim(), tokenId).encodeABI();
+    const dataBytes = provenance ?
+        Buffer.from(provenanceData + '\'\'\'###\'\'\'' + toWei(tokenPrice!, 'ether'), 'utf8') : '';
+    const tokenData = provenance ? contract.methods.safeTransfer(to.trim(), tokenId, `0x${dataBytes.toString('hex')}`).encodeABI() : contract.methods.safeTransfer(to.trim(), tokenId).encodeABI();
     const tx: TransactionConfig = {
         from: 0,
         to: contractAddress.trim(),

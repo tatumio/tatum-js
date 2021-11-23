@@ -226,6 +226,30 @@ export default [
 		"inputs": [
 			{
 				"internalType": "address",
+				"name": "a",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "t",
+				"type": "uint256"
+			}
+		],
+		"name": "allowance",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
 				"name": "to",
 				"type": "address"
 			},
@@ -479,6 +503,49 @@ export default [
 	{
 		"inputs": [
 			{
+				"internalType": "address[]",
+				"name": "to",
+				"type": "address[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "tokenId",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "string[]",
+				"name": "uri",
+				"type": "string[]"
+			},
+			{
+				"internalType": "address[][]",
+				"name": "recipientAddresses",
+				"type": "address[][]"
+			},
+			{
+				"internalType": "uint256[][]",
+				"name": "cashbackValues",
+				"type": "uint256[][]"
+			},
+			{
+				"internalType": "uint256[][]",
+				"name": "fValues",
+				"type": "uint256[][]"
+			},
+			{
+				"internalType": "address",
+				"name": "erc20",
+				"type": "address"
+			}
+		],
+		"name": "mintMultiple",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "address",
 				"name": "to",
 				"type": "address"
@@ -507,6 +574,49 @@ export default [
 				"internalType": "uint256[]",
 				"name": "fValues",
 				"type": "uint256[]"
+			}
+		],
+		"name": "mintWithTokenURI",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "uri",
+				"type": "string"
+			},
+			{
+				"internalType": "address[]",
+				"name": "recipientAddresses",
+				"type": "address[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "cashbackValues",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "fValues",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "address",
+				"name": "erc20",
+				"type": "address"
 			}
 		],
 		"name": "mintWithTokenURI",
@@ -595,9 +705,9 @@ export default [
 				"type": "uint256"
 			},
 			{
-				"internalType": "string",
-				"name": "data",
-				"type": "string"
+				"internalType": "bytes",
+				"name": "dataBytes",
+				"type": "bytes"
 			}
 		],
 		"name": "safeTransfer",
@@ -625,7 +735,7 @@ export default [
 		],
 		"name": "safeTransferFrom",
 		"outputs": [],
-		"stateMutability": "nonpayable",
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
@@ -647,13 +757,13 @@ export default [
 			},
 			{
 				"internalType": "bytes",
-				"name": "_data",
+				"name": "dataBytes",
 				"type": "bytes"
 			}
 		],
 		"name": "safeTransferFrom",
 		"outputs": [],
-		"stateMutability": "nonpayable",
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
