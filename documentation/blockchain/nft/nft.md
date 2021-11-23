@@ -53,6 +53,7 @@ const transactionHash = await deployNFT(false, {
 ```
 
 ## Mint NFT
+if cashbacks are to be made in custom erc20 add erc20:'contract address here' to the body
 ```typescript
 const transactionHash = await mintNFTWithUri(false, {
     to: '0x0ff64c166a462b31ed657c9d88c5ac4fef6b88b6',
@@ -77,6 +78,7 @@ const transactionHash = await burnNFT(false, {
 ```
 
 ## Transfer NFT
+In case of custom erc20 cashbacks please send approval of erc20 to nft address
 ```typescript
 const transactionHash = await transferNFT(false, {
     to: '0x0ff64c166a462b31ed657c9d88c5ac4fef6b88b6',
