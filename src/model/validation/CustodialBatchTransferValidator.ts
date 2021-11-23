@@ -11,11 +11,11 @@ export class CustodialBatchTransferValidator implements ValidatorConstraintInter
         const data = validationArguments?.object as TransferFromCustodialAddressBatch
         if (data.recipient.length !== data.contractType.length)
             return false
-        if (data.recipient.length !== data.tokenAddress.length)
+        if (data.recipient.length !== data.tokenAddress?.length)
             return false
-        if (data.recipient.length !== data.tokenId.length)
+        if (data.recipient.length !== data.tokenId?.length)
             return false
-        return data.recipient.length === data.amount.length
+        return data.recipient.length === data.amount?.length
 
     }
 
