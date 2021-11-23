@@ -91,6 +91,26 @@ const nftRoyalty = await getNFTRoyalty(
 );
 ```
 
+## Deploy NFT
+```typescript
+const transactionHash = await deployNFT(false, {
+    name: 'MY_NFT',
+    chain: Currency.ETH,
+    symbol: 'NFT_SYMBOL'
+});
+```
+
+## Mint NFT
+```typescript
+const transactionHash = await mintNFTWithUri(false, {
+    to: '0x0ff64c166a462b31ed657c9d88c5ac4fef6b88b6',
+    url: 'https://my-token-metadata-url',
+    tokenId: '12',
+    chain: Currency.ETH,
+    contractAddress: '0x7060694f5ce1feb5a255d06fdcf6e4f7a3507492',
+});
+```
+
 ## Burn NFT
 Use the following endpoint to [burn an NFT](https://tatum.io/apidoc.php#operation/NftBurnErc721). The required parameters are the chain, the address of the NFT smart contract, and the tokenID of the NFT.
 
