@@ -23,6 +23,7 @@
     "bitcoinjs-lib": "^5.2.0",
     "class-transformer": "^0.2.3",
     "class-validator": "0.13.0",
+    "hdkey": "^2.0.1",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
