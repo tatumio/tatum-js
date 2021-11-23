@@ -7,7 +7,6 @@ import {
   GenerateCustodialAddress,
   TransferFromCustodialAddress,
   SmartContractMethodInvocation,
-  TransferFromTronCustodialAddress,
   TransferFromCustodialAddressBatch,
   ApproveCustodialTransfer,
   validateBody,
@@ -91,11 +90,8 @@ export const prepareTransferFromCustodialWallet = async (testnet: boolean, body:
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendTransferFromCustodialWallet = async (
-  testnet: boolean,
-  body: TransferFromCustodialAddress | TransferFromTronCustodialAddress,
-  provider?: string
-) => helperBroadcastTx(await prepareTransferFromCustodialWallet(testnet, body, provider), body.signatureId)
+export const sendTransferFromCustodialWallet = async (testnet: boolean, body: TransferFromCustodialAddress, provider?: string) =>
+  helperBroadcastTx(await prepareTransferFromCustodialWallet(testnet, body, provider), body.signatureId)
 
 /**
  * Prepare signed batch transaction from the custodial SC wallet.
