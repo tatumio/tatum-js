@@ -21,6 +21,7 @@
     "bip32": "^2.0.6",
     "bip39": "^3.0.2",
     "bitcoinjs-lib": "^5.2.0",
+    "bitcore-lib-doge": "^8.25.10",
     "ethereumjs-wallet": "^1.0.0",
     "hdkey": "^2.0.1"
   },
