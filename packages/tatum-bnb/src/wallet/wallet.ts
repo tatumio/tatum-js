@@ -21,5 +21,5 @@ export const generateBnbWallet = async (testnet: boolean): Promise<WalletWithAdd
  * @returns wallet or a combination of address and private key
  */
 export const generateWallet = (options: { testnet?: boolean }) => {
-  return generateBnbWallet(options.testnet as boolean)
+  return generateBnbWallet(!!options.testnet)
 }

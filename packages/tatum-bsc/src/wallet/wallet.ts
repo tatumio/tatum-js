@@ -36,7 +36,6 @@ export const generateBscWallet = async (testnet: boolean, mnem: string): Promise
  * @returns wallet or a combination of address and private key
  */
 export const generateWallet = (options: { testnet?: boolean; mnemonic?: string }) => {
-  const mnemonic = options.mnemonic
-  const mnem = mnemonic ? mnemonic : generateMnemonic(256)
-  return generateBscWallet(options.testnet as boolean, mnem)
+  const mnem = options?.mnemonic ? options.mnemonic : generateMnemonic(256)
+  return generateBscWallet(!!options.testnet, mnem)
 }
