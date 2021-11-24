@@ -12,7 +12,7 @@
     "lint": "yarn lerna run lint",
     "clean:all": "yarn lerna clean --yes",
     "bootstrap": "yarn lerna bootstrap && yarn lerna exec yarn install",
-    "publish:prerelease": "yarn lerna publish prerelease --yes --no-verify-access"
+    "publish:prerelease": "yarn lerna publish prerelease --yes --no-verify-access --dist-tag alpha --force-publish"
   },
   "private": true,
   "workspaces": [
