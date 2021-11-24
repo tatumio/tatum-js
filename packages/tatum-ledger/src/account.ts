@@ -18,7 +18,7 @@ import {
 import { createNewSubscription } from './subscription'
 import { Wallet } from './wallet'
 
-export type GenerateWalletFn = (options: { testnet?: boolean; mnemonic?: string }) => Promise<Wallet>
+export type GenerateWalletFn = (mnemonic: string, options?: { testnet?: boolean }) => Promise<Wallet>
 export interface GeneratedAccount {
   account: Account
   address: Address
@@ -54,7 +54,7 @@ export const generateAccount = async (
   let w
   if (generateNewWallet) {
     // @ts-ignore
-    w = await generateNewWalletFn({ testnet })
+    w = await generateNewWalletFn(undefined, { testnet })
     // @ts-ignore
     account.xpub = w.xpub || w.address
   }
