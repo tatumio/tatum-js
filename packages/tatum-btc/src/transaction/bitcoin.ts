@@ -4,7 +4,7 @@ import { PrivateKey, Script, Transaction } from 'bitcore-lib'
 import { btcBroadcast, btcGetTransaction, btcGetTxForAccount, btcGetUTXO } from '../blockchain'
 import { validateBody, Currency, TransactionKMS } from '@tatumio/tatum-core'
 import { BtcTxOutputs } from '../model'
-import { TransferBtcBasedBlockchain } from '@tatumio/tatum-core/src/model'
+import { TransferBtcBasedBlockchain } from '@tatumio/tatum-core'
 
 /**
  * Prepare a signed Btc transaction with the private key locally. Nothing is broadcasted to the blockchain.
