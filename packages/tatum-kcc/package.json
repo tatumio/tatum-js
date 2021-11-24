@@ -8,6 +8,8 @@
     "test": "jest",
     "clean": "rimraf dist* tsconfig.tsbuildinfo",
     "build": "tsc",
+    "build:watch": "tsc -w",
+    "prepublish": "npm run clean && npm run build",
     "docs": "typedoc",
     "lint": "eslint ./src --ext .ts --fix"
   },
