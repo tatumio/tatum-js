@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-btc",
-  "version": "2.0.0-alpha.35",
+  "version": "2.0.0-alpha.43",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -21,8 +21,10 @@
     "bip32": "^2.0.5",
     "bip39": "^3.0.2",
     "bitcoinjs-lib": "^5.2.0",
+    "bitcore-lib": "^8.25.10",
     "class-transformer": "^0.2.3",
     "class-validator": "0.13.0",
+    "hdkey": "^2.0.1",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
