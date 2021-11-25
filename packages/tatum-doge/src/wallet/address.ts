@@ -1,8 +1,8 @@
 import { fromBase58, fromSeed } from 'bip32'
 import { mnemonicToSeed } from 'bip39'
 import { payments } from 'bitcoinjs-lib'
-// @ts-ignore
-import { DOGE_DERIVATION_PATH, DOGE_NETWORK, DOGE_TEST_NETWORK, TESTNET_DERIVATION_PATH } from '../constants'
+import { DOGE_DERIVATION_PATH, DOGE_NETWORK, DOGE_TEST_NETWORK } from '../constants'
+import { TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
 
 /**
  * Generate Dogecoin address
