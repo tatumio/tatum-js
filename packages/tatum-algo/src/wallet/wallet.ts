@@ -4,7 +4,7 @@ import { WalletWithAddress } from '@tatumio/tatum-ledger'
 
 /**
  * Generate Algo wallet
- * @param mnem mnemonic seed to use
+ * @param mnem optional mnemonic seed to use
  * @returns address and secret
  */
 export const generateAlgoWallet = async (mnem?: string): Promise<WalletWithAddress> => {
