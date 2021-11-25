@@ -21,6 +21,7 @@
     "bignumber.js": "^9.0.0",
     "bip39": "^3.0.2",
     "cardano-crypto.js": "^6.0.0",
+    "class-validator": "0.13.0",
     "ethereumjs-wallet": "^1.0.0"
   },
   "devDependencies": {
