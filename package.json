@@ -32,7 +32,6 @@
   "author": "Tatum, hello@tatum.io",
   "license": "MIT",
   "devDependencies": {
-    "@strictsoftware/typedoc-plugin-monorepo": "^0.4.2",
     "@typescript-eslint/eslint-plugin": "^4.29.1",
     "@typescript-eslint/parser": "^4.29.1",
     "dotenv": "^8.2.0",
@@ -45,7 +44,7 @@
     "rimraf": "^3.0.2",
     "ts-jest": "^26.1.1",
     "typedoc": "^0.22.10",
-    "typescript": "^4.3.2"
+    "typescript": "4.3.2"
   },
   "jest": {
     "moduleFileExtensions": [

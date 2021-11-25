@@ -1,6 +1,7 @@
 {
-  "packages": "./packages",
+  "readme": "README.md",
+  "entryPoints": ["."],
+  "entryPointStrategy": "packages",
   "includeVersion": true,
-  "external-modulemap": ".*packages\/(@namespace\/[^\/]+)\/.*",
-  "excludeExternals": false
+  "exclude": "./**/*+(.spec|.e2e).ts"
 }
