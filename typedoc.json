@@ -1,4 +1,7 @@
 {
-  "packages": ".",
-  "includeVersion": true
+  "readme": "README.md",
+  "entryPoints": ["."],
+  "entryPointStrategy": "packages",
+  "includeVersion": true,
+  "exclude": "./**/*+(.spec|.e2e).ts"
 }
