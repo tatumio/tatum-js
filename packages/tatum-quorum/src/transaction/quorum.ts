@@ -12,19 +12,27 @@ import { TransferQuorum } from '../model'
 export const sendStoreDataQuorumTransaction = async (body: CreateRecord, provider: string) => {
   await validateBody(body, CreateRecord)
   const data = (
-    await axios.post(provider, {
-      jsonrpc: '2.0',
-      method: 'eth_sendTransaction',
-      params: [
-        {
-          from: body.from,
-          to: body.to,
-          nonce: body.nonce,
-          data: body.data ? (isHex(body.data) ? stringToHex(body.data) : toHex(body.data)) : undefined,
+    await axios.post(
+      provider,
+      {
+        jsonrpc: '2.0',
+        method: 'eth_sendTransaction',
+        params: [
+          {
+            from: body.from,
+            to: body.to,
+            nonce: body.nonce,
+            data: body.data ? (isHex(body.data) ? stringToHex(body.data) : toHex(body.data)) : undefined,
+          },
+        ],
+        id: 1,
+      },
+      {
+        headers: {
+          'x-quorum-endpoint': provider,
         },
-      ],
-      id: 1,
-    })
+      }
+    )
   ).data
   if (data.result) {
     return { txId: data.result }
@@ -42,12 +50,20 @@ export const sendStoreDataQuorumTransaction = async (body: CreateRecord, provide
 export const sendQuorumTransaction = async (body: TransferQuorum, provider: string) => {
   await validateBody(body, TransferQuorum)
   const data = (
-    await axios.post(provider, {
-      jsonrpc: '2.0',
-      method: 'eth_sendTransaction',
-      params: [body],
-      id: 1,
-    })
+    await axios.post(
+      provider,
+      {
+        jsonrpc: '2.0',
+        method: 'eth_sendTransaction',
+        params: [body],
+        id: 1,
+      },
+      {
+        headers: {
+          'x-quorum-endpoint': provider,
+        },
+      }
+    )
   ).data
   if (data.result) {
     return { txId: data.result }
