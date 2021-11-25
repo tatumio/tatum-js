@@ -16,9 +16,9 @@ import {
   InvokeAuctionOperation,
   UpdateAuctionFee,
   UpdateMarketplaceFeeRecipient,
+  erc721TokenABI as erc721_abi,
+  erc1155TokenABI as erc1155_abi,
 } from '@tatumio/tatum-core'
-import erc1155_abi from '@tatumio/tatum-core/src/contracts/erc1155/erc1155_abi'
-import erc721_abi from '@tatumio/tatum-core/src/contracts/erc721/erc721_abi'
 import { prepareApproveErc20 } from '../../fungible'
 import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../../helpers'
 import { prepareOneDeployAuctionSignedTransaction } from '../../transaction'
