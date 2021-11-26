@@ -1,4 +1,3 @@
-import { WalletWithMnemonic } from '@tatumio/tatum-ledger'
 import { generateMnemonic, mnemonicToSeed } from 'bip39'
 import { bip32 } from 'bitcoinjs-lib'
 import { TRON_DERIVATION_PATH } from '../constants'
@@ -7,7 +6,7 @@ import { TRON_DERIVATION_PATH } from '../constants'
  * Generate Tron wallet
  * @returns mnemonic for the wallet
  */
-export const generateTronWallet = async (mnem: string): Promise<WalletWithMnemonic> => {
+export const generateTronWallet = async (mnem: string) => {
   const w = bip32.fromSeed(await mnemonicToSeed(mnem))
   const bip32Interface = w.derivePath(TRON_DERIVATION_PATH)
   return {
@@ -18,11 +17,10 @@ export const generateTronWallet = async (mnem: string): Promise<WalletWithMnemon
 
 /**
  * Generate wallet
- * @param options.mnemonic mnemonic seed to use. If not present, new one will be generated
+ * @param mnemonic mnemonic seed to use. If not present, new one will be generated
  * @returns wallet or a combination of address and private key
  */
-export const generateWallet = (options: { mnemonic?: string }): Promise<WalletWithMnemonic> => {
-  const mnemonic = options.mnemonic
+export const generateWallet = (mnemonic?: string) => {
   const mnem = mnemonic ? mnemonic : generateMnemonic(256)
   return generateTronWallet(mnem)
 }
