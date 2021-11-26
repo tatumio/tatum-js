@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsNumberString, Length, Matches } from 'class-validator'
-import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
+import { PrivateKeyOrSignatureId } from '@tatumio/tatum-core/dist/model/request/PrivateKeyOrSignatureId'
 
 export class TransferSolana extends PrivateKeyOrSignatureId {
   @IsNotEmpty()

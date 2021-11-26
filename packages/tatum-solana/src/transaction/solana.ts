@@ -3,7 +3,7 @@ import { Connection, Keypair, LAMPORTS_PER_SOL, PublicKey, sendAndConfirmTransac
 import { BigNumber } from 'bignumber.js'
 import BN from 'bn.js'
 import { serialize } from 'borsh'
-import { validateBody, SolanaMintNft, TransferErc721, TransferSolana, TATUM_API_URL } from '@tatumio/tatum-core'
+import { validateBody, TATUM_API_URL, TransferErc721 } from '@tatumio/tatum-core'
 import {
   createAssociatedTokenAccountInstruction,
   createMasterEditionInstruction,
@@ -12,6 +12,7 @@ import {
   TOKEN_METADATA_PROGRAM_ID,
 } from './solanaSchema/instructions'
 import { CreateMasterEditionArgs, CreateMetadataArgs, METADATA_SCHEMA } from './solanaSchema/schema'
+import { SolanaMintNft, TransferSolana } from '../model'
 
 const generateSolanaKeyPair = (privateKey: string) => Keypair.fromSecretKey(Buffer.from(privateKey, 'hex'))
 

@@ -2,7 +2,7 @@ import { PublicKey } from '@solana/web3.js'
 import BN from 'bn.js'
 import { BinaryReader, BinaryWriter, deserializeUnchecked } from 'borsh'
 import base58 from 'bs58'
-import { SolanaNftMetadata, SolanaNftMetadataCreator } from '@tatumio/tatum-core'
+import { SolanaNftMetadata, SolanaNftMetadataCreator } from '../../model'
 
 type StringPublicKey = string
 

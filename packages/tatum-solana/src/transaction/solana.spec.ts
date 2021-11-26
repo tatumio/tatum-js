@@ -1,5 +1,6 @@
-import { Currency, SolanaNftMetadata } from '@tatumio/tatum-core'
+import { Currency } from '@tatumio/tatum-core'
 import { mintSolanaNft, sendSolana, transferSolanaNft } from './solana'
+import { SolanaNftMetadata } from '../model'
 
 jest.setTimeout(99999)
 

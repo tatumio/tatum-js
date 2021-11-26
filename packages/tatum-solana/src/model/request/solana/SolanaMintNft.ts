@@ -1,7 +1,7 @@
 import { Type } from 'class-transformer'
 import { IsIn, IsNotEmpty, Length, ValidateNested } from 'class-validator'
-import { Currency } from './Currency'
-import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
+import { Currency } from '@tatumio/tatum-core/dist/model/request/Currency'
+import { PrivateKeyOrSignatureId } from '@tatumio/tatum-core/dist/model/request/PrivateKeyOrSignatureId'
 import { SolanaNftMetadata } from './SolanaNftMetadata'
 
 export class SolanaMintNft extends PrivateKeyOrSignatureId {
