@@ -715,11 +715,6 @@ export default [
 				"internalType": "uint256",
 				"name": "tokenId",
 				"type": "uint256"
-			},
-			{
-				"internalType": "bytes",
-				"name": "dataBytes",
-				"type": "bytes"
 			}
 		],
 		"name": "safeTransfer",
@@ -769,7 +764,7 @@ export default [
 			},
 			{
 				"internalType": "bytes",
-				"name": "dataBytes",
+				"name": "_data",
 				"type": "bytes"
 			}
 		],
