@@ -174,13 +174,13 @@ export const prepareBatchTransferFromCustodialWalletAbstract = async (
   const amounts = []
   const tokenIds = []
   for (let i = 0; i < body.contractType.length; i++) {
-    let amount = new BigNumber(body.amount[i])
-    let tokenId = new BigNumber(body.tokenId[i])
+    let amount = new BigNumber(body.amount ? body.amount[i] : 0)
+    let tokenId = new BigNumber(body.tokenId ? body.tokenId[i] : 0)
     if (body.contractType[i] === ContractType.NATIVE_ASSET) {
       amount = amount.multipliedBy(new BigNumber(10).pow(decimals))
     } else if (body.contractType[i] === ContractType.NON_FUNGIBLE_TOKEN) {
       amount = new BigNumber(0)
-    } else if (body.contractType[i] === ContractType.FUNGIBLE_TOKEN) {
+    } else if (body.contractType[i] === ContractType.FUNGIBLE_TOKEN && body.tokenAddress) {
       tokenId = new BigNumber(0)
       amount = amount.multipliedBy(new BigNumber(10).pow(await getContractDecimals(body.tokenAddress[i], provider, testnet)))
     }
@@ -188,7 +188,7 @@ export const prepareBatchTransferFromCustodialWalletAbstract = async (
     tokenIds.push(`0x${tokenId.toString(16)}`)
   }
   r.params = [
-    body.tokenAddress.map((t) => (t === '0' ? '0x000000000000000000000000000000000000dEaD' : t)),
+    (body.tokenAddress || []).map((t) => (t === '0' ? '0x000000000000000000000000000000000000dEaD' : t)),
     body.contractType,
     body.recipient,
     amounts,
