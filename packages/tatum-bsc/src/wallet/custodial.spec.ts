@@ -9,9 +9,10 @@ import {
 import { bscBroadcast } from '../blockchain'
 import { sendBscGenerateCustodialWalletSignedTransaction } from '../transaction'
 import { prepareApproveFromCustodialWallet, prepareBatchTransferFromCustodialWallet, prepareTransferFromCustodialWallet } from './custodial'
+import { CeloProvider } from '@celo-tools/celo-ethers-wrapper'
 
 describe('Custodial wallet tests', () => {
-  jest.setTimeout(9999)
+  jest.setTimeout(99999)
 
   describe('Deploy address', () => {
     it('should create on BSC batch', async () => {
@@ -157,5 +158,23 @@ describe('Custodial wallet tests', () => {
       expect(txData).toContain('0x')
       console.log(await bscBroadcast(txData))
     })
+  })
+
+  it('should transfer 2 NFTs batch on CELO', async () => {
+    const body = new TransferFromCustodialAddressBatch()
+    body.fromPrivateKey = '0x37b091fc4ce46a56da643f021254612551dbe0944679a6e09cb5724d3085c9ab'
+    body.chain = Currency.CELO
+    body.contractType = [ContractType.NON_FUNGIBLE_TOKEN, ContractType.NON_FUNGIBLE_TOKEN]
+    body.custodialAddress = '0x7d0964ec4cd1817b8ad4830122f99b258fec1102'
+    body.tokenAddress = ['0x4f54fAD27F7F46C102Cd49b8E75C5593397cd9c3', '0x4f54fAD27F7F46C102Cd49b8E75C5593397cd9c3']
+    body.recipient = ['0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA', '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA']
+    body.tokenId = ['61', '62']
+    body.amount = ['0', '0']
+    const txData = await prepareBatchTransferFromCustodialWallet(true, body)
+    expect(txData).toContain('0x')
+    console.log(txData)
+    const provider = new CeloProvider('https://alfajores-forno.celo-testnet.org')
+    await provider.ready
+    console.log(await provider.sendTransaction(txData))
   })
 })
