@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-tron",
-  "version": "2.0.0-alpha.45",
+  "version": "2.0.0-alpha.47",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -24,7 +24,8 @@
     "class-validator": "^0.13.0",
     "elliptic": "^6.5.4",
     "ethereumjs-wallet": "^1.0.0",
-    "tronweb": "^4.0.1"
+    "js-sha3": "^0.8.0",
+    "tronweb": "^3.2.2"
   },
   "devDependencies": {
     "@types/elliptic": "^6.4.14",

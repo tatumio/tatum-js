@@ -13,7 +13,7 @@ export const storeData = async (body: CreateRecord, provider?: string) => {
 
 /**
  * Perform any native asset transaction.
- * @param chain Blockchain to work with. ETH,CELO,MATIC,ONE,TRON,BSC supported now.
+ * @param chain Blockchain to work with. ETH,CELO,MATIC,ONE,TRON,BSC,KCS supported now.
  * @param body Body of the transaction.
  * @param provider Optional provider to use for broadcasting signed tx to the blockchain.
  */

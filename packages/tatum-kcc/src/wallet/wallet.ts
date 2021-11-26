@@ -22,12 +22,11 @@ export const generateKccWallet = async (testnet: boolean, mnem: string): Promise
 
 /**
  * Generate wallet
+ * @param mnemonic mnemonic seed to use. If not present, new one will be generated
  * @param options.testnet testnet or mainnet version of address
- * @param options.mnemonic mnemonic seed to use. If not present, new one will be generated
  * @returns wallet or a combination of address and private key
  */
-export const generateWallet = (options: { testnet?: boolean; mnemonic?: string }) => {
-  const mnemonic = options.mnemonic
-  const mnem = mnemonic ? mnemonic : generateMnemonic(256)
-  return generateKccWallet(options.testnet as boolean, mnem)
+export const generateWallet = (mnemonic?: string, options?: { testnet?: boolean }) => {
+  mnemonic ||= generateMnemonic(256)
+  return generateKccWallet(!!options?.testnet, mnemonic)
 }

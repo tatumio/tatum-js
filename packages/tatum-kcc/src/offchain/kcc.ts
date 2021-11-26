@@ -37,7 +37,7 @@ export const sendKccOffchainTransaction = async (testnet: boolean, body: Transfe
     gasLimit: gasLimit || '21000',
     gasPrice: gasPrice || '20',
   }
-  if (account.currency === Currency.MATIC) {
+  if (account.currency === Currency.KCS) {
     txData = await prepareKccSignedTransaction(
       {
         amount,
@@ -69,7 +69,7 @@ export const sendKccOffchainTransaction = async (testnet: boolean, body: Transfe
   withdrawal.fee = fromWei(new BigNumber(fee.gasLimit).multipliedBy(toWei(fee.gasPrice, 'gwei')).toString(), 'ether')
   const { id } = await offchainStoreWithdrawal(withdrawal)
   try {
-    return { ...(await offchainBroadcast({ txData, withdrawalId: id, currency: Currency.MATIC })), id }
+    return { ...(await offchainBroadcast({ txData, withdrawalId: id, currency: Currency.KCS })), id }
   } catch (e) {
     console.error(e)
     try {

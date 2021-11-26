@@ -3,8 +3,6 @@ import {
   BurnErc20,
   BaseBurnMultiToken,
   BaseBurnMultiTokenBatch,
-  CONTRACT_ADDRESSES,
-  CONTRACT_DECIMALS,
   CreateRecord,
   Currency,
   DeployErc20,
@@ -108,7 +106,7 @@ export const prepareKccClient = (provider?: string, fromPrivateKey?: string) => 
  * @returns transaction data to be broadcast to blockchain.
  */
 export const signKccKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, provider?: string) => {
-  if (tx.chain !== Currency.MATIC) {
+  if (tx.chain !== Currency.KCS) {
     throw Error('Unsupported chain.')
   }
   const client = prepareKccClient(provider, fromPrivateKey)
@@ -175,18 +173,8 @@ export const prepareKccGenerateCustodialWalletSignedTransaction = async (body: G
  */
 export const prepareKccSignedTransaction = async (body: TransferErc20, provider?: string) => {
   await validateBody(body, TransferErc20)
-  const client = await prepareKccClient(provider, body.fromPrivateKey)
-  let data
-  let to = body.to
-  if (body.currency === Currency.MATIC) {
-    data = body.data ? (client.utils.isHex(body.data) ? client.utils.stringToHex(body.data) : client.utils.toHex(body.data)) : undefined
-  } else {
-    to = CONTRACT_ADDRESSES[body.currency as string]
-    // @ts-ignore
-    const contract = new client.eth.Contract([TRANSFER_METHOD_ABI], to)
-    const digits = new BigNumber(10).pow(CONTRACT_DECIMALS[body.currency as string])
-    data = contract.methods.transfer(body.to.trim(), `0x${new BigNumber(body.amount).multipliedBy(digits).toString(16)}`).encodeABI()
-  }
+  const client = await prepareKccClient(provider, body.fromPrivateKey)  
+  const data = body.data ? (client.utils.isHex(body.data) ? client.utils.stringToHex(body.data) : client.utils.toHex(body.data)) : undefined
   return prepareGeneralTx(
     client,
     body.fromPrivateKey,
