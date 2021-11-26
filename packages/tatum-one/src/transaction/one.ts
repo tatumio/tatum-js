@@ -431,24 +431,45 @@ export const prepareOneMint721ProvenanceSignedTransaction = async (body: OneMint
     body.fixedValues.map((c) => fv.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
     body.authorAddresses.map((a) => authors.push(new HarmonyAddress(a).basicHex))
   }
-  // @ts-ignore
-  const data = new client.eth.Contract(erc721Provenance_abi, new HarmonyAddress(body.contractAddress).basicHex).methods
-    .mintWithTokenURI(new HarmonyAddress(body.to).basicHex, body.tokenId, body.url, authors, cb, fv)
-    .encodeABI()
-  if (body.contractAddress) {
-    return prepareGeneralTx(
-      client,
-      body.fromPrivateKey,
-      body.signatureId,
-      new HarmonyAddress(body.contractAddress).basicHex,
-      undefined,
-      body.nonce,
-      data,
-      body.fee?.gasLimit,
-      body.fee?.gasPrice
-    )
+  if (body.erc20) {
+    // @ts-ignore
+    const data = new client.eth.Contract(erc721Provenance_abi, new HarmonyAddress(body.contractAddress).basicHex).methods
+      .mintWithTokenURI(new HarmonyAddress(body.to).basicHex, body.tokenId, body.url, authors, cb, fv)
+      .encodeABI()
+    if (body.contractAddress) {
+      return prepareGeneralTx(
+        client,
+        body.fromPrivateKey,
+        body.signatureId,
+        new HarmonyAddress(body.contractAddress).basicHex,
+        undefined,
+        body.nonce,
+        data,
+        body.fee?.gasLimit,
+        body.fee?.gasPrice
+      )
+    }
+    throw new Error('Contract address should not be empty!')
+  } else {
+    // @ts-ignore
+    const data = new client.eth.Contract(erc721Provenance_abi, new HarmonyAddress(body.contractAddress).basicHex).methods
+      .mintWithTokenURI(new HarmonyAddress(body.to).basicHex, body.tokenId, body.url, authors, cb, fv, body.erc20)
+      .encodeABI()
+    if (body.contractAddress) {
+      return prepareGeneralTx(
+        client,
+        body.fromPrivateKey,
+        body.signatureId,
+        new HarmonyAddress(body.contractAddress).basicHex,
+        undefined,
+        body.nonce,
+        data,
+        body.fee?.gasLimit,
+        body.fee?.gasPrice
+      )
+    }
+    throw new Error('Contract address should not be empty!')
   }
-  throw new Error('Contract address should not be empty!')
 }
 /**
  * Sign Harmony mint multiple cashback erc721 provenance transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -475,28 +496,54 @@ export const prepareOneMintMultiple721ProvenanceSignedTransaction = async (body:
   }
   // const cashbacks: string[][] = body.cashbackValues!
   // const cb = cashbacks.map(cashback => cashback.map(c => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
-  // @ts-ignore
-  const data = new client.eth.Contract(erc721Provenance_abi, new HarmonyAddress(body.contractAddress).basicHex).methods
-    .mintMultiple(
-      body.to.map((t) => new HarmonyAddress(t).basicHex),
-      body.tokenId,
-      body.url,
-      body.authorAddresses?.map((a) => a.map((a1) => new HarmonyAddress(a1).basicHex)),
-      cb,
-      fv
+  if (body.erc20) {
+    // @ts-ignore
+    const data = new client.eth.Contract(erc721Provenance_abi, new HarmonyAddress(body.contractAddress).basicHex).methods
+      .mintMultiple(
+        body.to.map((t) => new HarmonyAddress(t).basicHex),
+        body.tokenId,
+        body.url,
+        body.authorAddresses?.map((a) => a.map((a1) => new HarmonyAddress(a1).basicHex)),
+        cb,
+        fv,
+        body.erc20
+      )
+      .encodeABI()
+    return prepareGeneralTx(
+      client,
+      body.fromPrivateKey,
+      body.signatureId,
+      new HarmonyAddress(body.contractAddress).basicHex,
+      undefined,
+      body.nonce,
+      data,
+      body.fee?.gasLimit,
+      body.fee?.gasPrice
     )
-    .encodeABI()
-  return prepareGeneralTx(
-    client,
-    body.fromPrivateKey,
-    body.signatureId,
-    new HarmonyAddress(body.contractAddress).basicHex,
-    undefined,
-    body.nonce,
-    data,
-    body.fee?.gasLimit,
-    body.fee?.gasPrice
-  )
+  } else {
+    // @ts-ignore
+    const data = new client.eth.Contract(erc721Provenance_abi, new HarmonyAddress(body.contractAddress).basicHex).methods
+      .mintMultiple(
+        body.to.map((t) => new HarmonyAddress(t).basicHex),
+        body.tokenId,
+        body.url,
+        body.authorAddresses?.map((a) => a.map((a1) => new HarmonyAddress(a1).basicHex)),
+        cb,
+        fv
+      )
+      .encodeABI()
+    return prepareGeneralTx(
+      client,
+      body.fromPrivateKey,
+      body.signatureId,
+      new HarmonyAddress(body.contractAddress).basicHex,
+      undefined,
+      body.nonce,
+      data,
+      body.fee?.gasLimit,
+      body.fee?.gasPrice
+    )
+  }
 }
 
 /**
@@ -511,29 +558,58 @@ export const prepareOneMintCashback721SignedTransaction = async (body: OneMint72
   const cashbacks: string[] = body.cashbackValues!
   const cb = cashbacks.map((c) => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
   // @ts-ignore
-  const data = new client.eth.Contract(erc721TokenABI, new HarmonyAddress(body.contractAddress).basicHex).methods
-    .mintWithCashback(
-      new HarmonyAddress(body.to).basicHex,
-      body.tokenId,
-      body.url,
-      body.authorAddresses?.map((a) => new HarmonyAddress(a).basicHex),
-      cb
-    )
-    .encodeABI()
-  if (body.contractAddress) {
-    return prepareGeneralTx(
-      client,
-      body.fromPrivateKey,
-      body.signatureId,
-      new HarmonyAddress(body.contractAddress).basicHex,
-      undefined,
-      body.nonce,
-      data,
-      body.fee?.gasLimit,
-      body.fee?.gasPrice
-    )
+  if (body.erc20) {
+    // @ts-ignore
+    const data = new client.eth.Contract(erc721TokenABI, new HarmonyAddress(body.contractAddress).basicHex).methods
+      .mintWithCashback(
+        new HarmonyAddress(body.to).basicHex,
+        body.tokenId,
+        body.url,
+        body.authorAddresses?.map((a) => new HarmonyAddress(a).basicHex),
+        cb,
+        body.erc20
+      )
+      .encodeABI()
+    if (body.contractAddress) {
+      return prepareGeneralTx(
+        client,
+        body.fromPrivateKey,
+        body.signatureId,
+        new HarmonyAddress(body.contractAddress).basicHex,
+        undefined,
+        body.nonce,
+        data,
+        body.fee?.gasLimit,
+        body.fee?.gasPrice
+      )
+    }
+    throw new Error('Contract address should not be empty!')
+  } else {
+    // @ts-ignore
+    const data = new client.eth.Contract(erc721TokenABI, new HarmonyAddress(body.contractAddress).basicHex).methods
+      .mintWithCashback(
+        new HarmonyAddress(body.to).basicHex,
+        body.tokenId,
+        body.url,
+        body.authorAddresses?.map((a) => new HarmonyAddress(a).basicHex),
+        cb
+      )
+      .encodeABI()
+    if (body.contractAddress) {
+      return prepareGeneralTx(
+        client,
+        body.fromPrivateKey,
+        body.signatureId,
+        new HarmonyAddress(body.contractAddress).basicHex,
+        undefined,
+        body.nonce,
+        data,
+        body.fee?.gasLimit,
+        body.fee?.gasPrice
+      )
+    }
+    throw new Error('Contract address should not be empty!')
   }
-  throw new Error('Contract address should not be empty!')
 }
 
 /**
@@ -547,27 +623,52 @@ export const prepareOneMintMultipleCashback721SignedTransaction = async (body: O
   const client = await prepareOneClient(provider, body.fromPrivateKey)
   const cashbacks: string[][] = body.cashbackValues!
   const cb = cashbacks.map((cashback) => cashback.map((c) => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
-  // @ts-ignore
-  const data = new client.eth.Contract(erc721TokenABI, new HarmonyAddress(body.contractAddress).basicHex).methods
-    .mintMultipleCashback(
-      body.to.map((t) => new HarmonyAddress(t).basicHex),
-      body.tokenId,
-      body.url,
-      body.authorAddresses?.map((a) => a.map((a1) => new HarmonyAddress(a1).basicHex)),
-      cb
+  if (body.erc20) {
+    // @ts-ignore
+    const data = new client.eth.Contract(erc721TokenABI, new HarmonyAddress(body.contractAddress).basicHex).methods
+      .mintMultipleCashback(
+        body.to.map((t) => new HarmonyAddress(t).basicHex),
+        body.tokenId,
+        body.url,
+        body.authorAddresses?.map((a) => a.map((a1) => new HarmonyAddress(a1).basicHex)),
+        cb,
+        body.erc20
+      )
+      .encodeABI()
+    return prepareGeneralTx(
+      client,
+      body.fromPrivateKey,
+      body.signatureId,
+      new HarmonyAddress(body.contractAddress).basicHex,
+      undefined,
+      body.nonce,
+      data,
+      body.fee?.gasLimit,
+      body.fee?.gasPrice
     )
-    .encodeABI()
-  return prepareGeneralTx(
-    client,
-    body.fromPrivateKey,
-    body.signatureId,
-    new HarmonyAddress(body.contractAddress).basicHex,
-    undefined,
-    body.nonce,
-    data,
-    body.fee?.gasLimit,
-    body.fee?.gasPrice
-  )
+  } else {
+    // @ts-ignore
+    const data = new client.eth.Contract(erc721TokenABI, new HarmonyAddress(body.contractAddress).basicHex).methods
+      .mintMultipleCashback(
+        body.to.map((t) => new HarmonyAddress(t).basicHex),
+        body.tokenId,
+        body.url,
+        body.authorAddresses?.map((a) => a.map((a1) => new HarmonyAddress(a1).basicHex)),
+        cb
+      )
+      .encodeABI()
+    return prepareGeneralTx(
+      client,
+      body.fromPrivateKey,
+      body.signatureId,
+      new HarmonyAddress(body.contractAddress).basicHex,
+      undefined,
+      body.nonce,
+      data,
+      body.fee?.gasLimit,
+      body.fee?.gasPrice
+    )
+  }
 }
 
 /**
@@ -640,14 +741,9 @@ export const prepareOneTransfer721SignedTransaction = async (body: OneTransfer72
     body.provenance ? erc721Provenance_abi : erc721TokenABI,
     new HarmonyAddress(body.contractAddress).basicHex
   )
+  const dataBytes = body.provenance ? Buffer.from(body.provenanceData + "'''###'''" + toWei(body.tokenPrice!, 'ether'), 'utf8') : ''
   const data = body.provenance
-    ? contract.methods
-        .safeTransfer(
-          new HarmonyAddress(body.to).basicHex,
-          body.tokenId,
-          body.provenanceData + "'''###'''" + toWei(body.tokenPrice!, 'ether')
-        )
-        .encodeABI()
+    ? contract.methods.safeTransfer(new HarmonyAddress(body.to).basicHex, body.tokenId, `0x${dataBytes.toString('hex')}`).encodeABI()
     : contract.methods.safeTransfer(new HarmonyAddress(body.to).basicHex, body.tokenId).encodeABI()
   return prepareGeneralTx(
     client,

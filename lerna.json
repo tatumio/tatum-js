@@ -6,16 +6,6 @@
   "npmClient": "yarn",
   "useWorkspaces": true,
   "command": {
-    "bootstrap": {
-      "ignore": [
-        "@tatumio/tatum"
-      ]
-    },
-    "exec": {
-      "ignore": [
-        "@tatumio/tatum"
-      ]
-    },
     "publish": {
       "ignoreChanges": [
         "@tatumio/tatum"
