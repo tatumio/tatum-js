@@ -51,6 +51,7 @@
     "class-validator": "0.13.0",
     "ethereumjs-wallet": "^1.0.0",
     "reflect-metadata": "^0.1.13",
+    "tronweb": "^3.2.2",
     "url-parse": "^1.5.3",
     "web3": "1.4.0",
     "web3-core": "1.4.0",
