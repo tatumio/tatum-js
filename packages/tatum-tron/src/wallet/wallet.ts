@@ -18,10 +18,10 @@ export const generateTronWallet = async (mnem: string): Promise<WalletWithMnemon
 
 /**
  * Generate wallet
- * @param mnemonic mnemonic seed to use. If not present, new one will be generated
+ * @param mnemonic optional mnemonic seed to use. If not present, new one will be generated
  * @returns wallet or a combination of address and private key
  */
-export const generateWallet = (mnemonic: string): Promise<WalletWithMnemonic> => {
+export const generateWallet = (mnemonic?: string): Promise<WalletWithMnemonic> => {
   mnemonic ||= generateMnemonic(256)
   return generateTronWallet(mnemonic)
 }

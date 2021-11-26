@@ -18,7 +18,7 @@ import {
 import { createNewSubscription } from './subscription'
 import { Wallet } from './wallet'
 
-export type GenerateWalletFn = (mnemonic: string, options?: { testnet?: boolean }) => Promise<Wallet>
+export type GenerateWalletFn = (mnemonic?: string, options?: { testnet?: boolean }) => Promise<Wallet>
 export interface GeneratedAccount {
   account: Account
   address: Address
