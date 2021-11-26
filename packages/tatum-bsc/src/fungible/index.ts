@@ -20,7 +20,7 @@ export const sendApproveErc20 = async (testnet: boolean, body: ApproveErc20, pro
  */
 export const prepareApproveErc20 = async (testnet: boolean, body: ApproveErc20, provider?: string) => {
   const { body: validatedBody, params } = await prepareApproveErc20Abstraction(getBscBep20ContractDecimals, testnet, body, provider)
-  return await helperPrepareSCCall(validatedBody, 'approve', params, provider, token_abi)
+  return await helperPrepareSCCall(validatedBody, 'approve', params, provider, erc20TokenABI)
 }
 
 /**

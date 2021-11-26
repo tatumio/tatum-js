@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-ltc",
-  "version": "2.0.0-alpha.43",
+  "version": "2.0.0-alpha.47",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,7 +10,6 @@
     "build": "tsc",
     "build:watch": "tsc -w",
     "prepublish": "npm run clean && npm run build",
-    "docs": "typedoc",
     "lint": "eslint ./src --ext .ts --fix"
   },
   "dependencies": {
@@ -43,7 +42,6 @@
     "rimraf": "^3.0.2",
     "ts-jest": "^26.1.1",
     "ts-node": "^8.10.2",
-    "typedoc": "^0.21.5",
     "typescript": "^4.3.2"
   },
   "jest": {

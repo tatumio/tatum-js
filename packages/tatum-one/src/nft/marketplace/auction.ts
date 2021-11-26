@@ -91,7 +91,7 @@ export const prepareAuctionApproveNftTransfer = async (body: ApproveNftTransfer,
     body.isErc721 ? 'approve' : 'setApprovalForAll',
     params,
     provider,
-    body.isErc721 ? erc721_abi : erc1155_abi
+    body.isErc721 ? erc721TokenABI : erc1155TokenABI
   )
 }
 

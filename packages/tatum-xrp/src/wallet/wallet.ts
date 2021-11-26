@@ -3,6 +3,7 @@ import { RippleAPI } from 'ripple-lib'
 
 /**
  * Generate Xrp address and secret.
+ * @returns wallet or a combination of address and private key
  */
 export const generateXrpWallet = async (): Promise<WalletWithAddress> => {
   const { address, secret } = new RippleAPI().generateAddress()
