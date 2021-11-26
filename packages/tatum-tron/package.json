@@ -23,7 +23,8 @@
     "bitcoinjs-lib": "^5.2.0",
     "class-validator": "^0.13.0",
     "elliptic": "^6.5.4",
-    "ethereumjs-wallet": "^1.0.0"
+    "ethereumjs-wallet": "^1.0.0",
+    "tronweb": "^4.0.1"
   },
   "devDependencies": {
     "@types/elliptic": "^6.4.14",
