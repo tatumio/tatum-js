@@ -1,28 +1,28 @@
-export { sendAdaOffchainTransaction, signAdaOffchainKMSTransaction } from '@tatumio/tatum-ada/src'
+export { sendAdaOffchainTransaction, signAdaOffchainKMSTransaction } from '@tatumio/tatum-ada'
 export {
   sendBitcoinCashOffchainTransaction,
   signBitcoinCashOffchainKMSTransaction,
   prepareBitcoinCashSignedOffchainTransaction,
-} from '@tatumio/tatum-bch/src'
+} from '@tatumio/tatum-bch'
 export {
   sendBitcoinOffchainTransaction,
   signBitcoinOffchainKMSTransaction,
   prepareBitcoinSignedOffchainTransaction,
-} from '@tatumio/tatum-btc/src'
-export { sendBscOffchainTransaction } from '@tatumio/tatum-bsc/src'
-export { sendCeloOffchainTransaction } from '@tatumio/tatum-celo/src'
-export { sendDogecoinOffchainTransaction, prepareDogecoinSignedOffchainTransaction } from '@tatumio/tatum-doge/src'
-export { sendEgldOffchainTransaction } from '@tatumio/tatum-egld/src'
+} from '@tatumio/tatum-btc'
+export { sendBscOffchainTransaction } from '@tatumio/tatum-bsc'
+export { sendCeloOffchainTransaction } from '@tatumio/tatum-celo'
+export { sendDogecoinOffchainTransaction, prepareDogecoinSignedOffchainTransaction } from '@tatumio/tatum-doge'
+export { sendEgldOffchainTransaction } from '@tatumio/tatum-egld'
 export {
   sendEthOffchainTransaction,
   sendEthErc20OffchainTransaction,
   signEthOffchainKMSTransaction,
   prepareEthSignedOffchainTransaction,
   prepareEthErc20SignedOffchainTransaction,
-} from '@tatumio/tatum-eth/src'
+} from '@tatumio/tatum-eth'
 // TODO litecoin - submodule not ready yet
-export { sendPolygonOffchainTransaction } from '@tatumio/tatum-polygon/src'
-export { sendTronOffchainTransaction } from '@tatumio/tatum-tron/src'
-export { sendXdcOffchainTransaction } from '@tatumio/tatum-xdc/src'
-export { sendXlmOffchainTransaction } from '@tatumio/tatum-xlm/src'
-export { sendXrpOffchainTransaction } from '@tatumio/tatum-xrp/src'
+export { sendPolygonOffchainTransaction } from '@tatumio/tatum-polygon'
+export { sendTronOffchainTransaction } from '@tatumio/tatum-tron'
+export { sendXdcOffchainTransaction } from '@tatumio/tatum-xdc'
+export { sendXlmOffchainTransaction } from '@tatumio/tatum-xlm'
+export { sendXrpOffchainTransaction } from '@tatumio/tatum-xrp'

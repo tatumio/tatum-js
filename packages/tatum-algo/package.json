@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-algo",
-  "version": "2.0.0-alpha.45",
+  "version": "2.0.0-alpha.47",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -17,7 +17,10 @@
     "@tatumio/tatum-defi": "file:../tatum-defi",
     "@tatumio/tatum-ledger": "file:../tatum-ledger",
     "algosdk": "^1.12.0",
-    "base32.js": "^0.1.0"
+    "base32.js": "^0.1.0",
+    "bignumber.js": "^9.0.0",
+    "class-validator": "0.13.0",
+    "url-parse": "^1.5.3"
   },
   "devDependencies": {
     "@types/jest": "^27.0.2",

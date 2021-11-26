@@ -16,8 +16,8 @@ import {
   ApproveErc20,
   CreateAuction,
   InvokeAuctionOperation,
-  erc721TokenABI,
-  erc1155TokenABI,
+  erc1155TokenABI as erc1155_abi,
+  erc721TokenABI as erc721_abi,
 } from '@tatumio/tatum-core'
 import { prepareBscDeployAuctionSignedTransaction } from '../../transaction'
 import { prepareApproveErc20 } from '../../fungible'

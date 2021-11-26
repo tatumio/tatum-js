@@ -68,7 +68,7 @@ import {
 } from '@tatumio/tatum-core'
 import { sendAlgoCreateFractionalNFTSignedTransaction, sendAlgoTransferFractionalNFTSignedTransaction } from '@tatumio/tatum-algo'
 import { sendAlgoBurnFractionalNFTSignedTransaction } from '@tatumio/tatum-algo'
-import { helperBroadcastTx, helperPrepareSCCall } from 'src/helpers'
+import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
 
 /**
  * Deploy MultiTokens (1155) contract.
