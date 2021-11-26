@@ -1,4 +1,4 @@
-import { post, TransactionHash, erc721TokenABI as abi, AddMinter } from '@tatumio/tatum-core'
+import { post, TransactionHash, erc721TokenABI, AddMinter } from '@tatumio/tatum-core'
 import {
   TronBurnTrc721,
   TronDeployTrc721,
@@ -106,7 +106,7 @@ export const transferNFT = async (body: TronTransferTrc721) => {
  */
 export const prepareAddNFTMinter = async (body: AddMinter, provider?: string) => {
   const params = await prepareAddNFTMinterAbstraction(body)
-  return await helperPrepareSCCall(body, 'grantRole', params, undefined, provider, abi)
+  return await helperPrepareSCCall(body, 'grantRole', params, undefined, provider, erc721TokenABI)
 }
 
 /**

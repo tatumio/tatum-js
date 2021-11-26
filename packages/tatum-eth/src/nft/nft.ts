@@ -9,7 +9,7 @@ import {
   MintMultipleErc721,
   TransferErc721,
   AddMinter,
-  erc721TokenABI as abi,
+  erc721TokenABI,
 } from '@tatumio/tatum-core'
 import {
   sendBurnErc721Transaction,
@@ -107,7 +107,7 @@ export const transferNFT = async (body: TransferErc721, provider?: string) => {
  */
 export const prepareAddNFTMinter = async (body: AddMinter, provider?: string) => {
   const params = await prepareAddNFTMinterAbstraction(body)
-  return await helperPrepareSCCall(body, 'grantRole', params, provider, abi)
+  return await helperPrepareSCCall(body, 'grantRole', params, provider, erc721TokenABI)
 }
 
 /**
