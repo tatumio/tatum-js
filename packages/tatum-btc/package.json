@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-btc",
-  "version": "2.0.0-alpha.35",
+  "version": "2.0.0-alpha.45",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,7 +10,6 @@
     "build": "tsc",
     "build:watch": "tsc -w",
     "prepublish": "npm run clean && npm run build",
-    "docs": "typedoc",
     "lint": "eslint ./src --ext .ts --fix"
   },
   "dependencies": {
@@ -21,8 +20,10 @@
     "bip32": "^2.0.5",
     "bip39": "^3.0.2",
     "bitcoinjs-lib": "^5.2.0",
+    "bitcore-lib": "^8.25.10",
     "class-transformer": "^0.2.3",
     "class-validator": "0.13.0",
+    "hdkey": "^2.0.1",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
@@ -32,7 +33,6 @@
     "jest": "^27.2.2",
     "rimraf": "^3.0.2",
     "ts-jest": "^27.0.5",
-    "typedoc": "^0.21.5",
     "typescript": "^4.4.3"
   },
   "gitHead": "b38a4f55d98d9b2a96fa76425c853decaecf2cc2"
