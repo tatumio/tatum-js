@@ -3,6 +3,7 @@ import { WalletWithAddress } from '@tatumio/tatum-ledger'
 
 /**
  * Generate Neo address and private key.
+ * @returns wallet or a combination of address and private key
  */
 export const generateNeoWallet = (): WalletWithAddress => {
   const privateKey = Neon.create.privateKey()
