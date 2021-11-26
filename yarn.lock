@@ -279,7 +279,7 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.10.4", "@babel/runtime@^7.10.5", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.15.4":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.10.4", "@babel/runtime@^7.10.5", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.15.4":
   version "7.16.3"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.16.3.tgz#b86f0db02a04187a3c17caa77de69840165d42d5"
   integrity sha512-WBwekcqacdY2e9AF/Q7WLFUWmdJGJTkbjqTjoMDgXkVZ3ZRUvOPsLb5KdwISoQVsbP+DQzVZW4Zhci0DvpbNTQ==
@@ -4139,7 +4139,7 @@ bignumber.js@7.2.1, bignumber.js@^7.2.1:
   resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-7.2.1.tgz#80c048759d826800807c4bfd521e50edbba57a5f"
   integrity sha512-S4XzBk5sMB+Rcb/LNcpzXr57VRTxgAvaAEDAl1AwRx27j00hT84O6OkteE7u8UB3NuaaygCRrEpqox4uDOrbdQ==
 
-bignumber.js@9.0.1, bignumber.js@^9.0.0:
+bignumber.js@9.0.1, bignumber.js@^9.0.0, bignumber.js@^9.0.1:
   version "9.0.1"
   resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-9.0.1.tgz#8d7ba124c882bfd8e43260c67475518d0689e4e5"
   integrity sha512-IdZR9mh6ahOBv/hYGiXyVuyCetmGJhtYkqLBpTStdhEGjegpPlUawydyaF3pbIOFynJTpllEs+NP+CS9jKFLjA==
@@ -6284,7 +6284,7 @@ ethereumjs-wallet@^1.0.0:
     utf8 "^3.0.0"
     uuid "^8.3.2"
 
-ethers@^5.4.7:
+ethers@^5.4.4, ethers@^5.4.7:
   version "5.5.1"
   resolved "https://registry.yarnpkg.com/ethers/-/ethers-5.5.1.tgz#d3259a95a42557844aa543906c537106c0406fbf"
   integrity sha512-RodEvUFZI+EmFcE6bwkuJqpCYHazdzeR1nMzg+YWQSmQEsNtfl1KHGfp/FWZYl48bI/g7cgBeP2IlPthjiVngw==
@@ -7557,6 +7557,11 @@ init-package-json@^2.0.2:
     semver "^7.3.5"
     validate-npm-package-license "^3.0.4"
     validate-npm-package-name "^3.0.0"
+
+injectpromise@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/injectpromise/-/injectpromise-1.0.0.tgz#c621f7df2bbfc1164d714f1fb229adec2079da39"
+  integrity sha512-qNq5wy4qX4uWHcVFOEU+RqZkoVG65FhvGkyDWbuBxILMjK6A1LFf5A1mgXZkD4nRx5FCorD81X/XvPKp/zVfPA==
 
 inquirer@^7.3.3:
   version "7.3.3"
@@ -12624,6 +12629,22 @@ trim-newlines@^3.0.0:
   resolved "https://registry.yarnpkg.com/trim-newlines/-/trim-newlines-3.0.1.tgz#260a5d962d8b752425b32f3a7db0dcacd176c144"
   integrity sha512-c1PTsA3tYrIsLGkJkzHF+w9F2EyxfXGo4UyJc4pFL++FMjnq0HJS69T3M7d//gKrFKwy429bouPescbjecU+Zw==
 
+tronweb@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/tronweb/-/tronweb-4.0.1.tgz#fa7ca1e5838e95335d6404b1d3c1578e8b844e4b"
+  integrity sha512-Qes8PHgcCLQg69SSXJNSqR+TlN+Zxh7G7DS2E8+nCUIqBq/bLUyTBsY24Z5wZmGoPmZI9/22d0kDYFrw8vKsvw==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    axios "^0.21.1"
+    bignumber.js "^9.0.1"
+    elliptic "^6.5.4"
+    ethers "^5.4.4"
+    eventemitter3 "^3.1.0"
+    injectpromise "^1.0.0"
+    lodash "^4.17.21"
+    semver "^5.6.0"
+    validator "^13.6.0"
+
 ts-jest@^26.1.1:
   version "26.5.6"
   resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-26.5.6.tgz#c32e0746425274e1dfe333f43cd3c800e014ec35"
@@ -13113,7 +13134,7 @@ validate-npm-package-name@^3.0.0:
   dependencies:
     builtins "^1.0.3"
 
-validator@^13.1.1, validator@^13.5.2:
+validator@^13.1.1, validator@^13.5.2, validator@^13.6.0:
   version "13.7.0"
   resolved "https://registry.yarnpkg.com/validator/-/validator-13.7.0.tgz#4f9658ba13ba8f3d82ee881d3516489ea85c0857"
   integrity sha512-nYXQLCBkpJ8X6ltALua9dRrZDHVYxjJ1wgskNt1lH9fzGjs3tgojGSCBjmEPwkWS1y29+DrizMTW19Pr9uB2nw==
