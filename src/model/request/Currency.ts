@@ -67,6 +67,7 @@ export enum Currency {
     QTUM = 'QTUM',
     EGLD = 'EGLD',
     ALGO = 'ALGO',
+    KCS = 'KCS',
 }
 
 export const ERC20_CURRENCIES = [
