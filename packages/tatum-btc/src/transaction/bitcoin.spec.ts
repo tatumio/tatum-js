@@ -1,4 +1,4 @@
-import { TransferBtcBasedBlockchain } from '@tatumio/tatum-core/src/model'
+import { TransferBtcBasedBlockchain } from '@tatumio/tatum-core'
 import { prepareBitcoinSignedTransaction, sendBitcoinTransaction } from './bitcoin'
 
 describe('BTC transactions', () => {
