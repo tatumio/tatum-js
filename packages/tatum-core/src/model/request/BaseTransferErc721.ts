@@ -7,16 +7,28 @@ export class BaseTransferErc721 extends PrivateKeyOrSignatureId {
   @Length(42, 58)
   public to: string
 
+  @ValidateIf((o) => o.chain !== Currency.SOL)
   @IsNotEmpty()
   @MaxLength(256)
-  public tokenId: string
+  public tokenId?: string
 
   @IsNotEmpty()
-  @Length(1, 43)
+  @Length(1, 44)
   public contractAddress: string
 
   @IsNotEmpty()
-  @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC, Currency.TRON, Currency.ONE, Currency.MATIC, Currency.ALGO, Currency.KCS])
+  @IsIn([
+    Currency.BSC,
+    Currency.ETH,
+    Currency.CELO,
+    Currency.XDC,
+    Currency.TRON,
+    Currency.ONE,
+    Currency.MATIC,
+    Currency.ALGO,
+    Currency.KCS,
+    Currency.SOL,
+  ])
   public chain: Currency
 
   @Min(0)
@@ -40,7 +52,7 @@ export class BaseTransferErc721 extends PrivateKeyOrSignatureId {
   @ValidateIf((o) => o.provenanceData && o.tokenPrice && o.provenance)
   public tokenPrice?: string
 
-  @ValidateIf((o) => o.chain === Currency.ALGO && o.signatureId)
+  @ValidateIf((o) => (o.chain === Currency.ALGO && o.signatureId) || o.chain === Currency.SOL)
   @IsNotEmpty()
   @Length(42, 58)
   public from?: string
