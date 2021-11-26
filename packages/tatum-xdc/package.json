@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-xdc",
-  "version": "2.0.0-alpha.46",
+  "version": "2.0.0-alpha.47",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
