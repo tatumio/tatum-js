@@ -3,7 +3,8 @@ import { WalletWithAddress } from '@tatumio/tatum-ledger'
 
 /**
  * Generate Stellar address and secret.
- * @param secret secret of the account to generate address
+ * @param secret optional secret of the account to generate address, if not provided, random is generated
+ * @returns wallet or a combination of address and private key
  */
 export const generateXlmWallet = async (secret?: string): Promise<WalletWithAddress> => {
   const keypair = secret ? Keypair.fromSecret(secret) : Keypair.random()

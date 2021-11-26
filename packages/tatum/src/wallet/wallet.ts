@@ -38,13 +38,13 @@ export const generateWallet = (
   const mnem = mnemonic ? mnemonic : generateMnemonic(256)
   switch (currency) {
     case Currency.BTC:
-      return generateBtcWallet(testnet, mnem)
+      return generateBtcWallet(mnem, { testnet })
     case Currency.DOGE:
-      return generateDogeWallet(testnet, mnem)
+      return generateDogeWallet(mnem, { testnet })
     case Currency.LTC:
-      return generateLtcWallet(testnet, mnem)
+      return generateLtcWallet(mnem, { testnet })
     case Currency.BCH:
-      return generateBchWallet(testnet, mnem)
+      return generateBchWallet(mnem, { testnet })
     case Currency.TRON:
     case Currency.USDT_TRON:
     case Currency.INRT_TRON:
@@ -55,11 +55,11 @@ export const generateWallet = (
     case Currency.CELO:
     case Currency.CEUR:
     case Currency.CUSD:
-      return generateCeloWallet(testnet, mnem)
+      return generateCeloWallet(mnem, { testnet })
     case Currency.ONE:
-      return generateOneWallet(testnet, mnem)
+      return generateOneWallet(mnem, { testnet })
     case Currency.QTUM:
-      return generateQtumWallet(testnet, mnem)
+      return generateQtumWallet(mnem, { testnet })
     case Currency.EGLD:
       return generateEgldWallet(mnem)
     case Currency.USDT:
@@ -100,25 +100,25 @@ export const generateWallet = (
     case Currency.BLTC:
     case Currency.BBCH:
     case Currency.MMY:
-      return generateEthWallet(testnet, mnem)
+      return generateEthWallet(mnem, { testnet })
     case Currency.MATIC:
     case Currency.USDC_MATIC:
     case Currency.USDT_MATIC:
-      return generatePolygonWallet(testnet, mnem)
+      return generatePolygonWallet(mnem, { testnet })
     case Currency.XDC:
-      return generateXdcWallet(testnet, mnem)
+      return generateXdcWallet(mnem, { testnet })
     case Currency.XRP:
       return generateXrpWallet()
     case Currency.XLM:
       return generateXlmWallet()
     case Currency.VET:
-      return generateVetWallet(testnet, mnem)
+      return generateVetWallet(mnem, { testnet })
     case Currency.NEO:
       return generateNeoWallet()
     case Currency.BNB:
-      return generateBnbWallet(testnet)
+      return generateBnbWallet(undefined, { testnet })
     case Currency.LYRA:
-      return generateLyraWallet(testnet, mnem)
+      return generateLyraWallet(mnem, { testnet })
     case Currency.ADA:
       return generateAdaWallet(mnem)
     case Currency.ALGO:
