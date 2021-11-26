@@ -3,8 +3,6 @@ import {
   BurnErc20,
   BaseBurnMultiToken,
   BaseBurnMultiTokenBatch,
-  CONTRACT_ADDRESSES,
-  CONTRACT_DECIMALS,
   CreateRecord,
   Currency,
   DeployErc20,
