@@ -12,7 +12,7 @@ import {
 } from '@tatumio/tatum-core'
 import { generateAddressFromXPub, generatePrivateKeyFromMnemonic } from '../wallet'
 import { offchainTransferBtcKMS } from './kms'
-import { KeyPair, TransferBtcBasedOffchain } from '@tatumio/tatum-core/src/model'
+import { KeyPair, TransferBtcBasedOffchain } from '@tatumio/tatum-core'
 
 /**
  * Send Bitcoin transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.

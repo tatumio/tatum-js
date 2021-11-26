@@ -10,4 +10,5 @@ export * from './constants'
 
 export * from '@tatumio/tatum-core'
 export * from '@tatumio/tatum-defi'
+
 export { WalletWithMnemonic } from '@tatumio/tatum-ledger'
