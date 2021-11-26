@@ -27,7 +27,7 @@ const generateXdcPrivateKey = async (testnet: boolean, mnemonic: string, i: numb
 const generateXdcAddress = (xpub: string, i: number) => {
   const w = ethHdKey.fromExtendedKey(xpub)
   const wallet = w.deriveChild(i).getWallet()
-  return '0x' + wallet.getAddress().toString('hex').toLowerCase()
+  return 'xdc' + wallet.getAddress().toString('hex').toLowerCase()
 }
 
 /**

@@ -54,7 +54,7 @@ import {
   transferMultiTokenBatch as transferBscMultiTokenBatchTransaction,
 } from '@tatumio/tatum-bsc'
 import {
-  erc1155TokenABI as abi,
+  erc1155TokenABI,
   AddMinter,
   BurnMultiToken,
   Currency,
@@ -259,7 +259,7 @@ export const transferMultiTokenBatch = async (
  */
 export const prepareAddMultiTokenMinter = async (testnet: boolean, body: AddMinter, provider?: string) => {
   const params = await prepareAddMultiTokenMinterAbstraction(body)
-  return await helperPrepareSCCall(testnet, body, 'grantRole', params, undefined, provider, abi)
+  return await helperPrepareSCCall(testnet, body, 'grantRole', params, undefined, provider, erc1155TokenABI)
 }
 
 /**

@@ -1,5 +1,5 @@
 import { mintNFTRequest, createNFTAbstraction, prepareAddNFTMinterAbstraction } from '@tatumio/tatum-defi'
-import { AddMinter, MintErc721, TransactionHash, erc721TokenABI as abi } from '@tatumio/tatum-core'
+import { AddMinter, MintErc721, TransactionHash, erc721TokenABI } from '@tatumio/tatum-core'
 import {
   CeloDeployErc721,
   sendCeloDeployErc721Transaction,
@@ -119,7 +119,7 @@ export const transferNFT = async (testnet: boolean, body: CeloTransferErc721, pr
  */
 export const prepareAddNFTMinter = async (testnet: boolean, body: AddMinter, provider?: string) => {
   const params = await prepareAddNFTMinterAbstraction(body)
-  return await helperPrepareSCCall(testnet, body, 'grantRole', params, provider, abi)
+  return await helperPrepareSCCall(testnet, body, 'grantRole', params, provider, erc721TokenABI)
 }
 
 /**
