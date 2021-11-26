@@ -90,7 +90,7 @@ describe('NFT tests', () => {
             authorAddresses: ['0x6c4A48886b77D1197eCFBDaA3D3f35d81d584342'],
             cashbackValues: ['0.25'],
           },
-          'https://rpc-mumbai.matic.today'
+          { provider: 'https://rpc-mumbai.matic.today' }
         )
         console.log('mintedToken', mintedToken)
         expect(mintedToken).not.toBeNull()

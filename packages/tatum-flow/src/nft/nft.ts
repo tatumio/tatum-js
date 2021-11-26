@@ -23,16 +23,18 @@ export const deployNFT = async (body: FlowDeployNft): Promise<TransactionHash> =
  * @param provider optional provider do broadcast tx
  */
 export const createNFT = async (body: FlowMintNft, file: Buffer, name: string, description?: string, scheme?: any, provider?: string) => {
-  return await createNFTAbstraction(() => mintNFTWithUri(false, body), false, body, file, name, description, scheme, provider)
+  // @ts-ignore - to be fixed with generic types
+  return await createNFTAbstraction(mintNFTWithUri, false, body, file, name, description, scheme, provider)
 }
 
 /**
  * Mint new NFT token.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
+ * @param options
+ * @param options.testnet if we use testnet or not
  */
-export const mintNFTWithUri = async (testnet: boolean, body: FlowMintNft): Promise<TransactionHash> => {
-  return sendFlowNftMintToken(testnet, body as FlowMintNft)
+export const mintNFTWithUri = async (body: FlowMintNft, options?: { testnet?: boolean }): Promise<TransactionHash> => {
+  return sendFlowNftMintToken(!!options?.testnet, body as FlowMintNft)
 }
 
 /**

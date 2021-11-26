@@ -42,19 +42,20 @@ export const deployNFT = async (body: DeployErc721, provider?: string): Promise<
  * @param provider optional provider do broadcast tx
  */
 export const createNFT = async (body: MintErc721, file: Buffer, name: string, description?: string, scheme?: any, provider?: string) => {
-  return await createNFTAbstraction(mintXdcNFTWithUri, false, body, file, name, description, scheme, provider)
+  return await createNFTAbstraction(mintNFTWithUri, false, body, file, name, description, scheme, provider)
 }
 
 /**
  * Mint new NFT token.
  * @param body body of the mint request
- * @param provider optional provider do broadcast tx
+ * @param options
+ * @param options.provider optional provider do broadcast tx
  */
-export const mintXdcNFTWithUri = async (body: MintErc721, provider?: string): Promise<TransactionHash> => {
+export const mintNFTWithUri = async (body: MintErc721, options?: { provider?: string }): Promise<TransactionHash> => {
   if ((body as MintErc721).authorAddresses) {
-    return sendXdcMintErcCashback721Transaction(body as MintErc721, provider)
+    return sendXdcMintErcCashback721Transaction(body as MintErc721, options?.provider)
   } else {
-    return sendXdcMintErc721Transaction(body as MintErc721, provider)
+    return sendXdcMintErc721Transaction(body as MintErc721, options?.provider)
   }
 }
 

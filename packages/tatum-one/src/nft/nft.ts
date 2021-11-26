@@ -59,13 +59,14 @@ export const createNFT = async (
 /**
  * Mint new NFT token.
  * @param body body of the mint request
- * @param provider optional provider do broadcast tx
+ * @param options
+ * @param options.provider optional provider do broadcast tx
  */
-export const mintNFTWithUri = async (body: MintErc721, provider?: string): Promise<TransactionHash> => {
+export const mintNFTWithUri = async (body: MintErc721, options?: { provider?: string }): Promise<TransactionHash> => {
   if (body.authorAddresses) {
-    return sendOneMintCashback721SignedTransaction(body, provider)
+    return sendOneMintCashback721SignedTransaction(body, options?.provider)
   } else {
-    return sendOneMint721SignedTransaction(body, provider)
+    return sendOneMint721SignedTransaction(body, options?.provider)
   }
 }
 

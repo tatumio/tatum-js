@@ -155,25 +155,28 @@ export const createNFT = async (
   scheme?: any,
   provider?: string
 ) => {
-  return await createNFTAbstraction(() => mintNFTWithUri(testnet, body, provider), testnet, body, file, name, description, scheme, provider)
+  return await createNFTAbstraction(mintNFTWithUri, testnet, body, file, name, description, scheme, provider)
 }
 
 /**
  * Mint new NFT token.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
- * @param provider optional provider do broadcast tx
+ * @param options
+ * @param options.testnet optional if we use testnet or not
+ * @param options.provider optional provider do broadcast tx
  */
 export const mintNFTWithUri = async (
-  testnet: boolean,
   body: CeloMintErc721 | EthMintErc721 | TronMintTrc721 | FlowMintNft,
-  provider?: string
+  options?: {
+    testnet?: boolean
+    provider?: string
+  }
 ): Promise<TransactionHash> => {
   switch (body.chain) {
     case Currency.CELO:
-      return celoMintNFTWithUri(testnet, body, provider)
+      return celoMintNFTWithUri(body, options)
     case Currency.ETH:
-      return ethMintNFTWithUri(testnet, body, provider)
+      return ethMintNFTWithUri(body, options)
     case Currency.MATIC:
       return polygonMintNFTWithUri(body)
     case Currency.ONE:
@@ -183,7 +186,7 @@ export const mintNFTWithUri = async (
     case Currency.BSC:
       return bscMintNFTWithUri(body)
     case Currency.FLOW:
-      return flowMintNFTWithUri(testnet, body as FlowMintNft)
+      return flowMintNFTWithUri(body as FlowMintNft, options)
     default:
       throw new Error('Unsupported blockchain.')
   }

@@ -18,7 +18,7 @@ describe('NFT tests', () => {
 
     it('should test eth 721 mint transaction', async () => {
       const tokenId = new Date().getTime().toString()
-      const mintedToken = await mintNFTWithUri(false, {
+      const mintedToken = await mintNFTWithUri({
         to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
         chain: Currency.ETH,
         tokenId,
@@ -32,7 +32,7 @@ describe('NFT tests', () => {
 
     it('should test eth 721 mint transaction with cashback', async () => {
       const tokenId = new Date().getTime().toString()
-      const mintedToken = await mintNFTWithUri(false, {
+      const mintedToken = await mintNFTWithUri({
         to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
         chain: Currency.ETH,
         tokenId,
