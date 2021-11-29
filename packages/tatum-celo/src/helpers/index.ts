@@ -22,5 +22,5 @@ export const helperPrepareSCCall = async (
   abi: any[] = listing.abi
 ) => {
   const r = buildSmartContractMethodInvocation(body, params, methodName, abi, new CeloSmartContractMethodInvocation())
-  return await prepareCeloSmartContractWriteMethodInvocation(testnet, { ...r, feeCurrency: body.feeCurrency || Currency.CELO }, provider)
+  return await prepareCeloSmartContractWriteMethodInvocation({ ...r, feeCurrency: body.feeCurrency || Currency.CELO }, provider, testnet)
 }

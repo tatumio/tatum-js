@@ -8,7 +8,6 @@ import {
   GenerateCustodialAddress,
   TransferFromCustodialAddress,
   TransferFromCustodialAddressBatch,
-  Currency,
   ContractType,
   CustodialFullTokenWallet,
   validateBody,
@@ -83,9 +82,8 @@ export const prepareTransferFromCustodialWallet = async (testnet: boolean, body:
     testnet,
     body,
     getCeloErc20ContractDecimals,
-    (r, provider, testnet) =>
-      // @ts-ignore
-      prepareCeloSmartContractWriteMethodInvocation(testnet, { ...r, feeCurrency: body.feeCurrency || Currency.CELO }, provider),
+    // @ts-ignore - to be fixed with generic types
+    prepareCeloSmartContractWriteMethodInvocation,
     CeloSmartContractMethodInvocation,
     18,
     TransferFromCustodialAddress,
@@ -115,13 +113,13 @@ export const prepareBatchTransferFromCustodialWallet = async (
   body: TransferFromCustodialAddressBatch,
   provider?: string
 ) => {
+  console.log('log1')
   return prepareBatchTransferFromCustodialWalletAbstract(
     testnet,
     body,
     getCeloErc20ContractDecimals,
-    (r, provider, testnet) =>
-      // @ts-ignore
-      prepareCeloSmartContractWriteMethodInvocation(testnet, { ...r, feeCurrency: body.feeCurrency || Currency.CELO }, provider),
+    // @ts-ignore - to be fixed with generic types
+    prepareCeloSmartContractWriteMethodInvocation,
     CeloSmartContractMethodInvocation,
     18,
     TransferFromCustodialAddressBatch,

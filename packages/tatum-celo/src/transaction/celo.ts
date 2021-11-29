@@ -774,9 +774,9 @@ export const getCeloClient = (provider?: string) =>
  * @returns raw transaction data in hex, to be broadcasted to blockchain.
  */
 export const prepareCeloSmartContractWriteMethodInvocation = async (
-  testnet: boolean,
   body: CeloSmartContractMethodInvocation,
-  provider?: string
+  provider?: string,
+  testnet?: boolean
 ) => {
   await validateBody(body, CeloSmartContractMethodInvocation)
   const { fromPrivateKey, feeCurrency, fee, params, methodName, methodABI, contractAddress, nonce, signatureId, amount } = body
@@ -785,7 +785,7 @@ export const prepareCeloSmartContractWriteMethodInvocation = async (
   const p = new CeloProvider(url)
   const network = await p.ready
 
-  const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
+  const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, !!testnet)
 
   // @ts-ignore
   const contract = new new Web3(url).eth.Contract([methodABI], contractAddress.trim())
@@ -851,7 +851,7 @@ export const sendCeloSmartContractMethodInvocationTransaction = async (
     return sendCeloSmartContractReadMethodInvocationTransaction(body, provider)
   }
   const celoBody = body as CeloSmartContractMethodInvocation
-  return celoBroadcast(await prepareCeloSmartContractWriteMethodInvocation(testnet, celoBody, provider), celoBody.signatureId)
+  return celoBroadcast(await prepareCeloSmartContractWriteMethodInvocation(celoBody, provider, testnet), celoBody.signatureId)
 }
 
 export const getCeloErc20ContractDecimals = async (contractAddress: string, provider?: string) => {

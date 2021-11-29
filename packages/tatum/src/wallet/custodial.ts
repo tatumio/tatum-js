@@ -245,12 +245,12 @@ export const prepareTransferFromCustodialWallet = async (
   switch (body.chain) {
     case Currency.CELO:
       return await prepareCeloSmartContractWriteMethodInvocation(
-        testnet,
         {
           ...r,
           feeCurrency: body.feeCurrency || Currency.CELO,
         },
-        provider
+        provider,
+        testnet
       )
     case Currency.ONE:
       return await prepareOneSmartContractWriteMethodInvocation(r, provider)
@@ -372,12 +372,12 @@ export const prepareBatchTransferFromCustodialWallet = async (
   switch (body.chain) {
     case Currency.CELO:
       return await prepareCeloSmartContractWriteMethodInvocation(
-        testnet,
         {
           ...r,
           feeCurrency: body.feeCurrency || Currency.CELO,
         },
-        provider
+        provider,
+        testnet
       )
     case Currency.ONE:
       return await prepareOneSmartContractWriteMethodInvocation(r, provider)
