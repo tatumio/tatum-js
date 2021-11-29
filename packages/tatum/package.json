@@ -12,7 +12,6 @@
     "prepublish": "npm run clean && npm run build",
     "lint": "eslint ./src --ext .ts --fix"
   },
-  "private": true,
   "dependencies": {
     "@solana/spl-token": "^0.1.8",
     "@solana/web3.js": "^1.30.2",
