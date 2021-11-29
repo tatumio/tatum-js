@@ -4,12 +4,5 @@
   ],
   "version": "2.0.0-alpha.51",
   "npmClient": "yarn",
-  "useWorkspaces": true,
-  "command": {
-    "publish": {
-      "ignoreChanges": [
-        "@tatumio/tatum"
-      ]
-    }
-  }
+  "useWorkspaces": true
 }
