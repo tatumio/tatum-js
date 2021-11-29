@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-egld",
-  "version": "2.0.0-alpha.51",
+  "version": "2.0.0-alpha.52",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
