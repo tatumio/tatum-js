@@ -17,6 +17,7 @@ import {
   TransactionKMS,
   SmartContractReadMethodInvocation,
   CreateRecord,
+  CeloSmartContractMethodInvocation,
 } from '@tatumio/tatum-core'
 import { obtainCustodialAddressType } from '@tatumio/tatum-defi'
 import {
@@ -27,7 +28,6 @@ import {
   CeloBurnErc721,
   DeployCeloErc20,
   MintCeloErc20,
-  CeloSmartContractMethodInvocation,
   TransferCeloOrCeloErc20Token,
   BurnCeloErc20,
   CeloMintMultipleErc721,

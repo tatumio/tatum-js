@@ -23,8 +23,8 @@ import {
   TransferFromCustodialAddress,
   TransferFromCustodialAddressBatch,
   validateBody,
+  CeloSmartContractMethodInvocation,
 } from '@tatumio/tatum-core'
-import { CeloSmartContractMethodInvocation } from '@tatumio/tatum-celo'
 
 export const obtainCustodialAddressType = (body: GenerateCustodialAddress) => {
   if (body.chain === Currency.TRON && body.enableSemiFungibleTokens) {

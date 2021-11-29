@@ -1,5 +1,4 @@
-import { buildSmartContractMethodInvocation, Currency, listing } from '@tatumio/tatum-core'
-import { CeloSmartContractMethodInvocation } from '../model'
+import { buildSmartContractMethodInvocation, Currency, listing, CeloSmartContractMethodInvocation } from '@tatumio/tatum-core'
 import { getCeloClient, prepareCeloSmartContractWriteMethodInvocation } from '../transaction'
 import { celoBroadcast } from '../blockchain'
 import Web3 from 'web3'

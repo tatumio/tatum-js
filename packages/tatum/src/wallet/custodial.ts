@@ -11,11 +11,11 @@ import {
   TransferFromCustodialAddress,
   TransferFromCustodialAddressBatch,
   validateBody,
+  CeloSmartContractMethodInvocation,
 } from '@tatumio/tatum-core'
 import { getErc20Decimals } from '../fungible'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
 import {
-  CeloSmartContractMethodInvocation,
   generateCustodialWallet as sendCeloGenerateCustodialWalletSignedTransaction,
   getCeloErc20ContractDecimals,
   prepareCeloSmartContractWriteMethodInvocation,

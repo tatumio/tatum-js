@@ -13,6 +13,7 @@ import {
   validateBody,
   GenerateCustodialAddressBatch,
   CUSTODIAL_PROXY_ABI,
+  CeloSmartContractMethodInvocation,
 } from '@tatumio/tatum-core'
 import BigNumber from 'bignumber.js'
 import {
@@ -20,7 +21,6 @@ import {
   prepareCeloGenerateCustodialWalletSignedTransaction,
   getCeloErc20ContractDecimals,
   prepareCeloSmartContractWriteMethodInvocation,
-  CeloSmartContractMethodInvocation,
 } from '../'
 import { getErc20Decimals } from '../fungible'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
