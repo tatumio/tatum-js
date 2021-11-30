@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 import { Erc20Transaction } from 'src/model/response/common/Erc20Transaction'
-import { get, validateBody } from '../connector/tatum'
+import { get, Sort, validateBody } from '../connector/tatum'
 import { ApproveErc20, Currency } from '../model'
 
 /**
