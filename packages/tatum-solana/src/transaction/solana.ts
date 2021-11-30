@@ -3,7 +3,7 @@ import { Connection, Keypair, LAMPORTS_PER_SOL, PublicKey, sendAndConfirmTransac
 import { BigNumber } from 'bignumber.js'
 import BN from 'bn.js'
 import { serialize } from 'borsh'
-import { validateBody, TATUM_API_URL, TransferErc721 } from '@tatumio/tatum-core'
+import { Currency, TATUM_API_URL, TransactionKMS, TransferErc721, validateBody } from '@tatumio/tatum-core'
 import {
   createAssociatedTokenAccountInstruction,
   createMasterEditionInstruction,
@@ -90,6 +90,27 @@ export const sendSolana = async (body: TransferSolana, provider?: string) => {
 // }
 
 /**
+ * Signs Solana KMS transaction
+ * @param tx KMS pending transaction to sign
+ * @param fromPrivateKey private key to sign
+ * @param provider optional URL of the Solana cluster
+ */
+export const signSolanaKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, provider?: string) => {
+  if (tx.chain !== Currency.SOL) {
+    throw Error('Unsupported chain.')
+  }
+  const connection = getSolanaClient(provider)
+  const transaction = JSON.parse(tx.serializedTransaction)
+  const wallet = generateSolanaKeyPair(fromPrivateKey as string)
+  const signers = []
+  if (transaction.mintPK) {
+    signers.push(generateSolanaKeyPair(transaction.mintPK))
+  }
+  signers.push(wallet)
+  return await sendAndConfirmTransaction(connection, transaction.txData, signers)
+}
+
+/**
  * Transfer NFT on Solana network.
  * @param body body of the request
  * @param provider optional URL of the Solana cluster
@@ -161,7 +182,15 @@ export const mintSolanaNft = async (body: SolanaMintNft, provider?: string) => {
       TOKEN_METADATA_PROGRAM_ID
     )
   )[0]
-  const txnData = Buffer.from(serialize(METADATA_SCHEMA, new CreateMetadataArgs({ data: body.metadata, isMutable: true })))
+  const txnData = Buffer.from(
+    serialize(
+      METADATA_SCHEMA,
+      new CreateMetadataArgs({
+        data: body.metadata,
+        isMutable: true,
+      })
+    )
+  )
 
   instructions.push(createMetadataInstruction(metadataAccount, mint.publicKey, from, from, from, txnData))
 
