@@ -44,6 +44,7 @@ export enum Currency {
     LINK = 'LINK',
     WBTC = 'WBTC',
     UNI = 'UNI',
+    SOL = 'SOL',
     FREE = 'FREE',
     MKR = 'MKR',
     USDC = 'USDC',
