@@ -1,11 +1,12 @@
 import { AxiosRequestConfig } from 'axios'
 import BigNumber from 'bignumber.js'
 import { tronBroadcast } from '../blockchain'
-import bytecode, {
+import {
   listing,
   trc721TokenABI as trc721_abi,
   trc721TokenBytecode as trc721_bytecode,
   trc721TokenABI as abi,
+  trc20TokenBytecode as bytecode,
   validateBody,
   Currency,
   SmartContractMethodInvocation,
@@ -808,7 +809,7 @@ export const prepareTronTransferTrc721SignedTransaction = async (body: TronTrans
       { type: 'address', value: tronWeb.address.toHex(to) },
       {
         type: 'uint256',
-        value: `0x${new BigNumber(tokenId).toString(16)}`,
+        value: `0x${new BigNumber(tokenId as string).toString(16)}`,
       },
     ],
     sender

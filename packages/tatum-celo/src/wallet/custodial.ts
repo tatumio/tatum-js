@@ -8,12 +8,12 @@ import {
   GenerateCustodialAddress,
   TransferFromCustodialAddress,
   TransferFromCustodialAddressBatch,
-  Currency,
   ContractType,
   CustodialFullTokenWallet,
   validateBody,
   GenerateCustodialAddressBatch,
   CUSTODIAL_PROXY_ABI,
+  CeloSmartContractMethodInvocation,
 } from '@tatumio/tatum-core'
 import BigNumber from 'bignumber.js'
 import {
@@ -21,7 +21,6 @@ import {
   prepareCeloGenerateCustodialWalletSignedTransaction,
   getCeloErc20ContractDecimals,
   prepareCeloSmartContractWriteMethodInvocation,
-  CeloSmartContractMethodInvocation,
 } from '../'
 import { getErc20Decimals } from '../fungible'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
@@ -83,9 +82,8 @@ export const prepareTransferFromCustodialWallet = async (testnet: boolean, body:
     testnet,
     body,
     getCeloErc20ContractDecimals,
-    (r, provider, testnet) =>
-      // @ts-ignore
-      prepareCeloSmartContractWriteMethodInvocation(testnet, { ...r, feeCurrency: body.feeCurrency || Currency.CELO }, provider),
+    // @ts-ignore - to be fixed with generic types
+    prepareCeloSmartContractWriteMethodInvocation,
     CeloSmartContractMethodInvocation,
     18,
     TransferFromCustodialAddress,
@@ -119,9 +117,8 @@ export const prepareBatchTransferFromCustodialWallet = async (
     testnet,
     body,
     getCeloErc20ContractDecimals,
-    (r, provider, testnet) =>
-      // @ts-ignore
-      prepareCeloSmartContractWriteMethodInvocation(testnet, { ...r, feeCurrency: body.feeCurrency || Currency.CELO }, provider),
+    // @ts-ignore - to be fixed with generic types
+    prepareCeloSmartContractWriteMethodInvocation,
     CeloSmartContractMethodInvocation,
     18,
     TransferFromCustodialAddressBatch,

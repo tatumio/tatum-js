@@ -45,12 +45,7 @@ export const prepareApproveErc20 = async (testnet: boolean, body: ApproveErc20, 
       throw new Error('Unsupported combination of inputs.')
   }
 
-  const { body: validatedBody, params } = await prepareApproveErc20Abstraction(
-    (contractAddress, provider?) => getErc20ContractDecimalsFn(contractAddress, provider),
-    testnet,
-    body,
-    provider
-  )
+  const { body: validatedBody, params } = await prepareApproveErc20Abstraction(getErc20ContractDecimalsFn, testnet, body, provider)
   return await helperPrepareSCCall(testnet, validatedBody, 'approve', params, undefined, provider, erc20TokenABI)
 }
 

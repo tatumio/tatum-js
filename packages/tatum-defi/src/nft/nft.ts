@@ -1,5 +1,7 @@
-import { axios, get, post, ipfsUpload, Currency, BaseMintErc721, TransactionHash, validateBody, AddMinter, Sort } from '@tatumio/tatum-core'
 import { NftTransaction } from 'src/model'
+import { AddMinter, axios, BaseMintErc721, Currency, get, ipfsUpload, post, TransactionHash, validateBody, Sort } from '@tatumio/tatum-core'
+
+type MintNftWithUriFn = (body: BaseMintErc721, options?: { provider?: string; testnet?: boolean }) => Promise<any>
 
 export const mintNFTRequest = (body: BaseMintErc721): Promise<TransactionHash> => post(`/v3/nft/mint`, body)
 
@@ -78,11 +80,21 @@ export const getNFTImage = async (
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetRoyaltyErc721" target="_blank">Tatum API documentation</a>
  */
-export const getNFTRoyalty = async (chain: Currency, contractAddress: string, tokenId: string): Promise<{ data: string }> =>
-  get(`/v3/nft/royalty/${chain}/${contractAddress}/${tokenId}`)
+export const getNFTRoyalty = async (
+  chain: Currency,
+  contractAddress: string,
+  tokenId?: string
+): Promise<{ addresses: string[]; values: string[] }> => {
+  let url = `/v3/nft/royalty/${chain}/${contractAddress}`
+  if (tokenId) {
+    url += `/${tokenId}`
+  }
+  return get(url)
+}
 
 /**
  * Mint new NFT token with metadata stored on the IPFS.
+ * @param mintNftWithUri fn to mint new NFT token
  * @param testnet if we use testnet or not
  * @param body body of the mint request
  * @param file file to be stored on the IPFS
@@ -92,7 +104,7 @@ export const getNFTRoyalty = async (chain: Currency, contractAddress: string, to
  * @param provider optional provider do broadcast tx
  */
 export const createNFTAbstraction = async (
-  mintNftWithUri: (body: BaseMintErc721, provider?: string, testnet?: boolean) => Promise<any>,
+  mintNftWithUri: MintNftWithUriFn,
   testnet: boolean,
   body: BaseMintErc721,
   file: Buffer,
@@ -113,7 +125,7 @@ export const createNFTAbstraction = async (
   if (body.chain === Currency.FLOW) {
     ;(body as any).privateKey = (body as any).privateKey || (body as any).fromPrivateKey
   }
-  const result = await mintNftWithUri(body, provider, testnet)
+  const result = await mintNftWithUri(body, { provider, testnet })
   return {
     tokenId: (body as any).tokenId,
     // @ts-ignore

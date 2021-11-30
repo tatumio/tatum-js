@@ -3,6 +3,7 @@ export enum Currency {
   BCH = 'BCH',
   LTC = 'LTC',
   CELO = 'CELO',
+  SOL = 'SOL',
   ONE = 'ONE',
   CUSD = 'CUSD',
   CEUR = 'CEUR',

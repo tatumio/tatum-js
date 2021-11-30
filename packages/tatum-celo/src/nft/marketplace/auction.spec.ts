@@ -74,7 +74,7 @@ describe('Auction  tests', () => {
       mint.url = 'https://google.com'
       mint.feeCurrency = Currency.CUSD
       mint.chain = Currency.CELO
-      console.log(await mintNFTWithUri(true, mint, 'https://alfajores-forno.celo-testnet.org'))
+      console.log(await mintNFTWithUri(mint, { testnet: true, provider: 'https://alfajores-forno.celo-testnet.org' }))
 
       await sleep()
       console.log(
@@ -136,7 +136,7 @@ describe('Auction  tests', () => {
       mint.url = 'https://google.com'
       mint.feeCurrency = Currency.CUSD
       mint.chain = Currency.CELO
-      console.log(await mintNFTWithUri(true, mint, 'https://alfajores-forno.celo-testnet.org'))
+      console.log(await mintNFTWithUri(mint, { testnet: true, provider: 'https://alfajores-forno.celo-testnet.org' }))
 
       await sleep()
       console.log(
