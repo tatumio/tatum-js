@@ -17,6 +17,7 @@ import {
   TransactionKMS,
   SmartContractReadMethodInvocation,
   CreateRecord,
+  CeloSmartContractMethodInvocation,
 } from '@tatumio/tatum-core'
 import { obtainCustodialAddressType } from '@tatumio/tatum-defi'
 import {
@@ -27,7 +28,6 @@ import {
   CeloBurnErc721,
   DeployCeloErc20,
   MintCeloErc20,
-  CeloSmartContractMethodInvocation,
   TransferCeloOrCeloErc20Token,
   BurnCeloErc20,
   CeloMintMultipleErc721,
@@ -774,18 +774,20 @@ export const getCeloClient = (provider?: string) =>
  * @returns raw transaction data in hex, to be broadcasted to blockchain.
  */
 export const prepareCeloSmartContractWriteMethodInvocation = async (
-  testnet: boolean,
   body: CeloSmartContractMethodInvocation,
-  provider?: string
+  options?: {
+    provider?: string
+    testnet?: boolean
+  }
 ) => {
   await validateBody(body, CeloSmartContractMethodInvocation)
   const { fromPrivateKey, feeCurrency, fee, params, methodName, methodABI, contractAddress, nonce, signatureId, amount } = body
 
-  const url = provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`
+  const url = options?.provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`
   const p = new CeloProvider(url)
   const network = await p.ready
 
-  const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
+  const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, !!options?.testnet)
 
   // @ts-ignore
   const contract = new new Web3(url).eth.Contract([methodABI], contractAddress.trim())
@@ -851,7 +853,7 @@ export const sendCeloSmartContractMethodInvocationTransaction = async (
     return sendCeloSmartContractReadMethodInvocationTransaction(body, provider)
   }
   const celoBody = body as CeloSmartContractMethodInvocation
-  return celoBroadcast(await prepareCeloSmartContractWriteMethodInvocation(testnet, celoBody, provider), celoBody.signatureId)
+  return celoBroadcast(await prepareCeloSmartContractWriteMethodInvocation(celoBody, { provider, testnet }), celoBody.signatureId)
 }
 
 export const getCeloErc20ContractDecimals = async (contractAddress: string, provider?: string) => {

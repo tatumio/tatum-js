@@ -1,4 +1,5 @@
-import { Currency, SmartContractMethodInvocation } from '@tatumio/tatum-core'
+import { Currency } from './Currency'
+import { SmartContractMethodInvocation } from './SmartContractMethodInvocation'
 import { IsIn, IsNotEmpty } from 'class-validator'
 
 export class CeloSmartContractMethodInvocation extends SmartContractMethodInvocation {

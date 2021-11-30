@@ -37,7 +37,7 @@ describe('Auction  tests', () => {
       mint.tokenId = tokenId
       mint.url = 'https://google.com'
       mint.chain = Currency.MATIC
-      console.log(await mintNFTWithUri(mint, 'https://rpc-mumbai.maticvigil.com'))
+      console.log(await mintNFTWithUri(mint, { provider: 'https://rpc-mumbai.maticvigil.com' }))
 
       await sleep()
       console.log(
@@ -101,7 +101,7 @@ describe('Auction  tests', () => {
       mint.tokenId = tokenId
       mint.url = 'https://google.com'
       mint.chain = Currency.MATIC
-      console.log(await mintNFTWithUri(mint, 'https://rpc-mumbai.maticvigil.com'))
+      console.log(await mintNFTWithUri(mint, { provider: 'https://rpc-mumbai.maticvigil.com' }))
 
       await sleep()
       console.log(

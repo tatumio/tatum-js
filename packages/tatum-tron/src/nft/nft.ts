@@ -48,7 +48,8 @@ export const createNFT = async (
   scheme?: any,
   provider?: string
 ) => {
-  return await createNFTAbstraction(() => mintNFTWithUri(body), testnet, body, file, name, description, scheme, provider)
+  // @ts-ignore - to be fixed with generic types
+  return await createNFTAbstraction(mintNFTWithUri, testnet, body, file, name, description, scheme, provider)
 }
 
 /**

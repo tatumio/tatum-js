@@ -62,7 +62,7 @@ describe('NFT tests', () => {
       body.url = 'https://google.com'
       body.feeCurrency = Currency.CUSD
       body.chain = Currency.CELO
-      const test = await mintNFTWithUri(true, body, 'https://alfajores-forno.celo-testnet.org')
+      const test = await mintNFTWithUri(body, { testnet: true, provider: 'https://alfajores-forno.celo-testnet.org' })
       console.log('test results', test)
       expect(test).toBeDefined()
     })
@@ -76,7 +76,12 @@ describe('NFT tests', () => {
       body.url = 'https://google.com'
       body.feeCurrency = Currency.CUSD
       body.chain = Currency.CELO
-      expect(await mintNFTWithUri(true, body, 'https://alfajores-forno.celo-testnet.org')).toBeDefined()
+      expect(
+        await mintNFTWithUri(body, {
+          testnet: true,
+          provider: 'https://alfajores-forno.celo-testnet.org',
+        })
+      ).toBeDefined()
     })
 
     it('should test valid mint 721 transaction on IPFS', async () => {

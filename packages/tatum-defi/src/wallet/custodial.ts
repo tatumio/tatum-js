@@ -1,8 +1,7 @@
 import { BigNumber } from 'bignumber.js'
 import {
-  validateBody,
-  CustodialFullTokenWallet,
-  CustodialFullTokenWalletWithBatch,
+  ContractType,
+  Currency,
   Custodial_1155_TokenWallet,
   Custodial_1155_TokenWalletWithBatch,
   Custodial_20_1155_TokenWallet,
@@ -15,14 +14,16 @@ import {
   Custodial_721_1155_TokenWalletWithBatch,
   Custodial_721_TokenWallet,
   Custodial_721_TokenWalletWithBatch,
-  ContractType,
-  Currency,
+  CustodialFullTokenWallet,
+  CustodialFullTokenWalletWithBatch,
   GenerateCustodialAddress,
+  GenerateCustodialAddressBatch,
+  get,
   SmartContractMethodInvocation,
   TransferFromCustodialAddress,
   TransferFromCustodialAddressBatch,
-  get,
-  GenerateCustodialAddressBatch,
+  validateBody,
+  CeloSmartContractMethodInvocation,
 } from '@tatumio/tatum-core'
 
 export const obtainCustodialAddressType = (body: GenerateCustodialAddress) => {
@@ -136,7 +137,11 @@ export const prepareTransferFromCustodialWalletAbstract = async (
     `0x${new BigNumber(tokenId).toString(16)}`,
   ]
   r.methodABI = CustodialFullTokenWallet.abi.find((a) => a.name === 'transfer')
-  return await prepareSmartContractWriteMethodInvocation(r, provider, testnet)
+  return await prepareSmartContractWriteMethodInvocation(
+    body.chain === Currency.CELO ? ({ ...r, feeCurrency: body.feeCurrency || Currency.CELO } as CeloSmartContractMethodInvocation) : r,
+    provider,
+    testnet
+  )
 }
 
 /**
@@ -195,7 +200,11 @@ export const prepareBatchTransferFromCustodialWalletAbstract = async (
     tokenIds,
   ]
   r.methodABI = CustodialFullTokenWalletWithBatch.abi.find((a) => a.name === 'transferBatch')
-  return await prepareSmartContractWriteMethodInvocation(r, provider, testnet)
+  return await prepareSmartContractWriteMethodInvocation(
+    body.chain === Currency.CELO ? ({ ...r, feeCurrency: body.feeCurrency || Currency.CELO } as CeloSmartContractMethodInvocation) : r,
+    provider,
+    testnet
+  )
 }
 
 export const getCustodialAddresses = (chain: Currency, txId: string): Promise<string[]> =>

@@ -11,11 +11,11 @@ import {
   TransferFromCustodialAddress,
   TransferFromCustodialAddressBatch,
   validateBody,
+  CeloSmartContractMethodInvocation,
 } from '@tatumio/tatum-core'
 import { getErc20Decimals } from '../fungible'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
 import {
-  CeloSmartContractMethodInvocation,
   generateCustodialWallet as sendCeloGenerateCustodialWalletSignedTransaction,
   getCeloErc20ContractDecimals,
   prepareCeloSmartContractWriteMethodInvocation,
@@ -245,12 +245,14 @@ export const prepareTransferFromCustodialWallet = async (
   switch (body.chain) {
     case Currency.CELO:
       return await prepareCeloSmartContractWriteMethodInvocation(
-        testnet,
         {
           ...r,
           feeCurrency: body.feeCurrency || Currency.CELO,
         },
-        provider
+        {
+          provider,
+          testnet,
+        }
       )
     case Currency.ONE:
       return await prepareOneSmartContractWriteMethodInvocation(r, provider)
@@ -372,12 +374,14 @@ export const prepareBatchTransferFromCustodialWallet = async (
   switch (body.chain) {
     case Currency.CELO:
       return await prepareCeloSmartContractWriteMethodInvocation(
-        testnet,
         {
           ...r,
           feeCurrency: body.feeCurrency || Currency.CELO,
         },
-        provider
+        {
+          provider,
+          testnet,
+        }
       )
     case Currency.ONE:
       return await prepareOneSmartContractWriteMethodInvocation(r, provider)

@@ -9,7 +9,7 @@ import { ApproveErc20 } from '../model'
  * @param provider optional Web3 provider
  */
 export const prepareApproveErc20Abstraction = async (
-  getErc20ContractDecimalsFn: (contractAddress: string, provider?: string, tesnet?: boolean) => Promise<any>,
+  getErc20ContractDecimalsFn: (contractAddress: string, provider?: string, testnet?: boolean) => Promise<any>,
   testnet: boolean,
   body: ApproveErc20,
   provider?: string
