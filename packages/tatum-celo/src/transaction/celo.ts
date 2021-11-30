@@ -775,17 +775,19 @@ export const getCeloClient = (provider?: string) =>
  */
 export const prepareCeloSmartContractWriteMethodInvocation = async (
   body: CeloSmartContractMethodInvocation,
-  provider?: string,
-  testnet?: boolean
+  options?: {
+    provider?: string
+    testnet?: boolean
+  }
 ) => {
   await validateBody(body, CeloSmartContractMethodInvocation)
   const { fromPrivateKey, feeCurrency, fee, params, methodName, methodABI, contractAddress, nonce, signatureId, amount } = body
 
-  const url = provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`
+  const url = options?.provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`
   const p = new CeloProvider(url)
   const network = await p.ready
 
-  const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, !!testnet)
+  const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, !!options?.testnet)
 
   // @ts-ignore
   const contract = new new Web3(url).eth.Contract([methodABI], contractAddress.trim())
@@ -851,7 +853,7 @@ export const sendCeloSmartContractMethodInvocationTransaction = async (
     return sendCeloSmartContractReadMethodInvocationTransaction(body, provider)
   }
   const celoBody = body as CeloSmartContractMethodInvocation
-  return celoBroadcast(await prepareCeloSmartContractWriteMethodInvocation(celoBody, provider, testnet), celoBody.signatureId)
+  return celoBroadcast(await prepareCeloSmartContractWriteMethodInvocation(celoBody, { provider, testnet }), celoBody.signatureId)
 }
 
 export const getCeloErc20ContractDecimals = async (contractAddress: string, provider?: string) => {

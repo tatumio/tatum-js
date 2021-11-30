@@ -249,8 +249,10 @@ export const prepareTransferFromCustodialWallet = async (
           ...r,
           feeCurrency: body.feeCurrency || Currency.CELO,
         },
-        provider,
-        testnet
+        {
+          provider,
+          testnet,
+        }
       )
     case Currency.ONE:
       return await prepareOneSmartContractWriteMethodInvocation(r, provider)
@@ -376,8 +378,10 @@ export const prepareBatchTransferFromCustodialWallet = async (
           ...r,
           feeCurrency: body.feeCurrency || Currency.CELO,
         },
-        provider,
-        testnet
+        {
+          provider,
+          testnet,
+        }
       )
     case Currency.ONE:
       return await prepareOneSmartContractWriteMethodInvocation(r, provider)
