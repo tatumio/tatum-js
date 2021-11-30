@@ -6,6 +6,11 @@ type MintNftWithUriFn = (body: BaseMintErc721, options?: { provider?: string; te
 export const mintNFTRequest = (body: BaseMintErc721): Promise<TransactionHash> => post(`/v3/nft/mint`, body)
 
 /**
+ * For more details, see <a href="https://tatum.io/apidoc.php#operation/NftGetTransactErc721" target="_blank">Tatum API documentation</a>
+ */
+export const getNFTTransaction = async <TX>(chain: Currency, hash: string): Promise<TX> => get<TX>(`/v3/nft/transaction/${chain}/${hash}`)
+
+/**
  * For more details, see <a href="https://tatum.io/apidoc.php#operation/NftGetTransactionByAddress" target="_blank">Tatum API documentation</a>
  */
 export const getNFTTransactionsByAddress = async (
