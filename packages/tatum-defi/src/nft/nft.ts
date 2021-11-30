@@ -1,5 +1,5 @@
-import { NftTransaction } from 'src/model'
 import { AddMinter, axios, BaseMintErc721, Currency, get, ipfsUpload, post, TransactionHash, validateBody, Sort } from '@tatumio/tatum-core'
+import { NftTransaction } from '../model'
 
 type MintNftWithUriFn = (body: BaseMintErc721, options?: { provider?: string; testnet?: boolean }) => Promise<any>
 
