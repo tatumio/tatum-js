@@ -113,7 +113,6 @@ export const prepareBatchTransferFromCustodialWallet = async (
   body: TransferFromCustodialAddressBatch,
   provider?: string
 ) => {
-  console.log('log1')
   return prepareBatchTransferFromCustodialWalletAbstract(
     testnet,
     body,
