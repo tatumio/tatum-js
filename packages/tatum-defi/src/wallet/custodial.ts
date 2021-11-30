@@ -1,8 +1,7 @@
 import { BigNumber } from 'bignumber.js'
 import {
-  validateBody,
-  CustodialFullTokenWallet,
-  CustodialFullTokenWalletWithBatch,
+  ContractType,
+  Currency,
   Custodial_1155_TokenWallet,
   Custodial_1155_TokenWalletWithBatch,
   Custodial_20_1155_TokenWallet,
@@ -15,14 +14,16 @@ import {
   Custodial_721_1155_TokenWalletWithBatch,
   Custodial_721_TokenWallet,
   Custodial_721_TokenWalletWithBatch,
-  ContractType,
-  Currency,
+  CustodialFullTokenWallet,
+  CustodialFullTokenWalletWithBatch,
   GenerateCustodialAddress,
+  GenerateCustodialAddressBatch,
+  get,
   SmartContractMethodInvocation,
   TransferFromCustodialAddress,
   TransferFromCustodialAddressBatch,
-  get,
-  GenerateCustodialAddressBatch,
+  validateBody,
+  CeloSmartContractMethodInvocation,
 } from '@tatumio/tatum-core'
 
 export const obtainCustodialAddressType = (body: GenerateCustodialAddress) => {
@@ -136,7 +137,11 @@ export const prepareTransferFromCustodialWalletAbstract = async (
     `0x${new BigNumber(tokenId).toString(16)}`,
   ]
   r.methodABI = CustodialFullTokenWallet.abi.find((a) => a.name === 'transfer')
-  return await prepareSmartContractWriteMethodInvocation(r, provider, testnet)
+  return await prepareSmartContractWriteMethodInvocation(
+    body.chain === Currency.CELO ? ({ ...r, feeCurrency: body.feeCurrency || Currency.CELO } as CeloSmartContractMethodInvocation) : r,
+    provider,
+    testnet
+  )
 }
 
 /**
@@ -174,13 +179,13 @@ export const prepareBatchTransferFromCustodialWalletAbstract = async (
   const amounts = []
   const tokenIds = []
   for (let i = 0; i < body.contractType.length; i++) {
-    let amount = new BigNumber(body.amount[i])
-    let tokenId = new BigNumber(body.tokenId[i])
+    let amount = new BigNumber(body.amount ? body.amount[i] : 0)
+    let tokenId = new BigNumber(body.tokenId ? body.tokenId[i] : 0)
     if (body.contractType[i] === ContractType.NATIVE_ASSET) {
       amount = amount.multipliedBy(new BigNumber(10).pow(decimals))
     } else if (body.contractType[i] === ContractType.NON_FUNGIBLE_TOKEN) {
       amount = new BigNumber(0)
-    } else if (body.contractType[i] === ContractType.FUNGIBLE_TOKEN) {
+    } else if (body.contractType[i] === ContractType.FUNGIBLE_TOKEN && body.tokenAddress) {
       tokenId = new BigNumber(0)
       amount = amount.multipliedBy(new BigNumber(10).pow(await getContractDecimals(body.tokenAddress[i], provider, testnet)))
     }
@@ -188,14 +193,18 @@ export const prepareBatchTransferFromCustodialWalletAbstract = async (
     tokenIds.push(`0x${tokenId.toString(16)}`)
   }
   r.params = [
-    body.tokenAddress.map((t) => (t === '0' ? '0x000000000000000000000000000000000000dEaD' : t)),
+    (body.tokenAddress || []).map((t) => (t === '0' ? '0x000000000000000000000000000000000000dEaD' : t)),
     body.contractType,
     body.recipient,
     amounts,
     tokenIds,
   ]
   r.methodABI = CustodialFullTokenWalletWithBatch.abi.find((a) => a.name === 'transferBatch')
-  return await prepareSmartContractWriteMethodInvocation(r, provider, testnet)
+  return await prepareSmartContractWriteMethodInvocation(
+    body.chain === Currency.CELO ? ({ ...r, feeCurrency: body.feeCurrency || Currency.CELO } as CeloSmartContractMethodInvocation) : r,
+    provider,
+    testnet
+  )
 }
 
 export const getCustodialAddresses = (chain: Currency, txId: string): Promise<string[]> =>

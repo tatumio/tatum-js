@@ -9,7 +9,7 @@ import {
   MintMultipleErc721,
   TransferErc721,
   AddMinter,
-  erc721TokenABI as abi,
+  erc721TokenABI,
 } from '@tatumio/tatum-core'
 import {
   sendBurnErc721Transaction,
@@ -44,19 +44,20 @@ export const deployNFT = async (body: DeployErc721 & { chain: Currency.ETH }, pr
  * @param provider optional provider do broadcast tx
  */
 export const createNFT = async (body: MintErc721, file: Buffer, name: string, description?: string, scheme?: any, provider?: string) => {
-  return await createNFTAbstraction(() => mintNFTWithUri(false, body, provider), false, body, file, name, description, scheme, provider)
+  return await createNFTAbstraction(mintNFTWithUri, false, body, file, name, description, scheme, provider)
 }
 
 /**
  * Mint new NFT token.
  * @param body body of the mint request
- * @param provider optional provider do broadcast tx
+ * @param options
+ * @param options.provider optional provider do broadcast tx
  */
-export const mintNFTWithUri = async (_testnet: boolean, body: MintErc721, provider?: string) => {
+export const mintNFTWithUri = async (body: MintErc721, options?: { provider?: string }) => {
   if ((body as MintErc721).authorAddresses) {
-    return sendMintCashbackErc721Transaction(body as MintErc721, provider)
+    return sendMintCashbackErc721Transaction(body as MintErc721, options?.provider)
   } else {
-    return sendMintErc721Transaction(body as MintErc721, provider)
+    return sendMintErc721Transaction(body as MintErc721, options?.provider)
   }
 }
 
@@ -107,7 +108,7 @@ export const transferNFT = async (body: TransferErc721, provider?: string) => {
  */
 export const prepareAddNFTMinter = async (body: AddMinter, provider?: string) => {
   const params = await prepareAddNFTMinterAbstraction(body)
-  return await helperPrepareSCCall(body, 'grantRole', params, provider, abi)
+  return await helperPrepareSCCall(body, 'grantRole', params, provider, erc721TokenABI)
 }
 
 /**

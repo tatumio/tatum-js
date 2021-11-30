@@ -16,9 +16,9 @@ import {
   ApproveErc20,
   CreateAuction,
   InvokeAuctionOperation,
+  erc1155TokenABI,
+  erc721TokenABI,
 } from '@tatumio/tatum-core'
-import erc1155_abi from '@tatumio/tatum-core/dist/contracts/erc1155/erc1155_abi'
-import erc721_abi from '@tatumio/tatum-core/dist/contracts/erc721/erc721_abi'
 import { prepareBscDeployAuctionSignedTransaction } from '../../transaction'
 import { prepareApproveErc20 } from '../../fungible'
 import { helperBroadcastTx, helperPrepareSCCall, helperGetWeb3Client } from '../../helpers'
@@ -91,7 +91,7 @@ export const prepareAuctionApproveNftTransfer = async (body: ApproveNftTransfer,
     body.isErc721 ? 'approve' : 'setApprovalForAll',
     params,
     provider,
-    body.isErc721 ? erc721_abi : erc1155_abi
+    body.isErc721 ? erc721TokenABI : erc1155TokenABI
   )
 }
 

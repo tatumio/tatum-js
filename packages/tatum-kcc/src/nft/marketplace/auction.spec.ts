@@ -37,7 +37,7 @@ describe('Auction  tests', () => {
       mint.tokenId = tokenId
       mint.url = 'https://google.com'
       mint.chain = Currency.KCS
-      console.log(await mintNFTWithUri(mint, 'https://rpc-testnet.kcc.network'))
+      console.log(await mintNFTWithUri(mint, { provider: 'https://rpc-testnet.kcc.network' }))
 
       await sleep()
       console.log(
@@ -101,7 +101,7 @@ describe('Auction  tests', () => {
       mint.tokenId = tokenId
       mint.url = 'https://google.com'
       mint.chain = Currency.KCS
-      console.log(await mintNFTWithUri(mint, 'https://rpc-testnet.kcc.network'))
+      console.log(await mintNFTWithUri(mint, { provider: 'https://rpc-testnet.kcc.network' }))
 
       await sleep()
       console.log(

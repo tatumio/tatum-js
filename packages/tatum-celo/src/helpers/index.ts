@@ -1,5 +1,4 @@
-import { buildSmartContractMethodInvocation, Currency, listing } from '@tatumio/tatum-core'
-import { CeloSmartContractMethodInvocation } from '../model'
+import { buildSmartContractMethodInvocation, Currency, listing, CeloSmartContractMethodInvocation } from '@tatumio/tatum-core'
 import { getCeloClient, prepareCeloSmartContractWriteMethodInvocation } from '../transaction'
 import { celoBroadcast } from '../blockchain'
 import Web3 from 'web3'
@@ -22,5 +21,11 @@ export const helperPrepareSCCall = async (
   abi: any[] = listing.abi
 ) => {
   const r = buildSmartContractMethodInvocation(body, params, methodName, abi, new CeloSmartContractMethodInvocation())
-  return await prepareCeloSmartContractWriteMethodInvocation(testnet, { ...r, feeCurrency: body.feeCurrency || Currency.CELO }, provider)
+  return await prepareCeloSmartContractWriteMethodInvocation(
+    { ...r, feeCurrency: body.feeCurrency || Currency.CELO },
+    {
+      provider,
+      testnet,
+    }
+  )
 }

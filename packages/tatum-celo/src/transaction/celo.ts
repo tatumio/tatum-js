@@ -17,6 +17,7 @@ import {
   TransactionKMS,
   SmartContractReadMethodInvocation,
   CreateRecord,
+  CeloSmartContractMethodInvocation,
 } from '@tatumio/tatum-core'
 import { obtainCustodialAddressType } from '@tatumio/tatum-defi'
 import {
@@ -27,7 +28,6 @@ import {
   CeloBurnErc721,
   DeployCeloErc20,
   MintCeloErc20,
-  CeloSmartContractMethodInvocation,
   TransferCeloOrCeloErc20Token,
   BurnCeloErc20,
   CeloMintMultipleErc721,
@@ -335,7 +335,8 @@ export const prepareCeloDeployErc721SignedTransaction = async (testnet: boolean,
  */
 export const prepareCeloMintCashbackErc721SignedTransaction = async (testnet: boolean, body: CeloMintErc721, provider?: string) => {
   await validateBody(body, CeloMintErc721)
-  const { fromPrivateKey, url, to, tokenId, contractAddress, feeCurrency, nonce, signatureId, authorAddresses, cashbackValues } = body
+  const { fromPrivateKey, url, to, tokenId, contractAddress, feeCurrency, nonce, signatureId, authorAddresses, cashbackValues, erc20 } =
+    body
 
   const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
   const network = await p.ready
@@ -354,7 +355,9 @@ export const prepareCeloMintCashbackErc721SignedTransaction = async (testnet: bo
         nonce,
         to: contractAddress.trim(),
         gasLimit: '0',
-        data: contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb).encodeABI(),
+        data: erc20
+          ? contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb, erc20).encodeABI()
+          : contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb).encodeABI(),
       })
     }
     const wallet = new CeloWallet(fromPrivateKey as string, p)
@@ -367,7 +370,9 @@ export const prepareCeloMintCashbackErc721SignedTransaction = async (testnet: bo
       gasLimit: '0',
       to: contractAddress.trim(),
       gasPrice,
-      data: contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb).encodeABI(),
+      data: erc20
+        ? contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb, erc20).encodeABI()
+        : contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb).encodeABI(),
       from,
     }
     transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString()
@@ -393,6 +398,7 @@ export const prepareCeloMintErc721ProvenanceSignedTransaction = async (testnet: 
     cashbackValues,
     authorAddresses,
     fixedValues,
+    erc20,
   } = body
 
   const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
@@ -408,7 +414,9 @@ export const prepareCeloMintErc721ProvenanceSignedTransaction = async (testnet: 
       cashbackValues.map((c) => cb.push(`0x${new BigNumber(c).multipliedBy(100).toString(16)}`))
       fixedValues.map((c) => fv.push(`0x${new BigNumber(toWei(c, 'ether')).toString(16)}`))
     }
-    const data = contract.methods.mintWithTokenURI(to.trim(), tokenId, url, authorAddresses ? authorAddresses : [], cb, fv).encodeABI()
+    const data = erc20
+      ? contract.methods.mintWithTokenURI(to.trim(), tokenId, url, authorAddresses ? authorAddresses : [], cb, fv, erc20).encodeABI()
+      : contract.methods.mintWithTokenURI(to.trim(), tokenId, url, authorAddresses ? authorAddresses : [], cb, fv).encodeABI()
     if (signatureId) {
       return JSON.stringify({
         chainId: network.chainId,
@@ -458,6 +466,7 @@ export const prepareCeloMintMultipleErc721ProvenanceSignedTransaction = async (
     authorAddresses,
     cashbackValues,
     fixedValues,
+    erc20,
   } = body
 
   const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
@@ -482,16 +491,28 @@ export const prepareCeloMintMultipleErc721ProvenanceSignedTransaction = async (
       fv.push(fv2)
     }
   }
-  const data = contract.methods
-    .mintMultiple(
-      to.map((t) => t.trim()),
-      tokenId,
-      url,
-      authorAddresses ? authorAddresses : [],
-      cb,
-      fv
-    )
-    .encodeABI()
+  const data = erc20
+    ? contract.methods
+        .mintMultiple(
+          to.map((t) => t.trim()),
+          tokenId,
+          url,
+          authorAddresses ? authorAddresses : [],
+          cb,
+          fv,
+          erc20
+        )
+        .encodeABI()
+    : contract.methods
+        .mintMultiple(
+          to.map((t) => t.trim()),
+          tokenId,
+          url,
+          authorAddresses ? authorAddresses : [],
+          cb,
+          fv
+        )
+        .encodeABI()
   if (signatureId) {
     return JSON.stringify({
       chainId: network.chainId,
@@ -576,8 +597,9 @@ export const prepareCeloTransferErc721SignedTransaction = async (testnet: boolea
 
   // @ts-ignore
   const contract = new new Web3().eth.Contract(provenance ? erc721Provenance_abi : erc721_abi, contractAddress.trim())
+  const dataBytes = provenance ? Buffer.from(provenanceData + "'''###'''" + toWei(tokenPrice!, 'ether'), 'utf8') : ''
   const tokenData = provenance
-    ? contract.methods.safeTransfer(to.trim(), tokenId, provenanceData + "'''###'''" + toWei(tokenPrice!, 'ether')).encodeABI()
+    ? contract.methods.safeTransfer(to.trim(), tokenId, `0x${dataBytes.toString('hex')}`).encodeABI()
     : contract.methods.safeTransfer(to.trim(), tokenId).encodeABI()
 
   if (signatureId) {
@@ -752,18 +774,20 @@ export const getCeloClient = (provider?: string) =>
  * @returns raw transaction data in hex, to be broadcasted to blockchain.
  */
 export const prepareCeloSmartContractWriteMethodInvocation = async (
-  testnet: boolean,
   body: CeloSmartContractMethodInvocation,
-  provider?: string
+  options?: {
+    provider?: string
+    testnet?: boolean
+  }
 ) => {
   await validateBody(body, CeloSmartContractMethodInvocation)
   const { fromPrivateKey, feeCurrency, fee, params, methodName, methodABI, contractAddress, nonce, signatureId, amount } = body
 
-  const url = provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`
+  const url = options?.provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`
   const p = new CeloProvider(url)
   const network = await p.ready
 
-  const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
+  const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, !!options?.testnet)
 
   // @ts-ignore
   const contract = new new Web3(url).eth.Contract([methodABI], contractAddress.trim())
@@ -829,7 +853,7 @@ export const sendCeloSmartContractMethodInvocationTransaction = async (
     return sendCeloSmartContractReadMethodInvocationTransaction(body, provider)
   }
   const celoBody = body as CeloSmartContractMethodInvocation
-  return celoBroadcast(await prepareCeloSmartContractWriteMethodInvocation(testnet, celoBody, provider), celoBody.signatureId)
+  return celoBroadcast(await prepareCeloSmartContractWriteMethodInvocation(celoBody, { provider, testnet }), celoBody.signatureId)
 }
 
 export const getCeloErc20ContractDecimals = async (contractAddress: string, provider?: string) => {
@@ -949,7 +973,8 @@ export const prepareCeloMintMultipleCashbackErc721SignedTransaction = async (
   provider?: string
 ) => {
   await validateBody(body, CeloMintMultipleErc721)
-  const { fromPrivateKey, to, tokenId, contractAddress, url, feeCurrency, nonce, signatureId, authorAddresses, cashbackValues } = body
+  const { fromPrivateKey, to, tokenId, contractAddress, url, feeCurrency, nonce, signatureId, authorAddresses, cashbackValues, erc20 } =
+    body
 
   const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
   const network = await p.ready
@@ -975,15 +1000,26 @@ export const prepareCeloMintMultipleCashbackErc721SignedTransaction = async (
       nonce,
       gasLimit: '0',
       to: contractAddress.trim(),
-      data: contract.methods
-        .mintMultipleCashback(
-          to.map((t) => t.trim()),
-          tokenId,
-          url,
-          authorAddresses,
-          cb
-        )
-        .encodeABI(),
+      data: erc20
+        ? contract.methods
+            .mintMultipleCashback(
+              to.map((t) => t.trim()),
+              tokenId,
+              url,
+              authorAddresses,
+              cb,
+              erc20
+            )
+            .encodeABI()
+        : contract.methods
+            .mintMultipleCashback(
+              to.map((t) => t.trim()),
+              tokenId,
+              url,
+              authorAddresses,
+              cb
+            )
+            .encodeABI(),
     })
   }
   const wallet = new CeloWallet(fromPrivateKey as string, p)
@@ -995,15 +1031,26 @@ export const prepareCeloMintMultipleCashbackErc721SignedTransaction = async (
     gasLimit: '0',
     to: contractAddress.trim(),
     gasPrice,
-    data: contract.methods
-      .mintMultipleCashback(
-        to.map((t) => t.trim()),
-        tokenId,
-        url,
-        authorAddresses,
-        cb
-      )
-      .encodeABI(),
+    data: erc20
+      ? contract.methods
+          .mintMultipleCashback(
+            to.map((t) => t.trim()),
+            tokenId,
+            url,
+            authorAddresses,
+            cb,
+            erc20
+          )
+          .encodeABI()
+      : contract.methods
+          .mintMultipleCashback(
+            to.map((t) => t.trim()),
+            tokenId,
+            url,
+            authorAddresses,
+            cb
+          )
+          .encodeABI(),
     from,
   }
   transaction.gasLimit = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString()

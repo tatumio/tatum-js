@@ -1,5 +1,4 @@
-import { ApproveErc20, prepareApproveErc20Abstraction } from '@tatumio/tatum-core'
-import token_abi from '@tatumio/tatum-core/dist/contracts/erc20/token_abi'
+import { ApproveErc20, prepareApproveErc20Abstraction, erc20TokenABI } from '@tatumio/tatum-core'
 import { getBscBep20ContractDecimals } from '../'
 import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../helpers'
 
@@ -21,7 +20,7 @@ export const sendApproveErc20 = async (testnet: boolean, body: ApproveErc20, pro
  */
 export const prepareApproveErc20 = async (testnet: boolean, body: ApproveErc20, provider?: string) => {
   const { body: validatedBody, params } = await prepareApproveErc20Abstraction(getBscBep20ContractDecimals, testnet, body, provider)
-  return await helperPrepareSCCall(validatedBody, 'approve', params, provider, token_abi)
+  return await helperPrepareSCCall(validatedBody, 'approve', params, provider, erc20TokenABI)
 }
 
 /**

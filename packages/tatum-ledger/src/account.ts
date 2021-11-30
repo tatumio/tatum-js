@@ -18,7 +18,7 @@ import {
 import { createNewSubscription } from './subscription'
 import { Wallet } from './wallet'
 
-export type GenerateWalletFn = ((testnet: boolean, mnemonic?: string) => Promise<Wallet>) | ((mnemonic: string) => Promise<Wallet>)
+export type GenerateWalletFn = (mnemonic?: string, options?: { testnet?: boolean }) => Promise<Wallet>
 export interface GeneratedAccount {
   account: Account
   address: Address
@@ -40,6 +40,7 @@ export const createAccount = async (account: CreateAccount): Promise<Account> =>
  * and register incoming TX webhook notification.
  * @param account Account to be created.
  * @param generateNewWalletFn Function for creation of the new wallet. If you don't want to create a new wallet, pass undefined
+ * @param generateNewWallet Function for creation of the new wallet. If you don't want to create a new wallet, pass undefined
  * @param testnet if we are using testnet or not
  * @param webhookUrl optional URL, where webhook will be post for every incoming blockchain transaction to the address
  */
@@ -53,7 +54,7 @@ export const generateAccount = async (
   let w
   if (generateNewWallet) {
     // @ts-ignore
-    w = await generateNewWalletFn(testnet)
+    w = await generateNewWalletFn(undefined, { testnet })
     // @ts-ignore
     account.xpub = w.xpub || w.address
   }

@@ -42,4 +42,8 @@ export class BaseMintErc721 extends PrivateKeyOrSignatureIdBuiltInPrivateKey {
   @IsOptional()
   @ValidateIf((o) => o.provenance && o.fixedValues)
   public fixedValues?: string[]
+
+  @IsOptional()
+  @ValidateIf((o) => o.authorAddresses && o.cashbackValues)
+  public erc20?: string
 }

@@ -54,7 +54,7 @@ import {
   transferMultiTokenBatch as transferBscMultiTokenBatchTransaction,
 } from '@tatumio/tatum-bsc'
 import {
-  erc1155TokenABI as abi,
+  erc1155TokenABI,
   AddMinter,
   BurnMultiToken,
   Currency,
@@ -68,7 +68,7 @@ import {
 } from '@tatumio/tatum-core'
 import { sendAlgoCreateFractionalNFTSignedTransaction, sendAlgoTransferFractionalNFTSignedTransaction } from '@tatumio/tatum-algo'
 import { sendAlgoBurnFractionalNFTSignedTransaction } from '@tatumio/tatum-algo'
-import { helperBroadcastTx, helperPrepareSCCall } from 'src/helpers'
+import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
 
 /**
  * Deploy MultiTokens (1155) contract.
@@ -259,7 +259,7 @@ export const transferMultiTokenBatch = async (
  */
 export const prepareAddMultiTokenMinter = async (testnet: boolean, body: AddMinter, provider?: string) => {
   const params = await prepareAddMultiTokenMinterAbstraction(body)
-  return await helperPrepareSCCall(testnet, body, 'grantRole', params, undefined, provider, abi)
+  return await helperPrepareSCCall(testnet, body, 'grantRole', params, undefined, provider, erc1155TokenABI)
 }
 
 /**

@@ -38,7 +38,7 @@ describe('Auction  tests', () => {
       mint.tokenId = tokenId
       mint.url = 'https://google.com'
       mint.chain = Currency.BSC
-      console.log(await mintNFTWithUri(mint, 'https://data-seed-prebsc-2-s1.binance.org:8545'))
+      console.log(await mintNFTWithUri(mint, { provider: 'https://data-seed-prebsc-2-s1.binance.org:8545' }))
 
       await sleep()
       console.log(

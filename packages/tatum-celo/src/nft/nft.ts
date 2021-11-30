@@ -1,5 +1,5 @@
 import { mintNFTRequest, createNFTAbstraction, prepareAddNFTMinterAbstraction } from '@tatumio/tatum-defi'
-import { AddMinter, MintErc721, TransactionHash, erc721TokenABI as abi } from '@tatumio/tatum-core'
+import { AddMinter, MintErc721, TransactionHash, erc721TokenABI } from '@tatumio/tatum-core'
 import {
   CeloDeployErc721,
   sendCeloDeployErc721Transaction,
@@ -50,20 +50,24 @@ export const createNFT = async (
   scheme?: any,
   provider?: string
 ) => {
-  return await createNFTAbstraction(() => mintNFTWithUri(testnet, body, provider), testnet, body, file, name, description, scheme, provider)
+  return await createNFTAbstraction(mintNFTWithUri, testnet, body, file, name, description, scheme, provider)
 }
 
 /**
  * Mint new NFT token.
- * @param testnet if we use testnet or not
  * @param body body of the mint request
- * @param provider optional provider do broadcast tx
+ * @param options
+ * @param options.testnet optional if we use testnet or not
+ * @param options.provider optional provider do broadcast tx
  */
-export const mintNFTWithUri = async (testnet: boolean, body: CeloMintErc721, provider?: string): Promise<TransactionHash> => {
+export const mintNFTWithUri = async (
+  body: CeloMintErc721,
+  options?: { testnet?: boolean; provider?: string }
+): Promise<TransactionHash> => {
   if (body.authorAddresses) {
-    return sendCeloMintCashbackErc721Transaction(testnet, body, provider)
+    return sendCeloMintCashbackErc721Transaction(!!options?.testnet, body, options?.provider)
   } else {
-    return sendCeloMintErc721Transaction(testnet, body, provider)
+    return sendCeloMintErc721Transaction(!!options?.testnet, body, options?.provider)
   }
 }
 
@@ -119,7 +123,7 @@ export const transferNFT = async (testnet: boolean, body: CeloTransferErc721, pr
  */
 export const prepareAddNFTMinter = async (testnet: boolean, body: AddMinter, provider?: string) => {
   const params = await prepareAddNFTMinterAbstraction(body)
-  return await helperPrepareSCCall(testnet, body, 'grantRole', params, provider, abi)
+  return await helperPrepareSCCall(testnet, body, 'grantRole', params, provider, erc721TokenABI)
 }
 
 /**

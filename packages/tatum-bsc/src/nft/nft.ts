@@ -8,7 +8,7 @@ import {
   TransactionHash,
   TransferErc721,
   UpdateCashbackErc721,
-  erc721TokenABI as abi,
+  erc721TokenABI,
 } from '@tatumio/tatum-core'
 import {
   sendDeployBep721Transaction,
@@ -53,7 +53,7 @@ export const createNFT = async (
   scheme?: any,
   provider?: string
 ) => {
-  return await createNFTAbstraction(() => mintNFTWithUri(body, provider), testnet, body, file, name, description, scheme, provider)
+  return await createNFTAbstraction(mintNFTWithUri, testnet, body, file, name, description, scheme, provider)
 }
 
 /**
@@ -61,12 +61,12 @@ export const createNFT = async (
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const mintNFTWithUri = async (body: MintErc721, provider?: string): Promise<TransactionHash> => {
+export const mintNFTWithUri = async (body: MintErc721, options?: { provider?: string }): Promise<TransactionHash> => {
   if (body.authorAddresses) {
-    return sendMintBepCashback721Transaction(body, provider)
+    return sendMintBepCashback721Transaction(body, options?.provider)
   }
 
-  return sendMintBep721Transaction(body, provider)
+  return sendMintBep721Transaction(body, options?.provider)
 }
 
 /**
@@ -116,7 +116,7 @@ export const transferNFT = async (body: TransferErc721, provider?: string) => {
  */
 export const prepareAddNFTMinter = async (body: AddMinter, provider?: string) => {
   const params = await prepareAddNFTMinterAbstraction(body)
-  return await helperPrepareSCCall(body, 'grantRole', params, provider, abi)
+  return await helperPrepareSCCall(body, 'grantRole', params, provider, erc721TokenABI)
 }
 
 /**
