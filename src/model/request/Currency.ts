@@ -44,6 +44,7 @@ export enum Currency {
     LINK = 'LINK',
     WBTC = 'WBTC',
     UNI = 'UNI',
+    SOL = 'SOL',
     FREE = 'FREE',
     MKR = 'MKR',
     USDC = 'USDC',
@@ -67,6 +68,7 @@ export enum Currency {
     QTUM = 'QTUM',
     EGLD = 'EGLD',
     ALGO = 'ALGO',
+    KCS = 'KCS',
 }
 
 export const ERC20_CURRENCIES = [
