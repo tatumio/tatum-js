@@ -1,4 +1,4 @@
-import { axios, get, post, ipfsUpload, Currency, BaseMintErc721, TransactionHash, validateBody, AddMinter } from '@tatumio/tatum-core'
+import { AddMinter, axios, BaseMintErc721, Currency, get, ipfsUpload, post, TransactionHash, validateBody } from '@tatumio/tatum-core'
 
 type MintNftWithUriFn = (body: BaseMintErc721, options?: { provider?: string; testnet?: boolean }) => Promise<any>
 
@@ -64,8 +64,17 @@ export const getNFTImage = async (
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetRoyaltyErc721" target="_blank">Tatum API documentation</a>
  */
-export const getNFTRoyalty = async (chain: Currency, contractAddress: string, tokenId: string): Promise<{ data: string }> =>
-  get(`/v3/nft/royalty/${chain}/${contractAddress}/${tokenId}`)
+export const getNFTRoyalty = async (
+  chain: Currency,
+  contractAddress: string,
+  tokenId?: string
+): Promise<{ addresses: string[]; values: string[] }> => {
+  let url = `/v3/nft/royalty/${chain}/${contractAddress}`
+  if (tokenId) {
+    url += `/${tokenId}`
+  }
+  return get(url)
+}
 
 /**
  * Mint new NFT token with metadata stored on the IPFS.
