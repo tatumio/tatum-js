@@ -16,7 +16,9 @@ export const getERC20TransactionsByAddress = async (
   to?: string,
   sort?: Sort
 ): Promise<Erc20Transaction[]> =>
-  get(`/v3/nft/transaction/${chain}/${address}/${tokenAddress}?pageSize=${pageSize}&offset=${offset}&from=${from}&to=${to}&sort=${sort}`)
+  get(
+    `/v3/blockchain/token/transaction/${chain}/${address}/${tokenAddress}?pageSize=${pageSize}&offset=${offset}&from=${from}&to=${to}&sort=${sort}`
+  )
 
 /**
  * Prepare approve ERC20 signed transaction.
