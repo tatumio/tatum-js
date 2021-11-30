@@ -1,7 +1,6 @@
 import BigNumber from 'bignumber.js'
-import { Erc20Transaction } from 'src/model/response/common/Erc20Transaction'
-import { get, Sort, validateBody } from '../connector/tatum'
-import { ApproveErc20, Currency } from '../model'
+import { get, Sort, validateBody } from '../connector'
+import { ApproveErc20, Currency, Erc20Transaction } from '../model'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc.php#operation/Erc20GetTransactionByAddress" target="_blank">Tatum API documentation</a>
