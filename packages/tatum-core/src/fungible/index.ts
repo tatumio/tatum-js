@@ -1,6 +1,22 @@
 import BigNumber from 'bignumber.js'
-import { validateBody } from '../connector/tatum'
-import { ApproveErc20 } from '../model'
+import { Erc20Transaction } from 'src/model/response/common/Erc20Transaction'
+import { get, validateBody } from '../connector/tatum'
+import { ApproveErc20, Currency } from '../model'
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc.php#operation/Erc20GetTransactionByAddress" target="_blank">Tatum API documentation</a>
+ */
+export const getERC20TransactionsByAddress = async (
+  chain: Currency,
+  address: string,
+  tokenAddress: string,
+  pageSize = 50,
+  offset = 0,
+  from?: string,
+  to?: string,
+  sort?: Sort
+): Promise<Erc20Transaction[]> =>
+  get(`/v3/nft/transaction/${chain}/${address}/${tokenAddress}?pageSize=${pageSize}&offset=${offset}&from=${from}&to=${to}&sort=${sort}`)
 
 /**
  * Prepare approve ERC20 signed transaction.
