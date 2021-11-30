@@ -8,6 +8,11 @@ import http from 'http'
 import https from 'https'
 import { TATUM_API_URL, TATUM_RETRIES, TATUM_RETRY_DELAY } from '../constants'
 
+export enum Sort {
+  ASC = 'ASC',
+  DESC = 'DESC',
+}
+
 export const axios = a.create({
   httpAgent: new http.Agent({ keepAlive: true }),
   httpsAgent: new https.Agent({ keepAlive: true }),

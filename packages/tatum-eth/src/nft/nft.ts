@@ -120,6 +120,7 @@ export const sendAddNFTMinter = async (body: AddMinter, provider?: string) =>
   helperBroadcastTx((await prepareAddNFTMinter(body, provider)) as string, body.signatureId as string)
 
 export {
+  getNFTTransactionsByAddress,
   getNFTsByAddress,
   getNFTProvenanceData,
   getNFTContractAddress,
