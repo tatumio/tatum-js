@@ -33,3 +33,5 @@ export const getErc20Decimals = async (contractAddress: string, provider?: strin
   // @ts-ignore
   return new web3.eth.Contract(token_abi, contractAddress).methods.decimals().call()
 }
+
+export { getERC20TransactionsByAddress } from '@tatumio/tatum-core'
