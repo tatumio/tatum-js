@@ -11,6 +11,10 @@ import {
   erc1155TokenBytecode,
   erc20TokenBytecode,
   erc721TokenBytecode,
+  erc721TokenABI,
+  erc20TokenABI,
+  erc1155TokenABI,
+  erc721Provenance_bytecode,
   GenerateCustodialAddress,
   listing,
   MintErc20,
@@ -540,7 +544,7 @@ export const prepareKccDeployErc721SignedTransaction = async (body: DeployErc721
   const data = new client.eth.Contract(erc721TokenABI)
     .deploy({
       arguments: [body.name, body.symbol],
-      data: erc721TokenBytecode,
+      data: body.provenance ? erc721Provenance_bytecode : erc721TokenBytecode,
     })
     .encodeABI()
   return prepareGeneralTx(
