@@ -64,6 +64,7 @@ export const sendAddMultiTokenMinter = async (body: AddMinter, provider?: string
   helperBroadcastTx(await prepareAddMultiTokenMinter(body, provider), body.signatureId)
 
 export {
+  getMultiTokenTransactionsByAddress,
   getMultiTokenContractAddress,
   getMultiTokensBalance,
   getMultiTokensBatchBalance,

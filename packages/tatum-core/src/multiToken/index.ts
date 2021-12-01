@@ -1,5 +1,22 @@
-import { get, validateBody } from '../connector/tatum'
-import { AddMinter, Currency } from '../model'
+import { get, Sort, validateBody } from '../connector/tatum'
+import { AddMinter, Currency, MultiTokenTransaction } from '../model'
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc.php#operation/MultiTokenGetTransactionByAddress" target="_blank">Tatum API documentation</a>
+ */
+export const getMultiTokenTransactionsByAddress = async (
+  chain: Currency,
+  address: string,
+  tokenAddress: string,
+  pageSize = 50,
+  offset = 0,
+  from?: string,
+  to?: string,
+  sort?: Sort
+): Promise<MultiTokenTransaction[]> =>
+  get(
+    `/v3/multitoken/transaction/${chain}/${address}/${tokenAddress}?pageSize=${pageSize}&offset=${offset}&from=${from}&to=${to}&sort=${sort}`
+  )
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/MultiTokenGetContractAddress" target="_blank">Tatum API documentation</a>
