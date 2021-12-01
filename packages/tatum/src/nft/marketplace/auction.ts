@@ -18,7 +18,7 @@ import {
   UpdateMarketplaceFeeRecipient,
 } from '@tatumio/tatum-core'
 import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../../helpers'
-import { prepareApproveErc20 } from '../../fungible'
+import { getErc20Decimals, prepareApproveErc20 } from '../../fungible'
 import { prepareDeployAuction as prepareCeloDeployAuctionSignedTransaction } from '@tatumio/tatum-celo'
 import { prepareDeployAuction as prepareOneDeployAuctionSignedTransaction } from '@tatumio/tatum-one'
 import { prepareDeployAuction as prepareEthDeployAuctionSignedTransaction } from '@tatumio/tatum-eth'
@@ -151,7 +151,11 @@ export const prepareAuctionCreate = async (testnet: boolean, body: CreateAuction
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareAuctionBid = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
-  const { b: validatedBody, params, methodName } = await prepareAuctionBidAbstraction(helperGetWeb3Client, testnet, body, provider)
+  const {
+    b: validatedBody,
+    params,
+    methodName,
+  } = await prepareAuctionBidAbstraction(helperGetWeb3Client, getErc20Decimals, testnet, body, provider)
   return await helperPrepareSCCall(testnet, validatedBody, methodName, params, undefined, provider, auction.abi)
 }
 

@@ -148,7 +148,7 @@ export const prepareAuctionCreateAbstraction = async (body: CreateAuction) => {
  */
 export const prepareAuctionBidAbstraction = async (
   helperGetWeb3Client: (chain: Currency, provider?: string | undefined) => Web3,
-  // getErc20DecimalsFn: (chain: Currency, contractAddress: string, provider?: string, testnet?: boolean) => Promise<any>,
+  getErc20Decimals: (chain: Currency, contractAddress: string, provider?: string, testnet?: boolean) => Promise<any>,
   testnet: boolean,
   body: InvokeAuctionOperation,
   provider?: string
@@ -162,9 +162,8 @@ export const prepareAuctionBidAbstraction = async (
   let methodName = 'bid'
   const b: any = { ...body }
   if (a[6] !== '0x0000000000000000000000000000000000000000') {
-    // TODO inject fn
     // @ts-ignore
-    decimals = await getErc20DecimalsFn(body.chain, a[6], provider, testnet)
+    decimals = await getErc20Decimals(body.chain, a[6], provider, testnet)
     if (body.bidder) {
       methodName = 'bidForExternalBidder'
     }
