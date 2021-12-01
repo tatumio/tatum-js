@@ -19,7 +19,7 @@ import {
   erc1155TokenABI,
   erc721TokenABI,
 } from '@tatumio/tatum-core'
-import { prepareBscDeployAuctionSignedTransaction } from '../../transaction'
+import { getBscBep20ContractDecimals, prepareBscDeployAuctionSignedTransaction } from '../../transaction'
 import { prepareApproveErc20 } from '../../fungible'
 import { helperBroadcastTx, helperPrepareSCCall, helperGetWeb3Client } from '../../helpers'
 
@@ -128,7 +128,11 @@ export const prepareAuctionCreate = async (body: CreateAuction, provider?: strin
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareAuctionBid = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
-  const { b: validatedBody, params, methodName } = await prepareAuctionBidAbstraction(helperGetWeb3Client, testnet, body, provider)
+  const {
+    b: validatedBody,
+    params,
+    methodName,
+  } = await prepareAuctionBidAbstraction(helperGetWeb3Client, getBscBep20ContractDecimals, testnet, body, provider)
   return await helperPrepareSCCall(validatedBody, methodName, params, provider, auction.abi)
 }
 

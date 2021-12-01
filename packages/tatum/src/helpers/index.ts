@@ -27,6 +27,7 @@ import {
 } from '@tatumio/tatum-polygon'
 import { helperBroadcastTx as tronBroadcast, helperPrepareSCCall as tronHelperPrepareSCCall } from '@tatumio/tatum-tron'
 import { getXdcClient } from '@tatumio/tatum-xdc'
+import { SCBody } from '@tatumio/tatum-core'
 
 export const helperBroadcastTx = async (chain: Currency, txData: string, signatureId?: string): Promise<TransactionHash> => {
   switch (chain) {
@@ -66,10 +67,9 @@ export const helperGetWeb3Client = (chain: Currency, provider?: string): Web3 =>
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export const helperPrepareSCCall = async (
+export const helperPrepareSCCall = async <Body extends SCBody>(
   testnet: boolean,
-  body: any,
+  body: Body,
   methodName: string,
   params: any[],
   methodSig?: string,

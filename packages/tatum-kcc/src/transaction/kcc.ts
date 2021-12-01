@@ -173,7 +173,7 @@ export const prepareKccGenerateCustodialWalletSignedTransaction = async (body: G
  */
 export const prepareKccSignedTransaction = async (body: TransferErc20, provider?: string) => {
   await validateBody(body, TransferErc20)
-  const client = await prepareKccClient(provider, body.fromPrivateKey)  
+  const client = await prepareKccClient(provider, body.fromPrivateKey)
   const data = body.data ? (client.utils.isHex(body.data) ? client.utils.stringToHex(body.data) : client.utils.toHex(body.data)) : undefined
   return prepareGeneralTx(
     client,
@@ -808,13 +808,17 @@ export const prepareKccDeployMultiTokenSignedTransaction = async (body: DeployMu
 /**
  * Sign Kcc smart contract write method invocation transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
- * @param provider url of the Kcc Server to connect to. If not set, default public server will be used.
+ * @param options
+ * @param options.provider optional url of the Kcc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareKccSmartContractWriteMethodInvocation = async (body: SmartContractMethodInvocation, provider?: string) => {
+export const prepareKccSmartContractWriteMethodInvocation = async (
+  body: SmartContractMethodInvocation,
+  options?: { provider?: string }
+) => {
   await validateBody(body, SmartContractMethodInvocation)
   const { fromPrivateKey, fee, params, methodName, methodABI, contractAddress, nonce, amount, signatureId } = body
-  const client = await prepareKccClient(provider, fromPrivateKey)
+  const client = await prepareKccClient(options?.provider, fromPrivateKey)
 
   const data = new client.eth.Contract([methodABI]).methods[methodName as string](...params).encodeABI()
   return prepareGeneralTx(client, fromPrivateKey, signatureId, contractAddress.trim(), amount, nonce, data, fee?.gasLimit, fee?.gasPrice)
@@ -1057,7 +1061,7 @@ export const sendKccSmartContractMethodInvocationTransaction = async (
     return sendKccSmartContractReadMethodInvocationTransaction(body as SmartContractReadMethodInvocation, provider)
   }
   return kccBroadcast(
-    await prepareKccSmartContractWriteMethodInvocation(body, provider),
+    await prepareKccSmartContractWriteMethodInvocation(body, { provider }),
     (body as SmartContractMethodInvocation).signatureId
   )
 }

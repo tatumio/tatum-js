@@ -1,7 +1,7 @@
 import { AddMinter, axios, BaseMintErc721, Currency, get, ipfsUpload, post, TransactionHash, validateBody, Sort } from '@tatumio/tatum-core'
 import { NftTransaction } from '../model'
 
-type MintNftWithUriFn = (body: BaseMintErc721, options?: { provider?: string; testnet?: boolean }) => Promise<any>
+type MintNftWithUriFn<Body> = (body: Body, options?: { provider?: string; testnet?: boolean }) => Promise<TransactionHash>
 
 export const mintNFTRequest = (body: BaseMintErc721): Promise<TransactionHash> => post(`/v3/nft/mint`, body)
 
@@ -103,10 +103,10 @@ export const getNFTRoyalty = async (
  * @param scheme optional JSON Metadata scheme
  * @param provider optional provider do broadcast tx
  */
-export const createNFTAbstraction = async (
-  mintNftWithUri: MintNftWithUriFn,
+export const createNFTAbstraction = async <MintRequestBody extends BaseMintErc721 & { privateKey?: string }>(
+  mintNftWithUri: MintNftWithUriFn<MintRequestBody>,
   testnet: boolean,
-  body: BaseMintErc721,
+  body: MintRequestBody,
   file: Buffer,
   name: string,
   description?: string,
@@ -123,12 +123,11 @@ export const createNFTAbstraction = async (
   const { ipfsHash: metadataHash } = await ipfsUpload(Buffer.from(JSON.stringify(metadata)), 'metadata.json')
   body.url = `ipfs://${metadataHash}`
   if (body.chain === Currency.FLOW) {
-    ;(body as any).privateKey = (body as any).privateKey || (body as any).fromPrivateKey
+    body.privateKey ||= body.fromPrivateKey
   }
   const result = await mintNftWithUri(body, { provider, testnet })
   return {
-    tokenId: (body as any).tokenId,
-    // @ts-ignore
+    tokenId: body.tokenId,
     ...result,
     metadataUrl: body.url,
     metadataPublicUrl: `https://gateway.pinata.cloud/ipfs/${metadataHash}`,

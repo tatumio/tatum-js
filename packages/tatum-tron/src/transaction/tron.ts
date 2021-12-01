@@ -338,16 +338,19 @@ export const prepareTronSmartContractInvocation = async (
  * @param body content of the transaction to broadcast
  * @param feeLimit
  * @param from
- * @param provider
+ * @param options
+ * @param options.provider
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareTronCustodialTransferBatch = async (
   body: SmartContractMethodInvocation,
   feeLimit: number,
   from?: string,
-  provider?: string
+  options?: {
+    provider?: string
+  }
 ) => {
-  const tronWeb = prepareTronWeb(provider)
+  const tronWeb = prepareTronWeb(options?.provider)
   tronWeb.setAddress(body.contractAddress)
   const sender = from || tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(body.fromPrivateKey))
   const { transaction } = await tronWeb.transactionBuilder.triggerSmartContract(
