@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-ada",
-  "version": "2.0.0-alpha.68",
+  "version": "2.0.0-alpha.69",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
