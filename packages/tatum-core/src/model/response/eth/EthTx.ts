@@ -127,11 +127,21 @@ export interface EthTxLogs {
    */
   data: string
   /**
+   * @type {number}
+   * @memberof EthTxLogs
+   */
+  blockNumber: number
+  /**
    * Integer of the event index position in the block.
    * @type {number}
    * @memberof EthTxLogs
    */
   logIndex: number
+  /**
+   * @type {string}
+   * @memberof EthTxLogs
+   */
+  blockHash: string
   /**
    * Integer of the transaction’s index position, the event was created in.
    * @type {number}
@@ -144,4 +154,9 @@ export interface EthTxLogs {
    * @memberof EthTxLogs
    */
   transactionHash: string
+  /**
+   * @type {string}
+   * @memberof EthTxLogs
+   */
+  id?: string
 }
