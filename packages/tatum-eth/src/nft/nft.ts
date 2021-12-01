@@ -1,4 +1,9 @@
-import { createNFTAbstraction, mintNFTRequest, prepareAddNFTMinterAbstraction } from '@tatumio/tatum-defi'
+import {
+  createNFTAbstraction,
+  getNFTTransaction as getNFTTransactionDefi,
+  mintNFTRequest,
+  prepareAddNFTMinterAbstraction,
+} from '@tatumio/tatum-defi'
 import {
   Currency,
   TransactionHash,
@@ -22,6 +27,7 @@ import {
   sendUpdateCashbackForAuthorErc721Transaction,
 } from '../transaction'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
+import { ETHTx } from '../model'
 
 export const mintNFT = (body: MintErc721): Promise<TransactionHash> => mintNFTRequest(body)
 
@@ -118,6 +124,8 @@ export const prepareAddNFTMinter = async (body: AddMinter, provider?: string) =>
  */
 export const sendAddNFTMinter = async (body: AddMinter, provider?: string) =>
   helperBroadcastTx((await prepareAddNFTMinter(body, provider)) as string, body.signatureId as string)
+
+export const getNFTTransaction = (hash: string): Promise<ETHTx> => getNFTTransactionDefi<ETHTx>(Currency.ETH, hash)
 
 export {
   getNFTTransactionsByAddress,
