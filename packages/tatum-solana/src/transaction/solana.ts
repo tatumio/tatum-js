@@ -12,7 +12,7 @@ import {
   TOKEN_METADATA_PROGRAM_ID,
 } from './solanaSchema/instructions'
 import { CreateMasterEditionArgs, CreateMetadataArgs, METADATA_SCHEMA } from './solanaSchema/schema'
-import { SolanaMintNft, SolanaNftMetadata, TransferSolana } from '../model'
+import { SolanaMintNft, SolanaNftMetadata, SolanaNftMetadataCreator, TransferSolana } from '../model'
 
 const generateSolanaKeyPair = (privateKey: string) => Keypair.fromSecretKey(Buffer.from(privateKey, 'hex'))
 
@@ -182,17 +182,21 @@ export const mintSolanaNft = async (body: SolanaMintNft, provider?: string) => {
       TOKEN_METADATA_PROGRAM_ID
     )
   )[0]
+  const metadata = new SolanaNftMetadata(
+    body.metadata.name,
+    body.metadata.symbol,
+    body.metadata.uri,
+    body.metadata.sellerFeeBasisPoints,
+    body.metadata.creators
+  )
+  if (body.metadata.creators) {
+    metadata.creators = body.metadata.creators.map((c) => new SolanaNftMetadataCreator(c.address, c.verified, c.share))
+  }
   const txnData = Buffer.from(
     serialize(
       METADATA_SCHEMA,
       new CreateMetadataArgs({
-        data: new SolanaNftMetadata(
-          body.metadata.name,
-          body.metadata.symbol,
-          body.metadata.uri,
-          body.metadata.sellerFeeBasisPoints,
-          body.metadata.creators
-        ),
+        data: metadata,
         isMutable: true,
       })
     )

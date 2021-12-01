@@ -13,9 +13,9 @@ export class SolanaNftMetadataCreator {
   @IsNotEmpty()
   public share: number
 
-  constructor(args: { address: string; verified: number; share: number }) {
-    this.address = args.address
-    this.verified = args.verified
-    this.share = args.share
+  constructor(_address: string, _verified: number, _share: number) {
+    this.address = _address
+    this.verified = _verified
+    this.share = _share
   }
 }
