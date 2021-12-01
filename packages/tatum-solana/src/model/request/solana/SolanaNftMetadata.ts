@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer'
-import { IsArray, IsNotEmpty, IsNumber, MaxLength, ValidateIf } from 'class-validator'
+import { IsArray, IsNotEmpty, IsNumber, MaxLength, ValidateIf, ValidateNested } from 'class-validator'
 import { SolanaNftMetadataCreator } from './SolanaNftMetadataCreator'
 
 export class SolanaNftMetadata {
@@ -21,7 +21,7 @@ export class SolanaNftMetadata {
 
   @Type(() => SolanaNftMetadataCreator)
   @ValidateIf((o) => o.creators)
-  // @ValidateNested({ each: true })
+  @ValidateNested({ each: true })
   @IsArray()
   public creators: SolanaNftMetadataCreator[] | null
 
