@@ -1,7 +1,9 @@
 import { SmartContractMethodInvocation } from '../model'
 
-export const buildSmartContractMethodInvocation = (
-  body: any,
+export const buildSmartContractMethodInvocation = <
+  SCBody extends Omit<SmartContractMethodInvocation, 'params' | 'methodName' | 'methodABI'>
+>(
+  body: SCBody,
   params: any[],
   methodName: string,
   abi: any[],

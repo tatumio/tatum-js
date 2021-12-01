@@ -1,4 +1,4 @@
-import { buildSmartContractMethodInvocation, Currency, listing, CeloSmartContractMethodInvocation } from '@tatumio/tatum-core'
+import { buildSmartContractMethodInvocation, Currency, listing, CeloSmartContractMethodInvocation, SCBody } from '@tatumio/tatum-core'
 import { getCeloClient, prepareCeloSmartContractWriteMethodInvocation } from '../transaction'
 import { celoBroadcast } from '../blockchain'
 import Web3 from 'web3'
@@ -11,10 +11,9 @@ export const helperGetWeb3Client = (provider?: string): Web3 => {
   return getCeloClient(provider)
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export const helperPrepareSCCall = async (
+export const helperPrepareSCCall = async <Body extends SCBody>(
   testnet: boolean,
-  body: any,
+  body: Body,
   methodName: string,
   params: any[],
   provider?: string,

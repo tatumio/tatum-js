@@ -120,7 +120,7 @@ describe('KCS transactions', () => {
           },
           params: ['0x8c76887d2e738371bd750362fb55887343472346', '1'],
         },
-        'https://rpc-testnet.kcc.network'
+        { provider: 'https://rpc-testnet.kcc.network' }
       )
       expect(result).not.toBeNull()
       console.log(await broadcast(result))

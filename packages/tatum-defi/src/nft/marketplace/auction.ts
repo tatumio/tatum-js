@@ -84,7 +84,7 @@ export const getAuctionFeeRecipient = async (chain: Currency, contractAddress: s
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareAuctionUpdateFeeAbstraction = async (body: UpdateAuctionFee) => {
+export const prepareAuctionUpdateFeeAbstraction = async (body: UpdateAuctionFee): Promise<string[]> => {
   await validateBody(body, UpdateAuctionFee)
   return [`0x${new BigNumber(body.auctionFee).toString(16)}`]
 }
@@ -148,6 +148,7 @@ export const prepareAuctionCreateAbstraction = async (body: CreateAuction) => {
  */
 export const prepareAuctionBidAbstraction = async (
   helperGetWeb3Client: (chain: Currency, provider?: string | undefined) => Web3,
+  // getErc20DecimalsFn: (chain: Currency, contractAddress: string, provider?: string, testnet?: boolean) => Promise<any>,
   testnet: boolean,
   body: InvokeAuctionOperation,
   provider?: string
@@ -161,8 +162,9 @@ export const prepareAuctionBidAbstraction = async (
   let methodName = 'bid'
   const b: any = { ...body }
   if (a[6] !== '0x0000000000000000000000000000000000000000') {
+    // TODO inject fn
     // @ts-ignore
-    decimals = await getErc20Decimals(testnet, body.chain, a[6], provider)
+    decimals = await getErc20DecimalsFn(body.chain, a[6], provider, testnet)
     if (body.bidder) {
       methodName = 'bidForExternalBidder'
     }
@@ -181,12 +183,10 @@ export const prepareAuctionBidAbstraction = async (
 
 /**
  * Cancel auction on the auction. Only possible for the seller or the operator. There must be no buyer present for that auction. NFT asset is sent back to the seller.
- * @param testnet chain to work with
  * @param body request data
- * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareAuctionCancelAbstraction = async (body: InvokeAuctionOperation) => {
+export const prepareAuctionCancelAbstraction = async (body: InvokeAuctionOperation): Promise<string[]> => {
   await validateBody(body, InvokeAuctionOperation)
   return [body.id]
 }
@@ -196,7 +196,7 @@ export const prepareAuctionCancelAbstraction = async (body: InvokeAuctionOperati
  * @param body request data
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareAuctionSettleAbstraction = async (body: InvokeAuctionOperation) => {
+export const prepareAuctionSettleAbstraction = async (body: InvokeAuctionOperation): Promise<string[]> => {
   await validateBody(body, InvokeAuctionOperation)
   return [body.id]
 }

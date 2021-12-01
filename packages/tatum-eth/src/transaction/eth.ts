@@ -339,13 +339,14 @@ export const prepareDeployErc20SignedTransaction = async (body: DeployErc20, pro
 /**
  * Sign Ethereum invoke smart contract transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
- * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
+ * @param options
+ * @param options.provider optional url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareSmartContractWriteMethodInvocation = async (body: SmartContractMethodInvocation, provider?: string) => {
+export const prepareSmartContractWriteMethodInvocation = async (body: SmartContractMethodInvocation, options?: { provider?: string }) => {
   await validateBody(body, SmartContractMethodInvocation)
   const { fromPrivateKey, fee, params, methodName, methodABI, amount, contractAddress, nonce, signatureId } = body
-  const client = getClient(provider, fromPrivateKey)
+  const client = getClient(options?.provider, fromPrivateKey)
 
   const contract = new client.eth.Contract([methodABI])
   const tx: TransactionConfig = {
@@ -1030,7 +1031,10 @@ export const sendSmartContractMethodInvocationTransaction = async (
   if (body.methodABI.stateMutability === 'view') {
     return sendSmartContractReadMethodInvocationTransaction(body, provider)
   }
-  return ethBroadcast(await prepareSmartContractWriteMethodInvocation(body, provider), (body as SmartContractMethodInvocation).signatureId)
+  return ethBroadcast(
+    await prepareSmartContractWriteMethodInvocation(body, { provider }),
+    (body as SmartContractMethodInvocation).signatureId
+  )
 }
 
 /**

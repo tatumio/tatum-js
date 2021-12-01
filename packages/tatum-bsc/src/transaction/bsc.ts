@@ -343,13 +343,17 @@ export const prepareBscGenerateCustodialWalletSignedTransaction = async (body: G
 /**
  * Sign Bsc invoke smart contract transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
- * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+ * @param options
+ * @param options.provider optional url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareBscSmartContractWriteMethodInvocation = async (body: SmartContractMethodInvocation, provider?: string) => {
+export const prepareBscSmartContractWriteMethodInvocation = async (
+  body: SmartContractMethodInvocation,
+  options?: { provider?: string }
+) => {
   await validateBody(body, SmartContractMethodInvocation)
   const { fromPrivateKey, fee, params, methodName, methodABI, contractAddress, nonce, amount, signatureId } = body
-  const client = getBscClient(provider, fromPrivateKey)
+  const client = getBscClient(options?.provider, fromPrivateKey)
 
   const contract = new client.eth.Contract([methodABI])
 
@@ -1013,7 +1017,7 @@ export const sendBscSmartContractMethodInvocationTransaction = async (
     return sendBscSmartContractReadMethodInvocationTransaction(body, provider)
   }
   return bscBroadcast(
-    await prepareBscSmartContractWriteMethodInvocation(body, provider),
+    await prepareBscSmartContractWriteMethodInvocation(body, { provider }),
     (body as SmartContractMethodInvocation).signatureId
   )
 }

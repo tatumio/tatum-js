@@ -149,7 +149,7 @@ export const prepareApproveFromCustodialWallet = async (body: ApproveCustodialTr
     {
       ...body,
       contractAddress: body.custodialAddress,
-    },
+    } as ApproveCustodialTransfer & { contractAddress: string },
     'approve',
     params,
     provider,

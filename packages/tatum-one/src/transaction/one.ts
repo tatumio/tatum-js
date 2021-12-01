@@ -1018,13 +1018,17 @@ export const prepareOneDeployMultiTokenSignedTransaction = async (body: OneDeplo
 /**
  * Sign Harmony smart contract write method invocation transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
- * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
+ * @param options
+ * @param options.provider optional url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareOneSmartContractWriteMethodInvocation = async (body: SmartContractMethodInvocation, provider?: string) => {
+export const prepareOneSmartContractWriteMethodInvocation = async (
+  body: SmartContractMethodInvocation,
+  options?: { provider?: string }
+) => {
   await validateBody(body, SmartContractMethodInvocation)
   const { fromPrivateKey, fee, params, methodName, methodABI, amount, contractAddress, nonce, signatureId } = body
-  const client = await prepareOneClient(provider, fromPrivateKey)
+  const client = await prepareOneClient(options?.provider, fromPrivateKey)
 
   const data = new client.eth.Contract([methodABI]).methods[methodName as string](...params).encodeABI()
   return prepareGeneralTx(
@@ -1317,7 +1321,7 @@ export const sendOneSmartContractMethodInvocationTransaction = async (
     return sendOneSmartContractReadMethodInvocationTransaction(body as SmartContractReadMethodInvocation, provider)
   }
   return oneBroadcast(
-    await prepareOneSmartContractWriteMethodInvocation(body, provider),
+    await prepareOneSmartContractWriteMethodInvocation(body, { provider }),
     (body as SmartContractMethodInvocation).signatureId
   )
 }

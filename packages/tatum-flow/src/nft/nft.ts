@@ -23,7 +23,6 @@ export const deployNFT = async (body: FlowDeployNft): Promise<TransactionHash> =
  * @param provider optional provider do broadcast tx
  */
 export const createNFT = async (body: FlowMintNft, file: Buffer, name: string, description?: string, scheme?: any, provider?: string) => {
-  // @ts-ignore - to be fixed with generic types
   return await createNFTAbstraction(mintNFTWithUri, false, body, file, name, description, scheme, provider)
 }
 
