@@ -255,13 +255,13 @@ export const prepareTransferFromCustodialWallet = async (
         }
       )
     case Currency.ONE:
-      return await prepareOneSmartContractWriteMethodInvocation(r, provider)
+      return await prepareOneSmartContractWriteMethodInvocation(r, { provider })
     case Currency.ETH:
-      return await prepareSmartContractWriteMethodInvocation(r, provider)
+      return await prepareSmartContractWriteMethodInvocation(r, { provider })
     case Currency.BSC:
-      return await prepareBscSmartContractWriteMethodInvocation(r, provider)
+      return await prepareBscSmartContractWriteMethodInvocation(r, { provider })
     case Currency.MATIC:
-      return await preparePolygonSmartContractWriteMethodInvocation(r, provider)
+      return await preparePolygonSmartContractWriteMethodInvocation(r, { provider })
     case Currency.TRON: {
       const { feeLimit, from } = body as TransferFromTronCustodialAddress
       r.methodName = 'transfer(address,uint256,address,uint256,uint256)'
@@ -384,16 +384,16 @@ export const prepareBatchTransferFromCustodialWallet = async (
         }
       )
     case Currency.ONE:
-      return await prepareOneSmartContractWriteMethodInvocation(r, provider)
+      return await prepareOneSmartContractWriteMethodInvocation(r, { provider })
     case Currency.ETH:
-      return await prepareSmartContractWriteMethodInvocation(r, provider)
+      return await prepareSmartContractWriteMethodInvocation(r, { provider })
     case Currency.BSC:
-      return await prepareBscSmartContractWriteMethodInvocation(r, provider)
+      return await prepareBscSmartContractWriteMethodInvocation(r, { provider })
     case Currency.MATIC:
-      return await preparePolygonSmartContractWriteMethodInvocation(r, provider)
+      return await preparePolygonSmartContractWriteMethodInvocation(r, { provider })
     case Currency.TRON: {
       const body1 = body as TransferFromTronCustodialAddressBatch
-      return await prepareTronCustodialTransferBatch(r, body1.feeLimit as number, body1.from, provider)
+      return await prepareTronCustodialTransferBatch(r, body1.feeLimit as number, body1.from, { provider })
     }
     default:
       throw new Error('Unsupported combination of inputs.')

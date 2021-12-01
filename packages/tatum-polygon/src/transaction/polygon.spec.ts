@@ -129,7 +129,7 @@ describe('MATIC transactions', () => {
           },
           params: ['0x8c76887d2e738371bd750362fb55887343472346', '1'],
         },
-        'https://matic-mumbai.chainstacklabs.com/'
+        { provider: 'https://matic-mumbai.chainstacklabs.com/' }
       )
       expect(result).not.toBeNull()
       console.log(await broadcast(result))

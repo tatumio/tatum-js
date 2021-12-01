@@ -1000,13 +1000,17 @@ export const preparePolygonDeployMultiTokenSignedTransaction = async (body: Depl
 /**
  * Sign Polygon smart contract write method invocation transaction with private keys locally. Nothing is broadcast to the blockchain.
  * @param body content of the transaction to broadcast
- * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
+ * @param options
+ * @param options.provider optional url of the Polygon Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const preparePolygonSmartContractWriteMethodInvocation = async (body: SmartContractMethodInvocation, provider?: string) => {
+export const preparePolygonSmartContractWriteMethodInvocation = async (
+  body: SmartContractMethodInvocation,
+  options?: { provider?: string }
+) => {
   await validateBody(body, SmartContractMethodInvocation)
   const { fromPrivateKey, fee, params, methodName, methodABI, contractAddress, nonce, amount, signatureId } = body
-  const client = await preparePolygonClient(provider, fromPrivateKey)
+  const client = await preparePolygonClient(options?.provider, fromPrivateKey)
 
   const data = new client.eth.Contract([methodABI]).methods[methodName as string](...params).encodeABI()
   return prepareGeneralTx(client, fromPrivateKey, signatureId, contractAddress.trim(), amount, nonce, data, fee?.gasLimit, fee?.gasPrice)
@@ -1272,7 +1276,7 @@ export const sendPolygonSmartContractMethodInvocationTransaction = async (
     return sendPolygonSmartContractReadMethodInvocationTransaction(body as SmartContractReadMethodInvocation, provider)
   }
   return polygonBroadcast(
-    await preparePolygonSmartContractWriteMethodInvocation(body, provider),
+    await preparePolygonSmartContractWriteMethodInvocation(body, { provider }),
     (body as SmartContractMethodInvocation).signatureId
   )
 }

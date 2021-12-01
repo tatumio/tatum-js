@@ -23,7 +23,6 @@ import {
   TransferFromCustodialAddress,
   TransferFromCustodialAddressBatch,
   validateBody,
-  CeloSmartContractMethodInvocation,
 } from '@tatumio/tatum-core'
 
 export const obtainCustodialAddressType = (body: GenerateCustodialAddress) => {
@@ -102,11 +101,17 @@ export const obtainCustodialAddressType = (body: GenerateCustodialAddress) => {
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareTransferFromCustodialWalletAbstract = async (
+export const prepareTransferFromCustodialWalletAbstract = async <SCBody extends SmartContractMethodInvocation>(
   testnet: boolean,
   body: TransferFromCustodialAddress,
   getContractDecimals: (contractAddress: string, provider?: string, testnet?: boolean) => Promise<any>,
-  prepareSmartContractWriteMethodInvocation: (r: SmartContractMethodInvocation, provider?: string, testnet?: boolean) => Promise<string>,
+  prepareSmartContractWriteMethodInvocation: (
+    r: SCBody,
+    options?: {
+      provider?: string
+      testnet?: boolean
+    }
+  ) => Promise<string>,
   SmartContractMethodInvocationCtor: any,
   decimals: number,
   validateClass: any,
@@ -138,24 +143,27 @@ export const prepareTransferFromCustodialWalletAbstract = async (
   ]
   r.methodABI = CustodialFullTokenWallet.abi.find((a) => a.name === 'transfer')
   return await prepareSmartContractWriteMethodInvocation(
-    body.chain === Currency.CELO ? ({ ...r, feeCurrency: body.feeCurrency || Currency.CELO } as CeloSmartContractMethodInvocation) : r,
-    provider,
-    testnet
+    (body.chain === Currency.CELO ? { ...r, feeCurrency: body.feeCurrency || Currency.CELO } : r) as SCBody,
+    {
+      provider,
+      testnet,
+    }
   )
 }
 
 /**
  * Prepare signed batch transaction from the custodial SC wallet.
- * @param testnet chain to work with
  * @param body request data
- * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @param options
+ * @param options.provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @param options.testnet optional chain to work with
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareBatchTransferFromCustodialWalletAbstract = async (
+export const prepareBatchTransferFromCustodialWalletAbstract = async <SCBody extends SmartContractMethodInvocation>(
   testnet: boolean,
   body: TransferFromCustodialAddressBatch,
   getContractDecimals: (contractAddress: string, provider?: string, testnet?: boolean) => Promise<any>,
-  prepareSmartContractWriteMethodInvocation: (r: SmartContractMethodInvocation, provider?: string, testnet?: boolean) => Promise<string>,
+  prepareSmartContractWriteMethodInvocation: (r: SCBody, options?: { provider?: string; testnet?: boolean }) => Promise<string>,
   SmartContractMethodInvocationCtor: any,
   decimals: number,
   validateClass: any,
@@ -201,9 +209,11 @@ export const prepareBatchTransferFromCustodialWalletAbstract = async (
   ]
   r.methodABI = CustodialFullTokenWalletWithBatch.abi.find((a) => a.name === 'transferBatch')
   return await prepareSmartContractWriteMethodInvocation(
-    body.chain === Currency.CELO ? ({ ...r, feeCurrency: body.feeCurrency || Currency.CELO } as CeloSmartContractMethodInvocation) : r,
-    provider,
-    testnet
+    (body.chain === Currency.CELO ? { ...r, feeCurrency: body.feeCurrency || Currency.CELO } : r) as SCBody,
+    {
+      provider,
+      testnet,
+    }
   )
 }
 
@@ -214,7 +224,7 @@ export const prepareCustodialWalletBatchAbstract = async (
   testnet: boolean,
   body: GenerateCustodialAddressBatch,
   getCustodialFactoryContractAddress: (testnet: boolean) => string,
-  convertAddressToHex?: (address: string) => any
+  convertAddressToHex?: (address: string) => string
 ) => {
   await validateBody(body, GenerateCustodialAddressBatch)
   const params =

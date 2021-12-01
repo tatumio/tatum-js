@@ -82,7 +82,6 @@ export const prepareTransferFromCustodialWallet = async (testnet: boolean, body:
     testnet,
     body,
     getCeloErc20ContractDecimals,
-    // @ts-ignore - to be fixed with generic types
     prepareCeloSmartContractWriteMethodInvocation,
     CeloSmartContractMethodInvocation,
     18,
@@ -117,7 +116,6 @@ export const prepareBatchTransferFromCustodialWallet = async (
     testnet,
     body,
     getCeloErc20ContractDecimals,
-    // @ts-ignore - to be fixed with generic types
     prepareCeloSmartContractWriteMethodInvocation,
     CeloSmartContractMethodInvocation,
     18,
@@ -155,17 +153,11 @@ export const prepareApproveFromCustodialWallet = async (testnet: boolean, body: 
     `0x${new BigNumber(body.tokenId || 0).toString(16)}`,
   ]
   delete body.amount
-  return await helperPrepareSCCall(
-    testnet,
-    {
-      ...body,
-      contractAddress: body.custodialAddress,
-    },
-    'approve',
-    params,
-    provider,
-    CustodialFullTokenWallet.abi
-  )
+  const b = {
+    ...body,
+    contractAddress: body.custodialAddress,
+  }
+  return await helperPrepareSCCall(testnet, b, 'approve', params, provider, CustodialFullTokenWallet.abi)
 }
 /**
  * Send signed approve transaction from the custodial SC wallet.

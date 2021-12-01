@@ -11,7 +11,8 @@ import {
     sendMarketplaceApproveErc20Spending,
     sendMarketplaceBuyListing,
     sendMarketplaceCreateListing,
-    sendCeloSmartContractReadMethodInvocationTransaction
+    sendCeloSmartContractReadMethodInvocationTransaction,
+    sendAuctionApproveNftTransfer
 } from '@tatumio/tatum';
 ```
 
@@ -49,6 +50,19 @@ If you want the transfer to be in custom erc20 mention the address of the contra
             body.chain = Currency.CELO;
             console.log(await sendMarketplaceCreateListing(true, body, 'https://alfajores-forno.celo-testnet.org'));
 ```
+## Send approval for NFT
+
+ ```typescript
+             console.log(await sendAuctionApproveNftTransfer(true, {
+                 fromPrivateKey: '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236',
+                 chain: Currency.CELO,
+                 contractAddress: '0xd093bEd4BC06403bfEABB54667B42C48533D3Fd9',
+                 isErc721: true,
+                 spender: '0x991dfc0db4cbe2480296eec5bcc6b3215a9b7038',
+                 tokenId:'1'
+             }, 'https://alfajores-forno.celo-testnet.org'));
+             const endedAt = (await celoGetCurrentBlock()) + 9;
+ ```
 
 In response you will get a transaction id if the transaction is successful
 

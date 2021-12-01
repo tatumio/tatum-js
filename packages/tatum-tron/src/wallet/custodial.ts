@@ -30,7 +30,7 @@ import {
  */
 export const generateCustodialWallet = async (body: GenerateTronCustodialAddress, provider?: string) => {
   console.log('This method is deprecated. For better gas consumption, use prepareCustodialWalletBatch.')
-  return await sendTronGenerateCustodialWalletSignedTransaction(body as GenerateTronCustodialAddress, provider)
+  return await sendTronGenerateCustodialWalletSignedTransaction(body, provider)
 }
 /**
  * This method is @Deprecated. Use @link{prepareCustodialWalletBatch} instead
@@ -42,7 +42,7 @@ export const generateCustodialWallet = async (body: GenerateTronCustodialAddress
  */
 export const prepareCustodialWallet = async (body: GenerateTronCustodialAddress, provider?: string) => {
   console.log('This method is deprecated. For better gas consumption, use prepareCustodialWalletBatch.')
-  return await prepareTronGenerateCustodialWalletSignedTransaction(body as GenerateTronCustodialAddress, provider)
+  return await prepareTronGenerateCustodialWalletSignedTransaction(body, provider)
 }
 
 /**
@@ -70,7 +70,7 @@ export const prepareTransferFromCustodialWallet = async (testnet: boolean, body:
     testnet,
     body,
     getTronTrc20ContractDecimals,
-    (r, provider) => prepareTronSmartContractInvocation(r, feeLimit as number, from, provider),
+    (r) => prepareTronSmartContractInvocation(r, feeLimit as number, from),
     SmartContractMethodInvocation,
     18,
     TransferFromCustodialAddress,
@@ -105,7 +105,7 @@ export const prepareBatchTransferFromCustodialWallet = async (
     testnet,
     body,
     getTronTrc20ContractDecimals,
-    (r, provider) => prepareTronCustodialTransferBatch(r, feeLimit as number, from, provider),
+    (r) => prepareTronCustodialTransferBatch(r, feeLimit as number, from),
     SmartContractMethodInvocation,
     18,
     TransferFromTronCustodialAddressBatch,
