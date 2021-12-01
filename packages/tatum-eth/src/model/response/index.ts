@@ -1,1 +1,1 @@
-export * from './eth/ETHTx'
+export * from './eth/EthTx'
