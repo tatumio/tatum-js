@@ -8,7 +8,18 @@ import {
   Vkeywitnesses,
 } from '@emurgo/cardano-serialization-lib-nodejs'
 import BigNumber from 'bignumber.js'
-import { validateBody, Currency, TransactionKMS, WithdrawalResponseData, KeyPair, TransferBtcBasedOffchain } from '@tatumio/tatum-core'
+import {
+  validateBody,
+  Currency,
+  ChainTransactionKMS,
+  WithdrawalResponseData,
+  KeyPair,
+  TransferBtcBasedOffchain,
+  TransactionKMS,
+  offchainBroadcast,
+  offchainCancelWithdrawal,
+  offchainStoreWithdrawal,
+} from '@tatumio/tatum-core'
 import {
   adaToLovelace,
   addAddressInputsWithoutPrivateKey,
@@ -18,7 +29,6 @@ import {
   makeWitness,
 } from '../transaction'
 import { generateAddressFromXPub, generatePrivateKeyFromMnemonic } from '../wallet'
-import { offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal } from './common'
 import { offchainTransferAdaKMS } from './kms'
 
 /**
@@ -164,10 +174,11 @@ const addOffchainInputs = (transactionBuilder: TransactionBuilder, inputs: Withd
  * @param mnemonic mnemonic to generate private keys to sign transaction with.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signAdaOffchainKMSTransaction = async (tx: TransactionKMS, mnemonic: string) => {
-  if (tx.chain !== Currency.ADA || !tx.withdrawalResponses) {
+export const signAdaOffchainKMSTransaction = async (tx: ChainTransactionKMS, mnemonic: string) => {
+  if (!tx.withdrawalResponses) {
     throw Error('Unsupported chain.')
   }
+  ;(tx as TransactionKMS).chain = Currency.ADA
   const txData = JSON.parse(tx.serializedTransaction).txData
   const transactionBody = TransactionBody.from_bytes(Uint8Array.from(txData.split(',')))
   const txHash = hash_transaction(transactionBody)

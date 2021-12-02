@@ -1,20 +1,6 @@
 import { Currency } from '../../request'
-import { WithdrawalResponseData } from '../offchain/WithdrawalResponse'
+import { ChainTransactionKMS } from 'src/model/response/kms/ChainTransactionKMS'
 
-export class TransactionKMS {
-  public id: string
-
+export class TransactionKMS extends ChainTransactionKMS {
   public chain: Currency
-
-  public serializedTransaction: string
-
-  public hashes: string[]
-
-  public txId?: string
-
-  public withdrawalId?: string
-
-  public index?: number
-
-  public withdrawalResponses?: WithdrawalResponseData[]
 }
