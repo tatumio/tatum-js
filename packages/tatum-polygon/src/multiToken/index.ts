@@ -9,6 +9,8 @@ import {
   TransferMultiToken,
   TransferMultiTokenBatch,
   listing,
+  getMultiTokenTransaction as getMultiTokenTransactionCore,
+  Currency,
 } from '@tatumio/tatum-core'
 import {
   sendPolygonDeployMultiTokenSignedTransaction,
@@ -21,6 +23,7 @@ import {
   helperPrepareSCCall,
   helperBroadcastTx,
 } from '../'
+import { MaticTx } from '../model'
 
 export const deployMultiToken = async (body: DeployMultiToken, provider?: string) => {
   return sendPolygonDeployMultiTokenSignedTransaction(body, provider)
@@ -63,11 +66,16 @@ export const prepareAddMultiTokenMinter = async (body: AddMinter, provider?: str
 export const sendAddMultiTokenMinter = async (body: AddMinter, provider?: string) =>
   helperBroadcastTx(await prepareAddMultiTokenMinter(body, provider), body.signatureId)
 
+/**
+ * Get Multi Token transaction by transaction hash.
+ * @param hash Transaction hash
+ */
+export const getMultiTokenTransaction = (hash: string): Promise<MaticTx> => getMultiTokenTransactionCore<MaticTx>(Currency.MATIC, hash)
+
 export {
   getMultiTokenTransactionsByAddress,
   getMultiTokenContractAddress,
   getMultiTokensBalance,
   getMultiTokensBatchBalance,
-  getMultiTokenTransaction,
   getMultiTokenMetadata,
 } from '@tatumio/tatum-core'

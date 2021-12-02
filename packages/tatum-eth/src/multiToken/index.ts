@@ -8,7 +8,9 @@ import {
   MintMultiToken,
   AddMinter,
   prepareAddMultiTokenMinterAbstraction,
+  getMultiTokenTransaction as getMultiTokenTransactionCore,
   listing,
+  Currency,
 } from '@tatumio/tatum-core'
 import {
   sendEthBurnBatchMultiTokenTransaction,
@@ -20,6 +22,7 @@ import {
   sendEthMultiTokenTransaction,
 } from '../transaction'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
+import { ETHTx } from '../model'
 
 export const deployMultiToken = async (body: DeployMultiToken, provider?: string) => {
   return sendEthDeployMultiTokenTransaction(body, provider)
@@ -62,11 +65,16 @@ export const prepareAddMultiTokenMinter = async (body: AddMinter, provider?: str
 export const sendAddMultiTokenMinter = async (body: AddMinter, provider?: string) =>
   helperBroadcastTx(await prepareAddMultiTokenMinter(body, provider), body.signatureId)
 
+/**
+ * Get Multi Token transaction by transaction hash.
+ * @param hash Transaction hash
+ */
+export const getMultiTokenTransaction = (hash: string): Promise<ETHTx> => getMultiTokenTransactionCore<ETHTx>(Currency.ETH, hash)
+
 export {
   getMultiTokenTransactionsByAddress,
   getMultiTokenContractAddress,
   getMultiTokensBalance,
   getMultiTokensBatchBalance,
-  getMultiTokenTransaction,
   getMultiTokenMetadata,
 } from '@tatumio/tatum-core'

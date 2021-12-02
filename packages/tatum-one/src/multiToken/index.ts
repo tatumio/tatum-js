@@ -9,6 +9,8 @@ import {
   TransferMultiToken,
   TransferMultiTokenBatch,
   listing,
+  getMultiTokenTransaction as getMultiTokenTransactionCore,
+  Currency,
 } from '@tatumio/tatum-core'
 import {
   prepareOneBatchTransferMultiTokenSignedTransaction,
@@ -20,6 +22,7 @@ import {
   sendOneTransferMultiTokenSignedTransaction,
 } from '../transaction'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
+import { OneTx } from '../model'
 
 export const deployMultiToken = async (body: DeployMultiToken, provider?: string) => {
   return sendOneDeployMultiTokenSignedTransaction(body, provider)
@@ -62,10 +65,10 @@ export const prepareAddMultiTokenMinter = async (body: AddMinter, provider?: str
 export const sendAddMultiTokenMinter = async (body: AddMinter, provider?: string) =>
   helperBroadcastTx(await prepareAddMultiTokenMinter(body, provider), body.signatureId)
 
-export {
-  getMultiTokenContractAddress,
-  getMultiTokensBalance,
-  getMultiTokensBatchBalance,
-  getMultiTokenTransaction,
-  getMultiTokenMetadata,
-} from '@tatumio/tatum-core'
+/**
+ * Get Multi Token transaction by transaction hash.
+ * @param hash Transaction hash
+ */
+export const getMultiTokenTransaction = (hash: string): Promise<OneTx> => getMultiTokenTransactionCore<OneTx>(Currency.ONE, hash)
+
+export { getMultiTokenContractAddress, getMultiTokensBalance, getMultiTokensBatchBalance, getMultiTokenMetadata } from '@tatumio/tatum-core'
