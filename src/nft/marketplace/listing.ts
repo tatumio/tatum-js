@@ -256,7 +256,9 @@ export const prepareMarketplaceCreateListing = async (testnet: boolean, body: Cr
         //         {type: 'address', value: convertAddressToHex(params[7] as string)},
         //     ], 'createListing(string,bool,address,uint256,uint256,address,uint256,address)', provider)
     } else {
-        body.amount = undefined;
+        if(!body.isErc721){
+            body.amount = undefined;
+        }
         return await helperPrepareSCCall(testnet, body, CreateMarketplaceListing, 'createListing', params, undefined, provider);
     }
 };
