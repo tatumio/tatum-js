@@ -124,7 +124,7 @@ const getCustodialFactoryContractAddress = (chain: Currency, testnet: boolean) =
         case Currency.TRON:
             return testnet ? 'TRM8P5gpzAr85p2a5BMvqb9UfEdFEwEgA7' : 'TG59uLNQvCR45F6yKHPXipvCu7wg5D88Wr';
         case Currency.ETH:
-            return testnet ? (process.env.TESTNET_TYPE === 'ethereum-rinkeby' ? '0x4eC40a4A0dA042d46cC4529f918080957003b531' : '0x3485fdba44736859267789ac9c248cc4c1443956') : '0x9fd03ec6c02d2b4a92644a4dbfc23f22efe8ea11';
+            return testnet ? (process.env.TESTNET_TYPE === 'ethereum-rinkeby' ? '0x4eC40a4A0dA042d46cC4529f918080957003b531' : '0x3485fdba44736859267789ac9c248cc4c1443956') : '0x4cb7933f595cb081804f8078f7fe7eff717bdc4b';
         case Currency.MATIC:
             return testnet ? '0x80d8bac9a6901698b3749fe336bbd1385c1f98f2' : '0xb87c97ceb7d75f908fa3045f386474515547c232';
         case Currency.BSC:
