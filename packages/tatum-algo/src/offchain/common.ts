@@ -1,13 +1,9 @@
-export {
-  generateDepositAddress,
-  generateDepositAddresses,
-  checkAddressExists,
-  getWithdrawals,
-  assignDepositAddress,
-  removeDepositAddress,
-  getDepositAddressesForAccount,
-  offchainBroadcast,
-  offchainStoreWithdrawal,
-  offchainCancelWithdrawal,
-  offchainCompleteWithdrawal,
-} from '@tatumio/tatum-core'
+import { Currency, checkAddressExists as checkAddressExistsCore, getWithdrawals as getWithdrawalsCore } from '@tatumio/tatum-core'
+
+export const checkAddressExists = async (address: string, index?: number) => {
+  return checkAddressExistsCore(address, Currency.ALGO, index)
+}
+
+export const getWithdrawals = async (status?: string, pageSize = 50, offset = 0) => {
+  return getWithdrawalsCore(status, Currency.ALGO, pageSize, offset)
+}

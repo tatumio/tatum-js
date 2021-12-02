@@ -1,17 +1,3 @@
-import { WithdrawalResponseData } from '../offchain/WithdrawalResponse'
+import { TransactionKMS } from './TransactionKMS'
 
-export class ChainTransactionKMS {
-  public id: string
-
-  public serializedTransaction: string
-
-  public hashes: string[]
-
-  public txId?: string
-
-  public withdrawalId?: string
-
-  public index?: number
-
-  public withdrawalResponses?: WithdrawalResponseData[]
-}
+export type ChainTransactionKMS = Omit<TransactionKMS, 'chain'>
