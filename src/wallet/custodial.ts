@@ -120,15 +120,15 @@ export const obtainCustodialAddressType = (body: GenerateCustodialAddress) => {
 const getCustodialFactoryContractAddress = (chain: Currency, testnet: boolean) => {
     switch (chain) {
         case Currency.CELO:
-            return testnet ? '0x6C4B2ed1EaBcE4925f0F3d5Cf36e432C28d8A6dd' : '0x3b0B6734AC81252dD1d2B26FA3A4605e7eB96997';
+            return testnet ? '0x481D6f967B120E094D3551DA2C4951242Be582af' : '0x014a09b194A2Ed928aB777E83E2F27BbAc9529D0';
         case Currency.TRON:
-            return testnet ? 'TH8SiZrN3GFs932ATPZdkyJ2e1NQaSsJ9c' : 'TLLfWsi4VBDZyLCsrFgrmnazvJmoeyGA9H';
+            return testnet ? 'TRM8P5gpzAr85p2a5BMvqb9UfEdFEwEgA7' : 'TG59uLNQvCR45F6yKHPXipvCu7wg5D88Wr';
         case Currency.ETH:
-            return testnet ? (process.env.TESTNET_TYPE === 'ethereum-rinkeby' ? '0xbe7433f3373c8486B3FE1693D2A61870F73eFCf7' : '0xBe318B50BcE15C40f6AaFC2042882C987339Bf94') : '0x9fd03ec6c02d2b4a92644a4dbfc23f22efe8ea11';
+            return testnet ? (process.env.TESTNET_TYPE === 'ethereum-rinkeby' ? '0x4eC40a4A0dA042d46cC4529f918080957003b531' : '0x3485fdba44736859267789ac9c248cc4c1443956') : '0x4cb7933f595cb081804f8078f7fe7eff717bdc4b';
         case Currency.MATIC:
-            return testnet ? '0x7E53D8ccE7d55bDEFfb057cC3b7e95448b26E697' : '0x6B422BC77e7848b628fd89Ffc6D702e3f39a580A';
+            return testnet ? '0x6792a82ffab4890cfbcee6c2c775ae9c898afe71' : '0xb87c97ceb7d75f908fa3045f386474515547c232';
         case Currency.BSC:
-            return testnet ? '0x6709Bdda623aF7EB152cB2fE2562aB7e031e564f' : '0x1cfc7878Cf6Ae32A50F84481690F6fB04574de21';
+            return testnet ? '0xeac818b4CC468Cf6556f772C4BB86e132E6ac0F3' : '0x85ec2f5d5b53D5140ffCbAfABeDA6525485427Aa';
         default:
             throw new Error('Unsupported chain.');
     }
@@ -339,7 +339,10 @@ export const prepareTransferFromCustodialWallet = async (testnet: boolean, body:
     r.methodABI = CustodialFullTokenWallet.abi.find(a => a.name === 'transfer');
     switch (body.chain) {
         case Currency.CELO:
-            return await prepareCeloSmartContractWriteMethodInvocation(testnet, {...r, feeCurrency: body.feeCurrency || Currency.CELO}, provider);
+            return await prepareCeloSmartContractWriteMethodInvocation(testnet, {
+                ...r,
+                feeCurrency: body.feeCurrency || Currency.CELO
+            }, provider);
         case Currency.ONE:
             return await prepareOneSmartContractWriteMethodInvocation(testnet, r, provider);
         case Currency.ETH:
@@ -446,7 +449,10 @@ export const prepareBatchTransferFromCustodialWallet = async (testnet: boolean,
     r.methodABI = CustodialFullTokenWalletWithBatch.abi.find(a => a.name === 'transferBatch');
     switch (body.chain) {
         case Currency.CELO:
-            return await prepareCeloSmartContractWriteMethodInvocation(testnet, {...r, feeCurrency: body.feeCurrency || Currency.CELO}, provider);
+            return await prepareCeloSmartContractWriteMethodInvocation(testnet, {
+                ...r,
+                feeCurrency: body.feeCurrency || Currency.CELO
+            }, provider);
         case Currency.ONE:
             return await prepareOneSmartContractWriteMethodInvocation(testnet, r, provider);
         case Currency.ETH:
