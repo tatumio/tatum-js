@@ -1,6 +1,5 @@
 export * from './blockchain'
 export * from './ledger'
-export * from './multiToken'
 export * from './offchain'
 export * from './record'
 export * from './tatum'
