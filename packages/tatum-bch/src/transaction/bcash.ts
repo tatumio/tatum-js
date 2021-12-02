@@ -1,4 +1,4 @@
-import { Currency, TransactionKMS, validateBody } from '@tatumio/tatum-core'
+import { ChainTransactionKMS, Currency, TransactionKMS, validateBody } from '@tatumio/tatum-core'
 import BigNumber from 'bignumber.js'
 // @ts-ignore
 import coininfo from 'coininfo'
@@ -40,10 +40,8 @@ export const sendBitcoinCashTransaction = async (testnet: boolean, body: Transfe
  * @param testnet mainnet or testnet version
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signBitcoinCashKMSTransaction = async (tx: TransactionKMS, privateKeys: string[], testnet: boolean) => {
-  if (tx.chain !== Currency.BCH) {
-    throw Error('Unsupported chain.')
-  }
+export const signBitcoinCashKMSTransaction = async (tx: ChainTransactionKMS, privateKeys: string[], testnet: boolean) => {
+  ;(tx as TransactionKMS).chain = Currency.BCH
   const [data, amountsToDecode] = tx.serializedTransaction.split(':')
   const transaction = Transaction.fromHex(data)
   const amountsToSign = JSON.parse(amountsToDecode)

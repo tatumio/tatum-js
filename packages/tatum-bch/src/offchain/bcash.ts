@@ -1,8 +1,18 @@
 // @ts-ignore
 import coininfo from 'coininfo'
-import { Currency, KeyPair, TransactionKMS, TransferBtcBasedOffchain, validateBody, WithdrawalResponseData } from '@tatumio/tatum-core'
+import {
+  ChainTransactionKMS,
+  Currency,
+  KeyPair,
+  TransactionKMS,
+  TransferBtcBasedOffchain,
+  validateBody,
+  WithdrawalResponseData,
+  offchainBroadcast,
+  offchainCancelWithdrawal,
+  offchainStoreWithdrawal,
+} from '@tatumio/tatum-core'
 import { generateAddressFromXPub, generateBchWallet, generatePrivateKeyFromMnemonic, toLegacyAddress } from '../wallet'
-import { offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal } from './common'
 import { offchainTransferBcashKMS } from './kms'
 import BigNumber from 'bignumber.js'
 
@@ -65,10 +75,11 @@ export const sendBitcoinCashOffchainTransaction = async (testnet: boolean, body:
  * @param testnet mainnet or testnet version
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signBitcoinCashOffchainKMSTransaction = async (tx: TransactionKMS, mnemonic: string, testnet: boolean) => {
-  if (tx.chain !== Currency.BCH || !tx.withdrawalResponses) {
+export const signBitcoinCashOffchainKMSTransaction = async (tx: ChainTransactionKMS, mnemonic: string, testnet: boolean) => {
+  if (!tx.withdrawalResponses) {
     throw Error('Unsupported chain.')
   }
+  ;(tx as TransactionKMS).chain = Currency.BCH
   const [data, amountsToDecode] = tx.serializedTransaction.split(':')
   const transaction = bcash.Transaction.fromHex(data)
   const amountsToSign = JSON.parse(amountsToDecode) as number[]
