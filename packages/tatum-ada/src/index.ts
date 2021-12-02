@@ -1,5 +1,4 @@
 export * from './blockchain'
-export * from './fungible'
 export * from './ledger'
 export * from './multiToken'
 export * from './offchain'
