@@ -237,7 +237,7 @@ export const mintSolanaNft = async (body: SolanaMintNft, provider?: string) => {
 
   if (body.signatureId) {
     transaction.recentBlockhash = '7WyEshBZcZwEbJsvSeGgCkSNMxxxFAym3x7Cuj6UjAUE'
-    return { txData: transaction.serialize().toString('hex'), mintPK: Buffer.from(mint.secretKey).toString('hex') }
+    return { txData: transaction.compileMessage().serialize().toString('hex'), mintPK: Buffer.from(mint.secretKey).toString('hex') }
   }
 
   const wallet = generateSolanaKeyPair(body.fromPrivateKey as string)
