@@ -19,8 +19,8 @@ export const getNFTTransactionsByAddress = async (
   tokenAddress: string,
   pageSize = 50,
   offset = 0,
-  from?: string,
-  to?: string,
+  from?: number,
+  to?: number,
   sort?: Sort
 ): Promise<NftTransaction[]> =>
   get(`/v3/nft/transaction/${chain}/${address}/${tokenAddress}?pageSize=${pageSize}&offset=${offset}&from=${from}&to=${to}&sort=${sort}`)
