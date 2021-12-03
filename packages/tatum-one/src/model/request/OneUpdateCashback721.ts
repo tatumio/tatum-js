@@ -10,3 +10,5 @@ export class OneUpdateCashback721 extends UpdateCashbackErc721 {
   @Min(0)
   public toShardID?: number
 }
+
+export type ChainOneUpdateCashback721 = Omit<OneUpdateCashback721, 'chain'>

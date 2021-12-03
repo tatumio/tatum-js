@@ -10,3 +10,5 @@ export class OneBurnMultiTokenBatch extends BurnMultiTokenBatch {
   @Min(0)
   public toShardID?: number
 }
+
+export type ChainOneBurnMultiTokenBatch = Omit<OneBurnMultiTokenBatch, 'chain'>

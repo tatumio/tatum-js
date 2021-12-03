@@ -10,3 +10,5 @@ export class OneBurn721 extends BurnErc721 {
   @Min(0)
   public toShardID?: number
 }
+
+export type ChainOneBurn721 = Omit<OneBurn721, 'chain'>

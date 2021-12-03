@@ -10,3 +10,5 @@ export class OneTransfer extends TransferErc20 {
   @Min(0)
   public toShardID?: number
 }
+
+export type ChainOneTransfer = Omit<OneTransfer, 'chain'>
