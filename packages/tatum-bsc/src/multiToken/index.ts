@@ -9,6 +9,14 @@ import {
   prepareAddMultiTokenMinterAbstraction,
   AddMinter,
   listing,
+  getMultiTokenTransactionsByAddress as getMultiTokenTransactionsByAddressCore,
+  getMultiTokenContractAddress as getMultiTokenContractAddressCore,
+  getMultiTokensBalance as getMultiTokensBalanceCore,
+  getMultiTokensBatchBalance as getMultiTokensBatchBalanceCore,
+  getMultiTokenTransaction as getMultiTokenTransactionCore,
+  getMultiTokenMetadata as getMultiTokenMetadataCore,
+  Sort,
+  Currency,
 } from '@tatumio/tatum-core'
 import {
   sendBscDeployMultiTokenTransaction,
@@ -21,6 +29,33 @@ import {
   helperPrepareSCCall,
   helperBroadcastTx,
 } from '../'
+
+export const getMultiTokenTransactionsByAddress = async (
+  address: string,
+  tokenAddress: string,
+  pageSize = 50,
+  offset = 0,
+  from?: string,
+  to?: string,
+  sort?: Sort
+) => {
+  return getMultiTokenTransactionsByAddressCore(Currency.BSC, address, tokenAddress, pageSize, offset, from, to, sort)
+}
+export const getMultiTokenContractAddress = async (txId: string) => {
+  return getMultiTokenContractAddressCore(Currency.BSC, txId)
+}
+export const getMultiTokensBalance = async (contractAddress: string, address: string, tokenId: string) => {
+  return getMultiTokensBalanceCore(Currency.BSC, contractAddress, address, tokenId)
+}
+export const getMultiTokensBatchBalance = async (contractAddress: string, address: string, tokenIds: string) => {
+  return getMultiTokensBatchBalanceCore(Currency.BSC, contractAddress, address, tokenIds)
+}
+export const getMultiTokenTransaction = async (txId: string) => {
+  return getMultiTokenTransactionCore(Currency.BSC, txId)
+}
+export const getMultiTokenMetadata = async (contractAddress: string, tokenId: string) => {
+  return getMultiTokenMetadataCore(Currency.BSC, contractAddress, tokenId)
+}
 
 export const deployMultiToken = async (body: DeployMultiToken, provider?: string) => {
   return sendBscDeployMultiTokenTransaction(body, provider)
@@ -62,11 +97,3 @@ export const prepareAddMultiTokenMinter = async (body: AddMinter, provider?: str
  */
 export const sendAddMultiTokenMinter = async (body: AddMinter, provider?: string) =>
   helperBroadcastTx(await prepareAddMultiTokenMinter(body, provider), body.signatureId)
-
-export {
-  getMultiTokenContractAddress,
-  getMultiTokensBalance,
-  getMultiTokensBatchBalance,
-  getMultiTokenTransaction,
-  getMultiTokenMetadata,
-} from '@tatumio/tatum-core'
