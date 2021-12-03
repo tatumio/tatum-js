@@ -35,7 +35,7 @@ export const getSolanaClient = (provider?: string) => {
  * @param body body of the request
  * @param provider optional URL of the Solana cluster
  */
-export const sendSolana = async (body: TransferSolana, provider?: string) => {
+export const sendSolana = async (body: TransferSolana, provider?: string): Promise<{ txData: string } | { txId: string }> => {
   const fromPubkey = new PublicKey(body.from)
 
   const transaction = new Transaction({ feePayer: fromPubkey })
@@ -115,6 +115,7 @@ export const signSolanaKMSTransaction = async (tx: TransactionKMS, fromPrivateKe
   const connection = getSolanaClient(provider)
   const { txData, mintPK } = JSON.parse(tx.serializedTransaction)
   const transaction = Transaction.populate(Message.from(Buffer.from(txData, 'hex')))
+  transaction.recentBlockhash = undefined
   const wallet = generateSolanaKeyPair(fromPrivateKey as string)
   const signers = []
   if (mintPK) {
