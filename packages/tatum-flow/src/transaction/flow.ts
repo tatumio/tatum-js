@@ -7,9 +7,21 @@ import { ECDSA_secp256k1, encodeKey, SHA3_256 } from '@onflow/util-encode-key'
 import * as elliptic from 'elliptic'
 import { SHA3 } from 'sha3'
 import { flowBroadcastTx, flowGetSignKey, flowSignWithKey } from '../blockchain'
-import { Currency, validateBody, TransactionKMS } from '@tatumio/tatum-core'
+import { Currency, validateBody, TransactionKMS, ChainTransactionKMS } from '@tatumio/tatum-core'
 import { FLOW_MAINNET_ADDRESSES, FLOW_TESTNET_ADDRESSES } from '../constants'
-import { FlowArgs, FlowBurnNft, FlowMintMultipleNft, FlowMintNft, FlowTransferNft, TransferFlow, TransferFlowCustomTx } from '../model'
+import {
+  ChainFlowBurnNft,
+  ChainFlowMintMultipleNft,
+  ChainFlowMintNft,
+  ChainFlowTransferNft,
+  FlowArgs,
+  FlowBurnNft,
+  FlowMintMultipleNft,
+  FlowMintNft,
+  FlowTransferNft,
+  TransferFlow,
+  TransferFlowCustomTx,
+} from '../model'
 import { generatePrivateKeyFromMnemonic } from '../wallet'
 import {
   burnFlowNftTokenTxTemplate,
@@ -183,10 +195,9 @@ const sendScript = async (testnet: boolean, code: string, args: FlowArgs[]) => {
   return fcl.decode(response)
 }
 
-export const flowSignKMSTransaction = async (tx: TransactionKMS, privateKeys: string[], testnet: boolean) => {
-  if (tx.chain !== Currency.FLOW) {
-    throw Error('Unsupported chain.')
-  }
+export const flowSignKMSTransaction = async (tx: ChainTransactionKMS, privateKeys: string[], testnet: boolean) => {
+  ;(tx as TransactionKMS).chain = Currency.FLOW
+
   const { type, body }: { type: FlowTxType; apiManagedProposal: boolean; body: any } = JSON.parse(tx.serializedTransaction)
   switch (type) {
     case FlowTxType.CREATE_ACCOUNT:
@@ -313,10 +324,11 @@ export const getFlowNftTokenByAddress = async (testnet: boolean, account: string
  */
 export const sendFlowNftMintToken = async (
   testnet: boolean,
-  body: FlowMintNft,
+  body: ChainFlowMintNft,
   proposer?: (isPayer: boolean) => any,
   payer?: (isPayer: boolean) => any
 ): Promise<{ txId: string; tokenId: string }> => {
+  ;(body as FlowMintNft).chain = Currency.FLOW
   await validateBody(body, FlowMintNft)
   const code = mintFlowNftTokenTxTemplate(testnet)
   const { url, contractAddress: tokenType, to, mnemonic, index, account, privateKey } = body
@@ -356,10 +368,11 @@ export const sendFlowNftMintToken = async (
  */
 export const sendFlowNftMintMultipleToken = async (
   testnet: boolean,
-  body: FlowMintMultipleNft,
+  body: ChainFlowMintMultipleNft,
   proposer?: (isPayer: boolean) => any,
   payer?: (isPayer: boolean) => any
 ): Promise<{ txId: string; tokenId: number[] }> => {
+  ;(body as FlowMintMultipleNft).chain = Currency.FLOW
   await validateBody(body, FlowMintMultipleNft)
   const code = mintFlowMultipleNftTokenTxTemplate(testnet)
   const { url, contractAddress: tokenType, to, mnemonic, index, account, privateKey } = body
@@ -403,10 +416,11 @@ export const sendFlowNftMintMultipleToken = async (
  */
 export const sendFlowNftTransferToken = async (
   testnet: boolean,
-  body: FlowTransferNft,
+  body: ChainFlowTransferNft,
   proposer?: (isPayer: boolean) => any,
   payer?: (isPayer: boolean) => any
 ): Promise<{ txId: string }> => {
+  ;(body as FlowTransferNft).chain = Currency.FLOW
   await validateBody(body, FlowTransferNft)
   const code = transferFlowNftTokenTxTemplate(testnet)
   const { tokenId, to, mnemonic, index, account, privateKey } = body
@@ -442,10 +456,11 @@ export const sendFlowNftTransferToken = async (
  */
 export const sendFlowNftBurnToken = async (
   testnet: boolean,
-  body: FlowBurnNft,
+  body: ChainFlowBurnNft,
   proposer?: (isPayer: boolean) => any,
   payer?: (isPayer: boolean) => any
 ): Promise<{ txId: string }> => {
+  ;(body as FlowBurnNft).chain = Currency.FLOW
   await validateBody(body, FlowBurnNft)
   const code = burnFlowNftTokenTxTemplate(testnet)
   const { tokenId, contractAddress: tokenType, mnemonic, index, account, privateKey } = body
