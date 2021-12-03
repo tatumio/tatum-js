@@ -1,8 +1,8 @@
 import {
   mintNFTRequest,
-  getNFTTransaction as getNFTTransactionDefi,
   createNFTAbstraction,
   prepareAddNFTMinterAbstraction,
+  getNFTTransaction as getNFTTransactionDefi,
   getNFTTransactionsByAddress as getNFTTransactionsByAddressDefi,
   NftTransaction,
 } from '@tatumio/tatum-defi'
@@ -158,6 +158,10 @@ export const getNFTTransactionsByAddress = async (
   sort?: Sort
 ): Promise<NftTransaction[]> => getNFTTransactionsByAddressDefi(Currency.MATIC, address, tokenAddress, pageSize, offset, from, to, sort)
 
+/**
+ * Get NFT transaction by transaction hash.
+ * @param hash Transaction hash
+ */
 export const getNFTTransaction = async (hash: string): Promise<MaticTx> => getNFTTransactionDefi<MaticTx>(Currency.MATIC, hash)
 
 export {
