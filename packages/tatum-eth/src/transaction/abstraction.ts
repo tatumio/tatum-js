@@ -1,4 +1,4 @@
-import { validateBody, CreateRecord, TransferErc20 } from '@tatumio/tatum-core'
+import { validateBody, CreateRecord, TransferErc20, ChainCreateRecord, ChainTransferErc20, Currency } from '@tatumio/tatum-core'
 import { sendCustomErc20Transaction, sendEthOrErc20Transaction, sendStoreDataTransaction } from './eth'
 
 /**
@@ -6,7 +6,8 @@ import { sendCustomErc20Transaction, sendEthOrErc20Transaction, sendStoreDataTra
  * @param body Body of the transaction.
  * @param provider Optional provider to use for broadcasting signed tx to the blockchain.
  */
-export const storeData = async (body: CreateRecord, provider?: string) => {
+export const storeData = async (body: ChainCreateRecord, provider?: string) => {
+  ;(body as CreateRecord).chain = Currency.ETH
   await validateBody(body, CreateRecord)
   return await sendStoreDataTransaction(body, provider)
 }
@@ -16,7 +17,8 @@ export const storeData = async (body: CreateRecord, provider?: string) => {
  * @param body Body of the transaction.
  * @param provider Optional provider to use for broadcasting signed tx to the blockchain.
  */
-export const sendTransaction = async (body: TransferErc20, provider?: string) => {
+export const sendTransaction = async (body: ChainTransferErc20, provider?: string) => {
+  ;(body as TransferErc20).currency = Currency.ETH
   const b = body as TransferErc20
   return b.contractAddress ? sendCustomErc20Transaction(b, provider) : sendEthOrErc20Transaction(b, provider)
 }
