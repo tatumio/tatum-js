@@ -1,5 +1,14 @@
 import { ASSOCIATED_TOKEN_PROGRAM_ID, MintLayout, Token, TOKEN_PROGRAM_ID } from '@solana/spl-token'
-import { Connection, Keypair, LAMPORTS_PER_SOL, PublicKey, sendAndConfirmTransaction, SystemProgram, Transaction } from '@solana/web3.js'
+import {
+  Connection,
+  Keypair,
+  LAMPORTS_PER_SOL,
+  Message,
+  PublicKey,
+  sendAndConfirmTransaction,
+  SystemProgram,
+  Transaction,
+} from '@solana/web3.js'
 import { BigNumber } from 'bignumber.js'
 import BN from 'bn.js'
 import { serialize } from 'borsh'
@@ -27,21 +36,25 @@ export const getSolanaClient = (provider?: string) => {
  * @param provider optional URL of the Solana cluster
  */
 export const sendSolana = async (body: TransferSolana, provider?: string) => {
-  const transaction = new Transaction()
+  const fromPubkey = new PublicKey(body.from)
 
+  const transaction = new Transaction({ feePayer: fromPubkey })
   transaction.add(
     SystemProgram.transfer({
-      fromPubkey: new PublicKey(body.from),
+      fromPubkey: fromPubkey,
       toPubkey: new PublicKey(body.to),
       lamports: new BigNumber(body.amount).multipliedBy(LAMPORTS_PER_SOL).toNumber(),
     })
   )
 
   if (body.signatureId) {
-    return transaction.serialize().toString('hex')
+    transaction.recentBlockhash = '7WyEshBZcZwEbJsvSeGgCkSNMxxxFAym3x7Cuj6UjAUE'
+    return { txData: transaction.compileMessage().serialize().toString('hex') }
   }
 
-  return await sendAndConfirmTransaction(getSolanaClient(provider), transaction, [generateSolanaKeyPair(body.fromPrivateKey as string)])
+  return {
+    txId: await sendAndConfirmTransaction(getSolanaClient(provider), transaction, [generateSolanaKeyPair(body.fromPrivateKey as string)]),
+  }
 }
 
 // export const transferSolanaSlpToken = async (body: TransferSolanaSlp, provider?: string) => {
@@ -100,14 +113,15 @@ export const signSolanaKMSTransaction = async (tx: TransactionKMS, fromPrivateKe
     throw Error('Unsupported chain.')
   }
   const connection = getSolanaClient(provider)
-  const transaction = JSON.parse(tx.serializedTransaction)
+  const { txData, mintPK } = JSON.parse(tx.serializedTransaction)
+  const transaction = Transaction.populate(Message.from(Buffer.from(txData, 'hex')))
   const wallet = generateSolanaKeyPair(fromPrivateKey as string)
   const signers = []
-  if (transaction.mintPK) {
-    signers.push(generateSolanaKeyPair(transaction.mintPK))
+  if (mintPK) {
+    signers.push(generateSolanaKeyPair(mintPK))
   }
   signers.push(wallet)
-  return await sendAndConfirmTransaction(connection, transaction.txData, signers)
+  return await sendAndConfirmTransaction(connection, transaction, signers)
 }
 
 /**
@@ -134,7 +148,8 @@ export const transferSolanaNft = async (body: TransferErc721, provider?: string)
   transaction.add(Token.createTransferInstruction(TOKEN_PROGRAM_ID, fromTokenAddress, toTokenAccountAddress, from, [], 1))
 
   if (body.signatureId) {
-    return { txData: transaction.serialize().toString('hex') }
+    transaction.recentBlockhash = '7WyEshBZcZwEbJsvSeGgCkSNMxxxFAym3x7Cuj6UjAUE'
+    return { txData: transaction.compileMessage().serialize().toString('hex') }
   }
 
   const wallet = generateSolanaKeyPair(body.fromPrivateKey as string)
@@ -220,6 +235,7 @@ export const mintSolanaNft = async (body: SolanaMintNft, provider?: string) => {
   transaction.add(...instructions)
 
   if (body.signatureId) {
+    transaction.recentBlockhash = '7WyEshBZcZwEbJsvSeGgCkSNMxxxFAym3x7Cuj6UjAUE'
     return { txData: transaction.serialize().toString('hex'), mintPK: Buffer.from(mint.secretKey).toString('hex') }
   }
 
