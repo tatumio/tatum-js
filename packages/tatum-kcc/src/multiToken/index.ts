@@ -1,11 +1,19 @@
 import {
   BurnMultiToken,
   BurnMultiTokenBatch,
+  Currency,
   DeployMultiToken,
   MintMultiToken,
   MintMultiTokenBatch,
+  Sort,
   TransferMultiToken,
   TransferMultiTokenBatch,
+  getMultiTokenTransactionsByAddress as getMultiTokenTransactionsByAddressCore,
+  getMultiTokenContractAddress as getMultiTokenContractAddressCore,
+  getMultiTokensBalance as getMultiTokensBalanceCore,
+  getMultiTokensBatchBalance as getMultiTokensBatchBalanceCore,
+  getMultiTokenTransaction as getMultiTokenTransactionCore,
+  getMultiTokenMetadata as getMultiTokenMetadataCore,
 } from '@tatumio/tatum-core'
 import {
   sendKccDeployMultiTokenSignedTransaction,
@@ -40,10 +48,29 @@ export const transferMultiTokenBatch = async (body: TransferMultiTokenBatch, pro
   return prepareKccBatchTransferMultiTokenSignedTransaction(body, provider)
 }
 
-export {
-  getMultiTokenContractAddress,
-  getMultiTokensBalance,
-  getMultiTokensBatchBalance,
-  getMultiTokenTransaction,
-  getMultiTokenMetadata,
-} from '@tatumio/tatum-core'
+export const getMultiTokenTransactionsByAddress = async (
+  address: string,
+  tokenAddress: string,
+  pageSize = 50,
+  offset = 0,
+  from?: string,
+  to?: string,
+  sort?: Sort
+) => {
+  return getMultiTokenTransactionsByAddressCore(Currency.KCS, address, tokenAddress, pageSize, offset, from, to, sort)
+}
+export const getMultiTokenContractAddress = async (txId: string) => {
+  return getMultiTokenContractAddressCore(Currency.KCS, txId)
+}
+export const getMultiTokensBalance = async (contractAddress: string, address: string, tokenId: string) => {
+  return getMultiTokensBalanceCore(Currency.KCS, contractAddress, address, tokenId)
+}
+export const getMultiTokensBatchBalance = async (contractAddress: string, address: string, tokenIds: string) => {
+  return getMultiTokensBatchBalanceCore(Currency.KCS, contractAddress, address, tokenIds)
+}
+export const getMultiTokenTransaction = async (txId: string) => {
+  return getMultiTokenTransactionCore(Currency.KCS, txId)
+}
+export const getMultiTokenMetadata = async (contractAddress: string, tokenId: string) => {
+  return getMultiTokenMetadataCore(Currency.KCS, contractAddress, tokenId)
+}

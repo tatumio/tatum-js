@@ -1,8 +1,6 @@
 import {
   auction,
   BurnErc20,
-  BaseBurnMultiToken,
-  BaseBurnMultiTokenBatch,
   CreateRecord,
   Currency,
   DeployErc20,
@@ -33,6 +31,27 @@ import {
   BurnMultiToken,
   BurnMultiTokenBatch,
   DeployMultiToken,
+  ChainTransferErc20,
+  ChainTransactionKMS,
+  ChainGenerateCustodialAddress,
+  ChainCreateRecord,
+  ChainMintErc721,
+  ChainMintMultipleErc721,
+  ChainBurnErc721,
+  ChainTransferErc721,
+  ChainUpdateCashbackErc721,
+  ChainDeployErc721,
+  ChainDeployMarketplaceListing,
+  ChainDeployNftAuction,
+  ChainBurnMultiToken,
+  ChainBurnMultiTokenBatch,
+  ChainTransferMultiToken,
+  ChainTransferMultiTokenBatch,
+  ChainMintMultiToken,
+  ChainMintMultiTokenBatch,
+  ChainDeployMultiToken,
+  ChainBaseBurnMultiToken,
+  ChainBaseBurnMultiTokenBatch,
 } from '@tatumio/tatum-core'
 import { obtainCustodialAddressType } from '@tatumio/tatum-defi'
 import { BigNumber } from 'bignumber.js'
@@ -84,7 +103,7 @@ const prepareGeneralTx = async (
  * @param provider url of the Kcc Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendKccTransaction = async (body: TransferErc20, provider?: string) => {
+export const sendKccTransaction = async (body: ChainTransferErc20, provider?: string) => {
   return kccBroadcast(await prepareKccSignedTransaction(body, provider))
 }
 
@@ -105,10 +124,8 @@ export const prepareKccClient = (provider?: string, fromPrivateKey?: string) => 
  * @param provider url of the Kcc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signKccKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, provider?: string) => {
-  if (tx.chain !== Currency.KCS) {
-    throw Error('Unsupported chain.')
-  }
+export const signKccKMSTransaction = async (tx: ChainTransactionKMS, fromPrivateKey: string, provider?: string) => {
+  ;(tx as TransactionKMS).chain = Currency.KCS
   const client = prepareKccClient(provider, fromPrivateKey)
   const transactionConfig = JSON.parse(tx.serializedTransaction)
   if (!transactionConfig.gas) {
@@ -141,10 +158,11 @@ export const getKccErc20ContractDecimals = async (contractAddress: string, provi
  * @param provider url of the Kcc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareKccGenerateCustodialWalletSignedTransaction = async (body: GenerateCustodialAddress, provider?: string) => {
+export const prepareKccGenerateCustodialWalletSignedTransaction = async (body: ChainGenerateCustodialAddress, provider?: string) => {
+  ;(body as GenerateCustodialAddress).chain = Currency.KCS
   await validateBody(body, GenerateCustodialAddress)
   const client = await prepareKccClient(provider, body.fromPrivateKey)
-  const { abi, code } = obtainCustodialAddressType(body)
+  const { abi, code } = obtainCustodialAddressType({ ...body, chain: Currency.KCS })
   // @ts-ignore
   const contract = new client.eth.Contract(abi)
   const data = contract
@@ -171,7 +189,8 @@ export const prepareKccGenerateCustodialWalletSignedTransaction = async (body: G
  * @param provider url of the Kcc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareKccSignedTransaction = async (body: TransferErc20, provider?: string) => {
+export const prepareKccSignedTransaction = async (body: ChainTransferErc20, provider?: string) => {
+  ;(body as TransferErc20).currency = Currency.KCS
   await validateBody(body, TransferErc20)
   const client = await prepareKccClient(provider, body.fromPrivateKey)
   const data = body.data ? (client.utils.isHex(body.data) ? client.utils.stringToHex(body.data) : client.utils.toHex(body.data)) : undefined
@@ -194,7 +213,8 @@ export const prepareKccSignedTransaction = async (body: TransferErc20, provider?
  * @param provider url of the Kcc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareKccStoreDataTransaction = async (body: CreateRecord, provider?: string) => {
+export const prepareKccStoreDataTransaction = async (body: ChainCreateRecord, provider?: string) => {
+  ;(body as CreateRecord).chain = Currency.KCS
   await validateBody(body, CreateRecord)
   const client = await prepareKccClient(provider, body.fromPrivateKey)
   const hexData = isHex(body.data) ? stringToHex(body.data) : toHex(body.data)
@@ -269,7 +289,8 @@ export const prepareKccBurnErc20SignedTransaction = async (body: BurnErc20, prov
  * @param provider url of the Kcc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareKccTransferErc20SignedTransaction = async (body: TransferErc20, provider?: string) => {
+export const prepareKccTransferErc20SignedTransaction = async (body: ChainTransferErc20, provider?: string) => {
+  ;(body as TransferErc20).currency = Currency.KCS
   await validateBody(body, TransferErc20)
   const client = await prepareKccClient(provider, body.fromPrivateKey)
   const decimals = new BigNumber(10).pow(body.digits as number)
@@ -333,7 +354,8 @@ export const prepareKccDeployErc20SignedTransaction = async (body: DeployErc20, 
  * @param provider url of the Kcc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareKccMintErc721SignedTransaction = async (body: MintErc721, provider?: string) => {
+export const prepareKccMintErc721SignedTransaction = async (body: ChainMintErc721, provider?: string) => {
+  ;(body as MintErc721).chain = Currency.KCS
   await validateBody(body, MintErc721)
   const client = await prepareKccClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -362,7 +384,8 @@ export const prepareKccMintErc721SignedTransaction = async (body: MintErc721, pr
  * @param provider url of the Kcc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareKccMintCashbackErc721SignedTransaction = async (body: MintErc721, provider?: string) => {
+export const prepareKccMintCashbackErc721SignedTransaction = async (body: ChainMintErc721, provider?: string) => {
+  ;(body as MintErc721).chain = Currency.KCS
   await validateBody(body, MintErc721)
   const client = await prepareKccClient(provider, body.fromPrivateKey)
   const cashbacks: string[] = body.cashbackValues!
@@ -393,7 +416,8 @@ export const prepareKccMintCashbackErc721SignedTransaction = async (body: MintEr
  * @param provider url of the Kcc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareKccMintMultipleCashbackErc721SignedTransaction = async (body: MintMultipleErc721, provider?: string) => {
+export const prepareKccMintMultipleCashbackErc721SignedTransaction = async (body: ChainMintMultipleErc721, provider?: string) => {
+  ;(body as MintMultipleErc721).chain = Currency.KCS
   await validateBody(body, MintMultipleErc721)
   const client = await prepareKccClient(provider, body.fromPrivateKey)
   const cashbacks: string[][] = body.cashbackValues!
@@ -427,7 +451,8 @@ export const prepareKccMintMultipleCashbackErc721SignedTransaction = async (body
  * @param provider url of the Kcc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareKccMintMultipleErc721SignedTransaction = async (body: MintMultipleErc721, provider?: string) => {
+export const prepareKccMintMultipleErc721SignedTransaction = async (body: ChainMintMultipleErc721, provider?: string) => {
+  ;(body as MintMultipleErc721).chain = Currency.KCS
   await validateBody(body, MintMultipleErc721)
   const client = await prepareKccClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -457,7 +482,8 @@ export const prepareKccMintMultipleErc721SignedTransaction = async (body: MintMu
  * @param provider url of the Kcc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareKccBurnErc721SignedTransaction = async (body: BurnErc721, provider?: string) => {
+export const prepareKccBurnErc721SignedTransaction = async (body: ChainBurnErc721, provider?: string) => {
+  ;(body as BurnErc721).chain = Currency.KCS
   await validateBody(body, BurnErc721)
   const client = await prepareKccClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -481,7 +507,8 @@ export const prepareKccBurnErc721SignedTransaction = async (body: BurnErc721, pr
  * @param provider url of the Kcc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareKccTransferErc721SignedTransaction = async (body: TransferErc721, provider?: string) => {
+export const prepareKccTransferErc721SignedTransaction = async (body: ChainTransferErc721, provider?: string) => {
+  ;(body as TransferErc721).chain = Currency.KCS
   await validateBody(body, TransferErc721)
   const client = await prepareKccClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -507,7 +534,8 @@ export const prepareKccTransferErc721SignedTransaction = async (body: TransferEr
  * @param provider url of the Kcc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareKccUpdateCashbackForAuthorErc721SignedTransaction = async (body: UpdateCashbackErc721, provider?: string) => {
+export const prepareKccUpdateCashbackForAuthorErc721SignedTransaction = async (body: ChainUpdateCashbackErc721, provider?: string) => {
+  ;(body as UpdateCashbackErc721).chain = Currency.KCS
   await validateBody(body, UpdateCashbackErc721)
   const client = await prepareKccClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -533,7 +561,8 @@ export const prepareKccUpdateCashbackForAuthorErc721SignedTransaction = async (b
  * @param provider url of the Kcc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareKccDeployErc721SignedTransaction = async (body: DeployErc721, provider?: string) => {
+export const prepareKccDeployErc721SignedTransaction = async (body: ChainDeployErc721, provider?: string) => {
+  ;(body as DeployErc721).chain = Currency.KCS
   await validateBody(body, DeployErc721)
   const client = await prepareKccClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -562,7 +591,8 @@ export const prepareKccDeployErc721SignedTransaction = async (body: DeployErc721
  * @param provider url of the Kcc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
  */
-export const prepareKccDeployMarketplaceListingSignedTransaction = async (body: DeployMarketplaceListing, provider?: string) => {
+export const prepareKccDeployMarketplaceListingSignedTransaction = async (body: ChainDeployMarketplaceListing, provider?: string) => {
+  ;(body as DeployMarketplaceListing).chain = Currency.KCS
   await validateBody(body, DeployMarketplaceListing)
   const client = await prepareKccClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -590,7 +620,8 @@ export const prepareKccDeployMarketplaceListingSignedTransaction = async (body: 
  * @param provider url of the Kcc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
  */
-export const prepareKccDeployAuctionSignedTransaction = async (body: DeployNftAuction, provider?: string) => {
+export const prepareKccDeployAuctionSignedTransaction = async (body: ChainDeployNftAuction, provider?: string) => {
+  ;(body as DeployNftAuction).chain = Currency.KCS
   await validateBody(body, DeployNftAuction)
   const client = await prepareKccClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -619,7 +650,8 @@ export const prepareKccDeployAuctionSignedTransaction = async (body: DeployNftAu
  * @param provider url of the Kcc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareKccBurnMultiTokenSignedTransaction = async (body: BurnMultiToken, provider?: string) => {
+export const prepareKccBurnMultiTokenSignedTransaction = async (body: ChainBurnMultiToken, provider?: string) => {
+  ;(body as BurnMultiToken).chain = Currency.KCS
   await validateBody(body, BurnMultiToken)
   const client = await prepareKccClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -645,7 +677,8 @@ export const prepareKccBurnMultiTokenSignedTransaction = async (body: BurnMultiT
  * @param provider url of the Kcc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareKccBurnMultiTokenBatchSignedTransaction = async (body: BurnMultiTokenBatch, provider?: string) => {
+export const prepareKccBurnMultiTokenBatchSignedTransaction = async (body: ChainBurnMultiTokenBatch, provider?: string) => {
+  ;(body as BurnMultiTokenBatch).chain = Currency.KCS
   await validateBody(body, BurnMultiTokenBatch)
   const client = await prepareKccClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -671,7 +704,8 @@ export const prepareKccBurnMultiTokenBatchSignedTransaction = async (body: BurnM
  * @param provider url of the Kcc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareKccTransferMultiTokenSignedTransaction = async (body: TransferMultiToken, provider?: string) => {
+export const prepareKccTransferMultiTokenSignedTransaction = async (body: ChainTransferMultiToken, provider?: string) => {
+  ;(body as TransferMultiToken).chain = Currency.KCS
   await validateBody(body, TransferMultiToken)
   const client = await prepareKccClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -697,7 +731,8 @@ export const prepareKccTransferMultiTokenSignedTransaction = async (body: Transf
  * @param provider url of the Kcc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareKccBatchTransferMultiTokenSignedTransaction = async (body: TransferMultiTokenBatch, provider?: string) => {
+export const prepareKccBatchTransferMultiTokenSignedTransaction = async (body: ChainTransferMultiTokenBatch, provider?: string) => {
+  ;(body as TransferMultiTokenBatch).chain = Currency.KCS
   await validateBody(body, TransferMultiTokenBatch)
   const client = await prepareKccClient(provider, body.fromPrivateKey)
   const amts = body.amounts.map((amt: string) => `0x${new BigNumber(amt).toString(16)}`)
@@ -729,7 +764,8 @@ export const prepareKccBatchTransferMultiTokenSignedTransaction = async (body: T
  * @param provider url of the Kcc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareKccMintMultiTokenSignedTransaction = async (body: MintMultiToken, provider?: string) => {
+export const prepareKccMintMultiTokenSignedTransaction = async (body: ChainMintMultiToken, provider?: string) => {
+  ;(body as MintMultiToken).chain = Currency.KCS
   await validateBody(body, MintMultiToken)
   const client = await prepareKccClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -755,7 +791,8 @@ export const prepareKccMintMultiTokenSignedTransaction = async (body: MintMultiT
  * @param provider url of the Kcc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareKccMintMultiTokenBatchSignedTransaction = async (body: MintMultiTokenBatch, provider?: string) => {
+export const prepareKccMintMultiTokenBatchSignedTransaction = async (body: ChainMintMultiTokenBatch, provider?: string) => {
+  ;(body as MintMultiTokenBatch).chain = Currency.KCS
   await validateBody(body, MintMultiTokenBatch)
   const client = await prepareKccClient(provider, body.fromPrivateKey)
   const batchAmounts = body.amounts.map((amts: string[]) => amts.map((amt: string) => `0x${new BigNumber(amt).toString(16)}`))
@@ -782,7 +819,8 @@ export const prepareKccMintMultiTokenBatchSignedTransaction = async (body: MintM
  * @param provider url of the Kcc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareKccDeployMultiTokenSignedTransaction = async (body: DeployMultiToken, provider?: string) => {
+export const prepareKccDeployMultiTokenSignedTransaction = async (body: ChainDeployMultiToken, provider?: string) => {
+  ;(body as DeployMultiToken).chain = Currency.KCS
   await validateBody(body, DeployMultiToken)
   const client = await prepareKccClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -839,7 +877,7 @@ export const sendKccSmartContractReadMethodInvocationTransaction = async (body: 
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendKccStoreDataTransaction = async (body: CreateRecord, provider?: string) =>
+export const sendKccStoreDataTransaction = async (body: ChainCreateRecord, provider?: string) =>
   kccBroadcast(await prepareKccStoreDataTransaction(body, provider), body.signatureId)
 
 /**
@@ -869,7 +907,7 @@ export const sendKccBurnErc20SignedTransaction = async (body: BurnErc20, provide
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendKccTransferErc20SignedTransaction = async (body: TransferErc20, provider?: string) =>
+export const sendKccTransferErc20SignedTransaction = async (body: ChainTransferErc20, provider?: string) =>
   kccBroadcast(await prepareKccTransferErc20SignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -889,7 +927,7 @@ export const sendKccDeployErc20SignedTransaction = async (body: DeployErc20, pro
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendKccMintErc721SignedTransaction = async (body: MintErc721, provider?: string) => {
+export const sendKccMintErc721SignedTransaction = async (body: ChainMintErc721, provider?: string) => {
   if (!body.fromPrivateKey && !body.fromPrivateKey) {
     return mintNFT(body)
   }
@@ -903,7 +941,7 @@ export const sendKccMintErc721SignedTransaction = async (body: MintErc721, provi
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendKccMintCashbackErc721SignedTransaction = async (body: MintErc721, provider?: string) =>
+export const sendKccMintCashbackErc721SignedTransaction = async (body: ChainMintErc721, provider?: string) =>
   kccBroadcast(await prepareKccMintCashbackErc721SignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -913,7 +951,7 @@ export const sendKccMintCashbackErc721SignedTransaction = async (body: MintErc72
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendKccMintMultipleCashbackErc721SignedTransaction = async (body: MintMultipleErc721, provider?: string) =>
+export const sendKccMintMultipleCashbackErc721SignedTransaction = async (body: ChainMintMultipleErc721, provider?: string) =>
   kccBroadcast(await prepareKccMintMultipleCashbackErc721SignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -923,7 +961,7 @@ export const sendKccMintMultipleCashbackErc721SignedTransaction = async (body: M
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendKccMintMultipleErc721SignedTransaction = async (body: MintMultipleErc721, provider?: string) =>
+export const sendKccMintMultipleErc721SignedTransaction = async (body: ChainMintMultipleErc721, provider?: string) =>
   kccBroadcast(await prepareKccMintMultipleErc721SignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -933,7 +971,7 @@ export const sendKccMintMultipleErc721SignedTransaction = async (body: MintMulti
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendKccBurnErc721SignedTransaction = async (body: BurnErc721, provider?: string) =>
+export const sendKccBurnErc721SignedTransaction = async (body: ChainBurnErc721, provider?: string) =>
   kccBroadcast(await prepareKccBurnErc721SignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -943,7 +981,7 @@ export const sendKccBurnErc721SignedTransaction = async (body: BurnErc721, provi
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendKccTransferErc721SignedTransaction = async (body: TransferErc721, provider?: string) =>
+export const sendKccTransferErc721SignedTransaction = async (body: ChainTransferErc721, provider?: string) =>
   kccBroadcast(await prepareKccTransferErc721SignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -953,7 +991,7 @@ export const sendKccTransferErc721SignedTransaction = async (body: TransferErc72
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendKccUpdateCashbackForAuthorErc721SignedTransaction = async (body: UpdateCashbackErc721, provider?: string) =>
+export const sendKccUpdateCashbackForAuthorErc721SignedTransaction = async (body: ChainUpdateCashbackErc721, provider?: string) =>
   kccBroadcast(await prepareKccUpdateCashbackForAuthorErc721SignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -963,7 +1001,7 @@ export const sendKccUpdateCashbackForAuthorErc721SignedTransaction = async (body
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendKccDeployErc721SignedTransaction = async (body: DeployErc721, provider?: string) =>
+export const sendKccDeployErc721SignedTransaction = async (body: ChainDeployErc721, provider?: string) =>
   kccBroadcast(await prepareKccDeployErc721SignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -973,7 +1011,7 @@ export const sendKccDeployErc721SignedTransaction = async (body: DeployErc721, p
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendKccBurnMultiTokenSignedTransaction = async (body: BaseBurnMultiToken, provider?: string) =>
+export const sendKccBurnMultiTokenSignedTransaction = async (body: ChainBaseBurnMultiToken, provider?: string) =>
   kccBroadcast(await prepareKccBurnMultiTokenSignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -983,7 +1021,7 @@ export const sendKccBurnMultiTokenSignedTransaction = async (body: BaseBurnMulti
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendKccBurnMultiTokenBatchSignedTransaction = async (body: BaseBurnMultiTokenBatch, provider?: string) =>
+export const sendKccBurnMultiTokenBatchSignedTransaction = async (body: ChainBaseBurnMultiTokenBatch, provider?: string) =>
   kccBroadcast(await prepareKccBurnMultiTokenBatchSignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -993,7 +1031,7 @@ export const sendKccBurnMultiTokenBatchSignedTransaction = async (body: BaseBurn
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendKccTransferMultiTokenSignedTransaction = async (body: TransferMultiToken, provider?: string) =>
+export const sendKccTransferMultiTokenSignedTransaction = async (body: ChainTransferMultiToken, provider?: string) =>
   kccBroadcast(await prepareKccTransferMultiTokenSignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -1003,7 +1041,7 @@ export const sendKccTransferMultiTokenSignedTransaction = async (body: TransferM
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendKccBatchTransferMultiTokenSignedTransaction = async (body: TransferMultiTokenBatch, provider?: string) =>
+export const sendKccBatchTransferMultiTokenSignedTransaction = async (body: ChainTransferMultiTokenBatch, provider?: string) =>
   kccBroadcast(await prepareKccBatchTransferMultiTokenSignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -1013,7 +1051,7 @@ export const sendKccBatchTransferMultiTokenSignedTransaction = async (body: Tran
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendKccMintMultiTokenSignedTransaction = async (body: MintMultiToken, provider?: string) =>
+export const sendKccMintMultiTokenSignedTransaction = async (body: ChainMintMultiToken, provider?: string) =>
   kccBroadcast(await prepareKccMintMultiTokenSignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -1023,7 +1061,7 @@ export const sendKccMintMultiTokenSignedTransaction = async (body: MintMultiToke
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendKccMintMultiTokenBatchSignedTransaction = async (body: MintMultiTokenBatch, provider?: string) =>
+export const sendKccMintMultiTokenBatchSignedTransaction = async (body: ChainMintMultiTokenBatch, provider?: string) =>
   kccBroadcast(await prepareKccMintMultiTokenBatchSignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -1033,7 +1071,7 @@ export const sendKccMintMultiTokenBatchSignedTransaction = async (body: MintMult
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendKccDeployMultiTokenSignedTransaction = async (body: DeployMultiToken, provider?: string) =>
+export const sendKccDeployMultiTokenSignedTransaction = async (body: ChainDeployMultiToken, provider?: string) =>
   kccBroadcast(await prepareKccDeployMultiTokenSignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -1043,7 +1081,7 @@ export const sendKccDeployMultiTokenSignedTransaction = async (body: DeployMulti
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendKccGenerateCustodialWalletSignedTransaction = async (body: GenerateCustodialAddress, provider?: string) =>
+export const sendKccGenerateCustodialWalletSignedTransaction = async (body: ChainGenerateCustodialAddress, provider?: string) =>
   kccBroadcast(await prepareKccGenerateCustodialWalletSignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -1071,5 +1109,5 @@ export const sendKccSmartContractMethodInvocationTransaction = async (
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendKccDeployMarketplaceListingSignedTransaction = async (body: DeployMarketplaceListing, provider?: string) =>
+export const sendKccDeployMarketplaceListingSignedTransaction = async (body: ChainDeployMarketplaceListing, provider?: string) =>
   kccBroadcast(await prepareKccDeployMarketplaceListingSignedTransaction(body, provider), body.signatureId)

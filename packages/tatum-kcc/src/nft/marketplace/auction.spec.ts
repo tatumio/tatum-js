@@ -44,7 +44,6 @@ describe('Auction  tests', () => {
         await sendAuctionApproveNftTransfer(
           {
             fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
-            chain: Currency.KCS,
             contractAddress: '0x5d7d868ed584b04b922905a481f274206a42dd8a',
             isErc721: true,
             spender: '0x7a2cc5a4788a15d5705b1d31e0ff5cfc4465d073',
@@ -108,7 +107,6 @@ describe('Auction  tests', () => {
         await sendAuctionApproveNftTransfer(
           {
             fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
-            chain: Currency.KCS,
             contractAddress: '0x5d7d868ed584b04b922905a481f274206a42dd8a',
             isErc721: true,
             spender: '0x7a2cc5a4788a15d5705b1d31e0ff5cfc4465d073',
