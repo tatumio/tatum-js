@@ -3,6 +3,8 @@ import {
   getNFTTransaction as getNFTTransactionDefi,
   mintNFTRequest,
   prepareAddNFTMinterAbstraction,
+  getNFTTransactionsByAddress as getNFTTransactionsByAddressDefi,
+  NftTransaction,
 } from '@tatumio/tatum-defi'
 import {
   AddMinter,
@@ -15,6 +17,7 @@ import {
   UpdateCashbackErc721,
   erc721TokenABI,
   Currency,
+  Sort,
 } from '@tatumio/tatum-core'
 import { OneMint721 } from '../model/request'
 import {
@@ -134,6 +137,27 @@ export const prepareAddNFTMinter = async (body: AddMinter, provider?: string) =>
  */
 export const sendAddNFTMinter = async (body: AddMinter, provider?: string) =>
   helperBroadcastTx(await prepareAddNFTMinter(body, provider), body.signatureId)
+
+
+/**
+ * Get NFT transactions by address. This includes incoming and outgoing transactions for the address.
+ * @param address Account address
+ * @param tokenAddress NFT Token address
+ * @param pageSize Max number of items per page is 50.
+ * @param offset optional Offset to obtain next page of the data.
+ * @param from optional Transactions from this block onwords will be included.
+ * @param to optional Transactions up to this block will be included.
+ * @param sort optional Sorting of the data. ASC - oldest first, DESC - newest first.
+ */
+export const getNFTTransactionsByAddress = async (
+  address: string,
+  tokenAddress: string,
+  pageSize: number,
+  offset?: number,
+  from?: number,
+  to?: number,
+  sort?: Sort
+): Promise<NftTransaction[]> => getNFTTransactionsByAddressDefi(Currency.ONE, address, tokenAddress, pageSize, offset, from, to, sort)
 
 export const getNFTTransaction = async (hash: string): Promise<OneTx> => getNFTTransactionDefi<OneTx>(Currency.ONE, hash)
 
