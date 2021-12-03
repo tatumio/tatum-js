@@ -5,6 +5,7 @@ import {
   getNFTTransactionsByAddress as getNFTTransactionsByAddressDefi,
   prepareAddNFTMinterAbstraction,
   NftTransaction,
+  mintNFTRequest,
 } from '@tatumio/tatum-defi'
 import {
   Currency,
