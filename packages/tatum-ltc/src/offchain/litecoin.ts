@@ -1,9 +1,19 @@
 import BigNumber from 'bignumber.js'
 // @ts-ignore
 import { PrivateKey, Script, Transaction } from 'bitcore-lib-ltc'
-import { validateBody, Currency, TransactionKMS, WithdrawalResponseData, TransferBtcBasedOffchain, KeyPair } from '@tatumio/tatum-core'
+import {
+  offchainBroadcast,
+  offchainCancelWithdrawal,
+  offchainStoreWithdrawal,
+  validateBody,
+  Currency,
+  TransactionKMS,
+  WithdrawalResponseData,
+  TransferBtcBasedOffchain,
+  KeyPair,
+  ChainTransactionKMS,
+} from '@tatumio/tatum-core'
 import { generateAddressFromXPub, generatePrivateKeyFromMnemonic } from '../wallet'
-import { offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal } from './common'
 import { offchainTransferLtcKMS } from './kms'
 
 /**
@@ -63,8 +73,9 @@ export const sendLitecoinOffchainTransaction = async (testnet: boolean, body: Tr
  * @param testnet mainnet or testnet version
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signLitecoinOffchainKMSTransaction = async (tx: TransactionKMS, mnemonic: string, testnet: boolean) => {
-  if (tx.chain !== Currency.LTC || !tx.withdrawalResponses) {
+export const signLitecoinOffchainKMSTransaction = async (tx: ChainTransactionKMS, mnemonic: string, testnet: boolean) => {
+  ;(tx as TransactionKMS).chain = Currency.LTC
+  if (!tx.withdrawalResponses) {
     throw Error('Unsupported chain.')
   }
   const builder = new Transaction(JSON.parse(tx.serializedTransaction))

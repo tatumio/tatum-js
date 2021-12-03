@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js'
 // @ts-ignore
 import { PrivateKey, Script, Transaction } from 'bitcore-lib-ltc'
 import { ltcBroadcast, ltcGetTransaction, ltcGetTxForAccount, ltcGetUTXO } from '../blockchain'
-import { Currency, TransferBtcBasedBlockchain, TransactionKMS, validateBody } from '@tatumio/tatum-core'
+import { Currency, TransferBtcBasedBlockchain, TransactionKMS, validateBody, ChainTransactionKMS } from '@tatumio/tatum-core'
 import { LtcTxOutputs } from '../model'
 
 /**
@@ -71,10 +71,8 @@ const prepareSignedTransaction = async (body: TransferBtcBasedBlockchain) => {
  * @param privateKeys private keys to sign transaction with.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signLitecoinKMSTransaction = async (tx: TransactionKMS, privateKeys: string[]) => {
-  if (tx.chain !== Currency.LTC) {
-    throw Error('Unsupported chain.')
-  }
+export const signLitecoinKMSTransaction = async (tx: ChainTransactionKMS, privateKeys: string[]) => {
+  ;(tx as TransactionKMS).chain = Currency.LTC
   const builder = new Transaction(JSON.parse(tx.serializedTransaction))
   for (const privateKey of privateKeys) {
     builder.sign(PrivateKey.fromWIF(privateKey))
