@@ -14,7 +14,16 @@ import {
   Address,
 } from '@elrondnetwork/erdjs'
 import { egldBroadcast, egldGetTransactionsCount } from '../blockchain'
-import { axios, validateBody, TATUM_API_URL, CreateRecord, Currency, TransactionKMS } from '@tatumio/tatum-core'
+import {
+  axios,
+  validateBody,
+  TATUM_API_URL,
+  CreateRecord,
+  Currency,
+  TransactionKMS,
+  ChainTransactionKMS,
+  ChainCreateRecord,
+} from '@tatumio/tatum-core'
 import { ESDT_SYSTEM_SMART_CONTRACT_ADDRESS } from '../constants'
 import {
   EgldEsdtTransaction,
@@ -102,10 +111,8 @@ export const getEgldClient = (provider?: string) => {
  * @param fromPrivateKey private key to sign transaction with.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signEgldKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string) => {
-  if (tx.chain !== Currency.EGLD) {
-    throw Error('Unsupported chain.')
-  }
+export const signEgldKMSTransaction = async (tx: ChainTransactionKMS, fromPrivateKey: string) => {
+  ;(tx as TransactionKMS).chain = Currency.EGLD
   const transaction = JSON.parse(tx.serializedTransaction)
   return await prepareSignedTransactionAbstraction(transaction, undefined, fromPrivateKey)
 }
@@ -115,7 +122,8 @@ export const signEgldKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
  * @param body content of the transaction to broadcast
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareEgldStoreDataTransaction = async (body: CreateRecord) => {
+export const prepareEgldStoreDataTransaction = async (body: ChainCreateRecord) => {
+  ;(body as CreateRecord).chain = Currency.EGLD
   await validateBody(body, CreateRecord)
   const { fromPrivateKey, signatureId, from, data } = body
   const address = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
@@ -861,7 +869,7 @@ export const prepareEgldSignedTransaction = async (body: EgldEsdtTransaction) =>
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendEgldStoreDataTransaction = async (body: CreateRecord) =>
+export const sendEgldStoreDataTransaction = async (body: ChainCreateRecord) =>
   egldBroadcast(await prepareEgldStoreDataTransaction(body), body.signatureId)
 
 /**

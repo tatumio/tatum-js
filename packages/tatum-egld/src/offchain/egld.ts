@@ -3,7 +3,6 @@ import { Currency, validateBody, offchainBroadcast, offchainCancelWithdrawal, of
 import { EgldTransferOffchain } from '../model'
 import { prepareEgldSignedTransaction } from '../transaction'
 import { generatePrivateKeyFromMnemonic } from '../wallet'
-// import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common';
 import { offchainTransferEgldKMS } from './kms'
 
 /**
