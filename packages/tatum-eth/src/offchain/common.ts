@@ -21,9 +21,9 @@ export const storeErc20ContractAddress = async (name: string, address: string): 
   post(`/v3/offchain/ethereum/erc20/${name}/${address}`)
 
 export const checkAddressExists = async (address: string, index?: number) => {
-  return checkAddressExistsCore(address, Currency.ALGO, index)
+  return checkAddressExistsCore(address, Currency.ETH, index)
 }
 
 export const getWithdrawals = async (status?: string, pageSize = 50, offset = 0) => {
-  return getWithdrawalsCore(status, Currency.ALGO, pageSize, offset)
+  return getWithdrawalsCore(status, Currency.ETH, pageSize, offset)
 }
