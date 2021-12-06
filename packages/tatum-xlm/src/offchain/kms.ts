@@ -1,4 +1,4 @@
-import { post, SignatureId } from '@tatumio/tatum-core'
+import { Currency, getPendingTransactionsKMSByChain as getPendingTransactionsKMSByChainCore, post, SignatureId } from '@tatumio/tatum-core'
 import { TransferXlmOffchainKMS } from '../model'
 
 /**
@@ -6,3 +6,7 @@ import { TransferXlmOffchainKMS } from '../model'
  */
 export const offchainTransferXlmKMS = async (body: TransferXlmOffchainKMS): Promise<SignatureId> =>
   post(`/v3/offchain/xlm/transfer`, body, TransferXlmOffchainKMS)
+
+export const getPendingTransactionsKMSByChain = () => {
+  return getPendingTransactionsKMSByChainCore(Currency.XLM)
+}
