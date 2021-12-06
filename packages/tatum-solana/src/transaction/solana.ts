@@ -26,7 +26,7 @@ import { SolanaMintNft, SolanaNftMetadata, SolanaNftMetadataCreator, TransferSol
 const generateSolanaKeyPair = (privateKey: string) => Keypair.fromSecretKey(Buffer.from(privateKey, 'hex'))
 
 export const getSolanaClient = (provider?: string) => {
-  const url = provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/solana/node/${process.env.TATUM_API_KEY}`
+  const url = provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/solana/web3/${process.env.TATUM_API_KEY}`
   return new Connection(url, 'confirmed')
 }
 
