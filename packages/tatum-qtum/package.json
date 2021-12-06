@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-qtum",
-  "version": "2.0.0-alpha.74",
+  "version": "2.0.0-alpha.75",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
