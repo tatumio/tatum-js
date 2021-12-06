@@ -2,6 +2,8 @@ import 'reflect-metadata'
 
 export * from './model'
 export * from './blockchain'
+export * from './record'
+export * from './tatum'
 export * from './transaction'
 
 export {
