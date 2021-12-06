@@ -39,3 +39,5 @@ export class TronMintTrc721 extends PrivateKeyOrSignatureId {
 
   public cashbackValues?: string[]
 }
+
+export type ChainTronMintTrc721 = Omit<TronMintTrc721, 'chain'>

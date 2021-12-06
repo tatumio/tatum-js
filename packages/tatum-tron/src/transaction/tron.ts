@@ -13,6 +13,7 @@ import {
   TransactionKMS,
   TATUM_API_URL,
   axios,
+  ChainTransactionKMS,
 } from '@tatumio/tatum-core'
 import { obtainCustodialAddressType } from '@tatumio/tatum-defi'
 import {
@@ -30,6 +31,14 @@ import {
   TronTransferTrc721,
   TronUpdateCashbackTrc721,
   GenerateTronCustodialAddress,
+  ChainTronDeployTrc721,
+  ChainGenerateTronCustodialAddress,
+  ChainDeployTronMarketplaceListing,
+  ChainTronMintTrc721,
+  ChainTronTransferTrc721,
+  ChainTronBurnTrc721,
+  ChainTronMintMultipleTrc721,
+  ChainTronUpdateCashbackTrc721,
 } from '../model'
 
 // tslint:disable-next-line:no-var-requires
@@ -113,10 +122,8 @@ export const createTronTrc20Transaction = async (body: CreateTronTrc20) => {
  * @param fromPrivateKey private key to sign transaction with.
  * @returns transaction data to be broadcast to blockchain.
 //  */
-export const signTronKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string) => {
-  if (tx.chain !== Currency.TRON) {
-    throw Error('Unsupported chain.')
-  }
+export const signTronKMSTransaction = async (tx: ChainTransactionKMS, fromPrivateKey: string) => {
+  ;(tx as TransactionKMS).chain = Currency.TRON
   const tronWeb = prepareTronWeb()
   const transactionConfig = JSON.parse(tx.serializedTransaction)
   return JSON.stringify(await tronWeb.trx.sign(transactionConfig, fromPrivateKey))
@@ -132,7 +139,7 @@ export const convertAddressToHex = (address: string) => TronWeb.address.toHex(ad
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendTronDeployTrc721SignedTransaction = async (body: TronDeployTrc721) =>
+export const sendTronDeployTrc721SignedTransaction = async (body: ChainTronDeployTrc721) =>
   await tronBroadcast(await prepareTronDeployTrc721SignedTransaction(body), body.signatureId)
 
 /**
@@ -141,7 +148,7 @@ export const sendTronDeployTrc721SignedTransaction = async (body: TronDeployTrc7
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendTronGenerateCustodialWalletSignedTransaction = async (body: GenerateTronCustodialAddress, provider?: string) =>
+export const sendTronGenerateCustodialWalletSignedTransaction = async (body: ChainGenerateTronCustodialAddress, provider?: string) =>
   await tronBroadcast(await prepareTronGenerateCustodialWalletSignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -150,7 +157,7 @@ export const sendTronGenerateCustodialWalletSignedTransaction = async (body: Gen
  * @param provider optional provider to enter. if not present, Tatum provider will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendTronDeployMarketplaceListingSignedTransaction = async (body: DeployTronMarketplaceListing, provider?: string) =>
+export const sendTronDeployMarketplaceListingSignedTransaction = async (body: ChainDeployTronMarketplaceListing, provider?: string) =>
   await tronBroadcast(await prepareTronDeployMarketplaceListingSignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -159,7 +166,7 @@ export const sendTronDeployMarketplaceListingSignedTransaction = async (body: De
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendTronMintCashbackTrc721SignedTransaction = async (body: TronMintTrc721) =>
+export const sendTronMintCashbackTrc721SignedTransaction = async (body: ChainTronMintTrc721) =>
   await tronBroadcast(await prepareTronMintCashbackTrc721SignedTransaction(body), body.signatureId)
 
 /**
@@ -168,7 +175,7 @@ export const sendTronMintCashbackTrc721SignedTransaction = async (body: TronMint
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendTronMintTrc721SignedTransaction = async (body: TronMintTrc721) =>
+export const sendTronMintTrc721SignedTransaction = async (body: ChainTronMintTrc721) =>
   await tronBroadcast(await prepareTronMintTrc721SignedTransaction(body), body.signatureId)
 
 /**
@@ -177,7 +184,7 @@ export const sendTronMintTrc721SignedTransaction = async (body: TronMintTrc721) 
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendTronTransferTrc721SignedTransaction = async (body: TronTransferTrc721) =>
+export const sendTronTransferTrc721SignedTransaction = async (body: ChainTronTransferTrc721) =>
   await tronBroadcast(await prepareTronTransferTrc721SignedTransaction(body), body.signatureId)
 
 /**
@@ -186,7 +193,7 @@ export const sendTronTransferTrc721SignedTransaction = async (body: TronTransfer
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendTronBurnTrc721SignedTransaction = async (body: TronBurnTrc721) =>
+export const sendTronBurnTrc721SignedTransaction = async (body: ChainTronBurnTrc721) =>
   await tronBroadcast(await prepareTronBurnTrc721SignedTransaction(body), body.signatureId)
 
 /**
@@ -195,7 +202,7 @@ export const sendTronBurnTrc721SignedTransaction = async (body: TronBurnTrc721) 
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendTronMintMultipleTrc721SignedTransaction = async (body: TronMintMultipleTrc721) =>
+export const sendTronMintMultipleTrc721SignedTransaction = async (body: ChainTronMintMultipleTrc721) =>
   await tronBroadcast(await prepareTronMintMultipleTrc721SignedTransaction(body), body.signatureId)
 
 /**
@@ -204,7 +211,7 @@ export const sendTronMintMultipleTrc721SignedTransaction = async (body: TronMint
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendTronUpdateCashbackForAuthorTrc721SignedTransaction = async (body: TronUpdateCashbackTrc721) =>
+export const sendTronUpdateCashbackForAuthorTrc721SignedTransaction = async (body: ChainTronUpdateCashbackTrc721) =>
   await tronBroadcast(await prepareTronUpdateCashbackForAuthorTrc721SignedTransaction(body), body.signatureId)
 
 /**
@@ -622,7 +629,8 @@ export const prepareTronCreateTrc20SignedKMSTransaction = async (body: CreateTro
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronDeployTrc721SignedTransaction = async (body: TronDeployTrc721, provider?: string) => {
+export const prepareTronDeployTrc721SignedTransaction = async (body: ChainTronDeployTrc721, provider?: string) => {
+  ;(body as TronDeployTrc721).chain = Currency.TRON
   await validateBody(body, TronDeployTrc721)
   const { fromPrivateKey, name, symbol, feeLimit, signatureId, from } = body
 
@@ -652,10 +660,11 @@ export const prepareTronDeployTrc721SignedTransaction = async (body: TronDeployT
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronGenerateCustodialWalletSignedTransaction = async (body: GenerateTronCustodialAddress, provider?: string) => {
+export const prepareTronGenerateCustodialWalletSignedTransaction = async (body: ChainGenerateTronCustodialAddress, provider?: string) => {
+  ;(body as GenerateTronCustodialAddress).chain = Currency.TRON
   await validateBody(body, GenerateTronCustodialAddress)
   const tronWeb = prepareTronWeb(provider)
-  const { abi, code } = obtainCustodialAddressType(body)
+  const { abi, code } = obtainCustodialAddressType({ ...body, chain: Currency.TRON })
   const tx = await tronWeb.transactionBuilder.createSmartContract(
     {
       feeLimit: tronWeb.toSun(body.feeLimit || 100),
@@ -681,7 +690,8 @@ export const prepareTronGenerateCustodialWalletSignedTransaction = async (body: 
  * @param provider optional provider to enter. if not present, Tatum provider will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareTronDeployMarketplaceListingSignedTransaction = async (body: DeployTronMarketplaceListing, provider?: string) => {
+export const prepareTronDeployMarketplaceListingSignedTransaction = async (body: ChainDeployTronMarketplaceListing, provider?: string) => {
+  ;(body as DeployTronMarketplaceListing).chain = Currency.TRON
   await validateBody(body, DeployTronMarketplaceListing)
   const tronWeb = prepareTronWeb(provider)
   const tx = await tronWeb.transactionBuilder.createSmartContract(
@@ -709,7 +719,8 @@ export const prepareTronDeployMarketplaceListingSignedTransaction = async (body:
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronMintCashbackTrc721SignedTransaction = async (body: TronMintTrc721, provider?: string) => {
+export const prepareTronMintCashbackTrc721SignedTransaction = async (body: ChainTronMintTrc721, provider?: string) => {
+  ;(body as TronMintTrc721).chain = Currency.TRON
   await validateBody(body, TronMintTrc721)
   const { fromPrivateKey, url, to, tokenId, contractAddress, feeLimit, from, signatureId, authorAddresses, cashbackValues } = body
 
@@ -757,7 +768,8 @@ export const prepareTronMintCashbackTrc721SignedTransaction = async (body: TronM
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronMintTrc721SignedTransaction = async (body: TronMintTrc721, provider?: string) => {
+export const prepareTronMintTrc721SignedTransaction = async (body: ChainTronMintTrc721, provider?: string) => {
+  ;(body as TronMintTrc721).chain = Currency.TRON
   await validateBody(body, TronMintTrc721)
   const { fromPrivateKey, url, to, tokenId, contractAddress, from, feeLimit, signatureId } = body
 
@@ -793,7 +805,8 @@ export const prepareTronMintTrc721SignedTransaction = async (body: TronMintTrc72
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronTransferTrc721SignedTransaction = async (body: TronTransferTrc721, provider?: string) => {
+export const prepareTronTransferTrc721SignedTransaction = async (body: ChainTronTransferTrc721, provider?: string) => {
+  ;(body as TronTransferTrc721).chain = Currency.TRON
   await validateBody(body, TronTransferTrc721)
   const { fromPrivateKey, to, tokenId, contractAddress, feeLimit, from, signatureId, value } = body
 
@@ -826,7 +839,8 @@ export const prepareTronTransferTrc721SignedTransaction = async (body: TronTrans
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronBurnTrc721SignedTransaction = async (body: TronBurnTrc721, provider?: string) => {
+export const prepareTronBurnTrc721SignedTransaction = async (body: ChainTronBurnTrc721, provider?: string) => {
+  ;(body as TronBurnTrc721).chain = Currency.TRON
   await validateBody(body, TronBurnTrc721)
   const { fromPrivateKey, tokenId, contractAddress, feeLimit, from, signatureId } = body
 
@@ -857,7 +871,8 @@ export const prepareTronBurnTrc721SignedTransaction = async (body: TronBurnTrc72
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronMintMultipleTrc721SignedTransaction = async (body: TronMintMultipleTrc721, provider?: string) => {
+export const prepareTronMintMultipleTrc721SignedTransaction = async (body: ChainTronMintMultipleTrc721, provider?: string) => {
+  ;(body as TronMintMultipleTrc721).chain = Currency.TRON
   await validateBody(body, TronMintMultipleTrc721)
   const { fromPrivateKey, to, tokenId, contractAddress, url, feeLimit, from, signatureId } = body
 
@@ -896,7 +911,8 @@ export const prepareTronMintMultipleTrc721SignedTransaction = async (body: TronM
  * @param provider
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTronUpdateCashbackForAuthorTrc721SignedTransaction = async (body: TronUpdateCashbackTrc721, provider?: string) => {
+export const prepareTronUpdateCashbackForAuthorTrc721SignedTransaction = async (body: ChainTronUpdateCashbackTrc721, provider?: string) => {
+  ;(body as TronUpdateCashbackTrc721).chain = Currency.TRON
   await validateBody(body, TronUpdateCashbackTrc721)
   const { fromPrivateKey, cashbackValue, tokenId, contractAddress, feeLimit, from, signatureId } = body
 
@@ -931,10 +947,8 @@ export const prepareTronUpdateCashbackForAuthorTrc721SignedTransaction = async (
  * @param fromPrivateKey private key to sign transaction with.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signTrxKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string) => {
-  if (tx.chain !== Currency.TRON) {
-    throw Error('Unsupported chain.')
-  }
+export const signTrxKMSTransaction = async (tx: ChainTransactionKMS, fromPrivateKey: string) => {
+  ;(tx as TransactionKMS).chain = Currency.TRON
   const transactionConfig = JSON.parse(tx.serializedTransaction)
   const tronWeb = prepareTronWeb()
   return JSON.stringify(await tronWeb.trx.sign(transactionConfig, fromPrivateKey))

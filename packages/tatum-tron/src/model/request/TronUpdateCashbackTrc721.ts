@@ -15,3 +15,5 @@ export class TronUpdateCashbackTrc721 extends UpdateCashbackErc721 {
   @Min(0)
   public feeLimit: number
 }
+
+export type ChainTronUpdateCashbackTrc721 = Omit<TronUpdateCashbackTrc721, 'chain'>

@@ -87,3 +87,5 @@ export class CreateTrcOffchain {
   @ValidateNested()
   public customer?: CustomerUpdate
 }
+
+export type ChainCreateTrcOffchain = Omit<CreateTrcOffchain, 'chain'>
