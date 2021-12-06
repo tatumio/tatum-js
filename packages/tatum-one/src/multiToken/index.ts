@@ -28,6 +28,7 @@ import {
   sendOneTransferMultiTokenSignedTransaction,
 } from '../transaction'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
+import { OneTx } from '../model'
 
 export const deployMultiToken = async (body: ChainDeployMultiToken, provider?: string) => {
   return sendOneDeployMultiTokenSignedTransaction(body, provider)

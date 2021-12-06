@@ -36,6 +36,7 @@ import {
   sendPolygonUpdateCashbackForAuthorErc721SignedTransaction,
 } from '../transaction'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
+import { MaticTx } from '../model'
 
 export const mintNFT = (body: ChainMintErc721): Promise<TransactionHash> => mintNFTRequest({ ...body, chain: Currency.MATIC })
 

@@ -19,6 +19,26 @@ describe('Solana tests', () => {
     )
   })
 
+  it('should send SOL KMS', async () => {
+    const txData = await sendSolana(
+      {
+        from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
+        signatureId: '4ca4c0e6-33a3-4b00-a6dc-859cc1f86419',
+        to: 'ET7gwtm6QZfjRQboBLjxZ4PSHDAH7y6AAiAJE8sPaWvv',
+        amount: '0.001',
+      },
+      'https://api.testnet.solana.com'
+    )
+
+    console.log(
+      await signSolanaKMSTransaction(
+        { chain: Currency.SOL, hashes: [], id: '', serializedTransaction: JSON.stringify(txData) },
+        '3abc79a31093e4cfa4a724e94a44906cbbc3a32e2f75f985a28616676a5dbaf1de8d82a7e1d0561bb0e1b729c7a9b9b1708cf2803ad0ca928a332587ace391ad',
+        'https://api.testnet.solana.com'
+      )
+    )
+  })
+
   // it('should send SLP fungible token', async () => {
   //   console.log(
   //     await transferSolanaSlpToken(

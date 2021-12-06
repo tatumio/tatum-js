@@ -35,6 +35,7 @@ import {
   sendOneUpdateCashbackForAuthor721SignedTransaction,
 } from '../transaction'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
+import { OneTx } from '../model'
 
 export const mintNFT = (body: ChainOneMint721): Promise<TransactionHash> => mintNFTRequest({ ...body, chain: Currency.ONE })
 

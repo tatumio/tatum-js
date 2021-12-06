@@ -3,11 +3,11 @@ import { PrivateKeyOrSignatureId } from '@tatumio/tatum-core/dist/model/request/
 
 export class TransferSolana extends PrivateKeyOrSignatureId {
   @IsNotEmpty()
-  @Length(44, 44)
+  @Length(43, 44)
   public from: string
 
   @IsNotEmpty()
-  @Length(44, 44)
+  @Length(43, 44)
   public to: string
 
   @IsNotEmpty()

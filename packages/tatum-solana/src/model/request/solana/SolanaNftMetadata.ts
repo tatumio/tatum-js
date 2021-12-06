@@ -20,7 +20,7 @@ export class SolanaNftMetadata {
   public sellerFeeBasisPoints: number
 
   @Type(() => SolanaNftMetadataCreator)
-  @ValidateIf((o) => o.creators !== null)
+  @ValidateIf((o) => o.creators)
   @ValidateNested({ each: true })
   @IsArray()
   public creators: SolanaNftMetadataCreator[] | null

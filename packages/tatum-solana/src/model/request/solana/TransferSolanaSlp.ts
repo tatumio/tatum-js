@@ -4,7 +4,7 @@ import { PrivateKeyOrSignatureId } from '@tatumio/tatum-core/dist/model/request/
 
 export class TransferSolanaSlp extends PrivateKeyOrSignatureId {
   @IsNotEmpty()
-  @Length(44, 44)
+  @Length(43, 44)
   public to: string
 
   @IsNotEmpty()
@@ -17,7 +17,7 @@ export class TransferSolanaSlp extends PrivateKeyOrSignatureId {
   public currency?: Currency
 
   @IsNotEmpty()
-  @Length(44, 44)
+  @Length(43, 44)
   public contractAddress: string
 
   @IsNotEmpty()
@@ -26,6 +26,6 @@ export class TransferSolanaSlp extends PrivateKeyOrSignatureId {
   public decimals: number
 
   @IsNotEmpty()
-  @Length(44, 44)
+  @Length(43, 44)
   public from: string
 }

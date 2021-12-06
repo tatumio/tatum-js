@@ -48,7 +48,7 @@ export const getMultiTokensBatchBalance = async (
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/MultiTokenGetTransaction" target="_blank">Tatum API documentation</a>
  */
-export const getMultiTokenTransaction = async (chain: Currency, txId: string): Promise<any> =>
+export const getMultiTokenTransaction = async <TX>(chain: Currency, txId: string): Promise<TX> =>
   get(`/v3/multitoken/transaction/${chain}/${txId}`)
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/MultiTokenGetMetadata" target="_blank">Tatum API documentation</a>
