@@ -29,7 +29,6 @@ import {
   helperPrepareSCCall,
   helperBroadcastTx,
 } from '../'
-import { MaticTx } from '../model'
 
 export const deployMultiToken = async (body: ChainDeployMultiToken, provider?: string) => {
   return sendPolygonDeployMultiTokenSignedTransaction(body, provider)
