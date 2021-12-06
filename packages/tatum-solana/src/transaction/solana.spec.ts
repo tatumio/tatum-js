@@ -1,4 +1,3 @@
-import { Currency } from '@tatumio/tatum-core'
 import { mintSolanaNft, sendSolana, transferSolanaNft } from './solana'
 import { SolanaNftMetadata } from '../model'
 
@@ -47,7 +46,6 @@ describe('Solana tests', () => {
             '3abc79a31093e4cfa4a724e94a44906cbbc3a32e2f75f985a28616676a5dbaf1de8d82a7e1d0561bb0e1b729c7a9b9b1708cf2803ad0ca928a332587ace391ad',
           to: 'FZAS4mtPvswgVxbpc117SqfNgCDLTCtk5CoeAtt58FWU',
           metadata: new SolanaNftMetadata('Tatum', 'TTM', 'https://tatum.io/images/logo/logo.svg', 0),
-          chain: Currency.SOL,
         },
         'https://api.testnet.solana.com'
       )
@@ -63,7 +61,6 @@ describe('Solana tests', () => {
             'cb6ef9dc81967be3f9157a2dedf14d89fcf4b5fbb7cd2a9fcab7a600179d929cd840de2a454960308f688cd3ee308c1fa01ecfa0b03770aaaf3b52d71d46c31d',
           to: 'ET7gwtm6QZfjRQboBLjxZ4PSHDAH7y6AAiAJE8sPaWvv',
           contractAddress: '3tzudv5KaoqmieWiBUqzWokKEtTvx1wQMapVKeH7CHaq',
-          chain: Currency.SOL,
         },
         'https://api.testnet.solana.com'
       )
