@@ -1,4 +1,4 @@
-import { CreateRecord, validateBody, TransferErc20 } from '@tatumio/tatum-core'
+import { CreateRecord, validateBody, TransferErc20, ChainCreateRecord, ChainTransferErc20, Currency } from '@tatumio/tatum-core'
 import { sendPolygonStoreDataTransaction, sendPolygonTransaction, sendPolygonTransferErc20SignedTransaction } from './polygon'
 
 /**
@@ -6,7 +6,8 @@ import { sendPolygonStoreDataTransaction, sendPolygonTransaction, sendPolygonTra
  * @param body Body of the transaction.
  * @param provider Optional provider to use for broadcasting signed tx to the blockchain.
  */
-export const storeData = async (body: CreateRecord, provider?: string) => {
+export const storeData = async (body: ChainCreateRecord, provider?: string) => {
+  ;(body as CreateRecord).chain = Currency.MATIC
   await validateBody(body, CreateRecord)
   return await sendPolygonStoreDataTransaction(body, provider)
 }
@@ -16,7 +17,8 @@ export const storeData = async (body: CreateRecord, provider?: string) => {
  * @param body Body of the transaction.
  * @param provider Optional provider to use for broadcasting signed tx to the blockchain.
  */
-export const sendTransaction = async (body: TransferErc20, provider?: string) => {
+export const sendTransaction = async (body: ChainTransferErc20, provider?: string) => {
+  ;(body as TransferErc20).currency = Currency.MATIC
   const b = body as TransferErc20
   return b.contractAddress ? sendPolygonTransferErc20SignedTransaction(b, provider) : sendPolygonTransaction(b, provider)
 }

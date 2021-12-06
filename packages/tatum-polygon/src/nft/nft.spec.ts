@@ -10,7 +10,6 @@ describe('NFT tests', () => {
       const deployErc721Token = await deployNFT(
         {
           symbol: 'TatumToken',
-          chain: Currency.MATIC,
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
           name: 'TatumToken',
           fee: { gasLimit: '6000000', gasPrice: '5' },
@@ -26,7 +25,6 @@ describe('NFT tests', () => {
       const mintedTokens = await mintMultipleNFTWithUri(
         {
           to: ['0x811dfbff13adfbc3cf653dcc373c03616d3471c9', '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'],
-          chain: Currency.MATIC,
           tokenId: [firstTokenId.toString(), secondTokenId.toString()],
           url: ['https://www.seznam.cz', 'https://www.seznam.cz'],
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
@@ -72,17 +70,11 @@ describe('NFT tests', () => {
       expect(data.publicUrl).toBe('https://gateway.pinata.cloud/ipfs/Qmaiu5NAXe2gwH734hWhvyharurBjoxi8Kv37sGp1ZhRpf')
       expect(data.originalUrl).toBe('ipfs://Qmaiu5NAXe2gwH734hWhvyharurBjoxi8Kv37sGp1ZhRpf')
     })
-    it('should obtain metadata from NFT on IPFS on FLOW', async () => {
-      const data = await getNFTImage(Currency.FLOW, '2d103773-50e2-4a37-ac3d-61bc6af8faee', '145', '0x10247089e55180c9')
-      expect(data.publicUrl).toBe('https://gateway.pinata.cloud/ipfs/Qmaiu5NAXe2gwH734hWhvyharurBjoxi8Kv37sGp1ZhRpf')
-      expect(data.originalUrl).toBe('ipfs://Qmaiu5NAXe2gwH734hWhvyharurBjoxi8Kv37sGp1ZhRpf')
-    })
     it('should test MATIC 721 mint transaction', async () => {
       try {
         const mintedToken = await mintNFTWithUri(
           {
             to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-            chain: Currency.MATIC,
             tokenId: '1',
             url: 'test.com',
             fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
@@ -102,7 +94,6 @@ describe('NFT tests', () => {
       const sendErc721Token = await transferNFT(
         {
           to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-          chain: Currency.MATIC,
           tokenId: '1',
           fromPrivateKey: '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb',
           contractAddress: '0xdf82c2f74aa7b629bda65b1cfd258248c9c2b7d3',

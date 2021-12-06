@@ -51,7 +51,6 @@ describe('Marketplace Listing tests', () => {
       console.log(
         await transferNFT({
           to: '0xc4585ec777ba6dc5d33524ca72c425d512780c31',
-          chain: Currency.MATIC,
           tokenId: '121',
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
           contractAddress: '0x5d7d868ed584b04b922905a481f274206a42dd8a',
