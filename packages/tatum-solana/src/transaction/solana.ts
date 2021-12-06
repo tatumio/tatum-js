@@ -29,7 +29,7 @@ import {
   TOKEN_METADATA_PROGRAM_ID,
 } from './solanaSchema/instructions'
 import { CreateMasterEditionArgs, CreateMetadataArgs, METADATA_SCHEMA } from './solanaSchema/schema'
-import { ChainSolanaMintNft, SolanaMintNft, TransferSolana } from '../model'
+import { ChainSolanaMintNft, SolanaMintNft, SolanaNftMetadata, SolanaNftMetadataCreator, TransferSolana } from '../model'
 
 const generateSolanaKeyPair = (privateKey: string) => Keypair.fromSecretKey(Buffer.from(privateKey, 'hex'))
 
