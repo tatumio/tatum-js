@@ -5,47 +5,46 @@ import Web3 from 'web3'
 import { isHex, stringToHex, toHex, toWei } from 'web3-utils'
 import { celoBroadcast } from '../blockchain'
 import { mintNFT } from '../nft'
+import erc721_abi from '@tatumio/tatum-core/dist/contracts/erc721/erc721_abi'
 import {
-  Currency,
-  GenerateCustodialAddress,
-  validateBody,
-  TATUM_API_URL,
-  DeployMarketplaceListing,
-  listing,
-  DeployNftAuction,
   auction,
-  TransactionKMS,
-  SmartContractReadMethodInvocation,
-  CreateRecord,
   CeloSmartContractMethodInvocation,
+  CreateRecord,
+  Currency,
+  DeployMarketplaceListing,
+  DeployNftAuction,
+  erc1155TokenBytecode as erc1155_bytecode,
+  erc20TokenBytecode as erc20_bytecode,
+  erc721Provenance_bytecode,
+  erc721TokenBytecode as erc721_bytecode,
+  GenerateCustodialAddress,
+  listing,
+  SmartContractReadMethodInvocation,
+  TATUM_API_URL,
+  TransactionKMS,
+  validateBody,
 } from '@tatumio/tatum-core'
 import { obtainCustodialAddressType } from '@tatumio/tatum-defi'
 import {
-  CeloDeployMultiToken,
-  CeloDeployErc721,
-  CeloMintErc721,
-  CeloTransferErc721,
+  BurnCeloErc20,
   CeloBurnErc721,
+  CeloBurnMultiToken,
+  CeloBurnMultiTokenBatch,
+  CeloDeployErc721,
+  CeloDeployMultiToken,
+  CeloMintErc721,
+  CeloMintMultipleErc721,
+  CeloMintMultiToken,
+  CeloMintMultiTokenBatch,
+  CeloTransferErc721,
+  CeloTransferMultiToken,
+  CeloTransferMultiTokenBatch,
+  CeloUpdateCashbackErc721,
   DeployCeloErc20,
   MintCeloErc20,
   TransferCeloOrCeloErc20Token,
-  BurnCeloErc20,
-  CeloMintMultipleErc721,
-  CeloUpdateCashbackErc721,
-  CeloMintMultiToken,
-  CeloMintMultiTokenBatch,
-  CeloTransferMultiToken,
-  CeloTransferMultiTokenBatch,
-  CeloBurnMultiTokenBatch,
-  CeloBurnMultiToken,
 } from '../'
-import { CUSD_ADDRESS_MAINNET, CUSD_ADDRESS_TESTNET, CEUR_ADDRESS_TESTNET, CEUR_ADDRESS_MAINNET } from '../constants'
-import {
-  erc721Provenance_bytecode,
-  erc721TokenBytecode as erc721_bytecode,
-  erc1155TokenBytecode as erc1155_bytecode,
-  erc20TokenBytecode as erc20_bytecode,
-} from '@tatumio/tatum-core'
+import { CEUR_ADDRESS_MAINNET, CEUR_ADDRESS_TESTNET, CUSD_ADDRESS_MAINNET, CUSD_ADDRESS_TESTNET } from '../constants'
 
 const obtainWalletInformation = async (wallet: CeloWallet, feeCurrencyContractAddress?: string) => {
   const [txCount, gasPrice, from] = await Promise.all([
@@ -853,7 +852,13 @@ export const sendCeloSmartContractMethodInvocationTransaction = async (
     return sendCeloSmartContractReadMethodInvocationTransaction(body, provider)
   }
   const celoBody = body as CeloSmartContractMethodInvocation
-  return celoBroadcast(await prepareCeloSmartContractWriteMethodInvocation(celoBody, { provider, testnet }), celoBody.signatureId)
+  return celoBroadcast(
+    await prepareCeloSmartContractWriteMethodInvocation(celoBody, {
+      provider,
+      testnet,
+    }),
+    celoBody.signatureId
+  )
 }
 
 export const getCeloErc20ContractDecimals = async (contractAddress: string, provider?: string) => {
