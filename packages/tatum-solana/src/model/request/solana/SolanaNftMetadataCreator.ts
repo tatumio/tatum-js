@@ -2,7 +2,7 @@ import { IsNotEmpty, IsNumber, Length } from 'class-validator'
 
 export class SolanaNftMetadataCreator {
   @IsNotEmpty()
-  @Length(44, 44)
+  @Length(43, 44)
   public address: string
 
   @IsNumber()

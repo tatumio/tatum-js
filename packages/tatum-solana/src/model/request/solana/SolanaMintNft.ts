@@ -6,11 +6,11 @@ import { SolanaNftMetadata } from './SolanaNftMetadata'
 
 export class SolanaMintNft extends PrivateKeyOrSignatureId {
   @IsNotEmpty()
-  @Length(44, 44)
+  @Length(43, 44)
   public from: string
 
   @IsNotEmpty()
-  @Length(44, 44)
+  @Length(43, 44)
   public to: string
 
   @IsNotEmpty()
