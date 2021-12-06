@@ -5,6 +5,8 @@ export * from './constants'
 export * from './ledger'
 export * from './model'
 export * from './offchain'
+export * from './record'
+export * from './tatum'
 export * from './wallet'
 
 export {
