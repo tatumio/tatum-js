@@ -36,7 +36,6 @@ import {
   sendUpdateCashbackForAuthorErc721Transaction,
 } from '../transaction'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
-import { ETHTx } from '../model'
 
 export const mintNFT = (body: ChainMintErc721): Promise<TransactionHash> => mintNFTRequest({ ...body, chain: Currency.ETH })
 

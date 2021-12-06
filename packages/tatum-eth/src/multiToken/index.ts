@@ -1,6 +1,5 @@
 import {
   prepareAddMultiTokenMinterAbstraction,
-  getMultiTokenTransaction as getMultiTokenTransactionCore,
   listing,
   Sort,
   getMultiTokenTransactionsByAddress as getMultiTokenTransactionsByAddressCore,
@@ -29,7 +28,6 @@ import {
   sendEthMultiTokenTransaction,
 } from '../transaction'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
-import { ETHTx } from '../model'
 
 export const deployMultiToken = async (body: ChainDeployMultiToken, provider?: string) => {
   return sendEthDeployMultiTokenTransaction(body, provider)
