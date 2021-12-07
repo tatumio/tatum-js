@@ -6,6 +6,8 @@ export * from './model'
 export * from './multiToken'
 export * from './nft'
 export * from './offchain'
+export * from './record'
+export * from './tatum'
 export * from './transaction'
 export * from './wallet'
 

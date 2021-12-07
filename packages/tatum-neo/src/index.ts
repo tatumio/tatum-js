@@ -1,4 +1,6 @@
 export * from './offchain'
+export * from './record'
+export * from './tatum'
 export * from './wallet'
 
 export {
