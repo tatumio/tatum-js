@@ -1,5 +1,5 @@
 import { Currency, TransferBtcBasedBlockchain } from '@tatumio/tatum-core'
-import { prepareAdaTransaction, sendAdaTransaction, signAdaKMSTransaction } from './ada'
+import { prepareTransaction, sendTransaction, signKMSTransaction } from './ada'
 
 describe('ADA transactions', () => {
   it('should test preparing ADA fromAddress transaction', async () => {
@@ -22,7 +22,7 @@ describe('ADA transactions', () => {
       },
     ]
     try {
-      const txData = await prepareAdaTransaction(body)
+      const txData = await prepareTransaction(body)
       expect(txData).toBe(
         '83a40081825820ca5cd6764d36000c99576d2ab8d2d58e1ba4eb7f2cc279a3f6442e2929123dfd020183825839000743d16cfe3c4fcc0c11c2403bbc10dbc7ecdd4477e053481a368e7a06e2ae44dff6770dc0f4ada3cf4cf2605008e27aecdb332ad349fda71a000f4240825839000743d16cfe3c4fcc0c11c2403bbc10dbc7ecdd4477e053481a368e7a06e2ae44dff6770dc0f4ada3cf4cf2605008e27aecdb332ad349fda71a000f4240825839002618b52e3e8b817ab24b2db60e15f25dbbb8dec1753ad7877b95b1c2d619a1d6baf2841fab074bb67471adfd0e3e7d557f03aaf6b49497361a3aadc56f021a00029c7d031a01c4b82ba100818258207a72599737528714076956f71377dab57b1ceea5c63ac6669d547a22058d1f4458403c30ab577e96c9a4b4fb9e0e970f831033344d8e5efbfe20cce6b883dfeea4f31044bcb6ef1333e20202b4f7092d46667680478d4417c54a10582516ce55d909f6'
       )
@@ -48,7 +48,7 @@ describe('ADA transactions', () => {
       },
     ]
     try {
-      const txData = await sendAdaTransaction(body)
+      const txData = await sendTransaction(body)
       console.log(txData)
       expect(txData).toHaveProperty('txId')
     } catch (e) {
@@ -77,7 +77,7 @@ describe('ADA transactions', () => {
       },
     ]
     try {
-      const txData = await sendAdaTransaction(body)
+      const txData = await sendTransaction(body)
       expect(txData).toHaveProperty('txId')
     } catch (e) {
       fail(e)
@@ -85,7 +85,7 @@ describe('ADA transactions', () => {
   })
 
   it('should test KMS transaction sign', async () => {
-    const transactionToBroadcast = await signAdaKMSTransaction(
+    const transactionToBroadcast = await signKMSTransaction(
       {
         chain: Currency.ADA,
         serializedTransaction:

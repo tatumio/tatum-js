@@ -1,8 +1,8 @@
-import { generateAdaWallet } from './wallet'
+import { generateBlockchainWallet } from './wallet'
 
 describe('Wallet tests', () => {
   it('should generate wallet for ADA testnet', async () => {
-    const wallet = await generateAdaWallet(
+    const wallet = await generateBlockchainWallet(
       'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten'
     )
     expect(wallet.mnemonic).toBe(

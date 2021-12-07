@@ -7,7 +7,7 @@ import * as cardano from './cardano.crypto'
  * @param mnemonic mnemonic seed to use
  * @returns wallet
  */
-export const generateAdaWallet = async (mnemonic: string): Promise<WalletWithMnemonic> => {
+export const generateBlockchainWallet = async (mnemonic: string): Promise<WalletWithMnemonic> => {
   return { mnemonic, xpub: await cardano.generateXPublicKey(mnemonic) }
 }
 
@@ -18,5 +18,5 @@ export const generateAdaWallet = async (mnemonic: string): Promise<WalletWithMne
  */
 export const generateWallet = (mnemonic?: string) => {
   mnemonic ||= generateMnemonic(256)
-  return generateAdaWallet(mnemonic)
+  return generateBlockchainWallet(mnemonic)
 }

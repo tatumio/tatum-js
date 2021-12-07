@@ -16,7 +16,7 @@ import {
   Vkeywitnesses,
 } from '@emurgo/cardano-serialization-lib-nodejs'
 import BigNumber from 'bignumber.js'
-import { adaBroadcast, adaGetBlockChainInfo, adaGetTransaction, adaGetUtxos } from '../blockchain/ada'
+import { broadcast, getBlockChainInfo, getTransaction, getUtxos } from '../blockchain/ada'
 import { validateBody, Currency, TransactionKMS, TransferBtcBasedBlockchain, FromAddress, FromUTXO, To } from '@tatumio/tatum-core'
 import { AdaUtxo } from '../model'
 
@@ -25,7 +25,7 @@ import { AdaUtxo } from '../model'
  * @param transferBtcBasedBlockchain content of the transaction to prepare.
  * @returns raw transaction data in hex, to be broadcasted to blockchain.
  */
-export const prepareAdaTransaction = async (transferBtcBasedBlockchain: TransferBtcBasedBlockchain) => {
+export const prepareTransaction = async (transferBtcBasedBlockchain: TransferBtcBasedBlockchain) => {
   await validateBody(transferBtcBasedBlockchain, TransferBtcBasedBlockchain)
   const txBuilder = await initTransactionBuilder()
   const { to } = transferBtcBasedBlockchain
@@ -43,8 +43,8 @@ export const prepareAdaTransaction = async (transferBtcBasedBlockchain: Transfer
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendAdaTransaction = async (body: TransferBtcBasedBlockchain) => {
-  return adaBroadcast(await prepareAdaTransaction(body))
+export const sendTransaction = async (body: TransferBtcBasedBlockchain) => {
+  return broadcast(await prepareTransaction(body))
 }
 
 /**
@@ -53,7 +53,7 @@ export const sendAdaTransaction = async (body: TransferBtcBasedBlockchain) => {
  * @param privateKeys private keys to sign transaction with.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signAdaKMSTransaction = async (tx: TransactionKMS, privateKeys: string[]) => {
+export const signKMSTransaction = async (tx: TransactionKMS, privateKeys: string[]) => {
   if (tx.chain !== Currency.ADA) {
     throw Error('Unsupported chain.')
   }
@@ -81,7 +81,7 @@ export const signAdaKMSTransaction = async (tx: TransactionKMS, privateKeys: str
 export const addOutputs = (transactionBuilder: TransactionBuilder, tos: To[]) => {
   let amount = new BigNumber(0)
   for (const to of tos) {
-    const valueAdded = addOutputAda(transactionBuilder, to.address, to.value)
+    const valueAdded = addOutput(transactionBuilder, to.address, to.value)
     amount = amount.plus(valueAdded)
   }
   return amount
@@ -108,7 +108,7 @@ export const addAddressInputsWithoutPrivateKey = async (transactionBuilder: Tran
   let amount = new BigNumber(0)
   for (const fromAddress of fromAddresses) {
     const { address } = fromAddress
-    const utxos: AdaUtxo[] = await adaGetUtxos(address)
+    const utxos: AdaUtxo[] = await getUtxos(address)
     for (const utxo of utxos) {
       amount = amount.plus(utxo.value)
       addInput(transactionBuilder, utxo, address)
@@ -129,7 +129,7 @@ export const addUtxoInputs = async (transactionBuilder: TransactionBuilder, from
   let amount = new BigNumber(0)
   const privateKeysToSign = []
   for (const utxo of fromUTXOs) {
-    const transaction = await adaGetTransaction(utxo.txHash)
+    const transaction = await getTransaction(utxo.txHash)
     const output = transaction.outputs.find((output) => output.index === utxo.index)
     if (output) {
       const value = output.value
@@ -145,8 +145,8 @@ export const addOutputLovelace = (transactionBuilder: TransactionBuilder, addres
   transactionBuilder.add_output(TransactionOutput.new(Address.from_bech32(address), Value.new(BigNum.from_str(amount))))
 }
 
-export const addOutputAda = (transactionBuilder: TransactionBuilder, address: string, amount: string | number) => {
-  const amountLovelace = adaToLovelace(amount)
+export const addOutput = (transactionBuilder: TransactionBuilder, address: string, amount: string | number) => {
+  const amountLovelace = chainToLovelace(amount)
   addOutputLovelace(transactionBuilder, address, amountLovelace)
   return amountLovelace
 }
@@ -168,7 +168,7 @@ export const initTransactionBuilder = async () => {
   )
   const {
     tip: { slotNo },
-  } = await adaGetBlockChainInfo()
+  } = await getBlockChainInfo()
   txBuilder.set_ttl(slotNo + 50000)
   return txBuilder
 }
@@ -213,7 +213,7 @@ export const processFeeAndRest = async (
     addFeeAndRest(transactionBuilder, fromAddress[0].address, fromAmount, toAmount)
   } else if (fromUTXO) {
     const txHash = fromUTXO[0].txHash
-    const transaction = await adaGetTransaction(txHash)
+    const transaction = await getTransaction(txHash)
     const output = transaction.outputs.find((output) => output.index === fromUTXO[0].index)
     if (output) {
       addFeeAndRest(transactionBuilder, output.address, fromAmount, toAmount)
@@ -248,6 +248,6 @@ export const signTransaction = (
   return Buffer.from(Transaction.new(txBody, witnesses).to_bytes()).toString('hex')
 }
 
-export const lovelaceToAda = (lovelace: string | number) =>
+export const lovelaceToChain = (lovelace: string | number) =>
   new BigNumber(lovelace).dividedBy(1000000).toFixed(8, BigNumber.ROUND_FLOOR).toString()
-export const adaToLovelace = (ada: string | number) => new BigNumber(ada).times(1000000).toString()
+export const chainToLovelace = (ada: string | number) => new BigNumber(ada).times(1000000).toString()

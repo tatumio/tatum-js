@@ -1,4 +1,7 @@
-export { sendAdaOffchainTransaction, signAdaOffchainKMSTransaction } from '@tatumio/tatum-ada'
+export {
+  sendOffchainTransaction as sendAdaOffchainTransaction,
+  signOffchainKMSTransaction as signAdaOffchainKMSTransaction,
+} from '@tatumio/tatum-ada'
 export {
   sendBitcoinCashOffchainTransaction,
   signBitcoinCashOffchainKMSTransaction,
