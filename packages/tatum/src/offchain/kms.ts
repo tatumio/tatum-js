@@ -1,7 +1,7 @@
 export { offchainTransferKMS as offchainTransferAdaKMS } from '@tatumio/tatum-ada'
+export { offchainTransferKMS as offchainTransferBcashKMS } from '@tatumio/tatum-bch'
 export { offchainTransferBtcKMS } from '@tatumio/tatum-btc'
 export { offchainTransferLtcKMS } from '@tatumio/tatum-ltc'
-export { offchainTransferBcashKMS } from '@tatumio/tatum-bch'
 export { offchainTransferEthKMS, offchainTransferEthErc20KMS } from '@tatumio/tatum-eth'
 export { offchainTransferXlmKMS } from '@tatumio/tatum-xlm'
 export { offchainTransferXrpKMS } from '@tatumio/tatum-xrp'

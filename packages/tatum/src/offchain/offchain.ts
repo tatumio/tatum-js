@@ -3,9 +3,9 @@ export {
   signOffchainKMSTransaction as signAdaOffchainKMSTransaction,
 } from '@tatumio/tatum-ada'
 export {
-  sendBitcoinCashOffchainTransaction,
-  signBitcoinCashOffchainKMSTransaction,
-  prepareBitcoinCashSignedOffchainTransaction,
+  sendOffchainTransaction as sendBitcoinCashOffchainTransaction,
+  signOffchainKMSTransaction as signBitcoinCashOffchainKMSTransaction,
+  prepareSignedOffchainTransaction as prepareBitcoinCashSignedOffchainTransaction,
 } from '@tatumio/tatum-bch'
 export {
   sendBitcoinOffchainTransaction,

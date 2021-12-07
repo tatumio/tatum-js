@@ -1,9 +1,9 @@
 // @ts-ignore
 import coininfo from 'coininfo'
 import { Currency, KeyPair, TransactionKMS, TransferBtcBasedOffchain, validateBody, WithdrawalResponseData } from '@tatumio/tatum-core'
-import { generateAddressFromXPub, generateBchWallet, generatePrivateKeyFromMnemonic, toLegacyAddress } from '../wallet'
+import { generateAddressFromXPub, generateBlockchainWallet, generatePrivateKeyFromMnemonic, toLegacyAddress } from '../wallet'
 import { offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal } from './common'
-import { offchainTransferBcashKMS } from './kms'
+import { offchainTransferKMS } from './kms'
 import BigNumber from 'bignumber.js'
 
 // tslint:disable-next-line:no-var-requires
@@ -16,9 +16,9 @@ const bcash = require('@tatumio/bitcoincashjs2-lib')
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
-export const sendBitcoinCashOffchainTransaction = async (testnet: boolean, body: TransferBtcBasedOffchain) => {
+export const sendOffchainTransaction = async (testnet: boolean, body: TransferBtcBasedOffchain) => {
   if (body.signatureId) {
-    return offchainTransferBcashKMS(body)
+    return offchainTransferKMS(body)
   }
   await validateBody(body, TransferBtcBasedOffchain)
   const { mnemonic, keyPair, attr: changeAddress, ...withdrawal } = body
@@ -29,7 +29,7 @@ export const sendBitcoinCashOffchainTransaction = async (testnet: boolean, body:
   const { amount, address } = withdrawal
   let txData
   try {
-    txData = await prepareBitcoinCashSignedOffchainTransaction(
+    txData = await prepareSignedOffchainTransaction(
       testnet,
       data,
       amount,
@@ -65,7 +65,7 @@ export const sendBitcoinCashOffchainTransaction = async (testnet: boolean, body:
  * @param testnet mainnet or testnet version
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signBitcoinCashOffchainKMSTransaction = async (tx: TransactionKMS, mnemonic: string, testnet: boolean) => {
+export const signOffchainKMSTransaction = async (tx: TransactionKMS, mnemonic: string, testnet: boolean) => {
   if (tx.chain !== Currency.BCH || !tx.withdrawalResponses) {
     throw Error('Unsupported chain.')
   }
@@ -107,7 +107,7 @@ const getAddress = (address: string) => {
  * @param multipleAmounts if multiple recipients are present in the address separated by ',', this should be list of amounts to send
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareBitcoinCashSignedOffchainTransaction = async (
+export const prepareSignedOffchainTransaction = async (
   testnet: boolean,
   data: WithdrawalResponseData[],
   amount: string,
@@ -139,7 +139,7 @@ export const prepareBitcoinCashSignedOffchainTransaction = async (
   }
   if (new BigNumber(lastVin.amount).isGreaterThan(0)) {
     if (mnemonic && !changeAddress) {
-      const { xpub } = await generateBchWallet(testnet, mnemonic)
+      const { xpub } = await generateBlockchainWallet(testnet, mnemonic)
       tx.addOutput(
         getAddress(generateAddressFromXPub(testnet, xpub, 0)),
         Number(new BigNumber(lastVin.amount).multipliedBy(100000000).toFixed(0, BigNumber.ROUND_FLOOR))

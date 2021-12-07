@@ -1,5 +1,5 @@
 import { TransferBchBlockchain } from '../model'
-import { prepareBitcoinCashSignedTransaction } from './bcash'
+import { prepareSignedTransaction } from './bcash'
 
 describe('BCH transactions', () => {
   it('should test BCH transaction data', async () => {
@@ -19,7 +19,7 @@ describe('BCH transactions', () => {
       },
     ]
     try {
-      const txData = await prepareBitcoinCashSignedTransaction(true, body)
+      const txData = await prepareSignedTransaction(true, body)
       expect(txData).toBe(
         '0200000001f3895ebe9444637901b0f7bd510564baa73c89bc2c480a5bc594dc626649766300000000644185c688866fcabfb021f9b6d90f203dfc29e483b45853ad6b87ce91a6112d6cf2323af053c60dde98a5e00bf1ad7a8243733a23625fb89bc20b83614173513172412103b17a162956975765aa6951f6349f9ab5bf510584c5df9f6065924bfd94a08513ffffffff01703f3f02000000001976a914299480256432f2372df6d66e21ed48b097797c9a88ac00000000'
       )
@@ -40,7 +40,7 @@ describe('BCH transactions', () => {
       },
     ]
     try {
-      await prepareBitcoinCashSignedTransaction(true, body)
+      await prepareSignedTransaction(true, body)
       fail('Validation did not pass.')
     } catch (e) {
       console.error(e)

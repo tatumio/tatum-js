@@ -2,7 +2,7 @@ import { Currency, TransactionKMS, validateBody } from '@tatumio/tatum-core'
 import BigNumber from 'bignumber.js'
 // @ts-ignore
 import coininfo from 'coininfo'
-import { bcashBroadcast, bcashGetTransaction } from '../blockchain'
+import { broadcast, getTransaction } from '../blockchain'
 import { toLegacyAddress } from '../wallet'
 import { BchTx, TransferBchBlockchain } from '../model'
 
@@ -29,8 +29,8 @@ const getAddress = (address: string) => {
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendBitcoinCashTransaction = async (testnet: boolean, body: TransferBchBlockchain) => {
-  return bcashBroadcast(await prepareBitcoinCashSignedTransaction(testnet, body))
+export const sendTransaction = async (testnet: boolean, body: TransferBchBlockchain) => {
+  return broadcast(await prepareSignedTransaction(testnet, body))
 }
 
 /**
@@ -40,7 +40,7 @@ export const sendBitcoinCashTransaction = async (testnet: boolean, body: Transfe
  * @param testnet mainnet or testnet version
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signBitcoinCashKMSTransaction = async (tx: TransactionKMS, privateKeys: string[], testnet: boolean) => {
+export const signKMSTransaction = async (tx: TransactionKMS, privateKeys: string[], testnet: boolean) => {
   if (tx.chain !== Currency.BCH) {
     throw Error('Unsupported chain.')
   }
@@ -62,7 +62,7 @@ export const signBitcoinCashKMSTransaction = async (tx: TransactionKMS, privateK
  * @param body content of the transaction to broadcast
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareBitcoinCashSignedTransaction = async (testnet: boolean, body: TransferBchBlockchain) => {
+export const prepareSignedTransaction = async (testnet: boolean, body: TransferBchBlockchain) => {
   await validateBody(body, TransferBchBlockchain)
   const { fromUTXO, to } = body
   const network = testnet ? coininfo.bitcoincash.test.toBitcoinJS() : coininfo.bitcoincash.main.toBitcoinJS()
@@ -92,7 +92,7 @@ export const prepareBitcoinCashSignedTransaction = async (testnet: boolean, body
 const getTransactions = async (txHash: string[]): Promise<BchTx[]> => {
   const result = []
   for (const tx of txHash) {
-    result.push(bcashGetTransaction(tx))
+    result.push(getTransaction(tx))
   }
   return await Promise.all(result)
 }
