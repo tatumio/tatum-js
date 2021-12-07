@@ -2,6 +2,7 @@ import {
   prepareBatchTransferFromCustodialWalletAbstract,
   prepareCustodialWalletBatchAbstract,
   prepareTransferFromCustodialWalletAbstract,
+  getCustodialAddresses as getCustodialAddressesDefi,
 } from '@tatumio/tatum-defi'
 import {
   ApproveCustodialTransfer,
@@ -28,6 +29,10 @@ import {
 } from '../'
 import { getErc20Decimals } from '../fungible'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
+
+export const getCustodialAddresses = async (txId: string) => {
+  return getCustodialAddressesDefi(Currency.CELO, txId)
+}
 
 /**
  * This method is @Deprecated. Use @link{generateCustodialWalletBatch} instead

@@ -2,6 +2,7 @@ import {
   prepareTransferFromCustodialWalletAbstract,
   prepareBatchTransferFromCustodialWalletAbstract,
   prepareCustodialWalletBatchAbstract,
+  getCustodialAddresses as getCustodialAddressesDefi,
 } from '@tatumio/tatum-defi'
 import {
   TransferFromCustodialAddress,
@@ -28,6 +29,10 @@ import {
   prepareBscSmartContractWriteMethodInvocation,
   sendBscGenerateCustodialWalletSignedTransaction,
 } from '../transaction'
+
+export const getCustodialAddresses = async (txId: string) => {
+  return getCustodialAddressesDefi(Currency.BSC, txId)
+}
 
 /**
  * This method is @Deprecated. Use @link{generateCustodialWalletBatch} instead
