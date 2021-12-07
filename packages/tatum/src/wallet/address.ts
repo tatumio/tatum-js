@@ -299,4 +299,4 @@ export const generateAddressFromPrivatekey = (currency: Currency, testnet: boole
   }
 }
 
-export { generateAlgodAddressFromPrivatetKey } from '@tatumio/tatum-algo'
+export { generateAddressFromPrivatetKey as generateAlgodAddressFromPrivatetKey } from '@tatumio/tatum-algo'

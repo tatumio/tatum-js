@@ -1,4 +1,4 @@
-import { sendAlgoSignedTransaction } from './algo'
+import { sendSignedTransaction } from './algo'
 import { AlgoTransaction } from '../model'
 
 describe('Algo transaction', () => {
@@ -11,7 +11,7 @@ describe('Algo transaction', () => {
     tx.amount = '1'
     tx.note = 'Helloworld'
     tx.fromPrivateKey = '72TCV5BRQPBMSAFPYO3CPWVDBYWNGAYNMTW5QHENOMQF7I6QLNMJWCJZ7A3V5YKD7QD6ZZPEHG2PV2ZVVEDDO6BCRGXWIL3DIUMSUCI'
-    const txId = String(await sendAlgoSignedTransaction(true, tx))
+    const txId = String(await sendSignedTransaction(true, tx))
     expect(txId.length).toBe(52)
   })
 })

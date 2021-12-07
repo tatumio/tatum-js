@@ -1,6 +1,6 @@
 import { DeployErc721, BurnErc721, TransferErc721 } from '@tatumio/tatum-core'
 
-import { sendAlgoCreateNFTSignedTransaction, sendAlgoTransferNFTSignedTransaction, sendAlgoBurnNFTSignedTransaction } from '../transaction'
+import { sendCreateNFTSignedTransaction, sendTransferNFTSignedTransaction, sendBurnNFTSignedTransaction } from '../transaction'
 
 /**
  * Create new NFT token.
@@ -9,7 +9,7 @@ import { sendAlgoCreateNFTSignedTransaction, sendAlgoTransferNFTSignedTransactio
  * @param provider optional provider do broadcast tx
  */
 export const deployNFT = async (testnet: boolean, body: DeployErc721, provider?: string) => {
-  return sendAlgoCreateNFTSignedTransaction(testnet, body, provider)
+  return sendCreateNFTSignedTransaction(testnet, body, provider)
 }
 
 /**
@@ -19,7 +19,7 @@ export const deployNFT = async (testnet: boolean, body: DeployErc721, provider?:
  * @param provider optional provider do broadcast tx
  */
 export const burnNFT = async (testnet: boolean, body: BurnErc721, provider?: string) => {
-  return sendAlgoBurnNFTSignedTransaction(testnet, body, provider)
+  return sendBurnNFTSignedTransaction(testnet, body, provider)
 }
 
 /**
@@ -29,7 +29,7 @@ export const burnNFT = async (testnet: boolean, body: BurnErc721, provider?: str
  * @param provider optional provider do broadcast tx
  */
 export const transferNFT = async (testnet: boolean, body: TransferErc721, provider?: string) => {
-  return sendAlgoTransferNFTSignedTransaction(testnet, body, provider)
+  return sendTransferNFTSignedTransaction(testnet, body, provider)
 }
 
 export {
