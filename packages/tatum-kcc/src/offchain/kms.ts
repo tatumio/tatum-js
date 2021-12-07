@@ -12,6 +12,9 @@ import {
 export const offchainTransferKccKMS = async (body: TransferOffchainKMS): Promise<SignatureId> =>
   post(`/v3/offchain/kcc/transfer`, body, TransferOffchainKMS)
 
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/GetPendingTransactionsToSign" target="_blank">Tatum API documentation</a>
+ */
 export const getPendingTransactionsKMSByChain = () => {
   return getPendingTransactionsKMSByChainCore(Currency.KCS)
 }

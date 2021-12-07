@@ -18,6 +18,9 @@ export const offchainTransferEthKMS = async (body: TransferOffchainKMS): Promise
 export const offchainTransferEthErc20KMS = async (body: TransferOffchainKMS): Promise<SignatureId> =>
   post(`/v3/offchain/ethereum/erc20/transfer`, body, TransferOffchainKMS)
 
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/GetPendingTransactionsToSign" target="_blank">Tatum API documentation</a>
+ */
 export const getPendingTransactionsKMSByChain = () => {
   return getPendingTransactionsKMSByChainCore(Currency.ETH)
 }

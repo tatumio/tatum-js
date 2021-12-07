@@ -14,7 +14,9 @@ export * from './model'
 export * from './multiToken'
 
 export {
+  // security
   checkMaliciousAddress,
+  // off-chain
   generateDepositAddress,
   generateDepositAddresses,
   assignDepositAddress,
@@ -24,10 +26,12 @@ export {
   offchainStoreWithdrawal,
   offchainCancelWithdrawal,
   offchainCompleteWithdrawal,
+  // storage
   ipfsDelete,
   ipfsGet,
   ipfsUpload,
   getUsage,
+  // kms
   getTransactionKMS,
   deleteTransactionKMS,
   completePendingTransactionKMS,

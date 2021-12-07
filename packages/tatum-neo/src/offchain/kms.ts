@@ -4,5 +4,5 @@ import { Currency, getPendingTransactionsKMSByChain as getPendingTransactionsKMS
  * For more details, see <a href="https://tatum.io/apidoc#operation/GetPendingTransactionsToSign" target="_blank">Tatum API documentation</a>
  */
 export const getPendingTransactionsKMSByChain = () => {
-  return getPendingTransactionsKMSByChainCore(Currency.ONE)
+  return getPendingTransactionsKMSByChainCore(Currency.NEO)
 }
