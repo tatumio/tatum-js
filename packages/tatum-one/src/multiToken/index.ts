@@ -70,6 +70,9 @@ export const prepareAddMultiTokenMinter = async (body: AddMinter, provider?: str
 export const sendAddMultiTokenMinter = async (body: AddMinter, provider?: string) =>
   helperBroadcastTx(await prepareAddMultiTokenMinter(body, provider), body.signatureId)
 
+/**
+ * For more details, see <a href="https://tatum.io/apidoc.php#operation/MultiTokenGetTransactionByAddress" target="_blank">Tatum API documentation</a>
+ */
 export const getMultiTokenTransactionsByAddress = async (
   address: string,
   tokenAddress: string,
@@ -81,18 +84,38 @@ export const getMultiTokenTransactionsByAddress = async (
 ) => {
   return getMultiTokenTransactionsByAddressCore(Currency.ONE, address, tokenAddress, pageSize, offset, from, to, sort)
 }
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MultiTokenGetContractAddress" target="_blank">Tatum API documentation</a>
+ */
 export const getMultiTokenContractAddress = async (txId: string) => {
   return getMultiTokenContractAddressCore(Currency.ONE, txId)
 }
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MultiTokenGetBalance" target="_blank">Tatum API documentation</a>
+ */
 export const getMultiTokensBalance = async (contractAddress: string, address: string, tokenId: string) => {
   return getMultiTokensBalanceCore(Currency.ONE, contractAddress, address, tokenId)
 }
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MultiTokenGetBalanceBatch" target="_blank">Tatum API documentation</a>
+ */
 export const getMultiTokensBatchBalance = async (contractAddress: string, address: string, tokenIds: string) => {
   return getMultiTokensBatchBalanceCore(Currency.ONE, contractAddress, address, tokenIds)
 }
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MultiTokenGetTransaction" target="_blank">Tatum API documentation</a>
+ */
 export const getMultiTokenTransaction = async (txId: string) => {
   return getMultiTokenTransactionCore(Currency.ONE, txId)
 }
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MultiTokenGetMetadata" target="_blank">Tatum API documentation</a>
+ */
 export const getMultiTokenMetadata = async (contractAddress: string, tokenId: string) => {
   return getMultiTokenMetadataCore(Currency.ONE, contractAddress, tokenId)
 }
