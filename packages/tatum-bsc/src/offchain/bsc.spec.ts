@@ -1,8 +1,8 @@
-import { sendBscOffchainTransaction } from './bsc'
+import { sendOffchainTransaction } from './bsc'
 
 describe('BSC offchain', () => {
   it('should test custom gas sendBscOffchainTransaction transaction', async () => {
-    const tx = await sendBscOffchainTransaction(true, {
+    const tx = await sendOffchainTransaction(true, {
       senderAccountId: '612e0eb784c139b378c5ca18',
       address: '0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F',
       amount: '0.1',

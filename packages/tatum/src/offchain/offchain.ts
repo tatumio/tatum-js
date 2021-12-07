@@ -12,7 +12,7 @@ export {
   signBitcoinOffchainKMSTransaction,
   prepareBitcoinSignedOffchainTransaction,
 } from '@tatumio/tatum-btc'
-export { sendBscOffchainTransaction } from '@tatumio/tatum-bsc'
+export { sendOffchainTransaction as sendBscOffchainTransaction } from '@tatumio/tatum-bsc'
 export { sendCeloOffchainTransaction } from '@tatumio/tatum-celo'
 export { sendDogecoinOffchainTransaction, prepareDogecoinSignedOffchainTransaction } from '@tatumio/tatum-doge'
 export { sendEgldOffchainTransaction } from '@tatumio/tatum-egld'

@@ -19,10 +19,10 @@ import BigNumber from 'bignumber.js'
 import { getErc20Decimals } from '../fungible'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
 import {
-  getBscBep20ContractDecimals,
-  prepareBscGenerateCustodialWalletSignedTransaction,
-  prepareBscSmartContractWriteMethodInvocation,
-  sendBscGenerateCustodialWalletSignedTransaction,
+  getBep20ContractDecimals,
+  prepareGenerateCustodialWalletSignedTransaction,
+  prepareSmartContractWriteMethodInvocation,
+  sendGenerateCustodialWalletSignedTransaction,
 } from '../transaction'
 
 /**
@@ -35,7 +35,7 @@ import {
  */
 export const generateCustodialWallet = async (body: GenerateCustodialAddress, provider?: string) => {
   console.log('This method is deprecated. For better gas consumption, use generateCustodialWalletBatch.')
-  return await sendBscGenerateCustodialWalletSignedTransaction(body, provider)
+  return await sendGenerateCustodialWalletSignedTransaction(body, provider)
 }
 
 /**
@@ -48,7 +48,7 @@ export const generateCustodialWallet = async (body: GenerateCustodialAddress, pr
  */
 export const prepareCustodialWallet = async (body: GenerateCustodialAddress, provider?: string) => {
   console.log('This method is deprecated. For better gas consumption, use prepareCustodialWalletBatch.')
-  return await prepareBscGenerateCustodialWalletSignedTransaction(body, provider)
+  return await prepareGenerateCustodialWalletSignedTransaction(body, provider)
 }
 
 /**
@@ -59,7 +59,7 @@ export const prepareCustodialWallet = async (body: GenerateCustodialAddress, pro
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendCustodialWallet = async (body: GenerateCustodialAddress, provider?: string) => {
-  const txData = await prepareBscGenerateCustodialWalletSignedTransaction(body, provider)
+  const txData = await prepareGenerateCustodialWalletSignedTransaction(body, provider)
   return helperBroadcastTx(txData, body.signatureId)
 }
 
@@ -74,8 +74,8 @@ export const prepareTransferFromCustodialWallet = async (testnet: boolean, body:
   return prepareTransferFromCustodialWalletAbstract(
     testnet,
     body,
-    getBscBep20ContractDecimals,
-    prepareBscSmartContractWriteMethodInvocation,
+    getBep20ContractDecimals,
+    prepareSmartContractWriteMethodInvocation,
     SmartContractMethodInvocation,
     18,
     TransferFromCustodialAddress,
@@ -108,8 +108,8 @@ export const prepareBatchTransferFromCustodialWallet = async (
   return prepareBatchTransferFromCustodialWalletAbstract(
     testnet,
     body,
-    getBscBep20ContractDecimals,
-    prepareBscSmartContractWriteMethodInvocation,
+    getBep20ContractDecimals,
+    prepareSmartContractWriteMethodInvocation,
     SmartContractMethodInvocation,
     18,
     TransferFromCustodialAddressBatch,

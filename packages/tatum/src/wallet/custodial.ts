@@ -39,8 +39,8 @@ import {
 } from '@tatumio/tatum-eth'
 import {
   generateCustodialWallet as sendBscGenerateCustodialWalletSignedTransaction,
-  getBscBep20ContractDecimals,
-  prepareBscSmartContractWriteMethodInvocation,
+  getBep20ContractDecimals as getBscBep20ContractDecimals,
+  prepareSmartContractWriteMethodInvocation as prepareBscSmartContractWriteMethodInvocation,
   prepareCustodialWallet as prepareBscGenerateCustodialWalletSignedTransaction,
   generateCustodialWalletBatch as bscGenerateCustodialWalletBatch,
   prepareCustodialWalletBatch as bscPrepareCustodialWalletBatch,

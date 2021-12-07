@@ -13,11 +13,7 @@ import {
   CreateMarketplaceListing,
   InvokeMarketplaceListingOperation,
 } from '@tatumio/tatum-core'
-import {
-  sendBscDeployMarketplaceListingSignedTransaction,
-  prepareBscDeployMarketplaceListingSignedTransaction,
-  prepareApproveErc20,
-} from '../..'
+import { sendDeployMarketplaceListingSignedTransaction, prepareDeployMarketplaceListingSignedTransaction, prepareApproveErc20 } from '../..'
 import { helperPrepareSCCall, helperBroadcastTx } from '../../helpers'
 
 /**
@@ -34,7 +30,7 @@ import { helperPrepareSCCall, helperBroadcastTx } from '../../helpers'
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const deployMarketplaceListing = async (body: DeployMarketplaceListing, provider?: string) => {
-  return await sendBscDeployMarketplaceListingSignedTransaction(body, provider)
+  return await sendDeployMarketplaceListingSignedTransaction(body, provider)
 }
 
 /**
@@ -51,7 +47,7 @@ export const deployMarketplaceListing = async (body: DeployMarketplaceListing, p
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareDeployMarketplaceListing = async (body: DeployMarketplaceListing, provider?: string) => {
-  return await prepareBscDeployMarketplaceListingSignedTransaction(body, provider)
+  return await prepareDeployMarketplaceListingSignedTransaction(body, provider)
 }
 
 /**

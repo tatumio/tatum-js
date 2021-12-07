@@ -6,8 +6,8 @@ import {
   TransferFromCustodialAddress,
   TransferFromCustodialAddressBatch,
 } from '@tatumio/tatum-core'
-import { bscBroadcast } from '../blockchain'
-import { sendBscGenerateCustodialWalletSignedTransaction } from '../transaction'
+import { broadcast } from '../blockchain'
+import { sendGenerateCustodialWalletSignedTransaction } from '../transaction'
 import { prepareApproveFromCustodialWallet, prepareBatchTransferFromCustodialWallet, prepareTransferFromCustodialWallet } from './custodial'
 import { CeloProvider } from '@celo-tools/celo-ethers-wrapper'
 
@@ -23,7 +23,7 @@ describe('Custodial wallet tests', () => {
       body.enableNonFungibleTokens = true
       body.enableSemiFungibleTokens = true
       body.enableBatchTransactions = true
-      const txData = await sendBscGenerateCustodialWalletSignedTransaction(body, 'https://data-seed-prebsc-2-s1.binance.org:8545')
+      const txData = await sendGenerateCustodialWalletSignedTransaction(body, 'https://data-seed-prebsc-2-s1.binance.org:8545')
       expect(txData.txId).toContain('0x')
       console.log(txData.txId)
     })
@@ -40,7 +40,7 @@ describe('Custodial wallet tests', () => {
       body.amount = '0.0000001'
       const txData = await prepareTransferFromCustodialWallet(true, body)
       expect(txData).toContain('0x')
-      console.log(await bscBroadcast(txData))
+      console.log(await broadcast(txData))
     })
 
     it('should transfer 20 on BSC', async () => {
@@ -54,7 +54,7 @@ describe('Custodial wallet tests', () => {
       body.amount = '1'
       const txData = await prepareTransferFromCustodialWallet(true, body)
       expect(txData).toContain('0x')
-      console.log(await bscBroadcast(txData))
+      console.log(await broadcast(txData))
     })
 
     it('should transfer 721 on BSC', async () => {
@@ -68,7 +68,7 @@ describe('Custodial wallet tests', () => {
       body.tokenId = '20'
       const txData = await prepareTransferFromCustodialWallet(true, body)
       expect(txData).toContain('0x')
-      console.log(await bscBroadcast(txData))
+      console.log(await broadcast(txData))
     })
 
     it('should transfer 1155 on BSC', async () => {
@@ -83,7 +83,7 @@ describe('Custodial wallet tests', () => {
       body.amount = '1'
       const txData = await prepareTransferFromCustodialWallet(true, body)
       expect(txData).toContain('0x')
-      console.log(await bscBroadcast(txData))
+      console.log(await broadcast(txData))
     })
 
     it('should approve 20 on BSC', async () => {
@@ -97,7 +97,7 @@ describe('Custodial wallet tests', () => {
       body.amount = '1'
       const txData = await prepareApproveFromCustodialWallet(body)
       expect(txData).toContain('0x')
-      console.log(await bscBroadcast(txData))
+      console.log(await broadcast(txData))
     })
 
     it('should approve 721 on BSC', async () => {
@@ -111,7 +111,7 @@ describe('Custodial wallet tests', () => {
       body.tokenId = '10'
       const txData = await prepareApproveFromCustodialWallet(body)
       expect(txData).toContain('0x')
-      console.log(await bscBroadcast(txData))
+      console.log(await broadcast(txData))
     })
 
     it('should approve 1155 on BSC', async () => {
@@ -126,7 +126,7 @@ describe('Custodial wallet tests', () => {
       body.amount = '1'
       const txData = await prepareApproveFromCustodialWallet(body)
       expect(txData).toContain('0x')
-      console.log(await bscBroadcast(txData))
+      console.log(await broadcast(txData))
     })
 
     it('should transfer all batch on BSC', async () => {
@@ -156,7 +156,7 @@ describe('Custodial wallet tests', () => {
       body.amount = ['1', '0', '1', '0.00001']
       const txData = await prepareBatchTransferFromCustodialWallet(true, body)
       expect(txData).toContain('0x')
-      console.log(await bscBroadcast(txData))
+      console.log(await broadcast(txData))
     })
   })
 
