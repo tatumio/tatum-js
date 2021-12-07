@@ -1,5 +1,5 @@
 import { Currency, TransactionKMS } from '@tatumio/tatum-core'
-import { signBnbKMSTransaction } from './bnb'
+import { signKMSTransaction } from './bnb'
 
 describe('BNB tests', () => {
   it('should test KMS sign', async () => {
@@ -13,7 +13,7 @@ describe('BNB tests', () => {
       withdrawalResponses: undefined,
       id: '60b4ea4fae706954a27ee2dd',
     }
-    const data = await signBnbKMSTransaction(tx, '268a1c3c1b08e4cfd93cf380c39027ac0b6a707abcb4f578ad9ffd172a6eb327', true)
+    const data = await signKMSTransaction(tx, '268a1c3c1b08e4cfd93cf380c39027ac0b6a707abcb4f578ad9ffd172a6eb327', true)
     expect(data).toBeDefined()
   })
 })
