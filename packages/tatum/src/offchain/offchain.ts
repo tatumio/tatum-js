@@ -8,9 +8,9 @@ export {
   prepareSignedOffchainTransaction as prepareBitcoinCashSignedOffchainTransaction,
 } from '@tatumio/tatum-bch'
 export {
-  sendBitcoinOffchainTransaction,
-  signBitcoinOffchainKMSTransaction,
-  prepareBitcoinSignedOffchainTransaction,
+  sendOffchainTransaction as sendBitcoinOffchainTransaction,
+  signOffchainKMSTransaction as signBitcoinOffchainKMSTransaction,
+  prepareSignedOffchainTransaction as prepareBitcoinSignedOffchainTransaction,
 } from '@tatumio/tatum-btc'
 export { sendOffchainTransaction as sendBscOffchainTransaction } from '@tatumio/tatum-bsc'
 export { sendCeloOffchainTransaction } from '@tatumio/tatum-celo'

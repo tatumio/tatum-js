@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js'
 // @ts-ignore
 import { PrivateKey, Script, Transaction } from 'bitcore-lib'
-import { btcBroadcast, btcGetTransaction, btcGetTxForAccount, btcGetUTXO } from '../blockchain'
+import { broadcast, getTransaction, getTxForAccount, getUTXO } from '../blockchain'
 import { validateBody, Currency, TransactionKMS } from '@tatumio/tatum-core'
 import { BtcTxOutputs } from '../model'
 import { TransferBtcBasedBlockchain } from '@tatumio/tatum-core'
@@ -10,21 +10,21 @@ import { TransferBtcBasedBlockchain } from '@tatumio/tatum-core'
  * Prepare a signed Btc transaction with the private key locally. Nothing is broadcasted to the blockchain.
  * @returns raw transaction data in hex, to be broadcasted to blockchain.
  */
-const prepareSignedTransaction = async (body: TransferBtcBasedBlockchain) => {
+const prepareBlockchainSignedTransaction = async (body: TransferBtcBasedBlockchain) => {
   await validateBody(body, TransferBtcBasedBlockchain)
   const { fromUTXO, fromAddress, to } = body
   const tx = new Transaction()
   const privateKeysToSign = []
   if (fromAddress) {
     for (const item of fromAddress) {
-      const txs = await btcGetTxForAccount(item.address)
+      const txs = await getTxForAccount(item.address)
       for (const t of txs) {
         for (const [i, o] of (t.outputs as BtcTxOutputs[]).entries()) {
           if (o.address !== item.address) {
             continue
           }
           try {
-            await btcGetUTXO(t.hash, i)
+            await getUTXO(t.hash, i)
             tx.from({
               txId: t.hash,
               outputIndex: i,
@@ -40,7 +40,7 @@ const prepareSignedTransaction = async (body: TransferBtcBasedBlockchain) => {
     }
   } else if (fromUTXO) {
     for (const item of fromUTXO) {
-      const t = await btcGetTransaction(item.txHash)
+      const t = await getTransaction(item.txHash)
       const address = t.outputs ? t.outputs[item.index].address : t.vout?.[item.index].scriptPubKey.addresses[0]
       const value = t.outputs
         ? t.outputs[item.index].value
@@ -75,7 +75,7 @@ const prepareSignedTransaction = async (body: TransferBtcBasedBlockchain) => {
  * @param testnet mainnet or testnet version
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signBitcoinKMSTransaction = async (tx: TransactionKMS, privateKeys: string[]) => {
+export const signKMSTransaction = async (tx: TransactionKMS, privateKeys: string[]) => {
   if (tx.chain !== Currency.BTC) {
     throw Error('Unsupported chain.')
   }
@@ -91,8 +91,8 @@ export const signBitcoinKMSTransaction = async (tx: TransactionKMS, privateKeys:
  * @param body content of the transaction to broadcast
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareBitcoinSignedTransaction = async (body: TransferBtcBasedBlockchain) => {
-  return prepareSignedTransaction(body)
+export const prepareSignedTransaction = async (body: TransferBtcBasedBlockchain) => {
+  return prepareBlockchainSignedTransaction(body)
 }
 
 /**
@@ -101,6 +101,6 @@ export const prepareBitcoinSignedTransaction = async (body: TransferBtcBasedBloc
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendBitcoinTransaction = async (body: TransferBtcBasedBlockchain) => {
-  return btcBroadcast(await prepareBitcoinSignedTransaction(body))
+export const sendTransaction = async (body: TransferBtcBasedBlockchain) => {
+  return broadcast(await prepareSignedTransaction(body))
 }

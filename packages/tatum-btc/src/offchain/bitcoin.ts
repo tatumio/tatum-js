@@ -11,7 +11,7 @@ import {
   offchainStoreWithdrawal,
 } from '@tatumio/tatum-core'
 import { generateAddressFromXPub, generatePrivateKeyFromMnemonic } from '../wallet'
-import { offchainTransferBtcKMS } from './kms'
+import { offchainTransferKMS } from './kms'
 import { KeyPair, TransferBtcBasedOffchain } from '@tatumio/tatum-core'
 
 /**
@@ -21,9 +21,9 @@ import { KeyPair, TransferBtcBasedOffchain } from '@tatumio/tatum-core'
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
-export const sendBitcoinOffchainTransaction = async (testnet: boolean, body: TransferBtcBasedOffchain) => {
+export const sendOffchainTransaction = async (testnet: boolean, body: TransferBtcBasedOffchain) => {
   if (body.signatureId) {
-    return offchainTransferBtcKMS(body)
+    return offchainTransferKMS(body)
   }
   await validateBody(body, TransferBtcBasedOffchain)
   const { mnemonic, keyPair, xpub, attr: changeAddress, ...withdrawal } = body
@@ -34,7 +34,7 @@ export const sendBitcoinOffchainTransaction = async (testnet: boolean, body: Tra
   const { amount, address } = withdrawal
   let txData
   try {
-    txData = await prepareBitcoinSignedOffchainTransaction(
+    txData = await prepareSignedOffchainTransaction(
       testnet,
       data,
       amount,
@@ -71,7 +71,7 @@ export const sendBitcoinOffchainTransaction = async (testnet: boolean, body: Tra
  * @param testnet mainnet or testnet version
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signBitcoinOffchainKMSTransaction = async (tx: TransactionKMS, mnemonic: string, testnet: boolean) => {
+export const signOffchainKMSTransaction = async (tx: TransactionKMS, mnemonic: string, testnet: boolean) => {
   if (tx.chain !== Currency.BTC || !tx.withdrawalResponses) {
     throw Error('Unsupported chain.')
   }
@@ -99,7 +99,7 @@ export const signBitcoinOffchainKMSTransaction = async (tx: TransactionKMS, mnem
  * @param signatureId if using KMS, this is signatureId of the wallet representing mnemonic
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareBitcoinSignedOffchainTransaction = async (
+export const prepareSignedOffchainTransaction = async (
   testnet: boolean,
   data: WithdrawalResponseData[],
   amount: string,
