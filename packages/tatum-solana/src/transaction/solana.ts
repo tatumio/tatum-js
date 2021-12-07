@@ -128,7 +128,13 @@ export const signSolanaKMSTransaction = async (tx: ChainTransactionKMS, fromPriv
     signers.push(generateSolanaKeyPair(mintPK))
   }
   signers.push(wallet)
-  return await sendAndConfirmTransaction(connection, transaction, signers)
+  const txId = await connection.sendTransaction(transaction, signers)
+  await new Promise((r) => setTimeout(r, 5000))
+  const confirmedTx = await connection.getConfirmedTransaction(txId, 'confirmed')
+  if (confirmedTx && !confirmedTx.meta?.err) {
+    return txId
+  }
+  throw new Error('Transaction not confirmed.')
 }
 
 /**
@@ -245,7 +251,10 @@ export const mintSolanaNft = async (body: ChainSolanaMintNft, provider?: string)
 
   if (body.signatureId) {
     transaction.recentBlockhash = '7WyEshBZcZwEbJsvSeGgCkSNMxxxFAym3x7Cuj6UjAUE'
-    return { txData: transaction.compileMessage().serialize().toString('hex'), mintPK: Buffer.from(mint.secretKey).toString('hex') }
+    return {
+      txData: transaction.compileMessage().serialize().toString('hex'),
+      mintPK: Buffer.from(mint.secretKey).toString('hex'),
+    }
   }
 
   const wallet = generateSolanaKeyPair(body.fromPrivateKey as string)

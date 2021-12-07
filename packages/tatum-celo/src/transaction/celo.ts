@@ -5,6 +5,7 @@ import Web3 from 'web3'
 import { isHex, stringToHex, toHex, toWei } from 'web3-utils'
 import { celoBroadcast } from '../blockchain'
 import { mintNFT } from '../nft'
+import erc721_abi from '@tatumio/tatum-core/dist/contracts/erc721/erc721_abi'
 import {
   auction,
   CeloSmartContractMethodInvocation,
@@ -857,7 +858,13 @@ export const sendCeloSmartContractMethodInvocationTransaction = async (
     return sendCeloSmartContractReadMethodInvocationTransaction(body, provider)
   }
   const celoBody = body as CeloSmartContractMethodInvocation
-  return celoBroadcast(await prepareCeloSmartContractWriteMethodInvocation(celoBody, { provider, testnet }), celoBody.signatureId)
+  return celoBroadcast(
+    await prepareCeloSmartContractWriteMethodInvocation(celoBody, {
+      provider,
+      testnet,
+    }),
+    celoBody.signatureId
+  )
 }
 
 export const getCeloErc20ContractDecimals = async (contractAddress: string, provider?: string) => {
