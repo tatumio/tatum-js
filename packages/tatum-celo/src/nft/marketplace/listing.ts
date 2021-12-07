@@ -198,12 +198,23 @@ export const sendMarketplaceBuyListing = async (testnet: boolean, body: ChainInv
 export const sendMarketplaceCancelListing = async (testnet: boolean, body: ChainInvokeMarketplaceListingOperation, provider?: string) =>
   helperBroadcastTx(await prepareMarketplaceCancelListing(testnet, body, provider), body.signatureId)
 
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/GetMarketplaceFee" target="_blank">Tatum API documentation</a>
+ */
 export const getMarketplaceFee = async (contractAddress: string) => {
   return getMarketplaceFeeDefi(Currency.CELO, contractAddress)
 }
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/GetMarketplaceListing" target="_blank">Tatum API documentation</a>
+ */
 export const getMarketplaceListing = async (contractAddress: string, listingId: string) => {
   return getMarketplaceListingDefi(Currency.CELO, contractAddress, listingId)
 }
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/GetMarketplaceFeeRecipient" target="_blank">Tatum API documentation</a>
+ */
 export const getMarketplaceFeeRecipient = async (contractAddress: string) => {
   return getMarketplaceFeeRecipientDefi(Currency.CELO, contractAddress)
 }

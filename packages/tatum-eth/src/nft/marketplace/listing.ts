@@ -182,12 +182,23 @@ export const sendMarketplaceCancelListing = async (body: ChainInvokeMarketplaceL
 export const sendMarketplaceApproveErc20Spending = async (testnet: boolean, body: ChainApproveErc20, provider?: string) =>
   helperBroadcastTx(await prepareMarketplaceApproveErc20Spending(testnet, body, provider), body.signatureId)
 
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/GetMarketplaceFee" target="_blank">Tatum API documentation</a>
+ */
 export const getMarketplaceFee = async (contractAddress: string) => {
   return getMarketplaceFeeDefi(Currency.ETH, contractAddress)
 }
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/GetMarketplaceListing" target="_blank">Tatum API documentation</a>
+ */
 export const getMarketplaceListing = async (contractAddress: string, listingId: string) => {
   return getMarketplaceListingDefi(Currency.ETH, contractAddress, listingId)
 }
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/GetMarketplaceFeeRecipient" target="_blank">Tatum API documentation</a>
+ */
 export const getMarketplaceFeeRecipient = async (contractAddress: string) => {
   return getMarketplaceFeeRecipientDefi(Currency.ETH, contractAddress)
 }
