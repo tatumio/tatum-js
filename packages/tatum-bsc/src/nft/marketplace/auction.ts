@@ -27,14 +27,23 @@ import { getBscBep20ContractDecimals, prepareBscDeployAuctionSignedTransaction }
 import { prepareApproveErc20 } from '../../fungible'
 import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../../helpers'
 
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MPAuctionFee" target="_blank">Tatum API documentation</a>
+ */
 export const getAuctionFee = async (contractAddress: string) => {
   return getAuctionFeeDefi(Currency.BSC, contractAddress)
 }
 
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MPAuction" target="_blank">Tatum API documentation</a>
+ */
 export const getAuction = async (contractAddress: string, auctionId: string) => {
   return getAuctionDefi(Currency.BSC, contractAddress, auctionId)
 }
 
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MPAuctionRecipient" target="_blank">Tatum API documentation</a>
+ */
 export const getAuctionFeeRecipient = async (contractAddress: string) => {
   return getAuctionFeeRecipientDefi(Currency.BSC, contractAddress)
 }

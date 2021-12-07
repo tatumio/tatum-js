@@ -1,7 +1,4 @@
 import {
-  getAuction as getAuctionDefi,
-  getAuctionFee as getAuctionFeeDefi,
-  getAuctionFeeRecipient as getAuctionFeeRecipientDefi,
   prepareAuctionApproveNftTransferAbstraction,
   prepareAuctionBidAbstraction,
   prepareAuctionCancelAbstraction,
@@ -235,17 +232,5 @@ export const sendAuctionCancel = async (body: ChainInvokeAuctionOperation, provi
  */
 export const sendAuctionSettle = async (body: ChainInvokeAuctionOperation, provider?: string) =>
   helperBroadcastTx(await prepareAuctionSettle(body, provider), body.signatureId)
-
-export const getAuctionFee = async (contractAddress: string) => {
-  return getAuctionFeeDefi(Currency.KCS, contractAddress)
-}
-
-export const getAuction = async (contractAddress: string, auctionId: string) => {
-  return getAuctionDefi(Currency.KCS, contractAddress, auctionId)
-}
-
-export const getAuctionFeeRecipient = async (contractAddress: string) => {
-  return getAuctionFeeRecipientDefi(Currency.KCS, contractAddress)
-}
 
 export { Auction } from '@tatumio/tatum-defi'

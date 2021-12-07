@@ -240,14 +240,23 @@ export const sendAuctionCancel = async (body: ChainInvokeAuctionOperation, provi
 export const sendAuctionSettle = async (body: ChainInvokeAuctionOperation, provider?: string) =>
   helperBroadcastTx(await prepareAuctionSettle(body, provider), body.signatureId)
 
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MPAuctionFee" target="_blank">Tatum API documentation</a>
+ */
 export const getAuctionFee = async (contractAddress: string) => {
   return getAuctionFeeDefi(Currency.MATIC, contractAddress)
 }
 
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MPAuction" target="_blank">Tatum API documentation</a>
+ */
 export const getAuction = async (contractAddress: string, auctionId: string) => {
   return getAuctionDefi(Currency.MATIC, contractAddress, auctionId)
 }
 
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MPAuctionRecipient" target="_blank">Tatum API documentation</a>
+ */
 export const getAuctionFeeRecipient = async (contractAddress: string) => {
   return getAuctionFeeRecipientDefi(Currency.MATIC, contractAddress)
 }
