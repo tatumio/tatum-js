@@ -1,15 +1,12 @@
 import {
-  getNFTTransactionsByAddress as getNFTTransactionsByAddressDefi,
   getNFTsByAddress as getNFTsByAddressDefi,
-  getNFTProvenanceData as getNFTProvenanceDataDefi,
-  getNFTContractAddress as getNFTContractAddressDefi,
   getNFTMetadataURI as getNFTMetadataURIDefi,
   getNFTImage as getNFTImageDefi,
   getNFTRoyalty as getNFTRoyaltyDefi,
   mintNFTRequest,
   createNFTAbstraction,
 } from '@tatumio/tatum-defi'
-import { post, TransactionHash, Currency, Sort, ChainMintErc721 } from '@tatumio/tatum-core'
+import { post, TransactionHash, Currency, ChainMintErc721 } from '@tatumio/tatum-core'
 import {
   ChainFlowBurnNft,
   ChainFlowDeployNft,
@@ -87,29 +84,26 @@ export const transferNFT = async (testnet: boolean, body: ChainFlowTransferNft) 
   return sendFlowNftTransferToken(testnet, body)
 }
 
-export const getNFTTransactionsByAddress = async (
-  address: string,
-  tokenAddress: string,
-  pageSize = 50,
-  offset = 0,
-  from?: string,
-  to?: string,
-  sort?: Sort
-) => {
-  return getNFTTransactionsByAddressDefi(Currency.FLOW, address, tokenAddress, pageSize, offset, from, to, sort)
-}
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetBalanceErc721" target="_blank">Tatum API documentation</a>
+ */
 export const getNFTsByAddress = async (contractAddress: string, address: string) => {
   return getNFTsByAddressDefi(Currency.FLOW, contractAddress, address)
 }
-export const getNFTProvenanceData = async (contractAddress: string, tokenId: string) => {
-  return getNFTProvenanceDataDefi(Currency.FLOW, contractAddress, tokenId)
-}
-export const getNFTContractAddress = async (txId: string) => {
-  return getNFTContractAddressDefi(Currency.FLOW, txId)
-}
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetMetadataErc721" target="_blank">Tatum API documentation</a>
+ */
 export const getNFTMetadataURI = async (contractAddress: string, tokenId: string, account?: string) => {
   return getNFTMetadataURIDefi(Currency.FLOW, contractAddress, tokenId, account)
 }
+
+/**
+ * Get IPFS image URL from the NFT with the IPFS Metadata scheme. URL
+ * @param contractAddress contract address of the NFT token
+ * @param tokenId ID of the token
+ * @param account FLOW only - account where the token is minted
+ */
 export const getNFTImage = async (contractAddress: string, tokenId: string, account?: string) => {
   return getNFTImageDefi(Currency.FLOW, contractAddress, tokenId, account)
 }

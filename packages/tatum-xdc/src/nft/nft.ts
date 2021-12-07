@@ -1,13 +1,4 @@
-import {
-  createNFTAbstraction,
-  getNFTContractAddress as getNFTContractAddressDefi,
-  getNFTImage as getNFTImageDefi,
-  getNFTMetadataURI as getNFTMetadataURIDefi,
-  getNFTProvenanceData as getNFTProvenanceDataDefi,
-  getNFTRoyalty as getNFTRoyaltyDefi,
-  getNFTsByAddress as getNFTsByAddressDefi,
-  getNFTTransactionsByAddress as getNFTTransactionsByAddressDefi,
-} from '@tatumio/tatum-defi'
+import { createNFTAbstraction } from '@tatumio/tatum-defi'
 import {
   post,
   TransactionHash,
@@ -18,7 +9,6 @@ import {
   ChainBurnErc721,
   ChainUpdateCashbackErc721,
   ChainTransferErc721,
-  Sort,
 } from '@tatumio/tatum-core'
 
 import {
@@ -115,34 +105,4 @@ export const updateCashbackForAuthorNFT = async (body: ChainUpdateCashbackErc721
  */
 export const transferNFT = async (body: ChainTransferErc721, provider?: string) => {
   return sendXdcErc721Transaction(body, provider)
-}
-
-export const getNFTTransactionsByAddress = async (
-  address: string,
-  tokenAddress: string,
-  pageSize = 50,
-  offset = 0,
-  from?: string,
-  to?: string,
-  sort?: Sort
-) => {
-  return getNFTTransactionsByAddressDefi(Currency.XDC, address, tokenAddress, pageSize, offset, from, to, sort)
-}
-export const getNFTsByAddress = async (contractAddress: string, address: string) => {
-  return getNFTsByAddressDefi(Currency.XDC, contractAddress, address)
-}
-export const getNFTProvenanceData = async (contractAddress: string, tokenId: string) => {
-  return getNFTProvenanceDataDefi(Currency.XDC, contractAddress, tokenId)
-}
-export const getNFTContractAddress = async (txId: string) => {
-  return getNFTContractAddressDefi(Currency.XDC, txId)
-}
-export const getNFTMetadataURI = async (contractAddress: string, tokenId: string, account?: string) => {
-  return getNFTMetadataURIDefi(Currency.XDC, contractAddress, tokenId, account)
-}
-export const getNFTImage = async (contractAddress: string, tokenId: string, account?: string) => {
-  return getNFTImageDefi(Currency.XDC, contractAddress, tokenId, account)
-}
-export const getNFTRoyalty = async (contractAddress: string, tokenId: string) => {
-  return getNFTRoyaltyDefi(Currency.XDC, contractAddress, tokenId)
 }

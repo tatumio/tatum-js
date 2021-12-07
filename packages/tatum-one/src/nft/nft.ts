@@ -6,14 +6,12 @@ import {
   getNFTProvenanceData as getNFTProvenanceDataDefi,
   getNFTRoyalty as getNFTRoyaltyDefi,
   getNFTsByAddress as getNFTsByAddressDefi,
-  getNFTTransactionsByAddress as getNFTTransactionsByAddressDefi,
   mintNFTRequest,
   prepareAddNFTMinterAbstraction,
 } from '@tatumio/tatum-defi'
 import {
   TransactionHash,
   erc721TokenABI,
-  Sort,
   Currency,
   ChainDeployErc721,
   ChainMintErc721,
@@ -141,32 +139,47 @@ export const prepareAddNFTMinter = async (body: ChainAddMinter, provider?: strin
 export const sendAddNFTMinter = async (body: ChainAddMinter, provider?: string) =>
   helperBroadcastTx(await prepareAddNFTMinter(body, provider), body.signatureId)
 
-export const getNFTTransactionsByAddress = async (
-  address: string,
-  tokenAddress: string,
-  pageSize = 50,
-  offset = 0,
-  from?: string,
-  to?: string,
-  sort?: Sort
-) => {
-  return getNFTTransactionsByAddressDefi(Currency.ONE, address, tokenAddress, pageSize, offset, from, to, sort)
-}
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetBalanceErc721" target="_blank">Tatum API documentation</a>
+ */
 export const getNFTsByAddress = async (contractAddress: string, address: string) => {
   return getNFTsByAddressDefi(Currency.ONE, contractAddress, address)
 }
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/NftProvenanceReadData" target="_blank">Tatum API documentation</a>
+ */
 export const getNFTProvenanceData = async (contractAddress: string, tokenId: string) => {
   return getNFTProvenanceDataDefi(Currency.ONE, contractAddress, tokenId)
 }
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetContractAddress" target="_blank">Tatum API documentation</a>
+ */
 export const getNFTContractAddress = async (txId: string) => {
   return getNFTContractAddressDefi(Currency.ONE, txId)
 }
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetMetadataErc721" target="_blank">Tatum API documentation</a>
+ */
 export const getNFTMetadataURI = async (contractAddress: string, tokenId: string, account?: string) => {
   return getNFTMetadataURIDefi(Currency.ONE, contractAddress, tokenId, account)
 }
+
+/**
+ * Get IPFS image URL from the NFT with the IPFS Metadata scheme. URL
+ * @param contractAddress contract address of the NFT token
+ * @param tokenId ID of the token
+ * @param account FLOW only - account where the token is minted
+ */
 export const getNFTImage = async (contractAddress: string, tokenId: string, account?: string) => {
   return getNFTImageDefi(Currency.ONE, contractAddress, tokenId, account)
 }
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetRoyaltyErc721" target="_blank">Tatum API documentation</a>
+ */
 export const getNFTRoyalty = async (contractAddress: string, tokenId: string) => {
   return getNFTRoyaltyDefi(Currency.ONE, contractAddress, tokenId)
 }
