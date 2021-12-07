@@ -17,8 +17,8 @@ import { getErc20Decimals } from '../fungible'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
 import {
   generateCustodialWallet as sendCeloGenerateCustodialWalletSignedTransaction,
-  getCeloErc20ContractDecimals,
-  prepareCeloSmartContractWriteMethodInvocation,
+  getErc20ContractDecimals as getCeloErc20ContractDecimals,
+  prepareSmartContractWriteMethodInvocation as prepareCeloSmartContractWriteMethodInvocation,
   prepareCustodialWallet as prepareCeloGenerateCustodialWalletSignedTransaction,
   generateCustodialWalletBatch as celoGenerateCustodialWalletBatch,
   prepareCustodialWalletBatch as celoPrepareCustodialWalletBatch,

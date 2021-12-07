@@ -8,7 +8,7 @@ import {
   SmartContractReadMethodInvocation,
 } from '@tatumio/tatum-core'
 import { CeloMintErc721, sendCeloSmartContractReadMethodInvocationTransaction } from '../..'
-import { celoGetCurrentBlock } from '../../blockchain'
+import { getCurrentBlock } from '../../blockchain'
 import { mintNFTWithUri } from '../nft'
 import {
   deployAuction,
@@ -93,7 +93,7 @@ describe('Auction  tests', () => {
       )
 
       await sleep()
-      const endedAt = (await celoGetCurrentBlock()) + 9
+      const endedAt = (await getCurrentBlock()) + 9
       const body = new CreateAuction()
       body.fromPrivateKey = '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236'
       body.contractAddress = '0x991dfc0db4cbe2480296eec5bcc6b3215a9b7038'
@@ -155,7 +155,7 @@ describe('Auction  tests', () => {
       )
 
       await sleep()
-      const endedAt = (await celoGetCurrentBlock()) + 7
+      const endedAt = (await getCurrentBlock()) + 7
       const body = new CreateAuction()
       body.fromPrivateKey = '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236'
       body.contractAddress = '0x991dfc0db4cbe2480296eec5bcc6b3215a9b7038'

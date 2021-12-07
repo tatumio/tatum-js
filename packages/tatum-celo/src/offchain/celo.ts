@@ -3,10 +3,10 @@ import BigNumber from 'bignumber.js'
 import { TransferCeloOffchain } from '../model/request'
 import { fromWei, toWei } from 'web3-utils'
 import { getAccountById, getVirtualCurrencyByName } from '../ledger'
-import { prepareCeloOrCUsdSignedTransaction, prepareCeloTransferErc20SignedTransaction } from '../transaction'
+import { prepareCeloOrCUsdSignedTransaction, prepareTransferErc20SignedTransaction } from '../transaction'
 import { generatePrivateKeyFromMnemonic } from '../wallet'
 import { offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal } from './common'
-import { offchainTransferCeloKMS } from './kms'
+import { offchainTransferKMS } from './kms'
 import { CELO_BASED_CURRENCIES } from '../constants'
 
 /**
@@ -17,9 +17,9 @@ import { CELO_BASED_CURRENCIES } from '../constants'
  * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
-export const sendCeloOffchainTransaction = async (testnet: boolean, body: TransferCeloOffchain, provider?: string) => {
+export const sendOffchainTransaction = async (testnet: boolean, body: TransferCeloOffchain, provider?: string) => {
   if (body.signatureId) {
-    return offchainTransferCeloKMS(body)
+    return offchainTransferKMS(body)
   }
   await validateBody(body, TransferCeloOffchain)
   const { mnemonic, index, privateKey, gasLimit, gasPrice, nonce, feeCurrency, ...withdrawal } = body
@@ -48,7 +48,7 @@ export const sendCeloOffchainTransaction = async (testnet: boolean, body: Transf
     )
   } else {
     const vc = await getVirtualCurrencyByName(account.currency)
-    txData = await prepareCeloTransferErc20SignedTransaction(
+    txData = await prepareTransferErc20SignedTransaction(
       testnet,
       {
         amount,

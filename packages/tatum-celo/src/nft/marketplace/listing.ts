@@ -13,7 +13,7 @@ import {
   UpdateMarketplaceFee,
   UpdateMarketplaceFeeRecipient,
 } from '@tatumio/tatum-core'
-import { sendCeloDeployMarketplaceListingSignedTransaction, prepareCeloDeployMarketplaceListingSignedTransaction } from '../..'
+import { sendDeployMarketplaceListingSignedTransaction, prepareDeployMarketplaceListingSignedTransaction } from '../..'
 import { prepareApproveErc20 } from '../../fungible'
 import { helperBroadcastTx, helperPrepareSCCall } from '../../helpers'
 
@@ -32,7 +32,7 @@ import { helperBroadcastTx, helperPrepareSCCall } from '../../helpers'
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const deployMarketplaceListing = async (testnet: boolean, body: DeployMarketplaceListing, provider?: string) => {
-  return await sendCeloDeployMarketplaceListingSignedTransaction(testnet, body, provider)
+  return await sendDeployMarketplaceListingSignedTransaction(testnet, body, provider)
 }
 
 /**
@@ -50,7 +50,7 @@ export const deployMarketplaceListing = async (testnet: boolean, body: DeployMar
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareDeployMarketplaceListing = async (testnet: boolean, body: DeployMarketplaceListing, provider?: string) => {
-  return await prepareCeloDeployMarketplaceListingSignedTransaction(testnet, body, provider)
+  return await prepareDeployMarketplaceListingSignedTransaction(testnet, body, provider)
 }
 
 /**

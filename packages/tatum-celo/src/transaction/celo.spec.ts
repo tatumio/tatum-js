@@ -30,7 +30,7 @@ import {
   // prepareCeloOrCUsdSignedTransaction,
   // prepareCeloStoreDataSignedTransaction,
   // prepareCeloTransferErc20SignedTransaction,
-  prepareCeloTransferErc721SignedTransaction,
+  prepareTransferErc721SignedTransaction,
   // prepareCeloUpdateCashbackForAuthorErc721SignedTransaction,
   // sendCeloSmartContractMethodInvocationTransaction,
   // sendCeloSmartContractReadMethodInvocationTransaction,
@@ -506,7 +506,7 @@ describe('CELO transactions', () => {
     body.provenanceData = 'send token X'
     body.tokenPrice = '123'
     body.value = '1000'
-    const txData = await prepareCeloTransferErc721SignedTransaction(true, body, 'https://alfajores-forno.celo-testnet.org')
+    const txData = await prepareTransferErc721SignedTransaction(true, body, 'https://alfajores-forno.celo-testnet.org')
     expect(txData).toContain('0x')
     // const provider = new CeloProvider('https://alfajores-forno.celo-testnet.org');
     // await provider.ready;

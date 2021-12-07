@@ -8,43 +8,43 @@ import {
   CeloBurnMultiTokenBatch,
 } from '../model'
 import {
-  sendCeloBurnMultiTokenBatchTransaction,
-  sendCeloBurnMultiTokenTransaction,
-  sendCeloDeployMultiTokenTransaction,
-  sendCeloMintMultiTokenBatchTransaction,
-  sendCeloMintMultiTokenTransaction,
-  sendCeloTransferMultiTokenBatchTransaction,
-  sendCeloTransferMultiTokenTransaction,
+  sendBurnMultiTokenBatchTransaction,
+  sendBurnMultiTokenTransaction,
+  sendDeployMultiTokenTransaction,
+  sendMintMultiTokenBatchTransaction,
+  sendMintMultiTokenTransaction,
+  sendTransferMultiTokenBatchTransaction,
+  sendTransferMultiTokenTransaction,
 } from '../transaction'
 import { AddMinter, prepareAddMultiTokenMinterAbstraction, listing } from '@tatumio/tatum-core'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
 
 export const deployMultiToken = async (testnet: boolean, body: CeloDeployMultiToken, provider?: string) => {
-  return sendCeloDeployMultiTokenTransaction(testnet, body as CeloDeployMultiToken, provider)
+  return sendDeployMultiTokenTransaction(testnet, body as CeloDeployMultiToken, provider)
 }
 
 export const mintMultiToken = async (testnet: boolean, body: CeloMintMultiToken, provider?: string) => {
-  return sendCeloMintMultiTokenTransaction(testnet, body as CeloMintMultiToken, provider)
+  return sendMintMultiTokenTransaction(testnet, body as CeloMintMultiToken, provider)
 }
 
 export const mintMultiTokenBatch = async (testnet: boolean, body: CeloMintMultiTokenBatch, provider?: string) => {
-  return sendCeloMintMultiTokenBatchTransaction(testnet, body as CeloMintMultiTokenBatch, provider)
+  return sendMintMultiTokenBatchTransaction(testnet, body as CeloMintMultiTokenBatch, provider)
 }
 
 export const burnMultiToken = async (testnet: boolean, body: CeloBurnMultiToken, provider?: string) => {
-  return sendCeloBurnMultiTokenTransaction(testnet, body as CeloBurnMultiToken, provider)
+  return sendBurnMultiTokenTransaction(testnet, body as CeloBurnMultiToken, provider)
 }
 
 export const burnMultiTokenBatch = async (testnet: boolean, body: CeloBurnMultiTokenBatch, provider?: string) => {
-  return sendCeloBurnMultiTokenBatchTransaction(testnet, body as CeloBurnMultiTokenBatch, provider)
+  return sendBurnMultiTokenBatchTransaction(testnet, body as CeloBurnMultiTokenBatch, provider)
 }
 
 export const transferMultiToken = async (testnet: boolean, body: CeloTransferMultiToken, provider?: string) => {
-  return sendCeloTransferMultiTokenTransaction(testnet, body as CeloTransferMultiToken, provider)
+  return sendTransferMultiTokenTransaction(testnet, body as CeloTransferMultiToken, provider)
 }
 
 export const transferMultiTokenBatch = async (testnet: boolean, body: CeloTransferMultiTokenBatch, provider?: string) => {
-  return sendCeloTransferMultiTokenBatchTransaction(testnet, body as CeloTransferMultiTokenBatch, provider)
+  return sendTransferMultiTokenBatchTransaction(testnet, body as CeloTransferMultiTokenBatch, provider)
 }
 
 /**

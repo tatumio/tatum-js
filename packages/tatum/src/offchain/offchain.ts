@@ -13,7 +13,7 @@ export {
   prepareSignedOffchainTransaction as prepareBitcoinSignedOffchainTransaction,
 } from '@tatumio/tatum-btc'
 export { sendOffchainTransaction as sendBscOffchainTransaction } from '@tatumio/tatum-bsc'
-export { sendCeloOffchainTransaction } from '@tatumio/tatum-celo'
+export { sendOffchainTransaction as sendCeloOffchainTransaction } from '@tatumio/tatum-celo'
 export { sendDogecoinOffchainTransaction, prepareDogecoinSignedOffchainTransaction } from '@tatumio/tatum-doge'
 export { sendEgldOffchainTransaction } from '@tatumio/tatum-egld'
 export {
