@@ -1,11 +1,4 @@
-import {
-  prepareApproveErc20Abstraction,
-  erc20TokenABI,
-  Sort,
-  getERC20TransactionsByAddress as getERC20TransactionsByAddressCore,
-  Currency,
-  ChainApproveErc20,
-} from '@tatumio/tatum-core'
+import { prepareApproveErc20Abstraction, erc20TokenABI, Currency, ChainApproveErc20 } from '@tatumio/tatum-core'
 import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../helpers'
 import { getKccErc20ContractDecimals } from '../transaction'
 
@@ -44,16 +37,4 @@ export const getErc20Decimals = async (contractAddress: string, provider?: strin
   const web3 = helperGetWeb3Client(provider)
   // @ts-ignore
   return new web3.eth.Contract(token_abi, contractAddress).methods.decimals().call()
-}
-
-export const getERC20TransactionsByAddress = async (
-  address: string,
-  tokenAddress: string,
-  pageSize = 50,
-  offset = 0,
-  from?: string,
-  to?: string,
-  sort?: Sort
-) => {
-  return getERC20TransactionsByAddressCore(Currency.KCS, address, tokenAddress, pageSize, offset, from, to, sort)
 }
