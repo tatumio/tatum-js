@@ -62,14 +62,14 @@ export const prepareAlgoSignedTransaction = async (testnet: boolean, tx: AlgoTra
     const enc = new TextEncoder();
     const note = enc.encode(tx.note ? tx.note : '');
     const txn = algosdk.makePaymentTxnWithSuggestedParams(
-        tx.from, 
-        tx.to, 
-        Number(tx.amount) * 1000000, 
-        undefined, 
-        note, 
+        tx.from,
+        tx.to,
+        Number(tx.amount) * 1000000,
+        undefined,
+        note,
         {
-            ...params, 
-            fee: Number(tx.fee) * 1000000, 
+            ...params,
+            fee: Number(tx.fee) * 1000000,
             flatFee: true
         }
     );
@@ -106,9 +106,41 @@ export const signAlgoKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
         throw Error('Unsupported chain.')
     }
     const decoder = new base32.Decoder({ type: 'rfc4648' })
-    const txn = JSON.parse(tx.serializedTransaction);
-    const secretKey = new Uint8Array(decoder.write(fromPrivateKey).buf);    
-    const signedTxn = txn.signTxn(secretKey);
+    let txn = JSON.parse(tx.serializedTransaction);
+    txn.from = algosdk.encodeAddress(new Uint8Array(Object.values(txn.from.publicKey)));
+    txn.to = algosdk.encodeAddress(new Uint8Array(Object.values(txn.to.publicKey)));
+    txn.note = new Uint8Array(Object.values(txn.note));
+    txn.lease = undefined;
+    if (txn.tag) {
+        if (txn.tag.data) {
+            txn.tag = Buffer.from(txn.tag.data);
+        }
+    }
+    txn.genesisHash = Buffer.from(txn.genesisHash.data);
+    if (txn.assetManager) {
+        txn.assetManager = algosdk.encodeAddress(new Uint8Array(Object.values(txn.assetManager.publicKey)));
+    }
+    if (txn.assetReserve) {
+        txn.assetReserve = undefined;
+    }
+    if (txn.assetFreeze) {
+        txn.assetFreeze = undefined;
+    }
+    if (txn.assetClawback) {
+        txn.assetClawback = undefined;
+    }
+    if (txn.assetRevocationTarget) {
+        txn.assetRevocationTarget = undefined;
+    }
+    if (txn.reKeyTo) {
+        txn.reKeyTo = undefined;
+    }
+    if (txn.assetMetadataHash) {
+        txn.assetMetadataHash = new Uint8Array(Object.values(txn.assetMetadataHash));
+    }
+    const _txn = new (algosdk.Transaction)(txn);
+    const secretKey = new Uint8Array(decoder.write(fromPrivateKey).buf);
+    const signedTxn = _txn.signTxn(secretKey);
     return signedTxn;
 }
 
@@ -248,7 +280,7 @@ export const prepareAlgoCreateFractionalNFTSignedTransaction = async (testnet: b
     const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
         tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
         undefined,
-        10 ** Math.floor(Math.log10(Number(tx.amount))), 
+        10 ** Math.floor(Math.log10(Number(tx.amount))),
         Math.floor(Math.log10(Number(tx.amount))),
         false,
         tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
@@ -290,7 +322,7 @@ export const sendAlgoCreateFractionalNFTSignedTransaction = async (testnet: bool
 export const prepareAlgoTransferFractionalNFTSignedTransaction = async (testnet: boolean, tx: TransferMultiToken, provider?: string) => {
     const algodClient = getAlgoClient(testnet, provider);
     const params = await algodClient.getTransactionParams().do();
-    const decoder = new base32.Decoder({ type: 'rfc4648' })    
+    const decoder = new base32.Decoder({ type: 'rfc4648' })
     const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
         tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
         tx.to,
@@ -368,7 +400,7 @@ export const sendAlgoBurnFractionalNFTSignedTransaction = async (testnet: boolea
 export const prepareAlgoCreateFTSignedTransaction = async (testnet: boolean, tx: DeployErc20, provider?: string) => {
     const algodClient = getAlgoClient(testnet, provider);
     const params = await algodClient.getTransactionParams().do();
-    const decoder = new base32.Decoder({ type: 'rfc4648' })    
+    const decoder = new base32.Decoder({ type: 'rfc4648' })
     const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
         tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
         undefined,
