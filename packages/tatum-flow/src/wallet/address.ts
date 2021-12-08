@@ -9,7 +9,7 @@ import { FLOW_DERIVATION_PATH } from '../constants'
  * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
-const generateFlowPublicKey = (xpub: string, i: number) => {
+const generatePublicKey = (xpub: string, i: number) => {
   const w = fromBase58(xpub).derivePath(String(i))
   const s = new elliptic.ec('secp256k1').keyFromPublic(w.publicKey).getPublic().encode('hex', false)
   return s.slice(2)
@@ -19,7 +19,7 @@ const generateFlowPublicKey = (xpub: string, i: number) => {
  * Generate FLOW or FUSD public key from private key
  * @returns blockchain address
  */
-export const generateFlowPublicKeyFromPrivateKey = (pk: string) => {
+export const generatePublicKeyFromPrivateKey = (pk: string) => {
   const s = new elliptic.ec('secp256k1').keyFromPrivate(pk).getPublic().encode('hex', false)
   return s.slice(2)
 }
@@ -28,7 +28,7 @@ export const generateFlowPublicKeyFromPrivateKey = (pk: string) => {
  * Generate Flow private key from mnemonic seed
  * @returns blockchain private key to the address
  */
-const generateFlowPrivateKey = async (mnemonic: string, i: number, alg = 'secp256k1') => {
+const generatePrivateKey = async (mnemonic: string, i: number, alg = 'secp256k1') => {
   const key = fromSeed(await mnemonicToSeed(mnemonic))
     .derivePath(FLOW_DERIVATION_PATH)
     .derive(i).privateKey as Buffer
@@ -42,7 +42,7 @@ const generateFlowPrivateKey = async (mnemonic: string, i: number, alg = 'secp25
  * @returns blockchain address
  */
 export const generateAddressFromXPub = (xpub: string, i: number) => {
-  return generateFlowPublicKey(xpub, i)
+  return generatePublicKey(xpub, i)
 }
 
 /**
@@ -52,5 +52,5 @@ export const generateAddressFromXPub = (xpub: string, i: number) => {
  * @returns blockchain private key to the address
  */
 export const generatePrivateKeyFromMnemonic = (mnemonic: string, i: number) => {
-  return generateFlowPrivateKey(mnemonic, i)
+  return generatePrivateKey(mnemonic, i)
 }

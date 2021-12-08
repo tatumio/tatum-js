@@ -6,7 +6,7 @@ import * as types from '@onflow/types'
 import { ECDSA_secp256k1, encodeKey, SHA3_256 } from '@onflow/util-encode-key'
 import * as elliptic from 'elliptic'
 import { SHA3 } from 'sha3'
-import { flowBroadcastTx, flowGetSignKey, flowSignWithKey } from '../blockchain'
+import { broadcastTx, getSignKey, signWithKey } from '../blockchain'
 import { Currency, validateBody, TransactionKMS, ChainTransactionKMS } from '@tatumio/tatum-core'
 import { FLOW_MAINNET_ADDRESSES, FLOW_TESTNET_ADDRESSES } from '../constants'
 import {
@@ -24,15 +24,15 @@ import {
 } from '../model'
 import { generatePrivateKeyFromMnemonic } from '../wallet'
 import {
-  burnFlowNftTokenTxTemplate,
-  metadataFlowNftTokenScript,
-  mintFlowMultipleNftTokenTxTemplate,
-  mintFlowNftTokenTxTemplate,
+  burnNftTokenTxTemplate,
+  metadataNftTokenScript,
+  mintMultipleNftTokenTxTemplate,
+  mintNftTokenTxTemplate,
   prepareAddPublicKeyToAccountTxTemplate,
   prepareCreateAccountWithFUSDFromPublicKeyTxTemplate,
-  prepareTransferFlowTxTemplate,
-  tokenByAddressFlowNftTokenScript,
-  transferFlowNftTokenTxTemplate,
+  prepareTransferTxTemplate,
+  tokenByAddressNftTokenScript,
+  transferNftTokenTxTemplate,
 } from './flowTransaction'
 
 export enum FlowTxType {
@@ -81,7 +81,7 @@ type TransactionResult = {
 
 type AccountAuthorizer = (account?: Account) => Promise<AccountAuthorization>
 
-export const flowSign = (pk: string, msg: Buffer) => {
+export const sign = (pk: string, msg: Buffer) => {
   const keyPair = new elliptic.ec('secp256k1').keyFromPrivate(pk)
   const signature = keyPair.sign(new SHA3(256).update(msg).digest())
   const r = signature.r.toArrayLike(Buffer, 'be', 32)
@@ -90,7 +90,7 @@ export const flowSign = (pk: string, msg: Buffer) => {
   return Buffer.concat([r, s]).toString('hex')
 }
 
-export const getFlowSigner = (pk: string, address: string, keyId = 0) => {
+export const getSigner = (pk: string, address: string, keyId = 0) => {
   return {
     signer: (account: any) => {
       return {
@@ -102,7 +102,7 @@ export const getFlowSigner = (pk: string, address: string, keyId = 0) => {
           return {
             addr: fcl.withPrefix(address),
             keyId: Number(keyId),
-            signature: flowSign(pk, Buffer.from(data.message, 'hex')),
+            signature: sign(pk, Buffer.from(data.message, 'hex')),
           }
         },
       }
@@ -110,10 +110,10 @@ export const getFlowSigner = (pk: string, address: string, keyId = 0) => {
   }
 }
 
-export const getFlowApiSigner = (isPayer: boolean) => {
+export const getApiSigner = (isPayer: boolean) => {
   const keyHash = Date.now()
   const signer = async (account: any) => {
-    const { address, keyId } = await flowGetSignKey(isPayer)
+    const { address, keyId } = await getSignKey(isPayer)
     if (!isPayer) {
       process.env[`FLOW_PROPOSAL_KEY_${keyHash}`] = `${keyId}`
     }
@@ -126,7 +126,7 @@ export const getFlowApiSigner = (isPayer: boolean) => {
         return {
           addr: fcl.withPrefix(address),
           keyId: Number(keyId),
-          signature: (await flowSignWithKey(data.message, isPayer)).signature,
+          signature: (await signWithKey(data.message, isPayer)).signature,
         }
       },
     }
@@ -134,7 +134,7 @@ export const getFlowApiSigner = (isPayer: boolean) => {
   return { signer, keyHash: `FLOW_PROPOSAL_KEY_${keyHash}` }
 }
 
-const sendTransaction = async (
+const _sendTransaction = async (
   testnet: boolean,
   { code, args, proposer, authorizations, payer, keyHash }: Transaction
 ): Promise<TransactionResult> => {
@@ -159,7 +159,7 @@ const sendTransaction = async (
   } catch (e) {
     try {
       if (keyHash) {
-        await flowBroadcastTx('', undefined, keyHash ? parseInt((process.env[keyHash] || '0') as string) : undefined)
+        await broadcastTx('', undefined, keyHash ? parseInt((process.env[keyHash] || '0') as string) : undefined)
         delete process.env[keyHash]
       }
       // eslint-disable-next-line no-empty
@@ -178,7 +178,7 @@ const sendTransaction = async (
   } finally {
     try {
       if (keyHash) {
-        await flowBroadcastTx(transactionId, undefined, keyHash ? parseInt((process.env[keyHash] || '0') as string) : undefined)
+        await broadcastTx(transactionId, undefined, keyHash ? parseInt((process.env[keyHash] || '0') as string) : undefined)
         delete process.env[keyHash]
       }
       // eslint-disable-next-line no-empty
@@ -195,27 +195,27 @@ const sendScript = async (testnet: boolean, code: string, args: FlowArgs[]) => {
   return fcl.decode(response)
 }
 
-export const flowSignKMSTransaction = async (tx: ChainTransactionKMS, privateKeys: string[], testnet: boolean) => {
+export const signKMSTransaction = async (tx: ChainTransactionKMS, privateKeys: string[], testnet: boolean) => {
   ;(tx as TransactionKMS).chain = Currency.FLOW
 
   const { type, body }: { type: FlowTxType; apiManagedProposal: boolean; body: any } = JSON.parse(tx.serializedTransaction)
   switch (type) {
     case FlowTxType.CREATE_ACCOUNT:
-      return await flowCreateAccountFromPublicKey(testnet, body.publicKey, body.account, privateKeys[0])
+      return await createAccountFromPublicKey(testnet, body.publicKey, body.account, privateKeys[0])
     case FlowTxType.ADD_PK_TO_ACCOUNT:
-      return await flowAddPublicKeyToAccount(testnet, body.publicKey, body.account, privateKeys[0])
+      return await addPublicKeyToAccount(testnet, body.publicKey, body.account, privateKeys[0])
     case FlowTxType.TRANSFER:
-      return await flowSendTransaction(testnet, { ...body, privateKey: privateKeys[0] })
+      return await sendTransaction(testnet, { ...body, privateKey: privateKeys[0] })
     case FlowTxType.TRANSFER_NFT:
-      return await sendFlowNftTransferToken(testnet, { ...body, privateKey: privateKeys[0] })
+      return await sendNftTransferToken(testnet, { ...body, privateKey: privateKeys[0] })
     case FlowTxType.MINT_NFT:
-      return await sendFlowNftMintToken(testnet, { ...body, privateKey: privateKeys[0] })
+      return await sendNftMintToken(testnet, { ...body, privateKey: privateKeys[0] })
     case FlowTxType.MINT_MULTIPLE_NFT:
-      return await sendFlowNftMintMultipleToken(testnet, { ...body, privateKey: privateKeys[0] })
+      return await sendNftMintMultipleToken(testnet, { ...body, privateKey: privateKeys[0] })
     case FlowTxType.BURN_NFT:
-      return await sendFlowNftBurnToken(testnet, { ...body, privateKey: privateKeys[0] })
+      return await sendNftBurnToken(testnet, { ...body, privateKey: privateKeys[0] })
     default:
-      return await flowSendCustomTransaction(testnet, { ...body, privateKey: privateKeys[0] })
+      return await sendCustomTransaction(testnet, { ...body, privateKey: privateKeys[0] })
   }
 }
 
@@ -229,7 +229,7 @@ export const flowSignKMSTransaction = async (tx: ChainTransactionKMS, privateKey
  * @param proposer function to obtain proposer key from
  * @param payer function to obtain payer key from
  */
-export const flowCreateAccountFromPublicKey = async (
+export const createAccountFromPublicKey = async (
   testnet: boolean,
   publicKey: string,
   signerAddress: string,
@@ -240,14 +240,14 @@ export const flowCreateAccountFromPublicKey = async (
   const code = prepareCreateAccountWithFUSDFromPublicKeyTxTemplate(testnet)
   const encodedPublicKey = encodeKey(publicKey, ECDSA_secp256k1, SHA3_256, 1000)
   const args = [{ type: 'String', value: encodedPublicKey }]
-  const auth = getFlowSigner(signerPrivateKey, signerAddress).signer
-  const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getFlowApiSigner(false)
-  const result = await sendTransaction(testnet, {
+  const auth = getSigner(signerPrivateKey, signerAddress).signer
+  const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getApiSigner(false)
+  const result = await _sendTransaction(testnet, {
     code,
     args,
     proposer: proposer ? proposer(false) : proposalSigner,
     authorizations: [auth],
-    payer: payer ? payer(true) : getFlowApiSigner(true).signer,
+    payer: payer ? payer(true) : getApiSigner(true).signer,
     keyHash,
   })
   if (result.error) {
@@ -266,7 +266,7 @@ export const flowCreateAccountFromPublicKey = async (
  * @param proposer function to obtain proposer key from
  * @param payer function to obtain payer key from
  */
-export const flowAddPublicKeyToAccount = async (
+export const addPublicKeyToAccount = async (
   testnet: boolean,
   publicKey: string,
   signerAddress: string,
@@ -278,15 +278,15 @@ export const flowAddPublicKeyToAccount = async (
   const code = prepareAddPublicKeyToAccountTxTemplate()
   const encodedPublicKey = encodeKey(publicKey, ECDSA_secp256k1, SHA3_256, weight)
   const args = [{ type: 'String', value: encodedPublicKey }]
-  const auth = getFlowSigner(signerPrivateKey, signerAddress).signer
-  const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getFlowApiSigner(false)
-  const result = await sendTransaction(testnet, {
+  const auth = getSigner(signerPrivateKey, signerAddress).signer
+  const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getApiSigner(false)
+  const result = await _sendTransaction(testnet, {
     code,
     args,
     proposer: proposer ? proposer(false) : proposalSigner,
     authorizations: [auth],
     keyHash,
-    payer: payer ? payer(true) : getFlowApiSigner(true).signer,
+    payer: payer ? payer(true) : getApiSigner(true).signer,
   })
   if (result.error) {
     throw new Error(result.error)
@@ -294,8 +294,8 @@ export const flowAddPublicKeyToAccount = async (
   return { txId: result.id, address: result.events[0].data.address }
 }
 
-export const getFlowNftMetadata = async (testnet: boolean, account: string, id: string, tokenType: string) => {
-  const code = metadataFlowNftTokenScript(testnet)
+export const getNftMetadata = async (testnet: boolean, account: string, id: string, tokenType: string) => {
+  const code = metadataNftTokenScript(testnet)
   const args = [
     { type: 'Address', value: account },
     { type: 'UInt64', value: id },
@@ -304,8 +304,8 @@ export const getFlowNftMetadata = async (testnet: boolean, account: string, id: 
   return await sendScript(testnet, code, args)
 }
 
-export const getFlowNftTokenByAddress = async (testnet: boolean, account: string, tokenType: string) => {
-  const code = tokenByAddressFlowNftTokenScript(testnet)
+export const getNftTokenByAddress = async (testnet: boolean, account: string, tokenType: string) => {
+  const code = tokenByAddressNftTokenScript(testnet)
   const args = [
     { type: 'Address', value: account },
     { type: 'String', value: tokenType },
@@ -322,7 +322,7 @@ export const getFlowNftTokenByAddress = async (testnet: boolean, account: string
  * @param payer function to obtain payer key from
  * @returns txId id of the transaction in the blockchain
  */
-export const sendFlowNftMintToken = async (
+export const sendNftMintToken = async (
   testnet: boolean,
   body: ChainFlowMintNft,
   proposer?: (isPayer: boolean) => any,
@@ -330,7 +330,7 @@ export const sendFlowNftMintToken = async (
 ): Promise<{ txId: string; tokenId: string }> => {
   ;(body as FlowMintNft).chain = Currency.FLOW
   await validateBody(body, FlowMintNft)
-  const code = mintFlowNftTokenTxTemplate(testnet)
+  const code = mintNftTokenTxTemplate(testnet)
   const { url, contractAddress: tokenType, to, mnemonic, index, account, privateKey } = body
   const args = [
     { type: 'Address', value: to },
@@ -338,15 +338,15 @@ export const sendFlowNftMintToken = async (
     { type: 'String', value: tokenType },
   ]
   const pk = mnemonic && index && index >= 0 ? await generatePrivateKeyFromMnemonic(mnemonic, index as number) : (privateKey as string)
-  const auth = getFlowSigner(pk, account).signer
-  const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getFlowApiSigner(false)
-  const result = await sendTransaction(testnet, {
+  const auth = getSigner(pk, account).signer
+  const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getApiSigner(false)
+  const result = await _sendTransaction(testnet, {
     code,
     args,
     proposer: proposer ? proposer(false) : proposalSigner,
     authorizations: [auth],
     keyHash,
-    payer: payer ? payer(true) : getFlowApiSigner(true).signer,
+    payer: payer ? payer(true) : getApiSigner(true).signer,
   })
   if (result.error) {
     throw new Error(result.error)
@@ -366,7 +366,7 @@ export const sendFlowNftMintToken = async (
  * @param payer function to obtain payer key from
  * @returns txId id of the transaction in the blockchain
  */
-export const sendFlowNftMintMultipleToken = async (
+export const sendNftMintMultipleToken = async (
   testnet: boolean,
   body: ChainFlowMintMultipleNft,
   proposer?: (isPayer: boolean) => any,
@@ -374,7 +374,7 @@ export const sendFlowNftMintMultipleToken = async (
 ): Promise<{ txId: string; tokenId: number[] }> => {
   ;(body as FlowMintMultipleNft).chain = Currency.FLOW
   await validateBody(body, FlowMintMultipleNft)
-  const code = mintFlowMultipleNftTokenTxTemplate(testnet)
+  const code = mintMultipleNftTokenTxTemplate(testnet)
   const { url, contractAddress: tokenType, to, mnemonic, index, account, privateKey } = body
   const args = [
     { type: 'Array', subType: 'Address', value: to },
@@ -386,14 +386,14 @@ export const sendFlowNftMintMultipleToken = async (
     { type: 'String', value: tokenType },
   ]
   const pk = mnemonic && index && index >= 0 ? await generatePrivateKeyFromMnemonic(mnemonic, index as number) : (privateKey as string)
-  const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getFlowApiSigner(false)
-  const auth = getFlowSigner(pk, account).signer
-  const result = await sendTransaction(testnet, {
+  const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getApiSigner(false)
+  const auth = getSigner(pk, account).signer
+  const result = await _sendTransaction(testnet, {
     code,
     args,
     proposer: proposer ? proposer(false) : proposalSigner,
     authorizations: [auth],
-    payer: payer ? payer(true) : getFlowApiSigner(true).signer,
+    payer: payer ? payer(true) : getApiSigner(true).signer,
     keyHash,
   })
   if (result.error) {
@@ -414,7 +414,7 @@ export const sendFlowNftMintMultipleToken = async (
  * @param payer function to obtain payer key from
  * @returns {txId: string, events: any[]} id of the transaction in the blockchain and events this tx produced
  */
-export const sendFlowNftTransferToken = async (
+export const sendNftTransferToken = async (
   testnet: boolean,
   body: ChainFlowTransferNft,
   proposer?: (isPayer: boolean) => any,
@@ -422,21 +422,21 @@ export const sendFlowNftTransferToken = async (
 ): Promise<{ txId: string }> => {
   ;(body as FlowTransferNft).chain = Currency.FLOW
   await validateBody(body, FlowTransferNft)
-  const code = transferFlowNftTokenTxTemplate(testnet)
+  const code = transferNftTokenTxTemplate(testnet)
   const { tokenId, to, mnemonic, index, account, privateKey } = body
   const args = [
     { type: 'Address', value: to },
     { type: 'UInt64', value: tokenId },
   ]
   const pk = mnemonic && index && index >= 0 ? await generatePrivateKeyFromMnemonic(mnemonic, index as number) : (privateKey as string)
-  const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getFlowApiSigner(false)
-  const auth = getFlowSigner(pk, account).signer
-  const result = await sendTransaction(testnet, {
+  const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getApiSigner(false)
+  const auth = getSigner(pk, account).signer
+  const result = await _sendTransaction(testnet, {
     code,
     args,
     proposer: proposer ? proposer(false) : proposalSigner,
     authorizations: [auth],
-    payer: payer ? payer(true) : getFlowApiSigner(true).signer,
+    payer: payer ? payer(true) : getApiSigner(true).signer,
     keyHash,
   })
   if (result.error) {
@@ -454,7 +454,7 @@ export const sendFlowNftTransferToken = async (
  * @param payer function to obtain payer key from
  * @returns txId id of the transaction in the blockchain
  */
-export const sendFlowNftBurnToken = async (
+export const sendNftBurnToken = async (
   testnet: boolean,
   body: ChainFlowBurnNft,
   proposer?: (isPayer: boolean) => any,
@@ -462,21 +462,21 @@ export const sendFlowNftBurnToken = async (
 ): Promise<{ txId: string }> => {
   ;(body as FlowBurnNft).chain = Currency.FLOW
   await validateBody(body, FlowBurnNft)
-  const code = burnFlowNftTokenTxTemplate(testnet)
+  const code = burnNftTokenTxTemplate(testnet)
   const { tokenId, contractAddress: tokenType, mnemonic, index, account, privateKey } = body
   const args = [
     { type: 'UInt64', value: tokenId },
     { type: 'String', value: tokenType },
   ]
   const pk = mnemonic && index && index >= 0 ? await generatePrivateKeyFromMnemonic(mnemonic, index as number) : (privateKey as string)
-  const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getFlowApiSigner(false)
-  const auth = getFlowSigner(pk, account).signer
-  const result = await sendTransaction(testnet, {
+  const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getApiSigner(false)
+  const auth = getSigner(pk, account).signer
+  const result = await _sendTransaction(testnet, {
     code,
     args,
     proposer: proposer ? proposer(false) : proposalSigner,
     authorizations: [auth],
-    payer: payer ? payer(true) : getFlowApiSigner(true).signer,
+    payer: payer ? payer(true) : getApiSigner(true).signer,
     keyHash,
   })
   if (result.error) {
@@ -493,7 +493,7 @@ export const sendFlowNftBurnToken = async (
  * @param payer function to obtain payer key from
  * @returns txId id of the transaction in the blockchain
  */
-export const flowSendCustomTransaction = async (
+export const sendCustomTransaction = async (
   testnet: boolean,
   body: TransferFlowCustomTx,
   proposer?: (isPayer: boolean) => any,
@@ -501,15 +501,15 @@ export const flowSendCustomTransaction = async (
 ): Promise<{ txId: string; events: any[] }> => {
   await validateBody(body, TransferFlowCustomTx)
   const pk = body.privateKey || (await generatePrivateKeyFromMnemonic(body.mnemonic as string, body.index as number))
-  const auth = getFlowSigner(pk, body.account).signer
-  const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getFlowApiSigner(false)
-  const result = await sendTransaction(testnet, {
+  const auth = getSigner(pk, body.account).signer
+  const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getApiSigner(false)
+  const result = await _sendTransaction(testnet, {
     code: body.transaction,
     args: body.args,
     proposer: proposer ? proposer(false) : proposalSigner,
     authorizations: [auth],
     keyHash,
-    payer: payer ? payer(true) : getFlowApiSigner(true).signer,
+    payer: payer ? payer(true) : getApiSigner(true).signer,
   })
   if (result.error) {
     throw new Error(result.error)
@@ -525,7 +525,7 @@ export const flowSendCustomTransaction = async (
  * @param payer function to obtain payer key from
  * @returns txId id of the transaction in the blockchain
  */
-export const flowSendTransaction = async (
+export const sendTransaction = async (
   testnet: boolean,
   body: TransferFlow,
   proposer?: (isPayer: boolean) => any,
@@ -544,20 +544,20 @@ export const flowSendTransaction = async (
     tokenName = 'FUSD'
     tokenStorage = 'fusd'
   }
-  const code = prepareTransferFlowTxTemplate(testnet, tokenAddress, tokenName, tokenStorage)
+  const code = prepareTransferTxTemplate(testnet, tokenAddress, tokenName, tokenStorage)
   const args = [
     { value: parseFloat(body.amount).toFixed(8), type: 'UFix64' },
     { value: body.to, type: 'Address' },
   ]
   const pk = body.privateKey || (await generatePrivateKeyFromMnemonic(body.mnemonic as string, body.index as number))
-  const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getFlowApiSigner(false)
-  const auth = getFlowSigner(pk, body.account).signer
-  const result = await sendTransaction(testnet, {
+  const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getApiSigner(false)
+  const auth = getSigner(pk, body.account).signer
+  const result = await _sendTransaction(testnet, {
     code,
     args,
     proposer: proposer ? proposer(false) : proposalSigner,
     authorizations: [auth],
-    payer: payer ? payer(true) : getFlowApiSigner(true).signer,
+    payer: payer ? payer(true) : getApiSigner(true).signer,
     keyHash,
   })
   if (result.error) {
