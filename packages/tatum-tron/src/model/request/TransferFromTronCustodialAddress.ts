@@ -12,3 +12,5 @@ export class TransferFromTronCustodialAddress extends TransferFromCustodialAddre
   @Min(0)
   public feeLimit?: number
 }
+
+export type ChainTransferFromTronCustodialAddress = Omit<TransferFromTronCustodialAddress, 'chain'>

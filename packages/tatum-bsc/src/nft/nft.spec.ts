@@ -8,7 +8,6 @@ describe('NFT tests', () => {
     it('should test eth 721 deploy transaction', async () => {
       const deployErc721Token = await deployNFT({
         symbol: 'TatumToken',
-        chain: Currency.BSC,
         fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
         name: 'TatumToken',
         fee: { gasLimit: '6000000', gasPrice: '100' },
@@ -21,7 +20,6 @@ describe('NFT tests', () => {
       const secondTokenId = firstTokenId + 1
       const mintedTokens = await mintMultipleNFTWithUri({
         to: ['0x811dfbff13adfbc3cf653dcc373c03616d3471c9', '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'],
-        chain: Currency.BSC,
         tokenId: [firstTokenId.toString(), secondTokenId.toString()],
         url: ['https://www.seznam.cz', 'https://www.seznam.cz'],
         fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
@@ -43,7 +41,6 @@ describe('NFT tests', () => {
       try {
         const mintedToken = await mintNFTWithUri({
           to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-          chain: Currency.BSC,
           tokenId: '1',
           url: 'test.com',
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
@@ -71,7 +68,6 @@ describe('NFT tests', () => {
     it('should test BSC send transaction', async () => {
       const sendErc721Token = await transferNFT({
         to: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
-        chain: Currency.BSC,
         tokenId: '1',
         fromPrivateKey: '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb',
         contractAddress: '0xdf82c2f74aa7b629bda65b1cfd258248c9c2b7d3',

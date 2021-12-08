@@ -1,4 +1,4 @@
-import { Currency, TransactionKMS, TransferBtcBasedBlockchain, validateBody } from '@tatumio/tatum-core'
+import { ChainTransactionKMS, Currency, TransactionKMS, TransferBtcBasedBlockchain, validateBody } from '@tatumio/tatum-core'
 import BigNumber from 'bignumber.js'
 import { scryptaBroadcast, scryptaGetUnspentForAccount } from '../blockchain'
 import { LYRA_NETWORK, LYRA_TEST_NETWORK } from '../constants'
@@ -53,10 +53,8 @@ const prepareSignedTransaction = async (network: Network, body: TransferBtcBased
  * @param testnet mainnet or testnet version
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signScryptaKMSTransaction = async (tx: TransactionKMS, privateKeys: string[], testnet: boolean) => {
-  if (tx.chain !== Currency.LTC) {
-    throw Error('Unsupported chain.')
-  }
+export const signScryptaKMSTransaction = async (tx: ChainTransactionKMS, privateKeys: string[], testnet: boolean) => {
+  ;(tx as TransactionKMS).chain = Currency.LYRA
   const network = testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK
   const builder = TransactionBuilder.fromTransaction(Transaction.fromHex(tx.serializedTransaction), network)
   for (const [i, privateKey] of privateKeys.entries()) {

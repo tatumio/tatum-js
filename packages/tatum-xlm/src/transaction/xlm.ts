@@ -1,4 +1,4 @@
-import { TransactionKMS, Currency, validateBody } from '@tatumio/tatum-core'
+import { TransactionKMS, Currency, validateBody, ChainTransactionKMS } from '@tatumio/tatum-core'
 import { TransferXlm } from '../model'
 import { Account, Asset, Keypair, Memo, Networks, Operation, TransactionBuilder } from 'stellar-sdk'
 import { xlmBroadcast, xlmGetAccountInfo } from '../blockchain'
@@ -21,10 +21,8 @@ export const sendXlmTransaction = async (testnet: boolean, body: TransferXlm) =>
  * @param testnet mainnet or testnet version
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signXlmKMSTransaction = async (tx: TransactionKMS, secret: string, testnet: boolean) => {
-  if (tx.chain !== Currency.XLM) {
-    throw Error('Unsupported chain.')
-  }
+export const signXlmKMSTransaction = async (tx: ChainTransactionKMS, secret: string, testnet: boolean) => {
+  ;(tx as TransactionKMS).chain = Currency.XLM
   const transaction = TransactionBuilder.fromXDR(tx.serializedTransaction, testnet ? Networks.TESTNET : Networks.PUBLIC)
   transaction.sign(Keypair.fromSecret(secret))
   return transaction.toEnvelope().toXDR().toString('base64')

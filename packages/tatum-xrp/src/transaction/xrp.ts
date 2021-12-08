@@ -1,4 +1,4 @@
-import { TransactionKMS, Currency, validateBody } from '@tatumio/tatum-core'
+import { TransactionKMS, Currency, validateBody, ChainTransactionKMS } from '@tatumio/tatum-core'
 import BigNumber from 'bignumber.js'
 import { RippleAPI } from 'ripple-lib'
 import { Payment } from 'ripple-lib/dist/npm/transaction/payment'
@@ -21,10 +21,8 @@ export const sendXrpTransaction = async (body: TransferXrp) => {
  * @param secret secret key to sign transaction with.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signXrpKMSTransaction = async (tx: TransactionKMS, secret: string) => {
-  if (tx.chain !== Currency.XRP) {
-    throw Error('Unsupported chain.')
-  }
+export const signXrpKMSTransaction = async (tx: ChainTransactionKMS, secret: string) => {
+  ;(tx as TransactionKMS).chain = Currency.XRP
   const rippleAPI = new RippleAPI()
   return rippleAPI.sign(tx.serializedTransaction, secret).signedTransaction
 }

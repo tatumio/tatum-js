@@ -1,4 +1,4 @@
-import { ApproveErc20, prepareApproveErc20Abstraction, erc20TokenABI } from '@tatumio/tatum-core'
+import { ApproveErc20, ChainApproveErc20, Currency, erc20TokenABI, prepareApproveErc20Abstraction } from '@tatumio/tatum-core'
 import { getBscBep20ContractDecimals } from '../'
 import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../helpers'
 
@@ -9,7 +9,7 @@ import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendApproveErc20 = async (testnet: boolean, body: ApproveErc20, provider?: string) =>
+export const sendApproveErc20 = async (testnet: boolean, body: ChainApproveErc20, provider?: string) =>
   helperBroadcastTx(await prepareApproveErc20(testnet, body, provider), body.signatureId)
 
 /**
@@ -18,8 +18,13 @@ export const sendApproveErc20 = async (testnet: boolean, body: ApproveErc20, pro
  * @param body body of the approve operation
  * @param provider optional Web3 provider
  */
-export const prepareApproveErc20 = async (testnet: boolean, body: ApproveErc20, provider?: string) => {
-  const { body: validatedBody, params } = await prepareApproveErc20Abstraction(getBscBep20ContractDecimals, testnet, body, provider)
+export const prepareApproveErc20 = async (testnet: boolean, body: ChainApproveErc20, provider?: string) => {
+  const { body: validatedBody, params } = await prepareApproveErc20Abstraction(
+    getBscBep20ContractDecimals,
+    testnet,
+    { ...body, chain: Currency.BSC } as ApproveErc20,
+    provider
+  )
   return await helperPrepareSCCall(validatedBody, 'approve', params, provider, erc20TokenABI)
 }
 

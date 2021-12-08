@@ -6,11 +6,11 @@ import { SolanaNftMetadata } from './SolanaNftMetadata'
 
 export class SolanaMintNft extends PrivateKeyOrSignatureId {
   @IsNotEmpty()
-  @Length(44, 44)
+  @Length(43, 44)
   public from: string
 
   @IsNotEmpty()
-  @Length(44, 44)
+  @Length(43, 44)
   public to: string
 
   @IsNotEmpty()
@@ -22,3 +22,5 @@ export class SolanaMintNft extends PrivateKeyOrSignatureId {
   @IsIn([Currency.SOL])
   public chain: Currency
 }
+
+export type ChainSolanaMintNft = Omit<SolanaMintNft, 'chain'>

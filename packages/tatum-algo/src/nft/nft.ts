@@ -1,4 +1,4 @@
-import { DeployErc721, BurnErc721, TransferErc721 } from '@tatumio/tatum-core'
+import { ChainDeployErc721, ChainBurnErc721, ChainTransferErc721 } from '@tatumio/tatum-core'
 
 import { sendAlgoCreateNFTSignedTransaction, sendAlgoTransferNFTSignedTransaction, sendAlgoBurnNFTSignedTransaction } from '../transaction'
 
@@ -8,7 +8,7 @@ import { sendAlgoCreateNFTSignedTransaction, sendAlgoTransferNFTSignedTransactio
  * @param body body of the create request
  * @param provider optional provider do broadcast tx
  */
-export const deployNFT = async (testnet: boolean, body: DeployErc721, provider?: string) => {
+export const deployNFT = async (testnet: boolean, body: ChainDeployErc721, provider?: string) => {
   return sendAlgoCreateNFTSignedTransaction(testnet, body, provider)
 }
 
@@ -18,7 +18,7 @@ export const deployNFT = async (testnet: boolean, body: DeployErc721, provider?:
  * @param body body of the burn request
  * @param provider optional provider do broadcast tx
  */
-export const burnNFT = async (testnet: boolean, body: BurnErc721, provider?: string) => {
+export const burnNFT = async (testnet: boolean, body: ChainBurnErc721, provider?: string) => {
   return sendAlgoBurnNFTSignedTransaction(testnet, body, provider)
 }
 
@@ -28,15 +28,6 @@ export const burnNFT = async (testnet: boolean, body: BurnErc721, provider?: str
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const transferNFT = async (testnet: boolean, body: TransferErc721, provider?: string) => {
+export const transferNFT = async (testnet: boolean, body: ChainTransferErc721, provider?: string) => {
   return sendAlgoTransferNFTSignedTransaction(testnet, body, provider)
 }
-
-export {
-  getNFTsByAddress,
-  getNFTProvenanceData,
-  getNFTContractAddress,
-  getNFTMetadataURI,
-  getNFTImage,
-  getNFTRoyalty,
-} from '@tatumio/tatum-defi'

@@ -1,8 +1,15 @@
 import BigNumber from 'bignumber.js'
 import { TransferXrpOffchain } from '../model'
 import { xrpGetAccountInfo, xrpGetFee } from '../blockchain'
-import { offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal } from './common'
-import { Currency, TransactionKMS, validateBody } from '@tatumio/tatum-core'
+import {
+  offchainBroadcast,
+  offchainCancelWithdrawal,
+  offchainStoreWithdrawal,
+  Currency,
+  TransactionKMS,
+  validateBody,
+  ChainTransactionKMS,
+} from '@tatumio/tatum-core'
 import { RippleAPI } from 'ripple-lib'
 
 /**
@@ -49,10 +56,8 @@ export const sendXrpOffchainTransaction = async (body: TransferXrpOffchain) => {
  * @param secret secret key to sign transaction with.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signXrpOffchainKMSTransaction = async (tx: TransactionKMS, secret: string) => {
-  if (tx.chain !== Currency.XRP) {
-    throw Error('Unsupported chain.')
-  }
+export const signXrpOffchainKMSTransaction = async (tx: ChainTransactionKMS, secret: string) => {
+  ;(tx as TransactionKMS).chain = Currency.XRP
   const rippleAPI = new RippleAPI()
   return rippleAPI.sign(tx.serializedTransaction, secret).signedTransaction
 }

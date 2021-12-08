@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum",
-  "version": "2.0.0-alpha.73",
+  "version": "2.0.0-alpha.80",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -28,7 +28,7 @@
     "@tatumio/tatum-egld": "file:../tatum-egld",
     "@tatumio/tatum-eth": "file:../tatum-eth",
     "@tatumio/tatum-flow": "file:../tatum-flow",
-    "@tatumio/tatum-kcc": "file:../tatum-kcc",
+    "@tatumio/tatum-kcs": "file:../tatum-kcs",
     "@tatumio/tatum-ledger": "file:../tatum-ledger",
     "@tatumio/tatum-ltc": "file:../tatum-ltc",
     "@tatumio/tatum-neo": "file:../tatum-neo",

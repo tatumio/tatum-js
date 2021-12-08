@@ -17,7 +17,16 @@ import {
 } from '@emurgo/cardano-serialization-lib-nodejs'
 import BigNumber from 'bignumber.js'
 import { adaBroadcast, adaGetBlockChainInfo, adaGetTransaction, adaGetUtxos } from '../blockchain/ada'
-import { validateBody, Currency, TransactionKMS, TransferBtcBasedBlockchain, FromAddress, FromUTXO, To } from '@tatumio/tatum-core'
+import {
+  validateBody,
+  Currency,
+  ChainTransactionKMS,
+  TransactionKMS,
+  TransferBtcBasedBlockchain,
+  FromAddress,
+  FromUTXO,
+  To,
+} from '@tatumio/tatum-core'
 import { AdaUtxo } from '../model'
 
 /**
@@ -53,10 +62,8 @@ export const sendAdaTransaction = async (body: TransferBtcBasedBlockchain) => {
  * @param privateKeys private keys to sign transaction with.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signAdaKMSTransaction = async (tx: TransactionKMS, privateKeys: string[]) => {
-  if (tx.chain !== Currency.ADA) {
-    throw Error('Unsupported chain.')
-  }
+export const signAdaKMSTransaction = async (tx: ChainTransactionKMS, privateKeys: string[]) => {
+  ;(tx as TransactionKMS).chain = Currency.ADA
   const transferBtcBasedBlockchain = JSON.parse(tx.serializedTransaction).txData
   const txBuilder = await initTransactionBuilder()
   const { to } = transferBtcBasedBlockchain

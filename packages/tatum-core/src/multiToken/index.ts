@@ -25,9 +25,8 @@ export const getMultiTokenContractAddress = async (chain: Currency, txId: string
   get(`/v3/multitoken/address/${chain}/${txId}`)
 
 /**
- * For more details, see <a href="https://tatum.io/apidoc#operation/MultiTokenGetBalanceBatch" target="_blank">Tatum API documentation</a>
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MultiTokenGetBalance" target="_blank">Tatum API documentation</a>
  */
-
 export const getMultiTokensBalance = async (
   chain: Currency,
   contractAddress: string,
@@ -36,7 +35,7 @@ export const getMultiTokensBalance = async (
 ): Promise<string[]> => get(`/v3/multitoken/balance/${chain}/${contractAddress}/${address}/${tokenId}`)
 
 /**
- * For more details, see <a href="https://tatum.io/apidoc#operation/MultiTokenGetBalance" target="_blank">Tatum API documentation</a>
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MultiTokenGetBalanceBatch" target="_blank">Tatum API documentation</a>
  */
 export const getMultiTokensBatchBalance = async (
   chain: Currency,

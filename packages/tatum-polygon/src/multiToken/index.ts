@@ -1,16 +1,22 @@
 import {
-  AddMinter,
-  BurnMultiToken,
-  BurnMultiTokenBatch,
-  DeployMultiToken,
-  MintMultiToken,
-  MintMultiTokenBatch,
   prepareAddMultiTokenMinterAbstraction,
-  TransferMultiToken,
-  TransferMultiTokenBatch,
   listing,
-  getMultiTokenTransaction as getMultiTokenTransactionCore,
+  ChainDeployMultiToken,
+  ChainMintMultiToken,
+  ChainMintMultiTokenBatch,
+  ChainBurnMultiToken,
+  ChainBurnMultiTokenBatch,
+  ChainTransferMultiToken,
+  ChainTransferMultiTokenBatch,
+  ChainAddMinter,
+  Sort,
+  getMultiTokenTransactionsByAddress as getMultiTokenTransactionsByAddressCore,
   Currency,
+  getMultiTokenContractAddress as getMultiTokenContractAddressCore,
+  getMultiTokensBalance as getMultiTokensBalanceCore,
+  getMultiTokensBatchBalance as getMultiTokensBatchBalanceCore,
+  getMultiTokenTransaction as getMultiTokenTransactionCore,
+  getMultiTokenMetadata as getMultiTokenMetadataCore,
 } from '@tatumio/tatum-core'
 import {
   sendPolygonDeployMultiTokenSignedTransaction,
@@ -23,28 +29,27 @@ import {
   helperPrepareSCCall,
   helperBroadcastTx,
 } from '../'
-import { MaticTx } from '../model'
 
-export const deployMultiToken = async (body: DeployMultiToken, provider?: string) => {
+export const deployMultiToken = async (body: ChainDeployMultiToken, provider?: string) => {
   return sendPolygonDeployMultiTokenSignedTransaction(body, provider)
 }
-export const mintMultiToken = async (body: MintMultiToken, provider?: string) => {
+export const mintMultiToken = async (body: ChainMintMultiToken, provider?: string) => {
   return sendPolygonMintMultiTokenSignedTransaction(body, provider)
 }
-export const mintMultiTokenBatch = async (body: MintMultiTokenBatch, provider?: string) => {
+export const mintMultiTokenBatch = async (body: ChainMintMultiTokenBatch, provider?: string) => {
   return sendPolygonMintMultiTokenBatchSignedTransaction(body, provider)
 }
-export const burnMultiToken = async (body: BurnMultiToken, provider?: string) => {
+export const burnMultiToken = async (body: ChainBurnMultiToken, provider?: string) => {
   return sendPolygonBurnMultiTokenSignedTransaction(body, provider)
 }
-export const burnMultiTokenBatch = async (body: BurnMultiTokenBatch, provider?: string) => {
+export const burnMultiTokenBatch = async (body: ChainBurnMultiTokenBatch, provider?: string) => {
   return sendPolygonBurnMultiTokenBatchSignedTransaction(body, provider)
 }
 
-export const transferMultiToken = async (body: TransferMultiToken, provider?: string) => {
+export const transferMultiToken = async (body: ChainTransferMultiToken, provider?: string) => {
   return sendPolygonTransferMultiTokenSignedTransaction(body, provider)
 }
-export const transferMultiTokenBatch = async (body: TransferMultiTokenBatch, provider?: string) => {
+export const transferMultiTokenBatch = async (body: ChainTransferMultiTokenBatch, provider?: string) => {
   return preparePolygonBatchTransferMultiTokenSignedTransaction(body, provider)
 }
 
@@ -53,8 +58,8 @@ export const transferMultiTokenBatch = async (body: TransferMultiTokenBatch, pro
  * @param body body of the add minter request
  * @param provider optional provider do broadcast tx
  */
-export const prepareAddMultiTokenMinter = async (body: AddMinter, provider?: string) => {
-  const params = await prepareAddMultiTokenMinterAbstraction(body)
+export const prepareAddMultiTokenMinter = async (body: ChainAddMinter, provider?: string) => {
+  const params = await prepareAddMultiTokenMinterAbstraction({ ...body, chain: Currency.MATIC })
   return await helperPrepareSCCall(body, 'grantRole', params, provider, listing.abi)
 }
 
@@ -63,19 +68,55 @@ export const prepareAddMultiTokenMinter = async (body: AddMinter, provider?: str
  * @param body body of the add minter request
  * @param provider optional provider do broadcast tx
  */
-export const sendAddMultiTokenMinter = async (body: AddMinter, provider?: string) =>
+export const sendAddMultiTokenMinter = async (body: ChainAddMinter, provider?: string) =>
   helperBroadcastTx(await prepareAddMultiTokenMinter(body, provider), body.signatureId)
 
 /**
- * Get Multi Token transaction by transaction hash.
- * @param hash Transaction hash
+ * For more details, see <a href="https://tatum.io/apidoc.php#operation/MultiTokenGetTransactionByAddress" target="_blank">Tatum API documentation</a>
  */
-export const getMultiTokenTransaction = (hash: string): Promise<MaticTx> => getMultiTokenTransactionCore<MaticTx>(Currency.MATIC, hash)
+export const getMultiTokenTransactionsByAddress = async (
+  address: string,
+  tokenAddress: string,
+  pageSize = 50,
+  offset = 0,
+  from?: string,
+  to?: string,
+  sort?: Sort
+) => {
+  return getMultiTokenTransactionsByAddressCore(Currency.MATIC, address, tokenAddress, pageSize, offset, from, to, sort)
+}
 
-export {
-  getMultiTokenTransactionsByAddress,
-  getMultiTokenContractAddress,
-  getMultiTokensBalance,
-  getMultiTokensBatchBalance,
-  getMultiTokenMetadata,
-} from '@tatumio/tatum-core'
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MultiTokenGetContractAddress" target="_blank">Tatum API documentation</a>
+ */
+export const getMultiTokenContractAddress = async (txId: string) => {
+  return getMultiTokenContractAddressCore(Currency.MATIC, txId)
+}
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MultiTokenGetBalance" target="_blank">Tatum API documentation</a>
+ */
+export const getMultiTokensBalance = async (contractAddress: string, address: string, tokenId: string) => {
+  return getMultiTokensBalanceCore(Currency.MATIC, contractAddress, address, tokenId)
+}
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MultiTokenGetBalanceBatch" target="_blank">Tatum API documentation</a>
+ */
+export const getMultiTokensBatchBalance = async (contractAddress: string, address: string, tokenIds: string) => {
+  return getMultiTokensBatchBalanceCore(Currency.MATIC, contractAddress, address, tokenIds)
+}
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MultiTokenGetTransaction" target="_blank">Tatum API documentation</a>
+ */
+export const getMultiTokenTransaction = async (txId: string) => {
+  return getMultiTokenTransactionCore(Currency.MATIC, txId)
+}
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MultiTokenGetMetadata" target="_blank">Tatum API documentation</a>
+ */
+export const getMultiTokenMetadata = async (contractAddress: string, tokenId: string) => {
+  return getMultiTokenMetadataCore(Currency.MATIC, contractAddress, tokenId)
+}

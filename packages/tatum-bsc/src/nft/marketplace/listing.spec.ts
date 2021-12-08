@@ -42,7 +42,6 @@ describe('Marketplace Listing tests', () => {
       console.log(
         await transferNFT({
           to: '0xc4585ec777bA6dc5d33524Ca72c425D512780C31',
-          chain: Currency.BSC,
           tokenId: '2',
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
           contractAddress: '0x9b0eea3aa1e61b8ecb7d1c8260cd426eb2a9a698',

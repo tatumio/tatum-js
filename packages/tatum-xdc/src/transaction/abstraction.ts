@@ -1,4 +1,4 @@
-import { CreateRecord, validateBody, Currency, TransferErc20 } from '@tatumio/tatum-core'
+import { CreateRecord, validateBody, Currency, TransferErc20, ChainTransferErc20, ChainCreateRecord } from '@tatumio/tatum-core'
 import { sendXdcOrErc20Transaction, sendXdcStoreDataTransaction } from './xdc'
 
 /**
@@ -6,7 +6,8 @@ import { sendXdcOrErc20Transaction, sendXdcStoreDataTransaction } from './xdc'
  * @param body Body of the transaction.
  * @param provider Optional provider to use for broadcasting signed tx to the blockchain.
  */
-export const storeData = async (body: CreateRecord, provider?: string) => {
+export const storeData = async (body: ChainCreateRecord, provider?: string) => {
+  ;(body as CreateRecord).chain = Currency.XDC
   await validateBody(body, CreateRecord)
   return await sendXdcStoreDataTransaction(body, provider)
 }
@@ -17,7 +18,7 @@ export const storeData = async (body: CreateRecord, provider?: string) => {
  * @param body Body of the transaction.
  * @param provider Optional provider to use for broadcasting signed tx to the blockchain.
  */
-export const sendTransaction = async (chain: Currency, body: TransferErc20, provider?: string) => {
+export const sendTransaction = async (chain: Currency, body: ChainTransferErc20, provider?: string) => {
   ;(body as TransferErc20).currency = chain
-  return sendXdcOrErc20Transaction(body as TransferErc20, provider)
+  return sendXdcOrErc20Transaction(body, provider)
 }

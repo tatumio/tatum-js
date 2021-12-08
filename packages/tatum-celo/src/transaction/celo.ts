@@ -5,47 +5,51 @@ import Web3 from 'web3'
 import { isHex, stringToHex, toHex, toWei } from 'web3-utils'
 import { celoBroadcast } from '../blockchain'
 import { mintNFT } from '../nft'
+import erc721_abi from '@tatumio/tatum-core/dist/contracts/erc721/erc721_abi'
 import {
-  Currency,
-  GenerateCustodialAddress,
-  validateBody,
-  TATUM_API_URL,
-  DeployMarketplaceListing,
-  listing,
-  DeployNftAuction,
   auction,
-  TransactionKMS,
-  SmartContractReadMethodInvocation,
-  CreateRecord,
   CeloSmartContractMethodInvocation,
+  ChainCreateRecord,
+  ChainDeployMarketplaceListing,
+  ChainDeployNftAuction,
+  ChainGenerateCustodialAddress,
+  ChainTransactionKMS,
+  CreateRecord,
+  Currency,
+  DeployMarketplaceListing,
+  DeployNftAuction,
+  erc1155TokenBytecode as erc1155_bytecode,
+  erc20TokenBytecode as erc20_bytecode,
+  erc721Provenance_bytecode,
+  erc721TokenBytecode as erc721_bytecode,
+  GenerateCustodialAddress,
+  listing,
+  SmartContractReadMethodInvocation,
+  TATUM_API_URL,
+  TransactionKMS,
+  validateBody,
 } from '@tatumio/tatum-core'
 import { obtainCustodialAddressType } from '@tatumio/tatum-defi'
 import {
-  CeloDeployMultiToken,
-  CeloDeployErc721,
-  CeloMintErc721,
-  CeloTransferErc721,
+  BurnCeloErc20,
   CeloBurnErc721,
+  CeloBurnMultiToken,
+  CeloBurnMultiTokenBatch,
+  CeloDeployErc721,
+  CeloDeployMultiToken,
+  CeloMintErc721,
+  CeloMintMultipleErc721,
+  CeloMintMultiToken,
+  CeloMintMultiTokenBatch,
+  CeloTransferErc721,
+  CeloTransferMultiToken,
+  CeloTransferMultiTokenBatch,
+  CeloUpdateCashbackErc721,
   DeployCeloErc20,
   MintCeloErc20,
   TransferCeloOrCeloErc20Token,
-  BurnCeloErc20,
-  CeloMintMultipleErc721,
-  CeloUpdateCashbackErc721,
-  CeloMintMultiToken,
-  CeloMintMultiTokenBatch,
-  CeloTransferMultiToken,
-  CeloTransferMultiTokenBatch,
-  CeloBurnMultiTokenBatch,
-  CeloBurnMultiToken,
 } from '../'
-import { CUSD_ADDRESS_MAINNET, CUSD_ADDRESS_TESTNET, CEUR_ADDRESS_TESTNET, CEUR_ADDRESS_MAINNET } from '../constants'
-import {
-  erc721Provenance_bytecode,
-  erc721TokenBytecode as erc721_bytecode,
-  erc1155TokenBytecode as erc1155_bytecode,
-  erc20TokenBytecode as erc20_bytecode,
-} from '@tatumio/tatum-core'
+import { CEUR_ADDRESS_MAINNET, CEUR_ADDRESS_TESTNET, CUSD_ADDRESS_MAINNET, CUSD_ADDRESS_TESTNET } from '../constants'
 
 const obtainWalletInformation = async (wallet: CeloWallet, feeCurrencyContractAddress?: string) => {
   const [txCount, gasPrice, from] = await Promise.all([
@@ -83,16 +87,17 @@ const getFeeCurrency = (feeCurrency: Currency, testnet: boolean) => {
  */
 export const prepareCeloGenerateCustodialWalletSignedTransaction = async (
   testnet: boolean,
-  body: GenerateCustodialAddress,
+  body: ChainGenerateCustodialAddress,
   provider?: string
 ) => {
+  ;(body as GenerateCustodialAddress).chain = Currency.CELO
   await validateBody(body, GenerateCustodialAddress)
 
   const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
   const network = await p.ready
   const feeCurrency = body.feeCurrency || Currency.CELO
   const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
-  const { abi, code } = obtainCustodialAddressType(body)
+  const { abi, code } = obtainCustodialAddressType({ ...body, chain: Currency.CELO })
   // @ts-ignore
   const contract = new new Web3().eth.Contract(abi)
   const deploy = contract.deploy({
@@ -177,9 +182,10 @@ const deployContract = async (
  */
 export const prepareCeloDeployMarketplaceListingSignedTransaction = async (
   testnet: boolean,
-  body: DeployMarketplaceListing,
+  body: ChainDeployMarketplaceListing,
   provider?: string
 ) => {
+  ;(body as DeployMarketplaceListing).chain = Currency.CELO
   await validateBody(body, DeployMarketplaceListing)
 
   return deployContract(
@@ -202,18 +208,19 @@ export const prepareCeloDeployMarketplaceListingSignedTransaction = async (
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
  */
-export const prepareCeloDeployAuctionSignedTransaction = async (testnet: boolean, body: DeployNftAuction, provider?: string) => {
-  await validateBody(body, DeployNftAuction)
+export const prepareCeloDeployAuctionSignedTransaction = async (testnet: boolean, body: ChainDeployNftAuction, provider?: string) => {
+  const b: DeployNftAuction = { ...body, chain: Currency.CELO }
+  await validateBody(b, DeployNftAuction)
 
   return deployContract(
     testnet,
     auction.abi,
     auction.data,
-    [body.auctionFee, body.feeRecipient],
-    body.feeCurrency,
-    body.fromPrivateKey,
-    body.nonce,
-    body.signatureId,
+    [b.auctionFee, b.feeRecipient],
+    b.feeCurrency,
+    b.fromPrivateKey,
+    b.nonce,
+    b.signatureId,
     provider
   )
 }
@@ -224,10 +231,8 @@ export const prepareCeloDeployAuctionSignedTransaction = async (testnet: boolean
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
  */
-export const signCeloKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, provider?: string) => {
-  if (tx.chain !== Currency.CELO) {
-    throw Error('Unsupported chain.')
-  }
+export const signCeloKMSTransaction = async (tx: ChainTransactionKMS, fromPrivateKey: string, provider?: string) => {
+  ;(tx as TransactionKMS).chain = Currency.CELO
   const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
   await p.ready
   const wallet = new CeloWallet(fromPrivateKey as string, p)
@@ -833,7 +838,7 @@ export const sendCeloSmartContractReadMethodInvocationTransaction = async (body:
 }
 export const sendCeloDeployErc20Transaction = async (testnet: boolean, body: DeployCeloErc20, provider?: string) =>
   celoBroadcast(await prepareCeloDeployErc20SignedTransaction(testnet, body, provider), body.signatureId)
-export const sendCeloStoreDataSignedTransaction = async (testnet: boolean, body: CreateRecord, provider?: string) =>
+export const sendCeloStoreDataSignedTransaction = async (testnet: boolean, body: ChainCreateRecord, provider?: string) =>
   celoBroadcast(await prepareCeloStoreDataSignedTransaction(testnet, body, provider), body.signatureId)
 
 /**
@@ -853,7 +858,13 @@ export const sendCeloSmartContractMethodInvocationTransaction = async (
     return sendCeloSmartContractReadMethodInvocationTransaction(body, provider)
   }
   const celoBody = body as CeloSmartContractMethodInvocation
-  return celoBroadcast(await prepareCeloSmartContractWriteMethodInvocation(celoBody, { provider, testnet }), celoBody.signatureId)
+  return celoBroadcast(
+    await prepareCeloSmartContractWriteMethodInvocation(celoBody, {
+      provider,
+      testnet,
+    }),
+    celoBody.signatureId
+  )
 }
 
 export const getCeloErc20ContractDecimals = async (contractAddress: string, provider?: string) => {
@@ -1515,7 +1526,8 @@ export const prepareCeloOrCUsdSignedTransaction = async (testnet: boolean, body:
  * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
  */
-export const prepareCeloStoreDataSignedTransaction = async (testnet: boolean, body: CreateRecord, provider?: string) => {
+export const prepareCeloStoreDataSignedTransaction = async (testnet: boolean, body: ChainCreateRecord, provider?: string) => {
+  ;(body as CreateRecord).chain = Currency.CELO
   await validateBody(body, CreateRecord)
   const { fromPrivateKey, to, feeCurrency, nonce, data, ethFee: fee, signatureId } = body
 
@@ -1783,7 +1795,7 @@ export const sendCeloBurnMultiTokenBatchTransaction = async (testnet: boolean, b
  */
 export const sendCeloGenerateCustodialWalletSignedTransaction = async (
   testnet: boolean,
-  body: GenerateCustodialAddress,
+  body: ChainGenerateCustodialAddress,
   provider?: string
 ) => celoBroadcast(await prepareCeloGenerateCustodialWalletSignedTransaction(testnet, body, provider), body.signatureId)
 
@@ -1796,6 +1808,6 @@ export const sendCeloGenerateCustodialWalletSignedTransaction = async (
  */
 export const sendCeloDeployMarketplaceListingSignedTransaction = async (
   testnet: boolean,
-  body: DeployMarketplaceListing,
+  body: ChainDeployMarketplaceListing,
   provider?: string
 ) => celoBroadcast(await prepareCeloDeployMarketplaceListingSignedTransaction(testnet, body, provider), body.signatureId)

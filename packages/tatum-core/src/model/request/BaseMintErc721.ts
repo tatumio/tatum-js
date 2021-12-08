@@ -1,7 +1,7 @@
 import { IsBoolean, IsIn, IsNotEmpty, IsOptional, Length, MaxLength, Min, Validate, ValidateIf } from 'class-validator'
-import { Currency } from './Currency'
-import { PrivateKeyOrSignatureIdBuiltInPrivateKey } from './PrivateKeyOrSignatureIdBuiltInPrivateKey'
 import { Mint721BuiltInPrivateKeyValidator } from '../validation/Mint721BuiltInPrivateKeyValidator'
+import { PrivateKeyOrSignatureIdBuiltInPrivateKey } from './PrivateKeyOrSignatureIdBuiltInPrivateKey'
+import { Currency } from './Currency'
 
 export class BaseMintErc721 extends PrivateKeyOrSignatureIdBuiltInPrivateKey {
   @IsNotEmpty()

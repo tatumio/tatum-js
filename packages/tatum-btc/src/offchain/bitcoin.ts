@@ -9,6 +9,7 @@ import {
   offchainBroadcast,
   offchainCancelWithdrawal,
   offchainStoreWithdrawal,
+  ChainTransactionKMS,
 } from '@tatumio/tatum-core'
 import { generateAddressFromXPub, generatePrivateKeyFromMnemonic } from '../wallet'
 import { offchainTransferBtcKMS } from './kms'
@@ -71,8 +72,9 @@ export const sendBitcoinOffchainTransaction = async (testnet: boolean, body: Tra
  * @param testnet mainnet or testnet version
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signBitcoinOffchainKMSTransaction = async (tx: TransactionKMS, mnemonic: string, testnet: boolean) => {
-  if (tx.chain !== Currency.BTC || !tx.withdrawalResponses) {
+export const signBitcoinOffchainKMSTransaction = async (tx: ChainTransactionKMS, mnemonic: string, testnet: boolean) => {
+  ;(tx as TransactionKMS).chain = Currency.BTC
+  if (!tx.withdrawalResponses) {
     throw Error('Unsupported chain.')
   }
   const builder = new Transaction(JSON.parse(tx.serializedTransaction))

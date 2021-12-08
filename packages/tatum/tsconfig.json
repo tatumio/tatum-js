@@ -21,7 +21,7 @@
     { "path": "../tatum-egld" },
     { "path": "../tatum-eth" },
     { "path": "../tatum-flow" },
-    { "path": "../tatum-kcc" },
+    { "path": "../tatum-kcs" },
     { "path": "../tatum-ledger" },
     { "path": "../tatum-ltc" },
     { "path": "../tatum-one" },
