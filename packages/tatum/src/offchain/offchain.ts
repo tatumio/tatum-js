@@ -28,7 +28,7 @@ export {
 } from '@tatumio/tatum-eth'
 // TODO litecoin - submodule not ready yet
 export { sendOffchainTransaction as sendPolygonOffchainTransaction } from '@tatumio/tatum-polygon'
-export { sendTronOffchainTransaction } from '@tatumio/tatum-tron'
+export { sendOffchainTransaction as sendTronOffchainTransaction } from '@tatumio/tatum-tron'
 export { sendXdcOffchainTransaction } from '@tatumio/tatum-xdc'
 export { sendXlmOffchainTransaction } from '@tatumio/tatum-xlm'
 export { sendXrpOffchainTransaction } from '@tatumio/tatum-xrp'

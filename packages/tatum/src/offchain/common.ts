@@ -12,4 +12,4 @@ export {
   offchainCompleteWithdrawal,
 } from '@tatumio/tatum-core'
 export { registerErc20 as registerEthereumErc20, storeErc20ContractAddress } from '@tatumio/tatum-eth'
-export { storeTrcContractAddress, registerTronTrc } from '@tatumio/tatum-tron'
+export { storeTrcContractAddress, registerTrc as registerTronTrc } from '@tatumio/tatum-tron'

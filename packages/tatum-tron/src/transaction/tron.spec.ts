@@ -1,4 +1,4 @@
-import { tronBroadcast } from '../blockchain'
+import { broadcast } from '../blockchain'
 import {
   CreateTronTrc10,
   CreateTronTrc20,
@@ -16,19 +16,19 @@ import {
 import { erc20TokenBytecode as token_bytecode, Currency } from '@tatumio/tatum-core'
 
 import {
-  prepareTronBurnTrc721SignedTransaction,
-  prepareTronCreateTrc10SignedTransaction,
-  prepareTronCreateTrc20SignedTransaction,
-  prepareTronDeployTrc721SignedTransaction,
-  prepareTronFreezeTransaction,
-  prepareTronMintCashbackTrc721SignedTransaction,
-  prepareTronMintMultipleTrc721SignedTransaction,
-  prepareTronMintTrc721SignedTransaction,
-  prepareTronSignedTransaction,
-  prepareTronTransferTrc721SignedTransaction,
-  prepareTronTrc10SignedTransaction,
-  prepareTronTrc20SignedTransaction,
-  prepareTronUpdateCashbackForAuthorTrc721SignedTransaction,
+  prepareBurnTrc721SignedTransaction,
+  prepareCreateTrc10SignedTransaction,
+  prepareCreateTrc20SignedTransaction,
+  prepareDeployTrc721SignedTransaction,
+  prepareFreezeTransaction,
+  prepareMintCashbackTrc721SignedTransaction,
+  prepareMintMultipleTrc721SignedTransaction,
+  prepareMintTrc721SignedTransaction,
+  prepareSignedTransaction,
+  prepareTransferTrc721SignedTransaction,
+  prepareTrc10SignedTransaction,
+  prepareTrc20SignedTransaction,
+  prepareUpdateCashbackForAuthorTrc721SignedTransaction,
 } from './tron'
 
 const API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd'
@@ -47,7 +47,7 @@ describe('Tron transactions', () => {
     body.fromPrivateKey = PRIVATE_KEY
     body.amount = '0.000001'
     body.to = RECEIVER_ADDR
-    const txData = await prepareTronSignedTransaction(body)
+    const txData = await prepareSignedTransaction(body)
     expect(JSON.parse(txData).raw_data.contract[0].parameter.value.amount).toBe(1)
   })
 
@@ -58,7 +58,7 @@ describe('Tron transactions', () => {
     body.resource = 'ENERGY'
     body.duration = 3
     body.receiver = SENDER_ADDR
-    const txData = await prepareTronFreezeTransaction(body)
+    const txData = await prepareFreezeTransaction(body)
     expect(JSON.parse(txData).raw_data.contract[0].parameter.value.frozen_balance).toBe(1000000)
   })
 
@@ -70,7 +70,7 @@ describe('Tron transactions', () => {
     body.recipient = RECEIVER_ADDR
     body.name = 'TatumToken'
     body.totalSupply = 10
-    const txData = await prepareTronCreateTrc20SignedTransaction(body)
+    const txData = await prepareCreateTrc20SignedTransaction(body)
     expect(JSON.parse(txData).raw_data.contract[0].parameter.value.new_contract.bytecode).toContain(token_bytecode)
   })
 
@@ -80,7 +80,7 @@ describe('Tron transactions', () => {
     body.amount = '0.000001'
     body.tokenId = '1000538'
     body.to = 'TVAEYCmc15awaDRAjUZ1kvcHwQQaoPw2CW'
-    const txData = await prepareTronTrc10SignedTransaction(true, body)
+    const txData = await prepareTrc10SignedTransaction(true, body)
     expect(JSON.parse(txData).raw_data.contract[0].parameter.value.amount).toBe(1)
   })
 
@@ -91,7 +91,7 @@ describe('Tron transactions', () => {
     body.amount = '1'
     body.feeLimit = 100
     body.to = RECEIVER_ADDR
-    const txData = await prepareTronTrc20SignedTransaction(body)
+    const txData = await prepareTrc20SignedTransaction(body)
     expect(JSON.parse(txData).raw_data.contract[0].parameter.value.data).toBe(
       'a9059cbb000000000000000000000000f4a376310e3b26a57b30d5ff230dcbc8758b84bc00000000000000000000000000000000000000000000000000000000000f4240'
     )
@@ -107,7 +107,7 @@ describe('Tron transactions', () => {
     body.name = 'TTM'
     body.description = 'TTM'
     body.decimals = 5
-    const txData = await prepareTronCreateTrc10SignedTransaction(body)
+    const txData = await prepareCreateTrc10SignedTransaction(body)
     expect(JSON.parse(txData).raw_data.contract[0].parameter.value.amount).toBe(1)
   })
 
@@ -117,7 +117,7 @@ describe('Tron transactions', () => {
     body.amount = '1'
     body.to = 'TFnpwE8jCgtq3QpAhFfF2QpXzdBGmKvKMe'
     try {
-      await prepareTronSignedTransaction(body)
+      await prepareSignedTransaction(body)
       fail('Validation did not pass.')
     } catch (e) {
       // console.error(e);
@@ -136,9 +136,9 @@ describe('Tron transactions', () => {
     body.symbol = 'TTM'
     body.feeLimit = 600
     try {
-      const txData = await prepareTronDeployTrc721SignedTransaction(body)
+      const txData = await prepareDeployTrc721SignedTransaction(body)
       expect(JSON.parse(txData).txID).toBeDefined()
-      console.log(await tronBroadcast(txData))
+      console.log(await broadcast(txData))
     } catch (e) {
       console.error(e)
     }
@@ -155,9 +155,9 @@ describe('Tron transactions', () => {
     body.tokenId = '3'
     body.url = 'https://google.com'
     body.feeLimit = 50
-    const txData = await prepareTronMintTrc721SignedTransaction(body)
+    const txData = await prepareMintTrc721SignedTransaction(body)
     expect(JSON.parse(txData).txID).toBeDefined()
-    console.log(await tronBroadcast(txData))
+    console.log(await broadcast(txData))
   })
 
   it.skip('should test valid mint 721 with cashback transaction', async () => {
@@ -173,9 +173,9 @@ describe('Tron transactions', () => {
     body.tokenId = '3000'
     body.url = 'https://google.com'
     body.feeLimit = 50
-    const txData = await prepareTronMintCashbackTrc721SignedTransaction(body)
+    const txData = await prepareMintCashbackTrc721SignedTransaction(body)
     expect(JSON.parse(txData).txID).toBeDefined()
-    console.log(await tronBroadcast(txData))
+    console.log(await broadcast(txData))
   })
 
   it.skip('should test valid mint multiple 721 transaction', async () => {
@@ -189,9 +189,9 @@ describe('Tron transactions', () => {
     body.tokenId = ['40', '50']
     body.url = ['https://google.com', 'https://google.com']
     body.feeLimit = 50
-    const txData = await prepareTronMintMultipleTrc721SignedTransaction(body)
+    const txData = await prepareMintMultipleTrc721SignedTransaction(body)
     expect(JSON.parse(txData).txID).toBeDefined()
-    console.log(await tronBroadcast(txData))
+    console.log(await broadcast(txData))
   })
 
   it.skip('should test valid update 721 cashback transaction', async () => {
@@ -204,9 +204,9 @@ describe('Tron transactions', () => {
     body.cashbackValue = '0'
     body.tokenId = '11'
     body.feeLimit = 50
-    const txData = await prepareTronUpdateCashbackForAuthorTrc721SignedTransaction(body)
+    const txData = await prepareUpdateCashbackForAuthorTrc721SignedTransaction(body)
     expect(JSON.parse(txData).txID).toBeDefined()
-    console.log(await tronBroadcast(txData))
+    console.log(await broadcast(txData))
   })
 
   it.skip('should test valid burn 721 transaction', async () => {
@@ -218,9 +218,9 @@ describe('Tron transactions', () => {
     body.contractAddress = 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ'
     body.tokenId = '3'
     body.feeLimit = 50
-    const txData = await prepareTronBurnTrc721SignedTransaction(body)
+    const txData = await prepareBurnTrc721SignedTransaction(body)
     expect(JSON.parse(txData).txID).toBeDefined()
-    console.log(await tronBroadcast(txData))
+    console.log(await broadcast(txData))
   })
 
   it.skip('should test valid transfer 721 transaction without cashback', async () => {
@@ -234,9 +234,9 @@ describe('Tron transactions', () => {
     body.tokenId = '50'
     body.value = '0'
     body.feeLimit = 50
-    const txData = await prepareTronTransferTrc721SignedTransaction(body)
+    const txData = await prepareTransferTrc721SignedTransaction(body)
     expect(JSON.parse(txData).txID).toBeDefined()
-    console.log(await tronBroadcast(txData))
+    console.log(await broadcast(txData))
   })
 
   it.skip('should test valid transfer 721 transaction with cashback', async () => {
@@ -250,8 +250,8 @@ describe('Tron transactions', () => {
     body.tokenId = '3000'
     body.value = '30'
     body.feeLimit = 50
-    const txData = await prepareTronTransferTrc721SignedTransaction(body)
+    const txData = await prepareTransferTrc721SignedTransaction(body)
     expect(JSON.parse(txData).txID).toBeDefined()
-    console.log(await tronBroadcast(txData))
+    console.log(await broadcast(txData))
   })
 })

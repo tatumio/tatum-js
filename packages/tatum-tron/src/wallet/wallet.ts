@@ -7,7 +7,7 @@ import { TRON_DERIVATION_PATH } from '../constants'
  * Generate Tron wallet
  * @returns mnemonic for the wallet
  */
-export const generateTronWallet = async (mnem: string): Promise<WalletWithMnemonic> => {
+export const generateBlockchainWallet = async (mnem: string): Promise<WalletWithMnemonic> => {
   const w = bip32.fromSeed(await mnemonicToSeed(mnem))
   const bip32Interface = w.derivePath(TRON_DERIVATION_PATH)
   return {
@@ -23,5 +23,5 @@ export const generateTronWallet = async (mnem: string): Promise<WalletWithMnemon
  */
 export const generateWallet = (mnemonic?: string): Promise<WalletWithMnemonic> => {
   mnemonic ||= generateMnemonic(256)
-  return generateTronWallet(mnemonic)
+  return generateBlockchainWallet(mnemonic)
 }

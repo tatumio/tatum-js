@@ -11,7 +11,7 @@ const TronWeb = require('tronweb')
  * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
-const generateTronAddress = (xpub: string, i: number) => {
+const generateBlockchainAddress = (xpub: string, i: number) => {
   const w = fromPublicKey(Buffer.from(xpub.slice(0, 66), 'hex'), Buffer.from(xpub.slice(-64), 'hex'))
   return TronWeb.address.fromHex(generateAddress(w.derive(i).publicKey))
 }
@@ -22,7 +22,7 @@ const generateTronAddress = (xpub: string, i: number) => {
  * @param i derivation index of private key to generate.
  * @returns blockchain private key to the address
  */
-const generateTronPrivateKey = async (mnemonic: string, i: number) => {
+const generatePrivateKey = async (mnemonic: string, i: number) => {
   return (
     fromSeed(await mnemonicToSeed(mnemonic))
       .derivePath(TRON_DERIVATION_PATH)
@@ -38,7 +38,7 @@ const generateTronPrivateKey = async (mnemonic: string, i: number) => {
  * @returns blockchain address
  */
 export const generateAddressFromXPub = (xpub: string, i: number) => {
-  return generateTronAddress(xpub, i)
+  return generateBlockchainAddress(xpub, i)
 }
 
 /**
@@ -48,7 +48,7 @@ export const generateAddressFromXPub = (xpub: string, i: number) => {
  * @returns blockchain private key to the address
  */
 export const generatePrivateKeyFromMnemonic = (mnemonic: string, i: number) => {
-  return generateTronPrivateKey(mnemonic, i)
+  return generatePrivateKey(mnemonic, i)
 }
 
 /**

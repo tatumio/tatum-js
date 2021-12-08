@@ -8,13 +8,13 @@ import {
   ChainTronUpdateCashbackTrc721,
 } from '../model'
 import {
-  sendTronBurnTrc721SignedTransaction,
-  sendTronDeployTrc721SignedTransaction,
-  sendTronMintCashbackTrc721SignedTransaction,
-  sendTronMintMultipleTrc721SignedTransaction,
-  sendTronMintTrc721SignedTransaction,
-  sendTronTransferTrc721SignedTransaction,
-  sendTronUpdateCashbackForAuthorTrc721SignedTransaction,
+  sendBurnTrc721SignedTransaction,
+  sendDeployTrc721SignedTransaction,
+  sendMintCashbackTrc721SignedTransaction,
+  sendMintMultipleTrc721SignedTransaction,
+  sendMintTrc721SignedTransaction,
+  sendTransferTrc721SignedTransaction,
+  sendUpdateCashbackForAuthorTrc721SignedTransaction,
 } from '../transaction'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
 import {
@@ -35,7 +35,7 @@ export const mintNFT = (body: ChainTronMintTrc721): Promise<TransactionHash> => 
  * @param body body of the mint request
  */
 export const deployNFT = async (body: ChainTronDeployTrc721): Promise<TransactionHash> => {
-  return sendTronDeployTrc721SignedTransaction(body)
+  return sendDeployTrc721SignedTransaction(body)
 }
 
 /**
@@ -66,9 +66,9 @@ export const createNFT = async (
  */
 export const mintNFTWithUri = async (body: ChainTronMintTrc721): Promise<TransactionHash> => {
   if (body.authorAddresses) {
-    return sendTronMintCashbackTrc721SignedTransaction(body)
+    return sendMintCashbackTrc721SignedTransaction(body)
   } else {
-    return sendTronMintTrc721SignedTransaction(body)
+    return sendMintTrc721SignedTransaction(body)
   }
 }
 
@@ -80,7 +80,7 @@ export const mintMultipleNFTWithUri = async (body: ChainTronMintMultipleTrc721) 
   if (body.authorAddresses) {
     throw new Error('Unsupported operation.')
   } else {
-    return sendTronMintMultipleTrc721SignedTransaction(body)
+    return sendMintMultipleTrc721SignedTransaction(body)
   }
 }
 
@@ -89,7 +89,7 @@ export const mintMultipleNFTWithUri = async (body: ChainTronMintMultipleTrc721) 
  * @param body body of the mint request
  */
 export const burnNFT = async (body: ChainTronBurnTrc721) => {
-  return sendTronBurnTrc721SignedTransaction(body)
+  return sendBurnTrc721SignedTransaction(body)
 }
 
 /**
@@ -97,7 +97,7 @@ export const burnNFT = async (body: ChainTronBurnTrc721) => {
  * @param body body of the mint request
  */
 export const updateCashbackForAuthorNFT = async (body: ChainTronUpdateCashbackTrc721) => {
-  return sendTronUpdateCashbackForAuthorTrc721SignedTransaction(body)
+  return sendUpdateCashbackForAuthorTrc721SignedTransaction(body)
 }
 
 /**
@@ -105,7 +105,7 @@ export const updateCashbackForAuthorNFT = async (body: ChainTronUpdateCashbackTr
  * @param body body of the mint request
  */
 export const transferNFT = async (body: ChainTronTransferTrc721) => {
-  return sendTronTransferTrc721SignedTransaction(body)
+  return sendTransferTrc721SignedTransaction(body)
 }
 
 /**
