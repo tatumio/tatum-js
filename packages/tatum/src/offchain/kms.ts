@@ -11,4 +11,4 @@ export { offchainTransferKMS as offchainTransferPolygonKMS } from '@tatumio/tatu
 export { offchainTransferKMS as offchainTransferTronKMS } from '@tatumio/tatum-tron'
 export { offchainTransferKMS as offchainTransferXdcKMS } from '@tatumio/tatum-xdc'
 export { offchainTransferKMS as offchainTransferXlmKMS } from '@tatumio/tatum-xlm'
-export { offchainTransferXrpKMS } from '@tatumio/tatum-xrp'
+export { offchainTransferKMS as offchainTransferXrpKMS } from '@tatumio/tatum-xrp'

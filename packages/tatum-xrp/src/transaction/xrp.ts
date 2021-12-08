@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js'
 import { RippleAPI } from 'ripple-lib'
 import { Payment } from 'ripple-lib/dist/npm/transaction/payment'
 import { TransferXrp } from '../model'
-import { xrpBroadcast, xrpGetAccountInfo, xrpGetFee } from '../blockchain'
+import { broadcast, getAccountInfo, getFee } from '../blockchain'
 
 /**
  * Send Xrp transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -11,8 +11,8 @@ import { xrpBroadcast, xrpGetAccountInfo, xrpGetFee } from '../blockchain'
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendXrpTransaction = async (body: TransferXrp) => {
-  return xrpBroadcast(await prepareXrpSignedTransaction(body))
+export const sendBlockchainTransaction = async (body: TransferXrp) => {
+  return broadcast(await prepareSignedTransaction(body))
 }
 
 /**
@@ -21,7 +21,7 @@ export const sendXrpTransaction = async (body: TransferXrp) => {
  * @param secret secret key to sign transaction with.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signXrpKMSTransaction = async (tx: ChainTransactionKMS, secret: string) => {
+export const signKMSTransaction = async (tx: ChainTransactionKMS, secret: string) => {
   ;(tx as TransactionKMS).chain = Currency.XRP
   const rippleAPI = new RippleAPI()
   return rippleAPI.sign(tx.serializedTransaction, secret).signedTransaction
@@ -32,11 +32,11 @@ export const signXrpKMSTransaction = async (tx: ChainTransactionKMS, secret: str
  * @param body content of the transaction to broadcast
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareXrpSignedTransaction = async (body: TransferXrp) => {
+export const prepareSignedTransaction = async (body: TransferXrp) => {
   await validateBody(body, TransferXrp)
   const { fromAccount, fromSecret, to, amount, fee, sourceTag, destinationTag } = body
 
-  const f = fee ? fee : new BigNumber((await xrpGetFee()).drops.base_fee).dividedBy(1000000).toString()
+  const f = fee ? fee : new BigNumber((await getFee()).drops.base_fee).dividedBy(1000000).toString()
   const payment: Payment = {
     source: {
       address: fromAccount,
@@ -55,7 +55,7 @@ export const prepareXrpSignedTransaction = async (body: TransferXrp) => {
       tag: destinationTag,
     },
   }
-  const accountInfo = await xrpGetAccountInfo(fromAccount)
+  const accountInfo = await getAccountInfo(fromAccount)
   const sequence = accountInfo.account_data.Sequence
   const maxLedgerVersion = accountInfo.ledger_current_index + 500
   const rippleAPI = new RippleAPI()

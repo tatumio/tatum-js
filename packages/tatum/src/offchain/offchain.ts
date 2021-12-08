@@ -31,4 +31,4 @@ export { sendOffchainTransaction as sendPolygonOffchainTransaction } from '@tatu
 export { sendOffchainTransaction as sendTronOffchainTransaction } from '@tatumio/tatum-tron'
 export { sendOffchainTransaction as sendXdcOffchainTransaction } from '@tatumio/tatum-xdc'
 export { sendOffchainTransaction as sendXlmOffchainTransaction } from '@tatumio/tatum-xlm'
-export { sendXrpOffchainTransaction } from '@tatumio/tatum-xrp'
+export { sendOffchainTransaction as sendXrpOffchainTransaction } from '@tatumio/tatum-xrp'
