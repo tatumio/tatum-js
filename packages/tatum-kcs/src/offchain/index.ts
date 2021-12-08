@@ -1,3 +1,3 @@
 export * from './common'
-export * from './kcc'
+export * from './kcs'
 export * from './kms'

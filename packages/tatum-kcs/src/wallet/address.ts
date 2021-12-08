@@ -17,7 +17,7 @@ const generateEthAddress = (xpub: string, i: number) => {
 }
 
 /**
- * Generate Kcc or any other ERC20 private key from mnemonic seed
+ * Generate Kcs or any other ERC20 private key from mnemonic seed
  * @param testnet testnet or mainnet version of address
  * @param mnemonic mnemonic to generate private key from
  * @param i derivation index of private key to generate.

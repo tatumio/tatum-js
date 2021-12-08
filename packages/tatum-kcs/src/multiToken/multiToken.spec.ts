@@ -12,8 +12,8 @@ import {
 describe('NFT tests', () => {
   jest.setTimeout(99999)
 
-  describe('NFT KCC 1155 transactions', () => {
-    it('should test kcc 1155 deploy transaction', async () => {
+  describe('NFT KCS 1155 transactions', () => {
+    it('should test kcs 1155 deploy transaction', async () => {
       const deployMultiTokenToken = await deployMultiToken(
         {
           chain: Currency.KCS,
@@ -25,7 +25,7 @@ describe('NFT tests', () => {
       expect(deployMultiTokenToken).not.toBeNull()
       console.log('response::', deployMultiTokenToken)
     })
-    it('should test kcc 1155 mint transaction', async () => {
+    it('should test kcs 1155 mint transaction', async () => {
       const tokenId = '2'
       const mintedToken = await mintMultiToken(
         {
@@ -42,7 +42,7 @@ describe('NFT tests', () => {
       console.log(tokenId)
       expect(mintedToken).not.toBeNull()
     })
-    it('should test kcc 1155 mint batch transaction', async () => {
+    it('should test kcs 1155 mint batch transaction', async () => {
       const tokenId = [
         ['12101', '12102'],
         ['12101', '12102'],
@@ -65,7 +65,7 @@ describe('NFT tests', () => {
       console.log(mintedToken)
       expect(mintedToken).not.toBeNull()
     })
-    it('should test kcc 1155 send batch transaction', async () => {
+    it('should test kcs 1155 send batch transaction', async () => {
       const sendMultiTokenToken = await transferMultiTokenBatch(
         {
           to: '0x6c4A48886b77D1197eCFBDaA3D3f35d81d584342',
@@ -85,7 +85,7 @@ describe('NFT tests', () => {
       console.log('Result::', sendMultiTokenToken)
       expect(sendMultiTokenToken).not.toBeNull()
     })
-    it('should test kcc 1155 burn transaction', async () => {
+    it('should test kcs 1155 burn transaction', async () => {
       const burnMultiTokenToken = await burnMultiToken(
         {
           account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
@@ -100,7 +100,7 @@ describe('NFT tests', () => {
       console.log(burnMultiTokenToken)
       expect(burnMultiTokenToken).not.toBeNull()
     })
-    it('should test kcc 1155 burn batch transaction', async () => {
+    it('should test kcs 1155 burn batch transaction', async () => {
       const burnMultiTokenToken = await burnMultiTokenBatch(
         {
           account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
@@ -115,7 +115,7 @@ describe('NFT tests', () => {
       expect(burnMultiTokenToken).not.toBeNull()
     })
 
-    it('should test kcc 1155 send transaction', async () => {
+    it('should test kcs 1155 send transaction', async () => {
       const sendMultiTokenToken = await transferMultiToken(
         {
           to: '0x31a19a9E4BDd33982188BCb058a7E2a3515a8136',
