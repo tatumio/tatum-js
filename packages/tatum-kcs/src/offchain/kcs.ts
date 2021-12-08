@@ -14,11 +14,11 @@ import { generatePrivateKeyFromMnemonic } from '../wallet'
 import { offchainTransferKMS } from './kms'
 
 /**
- * Send Kcc transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * Send Kcs transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
  * @param testnet mainnet or testnet version
  * @param body content of the transaction to broadcast
- * @param provider url of the Kcc Server to connect to. If not set, default public server will be used.
+ * @param provider url of the Kcs Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
 export const sendOffchainTransaction = async (testnet: boolean, body: TransferOffchain, provider?: string) => {

@@ -7,10 +7,10 @@ import {
 } from '@tatumio/tatum-core'
 
 /**
- * For more details, see <a href="https://tatum.io/apidoc#operation/KccTransfer" target="_blank">Tatum API documentation</a>
+ * For more details, see <a href="https://tatum.io/apidoc#operation/KcsTransfer" target="_blank">Tatum API documentation</a>
  */
 export const offchainTransferKMS = async (body: TransferOffchainKMS): Promise<SignatureId> =>
-  post(`/v3/offchain/kcc/transfer`, body, TransferOffchainKMS)
+  post(`/v3/offchain/kcs/transfer`, body, TransferOffchainKMS)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/GetPendingTransactionsToSign" target="_blank">Tatum API documentation</a>
