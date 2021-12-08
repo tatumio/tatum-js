@@ -18,7 +18,7 @@ export {
   sendOffchainTransaction as sendDogecoinOffchainTransaction,
   prepareSignedOffchainTransaction as prepareDogecoinSignedOffchainTransaction,
 } from '@tatumio/tatum-doge'
-export { sendEgldOffchainTransaction } from '@tatumio/tatum-egld'
+export { sendOffchainTransaction as sendEgldOffchainTransaction } from '@tatumio/tatum-egld'
 export {
   sendEthOffchainTransaction,
   sendEthErc20OffchainTransaction,
