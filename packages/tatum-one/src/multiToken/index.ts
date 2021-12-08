@@ -19,37 +19,37 @@ import {
   ChainTransferMultiTokenBatch,
 } from '@tatumio/tatum-core'
 import {
-  prepareOneBatchTransferMultiTokenSignedTransaction,
-  sendOneBurnMultiTokenBatchSignedTransaction,
-  sendOneBurnMultiTokenSignedTransaction,
-  sendOneDeployMultiTokenSignedTransaction,
-  sendOneMintMultiTokenBatchSignedTransaction,
-  sendOneMintMultiTokenSignedTransaction,
-  sendOneTransferMultiTokenSignedTransaction,
+  prepareBatchTransferMultiTokenSignedTransaction,
+  sendBurnMultiTokenBatchSignedTransaction,
+  sendBurnMultiTokenSignedTransaction,
+  sendDeployMultiTokenSignedTransaction,
+  sendMintMultiTokenBatchSignedTransaction,
+  sendMintMultiTokenSignedTransaction,
+  sendTransferMultiTokenSignedTransaction,
 } from '../transaction'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
 
 export const deployMultiToken = async (body: ChainDeployMultiToken, provider?: string) => {
-  return sendOneDeployMultiTokenSignedTransaction(body, provider)
+  return sendDeployMultiTokenSignedTransaction(body, provider)
 }
 export const mintMultiToken = async (body: ChainMintMultiToken, provider?: string) => {
-  return sendOneMintMultiTokenSignedTransaction(body, provider)
+  return sendMintMultiTokenSignedTransaction(body, provider)
 }
 export const mintMultiTokenBatch = async (body: ChainMintMultiTokenBatch, provider?: string) => {
-  return sendOneMintMultiTokenBatchSignedTransaction(body, provider)
+  return sendMintMultiTokenBatchSignedTransaction(body, provider)
 }
 export const burnMultiToken = async (body: ChainBurnMultiToken, provider?: string) => {
-  return sendOneBurnMultiTokenSignedTransaction(body, provider)
+  return sendBurnMultiTokenSignedTransaction(body, provider)
 }
 export const burnMultiTokenBatch = async (body: ChainBurnMultiTokenBatch, provider?: string) => {
-  return sendOneBurnMultiTokenBatchSignedTransaction(body, provider)
+  return sendBurnMultiTokenBatchSignedTransaction(body, provider)
 }
 
 export const transferMultiToken = async (body: ChainTransferMultiToken, provider?: string) => {
-  return sendOneTransferMultiTokenSignedTransaction(body, provider)
+  return sendTransferMultiTokenSignedTransaction(body, provider)
 }
 export const transferMultiTokenBatch = async (body: ChainTransferMultiTokenBatch, provider?: string) => {
-  return prepareOneBatchTransferMultiTokenSignedTransaction(body, provider)
+  return prepareBatchTransferMultiTokenSignedTransaction(body, provider)
 }
 
 /**

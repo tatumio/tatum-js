@@ -25,7 +25,7 @@ import {
 } from '@tatumio/tatum-core'
 import { prepareApproveErc20 } from '../../fungible'
 import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../../helpers'
-import { getOne20ContractDecimals, prepareOneDeployAuctionSignedTransaction } from '../../transaction'
+import { get20ContractDecimals, prepareDeployAuctionSignedTransaction } from '../../transaction'
 
 /**
  * Deploy new smart contract for NFT auction logic. Smart contract enables auction operator to create new auction for NFT (ERC-721/1155).
@@ -57,7 +57,7 @@ export const deployAuction = async (body: ChainDeployNftAuction, provider?: stri
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareDeployAuction = async (body: ChainDeployNftAuction, provider?: string) => {
-  return await prepareOneDeployAuctionSignedTransaction(body, provider)
+  return await prepareDeployAuctionSignedTransaction(body, provider)
 }
 
 /**
@@ -136,7 +136,7 @@ export const prepareAuctionBid = async (testnet: boolean, body: ChainInvokeAucti
     b: validatedBody,
     params,
     methodName,
-  } = await prepareAuctionBidAbstraction(helperGetWeb3Client, getOne20ContractDecimals, testnet, { ...body, chain: Currency.ONE }, provider)
+  } = await prepareAuctionBidAbstraction(helperGetWeb3Client, get20ContractDecimals, testnet, { ...body, chain: Currency.ONE }, provider)
   return await helperPrepareSCCall(validatedBody, methodName, params, provider, auction.abi)
 }
 

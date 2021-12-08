@@ -25,9 +25,9 @@ import {
 } from '@tatumio/tatum-celo'
 import {
   generateCustodialWallet as sendOneGenerateCustodialWalletSignedTransaction,
-  getOne20ContractDecimals,
+  get20ContractDecimals as getOne20ContractDecimals,
   prepareCustodialWallet as prepareOneGenerateCustodialWalletSignedTransaction,
-  prepareOneSmartContractWriteMethodInvocation,
+  prepareSmartContractWriteMethodInvocation as prepareOneSmartContractWriteMethodInvocation,
 } from '@tatumio/tatum-one'
 import {
   generateCustodialWallet as sendEthGenerateCustodialWalletSignedTransaction,

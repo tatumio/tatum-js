@@ -10,7 +10,7 @@ import { ONE_DERIVATION_PATH } from '../constants'
  * @param mnem mnemonic seed to use
  * @returns wallet
  */
-export const generateOneWallet = async (testnet: boolean, mnem: string): Promise<WalletWithMnemonic> => {
+export const generateBlockchainWallet = async (testnet: boolean, mnem: string): Promise<WalletWithMnemonic> => {
   const path = testnet ? TESTNET_DERIVATION_PATH : ONE_DERIVATION_PATH
   const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnem))
   const derivePath = hdwallet.derivePath(path)
@@ -28,5 +28,5 @@ export const generateOneWallet = async (testnet: boolean, mnem: string): Promise
  */
 export const generateWallet = (mnemonic?: string, options?: { testnet?: boolean }) => {
   mnemonic ||= generateMnemonic(256)
-  return generateOneWallet(!!options?.testnet, mnemonic)
+  return generateBlockchainWallet(!!options?.testnet, mnemonic)
 }

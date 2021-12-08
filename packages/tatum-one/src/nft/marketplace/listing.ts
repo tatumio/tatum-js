@@ -19,7 +19,7 @@ import {
 } from '@tatumio/tatum-core'
 import { prepareApproveErc20 } from '../../fungible'
 import { helperBroadcastTx, helperPrepareSCCall } from '../../helpers'
-import { prepareOneDeployMarketplaceListingSignedTransaction, sendOneDeployMarketplaceListingSignedTransaction } from '../../transaction'
+import { prepareDeployMarketplaceListingSignedTransaction, sendDeployMarketplaceListingSignedTransaction } from '../../transaction'
 
 /**
  * Deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
@@ -35,7 +35,7 @@ import { prepareOneDeployMarketplaceListingSignedTransaction, sendOneDeployMarke
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const deployMarketplaceListing = async (body: ChainDeployMarketplaceListing, provider?: string) => {
-  return await sendOneDeployMarketplaceListingSignedTransaction(body, provider)
+  return await sendDeployMarketplaceListingSignedTransaction(body, provider)
 }
 
 /**
@@ -52,7 +52,7 @@ export const deployMarketplaceListing = async (body: ChainDeployMarketplaceListi
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareDeployMarketplaceListing = async (body: ChainDeployMarketplaceListing, provider?: string) => {
-  return await prepareOneDeployMarketplaceListingSignedTransaction(body, provider)
+  return await prepareDeployMarketplaceListingSignedTransaction(body, provider)
 }
 
 /**

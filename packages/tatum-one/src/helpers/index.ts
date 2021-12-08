@@ -1,14 +1,14 @@
 import { buildSmartContractMethodInvocation, ChainSCBody, Currency, listing } from '@tatumio/tatum-core'
-import { oneBroadcast } from '../'
+import { broadcast } from '../'
 import Web3 from 'web3'
-import { prepareOneClient, prepareOneSmartContractWriteMethodInvocation } from '../transaction'
+import { prepareClient, prepareSmartContractWriteMethodInvocation } from '../transaction'
 
 export const helperBroadcastTx = async (txData: string, signatureId?: string) => {
-  return await oneBroadcast(txData, signatureId)
+  return await broadcast(txData, signatureId)
 }
 
 export const helperGetWeb3Client = (provider?: string): Web3 => {
-  return prepareOneClient(provider)
+  return prepareClient(provider)
 }
 
 export const helperPrepareSCCall = async <Body extends ChainSCBody>(
@@ -19,5 +19,5 @@ export const helperPrepareSCCall = async <Body extends ChainSCBody>(
   abi: any[] = listing.abi
 ) => {
   const r = buildSmartContractMethodInvocation({ ...body, chain: Currency.ONE }, params, methodName, abi)
-  return await prepareOneSmartContractWriteMethodInvocation(r, { provider })
+  return await prepareSmartContractWriteMethodInvocation(r, { provider })
 }

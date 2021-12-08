@@ -11,7 +11,7 @@ import { ONE_DERIVATION_PATH } from '../constants'
  * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
-const generateOneAddress = (xpub: string, i: number) => {
+const generateAddress = (xpub: string, i: number) => {
   const w = ethHdKey.fromExtendedKey(xpub)
   const wallet = w.deriveChild(i).getWallet()
   const harmonyAddress = new HarmonyAddress('0x' + wallet.getAddress().toString('hex'))
@@ -25,7 +25,7 @@ const generateOneAddress = (xpub: string, i: number) => {
  * @param i derivation index of private key to generate.
  * @returns blockchain private key to the address
  */
-const generateOnePrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
+const generatePrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
   const path = testnet ? TESTNET_DERIVATION_PATH : ONE_DERIVATION_PATH
   const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnemonic))
   const derivePath = hdwallet.derivePath(path).deriveChild(i)
@@ -37,7 +37,7 @@ const generateOnePrivateKey = async (testnet: boolean, mnemonic: string, i: numb
  * @param privKey private key to use
  * @returns blockchain address
  */
-const convertOnePrivateKey = (privKey: string) => {
+const convertPrivateKey = (privKey: string) => {
   const wallet = ethWallet.fromPrivateKey(Buffer.from(privKey.replace('0x', ''), 'hex'))
   return wallet.getAddressString() as string
 }
@@ -49,7 +49,7 @@ const convertOnePrivateKey = (privKey: string) => {
  * @returns blockchain address
  */
 export const generateAddressFromXPub = (xpub: string, i: number) => {
-  return generateOneAddress(xpub, i)
+  return generateAddress(xpub, i)
 }
 
 /**
@@ -60,7 +60,7 @@ export const generateAddressFromXPub = (xpub: string, i: number) => {
  * @returns blockchain private key to the address
  */
 export const generatePrivateKeyFromMnemonic = (testnet: boolean, mnemonic: string, i: number) => {
-  return generateOnePrivateKey(testnet, mnemonic, i)
+  return generatePrivateKey(testnet, mnemonic, i)
 }
 
 /**
@@ -69,5 +69,5 @@ export const generatePrivateKeyFromMnemonic = (testnet: boolean, mnemonic: strin
  * @returns blockchain private key to the address
  */
 export const generateAddressFromPrivatekey = (privateKey: string) => {
-  return convertOnePrivateKey(privateKey)
+  return convertPrivateKey(privateKey)
 }
