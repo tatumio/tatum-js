@@ -1,4 +1,4 @@
-import { Currency, TransferBtcBasedBlockchain } from '@tatumio/tatum-core'
+import { TransferBtcBasedBlockchain } from '@tatumio/tatum-core'
 import { prepareTransaction, sendTransaction, signKMSTransaction } from './ada'
 
 describe('ADA transactions', () => {

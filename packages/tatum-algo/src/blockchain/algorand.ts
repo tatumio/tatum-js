@@ -26,7 +26,7 @@ export const getBlock = async (roundNumber: string): Promise<AlgoBlock> => get(`
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/AlgorandGetBalance" target="_blank">Tatum API documentation</a>
  */
-export const getAccountBalance = async (address: string): Promise<BigNumber> => get(`/v3/algorand/account/balance/${address}`)
+export const getBlockchainAccountBalance = async (address: string): Promise<BigNumber> => get(`/v3/algorand/account/balance/${address}`)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/AlgorandGetTransaction" target="_blank">Tatum API documentation</a>

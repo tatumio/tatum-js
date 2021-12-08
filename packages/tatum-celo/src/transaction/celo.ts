@@ -826,7 +826,7 @@ export const prepareSmartContractWriteMethodInvocation = async (
  * Prepare a signed Celo smart contract read method invocation transaction with the private key locally. Nothing is broadcasted to the blockchain.
  * @returns raw transaction data in hex, to be broadcasted to blockchain.
  */
-export const sendCeloSmartContractReadMethodInvocationTransaction = async (body: SmartContractReadMethodInvocation, provider?: string) => {
+export const sendSmartContractReadMethodInvocationTransaction = async (body: SmartContractReadMethodInvocation, provider?: string) => {
   await validateBody(body, SmartContractReadMethodInvocation)
   const { params, methodName, methodABI, contractAddress } = body
 
@@ -855,7 +855,7 @@ export const sendSmartContractMethodInvocationTransaction = async (
   provider?: string
 ) => {
   if (body.methodABI.stateMutability === 'view') {
-    return sendCeloSmartContractReadMethodInvocationTransaction(body, provider)
+    return sendSmartContractReadMethodInvocationTransaction(body, provider)
   }
   const celoBody = body as CeloSmartContractMethodInvocation
   return broadcast(

@@ -1100,7 +1100,7 @@ export const sendMintBepCashback721Transaction = async (body: ChainMintErc721, p
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendMintMultipleCashbackBep721Transaction = async (body: ChainMintMultipleErc721, provider?: string) =>
-  bscBroadcast(await prepareMintMultipleCashbackBep721SignedTransaction(body, provider), body.signatureId)
+  broadcast(await prepareMintMultipleCashbackBep721SignedTransaction(body, provider), body.signatureId)
 
 /**
  * Send Bsc BEP721 mint multiple transaction to the blockchain. This method broadcasts signed transaction to the blockchain.

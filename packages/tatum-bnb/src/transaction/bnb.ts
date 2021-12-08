@@ -1,7 +1,7 @@
 import { BncClient } from '@binance-chain/javascript-sdk'
 import { getAddressFromPrivateKey } from '@binance-chain/javascript-sdk/lib/crypto'
 import { TransactionKMS, Currency, ChainTransactionKMS } from '@tatumio/tatum-core'
-import { fetAccount } from '../blockchain'
+import { getAccount } from '../blockchain'
 
 /**
  * Sign Bnb pending transaction from Tatum KMS

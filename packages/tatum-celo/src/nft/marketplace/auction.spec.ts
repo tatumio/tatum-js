@@ -7,7 +7,7 @@ import {
   auction,
   SmartContractReadMethodInvocation,
 } from '@tatumio/tatum-core'
-import { CeloMintErc721, sendCeloSmartContractReadMethodInvocationTransaction } from '../..'
+import { CeloMintErc721, sendSmartContractReadMethodInvocationTransaction } from '../..'
 import { getCurrentBlock } from '../../blockchain'
 import { mintNFTWithUri } from '../nft'
 import {
@@ -205,7 +205,7 @@ describe('Auction  tests', () => {
       r.methodName = 'get'
       r.methodABI = auction.abi.find((a: any) => a.name === r.methodName)
       r.params = [tokenId]
-      console.log(await sendCeloSmartContractReadMethodInvocationTransaction(r, 'https://alfajores-forno.celo-testnet.org'))
+      console.log(await sendSmartContractReadMethodInvocationTransaction(r, 'https://alfajores-forno.celo-testnet.org'))
     })
 
     it('should get auction fee', async () => {
@@ -214,7 +214,7 @@ describe('Auction  tests', () => {
       r.methodName = 'getAuctionFee'
       r.methodABI = auction.abi.find((a: any) => a.name === r.methodName)
       r.params = []
-      console.log(await sendCeloSmartContractReadMethodInvocationTransaction(r, 'https://alfajores-forno.celo-testnet.org'))
+      console.log(await sendSmartContractReadMethodInvocationTransaction(r, 'https://alfajores-forno.celo-testnet.org'))
     })
   })
 })

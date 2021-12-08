@@ -17,7 +17,16 @@ import {
 } from '@emurgo/cardano-serialization-lib-nodejs'
 import BigNumber from 'bignumber.js'
 import { broadcast, getBlockChainInfo, getTransaction, getUtxos } from '../blockchain/ada'
-import { validateBody, Currency, TransactionKMS, TransferBtcBasedBlockchain, FromAddress, FromUTXO, To } from '@tatumio/tatum-core'
+import {
+  validateBody,
+  Currency,
+  TransactionKMS,
+  TransferBtcBasedBlockchain,
+  FromAddress,
+  FromUTXO,
+  To,
+  ChainTransactionKMS,
+} from '@tatumio/tatum-core'
 import { AdaUtxo } from '../model'
 
 /**
