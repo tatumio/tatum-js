@@ -2592,12 +2592,12 @@
     "@tatumio/bitcoincash-ops" "2.0.0"
 
 "@tatumio/tatum-ada@file:packages/tatum-ada":
-  version "2.0.0-alpha.47"
+  version "2.0.0-alpha.80"
   dependencies:
     "@emurgo/cardano-serialization-lib-nodejs" "^6.0.0"
-    "@tatumio/tatum-core" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-ada-2.0.0-alpha.47-28197279-e20f-46dd-b4dd-57f7de5a3b02-1637934088706/node_modules/@tatumio/tatum-core"
-    "@tatumio/tatum-defi" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-ada-2.0.0-alpha.47-28197279-e20f-46dd-b4dd-57f7de5a3b02-1637934088706/node_modules/@tatumio/tatum-defi"
-    "@tatumio/tatum-ledger" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-ada-2.0.0-alpha.47-28197279-e20f-46dd-b4dd-57f7de5a3b02-1637934088706/node_modules/@tatumio/tatum-ledger"
+    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-ada-2.0.0-alpha.80-cd943a24-abf4-45ee-8491-f92800cb287c-1638978209143/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-defi" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-ada-2.0.0-alpha.80-cd943a24-abf4-45ee-8491-f92800cb287c-1638978209143/node_modules/@tatumio/tatum-defi"
+    "@tatumio/tatum-ledger" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-ada-2.0.0-alpha.80-cd943a24-abf4-45ee-8491-f92800cb287c-1638978209143/node_modules/@tatumio/tatum-ledger"
     bignumber.js "^9.0.0"
     bip39 "^3.0.2"
     cardano-crypto.js "^6.0.0"
@@ -2605,11 +2605,11 @@
     ethereumjs-wallet "^1.0.0"
 
 "@tatumio/tatum-algo@file:packages/tatum-algo":
-  version "2.0.0-alpha.47"
+  version "2.0.0-alpha.80"
   dependencies:
-    "@tatumio/tatum-core" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-algo-2.0.0-alpha.47-805b8175-1514-45ac-946d-7c860cd37339-1637934088705/node_modules/@tatumio/tatum-core"
-    "@tatumio/tatum-defi" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-algo-2.0.0-alpha.47-805b8175-1514-45ac-946d-7c860cd37339-1637934088705/node_modules/@tatumio/tatum-defi"
-    "@tatumio/tatum-ledger" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-algo-2.0.0-alpha.47-805b8175-1514-45ac-946d-7c860cd37339-1637934088705/node_modules/@tatumio/tatum-ledger"
+    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-algo-2.0.0-alpha.80-522d06cf-89bf-48b6-82ad-7377f4b7e5bb-1638978209138/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-defi" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-algo-2.0.0-alpha.80-522d06cf-89bf-48b6-82ad-7377f4b7e5bb-1638978209138/node_modules/@tatumio/tatum-defi"
+    "@tatumio/tatum-ledger" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-algo-2.0.0-alpha.80-522d06cf-89bf-48b6-82ad-7377f4b7e5bb-1638978209138/node_modules/@tatumio/tatum-ledger"
     algosdk "^1.12.0"
     base32.js "^0.1.0"
     bignumber.js "^9.0.0"
@@ -2617,12 +2617,12 @@
     url-parse "^1.5.3"
 
 "@tatumio/tatum-bch@file:packages/tatum-bch":
-  version "2.0.0-alpha.47"
+  version "2.0.0-alpha.80"
   dependencies:
     "@tatumio/bitcoincashjs2-lib" "4.1.2"
-    "@tatumio/tatum-core" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-bch-2.0.0-alpha.47-8515cfaf-bdd2-47f7-a319-9ff78569ccfd-1637934088704/node_modules/@tatumio/tatum-core"
-    "@tatumio/tatum-defi" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-bch-2.0.0-alpha.47-8515cfaf-bdd2-47f7-a319-9ff78569ccfd-1637934088704/node_modules/@tatumio/tatum-defi"
-    "@tatumio/tatum-ledger" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-bch-2.0.0-alpha.47-8515cfaf-bdd2-47f7-a319-9ff78569ccfd-1637934088704/node_modules/@tatumio/tatum-ledger"
+    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-bch-2.0.0-alpha.80-b123c466-e3b3-4c48-9a3b-e7420234ca3a-1638978209148/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-defi" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-bch-2.0.0-alpha.80-b123c466-e3b3-4c48-9a3b-e7420234ca3a-1638978209148/node_modules/@tatumio/tatum-defi"
+    "@tatumio/tatum-ledger" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-bch-2.0.0-alpha.80-b123c466-e3b3-4c48-9a3b-e7420234ca3a-1638978209148/node_modules/@tatumio/tatum-ledger"
     bignumber.js "^9.0.0"
     bip32 "^2.0.5"
     bip39 "^3.0.2"
@@ -2634,19 +2634,19 @@
     hdkey "^2.0.1"
 
 "@tatumio/tatum-bnb@file:packages/tatum-bnb":
-  version "2.0.0-alpha.47"
+  version "2.0.0-alpha.80"
   dependencies:
     "@binance-chain/javascript-sdk" "^4.1.1"
-    "@tatumio/tatum-core" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-bnb-2.0.0-alpha.47-7a48ca6f-dfd4-4a79-bf87-0d999641f223-1637934088706/node_modules/@tatumio/tatum-core"
-    "@tatumio/tatum-defi" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-bnb-2.0.0-alpha.47-7a48ca6f-dfd4-4a79-bf87-0d999641f223-1637934088706/node_modules/@tatumio/tatum-defi"
-    "@tatumio/tatum-ledger" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-bnb-2.0.0-alpha.47-7a48ca6f-dfd4-4a79-bf87-0d999641f223-1637934088706/node_modules/@tatumio/tatum-ledger"
+    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-bnb-2.0.0-alpha.80-917fd70a-dc47-4144-9116-776cfd962ed2-1638978209142/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-defi" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-bnb-2.0.0-alpha.80-917fd70a-dc47-4144-9116-776cfd962ed2-1638978209142/node_modules/@tatumio/tatum-defi"
+    "@tatumio/tatum-ledger" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-bnb-2.0.0-alpha.80-917fd70a-dc47-4144-9116-776cfd962ed2-1638978209142/node_modules/@tatumio/tatum-ledger"
 
 "@tatumio/tatum-bsc@file:packages/tatum-bsc":
-  version "2.0.0-alpha.47"
+  version "2.0.0-alpha.80"
   dependencies:
-    "@tatumio/tatum-core" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-bsc-2.0.0-alpha.47-102c4901-da00-46cb-901c-436c3cbc131c-1637934088709/node_modules/@tatumio/tatum-core"
-    "@tatumio/tatum-defi" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-bsc-2.0.0-alpha.47-102c4901-da00-46cb-901c-436c3cbc131c-1637934088709/node_modules/@tatumio/tatum-defi"
-    "@tatumio/tatum-ledger" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-bsc-2.0.0-alpha.47-102c4901-da00-46cb-901c-436c3cbc131c-1637934088709/node_modules/@tatumio/tatum-ledger"
+    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-bsc-2.0.0-alpha.80-aa43c082-4c45-4761-99f0-3995253e0447-1638978209144/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-defi" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-bsc-2.0.0-alpha.80-aa43c082-4c45-4761-99f0-3995253e0447-1638978209144/node_modules/@tatumio/tatum-defi"
+    "@tatumio/tatum-ledger" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-bsc-2.0.0-alpha.80-aa43c082-4c45-4761-99f0-3995253e0447-1638978209144/node_modules/@tatumio/tatum-ledger"
     bignumber.js "^9.0.0"
     bip39 "^3.0.2"
     class-transformer "^0.2.3"
@@ -2657,11 +2657,11 @@
     web3-utils "1.4.0"
 
 "@tatumio/tatum-btc@file:packages/tatum-btc":
-  version "2.0.0-alpha.47"
+  version "2.0.0-alpha.80"
   dependencies:
-    "@tatumio/tatum-core" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-btc-2.0.0-alpha.47-839f3df9-d2de-489a-8b05-767d9a3f6675-1637934088708/node_modules/@tatumio/tatum-core"
-    "@tatumio/tatum-defi" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-btc-2.0.0-alpha.47-839f3df9-d2de-489a-8b05-767d9a3f6675-1637934088708/node_modules/@tatumio/tatum-defi"
-    "@tatumio/tatum-ledger" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-btc-2.0.0-alpha.47-839f3df9-d2de-489a-8b05-767d9a3f6675-1637934088708/node_modules/@tatumio/tatum-ledger"
+    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-btc-2.0.0-alpha.80-e4eadc50-69b3-4a50-a659-6bd6d4890524-1638978209146/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-defi" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-btc-2.0.0-alpha.80-e4eadc50-69b3-4a50-a659-6bd6d4890524-1638978209146/node_modules/@tatumio/tatum-defi"
+    "@tatumio/tatum-ledger" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-btc-2.0.0-alpha.80-e4eadc50-69b3-4a50-a659-6bd6d4890524-1638978209146/node_modules/@tatumio/tatum-ledger"
     bignumber.js "^9.0.0"
     bip32 "^2.0.5"
     bip39 "^3.0.2"
@@ -2673,13 +2673,13 @@
     reflect-metadata "^0.1.13"
 
 "@tatumio/tatum-celo@file:packages/tatum-celo":
-  version "2.0.0-alpha.47"
+  version "2.0.0-alpha.80"
   dependencies:
     "@celo-tools/celo-ethers-wrapper" "0.0.5"
     "@ethersproject/bignumber" "^5.5.0"
-    "@tatumio/tatum-core" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-celo-2.0.0-alpha.47-b1a904af-63a7-4e35-9d5c-0d6af560849c-1637934088707/node_modules/@tatumio/tatum-core"
-    "@tatumio/tatum-defi" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-celo-2.0.0-alpha.47-b1a904af-63a7-4e35-9d5c-0d6af560849c-1637934088707/node_modules/@tatumio/tatum-defi"
-    "@tatumio/tatum-ledger" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-celo-2.0.0-alpha.47-b1a904af-63a7-4e35-9d5c-0d6af560849c-1637934088707/node_modules/@tatumio/tatum-ledger"
+    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-celo-2.0.0-alpha.80-510647c0-a2ee-438e-8252-1ee65f8665e7-1638978209147/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-defi" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-celo-2.0.0-alpha.80-510647c0-a2ee-438e-8252-1ee65f8665e7-1638978209147/node_modules/@tatumio/tatum-defi"
+    "@tatumio/tatum-ledger" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-celo-2.0.0-alpha.80-510647c0-a2ee-438e-8252-1ee65f8665e7-1638978209147/node_modules/@tatumio/tatum-ledger"
     bignumber.js "^9.0.0"
     bip39 "^3.0.2"
     class-transformer "^0.2.3"
@@ -2691,7 +2691,7 @@
     web3-utils "1.4.0"
 
 "@tatumio/tatum-core@file:packages/tatum-core":
-  version "2.0.0-alpha.47"
+  version "2.0.0-alpha.80"
   dependencies:
     axios "^0.21.1"
     axios-retry "^3.1.9"
@@ -2703,18 +2703,18 @@
     web3 "1.4.0"
 
 "@tatumio/tatum-defi@file:packages/tatum-defi":
-  version "2.0.0-alpha.47"
+  version "2.0.0-alpha.80"
   dependencies:
-    "@tatumio/tatum-core" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-defi-2.0.0-alpha.47-739dcc6b-469b-41c2-ad70-8fc73928c15c-1637934088699/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-defi-2.0.0-alpha.80-cca39967-6e6c-4a93-9b0d-baa7189b83e3-1638978209134/node_modules/@tatumio/tatum-core"
     bignumber.js "^9.0.0"
     web3 "1.4.0"
 
 "@tatumio/tatum-doge@file:packages/tatum-doge":
-  version "2.0.0-alpha.47"
+  version "2.0.0-alpha.80"
   dependencies:
-    "@tatumio/tatum-core" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-doge-2.0.0-alpha.47-83e9aa3c-1a1f-4247-97e0-afdc3e2a8c20-1637934088710/node_modules/@tatumio/tatum-core"
-    "@tatumio/tatum-defi" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-doge-2.0.0-alpha.47-83e9aa3c-1a1f-4247-97e0-afdc3e2a8c20-1637934088710/node_modules/@tatumio/tatum-defi"
-    "@tatumio/tatum-ledger" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-doge-2.0.0-alpha.47-83e9aa3c-1a1f-4247-97e0-afdc3e2a8c20-1637934088710/node_modules/@tatumio/tatum-ledger"
+    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-doge-2.0.0-alpha.80-b0feb995-ff0d-448c-96a3-6b3159b6d350-1638978209149/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-defi" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-doge-2.0.0-alpha.80-b0feb995-ff0d-448c-96a3-6b3159b6d350-1638978209149/node_modules/@tatumio/tatum-defi"
+    "@tatumio/tatum-ledger" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-doge-2.0.0-alpha.80-b0feb995-ff0d-448c-96a3-6b3159b6d350-1638978209149/node_modules/@tatumio/tatum-ledger"
     bignumber.js "^9.0.0"
     bip32 "^2.0.6"
     bip39 "^3.0.2"
@@ -2724,12 +2724,12 @@
     hdkey "^2.0.1"
 
 "@tatumio/tatum-egld@file:packages/tatum-egld":
-  version "2.0.0-alpha.47"
+  version "2.0.0-alpha.80"
   dependencies:
     "@elrondnetwork/erdjs" "^8.0.1-alpha.11"
-    "@tatumio/tatum-core" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-egld-2.0.0-alpha.47-f0e4e76c-2517-4491-9641-6147b09ea00a-1637934088711/node_modules/@tatumio/tatum-core"
-    "@tatumio/tatum-defi" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-egld-2.0.0-alpha.47-f0e4e76c-2517-4491-9641-6147b09ea00a-1637934088711/node_modules/@tatumio/tatum-defi"
-    "@tatumio/tatum-ledger" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-egld-2.0.0-alpha.47-f0e4e76c-2517-4491-9641-6147b09ea00a-1637934088711/node_modules/@tatumio/tatum-ledger"
+    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-egld-2.0.0-alpha.80-44cbd31b-313d-4bf5-b143-bd272404a97d-1638978209150/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-defi" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-egld-2.0.0-alpha.80-44cbd31b-313d-4bf5-b143-bd272404a97d-1638978209150/node_modules/@tatumio/tatum-defi"
+    "@tatumio/tatum-ledger" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-egld-2.0.0-alpha.80-44cbd31b-313d-4bf5-b143-bd272404a97d-1638978209150/node_modules/@tatumio/tatum-ledger"
     axios "^0.21.1"
     bech32 "^1.1.4"
     bignumber.js "^9.0.0"
@@ -2741,11 +2741,11 @@
     web3 "1.4.0"
 
 "@tatumio/tatum-eth@file:packages/tatum-eth":
-  version "2.0.0-alpha.47"
+  version "2.0.0-alpha.80"
   dependencies:
-    "@tatumio/tatum-core" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-eth-2.0.0-alpha.47-48084b4c-b43d-428a-9f77-ce5a08089f6f-1637934088713/node_modules/@tatumio/tatum-core"
-    "@tatumio/tatum-defi" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-eth-2.0.0-alpha.47-48084b4c-b43d-428a-9f77-ce5a08089f6f-1637934088713/node_modules/@tatumio/tatum-defi"
-    "@tatumio/tatum-ledger" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-eth-2.0.0-alpha.47-48084b4c-b43d-428a-9f77-ce5a08089f6f-1637934088713/node_modules/@tatumio/tatum-ledger"
+    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-eth-2.0.0-alpha.80-1c35a0ab-f1ad-4156-8dd1-7da014bbac32-1638978209151/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-defi" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-eth-2.0.0-alpha.80-1c35a0ab-f1ad-4156-8dd1-7da014bbac32-1638978209151/node_modules/@tatumio/tatum-defi"
+    "@tatumio/tatum-ledger" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-eth-2.0.0-alpha.80-1c35a0ab-f1ad-4156-8dd1-7da014bbac32-1638978209151/node_modules/@tatumio/tatum-ledger"
     bignumber.js "^9.0.0"
     bip39 "^3.0.2"
     class-transformer "^0.2.3"
@@ -2758,14 +2758,14 @@
     web3-utils "1.4.0"
 
 "@tatumio/tatum-flow@file:packages/tatum-flow":
-  version "2.0.0-alpha.47"
+  version "2.0.0-alpha.80"
   dependencies:
     "@onflow/fcl" "^0.0.73"
     "@onflow/types" "^0.0.4"
     "@onflow/util-encode-key" "^0.0.2"
-    "@tatumio/tatum-core" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-flow-2.0.0-alpha.47-b85a6235-e874-48c5-a95b-ea386d70f87d-1637934088714/node_modules/@tatumio/tatum-core"
-    "@tatumio/tatum-defi" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-flow-2.0.0-alpha.47-b85a6235-e874-48c5-a95b-ea386d70f87d-1637934088714/node_modules/@tatumio/tatum-defi"
-    "@tatumio/tatum-ledger" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-flow-2.0.0-alpha.47-b85a6235-e874-48c5-a95b-ea386d70f87d-1637934088714/node_modules/@tatumio/tatum-ledger"
+    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-flow-2.0.0-alpha.80-ded124a9-54ef-4c12-ad19-92d67dbf553e-1638978209153/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-defi" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-flow-2.0.0-alpha.80-ded124a9-54ef-4c12-ad19-92d67dbf553e-1638978209153/node_modules/@tatumio/tatum-defi"
+    "@tatumio/tatum-ledger" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-flow-2.0.0-alpha.80-ded124a9-54ef-4c12-ad19-92d67dbf553e-1638978209153/node_modules/@tatumio/tatum-ledger"
     bip32 "^2.0.5"
     bip39 "^3.0.2"
     class-validator "0.13.0"
@@ -2775,12 +2775,12 @@
     reflect-metadata "^0.1.13"
     sha3 "^2.1.4"
 
-"@tatumio/tatum-kcc@file:packages/tatum-kcc":
-  version "2.0.0-alpha.47"
+"@tatumio/tatum-kcs@file:packages/tatum-kcs":
+  version "2.0.0-alpha.80"
   dependencies:
-    "@tatumio/tatum-core" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-kcc-2.0.0-alpha.47-0ffc74e8-f5c0-4d0e-82c7-8817e20cb4e2-1637934088715/node_modules/@tatumio/tatum-core"
-    "@tatumio/tatum-defi" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-kcc-2.0.0-alpha.47-0ffc74e8-f5c0-4d0e-82c7-8817e20cb4e2-1637934088715/node_modules/@tatumio/tatum-defi"
-    "@tatumio/tatum-ledger" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-kcc-2.0.0-alpha.47-0ffc74e8-f5c0-4d0e-82c7-8817e20cb4e2-1637934088715/node_modules/@tatumio/tatum-ledger"
+    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-kcs-2.0.0-alpha.80-ef875648-889a-4a4b-9575-70a803d10a90-1638978209152/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-defi" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-kcs-2.0.0-alpha.80-ef875648-889a-4a4b-9575-70a803d10a90-1638978209152/node_modules/@tatumio/tatum-defi"
+    "@tatumio/tatum-ledger" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-kcs-2.0.0-alpha.80-ef875648-889a-4a4b-9575-70a803d10a90-1638978209152/node_modules/@tatumio/tatum-ledger"
     bignumber.js "^9.0.0"
     bip39 "^3.0.2"
     class-transformer "^0.2.3"
@@ -2790,16 +2790,16 @@
     web3-utils "1.4.0"
 
 "@tatumio/tatum-ledger@file:packages/tatum-ledger":
-  version "2.0.0-alpha.47"
+  version "2.0.0-alpha.80"
   dependencies:
-    "@tatumio/tatum-core" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-ledger-2.0.0-alpha.47-ca3ad16a-8284-4f19-b78c-0b0f7a0ade5f-1637934088700/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-ledger-2.0.0-alpha.80-358385a3-71e4-4216-8ecb-c188526d5a29-1638978209136/node_modules/@tatumio/tatum-core"
 
 "@tatumio/tatum-ltc@file:packages/tatum-ltc":
-  version "2.0.0-alpha.47"
+  version "2.0.0-alpha.80"
   dependencies:
-    "@tatumio/tatum-core" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-ltc-2.0.0-alpha.47-c42c7209-a960-47fe-a628-689cc8d1682b-1637934088716/node_modules/@tatumio/tatum-core"
-    "@tatumio/tatum-defi" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-ltc-2.0.0-alpha.47-c42c7209-a960-47fe-a628-689cc8d1682b-1637934088716/node_modules/@tatumio/tatum-defi"
-    "@tatumio/tatum-ledger" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-ltc-2.0.0-alpha.47-c42c7209-a960-47fe-a628-689cc8d1682b-1637934088716/node_modules/@tatumio/tatum-ledger"
+    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-ltc-2.0.0-alpha.80-575b0ed1-2617-4ae6-8444-0af63b1639c3-1638978209154/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-defi" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-ltc-2.0.0-alpha.80-575b0ed1-2617-4ae6-8444-0af63b1639c3-1638978209154/node_modules/@tatumio/tatum-defi"
+    "@tatumio/tatum-ledger" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-ltc-2.0.0-alpha.80-575b0ed1-2617-4ae6-8444-0af63b1639c3-1638978209154/node_modules/@tatumio/tatum-ledger"
     bignumber.js "^9.0.0"
     bip32 "^2.0.5"
     bip39 "^3.0.2"
@@ -2811,36 +2811,37 @@
     reflect-metadata "^0.1.13"
 
 "@tatumio/tatum-neo@file:packages/tatum-neo":
-  version "2.0.0-alpha.47"
+  version "2.0.0-alpha.80"
   dependencies:
     "@cityofzion/neon-js" "^4.8.0"
-    "@tatumio/tatum-core" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-neo-2.0.0-alpha.47-825a5cdc-91bb-45b6-96cf-9ee0d7983fe1-1637934088722/node_modules/@tatumio/tatum-core"
-    "@tatumio/tatum-defi" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-neo-2.0.0-alpha.47-825a5cdc-91bb-45b6-96cf-9ee0d7983fe1-1637934088722/node_modules/@tatumio/tatum-defi"
-    "@tatumio/tatum-ledger" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-neo-2.0.0-alpha.47-825a5cdc-91bb-45b6-96cf-9ee0d7983fe1-1637934088722/node_modules/@tatumio/tatum-ledger"
+    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-neo-2.0.0-alpha.80-1dd5e106-fbaa-4ce0-8e72-b633c6a90735-1638978209155/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-defi" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-neo-2.0.0-alpha.80-1dd5e106-fbaa-4ce0-8e72-b633c6a90735-1638978209155/node_modules/@tatumio/tatum-defi"
+    "@tatumio/tatum-ledger" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-neo-2.0.0-alpha.80-1dd5e106-fbaa-4ce0-8e72-b633c6a90735-1638978209155/node_modules/@tatumio/tatum-ledger"
     reflect-metadata "^0.1.13"
 
 "@tatumio/tatum-one@file:packages/tatum-one":
-  version "2.0.0-alpha.47"
+  version "2.0.0-alpha.80"
   dependencies:
     "@harmony-js/crypto" "^0.1.56"
-    "@tatumio/tatum-core" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-one-2.0.0-alpha.47-8e3c9365-0b81-42c3-a3ed-a26222dd830d-1637934088721/node_modules/@tatumio/tatum-core"
-    "@tatumio/tatum-defi" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-one-2.0.0-alpha.47-8e3c9365-0b81-42c3-a3ed-a26222dd830d-1637934088721/node_modules/@tatumio/tatum-defi"
-    "@tatumio/tatum-ledger" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-one-2.0.0-alpha.47-8e3c9365-0b81-42c3-a3ed-a26222dd830d-1637934088721/node_modules/@tatumio/tatum-ledger"
+    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-one-2.0.0-alpha.80-3544cabe-3e0e-4b27-9238-273793b983f0-1638978209155/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-defi" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-one-2.0.0-alpha.80-3544cabe-3e0e-4b27-9238-273793b983f0-1638978209155/node_modules/@tatumio/tatum-defi"
+    "@tatumio/tatum-ledger" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-one-2.0.0-alpha.80-3544cabe-3e0e-4b27-9238-273793b983f0-1638978209155/node_modules/@tatumio/tatum-ledger"
     bignumber.js "^9.0.0"
     bip39 "^3.0.2"
     class-transformer "^0.2.3"
     class-validator "0.13.0"
     ethereumjs-wallet "^1.0.0"
+    tslib "^2.3.1"
     web3 "1.4.0"
     web3-core "1.4.0"
     web3-utils "1.4.0"
 
 "@tatumio/tatum-polygon@file:packages/tatum-polygon":
-  version "2.0.0-alpha.47"
+  version "2.0.0-alpha.80"
   dependencies:
-    "@tatumio/tatum-core" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-polygon-2.0.0-alpha.47-976be85b-9de8-42e9-898c-c112a6ba718e-1637934088720/node_modules/@tatumio/tatum-core"
-    "@tatumio/tatum-defi" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-polygon-2.0.0-alpha.47-976be85b-9de8-42e9-898c-c112a6ba718e-1637934088720/node_modules/@tatumio/tatum-defi"
-    "@tatumio/tatum-ledger" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-polygon-2.0.0-alpha.47-976be85b-9de8-42e9-898c-c112a6ba718e-1637934088720/node_modules/@tatumio/tatum-ledger"
+    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-polygon-2.0.0-alpha.80-b06a6e91-d935-4c22-8235-2a58ac507e3d-1638978209156/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-defi" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-polygon-2.0.0-alpha.80-b06a6e91-d935-4c22-8235-2a58ac507e3d-1638978209156/node_modules/@tatumio/tatum-defi"
+    "@tatumio/tatum-ledger" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-polygon-2.0.0-alpha.80-b06a6e91-d935-4c22-8235-2a58ac507e3d-1638978209156/node_modules/@tatumio/tatum-ledger"
     bignumber.js "^9.0.0"
     bip39 "^3.0.2"
     class-transformer "^0.2.3"
@@ -2850,11 +2851,11 @@
     web3-utils "1.4.0"
 
 "@tatumio/tatum-qtum@file:packages/tatum-qtum":
-  version "2.0.0-alpha.47"
+  version "2.0.0-alpha.80"
   dependencies:
-    "@tatumio/tatum-core" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-qtum-2.0.0-alpha.47-bb399865-d3ce-45a1-965e-c357c82124d4-1637934088723/node_modules/@tatumio/tatum-core"
-    "@tatumio/tatum-defi" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-qtum-2.0.0-alpha.47-bb399865-d3ce-45a1-965e-c357c82124d4-1637934088723/node_modules/@tatumio/tatum-defi"
-    "@tatumio/tatum-ledger" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-qtum-2.0.0-alpha.47-bb399865-d3ce-45a1-965e-c357c82124d4-1637934088723/node_modules/@tatumio/tatum-ledger"
+    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-qtum-2.0.0-alpha.80-64d7bb36-e255-4666-bf34-255dc08de12f-1638978209164/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-defi" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-qtum-2.0.0-alpha.80-64d7bb36-e255-4666-bf34-255dc08de12f-1638978209164/node_modules/@tatumio/tatum-defi"
+    "@tatumio/tatum-ledger" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-qtum-2.0.0-alpha.80-64d7bb36-e255-4666-bf34-255dc08de12f-1638978209164/node_modules/@tatumio/tatum-ledger"
     bip32 "^2.0.5"
     bip39 "^3.0.2"
     bitcoinjs-lib "^5.2.0"
@@ -2862,11 +2863,11 @@
     reflect-metadata "^0.1.13"
 
 "@tatumio/tatum-quorum@file:packages/tatum-quorum":
-  version "2.0.0-alpha.47"
+  version "2.0.0-alpha.80"
   dependencies:
-    "@tatumio/tatum-core" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-quorum-2.0.0-alpha.47-d4bca929-e99f-4188-bfb3-6e64d7b41303-1637934088725/node_modules/@tatumio/tatum-core"
-    "@tatumio/tatum-defi" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-quorum-2.0.0-alpha.47-d4bca929-e99f-4188-bfb3-6e64d7b41303-1637934088725/node_modules/@tatumio/tatum-defi"
-    "@tatumio/tatum-ledger" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-quorum-2.0.0-alpha.47-d4bca929-e99f-4188-bfb3-6e64d7b41303-1637934088725/node_modules/@tatumio/tatum-ledger"
+    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-quorum-2.0.0-alpha.80-b6119c30-a09b-491e-a7ba-73ce6770d8bb-1638978209161/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-defi" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-quorum-2.0.0-alpha.80-b6119c30-a09b-491e-a7ba-73ce6770d8bb-1638978209161/node_modules/@tatumio/tatum-defi"
+    "@tatumio/tatum-ledger" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-quorum-2.0.0-alpha.80-b6119c30-a09b-491e-a7ba-73ce6770d8bb-1638978209161/node_modules/@tatumio/tatum-ledger"
     bignumber.js "^9.0.0"
     class-transformer "^0.2.3"
     class-validator "0.13.0"
@@ -2877,11 +2878,11 @@
     web3-utils "1.4.0"
 
 "@tatumio/tatum-scrypta@file:packages/tatum-scrypta":
-  version "2.0.0-alpha.47"
+  version "2.0.0-alpha.80"
   dependencies:
-    "@tatumio/tatum-core" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-scrypta-2.0.0-alpha.47-74761e72-3691-48ad-b686-2092d90819a3-1637934088726/node_modules/@tatumio/tatum-core"
-    "@tatumio/tatum-defi" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-scrypta-2.0.0-alpha.47-74761e72-3691-48ad-b686-2092d90819a3-1637934088726/node_modules/@tatumio/tatum-defi"
-    "@tatumio/tatum-ledger" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-scrypta-2.0.0-alpha.47-74761e72-3691-48ad-b686-2092d90819a3-1637934088726/node_modules/@tatumio/tatum-ledger"
+    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-scrypta-2.0.0-alpha.80-05477bd1-5652-416c-8e84-105112c75347-1638978209157/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-defi" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-scrypta-2.0.0-alpha.80-05477bd1-5652-416c-8e84-105112c75347-1638978209157/node_modules/@tatumio/tatum-defi"
+    "@tatumio/tatum-ledger" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-scrypta-2.0.0-alpha.80-05477bd1-5652-416c-8e84-105112c75347-1638978209157/node_modules/@tatumio/tatum-ledger"
     bignumber.js "^9.0.0"
     bip32 "^2.0.5"
     bip39 "^3.0.2"
@@ -2890,11 +2891,11 @@
     hdkey "^2.0.1"
 
 "@tatumio/tatum-tron@file:packages/tatum-tron":
-  version "2.0.0-alpha.47"
+  version "2.0.0-alpha.80"
   dependencies:
-    "@tatumio/tatum-core" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-tron-2.0.0-alpha.47-139c9d41-5700-4826-9468-e7061913fef1-1637934088727/node_modules/@tatumio/tatum-core"
-    "@tatumio/tatum-defi" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-tron-2.0.0-alpha.47-139c9d41-5700-4826-9468-e7061913fef1-1637934088727/node_modules/@tatumio/tatum-defi"
-    "@tatumio/tatum-ledger" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-tron-2.0.0-alpha.47-139c9d41-5700-4826-9468-e7061913fef1-1637934088727/node_modules/@tatumio/tatum-ledger"
+    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-tron-2.0.0-alpha.80-35a07932-84b5-4281-bf36-95abc8756a15-1638978209158/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-defi" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-tron-2.0.0-alpha.80-35a07932-84b5-4281-bf36-95abc8756a15-1638978209158/node_modules/@tatumio/tatum-defi"
+    "@tatumio/tatum-ledger" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-tron-2.0.0-alpha.80-35a07932-84b5-4281-bf36-95abc8756a15-1638978209158/node_modules/@tatumio/tatum-ledger"
     axios "^0.21.1"
     bignumber.js "^9.0.0"
     bip32 "^2.0.5"
@@ -2907,11 +2908,11 @@
     tronweb "^3.2.2"
 
 "@tatumio/tatum-vet@file:packages/tatum-vet":
-  version "2.0.0-alpha.47"
+  version "2.0.0-alpha.80"
   dependencies:
-    "@tatumio/tatum-core" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-vet-2.0.0-alpha.47-ed84ff1b-93a7-40fb-80a6-cc47d4e30e1a-1637934088728/node_modules/@tatumio/tatum-core"
-    "@tatumio/tatum-defi" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-vet-2.0.0-alpha.47-ed84ff1b-93a7-40fb-80a6-cc47d4e30e1a-1637934088728/node_modules/@tatumio/tatum-defi"
-    "@tatumio/tatum-ledger" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-vet-2.0.0-alpha.47-ed84ff1b-93a7-40fb-80a6-cc47d4e30e1a-1637934088728/node_modules/@tatumio/tatum-ledger"
+    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-vet-2.0.0-alpha.80-b89e21e8-0d9e-4b20-8238-c6f29b5869ac-1638978209159/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-defi" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-vet-2.0.0-alpha.80-b89e21e8-0d9e-4b20-8238-c6f29b5869ac-1638978209159/node_modules/@tatumio/tatum-defi"
+    "@tatumio/tatum-ledger" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-vet-2.0.0-alpha.80-b89e21e8-0d9e-4b20-8238-c6f29b5869ac-1638978209159/node_modules/@tatumio/tatum-ledger"
     bip39 "^3.0.2"
     class-validator "0.13.0"
     ethereumjs-wallet "^1.0.0"
@@ -2920,11 +2921,11 @@
     web3-core "1.4.0"
 
 "@tatumio/tatum-xdc@file:packages/tatum-xdc":
-  version "2.0.0-alpha.47"
+  version "2.0.0-alpha.80"
   dependencies:
-    "@tatumio/tatum-core" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-xdc-2.0.0-alpha.47-48bfa17c-e8d7-4a63-86d7-9dca276ba1c9-1637934088729/node_modules/@tatumio/tatum-core"
-    "@tatumio/tatum-defi" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-xdc-2.0.0-alpha.47-48bfa17c-e8d7-4a63-86d7-9dca276ba1c9-1637934088729/node_modules/@tatumio/tatum-defi"
-    "@tatumio/tatum-ledger" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-xdc-2.0.0-alpha.47-48bfa17c-e8d7-4a63-86d7-9dca276ba1c9-1637934088729/node_modules/@tatumio/tatum-ledger"
+    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-xdc-2.0.0-alpha.80-dc426224-76c8-416a-9e8a-a44d95d35bc8-1638978209159/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-defi" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-xdc-2.0.0-alpha.80-dc426224-76c8-416a-9e8a-a44d95d35bc8-1638978209159/node_modules/@tatumio/tatum-defi"
+    "@tatumio/tatum-ledger" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-xdc-2.0.0-alpha.80-dc426224-76c8-416a-9e8a-a44d95d35bc8-1638978209159/node_modules/@tatumio/tatum-ledger"
     bignumber.js "^9.0.0"
     bip39 "^3.0.2"
     ethereumjs-wallet "^1.0.0"
@@ -2933,22 +2934,22 @@
     web3-utils "1.4.0"
 
 "@tatumio/tatum-xlm@file:packages/tatum-xlm":
-  version "2.0.0-alpha.47"
+  version "2.0.0-alpha.80"
   dependencies:
-    "@tatumio/tatum-core" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-xlm-2.0.0-alpha.47-9c855387-9879-4466-be39-50186c7daf23-1637934088730/node_modules/@tatumio/tatum-core"
-    "@tatumio/tatum-defi" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-xlm-2.0.0-alpha.47-9c855387-9879-4466-be39-50186c7daf23-1637934088730/node_modules/@tatumio/tatum-defi"
-    "@tatumio/tatum-ledger" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-xlm-2.0.0-alpha.47-9c855387-9879-4466-be39-50186c7daf23-1637934088730/node_modules/@tatumio/tatum-ledger"
+    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-xlm-2.0.0-alpha.80-88205ffd-8f3e-41a9-b5c3-8290fa4a8b87-1638978209160/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-defi" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-xlm-2.0.0-alpha.80-88205ffd-8f3e-41a9-b5c3-8290fa4a8b87-1638978209160/node_modules/@tatumio/tatum-defi"
+    "@tatumio/tatum-ledger" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-xlm-2.0.0-alpha.80-88205ffd-8f3e-41a9-b5c3-8290fa4a8b87-1638978209160/node_modules/@tatumio/tatum-ledger"
     bip39 "^3.0.2"
     class-validator "0.13.0"
     ethereumjs-wallet "^1.0.0"
     stellar-sdk "^8.1.0"
 
 "@tatumio/tatum-xrp@file:packages/tatum-xrp":
-  version "2.0.0-alpha.47"
+  version "2.0.0-alpha.80"
   dependencies:
-    "@tatumio/tatum-core" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-xrp-2.0.0-alpha.47-6cece672-b541-4bf9-8ebd-48b3a9a2c649-1637934088729/node_modules/@tatumio/tatum-core"
-    "@tatumio/tatum-defi" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-xrp-2.0.0-alpha.47-6cece672-b541-4bf9-8ebd-48b3a9a2c649-1637934088729/node_modules/@tatumio/tatum-defi"
-    "@tatumio/tatum-ledger" "file:../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-xrp-2.0.0-alpha.47-6cece672-b541-4bf9-8ebd-48b3a9a2c649-1637934088729/node_modules/@tatumio/tatum-ledger"
+    "@tatumio/tatum-core" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-xrp-2.0.0-alpha.80-5eb059fa-6028-48e6-b086-dc43ff00fd0a-1638978209161/node_modules/@tatumio/tatum-core"
+    "@tatumio/tatum-defi" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-xrp-2.0.0-alpha.80-5eb059fa-6028-48e6-b086-dc43ff00fd0a-1638978209161/node_modules/@tatumio/tatum-defi"
+    "@tatumio/tatum-ledger" "file:../../../../Library/Caches/Yarn/v6/npm-@tatumio-tatum-xrp-2.0.0-alpha.80-5eb059fa-6028-48e6-b086-dc43ff00fd0a-1638978209161/node_modules/@tatumio/tatum-ledger"
     bignumber.js "^9.0.0"
     bip39 "^3.0.2"
     class-validator "0.13.0"

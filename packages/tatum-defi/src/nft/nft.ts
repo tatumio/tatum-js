@@ -11,16 +11,33 @@ export const mintNFTRequest = (body: BaseMintErc721): Promise<TransactionHash> =
 export const getNFTTransaction = async <TX>(chain: Currency, hash: string): Promise<TX> => get<TX>(`/v3/nft/transaction/${chain}/${hash}`)
 
 /**
+ * For more details, see <a href="https://tatum.io/apidoc.php#operation/NftGetTransactionByToken" target="_blank">Tatum API documentation</a>
+ */
+export const getNFTTransactionsByToken = async (
+  chain: Currency,
+  tokenId: number,
+  tokenAddress: string,
+  pageSize = 50,
+  offset = 0,
+  from?: number,
+  to?: number,
+  sort?: Sort
+): Promise<NftTransaction[]> =>
+  get<NftTransaction[]>(
+    `/v3/nft/transaction/tokenId/${chain}/${tokenAddress}/${tokenId}?pageSize=${pageSize}&offset=${offset}&from=${from}&to=${to}&sort=${sort}`
+  )
+
+/**
  * For more details, see <a href="https://tatum.io/apidoc.php#operation/NftGetTransactionByAddress" target="_blank">Tatum API documentation</a>
  */
 export const getNFTTransactionsByAddress = async (
   chain: Currency,
   address: string,
   tokenAddress: string,
-  pageSize = 50,
-  offset = 0,
-  from?: string,
-  to?: string,
+  pageSize: number,
+  offset?: number,
+  from?: number,
+  to?: number,
   sort?: Sort
 ): Promise<NftTransaction[]> =>
   get(`/v3/nft/transaction/${chain}/${address}/${tokenAddress}?pageSize=${pageSize}&offset=${offset}&from=${from}&to=${to}&sort=${sort}`)
