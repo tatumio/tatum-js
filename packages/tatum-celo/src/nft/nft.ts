@@ -13,19 +13,19 @@ import {
 import { TransactionHash, erc721TokenABI, ChainMintErc721, ChainAddMinter, Currency, Sort } from '@tatumio/tatum-core'
 import {
   CeloDeployErc721,
-  sendCeloDeployErc721Transaction,
+  sendDeployErc721Transaction,
   CeloMintErc721,
-  sendCeloMintCashbackErc721Transaction,
-  sendCeloMintErc721Transaction,
+  sendMintCashbackErc721Transaction,
+  sendMintErc721Transaction,
   CeloMintMultipleErc721,
-  sendCeloMintMultipleCashbackErc721Transaction,
-  sendCeloMintMultipleErc721Transaction,
+  sendMintMultipleCashbackErc721Transaction,
+  sendMintMultipleErc721Transaction,
   CeloBurnErc721,
-  sendCeloBurnErc721Transaction,
+  sendBurnErc721Transaction,
   CeloUpdateCashbackErc721,
-  sendCeloUpdateCashbackForAuthorErc721Transaction,
+  sendUpdateCashbackForAuthorErc721Transaction,
   CeloTransferErc721,
-  sendCeloTransferErc721Transaction,
+  sendTransferErc721Transaction,
   helperPrepareSCCall,
   helperBroadcastTx,
 } from '..'
@@ -39,7 +39,7 @@ export const mintNFT = (body: ChainMintErc721): Promise<TransactionHash> => mint
  * @param provider optional provider do broadcast tx
  */
 export const deployNFT = async (testnet: boolean, body: CeloDeployErc721, provider?: string): Promise<TransactionHash> => {
-  return sendCeloDeployErc721Transaction(testnet, body, provider)
+  return sendDeployErc721Transaction(testnet, body, provider)
 }
 
 /**
@@ -76,9 +76,9 @@ export const mintNFTWithUri = async (
   options?: { testnet?: boolean; provider?: string }
 ): Promise<TransactionHash> => {
   if (body.authorAddresses) {
-    return sendCeloMintCashbackErc721Transaction(!!options?.testnet, body, options?.provider)
+    return sendMintCashbackErc721Transaction(!!options?.testnet, body, options?.provider)
   } else {
-    return sendCeloMintErc721Transaction(!!options?.testnet, body, options?.provider)
+    return sendMintErc721Transaction(!!options?.testnet, body, options?.provider)
   }
 }
 
@@ -90,9 +90,9 @@ export const mintNFTWithUri = async (
  */
 export const mintMultipleNFTWithUri = async (testnet: boolean, body: CeloMintMultipleErc721, provider?: string) => {
   if (body.authorAddresses) {
-    return sendCeloMintMultipleCashbackErc721Transaction(testnet, body, provider)
+    return sendMintMultipleCashbackErc721Transaction(testnet, body, provider)
   } else {
-    return sendCeloMintMultipleErc721Transaction(testnet, body, provider)
+    return sendMintMultipleErc721Transaction(testnet, body, provider)
   }
 }
 
@@ -103,7 +103,7 @@ export const mintMultipleNFTWithUri = async (testnet: boolean, body: CeloMintMul
  * @param provider optional provider do broadcast tx
  */
 export const burnNFT = async (testnet: boolean, body: CeloBurnErc721, provider?: string) => {
-  return sendCeloBurnErc721Transaction(testnet, body, provider)
+  return sendBurnErc721Transaction(testnet, body, provider)
 }
 
 /**
@@ -113,7 +113,7 @@ export const burnNFT = async (testnet: boolean, body: CeloBurnErc721, provider?:
  * @param provider optional provider do broadcast tx
  */
 export const updateCashbackForAuthorNFT = async (testnet: boolean, body: CeloUpdateCashbackErc721, provider?: string) => {
-  return sendCeloUpdateCashbackForAuthorErc721Transaction(testnet, body, provider)
+  return sendUpdateCashbackForAuthorErc721Transaction(testnet, body, provider)
 }
 
 /**
@@ -123,7 +123,7 @@ export const updateCashbackForAuthorNFT = async (testnet: boolean, body: CeloUpd
  * @param provider optional provider do broadcast tx
  */
 export const transferNFT = async (testnet: boolean, body: CeloTransferErc721, provider?: string) => {
-  return sendCeloTransferErc721Transaction(testnet, body, provider)
+  return sendTransferErc721Transaction(testnet, body, provider)
 }
 
 /**

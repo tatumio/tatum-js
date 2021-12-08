@@ -5,7 +5,7 @@ import {
   ContractType,
   GenerateCustodialAddressBatch,
 } from '@tatumio/tatum-core'
-import { sendCeloGenerateCustodialWalletSignedTransaction } from '../transaction'
+import { sendGenerateCustodialWalletSignedTransaction } from '../transaction'
 import { generateCustodialWalletBatch, prepareTransferFromCustodialWallet } from './custodial'
 import { CeloProvider } from '@celo-tools/celo-ethers-wrapper'
 
@@ -22,7 +22,7 @@ describe('Custodial wallet tests', () => {
       body.enableNonFungibleTokens = true
       body.enableSemiFungibleTokens = false
       body.enableBatchTransactions = false
-      const txData = await sendCeloGenerateCustodialWalletSignedTransaction(true, body, 'https://alfajores-forno.celo-testnet.org')
+      const txData = await sendGenerateCustodialWalletSignedTransaction(true, body, 'https://alfajores-forno.celo-testnet.org')
       expect(txData.txId).toContain('0x')
       console.log(txData.txId)
     })

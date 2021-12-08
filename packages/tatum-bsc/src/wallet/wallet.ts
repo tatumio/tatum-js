@@ -9,7 +9,7 @@ import { hdkey as ethHdKey } from 'ethereumjs-wallet'
  * @param mnem mnemonic seed to use
  * @returns wallet
  */
-export const generateEthWallet = async (testnet: boolean, mnem: string): Promise<WalletWithMnemonic> => {
+const generateEthWallet = async (testnet: boolean, mnem: string): Promise<WalletWithMnemonic> => {
   const path = testnet ? TESTNET_DERIVATION_PATH : ETH_DERIVATION_PATH
   const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnem))
   const derivePath = hdwallet.derivePath(path)
@@ -25,7 +25,7 @@ export const generateEthWallet = async (testnet: boolean, mnem: string): Promise
  * @param mnem mnemonic seed to use
  * @returns wallet
  */
-export const generateBscWallet = async (testnet: boolean, mnem: string): Promise<WalletWithMnemonic> => {
+export const generateBlockchainWallet = async (testnet: boolean, mnem: string): Promise<WalletWithMnemonic> => {
   return generateEthWallet(testnet, mnem)
 }
 
@@ -37,5 +37,5 @@ export const generateBscWallet = async (testnet: boolean, mnem: string): Promise
  */
 export const generateWallet = (mnemonic?: string, options?: { testnet?: boolean }) => {
   mnemonic ||= generateMnemonic(256)
-  return generateBscWallet(!!options?.testnet, mnemonic)
+  return generateBlockchainWallet(!!options?.testnet, mnemonic)
 }

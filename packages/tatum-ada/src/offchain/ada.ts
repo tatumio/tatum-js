@@ -11,25 +11,25 @@ import BigNumber from 'bignumber.js'
 import {
   validateBody,
   Currency,
-  ChainTransactionKMS,
+  TransactionKMS,
   WithdrawalResponseData,
   KeyPair,
   TransferBtcBasedOffchain,
-  TransactionKMS,
   offchainBroadcast,
   offchainCancelWithdrawal,
   offchainStoreWithdrawal,
+  ChainTransactionKMS,
 } from '@tatumio/tatum-core'
 import {
-  adaToLovelace,
+  chainToLovelace,
   addAddressInputsWithoutPrivateKey,
   addInput,
-  addOutputAda,
+  addOutput,
   initTransactionBuilder,
   makeWitness,
 } from '../transaction'
 import { generateAddressFromXPub, generatePrivateKeyFromMnemonic } from '../wallet'
-import { offchainTransferAdaKMS } from './kms'
+import { offchainTransferKMS } from './kms'
 
 /**
  * Send Ada transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -38,9 +38,9 @@ import { offchainTransferAdaKMS } from './kms'
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
-export const sendAdaOffchainTransaction = async (testnet: boolean, body: TransferBtcBasedOffchain) => {
+export const sendOffchainTransaction = async (testnet: boolean, body: TransferBtcBasedOffchain) => {
   if (body.signatureId) {
-    return offchainTransferAdaKMS(body)
+    return offchainTransferKMS(body)
   }
   await validateBody(body, TransferBtcBasedOffchain)
   const { mnemonic, keyPair, xpub, attr: changeAddress, ...withdrawal } = body
@@ -51,7 +51,7 @@ export const sendAdaOffchainTransaction = async (testnet: boolean, body: Transfe
   const { amount, address } = withdrawal
   let txData
   try {
-    txData = await prepareAdaSignedOffchainTransaction(
+    txData = await prepareSignedOffchainTransaction(
       testnet,
       data,
       amount,
@@ -81,7 +81,7 @@ export const sendAdaOffchainTransaction = async (testnet: boolean, body: Transfe
   }
 }
 
-const prepareAdaSignedOffchainTransaction = async (
+const prepareSignedOffchainTransaction = async (
   testnet: boolean,
   data: WithdrawalResponseData[],
   amount: string,
@@ -100,25 +100,25 @@ const prepareAdaSignedOffchainTransaction = async (
   addOffchainInputs(txBuilder, data)
   if (multipleAmounts?.length) {
     for (const [i, multipleAmount] of multipleAmounts.entries()) {
-      addOutputAda(txBuilder, address.split(',')[i], multipleAmount)
+      addOutput(txBuilder, address.split(',')[i], multipleAmount)
     }
   } else {
-    addOutputAda(txBuilder, address, amount)
+    addOutput(txBuilder, address, amount)
   }
 
   const lastVin = data.find((d) => d.vIn === '-1') as WithdrawalResponseData
   if (new BigNumber(lastVin.amount).isGreaterThan(0)) {
     if (xpub) {
       const zeroAddress = await generateAddressFromXPub(testnet, xpub, 0)
-      addOutputAda(txBuilder, zeroAddress, lastVin.amount)
+      addOutput(txBuilder, zeroAddress, lastVin.amount)
     } else if (changeAddress) {
-      addOutputAda(txBuilder, changeAddress, lastVin.amount)
+      addOutput(txBuilder, changeAddress, lastVin.amount)
     } else {
       throw new Error('Impossible to prepare transaction. Either xpub or keyPair and attr must be present.')
     }
   }
 
-  const lovelaceFee = adaToLovelace(1)
+  const lovelaceFee = chainToLovelace(1)
   txBuilder.set_fee(BigNum.from_str(lovelaceFee))
 
   const txBody = txBuilder.build()
@@ -156,7 +156,7 @@ const addOffchainInputs = (transactionBuilder: TransactionBuilder, inputs: Withd
       addInput(
         transactionBuilder,
         {
-          value: adaToLovelace(input.amount),
+          value: chainToLovelace(input.amount),
           index: input.vInIndex,
           txHash: input.vIn,
         },
@@ -174,7 +174,7 @@ const addOffchainInputs = (transactionBuilder: TransactionBuilder, inputs: Withd
  * @param mnemonic mnemonic to generate private keys to sign transaction with.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signAdaOffchainKMSTransaction = async (tx: ChainTransactionKMS, mnemonic: string) => {
+export const signOffchainKMSTransaction = async (tx: ChainTransactionKMS, mnemonic: string) => {
   if (!tx.withdrawalResponses) {
     throw Error('Unsupported chain.')
   }

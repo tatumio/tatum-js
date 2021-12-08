@@ -6,7 +6,7 @@ import { WalletWithAddress } from '@tatumio/tatum-ledger'
  * @param testnet testnet or mainnet version of address
  * @returns wallet
  */
-export const generateBnbWallet = async (testnet: boolean): Promise<WalletWithAddress> => {
+export const generateBlockchainWallet = async (testnet: boolean): Promise<WalletWithAddress> => {
   const privateKey = generatePrivateKey()
   const prefix = testnet ? 'tbnb' : 'bnb'
   return {
@@ -21,5 +21,5 @@ export const generateBnbWallet = async (testnet: boolean): Promise<WalletWithAdd
  * @returns wallet or a combination of address and private key
  */
 export const generateWallet = (_mnemonic?: string, options?: { testnet?: boolean }) => {
-  return generateBnbWallet(!!options?.testnet)
+  return generateBlockchainWallet(!!options?.testnet)
 }

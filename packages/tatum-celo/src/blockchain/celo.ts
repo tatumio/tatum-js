@@ -6,7 +6,7 @@ import { Block, Transaction } from 'web3-eth'
  * Broadcasts signed transaction to the Celo blockchain. <br>
  * For more details, see <a href="https://tatum.io/apidoc#operation/CeloBroadcast" target="_blank">Tatum API documentation</a>
  */
-export const celoBroadcast = async (txData: string, signatureId?: string): Promise<TransactionHash> =>
+export const broadcast = async (txData: string, signatureId?: string): Promise<TransactionHash> =>
   post(`/v3/celo/broadcast`, {
     txData,
     signatureId,
@@ -18,28 +18,28 @@ export const celoBroadcast = async (txData: string, signatureId?: string): Promi
  * To distinguish between them, there is a counter called a nonce, which represents the order of the transaction in the list of outgoing transactions.
  * For more details, see <a href="https://tatum.io/apidoc#operation/CeloGetTransactionCount" target="_blank">Tatum API documentation</a>
  */
-export const celoGetTransactionsCount = async (address: string): Promise<number> => get(`/v3/celo/transaction/count/${address}`)
+export const getTransactionsCount = async (address: string): Promise<number> => get(`/v3/celo/transaction/count/${address}`)
 
 /**
  * Returns information about Celo blockchain. <br>
  * For more details, see <a href="https://tatum.io/apidoc#operation/CeloGetCurrentBlock" target="_blank">Tatum API documentation</a>
  */
-export const celoGetCurrentBlock = async (): Promise<number> => get(`/v3/celo/block/current`)
+export const getCurrentBlock = async (): Promise<number> => get(`/v3/celo/block/current`)
 
 /**
  * Returns block by its hash from Celo blockchain. <br>
  * For more details, see <a href="https://tatum.io/apidoc#operation/CeloGetBlock" target="_blank">Tatum API documentation</a>
  */
-export const celoGetBlock = async (hash: string): Promise<Block> => get(`/v3/celo/block/${hash}`)
+export const getBlock = async (hash: string): Promise<Block> => get(`/v3/celo/block/${hash}`)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/CeloGetBalance" target="_blank">Tatum API documentation</a>
  */
-export const celoGetAccountBalance = async (address: string): Promise<{ celo: BigNumber; cUsd: BigNumber }> => {
+export const getAccountBalance = async (address: string): Promise<{ celo: BigNumber; cUsd: BigNumber }> => {
   return await get(`/v3/celo/account/balance/${address}`)
 }
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/CeloGetTransaction" target="_blank">Tatum API documentation</a>
  */
-export const celoGetTransaction = async (hash: string): Promise<Transaction> => get(`/v3/celo/transaction/${hash}`)
+export const getTransaction = async (hash: string): Promise<Transaction> => get(`/v3/celo/transaction/${hash}`)

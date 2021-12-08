@@ -10,7 +10,7 @@ import { LYRA_DERIVATION_PATH, LYRA_NETWORK, LYRA_TEST_NETWORK } from '../consta
  * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
-const generateLyraAddress = (testnet: boolean, xpub: string, i: number) => {
+const generateAddress = (testnet: boolean, xpub: string, i: number) => {
   const network = testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK
   const w = fromBase58(xpub, network).derivePath(String(i))
   return payments.p2pkh({ pubkey: w.publicKey, network }).address as string
@@ -23,7 +23,7 @@ const generateLyraAddress = (testnet: boolean, xpub: string, i: number) => {
  * @param i derivation index of private key to generate.
  * @returns blockchain private key to the address
  */
-const generateLyraPrivateKey = async (testnet: boolean, mnemonic: string, i: number) => {
+const generatePrivateKey = async (testnet: boolean, mnemonic: string, i: number) => {
   const network = testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK
   return fromSeed(await mnemonicToSeed(mnemonic), network)
     .derivePath(LYRA_DERIVATION_PATH)
@@ -37,7 +37,7 @@ const generateLyraPrivateKey = async (testnet: boolean, mnemonic: string, i: num
  * @param privkey private key to use
  * @returns blockchain address
  */
-const convertLyraPrivateKey = (testnet: boolean, privkey: string) => {
+const convertPrivateKey = (testnet: boolean, privkey: string) => {
   const network = testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK
   const keyPair = ECPair.fromWIF(privkey, network)
   return payments.p2pkh({ pubkey: keyPair.publicKey, network }).address as string
@@ -51,7 +51,7 @@ const convertLyraPrivateKey = (testnet: boolean, privkey: string) => {
  * @returns blockchain address
  */
 export const generateAddressFromXPub = (testnet: boolean, xpub: string, i: number) => {
-  return generateLyraAddress(testnet, xpub, i)
+  return generateAddress(testnet, xpub, i)
 }
 
 /**
@@ -62,7 +62,7 @@ export const generateAddressFromXPub = (testnet: boolean, xpub: string, i: numbe
  * @returns blockchain private key to the address
  */
 export const generatePrivateKeyFromMnemonic = (testnet: boolean, mnemonic: string, i: number) => {
-  return generateLyraPrivateKey(testnet, mnemonic, i)
+  return generatePrivateKey(testnet, mnemonic, i)
 }
 
 /**
@@ -72,5 +72,5 @@ export const generatePrivateKeyFromMnemonic = (testnet: boolean, mnemonic: strin
  * @returns blockchain private key to the address
  */
 export const generateAddressFromPrivatekey = (testnet: boolean, privateKey: string) => {
-  return convertLyraPrivateKey(testnet, privateKey)
+  return convertPrivateKey(testnet, privateKey)
 }

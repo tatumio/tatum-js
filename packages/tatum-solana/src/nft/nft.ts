@@ -1,5 +1,5 @@
 import { ChainSolanaMintNft } from '../model'
-import { mintSolanaNft, transferSolanaNft } from '../transaction'
+import { mintNft, transferNft } from '../transaction'
 import { ChainTransferErc721, Currency, Sort } from '@tatumio/tatum-core'
 import {
   getNFTTransactionsByAddress as getNFTTransactionsByAddressDefi,
@@ -14,7 +14,7 @@ import {
  * @param provider optional provider do broadcast tx
  */
 export const mintNFT = async (body: ChainSolanaMintNft, provider?: string) => {
-  return mintSolanaNft(body, provider)
+  return mintNft(body, provider)
 }
 
 /**
@@ -23,7 +23,7 @@ export const mintNFT = async (body: ChainSolanaMintNft, provider?: string) => {
  * @param provider optional provider do broadcast tx
  */
 export const transferNFT = async (body: ChainTransferErc721, provider?: string) => {
-  return transferSolanaNft(body, provider)
+  return transferNft(body, provider)
 }
 
 /**

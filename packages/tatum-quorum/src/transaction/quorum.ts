@@ -9,7 +9,7 @@ import { TransferQuorum } from '../model'
  * @param provider url of the Quorum Server to connect to.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendStoreDataQuorumTransaction = async (body: ChainCreateRecord, provider: string) => {
+export const sendStoreDataTransaction = async (body: ChainCreateRecord, provider: string) => {
   ;(body as CreateRecord).chain = Currency.QUORUM
   await validateBody(body, CreateRecord)
   const data = (
@@ -40,7 +40,7 @@ export const sendStoreDataQuorumTransaction = async (body: ChainCreateRecord, pr
  * @param provider url of the Quorum Server to connect to.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendQuorumTransaction = async (body: TransferQuorum, provider: string) => {
+export const sendBlockchainTransaction = async (body: TransferQuorum, provider: string) => {
   await validateBody(body, TransferQuorum)
   const data = (
     await axios.post(provider, {

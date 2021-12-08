@@ -1,9 +1,9 @@
 import BigNumber from 'bignumber.js'
 import { Currency, validateBody, offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal } from '@tatumio/tatum-core'
 import { EgldTransferOffchain } from '../model'
-import { prepareEgldSignedTransaction } from '../transaction'
+import { prepareSignedTransaction } from '../transaction'
 import { generatePrivateKeyFromMnemonic } from '../wallet'
-import { offchainTransferEgldKMS } from './kms'
+import { offchainTransferKMS } from './kms'
 
 /**
  * Send EGLD transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -12,9 +12,9 @@ import { offchainTransferEgldKMS } from './kms'
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
-export const sendEgldOffchainTransaction = async (testnet: boolean, body: EgldTransferOffchain) => {
+export const sendOffchainTransaction = async (testnet: boolean, body: EgldTransferOffchain) => {
   if (body.signatureId) {
-    return offchainTransferEgldKMS(body)
+    return offchainTransferKMS(body)
   }
   await validateBody(body, EgldTransferOffchain)
   const { mnemonic, index, fromPrivateKey, gasLimit, gasPrice, ...withdrawal } = body
@@ -27,7 +27,7 @@ export const sendEgldOffchainTransaction = async (testnet: boolean, body: EgldTr
     gasLimit: `${gasLimit || '50000'}`,
     gasPrice: `${gasPrice || '1000000000'}`,
   }
-  const txData = await prepareEgldSignedTransaction({
+  const txData = await prepareSignedTransaction({
     amount: value,
     fromPrivateKey: fromPriv,
     fee,

@@ -9,9 +9,9 @@ import {
   TrcType,
   TransferTrxOffchain,
 } from '@tatumio/tatum-core'
-import { prepareTronSignedTransaction, prepareTronTrc10SignedTransaction, prepareTronTrc20SignedTransaction } from '../transaction'
+import { prepareSignedTransaction, prepareTrc10SignedTransaction, prepareTrc20SignedTransaction } from '../transaction'
 import { generatePrivateKeyFromMnemonic } from '../wallet'
-import { offchainTransferTronKMS } from './kms'
+import { offchainTransferKMS } from './kms'
 
 /**
  * Send Tron transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -20,9 +20,9 @@ import { offchainTransferTronKMS } from './kms'
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
-export const sendTronOffchainTransaction = async (testnet: boolean, body: TransferTrxOffchain) => {
+export const sendOffchainTransaction = async (testnet: boolean, body: TransferTrxOffchain) => {
   if (body.signatureId) {
-    return offchainTransferTronKMS(body)
+    return offchainTransferKMS(body)
   }
   await validateBody(body, TransferTrxOffchain)
   const { mnemonic, index, fromPrivateKey, ...withdrawal } = body
@@ -41,9 +41,9 @@ export const sendTronOffchainTransaction = async (testnet: boolean, body: Transf
   const account = await getAccountById(withdrawal.senderAccountId)
   let txData
   if (account.currency === Currency.TRON) {
-    txData = await prepareTronSignedTransaction({ amount, fromPrivateKey: fromPriv, to: address })
+    txData = await prepareSignedTransaction({ amount, fromPrivateKey: fromPriv, to: address })
   } else if (account.currency === Currency.USDT_TRON || account.currency === Currency.INRT_TRON) {
-    txData = await prepareTronTrc20SignedTransaction({
+    txData = await prepareTrc20SignedTransaction({
       amount,
       fromPrivateKey: fromPriv,
       to: address,
@@ -53,7 +53,7 @@ export const sendTronOffchainTransaction = async (testnet: boolean, body: Transf
   } else {
     const vc = await getVirtualCurrencyByName(account.currency)
     if (vc.trcType === TrcType.TRC10) {
-      txData = await prepareTronTrc10SignedTransaction(
+      txData = await prepareTrc10SignedTransaction(
         testnet,
         {
           amount,
@@ -64,7 +64,7 @@ export const sendTronOffchainTransaction = async (testnet: boolean, body: Transf
         vc.precision
       )
     } else if (vc.trcType === TrcType.TRC20) {
-      txData = await prepareTronTrc20SignedTransaction({
+      txData = await prepareTrc20SignedTransaction({
         amount,
         feeLimit: parseFloat(withdrawal.fee),
         fromPrivateKey: fromPriv,

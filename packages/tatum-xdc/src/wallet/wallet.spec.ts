@@ -1,8 +1,8 @@
-import { generateXdcWallet } from './wallet'
+import { generateBlockchainWallet } from './wallet'
 
 describe('Wallet tests', () => {
   it('should generate wallet for XDC testnet', async () => {
-    const wallet = await generateXdcWallet(
+    const wallet = await generateBlockchainWallet(
       true,
       'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten'
     )

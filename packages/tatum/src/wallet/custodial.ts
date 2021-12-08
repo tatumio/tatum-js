@@ -17,21 +17,21 @@ import { getErc20Decimals } from '../fungible'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
 import {
   generateCustodialWallet as sendCeloGenerateCustodialWalletSignedTransaction,
-  getCeloErc20ContractDecimals,
-  prepareCeloSmartContractWriteMethodInvocation,
+  getErc20ContractDecimals as getCeloErc20ContractDecimals,
+  prepareSmartContractWriteMethodInvocation as prepareCeloSmartContractWriteMethodInvocation,
   prepareCustodialWallet as prepareCeloGenerateCustodialWalletSignedTransaction,
   generateCustodialWalletBatch as celoGenerateCustodialWalletBatch,
   prepareCustodialWalletBatch as celoPrepareCustodialWalletBatch,
 } from '@tatumio/tatum-celo'
 import {
   generateCustodialWallet as sendOneGenerateCustodialWalletSignedTransaction,
-  getOne20ContractDecimals,
+  get20ContractDecimals as getOne20ContractDecimals,
   prepareCustodialWallet as prepareOneGenerateCustodialWalletSignedTransaction,
-  prepareOneSmartContractWriteMethodInvocation,
+  prepareSmartContractWriteMethodInvocation as prepareOneSmartContractWriteMethodInvocation,
 } from '@tatumio/tatum-one'
 import {
   generateCustodialWallet as sendEthGenerateCustodialWalletSignedTransaction,
-  getEthErc20ContractDecimals,
+  getErc20ContractDecimals as getEthErc20ContractDecimals,
   prepareCustodialWallet as prepareEthGenerateCustodialWalletSignedTransaction,
   prepareSmartContractWriteMethodInvocation,
   generateCustodialWalletBatch as ethGenerateCustodialWalletBatch,
@@ -39,29 +39,29 @@ import {
 } from '@tatumio/tatum-eth'
 import {
   generateCustodialWallet as sendBscGenerateCustodialWalletSignedTransaction,
-  getBscBep20ContractDecimals,
-  prepareBscSmartContractWriteMethodInvocation,
+  getBep20ContractDecimals as getBscBep20ContractDecimals,
+  prepareSmartContractWriteMethodInvocation as prepareBscSmartContractWriteMethodInvocation,
   prepareCustodialWallet as prepareBscGenerateCustodialWalletSignedTransaction,
   generateCustodialWalletBatch as bscGenerateCustodialWalletBatch,
   prepareCustodialWalletBatch as bscPrepareCustodialWalletBatch,
 } from '@tatumio/tatum-bsc'
 import {
   generateCustodialWallet as sendPolygonGenerateCustodialWalletSignedTransaction,
-  getPolygonErc20ContractDecimals,
+  getErc20ContractDecimals as getPolygonErc20ContractDecimals,
   prepareCustodialWallet as preparePolygonGenerateCustodialWalletSignedTransaction,
-  preparePolygonSmartContractWriteMethodInvocation,
+  prepareSmartContractWriteMethodInvocation as preparePolygonSmartContractWriteMethodInvocation,
   generateCustodialWalletBatch as polygonGenerateCustodialWalletBatch,
   prepareCustodialWalletBatch as polygonPrepareCustodialWalletBatch,
 } from '@tatumio/tatum-polygon'
 import {
   generateCustodialWallet as sendTronGenerateCustodialWalletSignedTransaction,
   prepareCustodialWallet as prepareTronGenerateCustodialWalletSignedTransaction,
-  prepareTronCustodialTransferBatch,
+  prepareCustodialTransferBatch as prepareTronCustodialTransferBatch,
   TransferFromTronCustodialAddress,
   TransferFromTronCustodialAddressBatch,
   GenerateTronCustodialAddress,
-  getTronTrc20ContractDecimals,
-  prepareTronSmartContractInvocation,
+  getTrc20ContractDecimals as getTronTrc20ContractDecimals,
+  prepareSmartContractInvocation as prepareTronSmartContractInvocation,
   convertAddressToHex,
   generateCustodialWalletBatch as tronGenerateCustodialWalletBatch,
   prepareCustodialWalletBatch as tronPrepareCustodialWalletBatch,

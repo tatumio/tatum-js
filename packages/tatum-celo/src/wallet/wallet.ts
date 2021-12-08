@@ -10,7 +10,7 @@ import { CELO_DERIVATION_PATH } from '../constants'
  * @param mnem mnemonic seed to use
  * @returns wallet
  */
-export const generateCeloWallet = async (testnet: boolean, mnem: string): Promise<WalletWithMnemonic> => {
+export const generateBlockchainWallet = async (testnet: boolean, mnem: string): Promise<WalletWithMnemonic> => {
   const path = testnet ? TESTNET_DERIVATION_PATH : CELO_DERIVATION_PATH
   const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnem))
   const derivePath = hdwallet.derivePath(path)
@@ -28,5 +28,5 @@ export const generateCeloWallet = async (testnet: boolean, mnem: string): Promis
  */
 export const generateWallet = (mnemonic?: string, options?: { testnet?: boolean }) => {
   mnemonic ||= generateMnemonic(256)
-  return generateCeloWallet(!!options?.testnet, mnemonic)
+  return generateBlockchainWallet(!!options?.testnet, mnemonic)
 }

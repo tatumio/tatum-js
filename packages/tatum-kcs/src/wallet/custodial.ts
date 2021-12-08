@@ -16,10 +16,10 @@ import {
 } from '@tatumio/tatum-core'
 import BigNumber from 'bignumber.js'
 import {
-  getKcsErc20ContractDecimals,
-  prepareKcsGenerateCustodialWalletSignedTransaction,
-  prepareKcsSmartContractWriteMethodInvocation,
-  sendKcsGenerateCustodialWalletSignedTransaction,
+  getErc20ContractDecimals,
+  prepareGenerateCustodialWalletSignedTransaction,
+  prepareSmartContractWriteMethodInvocation,
+  sendGenerateCustodialWalletSignedTransaction,
 } from '../transaction'
 import { getErc20Decimals } from '../fungible'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
@@ -32,7 +32,7 @@ import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const generateCustodialWallet = async (body: ChainGenerateCustodialAddress, provider?: string) => {
-  return await sendKcsGenerateCustodialWalletSignedTransaction(body, provider)
+  return await sendGenerateCustodialWalletSignedTransaction(body, provider)
 }
 
 /**
@@ -43,7 +43,7 @@ export const generateCustodialWallet = async (body: ChainGenerateCustodialAddres
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareCustodialWallet = async (body: ChainGenerateCustodialAddress, provider?: string) => {
-  return await prepareKcsGenerateCustodialWalletSignedTransaction(body, provider)
+  return await prepareGenerateCustodialWalletSignedTransaction(body, provider)
 }
 
 /**
@@ -54,7 +54,7 @@ export const prepareCustodialWallet = async (body: ChainGenerateCustodialAddress
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendCustodialWallet = async (body: ChainGenerateCustodialAddress, provider?: string) => {
-  const txData = await prepareKcsGenerateCustodialWalletSignedTransaction(body, provider)
+  const txData = await prepareGenerateCustodialWalletSignedTransaction(body, provider)
   return helperBroadcastTx(txData, body.signatureId)
 }
 
@@ -69,8 +69,8 @@ export const prepareTransferFromCustodialWallet = async (testnet: boolean, body:
   return prepareTransferFromCustodialWalletAbstract(
     testnet,
     { ...body, chain: Currency.KCS },
-    getKcsErc20ContractDecimals,
-    prepareKcsSmartContractWriteMethodInvocation,
+    getErc20ContractDecimals,
+    prepareSmartContractWriteMethodInvocation,
     SmartContractMethodInvocation,
     18,
     TransferFromCustodialAddress,
@@ -103,8 +103,8 @@ export const prepareBatchTransferFromCustodialWallet = async (
   return prepareBatchTransferFromCustodialWalletAbstract(
     testnet,
     { ...body, chain: Currency.KCS },
-    getKcsErc20ContractDecimals,
-    prepareKcsSmartContractWriteMethodInvocation,
+    getErc20ContractDecimals,
+    prepareSmartContractWriteMethodInvocation,
     SmartContractMethodInvocation,
     18,
     TransferFromCustodialAddressBatch,

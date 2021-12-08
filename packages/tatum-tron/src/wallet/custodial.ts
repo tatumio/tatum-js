@@ -19,11 +19,11 @@ import {
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
 import {
   convertAddressToHex,
-  getTronTrc20ContractDecimals,
-  prepareTronCustodialTransferBatch,
-  prepareTronGenerateCustodialWalletSignedTransaction,
-  prepareTronSmartContractInvocation,
-  sendTronGenerateCustodialWalletSignedTransaction,
+  getTrc20ContractDecimals,
+  prepareCustodialTransferBatch,
+  prepareGenerateCustodialWalletSignedTransaction,
+  prepareSmartContractInvocation,
+  sendGenerateCustodialWalletSignedTransaction,
 } from '../transaction'
 
 /**
@@ -36,7 +36,7 @@ import {
  */
 export const generateCustodialWallet = async (body: ChainGenerateTronCustodialAddress, provider?: string) => {
   console.log('This method is deprecated. For better gas consumption, use prepareCustodialWalletBatch.')
-  return await sendTronGenerateCustodialWalletSignedTransaction(body, provider)
+  return await sendGenerateCustodialWalletSignedTransaction(body, provider)
 }
 /**
  * This method is @Deprecated. Use @link{prepareCustodialWalletBatch} instead
@@ -48,7 +48,7 @@ export const generateCustodialWallet = async (body: ChainGenerateTronCustodialAd
  */
 export const prepareCustodialWallet = async (body: ChainGenerateTronCustodialAddress, provider?: string) => {
   console.log('This method is deprecated. For better gas consumption, use prepareCustodialWalletBatch.')
-  return await prepareTronGenerateCustodialWalletSignedTransaction(body, provider)
+  return await prepareGenerateCustodialWalletSignedTransaction(body, provider)
 }
 
 /**
@@ -59,7 +59,7 @@ export const prepareCustodialWallet = async (body: ChainGenerateTronCustodialAdd
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendCustodialWallet = async (body: ChainGenerateTronCustodialAddress, provider?: string) => {
-  const txData = await prepareTronGenerateCustodialWalletSignedTransaction(body, provider)
+  const txData = await prepareGenerateCustodialWalletSignedTransaction(body, provider)
   return helperBroadcastTx(txData, body.signatureId)
 }
 
@@ -79,8 +79,8 @@ export const prepareTransferFromCustodialWallet = async (
   return prepareTransferFromCustodialWalletAbstract(
     testnet,
     { ...body, chain: Currency.TRON },
-    getTronTrc20ContractDecimals,
-    (r) => prepareTronSmartContractInvocation(r, feeLimit as number, from),
+    getTrc20ContractDecimals,
+    (r) => prepareSmartContractInvocation(r, feeLimit as number, from),
     SmartContractMethodInvocation,
     18,
     TransferFromCustodialAddress,
@@ -114,8 +114,8 @@ export const prepareBatchTransferFromCustodialWallet = async (
   return prepareBatchTransferFromCustodialWalletAbstract(
     testnet,
     { ...body, chain: Currency.TRON },
-    getTronTrc20ContractDecimals,
-    (r) => prepareTronCustodialTransferBatch(r, feeLimit as number, from),
+    getTrc20ContractDecimals,
+    (r) => prepareCustodialTransferBatch(r, feeLimit as number, from),
     SmartContractMethodInvocation,
     18,
     TransferFromTronCustodialAddressBatch,

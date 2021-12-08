@@ -5,12 +5,12 @@ import { hdkey as ethHdKey } from 'ethereumjs-wallet'
 import { KCS_DERIVATION_PATH } from '../constants'
 
 /**
- * Generate Kcs or any other ERC20 wallet
+ * Generate Kcc or any other ERC20 wallet
  * @param testnet testnet or mainnet version of address
  * @param mnem mnemonic seed to use
  * @returns wallet
  */
-export const generateKcsWallet = async (testnet: boolean, mnem: string): Promise<WalletWithMnemonic> => {
+export const generateBlockchainWallet = async (testnet: boolean, mnem: string): Promise<WalletWithMnemonic> => {
   const path = testnet ? TESTNET_DERIVATION_PATH : KCS_DERIVATION_PATH
   const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnem))
   const derivePath = hdwallet.derivePath(path)
@@ -28,5 +28,5 @@ export const generateKcsWallet = async (testnet: boolean, mnem: string): Promise
  */
 export const generateWallet = (mnemonic?: string, options?: { testnet?: boolean }) => {
   mnemonic ||= generateMnemonic(256)
-  return generateKcsWallet(!!options?.testnet, mnemonic)
+  return generateBlockchainWallet(!!options?.testnet, mnemonic)
 }

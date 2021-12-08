@@ -23,7 +23,7 @@ import {
   ChainInvokeAuctionOperation,
   ChainApproveErc20,
 } from '@tatumio/tatum-core'
-import { getEthErc20ContractDecimals, prepareEthDeployAuctionSignedTransaction } from '../../transaction'
+import { getErc20ContractDecimals, prepareDeployAuctionSignedTransaction } from '../../transaction'
 import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../../helpers'
 import { prepareApproveErc20 } from '../../fungible'
 
@@ -57,7 +57,7 @@ export const deployAuction = async (body: ChainDeployNftAuction, provider?: stri
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareDeployAuction = async (body: ChainDeployNftAuction, provider?: string) => {
-  return await prepareEthDeployAuctionSignedTransaction(body, provider)
+  return await prepareDeployAuctionSignedTransaction(body, provider)
 }
 
 /**
@@ -136,13 +136,7 @@ export const prepareAuctionBid = async (testnet: boolean, body: ChainInvokeAucti
     b: validatedBody,
     params,
     methodName,
-  } = await prepareAuctionBidAbstraction(
-    helperGetWeb3Client,
-    getEthErc20ContractDecimals,
-    testnet,
-    { ...body, chain: Currency.ETH },
-    provider
-  )
+  } = await prepareAuctionBidAbstraction(helperGetWeb3Client, getErc20ContractDecimals, testnet, { ...body, chain: Currency.ETH }, provider)
   return await helperPrepareSCCall(validatedBody, methodName, params, provider, auction.abi)
 }
 

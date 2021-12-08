@@ -1,14 +1,14 @@
 import { buildSmartContractMethodInvocation, ChainSCBody, Currency, listing } from '@tatumio/tatum-core'
-import { prepareKcsClient, prepareKcsSmartContractWriteMethodInvocation } from '../transaction'
-import { kcsBroadcast } from '../blockchain/kcs'
+import { prepareClient, prepareSmartContractWriteMethodInvocation } from '../transaction'
+import { broadcast } from '../blockchain/kcs'
 import Web3 from 'web3'
 
 export const helperBroadcastTx = async (txData: string, signatureId?: string) => {
-  return await kcsBroadcast(txData, signatureId)
+  return await broadcast(txData, signatureId)
 }
 
 export const helperGetWeb3Client = (provider?: string): Web3 => {
-  return prepareKcsClient(provider)
+  return prepareClient(provider)
 }
 
 export const helperPrepareSCCall = async <Body extends ChainSCBody>(
@@ -19,5 +19,5 @@ export const helperPrepareSCCall = async <Body extends ChainSCBody>(
   abi: any[] = listing.abi
 ) => {
   const r = buildSmartContractMethodInvocation({ ...body, chain: Currency.KCS }, params, methodName, abi)
-  return await prepareKcsSmartContractWriteMethodInvocation(r, { provider })
+  return await prepareSmartContractWriteMethodInvocation(r, { provider })
 }

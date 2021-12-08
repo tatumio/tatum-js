@@ -1,10 +1,10 @@
 import Web3 from 'web3'
-import { ethBroadcast } from '../blockchain'
+import { broadcast } from '../blockchain'
 import { listing, buildSmartContractMethodInvocation, ChainSCBody, Currency } from '@tatumio/tatum-core'
 import { getClient, prepareSmartContractWriteMethodInvocation } from '../transaction'
 
 export const helperBroadcastTx = async (txData: string, signatureId?: string) => {
-  return await ethBroadcast(txData, signatureId)
+  return await broadcast(txData, signatureId)
 }
 
 export const helperGetWeb3Client = (provider?: string): Web3 => {

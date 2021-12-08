@@ -34,7 +34,7 @@ const generateEthPrivateKey = async (testnet: boolean, mnemonic: string, i: numb
  * @param i derivation index of private key to generate.
  * @returns blockchain private key to the address
  */
-export const generateBscPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
+export const generateBlockchainPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
   return generateEthPrivateKey(testnet, mnemonic, i)
 }
 
@@ -56,7 +56,7 @@ export const generateAddressFromXPub = (xpub: string, i: number) => {
  * @returns blockchain private key to the address
  */
 export const generatePrivateKeyFromMnemonic = (testnet: boolean, mnemonic: string, i: number) => {
-  return generateBscPrivateKey(testnet, mnemonic, i)
+  return generateBlockchainPrivateKey(testnet, mnemonic, i)
 }
 
 /**

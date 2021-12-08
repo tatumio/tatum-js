@@ -1,5 +1,5 @@
 import { CreateRecord, validateBody, Currency, TransferErc20, ChainTransferErc20, ChainCreateRecord } from '@tatumio/tatum-core'
-import { sendXdcOrErc20Transaction, sendXdcStoreDataTransaction } from './xdc'
+import { sendXdcOrErc20Transaction, sendStoreDataTransaction } from './xdc'
 
 /**
  * Store any arbitrary data on the blockchain.
@@ -9,7 +9,7 @@ import { sendXdcOrErc20Transaction, sendXdcStoreDataTransaction } from './xdc'
 export const storeData = async (body: ChainCreateRecord, provider?: string) => {
   ;(body as CreateRecord).chain = Currency.XDC
   await validateBody(body, CreateRecord)
-  return await sendXdcStoreDataTransaction(body, provider)
+  return await sendStoreDataTransaction(body, provider)
 }
 
 /**

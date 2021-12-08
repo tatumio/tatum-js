@@ -29,14 +29,14 @@ import {
   ChainAddMinter,
 } from '@tatumio/tatum-core'
 import {
-  sendPolygonBurnErc721SignedTransaction,
-  sendPolygonDeployErc721SignedTransaction,
-  sendPolygonMintCashbackErc721SignedTransaction,
-  sendPolygonMintErc721SignedTransaction,
-  sendPolygonMintMultipleCashbackErc721SignedTransaction,
-  sendPolygonMintMultipleErc721SignedTransaction,
-  sendPolygonTransferErc721SignedTransaction,
-  sendPolygonUpdateCashbackForAuthorErc721SignedTransaction,
+  sendBurnErc721SignedTransaction,
+  sendDeployErc721SignedTransaction,
+  sendMintCashbackErc721SignedTransaction,
+  sendMintErc721SignedTransaction,
+  sendMintMultipleCashbackErc721SignedTransaction,
+  sendMintMultipleErc721SignedTransaction,
+  sendTransferErc721SignedTransaction,
+  sendUpdateCashbackForAuthorErc721SignedTransaction,
 } from '../transaction'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
 import { MaticTx } from '../model'
@@ -49,7 +49,7 @@ export const mintNFT = (body: ChainMintErc721): Promise<TransactionHash> => mint
  * @param provider optional provider do broadcast tx
  */
 export const deployNFT = async (body: ChainDeployErc721, provider?: string): Promise<TransactionHash> => {
-  return sendPolygonDeployErc721SignedTransaction(body, provider)
+  return sendDeployErc721SignedTransaction(body, provider)
 }
 
 /**
@@ -82,9 +82,9 @@ export const createNFT = async (
  */
 export const mintNFTWithUri = async (body: ChainMintErc721, options?: { provider?: string }): Promise<TransactionHash> => {
   if ((body as MintErc721).authorAddresses) {
-    return sendPolygonMintCashbackErc721SignedTransaction(body, options?.provider)
+    return sendMintCashbackErc721SignedTransaction(body, options?.provider)
   } else {
-    return sendPolygonMintErc721SignedTransaction(body, options?.provider)
+    return sendMintErc721SignedTransaction(body, options?.provider)
   }
 }
 
@@ -95,9 +95,9 @@ export const mintNFTWithUri = async (body: ChainMintErc721, options?: { provider
  */
 export const mintMultipleNFTWithUri = async (body: ChainMintMultipleErc721, provider?: string) => {
   if ((body as MintMultipleErc721).authorAddresses) {
-    return sendPolygonMintMultipleCashbackErc721SignedTransaction(body, provider)
+    return sendMintMultipleCashbackErc721SignedTransaction(body, provider)
   } else {
-    return sendPolygonMintMultipleErc721SignedTransaction(body, provider)
+    return sendMintMultipleErc721SignedTransaction(body, provider)
   }
 }
 
@@ -107,7 +107,7 @@ export const mintMultipleNFTWithUri = async (body: ChainMintMultipleErc721, prov
  * @param provider optional provider do broadcast tx
  */
 export const burnNFT = async (body: ChainBurnErc721, provider?: string) => {
-  return sendPolygonBurnErc721SignedTransaction(body, provider)
+  return sendBurnErc721SignedTransaction(body, provider)
 }
 
 /**
@@ -116,7 +116,7 @@ export const burnNFT = async (body: ChainBurnErc721, provider?: string) => {
  * @param provider optional provider do broadcast tx
  */
 export const updateCashbackForAuthorNFT = async (body: ChainUpdateCashbackErc721, provider?: string) => {
-  return sendPolygonUpdateCashbackForAuthorErc721SignedTransaction(body, provider)
+  return sendUpdateCashbackForAuthorErc721SignedTransaction(body, provider)
 }
 
 /**
@@ -125,7 +125,7 @@ export const updateCashbackForAuthorNFT = async (body: ChainUpdateCashbackErc721
  * @param provider optional provider do broadcast tx
  */
 export const transferNFT = async (body: ChainTransferErc721, provider?: string) => {
-  return sendPolygonTransferErc721SignedTransaction(body, provider)
+  return sendTransferErc721SignedTransaction(body, provider)
 }
 
 /**

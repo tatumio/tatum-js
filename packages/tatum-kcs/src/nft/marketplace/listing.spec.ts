@@ -7,7 +7,7 @@ import {
   listing,
   SmartContractReadMethodInvocation,
 } from '@tatumio/tatum-core'
-import { sendKcsSmartContractMethodInvocationTransaction, sendKcsSmartContractReadMethodInvocationTransaction } from '../../transaction'
+import { sendSmartContractMethodInvocationTransaction, sendSmartContractReadMethodInvocationTransaction } from '../../transaction'
 import { transferNFT } from '../nft'
 import {
   deployMarketplaceListing,
@@ -61,7 +61,7 @@ describe('Marketplace Listing tests', () => {
       r.methodName = 'getListing'
       r.methodABI = listing.abi.find((a) => a.name === r.methodName)
       r.params = ['8']
-      console.log(await sendKcsSmartContractMethodInvocationTransaction(r, 'https://rpc-testnet.kcc.network'))
+      console.log(await sendSmartContractMethodInvocationTransaction(r, 'https://rpc-testnet.kcc.network'))
     })
 
     it('should get marketplace fee', async () => {
@@ -70,7 +70,7 @@ describe('Marketplace Listing tests', () => {
       r.methodName = 'getMarketplaceFee'
       r.methodABI = listing.abi.find((a) => a.name === r.methodName)
       r.params = []
-      console.log(await sendKcsSmartContractReadMethodInvocationTransaction(r, 'https://rpc-testnet.kcc.network'))
+      console.log(await sendSmartContractReadMethodInvocationTransaction(r, 'https://rpc-testnet.kcc.network'))
     })
 
     it('should buy listing native', async () => {

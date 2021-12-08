@@ -17,7 +17,7 @@ import {
   GenerateCustodialAddress,
 } from '@tatumio/tatum-core'
 import { obtainCustodialAddressType } from '@tatumio/tatum-defi'
-import { prepareEthGenerateCustodialWalletSignedTransaction, sendEthGenerateCustodialWalletSignedTransaction } from '../transaction'
+import { prepareGenerateCustodialWalletSignedTransaction, sendGenerateCustodialWalletSignedTransaction } from '../transaction'
 
 describe('Custodial wallet tests', () => {
   process.env.TRON_PRO_API_KEY = 'b35409b4-7d11-491e-8760-32d2506a90b5'
@@ -174,7 +174,7 @@ describe('Custodial wallet tests', () => {
       body.enableNonFungibleTokens = true
       body.enableSemiFungibleTokens = false
       body.enableBatchTransactions = false
-      const txData = await sendEthGenerateCustodialWalletSignedTransaction(body)
+      const txData = await sendGenerateCustodialWalletSignedTransaction(body)
       expect(txData.txId).toContain('0x')
       console.log(txData.txId)
     })
@@ -187,7 +187,7 @@ describe('Custodial wallet tests', () => {
       body.enableNonFungibleTokens = true
       body.enableSemiFungibleTokens = false
       body.enableBatchTransactions = false
-      const txData = await prepareEthGenerateCustodialWalletSignedTransaction(body)
+      const txData = await prepareGenerateCustodialWalletSignedTransaction(body)
       expect(txData).toContain('0x')
     })
   })

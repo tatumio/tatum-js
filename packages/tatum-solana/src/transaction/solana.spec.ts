@@ -1,4 +1,4 @@
-import { mintSolanaNft, sendSolana, signSolanaKMSTransaction, transferSolanaNft } from './solana'
+import { mintNft, send, signKMSTransaction, transferNft } from './solana'
 import { SolanaNftMetadata } from '../model'
 
 jest.setTimeout(99999)
@@ -6,7 +6,7 @@ jest.setTimeout(99999)
 describe('Solana tests', () => {
   it('should send SOL', async () => {
     console.log(
-      await sendSolana(
+      await send(
         {
           from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
           fromPrivateKey:
@@ -20,7 +20,7 @@ describe('Solana tests', () => {
   })
 
   it('should send SOL KMS', async () => {
-    const txData = await sendSolana(
+    const txData = await send(
       {
         from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
         signatureId: '4ca4c0e6-33a3-4b00-a6dc-859cc1f86419',
@@ -31,7 +31,7 @@ describe('Solana tests', () => {
     )
 
     console.log(
-      await signSolanaKMSTransaction(
+      await signKMSTransaction(
         { hashes: [], id: '', serializedTransaction: JSON.stringify(txData) },
         '3abc79a31093e4cfa4a724e94a44906cbbc3a32e2f75f985a28616676a5dbaf1de8d82a7e1d0561bb0e1b729c7a9b9b1708cf2803ad0ca928a332587ace391ad',
         'https://api.testnet.solana.com'
@@ -59,7 +59,7 @@ describe('Solana tests', () => {
 
   it('should mint NFT', async () => {
     console.log(
-      await mintSolanaNft(
+      await mintNft(
         {
           from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
           fromPrivateKey:
@@ -74,7 +74,7 @@ describe('Solana tests', () => {
 
   it('should transfer NFT', async () => {
     console.log(
-      await transferSolanaNft(
+      await transferNft(
         {
           from: 'FZAS4mtPvswgVxbpc117SqfNgCDLTCtk5CoeAtt58FWU',
           fromPrivateKey:

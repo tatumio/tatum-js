@@ -1,5 +1,5 @@
 import { generateAddressFromXPub, generatePrivateKeyFromMnemonic } from './address'
-import { generateTronWallet } from './wallet'
+import { generateBlockchainWallet } from './wallet'
 
 // tslint:disable-next-line:no-var-requires
 const TronWeb = require('tronweb')
@@ -21,7 +21,7 @@ describe('Address tests', () => {
   })
 
   it('should generate private key and address 1 for TRON mainnet', async () => {
-    const wallet = await generateTronWallet(
+    const wallet = await generateBlockchainWallet(
       'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten'
     )
     const address = await generateAddressFromXPub(wallet.xpub, 1)

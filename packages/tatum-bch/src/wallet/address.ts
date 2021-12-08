@@ -30,7 +30,7 @@ interface Decoded extends Hash {
  * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
-const generateBchAddress = (testnet: boolean, xpub: string, i: number) => {
+const generateAddress = (testnet: boolean, xpub: string, i: number) => {
   const network = testnet ? networks.testnet : networks.bitcoin
   const hdNode = bcash.HDNode.fromBase58(xpub, network)
   const legacy = hdNode.derivePath(String(i)).getAddress()
@@ -47,7 +47,7 @@ const generateBchAddress = (testnet: boolean, xpub: string, i: number) => {
  * @param i derivation index of private key to generate.
  * @returns blockchain private key to the address
  */
-const generateBchPrivateKey = async (testnet: boolean, mnemonic: string, i: number) => {
+const generatePrivateKey = async (testnet: boolean, mnemonic: string, i: number) => {
   const network = testnet ? networks.testnet : networks.bitcoin
   return fromSeed(await mnemonicToSeed(mnemonic), network)
     .derivePath(BCH_DERIVATION_PATH)
@@ -137,7 +137,7 @@ const _decode = (address: string): Decoded => {
  * @returns blockchain address
  */
 export const generateAddressFromXPub = (testnet: boolean, xpub: string, i: number) => {
-  return generateBchAddress(testnet, xpub, i)
+  return generateAddress(testnet, xpub, i)
 }
 
 /**
@@ -149,5 +149,5 @@ export const generateAddressFromXPub = (testnet: boolean, xpub: string, i: numbe
  * @returns blockchain private key to the address
  */
 export const generatePrivateKeyFromMnemonic = (testnet: boolean, mnemonic: string, i: number) => {
-  return generateBchPrivateKey(testnet, mnemonic, i)
+  return generatePrivateKey(testnet, mnemonic, i)
 }

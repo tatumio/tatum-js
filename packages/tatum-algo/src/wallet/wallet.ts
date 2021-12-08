@@ -7,7 +7,7 @@ import { WalletWithAddress } from '@tatumio/tatum-ledger'
  * @param mnem optional mnemonic seed to use
  * @returns address and secret
  */
-export const generateAlgoWallet = async (mnem?: string): Promise<WalletWithAddress> => {
+export const generateBlockchainWallet = async (mnem?: string): Promise<WalletWithAddress> => {
   const account = mnem ? algosdk.mnemonicToSecretKey(mnem) : algosdk.generateAccount()
   const encoder = new base32.Encoder({ type: 'rfc4648' })
   const secret = encoder.write(account.sk).finalize()
@@ -23,5 +23,5 @@ export const generateAlgoWallet = async (mnem?: string): Promise<WalletWithAddre
  * @returns wallet or a combination of address and private key
  */
 export const generateWallet = (mnemonic?: string) => {
-  return generateAlgoWallet(mnemonic)
+  return generateBlockchainWallet(mnemonic)
 }

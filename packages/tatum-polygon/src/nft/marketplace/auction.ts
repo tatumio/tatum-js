@@ -23,7 +23,7 @@ import {
   ChainInvokeAuctionOperation,
   Currency,
 } from '@tatumio/tatum-core'
-import { getPolygonErc20ContractDecimals, preparePolygonDeployAuctionSignedTransaction } from '../../transaction'
+import { getErc20ContractDecimals, prepareDeployAuctionSignedTransaction } from '../../transaction'
 import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../../helpers'
 import { prepareApproveErc20 } from '../../fungible'
 
@@ -57,7 +57,7 @@ export const deployAuction = async (body: ChainDeployNftAuction, provider?: stri
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareDeployAuction = async (body: ChainDeployNftAuction, provider?: string) => {
-  return await preparePolygonDeployAuctionSignedTransaction(body, provider)
+  return await prepareDeployAuctionSignedTransaction(body, provider)
 }
 
 /**
@@ -138,7 +138,7 @@ export const prepareAuctionBid = async (testnet: boolean, body: ChainInvokeAucti
     methodName,
   } = await prepareAuctionBidAbstraction(
     helperGetWeb3Client,
-    getPolygonErc20ContractDecimals,
+    getErc20ContractDecimals,
     testnet,
     { ...body, chain: Currency.MATIC },
     provider

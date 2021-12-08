@@ -2,23 +2,23 @@ import dedent from 'dedent-js'
 import { Currency } from '@tatumio/tatum-core'
 import { FlowBurnNft, FlowMintMultipleNft, FlowMintNft, FlowTransferNft, TransferFlow, TransferFlowCustomTx } from '../model'
 import {
-  flowAddPublicKeyToAccount,
-  flowCreateAccountFromPublicKey,
-  flowSendCustomTransaction,
-  flowSendTransaction,
-  getFlowNftMetadata,
-  getFlowNftTokenByAddress,
-  getFlowSigner,
-  sendFlowNftBurnToken,
-  sendFlowNftMintMultipleToken,
-  sendFlowNftMintToken,
+  addPublicKeyToAccount,
+  createAccountFromPublicKey,
+  sendCustomTransaction,
+  sendTransaction,
+  getNftMetadata,
+  getNftTokenByAddress,
+  getSigner,
+  sendNftBurnToken,
+  sendNftMintMultipleToken,
+  sendNftMintToken,
 } from './flow'
 
 describe('Flow tests', () => {
   jest.setTimeout(199999)
 
   it('should create account from public key', async () => {
-    const result = await flowCreateAccountFromPublicKey(
+    const result = await createAccountFromPublicKey(
       true,
       '968c3ce11e871cb2b7161b282655ee5fcb051f3c04894705d771bf11c6fbebfc6556ab8a0c04f45ea56281312336d0668529077c9d66891a6cad3db877acbe90',
       '0x955cd3f17b2fd8ad',
@@ -30,7 +30,7 @@ describe('Flow tests', () => {
   })
 
   it('should add public key to account', async () => {
-    const result = await flowAddPublicKeyToAccount(
+    const result = await addPublicKeyToAccount(
       true,
       '968c3ce11e871cb2b7161b282655ee5fcb051f3c04894705d771bf11c6fbebfc6556ab8a0c04f45ea56281312336d0668529077c9d66891a6cad3db877acbe90',
       '0x955cd3f17b2fd8ad',
@@ -48,11 +48,11 @@ describe('Flow tests', () => {
     body.account = '0x4f09d8d43e4967b7'
     body.privateKey = '44179e42e147b391d3deb8a7a160b9490941cd7292936e6cc7277166a99ef058'
     body.currency = Currency.FLOW
-    const result = await flowSendTransaction(
+    const result = await sendTransaction(
       true,
       body,
-      () => getFlowSigner('44179e42e147b391d3deb8a7a160b9490941cd7292936e6cc7277166a99ef058', '0x4f09d8d43e4967b7', 0).signer,
-      () => getFlowSigner('44179e42e147b391d3deb8a7a160b9490941cd7292936e6cc7277166a99ef058', '0x4f09d8d43e4967b7').signer
+      () => getSigner('44179e42e147b391d3deb8a7a160b9490941cd7292936e6cc7277166a99ef058', '0x4f09d8d43e4967b7', 0).signer,
+      () => getSigner('44179e42e147b391d3deb8a7a160b9490941cd7292936e6cc7277166a99ef058', '0x4f09d8d43e4967b7').signer
     )
     expect(result.txId).toBeDefined()
     console.log(result)
@@ -65,7 +65,7 @@ describe('Flow tests', () => {
     body.account = '0x4f09d8d43e4967b7'
     body.privateKey = '44179e42e147b391d3deb8a7a160b9490941cd7292936e6cc7277166a99ef058'
     body.currency = Currency.FLOW
-    const result = await flowSendTransaction(true, body)
+    const result = await sendTransaction(true, body)
     expect(result.txId).toBeDefined()
     console.log(result)
   })
@@ -78,7 +78,7 @@ describe('Flow tests', () => {
     body.account = '0x10247089e55180c9'
     body.privateKey = '3881849dd540a0c80383c3727951d35e3e9e8c238ec82a581726c3fc2ca17bc4'
     body.chain = Currency.FLOW
-    const result = await sendFlowNftMintToken(true, body)
+    const result = await sendNftMintToken(true, body)
     expect(result.txId).toBeDefined()
     console.log(result)
   })
@@ -90,7 +90,7 @@ describe('Flow tests', () => {
     body.account = '0x10247089e55180c9'
     body.privateKey = '3881849dd540a0c80383c3727951d35e3e9e8c238ec82a581726c3fc2ca17bc4'
     body.chain = Currency.FLOW
-    const result = await sendFlowNftBurnToken(true, body)
+    const result = await sendNftBurnToken(true, body)
     expect(result.txId).toBeDefined()
     console.log(result)
   })
@@ -102,7 +102,7 @@ describe('Flow tests', () => {
     body.account = '0x10247089e55180c9'
     body.privateKey = '3881849dd540a0c80383c3727951d35e3e9e8c238ec82a581726c3fc2ca17bc4'
     body.chain = Currency.FLOW
-    const result = await sendFlowNftBurnToken(true, body)
+    const result = await sendNftBurnToken(true, body)
     expect(result.txId).toBeDefined()
     console.log(result)
   })
@@ -115,7 +115,7 @@ describe('Flow tests', () => {
     body.account = '0x10247089e55180c9'
     body.privateKey = '3881849dd540a0c80383c3727951d35e3e9e8c238ec82a581726c3fc2ca17bc4'
     body.chain = Currency.FLOW
-    const result = await sendFlowNftMintMultipleToken(true, body)
+    const result = await sendNftMintMultipleToken(true, body)
     expect(result.txId).toBeDefined()
     console.log(result)
   })
@@ -129,18 +129,18 @@ describe('Flow tests', () => {
     body.args = []
     body.account = '0x955cd3f17b2fd8ad'
     body.privateKey = '37afa218d41d9cd6a2c6f2b96d9eaa3ad96c598252bc50e4d45d62f9356a51f8'
-    const result = await flowSendCustomTransaction(true, body)
+    const result = await sendCustomTransaction(true, body)
     console.log(result)
     expect(result.txId).toBeDefined()
   })
 
   it('should get NFT token by address', async () => {
-    const result = await getFlowNftTokenByAddress(true, '0x2d0d7b39db4e3a08', '27320939-3087-490e-a65e-a53c8b06fcd9')
+    const result = await getNftTokenByAddress(true, '0x2d0d7b39db4e3a08', '27320939-3087-490e-a65e-a53c8b06fcd9')
     expect(result).toBeDefined()
   })
 
   it('should get NFT token metadata', async () => {
-    const result = await getFlowNftMetadata(true, '0x2d0d7b39db4e3a08', '8', '27320939-3087-490e-a65e-a53c8b06fcd9')
+    const result = await getNftMetadata(true, '0x2d0d7b39db4e3a08', '8', '27320939-3087-490e-a65e-a53c8b06fcd9')
     expect(result).toBeDefined()
   })
 })

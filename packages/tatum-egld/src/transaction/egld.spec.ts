@@ -1,5 +1,5 @@
 import { generateAddressFromPrivatekey } from '../wallet/address'
-import { egldGetConfig, egldGetGasPrice } from './egld'
+import { getConfig, getGasPrice } from './egld'
 
 describe('Elrond EGLD tests', () => {
   jest.setTimeout(99999)
@@ -12,13 +12,13 @@ describe('Elrond EGLD tests', () => {
   })
 
   it('should get network config', async () => {
-    const { data } = await egldGetConfig()
+    const { data } = await getConfig()
     // console.log(data.config['erd_chain_id']);
     expect(data.config['erd_chain_id']).toBeDefined()
   })
 
   it.skip('should get gas price', async () => {
-    const result = await egldGetGasPrice()
+    const result = await getGasPrice()
     // console.log(result);
     expect(result).toBeDefined()
   })

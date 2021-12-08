@@ -31,9 +31,9 @@ import {
 import { CreateMasterEditionArgs, CreateMetadataArgs, METADATA_SCHEMA } from './solanaSchema/schema'
 import { ChainSolanaMintNft, SolanaMintNft, SolanaNftMetadata, SolanaNftMetadataCreator, TransferSolana } from '../model'
 
-const generateSolanaKeyPair = (privateKey: string) => Keypair.fromSecretKey(Buffer.from(privateKey, 'hex'))
+const generateKeyPair = (privateKey: string) => Keypair.fromSecretKey(Buffer.from(privateKey, 'hex'))
 
-export const getSolanaClient = (provider?: string) => {
+export const getClient = (provider?: string) => {
   const url = provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/solana/web3/${process.env.TATUM_API_KEY}`
   return new Connection(url, 'confirmed')
 }
@@ -43,7 +43,7 @@ export const getSolanaClient = (provider?: string) => {
  * @param body body of the request
  * @param provider optional URL of the Solana cluster
  */
-export const sendSolana = async (body: TransferSolana, provider?: string): Promise<{ txData: string } | { txId: string }> => {
+export const send = async (body: TransferSolana, provider?: string): Promise<{ txData: string } | { txId: string }> => {
   const fromPubkey = new PublicKey(body.from)
 
   const transaction = new Transaction({ feePayer: fromPubkey })
@@ -61,11 +61,11 @@ export const sendSolana = async (body: TransferSolana, provider?: string): Promi
   }
 
   return {
-    txId: await sendAndConfirmTransaction(getSolanaClient(provider), transaction, [generateSolanaKeyPair(body.fromPrivateKey as string)]),
+    txId: await sendAndConfirmTransaction(getClient(provider), transaction, [generateKeyPair(body.fromPrivateKey as string)]),
   }
 }
 
-// export const transferSolanaSlpToken = async (body: TransferSolanaSlp, provider?: string) => {
+// export const transferSlpToken = async (body: TransferSolanaSlp, provider?: string) => {
 //   await validateBody(body, TransferSolanaSlp)
 //   const connection = getSolanaClient(provider)
 //   const from = new PublicKey(body.from as string)
@@ -116,16 +116,16 @@ export const sendSolana = async (body: TransferSolana, provider?: string): Promi
  * @param fromPrivateKey private key to sign
  * @param provider optional URL of the Solana cluster
  */
-export const signSolanaKMSTransaction = async (tx: ChainTransactionKMS, fromPrivateKey: string, provider?: string) => {
+export const signKMSTransaction = async (tx: ChainTransactionKMS, fromPrivateKey: string, provider?: string) => {
   ;(tx as TransactionKMS).chain = Currency.SOL
-  const connection = getSolanaClient(provider)
+  const connection = getClient(provider)
   const { txData, mintPK } = JSON.parse(tx.serializedTransaction)
   const transaction = Transaction.populate(Message.from(Buffer.from(txData, 'hex')))
   transaction.recentBlockhash = undefined
-  const wallet = generateSolanaKeyPair(fromPrivateKey as string)
+  const wallet = generateKeyPair(fromPrivateKey as string)
   const signers = []
   if (mintPK) {
-    signers.push(generateSolanaKeyPair(mintPK))
+    signers.push(generateKeyPair(mintPK))
   }
   signers.push(wallet)
   const txId = await connection.sendTransaction(transaction, signers)
@@ -142,10 +142,10 @@ export const signSolanaKMSTransaction = async (tx: ChainTransactionKMS, fromPriv
  * @param body body of the request
  * @param provider optional URL of the Solana cluster
  */
-export const transferSolanaNft = async (body: ChainTransferErc721, provider?: string) => {
+export const transferNft = async (body: ChainTransferErc721, provider?: string) => {
   ;(body as TransferErc721).chain = Currency.SOL
   await validateBody(body, TransferErc721)
-  const connection = getSolanaClient(provider)
+  const connection = getClient(provider)
   const from = new PublicKey(body.from as string)
   const transaction = new Transaction({ feePayer: from })
 
@@ -166,7 +166,7 @@ export const transferSolanaNft = async (body: ChainTransferErc721, provider?: st
     return { txData: transaction.compileMessage().serialize().toString('hex') }
   }
 
-  const wallet = generateSolanaKeyPair(body.fromPrivateKey as string)
+  const wallet = generateKeyPair(body.fromPrivateKey as string)
   return {
     txId: await sendAndConfirmTransaction(connection, transaction, [wallet]),
   }
@@ -177,10 +177,10 @@ export const transferSolanaNft = async (body: ChainTransferErc721, provider?: st
  * @param body body of the request
  * @param provider optional URL of the Solana cluster
  */
-export const mintSolanaNft = async (body: ChainSolanaMintNft, provider?: string) => {
+export const mintNft = async (body: ChainSolanaMintNft, provider?: string) => {
   ;(body as SolanaMintNft).chain = Currency.SOL
   await validateBody(body, SolanaMintNft)
-  const connection = getSolanaClient(provider)
+  const connection = getClient(provider)
   const from = new PublicKey(body.from)
   const transaction = new Transaction({ feePayer: from })
   const mintRent = await connection.getMinimumBalanceForRentExemption(MintLayout.span)
@@ -257,7 +257,7 @@ export const mintSolanaNft = async (body: ChainSolanaMintNft, provider?: string)
     }
   }
 
-  const wallet = generateSolanaKeyPair(body.fromPrivateKey as string)
+  const wallet = generateKeyPair(body.fromPrivateKey as string)
   const signers = [mint, wallet]
   return {
     txId: await sendAndConfirmTransaction(connection, transaction, [wallet, ...signers]),

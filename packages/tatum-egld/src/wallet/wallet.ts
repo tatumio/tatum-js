@@ -6,7 +6,7 @@ import { WalletWithMnemonic } from '@tatumio/tatum-ledger'
  * @param mnem mnemonic seed to use
  * @returns wallet
  */
-export const generateEgldWallet = async (mnem: string): Promise<WalletWithMnemonic> => {
+export const generateBlockchainWallet = async (mnem: string): Promise<WalletWithMnemonic> => {
   return {
     mnemonic: mnem,
     xpub: '',
@@ -20,5 +20,5 @@ export const generateEgldWallet = async (mnem: string): Promise<WalletWithMnemon
  */
 export const generateWallet = (mnemonic?: string) => {
   mnemonic ||= generateMnemonic(256)
-  return generateEgldWallet(mnemonic)
+  return generateBlockchainWallet(mnemonic)
 }

@@ -7,8 +7,8 @@ import {
   SmartContractReadMethodInvocation,
   auction,
 } from '@tatumio/tatum-core'
-import { bscGetCurrentBlock } from '../../blockchain'
-import { sendBscSmartContractMethodInvocationTransaction, sendBscSmartContractReadMethodInvocationTransaction } from '../../transaction'
+import { getCurrentBlock } from '../../blockchain'
+import { sendSmartContractMethodInvocationTransaction, sendSmartContractReadMethodInvocationTransaction } from '../../transaction'
 import { deployAuction, mintNFTWithUri, sendAuctionApproveNftTransfer, sendAuctionCreate, sendAuctionBid, sendAuctionSettle } from '../'
 
 const sleep = async (time = 7000) => new Promise((r) => setTimeout(r, time))
@@ -60,7 +60,7 @@ describe('Auction  tests', () => {
       body.contractAddress = '0x568bf1e6849e250f4705347a9cff717b5dcfc4ad'
       body.nftAddress = '0xada3e67deae341f16b44f67687866d2560d79ec8'
       body.tokenId = tokenId
-      body.endedAt = (await bscGetCurrentBlock()) + 9
+      body.endedAt = (await getCurrentBlock()) + 9
       body.id = tokenId
       body.isErc721 = true
       body.seller = '0x80d8bac9a6901698b3749fe336bbd1385c1f98f2'
@@ -91,7 +91,7 @@ describe('Auction  tests', () => {
       r.methodName = 'getAuction'
       r.methodABI = auction.abi.find((a: any) => a.name === r.methodName)
       r.params = ['1630313952428']
-      console.log(await sendBscSmartContractMethodInvocationTransaction(r, 'https://data-seed-prebsc-2-s1.binance.org:8545'))
+      console.log(await sendSmartContractMethodInvocationTransaction(r, 'https://data-seed-prebsc-2-s1.binance.org:8545'))
     })
 
     it('should get auction fee', async () => {
@@ -100,7 +100,7 @@ describe('Auction  tests', () => {
       r.methodName = 'getAuctionFee'
       r.methodABI = auction.abi.find((a: any) => a.name === r.methodName)
       r.params = []
-      console.log(await sendBscSmartContractReadMethodInvocationTransaction(r, 'https://data-seed-prebsc-2-s1.binance.org:8545'))
+      console.log(await sendSmartContractReadMethodInvocationTransaction(r, 'https://data-seed-prebsc-2-s1.binance.org:8545'))
     })
   })
 })

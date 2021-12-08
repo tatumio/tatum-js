@@ -1,7 +1,7 @@
 import { Currency, offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal, validateBody } from '@tatumio/tatum-core'
-import { prepareAlgoSignedTransaction } from '../transaction'
-import { generateAlgoWallet, generateAlgodAddressFromPrivatetKey } from '../wallet'
-import { offchainTransferAlgorandKMS } from './kms'
+import { prepareSignedTransaction } from '../transaction'
+import { generateBlockchainWallet, generateAddressFromPrivatetKey } from '../wallet'
+import { offchainTransferKMS } from './kms'
 import { TransferAlgoOffchain, AlgoTransaction } from '../model'
 
 /**
@@ -12,9 +12,9 @@ import { TransferAlgoOffchain, AlgoTransaction } from '../model'
  * @param provider url of the Algorand Node Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
-export const sendAlgorandOffchainTransaction = async (testnet: boolean, body: TransferAlgoOffchain, provider?: string) => {
+export const sendOffchainTransaction = async (testnet: boolean, body: TransferAlgoOffchain, provider?: string) => {
   if (body.signatureId) {
-    return offchainTransferAlgorandKMS(body)
+    return offchainTransferKMS(body)
   }
   await validateBody(body, TransferAlgoOffchain)
   const { mnemonic, privateKey, ...withdrawal } = body
@@ -22,12 +22,12 @@ export const sendAlgorandOffchainTransaction = async (testnet: boolean, body: Tr
   let from: string
   let key: string
   if (mnemonic) {
-    const wallet = await generateAlgoWallet(mnemonic)
+    const wallet = await generateBlockchainWallet(mnemonic)
     key = wallet.privateKey
     from = wallet.address
   } else {
     key = privateKey as string
-    from = await generateAlgodAddressFromPrivatetKey(key)
+    from = await generateAddressFromPrivatetKey(key)
   }
 
   const algotx: AlgoTransaction = new AlgoTransaction()
@@ -39,7 +39,7 @@ export const sendAlgorandOffchainTransaction = async (testnet: boolean, body: Tr
   algotx.note = withdrawal.senderNote || ''
   algotx.fee = withdrawal.fee || '0.0001'
 
-  const txData = await prepareAlgoSignedTransaction(testnet, algotx, provider)
+  const txData = await prepareSignedTransaction(testnet, algotx, provider)
 
   const { id } = await offchainStoreWithdrawal(withdrawal)
   // @ts-ignore

@@ -1,7 +1,7 @@
 import dedent from 'dedent-js'
 import { FLOW_MAINNET_ADDRESSES, FLOW_TESTNET_ADDRESSES } from '../../constants'
 
-export const deployFlowNftTokenTypeWithMinterTxTemplate = (testnet: boolean) => dedent`
+export const deployNftTokenTypeWithMinterTxTemplate = (testnet: boolean) => dedent`
 import TatumMultiNFT from ${testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLOW_MAINNET_ADDRESSES.TatumMultiNFT}
 
 transaction(type: String) {
@@ -26,7 +26,7 @@ transaction(type: String) {
 }
 `
 
-export const metadataFlowNftTokenScript = (testnet: boolean) => dedent`
+export const metadataNftTokenScript = (testnet: boolean) => dedent`
 import TatumMultiNFT from ${testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLOW_MAINNET_ADDRESSES.TatumMultiNFT}
 
 pub fun main(account: Address, id: UInt64, type: String): String {
@@ -43,7 +43,7 @@ pub fun main(account: Address, id: UInt64, type: String): String {
     }
 }`
 
-export const tokenByAddressFlowNftTokenScript = (testnet: boolean) => dedent`
+export const tokenByAddressNftTokenScript = (testnet: boolean) => dedent`
 import TatumMultiNFT from ${testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLOW_MAINNET_ADDRESSES.TatumMultiNFT}
 
 pub fun main(address: Address, type: String): [UInt64] {
@@ -55,7 +55,7 @@ pub fun main(address: Address, type: String): [UInt64] {
     return collectionRef.getIDsByType(type: type)
 }`
 
-export const mintFlowNftTokenTxTemplate = (testnet: boolean) => dedent`
+export const mintNftTokenTxTemplate = (testnet: boolean) => dedent`
 import TatumMultiNFT from ${testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLOW_MAINNET_ADDRESSES.TatumMultiNFT}
 
 transaction(recipient: Address, url: String, type: String) {
@@ -85,7 +85,7 @@ transaction(recipient: Address, url: String, type: String) {
     }
 }`
 
-export const mintFlowMultipleNftTokenTxTemplate = (testnet: boolean) => dedent`
+export const mintMultipleNftTokenTxTemplate = (testnet: boolean) => dedent`
 import TatumMultiNFT from ${testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLOW_MAINNET_ADDRESSES.TatumMultiNFT}
 
 transaction(recipient: [Address], url: [String], type: String) {
@@ -119,7 +119,7 @@ transaction(recipient: [Address], url: [String], type: String) {
     }
 }`
 
-export const burnFlowNftTokenTxTemplate = (testnet: boolean) => dedent`
+export const burnNftTokenTxTemplate = (testnet: boolean) => dedent`
 import TatumMultiNFT from ${testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLOW_MAINNET_ADDRESSES.TatumMultiNFT}
 
 transaction(withdrawID: UInt64, type: String) {
@@ -146,7 +146,7 @@ transaction(withdrawID: UInt64, type: String) {
     }
 }`
 
-export const transferFlowNftTokenTxTemplate = (testnet: boolean) => dedent`
+export const transferNftTokenTxTemplate = (testnet: boolean) => dedent`
 import TatumMultiNFT from ${testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLOW_MAINNET_ADDRESSES.TatumMultiNFT}
 
 transaction(recipient: Address, withdrawID: UInt64) {
@@ -184,7 +184,7 @@ signer.addPublicKey(publicKey.decodeHex())
 }
 }`
 
-export const prepareTransferFlowTxTemplate = (testnet: boolean, tokenAddress: string, tokenName: string, tokenStorage: string) =>
+export const prepareTransferTxTemplate = (testnet: boolean, tokenAddress: string, tokenName: string, tokenStorage: string) =>
   dedent`import FungibleToken from ${testnet ? FLOW_TESTNET_ADDRESSES.FungibleToken : FLOW_MAINNET_ADDRESSES.FungibleToken}
   import ${tokenName} from ${tokenAddress}
 

@@ -17,38 +17,38 @@ import {
   Currency,
 } from '@tatumio/tatum-core'
 import {
-  sendBscDeployMultiTokenTransaction,
-  sendBscMintMultiTokenTransaction,
-  sendBscMintMultiTokenBatchTransaction,
-  sendBscBurnMultiTokenTransaction,
-  sendBscBurnBatchMultiTokenTransaction,
-  sendBscMultiTokenTransaction,
-  sendBscMultiTokenBatchTransaction,
+  sendDeployMultiTokenTransaction,
+  sendMintMultiTokenTransaction,
+  sendMintMultiTokenBatchTransaction,
+  sendBurnMultiTokenTransaction,
+  sendBurnBatchMultiTokenTransaction,
+  sendMultiTokenTransaction,
+  sendMultiTokenBatchTransaction,
   helperPrepareSCCall,
   helperBroadcastTx,
 } from '../'
 
 export const deployMultiToken = async (body: DeployMultiToken, provider?: string) => {
-  return sendBscDeployMultiTokenTransaction(body, provider)
+  return sendDeployMultiTokenTransaction(body, provider)
 }
 export const mintMultiToken = async (body: MintMultiToken, provider?: string) => {
-  return sendBscMintMultiTokenTransaction(body, provider)
+  return sendMintMultiTokenTransaction(body, provider)
 }
 export const mintMultiTokenBatch = async (body: MintMultiTokenBatch, provider?: string) => {
-  return sendBscMintMultiTokenBatchTransaction(body, provider)
+  return sendMintMultiTokenBatchTransaction(body, provider)
 }
 export const burnMultiToken = async (body: BurnMultiToken, provider?: string) => {
-  return sendBscBurnMultiTokenTransaction(body, provider)
+  return sendBurnMultiTokenTransaction(body, provider)
 }
 export const burnMultiTokenBatch = async (body: BurnMultiTokenBatch, provider?: string) => {
-  return sendBscBurnBatchMultiTokenTransaction(body, provider)
+  return sendBurnBatchMultiTokenTransaction(body, provider)
 }
 
 export const transferMultiToken = async (body: TransferMultiToken, provider?: string) => {
-  return sendBscMultiTokenTransaction(body, provider)
+  return sendMultiTokenTransaction(body, provider)
 }
 export const transferMultiTokenBatch = async (body: TransferMultiTokenBatch, provider?: string) => {
-  return sendBscMultiTokenBatchTransaction(body, provider)
+  return sendMultiTokenBatchTransaction(body, provider)
 }
 
 /**

@@ -11,7 +11,7 @@ import { XDC_DERIVATION_PATH } from '../constants'
  * @param i derivation index of private key to generate.
  * @returns blockchain private key to the address
  */
-const generateXdcPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
+const generatePrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
   const path = testnet ? TESTNET_DERIVATION_PATH : XDC_DERIVATION_PATH
   const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnemonic))
   const derivePath = hdwallet.derivePath(path).deriveChild(i)
@@ -24,7 +24,7 @@ const generateXdcPrivateKey = async (testnet: boolean, mnemonic: string, i: numb
  * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
-const generateXdcAddress = (xpub: string, i: number) => {
+const generateAddress = (xpub: string, i: number) => {
   const w = ethHdKey.fromExtendedKey(xpub)
   const wallet = w.deriveChild(i).getWallet()
   return 'xdc' + wallet.getAddress().toString('hex').toLowerCase()
@@ -35,7 +35,7 @@ const generateXdcAddress = (xpub: string, i: number) => {
  * @param privkey private key to use
  * @returns blockchain address
  */
-const convertXdcPrivateKey = (privkey: string) => {
+const convertPrivateKey = (privkey: string) => {
   const wallet = ethWallet.fromPrivateKey(Buffer.from(privkey.replace('0x', ''), 'hex'))
   return wallet.getAddressString() as string
 }
@@ -47,7 +47,7 @@ const convertXdcPrivateKey = (privkey: string) => {
  * @returns blockchain address
  */
 export const generateAddressFromXPub = (xpub: string, i: number) => {
-  return generateXdcAddress(xpub, i)
+  return generateAddress(xpub, i)
 }
 
 /**
@@ -58,7 +58,7 @@ export const generateAddressFromXPub = (xpub: string, i: number) => {
  * @returns blockchain private key to the address
  */
 export const generatePrivateKeyFromMnemonic = (testnet: boolean, mnemonic: string, i: number) => {
-  return generateXdcPrivateKey(testnet, mnemonic, i)
+  return generatePrivateKey(testnet, mnemonic, i)
 }
 
 /**
@@ -67,5 +67,5 @@ export const generatePrivateKeyFromMnemonic = (testnet: boolean, mnemonic: strin
  * @returns blockchain private key to the address
  */
 export const generateAddressFromPrivatekey = (privateKey: string) => {
-  return convertXdcPrivateKey(privateKey)
+  return convertPrivateKey(privateKey)
 }

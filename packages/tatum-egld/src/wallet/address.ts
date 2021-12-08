@@ -11,7 +11,7 @@ import { TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
  * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
-export const generateEgldAddress = async (testnet: boolean, mnem: string, i: number): Promise<string> => {
+export const generateAddress = async (testnet: boolean, mnem: string, i: number): Promise<string> => {
   const path = (testnet ? TESTNET_DERIVATION_PATH + "'" : EGLD_DERIVATION_PATH) + `/${i}'`
   const seed = await mnemonicToSeed(mnem)
   const { key } = derivePath(path, seed.toString('hex'))
@@ -27,7 +27,7 @@ export const generateEgldAddress = async (testnet: boolean, mnem: string, i: num
  * @param i derivation index of private key to generate.
  * @returns blockchain private key to the address
  */
-const generateEgldPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
+const generatePrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
   const path = (testnet ? TESTNET_DERIVATION_PATH + "'" : EGLD_DERIVATION_PATH) + `/${i}'`
   const seed = await mnemonicToSeed(mnemonic)
   const { key } = derivePath(path, seed.toString('hex'))
@@ -39,7 +39,7 @@ const generateEgldPrivateKey = async (testnet: boolean, mnemonic: string, i: num
  * @param privKey private key to use
  * @returns blockchain address
  */
-const convertEgldPrivateKey = (privKey: string) => {
+const convertPrivateKey = (privKey: string) => {
   const publicKey = getPublicKey(Buffer.from(privKey, 'hex'), false).toString('hex')
   const words = bech32.toWords(Buffer.from(publicKey.slice(-64), 'hex'))
   const address = bech32.encode('erd', words)
@@ -54,7 +54,7 @@ const convertEgldPrivateKey = (privKey: string) => {
  * @returns blockchain address
  */
 export const generateAddressFromXPub = (testnet: boolean, xpub: string, i: number) => {
-  return generateEgldAddress(testnet, xpub, i)
+  return generateAddress(testnet, xpub, i)
 }
 
 /**
@@ -65,7 +65,7 @@ export const generateAddressFromXPub = (testnet: boolean, xpub: string, i: numbe
  * @returns blockchain private key to the address
  */
 export const generatePrivateKeyFromMnemonic = (testnet: boolean, mnemonic: string, i: number) => {
-  return generateEgldPrivateKey(testnet, mnemonic, i)
+  return generatePrivateKey(testnet, mnemonic, i)
 }
 
 /**
@@ -74,5 +74,5 @@ export const generatePrivateKeyFromMnemonic = (testnet: boolean, mnemonic: strin
  * @returns blockchain private key to the address
  */
 export const generateAddressFromPrivatekey = (privateKey: string) => {
-  return convertEgldPrivateKey(privateKey)
+  return convertPrivateKey(privateKey)
 }

@@ -8,26 +8,26 @@ import { AdaBlock, AdaBlockChainInfo, AdaTransaction, AdaUtxo, AdaAccount } from
  * @param txData
  * @param signatureId
  */
-export const adaBroadcast = async (txData: string, signatureId?: string): Promise<TransactionHash> =>
+export const broadcast = async (txData: string, signatureId?: string): Promise<TransactionHash> =>
   post(`/v3/ada/broadcast`, { txData, signatureId })
 
 /**
  * Returns information about Ada blockchain. <br>
  * For more details, see <a href="https://tatum.io/apidoc#operation/AdaGetBlockChainInfo" target="_blank">Tatum API documentation</a>
  */
-export const adaGetBlockChainInfo = async (): Promise<AdaBlockChainInfo> => get(`/v3/ada/info`)
+export const getBlockChainInfo = async (): Promise<AdaBlockChainInfo> => get(`/v3/ada/info`)
 
 /**
  * Returns block by its hash from Ada blockchain. <br>
  * For more details, see <a href="https://tatum.io/apidoc#operation/AdaGetBlock" target="_blank">Tatum API documentation</a>
  */
-export const adaGetBlock = async (hash: string): Promise<AdaBlock> => get(`/v3/ada/block/${hash}`)
+export const getBlock = async (hash: string): Promise<AdaBlock> => get(`/v3/ada/block/${hash}`)
 
 /**
  * Returns transaction by hash from Ada blockchain. <br>
  * For more details, see <a href="https://tatum.io/apidoc#operation/AdaGetRawTransaction" target="_blank">Tatum API documentation</a>
  */
-export const adaGetTransaction = async (hash: string): Promise<AdaTransaction> => get(`/v3/ada/transaction/${hash}`)
+export const getTransaction = async (hash: string): Promise<AdaTransaction> => get(`/v3/ada/transaction/${hash}`)
 
 /**
  * Returns transactions by address from Ada blockchain. <br>
@@ -38,18 +38,18 @@ export const adaGetTransaction = async (hash: string): Promise<AdaTransaction> =
  *
  * For more details, see <a href="https://tatum.io/apidoc#operation/AdaGetTxByAddress" target="_blank">Tatum API documentation</a>
  */
-export const adaGetTransactionsByAccount = async (address: string, pageSize = 50, offset = 0): Promise<AdaTransaction[]> =>
+export const getBlockchainTransactionsByAccount = async (address: string, pageSize = 50, offset = 0): Promise<AdaTransaction[]> =>
   get(`/v3/ada/transaction/address/${address}?pageSize=${pageSize}&offset=${offset}`)
 
 /**
  * Returns UTXOs by address from Ada blockchain. <br>
  * For more details, see <a href="https://tatum.io/apidoc#operation/AdaGetTxByAddress" target="_blank">Tatum API documentation</a>
  */
-export const adaGetUtxos = async (address: string): Promise<AdaUtxo[]> => get(`/v3/ada/${address}/utxos`)
+export const getUtxos = async (address: string): Promise<AdaUtxo[]> => get(`/v3/ada/${address}/utxos`)
 
 /**
  * Returns account balances for a given address <br>
  *
  * For more details, see <a href="https://tatum.io/apidoc#operation/AdaGetAccount" target="_blank">Tatum API documentation</a>
  */
-export const adaGetAccountsByAddress = async (address: string): Promise<AdaAccount[]> => get(`/v3/ada/account/${address}`)
+export const getAccountsByAddress = async (address: string): Promise<AdaAccount[]> => get(`/v3/ada/account/${address}`)

@@ -2,13 +2,13 @@ import { Currency, TransferErc20, DeployErc20 } from '@tatumio/tatum-core'
 import { TransferBscBep20 } from '../model'
 import Web3 from 'web3'
 import {
-  bscGetGasPriceInWei,
+  getGasPriceInWei,
   prepareBscOrBep20SignedTransaction,
   prepareCustomBep20SignedTransaction,
   prepareDeployBep20SignedTransaction,
   sendBep721Transaction,
-  sendBscSmartContractMethodInvocationTransaction,
-  sendBscSmartContractReadMethodInvocationTransaction,
+  sendSmartContractMethodInvocationTransaction,
+  sendSmartContractReadMethodInvocationTransaction,
   sendBurnBep721Transaction,
   sendDeployBep721Transaction,
   sendMintBep721Transaction,
@@ -122,12 +122,12 @@ describe('BSC transactions', () => {
   })
 
   it('should test ethGetGasPriceInWei', async () => {
-    const gasPrice = await bscGetGasPriceInWei()
+    const gasPrice = await getGasPriceInWei()
     expect(gasPrice).not.toBeNull()
   })
 
   it('should test read smart contract method invocation', async () => {
-    const result = await sendBscSmartContractReadMethodInvocationTransaction(
+    const result = await sendSmartContractReadMethodInvocationTransaction(
       {
         contractAddress: '0xae13d989dac2f0debff460ac112a837c89baa7cd',
         methodName: 'balanceOf',
@@ -159,7 +159,7 @@ describe('BSC transactions', () => {
   })
 
   it('should test write smart contract method invocation', async () => {
-    const result = await sendBscSmartContractMethodInvocationTransaction({
+    const result = await sendSmartContractMethodInvocationTransaction({
       fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
       contractAddress: '0xd7d3e5e2174b530fdfb6d680c07c8b34495e2195',
       fee: { gasLimit: '40000', gasPrice: '200' },

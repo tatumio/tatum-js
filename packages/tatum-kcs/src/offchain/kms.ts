@@ -9,7 +9,7 @@ import {
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/KcsTransfer" target="_blank">Tatum API documentation</a>
  */
-export const offchainTransferKcsKMS = async (body: TransferOffchainKMS): Promise<SignatureId> =>
+export const offchainTransferKMS = async (body: TransferOffchainKMS): Promise<SignatureId> =>
   post(`/v3/offchain/kcs/transfer`, body, TransferOffchainKMS)
 
 /**

@@ -6,7 +6,7 @@ import {
   listing,
   SmartContractReadMethodInvocation,
 } from '@tatumio/tatum-core'
-import { sendBscSmartContractMethodInvocationTransaction, sendBscSmartContractReadMethodInvocationTransaction } from '../../transaction'
+import { sendSmartContractMethodInvocationTransaction, sendSmartContractReadMethodInvocationTransaction } from '../../transaction'
 import { transferNFT } from '../nft'
 import { deployMarketplaceListing, sendMarketplaceBuyListing, sendMarketplaceCreateListing } from './listing'
 
@@ -55,7 +55,7 @@ describe('Marketplace Listing tests', () => {
       r.methodName = 'getListing'
       r.methodABI = listing.abi.find((a) => a.name === r.methodName)
       r.params = ['6']
-      console.log(await sendBscSmartContractMethodInvocationTransaction(r, 'https://data-seed-prebsc-2-s1.binance.org:8545'))
+      console.log(await sendSmartContractMethodInvocationTransaction(r, 'https://data-seed-prebsc-2-s1.binance.org:8545'))
     })
 
     it('should get marketplace fee', async () => {
@@ -64,7 +64,7 @@ describe('Marketplace Listing tests', () => {
       r.methodName = 'getMarketplaceFee'
       r.methodABI = listing.abi.find((a) => a.name === r.methodName)
       r.params = []
-      console.log(await sendBscSmartContractReadMethodInvocationTransaction(r, 'https://data-seed-prebsc-2-s1.binance.org:8545'))
+      console.log(await sendSmartContractReadMethodInvocationTransaction(r, 'https://data-seed-prebsc-2-s1.binance.org:8545'))
     })
 
     it('should buy listing native', async () => {

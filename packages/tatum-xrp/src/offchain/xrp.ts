@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 import { TransferXrpOffchain } from '../model'
-import { xrpGetAccountInfo, xrpGetFee } from '../blockchain'
+import { getAccountInfo, getFee } from '../blockchain'
 import {
   offchainBroadcast,
   offchainCancelWithdrawal,
@@ -18,19 +18,19 @@ import { RippleAPI } from 'ripple-lib'
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
-export const sendXrpOffchainTransaction = async (body: TransferXrpOffchain) => {
+export const sendOffchainTransaction = async (body: TransferXrpOffchain) => {
   await validateBody(body, TransferXrpOffchain)
   const { account, secret, ...withdrawal } = body
   if (!withdrawal.fee) {
-    withdrawal.fee = new BigNumber((await xrpGetFee()).drops.base_fee).dividedBy(1000000).toString()
+    withdrawal.fee = new BigNumber((await getFee()).drops.base_fee).dividedBy(1000000).toString()
   }
-  const acc = await xrpGetAccountInfo(account)
+  const acc = await getAccountInfo(account)
   const { id } = await offchainStoreWithdrawal(withdrawal)
   const { amount, fee, address } = withdrawal
 
   let txData
   try {
-    txData = await prepareXrpSignedOffchainTransaction(amount, address, secret, acc, fee, withdrawal.sourceTag, withdrawal.attr)
+    txData = await prepareSignedOffchainTransaction(amount, address, secret, acc, fee, withdrawal.sourceTag, withdrawal.attr)
   } catch (e) {
     console.error(e)
     await offchainCancelWithdrawal(id)
@@ -56,7 +56,7 @@ export const sendXrpOffchainTransaction = async (body: TransferXrpOffchain) => {
  * @param secret secret key to sign transaction with.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signXrpOffchainKMSTransaction = async (tx: ChainTransactionKMS, secret: string) => {
+export const signOffchainKMSTransaction = async (tx: ChainTransactionKMS, secret: string) => {
   ;(tx as TransactionKMS).chain = Currency.XRP
   const rippleAPI = new RippleAPI()
   return rippleAPI.sign(tx.serializedTransaction, secret).signedTransaction
@@ -73,7 +73,7 @@ export const signXrpOffchainKMSTransaction = async (tx: ChainTransactionKMS, sec
  * @param destinationTag
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareXrpSignedOffchainTransaction = async (
+export const prepareSignedOffchainTransaction = async (
   amount: string,
   address: string,
   secret: string,

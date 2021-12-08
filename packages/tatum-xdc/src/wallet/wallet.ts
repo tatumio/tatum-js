@@ -10,7 +10,7 @@ import { WalletWithMnemonic } from '@tatumio/tatum-ledger'
  * @param mnem mnemonic seed to use
  * @returns wallet
  */
-export const generateXdcWallet = async (testnet: boolean, mnem: string): Promise<WalletWithMnemonic> => {
+export const generateBlockchainWallet = async (testnet: boolean, mnem: string): Promise<WalletWithMnemonic> => {
   const path = testnet ? TESTNET_DERIVATION_PATH : XDC_DERIVATION_PATH
   const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnem))
   const derivePath = hdwallet.derivePath(path)
@@ -28,5 +28,5 @@ export const generateXdcWallet = async (testnet: boolean, mnem: string): Promise
  */
 export const generateWallet = (mnemonic?: string, options?: { testnet?: boolean }) => {
   mnemonic ||= generateMnemonic(256)
-  return generateXdcWallet(!!options?.testnet, mnemonic)
+  return generateBlockchainWallet(!!options?.testnet, mnemonic)
 }

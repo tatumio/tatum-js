@@ -1,8 +1,8 @@
-import { sendEthErc20OffchainTransaction, sendEthOffchainTransaction } from './eth'
+import { sendErc20OffchainTransaction, sendOffchainTransaction } from './eth'
 
 describe('ETH offchain', () => {
   it('should test custom gas sendEthErc20OffchainTransaction transaction', async () => {
-    const tx = await sendEthErc20OffchainTransaction(true, {
+    const tx = await sendErc20OffchainTransaction(true, {
       senderAccountId: '5fe10047e72e8a31c443b034',
       address: '0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F',
       amount: '0.1',
@@ -14,7 +14,7 @@ describe('ETH offchain', () => {
   })
 
   it('should test sendEthErc20OffchainTransaction transaction', async () => {
-    const tx = await sendEthErc20OffchainTransaction(true, {
+    const tx = await sendErc20OffchainTransaction(true, {
       senderAccountId: '5fe10047e72e8a31c443b034',
       address: '0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F',
       amount: '0.1',
@@ -24,7 +24,7 @@ describe('ETH offchain', () => {
   })
 
   it('should test custom gas sendEthOffchainTransaction transaction', async () => {
-    const tx = await sendEthOffchainTransaction(true, {
+    const tx = await sendOffchainTransaction(true, {
       senderAccountId: '600ed0a9fe9490f37acaddc9',
       address: '0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F',
       amount: '0.01',
@@ -36,7 +36,7 @@ describe('ETH offchain', () => {
   })
 
   it('should test sendEthOffchainTransaction transaction', async () => {
-    const tx = await sendEthOffchainTransaction(true, {
+    const tx = await sendOffchainTransaction(true, {
       senderAccountId: '600ed0a9fe9490f37acaddc9',
       address: '0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F',
       amount: '0.01',

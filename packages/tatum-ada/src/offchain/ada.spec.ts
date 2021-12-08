@@ -1,9 +1,9 @@
-import { sendAdaOffchainTransaction } from './ada'
+import { sendOffchainTransaction } from './ada'
 
 describe('ADA offchain', () => {
   it('should transaction with mnemonic and xpub', async () => {
     try {
-      const tx = await sendAdaOffchainTransaction(true, {
+      const tx = await sendOffchainTransaction(true, {
         senderAccountId: '60f990befd2f551040f512c0',
         address: 'addr_test1qp33h99feurpn7n8cezqthh75723q5kjwqmthaf073y7edlg9xj6jj5qs9pe3nxq8rx59aa5qlmjrgsm0jt22hh3ll5q7n3j5s',
         amount: '1',
@@ -19,7 +19,7 @@ describe('ADA offchain', () => {
   })
 
   it('should with keypair', async () => {
-    const tx = await sendAdaOffchainTransaction(true, {
+    const tx = await sendOffchainTransaction(true, {
       keyPair: [
         {
           privateKey:

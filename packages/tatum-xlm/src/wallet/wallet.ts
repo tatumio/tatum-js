@@ -6,7 +6,7 @@ import { WalletWithAddress } from '@tatumio/tatum-ledger'
  * @param secret optional secret of the account to generate address, if not provided, random is generated
  * @returns wallet or a combination of address and private key
  */
-export const generateXlmWallet = async (secret?: string): Promise<WalletWithAddress> => {
+export const generateBlockchainWallet = async (secret?: string): Promise<WalletWithAddress> => {
   const keypair = secret ? Keypair.fromSecret(secret) : Keypair.random()
   return { address: keypair.publicKey(), privateKey: keypair.secret() }
 }
@@ -16,5 +16,5 @@ export const generateXlmWallet = async (secret?: string): Promise<WalletWithAddr
  * @returns wallet or a combination of address and private key
  */
 export const generateWallet = () => {
-  return generateXlmWallet()
+  return generateBlockchainWallet()
 }

@@ -17,7 +17,7 @@ import {
   ChainUpdateMarketplaceFeeRecipient,
   Currency,
 } from '@tatumio/tatum-core'
-import { prepareEthDeployMarketplaceListingSignedTransaction, sendEthDeployMarketplaceListingSignedTransaction } from '../../transaction'
+import { prepareDeployMarketplaceListingSignedTransaction, sendDeployMarketplaceListingSignedTransaction } from '../../transaction'
 import { helperBroadcastTx, helperPrepareSCCall } from '../../helpers'
 import { prepareApproveErc20 } from '../../fungible'
 
@@ -35,7 +35,7 @@ import { prepareApproveErc20 } from '../../fungible'
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const deployMarketplaceListing = async (body: ChainDeployMarketplaceListing, provider?: string) => {
-  return await sendEthDeployMarketplaceListingSignedTransaction(body, provider)
+  return await sendDeployMarketplaceListingSignedTransaction(body, provider)
 }
 
 /**
@@ -52,7 +52,7 @@ export const deployMarketplaceListing = async (body: ChainDeployMarketplaceListi
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareDeployMarketplaceListing = async (body: ChainDeployMarketplaceListing, provider?: string) => {
-  return await prepareEthDeployMarketplaceListingSignedTransaction(body, provider)
+  return await prepareDeployMarketplaceListingSignedTransaction(body, provider)
 }
 
 /**

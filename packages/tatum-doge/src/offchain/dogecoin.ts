@@ -14,7 +14,7 @@ import {
   offchainStoreWithdrawal,
 } from '@tatumio/tatum-core'
 import { generateAddressFromXPub, generatePrivateKeyFromMnemonic } from '../wallet'
-import { offchainTransferDogeKMS } from './kms'
+import { offchainTransferKMS } from './kms'
 
 /**
  * Send Dogecoin transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -23,9 +23,9 @@ import { offchainTransferDogeKMS } from './kms'
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
-export const sendDogecoinOffchainTransaction = async (testnet: boolean, body: TransferBtcBasedOffchain) => {
+export const sendOffchainTransaction = async (testnet: boolean, body: TransferBtcBasedOffchain) => {
   if (body.signatureId) {
-    return offchainTransferDogeKMS(body)
+    return offchainTransferKMS(body)
   }
   await validateBody(body, TransferBtcBasedOffchain)
   const { mnemonic, keyPair, attr: changeAddress, xpub, ...withdrawal } = body
@@ -36,7 +36,7 @@ export const sendDogecoinOffchainTransaction = async (testnet: boolean, body: Tr
   const { amount, address } = withdrawal
   let txData
   try {
-    txData = await prepareDogecoinSignedOffchainTransaction(
+    txData = await prepareSignedOffchainTransaction(
       testnet,
       data,
       amount,
@@ -73,7 +73,7 @@ export const sendDogecoinOffchainTransaction = async (testnet: boolean, body: Tr
  * @param testnet mainnet or testnet version
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signDogecoinOffchainKMSTransaction = async (tx: ChainTransactionKMS, mnemonic: string, testnet: boolean) => {
+export const signOffchainKMSTransaction = async (tx: ChainTransactionKMS, mnemonic: string, testnet: boolean) => {
   ;(tx as TransactionKMS).chain = Currency.DOGE
   if (!tx.withdrawalResponses) {
     throw Error('Unsupported chain.')
@@ -102,7 +102,7 @@ export const signDogecoinOffchainKMSTransaction = async (tx: ChainTransactionKMS
  * @param signatureId if using KMS, this is signatureId of the wallet representing mnemonic
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareDogecoinSignedOffchainTransaction = async (
+export const prepareSignedOffchainTransaction = async (
   testnet: boolean,
   data: WithdrawalResponseData[],
   amount: string,

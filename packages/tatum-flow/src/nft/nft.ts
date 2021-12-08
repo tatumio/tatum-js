@@ -15,7 +15,7 @@ import {
   ChainFlowTransferNft,
   FlowDeployNft,
 } from '../model'
-import { sendFlowNftBurnToken, sendFlowNftMintMultipleToken, sendFlowNftMintToken, sendFlowNftTransferToken } from '../transaction'
+import { sendNftBurnToken, sendNftMintMultipleToken, sendNftMintToken, sendNftTransferToken } from '../transaction'
 
 export const mintNFT = (body: ChainMintErc721): Promise<TransactionHash> => mintNFTRequest({ ...body, chain: Currency.FLOW })
 
@@ -54,7 +54,7 @@ export const createNFT = async (
  * @param options.testnet if we use testnet or not
  */
 export const mintNFTWithUri = async (body: ChainFlowMintNft, options?: { testnet?: boolean }): Promise<TransactionHash> => {
-  return sendFlowNftMintToken(!!options?.testnet, body)
+  return sendNftMintToken(!!options?.testnet, body)
 }
 
 /**
@@ -63,7 +63,7 @@ export const mintNFTWithUri = async (body: ChainFlowMintNft, options?: { testnet
  * @param body body of the mint request
  */
 export const mintMultipleNFTWithUri = async (testnet: boolean, body: ChainFlowMintMultipleNft) => {
-  return sendFlowNftMintMultipleToken(testnet, body)
+  return sendNftMintMultipleToken(testnet, body)
 }
 
 /**
@@ -72,7 +72,7 @@ export const mintMultipleNFTWithUri = async (testnet: boolean, body: ChainFlowMi
  * @param body body of the mint request
  */
 export const burnNFT = async (testnet: boolean, body: ChainFlowBurnNft) => {
-  return sendFlowNftBurnToken(testnet, body)
+  return sendNftBurnToken(testnet, body)
 }
 
 /**
@@ -81,7 +81,7 @@ export const burnNFT = async (testnet: boolean, body: ChainFlowBurnNft) => {
  * @param body body of the mint request
  */
 export const transferNFT = async (testnet: boolean, body: ChainFlowTransferNft) => {
-  return sendFlowNftTransferToken(testnet, body)
+  return sendNftTransferToken(testnet, body)
 }
 
 /**

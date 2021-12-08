@@ -32,7 +32,7 @@ import {
   // prepareOneDeploy20SignedTransaction,
   // prepareOneDeploy721SignedTransaction,
   // prepareOneDeployMultiTokenSignedTransaction,
-  prepareOneMint721ProvenanceSignedTransaction,
+  prepareMint721ProvenanceSignedTransaction,
   // prepareOneMint721SignedTransaction,
   // prepareOneMintCashback721SignedTransaction,
   // prepareOneMintMultiple721ProvenanceSignedTransaction,
@@ -145,7 +145,7 @@ describe('ONE transactions', () => {
       body.chain = Currency.ONE
       body.to = 'one13t9ul0yvudlk7e60fwvxr5l0azfg3kyl474xmc'
       body.provenance = true
-      const txData = await prepareOneMint721ProvenanceSignedTransaction(body, PROVIDER)
+      const txData = await prepareMint721ProvenanceSignedTransaction(body, PROVIDER)
 
       expect(txData).toContain('0x')
 
@@ -164,7 +164,7 @@ describe('ONE transactions', () => {
       body.cashbackValues = ['1']
       body.fixedValues = ['1']
       body.provenance = true
-      const txData = await prepareOneMint721ProvenanceSignedTransaction(body, PROVIDER)
+      const txData = await prepareMint721ProvenanceSignedTransaction(body, PROVIDER)
 
       expect(txData).toContain('0x')
 

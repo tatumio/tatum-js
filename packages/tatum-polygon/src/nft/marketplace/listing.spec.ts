@@ -7,10 +7,7 @@ import {
   listing,
   SmartContractReadMethodInvocation,
 } from '@tatumio/tatum-core'
-import {
-  sendPolygonSmartContractMethodInvocationTransaction,
-  sendPolygonSmartContractReadMethodInvocationTransaction,
-} from '../../transaction'
+import { sendSmartContractMethodInvocationTransaction, sendPolygonSmartContractReadMethodInvocationTransaction } from '../../transaction'
 import { transferNFT } from '../nft'
 import {
   deployMarketplaceListing,
@@ -64,7 +61,7 @@ describe('Marketplace Listing tests', () => {
       r.methodName = 'getListing'
       r.methodABI = listing.abi.find((a) => a.name === r.methodName)
       r.params = ['8']
-      console.log(await sendPolygonSmartContractMethodInvocationTransaction(r, 'https://rpc-mumbai.matic.today'))
+      console.log(await sendSmartContractMethodInvocationTransaction(r, 'https://rpc-mumbai.matic.today'))
     })
 
     it('should get marketplace fee', async () => {

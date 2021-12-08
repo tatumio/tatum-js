@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js'
 // @ts-ignore
 import { PrivateKey, Script, Transaction } from 'bitcore-lib-doge'
-import { dogeBroadcast } from '../blockchain'
+import { broadcast } from '../blockchain'
 import { validateBody, Currency, TransactionKMS, ChainTransactionKMS } from '@tatumio/tatum-core'
 import { TransferDogeBlockchain } from '../model'
 
@@ -44,7 +44,7 @@ const prepareSignedTransaction = async (body: TransferDogeBlockchain) => {
  * @param privateKeys private keys to sign transaction with.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signDogecoinKMSTransaction = async (tx: ChainTransactionKMS, privateKeys: string[]) => {
+export const signKMSTransaction = async (tx: ChainTransactionKMS, privateKeys: string[]) => {
   ;(tx as TransactionKMS).chain = Currency.DOGE
   const builder = new Transaction(JSON.parse(tx.serializedTransaction))
   for (const privateKey of privateKeys) {
@@ -58,7 +58,7 @@ export const signDogecoinKMSTransaction = async (tx: ChainTransactionKMS, privat
  * @param body content of the transaction to broadcast
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareDogecoinSignedTransaction = async (body: TransferDogeBlockchain) => {
+export const prepareBlockchainSignedTransaction = async (body: TransferDogeBlockchain) => {
   return prepareSignedTransaction(body)
 }
 
@@ -68,6 +68,6 @@ export const prepareDogecoinSignedTransaction = async (body: TransferDogeBlockch
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendDogecoinTransaction = async (body: TransferDogeBlockchain) => {
-  return dogeBroadcast(await prepareDogecoinSignedTransaction(body))
+export const sendTransaction = async (body: TransferDogeBlockchain) => {
+  return broadcast(await prepareBlockchainSignedTransaction(body))
 }

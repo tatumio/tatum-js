@@ -66,8 +66,11 @@ import {
   TransferMultiTokenBatch,
   TransactionHash,
 } from '@tatumio/tatum-core'
-import { sendAlgoCreateFractionalNFTSignedTransaction, sendAlgoTransferFractionalNFTSignedTransaction } from '@tatumio/tatum-algo'
-import { sendAlgoBurnFractionalNFTSignedTransaction } from '@tatumio/tatum-algo'
+import {
+  sendCreateFractionalNFTSignedTransaction as sendAlgoCreateFractionalNFTSignedTransaction,
+  sendTransferFractionalNFTSignedTransaction as sendAlgoTransferFractionalNFTSignedTransaction,
+  sendBurnFractionalNFTSignedTransaction as sendAlgoBurnFractionalNFTSignedTransaction,
+} from '@tatumio/tatum-algo'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
 
 /**

@@ -24,10 +24,10 @@ import BigNumber from 'bignumber.js'
 import { getErc20Decimals } from '../fungible'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
 import {
-  getBscBep20ContractDecimals,
-  prepareBscGenerateCustodialWalletSignedTransaction,
-  prepareBscSmartContractWriteMethodInvocation,
-  sendBscGenerateCustodialWalletSignedTransaction,
+  getBep20ContractDecimals,
+  prepareGenerateCustodialWalletSignedTransaction,
+  prepareSmartContractWriteMethodInvocation,
+  sendGenerateCustodialWalletSignedTransaction,
 } from '../transaction'
 
 export const getCustodialAddresses = async (txId: string) => {
@@ -44,7 +44,7 @@ export const getCustodialAddresses = async (txId: string) => {
  */
 export const generateCustodialWallet = async (body: ChainGenerateCustodialAddress, provider?: string) => {
   console.log('This method is deprecated. For better gas consumption, use generateCustodialWalletBatch.')
-  return await sendBscGenerateCustodialWalletSignedTransaction(body, provider)
+  return await sendGenerateCustodialWalletSignedTransaction(body, provider)
 }
 
 /**
@@ -57,7 +57,7 @@ export const generateCustodialWallet = async (body: ChainGenerateCustodialAddres
  */
 export const prepareCustodialWallet = async (body: ChainGenerateCustodialAddress, provider?: string) => {
   console.log('This method is deprecated. For better gas consumption, use prepareCustodialWalletBatch.')
-  return await prepareBscGenerateCustodialWalletSignedTransaction(body, provider)
+  return await prepareGenerateCustodialWalletSignedTransaction(body, provider)
 }
 
 /**
@@ -68,7 +68,7 @@ export const prepareCustodialWallet = async (body: ChainGenerateCustodialAddress
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendCustodialWallet = async (body: ChainGenerateCustodialAddress, provider?: string) => {
-  const txData = await prepareBscGenerateCustodialWalletSignedTransaction(body, provider)
+  const txData = await prepareGenerateCustodialWalletSignedTransaction(body, provider)
   return helperBroadcastTx(txData, body.signatureId)
 }
 
@@ -83,8 +83,8 @@ export const prepareTransferFromCustodialWallet = async (testnet: boolean, body:
   return prepareTransferFromCustodialWalletAbstract(
     testnet,
     { ...body, chain: Currency.BSC },
-    getBscBep20ContractDecimals,
-    prepareBscSmartContractWriteMethodInvocation,
+    getBep20ContractDecimals,
+    prepareSmartContractWriteMethodInvocation,
     SmartContractMethodInvocation,
     18,
     TransferFromCustodialAddress,
@@ -117,8 +117,8 @@ export const prepareBatchTransferFromCustodialWallet = async (
   return prepareBatchTransferFromCustodialWalletAbstract(
     testnet,
     { ...body, chain: Currency.BSC },
-    getBscBep20ContractDecimals,
-    prepareBscSmartContractWriteMethodInvocation,
+    getBep20ContractDecimals,
+    prepareSmartContractWriteMethodInvocation,
     SmartContractMethodInvocation,
     18,
     TransferFromCustodialAddressBatch,

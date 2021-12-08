@@ -3,7 +3,7 @@ import { TransferVet } from '../model'
 import { thorify } from 'thorify'
 import Web3 from 'web3'
 import { TransactionConfig } from 'web3-core'
-import { vetBroadcast } from '../blockchain'
+import { broadcast } from '../blockchain'
 import { TEST_VET_URL, VET_URL } from '../constants'
 
 /**
@@ -14,8 +14,8 @@ import { TEST_VET_URL, VET_URL } from '../constants'
  * @param provider url of the VeChain Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendVetTransaction = async (testnet: boolean, body: TransferVet, provider?: string) => {
-  return vetBroadcast(await prepareVetSignedTransaction(testnet, body, provider))
+export const sendBlockchainTransaction = async (testnet: boolean, body: TransferVet, provider?: string) => {
+  return broadcast(await prepareSignedTransaction(testnet, body, provider))
 }
 
 /**
@@ -26,7 +26,7 @@ export const sendVetTransaction = async (testnet: boolean, body: TransferVet, pr
  * @param provider url of the VeChain Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signVetKMSTransaction = async (tx: ChainTransactionKMS, fromPrivateKey: string, testnet: boolean, provider?: string) => {
+export const signKMSTransaction = async (tx: ChainTransactionKMS, fromPrivateKey: string, testnet: boolean, provider?: string) => {
   ;(tx as TransactionKMS).chain = Currency.VET
   const client = thorify(new Web3(), provider || (testnet ? TEST_VET_URL : VET_URL))
   client.eth.accounts.wallet.clear()
@@ -44,7 +44,7 @@ export const signVetKMSTransaction = async (tx: ChainTransactionKMS, fromPrivate
  * @param provider url of the VeChain Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareVetSignedTransaction = async (testnet: boolean, body: TransferVet, provider?: string) => {
+export const prepareSignedTransaction = async (testnet: boolean, body: TransferVet, provider?: string) => {
   await validateBody(body, TransferVet)
   const { fromPrivateKey, to, amount, data, fee } = body
 

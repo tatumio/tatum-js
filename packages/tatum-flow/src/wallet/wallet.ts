@@ -9,7 +9,7 @@ import { FLOW_DERIVATION_PATH } from '../constants'
  * @param mnem mnemonic seed to use
  * @returns wallet
  */
-export const generateFlowWallet = async (mnem: string): Promise<WalletWithMnemonic> => {
+export const generateBlockchainWallet = async (mnem: string): Promise<WalletWithMnemonic> => {
   const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem))
   return {
     mnemonic: mnem,
@@ -24,5 +24,5 @@ export const generateFlowWallet = async (mnem: string): Promise<WalletWithMnemon
  */
 export const generateWallet = (mnemonic?: string) => {
   mnemonic ||= generateMnemonic(256)
-  return generateFlowWallet(mnemonic)
+  return generateBlockchainWallet(mnemonic)
 }

@@ -22,10 +22,10 @@ import {
 } from '@tatumio/tatum-core'
 import BigNumber from 'bignumber.js'
 import {
-  sendCeloGenerateCustodialWalletSignedTransaction,
-  prepareCeloGenerateCustodialWalletSignedTransaction,
-  getCeloErc20ContractDecimals,
-  prepareCeloSmartContractWriteMethodInvocation,
+  sendGenerateCustodialWalletSignedTransaction,
+  prepareGenerateCustodialWalletSignedTransaction,
+  getErc20ContractDecimals,
+  prepareSmartContractWriteMethodInvocation,
 } from '../'
 import { getErc20Decimals } from '../fungible'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
@@ -45,7 +45,7 @@ export const getCustodialAddresses = async (txId: string) => {
  */
 export const generateCustodialWallet = async (testnet: boolean, body: ChainGenerateCustodialAddress, provider?: string) => {
   console.log('This method is deprecated. For better gas consumption, use generateCustodialWalletBatch.')
-  return await sendCeloGenerateCustodialWalletSignedTransaction(testnet, body, provider)
+  return await sendGenerateCustodialWalletSignedTransaction(testnet, body, provider)
 }
 
 /**
@@ -59,7 +59,7 @@ export const generateCustodialWallet = async (testnet: boolean, body: ChainGener
  */
 export const prepareCustodialWallet = async (testnet: boolean, body: ChainGenerateCustodialAddress, provider?: string) => {
   console.log('This method is deprecated. For better gas consumption, use prepareCustodialWalletBatch.')
-  return await prepareCeloGenerateCustodialWalletSignedTransaction(testnet, body, provider)
+  return await prepareGenerateCustodialWalletSignedTransaction(testnet, body, provider)
 }
 
 const getCustodialFactoryContractAddress = (testnet: boolean) => {
@@ -75,7 +75,7 @@ const getCustodialFactoryContractAddress = (testnet: boolean) => {
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendCustodialWallet = async (testnet: boolean, body: ChainGenerateCustodialAddress, provider?: string) => {
-  const txData = await prepareCeloGenerateCustodialWalletSignedTransaction(testnet, body, provider)
+  const txData = await prepareGenerateCustodialWalletSignedTransaction(testnet, body, provider)
   return helperBroadcastTx(txData, body.signatureId)
 }
 
@@ -90,8 +90,8 @@ export const prepareTransferFromCustodialWallet = async (testnet: boolean, body:
   return prepareTransferFromCustodialWalletAbstract(
     testnet,
     { ...body, chain: Currency.CELO },
-    getCeloErc20ContractDecimals,
-    prepareCeloSmartContractWriteMethodInvocation,
+    getErc20ContractDecimals,
+    prepareSmartContractWriteMethodInvocation,
     CeloSmartContractMethodInvocation,
     18,
     TransferFromCustodialAddress,
@@ -124,8 +124,8 @@ export const prepareBatchTransferFromCustodialWallet = async (
   return prepareBatchTransferFromCustodialWalletAbstract(
     testnet,
     { ...body, chain: Currency.CELO },
-    getCeloErc20ContractDecimals,
-    prepareCeloSmartContractWriteMethodInvocation,
+    getErc20ContractDecimals,
+    prepareSmartContractWriteMethodInvocation,
     CeloSmartContractMethodInvocation,
     18,
     TransferFromCustodialAddressBatch,

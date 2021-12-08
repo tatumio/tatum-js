@@ -5,7 +5,7 @@ import { RippleAPI } from 'ripple-lib'
  * Generate Xrp address and secret.
  * @returns wallet or a combination of address and private key
  */
-export const generateXrpWallet = async (): Promise<WalletWithAddress> => {
+export const generateBlockchainWallet = async (): Promise<WalletWithAddress> => {
   const { address, secret } = new RippleAPI().generateAddress()
   // TODO: ripple-lib has been renamed to xrpl; should we update the dependency? Address is possible undefined.
   if (address === undefined) {
@@ -19,5 +19,5 @@ export const generateXrpWallet = async (): Promise<WalletWithAddress> => {
  * @returns wallet or a combination of address and private key
  */
 export const generateWallet = () => {
-  return generateXrpWallet()
+  return generateBlockchainWallet()
 }

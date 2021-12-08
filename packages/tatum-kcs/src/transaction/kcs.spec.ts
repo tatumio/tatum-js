@@ -1,18 +1,18 @@
 import { CreateRecord, Currency, DeployErc20, TransferErc20 } from '@tatumio/tatum-core'
 import Web3 from 'web3'
 import {
-  kcsGetGasPriceInWei,
-  prepareKcsBurnErc721SignedTransaction,
-  prepareKcsDeployErc20SignedTransaction,
-  prepareKcsDeployErc721SignedTransaction,
-  prepareKcsMintErc721SignedTransaction,
-  prepareKcsMintMultipleErc721SignedTransaction,
-  prepareKcsSignedTransaction,
-  prepareKcsSmartContractWriteMethodInvocation,
-  prepareKcsStoreDataTransaction,
-  prepareKcsTransferErc20SignedTransaction,
-  prepareKcsTransferErc721SignedTransaction,
-  sendKcsSmartContractReadMethodInvocationTransaction,
+  getGasPriceInWei,
+  prepareBurnErc721SignedTransaction,
+  prepareDeployErc20SignedTransaction,
+  prepareDeployErc721SignedTransaction,
+  prepareMintErc721SignedTransaction,
+  prepareMintMultipleErc721SignedTransaction,
+  prepareSignedTransaction,
+  prepareSmartContractWriteMethodInvocation,
+  prepareStoreDataTransaction,
+  prepareTransferErc20SignedTransaction,
+  prepareTransferErc721SignedTransaction,
+  sendSmartContractReadMethodInvocationTransaction,
 } from './kcs'
 
 describe('KCS transactions', () => {
@@ -34,7 +34,7 @@ describe('KCS transactions', () => {
       body.amount = '0.0001'
       body.currency = Currency.KCS
       body.to = '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
-      const txData = await prepareKcsSignedTransaction(body, 'https://rpc-testnet.kcc.network')
+      const txData = await prepareSignedTransaction(body, 'https://rpc-testnet.kcc.network')
       expect(txData).toContain('0x')
 
       console.log(await broadcast(txData))
@@ -45,19 +45,19 @@ describe('KCS transactions', () => {
       body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29'
       body.data = 'Hello hi'
       body.chain = Currency.KCS
-      const txData = await prepareKcsStoreDataTransaction(body, 'https://rpc-testnet.kcc.network')
+      const txData = await prepareStoreDataTransaction(body, 'https://rpc-testnet.kcc.network')
       expect(txData).toContain('0x')
 
       console.log(await broadcast(txData))
     })
 
     it('should test ethGetGasPriceInWei', async () => {
-      const gasPrice = await kcsGetGasPriceInWei()
+      const gasPrice = await getGasPriceInWei()
       expect(gasPrice).not.toBeNull()
     })
 
     it('should test read smart contract method invocation', async () => {
-      const result = await sendKcsSmartContractReadMethodInvocationTransaction(
+      const result = await sendSmartContractReadMethodInvocationTransaction(
         {
           contractAddress: '0x0b9808fce74030c87aae334a30f6c8f6c66b090d',
           methodName: 'balanceOf',
@@ -89,7 +89,7 @@ describe('KCS transactions', () => {
     })
 
     it('should test write smart contract method invocation', async () => {
-      const result = await prepareKcsSmartContractWriteMethodInvocation(
+      const result = await prepareSmartContractWriteMethodInvocation(
         {
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
           contractAddress: '0x0b9808fce74030c87aae334a30f6c8f6c66b090d',
@@ -135,7 +135,7 @@ describe('KCS transactions', () => {
       body.contractAddress = '0x0b9808fce74030c87aae334a30f6c8f6c66b090d'
       body.to = '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       body.digits = 10
-      const txData = await prepareKcsTransferErc20SignedTransaction(body, 'https://rpc-testnet.kcc.network')
+      const txData = await prepareTransferErc20SignedTransaction(body, 'https://rpc-testnet.kcc.network')
       expect(txData).toContain('0x')
 
       console.log(await broadcast(txData))
@@ -149,7 +149,7 @@ describe('KCS transactions', () => {
       body.supply = '100'
       body.address = '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       body.digits = 10
-      const txData = await prepareKcsDeployErc20SignedTransaction(body, 'https://rpc-testnet.kcc.network')
+      const txData = await prepareDeployErc20SignedTransaction(body, 'https://rpc-testnet.kcc.network')
       expect(txData).toContain('0x')
       console.log(await broadcast(txData))
     })
@@ -162,7 +162,7 @@ describe('KCS transactions', () => {
       body.address = '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       body.digits = 10
       try {
-        await prepareKcsDeployErc20SignedTransaction(body, 'https://rpc-testnet.kcc.network')
+        await prepareDeployErc20SignedTransaction(body, 'https://rpc-testnet.kcc.network')
         fail('Validation did not pass.')
       } catch (e) {
         console.error(e)
@@ -172,7 +172,7 @@ describe('KCS transactions', () => {
 
   describe('KCS 721 transactions', () => {
     it('should test 721 deploy transaction', async () => {
-      const deployBep721Token = await prepareKcsDeployErc721SignedTransaction(
+      const deployBep721Token = await prepareDeployErc721SignedTransaction(
         {
           symbol: '1oido3id3',
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
@@ -187,7 +187,7 @@ describe('KCS transactions', () => {
     it('should test 721 mint transaction', async () => {
       try {
         const tokenId = new Date().getTime().toString()
-        const mintedToken = await prepareKcsMintErc721SignedTransaction(
+        const mintedToken = await prepareMintErc721SignedTransaction(
           {
             to: '0x811dfbff13adfbc3cf653dcc373c03616d3471c9',
             tokenId,
@@ -208,7 +208,7 @@ describe('KCS transactions', () => {
     it('should test 721 mint multiple transaction', async () => {
       const firstTokenId = new Date().getTime()
       const secondTokenId = firstTokenId + 1
-      const mintedTokens = await prepareKcsMintMultipleErc721SignedTransaction(
+      const mintedTokens = await prepareMintMultipleErc721SignedTransaction(
         {
           to: ['0x811dfbff13adfbc3cf653dcc373c03616d3471c9', '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'],
           tokenId: [firstTokenId.toString(), secondTokenId.toString()],
@@ -223,7 +223,7 @@ describe('KCS transactions', () => {
     })
 
     it('should test 721 burn transaction', async () => {
-      const burnBep721Token = await prepareKcsBurnErc721SignedTransaction(
+      const burnBep721Token = await prepareBurnErc721SignedTransaction(
         {
           tokenId: '1626437687633',
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
@@ -236,7 +236,7 @@ describe('KCS transactions', () => {
     })
 
     it('should test 721 send transaction', async () => {
-      const sendBep721Token = await prepareKcsTransferErc721SignedTransaction(
+      const sendBep721Token = await prepareTransferErc721SignedTransaction(
         {
           to: '0x811dfbff13adfbc3cf653dcc373c03616d3471c9',
           tokenId: '1626437745973',

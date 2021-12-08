@@ -28,14 +28,14 @@ import {
 } from '@tatumio/tatum-core'
 import { ChainOneMint721 } from '../model/request'
 import {
-  sendOneBurn721SignedTransaction,
-  sendOneDeploy721SignedTransaction,
-  sendOneMint721SignedTransaction,
-  sendOneMintCashback721SignedTransaction,
-  sendOneMintMultiple721SignedTransaction,
-  sendOneMintMultipleCashback721SignedTransaction,
-  sendOneTransfer721SignedTransaction,
-  sendOneUpdateCashbackForAuthor721SignedTransaction,
+  sendBurn721SignedTransaction,
+  sendDeploy721SignedTransaction,
+  sendMint721SignedTransaction,
+  sendMintCashback721SignedTransaction,
+  sendMintMultiple721SignedTransaction,
+  sendMintMultipleCashback721SignedTransaction,
+  sendTransfer721SignedTransaction,
+  sendUpdateCashbackForAuthor721SignedTransaction,
 } from '../transaction'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
 import { OneTx } from '../model'
@@ -48,7 +48,7 @@ export const mintNFT = (body: ChainOneMint721): Promise<TransactionHash> => mint
  * @param provider optional provider do broadcast tx
  */
 export const deployNFT = async (body: ChainDeployErc721, provider?: string): Promise<TransactionHash> => {
-  return sendOneDeploy721SignedTransaction(body, provider)
+  return sendDeploy721SignedTransaction(body, provider)
 }
 
 /**
@@ -81,9 +81,9 @@ export const createNFT = async (
  */
 export const mintNFTWithUri = async (body: ChainMintErc721, options?: { provider?: string }): Promise<TransactionHash> => {
   if (body.authorAddresses) {
-    return sendOneMintCashback721SignedTransaction(body, options?.provider)
+    return sendMintCashback721SignedTransaction(body, options?.provider)
   } else {
-    return sendOneMint721SignedTransaction(body, options?.provider)
+    return sendMint721SignedTransaction(body, options?.provider)
   }
 }
 
@@ -94,9 +94,9 @@ export const mintNFTWithUri = async (body: ChainMintErc721, options?: { provider
  */
 export const mintMultipleNFTWithUri = async (body: ChainMintMultipleErc721, provider?: string) => {
   if (body.authorAddresses) {
-    return sendOneMintMultipleCashback721SignedTransaction(body, provider)
+    return sendMintMultipleCashback721SignedTransaction(body, provider)
   } else {
-    return sendOneMintMultiple721SignedTransaction(body, provider)
+    return sendMintMultiple721SignedTransaction(body, provider)
   }
 }
 
@@ -106,7 +106,7 @@ export const mintMultipleNFTWithUri = async (body: ChainMintMultipleErc721, prov
  * @param provider optional provider do broadcast tx
  */
 export const burnNFT = async (body: ChainBurnErc721, provider?: string) => {
-  return sendOneBurn721SignedTransaction(body, provider)
+  return sendBurn721SignedTransaction(body, provider)
 }
 
 /**
@@ -115,7 +115,7 @@ export const burnNFT = async (body: ChainBurnErc721, provider?: string) => {
  * @param provider optional provider do broadcast tx
  */
 export const updateCashbackForAuthorNFT = async (body: ChainUpdateCashbackErc721, provider?: string) => {
-  return sendOneUpdateCashbackForAuthor721SignedTransaction(body, provider)
+  return sendUpdateCashbackForAuthor721SignedTransaction(body, provider)
 }
 
 /**
@@ -124,7 +124,7 @@ export const updateCashbackForAuthorNFT = async (body: ChainUpdateCashbackErc721
  * @param provider optional provider do broadcast tx
  */
 export const transferNFT = async (body: ChainTransferErc721, provider?: string) => {
-  return sendOneTransfer721SignedTransaction(body, provider)
+  return sendTransfer721SignedTransaction(body, provider)
 }
 
 /**

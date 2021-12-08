@@ -1,8 +1,8 @@
-import { generateBtcWallet } from './wallet'
+import { generateBlockchainWallet } from './wallet'
 
 describe('Wallet tests', () => {
   it('should generate wallet for BTC mainnet', async () => {
-    const wallet = await generateBtcWallet(
+    const wallet = await generateBlockchainWallet(
       false,
       'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten'
     )
@@ -15,7 +15,7 @@ describe('Wallet tests', () => {
   })
 
   it('should generate wallet for BTC testnet', async () => {
-    const wallet = await generateBtcWallet(
+    const wallet = await generateBlockchainWallet(
       true,
       'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten'
     )

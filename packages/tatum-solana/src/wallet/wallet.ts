@@ -6,7 +6,7 @@ import { WalletWithAddress } from '@tatumio/tatum-ledger'
  * @param privateKey key to generate address from
  * @returns address and privateKey
  */
-export const generateSolanaWallet = async (privateKey?: string): Promise<WalletWithAddress> => {
+export const generateBlockchainWallet = async (privateKey?: string): Promise<WalletWithAddress> => {
   const pair = privateKey ? solana.Keypair.fromSecretKey(Buffer.from(privateKey, 'hex')) : solana.Keypair.generate()
   return {
     address: pair.publicKey.toBase58(),
@@ -19,5 +19,5 @@ export const generateSolanaWallet = async (privateKey?: string): Promise<WalletW
  * @returns wallet or a combination of address and private key
  */
 export const generateWallet = () => {
-  return generateSolanaWallet()
+  return generateBlockchainWallet()
 }

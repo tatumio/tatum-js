@@ -9,5 +9,5 @@ export const storeTrcContractAddress = async (name: string, address: string): Pr
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/createTrc" target="_blank">Tatum API documentation</a>
  */
-export const registerTronTrc = async (data: ChainCreateTrcOffchain): Promise<Account> =>
+export const registerTrc = async (data: ChainCreateTrcOffchain): Promise<Account> =>
   post(`/v3/offchain/tron/trc`, { ...data, chain: Currency.TRON }, CreateTrcOffchain)

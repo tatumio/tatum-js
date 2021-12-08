@@ -1,14 +1,14 @@
 import { buildSmartContractMethodInvocation, Currency, listing, CeloSmartContractMethodInvocation, ChainSCBody } from '@tatumio/tatum-core'
-import { getCeloClient, prepareCeloSmartContractWriteMethodInvocation } from '../transaction'
-import { celoBroadcast } from '../blockchain'
+import { getClient, prepareSmartContractWriteMethodInvocation } from '../transaction'
+import { broadcast } from '../blockchain'
 import Web3 from 'web3'
 
 export const helperBroadcastTx = async (txData: string, signatureId?: string) => {
-  return await celoBroadcast(txData, signatureId)
+  return await broadcast(txData, signatureId)
 }
 
 export const helperGetWeb3Client = (provider?: string): Web3 => {
-  return getCeloClient(provider)
+  return getClient(provider)
 }
 
 export const helperPrepareSCCall = async <Body extends ChainSCBody>(
@@ -26,7 +26,7 @@ export const helperPrepareSCCall = async <Body extends ChainSCBody>(
     abi,
     new CeloSmartContractMethodInvocation()
   )
-  return await prepareCeloSmartContractWriteMethodInvocation(
+  return await prepareSmartContractWriteMethodInvocation(
     { ...r, feeCurrency: body.feeCurrency || Currency.CELO },
     {
       provider,
