@@ -14,36 +14,36 @@ import {
   getMultiTokenMetadata as getMultiTokenMetadataCore,
 } from '@tatumio/tatum-core'
 import {
-  sendKccDeployMultiTokenSignedTransaction,
-  sendKccMintMultiTokenSignedTransaction,
-  sendKccMintMultiTokenBatchSignedTransaction,
-  sendKccBurnMultiTokenSignedTransaction,
-  sendKccBurnMultiTokenBatchSignedTransaction,
-  sendKccTransferMultiTokenSignedTransaction,
-  prepareKccBatchTransferMultiTokenSignedTransaction,
+  sendKcsDeployMultiTokenSignedTransaction,
+  sendKcsMintMultiTokenSignedTransaction,
+  sendKcsMintMultiTokenBatchSignedTransaction,
+  sendKcsBurnMultiTokenSignedTransaction,
+  sendKcsBurnMultiTokenBatchSignedTransaction,
+  sendKcsTransferMultiTokenSignedTransaction,
+  prepareKcsBatchTransferMultiTokenSignedTransaction,
 } from '../transaction'
 
 export const deployMultiToken = async (body: DeployMultiToken, provider?: string) => {
-  return sendKccDeployMultiTokenSignedTransaction(body, provider)
+  return sendKcsDeployMultiTokenSignedTransaction(body, provider)
 }
 export const mintMultiToken = async (body: MintMultiToken, provider?: string) => {
-  return sendKccMintMultiTokenSignedTransaction(body, provider)
+  return sendKcsMintMultiTokenSignedTransaction(body, provider)
 }
 export const mintMultiTokenBatch = async (body: MintMultiTokenBatch, provider?: string) => {
-  return sendKccMintMultiTokenBatchSignedTransaction(body, provider)
+  return sendKcsMintMultiTokenBatchSignedTransaction(body, provider)
 }
 export const burnMultiToken = async (body: BurnMultiToken, provider?: string) => {
-  return sendKccBurnMultiTokenSignedTransaction(body, provider)
+  return sendKcsBurnMultiTokenSignedTransaction(body, provider)
 }
 export const burnMultiTokenBatch = async (body: BurnMultiTokenBatch, provider?: string) => {
-  return sendKccBurnMultiTokenBatchSignedTransaction(body, provider)
+  return sendKcsBurnMultiTokenBatchSignedTransaction(body, provider)
 }
 
 export const transferMultiToken = async (body: TransferMultiToken, provider?: string) => {
-  return sendKccTransferMultiTokenSignedTransaction(body, provider)
+  return sendKcsTransferMultiTokenSignedTransaction(body, provider)
 }
 export const transferMultiTokenBatch = async (body: TransferMultiTokenBatch, provider?: string) => {
-  return prepareKccBatchTransferMultiTokenSignedTransaction(body, provider)
+  return prepareKcsBatchTransferMultiTokenSignedTransaction(body, provider)
 }
 
 /**

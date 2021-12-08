@@ -20,14 +20,14 @@ import {
   ChainTransferErc721,
 } from '@tatumio/tatum-core'
 import {
-  sendKccBurnErc721SignedTransaction,
-  sendKccDeployErc721SignedTransaction,
-  sendKccMintCashbackErc721SignedTransaction,
-  sendKccMintErc721SignedTransaction,
-  sendKccMintMultipleCashbackErc721SignedTransaction,
-  sendKccMintMultipleErc721SignedTransaction,
-  sendKccTransferErc721SignedTransaction,
-  sendKccUpdateCashbackForAuthorErc721SignedTransaction,
+  sendKcsBurnErc721SignedTransaction,
+  sendKcsDeployErc721SignedTransaction,
+  sendKcsMintCashbackErc721SignedTransaction,
+  sendKcsMintErc721SignedTransaction,
+  sendKcsMintMultipleCashbackErc721SignedTransaction,
+  sendKcsMintMultipleErc721SignedTransaction,
+  sendKcsTransferErc721SignedTransaction,
+  sendKcsUpdateCashbackForAuthorErc721SignedTransaction,
 } from '../transaction'
 
 export const mintNFT = (body: ChainMintErc721): Promise<TransactionHash> => mintNFTRequest({ ...body, chain: Currency.KCS })
@@ -38,7 +38,7 @@ export const mintNFT = (body: ChainMintErc721): Promise<TransactionHash> => mint
  * @param provider optional provider do broadcast tx
  */
 export const deployNFT = async (body: ChainDeployErc721, provider?: string): Promise<TransactionHash> => {
-  return sendKccDeployErc721SignedTransaction(body, provider)
+  return sendKcsDeployErc721SignedTransaction(body, provider)
 }
 
 /**
@@ -71,9 +71,9 @@ export const createNFT = async (
  */
 export const mintNFTWithUri = async (body: ChainMintErc721, options?: { provider?: string }): Promise<TransactionHash> => {
   if (body.authorAddresses) {
-    return sendKccMintCashbackErc721SignedTransaction(body, options?.provider)
+    return sendKcsMintCashbackErc721SignedTransaction(body, options?.provider)
   } else {
-    return sendKccMintErc721SignedTransaction(body, options?.provider)
+    return sendKcsMintErc721SignedTransaction(body, options?.provider)
   }
 }
 
@@ -84,9 +84,9 @@ export const mintNFTWithUri = async (body: ChainMintErc721, options?: { provider
  */
 export const mintMultipleNFTWithUri = async (body: ChainMintMultipleErc721, provider?: string) => {
   if (body.authorAddresses) {
-    return sendKccMintMultipleCashbackErc721SignedTransaction(body, provider)
+    return sendKcsMintMultipleCashbackErc721SignedTransaction(body, provider)
   } else {
-    return sendKccMintMultipleErc721SignedTransaction(body, provider)
+    return sendKcsMintMultipleErc721SignedTransaction(body, provider)
   }
 }
 
@@ -96,7 +96,7 @@ export const mintMultipleNFTWithUri = async (body: ChainMintMultipleErc721, prov
  * @param provider optional provider do broadcast tx
  */
 export const burnNFT = async (body: ChainBurnErc721, provider?: string) => {
-  return sendKccBurnErc721SignedTransaction(body, provider)
+  return sendKcsBurnErc721SignedTransaction(body, provider)
 }
 
 /**
@@ -105,7 +105,7 @@ export const burnNFT = async (body: ChainBurnErc721, provider?: string) => {
  * @param provider optional provider do broadcast tx
  */
 export const updateCashbackForAuthorNFT = async (body: ChainUpdateCashbackErc721, provider?: string) => {
-  return sendKccUpdateCashbackForAuthorErc721SignedTransaction(body, provider)
+  return sendKcsUpdateCashbackForAuthorErc721SignedTransaction(body, provider)
 }
 
 /**
@@ -114,7 +114,7 @@ export const updateCashbackForAuthorNFT = async (body: ChainUpdateCashbackErc721
  * @param provider optional provider do broadcast tx
  */
 export const transferNFT = async (body: ChainTransferErc721, provider?: string) => {
-  return sendKccTransferErc721SignedTransaction(body, provider)
+  return sendKcsTransferErc721SignedTransaction(body, provider)
 }
 
 export const getNFTTransactionsByAddress = async (

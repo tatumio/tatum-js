@@ -1,1 +1,1 @@
-export * from './kcc'
+export * from './kcs'
