@@ -7,7 +7,7 @@ export { offchainTransferKMS as offchainTransferDogeKMS } from '@tatumio/tatum-d
 export { offchainTransferKMS as offchainTransferEgldKMS } from '@tatumio/tatum-egld'
 export { offchainTransferKMS as offchainTransferEthKMS, offchainTransferErc20KMS as offchainTransferEthErc20KMS } from '@tatumio/tatum-eth'
 export { offchainTransferKMS as offchainTransferLtcKMS } from '@tatumio/tatum-ltc'
-export { offchainTransferPolygonKMS } from '@tatumio/tatum-polygon'
+export { offchainTransferKMS as offchainTransferPolygonKMS } from '@tatumio/tatum-polygon'
 export { offchainTransferTronKMS } from '@tatumio/tatum-tron'
 export { offchainTransferXdcKMS } from '@tatumio/tatum-xdc'
 export { offchainTransferXlmKMS } from '@tatumio/tatum-xlm'

@@ -4,7 +4,7 @@ import { get20ContractDecimals as getOne20ContractDecimals } from '@tatumio/tatu
 import { getErc20ContractDecimals as getEthErc20ContractDecimals } from '@tatumio/tatum-eth'
 import { getErc20ContractDecimals as getCeloErc20ContractDecimals } from '@tatumio/tatum-celo'
 import { getBep20ContractDecimals as getBscBep20ContractDecimals } from '@tatumio/tatum-bsc'
-import { getPolygonErc20ContractDecimals } from '@tatumio/tatum-polygon'
+import { getErc20ContractDecimals as getPolygonErc20ContractDecimals } from '@tatumio/tatum-polygon'
 
 /**
  * Approve ERC20 transfer for spender.

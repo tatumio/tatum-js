@@ -27,7 +27,7 @@ export {
   prepareErc20SignedOffchainTransaction as prepareEthErc20SignedOffchainTransaction,
 } from '@tatumio/tatum-eth'
 // TODO litecoin - submodule not ready yet
-export { sendPolygonOffchainTransaction } from '@tatumio/tatum-polygon'
+export { sendOffchainTransaction as sendPolygonOffchainTransaction } from '@tatumio/tatum-polygon'
 export { sendTronOffchainTransaction } from '@tatumio/tatum-tron'
 export { sendXdcOffchainTransaction } from '@tatumio/tatum-xdc'
 export { sendXlmOffchainTransaction } from '@tatumio/tatum-xlm'

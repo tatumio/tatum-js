@@ -47,9 +47,9 @@ import {
 } from '@tatumio/tatum-bsc'
 import {
   generateCustodialWallet as sendPolygonGenerateCustodialWalletSignedTransaction,
-  getPolygonErc20ContractDecimals,
+  getErc20ContractDecimals as getPolygonErc20ContractDecimals,
   prepareCustodialWallet as preparePolygonGenerateCustodialWalletSignedTransaction,
-  preparePolygonSmartContractWriteMethodInvocation,
+  prepareSmartContractWriteMethodInvocation as preparePolygonSmartContractWriteMethodInvocation,
   generateCustodialWalletBatch as polygonGenerateCustodialWalletBatch,
   prepareCustodialWalletBatch as polygonPrepareCustodialWalletBatch,
 } from '@tatumio/tatum-polygon'

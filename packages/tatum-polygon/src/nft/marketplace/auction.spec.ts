@@ -1,5 +1,5 @@
 import { DeployNftAuction, Currency, MintErc721, CreateAuction, InvokeAuctionOperation, ApproveErc20 } from '@tatumio/tatum-core'
-import { polygonGetCurrentBlock } from '../../blockchain'
+import { getCurrentBlock } from '../../blockchain'
 import { mintNFTWithUri } from '../nft'
 import {
   deployAuction,
@@ -59,7 +59,7 @@ describe('Auction  tests', () => {
       body.contractAddress = '0x7a2cc5a4788a15d5705b1d31e0ff5cfc4465d073'
       body.nftAddress = '0x5d7d868ed584b04b922905a481f274206a42dd8a'
       body.tokenId = tokenId
-      body.endedAt = (await polygonGetCurrentBlock()) + 12
+      body.endedAt = (await getCurrentBlock()) + 12
       body.id = tokenId
       body.isErc721 = true
       body.seller = '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'
@@ -122,7 +122,7 @@ describe('Auction  tests', () => {
       body.contractAddress = '0x7a2cc5a4788a15d5705b1d31e0ff5cfc4465d073'
       body.nftAddress = '0x5d7d868ed584b04b922905a481f274206a42dd8a'
       body.tokenId = tokenId
-      body.endedAt = (await polygonGetCurrentBlock()) + 10
+      body.endedAt = (await getCurrentBlock()) + 10
       body.id = tokenId
       body.isErc721 = true
       body.erc20Address = '0x326c977e6efc84e512bb9c30f76e30c160ed06fb'

@@ -7,7 +7,7 @@ import {
   Sort,
 } from '@tatumio/tatum-core'
 import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../helpers'
-import { getPolygonErc20ContractDecimals } from '../transaction'
+import { getErc20ContractDecimals } from '../transaction'
 
 /**
  * Approve ERC20 transfer for spender.
@@ -27,7 +27,7 @@ export const sendApproveErc20 = async (testnet: boolean, body: ChainApproveErc20
  */
 export const prepareApproveErc20 = async (testnet: boolean, body: ChainApproveErc20, provider?: string) => {
   const { body: validatedBody, params } = await prepareApproveErc20Abstraction(
-    getPolygonErc20ContractDecimals,
+    getErc20ContractDecimals,
     testnet,
     { ...body, chain: Currency.MATIC },
     provider
