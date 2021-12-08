@@ -1,4 +1,3 @@
-import { Currency } from '@tatumio/tatum-core'
 import { sendTransaction } from './abstraction'
 
 describe('Abstraction ETH erc20', () => {
@@ -6,7 +5,6 @@ describe('Abstraction ETH erc20', () => {
     await sendTransaction({
       amount: '10',
       to: '0xc6c02b874bf5efad3a0deeee72a56a50d81b6a61',
-      currency: Currency.BAT,
       contractAddress: '0xd683f13658bBFf28cFda4a432d3533640D138d6E',
       fromPrivateKey: '0xf4e94a6e04e61c9fd03362a2c39175aef88f73bd2054e1853f59dd619f87e38b',
     })
@@ -16,7 +14,6 @@ describe('Abstraction ETH erc20', () => {
     await sendTransaction({
       amount: '10',
       to: '0xc6c02b874bf5efad3a0deeee72a56a50d81b6a61',
-      currency: Currency.BAT,
       fromPrivateKey: '0xf4e94a6e04e61c9fd03362a2c39175aef88f73bd2054e1853f59dd619f87e38b',
     })
   })

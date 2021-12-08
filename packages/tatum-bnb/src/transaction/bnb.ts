@@ -1,7 +1,7 @@
 import { BncClient } from '@binance-chain/javascript-sdk'
 import { getAddressFromPrivateKey } from '@binance-chain/javascript-sdk/lib/crypto'
-import { TransactionKMS, Currency } from '@tatumio/tatum-core'
-import { getAccount } from '../blockchain'
+import { TransactionKMS, Currency, ChainTransactionKMS } from '@tatumio/tatum-core'
+import { fetAccount } from '../blockchain'
 
 /**
  * Sign Bnb pending transaction from Tatum KMS
@@ -11,10 +11,8 @@ import { getAccount } from '../blockchain'
  * @param provider url of the Bnb Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, testnet: boolean, provider?: string) => {
-  if (tx.chain !== Currency.BNB) {
-    throw Error('Unsupported chain.')
-  }
+export const signKMSTransaction = async (tx: ChainTransactionKMS, fromPrivateKey: string, testnet: boolean, provider?: string) => {
+  ;(tx as TransactionKMS).chain = Currency.BNB
   const bnbClient = new BncClient(
     provider ? provider : testnet ? 'https://testnet-dex-atlantic.binance.org' : 'https://dex-european.binance.org'
   )

@@ -15,3 +15,5 @@ export class TronBurnTrc721 extends BurnErc721 {
   @Min(0)
   public feeLimit: number
 }
+
+export type ChainTronBurnTrc721 = Omit<TronBurnTrc721, 'chain'>

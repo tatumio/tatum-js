@@ -10,3 +10,5 @@ export class OneDeploy721 extends DeployErc721 {
   @Min(0)
   public toShardID?: number
 }
+
+export type ChainOneDeploy721 = Omit<OneDeploy721, 'chain'>

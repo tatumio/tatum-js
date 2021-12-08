@@ -1,4 +1,4 @@
-import { CreateRecord, validateBody, Currency } from '@tatumio/tatum-core'
+import { CreateRecord, validateBody, Currency, ChainCreateRecord } from '@tatumio/tatum-core'
 import { sendStoreDataSignedTransaction, sendCeloOrcUsdTransaction, sendErc20Transaction } from '../transaction'
 import { TransferCeloOrCeloErc20Token } from '../model'
 
@@ -8,7 +8,8 @@ import { TransferCeloOrCeloErc20Token } from '../model'
  * @param body Body of the transaction.
  * @param provider Optional provider to use for broadcasting signed tx to the blockchain.
  */
-export const storeData = async (testnet: boolean, body: CreateRecord, provider?: string) => {
+export const storeData = async (testnet: boolean, body: ChainCreateRecord, provider?: string) => {
+  ;(body as CreateRecord).chain = Currency.CELO
   await validateBody(body, CreateRecord)
   return await sendStoreDataSignedTransaction(testnet, body, provider)
 }

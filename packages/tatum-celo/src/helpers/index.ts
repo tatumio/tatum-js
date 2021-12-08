@@ -1,4 +1,4 @@
-import { buildSmartContractMethodInvocation, Currency, listing, CeloSmartContractMethodInvocation, SCBody } from '@tatumio/tatum-core'
+import { buildSmartContractMethodInvocation, Currency, listing, CeloSmartContractMethodInvocation, ChainSCBody } from '@tatumio/tatum-core'
 import { getClient, prepareSmartContractWriteMethodInvocation } from '../transaction'
 import { broadcast } from '../blockchain'
 import Web3 from 'web3'
@@ -11,7 +11,7 @@ export const helperGetWeb3Client = (provider?: string): Web3 => {
   return getClient(provider)
 }
 
-export const helperPrepareSCCall = async <Body extends SCBody>(
+export const helperPrepareSCCall = async <Body extends ChainSCBody>(
   testnet: boolean,
   body: Body,
   methodName: string,
@@ -19,7 +19,13 @@ export const helperPrepareSCCall = async <Body extends SCBody>(
   provider?: string,
   abi: any[] = listing.abi
 ) => {
-  const r = buildSmartContractMethodInvocation(body, params, methodName, abi, new CeloSmartContractMethodInvocation())
+  const r = buildSmartContractMethodInvocation(
+    { ...body, chain: Currency.CELO },
+    params,
+    methodName,
+    abi,
+    new CeloSmartContractMethodInvocation()
+  )
   return await prepareSmartContractWriteMethodInvocation(
     { ...r, feeCurrency: body.feeCurrency || Currency.CELO },
     {

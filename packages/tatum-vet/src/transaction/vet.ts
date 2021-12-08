@@ -1,4 +1,4 @@
-import { TransactionKMS, Currency, validateBody } from '@tatumio/tatum-core'
+import { TransactionKMS, Currency, validateBody, ChainTransactionKMS } from '@tatumio/tatum-core'
 import { TransferVet } from '../model'
 import { thorify } from 'thorify'
 import Web3 from 'web3'
@@ -26,10 +26,8 @@ export const sendVetTransaction = async (testnet: boolean, body: TransferVet, pr
  * @param provider url of the VeChain Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signVetKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, testnet: boolean, provider?: string) => {
-  if (tx.chain !== Currency.VET) {
-    throw Error('Unsupported chain.')
-  }
+export const signVetKMSTransaction = async (tx: ChainTransactionKMS, fromPrivateKey: string, testnet: boolean, provider?: string) => {
+  ;(tx as TransactionKMS).chain = Currency.VET
   const client = thorify(new Web3(), provider || (testnet ? TEST_VET_URL : VET_URL))
   client.eth.accounts.wallet.clear()
   client.eth.accounts.wallet.add(fromPrivateKey)

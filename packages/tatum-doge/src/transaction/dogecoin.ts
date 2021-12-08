@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js'
 // @ts-ignore
 import { PrivateKey, Script, Transaction } from 'bitcore-lib-doge'
 import { dogeBroadcast } from '../blockchain'
-import { validateBody, Currency, TransactionKMS } from '@tatumio/tatum-core'
+import { validateBody, Currency, TransactionKMS, ChainTransactionKMS } from '@tatumio/tatum-core'
 import { TransferDogeBlockchain } from '../model'
 
 /**
@@ -44,10 +44,8 @@ const prepareSignedTransaction = async (body: TransferDogeBlockchain) => {
  * @param privateKeys private keys to sign transaction with.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signDogecoinKMSTransaction = async (tx: TransactionKMS, privateKeys: string[]) => {
-  if (tx.chain !== Currency.DOGE) {
-    throw Error('Unsupported chain.')
-  }
+export const signDogecoinKMSTransaction = async (tx: ChainTransactionKMS, privateKeys: string[]) => {
+  ;(tx as TransactionKMS).chain = Currency.DOGE
   const builder = new Transaction(JSON.parse(tx.serializedTransaction))
   for (const privateKey of privateKeys) {
     builder.sign(PrivateKey.fromWIF(privateKey))

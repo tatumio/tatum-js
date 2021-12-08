@@ -1,5 +1,5 @@
 import { isHex, stringToHex, toHex } from 'web3-utils'
-import { axios, validateBody, CreateRecord } from '@tatumio/tatum-core'
+import { axios, validateBody, CreateRecord, ChainCreateRecord, Currency } from '@tatumio/tatum-core'
 import { TransferQuorum } from '../model'
 
 /**
@@ -9,7 +9,8 @@ import { TransferQuorum } from '../model'
  * @param provider url of the Quorum Server to connect to.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendStoreDataQuorumTransaction = async (body: CreateRecord, provider: string) => {
+export const sendStoreDataQuorumTransaction = async (body: ChainCreateRecord, provider: string) => {
+  ;(body as CreateRecord).chain = Currency.QUORUM
   await validateBody(body, CreateRecord)
   const data = (
     await axios.post(provider, {

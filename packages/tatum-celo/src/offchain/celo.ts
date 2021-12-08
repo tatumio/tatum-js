@@ -1,11 +1,10 @@
-import { validateBody, Currency } from '@tatumio/tatum-core'
+import { validateBody, Currency, offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal } from '@tatumio/tatum-core'
 import BigNumber from 'bignumber.js'
 import { TransferCeloOffchain } from '../model/request'
 import { fromWei, toWei } from 'web3-utils'
 import { getAccountById, getVirtualCurrencyByName } from '../ledger'
 import { prepareCeloOrCUsdSignedTransaction, prepareTransferErc20SignedTransaction } from '../transaction'
 import { generatePrivateKeyFromMnemonic } from '../wallet'
-import { offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal } from './common'
 import { offchainTransferKMS } from './kms'
 import { CELO_BASED_CURRENCIES } from '../constants'
 

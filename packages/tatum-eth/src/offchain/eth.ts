@@ -9,11 +9,14 @@ import {
   CONTRACT_ADDRESSES,
   CONTRACT_DECIMALS,
   TransferOffchain,
+  offchainBroadcast,
+  offchainCancelWithdrawal,
+  offchainStoreWithdrawal,
+  ChainTransactionKMS,
 } from '@tatumio/tatum-core'
 import { PrepareEthErc20SignedOffchainTransaction, PrepareEthSignedOffchainTransaction } from '../model'
 import { ethGetGasPriceInWei, getClient } from '../transaction'
 import { generatePrivateKeyFromMnemonic } from '../wallet'
-import { offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal } from './common'
 import { offchainTransferEthKMS } from './kms'
 import { getAccountById, getVirtualCurrencyByName } from '@tatumio/tatum-ledger'
 
@@ -142,10 +145,8 @@ export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: Tr
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signEthOffchainKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, provider?: string) => {
-  if (tx.chain !== Currency.ETH) {
-    throw Error('Unsupported chain.')
-  }
+export const signEthOffchainKMSTransaction = async (tx: ChainTransactionKMS, fromPrivateKey: string, provider?: string) => {
+  ;(tx as TransactionKMS).chain = Currency.ETH
   const client = await getClient(provider, fromPrivateKey)
   const transactionConfig = JSON.parse(tx.serializedTransaction)
   transactionConfig.gas = await client.eth.estimateGas(transactionConfig)

@@ -10,3 +10,5 @@ export class OneDeployMultiToken extends DeployMultiToken {
   @Min(0)
   public toShardID?: number
 }
+
+export type ChainOneDeployMultiToken = Omit<OneDeployMultiToken, 'chain'>

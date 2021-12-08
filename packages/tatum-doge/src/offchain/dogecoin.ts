@@ -1,9 +1,19 @@
 import BigNumber from 'bignumber.js'
 // @ts-ignore
 import { PrivateKey, Script, Transaction } from 'bitcore-lib-doge'
-import { validateBody, Currency, TransactionKMS, WithdrawalResponseData, KeyPair, TransferBtcBasedOffchain } from '@tatumio/tatum-core'
+import {
+  validateBody,
+  Currency,
+  TransactionKMS,
+  WithdrawalResponseData,
+  KeyPair,
+  TransferBtcBasedOffchain,
+  ChainTransactionKMS,
+  offchainBroadcast,
+  offchainCancelWithdrawal,
+  offchainStoreWithdrawal,
+} from '@tatumio/tatum-core'
 import { generateAddressFromXPub, generatePrivateKeyFromMnemonic } from '../wallet'
-import { offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal } from './common'
 import { offchainTransferDogeKMS } from './kms'
 
 /**
@@ -63,8 +73,9 @@ export const sendDogecoinOffchainTransaction = async (testnet: boolean, body: Tr
  * @param testnet mainnet or testnet version
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signDogecoinOffchainKMSTransaction = async (tx: TransactionKMS, mnemonic: string, testnet: boolean) => {
-  if (tx.chain !== Currency.DOGE || !tx.withdrawalResponses) {
+export const signDogecoinOffchainKMSTransaction = async (tx: ChainTransactionKMS, mnemonic: string, testnet: boolean) => {
+  ;(tx as TransactionKMS).chain = Currency.DOGE
+  if (!tx.withdrawalResponses) {
     throw Error('Unsupported chain.')
   }
   const builder = new Transaction(JSON.parse(tx.serializedTransaction))

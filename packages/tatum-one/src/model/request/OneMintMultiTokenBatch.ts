@@ -10,3 +10,5 @@ export class OneMintMultiTokenBatch extends MintMultiTokenBatch {
   @Min(0)
   public toShardID?: number
 }
+
+export type ChainOneMintMultiTokenBatch = Omit<OneMintMultiTokenBatch, 'chain'>

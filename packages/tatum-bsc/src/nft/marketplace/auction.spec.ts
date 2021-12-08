@@ -45,7 +45,6 @@ describe('Auction  tests', () => {
         await sendAuctionApproveNftTransfer(
           {
             fromPrivateKey: '0x37b091fc4ce46a56da643f021254612551dbe0944679a6e09cb5724d3085c9ab',
-            chain: Currency.BSC,
             contractAddress: '0xada3e67deae341f16b44f67687866d2560d79ec8',
             isErc721: true,
             spender: '0x568bf1e6849e250f4705347a9cff717b5dcfc4ad',

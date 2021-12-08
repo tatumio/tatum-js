@@ -3,17 +3,25 @@ const base32 = require('base32.js')
 import { TextEncoder } from 'util'
 import { broadcast } from '../blockchain'
 import {
-  DeployErc721,
-  TransferErc721,
-  BurnErc721,
-  DeployErc20,
-  TransferErc20,
   BurnErc20,
-  Currency,
-  TransactionKMS,
-  MintMultiToken,
-  TransferMultiToken,
+  BurnErc721,
   BurnMultiToken,
+  ChainBurnErc721,
+  ChainBurnMultiToken,
+  ChainDeployErc721,
+  ChainMintMultiToken,
+  ChainTransactionKMS,
+  ChainTransferErc20,
+  ChainTransferErc721,
+  ChainTransferMultiToken,
+  Currency,
+  DeployErc20,
+  DeployErc721,
+  MintMultiToken,
+  TransactionKMS,
+  TransferErc20,
+  TransferErc721,
+  TransferMultiToken,
 } from '@tatumio/tatum-core'
 
 import { AlgoTransaction } from '../model'
@@ -120,10 +128,8 @@ export const sendSignedTransaction = async (testnet: boolean, tx: AlgoTransactio
  * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string) => {
-  if (tx.chain !== Currency.ALGO) {
-    throw Error('Unsupported chain.')
-  }
+export const signKMSTransaction = async (tx: ChainTransactionKMS, fromPrivateKey: string) => {
+  ;(tx as TransactionKMS).chain = Currency.ALGO
   const decoder = new base32.Decoder({ type: 'rfc4648' })
   const txn = JSON.parse(tx.serializedTransaction)
   const secretKey = new Uint8Array(decoder.write(fromPrivateKey).buf)
@@ -138,7 +144,8 @@ export const signKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: str
  * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain
  */
-export const prepareCreateNFTSignedTransaction = async (testnet: boolean, tx: DeployErc721, provider?: string) => {
+export const prepareCreateNFTSignedTransaction = async (testnet: boolean, tx: ChainDeployErc721, provider?: string) => {
+  ;(tx as DeployErc721).chain = Currency.ALGO
   const algodClient = getClient(testnet, provider)
   const params = await algodClient.getTransactionParams().do()
   const decoder = new base32.Decoder({ type: 'rfc4648' })
@@ -173,7 +180,7 @@ export const prepareCreateNFTSignedTransaction = async (testnet: boolean, tx: De
  * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendCreateNFTSignedTransaction = async (testnet: boolean, tx: DeployErc721, provider?: string) => {
+export const sendCreateNFTSignedTransaction = async (testnet: boolean, tx: ChainDeployErc721, provider?: string) => {
   return await broadcast(await prepareCreateNFTSignedTransaction(testnet, tx, provider))
 }
 
@@ -184,7 +191,8 @@ export const sendCreateNFTSignedTransaction = async (testnet: boolean, tx: Deplo
  * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTransferNFTSignedTransaction = async (testnet: boolean, tx: TransferErc721, provider?: string) => {
+export const prepareTransferNFTSignedTransaction = async (testnet: boolean, tx: ChainTransferErc721, provider?: string) => {
+  ;(tx as TransferErc721).chain = Currency.ALGO
   const algodClient = getClient(testnet, provider)
   const params = await algodClient.getTransactionParams().do()
   const decoder = new base32.Decoder({ type: 'rfc4648' })
@@ -214,7 +222,7 @@ export const prepareTransferNFTSignedTransaction = async (testnet: boolean, tx: 
  * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain.
  */
-export const sendTransferNFTSignedTransaction = async (testnet: boolean, tx: TransferErc721, provider?: string) => {
+export const sendTransferNFTSignedTransaction = async (testnet: boolean, tx: ChainTransferErc721, provider?: string) => {
   return await broadcast(await prepareTransferNFTSignedTransaction(testnet, tx, provider))
 }
 
@@ -225,7 +233,8 @@ export const sendTransferNFTSignedTransaction = async (testnet: boolean, tx: Tra
  * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareBurnNFTSignedTransaction = async (testnet: boolean, tx: BurnErc721, provider?: string) => {
+export const prepareBurnNFTSignedTransaction = async (testnet: boolean, tx: ChainBurnErc721, provider?: string) => {
+  ;(tx as BurnErc721).chain = Currency.ALGO
   const algodClient = getClient(testnet, provider)
   const params = await algodClient.getTransactionParams().do()
   const decoder = new base32.Decoder({ type: 'rfc4648' })
@@ -251,7 +260,7 @@ export const prepareBurnNFTSignedTransaction = async (testnet: boolean, tx: Burn
  * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain.
  */
-export const sendBurnNFTSignedTransaction = async (testnet: boolean, tx: BurnErc721, provider?: string) => {
+export const sendBurnNFTSignedTransaction = async (testnet: boolean, tx: ChainBurnErc721, provider?: string) => {
   return await broadcast(await prepareBurnNFTSignedTransaction(testnet, tx, provider))
 }
 
@@ -262,7 +271,8 @@ export const sendBurnNFTSignedTransaction = async (testnet: boolean, tx: BurnErc
  * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareCreateFractionalNFTSignedTransaction = async (testnet: boolean, tx: MintMultiToken, provider?: string) => {
+export const prepareCreateFractionalNFTSignedTransaction = async (testnet: boolean, tx: ChainMintMultiToken, provider?: string) => {
+  ;(tx as MintMultiToken).chain = Currency.ALGO
   const algodClient = getClient(testnet, provider)
   const params = await algodClient.getTransactionParams().do()
   const decoder = new base32.Decoder({ type: 'rfc4648' })
@@ -297,7 +307,7 @@ export const prepareCreateFractionalNFTSignedTransaction = async (testnet: boole
  * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain.
  */
-export const sendCreateFractionalNFTSignedTransaction = async (testnet: boolean, tx: MintMultiToken, provider?: string) => {
+export const sendCreateFractionalNFTSignedTransaction = async (testnet: boolean, tx: ChainMintMultiToken, provider?: string) => {
   return await broadcast(await prepareCreateFractionalNFTSignedTransaction(testnet, tx, provider))
 }
 
@@ -308,7 +318,12 @@ export const sendCreateFractionalNFTSignedTransaction = async (testnet: boolean,
  * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTransferFractionalNFTSignedTransaction = async (testnet: boolean, tx: TransferMultiToken, provider?: string) => {
+export const prepareTransferFractionalNFTSignedTransaction = async (
+  testnet: boolean,
+  tx: ChainTransferMultiToken,
+  provider?: string
+) => {
+  ;(tx as TransferMultiToken).chain = Currency.ALGO
   const algodClient = getClient(testnet, provider)
   const params = await algodClient.getTransactionParams().do()
   const decoder = new base32.Decoder({ type: 'rfc4648' })
@@ -338,7 +353,7 @@ export const prepareTransferFractionalNFTSignedTransaction = async (testnet: boo
  * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain.
  */
-export const sendTransferFractionalNFTSignedTransaction = async (testnet: boolean, tx: TransferMultiToken, provider?: string) => {
+export const sendTransferFractionalNFTSignedTransaction = async (testnet: boolean, tx: ChainTransferMultiToken, provider?: string) => {
   return await broadcast(await prepareTransferFractionalNFTSignedTransaction(testnet, tx, provider))
 }
 
@@ -349,7 +364,8 @@ export const sendTransferFractionalNFTSignedTransaction = async (testnet: boolea
  * @param provider url of the Algorand Server to connecto to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareBurnFractionalNFTSignedTransaction = async (testnet: boolean, tx: BurnMultiToken, provider?: string) => {
+export const prepareBurnFractionalNFTSignedTransaction = async (testnet: boolean, tx: ChainBurnMultiToken, provider?: string) => {
+  ;(tx as BurnMultiToken).chain = Currency.ALGO
   const algodClient = getClient(testnet, provider)
   const params = await algodClient.getTransactionParams().do()
   const decoder = new base32.Decoder({ type: 'rfc4648' })
@@ -375,7 +391,7 @@ export const prepareBurnFractionalNFTSignedTransaction = async (testnet: boolean
  * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain.
  */
-export const sendBurnFractionalNFTSignedTransaction = async (testnet: boolean, tx: BurnMultiToken, provider?: string) => {
+export const sendBurnFractionalNFTSignedTransaction = async (testnet: boolean, tx: ChainBurnMultiToken, provider?: string) => {
   return await broadcast(await prepareBurnFractionalNFTSignedTransaction(testnet, tx, provider))
 }
 
@@ -432,7 +448,8 @@ export const sendCreateFTSignedTransaction = async (testnet: boolean, tx: Deploy
  * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTransferFTSignedTransaction = async (testnet: boolean, tx: TransferErc20, provider?: string) => {
+export const prepareTransferFTSignedTransaction = async (testnet: boolean, tx: ChainTransferErc20, provider?: string) => {
+  ;(tx as TransferErc20).currency = Currency.ALGO
   const algodClient = getClient(testnet, provider)
   const params = await algodClient.getTransactionParams().do()
   const decoder = new base32.Decoder({ type: 'rfc4648' })
@@ -462,7 +479,7 @@ export const prepareTransferFTSignedTransaction = async (testnet: boolean, tx: T
  * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain.
  */
-export const sendTransferFTSignedTransaction = async (testnet: boolean, tx: TransferErc20, provider?: string) => {
+export const sendTransferFTSignedTransaction = async (testnet: boolean, tx: ChainTransferErc20, provider?: string) => {
   return await broadcast(await prepareTransferFTSignedTransaction(testnet, tx, provider))
 }
 

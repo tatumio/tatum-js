@@ -1,20 +1,29 @@
 import {
   mintNFTRequest,
-  getNFTTransaction as getNFTTransactionDefi,
   createNFTAbstraction,
   prepareAddNFTMinterAbstraction,
+  getNFTTransactionsByAddress as getNFTTransactionsByAddressDefi,
+  getNFTsByAddress as getNFTsByAddressDefi,
+  getNFTProvenanceData as getNFTProvenanceDataDefi,
+  getNFTContractAddress as getNFTContractAddressDefi,
+  getNFTMetadataURI as getNFTMetadataURIDefi,
+  getNFTImage as getNFTImageDefi,
+  getNFTRoyalty as getNFTRoyaltyDefi,
 } from '@tatumio/tatum-defi'
 import {
   MintErc721,
-  DeployErc721,
   MintMultipleErc721,
-  BurnErc721,
-  TransferErc721,
   TransactionHash,
-  UpdateCashbackErc721,
-  AddMinter,
   erc721TokenABI,
+  Sort,
   Currency,
+  ChainMintErc721,
+  ChainDeployErc721,
+  ChainMintMultipleErc721,
+  ChainBurnErc721,
+  ChainUpdateCashbackErc721,
+  ChainTransferErc721,
+  ChainAddMinter,
 } from '@tatumio/tatum-core'
 import {
   sendPolygonBurnErc721SignedTransaction,
@@ -27,17 +36,16 @@ import {
   sendPolygonUpdateCashbackForAuthorErc721SignedTransaction,
 } from '../transaction'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
-import { MaticTx } from '../model'
 
-export const mintNFT = (body: MintErc721): Promise<TransactionHash> => mintNFTRequest(body)
+export const mintNFT = (body: ChainMintErc721): Promise<TransactionHash> => mintNFTRequest({ ...body, chain: Currency.MATIC })
 
 /**
  * Deploy new NFT smart contract, which will be used for later minting.
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const deployNFT = async (body: DeployErc721, provider?: string): Promise<TransactionHash> => {
-  return sendPolygonDeployErc721SignedTransaction(body as DeployErc721, provider)
+export const deployNFT = async (body: ChainDeployErc721, provider?: string): Promise<TransactionHash> => {
+  return sendPolygonDeployErc721SignedTransaction(body, provider)
 }
 
 /**
@@ -52,14 +60,14 @@ export const deployNFT = async (body: DeployErc721, provider?: string): Promise<
  */
 export const createNFT = async (
   testnet: boolean,
-  body: MintErc721,
+  body: ChainMintErc721,
   file: Buffer,
   name: string,
   description?: string,
   scheme?: any,
   provider?: string
 ) => {
-  return await createNFTAbstraction(mintNFTWithUri, testnet, body, file, name, description, scheme, provider)
+  return await createNFTAbstraction(mintNFTWithUri, testnet, { ...body, chain: Currency.MATIC }, file, name, description, scheme, provider)
 }
 
 /**
@@ -68,11 +76,11 @@ export const createNFT = async (
  * @param options
  * @param options.provider optional provider do broadcast tx
  */
-export const mintNFTWithUri = async (body: MintErc721, options?: { provider?: string }): Promise<TransactionHash> => {
+export const mintNFTWithUri = async (body: ChainMintErc721, options?: { provider?: string }): Promise<TransactionHash> => {
   if ((body as MintErc721).authorAddresses) {
-    return sendPolygonMintCashbackErc721SignedTransaction(body as MintErc721, options?.provider)
+    return sendPolygonMintCashbackErc721SignedTransaction(body, options?.provider)
   } else {
-    return sendPolygonMintErc721SignedTransaction(body as MintErc721, options?.provider)
+    return sendPolygonMintErc721SignedTransaction(body, options?.provider)
   }
 }
 
@@ -81,11 +89,11 @@ export const mintNFTWithUri = async (body: MintErc721, options?: { provider?: st
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const mintMultipleNFTWithUri = async (body: MintMultipleErc721, provider?: string) => {
+export const mintMultipleNFTWithUri = async (body: ChainMintMultipleErc721, provider?: string) => {
   if ((body as MintMultipleErc721).authorAddresses) {
-    return sendPolygonMintMultipleCashbackErc721SignedTransaction(body as MintMultipleErc721, provider)
+    return sendPolygonMintMultipleCashbackErc721SignedTransaction(body, provider)
   } else {
-    return sendPolygonMintMultipleErc721SignedTransaction(body as MintMultipleErc721, provider)
+    return sendPolygonMintMultipleErc721SignedTransaction(body, provider)
   }
 }
 
@@ -94,7 +102,7 @@ export const mintMultipleNFTWithUri = async (body: MintMultipleErc721, provider?
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const burnNFT = async (body: BurnErc721, provider?: string) => {
+export const burnNFT = async (body: ChainBurnErc721, provider?: string) => {
   return sendPolygonBurnErc721SignedTransaction(body, provider)
 }
 
@@ -103,7 +111,7 @@ export const burnNFT = async (body: BurnErc721, provider?: string) => {
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const updateCashbackForAuthorNFT = async (body: UpdateCashbackErc721, provider?: string) => {
+export const updateCashbackForAuthorNFT = async (body: ChainUpdateCashbackErc721, provider?: string) => {
   return sendPolygonUpdateCashbackForAuthorErc721SignedTransaction(body, provider)
 }
 
@@ -112,7 +120,7 @@ export const updateCashbackForAuthorNFT = async (body: UpdateCashbackErc721, pro
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const transferNFT = async (body: TransferErc721, provider?: string) => {
+export const transferNFT = async (body: ChainTransferErc721, provider?: string) => {
   return sendPolygonTransferErc721SignedTransaction(body, provider)
 }
 
@@ -121,8 +129,8 @@ export const transferNFT = async (body: TransferErc721, provider?: string) => {
  * @param body body of the add minter request
  * @param provider optional provider do broadcast tx
  */
-export const prepareAddNFTMinter = async (body: AddMinter, provider?: string) => {
-  const params = await prepareAddNFTMinterAbstraction(body)
+export const prepareAddNFTMinter = async (body: ChainAddMinter, provider?: string) => {
+  const params = await prepareAddNFTMinterAbstraction({ ...body, chain: Currency.MATIC })
   return await helperPrepareSCCall(body, 'grantRole', params, provider, erc721TokenABI)
 }
 
@@ -131,17 +139,65 @@ export const prepareAddNFTMinter = async (body: AddMinter, provider?: string) =>
  * @param body body of the add minter request
  * @param provider optional provider do broadcast tx
  */
-export const sendAddNFTMinter = async (body: AddMinter, provider?: string) =>
+export const sendAddNFTMinter = async (body: ChainAddMinter, provider?: string) =>
   helperBroadcastTx(await prepareAddNFTMinter(body, provider), body.signatureId)
 
-export const getNFTTransaction = async (hash: string): Promise<MaticTx> => getNFTTransactionDefi<MaticTx>(Currency.MATIC, hash)
+/**
+ * For more details, see <a href="https://tatum.io/apidoc.php#operation/NftGetTransactionByAddress" target="_blank">Tatum API documentation</a>
+ */
+export const getNFTTransactionsByAddress = async (
+  address: string,
+  tokenAddress: string,
+  pageSize = 50,
+  offset = 0,
+  from?: string,
+  to?: string,
+  sort?: Sort
+) => {
+  return getNFTTransactionsByAddressDefi(Currency.MATIC, address, tokenAddress, pageSize, offset, from, to, sort)
+}
 
-export {
-  getNFTTransactionsByAddress,
-  getNFTsByAddress,
-  getNFTProvenanceData,
-  getNFTContractAddress,
-  getNFTMetadataURI,
-  getNFTImage,
-  getNFTRoyalty,
-} from '@tatumio/tatum-defi'
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetBalanceErc721" target="_blank">Tatum API documentation</a>
+ */
+export const getNFTsByAddress = async (contractAddress: string, address: string) => {
+  return getNFTsByAddressDefi(Currency.MATIC, contractAddress, address)
+}
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/NftProvenanceReadData" target="_blank">Tatum API documentation</a>
+ */
+export const getNFTProvenanceData = async (contractAddress: string, tokenId: string) => {
+  return getNFTProvenanceDataDefi(Currency.MATIC, contractAddress, tokenId)
+}
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetContractAddress" target="_blank">Tatum API documentation</a>
+ */
+export const getNFTContractAddress = async (txId: string) => {
+  return getNFTContractAddressDefi(Currency.MATIC, txId)
+}
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetMetadataErc721" target="_blank">Tatum API documentation</a>
+ */
+export const getNFTMetadataURI = async (contractAddress: string, tokenId: string, account?: string) => {
+  return getNFTMetadataURIDefi(Currency.MATIC, contractAddress, tokenId, account)
+}
+
+/**
+ * Get IPFS image URL from the NFT with the IPFS Metadata scheme. URL
+ * @param contractAddress contract address of the NFT token
+ * @param tokenId ID of the token
+ * @param account FLOW only - account where the token is minted
+ */
+export const getNFTImage = async (contractAddress: string, tokenId: string, account?: string) => {
+  return getNFTImageDefi(Currency.MATIC, contractAddress, tokenId, account)
+}
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetRoyaltyErc721" target="_blank">Tatum API documentation</a>
+ */
+export const getNFTRoyalty = async (contractAddress: string, tokenId: string) => {
+  return getNFTRoyaltyDefi(Currency.MATIC, contractAddress, tokenId)
+}

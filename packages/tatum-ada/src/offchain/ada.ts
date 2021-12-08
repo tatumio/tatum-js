@@ -164,10 +164,11 @@ const addOffchainInputs = (transactionBuilder: TransactionBuilder, inputs: Withd
  * @param mnemonic mnemonic to generate private keys to sign transaction with.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signOffchainKMSTransaction = async (tx: TransactionKMS, mnemonic: string) => {
-  if (tx.chain !== Currency.ADA || !tx.withdrawalResponses) {
+export const signOffchainKMSTransaction = async (tx: ChainTransactionKMS, mnemonic: string) => {
+  if (!tx.withdrawalResponses) {
     throw Error('Unsupported chain.')
   }
+  ;(tx as TransactionKMS).chain = Currency.ADA
   const txData = JSON.parse(tx.serializedTransaction).txData
   const transactionBody = TransactionBody.from_bytes(Uint8Array.from(txData.split(',')))
   const txHash = hash_transaction(transactionBody)

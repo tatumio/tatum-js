@@ -1,4 +1,12 @@
-import { post, Account, Address, CreateErc20Offchain } from '@tatumio/tatum-core'
+import {
+  post,
+  Account,
+  Address,
+  CreateErc20Offchain,
+  checkAddressExists as checkAddressExistsCore,
+  Currency,
+  getWithdrawals as getWithdrawalsCore,
+} from '@tatumio/tatum-core'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/createErc20" target="_blank">Tatum API documentation</a>
@@ -12,16 +20,16 @@ export const registerEthereumErc20 = async (data: CreateErc20Offchain): Promise<
 export const storeErc20ContractAddress = async (name: string, address: string): Promise<Address> =>
   post(`/v3/offchain/ethereum/erc20/${name}/${address}`)
 
-export {
-  generateDepositAddress,
-  generateDepositAddresses,
-  checkAddressExists,
-  getWithdrawals,
-  assignDepositAddress,
-  removeDepositAddress,
-  getDepositAddressesForAccount,
-  offchainBroadcast,
-  offchainStoreWithdrawal,
-  offchainCancelWithdrawal,
-  offchainCompleteWithdrawal,
-} from '@tatumio/tatum-core'
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/addressExists" target="_blank">Tatum API documentation</a>
+ */
+export const checkAddressExists = async (address: string, index?: number) => {
+  return checkAddressExistsCore(address, Currency.ETH, index)
+}
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/GetWithdrawals" target="_blank">Tatum API documentation</a>
+ */
+export const getWithdrawals = async (status?: string, pageSize = 50, offset = 0) => {
+  return getWithdrawalsCore(status, Currency.ETH, pageSize, offset)
+}

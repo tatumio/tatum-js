@@ -15,3 +15,5 @@ export class FlowBurnNft extends FlowMnemonicOrPrivateKeyOrSignatureId {
   @IsUUID('4')
   public contractAddress: string
 }
+
+export type ChainFlowBurnNft = Omit<FlowBurnNft, 'chain'>

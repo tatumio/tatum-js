@@ -42,7 +42,6 @@ export const sendPolygonOffchainTransaction = async (testnet: boolean, body: Tra
       {
         amount,
         fromPrivateKey: fromPriv,
-        currency: account.currency,
         fee,
         nonce,
         to: address,

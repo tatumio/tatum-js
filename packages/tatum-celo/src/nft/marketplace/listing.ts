@@ -1,4 +1,7 @@
 import {
+  getMarketplaceFee as getMarketplaceFeeDefi,
+  getMarketplaceFeeRecipient as getMarketplaceFeeRecipientDefi,
+  getMarketplaceListing as getMarketplaceListingDefi,
   prepareMarketplaceBuyListingAbstraction,
   prepareMarketplaceCancelListingAbstraction,
   prepareMarketplaceCreateListingAbstraction,
@@ -6,12 +9,13 @@ import {
   prepareMarketplaceUpdateFeeRecipientAbstraction,
 } from '@tatumio/tatum-defi'
 import {
-  ApproveErc20,
-  CreateMarketplaceListing,
-  DeployMarketplaceListing,
-  InvokeMarketplaceListingOperation,
-  UpdateMarketplaceFee,
-  UpdateMarketplaceFeeRecipient,
+  ChainApproveErc20,
+  ChainCreateMarketplaceListing,
+  ChainDeployMarketplaceListing,
+  ChainInvokeMarketplaceListingOperation,
+  ChainUpdateMarketplaceFee,
+  ChainUpdateMarketplaceFeeRecipient,
+  Currency,
 } from '@tatumio/tatum-core'
 import { sendDeployMarketplaceListingSignedTransaction, prepareDeployMarketplaceListingSignedTransaction } from '../..'
 import { prepareApproveErc20 } from '../../fungible'
@@ -31,7 +35,7 @@ import { helperBroadcastTx, helperPrepareSCCall } from '../../helpers'
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const deployMarketplaceListing = async (testnet: boolean, body: DeployMarketplaceListing, provider?: string) => {
+export const deployMarketplaceListing = async (testnet: boolean, body: ChainDeployMarketplaceListing, provider?: string) => {
   return await sendDeployMarketplaceListingSignedTransaction(testnet, body, provider)
 }
 
@@ -49,7 +53,7 @@ export const deployMarketplaceListing = async (testnet: boolean, body: DeployMar
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareDeployMarketplaceListing = async (testnet: boolean, body: DeployMarketplaceListing, provider?: string) => {
+export const prepareDeployMarketplaceListing = async (testnet: boolean, body: ChainDeployMarketplaceListing, provider?: string) => {
   return await prepareDeployMarketplaceListingSignedTransaction(testnet, body, provider)
 }
 
@@ -60,8 +64,8 @@ export const prepareDeployMarketplaceListing = async (testnet: boolean, body: De
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareMarketplaceUpdateFee = async (testnet: boolean, body: UpdateMarketplaceFee, provider?: string) => {
-  const params = await prepareMarketplaceUpdateFeeAbstraction(body)
+export const prepareMarketplaceUpdateFee = async (testnet: boolean, body: ChainUpdateMarketplaceFee, provider?: string) => {
+  const params = await prepareMarketplaceUpdateFeeAbstraction({ ...body, chain: Currency.CELO })
   return await helperPrepareSCCall(testnet, body, 'setMarketplaceFee', params, provider)
 }
 
@@ -72,8 +76,12 @@ export const prepareMarketplaceUpdateFee = async (testnet: boolean, body: Update
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareMarketplaceUpdateFeeRecipient = async (testnet: boolean, body: UpdateMarketplaceFeeRecipient, provider?: string) => {
-  const params = await prepareMarketplaceUpdateFeeRecipientAbstraction(body)
+export const prepareMarketplaceUpdateFeeRecipient = async (
+  testnet: boolean,
+  body: ChainUpdateMarketplaceFeeRecipient,
+  provider?: string
+) => {
+  const params = await prepareMarketplaceUpdateFeeRecipientAbstraction({ ...body, chain: Currency.CELO })
   return await helperPrepareSCCall(testnet, body, 'setMarketplaceFeeRecipient', params, provider)
 }
 
@@ -86,8 +94,8 @@ export const prepareMarketplaceUpdateFeeRecipient = async (testnet: boolean, bod
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareMarketplaceCreateListing = async (testnet: boolean, body: CreateMarketplaceListing, provider?: string) => {
-  const { body: validatedBody, params } = await prepareMarketplaceCreateListingAbstraction(body)
+export const prepareMarketplaceCreateListing = async (testnet: boolean, body: ChainCreateMarketplaceListing, provider?: string) => {
+  const { body: validatedBody, params } = await prepareMarketplaceCreateListingAbstraction({ ...body, chain: Currency.CELO })
   return await helperPrepareSCCall(testnet, validatedBody, 'createListing', params, provider)
 }
 
@@ -99,8 +107,8 @@ export const prepareMarketplaceCreateListing = async (testnet: boolean, body: Cr
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareMarketplaceBuyListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation, provider?: string) => {
-  const { body: validatedBody, params, methodName } = await prepareMarketplaceBuyListingAbstraction(body)
+export const prepareMarketplaceBuyListing = async (testnet: boolean, body: ChainInvokeMarketplaceListingOperation, provider?: string) => {
+  const { body: validatedBody, params, methodName } = await prepareMarketplaceBuyListingAbstraction({ ...body, chain: Currency.CELO })
   return await helperPrepareSCCall(testnet, validatedBody, methodName, params, provider)
 }
 
@@ -111,8 +119,12 @@ export const prepareMarketplaceBuyListing = async (testnet: boolean, body: Invok
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareMarketplaceCancelListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation, provider?: string) => {
-  const params = await prepareMarketplaceCancelListingAbstraction(body)
+export const prepareMarketplaceCancelListing = async (
+  testnet: boolean,
+  body: ChainInvokeMarketplaceListingOperation,
+  provider?: string
+) => {
+  const params = await prepareMarketplaceCancelListingAbstraction({ ...body, chain: Currency.CELO })
   return await helperPrepareSCCall(testnet, body, 'cancelListing', params, provider)
 }
 
@@ -123,7 +135,7 @@ export const prepareMarketplaceCancelListing = async (testnet: boolean, body: In
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendMarketplaceUpdateFee = async (testnet: boolean, body: UpdateMarketplaceFee, provider?: string) =>
+export const sendMarketplaceUpdateFee = async (testnet: boolean, body: ChainUpdateMarketplaceFee, provider?: string) =>
   helperBroadcastTx(await prepareMarketplaceUpdateFee(testnet, body, provider), body.signatureId)
 /**
  * Update marketplace fee recipient.
@@ -132,7 +144,7 @@ export const sendMarketplaceUpdateFee = async (testnet: boolean, body: UpdateMar
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendMarketplaceUpdateFeeRecipient = async (testnet: boolean, body: UpdateMarketplaceFeeRecipient, provider?: string) =>
+export const sendMarketplaceUpdateFeeRecipient = async (testnet: boolean, body: ChainUpdateMarketplaceFeeRecipient, provider?: string) =>
   helperBroadcastTx(await prepareMarketplaceUpdateFeeRecipient(testnet, body, provider), body.signatureId)
 /**
  * Approve ERC20 spending for marketplace to perform buy with ERC20 token.
@@ -141,7 +153,7 @@ export const sendMarketplaceUpdateFeeRecipient = async (testnet: boolean, body: 
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendMarketplaceApproveErc20Spending = async (testnet: boolean, body: ApproveErc20, provider?: string) =>
+export const sendMarketplaceApproveErc20Spending = async (testnet: boolean, body: ChainApproveErc20, provider?: string) =>
   helperBroadcastTx(await prepareMarketplaceApproveErc20Spending(testnet, body, provider), body.signatureId)
 
 /**
@@ -151,7 +163,7 @@ export const sendMarketplaceApproveErc20Spending = async (testnet: boolean, body
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareMarketplaceApproveErc20Spending = async (testnet: boolean, body: ApproveErc20, provider?: string) => {
+export const prepareMarketplaceApproveErc20Spending = async (testnet: boolean, body: ChainApproveErc20, provider?: string) => {
   return prepareApproveErc20(testnet, body, provider)
 }
 
@@ -164,7 +176,7 @@ export const prepareMarketplaceApproveErc20Spending = async (testnet: boolean, b
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendMarketplaceCreateListing = async (testnet: boolean, body: CreateMarketplaceListing, provider?: string) =>
+export const sendMarketplaceCreateListing = async (testnet: boolean, body: ChainCreateMarketplaceListing, provider?: string) =>
   helperBroadcastTx(await prepareMarketplaceCreateListing(testnet, body, provider), body.signatureId)
 /**
  * Buy listing on the marketplace. Buyer must either send native assets with this operation, or approve ERC20 token spending before.
@@ -174,7 +186,7 @@ export const sendMarketplaceCreateListing = async (testnet: boolean, body: Creat
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendMarketplaceBuyListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation, provider?: string) =>
+export const sendMarketplaceBuyListing = async (testnet: boolean, body: ChainInvokeMarketplaceListingOperation, provider?: string) =>
   helperBroadcastTx(await prepareMarketplaceBuyListing(testnet, body, provider), body.signatureId)
 /**
  * Cancel listing on the marketplace. Only possible for the seller or the operator. There must be no buyer present for that listing. NFT asset is sent back to the seller.
@@ -183,7 +195,26 @@ export const sendMarketplaceBuyListing = async (testnet: boolean, body: InvokeMa
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendMarketplaceCancelListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation, provider?: string) =>
+export const sendMarketplaceCancelListing = async (testnet: boolean, body: ChainInvokeMarketplaceListingOperation, provider?: string) =>
   helperBroadcastTx(await prepareMarketplaceCancelListing(testnet, body, provider), body.signatureId)
 
-export { getMarketplaceFee, getMarketplaceListing, getMarketplaceFeeRecipient } from '@tatumio/tatum-defi'
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/GetMarketplaceFee" target="_blank">Tatum API documentation</a>
+ */
+export const getMarketplaceFee = async (contractAddress: string) => {
+  return getMarketplaceFeeDefi(Currency.CELO, contractAddress)
+}
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/GetMarketplaceListing" target="_blank">Tatum API documentation</a>
+ */
+export const getMarketplaceListing = async (contractAddress: string, listingId: string) => {
+  return getMarketplaceListingDefi(Currency.CELO, contractAddress, listingId)
+}
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/GetMarketplaceFeeRecipient" target="_blank">Tatum API documentation</a>
+ */
+export const getMarketplaceFeeRecipient = async (contractAddress: string) => {
+  return getMarketplaceFeeRecipientDefi(Currency.CELO, contractAddress)
+}

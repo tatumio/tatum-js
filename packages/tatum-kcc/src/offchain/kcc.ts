@@ -42,7 +42,6 @@ export const sendKccOffchainTransaction = async (testnet: boolean, body: Transfe
       {
         amount,
         fromPrivateKey: fromPriv,
-        currency: account.currency,
         fee,
         nonce,
         to: address,

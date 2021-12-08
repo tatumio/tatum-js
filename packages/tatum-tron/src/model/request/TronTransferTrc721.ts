@@ -19,3 +19,5 @@ export class TronTransferTrc721 extends TransferErc721 {
   @Min(0)
   public feeLimit: number
 }
+
+export type ChainTronTransferTrc721 = Omit<TronTransferTrc721, 'chain'>

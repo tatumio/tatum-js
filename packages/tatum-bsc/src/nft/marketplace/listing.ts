@@ -4,6 +4,9 @@ import {
   prepareMarketplaceCreateListingAbstraction,
   prepareMarketplaceBuyListingAbstraction,
   prepareMarketplaceCancelListingAbstraction,
+  getMarketplaceFee as getMarketplaceFeeDefi,
+  getMarketplaceListing as getMarketplaceListingDefi,
+  getMarketplaceFeeRecipient as getMarketplaceFeeRecipientDefi,
 } from '@tatumio/tatum-defi'
 import {
   DeployMarketplaceListing,
@@ -12,9 +15,31 @@ import {
   ApproveErc20,
   CreateMarketplaceListing,
   InvokeMarketplaceListingOperation,
+  Currency,
 } from '@tatumio/tatum-core'
 import { sendDeployMarketplaceListingSignedTransaction, prepareDeployMarketplaceListingSignedTransaction, prepareApproveErc20 } from '../..'
 import { helperPrepareSCCall, helperBroadcastTx } from '../../helpers'
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/GetMarketplaceFee" target="_blank">Tatum API documentation</a>
+ */
+export const getMarketplaceFee = async (contractAddress: string) => {
+  return getMarketplaceFeeDefi(Currency.BSC, contractAddress)
+}
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/GetMarketplaceListing" target="_blank">Tatum API documentation</a>
+ */
+export const getMarketplaceListing = async (contractAddress: string, listingId: string) => {
+  return getMarketplaceListingDefi(Currency.BSC, contractAddress, listingId)
+}
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/GetMarketplaceFeeRecipient" target="_blank">Tatum API documentation</a>
+ */
+export const getMarketplaceFeeRecipient = async (contractAddress: string) => {
+  return getMarketplaceFeeRecipientDefi(Currency.BSC, contractAddress)
+}
 
 /**
  * Deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
@@ -171,5 +196,3 @@ export const sendMarketplaceBuyListing = async (body: InvokeMarketplaceListingOp
  */
 export const sendMarketplaceCancelListing = async (body: InvokeMarketplaceListingOperation, provider?: string) =>
   helperBroadcastTx(await prepareMarketplaceCancelListing(body, provider), body.signatureId)
-
-export { getMarketplaceFee, getMarketplaceListing, getMarketplaceFeeRecipient } from '@tatumio/tatum-defi'

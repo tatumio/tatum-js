@@ -28,6 +28,15 @@ import {
   TransactionKMS,
   TransferErc20,
   UpdateCashbackErc721,
+  ChainTransactionKMS,
+  ChainCreateRecord,
+  ChainMintErc721,
+  ChainMintMultipleErc721,
+  ChainBurnErc721,
+  ChainTransferErc721,
+  ChainUpdateCashbackErc721,
+  ChainDeployErc721,
+  ChainTransferErc20,
 } from '@tatumio/tatum-core'
 
 /**
@@ -75,10 +84,8 @@ export const getXdcClient = (provider?: string, fromPrivateKey?: string) => {
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signXdcKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, provider?: string) => {
-  if (tx.chain !== Currency.XDC) {
-    throw Error('Unsupported chain.')
-  }
+export const signXdcKMSTransaction = async (tx: ChainTransactionKMS, fromPrivateKey: string, provider?: string) => {
+  ;(tx as TransactionKMS).chain = Currency.XDC
   const client = getXdcClient(provider, fromPrivateKey)
   const transactionConfig = JSON.parse(tx.serializedTransaction)
   transactionConfig.gas = await client.eth.estimateGas(transactionConfig)
@@ -94,7 +101,8 @@ export const signXdcKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareXdcStoreDataTransaction = async (body: CreateRecord, provider?: string) => {
+export const prepareXdcStoreDataTransaction = async (body: ChainCreateRecord, provider?: string) => {
+  ;(body as CreateRecord).chain = Currency.XDC
   await validateBody(body, CreateRecord)
   const { fromPrivateKey, to, ethFee, data, nonce, signatureId } = body
   const client = getXdcClient(provider, fromPrivateKey)
@@ -326,7 +334,8 @@ export const prepareXdcSmartContractWriteMethodInvocation = async (body: SmartCo
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareXdcMintErc721SignedTransaction = async (body: MintErc721, provider?: string) => {
+export const prepareXdcMintErc721SignedTransaction = async (body: ChainMintErc721, provider?: string) => {
+  ;(body as MintErc721).chain = Currency.XDC
   await validateBody(body, MintErc721)
   const { fromPrivateKey, to, tokenId, contractAddress, nonce, fee, url, signatureId } = body
 
@@ -352,7 +361,8 @@ export const prepareXdcMintErc721SignedTransaction = async (body: MintErc721, pr
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareXdcMintErcCashback721SignedTransaction = async (body: MintErc721, provider?: string) => {
+export const prepareXdcMintErcCashback721SignedTransaction = async (body: ChainMintErc721, provider?: string) => {
+  ;(body as MintErc721).chain = Currency.XDC
   await validateBody(body, MintErc721)
   const { fromPrivateKey, to, tokenId, contractAddress, nonce, fee, url, signatureId, authorAddresses, cashbackValues } = body
 
@@ -385,7 +395,8 @@ export const prepareXdcMintErcCashback721SignedTransaction = async (body: MintEr
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareXdcMintMultipleCashbackErc721SignedTransaction = async (body: MintMultipleErc721, provider?: string) => {
+export const prepareXdcMintMultipleCashbackErc721SignedTransaction = async (body: ChainMintMultipleErc721, provider?: string) => {
+  ;(body as MintMultipleErc721).chain = Currency.XDC
   await validateBody(body, MintMultipleErc721)
   const { fromPrivateKey, to, tokenId, contractAddress, url, nonce, signatureId, authorAddresses, cashbackValues, fee } = body
 
@@ -427,7 +438,8 @@ export const prepareXdcMintMultipleCashbackErc721SignedTransaction = async (body
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareXdcMintMultipleErc721SignedTransaction = async (body: MintMultipleErc721, provider?: string) => {
+export const prepareXdcMintMultipleErc721SignedTransaction = async (body: ChainMintMultipleErc721, provider?: string) => {
+  ;(body as MintMultipleErc721).chain = Currency.XDC
   await validateBody(body, MintMultipleErc721)
   const { fromPrivateKey, to, tokenId, contractAddress, url, nonce, signatureId, fee } = body
 
@@ -458,7 +470,8 @@ export const prepareXdcMintMultipleErc721SignedTransaction = async (body: MintMu
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareXdcBurnErc721SignedTransaction = async (body: BurnErc721, provider?: string) => {
+export const prepareXdcBurnErc721SignedTransaction = async (body: ChainBurnErc721, provider?: string) => {
+  ;(body as BurnErc721).chain = Currency.XDC
   await validateBody(body, BurnErc721)
   const { fromPrivateKey, tokenId, fee, contractAddress, nonce, signatureId } = body
 
@@ -482,7 +495,8 @@ export const prepareXdcBurnErc721SignedTransaction = async (body: BurnErc721, pr
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareXdcTransferErc721SignedTransaction = async (body: TransferErc721, provider?: string) => {
+export const prepareXdcTransferErc721SignedTransaction = async (body: ChainTransferErc721, provider?: string) => {
+  ;(body as TransferErc721).chain = Currency.XDC
   await validateBody(body, TransferErc721)
   const { fromPrivateKey, to, tokenId, fee, contractAddress, nonce, signatureId, value } = body
 
@@ -508,7 +522,8 @@ export const prepareXdcTransferErc721SignedTransaction = async (body: TransferEr
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareXdcUpdateCashbackForAuthorErc721SignedTransaction = async (body: UpdateCashbackErc721, provider?: string) => {
+export const prepareXdcUpdateCashbackForAuthorErc721SignedTransaction = async (body: ChainUpdateCashbackErc721, provider?: string) => {
+  ;(body as UpdateCashbackErc721).chain = Currency.XDC
   await validateBody(body, UpdateCashbackErc721)
   const { fromPrivateKey, cashbackValue, tokenId, fee, contractAddress, nonce, signatureId } = body
 
@@ -533,7 +548,8 @@ export const prepareXdcUpdateCashbackForAuthorErc721SignedTransaction = async (b
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareXdcDeployErc721SignedTransaction = async (body: DeployErc721, provider?: string) => {
+export const prepareXdcDeployErc721SignedTransaction = async (body: ChainDeployErc721, provider?: string) => {
+  ;(body as DeployErc721).chain = Currency.XDC
   await validateBody(body, DeployErc721)
   const { fromPrivateKey, fee, name, symbol, nonce, signatureId } = body
 
@@ -580,7 +596,7 @@ export const sendXdcSmartContractReadMethodInvocationTransaction = async (body: 
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendXdcStoreDataTransaction = async (body: CreateRecord, provider?: string) =>
+export const sendXdcStoreDataTransaction = async (body: ChainCreateRecord, provider?: string) =>
   xdcBroadcast(await prepareXdcStoreDataTransaction(body, provider), body.signatureId)
 
 /**
@@ -590,7 +606,7 @@ export const sendXdcStoreDataTransaction = async (body: CreateRecord, provider?:
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendXdcOrErc20Transaction = async (body: TransferErc20, provider?: string) =>
+export const sendXdcOrErc20Transaction = async (body: ChainTransferErc20, provider?: string) =>
   xdcBroadcast(await prepareXdcOrErc20SignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -600,7 +616,7 @@ export const sendXdcOrErc20Transaction = async (body: TransferErc20, provider?: 
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendXdcCustomErc20Transaction = async (body: TransferErc20, provider?: string) =>
+export const sendXdcCustomErc20Transaction = async (body: ChainTransferErc20, provider?: string) =>
   xdcBroadcast(await prepareXdcCustomErc20SignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -640,7 +656,7 @@ export const sendXdcSmartContractMethodInvocationTransaction = async (
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendXdcMintErc721Transaction = async (body: MintErc721, provider?: string) =>
+export const sendXdcMintErc721Transaction = async (body: ChainMintErc721, provider?: string) =>
   xdcBroadcast(await prepareXdcMintErc721SignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -650,7 +666,7 @@ export const sendXdcMintErc721Transaction = async (body: MintErc721, provider?: 
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendXdcMintErcCashback721Transaction = async (body: MintErc721, provider?: string) =>
+export const sendXdcMintErcCashback721Transaction = async (body: ChainMintErc721, provider?: string) =>
   xdcBroadcast(await prepareXdcMintErcCashback721SignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -660,7 +676,7 @@ export const sendXdcMintErcCashback721Transaction = async (body: MintErc721, pro
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendXdcMintMultipleCashbackErc721Transaction = async (body: MintMultipleErc721, provider?: string) =>
+export const sendXdcMintMultipleCashbackErc721Transaction = async (body: ChainMintMultipleErc721, provider?: string) =>
   xdcBroadcast(await prepareXdcMintMultipleCashbackErc721SignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -670,7 +686,7 @@ export const sendXdcMintMultipleCashbackErc721Transaction = async (body: MintMul
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendXdcMintMultipleErc721Transaction = async (body: MintMultipleErc721, provider?: string) =>
+export const sendXdcMintMultipleErc721Transaction = async (body: ChainMintMultipleErc721, provider?: string) =>
   xdcBroadcast(await prepareXdcMintMultipleErc721SignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -680,10 +696,10 @@ export const sendXdcMintMultipleErc721Transaction = async (body: MintMultipleErc
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendXdcBurnErc721Transaction = async (body: BurnErc721, provider?: string) =>
+export const sendXdcBurnErc721Transaction = async (body: ChainBurnErc721, provider?: string) =>
   xdcBroadcast(await prepareXdcBurnErc721SignedTransaction(body, provider), body.signatureId)
 
-export const sendXdcUpdateCashbackForAuthorErc721Transaction = async (body: UpdateCashbackErc721, provider?: string) =>
+export const sendXdcUpdateCashbackForAuthorErc721Transaction = async (body: ChainUpdateCashbackErc721, provider?: string) =>
   xdcBroadcast(await prepareXdcUpdateCashbackForAuthorErc721SignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -693,7 +709,7 @@ export const sendXdcUpdateCashbackForAuthorErc721Transaction = async (body: Upda
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendXdcErc721Transaction = async (body: TransferErc721, provider?: string) =>
+export const sendXdcErc721Transaction = async (body: ChainTransferErc721, provider?: string) =>
   xdcBroadcast(await prepareXdcTransferErc721SignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -703,7 +719,7 @@ export const sendXdcErc721Transaction = async (body: TransferErc721, provider?: 
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendXdcDeployErc721Transaction = async (body: DeployErc721, provider?: string) =>
+export const sendXdcDeployErc721Transaction = async (body: ChainDeployErc721, provider?: string) =>
   xdcBroadcast(await prepareXdcDeployErc721SignedTransaction(body, provider), body.signatureId)
 
 // TODO: add ERC-1155 support

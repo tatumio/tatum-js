@@ -185,7 +185,6 @@ describe('MATIC transactions', () => {
         {
           symbol: '1oido3id3',
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
-          chain: Currency.MATIC,
           name: '2123kd',
         },
         'https://matic-mumbai.chainstacklabs.com/'
@@ -203,7 +202,6 @@ describe('MATIC transactions', () => {
             tokenId,
             url: 'https://www.seznam.cz',
             fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
-            chain: Currency.MATIC,
             contractAddress: '0x5d7d868ed584b04b922905a481f274206a42dd8a',
           },
           'https://matic-mumbai.chainstacklabs.com/'
@@ -225,7 +223,6 @@ describe('MATIC transactions', () => {
           tokenId: [firstTokenId.toString(), secondTokenId.toString()],
           url: ['https://www.seznam.cz', 'https://www.seznam.cz'],
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
-          chain: Currency.MATIC,
           contractAddress: '0x5d7d868ed584b04b922905a481f274206a42dd8a',
         },
         'https://matic-mumbai.chainstacklabs.com/'
@@ -239,7 +236,6 @@ describe('MATIC transactions', () => {
         {
           tokenId: '1626437687633',
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
-          chain: Currency.MATIC,
           contractAddress: '0x5d7d868ed584b04b922905a481f274206a42dd8a',
         },
         'https://matic-mumbai.chainstacklabs.com/'
@@ -254,7 +250,6 @@ describe('MATIC transactions', () => {
           to: '0x811dfbff13adfbc3cf653dcc373c03616d3471c9',
           tokenId: '1626437745973',
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
-          chain: Currency.MATIC,
           contractAddress: '0x5d7d868ed584b04b922905a481f274206a42dd8a',
         },
         'https://matic-mumbai.chainstacklabs.com/'
@@ -269,7 +264,6 @@ describe('MATIC transactions', () => {
         {
           symbol: '1oido3id3',
           fromPrivateKey: '0xf17abcb517d759efee24bc4859183c7219c588540754318baebb3f9c31449564',
-          chain: Currency.MATIC,
           provenance: true,
           name: '2123kd',
         },
@@ -287,7 +281,6 @@ describe('MATIC transactions', () => {
             tokenId,
             url: 'https://www.seznam.cz',
             fromPrivateKey: '0xf17abcb517d759efee24bc4859183c7219c588540754318baebb3f9c31449564',
-            chain: Currency.MATIC,
             contractAddress: '0x8D2A0dd3855ECA8591756a606DA9829f703cA26B',
           },
           'https://matic-mumbai.chainstacklabs.com/'
@@ -310,7 +303,6 @@ describe('MATIC transactions', () => {
             authorAddresses: ['0x75Bd6dFA13C0086b9C8C4b510b1F758c720B79BF'],
             cashbackValues: ['2'],
             fixedValues: ['0.01'],
-            chain: Currency.MATIC,
             contractAddress: '0x44ef7a380c34E76a39Cb00410956dE2aeeaf3B1B',
           },
           'https://matic-mumbai.chainstacklabs.com/'
@@ -331,7 +323,6 @@ describe('MATIC transactions', () => {
           cashbackValues: [['1'], ['1']],
           fixedValues: [['1'], ['1']],
           fromPrivateKey: '0xf17abcb517d759efee24bc4859183c7219c588540754318baebb3f9c31449564',
-          chain: Currency.MATIC,
           contractAddress: '0xe54a147b6ebe25bda0eec07e8a0051c1b9d08338',
         },
         'https://matic-mumbai.chainstacklabs.com/'
@@ -345,7 +336,6 @@ describe('MATIC transactions', () => {
           to: '0xD25031B1aB4D82e5fDFb700234b2a22e272232Be',
           tokenId: '12',
           fromPrivateKey: '0x37b091fc4ce46a56da643f021254612551dbe0944679a6e09cb5724d3085c9ab',
-          chain: Currency.MATIC,
           provenance: true,
           provenanceData: 'testMatic',
           tokenPrice: '1.5',
@@ -377,7 +367,6 @@ describe('MATIC transactions', () => {
         {
           tokenId: '5',
           fromPrivateKey: '0xf17abcb517d759efee24bc4859183c7219c588540754318baebb3f9c31449564',
-          chain: Currency.MATIC,
           contractAddress: '0xe54a147b6ebe25bda0eec07e8a0051c1b9d08338',
         },
         'https://matic-mumbai.chainstacklabs.com/'

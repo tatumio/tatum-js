@@ -13,7 +13,7 @@ import {
   TronTransferTrc721,
   TronUpdateCashbackTrc721,
 } from '../model'
-import token_bytecode, { Currency } from '@tatumio/tatum-core'
+import { erc20TokenBytecode as token_bytecode, Currency } from '@tatumio/tatum-core'
 
 import {
   prepareTronBurnTrc721SignedTransaction,

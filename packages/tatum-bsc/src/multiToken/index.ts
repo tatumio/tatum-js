@@ -9,6 +9,12 @@ import {
   prepareAddMultiTokenMinterAbstraction,
   AddMinter,
   listing,
+  getMultiTokenContractAddress as getMultiTokenContractAddressCore,
+  getMultiTokensBalance as getMultiTokensBalanceCore,
+  getMultiTokensBatchBalance as getMultiTokensBatchBalanceCore,
+  getMultiTokenTransaction as getMultiTokenTransactionCore,
+  getMultiTokenMetadata as getMultiTokenMetadataCore,
+  Currency,
 } from '@tatumio/tatum-core'
 import {
   sendDeployMultiTokenTransaction,
@@ -63,10 +69,37 @@ export const prepareAddMultiTokenMinter = async (body: AddMinter, provider?: str
 export const sendAddMultiTokenMinter = async (body: AddMinter, provider?: string) =>
   helperBroadcastTx(await prepareAddMultiTokenMinter(body, provider), body.signatureId)
 
-export {
-  getMultiTokenContractAddress,
-  getMultiTokensBalance,
-  getMultiTokensBatchBalance,
-  getMultiTokenTransaction,
-  getMultiTokenMetadata,
-} from '@tatumio/tatum-core'
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MultiTokenGetContractAddress" target="_blank">Tatum API documentation</a>
+ */
+export const getMultiTokenContractAddress = async (txId: string) => {
+  return getMultiTokenContractAddressCore(Currency.BSC, txId)
+}
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MultiTokenGetBalance" target="_blank">Tatum API documentation</a>
+ */
+export const getMultiTokensBalance = async (contractAddress: string, address: string, tokenId: string) => {
+  return getMultiTokensBalanceCore(Currency.BSC, contractAddress, address, tokenId)
+}
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MultiTokenGetBalanceBatch" target="_blank">Tatum API documentation</a>
+ */
+export const getMultiTokensBatchBalance = async (contractAddress: string, address: string, tokenIds: string) => {
+  return getMultiTokensBatchBalanceCore(Currency.BSC, contractAddress, address, tokenIds)
+}
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MultiTokenGetTransaction" target="_blank">Tatum API documentation</a>
+ */
+export const getMultiTokenTransaction = async (txId: string) => {
+  return getMultiTokenTransactionCore(Currency.BSC, txId)
+}
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MultiTokenGetMetadata" target="_blank">Tatum API documentation</a>
+ */
+export const getMultiTokenMetadata = async (contractAddress: string, tokenId: string) => {
+  return getMultiTokenMetadataCore(Currency.BSC, contractAddress, tokenId)
+}

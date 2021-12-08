@@ -176,7 +176,6 @@ describe('KCS transactions', () => {
         {
           symbol: '1oido3id3',
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
-          chain: Currency.KCS,
           name: '2123kd',
         },
         'https://rpc-testnet.kcc.network'
@@ -194,7 +193,6 @@ describe('KCS transactions', () => {
             tokenId,
             url: 'https://www.seznam.cz',
             fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
-            chain: Currency.KCS,
             contractAddress: '0x5d7d868ed584b04b922905a481f274206a42dd8a',
           },
           'https://rpc-testnet.kcc.network'
@@ -216,7 +214,6 @@ describe('KCS transactions', () => {
           tokenId: [firstTokenId.toString(), secondTokenId.toString()],
           url: ['https://www.seznam.cz', 'https://www.seznam.cz'],
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
-          chain: Currency.KCS,
           contractAddress: '0x5d7d868ed584b04b922905a481f274206a42dd8a',
         },
         'https://rpc-testnet.kcc.network'
@@ -230,7 +227,6 @@ describe('KCS transactions', () => {
         {
           tokenId: '1626437687633',
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
-          chain: Currency.KCS,
           contractAddress: '0x5d7d868ed584b04b922905a481f274206a42dd8a',
         },
         'https://rpc-testnet.kcc.network'
@@ -245,7 +241,6 @@ describe('KCS transactions', () => {
           to: '0x811dfbff13adfbc3cf653dcc373c03616d3471c9',
           tokenId: '1626437745973',
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
-          chain: Currency.KCS,
           contractAddress: '0x5d7d868ed584b04b922905a481f274206a42dd8a',
         },
         'https://rpc-testnet.kcc.network'

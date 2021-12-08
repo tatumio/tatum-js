@@ -82,7 +82,6 @@ describe('Auction  tests', () => {
           true,
           {
             fromPrivateKey: '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236',
-            chain: Currency.CELO,
             contractAddress: '0x1214BEada6b25bc98f7494C7BDBf22C095FDCaBD',
             isErc721: true,
             spender: '0x991dfc0db4cbe2480296eec5bcc6b3215a9b7038',
@@ -144,7 +143,6 @@ describe('Auction  tests', () => {
           true,
           {
             fromPrivateKey: '0xa488a82b8b57c3ece4307525741fd8256781906c5fad948b85f1d63000948236',
-            chain: Currency.CELO,
             contractAddress: '0xdf82c2f74aa7b629bda65b1cfd258248c9c2b7d3',
             isErc721: true,
             spender: '0x991dfc0db4cbe2480296eec5bcc6b3215a9b7038',

@@ -1,50 +1,71 @@
 import {
-  Fee,
-  TransactionKMS,
-  Currency,
-  CreateRecord,
-  validateBody,
-  MintErc20,
-  BurnErc20,
-  TransferErc20,
-  DeployErc20,
-  erc20TokenBytecode,
-  GenerateCustodialAddress,
-  SmartContractMethodInvocation,
-  UpdateCashbackErc721,
-  erc721TokenBytecode,
-  erc721Provenance_bytecode,
-  DeployMarketplaceListing,
-  listing,
-  DeployNftAuction,
   auction,
-  TransferMultiToken,
-  TransferMultiTokenBatch,
-  MintMultiToken,
-  MintMultiTokenBatch,
-  erc1155TokenBytecode,
-  SmartContractReadMethodInvocation,
-  CONTRACT_DECIMALS,
-  CONTRACT_ADDRESSES,
-  MintErc721,
-  MintMultipleErc721,
-  TATUM_API_URL,
+  BurnErc20,
   BurnErc721,
   BurnMultiToken,
-  DeployErc721,
-  TransferErc721,
   BurnMultiTokenBatch,
+  ChainBurnErc721,
+  ChainBurnMultiToken,
+  ChainBurnMultiTokenBatch,
+  ChainCreateRecord,
+  ChainDeployErc721,
+  ChainDeployMarketplaceListing,
+  ChainDeployMultiToken,
+  ChainDeployNftAuction,
+  ChainEthMintErc721,
+  ChainEthMintMultipleErc721,
+  ChainGenerateCustodialAddress,
+  ChainMintErc721,
+  ChainMintMultipleErc721,
+  ChainMintMultiToken,
+  ChainMintMultiTokenBatch,
+  ChainTransactionKMS,
+  ChainTransferErc20,
+  ChainTransferErc721,
+  ChainTransferMultiToken,
+  ChainTransferMultiTokenBatch,
+  ChainUpdateCashbackErc721,
+  CONTRACT_ADDRESSES,
+  CONTRACT_DECIMALS,
+  CreateRecord,
+  Currency,
+  DeployErc20,
+  DeployErc721,
+  DeployMarketplaceListing,
   DeployMultiToken,
-  EthMintMultipleErc721,
+  DeployNftAuction,
+  erc1155TokenBytecode,
+  erc20TokenBytecode,
+  erc721Provenance_bytecode,
+  erc721TokenBytecode,
   EthMintErc721,
+  EthMintMultipleErc721,
+  Fee,
+  GenerateCustodialAddress,
+  listing,
+  MintErc20,
+  MintErc721,
+  MintMultipleErc721,
+  MintMultiToken,
+  MintMultiTokenBatch,
+  SmartContractMethodInvocation,
+  SmartContractReadMethodInvocation,
+  TATUM_API_URL,
+  TransactionKMS,
+  TransferErc20,
+  TransferErc721,
+  TransferMultiToken,
+  TransferMultiTokenBatch,
+  UpdateCashbackErc721,
+  validateBody,
 } from '@tatumio/tatum-core'
+import { TransferBscBep20, ChainTransferBscBep20 } from '../model'
 import { obtainCustodialAddressType } from '@tatumio/tatum-defi'
 import { BigNumber } from 'bignumber.js'
 import Web3 from 'web3'
 import { TransactionConfig } from 'web3-core'
 import { toWei } from 'web3-utils'
 import { broadcast, getTransactionsCount } from '../blockchain'
-import { TransferBscBep20 } from '../model'
 import { mintNFT } from '../nft'
 
 /**
@@ -96,10 +117,8 @@ const prepareSignedTransactionAbstraction = async (
  * @param provider url of the BSC Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, provider?: string) => {
-  if (tx.chain !== Currency.BSC) {
-    throw Error('Unsupported chain.')
-  }
+export const signKMSTransaction = async (tx: ChainTransactionKMS, fromPrivateKey: string, provider?: string) => {
+  ;(tx as TransactionKMS).chain = Currency.BSC
   const client = getClient(provider, fromPrivateKey)
   const transactionConfig = JSON.parse(tx.serializedTransaction)
   const gas = await client.eth.estimateGas(transactionConfig)
@@ -136,7 +155,8 @@ export const getBep20ContractDecimals = async (contractAddress: string, provider
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareStoreDataTransaction = async (body: CreateRecord, provider?: string) => {
+export const prepareStoreDataTransaction = async (body: ChainCreateRecord, provider?: string) => {
+  ;(body as CreateRecord).chain = Currency.BSC
   await validateBody(body, CreateRecord)
   const { fromPrivateKey, to, ethFee, data, nonce, signatureId } = body
   const client = getClient(provider, fromPrivateKey)
@@ -228,7 +248,8 @@ export const prepareBurnBep20SignedTransaction = async (body: BurnErc20, provide
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareBscOrBep20SignedTransaction = async (body: TransferBscBep20, provider?: string) => {
+export const prepareBscOrBep20SignedTransaction = async (body: ChainTransferBscBep20, provider?: string) => {
+  ;(body as TransferBscBep20).currency = Currency.BSC
   await validateBody(body, TransferBscBep20)
   const { fromPrivateKey, to, amount, currency, fee, data, nonce, signatureId } = body
 
@@ -263,7 +284,8 @@ export const prepareBscOrBep20SignedTransaction = async (body: TransferBscBep20,
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareCustomBep20SignedTransaction = async (body: TransferErc20, provider?: string) => {
+export const prepareCustomBep20SignedTransaction = async (body: ChainTransferErc20, provider?: string) => {
+  ;(body as TransferErc20).currency = Currency.BSC
   await validateBody(body, TransferErc20)
   const { fromPrivateKey, to, amount, contractAddress, digits, fee, nonce, signatureId } = body
 
@@ -321,12 +343,13 @@ export const prepareDeployBep20SignedTransaction = async (body: DeployErc20, pro
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareGenerateCustodialWalletSignedTransaction = async (body: GenerateCustodialAddress, provider?: string) => {
+export const prepareGenerateCustodialWalletSignedTransaction = async (body: ChainGenerateCustodialAddress, provider?: string) => {
+  ;(body as GenerateCustodialAddress).chain = Currency.BSC
   await validateBody(body, GenerateCustodialAddress)
 
   const client = getClient(provider, body.fromPrivateKey)
 
-  const { abi, code } = obtainCustodialAddressType(body)
+  const { abi, code } = obtainCustodialAddressType({ ...body, chain: Currency.BSC })
   // @ts-ignore
   const contract = new client.eth.Contract(abi)
   const deploy = contract.deploy({
@@ -370,7 +393,8 @@ export const prepareSmartContractWriteMethodInvocation = async (body: SmartContr
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareMintBep721SignedTransaction = async (body: MintErc721, provider?: string) => {
+export const prepareMintBep721SignedTransaction = async (body: ChainMintErc721, provider?: string) => {
+  ;(body as MintErc721).chain = Currency.BSC
   await validateBody(body, MintErc721)
   const { fromPrivateKey, to, tokenId, contractAddress, nonce, fee, url, signatureId } = body
 
@@ -395,7 +419,8 @@ export const prepareMintBep721SignedTransaction = async (body: MintErc721, provi
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareMintMultipleBep721ProvenanceSignedTransaction = async (body: EthMintMultipleErc721, provider?: string) => {
+export const prepareMintMultipleBep721ProvenanceSignedTransaction = async (body: ChainEthMintMultipleErc721, provider?: string) => {
+  ;(body as EthMintMultipleErc721).chain = Currency.BSC
   await validateBody(body, EthMintMultipleErc721)
   const {
     fromPrivateKey,
@@ -465,7 +490,8 @@ export const prepareMintMultipleBep721ProvenanceSignedTransaction = async (body:
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareMintBep721ProvenanceSignedTransaction = async (body: EthMintErc721, provider?: string) => {
+export const prepareMintBep721ProvenanceSignedTransaction = async (body: ChainEthMintErc721, provider?: string) => {
+  ;(body as EthMintErc721).chain = Currency.BSC
   await validateBody(body, EthMintErc721)
   const {
     fromPrivateKey,
@@ -512,7 +538,8 @@ export const prepareMintBep721ProvenanceSignedTransaction = async (body: EthMint
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareMintBepCashback721SignedTransaction = async (body: MintErc721, provider?: string) => {
+export const prepareMintBepCashback721SignedTransaction = async (body: ChainMintErc721, provider?: string) => {
+  ;(body as MintErc721).chain = Currency.BSC
   await validateBody(body, MintErc721)
   const { fromPrivateKey, to, tokenId, contractAddress, nonce, fee, url, signatureId, authorAddresses, cashbackValues, erc20 } = body
 
@@ -542,7 +569,8 @@ export const prepareMintBepCashback721SignedTransaction = async (body: MintErc72
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareMintMultipleCashbackBep721SignedTransaction = async (body: MintMultipleErc721, provider?: string) => {
+export const prepareMintMultipleCashbackBep721SignedTransaction = async (body: ChainMintMultipleErc721, provider?: string) => {
+  ;(body as MintMultipleErc721).chain = Currency.BSC
   await validateBody(body, MintMultipleErc721)
   const { fromPrivateKey, to, tokenId, contractAddress, url, nonce, signatureId, authorAddresses, cashbackValues, fee, erc20 } = body
 
@@ -585,7 +613,8 @@ export const prepareMintMultipleCashbackBep721SignedTransaction = async (body: M
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareMintMultipleBep721SignedTransaction = async (body: MintMultipleErc721, provider?: string) => {
+export const prepareMintMultipleBep721SignedTransaction = async (body: ChainMintMultipleErc721, provider?: string) => {
+  ;(body as MintMultipleErc721).chain = Currency.BSC
   await validateBody(body, MintMultipleErc721)
   const { fromPrivateKey, to, tokenId, contractAddress, url, nonce, signatureId, fee } = body
 
@@ -615,7 +644,8 @@ export const prepareMintMultipleBep721SignedTransaction = async (body: MintMulti
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareBurnBep721SignedTransaction = async (body: BurnErc721, provider?: string) => {
+export const prepareBurnBep721SignedTransaction = async (body: ChainBurnErc721, provider?: string) => {
+  ;(body as BurnErc721).chain = Currency.BSC
   await validateBody(body, BurnErc721)
   const { fromPrivateKey, tokenId, fee, contractAddress, nonce, signatureId } = body
 
@@ -639,7 +669,8 @@ export const prepareBurnBep721SignedTransaction = async (body: BurnErc721, provi
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTransferBep721SignedTransaction = async (body: TransferErc721, provider?: string) => {
+export const prepareTransferBep721SignedTransaction = async (body: ChainTransferErc721, provider?: string) => {
+  ;(body as TransferErc721).chain = Currency.BSC
   await validateBody(body, TransferErc721)
   const { fromPrivateKey, to, tokenId, fee, contractAddress, nonce, signatureId, value, provenance, provenanceData, tokenPrice } = body
 
@@ -669,7 +700,8 @@ export const prepareTransferBep721SignedTransaction = async (body: TransferErc72
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareUpdateCashbackForAuthorErc721SignedTransaction = async (body: UpdateCashbackErc721, provider?: string) => {
+export const prepareUpdateCashbackForAuthorErc721SignedTransaction = async (body: ChainUpdateCashbackErc721, provider?: string) => {
+  ;(body as UpdateCashbackErc721).chain = Currency.BSC
   await validateBody(body, UpdateCashbackErc721)
   const { fromPrivateKey, cashbackValue, tokenId, fee, contractAddress, nonce, signatureId } = body
 
@@ -693,7 +725,8 @@ export const prepareUpdateCashbackForAuthorErc721SignedTransaction = async (body
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareDeployBep721SignedTransaction = async (body: DeployErc721, provider?: string) => {
+export const prepareDeployBep721SignedTransaction = async (body: ChainDeployErc721, provider?: string) => {
+  ;(body as DeployErc721).chain = Currency.BSC
   await validateBody(body, DeployErc721)
   const { fromPrivateKey, fee, name, symbol, nonce, signatureId, provenance } = body
 
@@ -723,7 +756,8 @@ export const prepareDeployBep721SignedTransaction = async (body: DeployErc721, p
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
  */
-export const prepareDeployMarketplaceListingSignedTransaction = async (body: DeployMarketplaceListing, provider?: string) => {
+export const prepareDeployMarketplaceListingSignedTransaction = async (body: ChainDeployMarketplaceListing, provider?: string) => {
+  ;(body as DeployMarketplaceListing).chain = Currency.BSC
   await validateBody(body, DeployMarketplaceListing)
   return deployContract(
     listing.abi,
@@ -742,7 +776,8 @@ export const prepareDeployMarketplaceListingSignedTransaction = async (body: Dep
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
  */
-export const prepareDeployAuctionSignedTransaction = async (body: DeployNftAuction, provider?: string) => {
+export const prepareDeployAuctionSignedTransaction = async (body: ChainDeployNftAuction, provider?: string) => {
+  ;(body as DeployNftAuction).chain = Currency.BSC
   await validateBody(body, DeployNftAuction)
   return deployContract(
     auction.abi,
@@ -790,7 +825,8 @@ const deployContract = async (
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareBurnMultiTokenSignedTransaction = async (body: BurnMultiToken, provider?: string) => {
+export const prepareBurnMultiTokenSignedTransaction = async (body: ChainBurnMultiToken, provider?: string) => {
+  ;(body as BurnMultiToken).chain = Currency.BSC
   await validateBody(body, BurnMultiToken)
   const { fromPrivateKey, account, tokenId, amount, fee, contractAddress, nonce, signatureId } = body
 
@@ -807,7 +843,8 @@ export const prepareBurnMultiTokenSignedTransaction = async (body: BurnMultiToke
   return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
 }
 
-export const prepareBurnMultiTokenBatchSignedTransaction = async (body: BurnMultiTokenBatch, provider?: string) => {
+export const prepareBurnMultiTokenBatchSignedTransaction = async (body: ChainBurnMultiTokenBatch, provider?: string) => {
+  ;(body as BurnMultiTokenBatch).chain = Currency.BSC
   await validateBody(body, BurnMultiTokenBatch)
   const { fromPrivateKey, account, tokenId, amounts, fee, contractAddress, nonce, signatureId } = body
 
@@ -825,7 +862,8 @@ export const prepareBurnMultiTokenBatchSignedTransaction = async (body: BurnMult
   return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
 }
 
-export const prepareTransferMultiTokenSignedTransaction = async (body: TransferMultiToken, provider?: string) => {
+export const prepareTransferMultiTokenSignedTransaction = async (body: ChainTransferMultiToken, provider?: string) => {
+  ;(body as TransferMultiToken).chain = Currency.BSC
   await validateBody(body, TransferMultiToken)
   const { fromPrivateKey, to, tokenId, fee, contractAddress, nonce, signatureId, amount, data } = body
 
@@ -842,7 +880,8 @@ export const prepareTransferMultiTokenSignedTransaction = async (body: TransferM
 
   return await prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, fee)
 }
-export const prepareBatchTransferMultiTokenSignedTransaction = async (body: TransferMultiTokenBatch, provider?: string) => {
+export const prepareBatchTransferMultiTokenSignedTransaction = async (body: ChainTransferMultiTokenBatch, provider?: string) => {
+  ;(body as TransferMultiTokenBatch).chain = Currency.BSC
   await validateBody(body, TransferMultiTokenBatch)
   const { fromPrivateKey, to, tokenId, fee, contractAddress, nonce, signatureId, amounts, data } = body
 
@@ -873,7 +912,8 @@ export const prepareBatchTransferMultiTokenSignedTransaction = async (body: Tran
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareMintMultiTokenSignedTransaction = async (body: MintMultiToken, provider?: string) => {
+export const prepareMintMultiTokenSignedTransaction = async (body: ChainMintMultiToken, provider?: string) => {
+  ;(body as MintMultiToken).chain = Currency.BSC
   await validateBody(body, MintMultiToken)
   const { fromPrivateKey, to, tokenId, contractAddress, nonce, data, fee, amount, signatureId } = body
 
@@ -896,7 +936,8 @@ export const prepareMintMultiTokenSignedTransaction = async (body: MintMultiToke
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareMintMultiTokenBatchSignedTransaction = async (body: MintMultiTokenBatch, provider?: string) => {
+export const prepareMintMultiTokenBatchSignedTransaction = async (body: ChainMintMultiTokenBatch, provider?: string) => {
+  ;(body as MintMultiTokenBatch).chain = Currency.BSC
   await validateBody(body, MintMultiTokenBatch)
   const { fromPrivateKey, to, tokenId, contractAddress, nonce, data, fee, amounts, signatureId } = body
 
@@ -920,7 +961,8 @@ export const prepareMintMultiTokenBatchSignedTransaction = async (body: MintMult
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareDeployMultiTokenSignedTransaction = async (body: DeployMultiToken, provider?: string) => {
+export const prepareDeployMultiTokenSignedTransaction = async (body: ChainDeployMultiToken, provider?: string) => {
+  ;(body as DeployMultiToken).chain = Currency.BSC
   await validateBody(body, DeployMultiToken)
   const { fromPrivateKey, fee, uri, nonce, signatureId } = body
 
@@ -966,7 +1008,7 @@ export const sendSmartContractReadMethodInvocationTransaction = async (body: Sma
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendStoreDataTransaction = async (body: CreateRecord, provider?: string) =>
+export const sendStoreDataTransaction = async (body: ChainCreateRecord, provider?: string) =>
   broadcast(await prepareStoreDataTransaction(body, provider), body.signatureId)
 
 /**
@@ -976,7 +1018,7 @@ export const sendStoreDataTransaction = async (body: CreateRecord, provider?: st
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendBscOrBep20Transaction = async (body: TransferBscBep20, provider?: string) =>
+export const sendBscOrBep20Transaction = async (body: ChainTransferBscBep20, provider?: string) =>
   broadcast(await prepareBscOrBep20SignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -986,7 +1028,7 @@ export const sendBscOrBep20Transaction = async (body: TransferBscBep20, provider
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendCustomBep20Transaction = async (body: TransferErc20, provider?: string) =>
+export const sendCustomBep20Transaction = async (body: ChainTransferErc20, provider?: string) =>
   broadcast(await prepareCustomBep20SignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -1023,21 +1065,22 @@ export const sendSmartContractMethodInvocationTransaction = async (
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendMintBep721Transaction = async (body: MintErc721, provider?: string) => {
+export const sendMintBep721Transaction = async (body: ChainMintErc721, provider?: string) => {
+  ;(body as MintErc721).chain = Currency.BSC
   if (!body.fromPrivateKey && !body.fromPrivateKey) {
     return mintNFT(body)
   }
   return broadcast(await prepareMintBep721SignedTransaction(body, provider), body.signatureId)
 }
 
-export const sendGenerateCustodialWalletSignedTransaction = async (body: GenerateCustodialAddress, provider?: string) =>
+export const sendGenerateCustodialWalletSignedTransaction = async (body: ChainGenerateCustodialAddress, provider?: string) =>
   broadcast(await prepareGenerateCustodialWalletSignedTransaction(body, provider), body.signatureId)
 // MultiToken
-export const sendDeployMultiTokenTransaction = async (body: DeployMultiToken, provider?: string) =>
+export const sendDeployMultiTokenTransaction = async (body: ChainDeployMultiToken, provider?: string) =>
   broadcast(await prepareDeployMultiTokenSignedTransaction(body, provider))
-export const sendMintMultiTokenTransaction = async (body: MintMultiToken, provider?: string) =>
+export const sendMintMultiTokenTransaction = async (body: ChainMintMultiToken, provider?: string) =>
   broadcast(await prepareMintMultiTokenSignedTransaction(body, provider), body.signatureId)
-export const sendMintMultiTokenBatchTransaction = async (body: MintMultiTokenBatch, provider?: string) =>
+export const sendMintMultiTokenBatchTransaction = async (body: ChainMintMultiTokenBatch, provider?: string) =>
   broadcast(await prepareMintMultiTokenBatchSignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -1047,7 +1090,7 @@ export const sendMintMultiTokenBatchTransaction = async (body: MintMultiTokenBat
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendMintBepCashback721Transaction = async (body: MintErc721, provider?: string) =>
+export const sendMintBepCashback721Transaction = async (body: ChainMintErc721, provider?: string) =>
   broadcast(await prepareMintBepCashback721SignedTransaction(body, provider), body.signatureId)
 /**
  * Send Bsc BEP721 mint multiple transaction with cashback to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1056,8 +1099,8 @@ export const sendMintBepCashback721Transaction = async (body: MintErc721, provid
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendMintMultipleCashbackBep721Transaction = async (body: MintMultipleErc721, provider?: string) =>
-  broadcast(await prepareMintMultipleCashbackBep721SignedTransaction(body, provider), body.signatureId)
+export const sendMintMultipleCashbackBep721Transaction = async (body: ChainMintMultipleErc721, provider?: string) =>
+  bscBroadcast(await prepareMintMultipleCashbackBep721SignedTransaction(body, provider), body.signatureId)
 
 /**
  * Send Bsc BEP721 mint multiple transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1066,7 +1109,7 @@ export const sendMintMultipleCashbackBep721Transaction = async (body: MintMultip
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendMintMultipleBep721Transaction = async (body: MintMultipleErc721, provider?: string) =>
+export const sendMintMultipleBep721Transaction = async (body: ChainMintMultipleErc721, provider?: string) =>
   broadcast(await prepareMintMultipleBep721SignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -1076,7 +1119,7 @@ export const sendMintMultipleBep721Transaction = async (body: MintMultipleErc721
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendMintMultipleBep721ProvenanceTransaction = async (body: EthMintMultipleErc721, provider?: string) =>
+export const sendMintMultipleBep721ProvenanceTransaction = async (body: ChainEthMintMultipleErc721, provider?: string) =>
   broadcast(await prepareMintMultipleBep721ProvenanceSignedTransaction(body, provider), body.signatureId)
 /**
  * Send Bsc BEP721 mint provenance transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1085,7 +1128,7 @@ export const sendMintMultipleBep721ProvenanceTransaction = async (body: EthMintM
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendMintBep721ProvenanceTransaction = async (body: EthMintErc721, provider?: string) => {
+export const sendMintBep721ProvenanceTransaction = async (body: ChainEthMintErc721, provider?: string) => {
   return broadcast(await prepareMintBep721ProvenanceSignedTransaction(body, provider), body.signatureId)
 }
 /**
@@ -1095,16 +1138,16 @@ export const sendMintBep721ProvenanceTransaction = async (body: EthMintErc721, p
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendBurnBep721Transaction = async (body: BurnErc721, provider?: string) =>
+export const sendBurnBep721Transaction = async (body: ChainBurnErc721, provider?: string) =>
   broadcast(await prepareBurnBep721SignedTransaction(body, provider), body.signatureId)
 
-export const sendUpdateCashbackForAuthorBep721Transaction = async (body: UpdateCashbackErc721, provider?: string) =>
+export const sendUpdateCashbackForAuthorBep721Transaction = async (body: ChainUpdateCashbackErc721, provider?: string) =>
   broadcast(await prepareUpdateCashbackForAuthorErc721SignedTransaction(body, provider), body.signatureId)
 // Burn 1155
-export const sendBurnMultiTokenTransaction = async (body: BurnMultiToken, provider?: string) =>
+export const sendBurnMultiTokenTransaction = async (body: ChainBurnMultiToken, provider?: string) =>
   broadcast(await prepareBurnMultiTokenSignedTransaction(body, provider), body.signatureId)
 
-export const sendBurnBatchMultiTokenTransaction = async (body: BurnMultiTokenBatch, provider?: string) =>
+export const sendBurnBatchMultiTokenTransaction = async (body: ChainBurnMultiTokenBatch, provider?: string) =>
   broadcast(await prepareBurnMultiTokenBatchSignedTransaction(body, provider), body.signatureId)
 /**
  * Send Bsc BEP721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1113,7 +1156,7 @@ export const sendBurnBatchMultiTokenTransaction = async (body: BurnMultiTokenBat
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendBep721Transaction = async (body: TransferErc721, provider?: string) =>
+export const sendBep721Transaction = async (body: ChainTransferErc721, provider?: string) =>
   broadcast(await prepareTransferBep721SignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -1123,10 +1166,10 @@ export const sendBep721Transaction = async (body: TransferErc721, provider?: str
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendMultiTokenTransaction = async (body: TransferMultiToken, provider?: string) =>
+export const sendMultiTokenTransaction = async (body: ChainTransferMultiToken, provider?: string) =>
   broadcast(await prepareTransferMultiTokenSignedTransaction(body, provider), body.signatureId)
 
-export const sendMultiTokenBatchTransaction = async (body: TransferMultiTokenBatch, provider?: string) =>
+export const sendMultiTokenBatchTransaction = async (body: ChainTransferMultiTokenBatch, provider?: string) =>
   broadcast(await prepareBatchTransferMultiTokenSignedTransaction(body, provider), body.signatureId)
 /**
  * Send Bsc BEP721 deploy to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -1135,7 +1178,7 @@ export const sendMultiTokenBatchTransaction = async (body: TransferMultiTokenBat
  * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendDeployBep721Transaction = async (body: DeployErc721, provider?: string) =>
+export const sendDeployBep721Transaction = async (body: ChainDeployErc721, provider?: string) =>
   broadcast(await prepareDeployBep721SignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -1145,5 +1188,5 @@ export const sendDeployBep721Transaction = async (body: DeployErc721, provider?:
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendDeployMarketplaceListingSignedTransaction = async (body: DeployMarketplaceListing, provider?: string) =>
+export const sendDeployMarketplaceListingSignedTransaction = async (body: ChainDeployMarketplaceListing, provider?: string) =>
   broadcast(await prepareDeployMarketplaceListingSignedTransaction(body, provider), body.signatureId)

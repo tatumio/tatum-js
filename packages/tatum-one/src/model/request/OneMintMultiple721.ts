@@ -10,3 +10,5 @@ export class OneMintMultiple721 extends MintMultipleErc721 {
   @Min(0)
   public toShardID?: number
 }
+
+export type ChainOneMintMultiple721 = Omit<OneMintMultiple721, 'chain'>

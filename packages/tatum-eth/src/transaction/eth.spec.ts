@@ -1,12 +1,10 @@
-import {
-  // BurnErc20,
-  Currency,
-  // DeployErc20,
-  // erc721Provenance_abi,
-  // MintErc20,
-  // SmartContractReadMethodInvocation,
-  // TransferErc20,
-} from '@tatumio/tatum-core'
+import // BurnErc20,
+// DeployErc20,
+// erc721Provenance_abi,
+// MintErc20,
+// SmartContractReadMethodInvocation,
+// TransferErc20,
+'@tatumio/tatum-core'
 // import { ethEstimateGas } from '../blockchain'
 import {
   // ethGetGasPriceInWei,
@@ -274,7 +272,6 @@ describe('ETH transactions', () => {
       to: '0x811dfbff13adfbc3cf653dcc373c03616d3471c9',
       tokenId: '1615546122766',
       fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
-      chain: Currency.ETH,
       contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
       fee: {
         gasLimit: '5000000',

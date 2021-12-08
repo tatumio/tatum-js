@@ -1,11 +1,11 @@
 import {
+  CeloBurnMultiToken,
+  CeloBurnMultiTokenBatch,
   CeloDeployMultiToken,
   CeloMintMultiToken,
   CeloMintMultiTokenBatch,
-  CeloBurnMultiToken,
   CeloTransferMultiToken,
   CeloTransferMultiTokenBatch,
-  CeloBurnMultiTokenBatch,
 } from '../model'
 import {
   sendBurnMultiTokenBatchTransaction,
@@ -16,7 +16,19 @@ import {
   sendTransferMultiTokenBatchTransaction,
   sendTransferMultiTokenTransaction,
 } from '../transaction'
-import { AddMinter, prepareAddMultiTokenMinterAbstraction, listing } from '@tatumio/tatum-core'
+import {
+  ChainAddMinter,
+  Currency,
+  getMultiTokenContractAddress as getMultiTokenContractAddressCore,
+  getMultiTokenMetadata as getMultiTokenMetadataCore,
+  getMultiTokensBalance as getMultiTokensBalanceCore,
+  getMultiTokensBatchBalance as getMultiTokensBatchBalanceCore,
+  getMultiTokenTransaction as getMultiTokenTransactionCore,
+  getMultiTokenTransactionsByAddress as getMultiTokenTransactionsByAddressCore,
+  listing,
+  prepareAddMultiTokenMinterAbstraction,
+  Sort,
+} from '@tatumio/tatum-core'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
 
 export const deployMultiToken = async (testnet: boolean, body: CeloDeployMultiToken, provider?: string) => {
@@ -53,8 +65,8 @@ export const transferMultiTokenBatch = async (testnet: boolean, body: CeloTransf
  * @param body body of the add minter request
  * @param provider optional provider do broadcast tx
  */
-export const prepareAddMultiTokenMinter = async (testnet: boolean, body: AddMinter, provider?: string) => {
-  const params = await prepareAddMultiTokenMinterAbstraction(body)
+export const prepareAddMultiTokenMinter = async (testnet: boolean, body: ChainAddMinter, provider?: string) => {
+  const params = await prepareAddMultiTokenMinterAbstraction({ ...body, chain: Currency.CELO })
   return await helperPrepareSCCall(testnet, body, 'grantRole', params, provider, listing.abi)
 }
 
@@ -64,14 +76,55 @@ export const prepareAddMultiTokenMinter = async (testnet: boolean, body: AddMint
  * @param body body of the add minter request
  * @param provider optional provider do broadcast tx
  */
-export const sendAddMultiTokenMinter = async (testnet: boolean, body: AddMinter, provider?: string) =>
+export const sendAddMultiTokenMinter = async (testnet: boolean, body: ChainAddMinter, provider?: string) =>
   helperBroadcastTx(await prepareAddMultiTokenMinter(testnet, body, provider), body.signatureId)
 
-export {
-  getMultiTokenTransactionsByAddress,
-  getMultiTokenContractAddress,
-  getMultiTokensBalance,
-  getMultiTokensBatchBalance,
-  getMultiTokenTransaction,
-  getMultiTokenMetadata,
-} from '@tatumio/tatum-core'
+/**
+ * For more details, see <a href="https://tatum.io/apidoc.php#operation/MultiTokenGetTransactionByAddress" target="_blank">Tatum API documentation</a>
+ */
+export const getMultiTokenTransactionsByAddress = async (
+  address: string,
+  tokenAddress: string,
+  pageSize = 50,
+  offset = 0,
+  from?: string,
+  to?: string,
+  sort?: Sort
+) => {
+  return getMultiTokenTransactionsByAddressCore(Currency.CELO, address, tokenAddress, pageSize, offset, from, to, sort)
+}
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MultiTokenGetContractAddress" target="_blank">Tatum API documentation</a>
+ */
+export const getMultiTokenContractAddress = async (txId: string) => {
+  return getMultiTokenContractAddressCore(Currency.CELO, txId)
+}
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MultiTokenGetBalance" target="_blank">Tatum API documentation</a>
+ */
+export const getMultiTokensBalance = async (contractAddress: string, address: string, tokenId: string) => {
+  return getMultiTokensBalanceCore(Currency.CELO, contractAddress, address, tokenId)
+}
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MultiTokenGetBalanceBatch" target="_blank">Tatum API documentation</a>
+ */
+export const getMultiTokensBatchBalance = async (contractAddress: string, address: string, tokenIds: string) => {
+  return getMultiTokensBatchBalanceCore(Currency.CELO, contractAddress, address, tokenIds)
+}
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MultiTokenGetTransaction" target="_blank">Tatum API documentation</a>
+ */
+export const getMultiTokenTransaction = async (txId: string) => {
+  return getMultiTokenTransactionCore(Currency.CELO, txId)
+}
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/MultiTokenGetMetadata" target="_blank">Tatum API documentation</a>
+ */
+export const getMultiTokenMetadata = async (contractAddress: string, tokenId: string) => {
+  return getMultiTokenMetadataCore(Currency.CELO, contractAddress, tokenId)
+}
