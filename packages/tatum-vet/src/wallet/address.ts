@@ -10,7 +10,7 @@ import { VET_DERIVATION_PATH } from '../constants'
  * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
-const generateVetAddress = (xpub: string, i: number) => {
+const generateAddress = (xpub: string, i: number) => {
   const w = ethHdKey.fromExtendedKey(xpub)
   const wallet = w.deriveChild(i).getWallet()
   return '0x' + wallet.getAddress().toString('hex').toLowerCase()
@@ -23,7 +23,7 @@ const generateVetAddress = (xpub: string, i: number) => {
  * @param i derivation index of private key to generate.
  * @returns blockchain private key to the address
  */
-const generateVetPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
+const generatePrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
   const path = testnet ? TESTNET_DERIVATION_PATH : VET_DERIVATION_PATH
   const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnemonic))
   const derivePath = hdwallet.derivePath(path).deriveChild(i)
@@ -37,7 +37,7 @@ const generateVetPrivateKey = async (testnet: boolean, mnemonic: string, i: numb
  * @returns blockchain address
  */
 export const generateAddressFromXPub = (xpub: string, i: number) => {
-  return generateVetAddress(xpub, i)
+  return generateAddress(xpub, i)
 }
 
 /**
@@ -48,5 +48,5 @@ export const generateAddressFromXPub = (xpub: string, i: number) => {
  * @returns blockchain private key to the address
  */
 export const generatePrivateKeyFromMnemonic = (testnet: boolean, mnemonic: string, i: number) => {
-  return generateVetPrivateKey(testnet, mnemonic, i)
+  return generatePrivateKey(testnet, mnemonic, i)
 }
