@@ -29,8 +29,8 @@ export const getNFTTransactionsByToken = async (
   chain: Currency,
   tokenId: number,
   tokenAddress: string,
-  pageSize = 50,
-  offset = 0,
+  pageSize: number,
+  offset?: number,
   from?: number,
   to?: number,
   sort?: Sort
