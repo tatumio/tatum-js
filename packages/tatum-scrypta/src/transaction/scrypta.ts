@@ -1,6 +1,6 @@
 import { ChainTransactionKMS, Currency, TransactionKMS, TransferBtcBasedBlockchain, validateBody } from '@tatumio/tatum-core'
 import BigNumber from 'bignumber.js'
-import { scryptaBroadcast, scryptaGetUnspentForAccount } from '../blockchain'
+import { broadcast, getUnspentForAccount } from '../blockchain'
 import { LYRA_NETWORK, LYRA_TEST_NETWORK } from '../constants'
 import { ECPair, Network, Transaction, TransactionBuilder } from 'bitcoinjs-lib'
 
@@ -16,7 +16,7 @@ const prepareSignedTransaction = async (network: Network, body: TransferBtcBased
   tx.setVersion(1)
   if (fromAddress) {
     for (const item of fromAddress) {
-      const txs = await scryptaGetUnspentForAccount(item.address)
+      const txs = await getUnspentForAccount(item.address)
       for (const t of txs) {
         try {
           tx.addInput(t.txid, t.vout)
@@ -53,7 +53,7 @@ const prepareSignedTransaction = async (network: Network, body: TransferBtcBased
  * @param testnet mainnet or testnet version
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signScryptaKMSTransaction = async (tx: ChainTransactionKMS, privateKeys: string[], testnet: boolean) => {
+export const signKMSTransaction = async (tx: ChainTransactionKMS, privateKeys: string[], testnet: boolean) => {
   ;(tx as TransactionKMS).chain = Currency.LYRA
   const network = testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK
   const builder = TransactionBuilder.fromTransaction(Transaction.fromHex(tx.serializedTransaction), network)
@@ -70,7 +70,7 @@ export const signScryptaKMSTransaction = async (tx: ChainTransactionKMS, private
  * @param body content of the transaction to broadcast
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareScryptaSignedTransaction = async (testnet: boolean, body: TransferBtcBasedBlockchain) => {
+export const prepareBlockchainSignedTransaction = async (testnet: boolean, body: TransferBtcBasedBlockchain) => {
   return prepareSignedTransaction(testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK, body)
 }
 
@@ -81,6 +81,6 @@ export const prepareScryptaSignedTransaction = async (testnet: boolean, body: Tr
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendScryptaTransaction = async (testnet: boolean, body: TransferBtcBasedBlockchain) => {
-  return scryptaBroadcast(await prepareScryptaSignedTransaction(testnet, body))
+export const sendBlockchainTransaction = async (testnet: boolean, body: TransferBtcBasedBlockchain) => {
+  return broadcast(await prepareBlockchainSignedTransaction(testnet, body))
 }
