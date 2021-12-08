@@ -10,7 +10,7 @@ import {
 } from '@tatumio/tatum-core'
 import { prepareXdcOrErc20SignedTransaction } from '../transaction'
 import { generatePrivateKeyFromMnemonic } from '../wallet'
-import { offchainTransferXdcKMS } from './kms'
+import { offchainTransferKMS } from './kms'
 
 /**
  * Send XDC transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -20,9 +20,9 @@ import { offchainTransferXdcKMS } from './kms'
  * @param provider url of the XDC Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
-export const sendXdcOffchainTransaction = async (testnet: boolean, body: TransferOffchain, provider?: string) => {
+export const sendOffchainTransaction = async (testnet: boolean, body: TransferOffchain, provider?: string) => {
   if (body.signatureId) {
-    return offchainTransferXdcKMS(body)
+    return offchainTransferKMS(body)
   }
   await validateBody(body, TransferOffchain)
   const { mnemonic, index, privateKey, gasLimit, gasPrice, nonce, ...withdrawal } = body

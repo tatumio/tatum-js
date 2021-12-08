@@ -26,7 +26,7 @@ import {
   helperPrepareSCCall as polygonHelperPrepareSCCall,
 } from '@tatumio/tatum-polygon'
 import { helperBroadcastTx as tronBroadcast, helperPrepareSCCall as tronHelperPrepareSCCall } from '@tatumio/tatum-tron'
-import { getXdcClient } from '@tatumio/tatum-xdc'
+import { getClient as getXdcClient } from '@tatumio/tatum-xdc'
 import { SCBody } from '@tatumio/tatum-core'
 
 export const helperBroadcastTx = async (chain: Currency, txData: string, signatureId?: string): Promise<TransactionHash> => {
