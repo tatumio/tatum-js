@@ -1,8 +1,8 @@
-import { generateXlmWallet } from './wallet'
+import { generateBlockchainWallet } from './wallet'
 
 describe('Wallet tests', () => {
   it('should generate wallet for XLM', async () => {
-    const wallet = await generateXlmWallet()
+    const wallet = await generateBlockchainWallet()
     expect(wallet.address).not.toBe('')
     expect(wallet.privateKey).not.toBe('')
   })

@@ -1,7 +1,7 @@
 import { TransactionKMS, Currency, validateBody, ChainTransactionKMS } from '@tatumio/tatum-core'
 import { TransferXlm } from '../model'
 import { Account, Asset, Keypair, Memo, Networks, Operation, TransactionBuilder } from 'stellar-sdk'
-import { xlmBroadcast, xlmGetAccountInfo } from '../blockchain'
+import { broadcast, getAccountInfo } from '../blockchain'
 
 /**
  * Send Stellar transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -10,8 +10,8 @@ import { xlmBroadcast, xlmGetAccountInfo } from '../blockchain'
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendXlmTransaction = async (testnet: boolean, body: TransferXlm) => {
-  return xlmBroadcast(await prepareXlmSignedTransaction(testnet, body))
+export const sendBlockchainTransaction = async (testnet: boolean, body: TransferXlm) => {
+  return broadcast(await prepareSignedTransaction(testnet, body))
 }
 
 /**
@@ -21,7 +21,7 @@ export const sendXlmTransaction = async (testnet: boolean, body: TransferXlm) =>
  * @param testnet mainnet or testnet version
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signXlmKMSTransaction = async (tx: ChainTransactionKMS, secret: string, testnet: boolean) => {
+export const signKMSTransaction = async (tx: ChainTransactionKMS, secret: string, testnet: boolean) => {
   ;(tx as TransactionKMS).chain = Currency.XLM
   const transaction = TransactionBuilder.fromXDR(tx.serializedTransaction, testnet ? Networks.TESTNET : Networks.PUBLIC)
   transaction.sign(Keypair.fromSecret(secret))
@@ -34,13 +34,13 @@ export const signXlmKMSTransaction = async (tx: ChainTransactionKMS, secret: str
  * @param body content of the transaction to broadcast
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareXlmSignedTransaction = async (testnet: boolean, body: TransferXlm) => {
+export const prepareSignedTransaction = async (testnet: boolean, body: TransferXlm) => {
   await validateBody(body, TransferXlm)
   const { fromSecret, to, amount, message, initialize } = body
 
   const memo = message ? (message.length > 28 ? Memo.hash(message) : Memo.text(message)) : undefined
   const fromAccount = Keypair.fromSecret(fromSecret).publicKey()
-  const account = await xlmGetAccountInfo(fromAccount)
+  const account = await getAccountInfo(fromAccount)
   const builder = new TransactionBuilder(new Account(fromAccount, account.sequence), {
     fee: '100',
     networkPassphrase: testnet ? Networks.TESTNET : Networks.PUBLIC,
