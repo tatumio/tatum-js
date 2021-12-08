@@ -152,10 +152,10 @@ export const sendAddNFTMinter = async (testnet: boolean, body: ChainAddMinter, p
 export const getNFTTransactionsByAddress = async (
   address: string,
   tokenAddress: string,
-  pageSize = 50,
-  offset = 0,
-  from?: string,
-  to?: string,
+  pageSize: number,
+  offset?: number,
+  from?: number,
+  to?: number,
   sort?: Sort
 ) => {
   return getNFTTransactionsByAddressDefi(Currency.CELO, address, tokenAddress, pageSize, offset, from, to, sort)
