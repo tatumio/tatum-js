@@ -151,6 +151,7 @@ export const sendAddNFTMinter = async (body: ChainAddMinter, provider?: string) 
  * @param hash Transaction hash
  */
 export const getNFTTransaction = async (hash: string): Promise<MaticTx> => getNFTTransactionDefi<MaticTx>(Currency.MATIC, hash)
+
 /**
  * Get NFT transactions by token. This includes incoming and outgoing transactions for the token.
  * @param tokenId NFT Token ID
