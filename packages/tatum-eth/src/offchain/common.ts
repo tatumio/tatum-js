@@ -11,7 +11,7 @@ import {
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/createErc20" target="_blank">Tatum API documentation</a>
  */
-export const registerEthereumErc20 = async (data: CreateErc20Offchain): Promise<Account> =>
+export const registerErc20 = async (data: CreateErc20Offchain): Promise<Account> =>
   post(`/v3/offchain/ethereum/erc20`, data, CreateErc20Offchain)
 
 /**

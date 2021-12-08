@@ -31,7 +31,7 @@ import {
 } from '@tatumio/tatum-one'
 import {
   generateCustodialWallet as sendEthGenerateCustodialWalletSignedTransaction,
-  getEthErc20ContractDecimals,
+  getErc20ContractDecimals as getEthErc20ContractDecimals,
   prepareCustodialWallet as prepareEthGenerateCustodialWalletSignedTransaction,
   prepareSmartContractWriteMethodInvocation,
   generateCustodialWalletBatch as ethGenerateCustodialWalletBatch,

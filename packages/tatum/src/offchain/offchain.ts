@@ -20,11 +20,11 @@ export {
 } from '@tatumio/tatum-doge'
 export { sendOffchainTransaction as sendEgldOffchainTransaction } from '@tatumio/tatum-egld'
 export {
-  sendEthOffchainTransaction,
-  sendEthErc20OffchainTransaction,
-  signEthOffchainKMSTransaction,
-  prepareEthSignedOffchainTransaction,
-  prepareEthErc20SignedOffchainTransaction,
+  sendOffchainTransaction as sendEthOffchainTransaction,
+  sendErc20OffchainTransaction as sendEthErc20OffchainTransaction,
+  signOffchainKMSTransaction as signEthOffchainKMSTransaction,
+  prepareSignedOffchainTransaction as prepareEthSignedOffchainTransaction,
+  prepareErc20SignedOffchainTransaction as prepareEthErc20SignedOffchainTransaction,
 } from '@tatumio/tatum-eth'
 // TODO litecoin - submodule not ready yet
 export { sendPolygonOffchainTransaction } from '@tatumio/tatum-polygon'

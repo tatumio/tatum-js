@@ -6,7 +6,7 @@ import {
   getERC20TransactionsByAddress as getERC20TransactionsByAddressCore,
   ChainApproveErc20,
 } from '@tatumio/tatum-core'
-import { getEthErc20ContractDecimals } from '../transaction'
+import { getErc20ContractDecimals } from '../transaction'
 import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../helpers'
 
 /**
@@ -27,7 +27,7 @@ export const sendApproveErc20 = async (testnet: boolean, body: ChainApproveErc20
  */
 export const prepareApproveErc20 = async (testnet: boolean, body: ChainApproveErc20, provider?: string) => {
   const { body: validatedBody, params } = await prepareApproveErc20Abstraction(
-    getEthErc20ContractDecimals,
+    getErc20ContractDecimals,
     testnet,
     { ...body, chain: Currency.ETH },
     provider

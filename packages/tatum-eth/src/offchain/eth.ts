@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 import { TransactionConfig } from 'web3-core'
-import { ethGetTransactionsCount } from '../blockchain'
+import { getTransactionsCount } from '../blockchain'
 import {
   Currency,
   ETH_BASED_CURRENCIES,
@@ -15,9 +15,9 @@ import {
   ChainTransactionKMS,
 } from '@tatumio/tatum-core'
 import { PrepareEthErc20SignedOffchainTransaction, PrepareEthSignedOffchainTransaction } from '../model'
-import { ethGetGasPriceInWei, getClient } from '../transaction'
+import { getGasPriceInWei, getClient } from '../transaction'
 import { generatePrivateKeyFromMnemonic } from '../wallet'
-import { offchainTransferEthKMS } from './kms'
+import { offchainTransferKMS } from './kms'
 import { getAccountById, getVirtualCurrencyByName } from '@tatumio/tatum-ledger'
 
 /**
@@ -28,9 +28,9 @@ import { getAccountById, getVirtualCurrencyByName } from '@tatumio/tatum-ledger'
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
-export const sendEthOffchainTransaction = async (testnet: boolean, body: TransferOffchain, provider?: string) => {
+export const sendOffchainTransaction = async (testnet: boolean, body: TransferOffchain, provider?: string) => {
   if (body.signatureId) {
-    return offchainTransferEthKMS(body)
+    return offchainTransferKMS(body)
   }
   await validateBody(body, TransferOffchain)
   const { mnemonic, index, privateKey, nonce, ...withdrawal } = body
@@ -46,10 +46,10 @@ export const sendEthOffchainTransaction = async (testnet: boolean, body: Transfe
   }
 
   const web3 = await getClient(provider, fromPriv)
-  const gasPrice = body.gasPrice ? web3.utils.toWei(body.gasPrice, 'gwei') : await ethGetGasPriceInWei()
+  const gasPrice = body.gasPrice ? web3.utils.toWei(body.gasPrice, 'gwei') : await getGasPriceInWei()
 
   const account = await getAccountById(withdrawal.senderAccountId)
-  const { txData, gasLimit } = await prepareEthSignedOffchainTransaction({
+  const { txData, gasLimit } = await prepareSignedOffchainTransaction({
     amount,
     privateKey: fromPriv,
     address,
@@ -86,7 +86,7 @@ export const sendEthOffchainTransaction = async (testnet: boolean, body: Transfe
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
-export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: TransferOffchain, provider?: string) => {
+export const sendErc20OffchainTransaction = async (testnet: boolean, body: TransferOffchain, provider?: string) => {
   await validateBody(body, TransferOffchain)
   const { mnemonic, index, privateKey, nonce, ...withdrawal } = body
   const { amount, address } = withdrawal
@@ -101,16 +101,16 @@ export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: Tr
   }
 
   const web3 = await getClient(provider, fromPriv)
-  const gasPrice = body.gasPrice ? web3.utils.toWei(body.gasPrice, 'gwei') : await ethGetGasPriceInWei()
+  const gasPrice = body.gasPrice ? web3.utils.toWei(body.gasPrice, 'gwei') : await getGasPriceInWei()
 
   const account = await getAccountById(withdrawal.senderAccountId)
 
   if (ETH_BASED_CURRENCIES.includes(account.currency)) {
-    return sendEthOffchainTransaction(testnet, body, provider)
+    return sendOffchainTransaction(testnet, body, provider)
   }
 
   const vc = await getVirtualCurrencyByName(account.currency)
-  const { txData, gasLimit } = await prepareEthErc20SignedOffchainTransaction({
+  const { txData, gasLimit } = await prepareErc20SignedOffchainTransaction({
     amount,
     privateKey: fromPriv,
     address,
@@ -145,13 +145,13 @@ export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: Tr
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signEthOffchainKMSTransaction = async (tx: ChainTransactionKMS, fromPrivateKey: string, provider?: string) => {
+export const signOffchainKMSTransaction = async (tx: ChainTransactionKMS, fromPrivateKey: string, provider?: string) => {
   ;(tx as TransactionKMS).chain = Currency.ETH
   const client = await getClient(provider, fromPrivateKey)
   const transactionConfig = JSON.parse(tx.serializedTransaction)
   transactionConfig.gas = await client.eth.estimateGas(transactionConfig)
   if (!transactionConfig.nonce) {
-    transactionConfig.nonce = await ethGetTransactionsCount(client.eth.defaultAccount as string)
+    transactionConfig.nonce = await getTransactionsCount(client.eth.defaultAccount as string)
   }
   if (
     !transactionConfig.gasPrice ||
@@ -159,7 +159,7 @@ export const signEthOffchainKMSTransaction = async (tx: ChainTransactionKMS, fro
     transactionConfig.gasPrice === 0 ||
     transactionConfig.gasPrice === '0x0'
   ) {
-    transactionConfig.gasPrice = await ethGetGasPriceInWei()
+    transactionConfig.gasPrice = await getGasPriceInWei()
   }
   return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey)).rawTransaction as string
 }
@@ -169,7 +169,7 @@ export const signEthOffchainKMSTransaction = async (tx: ChainTransactionKMS, fro
  * @returns transaction data to be broadcast to blockchain.
  * @param body
  */
-export const prepareEthSignedOffchainTransaction = async (body: PrepareEthSignedOffchainTransaction) => {
+export const prepareSignedOffchainTransaction = async (body: PrepareEthSignedOffchainTransaction) => {
   await validateBody(body, PrepareEthSignedOffchainTransaction)
   const { currency, address, amount, gasLimit, gasPrice, nonce, privateKey, web3 } = body
   let tx: TransactionConfig
@@ -213,7 +213,7 @@ export const prepareEthSignedOffchainTransaction = async (body: PrepareEthSigned
  * @returns transaction data to be broadcast to blockchain.
  * @param body
  */
-export const prepareEthErc20SignedOffchainTransaction = async (body: PrepareEthErc20SignedOffchainTransaction) => {
+export const prepareErc20SignedOffchainTransaction = async (body: PrepareEthErc20SignedOffchainTransaction) => {
   await validateBody(body, PrepareEthErc20SignedOffchainTransaction)
 
   const { amount, privateKey, address, gasPrice, nonce, tokenAddress, web3, gasLimit } = body

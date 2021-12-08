@@ -1,7 +1,7 @@
 import { ApproveErc20, Currency, prepareApproveErc20Abstraction, erc20TokenABI } from '@tatumio/tatum-core'
 import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../helpers'
 import { getOne20ContractDecimals } from '@tatumio/tatum-one'
-import { getEthErc20ContractDecimals } from '@tatumio/tatum-eth'
+import { getErc20ContractDecimals as getEthErc20ContractDecimals } from '@tatumio/tatum-eth'
 import { getErc20ContractDecimals as getCeloErc20ContractDecimals } from '@tatumio/tatum-celo'
 import { getBep20ContractDecimals as getBscBep20ContractDecimals } from '@tatumio/tatum-bsc'
 import { getPolygonErc20ContractDecimals } from '@tatumio/tatum-polygon'

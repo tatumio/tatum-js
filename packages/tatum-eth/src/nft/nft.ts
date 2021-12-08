@@ -28,7 +28,7 @@ import {
   sendBurnErc721Transaction,
   sendDeployErc721Transaction,
   sendErc721Transaction,
-  sendEthMintMultipleCashbackErc721SignedTransaction,
+  sendMintMultipleCashbackErc721SignedTransaction,
   sendMintCashbackErc721Transaction,
   sendMintErc721Transaction,
   sendMintMultipleErc721Transaction,
@@ -88,7 +88,7 @@ export const mintNFTWithUri = async (body: ChainMintErc721, options?: { provider
  */
 export const mintMultipleNFTWithUri = async (body: ChainMintMultipleErc721, provider?: string) => {
   if ((body as MintMultipleErc721).authorAddresses) {
-    return sendEthMintMultipleCashbackErc721SignedTransaction(body, provider)
+    return sendMintMultipleCashbackErc721SignedTransaction(body, provider)
   } else {
     return sendMintMultipleErc721Transaction(body, provider)
   }

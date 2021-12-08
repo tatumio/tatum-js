@@ -19,37 +19,37 @@ import {
   ChainAddMinter,
 } from '@tatumio/tatum-core'
 import {
-  sendEthBurnBatchMultiTokenTransaction,
-  sendEthBurnMultiTokenTransaction,
-  sendEthDeployMultiTokenTransaction,
-  sendEthMintMultiTokenBatchTransaction,
-  sendEthMintMultiTokenTransaction,
-  sendEthMultiTokenBatchTransaction,
-  sendEthMultiTokenTransaction,
+  sendBurnBatchMultiTokenTransaction,
+  sendBurnMultiTokenTransaction,
+  sendDeployMultiTokenTransaction,
+  sendMintMultiTokenBatchTransaction,
+  sendMintMultiTokenTransaction,
+  sendMultiTokenBatchTransaction,
+  sendMultiTokenTransaction,
 } from '../transaction'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
 
 export const deployMultiToken = async (body: ChainDeployMultiToken, provider?: string) => {
-  return sendEthDeployMultiTokenTransaction(body, provider)
+  return sendDeployMultiTokenTransaction(body, provider)
 }
 export const mintMultiToken = async (body: ChainMintMultiToken, provider?: string) => {
-  return sendEthMintMultiTokenTransaction(body, provider)
+  return sendMintMultiTokenTransaction(body, provider)
 }
 export const mintMultiTokenBatch = async (body: ChainMintMultiTokenBatch, provider?: string) => {
-  return sendEthMintMultiTokenBatchTransaction(body, provider)
+  return sendMintMultiTokenBatchTransaction(body, provider)
 }
 export const burnMultiToken = async (body: ChainBurnMultiToken, provider?: string) => {
-  return sendEthBurnMultiTokenTransaction(body, provider)
+  return sendBurnMultiTokenTransaction(body, provider)
 }
 export const burnMultiTokenBatch = async (body: ChainBurnMultiTokenBatch, provider?: string) => {
-  return sendEthBurnBatchMultiTokenTransaction(body, provider)
+  return sendBurnBatchMultiTokenTransaction(body, provider)
 }
 
 export const transferMultiToken = async (body: ChainTransferMultiToken, provider?: string) => {
-  return sendEthMultiTokenTransaction(body, provider)
+  return sendMultiTokenTransaction(body, provider)
 }
 export const transferMultiTokenBatch = async (body: ChainTransferMultiTokenBatch, provider?: string) => {
-  return sendEthMultiTokenBatchTransaction(body, provider)
+  return sendMultiTokenBatchTransaction(body, provider)
 }
 
 /**
