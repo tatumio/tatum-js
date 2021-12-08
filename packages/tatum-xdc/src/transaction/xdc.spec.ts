@@ -1,5 +1,5 @@
 // import Web3 from 'web3'
-import { Currency, DeployErc20, TransferErc20 } from '@tatumio/tatum-core'
+import { DeployErc20, TransferErc20 } from '@tatumio/tatum-core'
 import {
   prepareXdcCustomErc20SignedTransaction,
   prepareXdcDeployErc20SignedTransaction,
@@ -199,7 +199,6 @@ describe('XDC transactions', () => {
         tokenId,
         url: 'https://www.seznam.cz',
         fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
-        chain: Currency.XDC,
         contractAddress: 'xdc687422eEA2cB73B5d3e242bA5456b782919AFc85',
         fee: {
           gasLimit: '50000',
@@ -221,7 +220,6 @@ describe('XDC transactions', () => {
       tokenId: [firstTokenId.toString(), secondTokenId.toString()],
       url: ['https://www.seznam.cz', 'https://www.seznam.cz'],
       fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
-      chain: Currency.XDC,
       contractAddress: 'xdc687422eEA2cB73B5d3e242bA5456b782919AFc85',
       fee: {
         gasLimit: '50000',
@@ -235,7 +233,6 @@ describe('XDC transactions', () => {
     const burnErc721Token = await sendXdcBurnErc721Transaction({
       tokenId: '1615552558810',
       fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
-      chain: Currency.XDC,
       contractAddress: 'xdc687422eEA2cB73B5d3e242bA5456b782919AFc85',
       fee: {
         gasLimit: '5000000',
@@ -250,7 +247,6 @@ describe('XDC transactions', () => {
       to: 'xdc811dfbff13adfbc3cf653dcc373c03616d3471c9',
       tokenId: '1615546122766',
       fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
-      chain: Currency.XDC,
       contractAddress: 'xdc687422eEA2cB73B5d3e242bA5456b782919AFc85',
       fee: {
         gasLimit: '5000000',
@@ -264,7 +260,6 @@ describe('XDC transactions', () => {
     const deployErc721Token = await sendXdcDeployErc721Transaction({
       symbol: '1oido3id3',
       fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
-      chain: Currency.XDC,
       name: '2123kd',
     })
     expect(deployErc721Token).not.toBeNull()

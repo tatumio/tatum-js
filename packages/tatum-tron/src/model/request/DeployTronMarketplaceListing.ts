@@ -12,3 +12,5 @@ export class DeployTronMarketplaceListing extends DeployMarketplaceListing {
   @Min(0)
   public feeLimit?: number
 }
+
+export type ChainDeployTronMarketplaceListing = Omit<DeployTronMarketplaceListing, 'chain'>

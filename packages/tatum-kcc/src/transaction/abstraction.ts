@@ -1,4 +1,4 @@
-import { CreateRecord, validateBody, Currency, TransferErc20 } from '@tatumio/tatum-core'
+import { CreateRecord, validateBody, Currency, TransferErc20, ChainCreateRecord, ChainTransferErc20 } from '@tatumio/tatum-core'
 import { sendKccStoreDataTransaction, sendKccTransaction } from './kcc'
 
 /**
@@ -6,7 +6,8 @@ import { sendKccStoreDataTransaction, sendKccTransaction } from './kcc'
  * @param body Body of the transaction.
  * @param provider Optional provider to use for broadcasting signed tx to the blockchain.
  */
-export const storeData = async (body: CreateRecord, provider?: string) => {
+export const storeData = async (body: ChainCreateRecord, provider?: string) => {
+  ;(body as CreateRecord).chain = Currency.KCS
   await validateBody(body, CreateRecord)
   return await sendKccStoreDataTransaction(body, provider)
 }
@@ -17,7 +18,7 @@ export const storeData = async (body: CreateRecord, provider?: string) => {
  * @param body Body of the transaction.
  * @param provider Optional provider to use for broadcasting signed tx to the blockchain.
  */
-export const sendTransaction = async (chain: Currency, body: TransferErc20, provider?: string) => {
+export const sendTransaction = async (chain: Currency, body: ChainTransferErc20, provider?: string) => {
   ;(body as TransferErc20).currency = chain
-  return sendKccTransaction(body as TransferErc20, provider)
+  return sendKccTransaction(body, provider)
 }

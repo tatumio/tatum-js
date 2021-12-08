@@ -3,10 +3,16 @@ import {
   prepareBatchTransferFromCustodialWalletAbstract,
   prepareCustodialWalletBatchAbstract,
 } from '@tatumio/tatum-defi'
-import { GenerateTronCustodialAddress, TransferFromTronCustodialAddress, TransferFromTronCustodialAddressBatch } from '../model'
 import {
+  ChainGenerateTronCustodialAddress,
+  ChainTransferFromTronCustodialAddress,
+  ChainTransferFromTronCustodialAddressBatch,
+  TransferFromTronCustodialAddressBatch,
+} from '../model'
+import {
+  ChainGenerateCustodialAddressBatch,
+  Currency,
   CUSTODIAL_PROXY_ABI,
-  GenerateCustodialAddressBatch,
   SmartContractMethodInvocation,
   TransferFromCustodialAddress,
 } from '@tatumio/tatum-core'
@@ -28,7 +34,7 @@ import {
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const generateCustodialWallet = async (body: GenerateTronCustodialAddress, provider?: string) => {
+export const generateCustodialWallet = async (body: ChainGenerateTronCustodialAddress, provider?: string) => {
   console.log('This method is deprecated. For better gas consumption, use prepareCustodialWalletBatch.')
   return await sendTronGenerateCustodialWalletSignedTransaction(body, provider)
 }
@@ -40,7 +46,7 @@ export const generateCustodialWallet = async (body: GenerateTronCustodialAddress
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareCustodialWallet = async (body: GenerateTronCustodialAddress, provider?: string) => {
+export const prepareCustodialWallet = async (body: ChainGenerateTronCustodialAddress, provider?: string) => {
   console.log('This method is deprecated. For better gas consumption, use prepareCustodialWalletBatch.')
   return await prepareTronGenerateCustodialWalletSignedTransaction(body, provider)
 }
@@ -52,7 +58,7 @@ export const prepareCustodialWallet = async (body: GenerateTronCustodialAddress,
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendCustodialWallet = async (body: GenerateTronCustodialAddress, provider?: string) => {
+export const sendCustodialWallet = async (body: ChainGenerateTronCustodialAddress, provider?: string) => {
   const txData = await prepareTronGenerateCustodialWalletSignedTransaction(body, provider)
   return helperBroadcastTx(txData, body.signatureId)
 }
@@ -64,11 +70,15 @@ export const sendCustodialWallet = async (body: GenerateTronCustodialAddress, pr
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareTransferFromCustodialWallet = async (testnet: boolean, body: TransferFromTronCustodialAddress, provider?: string) => {
+export const prepareTransferFromCustodialWallet = async (
+  testnet: boolean,
+  body: ChainTransferFromTronCustodialAddress,
+  provider?: string
+) => {
   const { feeLimit, from } = body
   return prepareTransferFromCustodialWalletAbstract(
     testnet,
-    body,
+    { ...body, chain: Currency.TRON },
     getTronTrc20ContractDecimals,
     (r) => prepareTronSmartContractInvocation(r, feeLimit as number, from),
     SmartContractMethodInvocation,
@@ -85,7 +95,7 @@ export const prepareTransferFromCustodialWallet = async (testnet: boolean, body:
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendTransferFromCustodialWallet = async (testnet: boolean, body: TransferFromTronCustodialAddress, provider?: string) =>
+export const sendTransferFromCustodialWallet = async (testnet: boolean, body: ChainTransferFromTronCustodialAddress, provider?: string) =>
   helperBroadcastTx(await prepareTransferFromCustodialWallet(testnet, body, provider), body.signatureId)
 
 /**
@@ -97,13 +107,13 @@ export const sendTransferFromCustodialWallet = async (testnet: boolean, body: Tr
  */
 export const prepareBatchTransferFromCustodialWallet = async (
   testnet: boolean,
-  body: TransferFromTronCustodialAddressBatch,
+  body: ChainTransferFromTronCustodialAddressBatch,
   provider?: string
 ) => {
   const { feeLimit, from } = body
   return prepareBatchTransferFromCustodialWalletAbstract(
     testnet,
-    body,
+    { ...body, chain: Currency.TRON },
     getTronTrc20ContractDecimals,
     (r) => prepareTronCustodialTransferBatch(r, feeLimit as number, from),
     SmartContractMethodInvocation,
@@ -122,7 +132,7 @@ export const prepareBatchTransferFromCustodialWallet = async (
  */
 export const sendBatchTransferFromCustodialWallet = async (
   testnet: boolean,
-  body: TransferFromTronCustodialAddressBatch,
+  body: ChainTransferFromTronCustodialAddressBatch,
   provider?: string
 ) => helperBroadcastTx(await prepareBatchTransferFromCustodialWallet(testnet, body, provider), body.signatureId)
 /**
@@ -133,7 +143,7 @@ export const sendBatchTransferFromCustodialWallet = async (
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const generateCustodialWalletBatch = async (testnet: boolean, body: GenerateCustodialAddressBatch, provider?: string) => {
+export const generateCustodialWalletBatch = async (testnet: boolean, body: ChainGenerateCustodialAddressBatch, provider?: string) => {
   const txData = await prepareCustodialWalletBatch(testnet, body, provider)
   return helperBroadcastTx(txData, body.signatureId)
 }
@@ -146,10 +156,10 @@ export const generateCustodialWalletBatch = async (testnet: boolean, body: Gener
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareCustodialWalletBatch = async (testnet: boolean, body: GenerateCustodialAddressBatch, provider?: string) => {
+export const prepareCustodialWalletBatch = async (testnet: boolean, body: ChainGenerateCustodialAddressBatch, provider?: string) => {
   const { params, methodName, methodSig, bodyWithContractAddress } = await prepareCustodialWalletBatchAbstract(
     testnet,
-    body,
+    { ...body, chain: Currency.TRON },
     getCustodialFactoryContractAddress,
     convertAddressToHex
   )

@@ -12,3 +12,5 @@ export class GenerateTronCustodialAddress extends GenerateCustodialAddress {
   @Min(0)
   public feeLimit?: number
 }
+
+export type ChainGenerateTronCustodialAddress = Omit<GenerateTronCustodialAddress, 'chain'>

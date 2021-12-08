@@ -1,4 +1,4 @@
-import { SignatureId, post } from '@tatumio/tatum-core'
+import { SignatureId, post, getPendingTransactionsKMSByChain as getPendingTransactionsKMSByChainCore, Currency } from '@tatumio/tatum-core'
 import { TransferXrpOffchainKMS } from '../model'
 
 /**
@@ -6,3 +6,10 @@ import { TransferXrpOffchainKMS } from '../model'
  */
 export const offchainTransferXrpKMS = async (body: TransferXrpOffchainKMS): Promise<SignatureId> =>
   post(`/v3/offchain/xrp/transfer`, body, TransferXrpOffchainKMS)
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc#operation/GetPendingTransactionsToSign" target="_blank">Tatum API documentation</a>
+ */
+export const getPendingTransactionsKMSByChain = () => {
+  return getPendingTransactionsKMSByChainCore(Currency.XRP)
+}

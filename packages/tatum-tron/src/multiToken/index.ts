@@ -1,4 +1,4 @@
-import { AddMinter, prepareAddMultiTokenMinterAbstraction, listing } from '@tatumio/tatum-core'
+import { prepareAddMultiTokenMinterAbstraction, listing, ChainAddMinter, Currency } from '@tatumio/tatum-core'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
 
 /**
@@ -6,8 +6,8 @@ import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
  * @param body body of the add minter request
  * @param provider optional provider do broadcast tx
  */
-export const prepareAddMultiTokenMinter = async (body: AddMinter, provider?: string) => {
-  const params = await prepareAddMultiTokenMinterAbstraction(body)
+export const prepareAddMultiTokenMinter = async (body: ChainAddMinter, provider?: string) => {
+  const params = await prepareAddMultiTokenMinterAbstraction({ ...body, chain: Currency.TRON })
   return await helperPrepareSCCall(body, 'grantRole', params, undefined, provider, listing.abi)
 }
 
@@ -16,13 +16,5 @@ export const prepareAddMultiTokenMinter = async (body: AddMinter, provider?: str
  * @param body body of the add minter request
  * @param provider optional provider do broadcast tx
  */
-export const sendAddMultiTokenMinter = async (body: AddMinter, provider?: string) =>
+export const sendAddMultiTokenMinter = async (body: ChainAddMinter, provider?: string) =>
   helperBroadcastTx(await prepareAddMultiTokenMinter(body, provider), body.signatureId)
-
-export {
-  getMultiTokenContractAddress,
-  getMultiTokensBalance,
-  getMultiTokensBatchBalance,
-  getMultiTokenTransaction,
-  getMultiTokenMetadata,
-} from '@tatumio/tatum-core'

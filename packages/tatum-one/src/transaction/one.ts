@@ -18,6 +18,11 @@ import {
   erc721Provenance_abi,
   erc721TokenABI,
   erc721Provenance_bytecode,
+  ChainTransactionKMS,
+  ChainCreateRecord,
+  ChainGenerateCustodialAddress,
+  ChainDeployMarketplaceListing,
+  ChainDeployNftAuction,
 } from '@tatumio/tatum-core'
 import { obtainCustodialAddressType } from '@tatumio/tatum-defi'
 import { BigNumber } from 'bignumber.js'
@@ -26,6 +31,21 @@ import { TransactionConfig } from 'web3-core'
 import { toWei } from 'web3-utils'
 import { oneBroadcast } from '../blockchain'
 import {
+  ChainOneBurn721,
+  ChainOneBurnMultiToken,
+  ChainOneBurnMultiTokenBatch,
+  ChainOneDeploy721,
+  ChainOneDeployMultiToken,
+  ChainOneMint721,
+  ChainOneMintMultiple721,
+  ChainOneMintMultiToken,
+  ChainOneMintMultiTokenBatch,
+  ChainOneTransfer,
+  ChainOneTransfer20,
+  ChainOneTransfer721,
+  ChainOneTransferMultiToken,
+  ChainOneTransferMultiTokenBatch,
+  ChainOneUpdateCashback721,
   OneBurn20,
   OneBurn721,
   OneBurnMultiToken,
@@ -83,7 +103,7 @@ const prepareGeneralTx = async (
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendOneTransaction = async (body: OneTransfer, provider?: string) => {
+export const sendOneTransaction = async (body: ChainOneTransfer, provider?: string) => {
   return oneBroadcast(await prepareOneSignedTransaction(body, provider))
 }
 
@@ -104,10 +124,8 @@ export const prepareOneClient = (provider?: string, fromPrivateKey?: string) => 
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signOneKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, provider?: string) => {
-  if (tx.chain !== Currency.ONE) {
-    throw Error('Unsupported chain.')
-  }
+export const signOneKMSTransaction = async (tx: ChainTransactionKMS, fromPrivateKey: string, provider?: string) => {
+  ;(tx as TransactionKMS).chain = Currency.ONE
   const client = prepareOneClient(provider, fromPrivateKey)
   const transactionConfig = JSON.parse(tx.serializedTransaction)
   if (!transactionConfig.gas) {
@@ -130,7 +148,8 @@ export const signOneKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareOneSignedTransaction = async (body: OneTransfer, provider?: string) => {
+export const prepareOneSignedTransaction = async (body: ChainOneTransfer, provider?: string) => {
+  ;(body as OneTransfer).currency = Currency.ONE
   await validateBody(body, OneTransfer)
   const client = await prepareOneClient(provider, body.fromPrivateKey)
   return prepareGeneralTx(
@@ -152,7 +171,8 @@ export const prepareOneSignedTransaction = async (body: OneTransfer, provider?: 
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareOneStoreDataTransaction = async (body: CreateRecord, provider?: string) => {
+export const prepareOneStoreDataTransaction = async (body: ChainCreateRecord, provider?: string) => {
+  ;(body as CreateRecord).chain = Currency.ONE
   await validateBody(body, CreateRecord)
   const client = await prepareOneClient(provider, body.fromPrivateKey)
   const hexData = client.utils.isHex(body.data) ? client.utils.stringToHex(body.data) : client.utils.toHex(body.data)
@@ -229,7 +249,8 @@ export const prepareOneBurn20SignedTransaction = async (body: OneBurn20, provide
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareOneTransfer20SignedTransaction = async (body: OneTransfer20, provider?: string) => {
+export const prepareOneTransfer20SignedTransaction = async (body: ChainOneTransfer20, provider?: string) => {
+  ;(body as OneTransfer20).currency = Currency.ONE
   await validateBody(body, OneTransfer20)
   const client = await prepareOneClient(provider, body.fromPrivateKey)
   const decimals = new BigNumber(10).pow(body.digits as number)
@@ -266,10 +287,11 @@ export const getOne20ContractDecimals = async (contractAddress: string, provider
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareOneGenerateCustodialWalletSignedTransaction = async (body: GenerateCustodialAddress, provider?: string) => {
+export const prepareOneGenerateCustodialWalletSignedTransaction = async (body: ChainGenerateCustodialAddress, provider?: string) => {
+  ;(body as GenerateCustodialAddress).chain = Currency.ONE
   await validateBody(body, GenerateCustodialAddress)
   const client = await prepareOneClient(provider, body.fromPrivateKey)
-  const { abi, code } = obtainCustodialAddressType(body)
+  const { abi, code } = obtainCustodialAddressType({ ...body, chain: Currency.ONE })
   // @ts-ignore
   const contract = new client.eth.Contract(abi)
   const data = contract
@@ -296,7 +318,8 @@ export const prepareOneGenerateCustodialWalletSignedTransaction = async (body: G
  * @param provider url of the One Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
  */
-export const prepareOneDeployMarketplaceListingSignedTransaction = async (body: DeployMarketplaceListing, provider?: string) => {
+export const prepareOneDeployMarketplaceListingSignedTransaction = async (body: ChainDeployMarketplaceListing, provider?: string) => {
+  ;(body as DeployMarketplaceListing).chain = Currency.ONE
   await validateBody(body, DeployMarketplaceListing)
   const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -325,7 +348,8 @@ export const prepareOneDeployMarketplaceListingSignedTransaction = async (body: 
  * @param provider url of the One Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
  */
-export const prepareOneDeployAuctionSignedTransaction = async (body: DeployNftAuction, provider?: string) => {
+export const prepareOneDeployAuctionSignedTransaction = async (body: ChainDeployNftAuction, provider?: string) => {
+  ;(body as DeployNftAuction).chain = Currency.ONE
   await validateBody(body, DeployNftAuction)
   const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -392,7 +416,8 @@ export const prepareOneDeploy20SignedTransaction = async (body: OneDeploy20, pro
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareOneMint721SignedTransaction = async (body: OneMint721, provider?: string) => {
+export const prepareOneMint721SignedTransaction = async (body: ChainOneMint721, provider?: string) => {
+  ;(body as OneMint721).chain = Currency.ONE
   await validateBody(body, OneMint721)
   const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -420,7 +445,8 @@ export const prepareOneMint721SignedTransaction = async (body: OneMint721, provi
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareOneMint721ProvenanceSignedTransaction = async (body: OneMint721, provider?: string) => {
+export const prepareOneMint721ProvenanceSignedTransaction = async (body: ChainOneMint721, provider?: string) => {
+  ;(body as OneMint721).chain = Currency.ONE
   await validateBody(body, OneMint721)
   const client = await prepareOneClient(provider, body.fromPrivateKey)
   const cb: string[] = []
@@ -477,7 +503,8 @@ export const prepareOneMint721ProvenanceSignedTransaction = async (body: OneMint
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareOneMintMultiple721ProvenanceSignedTransaction = async (body: OneMintMultiple721, provider?: string) => {
+export const prepareOneMintMultiple721ProvenanceSignedTransaction = async (body: ChainOneMintMultiple721, provider?: string) => {
+  ;(body as OneMintMultiple721).chain = Currency.ONE
   await validateBody(body, OneMintMultiple721)
   const client = await prepareOneClient(provider, body.fromPrivateKey)
   const cb: string[][] = []
@@ -552,7 +579,8 @@ export const prepareOneMintMultiple721ProvenanceSignedTransaction = async (body:
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareOneMintCashback721SignedTransaction = async (body: OneMint721, provider?: string) => {
+export const prepareOneMintCashback721SignedTransaction = async (body: ChainOneMint721, provider?: string) => {
+  ;(body as OneMint721).chain = Currency.ONE
   await validateBody(body, OneMint721)
   const client = await prepareOneClient(provider, body.fromPrivateKey)
   const cashbacks: string[] = body.cashbackValues!
@@ -618,7 +646,8 @@ export const prepareOneMintCashback721SignedTransaction = async (body: OneMint72
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareOneMintMultipleCashback721SignedTransaction = async (body: OneMintMultiple721, provider?: string) => {
+export const prepareOneMintMultipleCashback721SignedTransaction = async (body: ChainOneMintMultiple721, provider?: string) => {
+  ;(body as OneMintMultiple721).chain = Currency.ONE
   await validateBody(body, OneMintMultiple721)
   const client = await prepareOneClient(provider, body.fromPrivateKey)
   const cashbacks: string[][] = body.cashbackValues!
@@ -677,7 +706,8 @@ export const prepareOneMintMultipleCashback721SignedTransaction = async (body: O
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareOneMintMultiple721SignedTransaction = async (body: OneMintMultiple721, provider?: string) => {
+export const prepareOneMintMultiple721SignedTransaction = async (body: ChainOneMintMultiple721, provider?: string) => {
+  ;(body as OneMintMultiple721).chain = Currency.ONE
   await validateBody(body, OneMintMultiple721)
   const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -707,7 +737,8 @@ export const prepareOneMintMultiple721SignedTransaction = async (body: OneMintMu
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareOneBurn721SignedTransaction = async (body: OneBurn721, provider?: string) => {
+export const prepareOneBurn721SignedTransaction = async (body: ChainOneBurn721, provider?: string) => {
+  ;(body as OneBurn721).chain = Currency.ONE
   await validateBody(body, OneBurn721)
   const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -733,7 +764,8 @@ export const prepareOneBurn721SignedTransaction = async (body: OneBurn721, provi
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareOneTransfer721SignedTransaction = async (body: OneTransfer721, provider?: string) => {
+export const prepareOneTransfer721SignedTransaction = async (body: ChainOneTransfer721, provider?: string) => {
+  ;(body as OneTransfer721).chain = Currency.ONE
   await validateBody(body, OneTransfer721)
   const client = await prepareOneClient(provider, body.fromPrivateKey)
   const contract = new client.eth.Contract(
@@ -764,7 +796,8 @@ export const prepareOneTransfer721SignedTransaction = async (body: OneTransfer72
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareOneUpdateCashbackForAuthor721SignedTransaction = async (body: OneUpdateCashback721, provider?: string) => {
+export const prepareOneUpdateCashbackForAuthor721SignedTransaction = async (body: ChainOneUpdateCashback721, provider?: string) => {
+  ;(body as OneUpdateCashback721).chain = Currency.ONE
   await validateBody(body, OneUpdateCashback721)
   const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -790,7 +823,8 @@ export const prepareOneUpdateCashbackForAuthor721SignedTransaction = async (body
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareOneDeploy721SignedTransaction = async (body: OneDeploy721, provider?: string) => {
+export const prepareOneDeploy721SignedTransaction = async (body: ChainOneDeploy721, provider?: string) => {
+  ;(body as OneDeploy721).chain = Currency.ONE
   await validateBody(body, OneDeploy721)
   const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -819,7 +853,8 @@ export const prepareOneDeploy721SignedTransaction = async (body: OneDeploy721, p
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareOneBurnMultiTokenSignedTransaction = async (body: OneBurnMultiToken, provider?: string) => {
+export const prepareOneBurnMultiTokenSignedTransaction = async (body: ChainOneBurnMultiToken, provider?: string) => {
+  ;(body as OneBurnMultiToken).chain = Currency.ONE
   await validateBody(body, OneBurnMultiToken)
   const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -845,7 +880,8 @@ export const prepareOneBurnMultiTokenSignedTransaction = async (body: OneBurnMul
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareOneBurnMultiTokenBatchSignedTransaction = async (body: OneBurnMultiTokenBatch, provider?: string) => {
+export const prepareOneBurnMultiTokenBatchSignedTransaction = async (body: ChainOneBurnMultiTokenBatch, provider?: string) => {
+  ;(body as OneBurnMultiTokenBatch).chain = Currency.ONE
   await validateBody(body, OneBurnMultiTokenBatch)
   const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -871,7 +907,8 @@ export const prepareOneBurnMultiTokenBatchSignedTransaction = async (body: OneBu
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareOneTransferMultiTokenSignedTransaction = async (body: OneTransferMultiToken, provider?: string) => {
+export const prepareOneTransferMultiTokenSignedTransaction = async (body: ChainOneTransferMultiToken, provider?: string) => {
+  ;(body as OneTransferMultiToken).chain = Currency.ONE
   await validateBody(body, OneTransferMultiToken)
   const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -902,7 +939,8 @@ export const prepareOneTransferMultiTokenSignedTransaction = async (body: OneTra
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareOneBatchTransferMultiTokenSignedTransaction = async (body: OneTransferMultiTokenBatch, provider?: string) => {
+export const prepareOneBatchTransferMultiTokenSignedTransaction = async (body: ChainOneTransferMultiTokenBatch, provider?: string) => {
+  ;(body as OneTransferMultiTokenBatch).chain = Currency.ONE
   await validateBody(body, OneTransferMultiTokenBatch)
   const client = await prepareOneClient(provider, body.fromPrivateKey)
   const amts = body.amounts.map((amt) => `0x${new BigNumber(amt).toString(16)}`)
@@ -934,7 +972,8 @@ export const prepareOneBatchTransferMultiTokenSignedTransaction = async (body: O
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareOneMintMultiTokenSignedTransaction = async (body: OneMintMultiToken, provider?: string) => {
+export const prepareOneMintMultiTokenSignedTransaction = async (body: ChainOneMintMultiToken, provider?: string) => {
+  ;(body as OneMintMultiToken).chain = Currency.ONE
   await validateBody(body, OneMintMultiToken)
   const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -960,7 +999,8 @@ export const prepareOneMintMultiTokenSignedTransaction = async (body: OneMintMul
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareOneMintMultiTokenBatchSignedTransaction = async (body: OneMintMultiTokenBatch, provider?: string) => {
+export const prepareOneMintMultiTokenBatchSignedTransaction = async (body: ChainOneMintMultiTokenBatch, provider?: string) => {
+  ;(body as OneMintMultiTokenBatch).chain = Currency.ONE
   await validateBody(body, OneMintMultiTokenBatch)
   const client = await prepareOneClient(provider, body.fromPrivateKey)
   const batchAmounts = body.amounts.map((amts) => amts.map((amt) => `0x${new BigNumber(amt).toString(16)}`))
@@ -992,7 +1032,8 @@ export const prepareOneMintMultiTokenBatchSignedTransaction = async (body: OneMi
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareOneDeployMultiTokenSignedTransaction = async (body: OneDeployMultiToken, provider?: string) => {
+export const prepareOneDeployMultiTokenSignedTransaction = async (body: ChainOneDeployMultiToken, provider?: string) => {
+  ;(body as OneDeployMultiToken).chain = Currency.ONE
   await validateBody(body, OneDeployMultiToken)
   const client = await prepareOneClient(provider, body.fromPrivateKey)
   // @ts-ignore
@@ -1066,7 +1107,7 @@ export const sendOneSmartContractReadMethodInvocationTransaction = async (body: 
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendOneStoreDataTransaction = async (body: CreateRecord, provider?: string) =>
+export const sendOneStoreDataTransaction = async (body: ChainCreateRecord, provider?: string) =>
   oneBroadcast(await prepareOneStoreDataTransaction(body, provider))
 
 /**
@@ -1115,7 +1156,7 @@ export const sendOneDeploy20SignedTransaction = async (body: OneDeploy20, provid
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendOneMint721SignedTransaction = async (body: OneMint721, provider?: string) => {
+export const sendOneMint721SignedTransaction = async (body: ChainOneMint721, provider?: string) => {
   if (!body.fromPrivateKey) {
     return mintNFT(body)
   }
@@ -1130,7 +1171,7 @@ export const sendOneMint721SignedTransaction = async (body: OneMint721, provider
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendOneMint721ProvenanceSignedTransaction = async (body: OneMint721, provider?: string) => {
+export const sendOneMint721ProvenanceSignedTransaction = async (body: ChainOneMint721, provider?: string) => {
   if (!body.fromPrivateKey) {
     return mintNFT(body)
   }
@@ -1144,7 +1185,7 @@ export const sendOneMint721ProvenanceSignedTransaction = async (body: OneMint721
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendOneMintMultiple721ProvenanceSignedTransaction = async (body: OneMintMultiple721, provider?: string) =>
+export const sendOneMintMultiple721ProvenanceSignedTransaction = async (body: ChainOneMintMultiple721, provider?: string) =>
   oneBroadcast(await prepareOneMintMultiple721ProvenanceSignedTransaction(body, provider))
 
 /**
@@ -1154,7 +1195,7 @@ export const sendOneMintMultiple721ProvenanceSignedTransaction = async (body: On
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendOneMintCashback721SignedTransaction = async (body: OneMint721, provider?: string) =>
+export const sendOneMintCashback721SignedTransaction = async (body: ChainOneMint721, provider?: string) =>
   oneBroadcast(await prepareOneMintCashback721SignedTransaction(body, provider))
 
 /**
@@ -1164,7 +1205,7 @@ export const sendOneMintCashback721SignedTransaction = async (body: OneMint721, 
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendOneMintMultipleCashback721SignedTransaction = async (body: OneMintMultiple721, provider?: string) =>
+export const sendOneMintMultipleCashback721SignedTransaction = async (body: ChainOneMintMultiple721, provider?: string) =>
   oneBroadcast(await prepareOneMintMultipleCashback721SignedTransaction(body, provider))
 
 /**
@@ -1174,7 +1215,7 @@ export const sendOneMintMultipleCashback721SignedTransaction = async (body: OneM
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendOneMintMultiple721SignedTransaction = async (body: OneMintMultiple721, provider?: string) =>
+export const sendOneMintMultiple721SignedTransaction = async (body: ChainOneMintMultiple721, provider?: string) =>
   oneBroadcast(await prepareOneMintMultiple721SignedTransaction(body, provider))
 
 /**
@@ -1184,7 +1225,7 @@ export const sendOneMintMultiple721SignedTransaction = async (body: OneMintMulti
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendOneBurn721SignedTransaction = async (body: OneBurn721, provider?: string) =>
+export const sendOneBurn721SignedTransaction = async (body: ChainOneBurn721, provider?: string) =>
   oneBroadcast(await prepareOneBurn721SignedTransaction(body, provider))
 
 /**
@@ -1194,7 +1235,7 @@ export const sendOneBurn721SignedTransaction = async (body: OneBurn721, provider
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendOneTransfer721SignedTransaction = async (body: OneTransfer721, provider?: string) =>
+export const sendOneTransfer721SignedTransaction = async (body: ChainOneTransfer721, provider?: string) =>
   oneBroadcast(await prepareOneTransfer721SignedTransaction(body, provider))
 
 /**
@@ -1204,7 +1245,7 @@ export const sendOneTransfer721SignedTransaction = async (body: OneTransfer721, 
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendOneUpdateCashbackForAuthor721SignedTransaction = async (body: OneUpdateCashback721, provider?: string) =>
+export const sendOneUpdateCashbackForAuthor721SignedTransaction = async (body: ChainOneUpdateCashback721, provider?: string) =>
   oneBroadcast(await prepareOneUpdateCashbackForAuthor721SignedTransaction(body, provider))
 
 /**
@@ -1214,7 +1255,7 @@ export const sendOneUpdateCashbackForAuthor721SignedTransaction = async (body: O
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendOneDeploy721SignedTransaction = async (body: OneDeploy721, provider?: string) =>
+export const sendOneDeploy721SignedTransaction = async (body: ChainOneDeploy721, provider?: string) =>
   oneBroadcast(await prepareOneDeploy721SignedTransaction(body, provider))
 
 /**
@@ -1224,7 +1265,7 @@ export const sendOneDeploy721SignedTransaction = async (body: OneDeploy721, prov
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendOneBurnMultiTokenSignedTransaction = async (body: OneBurnMultiToken, provider?: string) =>
+export const sendOneBurnMultiTokenSignedTransaction = async (body: ChainOneBurnMultiToken, provider?: string) =>
   oneBroadcast(await prepareOneBurnMultiTokenSignedTransaction(body, provider))
 
 /**
@@ -1234,7 +1275,7 @@ export const sendOneBurnMultiTokenSignedTransaction = async (body: OneBurnMultiT
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendOneBurnMultiTokenBatchSignedTransaction = async (body: OneBurnMultiTokenBatch, provider?: string) =>
+export const sendOneBurnMultiTokenBatchSignedTransaction = async (body: ChainOneBurnMultiTokenBatch, provider?: string) =>
   oneBroadcast(await prepareOneBurnMultiTokenBatchSignedTransaction(body, provider))
 
 /**
@@ -1244,7 +1285,7 @@ export const sendOneBurnMultiTokenBatchSignedTransaction = async (body: OneBurnM
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendOneTransferMultiTokenSignedTransaction = async (body: OneTransferMultiToken, provider?: string) =>
+export const sendOneTransferMultiTokenSignedTransaction = async (body: ChainOneTransferMultiToken, provider?: string) =>
   oneBroadcast(await prepareOneTransferMultiTokenSignedTransaction(body, provider))
 
 /**
@@ -1254,7 +1295,7 @@ export const sendOneTransferMultiTokenSignedTransaction = async (body: OneTransf
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendOneBatchTransferMultiTokenSignedTransaction = async (body: OneTransferMultiTokenBatch, provider?: string) =>
+export const sendOneBatchTransferMultiTokenSignedTransaction = async (body: ChainOneTransferMultiTokenBatch, provider?: string) =>
   oneBroadcast(await prepareOneBatchTransferMultiTokenSignedTransaction(body, provider))
 
 /**
@@ -1264,7 +1305,7 @@ export const sendOneBatchTransferMultiTokenSignedTransaction = async (body: OneT
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendOneMintMultiTokenSignedTransaction = async (body: OneMintMultiToken, provider?: string) =>
+export const sendOneMintMultiTokenSignedTransaction = async (body: ChainOneMintMultiToken, provider?: string) =>
   oneBroadcast(await prepareOneMintMultiTokenSignedTransaction(body, provider))
 
 /**
@@ -1274,7 +1315,7 @@ export const sendOneMintMultiTokenSignedTransaction = async (body: OneMintMultiT
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendOneMintMultiTokenBatchSignedTransaction = async (body: OneMintMultiTokenBatch, provider?: string) =>
+export const sendOneMintMultiTokenBatchSignedTransaction = async (body: ChainOneMintMultiTokenBatch, provider?: string) =>
   oneBroadcast(await prepareOneMintMultiTokenBatchSignedTransaction(body, provider))
 
 /**
@@ -1284,7 +1325,7 @@ export const sendOneMintMultiTokenBatchSignedTransaction = async (body: OneMintM
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendOneDeployMultiTokenSignedTransaction = async (body: OneDeployMultiToken, provider?: string) =>
+export const sendOneDeployMultiTokenSignedTransaction = async (body: ChainOneDeployMultiToken, provider?: string) =>
   oneBroadcast(await prepareOneDeployMultiTokenSignedTransaction(body, provider))
 
 /**
@@ -1294,7 +1335,7 @@ export const sendOneDeployMultiTokenSignedTransaction = async (body: OneDeployMu
  * @param provider url of the Harmony Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendOneGenerateCustodialWalletSignedTransaction = async (body: GenerateCustodialAddress, provider?: string) =>
+export const sendOneGenerateCustodialWalletSignedTransaction = async (body: ChainGenerateCustodialAddress, provider?: string) =>
   oneBroadcast(await prepareOneGenerateCustodialWalletSignedTransaction(body, provider), body.signatureId)
 
 /**
@@ -1303,7 +1344,7 @@ export const sendOneGenerateCustodialWalletSignedTransaction = async (body: Gene
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendOneDeployMarketplaceListingSignedTransaction = async (body: DeployMarketplaceListing, provider?: string) =>
+export const sendOneDeployMarketplaceListingSignedTransaction = async (body: ChainDeployMarketplaceListing, provider?: string) =>
   oneBroadcast(await prepareOneDeployMarketplaceListingSignedTransaction(body, provider), body.signatureId)
 
 /**

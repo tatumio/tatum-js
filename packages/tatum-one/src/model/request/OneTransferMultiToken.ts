@@ -10,3 +10,5 @@ export class OneTransferMultiToken extends TransferMultiToken {
   @Min(0)
   public toShardID?: number
 }
+
+export type ChainOneTransferMultiToken = Omit<OneTransferMultiToken, 'chain'>

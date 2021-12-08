@@ -15,3 +15,5 @@ export class TronMintMultipleTrc721 extends MintMultipleErc721 {
   @Min(0)
   public feeLimit: number
 }
+
+export type ChainTronMintMultipleTrc721 = Omit<TronMintMultipleTrc721, 'chain'>

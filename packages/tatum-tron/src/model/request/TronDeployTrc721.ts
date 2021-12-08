@@ -11,3 +11,5 @@ export class TronDeployTrc721 extends DeployErc721 {
   @Min(0)
   public feeLimit: number
 }
+
+export type ChainTronDeployTrc721 = Omit<TronDeployTrc721, 'chain'>

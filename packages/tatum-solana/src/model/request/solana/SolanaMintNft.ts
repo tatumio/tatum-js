@@ -22,3 +22,5 @@ export class SolanaMintNft extends PrivateKeyOrSignatureId {
   @IsIn([Currency.SOL])
   public chain: Currency
 }
+
+export type ChainSolanaMintNft = Omit<SolanaMintNft, 'chain'>

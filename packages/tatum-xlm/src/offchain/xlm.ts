@@ -1,8 +1,15 @@
-import { validateBody, Currency, TransactionKMS } from '@tatumio/tatum-core'
+import {
+  offchainBroadcast,
+  offchainCancelWithdrawal,
+  offchainStoreWithdrawal,
+  validateBody,
+  Currency,
+  TransactionKMS,
+  ChainTransactionKMS,
+} from '@tatumio/tatum-core'
 import { TransferXlmOffchain } from '../model'
 import { Account, Asset, Keypair, Memo, Networks, Operation, TransactionBuilder } from 'stellar-sdk'
 import { xlmGetAccountInfo } from '../blockchain'
-import { offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal } from './common'
 
 /**
  * Send Stellar transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -51,10 +58,8 @@ export const sendXlmOffchainTransaction = async (testnet: boolean, body: Transfe
  * @param testnet mainnet or testnet version
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signXlmOffchainKMSTransaction = async (tx: TransactionKMS, secret: string, testnet: boolean) => {
-  if (tx.chain !== Currency.XLM) {
-    throw Error('Unsupported chain.')
-  }
+export const signXlmOffchainKMSTransaction = async (tx: ChainTransactionKMS, secret: string, testnet: boolean) => {
+  ;(tx as TransactionKMS).chain = Currency.XLM
   const transaction = TransactionBuilder.fromXDR(tx.serializedTransaction, testnet ? Networks.TESTNET : Networks.PUBLIC)
   transaction.sign(Keypair.fromSecret(secret))
   return transaction.toEnvelope().toXDR().toString('base64')

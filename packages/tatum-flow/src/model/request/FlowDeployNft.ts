@@ -7,3 +7,5 @@ export class FlowDeployNft extends FlowMnemonicOrPrivateKeyOrSignatureId {
   @IsIn([Currency.FLOW])
   public chain: Currency
 }
+
+export type ChainFlowDeployNft = Omit<FlowDeployNft, 'chain'>
