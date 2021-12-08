@@ -11,7 +11,7 @@ import { WalletWithMnemonic } from '@tatumio/tatum-ledger'
  * @param mnem mnemonic seed to use
  * @returns wallet
  */
-export const generateDogeWallet = async (testnet: boolean, mnem: string): Promise<WalletWithMnemonic> => {
+export const generateBlockchainWallet = async (testnet: boolean, mnem: string): Promise<WalletWithMnemonic> => {
   const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? DOGE_TEST_NETWORK.bip32 : DOGE_NETWORK.bip32)
   return {
     mnemonic: mnem,
@@ -27,5 +27,5 @@ export const generateDogeWallet = async (testnet: boolean, mnem: string): Promis
  */
 export const generateWallet = (mnemonic?: string, options?: { testnet?: boolean }) => {
   mnemonic ||= generateMnemonic(256)
-  return generateDogeWallet(!!options?.testnet, mnemonic)
+  return generateBlockchainWallet(!!options?.testnet, mnemonic)
 }

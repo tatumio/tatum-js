@@ -11,7 +11,7 @@ import { TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
  * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
-const generateDogeAddress = (testnet: boolean, xpub: string, i: number) => {
+const generateBlockchainAddress = (testnet: boolean, xpub: string, i: number) => {
   const network = testnet ? DOGE_TEST_NETWORK : DOGE_NETWORK
   const w = fromBase58(xpub, network).derivePath(String(i))
   return payments.p2pkh({ pubkey: w.publicKey, network }).address as string
@@ -24,7 +24,7 @@ const generateDogeAddress = (testnet: boolean, xpub: string, i: number) => {
  * @param i derivation index of private key to generate.
  * @returns blockchain private key to the address
  */
-const generateDogePrivateKey = async (testnet: boolean, mnemonic: string, i: number) => {
+const generatePrivateKey = async (testnet: boolean, mnemonic: string, i: number) => {
   const network = testnet ? DOGE_TEST_NETWORK : DOGE_NETWORK
   return fromSeed(await mnemonicToSeed(mnemonic), network)
     .derivePath(testnet ? TESTNET_DERIVATION_PATH : DOGE_DERIVATION_PATH)
@@ -40,7 +40,7 @@ const generateDogePrivateKey = async (testnet: boolean, mnemonic: string, i: num
  * @returns blockchain address
  */
 export const generateAddressFromXPub = (testnet: boolean, xpub: string, i: number) => {
-  return generateDogeAddress(testnet, xpub, i)
+  return generateBlockchainAddress(testnet, xpub, i)
 }
 
 /**
@@ -51,5 +51,5 @@ export const generateAddressFromXPub = (testnet: boolean, xpub: string, i: numbe
  * @returns blockchain private key to the address
  */
 export const generatePrivateKeyFromMnemonic = (testnet: boolean, mnemonic: string, i: number) => {
-  return generateDogePrivateKey(testnet, mnemonic, i)
+  return generatePrivateKey(testnet, mnemonic, i)
 }
