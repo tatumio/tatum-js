@@ -20,7 +20,7 @@ import { generateWallet as generateLyraWallet } from '@tatumio/tatum-scrypta'
 import { generateWallet as generateBnbWallet } from '@tatumio/tatum-bnb'
 import { generateWallet as generateAdaWallet } from '@tatumio/tatum-ada'
 import { generateWallet as generateAlgoWallet } from '@tatumio/tatum-algo'
-import { generateNeoWallet } from '@tatumio/tatum-neo'
+import { generateWallet as generateNeoWallet } from '@tatumio/tatum-neo'
 import { WalletWithAddress, WalletWithMnemonic } from '@tatumio/tatum-ledger'
 
 /**
