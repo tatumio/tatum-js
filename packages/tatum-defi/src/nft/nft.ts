@@ -1,4 +1,16 @@
-import { AddMinter, axios, BaseMintErc721, Currency, get, ipfsUpload, post, TransactionHash, validateBody, Sort } from '@tatumio/tatum-core'
+import {
+  AddMinter,
+  axios,
+  BaseMintErc721,
+  Currency,
+  get,
+  ipfsUpload,
+  post,
+  TransactionHash,
+  validateBody,
+  queryParmsToString,
+  Sort,
+} from '@tatumio/tatum-core'
 import { NftTransaction } from '../model'
 
 type MintNftWithUriFn<Body> = (body: Body, options?: { provider?: string; testnet?: boolean }) => Promise<TransactionHash>
@@ -24,7 +36,7 @@ export const getNFTTransactionsByToken = async (
   sort?: Sort
 ): Promise<NftTransaction[]> =>
   get<NftTransaction[]>(
-    `/v3/nft/transaction/tokenId/${chain}/${tokenAddress}/${tokenId}?pageSize=${pageSize}&offset=${offset}&from=${from}&to=${to}&sort=${sort}`
+    `/v3/nft/transaction/tokenId/${chain}/${tokenAddress}/${tokenId}${queryParmsToString({ pageSize, offset, from, to, sort })}`
   )
 
 /**
@@ -40,7 +52,7 @@ export const getNFTTransactionsByAddress = async (
   to?: number,
   sort?: Sort
 ): Promise<NftTransaction[]> =>
-  get(`/v3/nft/transaction/${chain}/${address}/${tokenAddress}?pageSize=${pageSize}&offset=${offset}&from=${from}&to=${to}&sort=${sort}`)
+  get(`/v3/nft/transaction/${chain}/${address}/${tokenAddress}${queryParmsToString({ pageSize, offset, from, to, sort })}`)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetBalanceErc721" target="_blank">Tatum API documentation</a>
