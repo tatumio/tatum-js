@@ -34,8 +34,8 @@ export const getNFTTransactionsByAddress = async (
   chain: Currency,
   address: string,
   tokenAddress: string,
-  pageSize = 50,
-  offset = 0,
+  pageSize: number,
+  offset?: number,
   from?: number,
   to?: number,
   sort?: Sort
