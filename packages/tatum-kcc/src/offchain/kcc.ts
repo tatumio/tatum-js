@@ -9,9 +9,9 @@ import {
 import BigNumber from 'bignumber.js'
 import { fromWei, toWei } from 'web3-utils'
 import { getAccountById, getVirtualCurrencyByName } from '../ledger'
-import { prepareKccSignedTransaction, prepareKccTransferErc20SignedTransaction } from '../transaction'
+import { prepareSignedTransaction, prepareTransferErc20SignedTransaction } from '../transaction'
 import { generatePrivateKeyFromMnemonic } from '../wallet'
-import { offchainTransferKccKMS } from './kms'
+import { offchainTransferKMS } from './kms'
 
 /**
  * Send Kcc transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -21,9 +21,9 @@ import { offchainTransferKccKMS } from './kms'
  * @param provider url of the Kcc Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
-export const sendKccOffchainTransaction = async (testnet: boolean, body: TransferOffchain, provider?: string) => {
+export const sendOffchainTransaction = async (testnet: boolean, body: TransferOffchain, provider?: string) => {
   if (body.signatureId) {
-    return offchainTransferKccKMS(body)
+    return offchainTransferKMS(body)
   }
   await validateBody(body, TransferOffchain)
   const { mnemonic, index, privateKey, gasLimit, gasPrice, nonce, ...withdrawal } = body
@@ -38,7 +38,7 @@ export const sendKccOffchainTransaction = async (testnet: boolean, body: Transfe
     gasPrice: gasPrice || '20',
   }
   if (account.currency === Currency.KCS) {
-    txData = await prepareKccSignedTransaction(
+    txData = await prepareSignedTransaction(
       {
         amount,
         fromPrivateKey: fromPriv,
@@ -51,7 +51,7 @@ export const sendKccOffchainTransaction = async (testnet: boolean, body: Transfe
   } else {
     fee.gasLimit = '100000'
     const vc = await getVirtualCurrencyByName(account.currency)
-    txData = await prepareKccTransferErc20SignedTransaction(
+    txData = await prepareTransferErc20SignedTransaction(
       {
         amount,
         fee,

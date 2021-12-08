@@ -1,6 +1,6 @@
 import { prepareApproveErc20Abstraction, erc20TokenABI, Currency, ChainApproveErc20 } from '@tatumio/tatum-core'
 import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../helpers'
-import { getKccErc20ContractDecimals } from '../transaction'
+import { getErc20ContractDecimals } from '../transaction'
 
 /**
  * Approve ERC20 transfer for spender.
@@ -20,7 +20,7 @@ export const sendApproveErc20 = async (testnet: boolean, body: ChainApproveErc20
  */
 export const prepareApproveErc20 = async (testnet: boolean, body: ChainApproveErc20, provider?: string) => {
   const { body: validatedBody, params } = await prepareApproveErc20Abstraction(
-    getKccErc20ContractDecimals,
+    getErc20ContractDecimals,
     testnet,
     { ...body, chain: Currency.KCS },
     provider

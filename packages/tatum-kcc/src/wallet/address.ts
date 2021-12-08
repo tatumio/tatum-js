@@ -23,7 +23,7 @@ const generateEthAddress = (xpub: string, i: number) => {
  * @param i derivation index of private key to generate.
  * @returns blockchain private key to the address
  */
-const generateKccPrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
+const generatePrivateKey = async (testnet: boolean, mnemonic: string, i: number): Promise<string> => {
   const path = testnet ? TESTNET_DERIVATION_PATH : KCS_DERIVATION_PATH
   const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnemonic))
   const derivePath = hdwallet.derivePath(path).deriveChild(i)
@@ -58,7 +58,7 @@ export const generateAddressFromXPub = (xpub: string, i: number) => {
  * @returns blockchain private key to the address
  */
 export const generatePrivateKeyFromMnemonic = (testnet: boolean, mnemonic: string, i: number) => {
-  return generateKccPrivateKey(testnet, mnemonic, i)
+  return generatePrivateKey(testnet, mnemonic, i)
 }
 
 /**
