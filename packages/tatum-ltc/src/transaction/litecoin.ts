@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js'
 // @ts-ignore
 import { PrivateKey, Script, Transaction } from 'bitcore-lib-ltc'
-import { ltcBroadcast, ltcGetTransaction, ltcGetTxForAccount, ltcGetUTXO } from '../blockchain'
+import { broadcast, getTransaction, getTxForAccount, getUTXO } from '../blockchain'
 import { Currency, TransferBtcBasedBlockchain, TransactionKMS, validateBody, ChainTransactionKMS } from '@tatumio/tatum-core'
 import { LtcTxOutputs } from '../model'
 
@@ -9,21 +9,21 @@ import { LtcTxOutputs } from '../model'
  * Prepare a signed Ltc transaction with the private key locally. Nothing is broadcasted to the blockchain.
  * @returns raw transaction data in hex, to be broadcasted to blockchain.
  */
-const prepareSignedTransaction = async (body: TransferBtcBasedBlockchain) => {
+const _prepareSignedTransaction = async (body: TransferBtcBasedBlockchain) => {
   await validateBody(body, TransferBtcBasedBlockchain)
   const { fromUTXO, fromAddress, to } = body
   const tx = new Transaction()
   const privateKeysToSign = []
   if (fromAddress) {
     for (const item of fromAddress) {
-      const txs = await ltcGetTxForAccount(item.address)
+      const txs = await getTxForAccount(item.address)
       for (const t of txs) {
         for (const [i, o] of (t.outputs as LtcTxOutputs[]).entries()) {
           if (o.address !== item.address) {
             continue
           }
           try {
-            await ltcGetUTXO(t.hash, i)
+            await getUTXO(t.hash, i)
             tx.from({
               txId: t.hash,
               outputIndex: i,
@@ -39,7 +39,7 @@ const prepareSignedTransaction = async (body: TransferBtcBasedBlockchain) => {
     }
   } else if (fromUTXO) {
     for (const item of fromUTXO) {
-      const t = await ltcGetTransaction(item.txHash)
+      const t = await getTransaction(item.txHash)
       const address = t.outputs ? t.outputs[item.index].address : t.vout?.[item.index].scriptPubKey.addresses[0]
       const value = t.outputs ? t.outputs[item.index].value : t.vout?.[item.index].value || 0
       tx.from({
@@ -71,7 +71,7 @@ const prepareSignedTransaction = async (body: TransferBtcBasedBlockchain) => {
  * @param privateKeys private keys to sign transaction with.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signLitecoinKMSTransaction = async (tx: ChainTransactionKMS, privateKeys: string[]) => {
+export const signKMSTransaction = async (tx: ChainTransactionKMS, privateKeys: string[]) => {
   ;(tx as TransactionKMS).chain = Currency.LTC
   const builder = new Transaction(JSON.parse(tx.serializedTransaction))
   for (const privateKey of privateKeys) {
@@ -85,8 +85,8 @@ export const signLitecoinKMSTransaction = async (tx: ChainTransactionKMS, privat
  * @param body content of the transaction to broadcast
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareLitecoinSignedTransaction = async (body: TransferBtcBasedBlockchain) => {
-  return prepareSignedTransaction(body)
+export const prepareSignedTransaction = async (body: TransferBtcBasedBlockchain) => {
+  return _prepareSignedTransaction(body)
 }
 
 /**
@@ -95,6 +95,6 @@ export const prepareLitecoinSignedTransaction = async (body: TransferBtcBasedBlo
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendLitecoinTransaction = async (body: TransferBtcBasedBlockchain) => {
-  return ltcBroadcast(await prepareLitecoinSignedTransaction(body))
+export const sendTransaction = async (body: TransferBtcBasedBlockchain) => {
+  return broadcast(await prepareSignedTransaction(body))
 }

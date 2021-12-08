@@ -11,7 +11,7 @@ import { LTC_DERIVATION_PATH, LTC_NETWORK, LTC_TEST_NETWORK } from '../constants
  * @param mnem mnemonic seed to use
  * @returns wallet
  */
-export const generateLtcWallet = async (testnet: boolean, mnem: string): Promise<WalletWithMnemonic> => {
+export const generateBlockchainWallet = async (testnet: boolean, mnem: string): Promise<WalletWithMnemonic> => {
   const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? LTC_TEST_NETWORK.bip32 : LTC_NETWORK.bip32)
   return {
     mnemonic: mnem,
@@ -27,5 +27,5 @@ export const generateLtcWallet = async (testnet: boolean, mnem: string): Promise
  */
 export const generateWallet = (mnemonic?: string, options?: { testnet?: boolean }) => {
   mnemonic ||= generateMnemonic(256)
-  return generateLtcWallet(!!options?.testnet, mnemonic)
+  return generateBlockchainWallet(!!options?.testnet, mnemonic)
 }
