@@ -13,7 +13,7 @@ import {
   prepareTransferErc20SignedTransaction,
   prepareTransferErc721SignedTransaction,
   sendSmartContractReadMethodInvocationTransaction,
-} from './kcc'
+} from './kcs'
 
 describe('KCS transactions', () => {
   jest.setTimeout(19999)

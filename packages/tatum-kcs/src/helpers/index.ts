@@ -1,6 +1,6 @@
 import { buildSmartContractMethodInvocation, ChainSCBody, Currency, listing } from '@tatumio/tatum-core'
 import { prepareClient, prepareSmartContractWriteMethodInvocation } from '../transaction'
-import { broadcast } from '../blockchain/kcc'
+import { broadcast } from '../blockchain/kcs'
 import Web3 from 'web3'
 
 export const helperBroadcastTx = async (txData: string, signatureId?: string) => {

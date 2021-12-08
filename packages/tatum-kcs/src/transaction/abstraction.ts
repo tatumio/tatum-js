@@ -1,5 +1,5 @@
 import { CreateRecord, validateBody, Currency, TransferErc20, ChainCreateRecord, ChainTransferErc20 } from '@tatumio/tatum-core'
-import { sendStoreDataTransaction, sendBlockchainTransaction } from './kcc'
+import { sendStoreDataTransaction, sendBlockchainTransaction } from './kcs'
 
 /**
  * Store any arbitrary data on the blockchain.
