@@ -1,10 +1,9 @@
 import { Currency } from '@tatumio/tatum-core'
 import {
+  generateAddressFromPrivatekey as convertBtcPrivateKey,
   generateAddressFromXPub as generateBtcAddress,
   generatePrivateKeyFromMnemonic as generateBtcPrivateKey,
-  generateAddressFromPrivatekey as convertBtcPrivateKey,
 } from '@tatumio/tatum-btc'
-import { generateAddressFromPrivatekey as getAddressFromPrivateKey } from '@tatumio/tatum-bnb'
 import {
   generateAddressFromXPub as generateTronAddress,
   generatePrivateKeyFromMnemonic as generateTronPrivateKey,
@@ -24,38 +23,39 @@ import {
 } from '@tatumio/tatum-celo'
 import { generateAddressFromXPub as generateBchAddress, generatePrivateKeyFromMnemonic as generateBchPrivateKey } from '@tatumio/tatum-bch'
 import {
+  generateAddressFromPrivatekey as convertQTUMPrivateKey,
   generateAddressFromXPub as generateQtumAddress,
   generatePrivateKeyFromMnemonic as generateQtumPrivateKey,
-  generateAddressFromPrivatekey as convertQTUMPrivateKey,
 } from '@tatumio/tatum-qtum'
 import {
+  generateAddressFromPrivatekey as convertEthPrivateKey,
   generateAddressFromXPub as generateEthAddress,
   generatePrivateKeyFromMnemonic as generateEthPrivateKey,
-  generateAddressFromPrivatekey as convertEthPrivateKey,
 } from '@tatumio/tatum-eth'
 import {
+  generateAddressFromPrivatekey as convertOnePrivateKey,
   generateAddressFromXPub as generateOneAddress,
   generatePrivateKeyFromMnemonic as generateOnePrivateKey,
-  generateAddressFromPrivatekey as convertOnePrivateKey,
 } from '@tatumio/tatum-one'
 import {
+  generateAddressFromPrivatekey as convertXdcPrivateKey,
   generateAddressFromXPub as generateXdcAddress,
   generatePrivateKeyFromMnemonic as generateXdcPrivateKey,
-  generateAddressFromPrivatekey as convertXdcPrivateKey,
 } from '@tatumio/tatum-xdc'
 import {
+  generateAddressFromPrivatekey as convertEgldPrivateKey,
   generateAddressFromXPub as generateEgldAddress,
   generatePrivateKeyFromMnemonic as generateEgldPrivateKey,
-  generateAddressFromPrivatekey as convertEgldPrivateKey,
 } from '@tatumio/tatum-egld'
 import { generateAddressFromXPub as generateVetAddress, generatePrivateKeyFromMnemonic as generateVetPrivateKey } from '@tatumio/tatum-vet'
 import {
+  generateAddressFromPrivatekey as convertLyraPrivateKey,
   generateAddressFromXPub as generateLyraAddress,
   generatePrivateKeyFromMnemonic as generateLyraPrivateKey,
-  generateAddressFromPrivatekey as convertLyraPrivateKey,
 } from '@tatumio/tatum-scrypta'
-import { generatePrivateKeyFromMnemonic as generatePolygonPrivateKey } from '@tatumio/tatum-polygon'
 import { generateAddress as generateCardanoAddress, generatePrivateKey as generateCardanoPrivateKey } from '@tatumio/tatum-ada'
+import { generatePrivateKeyFromMnemonic as generatePolygonPrivateKey } from '@tatumio/tatum-polygon'
+import { generateAddressFromPrivatekey as getAddressFromPrivateKey } from '@tatumio/tatum-bnb'
 
 const TronWeb = require('tronweb')
 
