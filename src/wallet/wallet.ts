@@ -366,6 +366,7 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
         case Currency.LEO:
         case Currency.REVV:
         case Currency.LATOKEN:
+        case Currency.COIIN:
         case Currency.SAND:
         case Currency.LINK:
         case Currency.UNI:

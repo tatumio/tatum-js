@@ -134,7 +134,7 @@ const getCustodialFactoryContractAddress = (chain: Currency, testnet: boolean) =
     }
 };
 
-export const getCustodialAddresses = (chain: Currency, txId: string): Promise<string[]> => get(`v3/blockchain/sc/custodial/${chain}/${txId}`);
+export const getCustodialAddresses = (chain: Currency, txId: string): Promise<string[]> => get(`/v3/blockchain/sc/custodial/${chain}/${txId}`);
 
 /**
  * This method is @Deprecated. Use @link{generateCustodialWalletBatch} instead
