@@ -1,4 +1,4 @@
-import { get, post } from '../connector/tatum'
+import {get, post} from '../connector/tatum'
 import {TransactionHash} from '../model'
 
 /**
@@ -9,14 +9,14 @@ export const xrpGetFee = async (): Promise<{ drops: { base_fee: number } }> => g
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/XrpGetAccountInfo" target="_blank">Tatum API documentation</a>
  */
-export const xrpGetAccountInfo = async (account: string): Promise<{ ledger_current_index: number, account_data: { Sequence: number } }> =>
-  get(`/v3/xrp/account/${account}`)
+export const xrpGetAccountInfo = async (account: string): Promise<{ ledger_current_index: number, ledger_index: number, account_data: { Sequence: number } }> =>
+    get(`/v3/xrp/account/${account}`)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/XrpBroadcast" target="_blank">Tatum API documentation</a>
  */
 export const xrpBroadcast = async (txData: string, signatureId?: string): Promise<TransactionHash> =>
-  post(`/v3/xrp/broadcast`, { txData, signatureId })
+    post(`/v3/xrp/broadcast`, {txData, signatureId})
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/XrpGetLastClosedLedger" target="_blank">Tatum API documentation</a>
@@ -42,4 +42,4 @@ export const xrpGetTransaction = async (hash: string) => get(`/v3/xrp/transactio
  * For more details, see <a href="https://tatum.io/apidoc#operation/XrpGetAccountTx" target="_blank">Tatum API documentation</a>
  */
 export const xrpGetAccountTransactions = async (address: string, min?: number, marker?: string) =>
-  get(`/v3/xrp/account/tx/${address}${min ? `?min=${min}${marker ? `&marker=${marker}` : ''}` : marker ? `?marker=${marker}` : ''}`)
+    get(`/v3/xrp/account/tx/${address}${min ? `?min=${min}${marker ? `&marker=${marker}` : ''}` : marker ? `?marker=${marker}` : ''}`)
