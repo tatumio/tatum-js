@@ -1,10 +1,22 @@
 import 'reflect-metadata'
 
-export * from './ledger'
-export * from './offchain'
 export * from './fungible'
+export * from './ledger'
 export * from './multiToken'
+export * from './nft'
+export * from './offchain'
+export * from './wallet'
 
-export * from '@tatumio/tatum-core'
-export * from '@tatumio/tatum-defi'
-export * from '@tatumio/tatum-ledger'
+export {
+  // security
+  checkMaliciousAddress,
+  // storage
+  ipfsDelete,
+  ipfsGet,
+  ipfsUpload,
+  getUsage,
+  // kms
+  getTransactionKMS,
+  deleteTransactionKMS,
+  completePendingTransactionKMS,
+} from '@tatumio/tatum-core'

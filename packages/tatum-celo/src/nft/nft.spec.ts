@@ -1,10 +1,9 @@
-import { Currency } from '@tatumio/tatum-core'
+import { CeloMintErc721, Currency } from '@tatumio/tatum-core'
 import { readFileSync } from 'fs'
 import {
   CeloDeployErc721,
   deployNFT,
   mintMultipleNFTWithUri,
-  CeloMintErc721,
   mintNFTWithUri,
   createNFT,
   CeloMintMultipleErc721,

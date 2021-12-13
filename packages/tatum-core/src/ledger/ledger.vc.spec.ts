@@ -1,18 +1,23 @@
-import { Currency, Fiat } from '@tatumio/tatum-core'
-import { createVirtualCurrency, getVirtualCurrencyByName, mintVirtualCurrency, revokeVirtualCurrency, updateVirtualCurrency } from './index'
-// import { updateVirtualCurrency } from './vc';
+import { Currency, Fiat } from '../model'
+import {
+  createVirtualCurrency,
+  getVirtualCurrencyByName,
+  mintVirtualCurrency,
+  revokeVirtualCurrency,
+  updateVirtualCurrency,
+} from '../ledger'
 
 describe('LEDGER TESTS: Virtual Currency test suite', () => {
   // declaring global variables which have larger scope
   let id = ''
   it('should create a virtual currency', async () => {
     /*
-        always returns error currency already registered
-        returning error
-        reached error state { message: 'Virtual currency with given name already exists.',
-        errorCode: 'virtual.duplicate',
-        statusCode: 403 }
-    */
+            always returns error currency already registered
+            returning error
+            reached error state { message: 'Virtual currency with given name already exists.',
+            errorCode: 'virtual.duplicate',
+            statusCode: 403 }
+        */
     try {
       const accountObj = await createVirtualCurrency({
         name: 'VC_demoVC',
@@ -32,7 +37,7 @@ describe('LEDGER TESTS: Virtual Currency test suite', () => {
       expect(accountObj.currency).toBe('VC_JHGFRG')
       expect(accountObj.frozen).toBe(false)
       expect(accountObj.balance.accountBalance).toBe('1000000')
-    } catch (error: any) {
+    } catch (error) {
       // checking if currency already exists and proceeding
       console.log('reached error state', error.response.data)
       expect(error.response.data.errorCode).toBe('virtual.duplicate')
@@ -54,7 +59,7 @@ describe('LEDGER TESTS: Virtual Currency test suite', () => {
         baseRate: 0.5,
       })
       console.log(accountObj)
-    } catch (e: any) {
+    } catch (e) {
       expect(e.response.data.statusCode).toBe(403)
       expect(e.response.data.errorCode).toBe('vc.not.found')
     }
@@ -67,7 +72,7 @@ describe('LEDGER TESTS: Virtual Currency test suite', () => {
         baseRate: 0.5,
       })
       console.log(accountObj)
-    } catch (e: any) {
+    } catch (e) {
       // checking negative test results
       expect(e.response.data.statusCode).toBe(400)
       expect(e.response.data.errorCode).toBe('validation.failed')
@@ -82,7 +87,7 @@ describe('LEDGER TESTS: Virtual Currency test suite', () => {
   it('should return error if currency does not exists', async () => {
     try {
       await getVirtualCurrencyByName('VC_emoVC')
-    } catch (e: any) {
+    } catch (e) {
       expect(e.response.data.statusCode).toBe(403)
       expect(e.response.data.errorCode).toBe('vc.not.found')
     }
@@ -94,7 +99,7 @@ describe('LEDGER TESTS: Virtual Currency test suite', () => {
         amount: '1.5',
       })
       expect(accountObj.reference).not.toBe(null)
-    } catch (e: any) {
+    } catch (e) {
       console.log(JSON.stringify(e.response.data))
     }
   })
@@ -106,7 +111,7 @@ describe('LEDGER TESTS: Virtual Currency test suite', () => {
         amount: '1.5',
       })
       expect(accountObj.reference).not.toBe(null)
-    } catch (e: any) {
+    } catch (e) {
       console.log(JSON.stringify(e.response.data))
     }
   })

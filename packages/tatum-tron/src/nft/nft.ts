@@ -1,4 +1,18 @@
-import { post, TransactionHash, erc721TokenABI, Currency, ChainAddMinter } from '@tatumio/tatum-core'
+import {
+  post,
+  TransactionHash,
+  erc721TokenABI,
+  Currency,
+  ChainAddMinter,
+  createNFTAbstraction,
+  prepareAddNFTMinterAbstraction,
+  getNFTsByAddress as getNFTsByAddressDefi,
+  getNFTProvenanceData as getNFTProvenanceDataDefi,
+  getNFTContractAddress as getNFTContractAddressDefi,
+  getNFTMetadataURI as getNFTMetadataURIDefi,
+  getNFTImage as getNFTImageDefi,
+  getNFTRoyalty as getNFTRoyaltyDefi,
+} from '@tatumio/tatum-core'
 import {
   ChainTronBurnTrc721,
   ChainTronDeployTrc721,
@@ -17,16 +31,6 @@ import {
   sendUpdateCashbackForAuthorTrc721SignedTransaction,
 } from '../transaction'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
-import {
-  createNFTAbstraction,
-  prepareAddNFTMinterAbstraction,
-  getNFTsByAddress as getNFTsByAddressDefi,
-  getNFTProvenanceData as getNFTProvenanceDataDefi,
-  getNFTContractAddress as getNFTContractAddressDefi,
-  getNFTMetadataURI as getNFTMetadataURIDefi,
-  getNFTImage as getNFTImageDefi,
-  getNFTRoyalty as getNFTRoyaltyDefi,
-} from '@tatumio/tatum-defi'
 
 export const mintNFT = (body: ChainTronMintTrc721): Promise<TransactionHash> => post(`/v3/nft/mint`, { ...body, chain: Currency.TRON })
 

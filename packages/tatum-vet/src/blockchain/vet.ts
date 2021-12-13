@@ -26,7 +26,7 @@ export const getBlock = async (hash: string): Promise<VetBlock> => get(`/v3/vet/
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/VetGetBalance" target="_blank">Tatum API documentation</a>
  */
-export const getAccountBalance = async (address: string): Promise<number> => get(`/v3/vet/account/balance/${address}`)
+export const getBlockchainAccountBalance = async (address: string): Promise<number> => get(`/v3/vet/account/balance/${address}`)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/VetGetEnergy" target="_blank">Tatum API documentation</a>

@@ -66,8 +66,8 @@ import {
   ChainTransferMultiToken,
   ChainDeployMultiToken,
   ChainDeployErc721,
+  obtainCustodialAddressType,
 } from '@tatumio/tatum-core'
-import { obtainCustodialAddressType } from '@tatumio/tatum-defi'
 import { mintNFT } from '../nft'
 
 /**

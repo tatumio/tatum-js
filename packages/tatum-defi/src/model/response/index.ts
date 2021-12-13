@@ -1,1 +1,1 @@
-export * from './NftTransaction'
+export { NftTransaction } from '@tatumio/tatum-core'

@@ -25,6 +25,5 @@ export {
   getTransactionKMS,
   deleteTransactionKMS,
   completePendingTransactionKMS,
+  WalletWithAddress,
 } from '@tatumio/tatum-core'
-
-export { WalletWithAddress } from '@tatumio/tatum-ledger'

@@ -5,8 +5,11 @@ import {
   getNFTRoyalty as getNFTRoyaltyDefi,
   mintNFTRequest,
   createNFTAbstraction,
-} from '@tatumio/tatum-defi'
-import { post, TransactionHash, Currency, ChainMintErc721 } from '@tatumio/tatum-core'
+  post,
+  TransactionHash,
+  Currency,
+  ChainMintErc721,
+} from '@tatumio/tatum-core'
 import {
   ChainFlowBurnNft,
   ChainFlowDeployNft,

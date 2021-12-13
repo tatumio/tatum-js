@@ -9,12 +9,12 @@ import {
   getNFTMetadataURI as getNFTMetadataURIDefi,
   getNFTImage as getNFTImageDefi,
   getNFTRoyalty as getNFTRoyaltyDefi,
-} from '@tatumio/tatum-defi'
+  CeloMintErc721,
+} from '@tatumio/tatum-core'
 import { TransactionHash, erc721TokenABI, ChainMintErc721, ChainAddMinter, Currency, Sort } from '@tatumio/tatum-core'
 import {
   CeloDeployErc721,
   sendDeployErc721Transaction,
-  CeloMintErc721,
   sendMintCashbackErc721Transaction,
   sendMintErc721Transaction,
   CeloMintMultipleErc721,

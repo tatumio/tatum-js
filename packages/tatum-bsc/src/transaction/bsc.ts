@@ -58,9 +58,9 @@ import {
   TransferMultiTokenBatch,
   UpdateCashbackErc721,
   validateBody,
+  obtainCustodialAddressType,
 } from '@tatumio/tatum-core'
 import { TransferBscBep20, ChainTransferBscBep20 } from '../model'
-import { obtainCustodialAddressType } from '@tatumio/tatum-defi'
 import { BigNumber } from 'bignumber.js'
 import Web3 from 'web3'
 import { TransactionConfig } from 'web3-core'

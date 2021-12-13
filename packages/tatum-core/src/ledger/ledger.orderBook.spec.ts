@@ -1,16 +1,16 @@
-import { TradeType } from '@tatumio/tatum-core'
+import { TradeType } from '../model'
 import { storeTrade } from './orderBook'
 
 describe('LEDGER TESTS: Trades test suite', () => {
   /*
-  returns error validation failed
-      {
-      "statusCode": 400,
-      "errorCode": "validation.failed",
-      "message": "Request validation failed. Please see data for additional information.",
-      "data": [...{}]
-      }
-  */
+    returns error validation failed
+        {
+        "statusCode": 400,
+        "errorCode": "validation.failed",
+        "message": "Request validation failed. Please see data for additional information.",
+        "data": [...{}]
+        }
+    */
   it('should be able to trade between pairs', async () => {
     try {
       const accountObj = await storeTrade({
@@ -24,7 +24,7 @@ describe('LEDGER TESTS: Trades test suite', () => {
         fee: 1.5,
       })
       console.log(accountObj)
-    } catch (e: any) {
+    } catch (e) {
       // return error if any
       console.log(JSON.stringify(e.response.data))
     }
@@ -43,7 +43,7 @@ describe('LEDGER TESTS: Trades test suite', () => {
       })
       // printing the results
       console.log(accountObj)
-    } catch (e: any) {
+    } catch (e) {
       // return error if any
       console.log(e.response.data)
     }
@@ -61,7 +61,7 @@ describe('LEDGER TESTS: Trades test suite', () => {
         fee: 1.5,
       })
       console.log(accountObj)
-    } catch (e: any) {
+    } catch (e) {
       // checking negative test cases
       expect(e.response.data.statusCode).toBe(403)
       expect(e.response.data.errorCode).toBe('trade.currency1.pair')

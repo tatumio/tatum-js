@@ -15,8 +15,6 @@
   "dependencies": {
     "@cityofzion/neon-js": "^4.8.0",
     "@tatumio/tatum-core": "file:../tatum-core",
-    "@tatumio/tatum-defi": "file:../tatum-defi",
-    "@tatumio/tatum-ledger": "file:../tatum-ledger",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {

@@ -13,12 +13,13 @@ import {
   offchainCancelWithdrawal,
   offchainStoreWithdrawal,
   ChainTransactionKMS,
+  getAccountById,
+  getVirtualCurrencyByName,
 } from '@tatumio/tatum-core'
 import { PrepareEthErc20SignedOffchainTransaction, PrepareEthSignedOffchainTransaction } from '../model'
 import { getGasPriceInWei, getClient } from '../transaction'
 import { generatePrivateKeyFromMnemonic } from '../wallet'
 import { offchainTransferKMS } from './kms'
-import { getAccountById, getVirtualCurrencyByName } from '@tatumio/tatum-ledger'
 
 /**
  * Send Ethereum transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.

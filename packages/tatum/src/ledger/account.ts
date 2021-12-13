@@ -16,4 +16,4 @@ export {
   getAccountsByCustomerId,
   getAllAccounts,
   getAccountBalance,
-} from '@tatumio/tatum-ledger'
+} from '@tatumio/tatum-core'

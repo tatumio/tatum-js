@@ -15,8 +15,8 @@ import {
   Custodial_721_TokenWallet,
   Custodial_721_TokenWalletWithBatch,
   GenerateCustodialAddress,
+  obtainCustodialAddressType,
 } from '@tatumio/tatum-core'
-import { obtainCustodialAddressType } from '@tatumio/tatum-defi'
 import { prepareGenerateCustodialWalletSignedTransaction, sendGenerateCustodialWalletSignedTransaction } from '../transaction'
 
 describe('Custodial wallet tests', () => {

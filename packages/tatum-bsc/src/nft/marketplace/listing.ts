@@ -7,8 +7,6 @@ import {
   getMarketplaceFee as getMarketplaceFeeDefi,
   getMarketplaceListing as getMarketplaceListingDefi,
   getMarketplaceFeeRecipient as getMarketplaceFeeRecipientDefi,
-} from '@tatumio/tatum-defi'
-import {
   DeployMarketplaceListing,
   UpdateMarketplaceFee,
   UpdateMarketplaceFeeRecipient,

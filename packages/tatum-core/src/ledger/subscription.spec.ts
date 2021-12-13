@@ -1,4 +1,4 @@
-import { SubscriptionType } from '@tatumio/tatum-core'
+import { SubscriptionType } from '../model'
 import { createNewSubscription } from './subscription'
 
 describe('Subscription tests', () => {

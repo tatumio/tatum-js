@@ -7,8 +7,6 @@ import {
   getNFTMetadataURI as getNFTMetadataURIDefi,
   getNFTImage as getNFTImageDefi,
   getNFTRoyalty as getNFTRoyaltyDefi,
-} from '@tatumio/tatum-defi'
-import {
   TransactionHash,
   Sort,
   Currency,

@@ -11,8 +11,6 @@ import {
   prepareAddNFTMinterAbstraction,
   NftTransaction,
   mintNFTRequest,
-} from '@tatumio/tatum-defi'
-import {
   Currency,
   TransactionHash,
   MintErc721,

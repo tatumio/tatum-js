@@ -14,8 +14,8 @@ import {
   TATUM_API_URL,
   axios,
   ChainTransactionKMS,
+  obtainCustodialAddressType,
 } from '@tatumio/tatum-core'
-import { obtainCustodialAddressType } from '@tatumio/tatum-defi'
 import {
   CreateTronTrc10,
   CreateTronTrc20,

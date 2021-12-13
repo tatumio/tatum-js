@@ -1,5 +1,5 @@
 import * as solana from '@solana/web3.js'
-import { WalletWithAddress } from '@tatumio/tatum-ledger'
+import { WalletWithAddress } from '@tatumio/tatum-core'
 
 /**
  * Generate Solana wallet

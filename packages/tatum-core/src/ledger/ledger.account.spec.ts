@@ -11,7 +11,7 @@ import {
   getAccountById,
   getBlockedAmountsByAccountId,
   updateAccount,
-} from './index'
+} from './account'
 
 describe('LEDGER TESTS: Account test suite', () => {
   // declaring global variables which have larger scope

@@ -25,7 +25,7 @@ export const getBlock = async (hash: string): Promise<EthBlock> => get(`/v3/poly
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/PolygonGetBalance" target="_blank">Tatum API documentation</a>
  */
-export const getAccountBalance = async (address: string): Promise<BigNumber> => get(`/v3/polygon/account/balance/${address}`)
+export const getBlockchainAccountBalance = async (address: string): Promise<BigNumber> => get(`/v3/polygon/account/balance/${address}`)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/PolygonGetTransaction" target="_blank">Tatum API documentation</a>

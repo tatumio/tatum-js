@@ -26,7 +26,7 @@ export const getBlock = async (hash: string): Promise<EthBlock> => get(`/v3/ethe
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/EthGetBalance" target="_blank">Tatum API documentation</a>
  */
-export const getAccountBalance = async (address: string): Promise<BigNumber> => get(`/v3/ethereum/account/balance/${address}`)
+export const getBlockchainAccountBalance = async (address: string): Promise<BigNumber> => get(`/v3/ethereum/account/balance/${address}`)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/EthErc20GetBalance" target="_blank">Tatum API documentation</a>

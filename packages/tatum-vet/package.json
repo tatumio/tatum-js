@@ -14,8 +14,6 @@
   },
   "dependencies": {
     "@tatumio/tatum-core": "file:../tatum-core",
-    "@tatumio/tatum-defi": "file:../tatum-defi",
-    "@tatumio/tatum-ledger": "file:../tatum-ledger",
     "bip39": "^3.0.2",
     "class-validator": "0.13.0",
     "ethereumjs-wallet": "^1.0.0",

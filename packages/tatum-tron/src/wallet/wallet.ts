@@ -1,4 +1,4 @@
-import { WalletWithMnemonic } from '@tatumio/tatum-ledger'
+import { WalletWithMnemonic } from '@tatumio/tatum-core'
 import { generateMnemonic, mnemonicToSeed } from 'bip39'
 import { bip32 } from 'bitcoinjs-lib'
 import { TRON_DERIVATION_PATH } from '../constants'

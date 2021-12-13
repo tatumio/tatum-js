@@ -11,9 +11,7 @@ export * from './nft'
 export * from './model'
 
 export {
-  // security
-  checkMaliciousAddress,
-  // off-chain
+  // offchain
   generateDepositAddress,
   generateDepositAddresses,
   assignDepositAddress,
@@ -28,10 +26,11 @@ export {
   ipfsGet,
   ipfsUpload,
   getUsage,
+  // security
+  checkMaliciousAddress,
   // kms
   getTransactionKMS,
   deleteTransactionKMS,
   completePendingTransactionKMS,
+  WalletWithAddress,
 } from '@tatumio/tatum-core'
-
-export { WalletWithAddress } from '@tatumio/tatum-ledger'

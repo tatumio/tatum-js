@@ -2,8 +2,7 @@ import { generateMnemonic, mnemonicToSeed } from 'bip39'
 // @ts-ignore
 import hdkey from 'hdkey'
 import { DOGE_DERIVATION_PATH, DOGE_NETWORK, DOGE_TEST_NETWORK } from '../constants'
-import { TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
-import { WalletWithMnemonic } from '@tatumio/tatum-ledger'
+import { WalletWithMnemonic, TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
 
 /**
  * Generate Doge wallet

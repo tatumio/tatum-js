@@ -1,4 +1,4 @@
-import { MintErc721 } from '@tatumio/tatum-core'
+import { MintErc721 } from './'
 import { IsOptional, Min } from 'class-validator'
 
 export class OneMint721 extends MintErc721 {

@@ -6,8 +6,6 @@ import {
   getNFTRoyalty as getNFTRoyaltyDefi,
   mintNFTRequest,
   prepareAddNFTMinterAbstraction,
-} from '@tatumio/tatum-defi'
-import {
   ChainAddMinter,
   ChainBurnErc721,
   ChainDeployErc721,

@@ -17,8 +17,6 @@
     "@onflow/types": "^0.0.4",
     "@onflow/util-encode-key": "^0.0.2",
     "@tatumio/tatum-core": "file:../tatum-core",
-    "@tatumio/tatum-defi": "file:../tatum-defi",
-    "@tatumio/tatum-ledger": "file:../tatum-ledger",
     "bip32": "^2.0.5",
     "bip39": "^3.0.2",
     "class-validator": "0.13.0",

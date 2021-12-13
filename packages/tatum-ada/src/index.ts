@@ -28,6 +28,5 @@ export {
   getTransactionKMS,
   deleteTransactionKMS,
   completePendingTransactionKMS,
+  WalletWithMnemonic,
 } from '@tatumio/tatum-core'
-
-export { WalletWithMnemonic } from '@tatumio/tatum-ledger'

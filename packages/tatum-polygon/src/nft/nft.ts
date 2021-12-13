@@ -12,8 +12,6 @@ import {
   getNFTMetadataURI as getNFTMetadataURIDefi,
   getNFTImage as getNFTImageDefi,
   getNFTRoyalty as getNFTRoyaltyDefi,
-} from '@tatumio/tatum-defi'
-import {
   MintErc721,
   MintMultipleErc721,
   TransactionHash,

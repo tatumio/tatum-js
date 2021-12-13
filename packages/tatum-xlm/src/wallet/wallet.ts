@@ -1,5 +1,5 @@
 import { Keypair } from 'stellar-sdk'
-import { WalletWithAddress } from '@tatumio/tatum-ledger'
+import { WalletWithAddress } from '@tatumio/tatum-core'
 
 /**
  * Generate Stellar address and secret.
