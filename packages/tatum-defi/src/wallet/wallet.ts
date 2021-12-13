@@ -126,3 +126,5 @@ export const generateWallet = (
       throw new Error('Unsupported blockchain.')
   }
 }
+
+export { Wallet, WalletWithAddress, WalletWithMnemonic, Currency } from '@tatumio/tatum-core'

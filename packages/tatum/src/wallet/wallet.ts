@@ -1,1 +1,1 @@
-export { generateWallet } from '@tatumio/tatum-defi'
+export { Wallet, WalletWithAddress, WalletWithMnemonic, Currency, generateWallet } from '@tatumio/tatum-defi'
