@@ -1,4 +1,4 @@
-import {IsIn, IsNotEmpty, IsOptional, Min} from 'class-validator'
+import {IsIn, IsNotEmpty, IsOptional, Min, IsBoolean} from 'class-validator'
 import {Currency} from './Currency'
 import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId'
 
@@ -14,4 +14,8 @@ export class DeployMultiToken extends PrivateKeyOrSignatureId {
     @Min(0)
     @IsOptional()
     public nonce?: number;
+    
+    @IsBoolean()
+    @IsOptional()
+    public publicMint?: boolean;
 }

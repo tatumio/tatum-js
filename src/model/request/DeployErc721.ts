@@ -32,4 +32,8 @@ export class DeployErc721 extends PrivateKeyOrSignatureId {
     @IsNotEmpty()
     @Length(42, 58)
     public from?: string;
+
+    @IsBoolean()
+    @IsOptional()
+    public publicMint?: boolean;
 }

@@ -512,7 +512,7 @@ export const preparePolygonDeployErc721SignedTransaction = async (testnet: boole
     const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
     // @ts-ignore
     const data = new client.eth.Contract(body.provenance ? erc721Provenance_abi : erc721TokenABI).deploy({
-        arguments: [body.name, body.symbol],
+        arguments: [body.name, body.symbol, body.publicMint ? body.publicMint : false],
         data: body.provenance ? erc721Provenance_bytecode : erc721TokenBytecode,
     }).encodeABI()
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, undefined, undefined, body.nonce, data,
@@ -672,7 +672,7 @@ export const preparePolygonDeployMultiTokenSignedTransaction = async (testnet: b
     const client = await preparePolygonClient(testnet, provider, body.fromPrivateKey)
     // @ts-ignore
     const data = new client.eth.Contract(erc1155TokenABI).deploy({
-        arguments: [body.uri],
+        arguments: [body.uri, body.publicMint ? body.publicMint : false],
         data: erc1155TokenBytecode,
     }).encodeABI()
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, undefined, undefined, body.nonce, data,

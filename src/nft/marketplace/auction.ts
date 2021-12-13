@@ -224,7 +224,7 @@ export const prepareAuctionBid = async (testnet: boolean, body: InvokeAuctionOpe
     } else if (body.bidder) {
         throw new Error('Bidder could be present only for ERC20 based auctions.');
     } else {
-        b.amount = body.bidValue;
+        b.amount = body.amount ? body.amount : body.bidValue;
     }
 
     const params = [body.id, `0x${new BigNumber(body.bidValue).multipliedBy(new BigNumber(10).pow(decimals)).toString(16)}`,];

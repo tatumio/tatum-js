@@ -766,7 +766,8 @@ export const prepareBscDeployBep721SignedTransaction = async (body: EthDeployErc
         symbol,
         nonce,
         signatureId,
-        provenance
+        provenance,
+        publicMint
     } = body
 
     const client = await getBscClient(provider, fromPrivateKey)
@@ -778,7 +779,7 @@ export const prepareBscDeployBep721SignedTransaction = async (body: EthDeployErc
 
     // @ts-ignore
     const deploy = contract.deploy({
-        arguments: [name, symbol]
+        arguments: [name, symbol, publicMint ? publicMint : false]
     })
 
     const tx: TransactionConfig = {
@@ -1027,6 +1028,7 @@ export const prepareBscDeployMultiTokenSignedTransaction = async (body: EthDeplo
         uri,
         nonce,
         signatureId,
+        publicMint
     } = body
 
     const client = await getBscClient(provider, fromPrivateKey)
@@ -1038,7 +1040,7 @@ export const prepareBscDeployMultiTokenSignedTransaction = async (body: EthDeplo
 
     // @ts-ignore
     const deploy = contract.deploy({
-        arguments: [uri]
+        arguments: [uri, publicMint ? publicMint : false]
     })
 
     const tx: TransactionConfig = {

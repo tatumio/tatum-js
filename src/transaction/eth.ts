@@ -996,6 +996,7 @@ export const prepareEthDeployMultiTokenSignedTransaction = async (body: EthDeplo
         uri,
         nonce,
         signatureId,
+        publicMint
     } = body
 
     const client = await getClient(provider, fromPrivateKey)
@@ -1007,7 +1008,7 @@ export const prepareEthDeployMultiTokenSignedTransaction = async (body: EthDeplo
 
     // @ts-ignore
     const deploy = contract.deploy({
-        arguments: [uri]
+        arguments: [uri, publicMint ? publicMint : false]
     })
 
     const tx: TransactionConfig = {
@@ -1032,7 +1033,8 @@ export const prepareEthDeployErc721SignedTransaction = async (body: EthDeployErc
         symbol,
         nonce,
         signatureId,
-        provenance
+        provenance,
+        publicMint
     } = body
 
     const client = await getClient(provider, fromPrivateKey)
@@ -1044,7 +1046,7 @@ export const prepareEthDeployErc721SignedTransaction = async (body: EthDeployErc
 
     // @ts-ignore
     const deploy = contract.deploy({
-        arguments: [name, symbol]
+        arguments: [name, symbol, publicMint ? publicMint : false]
     })
 
     const tx: TransactionConfig = {
