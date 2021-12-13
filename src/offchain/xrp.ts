@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js'
 import {RippleAPI} from 'ripple-lib'
 import {xrpGetAccountInfo, xrpGetFee} from '../blockchain'
-import { validateBody } from '../connector/tatum'
+import {validateBody} from '../connector/tatum'
 import {Currency, TransactionKMS, TransferXrpOffchain} from '../model'
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common'
 
@@ -101,7 +101,7 @@ export const prepareXrpSignedOffchainTransaction =
         const prepared = await rippleAPI.preparePayment(account.account_data.Account, payment, {
             fee: `${fee}`,
             sequence: account.account_data.Sequence,
-            maxLedgerVersion: account.ledger_current_index + 5,
+            maxLedgerVersion: (account.ledger_current_index || account.ledger_index) + 500,
         })
         return (await rippleAPI.sign(prepared.txJSON, secret)).signedTransaction
     }
