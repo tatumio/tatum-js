@@ -8,6 +8,7 @@ describe('XRP transactions', () => {
     it('should test XRP transaction data', async () => {
         jest.spyOn(blockchain, 'xrpGetAccountInfo').mockResolvedValue({
             ledger_current_index: 1,
+            ledger_index: 1,
             account_data: {Sequence: 123}
         })
         const body = new TransferXrp()
@@ -23,6 +24,7 @@ describe('XRP transactions', () => {
     it('should not test XRP transaction data, missing amount', async () => {
         jest.spyOn(blockchain, 'xrpGetAccountInfo').mockResolvedValue({
             ledger_current_index: 1,
+            ledger_index: 1,
             account_data: {Sequence: 123}
         })
         const body = new TransferXrp()
