@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-quorum",
-  "version": "2.0.0-alpha.82",
+  "version": "2.0.0-alpha.83",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
