@@ -70,6 +70,7 @@ export enum Currency {
   ALGO = 'ALGO',
   KCS = 'KCS',
   COIIN = 'COIIN',
+  OOO = 'OOO',
 }
 
 export const ERC20_CURRENCIES = [

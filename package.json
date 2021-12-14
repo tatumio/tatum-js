@@ -12,7 +12,8 @@
     "lint": "yarn lerna run lint",
     "clean:all": "yarn lerna clean --yes && find ./packages -name 'dist' -type d -prune -print -exec rm -rf '{}' \\;",
     "bootstrap": "yarn lerna bootstrap && yarn lerna exec yarn install",
-    "publish:prerelease": "yarn lerna publish prerelease --yes --no-verify-access --dist-tag alpha --force-publish"
+    "publish:prerelease": "yarn lerna publish prerelease --yes --no-verify-access --dist-tag alpha --force-publish",
+    "add:chain": "yarn plop && yarn && yarn bootstrap"
   },
   "private": true,
   "workspaces": [
@@ -40,6 +41,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "^26.6.3",
     "lerna": "^4.0.0",
+    "plop": "^3.0.5",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "ts-jest": "^26.1.1",

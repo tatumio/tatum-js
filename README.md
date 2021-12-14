@@ -38,32 +38,47 @@ Library is written in TypeScript with ES2017 as the target JS version. Library s
 | TATUM_GAS_STATION_API_KEY | <ul><li>- [ ] </li></ul> |                          | In the library, there are functions for estimating the Ethereum transaction fee. For the estimation of the transaction fee, we are using https://ethgasstation.info. If you have your API key from https://ethgasstation.info you can use it. |
 | YOUR_TRON_PRO_API_KEY     | <ul><li>- [ ] </li></ul> |                          | If you want to work with TRON locally, you need to enter API Key for  [Trongrid] (https://trongrid.io).                                                                                                                                       |
 
-## Development
+## Development - Add a new chain (EVM)
 
-#### Pull repository 
+### 1. Pull repository 
 
 ```console
 $ git clone https://github.com/tatumio/tatum-js.git && cd tatum-js
 ```
 
-#### Install root dependencies
+### 2. Install root dependencies
 
 ```console
 $ yarn
 ```
 
-#### Install dependencies & build in subpackages 
+### 3. Install dependencies & build in subpackages 
 
 ```console
 $ yarn bootstrap
 ```
 
-#### Clean all node_modules in subpackages
+### 4. Add chain to the core package 
+Add chain constant to the ```packages/tatum-core/src/model/request/Currency.ts```.
+
+### 5. Create subpackage
+Following command will generate whole structure (files and directories), download dependencies and build subpackage.
+```console
+$ yarn add:chain
+```
+As a template is used ```templates``` directory.
+
+### 6. Update rest - TODO 
+- Estimate gas fee - ```packages/tatum-{{slug}}/src/transaction/super.ts```
+- Derivation path - ```packages/tatum-{{slug}}/src/constants.ts```
+- Update all in ```packages/tatum```
+
+### Clean all node_modules in subpackages - in case of problems with dependency
 
 ```console
 $ yarn clean:all
 ```
-#### Publish alpha version
+### Publish alpha version
 
 We are using Github actions for publishing to NPM registry. Github action is defined in .github/workflows. Use this command only if Github action dont work! 
 
