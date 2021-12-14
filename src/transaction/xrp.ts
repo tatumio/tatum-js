@@ -67,7 +67,7 @@ export const prepareXrpSignedTransaction = async (body: TransferXrp) => {
     }
     const accountInfo = await xrpGetAccountInfo(fromAccount)
     const sequence = accountInfo.account_data.Sequence
-    const maxLedgerVersion = accountInfo.ledger_current_index + 500
+    const maxLedgerVersion = (accountInfo.ledger_current_index || accountInfo.ledger_index) + 500
     const rippleAPI = new RippleAPI()
     const prepared = await rippleAPI.preparePayment(fromAccount, payment, {
         fee: f,
