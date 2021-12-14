@@ -214,6 +214,7 @@ export const prepareCeloDeployMultiTokenSignedTransaction = async (testnet: bool
         feeCurrency,
         nonce,
         signatureId,
+        publicMint
     } = body
 
     const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
@@ -224,7 +225,7 @@ export const prepareCeloDeployMultiTokenSignedTransaction = async (testnet: bool
     const contract = new (new Web3()).eth.Contract(erc1155_abi)
     const deploy = contract.deploy({
         data: erc1155_bytecode,
-        arguments: [uri]
+        arguments: [uri, publicMint ? publicMint : false]
     })
 
     if (signatureId) {
@@ -264,7 +265,8 @@ export const prepareCeloDeployErc721SignedTransaction = async (testnet: boolean,
         feeCurrency,
         nonce,
         signatureId,
-        provenance
+        provenance,
+        publicMint
     } = body
 
     const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`);
@@ -275,7 +277,7 @@ export const prepareCeloDeployErc721SignedTransaction = async (testnet: boolean,
     const contract = new (new Web3()).eth.Contract(provenance ? erc721Provenance_abi : erc721_abi)
     const deploy = contract.deploy({
         data: provenance ? erc721Provenance_bytecode : erc721_bytecode,
-        arguments: [name, symbol]
+        arguments: [name, symbol, publicMint ? publicMint : false]
     })
 
     if (signatureId) {

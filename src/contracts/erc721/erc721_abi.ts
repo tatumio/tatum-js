@@ -10,6 +10,11 @@ export default [
 				"internalType": "string",
 				"name": "symbol_",
 				"type": "string"
+			},
+			{
+				"internalType": "bool",
+				"name": "publicMint",
+				"type": "bool"
 			}
 		],
 		"stateMutability": "nonpayable",
@@ -726,6 +731,35 @@ export default [
 	{
 		"inputs": [
 			{
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "value",
+				"type": "uint256"
+			}
+		],
+		"name": "royaltyInfo",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "address",
 				"name": "to",
 				"type": "address"
@@ -885,6 +919,11 @@ export default [
 			{
 				"internalType": "uint256",
 				"name": "tokenId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "tokenPrice",
 				"type": "uint256"
 			}
 		],
