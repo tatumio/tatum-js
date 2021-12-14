@@ -1,7 +1,9 @@
 import {
+  NftTransaction,
   mintNFTRequest,
   createNFTAbstraction,
   prepareAddNFTMinterAbstraction,
+  getNFTTransactionsByToken as getNFTTransactionsByTokenDefi,
   getNFTTransactionsByAddress as getNFTTransactionsByAddressDefi,
   getNFTsByAddress as getNFTsByAddressDefi,
   getNFTProvenanceData as getNFTProvenanceDataDefi,
@@ -147,6 +149,34 @@ export const sendAddNFTMinter = async (testnet: boolean, body: ChainAddMinter, p
   helperBroadcastTx(await prepareAddNFTMinter(testnet, body, provider), body.signatureId)
 
 /**
+ * Get NFT transactions by token. This includes incoming and outgoing transactions for the token.
+ * @param tokenId NFT Token ID
+ * @param tokenAddress NFT Token address
+ * @param pageSize Max number of items per page is 50.
+ * @param offset optional Offset to obtain next page of the data.
+ * @param from optional Transactions from this block onwords will be included.
+ * @param to optional Transactions up to this block will be included.
+ * @param sort optional Sorting of the data. ASC - oldest first, DESC - newest first.
+ */
+export const getNFTTransactionsByToken = async (
+  tokenId: number,
+  tokenAddress: string,
+  pageSize: number,
+  offset?: number,
+  from?: number,
+  to?: number,
+  sort?: Sort
+): Promise<NftTransaction[]> => getNFTTransactionsByTokenDefi(Currency.CELO, tokenId, tokenAddress, pageSize, offset, from, to, sort)
+
+/**
+ * Get NFT transactions by address. This includes incoming and outgoing transactions for the address.
+ * @param address Account address
+ * @param tokenAddress NFT Token address
+ * @param pageSize Max number of items per page is 50.
+ * @param offset optional Offset to obtain next page of the data.
+ * @param from optional Transactions from this block onwords will be included.
+ * @param to optional Transactions up to this block will be included.
+ * @param sort optional Sorting of the data. ASC - oldest first, DESC - newest first.
  * For more details, see <a href="https://tatum.io/apidoc.php#operation/NftGetTransactionByAddress" target="_blank">Tatum API documentation</a>
  */
 export const getNFTTransactionsByAddress = async (
@@ -157,9 +187,7 @@ export const getNFTTransactionsByAddress = async (
   from?: number,
   to?: number,
   sort?: Sort
-) => {
-  return getNFTTransactionsByAddressDefi(Currency.CELO, address, tokenAddress, pageSize, offset, from, to, sort)
-}
+): Promise<NftTransaction[]> => getNFTTransactionsByAddressDefi(Currency.CELO, address, tokenAddress, pageSize, offset, from, to, sort)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/NftGetBalanceErc721" target="_blank">Tatum API documentation</a>

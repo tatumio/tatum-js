@@ -13,6 +13,15 @@ export enum Sort {
   DESC = 'DESC',
 }
 
+export interface QueryParams {
+  from: number | undefined
+  to: number | undefined
+  sort: Sort | undefined
+  pageSize: number | undefined
+  offset: number | undefined
+  account: string | undefined
+}
+
 export const axios = a.create({
   httpAgent: new http.Agent({ keepAlive: true }),
   httpsAgent: new https.Agent({ keepAlive: true }),
@@ -30,6 +39,19 @@ const baseUrl = () => process.env.TATUM_API_URL || TATUM_API_URL
 const headers = () => ({
   headers: { 'x-api-key': process.env.TATUM_API_KEY, 'x-testnet-type': process.env.TESTNET_TYPE || 'ethereum-ropsten' },
 })
+
+const isSetFilter =
+  <OBJ extends Record<string, unknown>>(query: OBJ) =>
+  (item: string): boolean =>
+    query[item] !== null && query[item] !== undefined
+
+const queryToStringReducer =
+  <OBJ extends Record<string, unknown>>(query: OBJ) =>
+  (queryString: string /* ? */, queryName: string) =>
+    queryString === '' ? `?${queryName}=${query[queryName]}` : `${queryString}&${queryName}=${query[queryName]}`
+
+export const queryParmsToString = <K extends keyof QueryParams>(query: Pick<QueryParams, K>): string =>
+  Object.keys(query).filter(isSetFilter<Pick<QueryParams, K>>(query)).reduce(queryToStringReducer<Pick<QueryParams, K>>(query), '')
 
 export const get = async <T>(url: string): Promise<T> => {
   const { data } = await axios.get(`${baseUrl()}${url}`, headers())
