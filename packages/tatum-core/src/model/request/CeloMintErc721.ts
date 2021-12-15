@@ -1,4 +1,5 @@
-import { BaseMintErc721, Currency } from '@tatumio/tatum-core'
+import { Currency } from './Currency'
+import { BaseMintErc721 } from './BaseMintErc721'
 import { IsIn, IsOptional } from 'class-validator'
 
 export class CeloMintErc721 extends BaseMintErc721 {

@@ -30,7 +30,7 @@ export const getLedger = async (i: number) => get(`/v3/xrp/ledger/${i}`)
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/XrpGetAccountBalance" target="_blank">Tatum API documentation</a>
  */
-export const getAccountBalance = async (address: string) => get(`/v3/xrp/account/${address}/balance`)
+export const getBlockchainAccountBalance = async (address: string) => get(`/v3/xrp/account/${address}/balance`)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/XrpGetTransaction" target="_blank">Tatum API documentation</a>

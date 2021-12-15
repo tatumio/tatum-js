@@ -2,8 +2,7 @@ import { generateMnemonic, mnemonicToSeed } from 'bip39'
 import { networks } from 'bitcoinjs-lib'
 // @ts-ignore
 import hdkey from 'hdkey'
-import { TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
-import { WalletWithMnemonic } from '@tatumio/tatum-ledger'
+import { WalletWithMnemonic, TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
 import { BTC_DERIVATION_PATH } from '../constants'
 
 /**

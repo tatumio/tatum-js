@@ -9,8 +9,6 @@ import {
   prepareAuctionSettleAbstraction,
   prepareAuctionUpdateFeeAbstraction,
   prepareAuctionUpdateFeeRecipientAbstraction,
-} from '@tatumio/tatum-defi'
-import {
   auction,
   ChainApproveErc20,
   ChainApproveNftTransfer,
@@ -276,4 +274,4 @@ export const getAuctionFeeRecipient = async (contractAddress: string) => {
   return getAuctionFeeRecipientDefi(Currency.CELO, contractAddress)
 }
 
-export { Auction } from '@tatumio/tatum-defi'
+export { Auction } from '@tatumio/tatum-core'

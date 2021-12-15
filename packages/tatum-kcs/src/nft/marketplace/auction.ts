@@ -6,8 +6,6 @@ import {
   prepareAuctionSettleAbstraction,
   prepareAuctionUpdateFeeAbstraction,
   prepareAuctionUpdateFeeRecipientAbstraction,
-} from '@tatumio/tatum-defi'
-import {
   auction,
   ChainApproveErc20,
   ChainApproveNftTransfer,
@@ -233,4 +231,4 @@ export const sendAuctionCancel = async (body: ChainInvokeAuctionOperation, provi
 export const sendAuctionSettle = async (body: ChainInvokeAuctionOperation, provider?: string) =>
   helperBroadcastTx(await prepareAuctionSettle(body, provider), body.signatureId)
 
-export { Auction } from '@tatumio/tatum-defi'
+export { Auction } from '@tatumio/tatum-core'

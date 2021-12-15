@@ -10,6 +10,8 @@ export {
   offchainStoreWithdrawal,
   offchainCancelWithdrawal,
   offchainCompleteWithdrawal,
-} from '@tatumio/tatum-core'
-export { registerErc20 as registerEthereumErc20, storeErc20ContractAddress } from '@tatumio/tatum-eth'
-export { storeTrcContractAddress, registerTrc as registerTronTrc } from '@tatumio/tatum-tron'
+  registerEthereumErc20,
+  storeErc20ContractAddress,
+  storeTrcContractAddress,
+  registerTronTrc,
+} from '@tatumio/tatum-ledger'

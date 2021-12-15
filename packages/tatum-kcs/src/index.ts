@@ -1,4 +1,5 @@
 export * from './blockchain'
+export * from './ledger'
 export * from './fungible'
 export * from './helpers'
 export * from './multiToken'
@@ -31,6 +32,5 @@ export {
   getTransactionKMS,
   deleteTransactionKMS,
   completePendingTransactionKMS,
+  WalletWithAddress,
 } from '@tatumio/tatum-core'
-
-export { WalletWithMnemonic } from '@tatumio/tatum-ledger'

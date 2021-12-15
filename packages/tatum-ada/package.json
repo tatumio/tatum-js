@@ -15,8 +15,6 @@
   "dependencies": {
     "@emurgo/cardano-serialization-lib-nodejs": "^6.0.0",
     "@tatumio/tatum-core": "file:../tatum-core",
-    "@tatumio/tatum-defi": "file:../tatum-defi",
-    "@tatumio/tatum-ledger": "file:../tatum-ledger",
     "bignumber.js": "^9.0.0",
     "bip39": "^3.0.2",
     "cardano-crypto.js": "^6.0.0",

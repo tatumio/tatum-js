@@ -8,7 +8,7 @@ import {
   mintMultiTokenBatch,
   transferMultiToken,
   transferMultiTokenBatch,
-} from './index'
+} from '../multiToken'
 
 describe('NFT tests', () => {
   jest.setTimeout(99999)

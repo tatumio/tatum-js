@@ -9,8 +9,6 @@ import {
   prepareAuctionSettleAbstraction,
   prepareAuctionUpdateFeeAbstraction,
   prepareAuctionUpdateFeeRecipientAbstraction,
-} from '@tatumio/tatum-defi'
-import {
   auction,
   erc1155TokenABI,
   erc721TokenABI,
@@ -261,4 +259,4 @@ export const getAuctionFeeRecipient = async (contractAddress: string) => {
   return getAuctionFeeRecipientDefi(Currency.MATIC, contractAddress)
 }
 
-export { Auction } from '@tatumio/tatum-defi'
+export { Auction } from '@tatumio/tatum-core'

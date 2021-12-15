@@ -1,4 +1,5 @@
 export * from './blockchain'
+export * from './ledger'
 export * from './model'
 export * from './offchain'
 export * from './record'
@@ -28,6 +29,5 @@ export {
   getTransactionKMS,
   deleteTransactionKMS,
   completePendingTransactionKMS,
+  WalletWithAddress,
 } from '@tatumio/tatum-core'
-
-export { WalletWithAddress } from '@tatumio/tatum-ledger'

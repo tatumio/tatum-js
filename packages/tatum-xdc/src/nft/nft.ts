@@ -1,4 +1,3 @@
-import { createNFTAbstraction } from '@tatumio/tatum-defi'
 import {
   post,
   TransactionHash,
@@ -9,6 +8,7 @@ import {
   ChainBurnErc721,
   ChainUpdateCashbackErc721,
   ChainTransferErc721,
+  createNFTAbstraction,
 } from '@tatumio/tatum-core'
 
 import {

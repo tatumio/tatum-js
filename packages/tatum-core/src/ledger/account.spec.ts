@@ -1,5 +1,5 @@
 import { createAccount, freezeAccount, getAccountById, updateAccount } from './account'
-import { Currency } from '@tatumio/tatum-core'
+import { Currency } from '../model'
 
 describe('Ledger accounts tests', () => {
   it('should test create of ledger account', async () => {

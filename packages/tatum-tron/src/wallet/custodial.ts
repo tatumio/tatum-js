@@ -2,20 +2,18 @@ import {
   prepareTransferFromCustodialWalletAbstract,
   prepareBatchTransferFromCustodialWalletAbstract,
   prepareCustodialWalletBatchAbstract,
-} from '@tatumio/tatum-defi'
-import {
-  ChainGenerateTronCustodialAddress,
-  ChainTransferFromTronCustodialAddress,
-  ChainTransferFromTronCustodialAddressBatch,
-  TransferFromTronCustodialAddressBatch,
-} from '../model'
-import {
   ChainGenerateCustodialAddressBatch,
   Currency,
   CUSTODIAL_PROXY_ABI,
   SmartContractMethodInvocation,
   TransferFromCustodialAddress,
 } from '@tatumio/tatum-core'
+import {
+  ChainGenerateTronCustodialAddress,
+  ChainTransferFromTronCustodialAddress,
+  ChainTransferFromTronCustodialAddressBatch,
+  TransferFromTronCustodialAddressBatch,
+} from '../model'
 import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
 import {
   convertAddressToHex,

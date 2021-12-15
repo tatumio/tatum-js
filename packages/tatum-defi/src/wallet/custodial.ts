@@ -1,97 +1,175 @@
 import { BigNumber } from 'bignumber.js'
 import {
+  ApproveCustodialTransfer,
+  CeloSmartContractMethodInvocation,
   ContractType,
   Currency,
-  Custodial_1155_TokenWallet,
-  Custodial_1155_TokenWalletWithBatch,
-  Custodial_20_1155_TokenWallet,
-  Custodial_20_1155_TokenWalletWithBatch,
-  Custodial_20_721_TokenWallet,
-  Custodial_20_721_TokenWalletWithBatch,
-  Custodial_20_TokenWallet,
-  Custodial_20_TokenWalletWithBatch,
-  Custodial_721_1155_TokenWallet,
-  Custodial_721_1155_TokenWalletWithBatch,
-  Custodial_721_TokenWallet,
-  Custodial_721_TokenWalletWithBatch,
   CustodialFullTokenWallet,
   CustodialFullTokenWalletWithBatch,
   GenerateCustodialAddress,
   GenerateCustodialAddressBatch,
-  get,
   SmartContractMethodInvocation,
   TransferFromCustodialAddress,
   TransferFromCustodialAddressBatch,
   validateBody,
 } from '@tatumio/tatum-core'
+import {
+  convertAddressToHex,
+  generateCustodialWallet as sendTronGenerateCustodialWalletSignedTransaction,
+  generateCustodialWalletBatch as tronGenerateCustodialWalletBatch,
+  GenerateTronCustodialAddress,
+  getTrc20ContractDecimals as getTronTrc20ContractDecimals,
+  prepareCustodialTransferBatch as prepareTronCustodialTransferBatch,
+  prepareCustodialWallet as prepareTronGenerateCustodialWalletSignedTransaction,
+  prepareCustodialWalletBatch as tronPrepareCustodialWalletBatch,
+  prepareSmartContractInvocation as prepareTronSmartContractInvocation,
+  TransferFromTronCustodialAddress,
+  TransferFromTronCustodialAddressBatch,
+} from '@tatumio/tatum-tron'
+import {
+  generateCustodialWallet as sendCeloGenerateCustodialWalletSignedTransaction,
+  generateCustodialWalletBatch as celoGenerateCustodialWalletBatch,
+  getErc20ContractDecimals as getCeloErc20ContractDecimals,
+  prepareCustodialWallet as prepareCeloGenerateCustodialWalletSignedTransaction,
+  prepareCustodialWalletBatch as celoPrepareCustodialWalletBatch,
+  prepareSmartContractWriteMethodInvocation as prepareCeloSmartContractWriteMethodInvocation,
+} from '@tatumio/tatum-celo'
+import {
+  generateCustodialWallet as sendOneGenerateCustodialWalletSignedTransaction,
+  get20ContractDecimals as getOne20ContractDecimals,
+  prepareCustodialWallet as prepareOneGenerateCustodialWalletSignedTransaction,
+  prepareSmartContractWriteMethodInvocation as prepareOneSmartContractWriteMethodInvocation,
+} from '@tatumio/tatum-one'
+import {
+  generateCustodialWallet as sendEthGenerateCustodialWalletSignedTransaction,
+  generateCustodialWalletBatch as ethGenerateCustodialWalletBatch,
+  getErc20ContractDecimals as getEthErc20ContractDecimals,
+  prepareCustodialWallet as prepareEthGenerateCustodialWalletSignedTransaction,
+  prepareCustodialWalletBatch as ethPrepareCustodialWalletBatch,
+  prepareSmartContractWriteMethodInvocation,
+} from '@tatumio/tatum-eth'
+import {
+  generateCustodialWallet as sendBscGenerateCustodialWalletSignedTransaction,
+  generateCustodialWalletBatch as bscGenerateCustodialWalletBatch,
+  getBep20ContractDecimals as getBscBep20ContractDecimals,
+  prepareCustodialWallet as prepareBscGenerateCustodialWalletSignedTransaction,
+  prepareCustodialWalletBatch as bscPrepareCustodialWalletBatch,
+  prepareSmartContractWriteMethodInvocation as prepareBscSmartContractWriteMethodInvocation,
+} from '@tatumio/tatum-bsc'
+import {
+  generateCustodialWallet as sendPolygonGenerateCustodialWalletSignedTransaction,
+  generateCustodialWalletBatch as polygonGenerateCustodialWalletBatch,
+  getErc20ContractDecimals as getPolygonErc20ContractDecimals,
+  prepareCustodialWallet as preparePolygonGenerateCustodialWalletSignedTransaction,
+  prepareCustodialWalletBatch as polygonPrepareCustodialWalletBatch,
+  prepareSmartContractWriteMethodInvocation as preparePolygonSmartContractWriteMethodInvocation,
+} from '@tatumio/tatum-polygon'
+import { helperBroadcastTx, helperPrepareSCCall } from '../helpers'
+import { getErc20Decimals } from '../fungible'
 
-export const obtainCustodialAddressType = (body: GenerateCustodialAddress) => {
-  if (body.chain === Currency.TRON && body.enableSemiFungibleTokens) {
-    throw new Error('MultiToken not supported for TRON.')
+/**
+ * This method is @Deprecated. Use @link{generateCustodialWalletBatch} instead
+ * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, btu transaction costs connected to the withdrawal
+ * of assets is covered by the deployer.
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const generateCustodialWallet = async (
+  testnet: boolean,
+  body: GenerateCustodialAddress | GenerateTronCustodialAddress,
+  provider?: string
+): Promise<{ txId: string }> => {
+  console.log('This method is deprecated. For better gas consumption, use generateCustodialWalletBatch.')
+  switch (body.chain) {
+    case Currency.CELO:
+      return await sendCeloGenerateCustodialWalletSignedTransaction(testnet, body, provider)
+    case Currency.ONE:
+      return await sendOneGenerateCustodialWalletSignedTransaction(body, provider)
+    case Currency.ETH:
+      return await sendEthGenerateCustodialWalletSignedTransaction(body, provider)
+    case Currency.BSC:
+      return await sendBscGenerateCustodialWalletSignedTransaction(body, provider)
+    case Currency.MATIC:
+      return await sendPolygonGenerateCustodialWalletSignedTransaction(body, provider)
+    case Currency.TRON:
+      return await sendTronGenerateCustodialWalletSignedTransaction(body as GenerateTronCustodialAddress, provider)
+    default:
+      throw new Error('Unsupported chain')
   }
-  let abi
-  let code
-  if (body.enableFungibleTokens && body.enableNonFungibleTokens && body.enableSemiFungibleTokens && body.enableBatchTransactions) {
-    code = CustodialFullTokenWalletWithBatch.bytecode
-    abi = CustodialFullTokenWalletWithBatch.abi
-  } else if (body.enableFungibleTokens && body.enableNonFungibleTokens && body.enableSemiFungibleTokens && !body.enableBatchTransactions) {
-    code = CustodialFullTokenWallet.bytecode
-    abi = CustodialFullTokenWallet.abi
-  } else if (body.enableFungibleTokens && body.enableNonFungibleTokens && !body.enableSemiFungibleTokens && body.enableBatchTransactions) {
-    code = Custodial_20_721_TokenWalletWithBatch.bytecode
-    abi = Custodial_20_721_TokenWalletWithBatch.abi
-  } else if (body.enableFungibleTokens && body.enableNonFungibleTokens && !body.enableSemiFungibleTokens && !body.enableBatchTransactions) {
-    code = Custodial_20_721_TokenWallet.bytecode
-    abi = Custodial_20_721_TokenWallet.abi
-  } else if (body.enableFungibleTokens && !body.enableNonFungibleTokens && body.enableSemiFungibleTokens && body.enableBatchTransactions) {
-    code = Custodial_20_1155_TokenWalletWithBatch.bytecode
-    abi = Custodial_20_1155_TokenWalletWithBatch.abi
-  } else if (body.enableFungibleTokens && !body.enableNonFungibleTokens && body.enableSemiFungibleTokens && !body.enableBatchTransactions) {
-    code = Custodial_20_1155_TokenWallet.bytecode
-    abi = Custodial_20_1155_TokenWallet.abi
-  } else if (!body.enableFungibleTokens && body.enableNonFungibleTokens && body.enableSemiFungibleTokens && body.enableBatchTransactions) {
-    code = Custodial_721_1155_TokenWalletWithBatch.bytecode
-    abi = Custodial_721_1155_TokenWalletWithBatch.abi
-  } else if (!body.enableFungibleTokens && body.enableNonFungibleTokens && body.enableSemiFungibleTokens && !body.enableBatchTransactions) {
-    code = Custodial_721_1155_TokenWallet.bytecode
-    abi = Custodial_721_1155_TokenWallet.abi
-  } else if (body.enableFungibleTokens && !body.enableNonFungibleTokens && !body.enableSemiFungibleTokens && body.enableBatchTransactions) {
-    code = Custodial_20_TokenWalletWithBatch.bytecode
-    abi = Custodial_20_TokenWalletWithBatch.abi
-  } else if (
-    body.enableFungibleTokens &&
-    !body.enableNonFungibleTokens &&
-    !body.enableSemiFungibleTokens &&
-    !body.enableBatchTransactions
-  ) {
-    code = Custodial_20_TokenWallet.bytecode
-    abi = Custodial_20_TokenWallet.abi
-  } else if (!body.enableFungibleTokens && body.enableNonFungibleTokens && !body.enableSemiFungibleTokens && body.enableBatchTransactions) {
-    code = Custodial_721_TokenWalletWithBatch.bytecode
-    abi = Custodial_721_TokenWalletWithBatch.abi
-  } else if (
-    !body.enableFungibleTokens &&
-    body.enableNonFungibleTokens &&
-    !body.enableSemiFungibleTokens &&
-    !body.enableBatchTransactions
-  ) {
-    code = Custodial_721_TokenWallet.bytecode
-    abi = Custodial_721_TokenWallet.abi
-  } else if (!body.enableFungibleTokens && !body.enableNonFungibleTokens && body.enableSemiFungibleTokens && body.enableBatchTransactions) {
-    code = Custodial_1155_TokenWalletWithBatch.bytecode
-    abi = Custodial_1155_TokenWalletWithBatch.abi
-  } else if (
-    !body.enableFungibleTokens &&
-    !body.enableNonFungibleTokens &&
-    body.enableSemiFungibleTokens &&
-    !body.enableBatchTransactions
-  ) {
-    code = Custodial_1155_TokenWallet.bytecode
-    abi = Custodial_1155_TokenWallet.abi
-  } else {
-    throw new Error('Unsupported combination of inputs.')
+}
+
+/**
+ * This method is @Deprecated. Use @link{prepareCustodialWalletBatch} instead
+ * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, btu transaction costs connected to the withdrawal
+ * of assets is covered by the deployer.
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const prepareCustodialWallet = async (
+  testnet: boolean,
+  body: GenerateCustodialAddress | GenerateTronCustodialAddress,
+  provider?: string
+) => {
+  console.log('This method is deprecated. For better gas consumption, use prepareCustodialWalletBatch.')
+  switch (body.chain) {
+    case Currency.CELO:
+      return await prepareCeloGenerateCustodialWalletSignedTransaction(testnet, body, provider)
+    case Currency.ONE:
+      return await prepareOneGenerateCustodialWalletSignedTransaction(body, provider)
+    case Currency.ETH:
+      return await prepareEthGenerateCustodialWalletSignedTransaction(body, provider)
+    case Currency.BSC:
+      return await prepareBscGenerateCustodialWalletSignedTransaction(body, provider)
+    case Currency.MATIC:
+      return await preparePolygonGenerateCustodialWalletSignedTransaction(body, provider)
+    case Currency.TRON:
+      return await prepareTronGenerateCustodialWalletSignedTransaction(body as GenerateTronCustodialAddress, provider)
+    default:
+      throw new Error('Unsupported chain')
   }
-  return { abi, code }
+}
+
+/**
+ * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, btu transaction costs connected to the withdrawal
+ * of assets is covered by the deployer.
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const sendCustodialWallet = async (
+  testnet: boolean,
+  body: GenerateCustodialAddress | GenerateTronCustodialAddress,
+  provider?: string
+): Promise<{ txId: string }> => {
+  let txData
+  switch (body.chain) {
+    case Currency.CELO:
+      txData = await prepareCeloGenerateCustodialWalletSignedTransaction(testnet, body, provider)
+      break
+    case Currency.ONE:
+      txData = await prepareOneGenerateCustodialWalletSignedTransaction(body, provider)
+      break
+    case Currency.ETH:
+      txData = await prepareEthGenerateCustodialWalletSignedTransaction(body, provider)
+      break
+    case Currency.BSC:
+      txData = await prepareBscGenerateCustodialWalletSignedTransaction(body, provider)
+      break
+    case Currency.MATIC:
+      txData = await preparePolygonGenerateCustodialWalletSignedTransaction(body, provider)
+      break
+    case Currency.TRON:
+      txData = await prepareTronGenerateCustodialWalletSignedTransaction(body, provider)
+      break
+    default:
+      throw new Error('Unsupported chain')
+  }
+  return helperBroadcastTx(body.chain, txData, body.signatureId)
 }
 
 /**
@@ -101,24 +179,25 @@ export const obtainCustodialAddressType = (body: GenerateCustodialAddress) => {
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareTransferFromCustodialWalletAbstract = async <SCBody extends SmartContractMethodInvocation>(
+export const prepareTransferFromCustodialWallet = async (
   testnet: boolean,
-  body: TransferFromCustodialAddress,
-  getContractDecimals: (contractAddress: string, provider?: string, testnet?: boolean) => Promise<any>,
-  prepareSmartContractWriteMethodInvocation: (
-    r: SCBody,
-    options?: {
-      provider?: string
-      testnet?: boolean
-    }
-  ) => Promise<string>,
-  SmartContractMethodInvocationCtor: any,
-  decimals: number,
-  validateClass: any,
+  body: TransferFromCustodialAddress | TransferFromTronCustodialAddress,
   provider?: string
 ) => {
-  await validateBody(body, validateClass)
-  const r: SmartContractMethodInvocation = new SmartContractMethodInvocationCtor()
+  let r: SmartContractMethodInvocation | CeloSmartContractMethodInvocation
+  let decimals
+  if (body.chain === Currency.TRON) {
+    decimals = 6
+    await validateBody(body, TransferFromTronCustodialAddress)
+  } else {
+    decimals = 18
+    await validateBody(body, TransferFromCustodialAddress)
+  }
+  if (body.chain === Currency.CELO) {
+    r = new CeloSmartContractMethodInvocation()
+  } else {
+    r = new SmartContractMethodInvocation()
+  }
   r.fee = body.fee
   r.nonce = body.nonce
   r.fromPrivateKey = body.fromPrivateKey
@@ -132,7 +211,28 @@ export const prepareTransferFromCustodialWalletAbstract = async <SCBody extends 
     amount = amount.multipliedBy(new BigNumber(10).pow(decimals))
   } else if (body.contractType === ContractType.FUNGIBLE_TOKEN) {
     tokenId = new BigNumber(0)
-    amount = amount.multipliedBy(new BigNumber(10).pow(await getContractDecimals(body.tokenAddress, provider, testnet)))
+    switch (body.chain) {
+      case Currency.CELO:
+        amount = amount.multipliedBy(new BigNumber(10).pow(await getCeloErc20ContractDecimals(body.tokenAddress, provider)))
+        break
+      case Currency.ONE:
+        amount = amount.multipliedBy(new BigNumber(10).pow(await getOne20ContractDecimals(body.tokenAddress, provider)))
+        break
+      case Currency.ETH:
+        amount = amount.multipliedBy(new BigNumber(10).pow(await getEthErc20ContractDecimals(body.tokenAddress, provider)))
+        break
+      case Currency.BSC:
+        amount = amount.multipliedBy(new BigNumber(10).pow(await getBscBep20ContractDecimals(body.tokenAddress, provider)))
+        break
+      case Currency.MATIC:
+        amount = amount.multipliedBy(new BigNumber(10).pow(await getPolygonErc20ContractDecimals(body.tokenAddress, provider)))
+        break
+      case Currency.TRON:
+        amount = amount.multipliedBy(new BigNumber(10).pow(await getTronTrc20ContractDecimals(body.tokenAddress, provider)))
+        break
+      default:
+        throw new Error('Unsupported combination of inputs.')
+    }
   }
   r.params = [
     body.tokenAddress || '0x000000000000000000000000000000000000dEaD',
@@ -142,41 +242,83 @@ export const prepareTransferFromCustodialWalletAbstract = async <SCBody extends 
     `0x${new BigNumber(tokenId).toString(16)}`,
   ]
   r.methodABI = CustodialFullTokenWallet.abi.find((a) => a.name === 'transfer')
-  return await prepareSmartContractWriteMethodInvocation(
-    (body.chain === Currency.CELO ? { ...r, feeCurrency: body.feeCurrency || Currency.CELO } : r) as SCBody,
-    {
-      provider,
-      testnet,
+  switch (body.chain) {
+    case Currency.CELO:
+      return await prepareCeloSmartContractWriteMethodInvocation(
+        {
+          ...r,
+          feeCurrency: body.feeCurrency || Currency.CELO,
+        },
+        {
+          provider,
+          testnet,
+        }
+      )
+    case Currency.ONE:
+      return await prepareOneSmartContractWriteMethodInvocation(r, { provider })
+    case Currency.ETH:
+      return await prepareSmartContractWriteMethodInvocation(r, { provider })
+    case Currency.BSC:
+      return await prepareBscSmartContractWriteMethodInvocation(r, { provider })
+    case Currency.MATIC:
+      return await preparePolygonSmartContractWriteMethodInvocation(r, { provider })
+    case Currency.TRON: {
+      const { feeLimit, from } = body as TransferFromTronCustodialAddress
+      r.methodName = 'transfer(address,uint256,address,uint256,uint256)'
+      r.params = [
+        { type: 'address', value: convertAddressToHex(r.params[0]) },
+        { type: 'uint256', value: r.params[1] },
+        { type: 'address', value: convertAddressToHex(r.params[2]) },
+        { type: 'uint256', value: r.params[3] },
+        { type: 'uint256', value: r.params[4] },
+      ]
+      return await prepareTronSmartContractInvocation(r, feeLimit as number, from, provider)
     }
-  )
+    default:
+      throw new Error('Unsupported combination of inputs.')
+  }
 }
 
 /**
- * Prepare signed batch transaction from the custodial SC wallet.
+ * Send signed transaction from the custodial SC wallet.
+ * @param testnet chain to work with
  * @param body request data
- * @param options
- * @param options.provider optional provider to enter. if not present, Tatum Web3 will be used.
- * @param options.testnet optional chain to work with
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const prepareBatchTransferFromCustodialWalletAbstract = async <SCBody extends SmartContractMethodInvocation>(
+export const sendTransferFromCustodialWallet = async (
   testnet: boolean,
-  body: TransferFromCustodialAddressBatch,
-  getContractDecimals: (contractAddress: string, provider?: string, testnet?: boolean) => Promise<any>,
-  prepareSmartContractWriteMethodInvocation: (r: SCBody, options?: { provider?: string; testnet?: boolean }) => Promise<string>,
-  SmartContractMethodInvocationCtor: any,
-  decimals: number,
-  validateClass: any,
+  body: TransferFromCustodialAddress | TransferFromTronCustodialAddress,
+  provider?: string
+): Promise<{ txId: string }> =>
+  helperBroadcastTx(body.chain, await prepareTransferFromCustodialWallet(testnet, body, provider), body.signatureId)
+
+/**
+ * Prepare signed batch transaction from the custodial SC wallet.
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const prepareBatchTransferFromCustodialWallet = async (
+  testnet: boolean,
+  body: TransferFromCustodialAddressBatch | TransferFromTronCustodialAddressBatch,
   provider?: string
 ) => {
+  let r: SmartContractMethodInvocation | CeloSmartContractMethodInvocation
+  let decimals
   if (body.chain === Currency.TRON) {
-    await validateBody(body, validateClass)
+    await validateBody(body, TransferFromTronCustodialAddressBatch)
     decimals = 6
   } else {
-    await validateBody(body, validateClass)
+    await validateBody(body, TransferFromCustodialAddressBatch)
     decimals = 18
   }
-  const r: SmartContractMethodInvocation = new SmartContractMethodInvocationCtor()
+  if (body.chain === Currency.CELO) {
+    r = new CeloSmartContractMethodInvocation()
+  } else {
+    r = new SmartContractMethodInvocation()
+  }
   r.fee = body.fee
   r.nonce = body.nonce
   r.fromPrivateKey = body.fromPrivateKey
@@ -195,7 +337,28 @@ export const prepareBatchTransferFromCustodialWalletAbstract = async <SCBody ext
       amount = new BigNumber(0)
     } else if (body.contractType[i] === ContractType.FUNGIBLE_TOKEN && body.tokenAddress) {
       tokenId = new BigNumber(0)
-      amount = amount.multipliedBy(new BigNumber(10).pow(await getContractDecimals(body.tokenAddress[i], provider, testnet)))
+      switch (body.chain) {
+        case Currency.CELO:
+          amount = amount.multipliedBy(new BigNumber(10).pow(await getCeloErc20ContractDecimals(body.tokenAddress[i], provider)))
+          break
+        case Currency.ONE:
+          amount = amount.multipliedBy(new BigNumber(10).pow(await getOne20ContractDecimals(body.tokenAddress[i], provider)))
+          break
+        case Currency.ETH:
+          amount = amount.multipliedBy(new BigNumber(10).pow(await getEthErc20ContractDecimals(body.tokenAddress[i], provider)))
+          break
+        case Currency.BSC:
+          amount = amount.multipliedBy(new BigNumber(10).pow(await getBscBep20ContractDecimals(body.tokenAddress[i], provider)))
+          break
+        case Currency.MATIC:
+          amount = amount.multipliedBy(new BigNumber(10).pow(await getPolygonErc20ContractDecimals(body.tokenAddress[i], provider)))
+          break
+        case Currency.TRON:
+          amount = amount.multipliedBy(new BigNumber(10).pow(await getTronTrc20ContractDecimals(body.tokenAddress[i], provider)))
+          break
+        default:
+          throw new Error('Unsupported combination of inputs.')
+      }
     }
     amounts.push(`0x${amount.toString(16)}`)
     tokenIds.push(`0x${tokenId.toString(16)}`)
@@ -208,39 +371,147 @@ export const prepareBatchTransferFromCustodialWalletAbstract = async <SCBody ext
     tokenIds,
   ]
   r.methodABI = CustodialFullTokenWalletWithBatch.abi.find((a) => a.name === 'transferBatch')
-  return await prepareSmartContractWriteMethodInvocation(
-    (body.chain === Currency.CELO ? { ...r, feeCurrency: body.feeCurrency || Currency.CELO } : r) as SCBody,
-    {
-      provider,
-      testnet,
+  switch (body.chain) {
+    case Currency.CELO:
+      return await prepareCeloSmartContractWriteMethodInvocation(
+        {
+          ...r,
+          feeCurrency: body.feeCurrency || Currency.CELO,
+        },
+        {
+          provider,
+          testnet,
+        }
+      )
+    case Currency.ONE:
+      return await prepareOneSmartContractWriteMethodInvocation(r, { provider })
+    case Currency.ETH:
+      return await prepareSmartContractWriteMethodInvocation(r, { provider })
+    case Currency.BSC:
+      return await prepareBscSmartContractWriteMethodInvocation(r, { provider })
+    case Currency.MATIC:
+      return await preparePolygonSmartContractWriteMethodInvocation(r, { provider })
+    case Currency.TRON: {
+      const body1 = body as TransferFromTronCustodialAddressBatch
+      return await prepareTronCustodialTransferBatch(r, body1.feeLimit as number, body1.from, { provider })
     }
+    default:
+      throw new Error('Unsupported combination of inputs.')
+  }
+}
+
+/**
+ * Send signed batch transaction from the custodial SC wallet.
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const sendBatchTransferFromCustodialWallet = async (
+  testnet: boolean,
+  body: TransferFromCustodialAddressBatch | TransferFromTronCustodialAddressBatch,
+  provider?: string
+): Promise<{ txId: string }> =>
+  helperBroadcastTx(body.chain, await prepareBatchTransferFromCustodialWallet(testnet, body, provider), body.signatureId)
+
+/**
+ * Prepare signed approve transaction from the custodial SC wallet.
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const prepareApproveFromCustodialWallet = async (testnet: boolean, body: ApproveCustodialTransfer, provider?: string) => {
+  await validateBody(body, ApproveCustodialTransfer)
+
+  const decimals = body.contractType === ContractType.FUNGIBLE_TOKEN ? await getErc20Decimals(body.chain, body.tokenAddress, provider) : 0
+  const params = [
+    body.tokenAddress.trim(),
+    body.contractType,
+    body.spender,
+    `0x${new BigNumber(body.amount || 0).multipliedBy(new BigNumber(10).pow(decimals)).toString(16)}`,
+    `0x${new BigNumber(body.tokenId || 0).toString(16)}`,
+  ]
+  delete body.amount
+  return await helperPrepareSCCall(
+    testnet,
+    {
+      ...body,
+      contractAddress: body.custodialAddress,
+    },
+    'approve',
+    params,
+    undefined,
+    provider,
+    CustodialFullTokenWallet.abi
   )
 }
 
-export const getCustodialAddresses = (chain: Currency, txId: string): Promise<string[]> =>
-  get(`v3/blockchain/sc/custodial/${chain}/${txId}`)
+/**
+ * Send signed approve transaction from the custodial SC wallet.
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const sendApproveFromCustodialWallet = async (
+  testnet: boolean,
+  body: ApproveCustodialTransfer,
+  provider?: string
+): Promise<{ txId: string }> =>
+  helperBroadcastTx(body.chain, await prepareApproveFromCustodialWallet(testnet, body, provider), body.signatureId)
 
-export const prepareCustodialWalletBatchAbstract = async (
+/**
+ * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, but transaction costs connected to the withdrawal
+ * of assets is covered by the deployer.
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const generateCustodialWalletBatch = async (
   testnet: boolean,
   body: GenerateCustodialAddressBatch,
-  getCustodialFactoryContractAddress: (testnet: boolean) => string,
-  convertAddressToHex?: (address: string) => string
-) => {
-  await validateBody(body, GenerateCustodialAddressBatch)
-  const params =
-    body.chain === Currency.TRON
-      ? [
-          // @ts-ignore
-          { type: 'address', value: convertAddressToHex(body.owner.trim()) },
-          { type: 'uint256', value: `0x${new BigNumber(body.batchCount).toString(16)}` },
-        ]
-      : [body.owner.trim(), `0x${new BigNumber(body.batchCount).toString(16)}`]
-
-  const methodName = body.chain === Currency.TRON ? 'cloneNewWallet(address,uint256)' : 'cloneNewWallet'
-  const methodSig = body.chain === Currency.TRON ? methodName : undefined
-  const bodyWithContractAddress = {
-    ...body,
-    contractAddress: getCustodialFactoryContractAddress(testnet),
+  provider?: string
+): Promise<{ txId: string }> => {
+  switch (body.chain) {
+    case Currency.CELO:
+      return await celoGenerateCustodialWalletBatch(testnet, body, provider)
+    case Currency.TRON:
+      return await tronGenerateCustodialWalletBatch(testnet, body, provider)
+    case Currency.ETH:
+      return await ethGenerateCustodialWalletBatch(testnet, body, provider)
+    case Currency.MATIC:
+      return await polygonGenerateCustodialWalletBatch(testnet, body, provider)
+    case Currency.BSC:
+      return await bscGenerateCustodialWalletBatch(testnet, body, provider)
+    default:
+      throw new Error('Unsupported chain')
   }
-  return { params, methodName, methodSig, bodyWithContractAddress }
 }
+
+/**
+ * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, but transaction costs connected to the withdrawal
+ * of assets is covered by the deployer.
+ * @param testnet chain to work with
+ * @param body request data
+ * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+ * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+ */
+export const prepareCustodialWalletBatch = async (testnet: boolean, body: GenerateCustodialAddressBatch, provider?: string) => {
+  switch (body.chain) {
+    case Currency.CELO:
+      return await celoPrepareCustodialWalletBatch(testnet, body, provider)
+    case Currency.TRON:
+      return await tronPrepareCustodialWalletBatch(testnet, body, provider)
+    case Currency.ETH:
+      return await ethPrepareCustodialWalletBatch(testnet, body, provider)
+    case Currency.MATIC:
+      return await polygonPrepareCustodialWalletBatch(testnet, body, provider)
+    case Currency.BSC:
+      return await bscPrepareCustodialWalletBatch(testnet, body, provider)
+    default:
+      throw new Error('Unsupported chain')
+  }
+}
+export { obtainCustodialAddressType, getCustodialAddresses } from '@tatumio/tatum-core'

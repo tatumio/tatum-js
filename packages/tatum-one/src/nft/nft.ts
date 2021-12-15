@@ -12,7 +12,8 @@ import {
   getNFTTransactionsByToken as getNFTTransactionsByTokenDefi,
   getNFTTransactionsByAddress as getNFTTransactionsByAddressDefi,
   NftTransaction,
-} from '@tatumio/tatum-defi'
+  ChainOneMint721,
+} from '@tatumio/tatum-core'
 import {
   TransactionHash,
   erc721TokenABI,
@@ -26,7 +27,6 @@ import {
   ChainTransferErc721,
   ChainAddMinter,
 } from '@tatumio/tatum-core'
-import { ChainOneMint721 } from '../model/request'
 import {
   sendBurn721SignedTransaction,
   sendDeploy721SignedTransaction,

@@ -1,6 +1,5 @@
 import { ChainSolanaMintNft } from '../model'
 import { mintNft, transferNft } from '../transaction'
-import { ChainTransferErc721, Currency, Sort } from '@tatumio/tatum-core'
 import {
   NftTransaction,
   getNFTTransactionsByAddress as getNFTTransactionsByAddressDefi,
@@ -8,7 +7,10 @@ import {
   getNFTImage as getNFTImageDefi,
   getNFTRoyalty as getNFTRoyaltyDefi,
   getNFTTransactionsByToken as getNFTTransactionsByTokenDefi,
-} from '@tatumio/tatum-defi'
+  ChainTransferErc721,
+  Currency,
+  Sort,
+} from '@tatumio/tatum-core'
 
 /**
  * Mint NFT on Solana blockchain.

@@ -1,5 +1,6 @@
 export * from './account'
 export * from './customer'
+export * from './offchain'
 export * from './orderBook'
 export * from './subscription'
 export * from './transaction'

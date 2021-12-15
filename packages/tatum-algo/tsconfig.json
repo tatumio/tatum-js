@@ -9,7 +9,5 @@
   "exclude": ["node_modules", "dist"],
   "references": [
     { "path": "../tatum-core" },
-    { "path": "../tatum-defi" },
-    { "path": "../tatum-ledger" }
   ],
 }

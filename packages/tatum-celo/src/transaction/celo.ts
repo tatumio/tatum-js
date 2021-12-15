@@ -5,7 +5,6 @@ import Web3 from 'web3'
 import { isHex, stringToHex, toHex, toWei } from 'web3-utils'
 import { broadcast } from '../blockchain'
 import { mintNFT } from '../nft'
-import erc721_abi from '@tatumio/tatum-core/dist/contracts/erc721/erc721_abi'
 import {
   auction,
   CeloSmartContractMethodInvocation,
@@ -18,6 +17,7 @@ import {
   Currency,
   DeployMarketplaceListing,
   DeployNftAuction,
+  erc721TokenABI as erc721_abi,
   erc1155TokenBytecode as erc1155_bytecode,
   erc20TokenBytecode as erc20_bytecode,
   erc721Provenance_bytecode,
@@ -28,8 +28,9 @@ import {
   TATUM_API_URL,
   TransactionKMS,
   validateBody,
+  obtainCustodialAddressType,
+  CeloMintErc721,
 } from '@tatumio/tatum-core'
-import { obtainCustodialAddressType } from '@tatumio/tatum-defi'
 import {
   BurnCeloErc20,
   CeloBurnErc721,
@@ -37,7 +38,6 @@ import {
   CeloBurnMultiTokenBatch,
   CeloDeployErc721,
   CeloDeployMultiToken,
-  CeloMintErc721,
   CeloMintMultipleErc721,
   CeloMintMultiToken,
   CeloMintMultiTokenBatch,

@@ -2,8 +2,6 @@ import {
   prepareBatchTransferFromCustodialWalletAbstract,
   prepareCustodialWalletBatchAbstract,
   prepareTransferFromCustodialWalletAbstract,
-} from '@tatumio/tatum-defi'
-import {
   ApproveCustodialTransfer,
   TransferFromCustodialAddress,
   TransferFromCustodialAddressBatch,

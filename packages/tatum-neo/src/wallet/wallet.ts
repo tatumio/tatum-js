@@ -1,5 +1,5 @@
 import Neon, { wallet } from '@cityofzion/neon-js'
-import { WalletWithAddress } from '@tatumio/tatum-ledger'
+import { WalletWithAddress } from '@tatumio/tatum-core'
 
 /**
  * Generate Neo address and private key.

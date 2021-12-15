@@ -9,7 +9,7 @@ import {
   prepareAuctionSettleAbstraction,
   prepareAuctionUpdateFeeAbstraction,
   prepareAuctionUpdateFeeRecipientAbstraction,
-} from '@tatumio/tatum-defi'
+} from '@tatumio/tatum-core'
 import {
   auction,
   ChainApproveErc20,
@@ -157,13 +157,7 @@ export const prepareAuctionBid = async (testnet: boolean, body: ChainInvokeAucti
     b: validatedBody,
     params,
     methodName,
-  } = await prepareAuctionBidAbstraction(
-    helperGetWeb3Client,
-    getBep20ContractDecimals,
-    testnet,
-    { ...body, chain: Currency.BSC },
-    provider
-  )
+  } = await prepareAuctionBidAbstraction(helperGetWeb3Client, getBep20ContractDecimals, testnet, { ...body, chain: Currency.BSC }, provider)
   return await helperPrepareSCCall(validatedBody, methodName, params, provider, auction.abi)
 }
 
@@ -260,4 +254,4 @@ export const sendAuctionCancel = async (body: ChainInvokeAuctionOperation, provi
 export const sendAuctionSettle = async (body: ChainInvokeAuctionOperation, provider?: string) =>
   helperBroadcastTx(await prepareAuctionSettle(body, provider), body.signatureId)
 
-export { Auction } from '@tatumio/tatum-defi'
+export { Auction } from '@tatumio/tatum-core'

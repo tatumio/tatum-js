@@ -4,9 +4,6 @@ import {
   prepareMarketplaceCreateListingAbstraction,
   prepareMarketplaceUpdateFeeAbstraction,
   prepareMarketplaceUpdateFeeRecipientAbstraction,
-} from '@tatumio/tatum-defi'
-
-import {
   ChainApproveErc20,
   ChainCreateMarketplaceListing,
   ChainDeployMarketplaceListing,

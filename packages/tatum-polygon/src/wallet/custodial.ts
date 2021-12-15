@@ -3,8 +3,6 @@ import {
   prepareCustodialWalletBatchAbstract,
   prepareTransferFromCustodialWalletAbstract,
   getCustodialAddresses as getCustodialAddressesDefi,
-} from '@tatumio/tatum-defi'
-import {
   ContractType,
   CustodialFullTokenWallet,
   validateBody,

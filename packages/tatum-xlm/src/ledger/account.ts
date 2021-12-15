@@ -1,5 +1,4 @@
-import { CreateAccount } from '@tatumio/tatum-core'
-import { generateAccount as generateAccountCore } from '@tatumio/tatum-ledger'
+import { generateAccount as generateAccountCore, CreateAccount } from '@tatumio/tatum-core'
 import { generateWallet } from '../wallet'
 
 /**
@@ -31,4 +30,4 @@ export {
   getAccountsByCustomerId,
   getAllAccounts,
   getAccountBalance,
-} from '@tatumio/tatum-ledger'
+} from '@tatumio/tatum-core'

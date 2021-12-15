@@ -1,4 +1,3 @@
-import { prepareTransferFromCustodialWalletAbstract, prepareBatchTransferFromCustodialWalletAbstract } from '@tatumio/tatum-defi'
 import {
   SmartContractMethodInvocation,
   validateBody,
@@ -12,6 +11,8 @@ import {
   Currency,
   ChainTransferFromCustodialAddressBatch,
   ChainApproveCustodialTransfer,
+  prepareTransferFromCustodialWalletAbstract,
+  prepareBatchTransferFromCustodialWalletAbstract,
 } from '@tatumio/tatum-core'
 import BigNumber from 'bignumber.js'
 import { getErc20Decimals } from '../fungible'

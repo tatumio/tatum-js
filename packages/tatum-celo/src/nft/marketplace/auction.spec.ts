@@ -6,8 +6,9 @@ import {
   ApproveErc20,
   auction,
   SmartContractReadMethodInvocation,
+  CeloMintErc721,
 } from '@tatumio/tatum-core'
-import { CeloMintErc721, sendSmartContractReadMethodInvocationTransaction } from '../..'
+import { sendSmartContractReadMethodInvocationTransaction } from '../..'
 import { getCurrentBlock } from '../../blockchain'
 import { mintNFTWithUri } from '../nft'
 import {

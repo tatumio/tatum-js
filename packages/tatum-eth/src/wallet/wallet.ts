@@ -1,5 +1,4 @@
-import { ETH_DERIVATION_PATH, TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
-import { WalletWithMnemonic } from '@tatumio/tatum-ledger'
+import { WalletWithMnemonic, ETH_DERIVATION_PATH, TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
 import { generateMnemonic, mnemonicToSeed } from 'bip39'
 import { hdkey as ethHdKey } from 'ethereumjs-wallet'
 

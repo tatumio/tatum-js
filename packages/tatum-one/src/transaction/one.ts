@@ -23,8 +23,10 @@ import {
   ChainGenerateCustodialAddress,
   ChainDeployMarketplaceListing,
   ChainDeployNftAuction,
+  obtainCustodialAddressType,
+  ChainOneMint721,
+  OneMint721,
 } from '@tatumio/tatum-core'
-import { obtainCustodialAddressType } from '@tatumio/tatum-defi'
 import { BigNumber } from 'bignumber.js'
 import Web3 from 'web3'
 import { TransactionConfig } from 'web3-core'
@@ -36,7 +38,6 @@ import {
   ChainOneBurnMultiTokenBatch,
   ChainOneDeploy721,
   ChainOneDeployMultiToken,
-  ChainOneMint721,
   ChainOneMintMultiple721,
   ChainOneMintMultiToken,
   ChainOneMintMultiTokenBatch,
@@ -54,7 +55,6 @@ import {
   OneDeploy721,
   OneDeployMultiToken,
   OneMint20,
-  OneMint721,
   OneMintMultiple721,
   OneMintMultiToken,
   OneMintMultiTokenBatch,
