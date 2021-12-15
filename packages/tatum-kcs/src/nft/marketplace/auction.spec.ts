@@ -10,6 +10,7 @@ import {
   sendAuctionSettle,
 } from './auction'
 
+// TODO move to core
 const sleep = async (time = 7000) => new Promise((r) => setTimeout(r, time))
 
 describe('Auction  tests', () => {

@@ -1,5 +1,6 @@
 export * from './fungible'
 export * from './model'
 export * from './nft'
+export * from './node'
 export * from './multiToken'
 export * from './wallet'

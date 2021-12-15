@@ -1,6 +1,7 @@
 export * from './blockchain'
 export * from './ledger'
 export * from './nft'
+export * from './node'
 export * from './offchain'
 export * from './record'
 export * from './tatum'
