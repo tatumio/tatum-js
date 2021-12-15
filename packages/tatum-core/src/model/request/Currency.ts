@@ -69,6 +69,7 @@ export enum Currency {
   EGLD = 'EGLD',
   ALGO = 'ALGO',
   KCS = 'KCS',
+  COIIN = 'COIIN',
 }
 
 export const ERC20_CURRENCIES = [
@@ -90,6 +91,7 @@ export const ERC20_CURRENCIES = [
   Currency.PLTC.toString(),
   Currency.XCON.toString(),
   Currency.MMY.toString(),
+  Currency.COIIN.toString(),
   Currency.REVV.toString(),
   Currency.SAND.toString(),
   Currency.GMC.toString(),
