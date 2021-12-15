@@ -35,7 +35,7 @@ jobs:
 
       - run: yarn lint
 
-      - run: yarn docs
+      - run: yarn docs --gaID ${{ secrets.GA_ID }}
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.4
