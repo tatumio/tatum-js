@@ -6,9 +6,9 @@ import { httpDriver as polygonHttpDriver } from '@tatumio/tatum-polygon'
 import { httpDriver as solanaHttpDriver } from '@tatumio/tatum-solana'
 import { httpDriver as xdcHttpDriver } from '@tatumio/tatum-xdc'
 import { networkConfig as egldNetworkConfig } from '@tatumio/tatum-egld'
-import { Currency, WebDriver } from '@tatumio/tatum-core'
+import { Currency, GetWebDriver, WebDriver, EgldNetworkConfigResponse } from '@tatumio/tatum-core'
 
-export const httpDriver = async (chain: Currency, body: WebDriver): Promise<{ jsonrpc: string; id: number; result: string }> => {
+export const httpDriver = async (chain: Currency, body: GetWebDriver): Promise<WebDriver> => {
   switch (chain) {
     case Currency.BSC:
       return bscHttpDriver(body)
@@ -29,7 +29,7 @@ export const httpDriver = async (chain: Currency, body: WebDriver): Promise<{ js
   }
 }
 
-export const networkConfig = async (chain: Currency): Promise<{ jsonrpc: string; id: number; result: string }> => {
+export const networkConfig = async (chain: Currency): Promise<EgldNetworkConfigResponse> => {
   switch (chain) {
     case Currency.EGLD:
       return egldNetworkConfig()
