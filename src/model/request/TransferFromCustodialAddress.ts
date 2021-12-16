@@ -12,7 +12,7 @@ export class TransferFromCustodialAddress extends PrivateKeyOrSignatureId {
     public custodialAddress: string;
 
     @IsNotEmpty()
-    @IsIn([Currency.ETH, Currency.MATIC, Currency.BSC, Currency.ONE, Currency.CELO, Currency.TRON])
+    @IsIn([Currency.ETH, Currency.MATIC, Currency.BSC, Currency.ONE, Currency.CELO, Currency.TRON, Currency.XDC])
     public chain: Currency;
 
     @ValidateIf(o => o.contractType !== ContractType.NATIVE_ASSET)

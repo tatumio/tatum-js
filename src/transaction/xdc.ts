@@ -41,7 +41,12 @@ export const fromXdcAddress = (xdcAddress: string): string => {
 export const xdcGetGasPriceInWei = async () => {
     const gasStationUrl = 'https://rpc.xinfin.network/'
     try {
-        const {data} = await axios.post(`${gasStationUrl}gasPrice`, {'jsonrpc': '2.0', 'method': 'eth_gasPrice', 'params': [], 'id': 1})
+        const {data} = await axios.post(`${gasStationUrl}gasPrice`, {
+            'jsonrpc': '2.0',
+            'method': 'eth_gasPrice',
+            'params': [],
+            'id': 1
+        })
         return data ? Web3.utils.toWei(data, 'wei') : Web3.utils.toWei('5', 'kwei')
     } catch (e) {
         return Web3.utils.toWei('5', 'kwei')
