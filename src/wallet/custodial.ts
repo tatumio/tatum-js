@@ -1,5 +1,13 @@
 import BigNumber from 'bignumber.js';
-import {bscBroadcast, celoBroadcast, ethBroadcast, polygonBroadcast, tronBroadcast} from '../blockchain';
+import {
+    bscBroadcast,
+    celoBroadcast,
+    ethBroadcast,
+    oneBroadcast,
+    polygonBroadcast,
+    tronBroadcast,
+    xdcBroadcast
+} from '../blockchain';
 import {get, validateBody} from '../connector/tatum';
 import {CUSTODIAL_PROXY_ABI} from '../constants';
 import {
@@ -55,6 +63,7 @@ import {
     prepareTronCustodialTransferBatch,
     prepareTronGenerateCustodialWalletSignedTransaction,
     prepareTronSmartContractInvocation,
+    prepareXdcSmartContractWriteMethodInvocation,
     sendBscGenerateCustodialWalletSignedTransaction,
     sendCeloGenerateCustodialWalletSignedTransaction,
     sendEthGenerateCustodialWalletSignedTransaction,
@@ -123,6 +132,10 @@ const getCustodialFactoryContractAddress = (chain: Currency, testnet: boolean) =
             return testnet ? '0x481D6f967B120E094D3551DA2C4951242Be582af' : '0x014a09b194A2Ed928aB777E83E2F27BbAc9529D0';
         case Currency.TRON:
             return testnet ? 'TRM8P5gpzAr85p2a5BMvqb9UfEdFEwEgA7' : 'TG59uLNQvCR45F6yKHPXipvCu7wg5D88Wr';
+        case Currency.ONE:
+            return testnet ? '0xb1462fE8E9Cf82c0296022Cca7bEfA3Fd4c12B34' : '0x6d3C42602DDf00B5E40bD810aA2075815Dae5D4D';
+        case Currency.XDC:
+            return testnet ? 'xdc6709Bdda623aF7EB152cB2fE2562aB7e031e564f' : 'xdc6709Bdda623aF7EB152cB2fE2562aB7e031e564f';
         case Currency.ETH:
             return testnet ? (process.env.TESTNET_TYPE === 'ethereum-rinkeby' ? '0x4eC40a4A0dA042d46cC4529f918080957003b531' : '0x3485fdba44736859267789ac9c248cc4c1443956') : '0x4cb7933f595cb081804f8078f7fe7eff717bdc4b';
         case Currency.MATIC:
@@ -212,6 +225,10 @@ export const generateCustodialWalletBatch = async (testnet: boolean, body: Gener
             return await ethBroadcast(txData, body.signatureId);
         case Currency.MATIC:
             return await polygonBroadcast(txData, body.signatureId);
+        case Currency.ONE:
+            return await oneBroadcast(txData, body.signatureId);
+        case Currency.XDC:
+            return await xdcBroadcast(txData, body.signatureId);
         case Currency.BSC:
             return await bscBroadcast(txData, body.signatureId);
         default:
@@ -243,6 +260,7 @@ export const prepareCustodialWalletBatch = async (testnet: boolean, body: Genera
 };
 
 /**
+ * @Deprecated, use generateCustodialWalletBatch
  * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, but transaction costs connected to the withdrawal
  * of assets is covered by the deployer.
  * @param testnet chain to work with
@@ -319,6 +337,9 @@ export const prepareTransferFromCustodialWallet = async (testnet: boolean, body:
             case Currency.ONE:
                 amount = amount.multipliedBy(new BigNumber(10).pow(await getOne20ContractDecimals(testnet, body.tokenAddress, provider)));
                 break;
+            case Currency.XDC:
+                amount = amount.multipliedBy(new BigNumber(10).pow(await getErc20Decimals(testnet, Currency.XDC, body.tokenAddress, provider)));
+                break;
             case Currency.ETH:
                 amount = amount.multipliedBy(new BigNumber(10).pow(await getEthErc20ContractDecimals(testnet, body.tokenAddress, provider)));
                 break;
@@ -345,6 +366,8 @@ export const prepareTransferFromCustodialWallet = async (testnet: boolean, body:
             }, provider);
         case Currency.ONE:
             return await prepareOneSmartContractWriteMethodInvocation(testnet, r, provider);
+        case Currency.XDC:
+            return await prepareXdcSmartContractWriteMethodInvocation(r, provider);
         case Currency.ETH:
             return await prepareSmartContractWriteMethodInvocation(r, provider);
         case Currency.BSC:
@@ -426,6 +449,9 @@ export const prepareBatchTransferFromCustodialWallet = async (testnet: boolean,
                 case Currency.ONE:
                     amount = amount.multipliedBy(new BigNumber(10).pow(await getOne20ContractDecimals(testnet, body.tokenAddress[i], provider)));
                     break;
+                case Currency.XDC:
+                    amount = amount.multipliedBy(new BigNumber(10).pow(await getErc20Decimals(testnet, Currency.XDC, body.tokenAddress[i], provider)));
+                    break;
                 case Currency.ETH:
                     amount = amount.multipliedBy(new BigNumber(10).pow(await getEthErc20ContractDecimals(testnet, body.tokenAddress[i], provider)));
                     break;
@@ -455,6 +481,8 @@ export const prepareBatchTransferFromCustodialWallet = async (testnet: boolean,
             }, provider);
         case Currency.ONE:
             return await prepareOneSmartContractWriteMethodInvocation(testnet, r, provider);
+        case Currency.XDC:
+            return await prepareXdcSmartContractWriteMethodInvocation(r, provider);
         case Currency.ETH:
             return await prepareSmartContractWriteMethodInvocation(r, provider);
         case Currency.BSC:

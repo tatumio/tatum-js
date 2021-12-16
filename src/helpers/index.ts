@@ -15,7 +15,8 @@ import {
     preparePolygonClient,
     preparePolygonSmartContractWriteMethodInvocation,
     prepareSmartContractWriteMethodInvocation,
-    prepareTronSmartContractInvocation
+    prepareTronSmartContractInvocation,
+    prepareXdcSmartContractWriteMethodInvocation
 } from '../transaction';
 
 export const helperBroadcastTx = async (chain: Currency, txData: string, signatureId?: string) => {
@@ -77,9 +78,14 @@ export const helperPrepareSCCall = async (testnet: boolean, body: any, clazz: Cl
     r.methodABI = abi.find(a => a.name === r.methodName);
     switch (body.chain) {
         case Currency.CELO:
-            return await prepareCeloSmartContractWriteMethodInvocation(testnet, {...r, feeCurrency: body.feeCurrency || Currency.CELO}, provider);
+            return await prepareCeloSmartContractWriteMethodInvocation(testnet, {
+                ...r,
+                feeCurrency: body.feeCurrency || Currency.CELO
+            }, provider);
         case Currency.ONE:
             return await prepareOneSmartContractWriteMethodInvocation(testnet, r, provider);
+        case Currency.XDC:
+            return await prepareXdcSmartContractWriteMethodInvocation(r, provider);
         case Currency.ETH:
             return await prepareSmartContractWriteMethodInvocation(r, provider);
         case Currency.BSC:

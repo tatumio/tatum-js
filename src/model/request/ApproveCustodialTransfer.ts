@@ -12,7 +12,7 @@ export class ApproveCustodialTransfer extends PrivateKeyOrSignatureId {
     public custodialAddress: string;
 
     @IsNotEmpty()
-    @IsIn([Currency.ETH, Currency.MATIC, Currency.BSC, Currency.ONE, Currency.CELO])
+    @IsIn([Currency.ETH, Currency.MATIC, Currency.BSC, Currency.ONE, Currency.CELO, Currency.XDC])
     public chain: Currency;
 
     @IsIn([ContractType.NON_FUNGIBLE_TOKEN, ContractType.SEMI_FUNGIBLE_TOKEN, ContractType.FUNGIBLE_TOKEN])
