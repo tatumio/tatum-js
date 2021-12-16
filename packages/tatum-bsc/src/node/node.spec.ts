@@ -1,4 +1,4 @@
-import { httpDriver } from '.'
+import { httpDriver } from './node'
 
 describe('httpDriver', () => {
   process.env.TATUM_API_KEY = 'be8215a0-7504-40b3-9ae2-6667554b56f8'
@@ -13,7 +13,7 @@ describe('httpDriver', () => {
     ).toEqual({
       jsonrpc: '2.0',
       id: 2,
-      result: 'celo/v1.4.1-stable/linux-amd64/go1.16.9',
+      result: 'Geth/v1.1.5-8ff7d531/linux-amd64/go1.16.4',
     })
   })
 })
