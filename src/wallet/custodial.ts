@@ -44,6 +44,7 @@ import {
 } from '../model';
 import {
     convertAddressToHex,
+    fromXdcAddress,
     getBscBep20ContractDecimals,
     getCeloErc20ContractDecimals,
     getEthErc20ContractDecimals,
@@ -250,7 +251,7 @@ export const prepareCustodialWalletBatch = async (testnet: boolean, body: Genera
         body.chain === Currency.TRON
             ? [{type: 'address', value: convertAddressToHex(body.owner.trim())},
                 {type: 'uint256', value: `0x${new BigNumber(body.batchCount).toString(16)}`}]
-            : [body.owner.trim(), `0x${new BigNumber(body.batchCount).toString(16)}`];
+            : [body.chain === Currency.XDC ? fromXdcAddress(body.owner) : body.owner.trim(), `0x${new BigNumber(body.batchCount).toString(16)}`];
 
     const methodName = body.chain === Currency.TRON ? 'cloneNewWallet(address,uint256)' : 'cloneNewWallet';
     return await helperPrepareSCCall(testnet, {
