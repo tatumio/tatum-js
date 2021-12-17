@@ -6,7 +6,7 @@ import {
   TransferFromCustodialAddress,
   TransferFromCustodialAddressBatch,
 } from '@tatumio/tatum-core'
-import { broadcast } from '../blockchain'
+import { broadcast } from '../web3'
 import { sendGenerateCustodialWalletSignedTransaction } from '../transaction'
 import { prepareApproveFromCustodialWallet, prepareBatchTransferFromCustodialWallet, prepareTransferFromCustodialWallet } from './custodial'
 import { CeloProvider } from '@celo-tools/celo-ethers-wrapper'
