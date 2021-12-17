@@ -1,12 +1,13 @@
 export * from './blockchain'
+export * from './constants'
 export * from './ledger'
 export * from './model'
+export * from './node'
 export * from './offchain'
 export * from './record'
 export * from './tatum'
 export * from './transaction'
 export * from './wallet'
-export * from './constants'
 
 export {
   // security
