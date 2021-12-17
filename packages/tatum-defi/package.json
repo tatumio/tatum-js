@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-defi",
-  "version": "2.0.0-alpha.84",
+  "version": "2.0.0-alpha.86",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,7 +13,6 @@
     "lint": "eslint ./src --ext .ts --fix"
   },
   "dependencies": {
-    "@tatumio/tatum-core": "file:../tatum-core",
     "@tatumio/tatum-ada": "file:../tatum-ada",
     "@tatumio/tatum-algo": "file:../tatum-algo",
     "@tatumio/tatum-bch": "file:../tatum-bch",
@@ -21,6 +20,7 @@
     "@tatumio/tatum-bsc": "file:../tatum-bsc",
     "@tatumio/tatum-btc": "file:../tatum-btc",
     "@tatumio/tatum-celo": "file:../tatum-celo",
+    "@tatumio/tatum-core": "file:../tatum-core",
     "@tatumio/tatum-doge": "file:../tatum-doge",
     "@tatumio/tatum-egld": "file:../tatum-egld",
     "@tatumio/tatum-eth": "file:../tatum-eth",
@@ -39,8 +39,8 @@
     "@tatumio/tatum-xdc": "file:../tatum-xdc",
     "@tatumio/tatum-xlm": "file:../tatum-xlm",
     "@tatumio/tatum-xrp": "file:../tatum-xrp",
-    "web3": "1.4.0",
-    "tronweb": "^3.2.2"
+    "tronweb": "^3.2.2",
+    "web3": "1.4.0"
   },
   "devDependencies": {
     "@types/jest": "^27.0.2",

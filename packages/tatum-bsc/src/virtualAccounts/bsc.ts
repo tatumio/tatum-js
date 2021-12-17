@@ -9,10 +9,10 @@ import {
 } from '@tatumio/tatum-core'
 import BigNumber from 'bignumber.js'
 import { fromWei, toWei } from 'web3-utils'
-import { getAccountById, getVirtualCurrencyByName } from '../ledger'
-import { prepareBscOrBep20SignedTransaction, prepareCustomBep20SignedTransaction } from '../transaction'
+import { getAccountById, getVirtualCurrencyByName } from '../virtualAccounts'
+import { prepareBscOrBep20SignedTransaction, prepareCustomBep20SignedTransaction } from 'src/transaction'
 import { generatePrivateKeyFromMnemonic } from '../wallet'
-import { offchainTransferKMS } from './kms'
+import { offchainTransferKMS } from '../custody'
 
 /**
  * Send Bsc transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.

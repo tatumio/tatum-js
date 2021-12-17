@@ -65,7 +65,7 @@ import { BigNumber } from 'bignumber.js'
 import Web3 from 'web3'
 import { TransactionConfig } from 'web3-core'
 import { toWei } from 'web3-utils'
-import { broadcast, getTransactionsCount } from '../blockchain'
+import { broadcast, getTransactionsCount } from '../web3'
 import { mintNFT } from '../nft'
 
 /**
