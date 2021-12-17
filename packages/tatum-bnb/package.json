@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-bnb",
-  "version": "2.0.0-alpha.85",
+  "version": "2.0.0-alpha.86",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
