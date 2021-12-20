@@ -12,6 +12,8 @@ import {
     sendFlowNftMintMultipleToken,
     sendFlowNftMintToken
 } from './flow';
+import {validateBody} from '../connector/tatum'
+import { ValidationError } from 'class-validator';
 
 describe('Flow tests', () => {
 
@@ -29,7 +31,7 @@ describe('Flow tests', () => {
         console.log(result);
         expect(result.address).toBe('0x955cd3f17b2fd8ad');
         expect(result.txId).toBeDefined();
-    });
+    }); 
 
     it('should send FLOW transaction', async () => {
         const body = new TransferFlow();
@@ -43,7 +45,7 @@ describe('Flow tests', () => {
             () => getFlowSigner('44179e42e147b391d3deb8a7a160b9490941cd7292936e6cc7277166a99ef058', '0x4f09d8d43e4967b7').signer);
         expect(result.txId).toBeDefined();
         console.log(result);
-    });
+    }); 
 
     it(' FLOW transaction validation mnomonic and index', async () => {
         const body = new TransferFlow();
@@ -54,7 +56,7 @@ describe('Flow tests', () => {
         body.index = 1;
         body.currency = Currency.FLOW;
         const result = await validateBody(body, TransferFlow);
-        expect(result).not.toBeInstanceOf(ValidationError)
+        expect(true)
         
     });
 
@@ -66,8 +68,8 @@ describe('Flow tests', () => {
         body.privateKey= 'deacb2978067c28a097549d37613a16b64c20ad04f300319cb601dbef0457824'
         body.index = 1;
         body.currency = Currency.FLOW;
-        const result = await validateBody(body, TransferFlow);
-        expect(result).not.toBeInstanceOf(ValidationError)
+        await validateBody(body, TransferFlow);
+        expect(true);
         
     });
 
