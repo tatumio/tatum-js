@@ -8,18 +8,18 @@ export class FlowMnemonicOrPrivateKeyOrSignatureId {
     public account: string;
 
     @Length(1, 500)
-    @ValidateIf(o => (o.mnemonic && o.index >= 0 && o.privateKey) || (o.index >= 0 && o.privateKey))
+    @ValidateIf(o => (!o.signatureId && !o.privateKey) || o.mnemonic)
     @IsNotEmpty()
     public mnemonic?: string;
 
-    @ValidateIf(o => (o.mnemonic && o.index >= 0 && o.privateKey) || o.mnemonic)
+    @ValidateIf(o => ( o.mnemonic))
     @Min(0)
     @IsNotEmpty()
     @IsInt()
     @Max(2147483647)
     public index?: number;
 
-    @ValidateIf(o => (o.mnemonic && o.index >= 0 && o.privateKey) || (!o.mnemonic && !o.signatureId && !o.index))
+    @ValidateIf(o => (!o.mnemonic &&!o.index && !o.privateKey))
     @Length(64, 64)
     @IsNotEmpty()
     public privateKey?: string;
