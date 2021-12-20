@@ -13,7 +13,6 @@ import {
     sendFlowNftMintToken
 } from './flow';
 import {validateBody} from '../connector/tatum'
-import { ValidationError } from 'class-validator';
 
 describe('Flow tests', () => {
 
@@ -31,7 +30,7 @@ describe('Flow tests', () => {
         console.log(result);
         expect(result.address).toBe('0x955cd3f17b2fd8ad');
         expect(result.txId).toBeDefined();
-    }); 
+    });
 
     it('should send FLOW transaction', async () => {
         const body = new TransferFlow();
