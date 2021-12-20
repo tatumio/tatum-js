@@ -45,6 +45,32 @@ describe('Flow tests', () => {
         console.log(result);
     });
 
+    it(' FLOW transaction validation mnomonic and index', async () => {
+        const body = new TransferFlow();
+        body.to = '0xbf4cacdb6ef17fa7';
+        body.amount = '0.114';
+        body.account = '0x2db1c763e6466c0c';
+        body.mnemonic= 'marriage favorite inject forward major beef upset victory tissue coil where grant else mean tag pipe naive leg material have blue execute spend chaos'
+        body.index = 1;
+        body.currency = Currency.FLOW;
+        const result = await validateBody(body, TransferFlow);
+        expect(result).not.toBeInstanceOf(ValidationError)
+        
+    });
+
+    it(' FLOW transaction validation privatekey and index', async () => {
+        const body = new TransferFlow();
+        body.to = '0xbf4cacdb6ef17fa7';
+        body.amount = '0.114';
+        body.account = '0x2db1c763e6466c0c';
+        body.privateKey= 'deacb2978067c28a097549d37613a16b64c20ad04f300319cb601dbef0457824'
+        body.index = 1;
+        body.currency = Currency.FLOW;
+        const result = await validateBody(body, TransferFlow);
+        expect(result).not.toBeInstanceOf(ValidationError)
+        
+    });
+
     it('should send FLOW API signer transaction', async () => {
         const body = new TransferFlow();
         body.to = '0x21cbd745a4df66f1';
