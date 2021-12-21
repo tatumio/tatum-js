@@ -294,7 +294,6 @@ export const prepareBurnErc20SignedTransaction = async (body: BurnErc20, provide
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareTransferErc20SignedTransaction = async (body: ChainTransferErc20, provider?: string) => {
-  ;(body as TransferErc20).currency = Currency.KCS
   await validateBody(body, TransferErc20)
   const client = await prepareClient(provider, body.fromPrivateKey)
   const decimals = new BigNumber(10).pow(body.digits as number)
