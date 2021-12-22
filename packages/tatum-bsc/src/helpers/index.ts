@@ -1,5 +1,5 @@
 import { buildSmartContractMethodInvocation, ChainSCBody, Currency, listing } from '@tatumio/tatum-core'
-import { broadcast } from '../web3'
+import { broadcast } from '../blockchain'
 import Web3 from 'web3'
 import { getClient, prepareSmartContractWriteMethodInvocation } from '../transaction'
 

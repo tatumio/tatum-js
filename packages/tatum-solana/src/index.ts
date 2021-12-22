@@ -1,15 +1,15 @@
 import 'reflect-metadata'
 
-export * from './blockchain'
+export * from './wallet'
 export * from './helpers'
-export * from './model'
-export * from './nft'
-export * from './node'
 export * from './offchain'
+export * from './blockchain'
 export * from './record'
 export * from './tatum'
 export * from './transaction'
-export * from './wallet'
+export * from './nft'
+export * from './node'
+export * from './model'
 
 export {
   // offchain
