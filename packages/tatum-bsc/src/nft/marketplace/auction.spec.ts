@@ -7,7 +7,7 @@ import {
   SmartContractReadMethodInvocation,
   auction,
 } from '@tatumio/tatum-core'
-import { getCurrentBlock } from '../../web3'
+import { getCurrentBlock } from '../../blockchain'
 import { sendSmartContractMethodInvocationTransaction, sendSmartContractReadMethodInvocationTransaction } from '../../transaction'
 import { deployAuction, mintNFTWithUri, sendAuctionApproveNftTransfer, sendAuctionCreate, sendAuctionBid, sendAuctionSettle } from '../'
 
