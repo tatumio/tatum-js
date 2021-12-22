@@ -1,4 +1,4 @@
-# Ledger API guide
+# Virtual Accounts API guide
 
 In following guide we will see how to work with Ledger endpoints. Just browse source code
 or [Github Pages](https://tatumio.github.io/tatum-js/) to see how to use other ledger endpoints.
@@ -234,68 +234,13 @@ const revokeReference = await revokeVirtualCurrency({
 });
 ```
 
-## Subscription endpoints
-All subscription endpoints are available in the [subscription.ts](https://github.com/tatumio/tatum-js/blob/master/src/ledger/subscription.ts) file.
-
-### Create a subscription - detect incoming blockchain transactions
+## Send offchain transaction
 ```typescript
-const subscription = await createNewSubscription({
-    type: SubscriptionType.ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION,
-    attr: {
-        id: '60f990befd2f551040f512c0',
-        url: 'https://my-webhook-url',
-    },
+const txHash = await sendOffchainTransaction(false, {
+    mnemonic: 'sorry convince space length yard nation fitness trade act identify live exclude toast category weather news gain game public amateur crisp great seek odor',
+    xpub: 'tpubDFm2ZWx6ehiBFvA3bfLJTpPa8aGRnMb69VFrf8n5sjWJ8fspa9qwzGXo3w8DgnMgmnsGBf7whE6qqzp9sVxzn3dBFCmXq4HqYzB45SEZFSE',
+    senderAccountId: '60f990befd2f551040f512c0',
+    address: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh',
+    amount: '1'
 });
-```
-
-### List active subscriptions
-```typescript
-const subscriptions = await listActiveSubscriptions();
-```
-
-### Cancel an existing subscription
-```typescript
-await cancelExistingSubscription('60f990befd2f551040f512c0');
-```
-
-### Obtain report for a subscription
-```typescript
-await obtainReportForSubscription('60f990befd2f551040f512c0');
-```
-
-## Order book endpoints
-All order book endpoints are available in the [orderBook.ts](https://github.com/tatumio/tatum-js/blob/master/src/ledger/orderBook.ts) file.
-
-### Store a sell trade
-```typescript
-const trade = await storeTrade({
-    type: "SELL",
-    price: "2",
-    amount: "2",
-    pair: "VC_BTC/VC_ETH",
-    currency1AccountId: "60ab440d58019206c876b4f6",
-    currency2AccountId: "609d0696bf835c241ac2920f"
-});
-```
-
-### Store a buy trade
-```typescript
-const trade = await storeTrade({
-    type: "BUY",
-    price: "2",
-    amount: "2",
-    pair: "VC_BTC/VC_ETH",
-    currency1AccountId: "60ab440d58019206c876b4f6",
-    currency2AccountId: "609d0696bf835c241ac2920f"
-});
-```
-
-### Get a trade
-```typescript
-const trade = await getTradeById('60ab440d58019206c876b4f6');
-```
-
-### Get all active sell trades
-```typescript
-const sellTrades = await getActiveSellTrades('60ab440d58019206c876b4f6');
 ```
