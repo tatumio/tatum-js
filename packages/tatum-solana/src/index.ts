@@ -8,6 +8,7 @@ export * from './record'
 export * from './tatum'
 export * from './transaction'
 export * from './nft'
+export * from './node'
 export * from './model'
 
 export {
