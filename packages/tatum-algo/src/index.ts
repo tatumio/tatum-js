@@ -7,6 +7,7 @@ export * from './record'
 export * from './tatum'
 export * from './transaction'
 export * from './wallet'
+export * from './model'
 
 export {
   // security

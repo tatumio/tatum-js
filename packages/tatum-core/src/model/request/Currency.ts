@@ -122,3 +122,5 @@ export const ETH_BASED_CURRENCIES = [Currency.ETH.toString(), ...ERC20_CURRENCIE
 export const MATIC_BASED_CURRENCIES = [Currency.MATIC.toString(), ...MATIC20_CURRENCIES]
 
 export const BSC_BASED_CURRENCIES = [Currency.BSC.toString(), ...BEP20_CURRENCIES]
+
+export const CELO_BASED_CURRENCIES = [Currency.CELO.toString(), Currency.CEUR.toString(), Currency.CUSD.toString()]

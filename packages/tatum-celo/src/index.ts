@@ -1,4 +1,5 @@
 export * from './blockchain'
+export * from './constants'
 export * from './ledger'
 export * from './fungible'
 export * from './helpers'
