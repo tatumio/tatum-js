@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-kcs",
-  "version": "2.0.0-alpha.89",
+  "version": "2.0.0-alpha.90",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
