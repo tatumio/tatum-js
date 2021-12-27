@@ -16,7 +16,7 @@ export class BaseMintMultipleErc721 extends PrivateKeyOrSignatureId {
   public url: string[]
 
   @IsNotEmpty()
-  @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC, Currency.TRON, Currency.ONE, Currency.MATIC, Currency.KCS])
+  @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC, Currency.TRON, Currency.ONE, Currency.MATIC, Currency.KCS, Currency.GLMR])
   public chain: Currency
 
   @IsNotEmpty()

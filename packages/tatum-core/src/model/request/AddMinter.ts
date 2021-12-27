@@ -14,7 +14,7 @@ export class AddMinter extends PrivateKeyOrSignatureId {
   public contractAddress: string
 
   @IsNotEmpty()
-  @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC])
+  @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC, Currency.GLMR])
   public chain: Currency
 
   @Min(0)

@@ -28,6 +28,7 @@ export class BaseTransferErc721 extends PrivateKeyOrSignatureId {
     Currency.ALGO,
     Currency.KCS,
     Currency.SOL,
+    Currency.GLMR,
   ])
   public chain: Currency
 

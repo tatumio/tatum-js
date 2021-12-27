@@ -12,7 +12,18 @@ export class BaseBurnErc721 extends PrivateKeyOrSignatureId {
   public contractAddress: string
 
   @IsNotEmpty()
-  @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC, Currency.TRON, Currency.ONE, Currency.MATIC, Currency.ALGO, Currency.KCS])
+  @IsIn([
+    Currency.BSC,
+    Currency.ETH,
+    Currency.CELO,
+    Currency.XDC,
+    Currency.TRON,
+    Currency.ONE,
+    Currency.MATIC,
+    Currency.ALGO,
+    Currency.KCS,
+    Currency.GLMR,
+  ])
   public chain: Currency
 
   @Min(0)

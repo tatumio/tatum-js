@@ -11,7 +11,7 @@ export class CreateAuction extends PrivateKeyOrSignatureId {
   public contractAddress: string
 
   @IsNotEmpty()
-  @IsIn([Currency.ETH, Currency.MATIC, Currency.BSC, Currency.ONE, Currency.CELO, Currency.TRON, Currency.KCS])
+  @IsIn([Currency.ETH, Currency.MATIC, Currency.BSC, Currency.ONE, Currency.CELO, Currency.TRON, Currency.KCS, Currency.GLMR])
   public chain: Currency
 
   @IsNotEmpty()
