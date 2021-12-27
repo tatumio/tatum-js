@@ -71,6 +71,7 @@ export enum Currency {
   KCS = 'KCS',
   COIIN = 'COIIN',
   TTT = 'TTT',
+  GLMR = 'GLMR',
 }
 
 export const ERC20_CURRENCIES = [
