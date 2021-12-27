@@ -98,6 +98,16 @@ import {
   transferNFT as bscTransferNFT,
   updateCashbackForAuthorNFT as bscUpdateCashbackForAuthorNFT,
 } from '@tatumio/tatum-bsc'
+import {
+  burnNFT as moonbeamBurnNFT,
+  deployNFT as moonbeamDeployNFT,
+  mintMultipleNFTWithUri as moonbeamMintMultipleNFTWithUri,
+  mintNFTWithUri as moonbeamMintNFTWithUri,
+  prepareAddNFTMinter as moonbeamPrepareAddNFTMinter,
+  sendAddNFTMinter as moonbeamSendAddNFTMinter,
+  transferNFT as moonbeamTransferNFT,
+  updateCashbackForAuthorNFT as moonbeamUpdateCashbackForAuthorNFT,
+} from '@tatumio/tatum-moonbeam'
 import { burnNFT as algoBurnNFT, deployNFT as algoDeployNFT, transferNFT as algoTransferNFT } from '@tatumio/tatum-algo'
 
 /**
@@ -124,6 +134,8 @@ export const deployNFT = async (
       return tronDeployNFT(body as TronDeployTrc721)
     case Currency.BSC:
       return bscDeployNFT(body as EthDeployErc721)
+    case Currency.GLMR:
+      return moonbeamDeployNFT(body as EthDeployErc721)
     case Currency.FLOW:
       return flowDeployNFT(body as FlowDeployNft)
     case Currency.ALGO:
@@ -182,6 +194,8 @@ export const mintNFTWithUri = async (
       return tronMintNFTWithUri(body as TronMintTrc721)
     case Currency.BSC:
       return bscMintNFTWithUri(body)
+    case Currency.GLMR:
+      return moonbeamMintNFTWithUri(body)
     case Currency.FLOW:
       return flowMintNFTWithUri(body as FlowMintNft, options)
     default:
@@ -213,6 +227,8 @@ export const mintMultipleNFTWithUri = async (
       return oneMintMultipleNFTWithUri(body as MintMultipleErc721)
     case Currency.BSC:
       return bscMintMultipleNFTWithUri(body as MintMultipleErc721)
+    case Currency.GLMR:
+      return moonbeamMintMultipleNFTWithUri(body as MintMultipleErc721)
     case Currency.FLOW:
       return flowMintMultipleNFTWithUri(testnet, body as FlowMintMultipleNft)
     default:
@@ -244,6 +260,8 @@ export const burnNFT = async (
       return oneBurnNFT(body, provider)
     case Currency.BSC:
       return bscBurnNFT(body, provider)
+    case Currency.GLMR:
+      return moonbeamBurnNFT(body, provider)
     case Currency.FLOW:
       return flowBurnNFT(testnet, body as FlowBurnNft)
     case Currency.ALGO:
@@ -277,6 +295,8 @@ export const updateCashbackForAuthorNFT = async (
       return tronUpdateCashbackForAuthorNFT(body as TronUpdateCashbackTrc721)
     case Currency.BSC:
       return bscUpdateCashbackForAuthorNFT(body, provider)
+    case Currency.GLMR:
+      return moonbeamUpdateCashbackForAuthorNFT(body, provider)
     default:
       throw new Error('Unsupported blockchain.')
   }
@@ -306,6 +326,8 @@ export const transferNFT = async (
       return tronTransferNFT(body as TronTransferTrc721)
     case Currency.BSC:
       return bscTransferNFT(body, provider)
+    case Currency.GLMR:
+      return moonbeamTransferNFT(body, provider)
     case Currency.FLOW:
       return flowTransferNFT(testnet, body as FlowTransferNft)
     case Currency.ALGO:
@@ -335,6 +357,8 @@ export const prepareAddNFTMinter = async (testnet: boolean, body: AddMinter, pro
       return tronPrepareAddNFTMinter(body, provider)
     case Currency.BSC:
       return bscPrepareAddNFTMinter(body, provider)
+    case Currency.GLMR:
+      return moonbeamPrepareAddNFTMinter(body, provider)
     default:
       throw new Error('Unsupported blockchain.')
   }
@@ -360,6 +384,8 @@ export const sendAddNFTMinter = async (testnet: boolean, body: AddMinter, provid
       return tronSendAddNFTMinter(body, provider)
     case Currency.BSC:
       return bscSendAddNFTMinter(body, provider)
+    case Currency.GLMR:
+      return moonbeamSendAddNFTMinter(body, provider)
     default:
       throw new Error('Unsupported blockchain.')
   }

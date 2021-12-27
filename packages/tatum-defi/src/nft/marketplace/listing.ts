@@ -37,6 +37,10 @@ import {
   prepareDeployMarketplaceListing as prepareBscDeployMarketplaceListingSignedTransaction,
 } from '@tatumio/tatum-bsc'
 import {
+  deployMarketplaceListing as sendMoonbeamDeployMarketplaceListingSignedTransaction,
+  prepareDeployMarketplaceListing as prepareMoonbeamDeployMarketplaceListingSignedTransaction,
+} from '@tatumio/tatum-moonbeam'
+import {
   deployMarketplaceListing as sendPolygonDeployMarketplaceListingSignedTransaction,
   prepareDeployMarketplaceListing as preparePolygonDeployMarketplaceListingSignedTransaction,
 } from '@tatumio/tatum-polygon'
@@ -71,6 +75,8 @@ export const deployMarketplaceListing = async (
       return await sendEthDeployMarketplaceListingSignedTransaction(body, provider)
     case Currency.BSC:
       return await sendBscDeployMarketplaceListingSignedTransaction(body, provider)
+    case Currency.GLMR:
+      return await sendMoonbeamDeployMarketplaceListingSignedTransaction(body, provider)
     case Currency.MATIC:
       return await sendPolygonDeployMarketplaceListingSignedTransaction(body, provider)
     // case Currency.TRON:
@@ -108,6 +114,8 @@ export const prepareDeployMarketplaceListing = async (
       return await prepareEthDeployMarketplaceListingSignedTransaction(body, provider)
     case Currency.BSC:
       return await prepareBscDeployMarketplaceListingSignedTransaction(body, provider)
+    case Currency.GLMR:
+      return await prepareMoonbeamDeployMarketplaceListingSignedTransaction(body, provider)
     case Currency.MATIC:
       return await preparePolygonDeployMarketplaceListingSignedTransaction(body, provider)
     // case Currency.TRON:

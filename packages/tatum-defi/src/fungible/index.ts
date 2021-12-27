@@ -4,6 +4,7 @@ import { getErc20ContractDecimals as getEthErc20ContractDecimals } from '@tatumi
 import { getErc20ContractDecimals as getCeloErc20ContractDecimals } from '@tatumio/tatum-celo'
 import { getBep20ContractDecimals as getBscBep20ContractDecimals } from '@tatumio/tatum-bsc'
 import { getErc20ContractDecimals as getPolygonErc20ContractDecimals } from '@tatumio/tatum-polygon'
+import { getErc20ContractDecimals as getMoonbeamErc20ContractDecimals } from '@tatumio/tatum-moonbeam'
 import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../helpers'
 
 /**
@@ -40,6 +41,9 @@ export const prepareApproveErc20 = async (testnet: boolean, body: ApproveErc20, 
       break
     case Currency.MATIC:
       getErc20ContractDecimalsFn = getPolygonErc20ContractDecimals
+      break
+    case Currency.GLMR:
+      getErc20ContractDecimalsFn = getMoonbeamErc20ContractDecimals
       break
     default:
       throw new Error('Unsupported combination of inputs.')

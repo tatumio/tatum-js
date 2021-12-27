@@ -33,6 +33,11 @@ import {
   generatePrivateKeyFromMnemonic as generateEthPrivateKey,
 } from '@tatumio/tatum-eth'
 import {
+  generateAddressFromPrivatekey as convertMoonbeamPrivateKey,
+  generateAddressFromXPub as generateMoonbeamAddress,
+  generatePrivateKeyFromMnemonic as generateMoonbeamPrivateKey,
+} from '@tatumio/tatum-moonbeam'
+import {
   generateAddressFromPrivatekey as convertOnePrivateKey,
   generateAddressFromXPub as generateOneAddress,
   generatePrivateKeyFromMnemonic as generateOnePrivateKey,
@@ -145,6 +150,8 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
       return generateLyraAddress(testnet, xpub, i)
     case Currency.ADA:
       return generateCardanoAddress(testnet, xpub, i)
+    case Currency.GLMR:
+      return generateMoonbeamAddress(xpub, i)
     default:
       throw new Error('Unsupported blockchain.')
   }
@@ -237,6 +244,8 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
       return generateLyraPrivateKey(testnet, mnemonic, i)
     case Currency.ADA:
       return generateCardanoPrivateKey(mnemonic, i)
+    case Currency.GLMR:
+      return generateMoonbeamPrivateKey(testnet, mnemonic, i)
     default:
       throw new Error('Unsupported blockchain.')
   }
@@ -294,6 +303,8 @@ export const generateAddressFromPrivatekey = (currency: Currency, testnet: boole
       return convertXdcPrivateKey(privateKey)
     case Currency.EGLD:
       return convertEgldPrivateKey(privateKey)
+    case Currency.GLMR:
+      return convertMoonbeamPrivateKey(privateKey)
     default:
       throw new Error('Unsupported blockchain.')
   }
