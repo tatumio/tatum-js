@@ -9,4 +9,4 @@
 |                | **getBlockHash**    | Returns transactions for address from Bch blockchain. |
 | _Transactions_ | **getTransaction**  | Returns transaction by hash from Bch blockchain.      |
 |                | **getTxForAccount** | Returns count of transactions.                        |
-| _Broadcast_    | **postBroadcast**   | Returns information about Ada blockchain.             |
+| _Broadcast_    | **postBroadcast**   | Returns information about Bch blockchain.             |

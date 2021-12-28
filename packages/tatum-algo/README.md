@@ -2,14 +2,14 @@
 
 #### Blockchain
 
-| **Category**   | Function                        | Description                                           |
-| -------------- | ------------------------------- | ----------------------------------------------------- |
-| _Account_      | **getBlockchainAccountBalance** | Returns account balances for a given address.         |
-| _Block_        | **getBlock**                    | Get blockchain block by hash or block number.         |
-|                | **getCurrentBlock**             | Returns current block.                                |
-| _Transactions_ | **getTransaction**              | Returns transaction by hash from algorand blockchain. |
-|                | **getTransactionsCount**        | Returns count of transactions.                        |
-| _Broadcast_    | **postBroadcast**               | Returns information about Ada blockchain.             |
+| **Category**   | Function                        | Description                                       |
+| -------------- | ------------------------------- | ------------------------------------------------- |
+| _Account_      | **getBlockchainAccountBalance** | Returns account balances for a given address.     |
+| _Block_        | **getBlock**                    | Get blockchain block by hash or block number.     |
+|                | **getCurrentBlock**             | Returns current block.                            |
+| _Transactions_ | **getTransaction**              | Returns transaction by hash from Algo blockchain. |
+|                | **getTransactionsCount**        | Returns count of transactions.                    |
+| _Broadcast_    | **postBroadcast**               | Returns information about Algo blockchain.        |
 
 #### Multitoken (ERC-1155)
 

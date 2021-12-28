@@ -11,7 +11,7 @@
 | _Transactions_ | **getTransactionsCount**        | Returns a number of outgoing Bsc transactions for the address from Bsc blockchain. |
 |                | **getTransaction**              | Returns transaction by hash from Bsc blockchain.                                   |
 |                | **estimateGas**                 | Returns gasLimit and gasPrice estimation of the transaction from Bsc blockchain.   |
-| _Broadcast_    | **postBroadcast**               | Returns information about Ada blockchain.                                          |
+| _Broadcast_    | **postBroadcast**               | Returns information about Bsc blockchain.                                          |
 
 #### Multitoken (ERC-1155)
 
@@ -72,13 +72,13 @@
 |                       | **AuctionApproveNftTransfer**   | Approve NFT transfer for auction to perform listing of the asset.                                                     |
 |                       | **AuctionApproveErc20Transfer** | Approve ERC20 transfer for auction to perform bidding on the asset in the auction.                                    |
 
-#### MarketPlace
+#### Marketplace
 
 | **Category**              | Function                            | Description                                                                                                                       |
 | ------------------------- | ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| _Marketplace information_ | **getMarketPlaceFee**               | Returns MarketPlace fee.                                                                                                          |
-|                           | **getMarketPlaceListing**           | Returns MarketPlace listing.                                                                                                      |
-|                           | **getMarketPlaceFeeRecipient**      | Returns MarketPlace fee recipient.                                                                                                |
+| _Marketplace information_ | **getMarketPlaceFee**               | Returns Marketplace fee.                                                                                                          |
+|                           | **getMarketPlaceListing**           | Returns Marketplace listing.                                                                                                      |
+|                           | **getMarketPlaceFeeRecipient**      | Returns Marketplace fee recipient.                                                                                                |
 | _Marketplace operations_  | **deployMarketPlaceListing**        | Deploy new smart contract for NFT marketplace logic.                                                                              |
 |                           | **MarketPlaceUpdateFee**            | Update marketplace fee.                                                                                                           |
 |                           | **MarketPlaceUpdateFeeRecipient**   | Update marketplace fee recipient.                                                                                                 |

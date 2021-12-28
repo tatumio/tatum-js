@@ -76,13 +76,13 @@
 |                       | **AuctionApproveNftTransfer**   | Approve NFT transfer for auction to perform listing of the asset.                                                     |
 |                       | **AuctionApproveErc20Transfer** | Approve ERC20 transfer for auction to perform bidding on the asset in the auction.                                    |
 
-#### MarketPlace
+#### Marketplace
 
 | **Category**              | Function                            | Description                                                                                                                       |
 | ------------------------- | ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| _Marketplace information_ | **getMarketPlaceFee**               | Returns MarketPlace fee.                                                                                                          |
-|                           | **getMarketPlaceListing**           | Returns MarketPlace listing.                                                                                                      |
-|                           | **getMarketPlaceFeeRecipient**      | Returns MarketPlace fee recipient.                                                                                                |
+| _Marketplace information_ | **getMarketPlaceFee**               | Returns Marketplace fee.                                                                                                          |
+|                           | **getMarketPlaceListing**           | Returns Marketplace listing.                                                                                                      |
+|                           | **getMarketPlaceFeeRecipient**      | Returns Marketplace fee recipient.                                                                                                |
 | _Marketplace operations_  | **deployMarketPlaceListing**        | Deploy new smart contract for NFT marketplace logic.                                                                              |
 |                           | **MarketPlaceUpdateFee**            | Update marketplace fee.                                                                                                           |
 |                           | **MarketPlaceUpdateFeeRecipient**   | Update marketplace fee recipient.                                                                                                 |
