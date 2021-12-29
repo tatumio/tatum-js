@@ -1,5 +1,6 @@
 const algosdk = require('algosdk');
 const base32 = require('base32.js');
+import BigNumber from 'bignumber.js';
 import { TextEncoder } from 'util';
 import { algorandBroadcast } from '../blockchain';
 import {
@@ -204,7 +205,7 @@ export const prepareAlgoTransferNFTSignedTransaction = async (testnet: boolean, 
         tx.to,
         undefined,
         undefined,
-        tx.value,
+        Number(tx.value),
         undefined,
         Number(tx.contractAddress),
         params,
@@ -277,11 +278,12 @@ export const prepareAlgoCreateFractionalNFTSignedTransaction = async (testnet: b
     const algodClient = getAlgoClient(testnet, provider);
     const params = await algodClient.getTransactionParams().do();
     const decoder = new base32.Decoder({ type: 'rfc4648' })
+    const v = Math.floor(Math.log10(Number(tx.amount)));
     const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
         tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
         undefined,
-        10 ** Math.floor(Math.log10(Number(tx.amount))),
-        Math.floor(Math.log10(Number(tx.amount))),
+        10 ** v,
+        v,
         false,
         tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
         undefined,
@@ -328,7 +330,7 @@ export const prepareAlgoTransferFractionalNFTSignedTransaction = async (testnet:
         tx.to,
         undefined,
         undefined,
-        tx.amount,
+        Number(tx.amount),
         undefined,
         Number(tx.contractAddress),
         params,
@@ -404,7 +406,7 @@ export const prepareAlgoCreateFTSignedTransaction = async (testnet: boolean, tx:
     const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
         tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
         undefined,
-        Number(tx.supply),
+        new BigNumber(tx.supply).shiftedBy(tx.digits).toNumber(),
         Number(tx.digits),
         false,
         tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
@@ -452,7 +454,7 @@ export const prepareAlgoTransferFTSignedTransaction = async (testnet: boolean, t
         tx.to,
         undefined,
         undefined,
-        tx.amount,
+        new BigNumber(tx.amount).shiftedBy(tx.digits || 1).toNumber(),
         undefined,
         Number(tx.contractAddress),
         params,
@@ -513,4 +515,3 @@ export const prepareAlgoBurnFTSignedTransaction = async (testnet: boolean, tx: B
 export const sendAlgoBurnFTSignedTransaction = async (testnet: boolean, tx: BurnErc20, provider?: string) => {
     return (await algorandBroadcast(await prepareAlgoBurnFTSignedTransaction(testnet, tx, provider)))
 }
-
