@@ -29,6 +29,11 @@ module.exports = function (plop) {
         templateFile: 'templates/npmignore.hbs',
         path: './packages/tatum-{{slug}}/.npmignore',
       },
+      {
+        type: 'add',
+        templateFile: 'templates/README.md.hbs',
+        path: './packages/tatum-{{slug}}/README.md',
+      },
     ],
   })
 }
