@@ -406,7 +406,7 @@ export const prepareAlgoCreateFTSignedTransaction = async (testnet: boolean, tx:
     const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
         tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
         undefined,
-        new BigNumber(tx.supply).shiftedBy(tx.digits).toNumber(),
+        new BigNumber(tx.supply).shiftedBy(Number(tx.digits)).toNumber(),
         Number(tx.digits),
         false,
         tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
