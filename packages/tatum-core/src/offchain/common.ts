@@ -76,3 +76,8 @@ export const offchainCancelWithdrawal = async (id: string, revert = true): Promi
  * For more details, see <a href="https://tatum.io/apidoc#operation/completeWithdrawal" target="_blank">Tatum API documentation</a>
  */
 export const offchainCompleteWithdrawal = async (id: string, txId: string): Promise<void> => put(`/v3/offchain/withdrawal/${id}/${txId}`)
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc.php#operation/storeTokenAddress" target="_blank">Tatum API documentation</a>
+ */
+export const storeTokenAddress = async (address: string, name: string): Promise<void> => put(`/v3/offchain/token/${name}/${address}`)
