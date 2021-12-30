@@ -1,8 +1,8 @@
+export * from './blockchain'
 export * from './offchain'
 export * from './record'
 export * from './tatum'
 export * from './wallet'
-export * from './blockchain'
 
 export {
   // security
