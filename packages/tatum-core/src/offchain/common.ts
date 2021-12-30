@@ -80,4 +80,4 @@ export const offchainCompleteWithdrawal = async (id: string, txId: string): Prom
 /**
  * For more details, see <a href="https://tatum.io/apidoc.php#operation/storeTokenAddress" target="_blank">Tatum API documentation</a>
  */
-export const storeTokenAddress = async (address: string, name: string): Promise<void> => put(`/v3/offchain/token/${name}/${address}`)
+export const storeTokenAddress = async (address: string, name: string): Promise<void> => post(`/v3/offchain/token/${name}/${address}`)
