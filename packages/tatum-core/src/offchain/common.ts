@@ -1,5 +1,5 @@
 import { get, httpDelete, post, put } from '../connector/tatum'
-import { Account, Address, BroadcastWithdrawal, TxHash, Withdrawal, WithdrawalResponse } from '../model'
+import { Account, Address, BroadcastWithdrawal, TxHash, Withdrawal, WithdrawalResponse, RegisterErc20Token } from '../model'
 import { AddressBatch } from '../model/request/CreateOffchainAddressesBatch'
 
 /**
@@ -76,3 +76,9 @@ export const offchainCancelWithdrawal = async (id: string, revert = true): Promi
  * For more details, see <a href="https://tatum.io/apidoc#operation/completeWithdrawal" target="_blank">Tatum API documentation</a>
  */
 export const offchainCompleteWithdrawal = async (id: string, txId: string): Promise<void> => put(`/v3/offchain/withdrawal/${id}/${txId}`)
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc.php#operation/registerErc20Token" target="_blank">Tatum API documentation</a>
+ */
+export const registerErc20Token = async (chain: string, data: RegisterErc20Token): Promise<{ accountId: string; address: string }> =>
+  post(`/v3/offchain/token/${chain}`, data, RegisterErc20Token)
