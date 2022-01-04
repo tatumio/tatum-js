@@ -1,5 +1,5 @@
 import { get, post, httpDelete } from '../connector/tatum'
-import { OrderBookResponse, OrderBookRequest } from '../model'
+import { OrderBookResponse, OrderBookRequest, GetOrderBook, OrderBookChart } from '../model'
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/getHistoricalTrades" target="_blank">Tatum API documentation</a>
@@ -46,3 +46,8 @@ export const deleteTrade = async (id: string): Promise<void> => httpDelete(`/v3/
  * For more details, see <a href="https://tatum.io/apidoc#operation/deleteAccountTrades" target="_blank">Tatum API documentation</a>
  */
 export const deleteAccountTrades = async (id: string): Promise<void> => httpDelete(`/v3/trade/account/${id}`)
+
+/**
+ * For more details, see <a href="https://tatum.io/apidoc.php#operation/chartRequest" target="_blank">Tatum API documentation</a>
+ */
+export const chartRequest = async (data: GetOrderBook): Promise<OrderBookChart> => post('/v3/trade/chart', data, GetOrderBook)
