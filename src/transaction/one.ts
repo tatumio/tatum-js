@@ -379,14 +379,14 @@ export const prepareOneMintMultiple721ProvenanceSignedTransaction = async (testn
         // @ts-ignore
         const data = new (client).eth.Contract(erc721Provenance_abi, new HarmonyAddress(body.contractAddress).basicHex).methods
             .mintMultiple(body.to.map(t => new HarmonyAddress(t).basicHex), body.tokenId, body.url,
-                body.authorAddresses?.map(a => a.map(a1 => new HarmonyAddress(a1).basicHex)), cb, fv, body.erc20).encodeABI()
+                body.authorAddresses?body.authorAddresses.map(a => a.map(a1 => new HarmonyAddress(a1).basicHex)):[], cb, fv, body.erc20).encodeABI()
         return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, undefined, body.nonce, data,
             body.fee?.gasLimit, body.fee?.gasPrice)
     } else {
         // @ts-ignore
         const data = new (client).eth.Contract(erc721Provenance_abi, new HarmonyAddress(body.contractAddress).basicHex).methods
             .mintMultiple(body.to.map(t => new HarmonyAddress(t).basicHex), body.tokenId, body.url,
-                body.authorAddresses?.map(a => a.map(a1 => new HarmonyAddress(a1).basicHex)), cb, fv).encodeABI()
+                body.authorAddresses?body.authorAddresses.map(a => a.map(a1 => new HarmonyAddress(a1).basicHex)):[], cb, fv).encodeABI()
         return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, new HarmonyAddress(body.contractAddress).basicHex, undefined, body.nonce, data,
             body.fee?.gasLimit, body.fee?.gasPrice)
     }
