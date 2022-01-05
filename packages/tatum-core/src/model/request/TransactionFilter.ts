@@ -2,7 +2,7 @@ import { Type } from 'class-transformer'
 import { IsArray, IsIn, IsNotEmpty, IsNumber, IsNumberString, IsOptional, IsString, Length, Min, ValidateNested } from 'class-validator'
 import { OperationType, TransactionType } from '../response'
 
-class AmountFilter {
+export class AmountFilter {
   @IsNotEmpty()
   @IsIn(['lt', 'gt', 'gte', 'lte', 'eq', 'neq'])
   public op: string

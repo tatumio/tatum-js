@@ -1,3 +1,4 @@
+import { FutureTypeAttributes } from '.'
 import { TradeType } from '../../request/TradeType'
 
 /**
@@ -80,4 +81,8 @@ export interface OrderBookResponse {
    * @memberof OrderBook
    */
   feeAccountId?: string
+
+  isMaker?: boolean
+
+  attr?: FutureTypeAttributes
 }
