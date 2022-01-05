@@ -209,7 +209,20 @@ describe('ONE transactions', () => {
 
             // await processTx(txData)
         })
+        it('should test valid 721 mint without cashback multiple', async () => {
+            const body = new OneMintMultiple721()
+            body.fromPrivateKey = '0x4cda6d2c33b0f9a041e46474a638ac59aee0734cf208aa9aa2f05ef887bd09e1'
+            body.tokenId = ['1032121','1032122']
+            body.contractAddress = '0x27c133a613f11870fa935ecbb03c0cf55f93e5de'
+            body.url = ['test.com','test1.com']
+            body.chain = Currency.ONE
+            body.to = ['one13t9ul0yvudlk7e60fwvxr5l0azfg3kyl474xmc','one13t9ul0yvudlk7e60fwvxr5l0azfg3kyl474xmc']
+            body.provenance = true
+            const txData = await prepareOneMintMultiple721ProvenanceSignedTransaction(true, body, PROVIDER)
+            expect(txData).toContain('0x')
 
+            // await processTx(txData)
+        })
     })
     describe('HRM 721', () => {
         it('should test valid Deploy 721', async () => {
