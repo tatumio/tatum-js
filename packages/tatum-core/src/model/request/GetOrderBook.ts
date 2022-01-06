@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsString, Length, Matches, Min } from 'class-validator'
+import { IsIn, IsNotEmpty, IsNumber, IsString, Length, Matches, Min } from 'class-validator'
 import { TimeFrame } from '.'
 
 export class GetOrderBook {
@@ -19,6 +19,6 @@ export class GetOrderBook {
   public to: number
 
   @IsNotEmpty()
-  @IsString()
+  @IsIn(Object.keys(TimeFrame))
   public timeFrame: TimeFrame
 }
