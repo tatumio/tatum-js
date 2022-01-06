@@ -1,3 +1,4 @@
+export * from './blockchain'
 export * from './offchain'
 export * from './record'
 export * from './tatum'
