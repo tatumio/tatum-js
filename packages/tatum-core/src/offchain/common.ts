@@ -82,3 +82,7 @@ export const offchainCompleteWithdrawal = async (id: string, txId: string): Prom
  */
 export const registerErc20Token = async (chain: string, data: RegisterErc20Token): Promise<{ accountId: string; address: string }> =>
   post(`/v3/offchain/token/${chain}`, data, RegisterErc20Token)
+
+/** For more details, see <a href="https://tatum.io/apidoc.php#operation/storeTokenAddress" target="_blank">Tatum API documentation</a>
+ */
+export const storeTokenAddress = async (address: string, name: string): Promise<void> => post(`/v3/offchain/token/${name}/${address}`)

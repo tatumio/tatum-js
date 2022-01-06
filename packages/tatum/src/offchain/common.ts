@@ -15,4 +15,5 @@ export {
   storeTrcContractAddress,
   registerTronTrc,
   registerErc20Token,
+  storeTokenAddress,
 } from '@tatumio/tatum-ledger'
