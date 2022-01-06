@@ -52,7 +52,7 @@ import { obtainCustodialAddressType } from '../wallet';
  */
 export const polygonGetGasPriceInWei = async () => {
     const { data } = await axios.get('https://gasstation-mainnet.matic.network');
-    return Web3.utils.toWei(`${Math.max(30, Math.min(Math.ceil(data.fast), 1000))}`, 'gwei');
+    return Web3.utils.toWei(`${Math.max(30, Math.ceil(data.fast))}`, 'gwei');
 };
 
 const prepareGeneralTx = async (client: Web3, testnet: boolean, fromPrivateKey?: string, signatureId?: string, to?: string, amount?: string, nonce?: number,
