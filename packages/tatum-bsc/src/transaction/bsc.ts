@@ -59,6 +59,8 @@ import {
   UpdateCashbackErc721,
   validateBody,
   obtainCustodialAddressType,
+  erc721Provenance_abi,
+  erc721TokenABI,
 } from '@tatumio/tatum-core'
 import { TransferBscBep20, ChainTransferBscBep20 } from '../model'
 import { BigNumber } from 'bignumber.js'
