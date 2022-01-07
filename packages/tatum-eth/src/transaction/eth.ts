@@ -67,6 +67,7 @@ import {
   ChainDeployMultiToken,
   ChainDeployErc721,
   obtainCustodialAddressType,
+  erc721Provenance_abi,
 } from '@tatumio/tatum-core'
 import { mintNFT } from '../nft'
 
