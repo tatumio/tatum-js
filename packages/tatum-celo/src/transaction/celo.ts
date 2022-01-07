@@ -30,6 +30,7 @@ import {
   validateBody,
   obtainCustodialAddressType,
   CeloMintErc721,
+  erc721Provenance_abi,
 } from '@tatumio/tatum-core'
 import {
   BurnCeloErc20,
