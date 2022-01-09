@@ -98,6 +98,14 @@ import {
   transferNFT as bscTransferNFT,
   updateCashbackForAuthorNFT as bscUpdateCashbackForAuthorNFT,
 } from '@tatumio/tatum-bsc'
+import {
+  burnNFT as kcsBurnNFT,
+  deployNFT as kcsDeployNFT,
+  mintMultipleNFTWithUri as kcsMintMultipleNFTWithUri,
+  mintNFTWithUri as kcsMintNFTWithUri,
+  transferNFT as kcsTransferNFT,
+  updateCashbackForAuthorNFT as kcsUpdateCashbackForAuthorNFT,
+} from '@tatumio/tatum-kcs'
 import { burnNFT as algoBurnNFT, deployNFT as algoDeployNFT, transferNFT as algoTransferNFT } from '@tatumio/tatum-algo'
 
 /**
@@ -128,6 +136,8 @@ export const deployNFT = async (
       return flowDeployNFT(body as FlowDeployNft)
     case Currency.ALGO:
       return algoDeployNFT(testnet, body as DeployErc721, provider)
+    case Currency.KCS:
+      return kcsDeployNFT(body as DeployErc721, provider)
     default:
       throw new Error('Unsupported currency')
   }
@@ -184,6 +194,8 @@ export const mintNFTWithUri = async (
       return bscMintNFTWithUri(body)
     case Currency.FLOW:
       return flowMintNFTWithUri(body as FlowMintNft, options)
+    case Currency.KCS:
+      return kcsMintNFTWithUri(body, options)
     default:
       throw new Error('Unsupported blockchain.')
   }
@@ -215,6 +227,8 @@ export const mintMultipleNFTWithUri = async (
       return bscMintMultipleNFTWithUri(body as MintMultipleErc721)
     case Currency.FLOW:
       return flowMintMultipleNFTWithUri(testnet, body as FlowMintMultipleNft)
+    case Currency.KCS:
+      return kcsMintMultipleNFTWithUri(body as MintMultipleErc721, provider)
     default:
       throw new Error('Unsupported blockchain.')
   }
@@ -248,6 +262,8 @@ export const burnNFT = async (
       return flowBurnNFT(testnet, body as FlowBurnNft)
     case Currency.ALGO:
       return algoBurnNFT(testnet, body as BurnErc721, provider)
+    case Currency.KCS:
+      return kcsBurnNFT(body as BurnErc721, provider)
     default:
       throw new Error('Unsupported blockchain.')
   }
@@ -277,6 +293,8 @@ export const updateCashbackForAuthorNFT = async (
       return tronUpdateCashbackForAuthorNFT(body as TronUpdateCashbackTrc721)
     case Currency.BSC:
       return bscUpdateCashbackForAuthorNFT(body, provider)
+    case Currency.KCS:
+      return kcsUpdateCashbackForAuthorNFT(body, provider)
     default:
       throw new Error('Unsupported blockchain.')
   }
@@ -310,6 +328,8 @@ export const transferNFT = async (
       return flowTransferNFT(testnet, body as FlowTransferNft)
     case Currency.ALGO:
       return algoTransferNFT(testnet, body as TransferErc721, provider)
+    case Currency.KCS:
+      return kcsTransferNFT(body as TransferErc721, provider)
     default:
       throw new Error('Unsupported blockchain.')
   }
