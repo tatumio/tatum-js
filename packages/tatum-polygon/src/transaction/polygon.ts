@@ -64,6 +64,7 @@ import {
   ChainEthMintErc721,
   ChainEthMintMultipleErc721,
   obtainCustodialAddressType,
+  erc721Provenance_abi,
 } from '@tatumio/tatum-core'
 import { BigNumber } from 'bignumber.js'
 import Web3 from 'web3'
