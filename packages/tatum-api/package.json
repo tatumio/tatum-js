@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-api",
-  "version": "2.0.0-alpha.93",
+  "version": "2.0.0-alpha.95",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,8 +13,8 @@
     "lint": "eslint ./src --ext .ts --fix"
   },
   "dependencies": {
-    "form-data": "^4.0.0",
-    "cross-blob": "^3.0.0"
+    "cross-blob": "^3.0.0",
+    "form-data": "^4.0.0"
   },
   "devDependencies": {
     "@types/jest": "^27.0.2",

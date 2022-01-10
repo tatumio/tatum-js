@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-polygon",
-  "version": "2.0.0-alpha.94",
+  "version": "2.0.0-alpha.95",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
