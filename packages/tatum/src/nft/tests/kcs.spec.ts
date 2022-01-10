@@ -30,7 +30,7 @@ describe('NFT tests - KCS', () => {
         fee: { gasLimit: '600000', gasPrice: '5' },
       }
       const deployToken = await deployNFT(true, body, 'https://rpc-testnet.kcc.network')
-      console.log(deployToken)
+      console.log('Deploy nft: ', deployToken)
       expect(deployToken).not.toBeNull()
     } catch (e) {
       console.log('Deploy nft errror: ', e)
@@ -51,7 +51,7 @@ describe('NFT tests - KCS', () => {
         cashbackValues: ['0.3'],
       }
       const mintedToken = await mintNFT(body)
-      console.log('minted: ', mintedToken)
+      console.log('Mint nft: ', mintedToken)
       expect(mintedToken).not.toBeNull()
     } catch (e) {
       console.log('Mint nft error: ', e.response.data)
@@ -75,7 +75,7 @@ describe('NFT tests - KCS', () => {
         },
       }
       const sendErc721Token = await transferNFT(true, body, 'https://rpc-testnet.kcc.network')
-      console.log('response: ', sendErc721Token)
+      console.log('Transfer nft: ', sendErc721Token)
       expect(sendErc721Token).not.toBeNull()
     } catch (e) {
       console.log('Transfer nft error: ', e)
@@ -100,7 +100,7 @@ describe('NFT tests - KCS', () => {
         ],
       }
       const mintedTokens = await mintMultipleNFTWithUri(true, body, 'https://rpc-testnet.kcc.network')
-      console.log(mintedTokens)
+      console.log('Mint multiple nfts: ', mintedTokens)
       expect(mintedTokens).not.toBeNull()
     } catch (e) {
       console.log('Mint multiple nfts error: ', e.response.data)
@@ -146,9 +146,9 @@ describe('NFT tests - KCS', () => {
       }
       const burnt = await burnNFT(true, body, 'https://rpc-testnet.kcc.network')
       expect(burnt).not.toBeNull()
-      console.log(burnt)
+      console.log('Burn nft: ', burnt)
     } catch (e) {
-      console.log('burn nft error: ', e.response.data)
+      console.log('Burn nft error: ', e.response.data)
       expect(e).not.toBeDefined()
     }
   })
@@ -158,9 +158,9 @@ describe('NFT tests - KCS', () => {
       const tokenAddress = '0x1ce4e40889a13971681391aad29e88efaf91f784'
       const transactions = await getNFTTransactionsByToken(Currency.KCS, tokenId, tokenAddress, 1)
       expect(transactions).not.toBeNull()
-      console.log('transactions data: ', transactions)
+      console.log('Get transactions by token: ', transactions)
     } catch (e) {
-      console.log(e.response.data)
+      console.log('Get transactions by token error: ', e.response.data)
       expect(e).not.toBeDefined()
     }
   })
@@ -170,9 +170,9 @@ describe('NFT tests - KCS', () => {
       const tokenAddress = '0x1ce4e40889a13971681391aad29e88efaf91f784'
       const transactions = await getNFTTransactionsByAddress(Currency.KCS, address, tokenAddress, 1)
       expect(transactions).not.toBeNull()
-      console.log('transactions data: ', transactions)
+      console.log('Get nft transactions by address: ', transactions)
     } catch (e) {
-      console.log(e.response.data)
+      console.log('Get nft transactions by address error: ', e.response.data)
       expect(e).not.toBeDefined()
     }
   })
@@ -180,11 +180,11 @@ describe('NFT tests - KCS', () => {
     try {
       const contractAddress = '0x2A42ae2a6346eEbC7FE2b2b7f02158634d5390dc'
       const address = '0x2A42ae2a6346eEbC7FE2b2b7f02158634d5390dc'
-      const provenanceData = await getNFTsByAddress(Currency.KCS, contractAddress, address)
-      expect(provenanceData).not.toBeNull()
-      console.log('provenance data: ', provenanceData)
+      const nftsByAddress = await getNFTsByAddress(Currency.KCS, contractAddress, address)
+      expect(nftsByAddress).not.toBeNull()
+      console.log('Get nfts by address: ', nftsByAddress)
     } catch (e) {
-      console.log(e.response.data)
+      console.log('Get nfts by address error: ', e.response.data)
       expect(e).not.toBeDefined()
     }
   })
@@ -194,9 +194,9 @@ describe('NFT tests - KCS', () => {
       const tokenId = '1641548895528'
       const metadata = await getNFTMetadataURI(Currency.KCS, contractAddress, tokenId)
       expect(metadata).not.toBeNull()
-      console.log('NFT metadata: ', metadata)
+      console.log('Get nft metadata uri: ', metadata)
     } catch (e) {
-      console.log(e.response.data)
+      console.log('Get nft metadata uri: ', e.response.data)
       expect(e).not.toBeDefined()
     }
   })
@@ -206,9 +206,9 @@ describe('NFT tests - KCS', () => {
       const tokenId = '1641548895528'
       const image = await getNFTImage(Currency.KCS, contractAddress, tokenId)
       expect(image).not.toBeNull()
-      console.log('NFT image: ', image)
+      console.log('Get nft image: ', image)
     } catch (e) {
-      console.log(e.response.data)
+      console.log('Get nft image error: ', e.response.data)
       expect(e).not.toBeDefined()
     }
   })
@@ -218,9 +218,9 @@ describe('NFT tests - KCS', () => {
       const tokenId = '1641548895528'
       const royalty = await getNFTRoyalty(Currency.KCS, contractAddress, tokenId)
       expect(royalty).not.toBeNull()
-      console.log('NFT royalty: ', royalty)
+      console.log('Get nft royalty: ', royalty)
     } catch (e) {
-      console.log(e.response.data)
+      console.log('Get nft royalty error: ', e.response.data)
       expect(e).not.toBeDefined()
     }
   })
@@ -236,19 +236,18 @@ describe('NFT tests - KCS', () => {
         fromPrivateKey: '0d6c13fe5fed644dfa02512d4bffde9453dcb48873afb0b0a4c0cebce160c279',
         contractAddress: '0x2A42ae2a6346eEbC7FE2b2b7f02158634d5390dc',
       }
-      console.log(
-        await createNFT(
-          true,
-          body,
-          readFileSync('/Users/marinajakcin/Downloads/pikachu.png'),
-          'Pokemon',
-          'Electric type',
-          undefined,
-          'https://rpc-testnet.kcc.network'
-        )
+      const nft = await createNFT(
+        true,
+        body,
+        readFileSync('/Users/marinajakcin/Downloads/pikachu.png'),
+        'Pokemon',
+        'Electric type',
+        undefined,
+        'https://rpc-testnet.kcc.network'
       )
+      console.log('Create nft: ', nft)
     } catch (e) {
-      console.log('create nft error: ', e.response.data)
+      console.log('Create nft error: ', e.response.data)
       expect(e).not.toBeDefined()
     }
   })
@@ -264,10 +263,10 @@ describe('NFT tests - KCS', () => {
         fromPrivateKey: '0d6c13fe5fed644dfa02512d4bffde9453dcb48873afb0b0a4c0cebce160c279',
       }
       const cashback = await updateCashbackForAuthorNFT(true, body, 'https://rpc-testnet.kcc.network')
-      console.log('response: ', cashback)
+      console.log('Update royalty cashback: ', cashback)
       expect(cashback).not.toBeNull()
     } catch (e) {
-      console.log('update cashback error: ', e.response.data)
+      console.log('Update royalty cashback error: ', e.response.data)
       expect(e).not.toBeDefined()
     }
   })
