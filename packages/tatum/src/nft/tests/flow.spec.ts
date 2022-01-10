@@ -2,7 +2,6 @@ import {
   Currency,
   getNFTImage,
   getNFTMetadataURI,
-  getNFTRoyalty,
   getNFTsByAddress,
   deployNFT,
   mintNFT,
@@ -165,19 +164,6 @@ describe('NFT tests - FLOW', () => {
       expect(e).not.toBeDefined()
     }
   })
-  it('should get NFT royalty', async () => {
-    try {
-      const contractAddress = '0x2A42ae2a6346eEbC7FE2b2b7f02158634d5390dc'
-      const tokenId = '1641548895528'
-      const royalty = await getNFTRoyalty(Currency.FLOW, contractAddress, tokenId)
-      expect(royalty).not.toBeNull()
-      console.log('Get nft royalty: ', royalty)
-    } catch (e) {
-      console.log('Get nft royalty error: ', e.response.data)
-      expect(e).not.toBeDefined()
-    }
-  })
-
   it('should create NFT', async () => {
     try {
       const tokenId = new Date().getTime() + 6
