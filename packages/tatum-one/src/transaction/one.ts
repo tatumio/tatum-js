@@ -26,6 +26,7 @@ import {
   obtainCustodialAddressType,
   ChainOneMint721,
   OneMint721,
+  erc1155TokenABI,
 } from '@tatumio/tatum-core'
 import { BigNumber } from 'bignumber.js'
 import Web3 from 'web3'
