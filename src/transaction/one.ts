@@ -238,9 +238,10 @@ export const prepareOneDeployMarketplaceListingSignedTransaction = async (testne
     await validateBody(body, DeployMarketplaceListing);
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
     // @ts-ignore
-    const contract = new client.eth.Contract(auction.abi);
+    // const contract = new client.eth.Contract(auction.abi);
+    const contract = new client.eth.Contract(listing.abi);
     const data = contract.deploy({
-        data: auction.data,
+        data: listing.data,
         arguments: [body.marketplaceFee, body.feeRecipient]
     }).encodeABI();
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, undefined, undefined, body.nonce, data,
@@ -257,9 +258,9 @@ export const prepareOneDeployAuctionSignedTransaction = async (testnet: boolean,
     await validateBody(body, DeployNftAuction);
     const client = await prepareOneClient(testnet, provider, body.fromPrivateKey);
     // @ts-ignore
-    const contract = new client.eth.Contract(listing.abi);
+    const contract = new client.eth.Contract(auction.abi);
     const data = contract.deploy({
-        data: listing.data,
+        data: auction.data,
         arguments: [body.auctionFee, body.feeRecipient]
     }).encodeABI();
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, undefined, undefined, body.nonce, data,
