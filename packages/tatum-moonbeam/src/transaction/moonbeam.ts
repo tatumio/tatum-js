@@ -207,7 +207,7 @@ export const prepareSignedTransaction = async (body: ChainTransferErc20, provide
   let data
   let to = b.to
   if (b.currency === Currency.GLMR) {
-    data = b.data ? (client.utils.isHex(b.data) ? client.utils.stringToHex(b.data) : client.utils.toHex(b.data)) : undefined
+    data = b.data ? (client.utils.isHex(b.data) ? client.utils.stringToHex(b.data) : client.utils.toHex(b.data)) : '0x'
   } else {
     to = CONTRACT_ADDRESSES[b.currency as string]
     // @ts-ignore
