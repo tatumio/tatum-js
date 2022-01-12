@@ -1,7 +1,6 @@
-import { TESTNET_DERIVATION_PATH } from '@tatumio/tatum-core'
 import { generateMnemonic, mnemonicToSeed } from 'bip39'
 import { hdkey as ethHdKey } from 'ethereumjs-wallet'
-import { GLMR_DERIVATION_PATH } from '../constants'
+import { GLMR_DERIVATION_PATH, DEV_DERIVATION_PATH } from '../constants'
 
 /**
  * Generate Moonbeam or any other ERC20 wallet
@@ -10,7 +9,7 @@ import { GLMR_DERIVATION_PATH } from '../constants'
  * @returns wallet
  */
 export const generateBlockchainWallet = async (testnet: boolean, mnem: string) => {
-  const path = testnet ? TESTNET_DERIVATION_PATH : GLMR_DERIVATION_PATH
+  const path = testnet ? DEV_DERIVATION_PATH : GLMR_DERIVATION_PATH
   const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnem))
   const derivePath = hdwallet.derivePath(path)
   return {
