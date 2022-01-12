@@ -44,3 +44,5 @@ tsconfig.tsbuildinfo
 
 # do not use package-lock.json in yarn workspace
 **/package-lock.json
+
+packages/tatum-api/src/generated
