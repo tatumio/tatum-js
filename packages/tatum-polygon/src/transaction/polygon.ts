@@ -1,3 +1,4 @@
+import { TatumApi } from '@tatumio/tatum-api'
 import {
   auction,
   axios,
@@ -305,7 +306,7 @@ export const prepareBurnErc20SignedTransaction = async (body: BurnErc20, provide
 export const prepareTransferErc20SignedTransaction = async (body: ChainTransferErc20, provider?: string) => {
   ;(body as TransferErc20).currency = Currency.MATIC
   await validateBody(body, TransferErc20)
-  const client = await prepareClient(provider, body.fromPrivateKey)
+  const client = prepareClient(provider, body.fromPrivateKey)
   const decimals = new BigNumber(10).pow(body.digits as number)
   // @ts-ignore
   const data = new client.eth.Contract(erc20TokenABI, body.contractAddress.trim().trim()).methods
@@ -1098,7 +1099,10 @@ export const sendBurnErc20SignedTransaction = async (body: BurnErc20, provider?:
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendTransferErc20SignedTransaction = async (body: ChainTransferErc20, provider?: string) =>
-  broadcast(await prepareTransferErc20SignedTransaction(body, provider), body.signatureId)
+  TatumApi(process.env.TATUM_API_KEY).blockchain.polygon.polygonBroadcast({
+    txData: await prepareTransferErc20SignedTransaction(body, provider),
+    signatureId: body.signatureId,
+  })
 
 /**
  * Send Polygon deploy erc20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
