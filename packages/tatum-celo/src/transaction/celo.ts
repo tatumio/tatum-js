@@ -50,6 +50,7 @@ import {
   TransferCeloOrCeloErc20Token,
 } from '../'
 import { CEUR_ADDRESS_MAINNET, CEUR_ADDRESS_TESTNET, CUSD_ADDRESS_MAINNET, CUSD_ADDRESS_TESTNET } from '../constants'
+import { TatumApi } from '@tatumio/tatum-api'
 
 const obtainWalletInformation = async (wallet: CeloWallet, feeCurrencyContractAddress?: string) => {
   const [txCount, gasPrice, from] = await Promise.all([
@@ -1782,7 +1783,11 @@ export const sendGenerateCustodialWalletSignedTransaction = async (
   testnet: boolean,
   body: ChainGenerateCustodialAddress,
   provider?: string
-) => broadcast(await prepareGenerateCustodialWalletSignedTransaction(testnet, body, provider), body.signatureId)
+) =>
+  TatumApi(process.env.TATUM_API_KEY).blockchain.celo.celoBroadcast({
+    txData: await prepareGenerateCustodialWalletSignedTransaction(testnet, body, provider),
+    signatureId: body.signatureId,
+  })
 
 /**
  * Deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).

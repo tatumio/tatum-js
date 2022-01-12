@@ -49,8 +49,8 @@ import {
 
 export * from './generated'
 
-export function TatumApi(apiKey: string, url = 'https://api-eu1.tatum.io') {
-  OpenAPI.HEADERS = { 'X-API-Key': apiKey }
+export function TatumApi(apiKey?: string, url = 'https://api-eu1.tatum.io') {
+  OpenAPI.HEADERS = { ...(apiKey && { 'X-API-Key': apiKey }), 'x-testnet-type': process.env.TESTNET_TYPE || 'ethereum-ropsten' }
   OpenAPI.BASE = url
 
   return {

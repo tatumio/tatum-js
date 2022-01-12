@@ -16,6 +16,7 @@
     "@celo-tools/celo-ethers-wrapper": "0.0.5",
     "@ethersproject/bignumber": "^5.5.0",
     "@tatumio/tatum-core": "file:../tatum-core",
+    "@tatumio/tatum-api": "file:../tatum-api",
     "bignumber.js": "^9.0.0",
     "bip39": "^3.0.2",
     "class-transformer": "^0.2.3",
