@@ -2,6 +2,8 @@ import { Currency, MintErc721 } from '@tatumio/tatum-core'
 import { readFileSync } from 'fs'
 import { createNFT, deployNFT, getNFTImage, mintMultipleNFTWithUri, mintNFTWithUri, transferNFT } from './nft'
 
+const PROVIDER = 'https://moonbeam-alpha.api.onfinality.io/public'
+
 describe('NFT tests', () => {
   jest.setTimeout(99999)
 
@@ -14,7 +16,7 @@ describe('NFT tests', () => {
           name: 'TatumToken',
           fee: { gasLimit: '6000000', gasPrice: '5' },
         },
-        'https://rpc-mumbai.matic.today'
+        PROVIDER
       )
       expect(deployErc721Token).not.toBeNull()
       console.log(deployErc721Token)
@@ -39,7 +41,7 @@ describe('NFT tests', () => {
           ],
           fee: { gasLimit: '6000000', gasPrice: '100' },
         },
-        'https://rpc-mumbai.matic.today'
+        PROVIDER
       )
       console.log(mintedTokens)
       expect(mintedTokens).not.toBeNull()
@@ -61,7 +63,7 @@ describe('NFT tests', () => {
           'Tatum LOGO',
           'description',
           undefined,
-          'https://rpc-mumbai.matic.today'
+          PROVIDER
         )
       )
     })
@@ -82,7 +84,7 @@ describe('NFT tests', () => {
             authorAddresses: ['0x6c4A48886b77D1197eCFBDaA3D3f35d81d584342'],
             cashbackValues: ['0.25'],
           },
-          { provider: 'https://rpc-mumbai.matic.today' }
+          { provider: PROVIDER }
         )
         console.log('mintedToken', mintedToken)
         expect(mintedToken).not.toBeNull()
@@ -99,7 +101,7 @@ describe('NFT tests', () => {
           contractAddress: '0xdf82c2f74aa7b629bda65b1cfd258248c9c2b7d3',
           value: '1',
         },
-        'https://rpc-mumbai.matic.today'
+        PROVIDER
       )
       console.log('response: ', sendErc721Token)
       expect(sendErc721Token).not.toBeNull()

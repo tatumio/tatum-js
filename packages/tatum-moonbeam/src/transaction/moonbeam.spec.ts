@@ -24,10 +24,12 @@ import {
   sendMoonbeamSmartContractReadMethodInvocationTransaction,
 } from './moonbeam'
 
+const PROVIDER = 'https://moonbeam-alpha.api.onfinality.io/public'
+
 describe('GLMR transactions', () => {
   jest.setTimeout(99999)
   const broadcast = async (txData: string) => {
-    const client = new Web3('https://matic-mumbai.chainstacklabs.com/')
+    const client = new Web3(PROVIDER)
     return await new Promise((resolve, reject) => {
       client.eth
         .sendSignedTransaction(txData)
@@ -43,7 +45,7 @@ describe('GLMR transactions', () => {
       body.amount = '0.0001'
       body.currency = Currency.GLMR
       body.to = '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
-      const txData = await prepareSignedTransaction(body, 'https://matic-mumbai.chainstacklabs.com/')
+      const txData = await prepareSignedTransaction(body, PROVIDER)
       expect(txData).toContain('0x')
 
       console.log(await broadcast(txData))
@@ -54,7 +56,7 @@ describe('GLMR transactions', () => {
       body.fromPrivateKey = '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29'
       body.data = 'Hello hi'
       body.chain = Currency.GLMR
-      const txData = await prepareStoreDataTransaction(body, 'https://matic-mumbai.chainstacklabs.com/')
+      const txData = await prepareStoreDataTransaction(body, PROVIDER)
       expect(txData).toContain('0x')
 
       console.log(await broadcast(txData))
@@ -91,7 +93,7 @@ describe('GLMR transactions', () => {
           },
           params: ['0x9ac64cc6e4415144c455bd8e4837fea55603e5c3'],
         },
-        'https://matic-mumbai.chainstacklabs.com/'
+        PROVIDER
       )
       console.log(result)
       expect(result).not.toBeNull()
@@ -129,7 +131,7 @@ describe('GLMR transactions', () => {
           },
           params: ['0x8c76887d2e738371bd750362fb55887343472346', '1'],
         },
-        { provider: 'https://matic-mumbai.chainstacklabs.com/' }
+        { provider: PROVIDER }
       )
       expect(result).not.toBeNull()
       console.log(await broadcast(result))
@@ -144,7 +146,7 @@ describe('GLMR transactions', () => {
       body.contractAddress = '0x0b9808fce74030c87aae334a30f6c8f6c66b090d'
       body.to = '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       body.digits = 10
-      const txData = await prepareTransferErc20SignedTransaction(body, 'https://matic-mumbai.chainstacklabs.com/')
+      const txData = await prepareTransferErc20SignedTransaction(body, PROVIDER)
       expect(txData).toContain('0x')
 
       console.log(await broadcast(txData))
@@ -158,7 +160,7 @@ describe('GLMR transactions', () => {
       body.supply = '100'
       body.address = '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       body.digits = 10
-      const txData = await prepareDeployErc20SignedTransaction(body, 'https://matic-mumbai.chainstacklabs.com/')
+      const txData = await prepareDeployErc20SignedTransaction(body, PROVIDER)
       expect(txData).toContain('0x')
       console.log(await broadcast(txData))
     })
@@ -171,7 +173,7 @@ describe('GLMR transactions', () => {
       body.address = '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       body.digits = 10
       try {
-        await prepareDeployErc20SignedTransaction(body, 'https://matic-mumbai.chainstacklabs.com/')
+        await prepareDeployErc20SignedTransaction(body, PROVIDER)
         fail('Validation did not pass.')
       } catch (e) {
         console.error(e)
@@ -187,7 +189,7 @@ describe('GLMR transactions', () => {
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
           name: '2123kd',
         },
-        'https://matic-mumbai.chainstacklabs.com/'
+        PROVIDER
       )
       expect(deployBep721Token).not.toBeNull()
       console.log(await broadcast(deployBep721Token))
@@ -204,7 +206,7 @@ describe('GLMR transactions', () => {
             fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
             contractAddress: '0x5d7d868ed584b04b922905a481f274206a42dd8a',
           },
-          'https://matic-mumbai.chainstacklabs.com/'
+          PROVIDER
         )
         console.log(tokenId)
         expect(mintedToken).not.toBeNull()
@@ -225,7 +227,7 @@ describe('GLMR transactions', () => {
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
           contractAddress: '0x5d7d868ed584b04b922905a481f274206a42dd8a',
         },
-        'https://matic-mumbai.chainstacklabs.com/'
+        PROVIDER
       )
       expect(mintedTokens).not.toBeNull()
       console.log(await broadcast(mintedTokens))
@@ -238,7 +240,7 @@ describe('GLMR transactions', () => {
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
           contractAddress: '0x5d7d868ed584b04b922905a481f274206a42dd8a',
         },
-        'https://matic-mumbai.chainstacklabs.com/'
+        PROVIDER
       )
       expect(burnBep721Token).not.toBeNull()
       console.log(await broadcast(burnBep721Token))
@@ -252,7 +254,7 @@ describe('GLMR transactions', () => {
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
           contractAddress: '0x5d7d868ed584b04b922905a481f274206a42dd8a',
         },
-        'https://matic-mumbai.chainstacklabs.com/'
+        PROVIDER
       )
       expect(sendBep721Token).not.toBeNull()
       console.log(await broadcast(sendBep721Token))
@@ -267,7 +269,7 @@ describe('GLMR transactions', () => {
           provenance: true,
           name: '2123kd',
         },
-        'https://matic-mumbai.chainstacklabs.com/'
+        PROVIDER
       )
       expect(deployBep721Token).not.toBeNull()
       console.log(await broadcast(deployBep721Token))
@@ -283,7 +285,7 @@ describe('GLMR transactions', () => {
             fromPrivateKey: '0xf17abcb517d759efee24bc4859183c7219c588540754318baebb3f9c31449564',
             contractAddress: '0x8D2A0dd3855ECA8591756a606DA9829f703cA26B',
           },
-          'https://matic-mumbai.chainstacklabs.com/'
+          PROVIDER
         )
         console.log(tokenId)
         expect(mintedToken).not.toBeNull()
@@ -305,7 +307,7 @@ describe('GLMR transactions', () => {
             fixedValues: ['0.01'],
             contractAddress: '0x44ef7a380c34E76a39Cb00410956dE2aeeaf3B1B',
           },
-          'https://matic-mumbai.chainstacklabs.com/'
+          PROVIDER
         )
         expect(mintedToken).not.toBeNull()
         console.log(await broadcast(mintedToken))
@@ -325,7 +327,7 @@ describe('GLMR transactions', () => {
           fromPrivateKey: '0xf17abcb517d759efee24bc4859183c7219c588540754318baebb3f9c31449564',
           contractAddress: '0xe54a147b6ebe25bda0eec07e8a0051c1b9d08338',
         },
-        'https://matic-mumbai.chainstacklabs.com/'
+        PROVIDER
       )
       expect(mintedTokens).not.toBeNull()
       console.log(await broadcast(mintedTokens))
@@ -346,7 +348,7 @@ describe('GLMR transactions', () => {
           },
           contractAddress: '0x44ef7a380c34E76a39Cb00410956dE2aeeaf3B1B',
         },
-        'https://matic-mumbai.chainstacklabs.com/'
+        PROVIDER
       )
       console.log(senderc721Token)
       expect(senderc721Token).not.toBeNull()
@@ -357,8 +359,8 @@ describe('GLMR transactions', () => {
       body.contractAddress = '0xe54a147b6ebe25bda0eec07e8a0051c1b9d08338'
       body.params = ['1634501273645']
       body.methodName = 'getTokenData'
-      body.methodABI = erc721Provenance_abi.find((a: any) => a.name === 'getTokenData')
-      const response = await sendMoonbeamSmartContractReadMethodInvocationTransaction(body, 'https://matic-mumbai.chainstacklabs.com/')
+      body.methodABI = erc721Provenance_abi.find((a) => a.name === 'getTokenData')
+      const response = await sendMoonbeamSmartContractReadMethodInvocationTransaction(body, PROVIDER)
       // @ts-ignore
       console.log(JSON.stringify(response))
     })
@@ -369,7 +371,7 @@ describe('GLMR transactions', () => {
           fromPrivateKey: '0xf17abcb517d759efee24bc4859183c7219c588540754318baebb3f9c31449564',
           contractAddress: '0xe54a147b6ebe25bda0eec07e8a0051c1b9d08338',
         },
-        'https://matic-mumbai.chainstacklabs.com/'
+        PROVIDER
       )
       expect(burnBep721Token).not.toBeNull()
       // console.log(await broadcast(burnBep721Token))

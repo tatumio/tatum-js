@@ -4,18 +4,18 @@ describe('Address tests', () => {
   it('should generate private key 1 for GLMR testnet', async () => {
     const privateKey = await generatePrivateKeyFromMnemonic(
       true,
-      'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten',
+      'timber cabbage receive elevator obey blame razor suggest afford fantasy term hammer despair tattoo usual habit later awkward genre enemy urge blue swap shoulder',
       1
     )
-    expect(privateKey).toBe('0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb')
+    expect(privateKey).toBe('0x6bdcbe90b617c8c9d5f93233e0146d550524b74be90bd9e9cf03a15c4333b134')
   })
 
   it('should generate private key 1 for GLMR mainnet', async () => {
     const privateKey = await generatePrivateKeyFromMnemonic(
       false,
-      'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten',
+      'timber cabbage receive elevator obey blame razor suggest afford fantasy term hammer despair tattoo usual habit later awkward genre enemy urge blue swap shoulder',
       1
     )
-    expect(privateKey).toBe('0x4bc3706c9fa5345f61d8186b817f3ba2c44581ce40fae86bec84dd9b079bc40a')
+    expect(privateKey).toBe('0xab4130f2c4d6331050f60fc3cc3750da304ecd3b94909c18bdd7c8052c56ab0a')
   })
 })

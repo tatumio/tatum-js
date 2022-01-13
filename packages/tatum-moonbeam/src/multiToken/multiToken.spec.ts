@@ -8,6 +8,8 @@ import {
   transferMultiTokenBatch,
 } from './index'
 
+const PROVIDER = 'https://moonbeam-alpha.api.onfinality.io/public'
+
 describe('NFT tests', () => {
   jest.setTimeout(99999)
 
@@ -18,7 +20,7 @@ describe('NFT tests', () => {
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
           uri: 'tatum',
         },
-        'https://rpc-mumbai.matic.today'
+        PROVIDER
       )
       expect(deployMultiTokenToken).not.toBeNull()
       console.log('response::', deployMultiTokenToken)
@@ -34,7 +36,7 @@ describe('NFT tests', () => {
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
           contractAddress: '0xe2a8d7c5b2b4acad7e5b9aec0998cdbbeed45e49',
         },
-        'https://rpc-mumbai.matic.today'
+        PROVIDER
       )
       console.log(tokenId)
       expect(mintedToken).not.toBeNull()
@@ -56,7 +58,7 @@ describe('NFT tests', () => {
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
           contractAddress: '0xe2a8d7c5b2b4acad7e5b9aec0998cdbbeed45e49',
         },
-        'https://rpc-mumbai.matic.today'
+        PROVIDER
       )
       console.log(mintedToken)
       expect(mintedToken).not.toBeNull()
@@ -75,7 +77,7 @@ describe('NFT tests', () => {
             gasPrice: '100',
           },
         },
-        'https://rpc-mumbai.matic.today'
+        PROVIDER
       )
       console.log('Result::', sendMultiTokenToken)
       expect(sendMultiTokenToken).not.toBeNull()
@@ -89,7 +91,7 @@ describe('NFT tests', () => {
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
           contractAddress: '0xe2a8d7c5b2b4acad7e5b9aec0998cdbbeed45e49',
         },
-        'https://rpc-mumbai.matic.today'
+        PROVIDER
       )
       console.log(burnMultiTokenToken)
       expect(burnMultiTokenToken).not.toBeNull()
@@ -103,7 +105,7 @@ describe('NFT tests', () => {
           fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
           contractAddress: '0xe2a8d7c5b2b4acad7e5b9aec0998cdbbeed45e49',
         },
-        'https://rpc-mumbai.matic.today'
+        PROVIDER
       )
       expect(burnMultiTokenToken).not.toBeNull()
     })
@@ -118,7 +120,7 @@ describe('NFT tests', () => {
           amount: '1',
           data: '0x1234',
         },
-        'https://rpc-mumbai.matic.today'
+        PROVIDER
       )
       console.log('Result::', sendMultiTokenToken)
       expect(sendMultiTokenToken).not.toBeNull()
