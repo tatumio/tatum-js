@@ -30,6 +30,7 @@ import {
   validateBody,
   obtainCustodialAddressType,
   CeloMintErc721,
+  erc1155TokenABI,
 } from '@tatumio/tatum-core'
 import {
   BurnCeloErc20,
@@ -261,7 +262,7 @@ export const prepareDeployMultiTokenSignedTransaction = async (testnet: boolean,
   const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
 
   // @ts-ignore
-  const contract = new new Web3().eth.Contract(erc1155_abi)
+  const contract = new new Web3().eth.Contract(erc1155TokenABI)
   const deploy = contract.deploy({
     data: erc1155_bytecode,
     arguments: [uri],
@@ -1176,7 +1177,7 @@ export const prepareMintMultiTokenSignedTransaction = async (testnet: boolean, b
   const network = await p.ready
   const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
   // @ts-ignore
-  const contract = new new Web3().eth.Contract(erc1155_abi, contractAddress.trim())
+  const contract = new new Web3().eth.Contract(erc1155TokenABI, contractAddress.trim())
 
   if (signatureId) {
     return JSON.stringify({
@@ -1218,7 +1219,7 @@ export const prepareMintMultiTokenBatchSignedTransaction = async (testnet: boole
   const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
 
   // @ts-ignore
-  const contract = new new Web3().eth.Contract(erc1155_abi, contractAddress.trim())
+  const contract = new new Web3().eth.Contract(erc1155TokenABI, contractAddress.trim())
   const amts = amounts.map((amts) => amts.map((amt) => `0x${new BigNumber(amt).toString(16)}`))
   if (signatureId) {
     return JSON.stringify({
@@ -1273,7 +1274,7 @@ export const prepareTransferMultiTokenSignedTransaction = async (testnet: boolea
   const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
 
   // @ts-ignore
-  const contract = new new Web3().eth.Contract(erc1155_abi, contractAddress.trim())
+  const contract = new new Web3().eth.Contract(erc1155TokenABI, contractAddress.trim())
 
   if (signatureId) {
     return JSON.stringify({
@@ -1318,7 +1319,7 @@ export const prepareBatchTransferMultiTokenSignedTransaction = async (
   const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
   const amts = amounts.map((amt) => `0x${new BigNumber(amt).toString(16)}`)
   // @ts-ignore
-  const contract = new new Web3().eth.Contract(erc1155_abi, contractAddress.trim())
+  const contract = new new Web3().eth.Contract(erc1155TokenABI, contractAddress.trim())
 
   if (signatureId) {
     return JSON.stringify({
@@ -1374,7 +1375,7 @@ export const prepareBurnMultiTokenBatchSignedTransaction = async (testnet: boole
   const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
 
   // @ts-ignore
-  const contract = new new Web3().eth.Contract(erc1155_abi, contractAddress.trim())
+  const contract = new new Web3().eth.Contract(erc1155TokenABI, contractAddress.trim())
 
   if (signatureId) {
     return JSON.stringify({
@@ -1416,7 +1417,7 @@ export const prepareBurnMultiTokenSignedTransaction = async (testnet: boolean, b
   const feeCurrencyContractAddress = getFeeCurrency(feeCurrency, testnet)
 
   // @ts-ignore
-  const contract = new new Web3().eth.Contract(erc1155_abi, contractAddress.trim())
+  const contract = new new Web3().eth.Contract(erc1155TokenABI, contractAddress.trim())
 
   if (signatureId) {
     return JSON.stringify({

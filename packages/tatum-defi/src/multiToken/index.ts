@@ -280,4 +280,5 @@ export {
   getMultiTokensBatchBalance,
   getMultiTokenTransaction,
   getMultiTokenMetadata,
+  getMultiTokenTransactionsByAddress,
 } from '@tatumio/tatum-core'
