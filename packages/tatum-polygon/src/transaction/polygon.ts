@@ -160,7 +160,7 @@ export const getErc20ContractDecimals = async (contractAddress: string, provider
   }
   const client = await prepareClient(provider)
   // @ts-ignore
-  const contract = new client.eth.Contract(erc20_abi, contractAddress.trim())
+  const contract = new client.eth.Contract(erc20TokenABI, contractAddress.trim())
   return await contract.methods.decimals().call()
 }
 

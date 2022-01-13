@@ -23,6 +23,7 @@ import { prepareDeployAuction as prepareOneDeployAuctionSignedTransaction } from
 import { prepareDeployAuction as prepareEthDeployAuctionSignedTransaction } from '@tatumio/tatum-eth'
 import { prepareDeployAuction as prepareBscDeployAuctionSignedTransaction } from '@tatumio/tatum-bsc'
 import { prepareDeployAuction as preparePolygonDeployAuctionSignedTransaction } from '@tatumio/tatum-polygon'
+import { prepareDeployAuction as prepareKcsDeployAuctionSignedTransaction } from '@tatumio/tatum-kcs'
 import { getErc20Decimals, prepareApproveErc20 } from '../../fungible'
 import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../../helpers'
 
@@ -35,7 +36,7 @@ import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../
  * Buyer of the auction must perform approval for the smart contract to access ERC20 token, before the actual bid() method is called.
  * Once there is higher bid than the actual one, the previous bidder's funds will be returned to him and new bidder will be the current winning one.
  * When auction ends, anyone can settle the auction - NFT will be sent to the bidder, assets to the seller and fee to the operator.
- * @param testnet chain to work with
+ * @param testnet if we are using testnet or not
  * @param body request data
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
@@ -69,6 +70,8 @@ export const prepareDeployAuction = async (testnet: boolean, body: DeployNftAuct
       return await prepareBscDeployAuctionSignedTransaction(body, provider)
     case Currency.MATIC:
       return await preparePolygonDeployAuctionSignedTransaction(body, provider)
+    case Currency.KCS:
+      return await prepareKcsDeployAuctionSignedTransaction(body, provider)
     default:
       throw new Error('Unsupported chain')
   }

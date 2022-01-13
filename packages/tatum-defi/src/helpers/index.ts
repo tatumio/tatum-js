@@ -25,8 +25,13 @@ import {
   helperPrepareSCCall as polygonHelperPrepareSCCall,
 } from '@tatumio/tatum-polygon'
 import { helperBroadcastTx as tronBroadcast, helperPrepareSCCall as tronHelperPrepareSCCall } from '@tatumio/tatum-tron'
-import Web3 from 'web3'
+import {
+  helperBroadcastTx as kcsBroadcast,
+  helperGetWeb3Client as prepareKcsClient,
+  helperPrepareSCCall as kcsHelperPrepareSCCall,
+} from '@tatumio/tatum-kcs'
 import { getClient as getXdcClient } from '@tatumio/tatum-xdc'
+import Web3 from 'web3'
 
 export const helperBroadcastTx = async (chain: Currency, txData: string, signatureId?: string): Promise<TransactionHash> => {
   switch (chain) {
@@ -42,6 +47,8 @@ export const helperBroadcastTx = async (chain: Currency, txData: string, signatu
       return await polygonBroadcast(txData, signatureId)
     case Currency.TRON:
       return await tronBroadcast(txData, signatureId)
+    case Currency.KCS:
+      return await kcsBroadcast(txData, signatureId)
     default:
       throw new Error('Unsupported chain')
   }
@@ -61,6 +68,8 @@ export const helperGetWeb3Client = (chain: Currency, provider?: string): Web3 =>
       return getBscClient(provider)
     case Currency.MATIC:
       return preparePolygonClient(provider)
+    case Currency.KCS:
+      return prepareKcsClient(provider)
     default:
       throw new Error('Unsupported chain')
   }
@@ -88,6 +97,8 @@ export const helperPrepareSCCall = async <Body extends SCBody>(
       return await polygonHelperPrepareSCCall(body, methodName, params, provider, abi)
     case Currency.TRON:
       return await tronHelperPrepareSCCall(body, methodName, params, methodSig, provider, abi)
+    case Currency.KCS:
+      return await kcsHelperPrepareSCCall(body, methodName, params, provider, abi)
     default:
       throw new Error('Unsupported combination of inputs.')
   }

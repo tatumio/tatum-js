@@ -38,6 +38,7 @@ import {
   erc20TokenBytecode,
   erc721Provenance_bytecode,
   erc721TokenBytecode,
+  erc721TokenABI,
   EthMintErc721,
   EthMintMultipleErc721,
   Fee,
@@ -59,6 +60,8 @@ import {
   UpdateCashbackErc721,
   validateBody,
   obtainCustodialAddressType,
+  erc721Provenance_abi,
+  erc20TokenABI,
 } from '@tatumio/tatum-core'
 import { TransferBscBep20, ChainTransferBscBep20 } from '../model'
 import { BigNumber } from 'bignumber.js'
@@ -145,7 +148,7 @@ export const getBep20ContractDecimals = async (contractAddress: string, provider
   }
   const client = await getClient(provider)
   // @ts-ignore
-  const contract = new client.eth.Contract(erc20_abi, contractAddress.trim())
+  const contract = new client.eth.Contract(erc20TokenABI, contractAddress.trim())
   return await contract.methods.decimals().call()
 }
 

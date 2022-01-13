@@ -63,19 +63,19 @@ export interface Auction {
  * For more details, see <a href="https://tatum.io/apidoc#operation/MPAuctionFee" target="_blank">Tatum API documentation</a>
  */
 export const getAuctionFee = async (chain: Currency, contractAddress: string): Promise<number> =>
-  get(`/v3/blockchain/auction/auction/${chain}/${contractAddress}/fee`)
+  get(`/v3/blockchain/auction/${chain}/${contractAddress}/fee`)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/MPAuction" target="_blank">Tatum API documentation</a>
  */
 export const getAuction = async (chain: Currency, contractAddress: string, auctionId: string): Promise<Auction> =>
-  get(`/v3/blockchain/auction/auction/${chain}/${contractAddress}/auction/${auctionId}`)
+  get(`/v3/blockchain/auction/${chain}/${contractAddress}/${auctionId}`)
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/MPAuctionRecipient" target="_blank">Tatum API documentation</a>
  */
 export const getAuctionFeeRecipient = async (chain: Currency, contractAddress: string): Promise<{ address: string }> =>
-  get(`/v3/blockchain/auction/auction/${chain}/${contractAddress}/recipient`)
+  get(`/v3/blockchain/auction/${chain}/${contractAddress}/recipient`)
 
 /**
  * Update auction fee.

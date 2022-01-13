@@ -22,6 +22,7 @@ import {
   erc20TokenBytecode as erc20_bytecode,
   erc721Provenance_bytecode,
   erc721TokenBytecode as erc721_bytecode,
+  erc20TokenABI as erc20_abi,
   GenerateCustodialAddress,
   listing,
   SmartContractReadMethodInvocation,

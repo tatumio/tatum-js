@@ -1,6 +1,6 @@
 import {
-  getAuction as getAuctionDefi,
-  getAuctionFee as getAuctionFeeDefi,
+  getAuction as getAuctionCore,
+  getAuctionFee as getAuctionFeeCore,
   getAuctionFeeRecipient as getAuctionFeeRecipientDefi,
   prepareAuctionApproveNftTransferAbstraction,
   prepareAuctionBidAbstraction,
@@ -242,14 +242,14 @@ export const sendAuctionSettle = async (body: ChainInvokeAuctionOperation, provi
  * For more details, see <a href="https://tatum.io/apidoc#operation/MPAuctionFee" target="_blank">Tatum API documentation</a>
  */
 export const getAuctionFee = async (contractAddress: string) => {
-  return getAuctionFeeDefi(Currency.MATIC, contractAddress)
+  return getAuctionFeeCore(Currency.MATIC, contractAddress)
 }
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/MPAuction" target="_blank">Tatum API documentation</a>
  */
 export const getAuction = async (contractAddress: string, auctionId: string) => {
-  return getAuctionDefi(Currency.MATIC, contractAddress, auctionId)
+  return getAuctionCore(Currency.MATIC, contractAddress, auctionId)
 }
 
 /**
