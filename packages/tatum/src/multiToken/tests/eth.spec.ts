@@ -268,7 +268,7 @@ describe('Multitoken tests - ETH', () => {
       const contractAddress = '0xe520E9aB6d4CF47C3e270e42Cef63F437Df19E88'
       const tokenId = new Date().getTime() + 60
       const account = '0xffb28c3c7a1b19380b7e9e5A7Bbe2afF1AA7A5Ef'
-      const balance = await getMultiTokensBalance(Currency.ETH, contractAddress, tokenId.toString(), account)
+      const balance = await getMultiTokensBalance(Currency.ETH, contractAddress, account, tokenId.toString())
       expect(balance).not.toBeNull()
       console.log('Get multitoken balance ', balance)
     } catch (e) {

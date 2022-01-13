@@ -14,63 +14,56 @@ import {
   getMultiTokensBatchBalance,
   getMultiTokenTransaction,
   getMultiTokenMetadata,
+  getMultiTokenTransactionsByAddress,
 } from '@tatumio/tatum-defi'
 
-describe('Multitoken tests - BSC', () => {
+describe('Multitoken tests - ONE', () => {
   jest.setTimeout(99999)
   process.env.TATUM_API_KEY = 'd341d8f5-5f6a-43ca-a57c-c67839d1a1cb'
   it('should deploy multitoken', async () => {
     try {
       const body = {
-        chain: Currency.BSC,
+        chain: Currency.ONE,
         fromPrivateKey: '0d6c13fe5fed644dfa02512d4bffde9453dcb48873afb0b0a4c0cebce160c279',
         uri: 'tatum-test',
       }
-      const deployMultiTokenToken = await deployMultiToken(true, body, 'https://data-seed-prebsc-1-s1.binance.org:8545')
+      const deployMultiTokenToken = await deployMultiToken(true, body)
       expect(deployMultiTokenToken).not.toBeNull()
       console.log('Deploy multi token: ', deployMultiTokenToken)
     } catch (e) {
-      console.log('Deploy multi token error: ', e.response)
+      console.log('Deploy multi token error: ', e.response.data)
       expect(e).not.toBeDefined()
     }
   })
 
   it('should prepare minter', async () => {
     try {
-      const minter = await prepareAddMultiTokenMinter(
-        true,
-        {
-          minter: '0xffb28c3c7a1b19380b7e9e5A7Bbe2afF1AA7A5Ef',
-          chain: Currency.BSC,
-          fromPrivateKey: '0d6c13fe5fed644dfa02512d4bffde9453dcb48873afb0b0a4c0cebce160c279',
-          contractAddress: '0xe520E9aB6d4CF47C3e270e42Cef63F437Df19E88',
-        },
-        'https://data-seed-prebsc-1-s1.binance.org:8545'
-      )
+      const minter = await prepareAddMultiTokenMinter(true, {
+        minter: '0x80d8bac9a6901698b3749fe336bbd1385c1f98f2',
+        chain: Currency.ONE,
+        fromPrivateKey: '0d6c13fe5fed644dfa02512d4bffde9453dcb48873afb0b0a4c0cebce160c279',
+        contractAddress: '0x744b7AfE4f2BE66C4e732CD1eC38cD2af20a75DE',
+      })
       console.log('Prepare add multitoken minter: ', minter)
       expect(minter).not.toBeNull()
     } catch (e) {
-      console.log('Prepare add multitoken minter error: ', e.response)
+      console.log('Prepare add multitoken minter error: ', e.response.data)
       expect(e).not.toBeDefined()
     }
   })
 
   it('should send minter', async () => {
     try {
-      const minter = await sendAddMultiTokenMinter(
-        true,
-        {
-          minter: '0xffb28c3c7a1b19380b7e9e5A7Bbe2afF1AA7A5Ef',
-          chain: Currency.BSC,
-          fromPrivateKey: '0d6c13fe5fed644dfa02512d4bffde9453dcb48873afb0b0a4c0cebce160c279',
-          contractAddress: '0xe520E9aB6d4CF47C3e270e42Cef63F437Df19E88',
-        },
-        'https://data-seed-prebsc-1-s1.binance.org:8545'
-      )
+      const minter = await sendAddMultiTokenMinter(true, {
+        minter: '0x80d8bac9a6901698b3749fe336bbd1385c1f98f2',
+        chain: Currency.ONE,
+        fromPrivateKey: '0d6c13fe5fed644dfa02512d4bffde9453dcb48873afb0b0a4c0cebce160c279',
+        contractAddress: '0x744b7AfE4f2BE66C4e732CD1eC38cD2af20a75DE',
+      })
       console.log('Send add multitoken minter: ', minter)
       expect(minter).not.toBeNull()
     } catch (e) {
-      console.log('Send add multitoken minter error: ', e)
+      console.log('Send add multitoken minter error: ', e.response.data)
       expect(e).not.toBeDefined()
     }
   })
@@ -79,23 +72,23 @@ describe('Multitoken tests - BSC', () => {
     try {
       const tokenId = new Date().getTime() + 1
       const body = {
-        to: '0xe520E9aB6d4CF47C3e270e42Cef63F437Df19E88',
-        chain: Currency.BSC,
+        to: 'one1l7egc0r6rvvnszm7ned8h032lud20f00sdz499',
+        chain: Currency.ONE,
         tokenId: tokenId.toString(),
         data: '0x1234',
-        amount: '100',
+        amount: '20',
         fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
-        contractAddress: '0xe520E9aB6d4CF47C3e270e42Cef63F437Df19E88',
+        contractAddress: '0x744b7AfE4f2BE66C4e732CD1eC38cD2af20a75DE',
         fee: {
-          gasLimit: '40000',
-          gasPrice: '20',
+          gasLimit: '5000000',
+          gasPrice: '100',
         },
       }
-      const mintedToken = await mintMultiToken(true, body, 'https://data-seed-prebsc-1-s1.binance.org:8545')
+      const mintedToken = await mintMultiToken(true, body)
       console.log('Mint multitoken: ', mintedToken)
       expect(mintedToken).not.toBeNull()
     } catch (e) {
-      console.log('Mint multitoken error: ', e.response)
+      console.log('Mint multitoken error: ', e.response.data)
       expect(e).not.toBeDefined()
     }
   })
@@ -109,26 +102,26 @@ describe('Multitoken tests - BSC', () => {
         [firstTokenId.toString(), secondTokenId.toString()],
       ]
       const body = {
-        to: ['0xe520E9aB6d4CF47C3e270e42Cef63F437Df19E88', '0xe520E9aB6d4CF47C3e270e42Cef63F437Df19E88'],
-        chain: Currency.BSC,
+        to: ['one1l7egc0r6rvvnszm7ned8h032lud20f00sdz499', 'one1l7egc0r6rvvnszm7ned8h032lud20f00sdz499'],
+        chain: Currency.ONE,
         tokenId,
         data: '0x1234',
         amounts: [
-          ['100', '100'],
-          ['100', '100'],
+          ['20', '20'],
+          ['20', '20'],
         ],
         fromPrivateKey: '0d6c13fe5fed644dfa02512d4bffde9453dcb48873afb0b0a4c0cebce160c279',
-        contractAddress: '0xe520E9aB6d4CF47C3e270e42Cef63F437Df19E88',
+        contractAddress: '0x744b7AfE4f2BE66C4e732CD1eC38cD2af20a75DE',
         fee: {
-          gasLimit: '40000',
-          gasPrice: '20',
+          gasLimit: '5000000',
+          gasPrice: '100',
         },
       }
-      const mintedToken = await mintMultiTokenBatch(true, body, 'https://data-seed-prebsc-1-s1.binance.org:8545')
+      const mintedToken = await mintMultiTokenBatch(true, body)
       console.log('Mint multitoken batch: ', mintedToken)
       expect(mintedToken).not.toBeNull()
     } catch (e) {
-      console.log('Mint multitoken batch error: ', e.response)
+      console.log('Mint multitoken batch error: ', e.response.data)
       expect(e).not.toBeDefined()
     }
   })
@@ -137,22 +130,22 @@ describe('Multitoken tests - BSC', () => {
     try {
       const tokenId = new Date().getTime() + 4
       const body = {
-        account: '0xe520E9aB6d4CF47C3e270e42Cef63F437Df19E88',
+        account: '0x744b7AfE4f2BE66C4e732CD1eC38cD2af20a75DE',
         tokenId: tokenId.toString(),
         amount: '1',
-        chain: Currency.BSC,
+        chain: Currency.ONE,
         fromPrivateKey: '0d6c13fe5fed644dfa02512d4bffde9453dcb48873afb0b0a4c0cebce160c279',
-        contractAddress: '0xe520E9aB6d4CF47C3e270e42Cef63F437Df19E88',
+        contractAddress: '0x744b7AfE4f2BE66C4e732CD1eC38cD2af20a75DE',
         fee: {
-          gasLimit: '40000',
-          gasPrice: '20',
+          gasLimit: '5000000',
+          gasPrice: '100',
         },
       }
-      const burnMultiTokenToken = await burnMultiToken(true, body, 'https://data-seed-prebsc-1-s1.binance.org:8545')
+      const burnMultiTokenToken = await burnMultiToken(true, body)
       console.log(burnMultiTokenToken)
       expect(burnMultiTokenToken).not.toBeNull()
     } catch (e) {
-      console.log('Burn multitoken error: ', e.response)
+      console.log('Burn multitoken error: ', e.response.data)
       expect(e).not.toBeDefined()
     }
   })
@@ -162,21 +155,21 @@ describe('Multitoken tests - BSC', () => {
       const firstTokenId = new Date().getTime() + 10
       const secondTokenId = new Date().getTime() + 12
       const body = {
-        account: '0xe520E9aB6d4CF47C3e270e42Cef63F437Df19E88',
+        account: '0x744b7AfE4f2BE66C4e732CD1eC38cD2af20a75DE',
         tokenId: [firstTokenId.toString(), secondTokenId.toString()],
         amounts: ['10', '10'],
-        chain: Currency.BSC,
+        chain: Currency.ONE,
         fromPrivateKey: '0d6c13fe5fed644dfa02512d4bffde9453dcb48873afb0b0a4c0cebce160c279',
-        contractAddress: '0xe520E9aB6d4CF47C3e270e42Cef63F437Df19E88',
+        contractAddress: '0x744b7AfE4f2BE66C4e732CD1eC38cD2af20a75DE',
         fee: {
-          gasLimit: '40000',
-          gasPrice: '20',
+          gasLimit: '5000000',
+          gasPrice: '100',
         },
       }
-      const burnMultiTokenToken = await burnMultiTokenBatch(true, body, 'https://data-seed-prebsc-1-s1.binance.org:8545')
+      const burnMultiTokenToken = await burnMultiTokenBatch(true, body)
       expect(burnMultiTokenToken).not.toBeNull()
     } catch (e) {
-      console.log('Burn multitoken batch error: ', e.response)
+      console.log('Burn multitoken batch error: ', e.response.data)
       expect(e).not.toBeDefined()
     }
   })
@@ -185,23 +178,23 @@ describe('Multitoken tests - BSC', () => {
     try {
       const tokenId = new Date().getTime() + 20
       const body = {
-        to: '0xffb28c3c7a1b19380b7e9e5A7Bbe2afF1AA7A5Ef',
-        chain: Currency.BSC,
+        to: 'one1l7egc0r6rvvnszm7ned8h032lud20f00sdz499',
+        chain: Currency.ONE,
         tokenId: tokenId.toString(),
         fromPrivateKey: '0d6c13fe5fed644dfa02512d4bffde9453dcb48873afb0b0a4c0cebce160c279',
-        contractAddress: '0xe520E9aB6d4CF47C3e270e42Cef63F437Df19E88',
+        contractAddress: '0x744b7AfE4f2BE66C4e732CD1eC38cD2af20a75DE',
         amount: '1',
         data: '0x1234',
         fee: {
-          gasLimit: '70000',
-          gasPrice: '20',
+          gasLimit: '5000000',
+          gasPrice: '100',
         },
       }
-      const sendMultiTokenToken = await transferMultiToken(true, body, 'https://data-seed-prebsc-1-s1.binance.org:8545')
+      const sendMultiTokenToken = await transferMultiToken(true, body)
       console.log('Transfer multitoken: ', sendMultiTokenToken)
       expect(sendMultiTokenToken).not.toBeNull()
     } catch (e) {
-      console.log('Transfer multitoken error: ', e.response)
+      console.log('Transfer multitoken error: ', e.response.data)
       expect(e).not.toBeDefined()
     }
   })
@@ -212,23 +205,23 @@ describe('Multitoken tests - BSC', () => {
 
     try {
       const body = {
-        to: '0xffb28c3c7a1b19380b7e9e5A7Bbe2afF1AA7A5Ef',
-        chain: Currency.BSC,
+        to: 'one1l7egc0r6rvvnszm7ned8h032lud20f00sdz499',
+        chain: Currency.ONE,
         tokenId: [firstTokenId.toString(), secondTokenId.toString()],
         fromPrivateKey: '0d6c13fe5fed644dfa02512d4bffde9453dcb48873afb0b0a4c0cebce160c279',
-        contractAddress: '0xe520E9aB6d4CF47C3e270e42Cef63F437Df19E88',
+        contractAddress: '0x744b7AfE4f2BE66C4e732CD1eC38cD2af20a75DE',
         amounts: ['10', '10'],
         data: '0x1234',
         fee: {
-          gasLimit: '70000',
-          gasPrice: '40',
+          gasLimit: '5000000',
+          gasPrice: '100',
         },
       }
-      const sendMultiTokenToken = await transferMultiTokenBatch(true, body, 'https://data-seed-prebsc-1-s1.binance.org:8545')
+      const sendMultiTokenToken = await transferMultiTokenBatch(true, body)
       console.log('Transfer multitoken batch: ', sendMultiTokenToken)
       expect(sendMultiTokenToken).not.toBeNull()
     } catch (e) {
-      console.log('Transfer multitoken batch error: ', e.response)
+      console.log('Transfer multitoken batch error: ', e.response.data)
       expect(e).not.toBeDefined()
     }
   })
@@ -236,7 +229,7 @@ describe('Multitoken tests - BSC', () => {
   it('should get multitoken contract address', async () => {
     try {
       const txId = '0xa6bce2332117e5e3e29393aa3e3931bdeef3f913438ee446ce9f517b52544e6c'
-      const contractAddress = await getMultiTokenContractAddress(Currency.BSC, txId)
+      const contractAddress = await getMultiTokenContractAddress(Currency.ONE, txId)
       expect(contractAddress).not.toBeNull()
       console.log('Get multitoken contract address: ', contractAddress)
     } catch (e) {
@@ -247,8 +240,8 @@ describe('Multitoken tests - BSC', () => {
 
   it('should get multitoken transaction', async () => {
     try {
-      const txId = '0xa6bce2332117e5e3e29393aa3e3931bdeef3f913438ee446ce9f517b52544e6c'
-      const transaction = await getMultiTokenTransaction(Currency.BSC, txId)
+      const txId = '0x1585337f43b0513a9ec9078698e2e3e6c79d62b6bde35575ae49325672b37e26'
+      const transaction = await getMultiTokenTransaction(Currency.ONE, txId)
       expect(transaction).not.toBeNull()
       console.log('Get multitoken transaction: ', transaction)
     } catch (e) {
@@ -259,9 +252,9 @@ describe('Multitoken tests - BSC', () => {
 
   it('should get multitoken metadata', async () => {
     try {
-      const contractAddress = '0xe520E9aB6d4CF47C3e270e42Cef63F437Df19E88'
+      const contractAddress = '0x744b7AfE4f2BE66C4e732CD1eC38cD2af20a75DE'
       const tokenId = new Date().getTime() + 50
-      const metadata = await getMultiTokenMetadata(Currency.BSC, contractAddress, tokenId.toString())
+      const metadata = await getMultiTokenMetadata(Currency.ONE, contractAddress, tokenId.toString())
       expect(metadata).not.toBeNull()
       console.log('Get multitoken metadata: ', metadata)
     } catch (e) {
@@ -272,10 +265,10 @@ describe('Multitoken tests - BSC', () => {
 
   it('should get multitoken balance', async () => {
     try {
-      const contractAddress = '0xe520E9aB6d4CF47C3e270e42Cef63F437Df19E88'
+      const contractAddress = '0x744b7AfE4f2BE66C4e732CD1eC38cD2af20a75DE'
       const tokenId = new Date().getTime() + 60
-      const account = '0xffb28c3c7a1b19380b7e9e5A7Bbe2afF1AA7A5Ef'
-      const balance = await getMultiTokensBalance(Currency.BSC, contractAddress, account, tokenId.toString())
+      const account = '0x80d8bac9a6901698b3749fe336bbd1385c1f98f2'
+      const balance = await getMultiTokensBalance(Currency.ONE, contractAddress, account, tokenId.toString())
       expect(balance).not.toBeNull()
       console.log('Get multitoken balance ', balance)
     } catch (e) {
@@ -286,16 +279,28 @@ describe('Multitoken tests - BSC', () => {
 
   it('should multitoken balance batch', async () => {
     try {
-      const address = '0xffb28c3c7a1b19380b7e9e5A7Bbe2afF1AA7A5Ef'
-      const contractAddress = '0xe520E9aB6d4CF47C3e270e42Cef63F437Df19E88'
+      const address = '0x80d8bac9a6901698b3749fe336bbd1385c1f98f2'
+      const contractAddress = '0x744b7AfE4f2BE66C4e732CD1eC38cD2af20a75DE'
       const firstTokenId = new Date().getTime() + 70
       const secondTokenId = new Date().getTime() + 80
       const tokenIds = [firstTokenId.toString(), secondTokenId.toString()].toString()
-      const batchBalance = await getMultiTokensBatchBalance(Currency.BSC, contractAddress, address, tokenIds)
+      const batchBalance = await getMultiTokensBatchBalance(Currency.ONE, contractAddress, address, tokenIds)
       expect(batchBalance).not.toBeNull()
       console.log('Get multitoken balance batch: ', batchBalance)
     } catch (e) {
       console.log('Get multitoken balance batch error: ', e.response.data)
+      expect(e).not.toBeDefined()
+    }
+  })
+  it('should get multitoken transactions by address', async () => {
+    try {
+      const address = '0x80d8bac9a6901698b3749fe336bbd1385c1f98f2'
+      const tokenAddress = '0x744b7AfE4f2BE66C4e732CD1eC38cD2af20a75DE'
+      const transactions = await getMultiTokenTransactionsByAddress(Currency.ONE, address, tokenAddress, 1, 0)
+      expect(transactions).not.toBeNull()
+      console.log('Get multitoken transactions by address: ', transactions)
+    } catch (e) {
+      console.log('Get multitoken transactions by address error: ', e.response.data)
       expect(e).not.toBeDefined()
     }
   })
