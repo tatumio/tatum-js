@@ -34,7 +34,7 @@ describe('NFT tests - HARMONY', () => {
       }
       const deployToken = await deployNFT(true, body)
       console.log('Deploy nft: ', deployToken)
-      expect(deployToken).not.toBeNull()
+      expect(deployToken).toBeDefined()
     } catch (e) {
       console.log('Deploy nft error: ', e.response.data)
       expect(e).not.toBeDefined()
@@ -55,7 +55,7 @@ describe('NFT tests - HARMONY', () => {
       }
       const mintedToken = await mintNFT(body)
       console.log('Mint nft', mintedToken)
-      expect(mintedToken).not.toBeNull()
+      expect(mintedToken).toBeDefined()
     } catch (e) {
       console.log('Mint nft error: ', e.response.data)
       expect(e).not.toBeDefined()
@@ -79,7 +79,7 @@ describe('NFT tests - HARMONY', () => {
       }
       const sendErc721Token = await transferNFT(true, body)
       console.log('Transfer nft: ', sendErc721Token)
-      expect(sendErc721Token).not.toBeNull()
+      expect(sendErc721Token).toBeDefined()
     } catch (e) {
       console.log('Transfer nft error:', e.esponse.data)
       expect(e).not.toBeDefined()
@@ -104,7 +104,7 @@ describe('NFT tests - HARMONY', () => {
       }
       const mintedTokens = await mintMultipleNFTWithUri(true, body)
       console.log('Mint multiple nfts: ', mintedTokens)
-      expect(mintedTokens).not.toBeNull()
+      expect(mintedTokens).toBeDefined()
     } catch (e) {
       console.log('Mint multiple nfts error:', e.response.data)
       expect(e).not.toBeDefined()
@@ -127,7 +127,7 @@ describe('NFT tests - HARMONY', () => {
         testnet: true,
       })
       console.log('Mint nft with uri: ', mintedToken)
-      expect(mintedToken).not.toBeNull()
+      expect(mintedToken).toBeDefined()
     } catch (e) {
       console.log('Mint nft with uri error: ', e.response.data)
       expect(e).not.toBeDefined()
@@ -147,7 +147,7 @@ describe('NFT tests - HARMONY', () => {
         },
       }
       const burnt = await burnNFT(true, body)
-      expect(burnt).not.toBeNull()
+      expect(burnt).toBeDefined()
       console.log('Burn nft: ', burnt)
     } catch (e) {
       console.log('Burn nft error:', e.response.data)
@@ -164,7 +164,7 @@ describe('NFT tests - HARMONY', () => {
       }
       const sendErc721Token = await prepareAddNFTMinter(true, body)
       console.log('Prepare nft minter: ', sendErc721Token)
-      expect(sendErc721Token).not.toBeNull()
+      expect(sendErc721Token).toBeDefined()
     } catch (e) {
       console.log('Prepare nft minter error:', e.response.data)
       expect(e).not.toBeDefined()
@@ -180,7 +180,7 @@ describe('NFT tests - HARMONY', () => {
       }
       const sendErc721Token = await sendAddNFTMinter(true, body)
       console.log('Add nft minter: ', sendErc721Token)
-      expect(sendErc721Token).not.toBeNull()
+      expect(sendErc721Token).toBeDefined()
     } catch (e) {
       console.log('Add nft minter error:', e.response.data)
       expect(e).not.toBeDefined()
@@ -191,7 +191,7 @@ describe('NFT tests - HARMONY', () => {
       const tokenId = 1232423
       const tokenAddress = '0x1ce4e40889a13971681391aad29e88efaf91f784'
       const transactions = await getNFTTransactionsByToken(Currency.ONE, tokenId, tokenAddress, 1)
-      expect(transactions).not.toBeNull()
+      expect(transactions).toBeDefined()
       console.log('Get nft transactions by token: ', transactions)
     } catch (e) {
       console.log('Get nft transactions by token error:', e.response.data)
@@ -203,7 +203,7 @@ describe('NFT tests - HARMONY', () => {
       const address = 'one1l7egc0r6rvvnszm7ned8h032lud20f00sdz499		'
       const tokenAddress = '0x1ce4e40889a13971681391aad29e88efaf91f784'
       const transactions = await getNFTTransactionsByAddress(Currency.ONE, address, tokenAddress, 1)
-      expect(transactions).not.toBeNull()
+      expect(transactions).toBeDefined()
       console.log('Get nft transactions by address: ', transactions)
     } catch (e) {
       console.log('Get nft transactions by address error:', e.response.data)
@@ -214,7 +214,7 @@ describe('NFT tests - HARMONY', () => {
     try {
       const txId = '0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7'
       const transaction = await getNFTTransaction(Currency.ONE, txId)
-      expect(transaction).not.toBeNull()
+      expect(transaction).toBeDefined()
       console.log('Get nft contract address: ', transaction)
     } catch (e) {
       console.log('Get nft contract address error:', e.response.data)
@@ -226,7 +226,7 @@ describe('NFT tests - HARMONY', () => {
       const contractAddress = '0x2A42ae2a6346eEbC7FE2b2b7f02158634d5390dc'
       const address = 'one1l7egc0r6rvvnszm7ned8h032lud20f00sdz499		'
       const nftsByAddress = await getNFTsByAddress(Currency.ONE, contractAddress, address)
-      expect(nftsByAddress).not.toBeNull()
+      expect(nftsByAddress).toBeDefined()
       console.log('Get nfts by address: ', nftsByAddress)
     } catch (e) {
       console.log('Get nfts by address error:', e.response.data)
@@ -238,7 +238,7 @@ describe('NFT tests - HARMONY', () => {
       const contractAddress = '0x2A42ae2a6346eEbC7FE2b2b7f02158634d5390dc'
       const tokenId = '1641548895528'
       const provenanceData = await getNFTProvenanceData(Currency.ONE, contractAddress, tokenId)
-      expect(provenanceData).not.toBeNull()
+      expect(provenanceData).toBeDefined()
       console.log('Get nft provenance data: ', provenanceData)
     } catch (e) {
       console.log('Get nft provenance data error:', e.response.data)
@@ -250,7 +250,7 @@ describe('NFT tests - HARMONY', () => {
       const contractAddress = '0x2A42ae2a6346eEbC7FE2b2b7f02158634d5390dc'
       const tokenId = '1641548895528'
       const metadata = await getNFTMetadataURI(Currency.ONE, contractAddress, tokenId)
-      expect(metadata).not.toBeNull()
+      expect(metadata).toBeDefined()
       console.log('Get nft metadata uri: ', metadata)
     } catch (e) {
       console.log('Get nft metadata uri error:', e.response.data)
@@ -262,7 +262,7 @@ describe('NFT tests - HARMONY', () => {
       const contractAddress = '0x2A42ae2a6346eEbC7FE2b2b7f02158634d5390dc'
       const tokenId = '1641548895528'
       const image = await getNFTImage(Currency.ONE, contractAddress, tokenId)
-      expect(image).not.toBeNull()
+      expect(image).toBeDefined()
       console.log('Get nft image: ', image)
     } catch (e) {
       console.log('Get nft image error:', e.response.data)
@@ -274,7 +274,7 @@ describe('NFT tests - HARMONY', () => {
       const contractAddress = '0x2A42ae2a6346eEbC7FE2b2b7f02158634d5390dc'
       const tokenId = '1641548895528'
       const royalty = await getNFTRoyalty(Currency.ONE, contractAddress, tokenId)
-      expect(royalty).not.toBeNull()
+      expect(royalty).toBeDefined()
       console.log('Get nft royalty: ', royalty)
     } catch (e) {
       console.log('Get nft royalty error:', e.response.data)
@@ -313,7 +313,7 @@ describe('NFT tests - HARMONY', () => {
       }
       const cashback = await updateCashbackForAuthorNFT(true, body)
       console.log('Update royalty cashback: ', cashback)
-      expect(cashback).not.toBeNull()
+      expect(cashback).toBeDefined()
     } catch (e) {
       console.log('Update royalty cashback error:', e.response.data)
       expect(e).not.toBeDefined()

@@ -35,7 +35,7 @@ describe('NFT tests - BSC', () => {
       }
       const deployToken = await deployNFT(true, body, 'https://data-seed-prebsc-1-s1.binance.org:8545')
       console.log('Deploy nft: ', deployToken)
-      expect(deployToken).not.toBeNull()
+      expect(deployToken).toBeDefined()
     } catch (e) {
       console.log('Deploy nft error: ', e.response.data)
       expect(e).not.toBeDefined()
@@ -58,7 +58,7 @@ describe('NFT tests - BSC', () => {
       }
       const mintedToken = await mintNFT(body)
       console.log('Mint nft: ', mintedToken)
-      expect(mintedToken).not.toBeNull()
+      expect(mintedToken).toBeDefined()
     } catch (e) {
       console.log('Mint nft error: ', e.response.data)
       expect(e).not.toBeDefined()
@@ -82,7 +82,7 @@ describe('NFT tests - BSC', () => {
       }
       const sendErc721Token = await transferNFT(true, body, 'https://data-seed-prebsc-1-s1.binance.org:8545')
       console.log('Transfer nft: ', sendErc721Token)
-      expect(sendErc721Token).not.toBeNull()
+      expect(sendErc721Token).toBeDefined()
     } catch (e) {
       console.log('Transfer nft error: ', e.response.data)
       expect(e).not.toBeDefined()
@@ -110,7 +110,7 @@ describe('NFT tests - BSC', () => {
       }
       const mintedTokens = await mintMultipleNFTWithUri(true, body, 'https://data-seed-prebsc-1-s1.binance.org:8545')
       console.log('Mint multiple nfts: ', mintedTokens)
-      expect(mintedTokens).not.toBeNull()
+      expect(mintedTokens).toBeDefined()
     } catch (e) {
       console.log('Mint multiple nfts error: ', e.response.data)
       expect(e).not.toBeDefined()
@@ -131,7 +131,7 @@ describe('NFT tests - BSC', () => {
       }
       const mintedToken = await mintNFTWithUri(body)
       console.log('Mint nft with uri: ', mintedToken)
-      expect(mintedToken).not.toBeNull()
+      expect(mintedToken).toBeDefined()
     } catch (e) {
       console.log('Mint nft with uri error: ', e.response.data)
       expect(e).not.toBeDefined()
@@ -147,7 +147,7 @@ describe('NFT tests - BSC', () => {
         fromPrivateKey: '0d6c13fe5fed644dfa02512d4bffde9453dcb48873afb0b0a4c0cebce160c279',
       }
       const burnt = await burnNFT(true, body, 'https://data-seed-prebsc-1-s1.binance.org:8545')
-      expect(burnt).not.toBeNull()
+      expect(burnt).toBeDefined()
       console.log('Burn nft: ', burnt)
     } catch (e) {
       console.log('Burn nft error: ', e.response.data)
@@ -164,7 +164,7 @@ describe('NFT tests - BSC', () => {
       }
       const sendErc721Token = await prepareAddNFTMinter(true, body, 'https://data-seed-prebsc-1-s1.binance.org:8545')
       console.log('Prepare nft minter: ', sendErc721Token)
-      expect(sendErc721Token).not.toBeNull()
+      expect(sendErc721Token).toBeDefined()
     } catch (e) {
       console.log('Prepare nft minter error: ', e.response.data)
       expect(e).not.toBeDefined()
@@ -180,7 +180,7 @@ describe('NFT tests - BSC', () => {
       }
       const sendErc721Token = await sendAddNFTMinter(true, body, 'https://data-seed-prebsc-1-s1.binance.org:8545')
       console.log('Add nft minter: ', sendErc721Token)
-      expect(sendErc721Token).not.toBeNull()
+      expect(sendErc721Token).toBeDefined()
     } catch (e) {
       console.log('Add nft minter error: ', e.response.data)
       expect(e).not.toBeDefined()
@@ -191,7 +191,7 @@ describe('NFT tests - BSC', () => {
       const contractAddress = '0x2A42ae2a6346eEbC7FE2b2b7f02158634d5390dc'
       const tokenId = '1641548895528'
       const provenanceData = await getNFTProvenanceData(Currency.BSC, contractAddress, tokenId)
-      expect(provenanceData).not.toBeNull()
+      expect(provenanceData).toBeDefined()
       console.log('Get provenance data: ', provenanceData)
     } catch (e) {
       console.log('Get nft provenance data error: ', e.response.data)
@@ -203,7 +203,7 @@ describe('NFT tests - BSC', () => {
       const contractAddress = '0x2A42ae2a6346eEbC7FE2b2b7f02158634d5390dc'
       const tokenId = '1641548895528'
       const metadata = await getNFTMetadataURI(Currency.BSC, contractAddress, tokenId)
-      expect(metadata).not.toBeNull()
+      expect(metadata).toBeDefined()
       console.log('Get nft metadata: ', metadata)
     } catch (e) {
       console.log('Get nft metadata uri error: ', e.response.data)
@@ -215,7 +215,7 @@ describe('NFT tests - BSC', () => {
       const contractAddress = '0x2A42ae2a6346eEbC7FE2b2b7f02158634d5390dc'
       const tokenId = '1641548895528'
       const image = await getNFTImage(Currency.BSC, contractAddress, tokenId)
-      expect(image).not.toBeNull()
+      expect(image).toBeDefined()
       console.log('Get nft image: ', image)
     } catch (e) {
       console.log('Get nft image error: ', e.response.data)
@@ -227,7 +227,7 @@ describe('NFT tests - BSC', () => {
       const contractAddress = '0x2A42ae2a6346eEbC7FE2b2b7f02158634d5390dc'
       const tokenId = '1641548895528'
       const royalty = await getNFTRoyalty(Currency.BSC, contractAddress, tokenId)
-      expect(royalty).not.toBeNull()
+      expect(royalty).toBeDefined()
       console.log('Get nft royalty: ', royalty)
     } catch (e) {
       console.log('Get nft royalty error: ', e.response.data)
@@ -266,7 +266,7 @@ describe('NFT tests - BSC', () => {
       }
       const cashback = await updateCashbackForAuthorNFT(true, body, 'https://data-seed-prebsc-1-s1.binance.org:8545')
       console.log('Update royalty cashback: ', cashback)
-      expect(cashback).not.toBeNull()
+      expect(cashback).toBeDefined()
     } catch (e) {
       console.log('Update royalty cashback error: ', e.response.data)
       expect(e).not.toBeDefined()

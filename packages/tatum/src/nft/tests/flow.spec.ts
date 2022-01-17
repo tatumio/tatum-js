@@ -26,7 +26,7 @@ describe('NFT tests - FLOW', () => {
       }
       const deployToken = await deployNFT(true, body, 'http://access.devnet.nodes.onflow.org:9000')
       console.log('Deploy nft: ', deployToken)
-      expect(deployToken).not.toBeNull()
+      expect(deployToken).toBeDefined()
     } catch (e) {
       console.log('Deploy nft errror: ', e.response.data)
       expect(e).not.toBeDefined()
@@ -44,7 +44,7 @@ describe('NFT tests - FLOW', () => {
       }
       const mintedToken = await mintNFT(body)
       console.log('Mint nft: ', mintedToken)
-      expect(mintedToken).not.toBeNull()
+      expect(mintedToken).toBeDefined()
     } catch (e) {
       console.log('Mint nft error: ', e.response.data)
       expect(e).not.toBeDefined()
@@ -64,7 +64,7 @@ describe('NFT tests - FLOW', () => {
       }
       const sendErc721Token = await transferNFT(true, body, 'http://access.devnet.nodes.onflow.org:9000')
       console.log('Transfer nft: ', sendErc721Token)
-      expect(sendErc721Token).not.toBeNull()
+      expect(sendErc721Token).toBeDefined()
     } catch (e) {
       console.log('Transfer nft error: ', e.response.data)
       expect(e).not.toBeDefined()
@@ -82,7 +82,7 @@ describe('NFT tests - FLOW', () => {
       }
       const mintedTokens = await mintMultipleNFTWithUri(true, body, 'http://access.devnet.nodes.onflow.org:9000')
       console.log('Mint multiple nfts: ', mintedTokens)
-      expect(mintedTokens).not.toBeNull()
+      expect(mintedTokens).toBeDefined()
     } catch (e) {
       console.log('Mint multiple nfts error: ', e.response.data)
       expect(e).not.toBeDefined()
@@ -103,7 +103,7 @@ describe('NFT tests - FLOW', () => {
         provider: 'http://access.devnet.nodes.onflow.org:9000',
       })
       console.log('Mint nft with uri error: ', mintedToken)
-      expect(mintedToken).not.toBeNull()
+      expect(mintedToken).toBeDefined()
     } catch (e) {
       console.log('Mint nft with uri error: ', e.response.data)
       expect(e).not.toBeDefined()
@@ -120,7 +120,7 @@ describe('NFT tests - FLOW', () => {
         account: '0xbb560ab889b51461',
       }
       const burnt = await burnNFT(true, body, 'http://access.devnet.nodes.onflow.org:9000')
-      expect(burnt).not.toBeNull()
+      expect(burnt).toBeDefined()
       console.log('Burn nft: ', burnt)
     } catch (e) {
       console.log('Burn nft error: ', e.response.data)
@@ -133,7 +133,7 @@ describe('NFT tests - FLOW', () => {
       const contractAddress = '0x2A42ae2a6346eEbC7FE2b2b7f02158634d5390dc'
       const address = '0xbb560ab889b51461'
       const nftsByAddress = await getNFTsByAddress(Currency.FLOW, contractAddress, address)
-      expect(nftsByAddress).not.toBeNull()
+      expect(nftsByAddress).toBeDefined()
       console.log('Get nfts by address: ', nftsByAddress)
     } catch (e) {
       console.log('Get nfts by address error ', e.response.data)
@@ -145,7 +145,7 @@ describe('NFT tests - FLOW', () => {
       const contractAddress = '0x2A42ae2a6346eEbC7FE2b2b7f02158634d5390dc'
       const tokenId = '1641548895528'
       const metadata = await getNFTMetadataURI(Currency.FLOW, contractAddress, tokenId)
-      expect(metadata).not.toBeNull()
+      expect(metadata).toBeDefined()
       console.log('Get nfts metadata uri: ', metadata)
     } catch (e) {
       console.log('Get nfts metadata uri error: ', e.response.data)
@@ -157,7 +157,7 @@ describe('NFT tests - FLOW', () => {
       const contractAddress = '0x2A42ae2a6346eEbC7FE2b2b7f02158634d5390dc'
       const tokenId = '1641548895528'
       const image = await getNFTImage(Currency.FLOW, contractAddress, tokenId)
-      expect(image).not.toBeNull()
+      expect(image).toBeDefined()
       console.log('Get nft image: ', image)
     } catch (e) {
       console.log('Get nft image error: ', e.response.data)

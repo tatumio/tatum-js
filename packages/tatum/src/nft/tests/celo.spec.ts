@@ -39,7 +39,7 @@ describe('NFT tests - CELO', () => {
       }
       const deployToken = await deployNFT(true, body, 'https://alfajores-forno.celo-testnet.org/')
       console.log('Deploy nft: ', deployToken)
-      expect(deployToken).not.toBeNull()
+      expect(deployToken).toBeDefined()
     } catch (e) {
       console.log('Deploy nft error: ', e.response.data)
       expect(e).not.toBeDefined()
@@ -61,7 +61,7 @@ describe('NFT tests - CELO', () => {
       }
       const mintedToken = await mintNFT(body)
       console.log('Mint nft: ', mintedToken)
-      expect(mintedToken).not.toBeNull()
+      expect(mintedToken).toBeDefined()
     } catch (e) {
       console.log('Mint nft error: ', e.response.data)
       expect(e).not.toBeDefined()
@@ -86,7 +86,7 @@ describe('NFT tests - CELO', () => {
       }
       const sendErc721Token = await transferNFT(true, body, 'https://alfajores-forno.celo-testnet.org/')
       console.log('Transfer nft: ', sendErc721Token)
-      expect(sendErc721Token).not.toBeNull()
+      expect(sendErc721Token).toBeDefined()
     } catch (e) {
       console.log('Deploy nft error: ', e.reponse.data)
       expect(e).not.toBeDefined()
@@ -112,7 +112,7 @@ describe('NFT tests - CELO', () => {
       }
       const mintedTokens = await mintMultipleNFTWithUri(true, body, 'https://alfajores-forno.celo-testnet.org/')
       console.log('Mint multiple nfts: ', mintedTokens)
-      expect(mintedTokens).not.toBeNull()
+      expect(mintedTokens).toBeDefined()
     } catch (e) {
       console.log('Mint multiple nfts error: ', e.response.data)
       expect(e).not.toBeDefined()
@@ -137,7 +137,7 @@ describe('NFT tests - CELO', () => {
         provider: 'https://alfajores-forno.celo-testnet.org',
       })
       console.log('Mint nft with uri: ', mintedToken)
-      expect(mintedToken).not.toBeNull()
+      expect(mintedToken).toBeDefined()
     } catch (e) {
       console.log('Mint nft with uri error: ', e.response.data)
       expect(e).not.toBeDefined()
@@ -154,7 +154,7 @@ describe('NFT tests - CELO', () => {
         fromPrivateKey: '0d6c13fe5fed644dfa02512d4bffde9453dcb48873afb0b0a4c0cebce160c279',
       }
       const burnt = await burnNFT(true, body, 'https://alfajores-forno.celo-testnet.org/')
-      expect(burnt).not.toBeNull()
+      expect(burnt).toBeDefined()
       console.log('Burn nft: ', burnt)
     } catch (e) {
       console.log('Burn nft error: ', e.response.data)
@@ -172,7 +172,7 @@ describe('NFT tests - CELO', () => {
       }
       const sendErc721Token = await prepareAddNFTMinter(true, body, 'https://alfajores-forno.celo-testnet.org/')
       console.log('Prepare add nft minter: ', sendErc721Token)
-      expect(sendErc721Token).not.toBeNull()
+      expect(sendErc721Token).toBeDefined()
     } catch (e) {
       console.log('Prepare add nft minter error: ', e.response.data)
       expect(e).not.toBeDefined()
@@ -189,7 +189,7 @@ describe('NFT tests - CELO', () => {
       }
       const sendErc721Token = await sendAddNFTMinter(true, body, 'https://alfajores-forno.celo-testnet.org/')
       console.log('Add nft minter: ', sendErc721Token)
-      expect(sendErc721Token).not.toBeNull()
+      expect(sendErc721Token).toBeDefined()
     } catch (e) {
       console.log('Add nft minter error: ', e.response.data)
       expect(e).not.toBeDefined()
@@ -201,7 +201,7 @@ describe('NFT tests - CELO', () => {
       const tokenId = 1232423
       const tokenAddress = '0x1ce4e40889a13971681391aad29e88efaf91f784'
       const transactions = await getNFTTransactionsByToken(Currency.CELO, tokenId, tokenAddress, 1)
-      expect(transactions).not.toBeNull()
+      expect(transactions).toBeDefined()
       console.log('Get transactions by token: ', transactions)
     } catch (e) {
       console.log('Get nft transactions by token error: ', e.response.data)
@@ -213,7 +213,7 @@ describe('NFT tests - CELO', () => {
       const address = '0x8ce4e40889a13971681391aad29e88efaf91f784'
       const tokenAddress = '0x1ce4e40889a13971681391aad29e88efaf91f784'
       const transactions = await getNFTTransactionsByAddress(Currency.CELO, address, tokenAddress, 1)
-      expect(transactions).not.toBeNull()
+      expect(transactions).toBeDefined()
       console.log('Get transactions by address: ', transactions)
     } catch (e) {
       console.log('Get nft transactions by address error: ', e.response.data)
@@ -224,7 +224,7 @@ describe('NFT tests - CELO', () => {
     try {
       const txId = '0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7'
       const transaction = await getNFTContractAddress(Currency.CELO, txId)
-      expect(transaction).not.toBeNull()
+      expect(transaction).toBeDefined()
       console.log('Get nft contract address: ', transaction)
     } catch (e) {
       console.log('Get nft contract address error: ', e.response.data)
@@ -236,7 +236,7 @@ describe('NFT tests - CELO', () => {
       const contractAddress = '0x2A42ae2a6346eEbC7FE2b2b7f02158634d5390dc'
       const address = '0x2A42ae2a6346eEbC7FE2b2b7f02158634d5390dc'
       const nfts = await getNFTsByAddress(Currency.CELO, contractAddress, address)
-      expect(nfts).not.toBeNull()
+      expect(nfts).toBeDefined()
       console.log('Get nfts by address: ', nfts)
     } catch (e) {
       console.log('Get nfts by address error: ', e.response.data)
@@ -248,7 +248,7 @@ describe('NFT tests - CELO', () => {
       const contractAddress = '0x2A42ae2a6346eEbC7FE2b2b7f02158634d5390dc'
       const tokenId = '1641548895528'
       const provenanceData = await getNFTProvenanceData(Currency.CELO, contractAddress, tokenId)
-      expect(provenanceData).not.toBeNull()
+      expect(provenanceData).toBeDefined()
       console.log('Get nft provenance data: ', provenanceData)
     } catch (e) {
       console.log('Get nft provenance data error: ', e.response.data)
@@ -260,7 +260,7 @@ describe('NFT tests - CELO', () => {
       const contractAddress = '0x2A42ae2a6346eEbC7FE2b2b7f02158634d5390dc'
       const tokenId = '1641548895528'
       const metadata = await getNFTMetadataURI(Currency.CELO, contractAddress, tokenId)
-      expect(metadata).not.toBeNull()
+      expect(metadata).toBeDefined()
       console.log('Get nft metadata uri: ', metadata)
     } catch (e) {
       console.log('Get nft metadata uri error: ', e.response.data)
@@ -272,7 +272,7 @@ describe('NFT tests - CELO', () => {
       const contractAddress = '0x2A42ae2a6346eEbC7FE2b2b7f02158634d5390dc'
       const tokenId = '1641548895528'
       const image = await getNFTImage(Currency.CELO, contractAddress, tokenId)
-      expect(image).not.toBeNull()
+      expect(image).toBeDefined()
       console.log('Get nft image: ', image)
     } catch (e) {
       console.log('Get nft image error: ', e.response.data)
@@ -284,7 +284,7 @@ describe('NFT tests - CELO', () => {
       const contractAddress = '0x2A42ae2a6346eEbC7FE2b2b7f02158634d5390dc'
       const tokenId = '1641548895528'
       const royalty = await getNFTRoyalty(Currency.CELO, contractAddress, tokenId)
-      expect(royalty).not.toBeNull()
+      expect(royalty).toBeDefined()
       console.log('Get nft royalty: ', royalty)
     } catch (e) {
       console.log('Get nft royalty error: ', e.response.data)
@@ -325,7 +325,7 @@ describe('NFT tests - CELO', () => {
       }
       const cashback = await updateCashbackForAuthorNFT(true, body, 'https://alfajores-forno.celo-testnet.org/')
       console.log('Update royalty cashback: ', cashback)
-      expect(cashback).not.toBeNull()
+      expect(cashback).toBeDefined()
     } catch (e) {
       console.log('Update royalty cashback error: ', e.response.data)
       expect(e).not.toBeDefined()
