@@ -1,4 +1,5 @@
 import { httpDriver as bscHttpDriver } from '@tatumio/tatum-bsc'
+import { httpDriver as moonbeamHttpDriver } from '@tatumio/tatum-moonbeam'
 import { httpDriver as ethHttpDriver } from '@tatumio/tatum-eth'
 import { httpDriver as celoHttpDriver } from '@tatumio/tatum-celo'
 import { httpDriver as oneHttpDriver } from '@tatumio/tatum-one'
@@ -12,6 +13,8 @@ export const httpDriver = async (chain: Currency, body: GetWebDriver): Promise<W
   switch (chain) {
     case Currency.BSC:
       return bscHttpDriver(body)
+    case Currency.GLMR:
+      return moonbeamHttpDriver(body)
     case Currency.ETH:
       return ethHttpDriver(body)
     case Currency.CELO:

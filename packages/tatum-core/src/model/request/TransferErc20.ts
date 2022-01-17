@@ -33,7 +33,7 @@ export class TransferErc20 extends PrivateKeyOrSignatureId {
   public data?: string
 
   @IsOptional()
-  @IsIn([...ETH_BASED_CURRENCIES, ...MATIC_BASED_CURRENCIES, Currency.XDC, Currency.ONE, Currency.ALGO, Currency.KCS])
+  @IsIn([...ETH_BASED_CURRENCIES, ...MATIC_BASED_CURRENCIES, Currency.XDC, Currency.ONE, Currency.ALGO, Currency.KCS, Currency.GLMR])
   public currency?: Currency
 
   @ValidateIf((o) => !o.currency)

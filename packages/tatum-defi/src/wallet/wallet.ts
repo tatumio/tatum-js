@@ -21,6 +21,7 @@ import { generateWallet as generateVetWallet } from '@tatumio/tatum-vet'
 import { generateWallet as generateXdcWallet } from '@tatumio/tatum-xdc'
 import { generateWallet as generateXlmWallet } from '@tatumio/tatum-xlm'
 import { generateWallet as generateXrpWallet } from '@tatumio/tatum-xrp'
+import { generateWallet as generateMoonbeamWallet } from '@tatumio/tatum-moonbeam'
 
 /**
  * Generate wallet
@@ -122,6 +123,8 @@ export const generateWallet = (
       return generateAdaWallet(mnem)
     case Currency.ALGO:
       return generateAlgoWallet(mnemonic)
+    case Currency.GLMR:
+      return generateMoonbeamWallet(mnemonic)
     default:
       throw new Error('Unsupported blockchain.')
   }

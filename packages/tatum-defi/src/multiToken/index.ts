@@ -54,6 +54,15 @@ import {
   transferMultiTokenBatch as transferBscMultiTokenBatchTransaction,
 } from '@tatumio/tatum-bsc'
 import {
+  deployMultiToken as deployMoonbeamMultiToken,
+  mintMultiToken as mintMoonbeamMultiToken,
+  mintMultiTokenBatch as mintMoonbeamMultiTokenBatch,
+  burnMultiToken as burnMoonbeamMultiTokenTransaction,
+  burnMultiTokenBatch as burnMoonbeamBatchMultiTokenTransaction,
+  transferMultiToken as transferMoonbeamMultiTokenTransaction,
+  transferMultiTokenBatch as transferMoonbeamMultiTokenBatchTransaction,
+} from '@tatumio/tatum-moonbeam'
+import {
   erc1155TokenABI,
   AddMinter,
   BurnMultiToken,
@@ -95,6 +104,8 @@ export const deployMultiToken = async (
       return deployEthMultiToken(body as DeployMultiToken, provider)
     case Currency.BSC:
       return deployBscMultiToken(body, provider)
+    case Currency.GLMR:
+      return deployMoonbeamMultiToken(body, provider)
   }
 }
 
@@ -120,6 +131,8 @@ export const mintMultiToken = async (
       return mintOneMultiToken(body, provider)
     case Currency.BSC:
       return mintBscMultiToken(body, provider)
+    case Currency.GLMR:
+      return mintMoonbeamMultiToken(body, provider)
     case Currency.ALGO:
       return sendAlgoCreateFractionalNFTSignedTransaction(testnet, body as MintMultiToken, provider)
   }
@@ -147,6 +160,8 @@ export const mintMultiTokenBatch = async (
       return mintOneMintMultiTokenBatchSigned(body, provider)
     case Currency.BSC:
       return mintBscMultiTokenBatch(body, provider)
+    case Currency.GLMR:
+      return mintMoonbeamMultiTokenBatch(body, provider)
   }
 }
 
@@ -172,6 +187,8 @@ export const burnMultiToken = async (
       return burnOneMultiTokenSignedTransaction(body, provider)
     case Currency.BSC:
       return burnBscMultiTokenTransaction(body, provider)
+    case Currency.GLMR:
+      return burnMoonbeamMultiTokenTransaction(body, provider)
     case Currency.ALGO:
       return sendAlgoBurnFractionalNFTSignedTransaction(testnet, body as BurnMultiToken, provider)
   }
@@ -199,6 +216,8 @@ export const burnMultiTokenBatch = async (
       return burnOneMultiTokenBatchSignedTransaction(body, provider)
     case Currency.BSC:
       return burnBscBatchMultiTokenTransaction(body, provider)
+    case Currency.GLMR:
+      return burnMoonbeamBatchMultiTokenTransaction(body, provider)
   }
 }
 
@@ -224,6 +243,8 @@ export const transferMultiToken = async (
       return transferOneMultiTokenSignedTransaction(body, provider)
     case Currency.BSC:
       return transferBscMultiTokenTransaction(body, provider)
+    case Currency.GLMR:
+      return transferMoonbeamMultiTokenTransaction(body, provider)
     case Currency.ALGO:
       return sendAlgoTransferFractionalNFTSignedTransaction(testnet, body as TransferMultiToken, provider)
   }
@@ -251,6 +272,8 @@ export const transferMultiTokenBatch = async (
       return transferOneMultiTokenSignedBatchTransaction(body, provider)
     case Currency.BSC:
       return transferBscMultiTokenBatchTransaction(body, provider)
+    case Currency.GLMR:
+      return transferMoonbeamMultiTokenBatchTransaction(body, provider)
   }
 }
 

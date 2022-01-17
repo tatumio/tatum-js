@@ -24,6 +24,11 @@ import {
   helperGetWeb3Client as preparePolygonClient,
   helperPrepareSCCall as polygonHelperPrepareSCCall,
 } from '@tatumio/tatum-polygon'
+import {
+  helperBroadcastTx as moonbeamBroadcast,
+  helperGetWeb3Client as prepareMoonbeamClient,
+  helperPrepareSCCall as moonbeamHelperPrepareSCCall,
+} from '@tatumio/tatum-moonbeam'
 import { helperBroadcastTx as tronBroadcast, helperPrepareSCCall as tronHelperPrepareSCCall } from '@tatumio/tatum-tron'
 import Web3 from 'web3'
 import { getClient as getXdcClient } from '@tatumio/tatum-xdc'
@@ -42,6 +47,8 @@ export const helperBroadcastTx = async (chain: Currency, txData: string, signatu
       return await polygonBroadcast(txData, signatureId)
     case Currency.TRON:
       return await tronBroadcast(txData, signatureId)
+    case Currency.GLMR:
+      return await moonbeamBroadcast(txData, signatureId)
     default:
       throw new Error('Unsupported chain')
   }
@@ -61,6 +68,8 @@ export const helperGetWeb3Client = (chain: Currency, provider?: string): Web3 =>
       return getBscClient(provider)
     case Currency.MATIC:
       return preparePolygonClient(provider)
+    case Currency.GLMR:
+      return prepareMoonbeamClient(provider)
     default:
       throw new Error('Unsupported chain')
   }
@@ -88,6 +97,8 @@ export const helperPrepareSCCall = async <Body extends SCBody>(
       return await polygonHelperPrepareSCCall(body, methodName, params, provider, abi)
     case Currency.TRON:
       return await tronHelperPrepareSCCall(body, methodName, params, methodSig, provider, abi)
+    case Currency.GLMR:
+      return await moonbeamHelperPrepareSCCall(body, methodName, params, provider, abi)
     default:
       throw new Error('Unsupported combination of inputs.')
   }

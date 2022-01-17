@@ -22,6 +22,7 @@ import { prepareDeployAuction as prepareCeloDeployAuctionSignedTransaction } fro
 import { prepareDeployAuction as prepareOneDeployAuctionSignedTransaction } from '@tatumio/tatum-one'
 import { prepareDeployAuction as prepareEthDeployAuctionSignedTransaction } from '@tatumio/tatum-eth'
 import { prepareDeployAuction as prepareBscDeployAuctionSignedTransaction } from '@tatumio/tatum-bsc'
+import { prepareDeployAuction as prepareMoonbeamDeployAuctionSignedTransaction } from '@tatumio/tatum-moonbeam'
 import { prepareDeployAuction as preparePolygonDeployAuctionSignedTransaction } from '@tatumio/tatum-polygon'
 import { getErc20Decimals, prepareApproveErc20 } from '../../fungible'
 import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../../helpers'
@@ -67,6 +68,8 @@ export const prepareDeployAuction = async (testnet: boolean, body: DeployNftAuct
       return await prepareEthDeployAuctionSignedTransaction(body, provider)
     case Currency.BSC:
       return await prepareBscDeployAuctionSignedTransaction(body, provider)
+    case Currency.GLMR:
+      return await prepareMoonbeamDeployAuctionSignedTransaction(body, provider)
     case Currency.MATIC:
       return await preparePolygonDeployAuctionSignedTransaction(body, provider)
     default:

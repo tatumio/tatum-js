@@ -57,6 +57,14 @@ import {
   prepareSmartContractWriteMethodInvocation as prepareBscSmartContractWriteMethodInvocation,
 } from '@tatumio/tatum-bsc'
 import {
+  generateCustodialWallet as sendMoonbeamGenerateCustodialWalletSignedTransaction,
+  generateCustodialWalletBatch as moonbeamGenerateCustodialWalletBatch,
+  getErc20ContractDecimals as getMoonbeamErc20ContractDecimals,
+  prepareCustodialWallet as prepareMoonbeamGenerateCustodialWalletSignedTransaction,
+  prepareCustodialWalletBatch as moonbeamPrepareCustodialWalletBatch,
+  prepareSmartContractWriteMethodInvocation as prepareMoonbeamSmartContractWriteMethodInvocation,
+} from '@tatumio/tatum-moonbeam'
+import {
   generateCustodialWallet as sendPolygonGenerateCustodialWalletSignedTransaction,
   generateCustodialWalletBatch as polygonGenerateCustodialWalletBatch,
   getErc20ContractDecimals as getPolygonErc20ContractDecimals,
@@ -91,6 +99,8 @@ export const generateCustodialWallet = async (
       return await sendEthGenerateCustodialWalletSignedTransaction(body, provider)
     case Currency.BSC:
       return await sendBscGenerateCustodialWalletSignedTransaction(body, provider)
+    case Currency.GLMR:
+      return await sendMoonbeamGenerateCustodialWalletSignedTransaction(body, provider)
     case Currency.MATIC:
       return await sendPolygonGenerateCustodialWalletSignedTransaction(body, provider)
     case Currency.TRON:
@@ -124,6 +134,8 @@ export const prepareCustodialWallet = async (
       return await prepareEthGenerateCustodialWalletSignedTransaction(body, provider)
     case Currency.BSC:
       return await prepareBscGenerateCustodialWalletSignedTransaction(body, provider)
+    case Currency.GLMR:
+      return await prepareMoonbeamGenerateCustodialWalletSignedTransaction(body, provider)
     case Currency.MATIC:
       return await preparePolygonGenerateCustodialWalletSignedTransaction(body, provider)
     case Currency.TRON:
@@ -159,6 +171,9 @@ export const sendCustodialWallet = async (
       break
     case Currency.BSC:
       txData = await prepareBscGenerateCustodialWalletSignedTransaction(body, provider)
+      break
+    case Currency.GLMR:
+      txData = await prepareMoonbeamGenerateCustodialWalletSignedTransaction(body, provider)
       break
     case Currency.MATIC:
       txData = await preparePolygonGenerateCustodialWalletSignedTransaction(body, provider)
@@ -224,6 +239,9 @@ export const prepareTransferFromCustodialWallet = async (
       case Currency.BSC:
         amount = amount.multipliedBy(new BigNumber(10).pow(await getBscBep20ContractDecimals(body.tokenAddress, provider)))
         break
+      case Currency.GLMR:
+        amount = amount.multipliedBy(new BigNumber(10).pow(await getMoonbeamErc20ContractDecimals(body.tokenAddress, provider)))
+        break
       case Currency.MATIC:
         amount = amount.multipliedBy(new BigNumber(10).pow(await getPolygonErc20ContractDecimals(body.tokenAddress, provider)))
         break
@@ -260,6 +278,8 @@ export const prepareTransferFromCustodialWallet = async (
       return await prepareSmartContractWriteMethodInvocation(r, { provider })
     case Currency.BSC:
       return await prepareBscSmartContractWriteMethodInvocation(r, { provider })
+    case Currency.GLMR:
+      return await prepareMoonbeamSmartContractWriteMethodInvocation(r, { provider })
     case Currency.MATIC:
       return await preparePolygonSmartContractWriteMethodInvocation(r, { provider })
     case Currency.TRON: {
@@ -350,6 +370,9 @@ export const prepareBatchTransferFromCustodialWallet = async (
         case Currency.BSC:
           amount = amount.multipliedBy(new BigNumber(10).pow(await getBscBep20ContractDecimals(body.tokenAddress[i], provider)))
           break
+        case Currency.GLMR:
+          amount = amount.multipliedBy(new BigNumber(10).pow(await getMoonbeamErc20ContractDecimals(body.tokenAddress[i], provider)))
+          break
         case Currency.MATIC:
           amount = amount.multipliedBy(new BigNumber(10).pow(await getPolygonErc20ContractDecimals(body.tokenAddress[i], provider)))
           break
@@ -389,6 +412,8 @@ export const prepareBatchTransferFromCustodialWallet = async (
       return await prepareSmartContractWriteMethodInvocation(r, { provider })
     case Currency.BSC:
       return await prepareBscSmartContractWriteMethodInvocation(r, { provider })
+    case Currency.GLMR:
+      return await prepareMoonbeamSmartContractWriteMethodInvocation(r, { provider })
     case Currency.MATIC:
       return await preparePolygonSmartContractWriteMethodInvocation(r, { provider })
     case Currency.TRON: {
@@ -485,6 +510,8 @@ export const generateCustodialWalletBatch = async (
       return await polygonGenerateCustodialWalletBatch(testnet, body, provider)
     case Currency.BSC:
       return await bscGenerateCustodialWalletBatch(testnet, body, provider)
+    case Currency.GLMR:
+      return await moonbeamGenerateCustodialWalletBatch(testnet, body, provider)
     default:
       throw new Error('Unsupported chain')
   }
@@ -510,6 +537,8 @@ export const prepareCustodialWalletBatch = async (testnet: boolean, body: Genera
       return await polygonPrepareCustodialWalletBatch(testnet, body, provider)
     case Currency.BSC:
       return await bscPrepareCustodialWalletBatch(testnet, body, provider)
+    case Currency.GLMR:
+      return await moonbeamPrepareCustodialWalletBatch(testnet, body, provider)
     default:
       throw new Error('Unsupported chain')
   }

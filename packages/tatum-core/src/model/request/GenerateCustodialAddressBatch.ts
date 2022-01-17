@@ -6,7 +6,7 @@ import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 
 export class GenerateCustodialAddressBatch extends PrivateKeyOrSignatureId {
   @IsNotEmpty()
-  @IsIn([Currency.MATIC, Currency.CELO, Currency.BSC, Currency.ETH, Currency.TRON])
+  @IsIn([Currency.MATIC, Currency.CELO, Currency.BSC, Currency.ETH, Currency.TRON, Currency.GLMR])
   public chain: Currency
 
   @IsNumber()
