@@ -13,7 +13,9 @@
     "clean:all": "yarn lerna clean --yes && find ./packages -name 'dist' -type d -prune -print -exec rm -rf '{}' \\;",
     "bootstrap": "yarn lerna bootstrap && yarn lerna exec yarn install",
     "publish:prerelease": "yarn lerna publish prerelease --yes --no-verify-access --dist-tag alpha --force-publish",
-    "add:chain": "yarn --cwd ./packages/tatum-core && yarn plop && yarn && yarn bootstrap"
+    "add:chain": "yarn --cwd ./packages/tatum-core && yarn plop && yarn && yarn bootstrap",
+    "generate-api": "openapi --client axios --input ./packages/tatum-api/api_schema.json --output ./packages/tatum-api/src/generated",
+    "postinstall": "yarn generate-api"
   },
   "private": true,
   "workspaces": [
@@ -46,6 +48,7 @@
     "rimraf": "^3.0.2",
     "ts-jest": "^26.1.1",
     "typedoc": "^0.22.10",
+    "openapi-typescript-codegen": "^0.13.0",
     "typescript": "4.3.2"
   },
   "jest": {
