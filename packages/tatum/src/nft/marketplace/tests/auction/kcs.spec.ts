@@ -48,9 +48,9 @@ describe('Auction  tests', () => {
         fee: { gasPrice: '40', gasLimit: '300000' },
       }
       try {
-        const txId = await deployAuction(true, body)
+        const { txId } = await deployAuction(true, body)
         console.log(`Create auction txId:`, txId)
-        expect(txId).toBeDefined()
+        expect(txId.startsWith('0x')).toBeTruthy()
       } catch (e) {
         console.log(`Deploy auction failed: ${e}`)
         expect(e).not.toBeDefined()
@@ -67,7 +67,7 @@ describe('Auction  tests', () => {
       }
       try {
         const token = await prepareDeployAuction(true, body)
-        expect(token).toBeDefined()
+        expect(token.startsWith('0x')).toBeTruthy()
       } catch (e) {
         console.log(`Prepare deploy auction failed: ${e}`)
         expect(e).not.toBeDefined()
@@ -89,9 +89,9 @@ describe('Auction  tests', () => {
           isErc721: false,
           fee: { gasPrice: '40', gasLimit: '300000' },
         }
-        const txId = await sendAuctionCreate(true, body)
+        const { txId } = await sendAuctionCreate(true, body)
         console.log(`Create auction txId:`, txId)
-        expect(txId).toBeDefined()
+        expect(txId.startsWith('0x')).toBeTruthy()
       } catch (e) {
         console.log(`Create auction failed: ${e}`)
         expect(e).not.toBeDefined()
@@ -114,7 +114,7 @@ describe('Auction  tests', () => {
           fee: { gasPrice: '40', gasLimit: '300000' },
         }
         const token = await prepareAuctionCreate(true, body)
-        expect(token).toBeDefined()
+        expect(token.startsWith('0x')).toBeTruthy()
       } catch (e) {
         console.log(`Prepare create auction failed: ${e}`)
         expect(e).not.toBeDefined()
@@ -123,9 +123,9 @@ describe('Auction  tests', () => {
 
     it('should get auction', async () => {
       try {
-        const txId = await getAuction(Currency.KCS, '0x991dfc0db4cbe2480296eec5bcc6b3215a9b7038', '16420222566821')
-        console.log(`Get auction txId:`, txId)
-        expect(txId).toBeDefined()
+        const auction = await getAuction(Currency.KCS, '0x991dfc0db4cbe2480296eec5bcc6b3215a9b7038', '16420222566821')
+        console.log(`Get auction:`, auction)
+        expect(auction).toBeDefined()
       } catch (e) {
         console.log(`Get auction failed:`, e)
         expect(e).not.toBeDefined()
@@ -162,9 +162,9 @@ describe('Auction  tests', () => {
           auctionFee: 1,
           fee: { gasPrice: '40', gasLimit: '300000' },
         }
-        const txId = await sendAuctionUpdateFee(true, body)
+        const { txId } = await sendAuctionUpdateFee(true, body)
         console.log(`Update auction fee txId:`, txId)
-        expect(txId).toBeDefined()
+        expect(txId.startsWith('0x')).toBeTruthy()
       } catch (e) {
         console.log(`Update auction fee failed:`, e)
         expect(e).not.toBeDefined()
@@ -181,7 +181,7 @@ describe('Auction  tests', () => {
           fee: { gasPrice: '40', gasLimit: '300000' },
         }
         const token = await prepareAuctionUpdateFee(true, body)
-        expect(token).toBeDefined()
+        expect(token.startsWith('0x')).toBeTruthy()
       } catch (e) {
         console.log(`Prepare update auction fee failed:`, e)
         expect(e).not.toBeDefined()
@@ -197,9 +197,9 @@ describe('Auction  tests', () => {
           feeRecipient: '0xffb28c3c7a1b19380b7e9e5A7Bbe2afF1AA7A5Ef',
           fee: { gasPrice: '40', gasLimit: '300000' },
         }
-        const txId = await sendAuctionUpdateFeeRecipient(true, body)
+        const { txId } = await sendAuctionUpdateFeeRecipient(true, body)
         console.log(`Get auction fee recipient:`, txId)
-        expect(txId).toBeDefined()
+        expect(txId.startsWith('0x')).toBeTruthy()
       } catch (e) {
         console.log(`Update auction fee recipient failed:`, e)
         expect(e).not.toBeDefined()
@@ -216,7 +216,7 @@ describe('Auction  tests', () => {
           fee: { gasPrice: '40', gasLimit: '300000' },
         }
         const token = await prepareAuctionUpdateFeeRecipient(true, body)
-        expect(token).toBeDefined()
+        expect(token.startsWith('0x')).toBeTruthy()
       } catch (e) {
         console.log(`Prepare update auction fee recipient failed:`, e)
         expect(e).not.toBeDefined()
@@ -234,9 +234,9 @@ describe('Auction  tests', () => {
           chain: Currency.KCS,
           fee: { gasPrice: '40', gasLimit: '300000' },
         }
-        const txId = await sendAuctionApproveNftTransfer(true, body)
+        const { txId } = await sendAuctionApproveNftTransfer(true, body)
         console.log(`Approve NFT transfer txId:`, txId)
-        expect(txId).toBeDefined()
+        expect(txId.startsWith('0x')).toBeTruthy()
       } catch (e) {
         console.log(`Approve NFT transfer failed:`, e)
         expect(e).not.toBeDefined()
@@ -255,7 +255,7 @@ describe('Auction  tests', () => {
           fee: { gasPrice: '40', gasLimit: '300000' },
         }
         const token = await prepareAuctionApproveNftTransfer(true, body)
-        expect(token).toBeDefined()
+        expect(token.startsWith('0x')).toBeTruthy()
       } catch (e) {
         console.log(`Prepare approve NFT transfer failed:`, e)
         expect(e).not.toBeDefined()
@@ -272,9 +272,9 @@ describe('Auction  tests', () => {
           chain: Currency.KCS,
           fee: { gasPrice: '40', gasLimit: '300000' },
         }
-        const txId = await sendAuctionApproveErc20Transfer(true, body)
+        const { txId } = await sendAuctionApproveErc20Transfer(true, body)
         console.log(`Approve Erc20 Transfer txId:`, txId)
-        expect(txId).toBeDefined()
+        expect(txId.startsWith('0x')).toBeTruthy()
       } catch (e) {
         console.log(`Approve Erc20 transfer failed:`, e)
         expect(e).not.toBeDefined()
@@ -293,7 +293,7 @@ describe('Auction  tests', () => {
         }
         const token = await prepareAuctionApproveErc20Transfer(true, body)
         console.log(`Prepare auction Erc20 transfer token:`, token)
-        expect(token).toBeDefined()
+        expect(token.startsWith('0x')).toBeTruthy()
       } catch (e) {
         console.log(`Prepare approve Erc20 transfer failed:`, e)
         expect(e).not.toBeDefined()
@@ -310,9 +310,9 @@ describe('Auction  tests', () => {
           fromPrivateKey: '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb',
           fee: { gasPrice: '40', gasLimit: '300000' },
         }
-        const txId = await sendAuctionBid(true, body)
+        const { txId } = await sendAuctionBid(true, body)
         console.log(`Send auction bid txId:`, txId)
-        expect(txId).toBeDefined()
+        expect(txId.startsWith('0x')).toBeTruthy()
       } catch (e) {
         console.log(`Send auction bid failed:`, e)
         expect(e).not.toBeDefined()
@@ -331,7 +331,7 @@ describe('Auction  tests', () => {
         }
         const token = await prepareAuctionBid(true, body)
         console.log(`Prepare auction bid token:`, token)
-        expect(token).toBeDefined()
+        expect(token.startsWith('0x')).toBeTruthy()
       } catch (e) {
         console.log(`Prepare auction bid failed:`, e)
         expect(e).not.toBeDefined()
@@ -348,9 +348,9 @@ describe('Auction  tests', () => {
           chain: Currency.KCS,
           fee: { gasPrice: '40', gasLimit: '300000' },
         }
-        const txId = await sendAuctionCancel(true, body)
+        const { txId } = await sendAuctionCancel(true, body)
         console.log(`Cancel auction txId:`, txId)
-        expect(txId).toBeDefined()
+        expect(txId.startsWith('0x')).toBeTruthy()
       } catch (e) {
         console.log(`Send auction cancel failed:`, e)
         expect(e).not.toBeDefined()
@@ -369,7 +369,7 @@ describe('Auction  tests', () => {
         }
         const token = await prepareAuctionCancel(true, body)
         console.log(`Prepare auction cancel token:`, token)
-        expect(token).toBeDefined()
+        expect(token.startsWith('0x')).toBeTruthy()
       } catch (e) {
         console.log(`Prepare auction cancel failed:`, e)
         expect(e).not.toBeDefined()
@@ -386,9 +386,9 @@ describe('Auction  tests', () => {
           fromPrivateKey: '0d6c13fe5fed644dfa02512d4bffde9453dcb48873afb0b0a4c0cebce160c279',
           fee: { gasPrice: '40', gasLimit: '300000' },
         }
-        const txId = await sendAuctionSettle(true, body)
+        const { txId } = await sendAuctionSettle(true, body)
         console.log(`Settle auction txId:`, txId)
-        expect(txId).toBeDefined()
+        expect(txId.startsWith('0x')).toBeTruthy()
       } catch (e) {
         console.log(`Send auction settle failed:`, e)
         expect(e).not.toBeDefined()
@@ -407,7 +407,7 @@ describe('Auction  tests', () => {
         }
         const token = await prepareAuctionSettle(true, body)
         console.log(`Prepare auction settle token:`, token)
-        expect(token).toBeDefined()
+        expect(token.startsWith('0x')).toBeTruthy()
       } catch (e) {
         console.log(`Prepare auction settle failed:`, e)
         expect(e).not.toBeDefined()
