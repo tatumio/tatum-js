@@ -3,6 +3,7 @@ import { BTC_TEST_DATA } from './test-data/btc.test-data'
 
 export type BlockchainNetworkTestData = {
   XPUB: string
+  XPUB_REGEX: RegExp
   ADDRESS_0: string
   ADDRESS_100: string
   PRIVATE_KEY_0: string

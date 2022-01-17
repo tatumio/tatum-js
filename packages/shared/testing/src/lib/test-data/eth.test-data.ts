@@ -3,6 +3,7 @@ import { BlockchainTestData } from '../shared-testing'
 export const ETH_TEST_DATA: BlockchainTestData = {
   MAINNET: {
     XPUB: 'xpub6EmVHAqPHkSRgsS7Km6Ynmjg4Kup6aD2NjX1zmVEwuwvJZPGefgmmg5a36eBX8QZpfhtPu7qHgcMmehDMLivrm8gY2L7v8iQDmxyYVhxPUs',
+    XPUB_REGEX: /xpub/,
     ADDRESS_0: '0xb9e379f99ca17a5009471bd2e8194123ec9eb497',
     ADDRESS_100: '0xc6776c6230adf9216646da8f68c9863493cf81df',
     PRIVATE_KEY_0: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
@@ -10,6 +11,7 @@ export const ETH_TEST_DATA: BlockchainTestData = {
   },
   TESTNET: {
     XPUB: 'xpub6Dwu4pG9LS4S3cSdR1nAoGL18AWLttx3WCYPqdvx3TPAEuemkbgdLSAQG13xPwTku21pkQsZjSuERGtiMsiNCVzzPnh1BVhwis2f1bYSYoH',
+    XPUB_REGEX: /xpub/,
     ADDRESS_0: '0xe73f05a8b3b28e1afec4ab759101e79b28542440',
     ADDRESS_100: '0x7246d8f7184bdfbe730d309f337b9f706b2f15cc',
     PRIVATE_KEY_0: '0x254ac28e10916b3c2def004a37fec216649288ae71c8cac41faf106193263792',

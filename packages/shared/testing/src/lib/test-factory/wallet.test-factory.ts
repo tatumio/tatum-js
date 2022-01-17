@@ -15,9 +15,19 @@ export const walletTestFactory = {
         expect(xpub).toBe(testData.MAINNET.XPUB)
       })
 
-      // @TODO add no args test
+      it('without input mnemonic', async () => {
+        const { mnemonic, xpub } = await sdk.generateWallet()
+        expect(mnemonic.length).toBeGreaterThan(0)
+        expect(xpub).toMatch(testData.MAINNET.XPUB_REGEX)
+      })
 
-      // @TODO add negative cases
+      it('invalid input mnemonic', async () => {
+        const wrongMnemonic = 'wrongmnemonic'
+
+        const { mnemonic, xpub } = await sdk.generateWallet(wrongMnemonic)
+        expect(mnemonic).toBe(wrongMnemonic)
+        expect(xpub).toMatch(testData.MAINNET.XPUB_REGEX)
+      })
     })
 
     describe('testnet', () => {
@@ -27,8 +37,23 @@ export const walletTestFactory = {
         expect(xpub).toBe(testData.TESTNET.XPUB)
       })
 
-      // @TODO add no args test
-      // @TODO add negative cases
+      it('without input mnemonic', async () => {
+        const { mnemonic, xpub } = await sdk.generateWallet(undefined, {
+          testnet: true,
+        })
+        expect(mnemonic.length).toBeGreaterThan(0)
+        expect(xpub).toMatch(testData.TESTNET.XPUB_REGEX)
+      })
+
+      it('invalid input mnemonic', async () => {
+        const wrongMnemonic = 'wrongmnemonic'
+
+        const { mnemonic, xpub } = await sdk.generateWallet(wrongMnemonic, {
+          testnet: true,
+        })
+        expect(mnemonic).toBe(wrongMnemonic)
+        expect(xpub).toMatch(testData.TESTNET.XPUB_REGEX)
+      })
     })
   },
   generateAddressFromXpub: (sdk: SdkWithWalletFunctions, testData: BlockchainTestData) => {
