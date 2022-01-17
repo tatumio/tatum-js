@@ -25,7 +25,7 @@ describe('Multitoken tests - KCS', () => {
         uri: 'tatum-test',
       }
       const deployMultiTokenToken = await deployMultiToken(true, body, 'https://rpc-testnet.kcc.network')
-      expect(deployMultiTokenToken).not.toBeNull()
+      expect(deployMultiTokenToken).toBeDefined()
       console.log('Deploy multi token: ', deployMultiTokenToken)
     } catch (e) {
       console.log('Deploy multi token error: ', e.response)
@@ -51,7 +51,7 @@ describe('Multitoken tests - KCS', () => {
       }
       const mintedToken = await mintMultiToken(true, body, 'https://rpc-testnet.kcc.network')
       console.log('Mint multitoken: ', mintedToken)
-      expect(mintedToken).not.toBeNull()
+      expect(mintedToken).toBeDefined()
     } catch (e) {
       console.log('Mint multitoken error: ', e.response)
       expect(e).not.toBeDefined()
@@ -84,7 +84,7 @@ describe('Multitoken tests - KCS', () => {
       }
       const mintedToken = await mintMultiTokenBatch(true, body, 'https://rpc-testnet.kcc.network')
       console.log('Mint multitoken batch: ', mintedToken)
-      expect(mintedToken).not.toBeNull()
+      expect(mintedToken).toBeDefined()
     } catch (e) {
       console.log('Mint multitoken batch error: ', e.response)
       expect(e).not.toBeDefined()
@@ -108,7 +108,7 @@ describe('Multitoken tests - KCS', () => {
       }
       const burnMultiTokenToken = await burnMultiToken(true, body, 'https://rpc-testnet.kcc.network')
       console.log(burnMultiTokenToken)
-      expect(burnMultiTokenToken).not.toBeNull()
+      expect(burnMultiTokenToken).toBeDefined()
     } catch (e) {
       console.log('Burn multitoken error: ', e.response)
       expect(e).not.toBeDefined()
@@ -132,7 +132,7 @@ describe('Multitoken tests - KCS', () => {
         },
       }
       const burnMultiTokenToken = await burnMultiTokenBatch(true, body, 'https://rpc-testnet.kcc.network')
-      expect(burnMultiTokenToken).not.toBeNull()
+      expect(burnMultiTokenToken).toBeDefined()
     } catch (e) {
       console.log('Burn multitoken batch error: ', e.response)
       expect(e).not.toBeDefined()
@@ -157,7 +157,7 @@ describe('Multitoken tests - KCS', () => {
       }
       const sendMultiTokenToken = await transferMultiToken(true, body, 'https://rpc-testnet.kcc.network')
       console.log('Transfer multitoken: ', sendMultiTokenToken)
-      expect(sendMultiTokenToken).not.toBeNull()
+      expect(sendMultiTokenToken).toBeDefined()
     } catch (e) {
       console.log('Transfer multitoken error: ', e.response)
       expect(e).not.toBeDefined()
@@ -184,7 +184,7 @@ describe('Multitoken tests - KCS', () => {
       }
       const sendMultiTokenToken = await transferMultiTokenBatch(true, body, 'https://rpc-testnet.kcc.network')
       console.log('Transfer multitoken batch: ', sendMultiTokenToken)
-      expect(sendMultiTokenToken).not.toBeNull()
+      expect(sendMultiTokenToken).toBeDefined()
     } catch (e) {
       console.log('Transfer multitoken batch error: ', e.response)
       expect(e).not.toBeDefined()
@@ -195,7 +195,7 @@ describe('Multitoken tests - KCS', () => {
     try {
       const txId = '0xa6bce2332117e5e3e29393aa3e3931bdeef3f913438ee446ce9f517b52544e6c'
       const contractAddress = await getMultiTokenContractAddress(Currency.KCS, txId)
-      expect(contractAddress).not.toBeNull()
+      expect(contractAddress).toBeDefined()
       console.log('Get multitoken contract address: ', contractAddress)
     } catch (e) {
       console.log('Get multitoken contract address error: ', e.response.data)
@@ -207,7 +207,7 @@ describe('Multitoken tests - KCS', () => {
     try {
       const txId = '0xa6bce2332117e5e3e29393aa3e3931bdeef3f913438ee446ce9f517b52544e6c'
       const transaction = await getMultiTokenTransaction(Currency.KCS, txId)
-      expect(transaction).not.toBeNull()
+      expect(transaction).toBeDefined()
       console.log('Get multitoken transaction: ', transaction)
     } catch (e) {
       console.log('Get multitoken transaction error: ', e.response.data)
@@ -220,7 +220,7 @@ describe('Multitoken tests - KCS', () => {
       const contractAddress = '0xe520E9aB6d4CF47C3e270e42Cef63F437Df19E88'
       const tokenId = new Date().getTime() + 50
       const metadata = await getMultiTokenMetadata(Currency.KCS, contractAddress, tokenId.toString())
-      expect(metadata).not.toBeNull()
+      expect(metadata).toBeDefined()
       console.log('Get multitoken metadata: ', metadata)
     } catch (e) {
       console.log('Get multitoken metadata error: ', e.response.data)
@@ -234,7 +234,7 @@ describe('Multitoken tests - KCS', () => {
       const tokenId = new Date().getTime() + 60
       const account = '0xffb28c3c7a1b19380b7e9e5A7Bbe2afF1AA7A5Ef'
       const balance = await getMultiTokensBalance(Currency.KCS, contractAddress, account, tokenId.toString())
-      expect(balance).not.toBeNull()
+      expect(balance).toBeDefined()
       console.log('Get multitoken balance ', balance)
     } catch (e) {
       console.log('Get multitoken balance error: ', e.response.data)
@@ -250,7 +250,7 @@ describe('Multitoken tests - KCS', () => {
       const secondTokenId = new Date().getTime() + 80
       const tokenIds = [firstTokenId.toString(), secondTokenId.toString()].toString()
       const batchBalance = await getMultiTokensBatchBalance(Currency.KCS, contractAddress, address, tokenIds)
-      expect(batchBalance).not.toBeNull()
+      expect(batchBalance).toBeDefined()
       console.log('Get multitoken balance batch: ', batchBalance)
     } catch (e) {
       console.log('Get multitoken balance batch error: ', e.response.data)
