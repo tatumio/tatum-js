@@ -30,7 +30,7 @@ import {
   sendAuctionSettle,
   sendAuctionUpdateFee,
   sendAuctionUpdateFeeRecipient,
-} from 'src/nft/marketplace/index'
+} from '../../'
 import { getCurrentBlock } from '@tatumio/tatum-bsc'
 
 describe('Auction  tests', () => {
