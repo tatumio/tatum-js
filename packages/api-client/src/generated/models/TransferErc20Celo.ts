@@ -1,0 +1,48 @@
+/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+
+export type TransferErc20Celo = {
+    /**
+     * Blockchain address to send ERC20 token to
+     */
+    to: string;
+    /**
+     * Amount to be sent.
+     */
+    amount: string;
+    /**
+     * Address of ERC20 token
+     */
+    contractAddress: string;
+    /**
+     * Number of decimal points that ERC20 token has.
+     */
+    digits: number;
+    /**
+     * Private key of sender address. Private key, or signature Id must be present.
+     */
+    fromPrivateKey: string;
+    /**
+     * Nonce to be set to Celo transaction. If not present, last known nonce will be used.
+     */
+    nonce?: number;
+    /**
+     * Currency to pay for transaction gas
+     */
+    feeCurrency: TransferErc20Celo.feeCurrency;
+}
+
+export namespace TransferErc20Celo {
+
+    /**
+     * Currency to pay for transaction gas
+     */
+    export enum feeCurrency {
+        CELO = 'CELO',
+        CUSD = 'CUSD',
+        CEUR = 'CEUR',
+    }
+
+
+}

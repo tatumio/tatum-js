@@ -1,0 +1,32 @@
+{
+  "root": "examples/eth-example",
+  "sourceRoot": "examples/eth-example/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/examples/eth-example",
+        "main": "examples/eth-example/src/index.ts",
+        "tsConfig": "examples/eth-example/tsconfig.app.json",
+        "packageJson": "examples/eth-example/package.json",
+        "assets": ["examples/eth-example/*.md"]
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:execute",
+      "options": {
+        "buildTarget": "eth-example:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["examples/eth-example/**/*.ts"]
+      }
+    }
+  },
+  "tags": ["type:example"]
+}

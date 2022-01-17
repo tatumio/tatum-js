@@ -1,0 +1,34 @@
+{
+  "root": "packages/shared/blockchain/btc-based",
+  "sourceRoot": "packages/shared/blockchain/btc-based/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/shared/blockchain/btc-based",
+        "main": "packages/shared/blockchain/btc-based/src/index.ts",
+        "packageJson": "packages/shared/blockchain/btc-based/package.json",
+        "tsConfig": "packages/shared/blockchain/btc-based/tsconfig.lib.json",
+        "assets": ["packages/shared/blockchain/btc-based/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/shared/blockchain/btc-based/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/shared/blockchain/btc-based"],
+      "options": {
+        "jestConfig": "packages/shared/blockchain/btc-based/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["scope:shared", "scope:btc-based"]
+}

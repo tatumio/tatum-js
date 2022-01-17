@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "projects": {
+    "api-client": "packages/api-client",
+    "btc-example": "examples/btc-example",
+    "eth-example": "examples/eth-example",
+    "sdk": "packages/sdk",
+    "sdk-btc": "packages/blockchain/btc",
+    "sdk-eth": "packages/blockchain/eth",
+    "sdk-example": "examples/sdk-example",
+    "shared-abstract-sdk": "packages/shared/abstract-sdk",
+    "shared-blockchain-abstract": "packages/shared/blockchain/abstract",
+    "shared-blockchain-btc-based": "packages/shared/blockchain/btc-based",
+    "shared-blockchain-evm-based": "packages/shared/blockchain/evm-based",
+    "shared-core": "packages/shared/core",
+    "shared-testing": "packages/shared/testing"
+  }
+}

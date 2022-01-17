@@ -1,71 +1,63 @@
 {
-  "name": "@tatumio/tatum",
-  "version": "2.0.0-alpha.0",
-  "description": "Tatum API client allows browsers and Node.js clients to interact with Tatum API.",
-  "repository": "https://github.com/tatumio/tatum-js",
+  "name": "tatumio",
+  "version": "0.0.0",
+  "license": "MIT",
   "scripts": {
-    "test": "jest",
-    "clean": "rimraf dist* tsconfig.tsbuildinfo",
-    "build": "tsc",
-    "prepublish": "yarn run clean && yarn run build",
-    "docs": "typedoc",
-    "lint": "yarn lerna run lint",
-    "clean:all": "yarn lerna clean --yes && find ./packages -name 'dist' -type d -prune -print -exec rm -rf '{}' \\;",
-    "bootstrap": "yarn lerna bootstrap && yarn lerna exec yarn install",
-    "publish:prerelease": "yarn lerna publish prerelease --yes --no-verify-access --dist-tag alpha --force-publish",
-    "add:chain": "yarn --cwd ./packages/tatum-core && yarn plop && yarn && yarn bootstrap",
-    "generate-api": "openapi --client axios --input ./packages/tatum-api/api_schema.json --output ./packages/tatum-api/src/generated",
-    "postinstall": "yarn generate-api"
+    "start": "nx serve",
+    "build": "nx affected:build",
+    "build:libs": "nx run-many --target=build --projects=$(nx affected:libs --plain | sed 's/ /,/g')",
+    "lint": "nx affected:lint",
+    "test": "nx affected:test",
+    "dep-graph": "nx dep-graph",
+    "generate-api": "openapi --exportCore false --client axios --input ./packages/api-client/src/api_schema.json --output ./packages/api-client/src/generated"
   },
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
-  "keywords": [
-    "Tatum",
-    "Blockchain",
-    "Building Blocks",
-    "Bitcoin",
-    "Litecoin",
-    "Stellar",
-    "Tatum API",
-    "XRP",
-    "Ethereum"
-  ],
-  "author": "Tatum, hello@tatum.io",
-  "license": "MIT",
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.29.1",
-    "@typescript-eslint/parser": "^4.29.1",
-    "dotenv": "^8.2.0",
-    "eslint": "^7.32.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "jest": "^26.6.3",
-    "lerna": "^4.0.0",
-    "plop": "^3.0.5",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "bignumber.js": "^9.0.2",
+    "bip32": "^2.0.5",
+    "bip39": "^3.0.2",
+    "bitcoinjs-lib": "^5.2.0",
+    "bitcore-lib": "^8.25.25",
+    "bitcore-lib-ltc": "^8.25.27",
+    "cross-blob": "^3.0.0",
+    "ethereumjs-wallet": "^1.0.2",
+    "form-data": "^4.0.0",
+    "hdkey": "^2.0.1",
     "reflect-metadata": "^0.1.13",
-    "rimraf": "^3.0.2",
-    "ts-jest": "^26.1.1",
-    "typedoc": "^0.22.10",
-    "openapi-typescript-codegen": "^0.13.0",
-    "typescript": "4.3.2"
+    "tslib": "^2.0.0",
+    "web3": "^1.6.1",
+    "web3-core": "^1.6.1",
+    "web3-eth": "^1.6.1",
+    "web3-utils": "^1.6.1"
   },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": ".",
-    "testRegex": ".spec.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "setupFiles": [
-      "./jest-setup-file.ts"
-    ],
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+  "devDependencies": {
+    "@nrwl/cli": "13.4.4",
+    "@nrwl/eslint-plugin-nx": "13.4.4",
+    "@nrwl/jest": "13.4.3",
+    "@nrwl/js": "^13.4.4",
+    "@nrwl/linter": "13.4.4",
+    "@nrwl/node": "^13.4.4",
+    "@nrwl/tao": "13.4.4",
+    "@nrwl/workspace": "13.4.4",
+    "@types/bignumber.js": "^5.0.0",
+    "@types/bip32": "^2.0.0",
+    "@types/bip39": "^3.0.0",
+    "@types/bitcore-lib": "^0.15.3",
+    "@types/hdkey": "^2.0.1",
+    "@types/jest": "^27.4.0",
+    "@types/node": "14.14.33",
+    "@typescript-eslint/eslint-plugin": "~5.9.1",
+    "@typescript-eslint/parser": "~5.9.1",
+    "eslint": "8.6.0",
+    "eslint-config-prettier": "^8.3.0",
+    "expect-more-jest": "^5.4.0",
+    "faker": "^5.5.3",
+    "glob": "^7.2.0",
+    "jest": "^27.4.5",
+    "openapi-typescript-codegen": "^0.12.5",
+    "prettier": "^2.3.1",
+    "ts-jest": "27.0.5",
+    "typescript": "~4.5.4"
   }
 }

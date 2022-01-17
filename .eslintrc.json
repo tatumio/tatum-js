@@ -1,0 +1,59 @@
+{
+  "root": true,
+  "ignorePatterns": ["**/*"],
+  "plugins": ["@nrwl/nx"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {
+        "@nrwl/nx/enforce-module-boundaries": [
+          "error",
+          {
+            "enforceBuildableLibDependency": true,
+            "allow": [],
+            "depConstraints": [
+              {
+                "sourceTag": "scope:shared",
+                "onlyDependOnLibsWithTags": ["scope:shared"]
+              },
+              {
+                "sourceTag": "scope:sdk-main",
+                "onlyDependOnLibsWithTags": ["*"]
+              },
+              {
+                "sourceTag": "scope:sdk",
+                "onlyDependOnLibsWithTags": ["scope:shared"]
+              },
+              {
+                "sourceTag": "scope:btc-based",
+                "onlyDependOnLibsWithTags": ["scope:shared"],
+                "bannedExternalImports": ["*web3*", "*ethereum*"]
+              },
+              {
+                "sourceTag": "scope:evm-based",
+                "onlyDependOnLibsWithTags": ["scope:shared"],
+                "bannedExternalImports": ["bitco*"]
+              },
+              {
+                "sourceTag": "type:example",
+                "onlyDependOnLibsWithTags": ["scope:shared", "scope:sdk", "scope:sdk-main"]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "extends": ["plugin:@nrwl/nx/typescript"],
+      "rules": {
+        "@typescript-eslint/ban-ts-comment": "off"
+      }
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "extends": ["plugin:@nrwl/nx/javascript"],
+      "rules": {}
+    }
+  ]
+}

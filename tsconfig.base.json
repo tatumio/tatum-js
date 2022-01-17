@@ -1,0 +1,34 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "baseUrl": ".",
+    "paths": {
+      "@tatumio/abstract-sdk": ["packages/shared/abstract-sdk/src/index.ts"],
+      "@tatumio/api-client": ["packages/api-client/src/index.ts"],
+      "@tatumio/btc": ["packages/blockchain/btc/src/index.ts"],
+      "@tatumio/eth": ["packages/blockchain/eth/src/index.ts"],
+      "@tatumio/sdk": ["packages/sdk/src/index.ts"],
+      "@tatumio/shared-blockchain-abstract": ["packages/shared/blockchain/abstract/src/index.ts"],
+      "@tatumio/shared-blockchain-btc-based": ["packages/shared/blockchain/btc-based/src/index.ts"],
+      "@tatumio/shared-blockchain-evm-based": ["packages/shared/blockchain/evm-based/src/index.ts"],
+      "@tatumio/shared-core": ["packages/shared/core/src/index.ts"],
+      "@tatumio/shared-testing": ["packages/shared/testing/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

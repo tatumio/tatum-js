@@ -1,0 +1,34 @@
+import { evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
+import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
+import { BlockchainEthereumService, TatumUrl } from '@tatumio/api-client'
+import { ethWeb3 } from './services/eth.web3'
+import { ethKmsService } from './services/eth.kms'
+import { ethTx } from './services/eth.tx'
+
+const blockchain = Blockchain.ETH
+
+export const TatumEthSDK = (args: { apiKey: string; url?: TatumUrl }) => {
+  const web3 = ethWeb3({ blockchain })
+  const api = BlockchainEthereumService
+
+  return {
+    ...evmBasedSdk({ ...args, blockchain, web3 }),
+    api,
+    kms: ethKmsService({ blockchain, web3 }),
+    transaction: ethTx({ blockchain, web3 }),
+    httpDriver: async (request: Web3Request): Promise<Web3Response> => {
+      return api.ethWeb3Driver(args.apiKey, { ...request, jsonrpc: '2.0' })
+    },
+    blockchain: {
+      broadcast: BlockchainEthereumService.ethBroadcast,
+      getTransactionsCount: BlockchainEthereumService.ethGetTransactionCount,
+      getCurrentBlock: BlockchainEthereumService.ethGetCurrentBlock,
+      getBlock: BlockchainEthereumService.ethGetBlock,
+      getBlockchainAccountBalance: BlockchainEthereumService.ethGetBalance,
+      get: BlockchainEthereumService.ethGetTransaction,
+      getAccountTransactions: BlockchainEthereumService.ethGetTransactionByAddress,
+      estimateGas: BlockchainEthereumService.ethEstimateGas,
+      estimateGasBatch: BlockchainEthereumService.ethEstimateGasBatch,
+    },
+  }
+}
