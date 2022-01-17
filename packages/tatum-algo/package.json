@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-algo",
-  "version": "2.0.0-alpha.95",
+  "version": "2.0.0-alpha.96",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
