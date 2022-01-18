@@ -13,9 +13,7 @@
     "clean:all": "yarn lerna clean --yes && find ./packages -name 'dist' -type d -prune -print -exec rm -rf '{}' \\;",
     "bootstrap": "yarn lerna bootstrap && yarn lerna exec yarn install",
     "publish:prerelease": "yarn lerna publish prerelease --yes --no-verify-access --dist-tag alpha --force-publish",
-    "add:chain": "yarn --cwd ./packages/tatum-core && yarn plop && yarn && yarn bootstrap",
-    "generate-api": "openapi --client axios --input ./packages/tatum-api/api_schema.json --output ./packages/tatum-api/src/generated",
-    "postinstall": "yarn generate-api"
+    "add:chain": "yarn --cwd ./packages/tatum-core && yarn plop && yarn && yarn bootstrap"
   },
   "private": true,
   "workspaces": [
