@@ -3,6 +3,7 @@ import { BTC_TEST_DATA } from './test-data/btc.test-data'
 
 export type BlockchainNetworkTestData = {
   XPUB: string
+  XPUB_REGEX: RegExp
   ADDRESS_0: string
   ADDRESS_100: string
   PRIVATE_KEY_0: string
@@ -12,6 +13,10 @@ export type BlockchainNetworkTestData = {
 export interface BlockchainTestData {
   MAINNET: BlockchainNetworkTestData
   TESTNET: BlockchainNetworkTestData
+  INVALID_XPUB_ERROR: string
+  INVALID_XPUB_CHILD_INDEX_ERROR: string
+  INVALID_PRIVATE_KEY_CHILD_INDEX_ERROR: string
+  INVALID_PRIVATE_KEY_ERROR: string
 }
 
 export const TEST_DATA = {
