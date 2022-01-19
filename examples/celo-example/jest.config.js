@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'eth-example',
+  displayName: 'celo-example',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -10,5 +10,5 @@ module.exports = {
     '^.+\\.[tj]s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/examples/eth-example',
+  coverageDirectory: '../../coverage/examples/celo-example',
 }
