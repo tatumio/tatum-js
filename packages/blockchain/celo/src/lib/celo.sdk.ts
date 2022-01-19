@@ -7,7 +7,7 @@ import { celoKmsService } from './services/celo.kms'
 import { celoTxService } from './services/celo.tx'
 
 
-const blockchain = Blockchain.ETH
+const blockchain = Blockchain.CELO
 
 export const TatumCeloSDK = (args: SDKArguments) => {
   const web3 = celoWeb3({ blockchain })

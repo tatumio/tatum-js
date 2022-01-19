@@ -1,1 +1,1 @@
-export * from './lib/blockchain-celo'
+export * from './lib/celo.sdk'

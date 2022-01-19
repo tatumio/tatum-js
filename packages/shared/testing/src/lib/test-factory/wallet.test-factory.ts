@@ -106,7 +106,7 @@ export const walletTestFactory = {
       })
 
       it('invalid child index', async () => {
-        await expect(async () => sdk.generatePrivateKeyFromMnemonic(undefined, -1)).rejects.toThrow(
+        await expect(async () => sdk.generatePrivateKeyFromMnemonic(givenMnemonic, -1)).rejects.toThrow(
           testData.INVALID_PRIVATE_KEY_CHILD_INDEX_ERROR,
         )
       })
@@ -124,7 +124,7 @@ export const walletTestFactory = {
       })
 
       it('invalid child index', async () => {
-        await expect(async () => sdk.generatePrivateKeyFromMnemonic(undefined, -1, { testnet: true })).rejects.toThrow(
+        await expect(async () => sdk.generatePrivateKeyFromMnemonic(givenMnemonic, -1, { testnet: true })).rejects.toThrow(
           testData.INVALID_PRIVATE_KEY_CHILD_INDEX_ERROR,
         )
       })

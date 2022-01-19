@@ -6,9 +6,10 @@ module.exports = {
       tsconfig: '<rootDir>/tsconfig.spec.json',
     },
   },
+  testEnvironment: 'node',
   transform: {
-    '^.+\\.[tj]s$': 'ts-jest',
+    '^.+\\.[tj]sx?$': 'ts-jest',
   },
-  moduleFileExtensions: ['ts', 'js', 'html'],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
   coverageDirectory: '../../../coverage/packages/blockchain/celo',
 }
