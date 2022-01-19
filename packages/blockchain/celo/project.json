@@ -1,0 +1,33 @@
+{
+  "root": "packages/blockchain/celo",
+  "sourceRoot": "packages/blockchain/celo/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/blockchain/celo",
+        "main": "packages/blockchain/celo/src/index.ts",
+        "tsConfig": "packages/blockchain/celo/tsconfig.lib.json",
+        "assets": ["packages/blockchain/celo/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/blockchain/celo/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/blockchain/celo"],
+      "options": {
+        "jestConfig": "packages/blockchain/celo/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
