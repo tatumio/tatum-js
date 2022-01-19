@@ -29,6 +29,22 @@ export const celoKmsService = (args: { blockchain: EvmBasedBlockchain; web3: Evm
     //   }
     //   return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey as string))
     //     .rawTransaction as string
+    // export const signKMSTransaction = async (tx: ChainTransactionKMS, fromPrivateKey: string, provider?: string) => {
+    //   ;(tx as TransactionKMS).chain = Currency.CELO
+    //   const p = new CeloProvider(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`)
+    //   await p.ready
+    //   const wallet = new CeloWallet(fromPrivateKey as string, p)
+    //   const transaction = JSON.parse(tx.serializedTransaction)
+    //   const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, transaction.feeCurrency)
+    //   transaction.nonce = transaction.nonce || txCount
+    //   transaction.gasPrice = transaction.gasPrice || gasPrice
+    //   transaction.from = from
+    //   transaction.gasLimit =
+    //     transaction.gasLimit === '0' || !transaction.gasLimit
+    //       ? (await wallet.estimateGas(transaction)).add(100000).toHexString()
+    //       : transaction.gasLimit
+    //   return wallet.signTransaction(transaction)
+    // }
     // },
   }
 }
