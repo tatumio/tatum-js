@@ -8,7 +8,7 @@ export const celoWeb3 = (args: { blockchain: EvmBasedBlockchain }) => {
   return {
     ...evmBasedWeb3Result,
     getClient(provider?: string, fromPrivateKey?: string): Web3 {
-      const web3 = evmBasedWeb3Result.getClient(provider, fromPrivateKey)
+      const web3 = evmBasedWeb3Result.getClient(provider)
 
       if (fromPrivateKey) {
         web3.eth.accounts.wallet.add(fromPrivateKey)
