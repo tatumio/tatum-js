@@ -10,6 +10,7 @@
         "outputPath": "dist/packages/blockchain/celo",
         "main": "packages/blockchain/celo/src/index.ts",
         "tsConfig": "packages/blockchain/celo/tsconfig.lib.json",
+        "packageJson": "packages/blockchain/celo/package.json",
         "assets": ["packages/blockchain/celo/*.md"]
       }
     },
@@ -29,5 +30,5 @@
       }
     }
   },
-  "tags": []
+  "tags": ["scope:sdk", "scope:evm-based"]
 }
