@@ -2,17 +2,10 @@ import 'jest/index'
 import { BlockchainTestData, TEST_DATA } from '../shared-testing'
 import { SdkWithWalletFunctions } from '@tatumio/shared-blockchain-abstract'
 
-export interface WalletTestData extends BlockchainTestData {
-  INVALID_XPUB_ERROR: string
-  INVALID_XPUB_CHILD_INDEX_ERROR: string
-  INVALID_PRIVATE_KEY_CHILD_INDEX_ERROR: string
-  INVALID_PRIVATE_KEY_ERROR: string
-}
-
 export const walletTestFactory = {
   generateBlockchainWallet: (
     sdk: SdkWithWalletFunctions,
-    testData: WalletTestData,
+    testData: BlockchainTestData,
     givenMnemonic = TEST_DATA.MNEMONIC,
   ) => {
     describe('mainnet', () => {
@@ -63,7 +56,7 @@ export const walletTestFactory = {
       })
     })
   },
-  generateAddressFromXpub: (sdk: SdkWithWalletFunctions, testData: WalletTestData) => {
+  generateAddressFromXpub: (sdk: SdkWithWalletFunctions, testData: BlockchainTestData) => {
     describe('mainnet', () => {
       it.each([
         [0, testData.MAINNET.ADDRESS_0],
@@ -100,7 +93,7 @@ export const walletTestFactory = {
   },
   generatePrivateKeyFromMnemonic: (
     sdk: SdkWithWalletFunctions,
-    testData: WalletTestData,
+    testData: BlockchainTestData,
     givenMnemonic = TEST_DATA.MNEMONIC,
   ) => {
     describe('mainnet', () => {
@@ -137,7 +130,7 @@ export const walletTestFactory = {
       })
     })
   },
-  generateAddressFromPrivateKey: (sdk: SdkWithWalletFunctions, testData: WalletTestData) => {
+  generateAddressFromPrivateKey: (sdk: SdkWithWalletFunctions, testData: BlockchainTestData) => {
     describe('mainnet', () => {
       it('valid', async () => {
         const address0 = sdk.generateAddressFromPrivateKey(testData.MAINNET.PRIVATE_KEY_0)

@@ -17,4 +17,8 @@ export const BTC_TEST_DATA: BlockchainTestData = {
     PRIVATE_KEY_0: 'cNqC7k1rcoLpWeC4t8UTJHUmm9nuNmeJZ2GAuFWirih2RLD8DuMd',
     PRIVATE_KEY_100: 'cPE42nXJCYf5XdHgWB8ZW6CdCRo1VuFwoKwpHNNxLFQcaDC69QkV',
   },
+  INVALID_XPUB_ERROR: 'Non-base58 character',
+  INVALID_XPUB_CHILD_INDEX_ERROR: 'Expected BIP32Path, got String "-1"',
+  INVALID_PRIVATE_KEY_CHILD_INDEX_ERROR: 'Expected UInt32, got Number -1',
+  INVALID_PRIVATE_KEY_ERROR: 'Non-base58 character',
 }

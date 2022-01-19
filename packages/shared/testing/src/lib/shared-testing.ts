@@ -13,6 +13,10 @@ export type BlockchainNetworkTestData = {
 export interface BlockchainTestData {
   MAINNET: BlockchainNetworkTestData
   TESTNET: BlockchainNetworkTestData
+  INVALID_XPUB_ERROR: string
+  INVALID_XPUB_CHILD_INDEX_ERROR: string
+  INVALID_PRIVATE_KEY_CHILD_INDEX_ERROR: string
+  INVALID_PRIVATE_KEY_ERROR: string
 }
 
 export const TEST_DATA = {
