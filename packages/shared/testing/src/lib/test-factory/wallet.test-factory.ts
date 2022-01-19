@@ -2,10 +2,17 @@ import 'jest/index'
 import { BlockchainTestData, TEST_DATA } from '../shared-testing'
 import { SdkWithWalletFunctions } from '@tatumio/shared-blockchain-abstract'
 
+export interface WalletTestData extends BlockchainTestData {
+  INVALID_XPUB_ERROR: string
+  INVALID_XPUB_CHILD_INDEX_ERROR: string
+  INVALID_PRIVATE_KEY_CHILD_INDEX_ERROR: string
+  INVALID_PRIVATE_KEY_ERROR: string
+}
+
 export const walletTestFactory = {
   generateBlockchainWallet: (
     sdk: SdkWithWalletFunctions,
-    testData: BlockchainTestData,
+    testData: WalletTestData,
     givenMnemonic = TEST_DATA.MNEMONIC,
   ) => {
     describe('mainnet', () => {
@@ -56,7 +63,7 @@ export const walletTestFactory = {
       })
     })
   },
-  generateAddressFromXpub: (sdk: SdkWithWalletFunctions, testData: BlockchainTestData) => {
+  generateAddressFromXpub: (sdk: SdkWithWalletFunctions, testData: WalletTestData) => {
     describe('mainnet', () => {
       it.each([
         [0, testData.MAINNET.ADDRESS_0],
@@ -65,7 +72,13 @@ export const walletTestFactory = {
         const address = sdk.generateAddressFromXPub(testData.MAINNET.XPUB, idx)
         expect(address).toBe(expectedAddress)
       })
-      // @TODO add negative cases
+
+      it.each([
+        ['xpub', 'invalid xpub', 1, testData.INVALID_XPUB_ERROR],
+        ['child index', testData.MAINNET.XPUB, -1, testData.INVALID_XPUB_CHILD_INDEX_ERROR],
+      ])('invalid arg %s', (_:string, xpub: string, childIndex: number, errorMessage: string) => {
+        expect(() => { sdk.generateAddressFromXPub(xpub, childIndex) }).toThrow(errorMessage)
+      })
     })
 
     describe('testnet', () => {
@@ -76,12 +89,18 @@ export const walletTestFactory = {
         const address = sdk.generateAddressFromXPub(testData.TESTNET.XPUB, idx, { testnet: true })
         expect(address).toBe(expectedAddress)
       })
-      // @TODO add negative cases
+
+      it.each([
+        ['xpub', 'invalid xpub', 1, testData.INVALID_XPUB_ERROR],
+        ['child index', testData.TESTNET.XPUB, -1, testData.INVALID_XPUB_CHILD_INDEX_ERROR],
+      ])('invalid arg %s', (_:string, xpub: string, childIndex: number, errorMessage: string) => {
+        expect(() => { sdk.generateAddressFromXPub(xpub, childIndex, { testnet: true }) }).toThrow(errorMessage)
+      })
     })
   },
   generatePrivateKeyFromMnemonic: (
     sdk: SdkWithWalletFunctions,
-    testData: BlockchainTestData,
+    testData: WalletTestData,
     givenMnemonic = TEST_DATA.MNEMONIC,
   ) => {
     describe('mainnet', () => {
@@ -91,6 +110,12 @@ export const walletTestFactory = {
 
         const privateKey100 = await sdk.generatePrivateKeyFromMnemonic(givenMnemonic, 100)
         expect(privateKey100).toBe(testData.MAINNET.PRIVATE_KEY_100)
+      })
+
+      it('invalid child index', async () => {
+        await expect(async () => sdk.generatePrivateKeyFromMnemonic(undefined, -1)).rejects.toThrow(
+          testData.INVALID_PRIVATE_KEY_CHILD_INDEX_ERROR,
+        )
       })
     })
 
@@ -104,11 +129,15 @@ export const walletTestFactory = {
         })
         expect(privateKey100).toBe(testData.TESTNET.PRIVATE_KEY_100)
       })
-    })
 
-    // @TODO add negative cases
+      it('invalid child index', async () => {
+        await expect(async () => sdk.generatePrivateKeyFromMnemonic(undefined, -1, { testnet: true })).rejects.toThrow(
+          testData.INVALID_PRIVATE_KEY_CHILD_INDEX_ERROR,
+        )
+      })
+    })
   },
-  generateAddressFromPrivateKey: (sdk: SdkWithWalletFunctions, testData: BlockchainTestData) => {
+  generateAddressFromPrivateKey: (sdk: SdkWithWalletFunctions, testData: WalletTestData) => {
     describe('mainnet', () => {
       it('valid', async () => {
         const address0 = sdk.generateAddressFromPrivateKey(testData.MAINNET.PRIVATE_KEY_0)
@@ -118,7 +147,9 @@ export const walletTestFactory = {
         expect(address100).toBe(testData.MAINNET.ADDRESS_100)
       })
 
-      // @TODO add negative cases
+      it('invalid private key', () => {
+        expect(() => { sdk.generateAddressFromPrivateKey('invalidKey') }).toThrow(testData.INVALID_PRIVATE_KEY_ERROR)
+      })
     })
 
     describe('testnet', () => {
@@ -132,7 +163,11 @@ export const walletTestFactory = {
         expect(address100).toBe(testData.TESTNET.ADDRESS_100)
       })
 
-      // @TODO add negative cases
+      it('invalid private key', () => {
+        expect(() => { sdk.generateAddressFromPrivateKey('invalidKey', { testnet: true }) }).toThrow(
+          testData.INVALID_PRIVATE_KEY_ERROR,
+        )
+      })
     })
   },
 }

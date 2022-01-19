@@ -42,3 +42,5 @@ Thumbs.db
 #packages/api-client/src/generated/models
 #packages/api-client/src/generated/services
 #packages/api-client/src/generated/index.ts
+
+.env
