@@ -5,6 +5,7 @@
     "btc-example": "examples/btc-example",
     "celo-example": "examples/celo-example",
     "eth-example": "examples/eth-example",
+    "polygon-example": "examples/polygon-example",
     "sdk": "packages/sdk",
     "sdk-btc": "packages/blockchain/btc",
     "sdk-celo": "packages/blockchain/celo",

@@ -1,0 +1,39 @@
+{
+  "root": "examples/polygon-example",
+  "sourceRoot": "examples/polygon-example/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/examples/polygon-example",
+        "main": "examples/polygon-example/src/index.ts",
+        "tsConfig": "examples/polygon-example/tsconfig.app.json",
+        "assets": ["examples/polygon-example/*.md"]
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/js:node",
+      "options": {
+        "buildTarget": "polygon-example:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["examples/polygon-example/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/examples/polygon-example"],
+      "options": {
+        "jestConfig": "examples/polygon-example/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
