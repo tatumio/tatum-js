@@ -1954,6 +1954,19 @@ bitcoinjs-lib@^5.2.0:
     varuint-bitcoin "^1.0.4"
     wif "^2.0.1"
 
+bitcore-lib-doge@^8.25.27:
+  version "8.25.27"
+  resolved "https://registry.yarnpkg.com/bitcore-lib-doge/-/bitcore-lib-doge-8.25.27.tgz#44f6e82c43e1f8ee7eb71758df256cf3fdbfeb18"
+  integrity sha512-el/MMAt1jCJF7e4Uf8Xn3C/3GXmqdL+aRjVnU/vdewfQV+nXm4aXG5WAn7oBsxC0lG2nFozxD6UK49g0/uMQoA==
+  dependencies:
+    bn.js "=4.11.8"
+    bs58 "^4.0.1"
+    buffer-compare "=1.1.1"
+    elliptic "^6.5.3"
+    inherits "=2.0.1"
+    lodash "^4.17.20"
+    scryptsy "2.1.0"
+
 bitcore-lib-ltc@^8.25.27:
   version "8.25.27"
   resolved "https://registry.yarnpkg.com/bitcore-lib-ltc/-/bitcore-lib-ltc-8.25.27.tgz#1d4bd2f718eb8763a864ac43f1feb4778a37da1b"
