@@ -1,6 +1,5 @@
 import { TatumDogeSDK } from '@tatumio/doge'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
-import { DogeTransaction } from 'packages/blockchain/doge/src/lib/transaction/doge.tx';
 
 const dogeSDK = TatumDogeSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
@@ -21,7 +20,7 @@ export async function dogeTransactionsExample() {
         value: 0.00015,
       },
     ],
-  } as DogeTransaction)
+  })
 
   const { txId, failed } = await dogeSDK.transaction.sendTransaction({
     fromUTXO: [
@@ -39,5 +38,5 @@ export async function dogeTransactionsExample() {
         value: 0.00015,
       },
     ],
-  } as DogeTransaction)
+  })
 }
