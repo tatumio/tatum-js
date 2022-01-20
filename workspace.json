@@ -3,9 +3,11 @@
   "projects": {
     "api-client": "packages/api-client",
     "btc-example": "examples/btc-example",
+    "celo-example": "examples/celo-example",
     "eth-example": "examples/eth-example",
     "sdk": "packages/sdk",
     "sdk-btc": "packages/blockchain/btc",
+    "sdk-celo": "packages/blockchain/celo",
     "sdk-eth": "packages/blockchain/eth",
     "sdk-example": "examples/sdk-example",
     "shared-abstract-sdk": "packages/shared/abstract-sdk",

@@ -1,6 +1,4 @@
 import {
-  CancelablePromise,
-  ExchangeRate,
   LedgerSubscriptionService,
   SecurityAddressService,
   StorageIpfsService,
@@ -12,9 +10,13 @@ import { abstractSdkOffChain } from './services/offchain.abstract'
 import { abstractSdkKms } from './services/kms.abstract'
 import { abstractSdkLedgerService } from './services/ledger.abstract'
 import { abstractSdkNftService } from './services/nft.abstract'
-import { Fiat } from '@tatumio/shared-core'
 
-export const abstractSdk = (args: { apiKey: string; url?: TatumUrl }) => {
+export interface SDKArguments {
+  apiKey: string
+  url?: TatumUrl
+}
+
+export const abstractSdk = (args: SDKArguments) => {
   TatumApi(args.apiKey, args.url)
 
   return {

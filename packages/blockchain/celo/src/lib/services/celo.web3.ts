@@ -2,7 +2,7 @@ import { evmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
 import Web3 from 'web3'
 import { EvmBasedBlockchain, httpHelper, THIRD_PARTY_API } from '@tatumio/shared-core'
 
-export const ethWeb3 = (args: { blockchain: EvmBasedBlockchain }) => {
+export const celoWeb3 = (args: { blockchain: EvmBasedBlockchain }) => {
   const evmBasedWeb3Result = evmBasedWeb3(args)
 
   return {

@@ -1,11 +1,12 @@
 import { Blockchain } from '@tatumio/shared-core'
 import { btcBasedSdk } from '@tatumio/shared-blockchain-btc-based'
-import { BlockchainBitcoinService, TatumUrl } from '@tatumio/api-client'
+import { BlockchainBitcoinService } from '@tatumio/api-client'
 import { btcTransactions } from './transaction/btc.tx'
+import { SDKArguments } from '@tatumio/abstract-sdk'
 
 const blockchain = Blockchain.BTC
 
-export const TatumBtcSDK = (args: { apiKey: string; url?: TatumUrl }) => {
+export const TatumBtcSDK = (args: SDKArguments) => {
   return {
     ...btcBasedSdk({ ...args, blockchain }),
     api: BlockchainBitcoinService,
