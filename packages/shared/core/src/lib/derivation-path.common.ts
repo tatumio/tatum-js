@@ -9,7 +9,7 @@ export const DERIVATION_PATH = {
   [Blockchain.LTC]: "m/44'/2'/0'/0",
   [Blockchain.ETH]: "m/44'/60'/0'/0",
   [Blockchain.DOGE]: "m/44'/3'/0'/0",
-  [Blockchain.CELO]: "m/44'/52752'/0'/0"
+  [Blockchain.CELO]: "m/44'/52752'/0'/0",
   [Blockchain.POLYGON]: "m/44'/966'/0'/0",
 }
 
