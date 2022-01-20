@@ -22,6 +22,7 @@
       "@tatumio/api-client": ["packages/api-client/src/index.ts"],
       "@tatumio/btc": ["packages/blockchain/btc/src/index.ts"],
       "@tatumio/doge": ["packages/blockchain/doge/src/index.ts"],
+      "@tatumio/celo": ["packages/blockchain/celo/src/index.ts"],
       "@tatumio/eth": ["packages/blockchain/eth/src/index.ts"],
       "@tatumio/sdk": ["packages/sdk/src/index.ts"],
       "@tatumio/shared-blockchain-abstract": ["packages/shared/blockchain/abstract/src/index.ts"],

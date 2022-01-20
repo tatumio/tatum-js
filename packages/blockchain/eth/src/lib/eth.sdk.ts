@@ -1,13 +1,14 @@
 import { evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
 import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
-import { BlockchainEthereumService, TatumUrl } from '@tatumio/api-client'
+import { BlockchainEthereumService } from '@tatumio/api-client'
 import { ethWeb3 } from './services/eth.web3'
 import { ethKmsService } from './services/eth.kms'
 import { ethTx } from './services/eth.tx'
+import { SDKArguments } from '@tatumio/abstract-sdk'
 
 const blockchain = Blockchain.ETH
 
-export const TatumEthSDK = (args: { apiKey: string; url?: TatumUrl }) => {
+export const TatumEthSDK = (args: SDKArguments) => {
   const web3 = ethWeb3({ blockchain })
   const api = BlockchainEthereumService
 
