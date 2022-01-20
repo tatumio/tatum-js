@@ -4,6 +4,6 @@ import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testin
 const dogeSDK = TatumDogeSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function dogeOffchainExample() {
-  const account = await dogeSDK.offchain.depositAddress.checkExists('1N4U6RidG5XScvBoSNgq5EmHiPxU4MAyEv')
+  const account = await dogeSDK.offchain.depositAddress.checkExists('n36h3pAH7sC3z8KMB47BjbqvW2aJd2oTi7')
   const withdrawals = await dogeSDK.offchain.withdrawal.getAll('Done')
 }

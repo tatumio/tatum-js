@@ -10,8 +10,8 @@ export async function dogeTransactionsExample() {
       {
         txHash: 'fcdc23f5c8bd811195921cd113f5724f3cf8b3fa0287a04366c51b9e8545c4c7',
         index: 1,
-        privateKey: 'cQ1YZMep3CiAnMTA9y62ha6BjGaaTFsTvtDuGmucGvpAVmS89khV',
-        address: 'nXz1s8tMQbqjARaSMNCPkgdwJQ2JDW2M7W',
+        privateKey: 'QTEcWfGqd2RbCRuAvoXAz99D8RwENfy8j6X92vPnUKR7yL1kXouk',
+        address: 'n36h3pAH7sC3z8KMB47BjbqvW2aJd2oTi7',
         value: '60'
       },
     ],
@@ -28,8 +28,8 @@ export async function dogeTransactionsExample() {
       {
         txHash: 'fcdc23f5c8bd811195921cd113f5724f3cf8b3fa0287a04366c51b9e8545c4c7',
         index: 1,
-        privateKey: 'cQ1YZMep3CiAnMTA9y62ha6BjGaaTFsTvtDuGmucGvpAVmS89khV',
-        address: 'nUPfS5zGfHzehxcReVQR2Jb53ef2i8xQb1',
+        privateKey: 'QTEcWfGqd2RbCRuAvoXAz99D8RwENfy8j6X92vPnUKR7yL1kXouk',
+        address: 'n36h3pAH7sC3z8KMB47BjbqvW2aJd2oTi7',
         value: '100'
       },
     ],
