@@ -4,17 +4,18 @@
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nrwl/node:package",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/examples/polygon-example",
         "main": "examples/polygon-example/src/index.ts",
         "tsConfig": "examples/polygon-example/tsconfig.app.json",
+        "packageJson": "examples/polygon-example/package.json",
         "assets": ["examples/polygon-example/*.md"]
       }
     },
     "serve": {
-      "executor": "@nrwl/js:node",
+      "executor": "@nrwl/node:execute",
       "options": {
         "buildTarget": "polygon-example:build"
       }
@@ -25,15 +26,7 @@
       "options": {
         "lintFilePatterns": ["examples/polygon-example/**/*.ts"]
       }
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/examples/polygon-example"],
-      "options": {
-        "jestConfig": "examples/polygon-example/jest.config.js",
-        "passWithNoTests": true
-      }
     }
   },
-  "tags": []
+  "tags": ["type:example"]
 }
