@@ -1,0 +1,33 @@
+{
+  "root": "packages/blockchain/ltc",
+  "sourceRoot": "packages/blockchain/ltc/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/blockchain/ltc",
+        "main": "packages/blockchain/ltc/src/index.ts",
+        "tsConfig": "packages/blockchain/ltc/tsconfig.lib.json",
+        "assets": ["packages/blockchain/ltc/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/blockchain/ltc/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/blockchain/ltc"],
+      "options": {
+        "jestConfig": "packages/blockchain/ltc/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,6 +1,7 @@
 import { ETH_TEST_DATA } from './test-data/eth.test-data'
 import { BTC_TEST_DATA } from './test-data/btc.test-data'
 import { CELO_TEST_DATA } from './test-data/celo.test-data'
+import { LTC_TEST_DATA } from './test-data/ltc.test-data'
 
 export type BlockchainNetworkTestData = {
   XPUB: string
@@ -26,6 +27,7 @@ export const TEST_DATA = {
   ETH: ETH_TEST_DATA,
   BTC: BTC_TEST_DATA,
   CELO: CELO_TEST_DATA,
+  LTC: LTC_TEST_DATA
 }
 
 /**
