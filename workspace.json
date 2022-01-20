@@ -10,6 +10,7 @@
     "sdk-celo": "packages/blockchain/celo",
     "sdk-eth": "packages/blockchain/eth",
     "sdk-example": "examples/sdk-example",
+    "sdk-polygon": "packages/blockchain/polygon",
     "shared-abstract-sdk": "packages/shared/abstract-sdk",
     "shared-blockchain-abstract": "packages/shared/blockchain/abstract",
     "shared-blockchain-btc-based": "packages/shared/blockchain/btc-based",
