@@ -8,9 +8,7 @@ import {
   TransactionHashKMS,
 } from '@tatumio/api-client';
 
-type DogeTransaction = 
-  | DogeTransactionUTXO 
-  | DogeTransactionUTXOKMS
+export type DogeTransaction = DogeTransactionUTXO | DogeTransactionUTXOKMS;
 
 const privateKeysFromUTXO = async (
   transaction: Transaction,
@@ -38,12 +36,12 @@ const prepareSignedTransaction = async (body: DogeTransaction): Promise<string> 
     .fee(Number(new BigNumber(body.fee).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)))
     .change(body.changeAddress);
 
-   const privateKeysToSign = await privateKeysFromUTXO(tx, body);
+  const privateKeysToSign = await privateKeysFromUTXO(tx, body);
 
-    const fromUTXO = body.fromUTXO;
-    if (fromUTXO && 'signatureId' in fromUTXO[0] && fromUTXO[0].signatureId) {
-      return JSON.stringify({ txData: JSON.stringify(tx), privateKeysToSign });
-    }
+  const fromUTXO = body.fromUTXO;
+  if (fromUTXO && 'signatureId' in fromUTXO[0] && fromUTXO[0].signatureId) {
+    return JSON.stringify({ txData: JSON.stringify(tx), privateKeysToSign });
+  }
 
   body.to.forEach((to) => {
     tx.to(

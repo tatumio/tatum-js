@@ -1,0 +1,52 @@
+{
+  "root": "examples/doge-example",
+  "sourceRoot": "examples/doge-example/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/examples/doge-example",
+        "main": "examples/doge-example/src/main.ts",
+        "tsConfig": "examples/doge-example/tsconfig.app.json",
+        "assets": ["examples/doge-example/src/assets"]
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "examples/doge-example/src/environments/environment.ts",
+              "with": "examples/doge-example/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:execute",
+      "options": {
+        "buildTarget": "doge-example:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["examples/doge-example/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/examples/doge-example"],
+      "options": {
+        "jestConfig": "examples/doge-example/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

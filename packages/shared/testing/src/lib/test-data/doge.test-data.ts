@@ -2,17 +2,23 @@ import { BlockchainTestData } from '../shared-testing'
 
 export const DOGE_TEST_DATA: BlockchainTestData = {
   MAINNET: {
-    XPUB: 'xpub6EvgPCG9vgxentW9pgd7iGUxMchXgvmhDTBdw9oPAT5ye4ZgVfR2kAoppb7PBuktykWwADKef4qGRSzTpF97Z9nrPmLwgVZjPNebKXDwyF1',
+    XPUB: 'xpub6EKTDXEVtTZR3sZoujGEnp9arodxCxHzTrN6G1PEFV7d8bt7CER3fLg8sz8G81LLAkz5C46FCtj4tppA7zd592gs4kCyKvqrMoQK6DQnD5r',
     ADDRESS_0: 'nXz1s8tMQbqjARaSMNCPkgdwJQ2JDW2M7W',
-    ADDRESS_100: '19A76Hwfyr29pNTv9wE1m2waz46hzLecYo',
-    PRIVATE_KEY_0: 'L27j51mbxeWksCcWLUxUT7MhP4iQWDRsb72seDKNo6yERKPr3vtj',
-    PRIVATE_KEY_100: 'L4YQbJRRzULqB2jnk2CbCgGnLMen8DJaQjiqzYw4qyucWM5cbBnQ',
+    ADDRESS_100: 'DJKAJhzMzvCezBjfAzdSKrTykbQB5kNCgv',
+    PRIVATE_KEY_0: 'QTWSvxHz3FgohMiqfjfZpctvodANr7eQcpjuvdXtw6QRgxFL1PzK',
+    PRIVATE_KEY_100: 'chAohgNcPWYSjPUhG7spHvHAE8yt86QvFmUAPgboFtKb4RnwB1L1',
+    XPUB_REGEX: /xpub6/,
   },
   TESTNET: {
-    XPUB: 'tpubDEKXb45q3i1tKQdUsCmG1BfNTHbztHT73q8hCBz6PN93zCKUppXiUsqEW38jvSQzgvYjMzPSGYjH7TPKkjZc5wTHTPSJs2NBJpd4mbos5ZZ',
-    ADDRESS_0: 'mt18BbsHM3TfGKF7wzPNo73dpWCbfHWptX',
-    ADDRESS_100: 'mpgJj832Nocdn6eftxtFoEv1XRhakfM5x3',
-    PRIVATE_KEY_0: 'cNqC7k1rcoLpWeC4t8UTJHUmm9nuNmeJZ2GAuFWirih2RLD8DuMd',
-    PRIVATE_KEY_100: 'cPE42nXJCYf5XdHgWB8ZW6CdCRo1VuFwoKwpHNNxLFQcaDC69QkV',
+    XPUB: 'tpubDFjLw3ykn4aB7fFt96FaqRjSnvtDsU2wpVr8GQk3Eo612LS9jo9JgMkQRfYVG248J3pTBsxGg3PYUXFd7pReNLTeUzxFcUDL3zCvrp3H34a',
+    ADDRESS_0: 'nXz1s8tMQbqjARaSMNCPkgdwJQ2JDW2M7W',
+    ADDRESS_100: 'nUPfS5zGfHzehxcReVQR2Jb53ef2i8xQb1',
+    PRIVATE_KEY_0: 'chAohgNcPWYSjPUhG7spHvHAE8yt86QvFmUAPgboFtKb4RnwB1L1',
+    PRIVATE_KEY_100: 'cifcEG11CVMvauPyEXLJXw6VTy3cpivuiRVekE8afRu1LPF1JZCw',
+    XPUB_REGEX: /tpub/,
   },
+  INVALID_XPUB_ERROR: 'Non-base58 character',
+  INVALID_XPUB_CHILD_INDEX_ERROR: 'Expected BIP32Path, got String "-1"',
+  INVALID_PRIVATE_KEY_CHILD_INDEX_ERROR: 'Expected UInt32, got Number -1',
+  INVALID_PRIVATE_KEY_ERROR: 'Non-base58 character',
 }

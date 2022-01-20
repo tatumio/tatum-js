@@ -1,5 +1,4 @@
-import { dogeTransactions } from './doge.tx'
-import { TatumApi } from '@tatumio/api-client'
+import { DogeTransaction } from './doge.tx'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
 import { TatumDogeSDK } from '../doge.sdk'
 
@@ -10,21 +9,21 @@ describe('DOGE transactions', () => {
     }).transaction.prepareSignedTransaction({
       fromUTXO: [
         {
-          privateKey: 'cQ1YZMep3CiAnMTA9y62ha6BjGaaTFsTvtDuGmucGvpAVmS89khV',
-          txHash: 'fcdc23f5c8bd811195921cd113f5724f3cf8b3fa0287a04366c51b9e8545c4c7',
-          index: 0,
-          value: '',
-          address: '',
+          privateKey: 'chAohgNcPWYSjPUhG7spHvHAE8yt86QvFmUAPgboFtKb4RnwB1L1',
+          txHash: 'abb7dfbbbf58407b3774c58f24930cbd6d8cba730200f96cbe8f024d9f8879e5',
+          index: 1,
+          value: '60.0819',
+          address: 'chAohgNcPWYSjPUhG7spHvHAE8yt86QvFmUAPgboFtKb4RnwB1L1',
         }],
       to: [
         {
-          address: 'tb1q9x2gqftyxterwt0k6ehzrm2gkzthjly677ucyr',
+          address: 'nXz1s8tMQbqjARaSMNCPkgdwJQ2JDW2M7W',
           value: 0.00015,
         },
       ],
-    })
+    } as DogeTransaction)
     expect(txData).toBe(
-      '02000000000101c7c445859e1bc56643a08702fab3f83c4f72f513d11c92951181bdc8f523dcfc0000000000ffffffff01983a000000000000160014299480256432f2372df6d66e21ed48b097797c9a024830450221008d43043b7e5ddc8eba5148b6540022deaa8628461fe08f6e48e596766a6c4b30022015270982a1a10fdc1454c1cd569f7a3eb9dac72b9598cebe74e3ba1c8af4e7dc012102473ddfe2afe40c68b68ecb81036003df920503668188b744b7c72046a97000bb00000000',
+      '0100000001e579889f4d028fbe6cf9000273ba8c6dbd0c93248fc574377b4058bfbbdfb7ab010000006a473044022042162432ec6f09dc0e259dde1a7643b0b2502aa77b92d9fad867801fee987223022010911ffa756f4da3bc52ef454fd9476453ed91e8cca8706dcce4fdc3ef79b0eb012102473ddfe2afe40c68b68ecb81036003df920503668188b744b7c72046a97000bbffffffff0200fab459010000001976a914299480256432f2372df6d66e21ed48b097797c9a88ac30d97206000000001976a914299480256432f2372df6d66e21ed48b097797c9a88ac00000000',
     )
   })
 })

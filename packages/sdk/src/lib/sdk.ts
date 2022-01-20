@@ -4,15 +4,17 @@ import { BlockchainRecordService, TatumUrl } from '@tatumio/api-client'
 import { abstractSdk } from '@tatumio/abstract-sdk'
 import { sdkKms } from './services/sdk.kms'
 import { TatumEthSDK } from '@tatumio/eth'
-import { Blockchain, blockchainHelper, Currency, Web3Request, Web3Response } from '@tatumio/shared-core'
+import { Currency, Web3Request, Web3Response } from '@tatumio/shared-core'
 import { sdkMultiToken } from './services/sdk.multitoken'
 import { SDKS } from './sdk.common'
 import { httpDriver } from './services/sdk.httpDriver'
+import { TatumDogeSDK } from '@tatumio/doge';
 
 export const TatumSDK = (args: { apiKey: string; url?: TatumUrl }) => {
   const blockchainSpecificSDKs: SDKS = {
     btc: TatumBtcSDK(args),
     eth: TatumEthSDK(args),
+    doge: TatumDogeSDK(args)
   }
 
   return {
