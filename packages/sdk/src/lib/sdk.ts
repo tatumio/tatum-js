@@ -8,12 +8,14 @@ import { Currency, Web3Request, Web3Response } from '@tatumio/shared-core'
 import { sdkMultiToken } from './services/sdk.multitoken'
 import { SDKS } from './sdk.common'
 import { httpDriver } from './services/sdk.httpDriver'
+import { TatumDogeSDK } from '@tatumio/doge';
 import { TatumCeloSDK } from '@tatumio/celo'
 
 export const TatumSDK = (args: { apiKey: string; url?: TatumUrl }) => {
   const blockchainSpecificSDKs: SDKS = {
     btc: TatumBtcSDK(args),
     eth: TatumEthSDK(args),
+    doge: TatumDogeSDK(args),
     celo: TatumCeloSDK(args),
   }
 
