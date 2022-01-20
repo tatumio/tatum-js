@@ -1,1 +1,1 @@
-export * from './lib/blockchain-polygon'
+export * from './lib/polygon.sdk'
