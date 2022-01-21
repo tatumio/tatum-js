@@ -4,6 +4,7 @@ type ReturnType = {
   [Blockchain.BTC]: Networks;
   [Blockchain.LTC]: Networks;
   [Blockchain.DOGE]: Networks;
+  [Blockchain.BCH]: Networks;
 };
 
 export const getNetworkConfig = (blockchain: BtcBasedBlockchain, options?: { testnet: boolean; }): Network => {
@@ -62,6 +63,30 @@ export const NETWORK_CONFIG: ReturnType = {
   [Blockchain.DOGE]: {
     mainnet: {
       messagePrefix: '\x18Dogecoin Signed Message:\n',
+      bech32: '',
+      bip32: {
+        public: 0x0488b21e,
+        private: 0x0488ade4,
+      },
+      pubKeyHash: 0x1e,
+      scriptHash: 0x16,
+      wif: 0x9e,
+    } as Network,
+    testnet: {
+      messagePrefix: '\x18Dogecoin Signed Message:\n',
+      bech32: '',
+      bip32: {
+        public: 0x043587cf,
+        private: 0x04358394,
+      },
+      pubKeyHash: 0x71,
+      scriptHash: 0xc4,
+      wif: 0xf1,
+    },
+  },
+  [Blockchain.BCH]: {
+    mainnet: {
+      messagePrefix: '\x18Bitcoin Cash Signed Message:\n',
       bech32: '',
       bip32: {
         public: 0x0488b21e,
