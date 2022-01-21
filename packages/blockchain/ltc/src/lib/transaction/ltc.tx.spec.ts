@@ -1,5 +1,3 @@
-import { ltcTransactions } from './ltc.tx'
-import { TatumApi } from '@tatumio/api-client'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
 import { TatumLtcSDK } from '../ltc.sdk'
 
@@ -11,13 +9,13 @@ describe('LTC transactions', () => {
       fromUTXO: [
         {
           txHash: '6670c707ca96d44531846b9853fb49dd26f43ff9197722ba55e21cb40722b807',
-          index: 1,
-          privateKey: 'cVX7YtgL5muLTPncHFhP95oitV1mqUUA5VeSn8HeCRJbPqipzobf',
+          index: 0,
+          privateKey: 'T61de4eW7crexnVmhRrddbXQfU8Av3t97RKZBKUWoaiWtBymQxrJ',
         },
       ],
       to: [
         {
-          address: 'mfh8kjy36ppH7bGXTzUwhWbKGgZziq4CbF',
+          address: 'LNzwQ65j1jZM42T2n6bcr74kFgcaaHQvf5',
           value: 0.2969944,
         },
       ],
@@ -34,13 +32,13 @@ describe('LTC transactions', () => {
       fromUTXO: [
         {
           txHash: '6670c707ca96d44531846b9853fb49dd26f43ff9197722ba55e21cb40722b807',
-          index: 1,
-          privateKey: 'cVX7YtgL5muLTPncHFhP95oitV1mqUUA5VeSn8HeCRJbPqipzobf',
+          index: 0,
+          privateKey: 'T61de4eW7crexnVmhRrddbXQfU8Av3t97RKZBKUWoaiWtBymQxrJ',
         },
       ],
       to: [
         {
-          address: 'mfh8kjy36ppH7bGXTzUwhWbKGgZziq4CbF',
+          address: 'LNzwQ65j1jZM42T2n6bcr74kFgcaaHQvf5',
           value: 0.2969944,
         },
       ],

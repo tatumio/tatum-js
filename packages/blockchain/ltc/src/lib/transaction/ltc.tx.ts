@@ -7,10 +7,8 @@ import {
   LtcTransactionAddressKMS,
   LtcTransactionUTXO,
   LtcTransactionUTXOKMS,
-  LtcTx,
   TransactionHashKMS,
 } from '@tatumio/api-client'
-import { Output } from 'bitcoinjs-lib/types/transaction';
 
 type LtcTransaction =
   | LtcTransactionAddress
