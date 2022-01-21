@@ -2,7 +2,6 @@
   "version": 2,
   "projects": {
     "api-client": "packages/api-client",
-    "blockchain-ltc": "packages/blockchain/ltc",
     "btc-example": "examples/btc-example",
     "celo-example": "examples/celo-example",
     "eth-example": "examples/eth-example",
@@ -11,6 +10,7 @@
     "sdk-btc": "packages/blockchain/btc",
     "sdk-celo": "packages/blockchain/celo",
     "sdk-eth": "packages/blockchain/eth",
+    "sdk-ltc": "packages/blockchain/ltc",
     "sdk-example": "examples/sdk-example",
     "shared-abstract-sdk": "packages/shared/abstract-sdk",
     "shared-blockchain-abstract": "packages/shared/blockchain/abstract",

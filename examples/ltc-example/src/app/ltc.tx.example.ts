@@ -7,15 +7,15 @@ export async function ltcTransactionsExample() {
   const txData = await ltcSDK.transaction.prepareSignedTransaction({
     fromUTXO: [
       {
-        txHash: 'fcdc23f5c8bd811195921cd113f5724f3cf8b3fa0287a04366c51b9e8545c4c7',
-        index: 0,
-        privateKey: 'cQ1YZMep3CiAnMTA9y62ha6BjGaaTFsTvtDuGmucGvpAVmS89khV',
+        txHash: '6670c707ca96d44531846b9853fb49dd26f43ff9197722ba55e21cb40722b807',
+        index: 1,
+        privateKey: 'cVX7YtgL5muLTPncHFhP95oitV1mqUUA5VeSn8HeCRJbPqipzobf',
       },
     ],
     to: [
       {
-        address: 'tb1q9x2gqftyxterwt0k6ehzrm2gkzthjly677ucyr',
-        value: 0.00015,
+        address: 'LYkdm7x4SCLePTi9AQfnvxRqKQfiwWp5pt',
+        value: 0.2969944,
       },
     ],
   })
@@ -24,13 +24,13 @@ export async function ltcTransactionsExample() {
   const { txId, failed } = await ltcSDK.transaction.sendTransaction({
     fromAddress: [
       {
-        address: 'tb1q9x2gqftyxterwt0k6ehzrm2gkzthjly677ucyr',
-        privateKey: 'cQ1YZMep3CiAnMTA9y62ha6BjGaaTFsTvtDuGmucGvpAVmS89khV',
+        address: 'LYkdm7x4SCLePTi9AQfnvxRqKQfiwWp5pt',
+        privateKey: 'cVX7YtgL5muLTPncHFhP95oitV1mqUUA5VeSn8HeCRJbPqipzobf',
       },
     ],
     to: [
       {
-        address: 'tb1q9x2gqftyxterwt0k6ehzrm2gkzthjly677ucyr',
+        address: 'LepMzqfXSgQommH2qu3fk7Gf5xgoHQsP1b',
         value: 0.00015,
       },
     ],

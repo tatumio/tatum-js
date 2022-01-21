@@ -8,22 +8,9 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/examples/ltc-example",
-        "main": "examples/ltc-example/src/main.ts",
-        "tsConfig": "examples/ltc-example/tsconfig.app.json",
-        "assets": ["examples/ltc-example/src/assets"]
-      },
-      "configurations": {
-        "production": {
-          "optimization": true,
-          "extractLicenses": true,
-          "inspect": false,
-          "fileReplacements": [
-            {
-              "replace": "examples/ltc-example/src/environments/environment.ts",
-              "with": "examples/ltc-example/src/environments/environment.prod.ts"
-            }
-          ]
-        }
+        "main": "examples/ltc-example/src/index.ts",
+        "packageJson": "examples/ltc-example/package.json",
+        "tsConfig": "examples/ltc-example/tsconfig.app.json"
       }
     },
     "serve": {
@@ -38,15 +25,7 @@
       "options": {
         "lintFilePatterns": ["examples/ltc-example/**/*.ts"]
       }
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/examples/ltc-example"],
-      "options": {
-        "jestConfig": "examples/ltc-example/jest.config.js",
-        "passWithNoTests": true
-      }
     }
   },
-  "tags": []
+  "tags": ["type:example"]
 }

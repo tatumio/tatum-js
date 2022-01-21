@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'blockchain-ltc',
+  displayName: 'sdk-ltc',
   preset: '../../../jest.preset.js',
   globals: {
     'ts-jest': {
