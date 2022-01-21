@@ -1,13 +1,14 @@
-import { Blockchain, BtcBasedBlockchain } from './models/Blockchain'
+import { Blockchain, BtcBasedBlockchain } from './models/Blockchain';
 
 type ReturnType = {
-  [Blockchain.BTC]: Networks
-  [Blockchain.LTC]: Networks
-}
+  [Blockchain.BTC]: Networks;
+  [Blockchain.LTC]: Networks;
+  [Blockchain.DOGE]: Networks;
+};
 
-export const getNetworkConfig = (blockchain: BtcBasedBlockchain, options?: { testnet: boolean }): Network => {
-  return options?.testnet ? NETWORK_CONFIG[blockchain].testnet : NETWORK_CONFIG[blockchain].mainnet
-}
+export const getNetworkConfig = (blockchain: BtcBasedBlockchain, options?: { testnet: boolean; }): Network => {
+  return options?.testnet ? NETWORK_CONFIG[blockchain].testnet : NETWORK_CONFIG[blockchain].mainnet;
+};
 
 export const NETWORK_CONFIG: ReturnType = {
   [Blockchain.BTC]: {
@@ -58,23 +59,47 @@ export const NETWORK_CONFIG: ReturnType = {
       wif: 0xef,
     },
   },
-}
+  [Blockchain.DOGE]: {
+    mainnet: {
+      messagePrefix: '\x18Dogecoin Signed Message:\n',
+      bech32: '',
+      bip32: {
+        public: 0x0488b21e,
+        private: 0x0488ade4,
+      },
+      pubKeyHash: 0x1e,
+      scriptHash: 0x16,
+      wif: 0x9e,
+    } as Network,
+    testnet: {
+      messagePrefix: '\x18Dogecoin Signed Message:\n',
+      bech32: '',
+      bip32: {
+        public: 0x043587cf,
+        private: 0x04358394,
+      },
+      pubKeyHash: 0x71,
+      scriptHash: 0xc4,
+      wif: 0xf1,
+    },
+  },
+};
 
 export type Networks = {
-  mainnet: Network
-  testnet: Network
-}
+  mainnet: Network;
+  testnet: Network;
+};
 
 interface Bip32 {
-  public: number
-  private: number
+  public: number;
+  private: number;
 }
 
 export interface Network {
-  messagePrefix: string
-  bech32: string
-  bip32: Bip32
-  pubKeyHash: number
-  scriptHash: number
-  wif: number
+  messagePrefix: string;
+  bech32: string;
+  bip32: Bip32;
+  pubKeyHash: number;
+  scriptHash: number;
+  wif: number;
 }
