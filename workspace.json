@@ -6,6 +6,7 @@
     "btc-example": "examples/btc-example",
     "celo-example": "examples/celo-example",
     "eth-example": "examples/eth-example",
+    "ltc-example": "examples/ltc-example",
     "sdk": "packages/sdk",
     "sdk-btc": "packages/blockchain/btc",
     "sdk-celo": "packages/blockchain/celo",
