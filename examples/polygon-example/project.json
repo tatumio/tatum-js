@@ -1,0 +1,32 @@
+{
+  "root": "examples/polygon-example",
+  "sourceRoot": "examples/polygon-example/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/examples/polygon-example",
+        "main": "examples/polygon-example/src/index.ts",
+        "tsConfig": "examples/polygon-example/tsconfig.app.json",
+        "packageJson": "examples/polygon-example/package.json",
+        "assets": ["examples/polygon-example/*.md"]
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:execute",
+      "options": {
+        "buildTarget": "polygon-example:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["examples/polygon-example/**/*.ts"]
+      }
+    }
+  },
+  "tags": ["type:example"]
+}

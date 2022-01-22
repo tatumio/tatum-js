@@ -24,6 +24,7 @@
       "@tatumio/celo": ["packages/blockchain/celo/src/index.ts"],
       "@tatumio/doge": ["packages/blockchain/doge/src/index.ts"],
       "@tatumio/eth": ["packages/blockchain/eth/src/index.ts"],
+      "@tatumio/polygon": ["packages/blockchain/polygon/src/index.ts"],
       "@tatumio/one": ["packages/blockchain/one/src/index.ts"],
       "@tatumio/sdk": ["packages/sdk/src/index.ts"],
       "@tatumio/shared-blockchain-abstract": ["packages/shared/blockchain/abstract/src/index.ts"],
