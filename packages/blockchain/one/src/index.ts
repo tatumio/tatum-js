@@ -1,1 +1,1 @@
-export * from './lib/blockchain-one'
+export * from './lib/one.sdk'
