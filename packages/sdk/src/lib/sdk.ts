@@ -10,6 +10,7 @@ import { SDKS } from './sdk.common'
 import { httpDriver } from './services/sdk.httpDriver'
 import { TatumDogeSDK } from '@tatumio/doge'
 import { TatumCeloSDK } from '@tatumio/celo'
+import { TatumLtcSDK } from '@tatumio/ltc'
 import { TatumPolygonSDK } from '@tatumio/polygon'
 import { TatumBscSDK } from '@tatumio/bsc'
 
@@ -19,6 +20,7 @@ export const TatumSDK = (args: { apiKey: string; url?: TatumUrl }) => {
     eth: TatumEthSDK(args),
     doge: TatumDogeSDK(args),
     celo: TatumCeloSDK(args),
+    ltc: TatumLtcSDK(args),
     polygon: TatumPolygonSDK(args),
     bsc: TatumBscSDK(args),
   }
