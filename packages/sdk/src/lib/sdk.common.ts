@@ -4,6 +4,7 @@ import { TatumEthSDK } from '@tatumio/eth'
 import { TatumLtcSDK } from '@tatumio/ltc'
 import { TatumDogeSDK } from '@tatumio/doge'
 import { TatumPolygonSDK } from '@tatumio/polygon'
+import { TatumKcsSDK } from '@tatumio/kcs'
 import { TatumBscSDK } from '@tatumio/bsc'
 
 export type SDKS = {
@@ -13,5 +14,6 @@ export type SDKS = {
   celo: ReturnType<typeof TatumCeloSDK>
   ltc: ReturnType<typeof TatumLtcSDK>
   polygon: ReturnType<typeof TatumPolygonSDK>
+  kcs: ReturnType<typeof TatumKcsSDK>
   bsc: ReturnType<typeof TatumBscSDK>
 }

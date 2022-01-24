@@ -1,0 +1,32 @@
+{
+  "root": "examples/kcs-example",
+  "sourceRoot": "examples/kcs-example/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/examples/kcs-example",
+        "main": "examples/kcs-example/src/index.ts",
+        "tsConfig": "examples/kcs-example/tsconfig.app.json",
+        "packageJson": "examples/kcs-example/package.json",
+        "assets": ["examples/kcs-example/*.md"]
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:execute",
+      "options": {
+        "buildTarget": "kcs-example:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["examples/kcs-example/**/*.ts"]
+      }
+    }
+  },
+  "tags": ["type:example"]
+}

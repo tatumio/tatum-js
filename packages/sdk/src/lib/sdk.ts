@@ -12,6 +12,7 @@ import { TatumDogeSDK } from '@tatumio/doge'
 import { TatumCeloSDK } from '@tatumio/celo'
 import { TatumLtcSDK } from '@tatumio/ltc'
 import { TatumPolygonSDK } from '@tatumio/polygon'
+import { TatumKcsSDK } from '@tatumio/kcs'
 import { TatumBscSDK } from '@tatumio/bsc'
 
 export const TatumSDK = (args: { apiKey: string; url?: TatumUrl }) => {
@@ -22,6 +23,7 @@ export const TatumSDK = (args: { apiKey: string; url?: TatumUrl }) => {
     celo: TatumCeloSDK(args),
     ltc: TatumLtcSDK(args),
     polygon: TatumPolygonSDK(args),
+    kcs: TatumKcsSDK(args),
     bsc: TatumBscSDK(args),
   }
 
