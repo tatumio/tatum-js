@@ -11,6 +11,7 @@ export const DERIVATION_PATH = {
   [Blockchain.DOGE]: "m/44'/3'/0'/0",
   [Blockchain.CELO]: "m/44'/52752'/0'/0",
   [Blockchain.POLYGON]: "m/44'/966'/0'/0",
+  [Blockchain.BSC]: "m/44'/60'/0'/0"
 }
 
 export const TESTNET_DERIVATION_PATH = "m/44'/1'/0'/0"

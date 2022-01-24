@@ -1,1 +1,1 @@
-export * from './lib/blockchain-bsc'
+export * from './lib/bsc.sdk'
