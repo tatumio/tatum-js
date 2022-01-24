@@ -11,6 +11,7 @@ import { httpDriver } from './services/sdk.httpDriver'
 import { TatumDogeSDK } from '@tatumio/doge'
 import { TatumCeloSDK } from '@tatumio/celo'
 import { TatumPolygonSDK } from '@tatumio/polygon'
+import { TatumBscSDK } from '@tatumio/bsc'
 
 export const TatumSDK = (args: { apiKey: string; url?: TatumUrl }) => {
   const blockchainSpecificSDKs: SDKS = {
@@ -19,6 +20,7 @@ export const TatumSDK = (args: { apiKey: string; url?: TatumUrl }) => {
     doge: TatumDogeSDK(args),
     celo: TatumCeloSDK(args),
     polygon: TatumPolygonSDK(args),
+    bsc: TatumBscSDK(args),
   }
 
   return {
