@@ -86,26 +86,26 @@ export const NETWORK_CONFIG: ReturnType = {
   },
   [Blockchain.BCH]: {
     mainnet: {
-      messagePrefix: '\x18Bitcoin Cash Signed Message:\n',
+      messagePrefix: '\x19BitcoinCash Signed Message:\n',
       bech32: '',
       bip32: {
-        public: 0x0488b21e,
-        private: 0x0488ade4,
+        public: 76067358,
+        private: 76066276,
       },
-      pubKeyHash: 0x1e,
-      scriptHash: 0x16,
-      wif: 0x9e,
+      pubKeyHash: 0,
+      scriptHash: 5,
+      wif: 128,
     } as Network,
     testnet: {
-      messagePrefix: '\x18Dogecoin Signed Message:\n',
+      messagePrefix: '\x19BitcoinCash Signed Message:\n',
       bech32: '',
       bip32: {
-        public: 0x043587cf,
-        private: 0x04358394,
+        public: 70617039,
+        private: 70615956,
       },
-      pubKeyHash: 0x71,
-      scriptHash: 0xc4,
-      wif: 0xf1,
+      pubKeyHash: 111,
+      scriptHash: 196,
+      wif: 239,
     },
   },
 };

@@ -17,7 +17,7 @@ export const TatumBchSDK = (args: SDKArguments) => {
       getBlockHash: BlockchainBitcoinCashService.bchGetBlockHash,
       getBlock: BlockchainBitcoinCashService.bchGetBlock,
       getTxForAccount: BlockchainBitcoinCashService.bchGetTxByAddress,
-      getTransaction: BlockchainBitcoinCashService.bchGetRawTransaction
+      getTransaction: BlockchainBitcoinCashService.bchGetRawTransaction,
     },
   }
 }
