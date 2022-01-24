@@ -1,9 +1,9 @@
-import { EvmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
-import { ChainTransactionKMS, EvmBasedBlockchain } from '@tatumio/shared-core'
+import { EvmBasedKMSServiceArgs } from '@tatumio/shared-blockchain-evm-based'
+import { ChainTransactionKMS } from '@tatumio/shared-core'
 import { PendingTransaction, ApiServices } from '@tatumio/api-client'
 import { abstractBlockchainKms } from '@tatumio/shared-blockchain-abstract'
 
-export const ethKmsService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3 }) => {
+export const ethKmsService = (args: EvmBasedKMSServiceArgs) => {
   return {
     ...abstractBlockchainKms(args),
     async sign(tx: ChainTransactionKMS, fromPrivateKey: string, provider?: string): Promise<string> {
