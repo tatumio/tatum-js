@@ -25,6 +25,7 @@
       "@tatumio/celo": ["packages/blockchain/celo/src/index.ts"],
       "@tatumio/doge": ["packages/blockchain/doge/src/index.ts"],
       "@tatumio/eth": ["packages/blockchain/eth/src/index.ts"],
+      "@tatumio/ltc": ["packages/blockchain/ltc/src/index.ts"],
       "@tatumio/sdk": ["packages/sdk/src/index.ts"],
       "@tatumio/shared-blockchain-abstract": ["packages/shared/blockchain/abstract/src/index.ts"],
       "@tatumio/shared-blockchain-btc-based": ["packages/shared/blockchain/btc-based/src/index.ts"],

@@ -32,6 +32,5 @@
         "projects": "dependencies"
       }
     ]
-  },
-  "defaultProject": "doge-example"
+  }
 }
