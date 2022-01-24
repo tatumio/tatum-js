@@ -25,6 +25,7 @@ const EndpointsMapping: Omit<Record<Blockchain, string>, 'FABRIC' | 'HARMONY' | 
   [Blockchain.BCH]: 'bcash',
   [Blockchain.XDC]: 'xdc',
   [Blockchain.XLM]: 'xlm',
+  [Blockchain.KCS]: 'kcs',
 }
 
 export const httpHelper = {
