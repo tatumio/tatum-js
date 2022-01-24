@@ -4,14 +4,25 @@
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/node:build",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/examples/doge-example",
         "main": "examples/doge-example/src/index.ts",
-        "tsConfig": "examples/doge-example/tsconfig.app.json",
-        "packageJson": "examples/doge-example/package.json",
-        "assets": ["examples/doge-example/*.md"]
+        "tsConfig": "examples/doge-example/tsconfig.app.json"
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "examples/doge-example/src/environments/environment.ts",
+              "with": "examples/doge-example/src/environments/environment.prod.ts"
+            }
+          ]
+        }
       }
     },
     "serve": {
@@ -26,7 +37,15 @@
       "options": {
         "lintFilePatterns": ["examples/doge-example/**/*.ts"]
       }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/examples/doge-example"],
+      "options": {
+        "jestConfig": "examples/doge-example/jest.config.js",
+        "passWithNoTests": true
+      }
     }
   },
-  "tags": ["type:example"]
+  "tags": []
 }
