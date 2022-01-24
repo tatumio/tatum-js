@@ -13,6 +13,7 @@
   },
   "private": true,
   "dependencies": {
+    "@tatumio/bitcoincashjs2-lib": "^4.1.2",
     "axios": "^0.24.0",
     "bignumber.js": "^9.0.2",
     "bip32": "^2.0.5",
@@ -21,6 +22,7 @@
     "bitcore-lib": "^8.25.25",
     "bitcore-lib-doge": "^8.25.27",
     "bitcore-lib-ltc": "^8.25.27",
+    "coininfo": "^5.1.0",
     "cross-blob": "^3.0.0",
     "ethereumjs-wallet": "^1.0.2",
     "form-data": "^4.0.0",
