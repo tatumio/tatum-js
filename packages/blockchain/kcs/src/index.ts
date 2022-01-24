@@ -1,1 +1,1 @@
-export * from './lib/blockchain-kcs'
+export * from './lib/kcs.sdk'
