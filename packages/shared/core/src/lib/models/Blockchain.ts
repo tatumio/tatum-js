@@ -23,6 +23,7 @@ export enum Blockchain {
   LYRA = 'LYRA',
   CARDANO = 'CARDANO',
   ALGO = 'ALGO',
+  KCS = 'KCS',
 }
 
 export const BtcBasedBlockchains = [Blockchain.BTC, Blockchain.LTC, Blockchain.BCH, Blockchain.DOGE]
