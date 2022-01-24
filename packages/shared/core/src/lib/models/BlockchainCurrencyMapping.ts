@@ -56,6 +56,7 @@ export const BlockchainCurrencyMapping: Record<
   [Blockchain.LYRA]: Currency.LYRA,
   [Blockchain.CARDANO]: Currency.ADA,
   [Blockchain.ALGO]: Currency.ALGO,
+  [Blockchain.KCS]: Currency.KCS,
 }
 
 export const CurrencyToBlockchainMapping: Record<Currency, Blockchain> = buildCurrencyBlockchainMapping()
