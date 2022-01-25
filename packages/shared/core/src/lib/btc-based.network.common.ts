@@ -1,18 +1,11 @@
-import { Blockchain, BtcBasedBlockchain } from './models/Blockchain';
+import { BtcBasedBlockchain } from './models/Blockchain'
 
-type ReturnType = {
-  [Blockchain.BTC]: Networks;
-  [Blockchain.LTC]: Networks;
-  [Blockchain.DOGE]: Networks;
-  [Blockchain.BCH]: Networks;
-};
+export const getNetworkConfig = (blockchain: BtcBasedBlockchain, options?: { testnet: boolean }): Network => {
+  return options?.testnet ? NETWORK_CONFIG[blockchain].testnet : NETWORK_CONFIG[blockchain].mainnet
+}
 
-export const getNetworkConfig = (blockchain: BtcBasedBlockchain, options?: { testnet: boolean; }): Network => {
-  return options?.testnet ? NETWORK_CONFIG[blockchain].testnet : NETWORK_CONFIG[blockchain].mainnet;
-};
-
-export const NETWORK_CONFIG: ReturnType = {
-  [Blockchain.BTC]: {
+export const NETWORK_CONFIG: Record<BtcBasedBlockchain, Networks> = {
+  BTC: {
     mainnet: {
       messagePrefix: '\x18Bitcoin Signed Message:\n',
       bech32: 'bc',
@@ -36,7 +29,7 @@ export const NETWORK_CONFIG: ReturnType = {
       wif: 0xef,
     },
   },
-  [Blockchain.LTC]: {
+  LTC: {
     mainnet: {
       messagePrefix: '\x18Litecoin Signed Message:\n',
       bech32: '',
@@ -60,7 +53,7 @@ export const NETWORK_CONFIG: ReturnType = {
       wif: 0xef,
     },
   },
-  [Blockchain.DOGE]: {
+  DOGE: {
     mainnet: {
       messagePrefix: '\x18Dogecoin Signed Message:\n',
       bech32: '',
@@ -84,7 +77,7 @@ export const NETWORK_CONFIG: ReturnType = {
       wif: 0xf1,
     },
   },
-  [Blockchain.BCH]: {
+  BCH: {
     mainnet: {
       messagePrefix: '\x19BitcoinCash Signed Message:\n',
       bech32: '',
@@ -108,23 +101,23 @@ export const NETWORK_CONFIG: ReturnType = {
       wif: 239,
     },
   },
-};
+}
 
 export type Networks = {
-  mainnet: Network;
-  testnet: Network;
-};
+  mainnet: Network
+  testnet: Network
+}
 
 interface Bip32 {
-  public: number;
-  private: number;
+  public: number
+  private: number
 }
 
 export interface Network {
-  messagePrefix: string;
-  bech32: string;
-  bip32: Bip32;
-  pubKeyHash: number;
-  scriptHash: number;
-  wif: number;
+  messagePrefix: string
+  bech32: string
+  bip32: Bip32
+  pubKeyHash: number
+  scriptHash: number
+  wif: number
 }
