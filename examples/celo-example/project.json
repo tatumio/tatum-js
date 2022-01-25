@@ -1,0 +1,32 @@
+{
+  "root": "examples/celo-example",
+  "sourceRoot": "examples/celo-example/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/examples/celo-example",
+        "main": "examples/celo-example/src/index.ts",
+        "tsConfig": "examples/celo-example/tsconfig.app.json",
+        "packageJson": "examples/celo-example/package.json",
+        "assets": ["examples/celo-example/*.md"]
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:execute",
+      "options": {
+        "buildTarget": "celo-example:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["examples/celo-example/**/*.ts"]
+      }
+    }
+  },
+  "tags": ["type:example"]
+}

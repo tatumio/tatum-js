@@ -1,0 +1,34 @@
+{
+  "root": "packages/blockchain/polygon",
+  "sourceRoot": "packages/blockchain/polygon/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/blockchain/polygon",
+        "tsConfig": "packages/blockchain/polygon/tsconfig.lib.json",
+        "packageJson": "packages/blockchain/polygon/package.json",
+        "main": "packages/blockchain/polygon/src/index.ts",
+        "assets": ["packages/blockchain/polygon/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/blockchain/polygon/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/blockchain/polygon"],
+      "options": {
+        "jestConfig": "packages/blockchain/polygon/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["scope:sdk", "scope:evm-based"]
+}

@@ -1,0 +1,32 @@
+{
+  "root": "examples/doge-example",
+  "sourceRoot": "examples/doge-example/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/examples/doge-example",
+        "main": "examples/doge-example/src/index.ts",
+        "tsConfig": "examples/doge-example/tsconfig.app.json",
+        "packageJson": "examples/doge-example/package.json",
+        "assets": ["examples/doge-example/*.md"]
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:execute",
+      "options": {
+        "buildTarget": "doge-example:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["examples/doge-example/**/*.ts"]
+      }
+    }
+  },
+  "tags": ["type:example"]
+}

@@ -1,0 +1,34 @@
+{
+  "root": "packages/shared/blockchain/abstract",
+  "sourceRoot": "packages/shared/blockchain/abstract/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/shared/blockchain/abstract",
+        "tsConfig": "packages/shared/blockchain/abstract/tsconfig.lib.json",
+        "packageJson": "packages/shared/blockchain/abstract/package.json",
+        "main": "packages/shared/blockchain/abstract/src/index.ts",
+        "assets": ["packages/shared/blockchain/abstract/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/shared/blockchain/abstract/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/shared/blockchain/abstract"],
+      "options": {
+        "jestConfig": "packages/shared/blockchain/abstract/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["scope:shared"]
+}

@@ -1,0 +1,8 @@
+{
+  "editor.formatOnSave": false,
+  "eslint.enable": true,
+  "eslint.packageManager": "yarn",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+}

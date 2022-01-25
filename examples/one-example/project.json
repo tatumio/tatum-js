@@ -1,0 +1,32 @@
+{
+  "root": "examples/one-example",
+  "sourceRoot": "examples/one-example/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/examples/one-example",
+        "main": "examples/one-example/src/index.ts",
+        "tsConfig": "examples/one-example/tsconfig.app.json",
+        "packageJson": "examples/one-example/package.json",
+        "assets": ["examples/one-example/*.md"]
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:execute",
+      "options": {
+        "buildTarget": "one-example:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["examples/one-example/**/*.ts"]
+      }
+    }
+  },
+  "tags": ["type:example"]
+}

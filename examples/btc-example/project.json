@@ -1,0 +1,31 @@
+{
+  "root": "examples/btc-example",
+  "sourceRoot": "examples/btc-example/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/examples/btc-example",
+        "main": "examples/btc-example/src/index.ts",
+        "packageJson": "examples/btc-example/package.json",
+        "tsConfig": "examples/btc-example/tsconfig.app.json"
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:execute",
+      "options": {
+        "buildTarget": "btc-example:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["examples/btc-example/**/*.ts"]
+      }
+    }
+  },
+  "tags": ["type:example"]
+}

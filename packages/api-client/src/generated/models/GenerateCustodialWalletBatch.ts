@@ -1,0 +1,55 @@
+/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+
+export type GenerateCustodialWalletBatch = {
+    /**
+     * Blockchain to work with.
+     */
+    chain: GenerateCustodialWalletBatch.chain;
+    /**
+     * Private key of account, from which the transaction will be initiated.
+     */
+    fromPrivateKey: string;
+    /**
+     * Number of addresses to generate.
+     */
+    batchCount: number;
+    /**
+     * Owner of the addresses.
+     */
+    owner: string;
+    /**
+     * Custom defined fee. If not present, it will be calculated automatically.
+     */
+    fee?: {
+        /**
+         * Gas limit for transaction in gas price.
+         */
+        gasLimit: string;
+        /**
+         * Gas price in Gwei.
+         */
+        gasPrice: string;
+    };
+    /**
+     * Nonce to be set to the transaction. If not present, last known nonce will be used.
+     */
+    nonce?: number;
+}
+
+export namespace GenerateCustodialWalletBatch {
+
+    /**
+     * Blockchain to work with.
+     */
+    export enum chain {
+        ETH = 'ETH',
+        MATIC = 'MATIC',
+        BSC = 'BSC',
+        ONE = 'ONE',
+        XDC = 'XDC',
+    }
+
+
+}
