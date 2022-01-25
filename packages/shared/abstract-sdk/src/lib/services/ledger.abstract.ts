@@ -95,7 +95,7 @@ export const abstractSdkLedgerService = () => {
         let w
         if (generateNewWallet) {
           w = await generateNewWalletFn(undefined, { testnet })
-          account.xpub = w.xpub || w.address
+          account.xpub = w.xpub // || w.address @TODO not in wallet type
         }
         const a = await LedgerAccountService.createAccount(account)
         const address = await ApiServices.offChain.account.generateDepositAddress(a.id)

@@ -5,8 +5,8 @@ import {
   Currency,
   ETH_BASED_CURRENCIES,
   FLOW_CURRENCIES,
-  NativeCurrency,
   MATIC_BASED_CURRENCIES,
+  NativeCurrency,
   TRON_CURRENCIES,
 } from './Currency'
 
@@ -14,49 +14,49 @@ export const BlockchainCurrencyMapping: Record<
   Blockchain,
   NativeCurrency | { nativeCurrency: NativeCurrency; currencies: Currency[] }
 > = {
-  [Blockchain.BTC]: Currency.BTC,
-  [Blockchain.LTC]: Currency.LTC,
-  [Blockchain.DOGE]: Currency.DOGE,
-  [Blockchain.BCH]: Currency.BCH,
-  [Blockchain.FABRIC]: Currency.FABRIC,
-  [Blockchain.QUORUM]: Currency.QUORUM,
-  [Blockchain.SOL]: Currency.SOL,
-  [Blockchain.TRON]: {
+  BTC: Currency.BTC,
+  LTC: Currency.LTC,
+  DOGE: Currency.DOGE,
+  BCH: Currency.BCH,
+  FABRIC: Currency.FABRIC,
+  QUORUM: Currency.QUORUM,
+  SOL: Currency.SOL,
+  TRON: {
     nativeCurrency: Currency.TRON,
     currencies: TRON_CURRENCIES,
   },
-  [Blockchain.FLOW]: {
+  FLOW: {
     nativeCurrency: Currency.FLOW,
     currencies: FLOW_CURRENCIES,
   },
-  [Blockchain.CELO]: {
+  CELO: {
     nativeCurrency: Currency.CELO,
     currencies: CELO_CURRENCIES,
   },
-  [Blockchain.HARMONY]: Currency.ONE,
-  [Blockchain.QTUM]: Currency.QTUM,
-  [Blockchain.EGLD]: Currency.EGLD,
-  [Blockchain.ETH]: {
+  HARMONY: Currency.ONE,
+  QTUM: Currency.QTUM,
+  EGLD: Currency.EGLD,
+  ETH: {
     nativeCurrency: Currency.ETH,
     currencies: ETH_BASED_CURRENCIES,
   },
-  [Blockchain.BSC]: {
+  BSC: {
     nativeCurrency: Currency.ETH,
     currencies: BSC_BASED_CURRENCIES,
   },
-  [Blockchain.POLYGON]: {
+  POLYGON: {
     nativeCurrency: Currency.MATIC,
     currencies: MATIC_BASED_CURRENCIES,
   },
-  [Blockchain.XDC]: Currency.XDC,
-  [Blockchain.XRP]: Currency.XRP,
-  [Blockchain.XLM]: Currency.XLM,
-  [Blockchain.VET]: Currency.VET,
-  [Blockchain.NEO]: Currency.NEO,
-  [Blockchain.LYRA]: Currency.LYRA,
-  [Blockchain.CARDANO]: Currency.ADA,
-  [Blockchain.ALGO]: Currency.ALGO,
-  [Blockchain.KCS]: Currency.KCS,
+  XDC: Currency.XDC,
+  XRP: Currency.XRP,
+  XLM: Currency.XLM,
+  VET: Currency.VET,
+  NEO: Currency.NEO,
+  LYRA: Currency.LYRA,
+  CARDANO: Currency.ADA,
+  ALGO: Currency.ALGO,
+  KCS: Currency.KCS,
 }
 
 export const CurrencyToBlockchainMapping: Record<Currency, Blockchain> = buildCurrencyBlockchainMapping()
@@ -64,7 +64,7 @@ export const BlockchainToNativeCurrencyMapping: Record<Blockchain, NativeCurrenc
   buildBlockchainDefaultCurrencyMapping()
 
 function buildBlockchainDefaultCurrencyMapping(): Record<Blockchain, Currency> {
-  return Object.keys(BlockchainCurrencyMapping)
+  return (Object.keys(BlockchainCurrencyMapping) as Blockchain[])
     .map((blockchain: Blockchain) => {
       const value = BlockchainCurrencyMapping[blockchain]
       if (typeof value === 'object') return { [blockchain]: value.nativeCurrency }
@@ -80,7 +80,7 @@ function buildBlockchainDefaultCurrencyMapping(): Record<Blockchain, Currency> {
 }
 
 function buildCurrencyBlockchainMapping(): Record<Currency, Blockchain> {
-  return Object.keys(BlockchainCurrencyMapping)
+  return (Object.keys(BlockchainCurrencyMapping) as Blockchain[])
     .map((blockchain: Blockchain) => {
       const value = BlockchainCurrencyMapping[blockchain]
 
