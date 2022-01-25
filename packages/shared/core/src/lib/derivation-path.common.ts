@@ -4,16 +4,33 @@ export const getDerivationPath = (blockchain: Blockchain, options?: { testnet: b
   return options?.testnet ? TESTNET_DERIVATION_PATH : DERIVATION_PATH[blockchain]
 }
 
-export const DERIVATION_PATH = {
-  [Blockchain.BTC]: "m/44'/0'/0'/0",
-  [Blockchain.LTC]: "m/44'/2'/0'/0",
-  [Blockchain.ETH]: "m/44'/60'/0'/0",
-  [Blockchain.DOGE]: "m/44'/3'/0'/0",
-  [Blockchain.CELO]: "m/44'/52752'/0'/0",
-  [Blockchain.POLYGON]: "m/44'/966'/0'/0",
-  [Blockchain.KCS]: "m/44'/60'/0'/0",
-  [Blockchain.HARMONY]: "m/44'/1023'/0'/0",
-  [Blockchain.BSC]: "m/44'/60'/0'/0"
+export const DERIVATION_PATH: Record<Blockchain, string> = {
+  BTC: "m/44'/0'/0'/0",
+  LTC: "m/44'/2'/0'/0",
+  ETH: "m/44'/60'/0'/0",
+  DOGE: "m/44'/3'/0'/0",
+  CELO: "m/44'/52752'/0'/0",
+  POLYGON: "m/44'/966'/0'/0",
+  KCS: "m/44'/60'/0'/0",
+  HARMONY: "m/44'/1023'/0'/0",
+  BSC: "m/44'/60'/0'/0",
+  // TBD
+  ALGO: '@TODO - TBD',
+  BCH: '@TODO - TBD',
+  CARDANO: '@TODO - TBD',
+  EGLD: '@TODO - TBD',
+  FABRIC: '@TODO - TBD',
+  FLOW: '@TODO - TBD',
+  LYRA: '@TODO - TBD',
+  NEO: '@TODO - TBD',
+  QTUM: '@TODO - TBD',
+  QUORUM: '@TODO - TBD',
+  SOL: '@TODO - TBD',
+  TRON: '@TODO - TBD',
+  VET: '@TODO - TBD',
+  XDC: '@TODO - TBD',
+  XLM: '@TODO - TBD',
+  XRP: '@TODO - TBD',
 }
 
 export const TESTNET_DERIVATION_PATH = "m/44'/1'/0'/0"
