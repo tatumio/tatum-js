@@ -25,25 +25,25 @@ export async function btcLedgerAccountsExample() {
   const customerAccounts = await btcSDK.ledger.account.getByCustomerId(10, '5e6be89ee6aa436299950c3f');
   await btcSDK.ledger.account.unfreeze('5e6be89ee6aa436299950c3f');
   await btcSDK.ledger.account.update('5e6be89ee6aa436299950c3f', {
-    "accountCode": "AC_1011_B",
-    "accountNumber": "123456"
+    accountCode: "AC_1011_B",
+    accountNumber: "123456"
   });
   const accountId = await btcSDK.ledger.blockAmount.block('5e6be89ee6aa436299950c3f', {
-    "amount": "5",
-    "type": "DEBIT_CARD_OP",
-    "description": "Card payment in the shop."
+    amount: "5",
+    type: "DEBIT_CARD_OP",
+    description: "Card payment in the shop."
   });
   await btcSDK.ledger.blockAmount.unblock('5e6be89ee6aa436299950c3f');
   const txResult = await btcSDK.ledger.blockAmount.unblockWithTransaction('5e6be89ee6aa436299950c3f', {
-    "recipientAccountId": "5e6645712b55823de7ea82f2",
-    "amount": "5",
-    "anonymous": false,
-    "compliant": false,
-    "transactionCode": "1_01_EXTERNAL_CODE",
-    "paymentId": "9625",
-    "recipientNote": "Private note",
-    "baseRate": 1,
-    "senderNote": "Sender note"
+    recipientAccountId: "5e6645712b55823de7ea82f2",
+    amount: "5",
+    anonymous: false,
+    compliant: false,
+    transactionCode: "1_01_EXTERNAL_CODE",
+    paymentId: "9625",
+    recipientNote: "Private note",
+    baseRate: 1,
+    senderNote: "Sender note"
   });
   await btcSDK.ledger.customer.activate('5e68c66581f2ee32bc354087');
   await btcSDK.ledger.customer.deactivate('5e68c66581f2ee32bc354087');
@@ -52,39 +52,39 @@ export async function btcLedgerAccountsExample() {
   const customer = await btcSDK.ledger.customer.get('5e68c66581f2ee32bc354087');
   const customers = await btcSDK.ledger.customer.getAll(10);
   const updatedCustomer = await btcSDK.ledger.customer.update('5e68c66581f2ee32bc354087', {
-    "externalId": "123654",
+    externalId: "123654",
   });
   await btcSDK.ledger.orderBook.cancel('5e68c66581f2ee32bc354087');
   await btcSDK.ledger.orderBook.cancelByAccount('5e68c66581f2ee32bc354087');
   const trade = await btcSDK.ledger.orderBook.get('7c21ed165e294db78b95f0f1');
   const activeBuyTrades = await btcSDK.ledger.orderBook.getActiveBuyTrades({
-    "id": "7c21ed165e294db78b95f0f1",
-    "customerId": "5e68c66581f2ee32bc354087",
-    "pageSize": 10,
+    id: "7c21ed165e294db78b95f0f1",
+    customerId: "5e68c66581f2ee32bc354087",
+    pageSize: 10,
   });
   const activeSellTrades = await btcSDK.ledger.orderBook.getActiveSellTrades({
-    "id": "7c21ed165e294db78b95f0f1",
-    "customerId": "5e68c66581f2ee32bc354087",
-    "pageSize": 10,
+    id: "7c21ed165e294db78b95f0f1",
+    customerId: "5e68c66581f2ee32bc354087",
+    pageSize: 10,
   });
   const historicalTrades = await btcSDK.ledger.orderBook.getHistorical({
-    "id": "7c21ed165e294db78b95f0f1",
-    "customerId": "5e68c66581f2ee32bc354087",
-    "pageSize": 10,
+    id: "7c21ed165e294db78b95f0f1",
+    customerId: "5e68c66581f2ee32bc354087",
+    pageSize: 10,
   });
   const newTrade = await btcSDK.ledger.orderBook.newTrade({
-    "type": CreateTrade.type.BUY,
-    "price": "8650.4",
-    "amount": "15000",
-    "pair": "BTC/EUR",
-    "currency1AccountId": "7c21ed165e294db78b95f0f1",
-    "currency2AccountId": "7c21ed165e294db78b95f0f1",
-    "feeAccountId": "7c21ed165e294db78b95f0f1",
-    "fee": 1.5,
-    "attr": {
-      "sealDate": 1572031674384,
-      "percentBlock": 1.5,
-      "percentPenalty": 1.5
+    type: CreateTrade.type.BUY,
+    price: "8650.4",
+    amount: "15000",
+    pair: "BTC/EUR",
+    currency1AccountId: "7c21ed165e294db78b95f0f1",
+    currency2AccountId: "7c21ed165e294db78b95f0f1",
+    feeAccountId: "7c21ed165e294db78b95f0f1",
+    fee: 1.5,
+    attr: {
+      sealDate: 1572031674384,
+      percentBlock: 1.5,
+      percentPenalty: 1.5
     }
   });
   const transaction = await btcSDK.ledger.transaction.countByAccount({
@@ -101,46 +101,46 @@ export async function btcLedgerAccountsExample() {
   });
   const transactionByReference = await btcSDK.ledger.transaction.getAllByReference('5e6be8e9e6aa436299950c41');
   const transactionResult = await btcSDK.ledger.transaction.send({
-    "senderAccountId": "5e6645712b55823de7ea82f1",
-    "recipientAccountId": "5e6645712b55823de7ea82f2",
-    "amount": "5",
+    senderAccountId: "5e6645712b55823de7ea82f1",
+    recipientAccountId: "5e6645712b55823de7ea82f2",
+    amount: "5",
   });
   const batchTxResult = await btcSDK.ledger.transaction.sendMultiple({
     senderAccountId: '5e6645712b55823de7ea82f1',
     transaction: [{
-      "recipientAccountId": "5e6645712b55823de7ea82f2",
-      "amount": "5",
+      recipientAccountId: "5e6645712b55823de7ea82f2",
+      amount: "5",
     }]
   });
 
   const virtualCurrencyAcc = await btcSDK.ledger.virtualCurrency.create({
-    "name": "VC_VIRTUAL",
-    "supply": "1000000",
-    "basePair": VirtualCurrency.basePair.BTC,
-    "baseRate": 1,
-    "customer": {
-      "accountingCurrency": VirtualCurrency.accountingCurrency.USD,
-      "customerCountry": "US",
-      "externalId": "123654",
-      "providerCountry": "US"
+    name: "VC_VIRTUAL",
+    supply: "1000000",
+    basePair: VirtualCurrency.basePair.BTC,
+    baseRate: 1,
+    customer: {
+      accountingCurrency: VirtualCurrency.accountingCurrency.USD,
+      customerCountry: "US",
+      externalId: "123654",
+      providerCountry: "US"
     },
-    "description": "My Virtual Token description.",
-    "accountCode": "AC_1011_B",
-    "accountNumber": "1234567890",
-    "accountingCurrency": VirtualCurrency.accountingCurrency.USD
+    description: "My Virtual Token description.",
+    accountCode: "AC_1011_B",
+    accountNumber: "1234567890",
+    accountingCurrency: VirtualCurrency.accountingCurrency.USD
   });
   const virtualCurrency = await btcSDK.ledger.virtualCurrency.getByName('VC_VIRTUAL');
   const mintTx = await btcSDK.ledger.virtualCurrency.mint({
-    "accountId": "5e68c66581f2ee32bc354087",
-    "amount": "1.5",
+    accountId: "5e68c66581f2ee32bc354087",
+    amount: "1.5",
   });
   const revokeTx = await btcSDK.ledger.virtualCurrency.revoke({
-    "accountId": "5e68c66581f2ee32bc354087",
-    "amount": "1.5",
+    accountId: "5e68c66581f2ee32bc354087",
+    amount: "1.5",
   });
   await btcSDK.ledger.virtualCurrency.update({
-    "name": "VC_VIRTUAL",
-    "baseRate": 1,
-    "basePair": VirtualCurrency.basePair.EUR
+    name: "VC_VIRTUAL",
+    baseRate: 1,
+    basePair: VirtualCurrency.basePair.EUR
   });
 }
