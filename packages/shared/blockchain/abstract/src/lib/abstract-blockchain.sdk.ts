@@ -36,3 +36,7 @@ export interface SdkWithWalletFunctions {
 export interface SdkWithXrpLikeWalletFunction {
   wallet(): CancelablePromise<XrpWallet>
 }
+
+export interface SdkWithErc20Functions {
+  decimals(contractAddress: string, provider?: string): any
+}
