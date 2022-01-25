@@ -2,6 +2,7 @@
   "version": 2,
   "projects": {
     "api-client": "packages/api-client",
+    "bsc-example": "examples/bsc-example",
     "btc-example": "examples/btc-example",
     "celo-example": "examples/celo-example",
     "doge-example": "examples/doge-example",
@@ -11,6 +12,7 @@
     "kcs-example": "examples/kcs-example",
     "one-example": "examples/one-example",
     "sdk": "packages/sdk",
+    "sdk-bsc": "packages/blockchain/bsc",
     "sdk-btc": "packages/blockchain/btc",
     "sdk-celo": "packages/blockchain/celo",
     "sdk-doge": "packages/blockchain/doge",
