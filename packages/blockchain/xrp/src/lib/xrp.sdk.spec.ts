@@ -4,6 +4,6 @@ import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA, xrpLikeWalletTestFactory } fr
 describe('TatumXrpSDK', () => {
   const sdk = TatumXrpSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
   describe('Generate wallet', () => {
-    xrpLikeWalletTestFactory.generateWallet(sdk.blockchain, TEST_DATA.XRP)
+    xrpLikeWalletTestFactory.generateWallet(sdk, TEST_DATA.XRP)
   })
 })

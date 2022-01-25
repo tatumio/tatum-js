@@ -1,16 +1,18 @@
 import { BigNumber } from 'bignumber.js'
 import { ApiServices, TransferXrp, Withdrawal } from '@tatumio/api-client'
-import { Currency } from '@tatumio/shared-core'
+import { Blockchain, Currency } from '@tatumio/shared-core'
 import { RippleAPI } from 'ripple-lib'
+import { abstractBlockchainOffchain } from '@tatumio/shared-blockchain-abstract'
 
-export const xrpOffChainService = () => {
+export const xrpOffchainService = (args: { blockchain: Blockchain }) => {
   return {
+    ...abstractBlockchainOffchain(args),
     sendOffchainTransaction,
     prepareSignedOffchainTransaction,
   }
 }
 
-export type TransferXrpOfchain = TransferXrp & Withdrawal
+export type TransferXrpOffchain = TransferXrp & Withdrawal
 
 /**
  * Send Xrp transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -18,7 +20,7 @@ export type TransferXrpOfchain = TransferXrp & Withdrawal
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
-export const sendOffchainTransaction = async (body: TransferXrpOfchain) => {
+export const sendOffchainTransaction = async (body: TransferXrpOffchain) => {
   const { account, secret, ...withdrawal } = body
   if (!withdrawal.fee) {
     withdrawal.fee = new BigNumber((await ApiServices.blockchain.xrp.xrpGetFee()).drops.base_fee)
