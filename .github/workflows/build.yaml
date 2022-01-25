@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - feature/submodule-nx  #TMP
   pull_request:
 
 env:
