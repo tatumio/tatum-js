@@ -8,12 +8,12 @@ export async function btcOffchainExample() {
   const adresses = await btcSDK.offchain.depositAddress.createMultiple({
     addresses: [
       {
-        "accountId": "5e6be8e9e6aa436299950c41",
-        "derivationKey": 0
+        accountId: "5e6be8e9e6aa436299950c41",
+        derivationKey: 0
       },
       {
-        "accountId": "5e6be8e9e6aa436299951n35",
-        "derivationKey": 1
+        accountId: "5e6be8e9e6aa436299951n35",
+        derivationKey: 1
       }
     ]
   });

@@ -21,12 +21,12 @@ export async function btcApiExample() {
   const utxo = await btcSDK.api.btcGetUtxo('53faa103e8217e1520f5149a4e8c84aeb58e55bdab11164a95e69a8ca50f8fcc', 0);
   const transfer = await btcSDK.api.btcTransferBlockchain({
     fromAddress: [{
-      "address": "2N9bBiH2qrTDrPCzrNhaFGdkNKS86PJAAAS",
-      "privateKey": "cVX7YtgL5muLTPncHFhP95oitV1mqUUA5VeSn8HeCRJbP"
-    }], "to": [
+      address: "2N9bBiH2qrTDrPCzrNhaFGdkNKS86PJAAAS",
+      privateKey: "cVX7YtgL5muLTPncHFhP95oitV1mqUUA5VeSn8HeCRJbP"
+    }], to: [
       {
-        "address": "2MzNGwuKvMEvKMQogtgzSqJcH2UW3Tc5oc7",
-        "value": 0.02969944
+        address: "2MzNGwuKvMEvKMQogtgzSqJcH2UW3Tc5oc7",
+        value: 0.02969944
       }
     ]
   } as BtcTransactionFromAddress);
