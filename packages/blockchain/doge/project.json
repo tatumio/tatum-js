@@ -1,0 +1,34 @@
+{
+  "root": "packages/blockchain/doge",
+  "sourceRoot": "packages/blockchain/doge/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/blockchain/doge",
+        "tsConfig": "packages/blockchain/doge/tsconfig.lib.json",
+        "packageJson": "packages/blockchain/doge/package.json",
+        "main": "packages/blockchain/doge/src/index.ts",
+        "assets": ["packages/blockchain/doge/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/blockchain/doge/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/blockchain/doge"],
+      "options": {
+        "jestConfig": "packages/blockchain/doge/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["scope:sdk", "scope:btc-based"]
+}

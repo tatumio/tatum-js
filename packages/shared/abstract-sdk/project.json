@@ -1,0 +1,34 @@
+{
+  "root": "packages/shared/abstract-sdk",
+  "sourceRoot": "packages/shared/abstract-sdk/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/shared/abstract-sdk",
+        "tsConfig": "packages/shared/abstract-sdk/tsconfig.lib.json",
+        "packageJson": "packages/shared/abstract-sdk/package.json",
+        "main": "packages/shared/abstract-sdk/src/index.ts",
+        "assets": ["packages/shared/abstract-sdk/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/shared/abstract-sdk/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/shared/abstract-sdk"],
+      "options": {
+        "jestConfig": "packages/shared/abstract-sdk/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["scope:shared"]
+}

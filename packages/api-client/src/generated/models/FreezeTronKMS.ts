@@ -1,0 +1,47 @@
+/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+
+export type FreezeTronKMS = {
+    /**
+     * Sender address of TRON account in Base58 format.
+     */
+    from: string;
+    /**
+     * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+     */
+    signatureId: string;
+    /**
+     * If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic.
+     */
+    index: number;
+    /**
+     * Recipient address of frozen BANDWIDTH or ENERGY.
+     */
+    receiver: string;
+    /**
+     * Duration of frozen funds, in days.
+     */
+    duration: number;
+    /**
+     * Resource to obtain, BANDWIDTH or ENERGY.
+     */
+    resource: FreezeTronKMS.resource;
+    /**
+     * Amount to be frozen in TRX.
+     */
+    amount: string;
+}
+
+export namespace FreezeTronKMS {
+
+    /**
+     * Resource to obtain, BANDWIDTH or ENERGY.
+     */
+    export enum resource {
+        BANDWIDTH = 'BANDWIDTH',
+        ENERGY = 'ENERGY',
+    }
+
+
+}

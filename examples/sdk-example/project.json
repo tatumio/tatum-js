@@ -1,0 +1,32 @@
+{
+  "root": "examples/sdk-example",
+  "sourceRoot": "examples/sdk-example/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/examples/sdk-example",
+        "main": "examples/sdk-example/src/index.ts",
+        "tsConfig": "examples/sdk-example/tsconfig.app.json",
+        "packageJson": "examples/sdk-example/package.json",
+        "assets": ["examples/sdk-example/*.md"]
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/js:node",
+      "options": {
+        "buildTarget": "sdk-example:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["examples/sdk-example/**/*.ts"]
+      }
+    }
+  },
+  "tags": ["type:example"]
+}
