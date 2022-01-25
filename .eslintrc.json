@@ -37,6 +37,11 @@
               {
                 "sourceTag": "type:example",
                 "onlyDependOnLibsWithTags": ["scope:shared", "scope:sdk", "scope:sdk-main"]
+              },
+              {
+                "sourceTag": "*",
+                "onlyDependOnLibsWithTags": ["*"],
+                "bannedExternalImports": ["@tatumio/tatum-*"]
               }
             ]
           }

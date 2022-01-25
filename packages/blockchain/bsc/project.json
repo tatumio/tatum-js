@@ -1,0 +1,34 @@
+{
+  "root": "packages/blockchain/bsc",
+  "sourceRoot": "packages/blockchain/bsc/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/blockchain/bsc",
+        "main": "packages/blockchain/bsc/src/index.ts",
+        "tsConfig": "packages/blockchain/bsc/tsconfig.lib.json",
+        "packageJson": "packages/blockchain/bsc/package.json",
+        "assets": ["packages/blockchain/bsc/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/blockchain/bsc/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/blockchain/bsc"],
+      "options": {
+        "jestConfig": "packages/blockchain/bsc/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["scope:sdk", "scope:evm-based"]
+}

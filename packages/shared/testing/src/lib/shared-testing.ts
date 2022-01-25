@@ -6,6 +6,8 @@ import { LTC_TEST_DATA } from './test-data/ltc.test-data'
 import { POLYGON_TEST_DATA } from './test-data/polygon.test-data'
 import { KCS_TEST_DATA } from './test-data/kcs.test-data'
 import { XRP_TEST_DATA } from './test-data/xrp.test-data'
+import { ONE_TEST_DATA } from './test-data/one.test-data'
+import { BSC_TEST_DATA } from './test-data/bsc.test-data'
 
 export type BlockchainNetworkTestData = {
   XPUB: string
@@ -36,6 +38,8 @@ export const TEST_DATA = {
   POLYGON: POLYGON_TEST_DATA,
   KCS: KCS_TEST_DATA,
   XRP: XRP_TEST_DATA,
+  ONE: ONE_TEST_DATA,
+  BSC: BSC_TEST_DATA,
 }
 
 /**
