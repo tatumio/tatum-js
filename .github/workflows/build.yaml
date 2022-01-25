@@ -8,6 +8,7 @@ on:
 
 env:
   NX_CLOUD_DISTRIBUTED_EXECUTION: true
+  TATUM_API_KEY: ${{ secrets.TATUM_API_KEY }}
 
 jobs:
   main:
