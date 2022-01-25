@@ -1,5 +1,5 @@
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
-import { EvmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
+import { erc20, EvmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
 import { DeployErc20 } from '@tatumio/api-client'
 import { ethWeb3 } from './eth.web3'
 import { Erc20Token } from '@tatumio/shared-blockchain-evm-based'
