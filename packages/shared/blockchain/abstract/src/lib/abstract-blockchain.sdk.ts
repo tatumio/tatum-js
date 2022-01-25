@@ -4,6 +4,7 @@ import {
   TatumServiceService,
   TatumUrl,
   TronWallet,
+  XrpWallet,
 } from '@tatumio/api-client'
 import { Blockchain, blockchainHelper, Fiat } from '@tatumio/shared-core'
 import { abstractSdk } from '@tatumio/abstract-sdk'
@@ -30,4 +31,8 @@ export interface SdkWithWalletFunctions {
   generatePrivateKeyFromMnemonic(mnemonic: string, i: number, options?: { testnet: boolean }): Promise<string>
   generateAddressFromPrivateKey(privateKey: string, options?: { testnet: boolean }): string
   generateWallet(mnemonic?: string, options?: { testnet: boolean }): Promise<TronWallet>
+}
+
+export interface SdkWithXrpLikeWalletFunction {
+  wallet(): CancelablePromise<XrpWallet>
 }
