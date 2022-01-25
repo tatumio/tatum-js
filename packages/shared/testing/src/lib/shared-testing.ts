@@ -2,6 +2,9 @@ import { ETH_TEST_DATA } from './test-data/eth.test-data'
 import { BTC_TEST_DATA } from './test-data/btc.test-data'
 import { DOGE_TEST_DATA } from './test-data/doge.test-data'
 import { CELO_TEST_DATA } from './test-data/celo.test-data'
+import { LTC_TEST_DATA } from './test-data/ltc.test-data'
+import { POLYGON_TEST_DATA } from './test-data/polygon.test-data'
+import { KCS_TEST_DATA } from './test-data/kcs.test-data'
 import { XRP_TEST_DATA } from './test-data/xrp.test-data'
 
 export type BlockchainNetworkTestData = {
@@ -29,6 +32,9 @@ export const TEST_DATA = {
   BTC: BTC_TEST_DATA,
   DOGE: DOGE_TEST_DATA,
   CELO: CELO_TEST_DATA,
+  LTC: LTC_TEST_DATA,
+  POLYGON: POLYGON_TEST_DATA,
+  KCS: KCS_TEST_DATA,
   XRP: XRP_TEST_DATA,
 }
 
