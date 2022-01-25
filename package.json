@@ -14,6 +14,7 @@
   },
   "private": true,
   "dependencies": {
+    "@tatumio/bitcoincashjs2-lib": "^4.1.2",
     "axios": "^0.24.0",
     "bignumber.js": "^9.0.2",
     "bip32": "^2.0.5",
@@ -22,6 +23,8 @@
     "bitcore-lib": "^8.25.25",
     "bitcore-lib-doge": "^8.25.27",
     "bitcore-lib-ltc": "^8.25.27",
+    "cashaddrjs": "^0.4.4",
+    "coininfo": "^5.1.0",
     "cross-blob": "^3.0.0",
     "ethereumjs-wallet": "^1.0.2",
     "form-data": "^4.0.0",
@@ -46,6 +49,7 @@
     "@types/bip32": "^2.0.0",
     "@types/bip39": "^3.0.0",
     "@types/bitcore-lib": "^0.15.3",
+    "@types/cashaddrjs": "^0.3.0",
     "@types/hdkey": "^2.0.1",
     "@types/jest": "^27.4.0",
     "@types/node": "14.14.33",
@@ -56,11 +60,11 @@
     "expect-more-jest": "^5.4.0",
     "faker": "^5.5.3",
     "glob": "^7.2.0",
+    "husky": "^7.0.4",
     "jest": "^27.4.5",
     "openapi-typescript-codegen": "^0.12.5",
     "prettier": "^2.3.1",
     "ts-jest": "27.0.5",
-    "husky": "^7.0.4",
     "typescript": "~4.5.4"
   }
 }

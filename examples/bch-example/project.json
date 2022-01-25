@@ -1,0 +1,31 @@
+{
+  "root": "examples/bch-example",
+  "sourceRoot": "examples/bch-example/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/examples/bch-example",
+        "main": "examples/bch-example/src/index.ts",
+        "tsConfig": "examples/bch-example/tsconfig.app.json",
+        "packageJson": "examples/bch-example/package.json"
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:execute",
+      "options": {
+        "buildTarget": "bch-example:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["examples/bch-example/**/*.ts"]
+      }
+    }
+  },
+  "tags": ["type:example"]
+}

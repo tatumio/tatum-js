@@ -1,7 +1,7 @@
 import { Blockchain } from './models/Blockchain'
 
 export const getDerivationPath = (blockchain: Blockchain, options?: { testnet: boolean }): string => {
-  return options?.testnet ? TESTNET_DERIVATION_PATH : DERIVATION_PATH[blockchain]
+  return options?.testnet ? TESTNET_DERIVATION_PATH[blockchain] : DERIVATION_PATH[blockchain]
 }
 
 export const DERIVATION_PATH: Record<Blockchain, string> = {
@@ -14,9 +14,9 @@ export const DERIVATION_PATH: Record<Blockchain, string> = {
   KCS: "m/44'/60'/0'/0",
   HARMONY: "m/44'/1023'/0'/0",
   BSC: "m/44'/60'/0'/0",
+  BCH: "m/44'/145'/0'/0",
   // TBD
   ALGO: '@TODO - TBD',
-  BCH: '@TODO - TBD',
   CARDANO: '@TODO - TBD',
   EGLD: '@TODO - TBD',
   FABRIC: '@TODO - TBD',
@@ -33,4 +33,25 @@ export const DERIVATION_PATH: Record<Blockchain, string> = {
   XRP: '@TODO - TBD',
 }
 
-export const TESTNET_DERIVATION_PATH = "m/44'/1'/0'/0"
+export const COMMON_TESTNET_DERIVATION_PATH = "m/44'/1'/0'/0"
+
+const TESTNET_DERIVATION_PATH_MAPPING = (Object.values(Blockchain) as Blockchain[])
+  .map((v: Blockchain) => {
+    return { [v]: COMMON_TESTNET_DERIVATION_PATH }
+  })
+  .reduce(
+    (obj, item) => ({
+      ...obj,
+      ...item,
+    }),
+    {},
+  ) as Record<Blockchain, string>
+
+const TESTNET_DERIVATION_PATH: Record<Blockchain, string> = {
+  ...TESTNET_DERIVATION_PATH_MAPPING,
+  /**
+   * BCH historically uses mainnet derivation path.
+   * It's not right, but changing it will break production users experience
+   */
+  BCH: DERIVATION_PATH.BCH,
+}

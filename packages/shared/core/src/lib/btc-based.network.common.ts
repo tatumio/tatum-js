@@ -77,6 +77,30 @@ export const NETWORK_CONFIG: Record<BtcBasedBlockchain, Networks> = {
       wif: 0xf1,
     },
   },
+  BCH: {
+    mainnet: {
+      messagePrefix: '\x19BitcoinCash Signed Message:\n',
+      bech32: '',
+      bip32: {
+        public: 76067358,
+        private: 76066276,
+      },
+      pubKeyHash: 0,
+      scriptHash: 5,
+      wif: 128,
+    } as Network,
+    testnet: {
+      messagePrefix: '\x19BitcoinCash Signed Message:\n',
+      bech32: '',
+      bip32: {
+        public: 70617039,
+        private: 70615956,
+      },
+      pubKeyHash: 111,
+      scriptHash: 196,
+      wif: 239,
+    },
+  },
 }
 
 export type Networks = {
