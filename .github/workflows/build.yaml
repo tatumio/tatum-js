@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - master
-      - feature/submodule-nx  #TMP
   pull_request:
 
 env:
   NX_CLOUD_DISTRIBUTED_EXECUTION: true
+  TATUM_API_KEY: ${{ secrets.TATUM_API_KEY }}
 
 jobs:
   main:
@@ -22,7 +22,6 @@ jobs:
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
-
       - uses: actions/cache@v2
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
@@ -32,10 +31,12 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v2
+        with:
+          main-branch-name: 'master'
       - uses: actions/setup-node@v1
         with:
           node-version: '14'
-      - run: yarn
+      - run: yarn --ignore-scripts --frozen-lockfile
       - run: npx nx-cloud start-ci-run
       - run: npx nx affected --target=lint --parallel --max-parallel=3
       - run: npx nx affected --target=build --parallel --max-parallel=3
@@ -52,7 +53,6 @@ jobs:
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
-
       - uses: actions/cache@v2
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
@@ -62,10 +62,12 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v2
+        with:
+          main-branch-name: 'master'
       - uses: actions/setup-node@v1
         with:
           node-version: '14'
-      - run: yarn
+      - run: yarn --ignore-scripts --frozen-lockfile
       - run: npx nx-cloud start-ci-run
       - run: npx nx affected --target=lint --parallel --max-parallel=3
       - run: npx nx affected --target=build --parallel --max-parallel=3

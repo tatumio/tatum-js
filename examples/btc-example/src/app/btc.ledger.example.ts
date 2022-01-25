@@ -1,9 +1,10 @@
-import { TatumBtcSDK } from '@tatumio/btc';
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing';
-import { Currency } from '@tatumio/shared-core';
+
+import { TatumBtcSDK } from '@tatumio/btc'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
+import { Currency } from '@tatumio/shared-core'
 import { CreateTrade, VirtualCurrency } from '@tatumio/api-client';
 
-const btcSDK = TatumBtcSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY });
+const btcSDK = TatumBtcSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function btcLedgerAccountsExample() {
   const account = await btcSDK.ledger.account.create({
