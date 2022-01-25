@@ -5,6 +5,7 @@ import { TatumLtcSDK } from '@tatumio/ltc'
 import { TatumDogeSDK } from '@tatumio/doge'
 import { TatumPolygonSDK } from '@tatumio/polygon'
 import { TatumKcsSDK } from '@tatumio/kcs'
+import { TatumOneSDK } from '@tatumio/one'
 
 export type SDKS = {
   btc: ReturnType<typeof TatumBtcSDK>
@@ -14,4 +15,5 @@ export type SDKS = {
   ltc: ReturnType<typeof TatumLtcSDK>
   polygon: ReturnType<typeof TatumPolygonSDK>
   kcs: ReturnType<typeof TatumKcsSDK>
+  one: ReturnType<typeof TatumOneSDK>
 }

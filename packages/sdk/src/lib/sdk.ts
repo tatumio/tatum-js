@@ -13,6 +13,7 @@ import { TatumCeloSDK } from '@tatumio/celo'
 import { TatumLtcSDK } from '@tatumio/ltc'
 import { TatumPolygonSDK } from '@tatumio/polygon'
 import { TatumKcsSDK } from '@tatumio/kcs'
+import { TatumOneSDK } from '@tatumio/one'
 
 export const TatumSDK = (args: { apiKey: string; url?: TatumUrl }) => {
   const blockchainSpecificSDKs: SDKS = {
@@ -23,6 +24,7 @@ export const TatumSDK = (args: { apiKey: string; url?: TatumUrl }) => {
     ltc: TatumLtcSDK(args),
     polygon: TatumPolygonSDK(args),
     kcs: TatumKcsSDK(args),
+    one: TatumOneSDK(args),
   }
 
   return {
