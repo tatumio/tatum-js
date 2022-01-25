@@ -1,5 +1,12 @@
-# [Tatum API client](http://tatum.io/) &middot; [![GitHub license](https://img.shields.io/npm/dm/@tatumio/tatum)](https://img.shields.io/npm/dm/@tatumio/tatum) [![GitHub license](https://img.shields.io/npm/v/@tatumio/tatum)](https://img.shields.io/npm/v/@tatumio/tatum) [![CI](https://github.com/tatumio/tatum-js/actions/workflows/main.yml/badge.svg)](https://github.com/tatumio/tatum-js/actions/workflows/main.yml)
+# [Tatum API client v2](http://tatum.io/) &middot; [![GitHub license](https://img.shields.io/npm/dm/@tatumio/tatum)](https://img.shields.io/npm/dm/@tatumio/tatum) [![GitHub license](https://img.shields.io/npm/v/@tatumio/tatum)](https://img.shields.io/npm/v/@tatumio/tatum) [![CI](https://github.com/tatumio/tatum-js/actions/workflows/main.yml/badge.svg)](https://github.com/tatumio/tatum-js/actions/workflows/main.yml)
 Tatum API client allows browsers and Node.js clients to interact with Tatum API. You can find API documentation at [API doc](https://tatum.io/apidoc).
+
+> **Are you looking for Tatum API client v1? It has been moved to long living branch [`/tatumio/tatum-js/tree/v1`](https://github.com/tatumio/tatum-js/tree/v1)**.
+> 
+## Status
+
+V2 is currently under active development and considered alpha version. (you can still use LTS version [`v1`](https://github.com/tatumio/tatum-js/tree/v1))
+
 
 ## Installation
 
@@ -9,14 +16,14 @@ This repository is a monorepo with multiple packages for each blockchain.
 You can select one or more blockchain packages that you want to use in your project and install them separately.
 
 ```console
-$ npm install @tatumio/tatum-eth
+$ npm install @tatumio/eth
 ```
 
 ### Full package
 You can install full package with all dependencies. But this will work only in node environment.
 
 ```console
-$ npm install @tatumio/tatum
+$ npm install @tatumio/sdk
 ```
 
 ### Node.JS & Browser support
