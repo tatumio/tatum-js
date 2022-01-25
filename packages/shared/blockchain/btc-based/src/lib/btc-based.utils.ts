@@ -45,7 +45,6 @@ export const btcBasedUtils = {
   ): Promise<TronWallet> {
     const derivationPath = blockchainUtils.getDerivationPath(blockchain, options)
     const mnem = mnemonic ?? generateMnemonic(256)
-    const conf = blockchainUtils.getNetworkConfig(blockchain, options).bip32
     const hdwallet = hdkey.fromMasterSeed(
       await mnemonicToSeed(mnem),
       blockchainUtils.getNetworkConfig(blockchain, options).bip32,

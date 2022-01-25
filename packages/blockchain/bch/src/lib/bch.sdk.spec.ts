@@ -1,8 +1,7 @@
 import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA, walletTestFactory } from '@tatumio/shared-testing'
 import { TatumBchSDK } from './bch.sdk'
 
-// @TODO BUG in generation of
-describe.skip('TatumBchSDK', () => {
+describe('TatumBchSDK', () => {
   const sdk = TatumBchSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
   describe('Wallet', () => {
