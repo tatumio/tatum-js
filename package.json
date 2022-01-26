@@ -6,7 +6,7 @@
     "start": "nx serve",
     "build": "nx affected:build",
     "build:libs": "nx run-many --target=build --projects=$(nx affected:libs --plain | sed 's/ /,/g')",
-    "test:ci": "nx run-many --target=test --parallel --max-parallel=3 --coverage --coverageReporters=lcov && node ./tools/coverageMerger.js",
+    "test:ci": "nx run-many --target=test --all --parallel --max-parallel=3 --coverage --coverageReporters=lcov && node ./tools/coverageMerger.js",
     "lint": "nx affected:lint --parallel",
     "format": "nx format:write",
     "test": "nx affected:test --parallel",
