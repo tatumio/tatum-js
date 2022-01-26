@@ -11,7 +11,6 @@
     "kcs-example": "examples/kcs-example",
     "ltc-example": "examples/ltc-example",
     "one-example": "examples/one-example",
-    "xrp-example": "examples/xrp-example",
     "polygon-example": "examples/polygon-example",
     "sdk": "packages/sdk",
     "sdk-bch": "packages/blockchain/bch",
@@ -31,6 +30,7 @@
     "shared-blockchain-btc-based": "packages/shared/blockchain/btc-based",
     "shared-blockchain-evm-based": "packages/shared/blockchain/evm-based",
     "shared-core": "packages/shared/core",
-    "shared-testing": "packages/shared/testing"
+    "shared-testing": "packages/shared/testing",
+    "xrp-example": "examples/xrp-example"
   }
 }
