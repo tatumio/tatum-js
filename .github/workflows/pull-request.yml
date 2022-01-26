@@ -3,6 +3,7 @@ on:
   pull_request:
     branches:
       - master
+      - v1
 jobs:
   build:
     name: 🏗️ Install and build
