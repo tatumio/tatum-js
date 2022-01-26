@@ -30,8 +30,11 @@ import {
 } from './solanaSchema/instructions'
 import { CreateMasterEditionArgs, CreateMetadataArgs, METADATA_SCHEMA } from './solanaSchema/schema'
 import { ChainSolanaMintNft, SolanaMintNft, SolanaNftMetadata, SolanaNftMetadataCreator, TransferSolana } from '../model'
+// @ts-ignore
+import { decode } from 'base-58'
 
-const generateKeyPair = (privateKey: string) => Keypair.fromSecretKey(Buffer.from(privateKey, 'hex'))
+const generateKeyPair = (privateKey: string) =>
+  Keypair.fromSecretKey(privateKey.length === 128 ? Buffer.from(privateKey, 'hex') : decode(privateKey))
 
 export const getClient = (provider?: string) => {
   const url = provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/solana/web3/${process.env.TATUM_API_KEY}`
