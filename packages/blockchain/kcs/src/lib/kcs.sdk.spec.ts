@@ -31,6 +31,10 @@ describe('TatumKcsSDK', () => {
       describe('deploySignedTransaction', () => {
         erc20TestFactory.prepare.deploySignedTransaction(sdk.transaction.erc20, TEST_DATA.KCS)
       })
+
+      describe('transferSignedTransaction', () => {
+        erc20TestFactory.prepare.transferSignedTransaction(sdk.transaction.erc20, TEST_DATA.KCS)
+      })
     })
   })
 })

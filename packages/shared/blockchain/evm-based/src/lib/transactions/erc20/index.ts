@@ -1,5 +1,5 @@
 import { DeployErc20 } from '@tatumio/api-client';
-import { ISignature } from '@tatumio/shared-blockchain-abstract';
+import { ChainTransferErc20, ISignature } from '@tatumio/shared-blockchain-abstract';
 import { EvmBasedBlockchain } from '@tatumio/shared-core';
 import BigNumber from 'bignumber.js';
 import Web3 from 'web3';
@@ -14,19 +14,21 @@ const prepareSignedTransactionAbstraction = async (
   fromPrivateKey: string | undefined,
   web3: EvmBasedWeb3,
   // TODO specify fee
-  fee?: any | undefined,
+  gasLimit?: string,
+  gasPrice?: string
 ) => {
-  const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await web3.getGasPriceInWei()
+  const gasPriceDefined = gasPrice ? client.utils.toWei(gasPrice, 'gwei') : await web3.getGasPriceInWei()
   const tx = {
     ...transaction,
-    gasPrice,
+    gasPrice: gasPriceDefined,
   }
+
+  tx.gas = gasLimit ?? (await client.eth.estimateGas(tx))
 
   if (signatureId) {
     return JSON.stringify(tx)
   }
 
-  tx.gas = fee?.gasLimit ?? (await client.eth.estimateGas(tx))
   const signedTransaction = await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)
 
   return signedTransaction.rawTransaction
@@ -71,8 +73,28 @@ export const erc20 = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3
           nonce,
         }
 
-        return prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, args.web3, fee)
+        return prepareSignedTransactionAbstraction(client, tx, signatureId, fromPrivateKey, args.web3, body.fee.gasLimit, body.fee.gasPrice)
       },
+      transferSignedTransaction: async (body: ChainTransferErc20 & ISignature, provider?: string) => {
+        // TODO
+        // await validateBody(body, TransferErc20)
+
+        const client = args.web3.getClient(provider)
+
+        const decimals = new BigNumber(10).pow(body.digits as number)
+        // TODO
+        const data = new client.eth.Contract(Erc20Token.abi as any, body.contractAddress.trim().trim()).methods
+          .transfer(body.to.trim(), `0x${new BigNumber(body.amount).multipliedBy(decimals).toString(16)}`)
+          .encodeABI()
+
+        const tx: TransactionConfig = {
+          from: 0,
+          data,
+          nonce: body.nonce,
+        }
+
+        return prepareSignedTransactionAbstraction(client, tx, body.signatureId, body.fromPrivateKey, args.web3, body.fee.gasLimit, body.fee.gasPrice)
+      }
     }
   }
 }

@@ -1,5 +1,5 @@
 import { SdkWithErc20Functions } from '@tatumio/shared-blockchain-abstract';
-import { BlockchainTestData } from '../shared-testing';
+import { BlockchainTestData, expectHexString } from '../shared-testing';
 
 export const erc20TestFactory = {
   decimals: (
@@ -45,7 +45,7 @@ export const erc20TestFactory = {
           expect(json.nonce).toBe(nonce)
           expect(json.gasPrice).toBe('20000000000')
           expect(json.from).toBe(0)
-          expect(json.data).toBeDefined()
+          expectHexString(json.data)
         })
 
         it('invalid address', async () => {
@@ -70,6 +70,56 @@ export const erc20TestFactory = {
             expect(e.reason).toMatch('invalid address')
           }
         })
+      })
+    },
+    transferSignedTransaction: (
+      sdk: SdkWithErc20Functions,
+      testData: BlockchainTestData,
+    ) => {
+      it('valid', async () => {
+        const nonce = 3252345722143
+
+        const result = await sdk.prepare.transferSignedTransaction({
+          to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+          amount: '10',
+          contractAddress: testData.MAINNET.ERC_20.ADDRESS,
+          fromPrivateKey: testData.MAINNET.PRIVATE_KEY_0, // todo this or signatureID
+          signatureId: '1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6',
+          digits: 18,
+          nonce,
+          fee: {
+            gasLimit: "40000",
+            gasPrice: "20"
+          }
+        })
+
+        const json = JSON.parse(result)
+
+        expect(json.nonce).toBe(nonce)
+        expect(json.gasPrice).toBe('20000000000')
+        expect(json.from).toBe(0)
+        expectHexString(json.data)
+      })
+
+      it('invalid address', async () => {
+        try {
+          await sdk.prepare.transferSignedTransaction({
+            to: 'someinvalidaddress',
+            contractAddress: testData.MAINNET.ERC_20.ADDRESS,
+            amount: '10',
+            fromPrivateKey: testData.MAINNET.PRIVATE_KEY_0, // todo this or signatureID
+            signatureId: '1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6',
+            digits: 18,
+            nonce: 3252345722143,
+            fee: {
+              gasLimit: "40000",
+              gasPrice: "20"
+            }
+          })
+          fail()
+        } catch (e) {
+          expect(e.reason).toMatch('invalid address')
+        }
       })
     }
   }

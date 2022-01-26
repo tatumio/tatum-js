@@ -1,5 +1,6 @@
 import {
   CancelablePromise,
+  ChainTransferEthErc20,
   DeployErc20,
   ExchangeRate,
   TatumServiceService,
@@ -35,12 +36,15 @@ export interface SdkWithWalletFunctions {
 }
 
 export interface ISignature {
-  signatureId: string;
+  signatureId: string
 }
+
+export type ChainTransferErc20 = Omit<ChainTransferEthErc20, 'chain'>
 
 export interface SdkWithErc20Functions {
   decimals(contractAddress: string, provider?: string): any
   prepare: {
     deploySignedTransaction(body: DeployErc20 & ISignature, provider?: string): Promise<string>
+    transferSignedTransaction(body: ChainTransferErc20 & ISignature, provider?: string): Promise<string>
   }
 }

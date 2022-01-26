@@ -48,6 +48,11 @@ export const TEST_DATA = {
   XRP: XRP_TEST_DATA,
 }
 
+export function expectHexString(value: string): void {
+  expect(value).toBeDefined()
+  expect(value).toMatch(/^(0x|0X)?[a-fA-F0-9]+$/)
+}
+
 /**
  * @deprecated Replace it with API key from https://tatum.io/
  */
