@@ -1,4 +1,4 @@
-import { DeployErc20 } from '@tatumio/api-client';
+import { ChainBurnErc20, ChainMintErc20, DeployErc20 } from '@tatumio/api-client';
 import { ChainTransferErc20, ISignature } from '@tatumio/shared-blockchain-abstract';
 import { EvmBasedBlockchain } from '@tatumio/shared-core';
 import BigNumber from 'bignumber.js';
@@ -13,7 +13,6 @@ const prepareSignedTransactionAbstraction = async (
   signatureId: string | undefined,
   fromPrivateKey: string | undefined,
   web3: EvmBasedWeb3,
-  // TODO specify fee
   gasLimit?: string,
   gasPrice?: string
 ) => {
@@ -94,6 +93,46 @@ export const erc20 = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3
         }
 
         return prepareSignedTransactionAbstraction(client, tx, body.signatureId, body.fromPrivateKey, args.web3, body.fee.gasLimit, body.fee.gasPrice)
+      },
+      mintSignedTransaction: async (body: ChainMintErc20 & ISignature, provider?: string) => {
+        // TODO: validation
+        // await validateBody(body, MintErc20)
+
+        const client = args.web3.getClient(provider)
+
+        // TODO: any type
+        const contract = new client.eth.Contract(Erc20Token.abi as any, body.contractAddress.trim().trim())
+
+        const digits = new BigNumber(10).pow(await contract.methods.decimals().call())
+        const data = contract.methods.mint(body.to.trim(), `0x${new BigNumber(body.amount).multipliedBy(digits).toString(16)}`).encodeABI()
+
+        const tx: TransactionConfig = {
+          from: 0,
+          data,
+          nonce: body.nonce,
+        }
+
+        return prepareSignedTransactionAbstraction(client, tx, body.signatureId, body.fromPrivateKey, args.web3)
+      },
+      burnSignedTransaction: async (body: ChainBurnErc20 & ISignature, provider?: string) => {
+        // TODO: validation
+        // await validateBody(body, BurnErc20)
+
+        const client = args.web3.getClient(provider)
+
+        // TODO: any type
+        const contract = new client.eth.Contract(Erc20Token.abi as any, body.contractAddress.trim().trim())
+
+        const digits = new BigNumber(10).pow(await contract.methods.decimals().call())
+        const data = contract.methods.burn(`0x${new BigNumber(body.amount).multipliedBy(digits).toString(16)}`).encodeABI()
+
+        const tx: TransactionConfig = {
+          from: 0,
+          data,
+          nonce: body.nonce,
+        }
+
+        return prepareSignedTransactionAbstraction(client, tx, body.signatureId, body.fromPrivateKey, args.web3)
       }
     }
   }

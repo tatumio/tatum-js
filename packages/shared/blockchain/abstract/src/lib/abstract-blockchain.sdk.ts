@@ -1,5 +1,7 @@
 import {
   CancelablePromise,
+  ChainBurnErc20,
+  ChainMintErc20,
   ChainTransferEthErc20,
   DeployErc20,
   ExchangeRate,
@@ -46,5 +48,7 @@ export interface SdkWithErc20Functions {
   prepare: {
     deploySignedTransaction(body: DeployErc20 & ISignature, provider?: string): Promise<string>
     transferSignedTransaction(body: ChainTransferErc20 & ISignature, provider?: string): Promise<string>
+    mintSignedTransaction(body: ChainMintErc20 & ISignature, provider?: string): Promise<string>
+    burnSignedTransaction(body: ChainBurnErc20 & ISignature, provider?: string): Promise<string>
   }
 }
