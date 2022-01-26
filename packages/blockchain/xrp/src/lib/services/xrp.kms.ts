@@ -4,6 +4,7 @@ import { PendingTransaction } from '@tatumio/api-client'
 import { RippleAPI } from 'ripple-lib'
 
 export const xrpKmsService = (args: { blockchain: Blockchain }) => {
+  const rippleAPI = new RippleAPI()
   return {
     ...abstractBlockchainKms(args),
     /**
@@ -14,7 +15,6 @@ export const xrpKmsService = (args: { blockchain: Blockchain }) => {
      */
     async sign(tx: ChainTransactionKMS, secret: string) {
       ;(tx as PendingTransaction).chain = 'XRP' as any
-      const rippleAPI = new RippleAPI()
       return rippleAPI.sign(tx.serializedTransaction, secret).signedTransaction
     },
   }
