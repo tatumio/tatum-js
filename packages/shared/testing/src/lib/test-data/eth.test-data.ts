@@ -11,7 +11,7 @@ export const ETH_TEST_DATA: BlockchainTestData = {
     CONTRACT_ADDRESS: '0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea',
     ERC_20: {
       ADDRESS: '0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea',
-    }
+    },
   },
   TESTNET: {
     XPUB: 'xpub6Dwu4pG9LS4S3cSdR1nAoGL18AWLttx3WCYPqdvx3TPAEuemkbgdLSAQG13xPwTku21pkQsZjSuERGtiMsiNCVzzPnh1BVhwis2f1bYSYoH',

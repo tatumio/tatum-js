@@ -9,7 +9,7 @@ export const ethTx = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3
         ...args,
         broadcastFunction: BlockchainEthereumService.ethBroadcast,
       }),
-    }
+    },
     //custodial: prepareGenerateCustodialWalletSignedTransaction()
   }
 }

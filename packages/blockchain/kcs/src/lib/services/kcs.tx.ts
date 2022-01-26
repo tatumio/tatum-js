@@ -9,6 +9,6 @@ export const kcsTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBa
         ...args,
         broadcastFunction: BlockchainKcsKcsService.kcsBroadcast,
       }),
-    }
+    },
   }
 }

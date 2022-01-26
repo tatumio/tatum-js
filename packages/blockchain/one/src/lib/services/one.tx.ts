@@ -9,6 +9,6 @@ export const oneTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBa
         ...args,
         broadcastFunction: BlockchainHarmonyOneService.oneBroadcast,
       }),
-    }
+    },
   }
 }

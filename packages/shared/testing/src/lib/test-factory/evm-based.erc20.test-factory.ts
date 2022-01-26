@@ -1,11 +1,8 @@
-import { SdkWithErc20Functions } from '@tatumio/shared-blockchain-abstract';
-import { BlockchainTestData, expectHexString } from '../shared-testing';
+import { SdkWithErc20Functions } from '@tatumio/shared-blockchain-abstract'
+import { BlockchainTestData, expectHexString } from '../shared-testing'
 
 export const erc20TestFactory = {
-  decimals: (
-    sdk: SdkWithErc20Functions,
-    testData: BlockchainTestData,
-  ) => {
+  decimals: (sdk: SdkWithErc20Functions, testData: BlockchainTestData) => {
     xdescribe('mainnet', () => {
       it('valid', async () => {
         // Returned values aren't valid, did it run Out of Gas? You might also see this error if you are not using the correct ABI for the contract you are retrieving data from, requesting data from a block number that does not exist, or querying a node which is not fully synced.
@@ -16,10 +13,7 @@ export const erc20TestFactory = {
     })
   },
   prepare: {
-    deploySignedTransaction: (
-      sdk: SdkWithErc20Functions,
-      testData: BlockchainTestData,
-    ) => {
+    deploySignedTransaction: (sdk: SdkWithErc20Functions, testData: BlockchainTestData) => {
       describe('mainnet', () => {
         it('valid', async () => {
           const nonce = 3252345722143
@@ -35,9 +29,9 @@ export const erc20TestFactory = {
             totalCap: '10000000',
             nonce,
             fee: {
-              gasLimit: "40000",
-              gasPrice: "20"
-            }
+              gasLimit: '40000',
+              gasPrice: '20',
+            },
           })
 
           const json = JSON.parse(result)
@@ -61,9 +55,9 @@ export const erc20TestFactory = {
               totalCap: '10000000',
               nonce: 3252345722143,
               fee: {
-                gasLimit: "40000",
-                gasPrice: "20"
-              }
+                gasLimit: '40000',
+                gasPrice: '20',
+              },
             })
             fail()
           } catch (e) {
@@ -72,10 +66,7 @@ export const erc20TestFactory = {
         })
       })
     },
-    transferSignedTransaction: (
-      sdk: SdkWithErc20Functions,
-      testData: BlockchainTestData,
-    ) => {
+    transferSignedTransaction: (sdk: SdkWithErc20Functions, testData: BlockchainTestData) => {
       it('valid', async () => {
         const nonce = 3252345722143
 
@@ -88,9 +79,9 @@ export const erc20TestFactory = {
           digits: 18,
           nonce,
           fee: {
-            gasLimit: "40000",
-            gasPrice: "20"
-          }
+            gasLimit: '40000',
+            gasPrice: '20',
+          },
         })
 
         const json = JSON.parse(result)
@@ -112,9 +103,9 @@ export const erc20TestFactory = {
             digits: 18,
             nonce: 3252345722143,
             fee: {
-              gasLimit: "40000",
-              gasPrice: "20"
-            }
+              gasLimit: '40000',
+              gasPrice: '20',
+            },
           })
           fail()
         } catch (e) {
@@ -122,10 +113,7 @@ export const erc20TestFactory = {
         }
       })
     },
-    mintSignedTransaction: (
-      sdk: SdkWithErc20Functions,
-      testData: BlockchainTestData,
-    ) => {
+    mintSignedTransaction: (sdk: SdkWithErc20Functions, testData: BlockchainTestData) => {
       it('valid', async () => {
         const nonce = 3252345722143
 
@@ -138,9 +126,9 @@ export const erc20TestFactory = {
           digits: 18,
           nonce,
           fee: {
-            gasLimit: "40000",
-            gasPrice: "20"
-          }
+            gasLimit: '40000',
+            gasPrice: '20',
+          },
         })
 
         const json = JSON.parse(result)
@@ -162,15 +150,15 @@ export const erc20TestFactory = {
             digits: 18,
             nonce: 3252345722143,
             fee: {
-              gasLimit: "40000",
-              gasPrice: "20"
-            }
+              gasLimit: '40000',
+              gasPrice: '20',
+            },
           })
           fail()
         } catch (e) {
           expect(e.reason).toMatch('invalid address')
         }
       })
-    }
-  }
+    },
+  },
 }

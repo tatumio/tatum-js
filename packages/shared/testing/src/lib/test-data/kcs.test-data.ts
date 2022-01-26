@@ -13,6 +13,6 @@ export const KCS_TEST_DATA: BlockchainTestData = {
     CONTRACT_ADDRESS: '0x0b9808fce74030c87aae334a30f6c8f6c66b090d',
     ERC_20: {
       ADDRESS: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-    }
+    },
   },
 }

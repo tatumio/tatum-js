@@ -52,4 +52,6 @@ export interface SdkWithErc20Functions {
   }
 }
 
-export type BroadcastFunction = (requestBody: { txData: string } & SignatureId ) => CancelablePromise<TransactionHashKMS>;
+export type BroadcastFunction = (
+  requestBody: { txData: string } & SignatureId,
+) => CancelablePromise<TransactionHashKMS>

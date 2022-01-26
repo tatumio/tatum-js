@@ -13,6 +13,6 @@ export const ONE_TEST_DATA: BlockchainTestData = {
     CONTRACT_ADDRESS: '0x0b9808fce74030c87aae334a30f6c8f6c66b090d',
     ERC_20: {
       ADDRESS: '0xF60dE853111e0E3A1fB3E703D9Bed83b470c73D5',
-    }
+    },
   },
 }
