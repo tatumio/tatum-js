@@ -16,7 +16,6 @@ type LtcTransaction =
   | LtcTransactionUTXO
   | LtcTransactionUTXOKMS
 
-
 const sendTransaction = async (body: LtcTransaction): Promise<TransactionHashKMS> => {
   return ApiServices.blockchain.ltc.ltcBroadcast({
     txData: await prepareSignedTransaction(body),
@@ -77,7 +76,9 @@ const privateKeysFromAddress = async (
             txId: tx.hash,
             outputIndex: i,
             script: Script.fromAddress(item.address).toString(),
-            satoshis: Number(new BigNumber(o.value!).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)),
+            satoshis: Number(
+              new BigNumber(o.value!).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR),
+            ),
           })
 
           if ('signatureId' in item) privateKeysToSign.push(item.signatureId)

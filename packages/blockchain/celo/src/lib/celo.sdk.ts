@@ -6,7 +6,6 @@ import { evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
 import { celoKmsService } from './services/celo.kms'
 import { celoTxService } from './services/celo.tx'
 
-
 const blockchain = Blockchain.CELO
 
 export const TatumCeloSDK = (args: SDKArguments) => {

@@ -79,7 +79,7 @@ jobs:
     timeout-minutes: 60
     strategy:
       matrix:
-        agent: [ 1, 2, 3 ]
+        agent: [1, 2, 3]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -88,4 +88,3 @@ jobs:
       - run: yarn
       - name: Start Nx Agent ${{ matrix.agent }}
         run: npx nx-cloud start-agent
-
