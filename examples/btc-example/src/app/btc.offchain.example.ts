@@ -21,6 +21,6 @@ export async function btcOffchainExample() {
   const account = await btcSDK.offchain.depositAddress.checkExists('1N4U6RidG5XScvBoSNgq5EmHiPxU4MAyEv');
   const addressByAccount = await btcSDK.offchain.depositAddress.getByAccount('5e6be8e9e6aa436299950c41');
   await btcSDK.offchain.depositAddress.remove('5e6be8e9e6aa436299950c41', '7c21ed165e294db78b95f0f181086d6f');
-  const withdrawals = await btcSDK.offchain.withdrawal.getAll('Done');
   await btcSDK.offchain.storeTokenAddress('7c21ed165e294db78b95f0f181086d6f', 'MY_TOKEN');
+  const withdrawals = await btcSDK.offchain.withdrawal.getAll('Done');
 }
