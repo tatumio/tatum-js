@@ -14,7 +14,6 @@
   },
   "private": true,
   "dependencies": {
-    "@nrwl/nx-cloud": "^13.1.2",
     "@tatumio/bitcoincashjs2-lib": "^4.1.2",
     "axios": "^0.24.0",
     "bignumber.js": "^9.0.2",
@@ -38,14 +37,15 @@
     "web3-utils": "^1.6.1"
   },
   "devDependencies": {
-    "@nrwl/cli": "13.4.4",
-    "@nrwl/eslint-plugin-nx": "13.4.4",
-    "@nrwl/jest": "13.4.3",
-    "@nrwl/js": "^13.4.4",
-    "@nrwl/linter": "13.4.4",
-    "@nrwl/node": "^13.4.4",
-    "@nrwl/tao": "13.4.4",
-    "@nrwl/workspace": "13.4.4",
+    "@nrwl/nx-cloud": "13.1.2",
+    "@nrwl/cli": "13.5.3",
+    "@nrwl/eslint-plugin-nx": "13.5.3",
+    "@nrwl/jest": "13.5.3",
+    "@nrwl/js": "13.5.3",
+    "@nrwl/linter": "13.5.3",
+    "@nrwl/node": "13.5.3",
+    "@nrwl/tao": "13.5.3",
+    "@nrwl/workspace": "13.5.3",
     "@types/bignumber.js": "^5.0.0",
     "@types/bip32": "^2.0.0",
     "@types/bip39": "^3.0.0",
@@ -64,8 +64,9 @@
     "husky": "^7.0.4",
     "jest": "^27.4.5",
     "openapi-typescript-codegen": "^0.12.5",
-    "prettier": "^2.3.1",
+    "prettier": "2.5.1",
     "ts-jest": "27.0.5",
     "typescript": "~4.5.4"
   }
 }
+
