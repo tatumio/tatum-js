@@ -28,7 +28,10 @@ export const oneKmsService = (args: EvmBasedKMSServiceArgs) => {
         transactionConfig.gasPrice = await args.web3.getGasPriceInWei()
       }
 
-      const signedTransaction = await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey as string)
+      const signedTransaction = await client.eth.accounts.signTransaction(
+        transactionConfig,
+        fromPrivateKey as string,
+      )
 
       // TODO: handle undefined case
       return signedTransaction.rawTransaction!
