@@ -44,6 +44,25 @@ export default [
 		'anonymous': false,
 		'inputs': [
 			{
+				'indexed': true,
+				'internalType': 'address',
+				'name': 'previousOwner',
+				'type': 'address'
+			},
+			{
+				'indexed': true,
+				'internalType': 'address',
+				'name': 'newOwner',
+				'type': 'address'
+			}
+		],
+		'name': 'OwnershipTransferred',
+		'type': 'event'
+	},
+	{
+		'anonymous': false,
+		'inputs': [
+			{
 				'indexed': false,
 				'internalType': 'address',
 				'name': 'account',
@@ -581,6 +600,19 @@ export default [
 	},
 	{
 		'inputs': [],
+		'name': 'owner',
+		'outputs': [
+			{
+				'internalType': 'address',
+				'name': '',
+				'type': 'address'
+			}
+		],
+		'stateMutability': 'view',
+		'type': 'function'
+	},
+	{
+		'inputs': [],
 		'name': 'pause',
 		'outputs': [],
 		'stateMutability': 'nonpayable',
@@ -597,6 +629,13 @@ export default [
 			}
 		],
 		'stateMutability': 'view',
+		'type': 'function'
+	},
+	{
+		'inputs': [],
+		'name': 'renounceOwnership',
+		'outputs': [],
+		'stateMutability': 'nonpayable',
 		'type': 'function'
 	},
 	{
@@ -792,6 +831,19 @@ export default [
 			}
 		],
 		'stateMutability': 'view',
+		'type': 'function'
+	},
+	{
+		'inputs': [
+			{
+				'internalType': 'address',
+				'name': 'newOwner',
+				'type': 'address'
+			}
+		],
+		'name': 'transferOwnership',
+		'outputs': [],
+		'stateMutability': 'nonpayable',
 		'type': 'function'
 	},
 	{
