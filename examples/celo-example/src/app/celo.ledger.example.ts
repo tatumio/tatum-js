@@ -70,7 +70,7 @@ export async function celoLedgerOrderBookExample() {
     type: CreateTrade.type.BUY,
     price: "8650.4",
     amount: "15000",
-    pair: "BCH/EUR",
+    pair: "CELO/EUR",
     currency1AccountId: "7c21ed165e294db78b95f0f1",
     currency2AccountId: "7c21ed165e294db78b95f0f1",
     feeAccountId: "7c21ed165e294db78b95f0f1",
