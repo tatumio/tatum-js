@@ -7,9 +7,9 @@
     "build": "nx affected:build",
     "build:libs": "nx run-many --target=build --projects=$(nx affected:libs --plain | sed 's/ /,/g')",
     "test:ci": "nx run-many --target=test --all --parallel --coverage --coverageReporters=lcov && node ./tools/coverageMerger.js",
-    "lint": "nx affected:lint --parallel --quiet",
+    "lint": "nx affected:lint --parallel",
     "format": "nx format:write",
-    "test": "nx affected:test --parallel --quiet",
+    "test": "nx affected:test --parallel",
     "dep-graph": "nx dep-graph",
     "generate-api": "openapi --exportCore false --client axios --input ./packages/api-client/src/api_schema.json --output ./packages/api-client/src/generated",
     "prepare": "husky install"
