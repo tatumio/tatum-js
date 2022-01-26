@@ -44,3 +44,4 @@ Thumbs.db
 #packages/api-client/src/generated/index.ts
 
 .env
+migrations.json

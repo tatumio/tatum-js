@@ -1,7 +1,6 @@
 import { TatumBtcSDK } from '@tatumio/btc'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
 
-//const btcSdk = new TatumBtcSDK(REPLACE_ME_WITH_TATUM_API_KEY)
 const btcSDK = TatumBtcSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function btcWalletExample() {
