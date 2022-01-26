@@ -10,8 +10,7 @@
         "outputPath": "dist/packages/blockchain/xrp",
         "tsConfig": "packages/blockchain/xrp/tsconfig.lib.json",
         "packageJson": "packages/blockchain/xrp/package.json",
-        "main": "packages/blockchain/xrp/src/index.ts",
-        "assets": ["packages/blockchain/xrp/*.md"]
+        "main": "packages/blockchain/xrp/src/index.ts"
       }
     },
     "lint": {
