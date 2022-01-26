@@ -40,7 +40,7 @@ jobs:
       - run: npx nx-cloud start-ci-run
       - run: npx nx affected --target=lint --parallel --max-parallel=3
       - run: npx nx affected --target=build --parallel --max-parallel=3
-      - run: yarn test:ci --max-parallel=3
+      - run: yarn test:ci
       - run: npx nx-cloud stop-all-agents
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v1.6
@@ -76,7 +76,7 @@ jobs:
       - run: npx nx-cloud start-ci-run
       - run: npx nx affected --target=lint --parallel --max-parallel=3
       - run: npx nx affected --target=build --parallel --max-parallel=3
-      - run: yarn test:ci --max-parallel=3
+      - run: yarn test:ci
       - run: npx nx-cloud stop-all-agents
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v1.6
