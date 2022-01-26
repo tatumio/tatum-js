@@ -20,7 +20,7 @@ export async function celoOffchainExample() {
   });
   const assignedAddress = await celoSdk.offchain.depositAddress.assign('5e6be8e9e6aa436299950c41', 'LepMzqfXSgQommH2qu3fk7Gf5xgoHQsP1b');
   const addressByAccount = await celoSdk.offchain.depositAddress.getByAccount('5e6be8e9e6aa436299950c41');
+  const withdrawals = await celoSdk.offchain.withdrawal.getAll('Done')
   await celoSdk.offchain.depositAddress.remove('5e6be8e9e6aa436299950c41', 'LepMzqfXSgQommH2qu3fk7Gf5xgoHQsP1b');
   await celoSdk.offchain.storeTokenAddress('LepMzqfXSgQommH2qu3fk7Gf5xgoHQsP1b', 'MY_TOKEN');
-  const withdrawals = await celoSdk.offchain.withdrawal.getAll('Done')
 }

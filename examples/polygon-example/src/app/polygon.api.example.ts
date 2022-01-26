@@ -6,7 +6,7 @@ import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
 const polygonSDK = TatumPolygonSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function polygonApiExample() {
-  // const txHash = await polygonSDK.api.polygonBlockchainSmartContractInvocation({
+  // const contractTransactionHash = await polygonSDK.api.polygonBlockchainSmartContractInvocation({
   // TODO: bug in openapi - feeCurrency
   //   contractAddress: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
   //   methodName: "transfer",
@@ -27,6 +27,13 @@ export async function polygonApiExample() {
   //   },
   //   feeCurrency: Currency.MATIC
   // })
+
+  const web3 = await polygonSDK.api.polygonWeb3Driver('asdlkfjnqunalkwjfnq2oi303294857k', {
+    jsonrpc: "2.0",
+    method: "web3_clientVersion",
+    params: [ ],
+    id: 2
+  })
 
   const transferHash = await polygonSDK.api.polygonBlockchainTransfer({
     data: "My note to recipient.",
@@ -49,11 +56,12 @@ export async function polygonApiExample() {
     data: "My note to recipient."
   })
 
-  const address = await polygonSDK.api.polygonGenerateAddress('xpub6EsCk1uU6cJzqvP9CdsTiJwT2rF748YkPnhv5Qo8q44DG7nn2vbyt48YRsNSUYS44jFCW9gwvD9kLQu9AuqXpTpM1c5hgg9PsuBLdeNncid', 0)
   const privateKey = await polygonSDK.api.polygonGenerateAddressPrivateKey({
     mnemonic: "urge pulp usage sister evidence arrest palm math please chief egg abuse",
     index: 0
   })
+
+  const address = await polygonSDK.api.polygonGenerateAddress('xpub6EsCk1uU6cJzqvP9CdsTiJwT2rF748YkPnhv5Qo8q44DG7nn2vbyt48YRsNSUYS44jFCW9gwvD9kLQu9AuqXpTpM1c5hgg9PsuBLdeNncid', 0)
   const wallet = await polygonSDK.api.polygonGenerateWallet('urge pulp usage sister evidence arrest palm math please chief egg abuse')
   const balance = await polygonSDK.api.polygonGetBalance('0x3223AEB8404C7525FcAA6C512f91e287AE9FfE7B')
   const block = await polygonSDK.api.polygonGetBlock('0x5d40698ee1b1ec589035f2a39c6162287e9056868cc79d66cfb248ba9f66c3fc')
@@ -61,10 +69,4 @@ export async function polygonApiExample() {
   const transaction = await polygonSDK.api.polygonGetTransaction('0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7')
   const transactionByAddress = await polygonSDK.api.polygonGetTransactionByAddress('0x8ce4e40889a13971681391aad29e88efaf91f784', 10)
   const transactionCount = await polygonSDK.api.polygonGetTransactionCount('0xdac17f958d2ee523a2206206994597c13d831ec7')
-  const web3 = await polygonSDK.api.polygonWeb3Driver('asdlkfjnqunalkwjfnq2oi303294857k', {
-    jsonrpc: "2.0",
-    method: "web3_clientVersion",
-    params: [ ],
-    id: 2
-  })
 }

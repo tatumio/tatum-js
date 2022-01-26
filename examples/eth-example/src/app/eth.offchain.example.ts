@@ -20,7 +20,7 @@ export async function ethOffchainExample() {
   });
   const assignedAddress = await ethSdk.offchain.depositAddress.assign('5e6be8e9e6aa436299950c41', 'LepMzqfXSgQommH2qu3fk7Gf5xgoHQsP1b');
   const addressByAccount = await ethSdk.offchain.depositAddress.getByAccount('5e6be8e9e6aa436299950c41');
+  const withdrawals = await ethSdk.offchain.withdrawal.getAll('Done')
   await ethSdk.offchain.depositAddress.remove('5e6be8e9e6aa436299950c41', 'LepMzqfXSgQommH2qu3fk7Gf5xgoHQsP1b');
   await ethSdk.offchain.storeTokenAddress('LepMzqfXSgQommH2qu3fk7Gf5xgoHQsP1b', 'MY_TOKEN');
-  const withdrawals = await ethSdk.offchain.withdrawal.getAll('Done')
 }

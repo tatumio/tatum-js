@@ -13,6 +13,7 @@ export async function ethSubscriptionsExample() {
       url: "https://webhook.tatum.io/account"
     }
   })
+
   await ethSDK.subscriptions.deleteSubscription("5e68c66581f2ee32bc354087")
   await ethSDK.subscriptions.disableWebHookHmac()
   await ethSDK.subscriptions.enableWebHookHmac({

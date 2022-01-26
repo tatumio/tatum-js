@@ -13,6 +13,7 @@ export async function kcsSubscriptionsExample() {
       url: "https://webhook.tatum.io/account"
     }
   })
+
   await kcsSDK.subscriptions.deleteSubscription("5e68c66581f2ee32bc354087")
   await kcsSDK.subscriptions.disableWebHookHmac()
   await kcsSDK.subscriptions.enableWebHookHmac({

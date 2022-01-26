@@ -7,7 +7,7 @@ const celoSDK = TatumCeloSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function celoApiExample() {
   // TODO: bug in openapi - feeCurrency
-  // const txHash = await celoSDK.api.celoBlockchainSmartContractInvocation({
+  // const contractTransactionHash = await celoSDK.api.celoBlockchainSmartContractInvocation({
   //   contractAddress: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
   //   methodName: "transfer",
   //   methodABI: {
@@ -27,6 +27,7 @@ export async function celoApiExample() {
   //   },
   //   feeCurrency: Currency.CELO
   // })
+
   const web3 = await celoSDK.api.celoWeb3Driver("asdlkfjnqunalkwjfnq2oi303294857k", {
     jsonrpc: "2.0",
     method: "web3_clientVersion",
@@ -34,17 +35,19 @@ export async function celoApiExample() {
     id: 2
   })
 
-  const transfer = await celoSDK.api.celoBlockchainTransfer({
+  const transferHash = await celoSDK.api.celoBlockchainTransfer({
     data: "My note to recipient.",
     nonce: 0,
     to: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
+    // TODO openapi bug
     currency: TransferCeloBlockchain.currency.CELO,
+    // TODO openapi bug
     feeCurrency: TransferCeloBlockchain.feeCurrency.CELO,
     amount: "100000",
     fromPrivateKey: "0x05e150c73f1920ec14caa1e0b6aa09940899678051a785"
   })
 
-  const hash = await celoSDK.api.celoBroadcast({
+  const broadcastHash = await celoSDK.api.celoBroadcast({
     txData: "62BD544D1B9031EFC330A3E855CC3A0D51CA5131455C1AB3BCAC6D243F65460D",
     signatureId: "1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6"
   })
@@ -59,7 +62,7 @@ export async function celoApiExample() {
   const block = await celoSDK.api.celoGetBlock("0x5d40698ee1b1ec589035f2a39c6162287e9056868cc79d66cfb248ba9f66c3fc")
   const currentBlock = await celoSDK.api.celoGetCurrentBlock()
   const balance = await celoSDK.api.celoGetBalance("0x3223AEB8404C7525FcAA6C512f91e287AE9FfE7B")
-  const tx = await celoSDK.api.celoGetTransaction("0xcf2c40f475e78c7c19778e1ae999a0e371c9319b38182ea15dc94536f13f9137")
-  const txByAddress = await celoSDK.api.celoGetTransactionByAddress("0x8ce4e40889a13971681391aad29e88efaf91f784", 10)
+  const transaction = await celoSDK.api.celoGetTransaction("0xcf2c40f475e78c7c19778e1ae999a0e371c9319b38182ea15dc94536f13f9137")
+  const transactionsByAddress = await celoSDK.api.celoGetTransactionByAddress("0x8ce4e40889a13971681391aad29e88efaf91f784", 10)
   const transactionsCount = await celoSDK.api.celoGetTransactionCount("0x8ce4e40889a13971681391aad29e88efaf91f784")
 }

@@ -5,7 +5,7 @@ import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
 const kcsSDK = TatumKcsSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function kcsApiExample() {
-  const txHash = await kcsSDK.api.kcsBlockchainSmartContractInvocation({
+  const contractTransactionHash = await kcsSDK.api.kcsBlockchainSmartContractInvocation({
     contractAddress: "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
     methodName: "transfer",
     methodABI: {
@@ -22,6 +22,13 @@ export async function kcsApiExample() {
       type: "function"
     },
     params: ["0x632"]
+  })
+
+  const web3 = await kcsSDK.api.kcsWeb3Driver('asdlkfjnqunalkwjfnq2oi303294857k', {
+    "jsonrpc": "2.0",
+    "method": "web3_clientVersion",
+    "params": [ ],
+    "id": 2
   })
 
   const transferHash = await kcsSDK.api.kcsBlockchainTransfer({
@@ -50,21 +57,16 @@ export async function kcsApiExample() {
     data: "My note to recipient."
   })
 
-  const address = await kcsSDK.api.kcsGenerateAddress('xpub6EsCk1uU6cJzqvP9CdsTiJwT2rF748YkPnhv5Qo8q44DG7nn2vbyt48YRsNSUYS44jFCW9gwvD9kLQu9AuqXpTpM1c5hgg9PsuBLdeNncid', 0)
   const privateKey = await kcsSDK.api.kcsGenerateAddressPrivateKey({
     index: 0,
     mnemonic: "urge pulp usage sister evidence arrest palm math please chief egg abuse"
   })
+
+  const address = await kcsSDK.api.kcsGenerateAddress('xpub6EsCk1uU6cJzqvP9CdsTiJwT2rF748YkPnhv5Qo8q44DG7nn2vbyt48YRsNSUYS44jFCW9gwvD9kLQu9AuqXpTpM1c5hgg9PsuBLdeNncid', 0)
   const wallet = await kcsSDK.api.kcsGenerateWallet('urge pulp usage sister evidence arrest palm math please chief egg abuse')
   const balance = await kcsSDK.api.kcsGetBalance('0x3223AEB8404C7525FcAA6C512f91e287AE9FfE7B')
   const block = await kcsSDK.api.kcsGetBlock('0x5d40698ee1b1ec589035f2a39c6162287e9056868cc79d66cfb248ba9f66c3fc')
   const currentBlock = await kcsSDK.api.kcsGetCurrentBlock()
   const transaction = await kcsSDK.api.kcsGetTransaction('0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7')
   const transactionCount = await kcsSDK.api.kcsGetTransactionCount('0xdac17f958d2ee523a2206206994597c13d831ec7')
-  const web3 = await kcsSDK.api.kcsWeb3Driver('asdlkfjnqunalkwjfnq2oi303294857k', {
-    "jsonrpc": "2.0",
-    "method": "web3_clientVersion",
-    "params": [ ],
-    "id": 2
-  })
 }

@@ -20,7 +20,7 @@ export async function oneOffchainExample() {
   });
   const assignedAddress = await oneSdk.offchain.depositAddress.assign('5e6be8e9e6aa436299950c41', '0xa7673161CbfE0116A4De9E341f8465940c2211d4');
   const addressByAccount = await oneSdk.offchain.depositAddress.getByAccount('5e6be8e9e6aa436299950c41');
+  const withdrawals = await oneSdk.offchain.withdrawal.getAll('Done')
   await oneSdk.offchain.depositAddress.remove('5e6be8e9e6aa436299950c41', '0xa7673161CbfE0116A4De9E341f8465940c2211d4');
   await oneSdk.offchain.storeTokenAddress('0xa7673161CbfE0116A4De9E341f8465940c2211d4', 'MY_TOKEN');
-  const withdrawals = await oneSdk.offchain.withdrawal.getAll('Done')
 }

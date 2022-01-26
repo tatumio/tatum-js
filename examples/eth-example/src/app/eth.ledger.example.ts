@@ -162,6 +162,7 @@ export async function ethLedgerVirtualCurrencyExample() {
   await ethSDK.ledger.virtualCurrency.update({
     name: "VC_VIRTUAL",
     baseRate: 1,
+    // TODO openapi bug
     basePair: VirtualCurrency.basePair.EUR
   });
 }

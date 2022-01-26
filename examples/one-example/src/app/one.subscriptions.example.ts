@@ -13,6 +13,7 @@ export async function oneSubscriptionsExample() {
       url: "https://webhook.tatum.io/account"
     }
   })
+
   await oneSDK.subscriptions.deleteSubscription("5e68c66581f2ee32bc354087")
   await oneSDK.subscriptions.disableWebHookHmac()
   await oneSDK.subscriptions.enableWebHookHmac({

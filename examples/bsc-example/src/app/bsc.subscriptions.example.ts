@@ -13,6 +13,7 @@ export async function bscSubscriptionsExample() {
       url: "https://webhook.tatum.io/account"
     }
   })
+
   await bscSDK.subscriptions.deleteSubscription("5e68c66581f2ee32bc354087")
   await bscSDK.subscriptions.disableWebHookHmac()
   await bscSDK.subscriptions.enableWebHookHmac({
