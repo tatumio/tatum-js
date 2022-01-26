@@ -5,8 +5,11 @@ import {
   ChainTransferEthErc20,
   DeployErc20,
   ExchangeRate,
+  SignatureId,
   TatumServiceService,
   TatumUrl,
+  Transaction,
+  TransactionHashKMS,
   TronWallet,
   XrpWallet,
 } from '@tatumio/api-client'
@@ -37,18 +40,16 @@ export interface SdkWithWalletFunctions {
   generateWallet(mnemonic?: string, options?: { testnet: boolean }): Promise<TronWallet>
 }
 
-export interface ISignature {
-  signatureId: string
-}
-
 export type ChainTransferErc20 = Omit<ChainTransferEthErc20, 'chain'>
 
 export interface SdkWithErc20Functions {
   decimals(contractAddress: string, provider?: string): any
   prepare: {
-    deploySignedTransaction(body: DeployErc20 & ISignature, provider?: string): Promise<string>
-    transferSignedTransaction(body: ChainTransferErc20 & ISignature, provider?: string): Promise<string>
-    mintSignedTransaction(body: ChainMintErc20 & ISignature, provider?: string): Promise<string>
-    burnSignedTransaction(body: ChainBurnErc20 & ISignature, provider?: string): Promise<string>
+    deploySignedTransaction(body: DeployErc20 & SignatureId, provider?: string): Promise<string>
+    transferSignedTransaction(body: ChainTransferErc20 & SignatureId, provider?: string): Promise<string>
+    mintSignedTransaction(body: ChainMintErc20 & SignatureId, provider?: string): Promise<string>
+    burnSignedTransaction(body: ChainBurnErc20 & SignatureId, provider?: string): Promise<string>
   }
 }
+
+export type BroadcastFunction = (requestBody: { txData: string } & SignatureId ) => CancelablePromise<TransactionHashKMS>;
