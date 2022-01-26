@@ -16,7 +16,7 @@ export const xrpTxService = () => {
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendTransaction = async (body: TransferXrpBlockchain) => {
+const sendTransaction = async (body: TransferXrpBlockchain) => {
   return ApiServices.blockchain.xrp.xrpBroadcast({ txData: await prepareSignedTransaction(body) })
 }
 
@@ -25,7 +25,7 @@ export const sendTransaction = async (body: TransferXrpBlockchain) => {
  * @param body content of the transaction to broadcast
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareSignedTransaction = async (body: TransferXrpBlockchain) => {
+const prepareSignedTransaction = async (body: TransferXrpBlockchain) => {
   const { fromAccount, fromSecret, to, amount, fee, sourceTag, destinationTag } = body
 
   const f = fee
