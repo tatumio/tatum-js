@@ -4,6 +4,10 @@ import { Blockchain, blockchainHelper, ChainTransactionKMS, Currency } from '@ta
 import { SDKS } from '../sdk.common'
 
 export const sdkKms = (args: { sdks: SDKS }) => {
+  let a = 10
+  a = 20
+  a = 20
+
   return {
     ...abstractSdkKms(),
     getAllPending: SecurityKeyManagementSystemService.getPendingTransactionsToSign,
