@@ -10,6 +10,7 @@ import { SDKS } from './sdk.common'
 import { httpDriver } from './services/sdk.httpDriver'
 import { TatumDogeSDK } from '@tatumio/doge'
 import { TatumCeloSDK } from '@tatumio/celo'
+import { TatumXrpSDK } from '@tatumio/xrp'
 import { TatumLtcSDK } from '@tatumio/ltc'
 import { TatumPolygonSDK } from '@tatumio/polygon'
 import { TatumKcsSDK } from '@tatumio/kcs'
@@ -27,8 +28,8 @@ export const TatumSDK = (args: { apiKey: string; url?: TatumUrl }) => {
     kcs: TatumKcsSDK(args),
     one: TatumOneSDK(args),
     bsc: TatumBscSDK(args),
+    xrp: TatumXrpSDK(args),
   }
-
   return {
     ...abstractSdk(args),
     blockchain: blockchainSpecificSDKs,

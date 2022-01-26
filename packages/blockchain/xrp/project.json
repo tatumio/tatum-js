@@ -1,0 +1,33 @@
+{
+  "root": "packages/blockchain/xrp",
+  "sourceRoot": "packages/blockchain/xrp/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/blockchain/xrp",
+        "tsConfig": "packages/blockchain/xrp/tsconfig.lib.json",
+        "packageJson": "packages/blockchain/xrp/package.json",
+        "main": "packages/blockchain/xrp/src/index.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/blockchain/xrp/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/blockchain/xrp"],
+      "options": {
+        "jestConfig": "packages/blockchain/xrp/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["scope:sdk"]
+}
