@@ -14,6 +14,8 @@
     "one-example": "examples/one-example",
     "xrp-example": "examples/xrp-example",
     "sdk": "packages/sdk",
+    "sdk-bsc": "packages/blockchain/bsc",
+    "sdk-bch": "packages/blockchain/bch",
     "sdk-btc": "packages/blockchain/btc",
     "sdk-celo": "packages/blockchain/celo",
     "sdk-doge": "packages/blockchain/doge",
