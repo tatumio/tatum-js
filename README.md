@@ -1,4 +1,4 @@
-# [Tatum API client v2](http://tatum.io/) &middot; [![GitHub license](https://img.shields.io/npm/dm/@tatumio/tatum)](https://img.shields.io/npm/dm/@tatumio/tatum) [![GitHub license](https://img.shields.io/npm/v/@tatumio/tatum)](https://img.shields.io/npm/v/@tatumio/tatum) [![CI](https://github.com/tatumio/tatum-js/actions/workflows/main.yml/badge.svg)](https://github.com/tatumio/tatum-js/actions/workflows/main.yml)
+# [Tatum API client v2](http://tatum.io/) &middot; [![GitHub license](https://img.shields.io/npm/dm/@tatumio/tatum)](https://img.shields.io/npm/dm/@tatumio/tatum) [![Build all packages](https://github.com/tatumio/tatum-js/actions/workflows/build.yaml/badge.svg?branch=master)](https://github.com/tatumio/tatum-js/actions/workflows/build.yaml)
 Tatum API client allows browsers and Node.js clients to interact with Tatum API. You can find API documentation at [API doc](https://tatum.io/apidoc).
 
 > **Are you looking for Tatum API client v1? It has been moved to long living branch [`/tatumio/tatum-js/tree/v1`](https://github.com/tatumio/tatum-js/tree/v1)**.
