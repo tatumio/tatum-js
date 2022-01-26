@@ -31,8 +31,8 @@ export async function bscApiExample() {
     // TODO openapi bug
     currency: TransferBscBlockchain.currency.B2U_BSC,
     fee: {
-      "gasLimit": "40000",
-      "gasPrice": "20"
+      gasLimit: "40000",
+      gasPrice: "20"
     },
     amount: "100000",
     fromPrivateKey: "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2"
@@ -63,9 +63,9 @@ export async function bscApiExample() {
   const transaction = await bscSDK.api.bscGetTransaction('0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7');
   const transactionCount = await bscSDK.api.bscGetTransactionCount('0xdac17f958d2ee523a2206206994597c13d831ec7');
   const web3 = await bscSDK.api.bscWeb3Driver('asdlkfjnqunalkwjfnq2oi303294857k', {
-    "jsonrpc": "2.0",
-    "method": "web3_clientVersion",
-    "params": [],
-    "id": 2
+    jsonrpc: "2.0",
+    method: "web3_clientVersion",
+    params: [],
+    id: 2
   });
 }
