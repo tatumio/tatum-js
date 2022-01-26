@@ -26,5 +26,11 @@ describe('TatumKcsSDK', () => {
     describe('decimals', () => {
       erc20TestFactory.decimals(sdk.transaction.erc20, TEST_DATA.KCS)
     })
+
+    describe('prepare', () => {
+      describe('deploySignedTransaction', () => {
+        erc20TestFactory.prepare.deploySignedTransaction(sdk.transaction.erc20, TEST_DATA.KCS)
+      })
+    })
   })
 })

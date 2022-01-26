@@ -17,6 +17,10 @@ export type BlockchainNetworkTestData = {
   ADDRESS_100: string
   PRIVATE_KEY_0: string
   PRIVATE_KEY_100: string
+  CONTRACT_ADDRESS?: string
+  ERC_20?: {
+    ADDRESS: string
+  }
 }
 
 export interface BlockchainTestData {

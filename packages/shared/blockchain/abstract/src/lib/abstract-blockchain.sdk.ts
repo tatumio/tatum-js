@@ -1,5 +1,6 @@
 import {
   CancelablePromise,
+  DeployErc20,
   ExchangeRate,
   TatumServiceService,
   TatumUrl,
@@ -33,10 +34,13 @@ export interface SdkWithWalletFunctions {
   generateWallet(mnemonic?: string, options?: { testnet: boolean }): Promise<TronWallet>
 }
 
-export interface SdkWithXrpLikeWalletFunction {
-  wallet(): CancelablePromise<XrpWallet>
+export interface ISignature {
+  signatureId: string;
 }
 
 export interface SdkWithErc20Functions {
   decimals(contractAddress: string, provider?: string): any
+  prepare: {
+    deploySignedTransaction(body: DeployErc20 & ISignature, provider?: string): Promise<string>
+  }
 }
