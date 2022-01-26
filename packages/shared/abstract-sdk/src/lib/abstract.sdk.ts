@@ -11,6 +11,7 @@ import { abstractSdkKms } from './services/kms.abstract'
 import { abstractSdkLedgerService } from './services/ledger.abstract'
 import { abstractSdkNftService } from './services/nft.abstract'
 
+console.log('HELLO')
 export interface SDKArguments {
   apiKey: string
   url?: TatumUrl
