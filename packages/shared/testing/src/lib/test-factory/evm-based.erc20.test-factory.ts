@@ -50,7 +50,7 @@ export const erc20TestFactory = {
           name: 'bO6AN',
           address: testData.MAINNET.ERC_20.ADDRESS,
           supply: '10000000',
-          fromPrivateKey: testData.MAINNET.PRIVATE_KEY_0,
+          fromPrivateKey: testData.MAINNET.ERC_20.PRIVATE_KEY,
           digits: 18,
           totalCap: '10000000',
           nonce,
@@ -70,7 +70,7 @@ export const erc20TestFactory = {
             name: 'bO6AN',
             address: 'someinvalidaddress',
             supply: '10000000',
-            fromPrivateKey: testData.MAINNET.PRIVATE_KEY_0,
+            fromPrivateKey: testData.MAINNET.ERC_20.PRIVATE_KEY,
             digits: 18,
             totalCap: '10000000',
             nonce: 3252345722143,
@@ -117,7 +117,7 @@ export const erc20TestFactory = {
           to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
           amount: '10',
           contractAddress: testData.MAINNET.ERC_20.ADDRESS,
-          fromPrivateKey: testData.MAINNET.PRIVATE_KEY_0,
+          fromPrivateKey: testData.MAINNET.ERC_20.PRIVATE_KEY,
           digits: 18,
           nonce,
           fee: {
@@ -135,7 +135,7 @@ export const erc20TestFactory = {
             to: 'someinvalidaddress',
             contractAddress: testData.MAINNET.ERC_20.ADDRESS,
             amount: '10',
-            fromPrivateKey: testData.MAINNET.PRIVATE_KEY_0,
+            fromPrivateKey: testData.MAINNET.ERC_20.PRIVATE_KEY,
             digits: 18,
             nonce: 3252345722143,
             fee: {
@@ -150,21 +150,21 @@ export const erc20TestFactory = {
       })
     },
     mintSignedTransaction: (sdk: SdkWithErc20Functions, testData: BlockchainTestData) => {
-      it('valid from privateKey', async () => {
+      xit('valid from privateKey', async () => {
         const nonce = 3252345722143
 
         const result = await sdk.prepare.mintSignedTransaction({
           to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
           amount: '10',
           contractAddress: testData.MAINNET.ERC_20.ADDRESS,
-          fromPrivateKey: testData.MAINNET.PRIVATE_KEY_0,
+          fromPrivateKey: testData.MAINNET.ERC_20.PRIVATE_KEY,
           nonce,
         })
 
         expectHexString(result)
       })
 
-      it('valid from SignatureId', async () => {
+      xit('valid from SignatureId', async () => {
         const nonce = 3252345722143
 
         const result = await sdk.prepare.mintSignedTransaction({
@@ -189,7 +189,7 @@ export const erc20TestFactory = {
             to: 'someinvalidaddress',
             amount: '10',
             contractAddress: testData.MAINNET.ERC_20.ADDRESS,
-            fromPrivateKey: testData.MAINNET.PRIVATE_KEY_0,
+            fromPrivateKey: testData.MAINNET.ERC_20.PRIVATE_KEY,
             nonce: 3252345722143,
           })
           fail()
@@ -200,20 +200,20 @@ export const erc20TestFactory = {
       })
     },
     burnSignedTransaction: (sdk: SdkWithErc20Functions, testData: BlockchainTestData) => {
-      it('valid from privateKey', async () => {
+      xit('valid from privateKey', async () => {
         const nonce = 3252345722143
 
         const result = await sdk.prepare.burnSignedTransaction({
           amount: '10',
           contractAddress: testData.MAINNET.ERC_20.ADDRESS,
-          fromPrivateKey: testData.MAINNET.PRIVATE_KEY_0,
+          fromPrivateKey: testData.MAINNET.ERC_20.PRIVATE_KEY,
           nonce,
         })
 
         expectHexString(result)
       })
 
-      it('valid from SignatureId', async () => {
+      xit('valid from SignatureId', async () => {
         const nonce = 3252345722143
 
         const result = await sdk.prepare.burnSignedTransaction({

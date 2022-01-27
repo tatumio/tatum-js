@@ -10,6 +10,7 @@ export const ETH_TEST_DATA: BlockchainTestData = {
     PRIVATE_KEY_100: '0x01c0a301a5387999ecd48f05c2485f895463332e503db22ac09361bae6af4dd5',
     CONTRACT_ADDRESS: '0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea',
     ERC_20: {
+      PRIVATE_KEY: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
       ADDRESS: '0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea',
     },
   },
