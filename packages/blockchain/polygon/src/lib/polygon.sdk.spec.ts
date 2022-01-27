@@ -1,4 +1,9 @@
-import { erc20TestFactory, REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA, walletTestFactory } from '@tatumio/shared-testing'
+import {
+  erc20TestFactory,
+  REPLACE_ME_WITH_TATUM_API_KEY,
+  TEST_DATA,
+  walletTestFactory,
+} from '@tatumio/shared-testing'
 import { TatumPolygonSDK } from './polygon.sdk'
 
 describe('TatumPolygonSDK', () => {
