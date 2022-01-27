@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum",
-  "version": "1.30.10",
+  "version": "1.30.12",
   "description": "Tatum API client allows browsers and Node.js clients to interact with Tatum API.",
   "main": "dist/src/index.js",
   "repository": "https://github.com/tatumio/tatum-js",
@@ -78,8 +78,8 @@
     "thorify": "^1.5.2",
     "tronweb": "^3.2.2",
     "url-parse": "^1.5.3",
-    "web3": "1.4.0",
-    "web3-eth": "1.4.0"
+    "web3": "^1.7.0",
+    "web3-eth": "^1.7.0"
   },
   "devDependencies": {
     "@types/bip32": "^2.0.0",
