@@ -38,17 +38,17 @@ const abi: Abi[] = [
         indexed: true,
         internalType: 'address',
         name: 'previousOwner',
-        type: 'address'
+        type: 'address',
       },
       {
         indexed: true,
         internalType: 'address',
         name: 'newOwner',
-        type: 'address'
-      }
+        type: 'address',
+      },
     ],
     name: 'OwnershipTransferred',
-    type: 'event'
+    type: 'event',
   },
   { inputs: [{ indexed: true, name: 'account', type: 'address' }], name: 'MinterAdded', type: 'event' },
   {
@@ -182,16 +182,16 @@ const abi: Abi[] = [
   { outputs: [{ type: 'string' }], constant: true, name: 'name', stateMutability: 'View', type: 'function' },
   {
     inputs: [],
-    name: "owner",
+    name: 'owner',
     outputs: [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
-    stateMutability: "view",
-    type: "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     outputs: [{ type: 'address' }],
@@ -203,10 +203,10 @@ const abi: Abi[] = [
   },
   {
     inputs: [],
-    name: "renounceOwnership",
+    name: 'renounceOwnership',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   { name: 'renounceMinter', stateMutability: 'Nonpayable', type: 'function' },
   {
@@ -338,15 +338,15 @@ const abi: Abi[] = [
   {
     inputs: [
       {
-        "internalType": "address",
-        "name": "newOwner",
-        "type": "address"
-      }
+        internalType: 'address',
+        name: 'newOwner',
+        type: 'address',
+      },
     ],
-    name: "transferOwnership",
+    name: 'transferOwnership',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     outputs: [{ type: 'bool' }],
