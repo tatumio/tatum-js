@@ -17,9 +17,7 @@
     "bignumber.js": "^9.0.0",
     "bip39": "^3.0.2",
     "ethereumjs-wallet": "^1.0.0",
-    "web3": "1.4.0",
-    "web3-core": "1.4.0",
-    "web3-utils": "1.4.0"
+    "web3": "^1.7.0"
   },
   "devDependencies": {
     "@types/jest": "^27.0.2",

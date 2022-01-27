@@ -23,7 +23,7 @@
     "class-validator": "0.13.0",
     "ed25519-hd-key": "^1.1.2",
     "reflect-metadata": "^0.1.13",
-    "web3": "1.4.0"
+    "web3": "^1.7.0"
   },
   "devDependencies": {
     "@types/jest": "^27.0.2",
