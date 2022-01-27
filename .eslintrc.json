@@ -5,7 +5,11 @@
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "parserOptions": {
+        "project": ["tsconfig.*?.json"]
+      },
       "rules": {
+        "@typescript-eslint/no-floating-promises": ["error"],
         "@nrwl/nx/enforce-module-boundaries": [
           "error",
           {

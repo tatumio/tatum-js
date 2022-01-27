@@ -48,4 +48,3 @@ export const celoKmsService = (args: { blockchain: EvmBasedBlockchain; web3: Evm
     // },
   }
 }
-

@@ -1,13 +1,13 @@
 import { dogeWalletExample } from './app/doge.wallet.example'
 import { dogeApiExample } from './app/doge.api.example'
 import { dogeKmsExample } from './app/doge.kms.example'
-import { 
+import {
   dogeLedgerAccountsExample,
-  dogeLedgerBlockAmountExample, 
-  dogeLedgerCustomerExample, 
-  dogeLedgerOrderBookExample, 
-  dogeLedgerTransactionExample, 
-  dogeLedgerVirtualCurrencyExample 
+  dogeLedgerBlockAmountExample,
+  dogeLedgerCustomerExample,
+  dogeLedgerOrderBookExample,
+  dogeLedgerTransactionExample,
+  dogeLedgerVirtualCurrencyExample,
 } from './app/doge.ledger.example'
 import { dogeOffchainExample } from './app/doge.offchain.example'
 import { exchangeRateExample } from './app/doge.root.example'
@@ -25,5 +25,3 @@ console.log(`Running ${dogeLedgerVirtualCurrencyExample()}`)
 console.log(`Running ${dogeOffchainExample()}`)
 console.log(`Running ${exchangeRateExample()}`)
 console.log(`Running ${dogeTransactionsExample()}`)
-
-

@@ -18,7 +18,9 @@ export const ETH_TEST_DATA: BlockchainTestData = {
     PRIVATE_KEY_100: '0x310d6940acde2a3e629e36fcd0f4bed1c2a1bc2613946836ffdd8d46e0e7cd15',
   },
   INVALID_XPUB_ERROR: 'Non-base58 character',
-  INVALID_XPUB_CHILD_INDEX_ERROR: 'The value of "value" is out of range. It must be >= 0 and <= 4294967295. Received -1',
-  INVALID_PRIVATE_KEY_CHILD_INDEX_ERROR: 'The value of "value" is out of range. It must be >= 0 and <= 4294967295. Received -1',
+  INVALID_XPUB_CHILD_INDEX_ERROR:
+    'The value of "value" is out of range. It must be >= 0 and <= 4294967295. Received -1',
+  INVALID_PRIVATE_KEY_CHILD_INDEX_ERROR:
+    'The value of "value" is out of range. It must be >= 0 and <= 4294967295. Received -1',
   INVALID_PRIVATE_KEY_ERROR: 'Expected private key to be an Uint8Array with length 32',
 }

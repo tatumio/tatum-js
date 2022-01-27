@@ -2,3 +2,5 @@
 
 /dist
 /coverage
+packages/api-client/src/generated
+.github

@@ -6,8 +6,10 @@
     "start": "nx serve",
     "build": "nx affected:build",
     "build:libs": "nx run-many --target=build --projects=$(nx affected:libs --plain | sed 's/ /,/g')",
-    "lint": "nx affected:lint --parallel --quiet",
-    "test": "nx affected:test --parallel --quiet",
+    "test:ci": "nx run-many --target=test --all --parallel --max-parallel=3 --coverage --coverageReporters=lcov && node ./tools/coverageMerger.js",
+    "lint": "nx affected:lint --parallel",
+    "format": "nx format:write",
+    "test": "nx affected:test --parallel",
     "dep-graph": "nx dep-graph",
     "generate-api": "openapi --exportCore false --client axios --input ./packages/api-client/src/api_schema.json --output ./packages/api-client/src/generated",
     "prepare": "husky install"
@@ -38,13 +40,13 @@
     "web3-utils": "^1.6.1"
   },
   "devDependencies": {
-    "@nrwl/nx-cloud": "13.1.2",
     "@nrwl/cli": "13.5.3",
     "@nrwl/eslint-plugin-nx": "13.5.3",
     "@nrwl/jest": "13.5.3",
     "@nrwl/js": "13.5.3",
     "@nrwl/linter": "13.5.3",
     "@nrwl/node": "13.5.3",
+    "@nrwl/nx-cloud": "13.1.2",
     "@nrwl/tao": "13.5.3",
     "@nrwl/workspace": "13.5.3",
     "@types/bignumber.js": "^5.0.0",
@@ -70,4 +72,3 @@
     "typescript": "~4.5.4"
   }
 }
-
