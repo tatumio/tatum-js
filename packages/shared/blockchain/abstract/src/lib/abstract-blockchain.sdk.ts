@@ -1,14 +1,13 @@
 import {
   CancelablePromise,
-  ChainBurnErc20,
-  ChainMintErc20,
+  ChainBurnErc20 as ApiChainBurnErc20,
+  ChainMintErc20 as ApiChainMintErc20,
   ChainTransferEthErc20,
   DeployErc20,
   ExchangeRate,
   SignatureId,
   TatumServiceService,
   TatumUrl,
-  Transaction,
   TransactionHashKMS,
   TronWallet,
   XrpWallet,
@@ -41,6 +40,10 @@ export interface SdkWithWalletFunctions {
 }
 
 export type ChainTransferErc20 = Omit<ChainTransferEthErc20, 'chain'>
+
+export type ChainMintErc20 = Omit<ApiChainMintErc20, 'chain'>
+
+export type ChainBurnErc20 = Omit<ApiChainBurnErc20, 'chain'>
 
 export interface SdkWithErc20Functions {
   decimals(contractAddress: string, provider?: string): any

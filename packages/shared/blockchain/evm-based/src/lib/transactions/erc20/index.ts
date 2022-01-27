@@ -1,5 +1,5 @@
-import { ChainBurnErc20, ChainMintErc20, DeployErc20, SignatureId } from '@tatumio/api-client'
-import { BroadcastFunction, ChainTransferErc20 } from '@tatumio/shared-blockchain-abstract'
+import { DeployErc20, SignatureId } from '@tatumio/api-client'
+import { BroadcastFunction, ChainTransferErc20, ChainMintErc20, ChainBurnErc20 } from '@tatumio/shared-blockchain-abstract'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
 import Web3 from 'web3'
