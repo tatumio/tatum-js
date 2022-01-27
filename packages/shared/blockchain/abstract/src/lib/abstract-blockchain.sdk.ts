@@ -39,22 +39,29 @@ export interface SdkWithWalletFunctions {
   generateWallet(mnemonic?: string, options?: { testnet: boolean }): Promise<TronWallet>
 }
 
-export type ChainTransferErc20 = Omit<ChainTransferEthErc20, 'chain'>
+export interface SdkWithXrpLikeWalletFunction {
+  wallet(): CancelablePromise<XrpWallet>
+}
 
-export type ChainMintErc20 = Omit<ApiChainMintErc20, 'chain'>
+type FromPrivateKeyOrSignatureId<T extends { fromPrivateKey: string }> = Omit<T, 'fromPrivateKey'> &
+  Partial<SignatureId> &
+  Partial<Pick<T, 'fromPrivateKey'>>
 
-export type ChainBurnErc20 = Omit<ApiChainBurnErc20, 'chain'>
+export type ChainTransferErc20 = FromPrivateKeyOrSignatureId<Omit<ChainTransferEthErc20, 'chain'>>
+
+export type ChainMintErc20 = FromPrivateKeyOrSignatureId<Omit<ApiChainMintErc20, 'chain'>>
+
+export type ChainBurnErc20 = FromPrivateKeyOrSignatureId<Omit<ApiChainBurnErc20, 'chain'>>
+
+export type ChainDeployErc20 = FromPrivateKeyOrSignatureId<DeployErc20>
 
 export interface SdkWithErc20Functions {
   decimals(contractAddress: string, provider?: string): any
   prepare: {
-    deploySignedTransaction(body: DeployErc20 & Partial<SignatureId>, provider?: string): Promise<string>
-    transferSignedTransaction(
-      body: ChainTransferErc20 & Partial<SignatureId>,
-      provider?: string,
-    ): Promise<string>
-    mintSignedTransaction(body: ChainMintErc20 & Partial<SignatureId>, provider?: string): Promise<string>
-    burnSignedTransaction(body: ChainBurnErc20 & Partial<SignatureId>, provider?: string): Promise<string>
+    deploySignedTransaction(body: ChainDeployErc20, provider?: string): Promise<string>
+    transferSignedTransaction(body: ChainTransferErc20, provider?: string): Promise<string>
+    mintSignedTransaction(body: ChainMintErc20, provider?: string): Promise<string>
+    burnSignedTransaction(body: ChainBurnErc20, provider?: string): Promise<string>
   }
 }
 

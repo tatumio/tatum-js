@@ -41,11 +41,11 @@ describe('TatumKcsSDK', () => {
         erc20TestFactory.prepare.transferSignedTransaction(sdk.transaction.erc20, TEST_DATA.KCS)
       })
 
-      describe('mintSignedTransaction', () => {
+      xdescribe('mintSignedTransaction', () => {
         erc20TestFactory.prepare.mintSignedTransaction(sdk.transaction.erc20, TEST_DATA.KCS)
       })
 
-      describe('burnSignedTransaction', () => {
+      xdescribe('burnSignedTransaction', () => {
         erc20TestFactory.prepare.burnSignedTransaction(sdk.transaction.erc20, TEST_DATA.KCS)
       })
     })
