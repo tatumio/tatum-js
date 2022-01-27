@@ -7,7 +7,13 @@ type MintNftWithUriFn<Body> = (
 
 export const abstractSdkNftService = () => {
   return {
+    deployNFTSmartContract: BlockchainNftService.nftDeployErc721,
+    addNFTMinter: BlockchainNftService.nftAddMinter,
     mintNFT: BlockchainNftService.nftMintErc721,
+    mintMultipleNFTs: BlockchainNftService.nftMintMultipleErc721,
+    burnNFT: BlockchainNftService.nftBurnErc721,
+    transferNFT: BlockchainNftService.nftTransferErc721,
+    updateNFTRoyalty: BlockchainNftService.nftUpdateCashbackErc721,
     getNFTTransaction: BlockchainNftService.nftGetTransactErc721,
     getNFTTransactionsByToken: BlockchainNftService.nftGetTransactionByToken,
     getNFTTransactionsByAddress: BlockchainNftService.nftGetTransactionByAddress,
@@ -15,6 +21,6 @@ export const abstractSdkNftService = () => {
     getNFTProvenanceData: BlockchainNftService.nftGetProvenanceDataErc721,
     getNFTMetadataURI: BlockchainNftService.nftGetMetadataErc721,
     getNFTRoyalty: BlockchainNftService.nftGetRoyaltyErc721,
-    prepareAddNFTMinterAbstraction: BlockchainNftService.nftGetRoyaltyErc721,
+    getNFTAccountBalance: BlockchainNftService.nftGetBalanceErc721,
   }
 }
