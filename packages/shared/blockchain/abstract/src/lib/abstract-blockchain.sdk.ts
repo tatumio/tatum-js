@@ -48,10 +48,13 @@ export type ChainBurnErc20 = Omit<ApiChainBurnErc20, 'chain'>
 export interface SdkWithErc20Functions {
   decimals(contractAddress: string, provider?: string): any
   prepare: {
-    deploySignedTransaction(body: DeployErc20 & SignatureId, provider?: string): Promise<string>
-    transferSignedTransaction(body: ChainTransferErc20 & SignatureId, provider?: string): Promise<string>
-    mintSignedTransaction(body: ChainMintErc20 & SignatureId, provider?: string): Promise<string>
-    burnSignedTransaction(body: ChainBurnErc20 & SignatureId, provider?: string): Promise<string>
+    deploySignedTransaction(body: DeployErc20 & Partial<SignatureId>, provider?: string): Promise<string>
+    transferSignedTransaction(
+      body: ChainTransferErc20 & Partial<SignatureId>,
+      provider?: string,
+    ): Promise<string>
+    mintSignedTransaction(body: ChainMintErc20 & Partial<SignatureId>, provider?: string): Promise<string>
+    burnSignedTransaction(body: ChainBurnErc20 & Partial<SignatureId>, provider?: string): Promise<string>
   }
 }
 

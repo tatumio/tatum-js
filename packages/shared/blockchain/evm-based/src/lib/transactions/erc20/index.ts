@@ -1,5 +1,10 @@
 import { DeployErc20, SignatureId } from '@tatumio/api-client'
-import { BroadcastFunction, ChainTransferErc20, ChainMintErc20, ChainBurnErc20 } from '@tatumio/shared-blockchain-abstract'
+import {
+  BroadcastFunction,
+  ChainTransferErc20,
+  ChainMintErc20,
+  ChainBurnErc20,
+} from '@tatumio/shared-blockchain-abstract'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
 import Web3 from 'web3'
@@ -28,13 +33,13 @@ const prepareSignedTransactionAbstraction = async (
     return JSON.stringify(tx)
   }
 
-  const signedTransaction = await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)
+  const signedTransaction = await client.eth.accounts.signTransaction(tx, fromPrivateKey)
 
   return signedTransaction.rawTransaction
 }
 
 const mintSignedTransaction = async (
-  body: ChainMintErc20 & SignatureId,
+  body: ChainMintErc20 & Partial<SignatureId>,
   web3: EvmBasedWeb3,
   provider?: string,
 ) => {
@@ -61,7 +66,7 @@ const mintSignedTransaction = async (
 }
 
 const burnSignedTransaction = async (
-  body: ChainBurnErc20 & SignatureId,
+  body: ChainBurnErc20 & Partial<SignatureId>,
   web3: EvmBasedWeb3,
   provider?: string,
 ) => {
@@ -74,6 +79,7 @@ const burnSignedTransaction = async (
   const contract = new client.eth.Contract(Erc20Token.abi as any, body.contractAddress.trim().trim())
 
   const digits = new BigNumber(10).pow(await contract.methods.decimals().call())
+
   const data = contract.methods
     .burn(`0x${new BigNumber(body.amount).multipliedBy(digits).toString(16)}`)
     .encodeABI()
@@ -88,7 +94,7 @@ const burnSignedTransaction = async (
 }
 
 const transferSignedTransaction = async (
-  body: ChainTransferErc20 & SignatureId,
+  body: ChainTransferErc20 & Partial<SignatureId>,
   web3: EvmBasedWeb3,
   provider?: string,
 ) => {
@@ -121,7 +127,7 @@ const transferSignedTransaction = async (
 }
 
 const deploySignedTransaction = async (
-  body: DeployErc20 & SignatureId,
+  body: DeployErc20 & Partial<SignatureId>,
   web3: EvmBasedWeb3,
   provider?: string,
 ) => {
@@ -185,7 +191,7 @@ export const erc20 = (args: {
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction data to be broadcast to blockchain.
        */
-      deploySignedTransaction: async (body: DeployErc20 & SignatureId, provider?: string) =>
+      deploySignedTransaction: async (body: DeployErc20 & Partial<SignatureId>, provider?: string) =>
         deploySignedTransaction(body, args.web3, provider),
       /**
        * Sign transfer erc20 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -193,7 +199,7 @@ export const erc20 = (args: {
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction data to be broadcast to blockchain.
        */
-      transferSignedTransaction: async (body: ChainTransferErc20 & SignatureId, provider?: string) =>
+      transferSignedTransaction: async (body: ChainTransferErc20 & Partial<SignatureId>, provider?: string) =>
         transferSignedTransaction(body, args.web3, provider),
       /**
        * Sign mint erc20 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -201,7 +207,7 @@ export const erc20 = (args: {
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction data to be broadcast to blockchain.
        */
-      mintSignedTransaction: async (body: ChainMintErc20 & SignatureId, provider?: string) =>
+      mintSignedTransaction: async (body: ChainMintErc20 & Partial<SignatureId>, provider?: string) =>
         mintSignedTransaction(body, args.web3, provider),
       /**
        * Sign burn erc20 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -209,7 +215,7 @@ export const erc20 = (args: {
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction data to be broadcast to blockchain.
        */
-      burnSignedTransaction: async (body: ChainBurnErc20 & SignatureId, provider?: string) =>
+      burnSignedTransaction: async (body: ChainBurnErc20 & Partial<SignatureId>, provider?: string) =>
         burnSignedTransaction(body, args.web3, provider),
     },
     send: {
@@ -220,7 +226,7 @@ export const erc20 = (args: {
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      deploySignedTransaction: async (body: DeployErc20 & SignatureId, provider?: string) =>
+      deploySignedTransaction: async (body: DeployErc20 & Partial<SignatureId>, provider?: string) =>
         args.broadcastFunction({
           txData: await deploySignedTransaction(body, args.web3, provider),
           signatureId: body.signatureId,
@@ -232,7 +238,7 @@ export const erc20 = (args: {
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      transferSignedTransaction: async (body: ChainTransferErc20 & SignatureId, provider?: string) =>
+      transferSignedTransaction: async (body: ChainTransferErc20 & Partial<SignatureId>, provider?: string) =>
         args.broadcastFunction({
           txData: await transferSignedTransaction(body, args.web3, provider),
           signatureId: body.signatureId,
@@ -244,7 +250,7 @@ export const erc20 = (args: {
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      mintSignedTransaction: async (body: ChainMintErc20 & SignatureId, provider?: string) =>
+      mintSignedTransaction: async (body: ChainMintErc20 & Partial<SignatureId>, provider?: string) =>
         args.broadcastFunction({
           txData: await mintSignedTransaction(body, args.web3, provider),
           signatureId: body.signatureId,
@@ -256,7 +262,10 @@ export const erc20 = (args: {
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      burnSignedTransaction: async (body: ChainBurnErc20 & SignatureId, provider?: string) =>
+      burnSignedTransaction: async (
+        body: ChainBurnErc20 & Partial<Partial<SignatureId>>,
+        provider?: string,
+      ) =>
         args.broadcastFunction({
           txData: await burnSignedTransaction(body, args.web3, provider),
           signatureId: body.signatureId,
