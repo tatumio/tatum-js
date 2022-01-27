@@ -36,6 +36,18 @@ describe('TatumEthSDK', () => {
       describe('deploySignedTransaction', () => {
         erc20TestFactory.prepare.deploySignedTransaction(sdk.transaction.erc20, TEST_DATA.ETH)
       })
+
+      describe('transferSignedTransaction', () => {
+        erc20TestFactory.prepare.transferSignedTransaction(sdk.transaction.erc20, TEST_DATA.ETH)
+      })
+
+      xdescribe('mintSignedTransaction', () => {
+        erc20TestFactory.prepare.mintSignedTransaction(sdk.transaction.erc20, TEST_DATA.ETH)
+      })
+
+      xdescribe('burnSignedTransaction', () => {
+        erc20TestFactory.prepare.burnSignedTransaction(sdk.transaction.erc20, TEST_DATA.ETH)
+      })
     })
   })
 })

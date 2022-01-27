@@ -53,7 +53,7 @@ const mintSignedTransaction = async (body: ChainMintErc20, web3: EvmBasedWeb3, p
     .encodeABI()
 
   const tx: TransactionConfig = {
-    from: 0,
+    from: undefined,
     data,
     nonce: body.nonce,
   }
