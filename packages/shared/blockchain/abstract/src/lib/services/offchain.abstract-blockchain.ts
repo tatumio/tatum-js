@@ -16,6 +16,7 @@ export const abstractBlockchainOffchain = (args: { blockchain: Blockchain }) => 
         ),
     },
     withdrawal: {
+      ...superObject.withdrawal,
       getAll: async (status?: 'InProgress' | 'Done' | 'Cancelled', pageSize = 50, offset = 0) =>
         superObject.withdrawal.getAll(
           pageSize,
