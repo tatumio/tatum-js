@@ -1,7 +1,7 @@
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
-import { TatumXrpSDK } from '@tatumio/xrp'
+import { TatumXlmSDK } from '@tatumio/xlm'
 
-const xlmSDK = TatumXrpSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const xlmSDK = TatumXlmSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function xlmKmsExample() {
   const pendingSignatureIds = await xlmSDK.kms.getAllPending()
@@ -17,5 +17,6 @@ export async function xlmKmsExample() {
       serializedTransaction: pendingSignatureIds.serializedTransaction,
     },
     'SCVVKNLBHOWBNJYHD3CNROOA2P3K35I5GNTYUHLLMUHMHWQYNEI7LVED',
+    true,
   )
 }
