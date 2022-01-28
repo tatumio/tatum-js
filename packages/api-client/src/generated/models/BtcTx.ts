@@ -18,9 +18,13 @@ export type BtcTx = {
     rate?: number;
     mtime?: number;
     /**
-     * Block this transaction belongs to.
+     * Height of the block this transaction belongs to.
      */
     blockNumber?: number;
+    /**
+     * Hash of the block this transaction belongs to.
+     */
+    block?: string;
     /**
      * Time of the transaction.
      */
@@ -58,7 +62,7 @@ export type BtcTx = {
         sequence?: number;
         coin?: {
             version?: number;
-            height?: number;
+            blockNumber?: number;
             /**
              * Amount of the transaction, in Satoshis (1 BTC = 100 000 000 Satoshis)
              */

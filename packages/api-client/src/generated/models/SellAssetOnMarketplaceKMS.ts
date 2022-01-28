@@ -28,7 +28,7 @@ export type SellAssetOnMarketplaceKMS = {
      */
     listingId: string;
     /**
-     * Amount of the assets to be sent. For ERC-721 tokens, enter 1.
+     * Amount of the assets to be sent. For ERC-721 tokens, enter amount only in case of natiev currency cashback.
      */
     amount?: string;
     /**

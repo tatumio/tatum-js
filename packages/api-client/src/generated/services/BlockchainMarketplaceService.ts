@@ -109,6 +109,13 @@ export class BlockchainMarketplaceService {
      * <li>Celo</li>
      * <li>Polygon (Matic)</li>
      * </ul>
+     * *Note:
+     * In the new tatum ERC721 smart contract, we have added an option for the author to set royalties on every transfer and in any currency.
+     * To make it backwards compatible with the previous logic we have added a check to see if you are using the new or old version.
+     * If you are using older version of the marketplace/auction, you may notice a warning in the explorer which says:
+     * "Although one or more Error Occurred [execution reverted] Contract Execution Completed"
+     *
+     * You can ignore the above warning, this has no impact on the functionality and is a response of internal transaction
      * </p>
      *
      * @param requestBody
@@ -144,6 +151,13 @@ export class BlockchainMarketplaceService {
      * <li>Celo</li>
      * <li>Polygon (Matic)</li>
      * </ul>
+     * *Note:
+     * In the new tatum ERC721 smart contract, we have added an option for the author to set royalties on every transfer and in any currency.
+     * To make it backwards compatible with the previous logic we have added a check to see if you are using the new or old version.
+     * If you are using older version of the marketplace/auction, you may notice a warning in the explorer which says:
+     * "Although one or more Error Occurred [execution reverted] Contract Execution Completed"
+     *
+     * You can ignore the above warning, this has no impact on the functionality and is a response of internal transaction
      * </p>
      *
      * @param requestBody
@@ -180,6 +194,13 @@ export class BlockchainMarketplaceService {
      * <li>Celo</li>
      * <li>Polygon (Matic)</li>
      * </ul>
+     * *Note:
+     * In the new tatum ERC721 smart contract, we have added an option for the author to set royalties on every transfer and in any currency.
+     * To make it backwards compatible with the previous logic we have added a check to see if you are using the new or old version.
+     * If you are using older version of the marketplace/auction, you may notice a warning in the explorer which says:
+     * "Although one or more Error Occurred [execution reverted] Contract Execution Completed"
+     *
+     * You can ignore the above warning, this has no impact on the functionality and is a response of internal transaction
      * </p>
      *
      * @param requestBody
@@ -508,6 +529,13 @@ export class BlockchainMarketplaceService {
      * <li>Celo</li>
      * <li>Polygon (Matic)</li>
      * </ul>
+     * *Note:
+     * In the new tatum ERC721 smart contract, we have added an option for the author to set royalties on every transfer and in any currency.
+     * To make it backwards compatible with the previous logic we have added a check to see if you are using the new or old version.
+     * If you are using older version of the marketplace/auction, you may notice a warning in the explorer which says:
+     * "Although one or more Error Occurred [execution reverted] Contract Execution Completed"
+     *
+     * You can ignore the above warning, this has no impact on the functionality and is a response of internal transaction
      * </p>
      *
      * @param requestBody
@@ -543,6 +571,13 @@ export class BlockchainMarketplaceService {
      * <li>Celo</li>
      * <li>Polygon (Matic)</li>
      * </ul>
+     * *Note:
+     * In the new tatum ERC721 smart contract, we have added an option for the author to set royalties on every transfer and in any currency.
+     * To make it backwards compatible with the previous logic we have added a check to see if you are using the new or old version.
+     * If you are using older version of the marketplace/auction, you may notice a warning in the explorer which says:
+     * "Although one or more Error Occurred [execution reverted] Contract Execution Completed"
+     *
+     * You can ignore the above warning, this has no impact on the functionality and is a response of internal transaction
      * </p>
      *
      * @param requestBody
@@ -578,6 +613,13 @@ export class BlockchainMarketplaceService {
      * <li>Celo</li>
      * <li>Polygon (Matic)</li>
      * </ul>
+     * *Note:
+     * In the new tatum ERC721 smart contract, we have added an option for the author to set royalties on every transfer and in any currency.
+     * To make it backwards compatible with the previous logic we have added a check to see if you are using the new or old version.
+     * If you are using older version of the marketplace/auction, you may notice a warning in the explorer which says:
+     * "Although one or more Error Occurred [execution reverted] Contract Execution Completed"
+     *
+     * You can ignore the above warning, this has no impact on the functionality and is a response of internal transaction
      * </p>
      *
      * @param requestBody
@@ -602,7 +644,7 @@ export class BlockchainMarketplaceService {
     }
 
     /**
-     * Approve NFT token spending for the Auction
+     * Approve NFT token spending for the Auction / Marketplace
      * <h4>2 credits per API call.</h4><br/>
      * <p>Approve NFT transfer for auction to perform listing of the asset.<br/>
      * Supported blockchains:
