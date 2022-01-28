@@ -31,7 +31,8 @@ const prepareSignedTransaction = async (testnet: boolean, body: TransferXlmBlock
   const memo = message ? (message.length > 28 ? Memo.hash(message) : Memo.text(message)) : undefined
   const fromAccount = Keypair.fromSecret(fromSecret).publicKey()
   const account = await ApiServices.blockchain.xlm.xlmGetAccountInfo(fromAccount)
-  if (!(typeof account.sequence === 'string')) {
+  if (typeof account.sequence !== 'string') {
+    console.log('Account has no sequence')
     return ''
   }
   const builder = new TransactionBuilder(new Account(fromAccount, account.sequence), {

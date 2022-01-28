@@ -39,7 +39,7 @@ export const sendOffchainTransaction = async (testnet: boolean, body: TransferXl
     txData = await prepareSignedOffchainTransaction(testnet, account, amount, address, secret, memo)
   } catch (e) {
     console.error(e)
-    if (!(typeof id === 'string')) {
+    if (typeof id !== 'string') {
       console.log('Missing withdrawal ID')
       throw e
     }
@@ -57,7 +57,7 @@ export const sendOffchainTransaction = async (testnet: boolean, body: TransferXl
   } catch (e) {
     console.error(e)
     try {
-      if (!(typeof id === 'string')) {
+      if (typeof id !== 'string') {
         console.log('Missing withdrawal ID')
         throw e
       }
