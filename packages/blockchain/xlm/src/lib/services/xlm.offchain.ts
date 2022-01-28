@@ -39,6 +39,10 @@ export const sendOffchainTransaction = async (testnet: boolean, body: TransferXl
     txData = await prepareSignedOffchainTransaction(testnet, account, amount, address, secret, memo)
   } catch (e) {
     console.error(e)
+    if (!(typeof id === 'string')) {
+      console.log('Missing withdrawal ID')
+      throw e
+    }
     await ApiServices.offChain.withdrawal.cancelInProgressWithdrawal(id)
     throw e
   }
@@ -49,11 +53,14 @@ export const sendOffchainTransaction = async (testnet: boolean, body: TransferXl
         withdrawalId: id,
         currency: Currency.XLM,
       })),
-      id,
     }
   } catch (e) {
     console.error(e)
     try {
+      if (!(typeof id === 'string')) {
+        console.log('Missing withdrawal ID')
+        throw e
+      }
       await ApiServices.offChain.withdrawal.cancelInProgressWithdrawal(id)
     } catch (e1) {
       console.log(e)

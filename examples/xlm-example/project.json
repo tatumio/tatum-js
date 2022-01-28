@@ -4,14 +4,13 @@
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/node:build",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/examples/xlm-example",
         "main": "examples/xlm-example/src/index.ts",
         "tsConfig": "examples/xlm-example/tsconfig.app.json",
-        "packageJson": "examples/xlm-example/package.json",
-        "assets": ["examples/xlm-example/*.md"]
+        "packageJson": "examples/xlm-example/package.json"
       }
     },
     "serve": {

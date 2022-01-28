@@ -11,8 +11,6 @@
     "kcs-example": "examples/kcs-example",
     "ltc-example": "examples/ltc-example",
     "one-example": "examples/one-example",
-    "xrp-example": "examples/xrp-example",
-    "xlm-example": "examples/xlm-example",
     "polygon-example": "examples/polygon-example",
     "sdk": "packages/sdk",
     "sdk-bch": "packages/blockchain/bch",
@@ -26,13 +24,15 @@
     "sdk-ltc": "packages/blockchain/ltc",
     "sdk-one": "packages/blockchain/one",
     "sdk-polygon": "packages/blockchain/polygon",
-    "sdk-xlm": "packages/blockchain/xrp",
+    "sdk-xlm": "packages/blockchain/xlm",
     "sdk-xrp": "packages/blockchain/xrp",
     "shared-abstract-sdk": "packages/shared/abstract-sdk",
     "shared-blockchain-abstract": "packages/shared/blockchain/abstract",
     "shared-blockchain-btc-based": "packages/shared/blockchain/btc-based",
     "shared-blockchain-evm-based": "packages/shared/blockchain/evm-based",
     "shared-core": "packages/shared/core",
-    "shared-testing": "packages/shared/testing"
+    "shared-testing": "packages/shared/testing",
+    "xlm-example": "examples/xlm-example",
+    "xrp-example": "examples/xrp-example"
   }
 }
