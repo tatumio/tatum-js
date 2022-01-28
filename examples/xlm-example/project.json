@@ -1,0 +1,32 @@
+{
+  "root": "examples/xlm-example",
+  "sourceRoot": "examples/xlm-example/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/examples/xlm-example",
+        "main": "examples/xlm-example/src/index.ts",
+        "tsConfig": "examples/xlm-example/tsconfig.app.json",
+        "packageJson": "examples/xlm-example/package.json",
+        "assets": ["examples/xlm-example/*.md"]
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:execute",
+      "options": {
+        "buildTarget": "xlm-example:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["examples/xlm-example/**/*.ts"]
+      }
+    }
+  },
+  "tags": ["type:example"]
+}
