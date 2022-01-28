@@ -108,6 +108,49 @@ export class BlockchainBitcoinService {
     }
 
     /**
+     * JSON RPC HTTP driver
+     * <h4>2 credits per API call.</h4><br/>
+     * <p>Use this endpoint URL as an http-based JSON RPC driver to connect directly to the node provided by Tatum.
+     * To learn more about JSON RPC, please visit <a href="https://developer.bitcoin.org/reference/rpc/index.html" target="_blank">Bitcoin developers' guide.</a></p>
+     *
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static btcRpcDriver(
+        requestBody: {
+            /**
+             * Version of the JSON RPC.
+             */
+            jsonrpc?: string;
+            /**
+             * ID of the request, could be any arbitrary identifier.
+             */
+            id?: string;
+            /**
+             * Method to invoke on the node.
+             */
+            method?: string;
+            /**
+             * Params to the method call, if required.
+             */
+            params?: any[];
+        },
+    ): CancelablePromise<any> {
+        return __request({
+            method: 'POST',
+            path: `/v3/bitcoin/node`,
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                500: `Internal server error. There was an error on the server while processing the request.`,
+            },
+        });
+    }
+
+    /**
      * Get Blockchain information
      * <h4>1 credit per API call.</h4><br/><p>Gets Bitcoin blockchain information. Obtains basic info like the testnet / mainnet version of the chain, the current block number and its hash.</p>
      * @returns BtcInfo OK
@@ -168,7 +211,7 @@ export class BlockchainBitcoinService {
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                403: `Forbidden. The request is authenticated, but it is not possible to perform the required operation due to a logical error or invalid permissions.`,
+                404: `Block not found.`,
                 500: `Internal server error. There was an error on the server while processing the request.`,
             },
         });

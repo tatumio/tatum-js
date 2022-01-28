@@ -4,7 +4,7 @@
 
 export type Error403AddressXpub = {
     /**
-     * Address.xpub.present
+     * account.xpub.present
      */
     errorCode: string;
     /**
