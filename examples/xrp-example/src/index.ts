@@ -5,12 +5,14 @@ import { xrpChangeRateExample } from './app/xrp.root.example'
 import { xrpOffchainExample } from './app/xrp.offchain.example'
 import { xrpTxExample } from './app/xrp.tx.example'
 import { xrpWalletExample } from './app/xrp.wallet.example'
-import { xrpLedgerAccountExample } from './app/xrp.ledger.account.example'
-import { xrpLedgerBlockAmountExample } from './app/xrp.ledger.block-amount.example'
-import { xrpLedgerCustomerExample } from './app/xrp.ledger.customer.example'
-import { xrpLedgerOrderBookExample } from './app/xrp.ledger.order-book.example'
-import { xrpLedgerTransactionExample } from './app/xrp.ledger.transaction.example'
-import { xrpLedgerVirtualCurrencyExample } from './app/xrp.ledger.virtual-currency.example'
+import {
+  xrpLedgerAccountExample,
+  xrpLedgerBlockAmountExample,
+  xrpLedgerCustomerExample,
+  xrpLedgerOrderBookExample,
+  xrpLedgerTransactionExample,
+  xrpLedgerVirtualCurrencyExample,
+} from './app/xrp.ledger.example'
 
 console.log(`Running ${xrpApiExample()}`)
 console.log(`Running ${xrpBlockchainExample()}`)
