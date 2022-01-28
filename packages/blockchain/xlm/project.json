@@ -10,8 +10,7 @@
         "outputPath": "dist/packages/blockchain/xlm",
         "tsConfig": "packages/blockchain/xlm/tsconfig.lib.json",
         "packageJson": "packages/blockchain/xlm/package.json",
-        "main": "packages/blockchain/xlm/src/index.ts",
-        "assets": ["packages/blockchain/xlm/*.md"]
+        "main": "packages/blockchain/xlm/src/index.ts"
       }
     },
     "lint": {
