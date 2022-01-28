@@ -14,7 +14,7 @@ export const xlmKmsService = (args: { blockchain: Blockchain }) => {
      * @returns transaction data to be broadcast to blockchain.
      */
     async sign(tx: ChainTransactionKMS, secret: string, testnet: boolean) {
-      ;(tx as PendingTransaction).chain = 'XLM' as any
+      (tx as PendingTransaction).chain = 'XLM' as any
       const transaction = TransactionBuilder.fromXDR(
         tx.serializedTransaction,
         testnet ? Networks.TESTNET : Networks.PUBLIC,

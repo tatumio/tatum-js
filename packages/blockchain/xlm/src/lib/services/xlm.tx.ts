@@ -28,7 +28,11 @@ const sendTransaction = async (testnet: boolean, body: TransferXlmBlockchain) =>
 const prepareSignedTransaction = async (testnet: boolean, body: TransferXlmBlockchain) => {
   const { fromSecret, to, amount, message, initialize } = body
 
-  const memo = message ? (message.length > 28 ? Memo.hash(message) : Memo.text(message)) : undefined
+  let memPhrase
+  if(message){
+    memPhrase = message?.length > 28 ? Memo.hash(message) : Memo.text(message)
+  }
+  const memo = memPhrase
   const fromAccount = Keypair.fromSecret(fromSecret).publicKey()
   const account = await ApiServices.blockchain.xlm.xlmGetAccountInfo(fromAccount)
   if (typeof account.sequence !== 'string') {

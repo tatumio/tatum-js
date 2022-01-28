@@ -25,11 +25,13 @@ export const sendOffchainTransaction = async (testnet: boolean, body: TransferXl
   if (!withdrawal.fee) {
     withdrawal.fee = '0.00001'
   }
-  const memo = withdrawal.attr
-    ? withdrawal.attr.length > 28
-      ? Memo.hash(withdrawal.attr)
-      : Memo.text(withdrawal.attr)
-    : undefined
+
+  let memPhrase
+  if(withdrawal.attr){
+    memPhrase = withdrawal.attr?.length > 28 ? Memo.hash(withdrawal.attr) : Memo.text(withdrawal.attr)
+  }
+  const memo = memPhrase
+
   const account = await ApiServices.blockchain.xlm.xlmGetAccountInfo(Keypair.fromSecret(secret).publicKey())
   const { id } = await ApiServices.offChain.withdrawal.storeWithdrawal(withdrawal)
   const { amount, address } = withdrawal
