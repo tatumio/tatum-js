@@ -4,7 +4,6 @@ on:
     branches:
       - master
       - v1
-      - hotfix/web3js
 jobs:
   build:
     name: 🏗️ Install and build
