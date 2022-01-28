@@ -12,7 +12,7 @@ export async function dogeTransactionsExample() {
         index: 1,
         privateKey: 'QTEcWfGqd2RbCRuAvoXAz99D8RwENfy8j6X92vPnUKR7yL1kXouk',
         address: 'n36h3pAH7sC3z8KMB47BjbqvW2aJd2oTi7',
-        value: '60'
+        value: '60',
       },
     ],
     to: [
@@ -21,7 +21,7 @@ export async function dogeTransactionsExample() {
         value: 0.00015,
       },
     ],
-  } as DogeTransactionUTXO )
+  } as DogeTransactionUTXO)
 
   const { txId, failed } = await dogeSDK.transaction.sendTransaction({
     fromUTXO: [
@@ -30,7 +30,7 @@ export async function dogeTransactionsExample() {
         index: 1,
         privateKey: 'QTEcWfGqd2RbCRuAvoXAz99D8RwENfy8j6X92vPnUKR7yL1kXouk',
         address: 'n36h3pAH7sC3z8KMB47BjbqvW2aJd2oTi7',
-        value: '100'
+        value: '100',
       },
     ],
     to: [

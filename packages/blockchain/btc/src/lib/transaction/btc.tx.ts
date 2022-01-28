@@ -8,6 +8,8 @@ import {
   BtcTransactionFromUTXOKMS,
   TransactionHashKMS,
 } from '@tatumio/api-client'
+import { SdkErrorCode } from '@tatumio/abstract-sdk'
+import { BtcSdkError } from '../btc.sdk.errors'
 
 type BtcTransaction =
   | BtcTransactionFromAddress
@@ -52,7 +54,11 @@ const prepareSignedTransaction = async (body: BtcTransaction): Promise<string> =
     tx.sign(new PrivateKey(key))
   })
 
-  return tx.serialize()
+  try {
+    return tx.serialize()
+  } catch (e) {
+    throw BtcSdkError.from(e)
+  }
 }
 
 const privateKeysFromAddress = async (
@@ -70,8 +76,6 @@ const privateKeysFromAddress = async (
         }
 
         try {
-          await ApiServices.blockchain.bitcoin.btcGetUtxo(tx.hash, i)
-
           transaction.from([
             Transaction.UnspentOutput.fromObject({
               txId: tx.hash,
@@ -100,6 +104,11 @@ const privateKeysFromUTXO = async (
 
   for (const item of body.fromUTXO) {
     const tx = await ApiServices.blockchain.bitcoin.btcGetRawTransaction(item.txHash)
+
+    if (!tx.outputs[item.index]) {
+      throw BtcSdkError.fromCode(SdkErrorCode.BTC_UTXO_NOT_FOUND)
+    }
+
     const address = tx.outputs[item.index].address
     const value = tx.outputs[item.index].value
 
