@@ -1,5 +1,5 @@
-import { BlockchainTestData } from '../shared-testing';
-import { ETH_TEST_DATA } from './eth.test-data';
+import { BlockchainTestData } from '../shared-testing'
+import { ETH_TEST_DATA } from './eth.test-data'
 
 export const ONE_TEST_DATA: BlockchainTestData = {
   ...ETH_TEST_DATA,

@@ -6,8 +6,10 @@
     "start": "nx serve",
     "build": "nx affected:build",
     "build:libs": "nx run-many --target=build --projects=$(nx affected:libs --plain | sed 's/ /,/g')",
-    "lint": "nx affected:lint --parallel --quiet",
-    "test": "nx affected:test --parallel --quiet",
+    "test:ci": "nx run-many --target=test --all --parallel --max-parallel=3 --coverage --coverageReporters=lcov && node ./tools/coverageMerger.js",
+    "lint": "nx affected:lint --parallel",
+    "format": "nx format:write",
+    "test": "nx affected:test --parallel",
     "dep-graph": "nx dep-graph",
     "generate-api": "openapi --exportCore false --client axios --input ./packages/api-client/src/api_schema.json --output ./packages/api-client/src/generated",
     "prepare": "husky install"
@@ -33,10 +35,10 @@
     "stellar-sdk": "^8.1.0",
     "ripple-lib": "^1.7.1",
     "tslib": "^2.0.0",
-    "web3": "^1.6.1",
-    "web3-core": "^1.6.1",
-    "web3-eth": "^1.6.1",
-    "web3-utils": "^1.6.1"
+    "web3": "^1.7.0",
+    "web3-core": "^1.7.0",
+    "web3-eth": "^1.7.0",
+    "web3-utils": "^1.7.0"
   },
   "devDependencies": {
     "@nrwl/cli": "13.5.3",

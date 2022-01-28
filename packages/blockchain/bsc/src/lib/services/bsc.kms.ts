@@ -13,7 +13,10 @@ export const bscKmsService = (args: EvmBasedKMSServiceArgs) => {
       const transactionConfig = JSON.parse(tx.serializedTransaction)
 
       if (!transactionConfig.gas) {
-        transactionConfig.gas = await client.eth.estimateGas({ to: transactionConfig.to, data: transactionConfig.data })
+        transactionConfig.gas = await client.eth.estimateGas({
+          to: transactionConfig.to,
+          data: transactionConfig.data,
+        })
       }
 
       if (

@@ -1,4 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-yarn lint && yarn test
+yarn format # && yarn test && yarn lint - will run on CI

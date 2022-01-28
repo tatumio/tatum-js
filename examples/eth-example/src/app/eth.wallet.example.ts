@@ -10,9 +10,3 @@ export async function ethWalletExample() {
   const privateKey = await ethSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet: true })
   const addressFromXpub = ethSDK.wallet.generateAddressFromXPub(xpub, 0)
 }
-
-export async function ethApiExample() {
-  const block = await ethSDK.api.ethGetBlock(
-    '0x1cfbae5efa5993977808a5c6d852d1114009354b3029d9bee283ea58e3bbebf7',
-  )
-}

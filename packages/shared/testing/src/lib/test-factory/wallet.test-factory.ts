@@ -69,8 +69,10 @@ export const walletTestFactory = {
       it.each([
         ['xpub', 'invalid xpub', 1, testData.INVALID_XPUB_ERROR],
         ['child index', testData.MAINNET.XPUB, -1, testData.INVALID_XPUB_CHILD_INDEX_ERROR],
-      ])('invalid arg %s', (_:string, xpub: string, childIndex: number, errorMessage: string) => {
-        expect(() => { sdk.generateAddressFromXPub(xpub, childIndex) }).toThrow(errorMessage)
+      ])('invalid arg %s', (_: string, xpub: string, childIndex: number, errorMessage: string) => {
+        expect(() => {
+          sdk.generateAddressFromXPub(xpub, childIndex)
+        }).toThrow(errorMessage)
       })
     })
 
@@ -86,8 +88,10 @@ export const walletTestFactory = {
       it.each([
         ['xpub', 'invalid xpub', 1, testData.INVALID_XPUB_ERROR],
         ['child index', testData.TESTNET.XPUB, -1, testData.INVALID_XPUB_CHILD_INDEX_ERROR],
-      ])('invalid arg %s', (_:string, xpub: string, childIndex: number, errorMessage: string) => {
-        expect(() => { sdk.generateAddressFromXPub(xpub, childIndex, { testnet: true }) }).toThrow(errorMessage)
+      ])('invalid arg %s', (_: string, xpub: string, childIndex: number, errorMessage: string) => {
+        expect(() => {
+          sdk.generateAddressFromXPub(xpub, childIndex, { testnet: true })
+        }).toThrow(errorMessage)
       })
     })
   },
@@ -124,9 +128,9 @@ export const walletTestFactory = {
       })
 
       it('invalid child index', async () => {
-        await expect(async () => sdk.generatePrivateKeyFromMnemonic(givenMnemonic, -1, { testnet: true })).rejects.toThrow(
-          testData.INVALID_PRIVATE_KEY_CHILD_INDEX_ERROR,
-        )
+        await expect(async () =>
+          sdk.generatePrivateKeyFromMnemonic(givenMnemonic, -1, { testnet: true }),
+        ).rejects.toThrow(testData.INVALID_PRIVATE_KEY_CHILD_INDEX_ERROR)
       })
     })
   },
@@ -141,7 +145,9 @@ export const walletTestFactory = {
       })
 
       it('invalid private key', () => {
-        expect(() => { sdk.generateAddressFromPrivateKey('invalidKey') }).toThrow(testData.INVALID_PRIVATE_KEY_ERROR)
+        expect(() => {
+          sdk.generateAddressFromPrivateKey('invalidKey')
+        }).toThrow(testData.INVALID_PRIVATE_KEY_ERROR)
       })
     })
 
@@ -157,9 +163,9 @@ export const walletTestFactory = {
       })
 
       it('invalid private key', () => {
-        expect(() => { sdk.generateAddressFromPrivateKey('invalidKey', { testnet: true }) }).toThrow(
-          testData.INVALID_PRIVATE_KEY_ERROR,
-        )
+        expect(() => {
+          sdk.generateAddressFromPrivateKey('invalidKey', { testnet: true })
+        }).toThrow(testData.INVALID_PRIVATE_KEY_ERROR)
       })
     })
   },
