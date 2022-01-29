@@ -32,6 +32,7 @@
     "form-data": "^4.0.0",
     "hdkey": "^2.0.1",
     "reflect-metadata": "^0.1.13",
+    "stellar-sdk": "^8.1.0",
     "ripple-lib": "^1.7.1",
     "tslib": "^2.0.0",
     "web3": "^1.7.0",
