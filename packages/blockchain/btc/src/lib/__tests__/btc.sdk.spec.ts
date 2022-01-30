@@ -1,9 +1,4 @@
-import {
-  REPLACE_ME_WITH_TATUM_API_KEY,
-  TEST_DATA,
-  testHelper,
-  walletTestFactory,
-} from '@tatumio/shared-testing'
+import { REPLACE_ME_WITH_TATUM_API_KEY, testHelper } from '@tatumio/shared-testing'
 import { TatumBtcSDK } from '../btc.sdk'
 import * as apiClient from '@tatumio/api-client'
 
@@ -15,24 +10,6 @@ describe('TatumBtcSDK', () => {
 
   afterEach(() => {
     jest.clearAllMocks()
-  })
-
-  describe('Wallet', () => {
-    describe('Generate wallet', () => {
-      walletTestFactory.generateBlockchainWallet(sdk.wallet, TEST_DATA.BTC)
-    })
-
-    describe('Address from XPUB', () => {
-      walletTestFactory.generateAddressFromXpub(sdk.wallet, TEST_DATA.BTC)
-    })
-
-    describe('Private key from mnemonic', () => {
-      walletTestFactory.generatePrivateKeyFromMnemonic(sdk.wallet, TEST_DATA.BTC)
-    })
-
-    describe('Address from private key', () => {
-      walletTestFactory.generateAddressFromPrivateKey(sdk.wallet, TEST_DATA.BTC)
-    })
   })
 
   describe('Blockchain', () => {

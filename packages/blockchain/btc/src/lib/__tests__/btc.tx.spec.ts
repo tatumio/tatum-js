@@ -1,0 +1,194 @@
+import '@tatumio/shared-testing'
+import * as apiClient from '@tatumio/api-client'
+import { BtcTransactionFromAddress, BtcTransactionFromUTXO, BtcTx } from '@tatumio/api-client'
+import { SdkErrorCode } from '@tatumio/abstract-sdk'
+import { btcTransactions } from '../transaction/btc.tx'
+import { mockHelper, testHelper } from '@tatumio/shared-testing'
+
+jest.mock('@tatumio/api-client')
+const mockedApi = mockHelper.mockApi(apiClient)
+
+describe('BTC transaction', () => {
+  const ADDRESS = 'tb1q9x2gqftyxterwt0k6ehzrm2gkzthjly677ucyr'
+  const VALID_TX_DATA =
+    '02000000000101c7c445859e1bc56643a08702fab3f83c4f72f513d11c92951181bdc8f523dcfc0000000000ffffffff01983a000000000000160014299480256432f2372df6d66e21ed48b097797c9a024830450221008d43043b7e5ddc8eba5148b6540022deaa8628461fe08f6e48e596766a6c4b30022015270982a1a10fdc1454c1cd569f7a3eb9dac72b9598cebe74e3ba1c8af4e7dc012102473ddfe2afe40c68b68ecb81036003df920503668188b744b7c72046a97000bb00000000'
+  const TX_HASH = 'fcdc23f5c8bd811195921cd113f5724f3cf8b3fa0287a04366c51b9e8545c4c7'
+  const PRIVATE_KEY = 'cQ1YZMep3CiAnMTA9y62ha6BjGaaTFsTvtDuGmucGvpAVmS89khV'
+
+  const transactions = btcTransactions()
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
+  describe('From UTXO', () => {
+    describe('sendTransaction', () => {
+      it('valid', async () => {
+        mockRequestGetRawTx()
+
+        mockedApi.blockchain.bitcoin.btcBroadcast.mockReturnValue(Promise.resolve({ txId: '12345' }))
+
+        const result = await transactions.sendTransaction(getRequestBodyFromUTXO(0.00015))
+        expect(result.txId).toBe('12345')
+        testHelper.expectMockCalled(mockedApi.blockchain.bitcoin.btcBroadcast, [{ txData: VALID_TX_DATA }])
+      })
+    })
+
+    describe('prepareSignedTransaction', () => {
+      it('valid', async () => {
+        mockRequestGetRawTx()
+        const txData = await transactions.prepareSignedTransaction(getRequestBodyFromUTXO(0.00015))
+        expect(txData).toBe(VALID_TX_DATA)
+      })
+
+      it('not enough money on balance', async () => {
+        mockRequestGetRawTx({
+          outputs: [
+            {
+              value: 12000,
+              address: ADDRESS,
+            },
+          ],
+        })
+
+        await expect(
+          transactions.prepareSignedTransaction(getRequestBodyFromUTXO(0.00015)),
+        ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_NOT_ENOUGH_BALANCE)
+      })
+
+      it('fee = 0', async () => {
+        mockRequestGetRawTx({
+          outputs: [
+            {
+              value: 15000,
+              address: ADDRESS,
+            },
+          ],
+        })
+
+        await expect(
+          transactions.prepareSignedTransaction(getRequestBodyFromUTXO(0.00015)),
+        ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_FEE_TOO_SMALL)
+      })
+
+      it('no outputs', async () => {
+        mockRequestGetRawTx({
+          outputs: [],
+        })
+
+        await expect(
+          transactions.prepareSignedTransaction(getRequestBodyFromUTXO(0.00015)),
+        ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_UTXO_NOT_FOUND)
+      })
+    })
+  })
+
+  describe('From Address', () => {
+    describe('sendTransaction', () => {
+      it('valid', async () => {
+        mockRequestGetTxByAddress()
+
+        mockedApi.blockchain.bitcoin.btcBroadcast.mockReturnValue(Promise.resolve({ txId: '12345' }))
+
+        const result = await transactions.sendTransaction(getRequestBodyFromAddress(0.00015))
+        expect(result.txId).toBe('12345')
+        testHelper.expectMockCalled(mockedApi.blockchain.bitcoin.btcBroadcast, [{ txData: VALID_TX_DATA }])
+      })
+    })
+
+    describe('prepareSignedTransaction', () => {
+      it('valid', async () => {
+        mockRequestGetTxByAddress()
+        const txData = await transactions.prepareSignedTransaction(getRequestBodyFromAddress(0.00015))
+        expect(txData).toBe(VALID_TX_DATA)
+      })
+
+      it('not enough money on balance', async () => {
+        mockRequestGetTxByAddress({
+          hash: TX_HASH,
+          outputs: [
+            {
+              value: 12000,
+              address: ADDRESS,
+            },
+          ],
+        })
+
+        await expect(
+          transactions.prepareSignedTransaction(getRequestBodyFromAddress(0.00015)),
+        ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_NOT_ENOUGH_BALANCE)
+      })
+
+      it('fee = 0', async () => {
+        mockRequestGetTxByAddress({
+          hash: TX_HASH,
+          outputs: [
+            {
+              value: 15000,
+              address: ADDRESS,
+            },
+          ],
+        })
+
+        await expect(
+          transactions.prepareSignedTransaction(getRequestBodyFromAddress(0.00015)),
+        ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_FEE_TOO_SMALL)
+      })
+    })
+  })
+
+  const getRequestBodyFromUTXO = (amount: number): BtcTransactionFromUTXO => ({
+    fromUTXO: [
+      {
+        txHash: TX_HASH,
+        index: 0,
+        privateKey: PRIVATE_KEY,
+      },
+    ],
+    to: getRequestBodyTo(amount),
+  })
+
+  const getRequestBodyFromAddress = (amount: number): BtcTransactionFromAddress => ({
+    fromAddress: [
+      {
+        address: ADDRESS,
+        privateKey: PRIVATE_KEY,
+      },
+    ],
+    to: getRequestBodyTo(amount),
+  })
+
+  const getRequestBodyTo = (amount: number): BtcTransactionFromUTXO['to'] => [
+    {
+      address: ADDRESS,
+      value: amount,
+    },
+  ]
+
+  const mockRequestGetRawTx = (
+    obj: BtcTx = {
+      outputs: [
+        {
+          value: 16000,
+          address: ADDRESS,
+        },
+      ],
+    },
+  ) => {
+    mockedApi.blockchain.bitcoin.btcGetRawTransaction.mockReturnValue(Promise.resolve(obj))
+  }
+
+  const mockRequestGetTxByAddress = (
+    obj: BtcTx = {
+      hash: TX_HASH,
+      outputs: [
+        {
+          value: 16000,
+          address: ADDRESS,
+        },
+      ],
+    },
+  ) => {
+    mockedApi.blockchain.bitcoin.btcGetTxByAddress.mockReturnValue(Promise.resolve([obj]))
+  }
+})

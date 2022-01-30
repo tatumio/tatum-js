@@ -3,7 +3,7 @@ import { blockchainUtils, BtcBasedBlockchain } from '@tatumio/shared-core'
 import bcash from '@tatumio/bitcoincashjs2-lib'
 import cashaddr from 'cashaddrjs'
 import { btcBasedWallet } from '@tatumio/shared-blockchain-btc-based'
-import { bcashAddressHelper } from '../utils/address'
+import { bcashAddressHelper } from '../utils/bch.address'
 import { SdkWithWalletFunctions } from '@tatumio/shared-blockchain-abstract'
 import { ECPair, payments } from 'bitcoinjs-lib'
 
