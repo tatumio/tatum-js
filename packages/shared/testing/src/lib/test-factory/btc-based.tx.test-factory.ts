@@ -17,6 +17,9 @@ export const btcBasedTxTestFactory = {
       requestGetRawTx: (obj?: unknown) => void
       broadcast: ((requestBody: BroadcastKMS) => CancelablePromise<TransactionHashKMS>) & jest.Mock
     }
+    skipTest?: {
+      noOutputs: boolean
+    }
   }) => {
     describe('sendTransaction', () => {
       it('valid', async () => {
@@ -32,6 +35,8 @@ export const btcBasedTxTestFactory = {
         testHelper.expectMockCalled(args.mock.broadcast, [{ txData: args.data.validTxData }])
       })
     })
+
+    // @TODO Add tests KMS
 
     describe('prepareSignedTransaction', () => {
       it('valid', async () => {
@@ -61,15 +66,17 @@ export const btcBasedTxTestFactory = {
         ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_FEE_TOO_SMALL)
       })
 
-      it('no outputs', async () => {
-        args.mock.requestGetRawTx({ outputs: [], vout: [] })
+      if (!args.skipTest?.noOutputs) {
+        it('no outputs', async () => {
+          args.mock.requestGetRawTx({ outputs: [], vout: [] })
 
-        await expect(
-          args.transactions.prepareSignedTransaction(args.getRequestBodyFromUTXO(args.data.validAmount), {
-            testnet: true,
-          }),
-        ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_UTXO_NOT_FOUND)
-      })
+          await expect(
+            args.transactions.prepareSignedTransaction(args.getRequestBodyFromUTXO(args.data.validAmount), {
+              testnet: true,
+            }),
+          ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_UTXO_NOT_FOUND)
+        })
+      }
     })
   },
   fromAddress: <T>(args: {
@@ -99,6 +106,8 @@ export const btcBasedTxTestFactory = {
         testHelper.expectMockCalled(args.mock.broadcast, [{ txData: args.data.validTxData }])
       })
     })
+
+    // @TODO Add tests KMS
 
     describe('prepareSignedTransaction', () => {
       it('valid', async () => {

@@ -25,6 +25,7 @@ const sendTransaction = async (
   })
 }
 
+// @TODO add support - by address
 const prepareSignedTransaction = async (
   body: BchTransactionBody,
   args: { testnet?: boolean },

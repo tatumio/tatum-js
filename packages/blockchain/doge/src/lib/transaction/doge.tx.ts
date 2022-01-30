@@ -5,45 +5,45 @@ import {
   DogeTransactionUTXOKMS,
   TransactionHashKMS,
 } from '@tatumio/api-client'
-import { amountUtils } from '@tatumio/abstract-sdk'
 import { BtcBasedTx } from '@tatumio/shared-blockchain-btc-based'
+import { amountUtils } from '@tatumio/abstract-sdk'
+import { DogeSdkError } from '../doge.sdk.errors'
 
 export type DogeTransaction = DogeTransactionUTXO | DogeTransactionUTXOKMS
 
+// @TODO add support - by address
 const prepareSignedTransaction = async (body: DogeTransaction): Promise<string> => {
   try {
-    const tx = new Transaction().fee(amountUtils.toSatoshis(body.fee)).change(body.changeAddress)
-    const privateKeysToSign = []
+    const { fromUTXO, to, fee, changeAddress } = body
+    const tx = new Transaction().fee(amountUtils.toSatoshis(fee)).change(changeAddress)
 
-    for (const item of body.fromUTXO) {
-      tx.from([
-        Transaction.UnspentOutput.fromObject({
-          txId: item.txHash,
-          outputIndex: item.index,
-          script: Script.fromAddress(item.address).toString(),
-          satoshis: amountUtils.toSatoshis(item.value),
-        }),
-      ])
+    const privateKeysToSign = []
+    for (const item of fromUTXO) {
+      tx.from({
+        txId: item.txHash,
+        outputIndex: item.index,
+        script: Script.fromAddress(item.address).toString(),
+        satoshis: amountUtils.toSatoshis(item.value),
+      })
       if ('signatureId' in item) privateKeysToSign.push(item.signatureId)
       else if ('privateKey' in item) privateKeysToSign.push(item.privateKey)
     }
 
-    const fromUTXO = body.fromUTXO
+    for (const item of to) {
+      tx.to(item.address, amountUtils.toSatoshis(item.value))
+    }
+
     if (fromUTXO && 'signatureId' in fromUTXO[0] && fromUTXO[0].signatureId) {
       return JSON.stringify({ txData: JSON.stringify(tx), privateKeysToSign })
     }
 
-    body.to.forEach((to) => {
-      tx.to(to.address, amountUtils.toSatoshis(to.value))
-    })
-
-    privateKeysToSign.forEach((key) => {
-      tx.sign(PrivateKey.fromWIF(key))
-    })
+    for (const pk of privateKeysToSign) {
+      tx.sign(PrivateKey.fromWIF(pk))
+    }
 
     return tx.serialize()
   } catch (e) {
-    console.log('TRANSACTION ERROR: ', e)
+    throw new DogeSdkError(e)
   }
 }
 
