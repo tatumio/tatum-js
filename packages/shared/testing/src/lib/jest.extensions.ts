@@ -3,17 +3,25 @@ export const createResult = ({
   message,
   notMessage,
 }: {
-  pass: boolean
+  pass: () => boolean
   message: () => string
   notMessage: () => string
 }): jest.CustomMatcherResult => ({
-  message: () => (pass ? notMessage() : message()).trim(),
-  pass,
+  message: () => (pass() ? notMessage() : message()).trim(),
+  pass: pass(),
 })
 
 export const toThrowSdkErrorWithCode = (value: Error, code: string): jest.CustomMatcherResult =>
   createResult({
     message: () => `expected ${value} to have error code ${code}`,
     notMessage: () => `expected ${value} not to have error code ${code}`,
-    pass: JSON.parse(value.message).errorCode === code,
+    pass: () => {
+      let errorCode
+      try {
+        errorCode = JSON.parse(value.message).errorCode
+      } catch (e) {
+        return false
+      }
+      return errorCode === code
+    },
   })

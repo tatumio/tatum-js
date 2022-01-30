@@ -9,3 +9,5 @@ export const mockHelper = {
     return jest.mocked(client.ApiServices, true)
   },
 }
+
+export type MockedApi = ReturnType<typeof mockHelper.mockApi>

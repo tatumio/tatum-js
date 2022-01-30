@@ -1,4 +1,3 @@
-import BigNumber from 'bignumber.js'
 import {
   ApiServices,
   BchTransaction,
@@ -8,7 +7,7 @@ import {
 } from '@tatumio/api-client'
 import { bcashAddressHelper } from '../utils/bch.address'
 import { BchSdkError } from '../bch.sdk.errors'
-import { SdkErrorCode } from '@tatumio/abstract-sdk'
+import { amountUtils, SdkErrorCode } from '@tatumio/abstract-sdk'
 
 import coininfo from 'coininfo'
 import { ECPair, ECSignature, TransactionBuilder } from '@tatumio/bitcoincashjs2-lib'
@@ -45,9 +44,7 @@ const prepareSignedTransaction = async (
       const vout = txs[i].vout[item.index]
       if (!vout) throw new BchSdkError(SdkErrorCode.BTC_UTXO_NOT_FOUND)
 
-      amountToSign.push(
-        Number(new BigNumber(vout.value).multipliedBy(100000000).toFixed(0, BigNumber.ROUND_FLOOR)),
-      )
+      amountToSign.push(amountUtils.toSatoshis(vout.value))
 
       const fromUTXO = body.fromUTXO
       if (fromUTXO && 'signatureId' in fromUTXO[0] && fromUTXO[0].signatureId) {
@@ -58,7 +55,7 @@ const prepareSignedTransaction = async (
     body.to.forEach((item) => {
       transactionBuilder.addOutput(
         bcashAddressHelper.getAddress(item.address),
-        Number(new BigNumber(item.value).multipliedBy(100000000).toFixed(0, BigNumber.ROUND_FLOOR)),
+        amountUtils.toSatoshis(item.value),
       )
     })
 

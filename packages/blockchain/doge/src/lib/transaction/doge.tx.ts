@@ -1,4 +1,3 @@
-import BigNumber from 'bignumber.js'
 import { PrivateKey, Script, Transaction } from 'bitcore-lib-doge'
 import {
   ApiServices,
@@ -6,14 +5,14 @@ import {
   DogeTransactionUTXOKMS,
   TransactionHashKMS,
 } from '@tatumio/api-client'
+import { amountUtils } from '@tatumio/abstract-sdk'
+import { BtcBasedTx } from '@tatumio/shared-blockchain-btc-based'
 
 export type DogeTransaction = DogeTransactionUTXO | DogeTransactionUTXOKMS
 
 const prepareSignedTransaction = async (body: DogeTransaction): Promise<string> => {
   try {
-    const tx = new Transaction()
-      .fee(Number(new BigNumber(body.fee).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)))
-      .change(body.changeAddress)
+    const tx = new Transaction().fee(amountUtils.toSatoshis(body.fee)).change(body.changeAddress)
     const privateKeysToSign = []
 
     for (const item of body.fromUTXO) {
@@ -22,9 +21,7 @@ const prepareSignedTransaction = async (body: DogeTransaction): Promise<string> 
           txId: item.txHash,
           outputIndex: item.index,
           script: Script.fromAddress(item.address).toString(),
-          satoshis: Number(
-            new BigNumber(item.value).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR),
-          ),
+          satoshis: amountUtils.toSatoshis(item.value),
         }),
       ])
       if ('signatureId' in item) privateKeysToSign.push(item.signatureId)
@@ -37,10 +34,7 @@ const prepareSignedTransaction = async (body: DogeTransaction): Promise<string> 
     }
 
     body.to.forEach((to) => {
-      tx.to(
-        to.address,
-        Number(new BigNumber(to.value).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)),
-      )
+      tx.to(to.address, amountUtils.toSatoshis(to.value))
     })
 
     privateKeysToSign.forEach((key) => {
@@ -59,7 +53,7 @@ const sendTransaction = async (body: DogeTransaction): Promise<TransactionHashKM
   })
 }
 
-export const dogeTransactions = () => ({
+export const dogeTransactions = (): BtcBasedTx<DogeTransaction> => ({
   sendTransaction,
   prepareSignedTransaction,
 })

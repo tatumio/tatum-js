@@ -1,5 +1,3 @@
-import BigNumber from 'bignumber.js'
-// @ts-ignore
 import { PrivateKey, Script, Transaction } from 'bitcore-lib-ltc'
 import {
   ApiServices,
@@ -9,6 +7,10 @@ import {
   LtcTransactionUTXOKMS,
   TransactionHashKMS,
 } from '@tatumio/api-client'
+import { amountUtils, SdkErrorCode } from '@tatumio/abstract-sdk'
+import BigNumber from 'bignumber.js'
+import { LtcSdkError } from '../ltc.sdk.errors'
+import { BtcBasedTx } from '@tatumio/shared-blockchain-btc-based'
 
 type LtcTransaction =
   | LtcTransactionAddress
@@ -26,11 +28,12 @@ const prepareSignedTransaction = async (body: LtcTransaction): Promise<string> =
   const tx = new Transaction()
   let privateKeysToSign: string[] = []
 
+  let outputsSum = new BigNumber(0)
+
   body.to.forEach((to) => {
-    tx.to(
-      to.address,
-      Number(new BigNumber(to.value).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)),
-    )
+    const amount = amountUtils.toSatoshis(to.value)
+    outputsSum = outputsSum.plus(new BigNumber(amount))
+    tx.to(to.address, amount)
   })
 
   if ('fromAddress' in body) {
@@ -49,11 +52,28 @@ const prepareSignedTransaction = async (body: LtcTransaction): Promise<string> =
     }
   }
 
+  verifyAmounts(tx, outputsSum)
+
   privateKeysToSign.forEach((key) => {
     tx.sign(PrivateKey.fromWIF(key))
   })
 
-  return tx.serialize()
+  // @TODO unchecked serialize
+  return tx.serialize(true)
+}
+
+function verifyAmounts(tx: Transaction, outputsSum: BigNumber) {
+  const inputsSum = tx.inputs
+    .map((i) => new BigNumber(i.output.satoshis))
+    .reduce((v, acc) => v.plus(acc), new BigNumber(0))
+
+  if (outputsSum.eq(inputsSum)) {
+    throw new LtcSdkError(SdkErrorCode.BTC_FEE_TOO_SMALL)
+  }
+
+  if (outputsSum.gt(inputsSum)) {
+    throw new LtcSdkError(SdkErrorCode.BTC_NOT_ENOUGH_BALANCE)
+  }
 }
 
 const privateKeysFromAddress = async (
@@ -76,9 +96,7 @@ const privateKeysFromAddress = async (
             txId: tx.hash,
             outputIndex: i,
             script: Script.fromAddress(item.address).toString(),
-            satoshis: Number(
-              new BigNumber(o.value!).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR),
-            ),
+            satoshis: amountUtils.toSatoshis(o.value),
           })
 
           if ('signatureId' in item) privateKeysToSign.push(item.signatureId)
@@ -100,14 +118,16 @@ const privateKeysFromUTXO = async (
 
   for (const item of body.fromUTXO) {
     const tx = await ApiServices.blockchain.ltc.ltcGetRawTransaction(item.txHash)
-    const address = tx.outputs![item.index].address
-    const value = tx.outputs![item.index].value
+    if (!tx.outputs[item.index]) throw new LtcSdkError(SdkErrorCode.BTC_UTXO_NOT_FOUND)
+
+    const address = tx.outputs[item.index].address
+    const value = tx.outputs[item.index].value
 
     transaction.from({
       txId: item.txHash,
       outputIndex: item.index,
       script: Script.fromAddress(address).toString(),
-      satoshis: Number(new BigNumber(value!).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)),
+      satoshis: amountUtils.toSatoshis(value),
     })
 
     if ('signatureId' in item) privateKeysToSign.push(item.signatureId)
@@ -117,7 +137,7 @@ const privateKeysFromUTXO = async (
   return privateKeysToSign
 }
 
-export const ltcTransactions = () => ({
+export const ltcTransactions = (): BtcBasedTx<LtcTransaction> => ({
   sendTransaction,
   prepareSignedTransaction,
 })

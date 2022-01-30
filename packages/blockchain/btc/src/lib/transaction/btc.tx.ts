@@ -8,8 +8,9 @@ import {
   BtcTransactionFromUTXOKMS,
   TransactionHashKMS,
 } from '@tatumio/api-client'
-import { SdkErrorCode } from '@tatumio/abstract-sdk'
+import { amountUtils, SdkErrorCode } from '@tatumio/abstract-sdk'
 import { BtcSdkError } from '../btc.sdk.errors'
+import { BtcBasedTx } from '@tatumio/shared-blockchain-btc-based'
 
 type BtcTransaction =
   | BtcTransactionFromAddress
@@ -29,10 +30,7 @@ const prepareSignedTransaction = async (body: BtcTransaction): Promise<string> =
     let privateKeysToSign = []
 
     body.to.forEach((to) => {
-      tx.to(
-        to.address,
-        Number(new BigNumber(to.value).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)),
-      )
+      tx.to(to.address, amountUtils.toSatoshis(to.value))
     })
 
     if ('fromAddress' in body) {
@@ -137,7 +135,7 @@ const privateKeysFromUTXO = async (
   }
 }
 
-export const btcTransactions = () => ({
+export const btcTransactions = (): BtcBasedTx<BtcTransaction> => ({
   /**
    * Send Bitcoin transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
    * This operation is irreversible.

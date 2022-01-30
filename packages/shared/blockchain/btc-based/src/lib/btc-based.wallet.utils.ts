@@ -5,7 +5,7 @@ import hdkey from 'hdkey'
 import { TronWallet } from '@tatumio/api-client'
 import { BtcBasedBlockchain, blockchainUtils } from '@tatumio/shared-core'
 
-export const btcBasedUtils = {
+export const btcBasedWalletUtils = {
   generateAddressFromXPub: (
     blockchain: BtcBasedBlockchain,
     xpub: string,
