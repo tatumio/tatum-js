@@ -4,14 +4,13 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/blockchain/celo",
         "main": "packages/blockchain/celo/src/index.ts",
         "tsConfig": "packages/blockchain/celo/tsconfig.lib.json",
-        "packageJson": "packages/blockchain/celo/package.json",
-        "assets": ["packages/blockchain/celo/*.md"]
+        "packageJson": "packages/blockchain/celo/package.json"
       }
     },
     "lint": {

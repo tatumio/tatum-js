@@ -15,10 +15,12 @@ export const btcBasedTxTestFactory = {
     }
     mock: {
       requestGetRawTx: (obj?: unknown) => void
+      requestGetRawTxNotFound: () => void
       broadcast: ((requestBody: BroadcastKMS) => CancelablePromise<TransactionHashKMS>) & jest.Mock
     }
     skipTest?: {
-      noOutputs: boolean
+      noOutputs?: boolean
+      txNotFound?: boolean
     }
   }) => {
     describe('sendTransaction', () => {
@@ -75,6 +77,18 @@ export const btcBasedTxTestFactory = {
               testnet: true,
             }),
           ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_UTXO_NOT_FOUND)
+        })
+      }
+
+      if (!args.skipTest?.txNotFound) {
+        it('tx not found', async () => {
+          args.mock.requestGetRawTxNotFound()
+
+          await expect(
+            args.transactions.prepareSignedTransaction(args.getRequestBodyFromUTXO(args.data.validAmount), {
+              testnet: true,
+            }),
+          ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.API_ERROR)
         })
       }
     })

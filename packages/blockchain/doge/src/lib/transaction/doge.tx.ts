@@ -1,3 +1,4 @@
+// @ts-ignore
 import { PrivateKey, Script, Transaction } from 'bitcore-lib-doge'
 import {
   ApiServices,
@@ -15,7 +16,7 @@ export type DogeTransaction = DogeTransactionUTXO | DogeTransactionUTXOKMS
 const prepareSignedTransaction = async (body: DogeTransaction): Promise<string> => {
   try {
     const { fromUTXO, to, fee, changeAddress } = body
-    const tx = new Transaction().fee(amountUtils.toSatoshis(fee)).change(changeAddress)
+    const tx = new Transaction().fee(amountUtils.toSatoshis(fee!)).change(changeAddress)
 
     const privateKeysToSign = []
     for (const item of fromUTXO) {
@@ -42,7 +43,7 @@ const prepareSignedTransaction = async (body: DogeTransaction): Promise<string> 
     }
 
     return tx.serialize()
-  } catch (e) {
+  } catch (e: any) {
     throw new DogeSdkError(e)
   }
 }

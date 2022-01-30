@@ -32,6 +32,7 @@ describe('BCH transactions', () => {
       },
       mock: {
         requestGetRawTx: mockRequestGetRawTx,
+        requestGetRawTxNotFound: mockRequestGetRawTxNotFound,
         broadcast: mockedApi.blockchain.bcash.bchBroadcast,
       },
       getRequestBodyFromUTXO,
@@ -47,17 +48,13 @@ describe('BCH transactions', () => {
           privateKey: PRIVATE_KEY,
         },
       ],
-      to: getRequestBodyTo(amount),
+      to: [
+        {
+          address: ADDRESS,
+          value: amount,
+        },
+      ],
     }
-  }
-
-  function getRequestBodyTo(amount: number): BtcTransactionFromUTXO['to'] {
-    return [
-      {
-        address: ADDRESS,
-        value: amount,
-      },
-    ]
   }
 
   function mockRequestGetRawTx(
@@ -73,6 +70,10 @@ describe('BCH transactions', () => {
       ],
     },
   ) {
-    mockedApi.blockchain.bcash.bchGetRawTransaction.mockReturnValue(Promise.resolve(obj))
+    mockedApi.blockchain.bcash.bchGetRawTransaction.mockResolvedValue(obj)
+  }
+
+  function mockRequestGetRawTxNotFound() {
+    mockedApi.blockchain.bcash.bchGetRawTransaction.mockRejectedValue(mockHelper.apiError.notFound())
   }
 })

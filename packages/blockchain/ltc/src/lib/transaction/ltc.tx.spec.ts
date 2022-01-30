@@ -1,8 +1,8 @@
 import '@tatumio/shared-testing'
-import * as apiClient from '@tatumio/api-client'
-import { BtcTransactionFromAddress, LtcTransactionUTXO, LtcTx } from '@tatumio/api-client'
 import { ltcTransactions } from './ltc.tx'
 import { btcBasedTxTestFactory, mockHelper } from '@tatumio/shared-testing'
+import * as apiClient from '@tatumio/api-client'
+import { BtcTransactionFromAddress, LtcTransactionUTXO, LtcTx } from '@tatumio/api-client'
 
 jest.mock('@tatumio/api-client')
 const mockedApi = mockHelper.mockApi(apiClient)
@@ -32,6 +32,7 @@ describe('LTC transactions', () => {
       },
       mock: {
         requestGetRawTx: mockRequestGetRawTx,
+        requestGetRawTxNotFound: mockRequestGetRawTxNotFound,
         broadcast: mockedApi.blockchain.ltc.ltcBroadcast,
       },
       getRequestBodyFromUTXO,
@@ -104,7 +105,11 @@ describe('LTC transactions', () => {
       ],
     },
   ) {
-    mockedApi.blockchain.ltc.ltcGetRawTransaction.mockReturnValue(Promise.resolve(obj))
+    mockedApi.blockchain.ltc.ltcGetRawTransaction.mockResolvedValue(obj)
+  }
+
+  function mockRequestGetRawTxNotFound() {
+    mockedApi.blockchain.ltc.ltcGetRawTransaction.mockRejectedValue(mockHelper.apiError.notFound())
   }
 
   function mockRequestGetTxByAddress(
@@ -124,6 +129,6 @@ describe('LTC transactions', () => {
       ],
     },
   ) {
-    mockedApi.blockchain.ltc.ltcGetTxByAddress.mockReturnValue(Promise.resolve([obj]))
+    mockedApi.blockchain.ltc.ltcGetTxByAddress.mockResolvedValue([obj])
   }
 })

@@ -28,11 +28,13 @@ describe('DOGE transactions', () => {
       },
       mock: {
         requestGetRawTx: () => {},
+        requestGetRawTxNotFound: () => {},
         broadcast: mockedApi.blockchain.doge.dogeBroadcast,
       },
       getRequestBodyFromUTXO,
       skipTest: {
         noOutputs: true,
+        txNotFound: true,
       },
     })
   })

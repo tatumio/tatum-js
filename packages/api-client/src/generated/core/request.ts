@@ -228,7 +228,7 @@ function catchErrors(options: ApiRequestOptions, result: ApiResult): void {
  * @returns CancelablePromise<T>
  * @throws ApiError
  */
-export async function request<T>(options: ApiRequestOptions): CancelablePromise<T> {
+/*export async function request<T>(options: ApiRequestOptions): CancelablePromise<T> {
   const url = getUrl(options)
   const formData = getFormData(options)
   const body = getRequestBody(options)
@@ -247,4 +247,35 @@ export async function request<T>(options: ApiRequestOptions): CancelablePromise<
   }
 
   return result.body
+}*/
+
+export function request<T>(options: ApiRequestOptions): CancelablePromise<T> {
+  return new CancelablePromise(async (resolve, reject, onCancel) => {
+    try {
+      const url = getUrl(options)
+      const formData = getFormData(options)
+      const body = getRequestBody(options)
+      const headers = await getHeaders(options, formData)
+
+      if (!onCancel.isCancelled) {
+        const response = await sendRequest(options, url, formData, body, headers, onCancel)
+        const responseBody = getResponseBody(response)
+        const responseHeader = getResponseHeader(response, options.responseHeader)
+
+        const result: ApiResult = {
+          url,
+          ok: isSuccess(response.status),
+          status: response.status,
+          statusText: response.statusText,
+          body: responseHeader || responseBody,
+        }
+
+        catchErrors(options, result)
+
+        resolve(result.body)
+      }
+    } catch (error) {
+      reject(error)
+    }
+  })
 }

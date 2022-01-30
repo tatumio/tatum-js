@@ -10,8 +10,7 @@
         "outputPath": "dist/examples/polygon-example",
         "main": "examples/polygon-example/src/index.ts",
         "tsConfig": "examples/polygon-example/tsconfig.app.json",
-        "packageJson": "examples/polygon-example/package.json",
-        "assets": ["examples/polygon-example/*.md"]
+        "packageJson": "examples/polygon-example/package.json"
       }
     },
     "serve": {

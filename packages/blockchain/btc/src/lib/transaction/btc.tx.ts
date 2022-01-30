@@ -1,4 +1,3 @@
-import BigNumber from 'bignumber.js'
 import { PrivateKey, Script, Transaction } from 'bitcore-lib'
 import {
   ApiServices,
@@ -27,7 +26,7 @@ const sendTransaction = async (body: BtcTransaction): Promise<TransactionHashKMS
 const prepareSignedTransaction = async (body: BtcTransaction): Promise<string> => {
   try {
     const tx = new Transaction()
-    let privateKeysToSign = []
+    let privateKeysToSign: string[] = []
 
     body.to.forEach((to) => {
       tx.to(to.address, amountUtils.toSatoshis(to.value))
@@ -54,7 +53,7 @@ const prepareSignedTransaction = async (body: BtcTransaction): Promise<string> =
     })
 
     return tx.serialize()
-  } catch (e) {
+  } catch (e: any) {
     throw new BtcSdkError(e)
   }
 }
@@ -69,6 +68,8 @@ const privateKeysFromAddress = async (
       const txs = await ApiServices.blockchain.bitcoin.btcGetTxByAddress(item.address, 50) // @TODO OPENAPI remove pageSize
 
       for (const tx of txs) {
+        if (!tx.outputs) throw new BtcSdkError(SdkErrorCode.BTC_UTXO_NOT_FOUND)
+
         for (const [i, o] of tx.outputs.entries()) {
           if (o.address !== item.address) {
             continue
@@ -93,7 +94,7 @@ const privateKeysFromAddress = async (
       }
     }
     return privateKeysToSign
-  } catch (e) {
+  } catch (e: any) {
     throw new BtcSdkError(e)
   }
 }
@@ -108,14 +109,14 @@ const privateKeysFromUTXO = async (
     for (const item of body.fromUTXO) {
       const tx = await ApiServices.blockchain.bitcoin.btcGetRawTransaction(item.txHash)
 
-      if (!tx.outputs[item.index]) {
+      if (!tx.outputs || !tx.outputs[item.index]) {
         throw new BtcSdkError(SdkErrorCode.BTC_UTXO_NOT_FOUND)
       }
 
       const address = tx.outputs[item.index].address
       const value = tx.outputs[item.index].value
 
-      const script = Script.fromAddress(address).toString()
+      const script = Script.fromAddress(address!).toString()
       transaction.from([
         Transaction.UnspentOutput.fromObject({
           txId: item.txHash,
@@ -130,7 +131,7 @@ const privateKeysFromUTXO = async (
     }
 
     return privateKeysToSign
-  } catch (e) {
+  } catch (e: any) {
     throw new BtcSdkError(e)
   }
 }
