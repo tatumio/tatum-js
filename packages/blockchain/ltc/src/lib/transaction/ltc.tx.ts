@@ -28,12 +28,8 @@ const prepareSignedTransaction = async (body: LtcTransaction): Promise<string> =
   const tx = new Transaction()
   let privateKeysToSign: string[] = []
 
-  let outputsSum = new BigNumber(0)
-
   body.to.forEach((to) => {
-    const amount = amountUtils.toSatoshis(to.value)
-    outputsSum = outputsSum.plus(new BigNumber(amount))
-    tx.to(to.address, amount)
+    tx.to(to.address, amountUtils.toSatoshis(to.value))
   })
 
   if ('fromAddress' in body) {
@@ -52,7 +48,7 @@ const prepareSignedTransaction = async (body: LtcTransaction): Promise<string> =
     }
   }
 
-  verifyAmounts(tx, outputsSum)
+  verifyAmounts(tx, body)
 
   privateKeysToSign.forEach((key) => {
     tx.sign(PrivateKey.fromWIF(key))
@@ -62,7 +58,11 @@ const prepareSignedTransaction = async (body: LtcTransaction): Promise<string> =
   return tx.serialize(true)
 }
 
-function verifyAmounts(tx: Transaction, outputsSum: BigNumber) {
+function verifyAmounts(tx: Transaction, body: LtcTransaction) {
+  const outputsSum = body.to
+    .map((to) => amountUtils.toSatoshis(to.value))
+    .reduce((e, acc) => e.plus(acc), new BigNumber(0))
+
   const inputsSum = tx.inputs
     .map((i) => new BigNumber(i.output.satoshis))
     .reduce((v, acc) => v.plus(acc), new BigNumber(0))

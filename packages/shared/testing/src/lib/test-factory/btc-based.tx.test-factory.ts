@@ -14,7 +14,7 @@ export const btcBasedTxTestFactory = {
       validTxData: string
     }
     mock: {
-      requestGetRawTx: (obj?: { outputs: [] }) => void
+      requestGetRawTx: (obj?: unknown) => void
       broadcast: ((requestBody: BroadcastKMS) => CancelablePromise<TransactionHashKMS>) & jest.Mock
     }
   }) => {
@@ -26,6 +26,7 @@ export const btcBasedTxTestFactory = {
 
         const result = await args.transactions.sendTransaction(
           args.getRequestBodyFromUTXO(args.data.validAmount),
+          { testnet: true },
         )
         expect(result.txId).toBe('12345')
         testHelper.expectMockCalled(args.mock.broadcast, [{ txData: args.data.validTxData }])
@@ -37,6 +38,7 @@ export const btcBasedTxTestFactory = {
         args.mock.requestGetRawTx()
         const txData = await args.transactions.prepareSignedTransaction(
           args.getRequestBodyFromUTXO(args.data.validAmount),
+          { testnet: true },
         )
         expect(txData).toBe(args.data.validTxData)
       })
@@ -45,7 +47,7 @@ export const btcBasedTxTestFactory = {
         args.mock.requestGetRawTx()
 
         await expect(
-          args.transactions.prepareSignedTransaction(args.getRequestBodyFromUTXO(100500)),
+          args.transactions.prepareSignedTransaction(args.getRequestBodyFromUTXO(100500), { testnet: true }),
         ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_NOT_ENOUGH_BALANCE)
       })
 
@@ -53,15 +55,19 @@ export const btcBasedTxTestFactory = {
         args.mock.requestGetRawTx()
 
         await expect(
-          args.transactions.prepareSignedTransaction(args.getRequestBodyFromUTXO(args.data.utxoAmount)),
+          args.transactions.prepareSignedTransaction(args.getRequestBodyFromUTXO(args.data.utxoAmount), {
+            testnet: true,
+          }),
         ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_FEE_TOO_SMALL)
       })
 
       it('no outputs', async () => {
-        args.mock.requestGetRawTx({ outputs: [] })
+        args.mock.requestGetRawTx({ outputs: [], vout: [] })
 
         await expect(
-          args.transactions.prepareSignedTransaction(args.getRequestBodyFromUTXO(args.data.validAmount)),
+          args.transactions.prepareSignedTransaction(args.getRequestBodyFromUTXO(args.data.validAmount), {
+            testnet: true,
+          }),
         ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_UTXO_NOT_FOUND)
       })
     })
@@ -87,6 +93,7 @@ export const btcBasedTxTestFactory = {
 
         const result = await args.transactions.sendTransaction(
           args.getRequestBodyFromAddress(args.data.validAmount),
+          { testnet: true },
         )
         expect(result.txId).toBe('12345')
         testHelper.expectMockCalled(args.mock.broadcast, [{ txData: args.data.validTxData }])
@@ -98,6 +105,7 @@ export const btcBasedTxTestFactory = {
         args.mock.requestGetTxByAddress()
         const txData = await args.transactions.prepareSignedTransaction(
           args.getRequestBodyFromAddress(args.data.validAmount),
+          { testnet: true },
         )
         expect(txData).toBe(args.data.validTxData)
       })
@@ -106,7 +114,9 @@ export const btcBasedTxTestFactory = {
         args.mock.requestGetTxByAddress()
 
         await expect(
-          args.transactions.prepareSignedTransaction(args.getRequestBodyFromAddress(100500)),
+          args.transactions.prepareSignedTransaction(args.getRequestBodyFromAddress(100500), {
+            testnet: true,
+          }),
         ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_NOT_ENOUGH_BALANCE)
       })
 
@@ -114,7 +124,9 @@ export const btcBasedTxTestFactory = {
         args.mock.requestGetTxByAddress()
 
         await expect(
-          args.transactions.prepareSignedTransaction(args.getRequestBodyFromAddress(args.data.utxoAmount)),
+          args.transactions.prepareSignedTransaction(args.getRequestBodyFromAddress(args.data.utxoAmount), {
+            testnet: true,
+          }),
         ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_FEE_TOO_SMALL)
       })
     })

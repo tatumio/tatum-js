@@ -11,6 +11,8 @@ import { amountUtils, SdkErrorCode } from '@tatumio/abstract-sdk'
 
 import coininfo from 'coininfo'
 import { ECPair, ECSignature, TransactionBuilder } from '@tatumio/bitcoincashjs2-lib'
+import { BtcBasedTx } from '@tatumio/shared-blockchain-btc-based'
+import BigNumber from 'bignumber.js'
 
 type BchTransactionBody = BchTransaction | BchTransactionKMS
 
@@ -59,6 +61,8 @@ const prepareSignedTransaction = async (
       )
     })
 
+    verifyAmounts(amountToSign, body)
+
     for (let i = 0; i < privateKeysToSign.length; i++) {
       const ecPair = ECPair.fromWIF(privateKeysToSign[i], network)
       transactionBuilder.sign(i, ecPair, undefined, 0x01, amountToSign[i], undefined, ECSignature.SCHNORR)
@@ -70,6 +74,24 @@ const prepareSignedTransaction = async (
   }
 }
 
+function verifyAmounts(amountToSign: number[], body: BchTransactionBody) {
+  const outputsSum = body.to
+    .map((to) => amountUtils.toSatoshis(to.value))
+    .reduce((e, acc) => e.plus(acc), new BigNumber(0))
+
+  const inputsSum = amountToSign
+    .map((i) => new BigNumber(i))
+    .reduce((v, acc) => v.plus(acc), new BigNumber(0))
+
+  if (outputsSum.eq(inputsSum)) {
+    throw new BchSdkError(SdkErrorCode.BTC_FEE_TOO_SMALL)
+  }
+
+  if (outputsSum.gt(inputsSum)) {
+    throw new BchSdkError(SdkErrorCode.BTC_NOT_ENOUGH_BALANCE)
+  }
+}
+
 const getTransactions = async (txHash: string[]): Promise<BchTx[]> => {
   const result = []
   for (const tx of txHash) {
@@ -78,7 +100,7 @@ const getTransactions = async (txHash: string[]): Promise<BchTx[]> => {
   return await Promise.all(result)
 }
 
-export const bchTransactions = () => ({
+export const bchTransactions = (): BtcBasedTx<BchTransactionBody> => ({
   sendTransaction,
   prepareSignedTransaction,
 })
