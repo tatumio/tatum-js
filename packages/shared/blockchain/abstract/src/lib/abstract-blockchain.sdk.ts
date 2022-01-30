@@ -1,15 +1,22 @@
 import {
+  BurnErc721,
   CancelablePromise,
   ChainBurnErc20 as ApiChainBurnErc20,
   ChainMintErc20 as ApiChainMintErc20,
   ChainTransferEthErc20,
   DeployErc20,
+  DeployNft,
   ExchangeRate,
+  MintErc721,
+  MintMultipleNft,
+  MintNft,
   SignatureId,
   TatumServiceService,
   TatumUrl,
   TransactionHashKMS,
+  TransferNft,
   TronWallet,
+  UpdateCashbackValueForAuthorNft,
   XrpWallet,
 } from '@tatumio/api-client'
 import { Blockchain, blockchainHelper, Fiat } from '@tatumio/shared-core'
@@ -55,6 +62,23 @@ export type ChainBurnErc20 = FromPrivateKeyOrSignatureId<Omit<ApiChainBurnErc20,
 
 export type ChainDeployErc20 = FromPrivateKeyOrSignatureId<DeployErc20>
 
+export type ChainMintErc721 = MintErc721 & { fromPrivateKey?: string }
+
+export type ChainMintNft = FromPrivateKeyOrSignatureId<Omit<MintNft, 'chain'>>
+
+export type ChainMintMultipleNft = FromPrivateKeyOrSignatureId<Omit<MintMultipleNft, 'chain'>> & {
+  erc20: string
+}
+
+export type ChainBurnErc721 = FromPrivateKeyOrSignatureId<BurnErc721>
+
+export type ChainTransferErc721 = FromPrivateKeyOrSignatureId<Omit<TransferNft, 'chain'>>
+
+export type ChainUpdateCashbackErc721 = FromPrivateKeyOrSignatureId<
+  Omit<UpdateCashbackValueForAuthorNft, 'chain'>
+>
+
+export type ChainDeployErc721 = FromPrivateKeyOrSignatureId<Omit<DeployNft, 'chain'>>
 export interface SdkWithErc20Functions {
   decimals(contractAddress: string, provider?: string): any
   prepare: {
@@ -62,6 +86,16 @@ export interface SdkWithErc20Functions {
     transferSignedTransaction(body: ChainTransferErc20, provider?: string): Promise<string>
     mintSignedTransaction(body: ChainMintErc20, provider?: string): Promise<string>
     burnSignedTransaction(body: ChainBurnErc20, provider?: string): Promise<string>
+  }
+}
+
+export interface SdkWithErc721Functions {
+  decimals(contractAddress: string, provider?: string): any
+  prepare: {
+    deploySignedTransaction(body: ChainDeployErc721, provider?: string): Promise<string>
+    transferSignedTransaction(body: ChainTransferErc721, provider?: string): Promise<string>
+    mintSignedTransaction(body: ChainMintErc721, provider?: string): Promise<string>
+    burnSignedTransaction(body: ChainBurnErc721, provider?: string): Promise<string>
   }
 }
 
