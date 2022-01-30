@@ -5,8 +5,8 @@ import {
   BchTx,
   TransactionHashKMS,
 } from '@tatumio/api-client'
-import { bcashAddressHelper } from '../utils/bch.address'
-import { BchSdkError } from '../bch.sdk.errors'
+import { bcashAddressHelper } from './utils/bch.address'
+import { BchSdkError } from './bch.sdk.errors'
 import { amountUtils, SdkErrorCode } from '@tatumio/abstract-sdk'
 
 import coininfo from 'coininfo'

@@ -21,7 +21,7 @@ export const DERIVATION_PATH: Record<Blockchain, string> = {
   EGLD: '@TODO - TBD',
   FABRIC: '@TODO - TBD',
   FLOW: '@TODO - TBD',
-  LYRA: '@TODO - TBD',
+  SCRYPTA: "m/44'/497'/0'/0",
   NEO: '@TODO - TBD',
   QTUM: '@TODO - TBD',
   QUORUM: '@TODO - TBD',
@@ -54,4 +54,5 @@ const TESTNET_DERIVATION_PATH: Record<Blockchain, string> = {
    * It's not right, but changing it will break production users experience
    */
   BCH: DERIVATION_PATH.BCH,
+  SCRYPTA: DERIVATION_PATH.SCRYPTA,
 }

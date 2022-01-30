@@ -1,4 +1,4 @@
-import { dogeTransactions } from '../transaction/doge.tx'
+import { dogeTransactions } from '../doge.sdk.tx'
 import { btcBasedTxTestFactory, mockHelper } from '@tatumio/shared-testing'
 import * as apiClient from '@tatumio/api-client'
 import { DogeTransactionUTXO } from '@tatumio/api-client'

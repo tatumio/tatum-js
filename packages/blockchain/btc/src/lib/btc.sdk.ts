@@ -9,17 +9,18 @@ const blockchain = Blockchain.BTC
 export const TatumBtcSDK = (args: SDKArguments) => {
   return {
     ...btcBasedSdk({ ...args, blockchain }),
-    api: BlockchainBitcoinService,
     transaction: btcTransactions(),
     blockchain: {
+      mempool: BlockchainBitcoinService.btcGetMempool,
       broadcast: BlockchainBitcoinService.btcBroadcast,
-      getCurrentBlock: BlockchainBitcoinService.btcGetBlockChainInfo,
+      info: BlockchainBitcoinService.btcGetBlockChainInfo,
       getBlockHash: BlockchainBitcoinService.btcGetBlockHash,
       getBlock: BlockchainBitcoinService.btcGetBlock,
       getUTXO: BlockchainBitcoinService.btcGetUtxo,
       getBlockchainAccountBalance: BlockchainBitcoinService.btcGetBalanceOfAddress,
-      get: BlockchainBitcoinService.btcGetRawTransaction,
-      getAccountTransactions: BlockchainBitcoinService.btcGetTxByAddress,
+      getTransaction: BlockchainBitcoinService.btcGetRawTransaction,
+      getTransactionsByAddress: BlockchainBitcoinService.btcGetTxByAddress,
+      sendTransaction: BlockchainBitcoinService.btcTransferBlockchain,
     },
   }
 }

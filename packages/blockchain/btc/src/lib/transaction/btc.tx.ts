@@ -75,21 +75,17 @@ const privateKeysFromAddress = async (
             continue
           }
 
-          try {
-            transaction.from([
-              Transaction.UnspentOutput.fromObject({
-                txId: tx.hash,
-                outputIndex: i,
-                script: Script.fromAddress(item.address).toString(),
-                satoshis: o.value,
-              }),
-            ])
+          transaction.from([
+            Transaction.UnspentOutput.fromObject({
+              txId: tx.hash,
+              outputIndex: i,
+              script: Script.fromAddress(item.address).toString(),
+              satoshis: o.value,
+            }),
+          ])
 
-            if ('signatureId' in item) privateKeysToSign.push(item.signatureId)
-            else if ('privateKey' in item) privateKeysToSign.push(item.privateKey)
-          } catch (e: any) {
-            console.error(e.toString())
-          }
+          if ('signatureId' in item) privateKeysToSign.push(item.signatureId)
+          else if ('privateKey' in item) privateKeysToSign.push(item.privateKey)
         }
       }
     }
