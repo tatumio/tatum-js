@@ -36,7 +36,7 @@ jobs:
       - name: Config git name
         run: git config --global user.name "Hathoriel"
 
-      - run: nxpm release $(npm --no-git-tag-version version prerelease) --fix
+      - run: nxpm release $(npm --no-git-tag-version version prerelease) --fix --ci
       - name: Publish packages
         run: yarn publish:prerelease
         env:
