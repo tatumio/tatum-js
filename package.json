@@ -1,6 +1,6 @@
 {
   "name": "tatumio",
-  "version": "2.0.0-alpha.203",
+  "version": "2.0.0-rc.1",
   "license": "MIT",
   "scripts": {
     "start": "nx serve",
@@ -13,6 +13,7 @@
     "test": "nx affected:test --parallel",
     "dep-graph": "nx dep-graph",
     "generate-api": "openapi --exportCore false --useUnionTypes true --client axios --input ./packages/api-client/src/api_schema.json --output ./packages/api-client/src/generated",
+    "release:patch": "nxpm release $(npm --no-git-tag-version version prerelease) --fix --ci",
     "registry:start": "nxpm registry:start",
     "registry:enable": "nxpm registry:enable",
     "registry:disable": "nxpm registry:disable",
