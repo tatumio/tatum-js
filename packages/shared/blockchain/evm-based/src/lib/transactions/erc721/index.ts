@@ -322,7 +322,136 @@ const deploySignedTransaction = async (body: ChainDeployErc721, web3: EvmBasedWe
   )
 }
 
-// TODO change documentation in comments!!!
+const mintProvenanceSignedTransaction = async (body: ChainMintNft, web3: EvmBasedWeb3, provider?: string) => {
+  const {
+    fromPrivateKey,
+    to,
+    tokenId,
+    contractAddress,
+    nonce,
+    fee,
+    url,
+    signatureId,
+    authorAddresses,
+    cashbackValues,
+    fixedValues,
+    erc20,
+  } = body
+
+  const client = web3.getClient(provider)
+
+  const contract = new client.eth.Contract(Erc721_Provenance.abi as any, contractAddress)
+  const cb: string[] = []
+  const fval: string[] = []
+  if (authorAddresses && cashbackValues && fixedValues) {
+    cashbackValues.map((c) => cb.push(`0x${new BigNumber(c).multipliedBy(100).toString(16)}`))
+    fixedValues.map((c) => fval.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
+  }
+  if (contractAddress) {
+    const tx: TransactionConfig = {
+      from: 0,
+      to: contractAddress.trim(),
+      data: contract.methods
+        .mintWithTokenURI(
+          to.trim(),
+          tokenId,
+          url,
+          authorAddresses ? authorAddresses : [],
+          cb,
+          fval,
+          erc20 ? erc20 : null,
+        )
+        .encodeABI(),
+      nonce,
+    }
+
+    return await evmBasedUtils.prepareSignedTransactionAbstraction(
+      client,
+      tx,
+      signatureId,
+      fromPrivateKey,
+      web3,
+      fee.gasLimit,
+      fee.gasPrice,
+    )
+  }
+  throw new Error('Contract address should not be empty!')
+}
+
+const mintMultipleProvenanceSignedTransaction = async (
+  body: ChainMintMultipleNft & { fixedValues: string[][] },
+  web3: EvmBasedWeb3,
+  provider?: string,
+) => {
+  const {
+    fromPrivateKey,
+    to,
+    tokenId,
+    contractAddress,
+    url,
+    nonce,
+    signatureId,
+    authorAddresses,
+    cashbackValues,
+    fixedValues,
+    erc20,
+    fee,
+  } = body
+
+  const client = await web3.getClient(provider)
+
+  const contract = new client.eth.Contract(Erc721_Provenance.abi as any, contractAddress)
+  const cb: string[][] = []
+  const fv: string[][] = []
+  if (authorAddresses && cashbackValues && fixedValues) {
+    for (let i = 0; i < cashbackValues.length; i++) {
+      const cb2: string[] = []
+      const fv2: string[] = []
+      for (let j = 0; j < cashbackValues[i].length; j++) {
+        cb2.push(`0x${new BigNumber(cashbackValues[i][j]).multipliedBy(100).toString(16)}`)
+        fv2.push(`0x${new BigNumber(client.utils.toWei(fixedValues[i][j], 'ether')).toString(16)}`)
+      }
+      cb.push(cb2)
+      fv.push(fv2)
+    }
+  }
+  const tx: TransactionConfig = {
+    from: 0,
+    to: contractAddress.trim(),
+    data: erc20
+      ? contract.methods
+          .mintMultiple(
+            to.map((t) => t.trim()),
+            tokenId,
+            url,
+            authorAddresses ? authorAddresses : [],
+            cb,
+            fv,
+            erc20,
+          )
+          .encodeABI()
+      : contract.methods
+          .mintMultiple(
+            to.map((t) => t.trim()),
+            tokenId,
+            url,
+            authorAddresses ? authorAddresses : [],
+            cb,
+            fv,
+          )
+          .encodeABI(),
+    nonce,
+  }
+  return await evmBasedUtils.prepareSignedTransactionAbstraction(
+    client,
+    tx,
+    signatureId,
+    fromPrivateKey,
+    web3,
+    fee.gasLimit,
+    fee.gasPrice,
+  )
+}
 
 export const erc721 = (args: {
   blockchain: EvmBasedBlockchain
@@ -395,6 +524,24 @@ export const erc721 = (args: {
        */
       deploySignedTransaction: async (body: ChainDeployErc721, provider?: string) =>
         deploySignedTransaction(body, args.web3, provider),
+      /**
+       * Sign mint ERC 721 provenance transaction with cashback via private keys locally. Nothing is broadcast to the blockchain.
+       * @param body content of the transaction to broadcast
+       * @param provider url of the Server to connect to. If not set, default public server will be used.
+       * @returns transaction data to be broadcast to blockchain.
+       */
+      mintProvenanceSignedTransaction: async (body: ChainMintNft, provider?: string) =>
+        mintProvenanceSignedTransaction(body, args.web3, provider),
+      /**
+       * Sign mint multiple ERC 721 Cashback transaction with private keys locally. Nothing is broadcast to the blockchain.
+       * @param body content of the transaction to broadcast
+       * @param provider url of the Server to connect to. If not set, default public server will be used.
+       * @returns transaction data to be broadcast to blockchain.
+       */
+      mintMultipleProvenanceSignedTransaction: async (
+        body: ChainMintMultipleNft & { fixedValues: string[][] },
+        provider?: string,
+      ) => mintMultipleProvenanceSignedTransaction(body, args.web3, provider),
     },
     send: {
       /**
@@ -474,7 +621,7 @@ export const erc721 = (args: {
           signatureId: body.signatureId,
         }),
       /**
-       * Send BEP721 deploy to the blockchain. This method broadcasts signed transaction to the blockchain.
+       * Send BEP721 update cashback to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
        * @param body content of the transaction to broadcast
        * @param provider url of the Server to connect to. If not set, default public server will be used.
@@ -495,6 +642,33 @@ export const erc721 = (args: {
       deploySignedTransaction: async (body: ChainDeployErc721, provider?: string) =>
         args.broadcastFunction({
           txData: await deploySignedTransaction(body, args.web3, provider),
+          signatureId: body.signatureId,
+        }),
+      /**
+       * Send BEP721 mint provenance transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+       * This operation is irreversible.
+       * @param body content of the transaction to broadcast
+       * @param provider url of the Server to connect to. If not set, default public server will be used.
+       * @returns transaction id of the transaction in the blockchain
+       */
+      mintProvenanceSignedTransaction: async (body: ChainMintNft, provider?: string) =>
+        args.broadcastFunction({
+          txData: await mintProvenanceSignedTransaction(body, args.web3, provider),
+          signatureId: body.signatureId,
+        }),
+      /**
+       * Send BEP721 mint multiple provenance transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+       * This operation is irreversible.
+       * @param body content of the transaction to broadcast
+       * @param provider url of the Server to connect to. If not set, default public server will be used.
+       * @returns transaction id of the transaction in the blockchain
+       */
+      mintMultipleProvenanceSignedTransaction: async (
+        body: ChainMintMultipleNft & { fixedValues: string[][] },
+        provider?: string,
+      ) =>
+        args.broadcastFunction({
+          txData: await mintMultipleProvenanceSignedTransaction(body, args.web3, provider),
           signatureId: body.signatureId,
         }),
     },

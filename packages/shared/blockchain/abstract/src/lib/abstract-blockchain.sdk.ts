@@ -64,21 +64,19 @@ export type ChainDeployErc20 = FromPrivateKeyOrSignatureId<DeployErc20>
 
 export type ChainMintErc721 = MintErc721 & { fromPrivateKey?: string }
 
-export type ChainMintNft = FromPrivateKeyOrSignatureId<Omit<MintNft, 'chain'>>
+export type ChainMintNft = FromPrivateKeyOrSignatureId<MintNft>
 
-export type ChainMintMultipleNft = FromPrivateKeyOrSignatureId<Omit<MintMultipleNft, 'chain'>> & {
+export type ChainMintMultipleNft = FromPrivateKeyOrSignatureId<MintMultipleNft> & {
   erc20: string
 }
 
 export type ChainBurnErc721 = FromPrivateKeyOrSignatureId<BurnErc721>
 
-export type ChainTransferErc721 = FromPrivateKeyOrSignatureId<Omit<TransferNft, 'chain'>>
+export type ChainTransferErc721 = FromPrivateKeyOrSignatureId<TransferNft>
 
-export type ChainUpdateCashbackErc721 = FromPrivateKeyOrSignatureId<
-  Omit<UpdateCashbackValueForAuthorNft, 'chain'>
->
+export type ChainUpdateCashbackErc721 = FromPrivateKeyOrSignatureId<UpdateCashbackValueForAuthorNft>
 
-export type ChainDeployErc721 = FromPrivateKeyOrSignatureId<Omit<DeployNft, 'chain'>>
+export type ChainDeployErc721 = FromPrivateKeyOrSignatureId<DeployNft>
 export interface SdkWithErc20Functions {
   decimals(contractAddress: string, provider?: string): any
   prepare: {
@@ -90,7 +88,6 @@ export interface SdkWithErc20Functions {
 }
 
 export interface SdkWithErc721Functions {
-  decimals(contractAddress: string, provider?: string): any
   prepare: {
     deploySignedTransaction(body: ChainDeployErc721, provider?: string): Promise<string>
     transferSignedTransaction(body: ChainTransferErc721, provider?: string): Promise<string>
