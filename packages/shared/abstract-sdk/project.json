@@ -4,14 +4,13 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/shared/abstract-sdk",
         "tsConfig": "packages/shared/abstract-sdk/tsconfig.lib.json",
         "packageJson": "packages/shared/abstract-sdk/package.json",
-        "main": "packages/shared/abstract-sdk/src/index.ts",
-        "assets": ["packages/shared/abstract-sdk/*.md"]
+        "main": "packages/shared/abstract-sdk/src/index.ts"
       }
     },
     "lint": {

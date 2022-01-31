@@ -12,7 +12,7 @@ export const evmBasedWeb3 = (args: { blockchain: EvmBasedBlockchain }) => {
     getClient(provider?: string): Web3 {
       const endpoint = httpHelper.web3Endpoint(
         args.blockchain,
-        process.env.TATUM_API_URL || TATUM_API_CONSTANTS.URL,
+        process.env['TATUM_API_URL'] || TATUM_API_CONSTANTS.URL,
         TATUM_API_CONSTANTS.API_KEY,
       )
 

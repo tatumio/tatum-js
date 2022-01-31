@@ -10,8 +10,7 @@
         "outputPath": "dist/examples/eth-example",
         "main": "examples/eth-example/src/index.ts",
         "tsConfig": "examples/eth-example/tsconfig.app.json",
-        "packageJson": "examples/eth-example/package.json",
-        "assets": ["examples/eth-example/*.md"]
+        "packageJson": "examples/eth-example/package.json"
       }
     },
     "serve": {

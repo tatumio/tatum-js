@@ -1,5 +1,8 @@
-import { SdkError, SdkErrorArgs, SdkErrorCode } from '@tatumio/abstract-sdk'
+import { SdkError, SdkErrorCode } from '@tatumio/abstract-sdk'
 
+/**
+ * https://github.com/bitpay/bitcore/blob/v8.0.0/packages/bitcore-lib/lib/errors/spec.js
+ */
 export const BTC_ERRORS_MAPPING = {
   'bitcore.ErrorTransactionFeeErrorTooSmall': SdkErrorCode.BTC_FEE_TOO_SMALL,
   'bitcore.ErrorTransactionInvalidOutputAmountSum': SdkErrorCode.BTC_NOT_ENOUGH_BALANCE,
@@ -11,15 +14,17 @@ export type BtcSdkErrorCode =
   | SdkErrorCode.BTC_NOT_ENOUGH_BALANCE
 
 export class BtcSdkError extends SdkError {
-  constructor(args: SdkErrorArgs<BtcSdkErrorCode>) {
-    super(args)
-  }
-
-  static from(originalError: any): BtcSdkError {
-    return new BtcSdkError({ originalError, code: BTC_ERRORS_MAPPING[originalError.name] })
-  }
-
-  static fromCode(code: BtcSdkErrorCode): BtcSdkError {
-    return new BtcSdkError({ code })
+  constructor(error: Error | BtcSdkErrorCode) {
+    if (typeof error === 'string') {
+      super({
+        code: error,
+      })
+    } else {
+      super({
+        originalError: error,
+        originalErrorAsString: error.name,
+        errorSubstringMapping: BTC_ERRORS_MAPPING,
+      })
+    }
   }
 }

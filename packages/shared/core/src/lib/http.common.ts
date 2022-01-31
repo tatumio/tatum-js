@@ -5,7 +5,7 @@ import { TATUM_API_CONSTANTS } from '@tatumio/api-client'
 const EndpointsMapping: Record<Blockchain, string> = {
   FABRIC: 'fabric',
   HARMONY: 'one',
-  LYRA: 'scrypta',
+  SCRYPTA: 'scrypta',
   BTC: 'bitcoin',
   DOGE: 'dogecoin',
   EGLD: 'egld',

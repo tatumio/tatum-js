@@ -10,8 +10,7 @@
         "outputPath": "dist/examples/kcs-example",
         "main": "examples/kcs-example/src/index.ts",
         "tsConfig": "examples/kcs-example/tsconfig.app.json",
-        "packageJson": "examples/kcs-example/package.json",
-        "assets": ["examples/kcs-example/*.md"]
+        "packageJson": "examples/kcs-example/package.json"
       }
     },
     "serve": {

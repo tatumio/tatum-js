@@ -53,7 +53,7 @@ export const BlockchainCurrencyMapping: Record<
   XLM: Currency.XLM,
   VET: Currency.VET,
   NEO: Currency.NEO,
-  LYRA: Currency.LYRA,
+  SCRYPTA: Currency.LYRA,
   CARDANO: Currency.ADA,
   ALGO: Currency.ALGO,
   KCS: Currency.KCS,

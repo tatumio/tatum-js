@@ -10,6 +10,7 @@ import { ONE_TEST_DATA } from './test-data/one.test-data'
 import { BSC_TEST_DATA } from './test-data/bsc.test-data'
 import { XRP_TEST_DATA } from './test-data/xrp.test-data'
 import { XLM_TEST_DATA } from './test-data/xlm.test-data'
+import { SCRYPTA_TEST_DATA } from './test-data/scrypta.test-data'
 
 export type BlockchainNetworkTestData = {
   XPUB: string
@@ -23,6 +24,9 @@ export type BlockchainNetworkTestData = {
 export interface BlockchainTestData {
   MAINNET: BlockchainNetworkTestData
   TESTNET: BlockchainNetworkTestData
+  TX_HASH: string
+  BLOCK_HASH: string
+  BLOCK_HEIGHT: number
   INVALID_XPUB_ERROR: string
   INVALID_XPUB_CHILD_INDEX_ERROR: string
   INVALID_PRIVATE_KEY_CHILD_INDEX_ERROR: string
@@ -44,6 +48,7 @@ export const TEST_DATA = {
   BSC: BSC_TEST_DATA,
   XRP: XRP_TEST_DATA,
   XLM: XLM_TEST_DATA,
+  SCRYPTA: SCRYPTA_TEST_DATA,
 }
 
 /**

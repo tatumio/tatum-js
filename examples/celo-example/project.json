@@ -10,8 +10,7 @@
         "outputPath": "dist/examples/celo-example",
         "main": "examples/celo-example/src/index.ts",
         "tsConfig": "examples/celo-example/tsconfig.app.json",
-        "packageJson": "examples/celo-example/package.json",
-        "assets": ["examples/celo-example/*.md"]
+        "packageJson": "examples/celo-example/package.json"
       }
     },
     "serve": {
