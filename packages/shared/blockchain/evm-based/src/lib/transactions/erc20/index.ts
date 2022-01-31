@@ -54,6 +54,7 @@ const mintSignedTransaction = async (body: ChainMintErc20, web3: EvmBasedWeb3, p
 
   const tx: TransactionConfig = {
     from: undefined,
+    to: body.to,
     data,
     nonce: body.nonce,
   }
@@ -77,7 +78,8 @@ const burnSignedTransaction = async (body: ChainBurnErc20, web3: EvmBasedWeb3, p
     .encodeABI()
 
   const tx: TransactionConfig = {
-    from: 0,
+    from: undefined,
+    to: body.contractAddress,
     data,
     nonce: body.nonce,
   }
@@ -98,7 +100,8 @@ const transferSignedTransaction = async (body: ChainTransferErc20, web3: EvmBase
     .encodeABI()
 
   const tx: TransactionConfig = {
-    from: 0,
+    from: undefined,
+    to: body.to,
     data,
     nonce: body.nonce,
   }
@@ -135,7 +138,7 @@ const deploySignedTransaction = async (body: ChainDeployErc20, web3: EvmBasedWeb
   })
 
   const tx: TransactionConfig = {
-    from: 0,
+    from: undefined,
     data: deploy.encodeABI(),
     nonce,
   }

@@ -36,7 +36,6 @@ export const erc20TestFactory = {
 
         expect(json.nonce).toBe(nonce)
         expect(json.gasPrice).toBe('20000000000')
-        expect(json.from).toBe(0)
         expectHexString(json.data)
       })
 
@@ -104,7 +103,6 @@ export const erc20TestFactory = {
 
         expect(json.nonce).toBe(nonce)
         expect(json.gasPrice).toBe('20000000000')
-        expect(json.from).toBe(0)
         expectHexString(json.data)
       })
 
@@ -162,26 +160,7 @@ export const erc20TestFactory = {
         expectHexString(result)
       })
 
-      xit('valid from SignatureId', async () => {
-        const nonce = 3252345722143
-
-        const result = await sdk.prepare.mintSignedTransaction({
-          to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-          amount: '10',
-          contractAddress: testData.MAINNET.ERC_20.ADDRESS,
-          signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-          nonce,
-        })
-
-        const json = JSON.parse(result)
-
-        expect(json.nonce).toBe(nonce)
-        expect(json.gasPrice).toBe('20000000000')
-        expect(json.from).toBe(0)
-        expectHexString(json.data)
-      })
-
-      xit('invalid address', async () => {
+      it('invalid address', async () => {
         try {
           await sdk.prepare.mintSignedTransaction({
             to: 'someinvalidaddress',
