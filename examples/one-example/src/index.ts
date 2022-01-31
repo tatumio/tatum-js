@@ -14,6 +14,7 @@ import {
 } from './app/one.ledger.example'
 import { oneOffchainExample } from './app/one.offchain.example'
 import { oneSubscriptionsExample } from './app/one.subscriptions.example'
+import { oneTxWithPrivateKeyExample, oneTxWithSignatureIdExample } from './app/one.tx.example'
 
 console.log(`Running ${oneApiExample()}`)
 console.log(`Running ${oneWalletExample()}`)
@@ -30,3 +31,5 @@ console.log(`Running ${oneLedgerOrderBookExample()}`)
 console.log(`Running ${oneLedgerTransactionExample()}`)
 console.log(`Running ${oneOffchainExample()}`)
 console.log(`Running ${oneSubscriptionsExample()}`)
+console.log(`Runninf ${oneTxWithPrivateKeyExample()}`)
+console.log(`Runninf ${oneTxWithSignatureIdExample()}`)

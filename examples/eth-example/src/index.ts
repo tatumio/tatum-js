@@ -12,6 +12,7 @@ import {
 import { ethOffchainExample } from './app/eth.offchain.example'
 import { exchangeRateExample } from './app/eth.root.example'
 import { ethSubscriptionsExample } from './app/eth.subscriptions.example'
+import { ethTxWithPrivateKeyExample, ethTxWithSignatureIdExample } from './app/eth.tx.example'
 
 console.log(`Running ${ethWalletExample()}`)
 console.log(`Running ${ethApiExample()}`)
@@ -25,3 +26,5 @@ console.log(`Running ${ethLedgerVirtualCurrencyExample()}`)
 console.log(`Running ${ethOffchainExample()}`)
 console.log(`Running ${exchangeRateExample()}`)
 console.log(`Running ${ethSubscriptionsExample()}`)
+console.log(`Runninf ${ethTxWithPrivateKeyExample()}`)
+console.log(`Runninf ${ethTxWithSignatureIdExample()}`)
