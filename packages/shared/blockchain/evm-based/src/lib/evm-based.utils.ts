@@ -44,9 +44,9 @@ export const evmBasedUtils = {
   prepareSignedTransactionAbstraction: async (
     client: Web3,
     transaction: TransactionConfig,
-    signatureId: string | undefined,
-    fromPrivateKey: string | undefined,
     web3: EvmBasedWeb3,
+    signatureId?: string,
+    fromPrivateKey?: string,
     gasLimit?: string,
     gasPrice?: string,
   ) => {
@@ -62,7 +62,7 @@ export const evmBasedUtils = {
       return JSON.stringify(tx)
     }
 
-    const signedTransaction = await client.eth.accounts.signTransaction(tx, fromPrivateKey)
+    const signedTransaction = await client.eth.accounts.signTransaction(tx, fromPrivateKey!)
 
     return signedTransaction.rawTransaction
   },

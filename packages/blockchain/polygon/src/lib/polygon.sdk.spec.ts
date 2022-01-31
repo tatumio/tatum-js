@@ -1,4 +1,5 @@
 import { BurnNft, DeployNft, MintNft, TransferNft } from '@tatumio/api-client'
+import { Currency } from '@tatumio/shared-core'
 import {
   erc20TestFactory,
   erc721TestFactory,
@@ -59,7 +60,7 @@ describe('TatumPolygonSDK', () => {
         erc721TestFactory.prepare.deploySignedTransaction(
           sdk.transaction.erc721,
           TEST_DATA.POLYGON,
-          DeployNft.chain.MATIC,
+          Currency.MATIC,
         )
       })
 
@@ -67,7 +68,7 @@ describe('TatumPolygonSDK', () => {
         erc721TestFactory.prepare.transferSignedTransaction(
           sdk.transaction.erc721,
           TEST_DATA.POLYGON,
-          TransferNft.chain.MATIC,
+          Currency.MATIC,
         )
       })
 
@@ -75,7 +76,7 @@ describe('TatumPolygonSDK', () => {
         erc721TestFactory.prepare.mintSignedTransaction(
           sdk.transaction.erc721,
           TEST_DATA.POLYGON,
-          MintNft.chain.MATIC,
+          Currency.MATIC,
         )
       })
 
@@ -83,7 +84,7 @@ describe('TatumPolygonSDK', () => {
         erc721TestFactory.prepare.burnSignedTransaction(
           sdk.transaction.erc721,
           TEST_DATA.POLYGON,
-          BurnNft.chain.MATIC,
+          Currency.MATIC,
         )
       })
     })

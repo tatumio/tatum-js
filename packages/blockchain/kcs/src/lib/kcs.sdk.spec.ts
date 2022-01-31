@@ -1,4 +1,4 @@
-import { DeployNft, MintNft, TransferNft } from '@tatumio/api-client'
+import { Currency } from '@tatumio/shared-core'
 import {
   erc20TestFactory,
   erc721TestFactory,
@@ -56,35 +56,23 @@ describe('TatumKcsSDK', () => {
   describe('erc721', () => {
     describe('prepare', () => {
       describe('deploySignedTransaction', () => {
-        erc721TestFactory.prepare.deploySignedTransaction(
-          sdk.transaction.erc721,
-          TEST_DATA.KCS,
-          DeployNft.chain.KCS,
-        )
+        erc721TestFactory.prepare.deploySignedTransaction(sdk.transaction.erc721, TEST_DATA.KCS, Currency.KCS)
       })
 
       describe('transferSignedTransaction', () => {
         erc721TestFactory.prepare.transferSignedTransaction(
           sdk.transaction.erc721,
           TEST_DATA.KCS,
-          TransferNft.chain.KCS,
+          Currency.KCS,
         )
       })
 
       describe('mintSignedTransaction', () => {
-        erc721TestFactory.prepare.mintSignedTransaction(
-          sdk.transaction.erc721,
-          TEST_DATA.KCS,
-          MintNft.chain.KCS,
-        )
+        erc721TestFactory.prepare.mintSignedTransaction(sdk.transaction.erc721, TEST_DATA.KCS, Currency.KCS)
       })
 
       describe('burnSignedTransaction', () => {
-        erc721TestFactory.prepare.burnSignedTransaction(
-          sdk.transaction.erc721,
-          TEST_DATA.KCS,
-          MintNft.chain.KCS,
-        )
+        erc721TestFactory.prepare.burnSignedTransaction(sdk.transaction.erc721, TEST_DATA.KCS, Currency.KCS)
       })
     })
   })

@@ -28,15 +28,15 @@ const mintSignedTransaction = async (body: ChainMintErc721, web3: EvmBasedWeb3, 
       data: contract.methods.mintWithTokenURI(to.trim(), tokenId, url).encodeABI(),
       nonce: nonce,
     }
-    // TODO private key undefined - not in MintErc721 type
+
     return await evmBasedUtils.prepareSignedTransactionAbstraction(
       client,
       tx,
+      web3,
       signatureId,
       fromPrivateKey,
-      web3,
-      fee.gasLimit,
-      fee.gasPrice,
+      fee?.gasLimit,
+      fee?.gasPrice,
     )
   }
   throw new Error('Contract address should not be empty')
@@ -74,11 +74,11 @@ const mintCashbackSignedTransaction = async (body: ChainMintNft, web3: EvmBasedW
     return await evmBasedUtils.prepareSignedTransactionAbstraction(
       client,
       tx,
+      web3,
       signatureId,
       fromPrivateKey,
-      web3,
-      fee.gasLimit,
-      fee.gasPrice,
+      fee?.gasLimit,
+      fee?.gasPrice,
     )
   }
   throw new Error('Contract address should not be empty!')
@@ -138,11 +138,11 @@ export const mintMultipleCashbackSignedTransaction = async (
   return await evmBasedUtils.prepareSignedTransactionAbstraction(
     client,
     tx,
+    web3,
     signatureId,
     fromPrivateKey,
-    web3,
-    fee.gasLimit,
-    fee.gasPrice,
+    fee?.gasLimit,
+    fee?.gasPrice,
   )
 }
 
@@ -172,11 +172,11 @@ const mintMultipleSignedTransaction = async (
   return await evmBasedUtils.prepareSignedTransactionAbstraction(
     client,
     tx,
+    web3,
     signatureId,
     fromPrivateKey,
-    web3,
-    fee.gasLimit,
-    fee.gasPrice,
+    fee?.gasLimit,
+    fee?.gasPrice,
   )
 }
 
@@ -196,11 +196,11 @@ const burnSignedTransaction = async (body: ChainBurnErc721, web3: EvmBasedWeb3, 
   return await evmBasedUtils.prepareSignedTransactionAbstraction(
     client,
     tx,
+    web3,
     signatureId,
     fromPrivateKey,
-    web3,
-    fee.gasLimit,
-    fee.gasPrice,
+    fee?.gasLimit,
+    fee?.gasPrice,
   )
 }
 
@@ -247,11 +247,11 @@ const transferSignedTransaction = async (
   return await evmBasedUtils.prepareSignedTransactionAbstraction(
     client,
     tx,
+    web3,
     signatureId,
     fromPrivateKey,
-    web3,
-    fee.gasLimit,
-    fee.gasPrice,
+    fee?.gasLimit,
+    fee?.gasPrice,
   )
 }
 
@@ -280,11 +280,11 @@ const updateCashbackForAuthorSignedTransaction = async (
   return await evmBasedUtils.prepareSignedTransactionAbstraction(
     client,
     tx,
+    web3,
     signatureId,
     fromPrivateKey,
-    web3,
-    fee.gasLimit,
-    fee.gasPrice,
+    fee?.gasLimit,
+    fee?.gasPrice,
   )
 }
 
@@ -295,7 +295,7 @@ const deploySignedTransaction = async (body: ChainDeployErc721, web3: EvmBasedWe
 
   const contract = new client.eth.Contract(
     provenance ? Erc721_Provenance.abi : (Erc721Token.abi as any),
-    null,
+    undefined,
     {
       data: provenance ? Erc721_Provenance.bytecode : Erc721Token.bytecode,
     },
@@ -314,11 +314,11 @@ const deploySignedTransaction = async (body: ChainDeployErc721, web3: EvmBasedWe
   return await evmBasedUtils.prepareSignedTransactionAbstraction(
     client,
     tx,
+    web3,
     signatureId,
     fromPrivateKey,
-    web3,
-    fee.gasLimit,
-    fee.gasPrice,
+    fee?.gasLimit,
+    fee?.gasPrice,
   )
 }
 
@@ -368,11 +368,11 @@ const mintProvenanceSignedTransaction = async (body: ChainMintNft, web3: EvmBase
     return await evmBasedUtils.prepareSignedTransactionAbstraction(
       client,
       tx,
+      web3,
       signatureId,
       fromPrivateKey,
-      web3,
-      fee.gasLimit,
-      fee.gasPrice,
+      fee?.gasLimit,
+      fee?.gasPrice,
     )
   }
   throw new Error('Contract address should not be empty!')
@@ -445,11 +445,11 @@ const mintMultipleProvenanceSignedTransaction = async (
   return await evmBasedUtils.prepareSignedTransactionAbstraction(
     client,
     tx,
+    web3,
     signatureId,
     fromPrivateKey,
-    web3,
-    fee.gasLimit,
-    fee.gasPrice,
+    fee?.gasLimit,
+    fee?.gasPrice,
   )
 }
 
@@ -552,7 +552,7 @@ export const erc721 = (args: {
        * @returns transaction id of the transaction in the blockchain
        */
       mintSignedTransaction: async (body: ChainMintErc721, provider?: string) => {
-        if (!body.fromPrivateKey && !body.signatureId) {
+        if (body.fromPrivateKey && body.signatureId) {
           return BlockchainNftService.nftMintErc721(body as MintNftKMS)
         }
         return args.broadcastFunction({

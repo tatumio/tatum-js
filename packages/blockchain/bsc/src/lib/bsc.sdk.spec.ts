@@ -1,4 +1,4 @@
-import { BurnNft, DeployNft, MintNft, TransferNft } from '@tatumio/api-client'
+import { Currency } from '@tatumio/shared-core'
 import {
   erc20TestFactory,
   REPLACE_ME_WITH_TATUM_API_KEY,
@@ -58,7 +58,7 @@ describe('TatumBscSDK', () => {
           erc721TestFactory.prepare.deploySignedTransaction(
             sdk.transaction.erc721,
             TEST_DATA.BSC,
-            DeployNft.chain.BSC,
+            Currency.BSC,
           )
         })
 
@@ -66,24 +66,16 @@ describe('TatumBscSDK', () => {
           erc721TestFactory.prepare.transferSignedTransaction(
             sdk.transaction.erc721,
             TEST_DATA.BSC,
-            TransferNft.chain.BSC,
+            Currency.BSC,
           )
         })
 
         describe('mintSignedTransaction', () => {
-          erc721TestFactory.prepare.mintSignedTransaction(
-            sdk.transaction.erc721,
-            TEST_DATA.BSC,
-            MintNft.chain.BSC,
-          )
+          erc721TestFactory.prepare.mintSignedTransaction(sdk.transaction.erc721, TEST_DATA.BSC, Currency.BSC)
         })
 
         describe('burnSignedTransaction', () => {
-          erc721TestFactory.prepare.burnSignedTransaction(
-            sdk.transaction.erc721,
-            TEST_DATA.BSC,
-            BurnNft.chain.BSC,
-          )
+          erc721TestFactory.prepare.burnSignedTransaction(sdk.transaction.erc721, TEST_DATA.BSC, Currency.BSC)
         })
       })
     })

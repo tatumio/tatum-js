@@ -1,11 +1,3 @@
-import {
-  BurnNft,
-  DeployNft,
-  MintMultipleNft,
-  MintNft,
-  TransferNft,
-  UpdateCashbackValueForAuthorNft,
-} from '@tatumio/api-client'
 import { TatumPolygonSDK } from '@tatumio/polygon'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
 
@@ -101,7 +93,7 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
 
   const preparedDeployErc721Transaction = await polygonSDK.transaction.erc721.prepare.deploySignedTransaction(
     {
-      chain: DeployNft.chain.MATIC,
+      chain: 'MATIC',
       name: 'MY_TOKEN',
       symbol: '1oido3id3',
       signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -114,7 +106,7 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
   )
 
   const sentDeployErc721Transaction = await polygonSDK.transaction.erc721.send.deploySignedTransaction({
-    chain: DeployNft.chain.MATIC,
+    chain: 'MATIC',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
     signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -126,7 +118,7 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
   })
 
   const preparedMintSignedTransaction = await polygonSDK.transaction.erc721.prepare.mintSignedTransaction({
-    chain: MintNft.chain.MATIC,
+    chain: 'MATIC',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -140,7 +132,7 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
   })
 
   const sentMintSignedTransaction = await polygonSDK.transaction.erc721.send.mintSignedTransaction({
-    chain: MintNft.chain.MATIC,
+    chain: 'MATIC',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -155,7 +147,7 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
 
   const preparedMintMultipleSignedTransaction =
     await polygonSDK.transaction.erc721.prepare.mintMultipleSignedTransaction({
-      chain: MintMultipleNft.chain.MATIC,
+      chain: 'MATIC',
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       tokenId: ['345634563', '53545345'],
       url: ['https://my_token_data.com', 'https://my_token_data2.com'],
@@ -174,7 +166,7 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
 
   const sentMintMultipleSignedTransaction =
     await polygonSDK.transaction.erc721.send.mintMultipleSignedTransaction({
-      chain: MintMultipleNft.chain.MATIC,
+      chain: 'MATIC',
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       tokenId: ['345634563', '53545345'],
       url: ['https://my_token_data.com', 'https://my_token_data2.com'],
@@ -193,7 +185,7 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
 
   const preparedMintCashbackSignedTransaction =
     await polygonSDK.transaction.erc721.prepare.mintCashbackSignedTransaction({
-      chain: MintNft.chain.MATIC,
+      chain: 'MATIC',
       to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
       tokenId: '45343653',
       url: 'https://my_token_data.com',
@@ -209,7 +201,7 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
 
   const sentMintCashbackSignedTransaction =
     await polygonSDK.transaction.erc721.send.mintCashbackSignedTransaction({
-      chain: MintNft.chain.MATIC,
+      chain: 'MATIC',
       to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
       tokenId: '45343653',
       url: 'https://my_token_data.com',
@@ -225,7 +217,7 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
 
   const preparedMintMultipleCashbackSignedTransaction =
     await polygonSDK.transaction.erc721.prepare.mintMultipleCashbackSignedTransaction({
-      chain: MintMultipleNft.chain.MATIC,
+      chain: 'MATIC',
       tokenId: ['53564656', '536456456'],
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       url: ['https://my_token_data.com', 'https://my_token_data2.com'],
@@ -241,7 +233,7 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
 
   const sentMintMultipleCashbackSignedTransaction =
     await polygonSDK.transaction.erc721.send.mintMultipleCashbackSignedTransaction({
-      chain: MintMultipleNft.chain.MATIC,
+      chain: 'MATIC',
       tokenId: ['53564656', '536456456'],
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       url: ['https://my_token_data.com', 'https://my_token_data2.com'],
@@ -257,7 +249,7 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
 
   const preparedMintProvenanceSignedTransaction =
     await polygonSDK.transaction.erc721.prepare.mintProvenanceSignedTransaction({
-      chain: MintNft.chain.MATIC,
+      chain: 'MATIC',
       tokenId: '5435345',
       to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
       url: 'https://my_token_data.com',
@@ -272,7 +264,7 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
 
   const sentMintProvenanceSignedTransaction =
     await polygonSDK.transaction.erc721.send.mintProvenanceSignedTransaction({
-      chain: MintNft.chain.MATIC,
+      chain: 'MATIC',
       to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
       contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
       tokenId: '5435345',
@@ -287,7 +279,7 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
 
   const preparedMintMultipleProvenanceSignedTransaction =
     await polygonSDK.transaction.erc721.prepare.mintMultipleProvenanceSignedTransaction({
-      chain: MintMultipleNft.chain.MATIC,
+      chain: 'MATIC',
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       tokenId: ['53564656', '536456456'],
       url: ['https://my_token_data.com'],
@@ -303,7 +295,7 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
 
   const sentMintMultipleProvenanceSignedTransaction =
     await polygonSDK.transaction.erc721.send.mintMultipleProvenanceSignedTransaction({
-      chain: MintMultipleNft.chain.MATIC,
+      chain: 'MATIC',
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       tokenId: ['53564656', '536456456'],
       url: ['https://my_token_data.com'],
@@ -319,7 +311,7 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
 
   const preparedTransferSignedTransaction =
     await polygonSDK.transaction.erc721.prepare.transferSignedTransaction({
-      chain: TransferNft.chain.MATIC,
+      chain: 'MATIC',
       tokenId: '453453',
       to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
       signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -332,7 +324,7 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
     })
 
   const sentTransferSignedTransaction = await polygonSDK.transaction.erc721.send.transferSignedTransaction({
-    chain: TransferNft.chain.MATIC,
+    chain: 'MATIC',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -346,7 +338,7 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
 
   const preparedUpdateCashbackForAuthorSignedTransaction =
     await polygonSDK.transaction.erc721.prepare.updateCashbackForAuthorSignedTransaction({
-      chain: UpdateCashbackValueForAuthorNft.chain.MATIC,
+      chain: 'MATIC',
       tokenId: '453453',
       cashbackValue: '0.8',
       contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -360,7 +352,7 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
 
   const sentUpdateCashbackForAuthorSignedTransaction =
     await polygonSDK.transaction.erc721.send.updateCashbackForAuthorSignedTransaction({
-      chain: UpdateCashbackValueForAuthorNft.chain.MATIC,
+      chain: 'MATIC',
       tokenId: '453453',
       cashbackValue: '0.8',
       contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -373,7 +365,7 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
     })
 
   const preparedBurnErc721Transaction = await polygonSDK.transaction.erc721.prepare.burnSignedTransaction({
-    chain: BurnNft.chain.MATIC,
+    chain: 'MATIC',
     tokenId: '45343653',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -385,7 +377,7 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
   })
 
   const sentBurnErc721Transaction = await polygonSDK.transaction.erc721.send.burnSignedTransaction({
-    chain: BurnNft.chain.MATIC,
+    chain: 'MATIC',
     tokenId: '45343653',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -487,7 +479,7 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
 
   const preparedDeployErc721Transaction = await polygonSDK.transaction.erc721.prepare.deploySignedTransaction(
     {
-      chain: DeployNft.chain.MATIC,
+      chain: 'MATIC',
       name: 'MY_TOKEN',
       symbol: '1oido3id3',
       fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
@@ -500,7 +492,7 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
   )
 
   const sentDeployErc721Transaction = await polygonSDK.transaction.erc721.send.deploySignedTransaction({
-    chain: DeployNft.chain.MATIC,
+    chain: 'MATIC',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
     fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
@@ -512,7 +504,7 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
   })
 
   const preparedMintSignedTransaction = await polygonSDK.transaction.erc721.prepare.mintSignedTransaction({
-    chain: MintNft.chain.MATIC,
+    chain: 'MATIC',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -526,7 +518,7 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
   })
 
   const sentMintSignedTransaction = await polygonSDK.transaction.erc721.send.mintSignedTransaction({
-    chain: MintNft.chain.MATIC,
+    chain: 'MATIC',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -541,7 +533,7 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
 
   const preparedMintMultipleSignedTransaction =
     await polygonSDK.transaction.erc721.prepare.mintMultipleSignedTransaction({
-      chain: MintMultipleNft.chain.MATIC,
+      chain: 'MATIC',
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       tokenId: ['345634563', '53545345'],
       url: ['https://my_token_data.com', 'https://my_token_data2.com'],
@@ -560,7 +552,7 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
 
   const sentMintMultipleSignedTransaction =
     await polygonSDK.transaction.erc721.send.mintMultipleSignedTransaction({
-      chain: MintMultipleNft.chain.MATIC,
+      chain: 'MATIC',
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       tokenId: ['345634563', '53545345'],
       url: ['https://my_token_data.com', 'https://my_token_data2.com'],
@@ -579,7 +571,7 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
 
   const preparedMintCashbackSignedTransaction =
     await polygonSDK.transaction.erc721.prepare.mintCashbackSignedTransaction({
-      chain: MintNft.chain.MATIC,
+      chain: 'MATIC',
       to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
       tokenId: '45343653',
       url: 'https://my_token_data.com',
@@ -595,7 +587,7 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
 
   const sentMintCashbackSignedTransaction =
     await polygonSDK.transaction.erc721.send.mintCashbackSignedTransaction({
-      chain: MintNft.chain.MATIC,
+      chain: 'MATIC',
       to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
       tokenId: '45343653',
       url: 'https://my_token_data.com',
@@ -611,7 +603,7 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
 
   const preparedMintMultipleCashbackSignedTransaction =
     await polygonSDK.transaction.erc721.prepare.mintMultipleCashbackSignedTransaction({
-      chain: MintMultipleNft.chain.MATIC,
+      chain: 'MATIC',
       tokenId: ['53564656', '536456456'],
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       url: ['https://my_token_data.com', 'https://my_token_data2.com'],
@@ -627,7 +619,7 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
 
   const sentMintMultipleCashbackSignedTransaction =
     await polygonSDK.transaction.erc721.send.mintMultipleCashbackSignedTransaction({
-      chain: MintMultipleNft.chain.MATIC,
+      chain: 'MATIC',
       tokenId: ['53564656', '536456456'],
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       url: ['https://my_token_data.com', 'https://my_token_data2.com'],
@@ -643,7 +635,7 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
 
   const preparedMintProvenanceSignedTransaction =
     await polygonSDK.transaction.erc721.prepare.mintProvenanceSignedTransaction({
-      chain: MintNft.chain.MATIC,
+      chain: 'MATIC',
       tokenId: '5435345',
       to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
       url: 'https://my_token_data.com',
@@ -658,7 +650,7 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
 
   const sentMintProvenanceSignedTransaction =
     await polygonSDK.transaction.erc721.send.mintProvenanceSignedTransaction({
-      chain: MintNft.chain.MATIC,
+      chain: 'MATIC',
       to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
       contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
       tokenId: '5435345',
@@ -673,7 +665,7 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
 
   const preparedMintMultipleProvenanceSignedTransaction =
     await polygonSDK.transaction.erc721.prepare.mintMultipleProvenanceSignedTransaction({
-      chain: MintMultipleNft.chain.MATIC,
+      chain: 'MATIC',
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       tokenId: ['53564656', '536456456'],
       url: ['https://my_token_data.com'],
@@ -689,7 +681,7 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
 
   const sentMintMultipleProvenanceSignedTransaction =
     await polygonSDK.transaction.erc721.send.mintMultipleProvenanceSignedTransaction({
-      chain: MintMultipleNft.chain.MATIC,
+      chain: 'MATIC',
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       tokenId: ['53564656', '536456456'],
       url: ['https://my_token_data.com'],
@@ -705,7 +697,7 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
 
   const preparedTransferSignedTransaction =
     await polygonSDK.transaction.erc721.prepare.transferSignedTransaction({
-      chain: TransferNft.chain.MATIC,
+      chain: 'MATIC',
       tokenId: '453453',
       to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
       fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
@@ -718,7 +710,7 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
     })
 
   const sentTransferSignedTransaction = await polygonSDK.transaction.erc721.send.transferSignedTransaction({
-    chain: TransferNft.chain.MATIC,
+    chain: 'MATIC',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
@@ -732,7 +724,7 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
 
   const preparedUpdateCashbackForAuthorSignedTransaction =
     await polygonSDK.transaction.erc721.prepare.updateCashbackForAuthorSignedTransaction({
-      chain: UpdateCashbackValueForAuthorNft.chain.MATIC,
+      chain: 'MATIC',
       tokenId: '453453',
       cashbackValue: '0.8',
       contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -746,7 +738,7 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
 
   const sentUpdateCashbackForAuthorSignedTransaction =
     await polygonSDK.transaction.erc721.send.updateCashbackForAuthorSignedTransaction({
-      chain: UpdateCashbackValueForAuthorNft.chain.MATIC,
+      chain: 'MATIC',
       tokenId: '453453',
       cashbackValue: '0.8',
       contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -759,7 +751,7 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
     })
 
   const preparedBurnErc721Transaction = await polygonSDK.transaction.erc721.prepare.burnSignedTransaction({
-    chain: BurnNft.chain.MATIC,
+    chain: 'MATIC',
     tokenId: '45343653',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
@@ -771,7 +763,7 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
   })
 
   const sentBurnErc721Transaction = await polygonSDK.transaction.erc721.send.burnSignedTransaction({
-    chain: BurnNft.chain.MATIC,
+    chain: 'MATIC',
     tokenId: '45343653',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',

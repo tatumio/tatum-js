@@ -1,4 +1,4 @@
-import { BurnNft, DeployNft, MintNft, TransferNft } from '@tatumio/api-client'
+import { Currency } from '@tatumio/shared-core'
 import {
   erc20TestFactory,
   erc721TestFactory,
@@ -56,35 +56,23 @@ describe('TatumEthSDK', () => {
   describe('erc721', () => {
     describe('prepare', () => {
       describe('deploySignedTransaction', () => {
-        erc721TestFactory.prepare.deploySignedTransaction(
-          sdk.transaction.erc721,
-          TEST_DATA.ETH,
-          DeployNft.chain.ETH,
-        )
+        erc721TestFactory.prepare.deploySignedTransaction(sdk.transaction.erc721, TEST_DATA.ETH, Currency.ETH)
       })
 
       describe('transferSignedTransaction', () => {
         erc721TestFactory.prepare.transferSignedTransaction(
           sdk.transaction.erc721,
           TEST_DATA.ETH,
-          TransferNft.chain.ETH,
+          Currency.ETH,
         )
       })
 
       describe('mintSignedTransaction', () => {
-        erc721TestFactory.prepare.mintSignedTransaction(
-          sdk.transaction.erc721,
-          TEST_DATA.ETH,
-          MintNft.chain.ETH,
-        )
+        erc721TestFactory.prepare.mintSignedTransaction(sdk.transaction.erc721, TEST_DATA.ETH, Currency.ETH)
       })
 
       describe('burnSignedTransaction', () => {
-        erc721TestFactory.prepare.burnSignedTransaction(
-          sdk.transaction.erc721,
-          TEST_DATA.ETH,
-          BurnNft.chain.ETH,
-        )
+        erc721TestFactory.prepare.burnSignedTransaction(sdk.transaction.erc721, TEST_DATA.ETH, Currency.ETH)
       })
     })
   })

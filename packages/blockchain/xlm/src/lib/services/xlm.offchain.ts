@@ -27,7 +27,7 @@ export const sendOffchainTransaction = async (testnet: boolean, body: TransferXl
   }
 
   let memPhrase
-  if(withdrawal.attr){
+  if (withdrawal.attr) {
     memPhrase = withdrawal.attr?.length > 28 ? Memo.hash(withdrawal.attr) : Memo.text(withdrawal.attr)
   }
   const memo = memPhrase

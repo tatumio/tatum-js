@@ -1,4 +1,5 @@
 import {
+  BroadcastKMS,
   BurnNft,
   CancelablePromise,
   ChainBurnErc20 as ApiChainBurnErc20,
@@ -63,7 +64,10 @@ export type ChainBurnErc20 = FromPrivateKeyOrSignatureId<Omit<ApiChainBurnErc20,
 
 export type ChainDeployErc20 = FromPrivateKeyOrSignatureId<DeployErc20>
 
-export type ChainMintErc721 = MintErc721 & { fromPrivateKey?: string; chain: string }
+export type ChainMintErc721 = MintErc721 & {
+  fromPrivateKey?: string
+  chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC'
+}
 
 export type ChainMintNft = FromPrivateKeyOrSignatureId<MintNft>
 
@@ -97,6 +101,4 @@ export interface SdkWithErc721Functions {
   }
 }
 
-export type BroadcastFunction = (
-  requestBody: { txData: string } & SignatureId,
-) => CancelablePromise<TransactionHashKMS>
+export type BroadcastFunction = (requestBody: BroadcastKMS) => CancelablePromise<TransactionHashKMS>
