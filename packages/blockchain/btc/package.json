@@ -1,5 +1,5 @@
 {
-  "name": "@tatumio/btc",
-  "version": "0.0.1",
-  "type": "commonjs"
+  "name": "@tatumio/sdk-btc",
+  "version": "2.0.0-alpha.200",
+  "license": "MIT"
 }

@@ -1,4 +1,5 @@
 {
-  "name": "@tatumio/kcs",
-  "version": "0.0.1"
+  "name": "@tatumio/sdk-kcs",
+  "version": "2.0.0-alpha.200",
+  "license": "MIT"
 }
