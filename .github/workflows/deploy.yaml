@@ -58,7 +58,7 @@ jobs:
         run: git config --global user.name "Hathoriel"
 
       - name: Publish packages
-        run: yarn release:patch --ignore-scripts
+        run: yarn release:prerelease --ignore-scripts
         env:
           GH_TOKEN: ${{ secrets.PAT_GITHUB }}
           GITHUB_TOKEN: ${{ secrets.PAT_GITHUB }}

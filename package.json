@@ -13,7 +13,7 @@
     "test": "nx affected:test --parallel",
     "dep-graph": "nx dep-graph",
     "generate-api": "openapi --exportCore false --useUnionTypes true --client axios --input ./packages/api-client/src/api_schema.json --output ./packages/api-client/src/generated",
-    "release:patch": "nxpm release $(npm --no-git-tag-version version prerelease) --fix --ci",
+    "release:prerelease": "nxpm release $(npm --no-git-tag-version version prerelease) --fix --ci",
     "registry:start": "nxpm registry:start",
     "registry:enable": "nxpm registry:enable",
     "registry:disable": "nxpm registry:disable",
