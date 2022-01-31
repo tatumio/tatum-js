@@ -12,7 +12,7 @@ export type PendingTransaction = {
     /**
      * Blockchain of the transaction
      */
-    chain: PendingTransaction.chain;
+    chain: 'BNB' | 'BTC' | 'ETH' | 'XLM' | 'XRP' | 'BCH' | 'LTC' | 'DOGE' | 'VET';
     /**
      * List of the signature Ids to be used to sign transaction. Those hashes should be in order of signing for the BTC, LTC or BCH blockchains.
      */
@@ -37,24 +37,4 @@ export type PendingTransaction = {
      * Additional information used for BTC, LTC, DOGE and BCH off-chain to blockchain transactions.
      */
     withdrawalResponses?: Array<ResponseData>;
-}
-
-export namespace PendingTransaction {
-
-    /**
-     * Blockchain of the transaction
-     */
-    export enum chain {
-        BNB = 'BNB',
-        BTC = 'BTC',
-        ETH = 'ETH',
-        XLM = 'XLM',
-        XRP = 'XRP',
-        BCH = 'BCH',
-        LTC = 'LTC',
-        DOGE = 'DOGE',
-        VET = 'VET',
-    }
-
-
 }

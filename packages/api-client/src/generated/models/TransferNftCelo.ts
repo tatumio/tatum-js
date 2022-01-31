@@ -10,7 +10,7 @@ export type TransferNftCelo = {
     /**
      * Chain to work with.
      */
-    chain: TransferNftCelo.chain;
+    chain: 'CELO';
     /**
      * Blockchain address to send NFT token to
      */
@@ -46,26 +46,5 @@ export type TransferNftCelo = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency?: TransferNftCelo.feeCurrency;
-}
-
-export namespace TransferNftCelo {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency?: 'CELO' | 'CUSD' | 'CEUR';
 }

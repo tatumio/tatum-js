@@ -18,7 +18,7 @@ export type TransferKcsBlockchain = {
     /**
      * Currency to transfer from Kcs Blockchain Account. ERC20 tokens USDC and USDT are available only for mainnet use.
      */
-    currency: TransferKcsBlockchain.currency;
+    currency: 'KCS' | 'USDC_KCS' | 'USDT_KCS';
     /**
      * Custom defined fee. If not present, it will be calculated automatically.
      */
@@ -40,18 +40,4 @@ export type TransferKcsBlockchain = {
      * Private key of sender address. Private key, or signature Id must be present.
      */
     fromPrivateKey: string;
-}
-
-export namespace TransferKcsBlockchain {
-
-    /**
-     * Currency to transfer from Kcs Blockchain Account. ERC20 tokens USDC and USDT are available only for mainnet use.
-     */
-    export enum currency {
-        KCS = 'KCS',
-        USDC_KCS = 'USDC_KCS',
-        USDT_KCS = 'USDT_KCS',
-    }
-
-
 }

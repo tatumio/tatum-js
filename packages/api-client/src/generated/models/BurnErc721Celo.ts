@@ -22,19 +22,5 @@ export type BurnErc721Celo = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: BurnErc721Celo.feeCurrency;
-}
-
-export namespace BurnErc721Celo {
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

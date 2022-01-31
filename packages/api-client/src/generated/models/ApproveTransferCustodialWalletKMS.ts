@@ -6,7 +6,7 @@ export type ApproveTransferCustodialWalletKMS = {
     /**
      * Blockchain to work with.
      */
-    chain: ApproveTransferCustodialWalletKMS.chain;
+    chain: 'ETH' | 'ONE' | 'BSC' | 'XDC' | 'MATIC';
     /**
      * Address of custodial wallet to transfer from
      */
@@ -18,7 +18,7 @@ export type ApproveTransferCustodialWalletKMS = {
     /**
      * Type of the asset to transfer. 0 - ERC20, 1 - ERC721, 2 - ERC1155
      */
-    contractType: ApproveTransferCustodialWalletKMS.contractType;
+    contractType: 0 | 1 | 2;
     /**
      * Blockchain address to allow spending.
      */
@@ -56,29 +56,4 @@ export type ApproveTransferCustodialWalletKMS = {
          */
         gasPrice: string;
     };
-}
-
-export namespace ApproveTransferCustodialWalletKMS {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        ONE = 'ONE',
-        BSC = 'BSC',
-        XDC = 'XDC',
-        MATIC = 'MATIC',
-    }
-
-    /**
-     * Type of the asset to transfer. 0 - ERC20, 1 - ERC721, 2 - ERC1155
-     */
-    export enum contractType {
-        '_0' = 0,
-        '_1' = 1,
-        '_2' = 2,
-    }
-
-
 }

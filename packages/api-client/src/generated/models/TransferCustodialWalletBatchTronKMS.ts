@@ -6,7 +6,7 @@ export type TransferCustodialWalletBatchTronKMS = {
     /**
      * Blockchain to work with.
      */
-    chain: TransferCustodialWalletBatchTronKMS.chain;
+    chain: 'TRON';
     /**
      * Address of custodial wallet to transfer from
      */
@@ -47,16 +47,4 @@ export type TransferCustodialWalletBatchTronKMS = {
      * Sender address of TRON account in Base58 format.
      */
     from: string;
-}
-
-export namespace TransferCustodialWalletBatchTronKMS {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        TRON = 'TRON',
-    }
-
-
 }

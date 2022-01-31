@@ -6,7 +6,7 @@ export type ChainTransferBscBep20KMS = {
     /**
      * Chain to work with.
      */
-    chain: ChainTransferBscBep20KMS.chain;
+    chain: 'BSC';
     /**
      * Blockchain address to send BEP20 token to
      */
@@ -44,16 +44,4 @@ export type ChainTransferBscBep20KMS = {
          */
         gasPrice: string;
     };
-}
-
-export namespace ChainTransferBscBep20KMS {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        BSC = 'BSC',
-    }
-
-
 }

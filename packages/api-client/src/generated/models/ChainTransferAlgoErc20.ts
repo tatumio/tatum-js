@@ -6,7 +6,7 @@ export type ChainTransferAlgoErc20 = {
     /**
      * Chain to work with.
      */
-    chain: ChainTransferAlgoErc20.chain;
+    chain: 'ALGO';
     /**
      * Blockchain address to send ERC20 token to
      */
@@ -23,16 +23,4 @@ export type ChainTransferAlgoErc20 = {
      * Private key of sender address. Private key, or signature Id must be present.
      */
     fromPrivateKey: string;
-}
-
-export namespace ChainTransferAlgoErc20 {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        ALGO = 'ALGO',
-    }
-
-
 }

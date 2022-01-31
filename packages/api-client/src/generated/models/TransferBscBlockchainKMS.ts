@@ -18,7 +18,7 @@ export type TransferBscBlockchainKMS = {
     /**
      * Currency to transfer from BSC Blockchain Account. BEP20 tokens BETH, BBTC, BADA, WBNB, BDOT, BXRP, BLTC, BBCH are available only for mainnet use.
      */
-    currency: TransferBscBlockchainKMS.currency;
+    currency: 'BETH' | 'BBTC' | 'BADA' | 'WBNB' | 'BDOT' | 'BXRP' | 'BLTC' | 'BBCH' | 'BSC';
     /**
      * Custom defined fee. If not present, it will be calculated automatically.
      */
@@ -44,24 +44,4 @@ export type TransferBscBlockchainKMS = {
      * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
      */
     signatureId: string;
-}
-
-export namespace TransferBscBlockchainKMS {
-
-    /**
-     * Currency to transfer from BSC Blockchain Account. BEP20 tokens BETH, BBTC, BADA, WBNB, BDOT, BXRP, BLTC, BBCH are available only for mainnet use.
-     */
-    export enum currency {
-        BETH = 'BETH',
-        BBTC = 'BBTC',
-        BADA = 'BADA',
-        WBNB = 'WBNB',
-        BDOT = 'BDOT',
-        BXRP = 'BXRP',
-        BLTC = 'BLTC',
-        BBCH = 'BBCH',
-        BSC = 'BSC',
-    }
-
-
 }

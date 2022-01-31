@@ -26,22 +26,9 @@ export type FreezeTronKMS = {
     /**
      * Resource to obtain, BANDWIDTH or ENERGY.
      */
-    resource: FreezeTronKMS.resource;
+    resource: 'BANDWIDTH' | 'ENERGY';
     /**
      * Amount to be frozen in TRX.
      */
     amount: string;
-}
-
-export namespace FreezeTronKMS {
-
-    /**
-     * Resource to obtain, BANDWIDTH or ENERGY.
-     */
-    export enum resource {
-        BANDWIDTH = 'BANDWIDTH',
-        ENERGY = 'ENERGY',
-    }
-
-
 }

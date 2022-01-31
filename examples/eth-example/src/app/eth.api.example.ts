@@ -43,7 +43,7 @@ export async function ethApiExample() {
     nonce: 0,
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     // TODO openapi bug
-    currency: TransferEthBlockchain.currency.ETH,
+    currency: 'ETH',
     fee: {
       gasLimit: '40000',
       gasPrice: '20',

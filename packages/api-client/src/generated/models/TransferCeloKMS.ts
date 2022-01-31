@@ -33,7 +33,7 @@ export type TransferCeloKMS = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: TransferCeloKMS.feeCurrency;
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
      * Identifier of the payment, shown for created Transaction within Tatum sender account.
      */
@@ -54,18 +54,4 @@ export type TransferCeloKMS = {
      * Gas price in Gwei. If not set, automatic calculation will be used.
      */
     gasPrice?: string;
-}
-
-export namespace TransferCeloKMS {
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
 }

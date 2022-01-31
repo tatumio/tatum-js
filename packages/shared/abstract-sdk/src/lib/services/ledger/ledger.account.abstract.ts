@@ -59,7 +59,7 @@ export class AbstractSdkLedgerAccountService {
     const address = await ApiServices.offChain.account.generateDepositAddress(a.id)
     if (webhookUrl) {
       await ApiServices.ledger.subscriptions.createSubscription({
-        type: CreateSubscriptionIncoming.type.ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION,
+        type: 'ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION',
         attr: { url: webhookUrl, id: a.id },
       })
     }

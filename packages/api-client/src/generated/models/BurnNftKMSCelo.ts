@@ -6,7 +6,7 @@ export type BurnNftKMSCelo = {
     /**
      * Chain to work with.
      */
-    chain: BurnNftKMSCelo.chain;
+    chain: 'CELO';
     /**
      * ID of token to be destroyed.
      */
@@ -30,26 +30,5 @@ export type BurnNftKMSCelo = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: BurnNftKMSCelo.feeCurrency;
-}
-
-export namespace BurnNftKMSCelo {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

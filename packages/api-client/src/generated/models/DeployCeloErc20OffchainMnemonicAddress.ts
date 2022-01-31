@@ -8,19 +8,5 @@ export type DeployCeloErc20OffchainMnemonicAddress = (DeployErc20OffchainMnemoni
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: DeployCeloErc20OffchainMnemonicAddress.feeCurrency;
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 });
-
-export namespace DeployCeloErc20OffchainMnemonicAddress {
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
-}

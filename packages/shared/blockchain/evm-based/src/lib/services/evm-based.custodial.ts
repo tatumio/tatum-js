@@ -49,7 +49,7 @@ export const evmBasedCustodial = () => {
   return {
     obtainCustodialAddressType: (body: GenerateCustodialWallet): ContractAbi => {
       // @ts-ignore @TODO OPENAPI
-      if (body.chain === GenerateCustodialWallet.chain.TRON && body.enableSemiFungibleTokens) {
+      if (body.chain === 'TRON' && body.enableSemiFungibleTokens) {
         throw new Error('MultiToken not supported for TRON.')
       }
 

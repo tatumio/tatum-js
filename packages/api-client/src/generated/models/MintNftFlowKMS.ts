@@ -6,7 +6,7 @@ export type MintNftFlowKMS = {
     /**
      * Chain to work with.
      */
-    chain: MintNftFlowKMS.chain;
+    chain: 'FLOW';
     /**
      * Blockchain address to send NFT token to.
      */
@@ -31,16 +31,4 @@ export type MintNftFlowKMS = {
      * Derivation index of sender address.
      */
     index?: number;
-}
-
-export namespace MintNftFlowKMS {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        FLOW = 'FLOW',
-    }
-
-
 }

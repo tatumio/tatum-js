@@ -6,7 +6,7 @@ export type ChainMintErc20KMS = {
     /**
      * Chain to work with.
      */
-    chain: ChainMintErc20KMS.chain;
+    chain: 'ETH' | 'BSC' | 'XDC';
     /**
      * Amount to be minted and transfered to the recipient.
      */
@@ -27,18 +27,4 @@ export type ChainMintErc20KMS = {
      * Nonce to be set to transaction. If not present, last known nonce will be used.
      */
     nonce?: number;
-}
-
-export namespace ChainMintErc20KMS {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        BSC = 'BSC',
-        XDC = 'XDC',
-    }
-
-
 }

@@ -6,7 +6,7 @@ export type TransferNftFlowPK = {
     /**
      * Chain to work with.
      */
-    chain: TransferNftFlowPK.chain;
+    chain: 'FLOW';
     /**
      * Blockchain address to send NFT token to.
      */
@@ -27,16 +27,4 @@ export type TransferNftFlowPK = {
      * Private key of sender address. Private key, mnemonic and index or signature Id must be present.
      */
     privateKey: string;
-}
-
-export namespace TransferNftFlowPK {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        FLOW = 'FLOW',
-    }
-
-
 }

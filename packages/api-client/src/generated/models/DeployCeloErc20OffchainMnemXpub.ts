@@ -8,19 +8,5 @@ export type DeployCeloErc20OffchainMnemXpub = (DeployErc20OffchainMnemXpub & {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: DeployCeloErc20OffchainMnemXpub.feeCurrency;
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 });
-
-export namespace DeployCeloErc20OffchainMnemXpub {
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
-}

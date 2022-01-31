@@ -6,7 +6,7 @@ export type GenerateMarketplaceKMS = {
     /**
      * Blockchain to work with.
      */
-    chain: GenerateMarketplaceKMS.chain;
+    chain: 'ETH' | 'ONE' | 'BSC' | 'MATIC';
     /**
      * Address of the recipient of the fee for the trade.
      */
@@ -40,19 +40,4 @@ export type GenerateMarketplaceKMS = {
          */
         gasPrice: string;
     };
-}
-
-export namespace GenerateMarketplaceKMS {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        ONE = 'ONE',
-        BSC = 'BSC',
-        MATIC = 'MATIC',
-    }
-
-
 }

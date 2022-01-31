@@ -67,7 +67,7 @@ export async function bscLedgerOrderBookExample() {
   await bscSDK.ledger.orderBook.cancelByAccount('5e68c66581f2ee32bc354087')
   const newTrade = await bscSDK.ledger.orderBook.newTrade({
     // TODO openapi bug
-    type: CreateTrade.type.BUY,
+    type: 'BUY',
     price: '8650.4',
     amount: '15000',
     pair: 'BSC/EUR',
@@ -137,11 +137,11 @@ export async function bscLedgerVirtualCurrencyExample() {
     name: 'VC_VIRTUAL',
     supply: '1000000',
     // TODO openapi bug
-    basePair: VirtualCurrency.basePair.GMC_BSC,
+    basePair: 'GMC_BSC',
     baseRate: 1,
     customer: {
       // TODO openapi bug
-      accountingCurrency: VirtualCurrency.accountingCurrency.USD,
+      accountingCurrency: 'USD',
       customerCountry: 'US',
       externalId: '123654',
       providerCountry: 'US',
@@ -150,7 +150,7 @@ export async function bscLedgerVirtualCurrencyExample() {
     accountCode: 'AC_1011_B',
     accountNumber: '1234567890',
     // TODO openapi bug
-    accountingCurrency: VirtualCurrency.accountingCurrency.USD,
+    accountingCurrency: 'USD',
   })
 
   const virtualCurrency = await bscSDK.ledger.virtualCurrency.getByName('VC_VIRTUAL')
@@ -169,6 +169,6 @@ export async function bscLedgerVirtualCurrencyExample() {
     name: 'VC_VIRTUAL',
     baseRate: 1,
     // TODO openapi bug
-    basePair: VirtualCurrency.basePair.EUR,
+    basePair: 'EUR',
   })
 }

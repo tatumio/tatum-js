@@ -6,7 +6,7 @@ export type TransferCustodialWalletTronKMS = {
     /**
      * Blockchain to work with.
      */
-    chain: TransferCustodialWalletTronKMS.chain;
+    chain: 'TRON';
     /**
      * Address of custodial wallet to transfer from
      */
@@ -18,7 +18,7 @@ export type TransferCustodialWalletTronKMS = {
     /**
      * Type of the asset to transfer. 0 - ERC20, 1 - ERC721, 3 - native asset
      */
-    contractType: TransferCustodialWalletTronKMS.contractType;
+    contractType: 0 | 1 | 3;
     /**
      * Blockchain address to send assets to
      */
@@ -47,25 +47,4 @@ export type TransferCustodialWalletTronKMS = {
      * Sender address of TRON account in Base58 format.
      */
     from: string;
-}
-
-export namespace TransferCustodialWalletTronKMS {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        TRON = 'TRON',
-    }
-
-    /**
-     * Type of the asset to transfer. 0 - ERC20, 1 - ERC721, 3 - native asset
-     */
-    export enum contractType {
-        '_0' = 0,
-        '_1' = 1,
-        '_3' = 3,
-    }
-
-
 }

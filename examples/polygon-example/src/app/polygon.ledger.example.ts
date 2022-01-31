@@ -67,7 +67,7 @@ export async function polygonLedgerOrderBookExample() {
   await polygonSDK.ledger.orderBook.cancelByAccount('5e68c66581f2ee32bc354087')
   const newTrade = await polygonSDK.ledger.orderBook.newTrade({
     // TODO openapi bug
-    type: CreateTrade.type.BUY,
+    type: 'BUY',
     price: '8650.4',
     amount: '15000',
     pair: 'MATIC/EUR',
@@ -137,11 +137,11 @@ export async function polygonLedgerVirtualCurrencyExample() {
     name: 'VC_VIRTUAL',
     supply: '1000000',
     // TODO openapi bug
-    basePair: VirtualCurrency.basePair.USDT_MATIC,
+    basePair: 'USDT_MATIC',
     baseRate: 1,
     customer: {
       // TODO openapi bug
-      accountingCurrency: VirtualCurrency.accountingCurrency.USD,
+      accountingCurrency: 'USD',
       customerCountry: 'US',
       externalId: '123654',
       providerCountry: 'US',
@@ -150,7 +150,7 @@ export async function polygonLedgerVirtualCurrencyExample() {
     accountCode: 'AC_1011_B',
     accountNumber: '1234567890',
     // TODO openapi bug
-    accountingCurrency: VirtualCurrency.accountingCurrency.USD,
+    accountingCurrency: 'USD',
   })
 
   const virtualCurrency = await polygonSDK.ledger.virtualCurrency.getByName('VC_VIRTUAL')
@@ -169,6 +169,6 @@ export async function polygonLedgerVirtualCurrencyExample() {
     name: 'VC_VIRTUAL',
     baseRate: 1,
     // TODO openapi bug
-    basePair: VirtualCurrency.basePair.EUR,
+    basePair: 'EUR',
   })
 }

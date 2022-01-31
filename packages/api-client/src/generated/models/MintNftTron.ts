@@ -6,7 +6,7 @@ export type MintNftTron = {
     /**
      * Chain to work with.
      */
-    chain: MintNftTron.chain;
+    chain: 'TRON';
     /**
      * ID of token to be created.
      */
@@ -39,16 +39,4 @@ export type MintNftTron = {
      * Max limit for fee to be paid, in TRX.
      */
     feeLimit: number;
-}
-
-export namespace MintNftTron {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        TRON = 'TRON',
-    }
-
-
 }

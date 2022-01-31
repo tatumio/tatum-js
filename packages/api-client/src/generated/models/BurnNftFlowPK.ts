@@ -6,7 +6,7 @@ export type BurnNftFlowPK = {
     /**
      * Chain to work with.
      */
-    chain: BurnNftFlowPK.chain;
+    chain: 'FLOW';
     /**
      * ID of token to be destroyed.
      */
@@ -23,16 +23,4 @@ export type BurnNftFlowPK = {
      * Private key of sender address. Private key, mnemonic and index or signature Id must be present.
      */
     privateKey: string;
-}
-
-export namespace BurnNftFlowPK {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        FLOW = 'FLOW',
-    }
-
-
 }
