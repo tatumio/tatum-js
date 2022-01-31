@@ -10,7 +10,7 @@ export type FlowTransactionPK = {
     /**
      * Type of asset to send
      */
-    currency: FlowTransactionPK.currency;
+    currency: 'FLOW' | 'FUSD';
     /**
      * Blockchain address to send assets
      */
@@ -23,17 +23,4 @@ export type FlowTransactionPK = {
      * Secret for account. Secret, or signature Id must be present.
      */
     privateKey: string;
-}
-
-export namespace FlowTransactionPK {
-
-    /**
-     * Type of asset to send
-     */
-    export enum currency {
-        FLOW = 'FLOW',
-        FUSD = 'FUSD',
-    }
-
-
 }

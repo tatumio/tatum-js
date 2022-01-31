@@ -39,7 +39,7 @@ export async function polygonApiExample() {
     data: 'My note to recipient.',
     nonce: 0,
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    currency: TransferPolygonBlockchain.currency.MATIC,
+    currency: 'MATIC',
     amount: '100000',
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a785',
   })

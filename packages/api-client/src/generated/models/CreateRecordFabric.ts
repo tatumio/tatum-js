@@ -10,21 +10,9 @@ export type CreateRecordFabric = {
     /**
      * Blockchain, where to store log data.
      */
-    chain: CreateRecordFabric.chain;
+    chain: 'FABRIC';
     /**
      * Key, under which the data will be stored.
      */
     key: string;
-}
-
-export namespace CreateRecordFabric {
-
-    /**
-     * Blockchain, where to store log data.
-     */
-    export enum chain {
-        FABRIC = 'FABRIC',
-    }
-
-
 }

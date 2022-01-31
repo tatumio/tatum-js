@@ -18,7 +18,7 @@ export type TransferPolygonBlockchain = {
     /**
      * Currency to transfer from Polygon Blockchain Account. ERC20 tokens USDC and USDT are available only for mainnet use.
      */
-    currency: TransferPolygonBlockchain.currency;
+    currency: 'MATIC' | 'USDC_MATIC' | 'USDT_MATIC';
     /**
      * Custom defined fee. If not present, it will be calculated automatically.
      */
@@ -40,18 +40,4 @@ export type TransferPolygonBlockchain = {
      * Private key of sender address. Private key, or signature Id must be present.
      */
     fromPrivateKey: string;
-}
-
-export namespace TransferPolygonBlockchain {
-
-    /**
-     * Currency to transfer from Polygon Blockchain Account. ERC20 tokens USDC and USDT are available only for mainnet use.
-     */
-    export enum currency {
-        MATIC = 'MATIC',
-        USDC_MATIC = 'USDC_MATIC',
-        USDT_MATIC = 'USDT_MATIC',
-    }
-
-
 }

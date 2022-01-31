@@ -10,7 +10,7 @@ export type Trade = {
     /**
      * Type of the trade, BUY or SELL
      */
-    type?: Trade.type;
+    type?: 'BUY' | 'SELL';
     /**
      * Price to buy / sell
      */
@@ -68,17 +68,4 @@ export type Trade = {
          */
         percentPenalty?: number;
     };
-}
-
-export namespace Trade {
-
-    /**
-     * Type of the trade, BUY or SELL
-     */
-    export enum type {
-        BUY = 'BUY',
-        SELL = 'SELL',
-    }
-
-
 }

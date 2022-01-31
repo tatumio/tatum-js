@@ -6,7 +6,7 @@ export type DeployNftTronKMS = {
     /**
      * Chain to work with.
      */
-    chain: DeployNftTronKMS.chain;
+    chain: 'TRON';
     /**
      * Blockchain address to perform transaction from
      */
@@ -31,16 +31,4 @@ export type DeployNftTronKMS = {
      * Max limit for fee to be paid, in TRX. For deploy, around 580 TRX is consumed.
      */
     feeLimit: number;
-}
-
-export namespace DeployNftTronKMS {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        TRON = 'TRON',
-    }
-
-
 }

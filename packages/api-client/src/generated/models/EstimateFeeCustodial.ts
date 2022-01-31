@@ -6,11 +6,11 @@ export type EstimateFeeCustodial = {
     /**
      * Blockchain to estimate fee for.
      */
-    chain: EstimateFeeCustodial.chain;
+    chain: 'CELO' | 'ETH' | 'BSC' | 'XDC' | 'ONE' | 'MATIC';
     /**
      * Type of transaction
      */
-    type: EstimateFeeCustodial.type;
+    type: 'TRANSFER_CUSTODIAL';
     /**
      * Sender address
      */
@@ -35,28 +35,4 @@ export type EstimateFeeCustodial = {
      * Type of the token to transfer from custodial wallet. 0 - ERC20, 1 - ERC721, 2 - ERC1155, 3 - native asset
      */
     tokenType: number;
-}
-
-export namespace EstimateFeeCustodial {
-
-    /**
-     * Blockchain to estimate fee for.
-     */
-    export enum chain {
-        CELO = 'CELO',
-        ETH = 'ETH',
-        BSC = 'BSC',
-        XDC = 'XDC',
-        ONE = 'ONE',
-        MATIC = 'MATIC',
-    }
-
-    /**
-     * Type of transaction
-     */
-    export enum type {
-        TRANSFER_CUSTODIAL = 'TRANSFER_CUSTODIAL',
-    }
-
-
 }

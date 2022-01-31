@@ -6,7 +6,7 @@ export type BuyAssetOnMarketplaceKMS = {
     /**
      * Blockchain to work with.
      */
-    chain: BuyAssetOnMarketplaceKMS.chain;
+    chain: 'ETH' | 'ONE' | 'BSC' | 'MATIC';
     /**
      * Address of the marketplace smart contract.
      */
@@ -52,19 +52,4 @@ export type BuyAssetOnMarketplaceKMS = {
          */
         gasPrice: string;
     };
-}
-
-export namespace BuyAssetOnMarketplaceKMS {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        ONE = 'ONE',
-        BSC = 'BSC',
-        MATIC = 'MATIC',
-    }
-
-
 }

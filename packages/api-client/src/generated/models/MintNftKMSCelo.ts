@@ -6,7 +6,7 @@ export type MintNftKMSCelo = {
     /**
      * Chain to work with.
      */
-    chain: MintNftKMSCelo.chain;
+    chain: 'CELO';
     /**
      * ID of token to be created.
      */
@@ -58,26 +58,5 @@ export type MintNftKMSCelo = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: MintNftKMSCelo.feeCurrency;
-}
-
-export namespace MintNftKMSCelo {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

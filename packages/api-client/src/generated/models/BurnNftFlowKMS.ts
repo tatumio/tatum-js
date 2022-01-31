@@ -6,7 +6,7 @@ export type BurnNftFlowKMS = {
     /**
      * Chain to work with.
      */
-    chain: BurnNftFlowKMS.chain;
+    chain: 'FLOW';
     /**
      * ID of token to be destroyed.
      */
@@ -27,16 +27,4 @@ export type BurnNftFlowKMS = {
      * Derivation index of sender address.
      */
     index?: number;
-}
-
-export namespace BurnNftFlowKMS {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        FLOW = 'FLOW',
-    }
-
-
 }

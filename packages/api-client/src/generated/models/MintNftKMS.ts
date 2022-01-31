@@ -6,7 +6,7 @@ export type MintNftKMS = {
     /**
      * Chain to work with.
      */
-    chain: MintNftKMS.chain;
+    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC';
     /**
      * ID of token to be created.
      */
@@ -68,20 +68,4 @@ export type MintNftKMS = {
          */
         gasPrice: string;
     };
-}
-
-export namespace MintNftKMS {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        MATIC = 'MATIC',
-        KCS = 'KCS',
-        ONE = 'ONE',
-        BSC = 'BSC',
-    }
-
-
 }

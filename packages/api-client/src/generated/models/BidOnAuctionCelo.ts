@@ -6,11 +6,11 @@ export type BidOnAuctionCelo = {
     /**
      * Blockchain to work with.
      */
-    chain: BidOnAuctionCelo.chain;
+    chain: 'CELO';
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: BidOnAuctionCelo.feeCurrency;
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
      * Address of the marketplace smart contract.
      */
@@ -52,25 +52,4 @@ export type BidOnAuctionCelo = {
          */
         gasPrice: string;
     };
-}
-
-export namespace BidOnAuctionCelo {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
 }

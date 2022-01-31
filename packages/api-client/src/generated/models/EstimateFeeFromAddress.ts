@@ -6,11 +6,11 @@ export type EstimateFeeFromAddress = {
     /**
      * Blockchain to estimate fee for.
      */
-    chain: EstimateFeeFromAddress.chain;
+    chain: 'BTC' | 'LTC';
     /**
      * Type of transaction
      */
-    type: EstimateFeeFromAddress.type;
+    type: 'TRANSFER';
     /**
      * Array of addresses. Tatum will automatically scan last 100 transactions for each address and will use all of the unspent values. We advise to use this option if you have 1 address per 1 transaction only.
      */
@@ -28,24 +28,4 @@ export type EstimateFeeFromAddress = {
          */
         value: number;
     }>;
-}
-
-export namespace EstimateFeeFromAddress {
-
-    /**
-     * Blockchain to estimate fee for.
-     */
-    export enum chain {
-        BTC = 'BTC',
-        LTC = 'LTC',
-    }
-
-    /**
-     * Type of transaction
-     */
-    export enum type {
-        TRANSFER = 'TRANSFER',
-    }
-
-
 }

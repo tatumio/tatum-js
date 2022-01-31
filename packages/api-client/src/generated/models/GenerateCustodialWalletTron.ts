@@ -6,7 +6,7 @@ export type GenerateCustodialWalletTron = {
     /**
      * Blockchain to work with.
      */
-    chain: GenerateCustodialWalletTron.chain;
+    chain: 'TRON';
     /**
      * Fee in TRX to be paid.
      */
@@ -31,16 +31,4 @@ export type GenerateCustodialWalletTron = {
      * If address should support batch transfers of the assets, it should be marked as true.
      */
     enableBatchTransactions: boolean;
-}
-
-export namespace GenerateCustodialWalletTron {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        TRON = 'TRON',
-    }
-
-
 }

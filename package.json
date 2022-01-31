@@ -11,7 +11,7 @@
     "format": "nx format:write",
     "test": "nx affected:test --parallel",
     "dep-graph": "nx dep-graph",
-    "generate-api": "openapi --exportCore false --client axios --input ./packages/api-client/src/api_schema.json --output ./packages/api-client/src/generated",
+    "generate-api": "openapi --exportCore false --useUnionTypes true --client axios --input ./packages/api-client/src/api_schema.json --output ./packages/api-client/src/generated",
     "prepare": "husky install"
   },
   "private": true,

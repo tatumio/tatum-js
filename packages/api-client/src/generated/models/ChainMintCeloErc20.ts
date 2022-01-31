@@ -6,7 +6,7 @@ export type ChainMintCeloErc20 = {
     /**
      * Chain to work with.
      */
-    chain: ChainMintCeloErc20.chain;
+    chain: 'CELO';
     /**
      * Amount to be minted and transfered to the recipient.
      */
@@ -30,26 +30,5 @@ export type ChainMintCeloErc20 = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: ChainMintCeloErc20.feeCurrency;
-}
-
-export namespace ChainMintCeloErc20 {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

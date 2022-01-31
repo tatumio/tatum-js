@@ -82,7 +82,7 @@ export async function btcLedgerOrderBookExample() {
     pageSize: 10,
   })
   const newTrade = await btcSDK.ledger.orderBook.newTrade({
-    type: CreateTrade.type.BUY,
+    type: 'BUY',
     price: '8650.4',
     amount: '15000',
     pair: 'BTC/EUR',
@@ -134,10 +134,10 @@ export async function btcLedgerVirtualCurrencyExample() {
   const virtualCurrencyAcc = await btcSDK.ledger.virtualCurrency.create({
     name: 'VC_VIRTUAL',
     supply: '1000000',
-    basePair: VirtualCurrency.basePair.BTC,
+    basePair: 'BTC',
     baseRate: 1,
     customer: {
-      accountingCurrency: VirtualCurrency.accountingCurrency.USD,
+      accountingCurrency: 'USD',
       customerCountry: 'US',
       externalId: '123654',
       providerCountry: 'US',
@@ -145,7 +145,7 @@ export async function btcLedgerVirtualCurrencyExample() {
     description: 'My Virtual Token description.',
     accountCode: 'AC_1011_B',
     accountNumber: '1234567890',
-    accountingCurrency: VirtualCurrency.accountingCurrency.USD,
+    accountingCurrency: 'USD',
   })
   const virtualCurrency = await btcSDK.ledger.virtualCurrency.getByName('VC_VIRTUAL')
   const mintTx = await btcSDK.ledger.virtualCurrency.mint({
@@ -159,6 +159,6 @@ export async function btcLedgerVirtualCurrencyExample() {
   await btcSDK.ledger.virtualCurrency.update({
     name: 'VC_VIRTUAL',
     baseRate: 1,
-    basePair: VirtualCurrency.basePair.EUR,
+    basePair: 'EUR',
   })
 }

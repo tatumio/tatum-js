@@ -6,7 +6,7 @@ export type CreateSubscriptionOffchain = {
     /**
      * Type of the subscription.
      */
-    type: CreateSubscriptionOffchain.type;
+    type: 'OFFCHAIN_WITHDRAWAL';
     /**
      * Additional attributes based on the subscription type.
      */
@@ -16,16 +16,4 @@ export type CreateSubscriptionOffchain = {
          */
         currency: string;
     };
-}
-
-export namespace CreateSubscriptionOffchain {
-
-    /**
-     * Type of the subscription.
-     */
-    export enum type {
-        OFFCHAIN_WITHDRAWAL = 'OFFCHAIN_WITHDRAWAL',
-    }
-
-
 }

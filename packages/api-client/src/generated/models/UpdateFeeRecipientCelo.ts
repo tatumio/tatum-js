@@ -6,11 +6,11 @@ export type UpdateFeeRecipientCelo = {
     /**
      * Blockchain to work with.
      */
-    chain: UpdateFeeRecipientCelo.chain;
+    chain: 'CELO';
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: UpdateFeeRecipientCelo.feeCurrency;
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
      * Recipient address of the marketplace fee.
      */
@@ -36,25 +36,4 @@ export type UpdateFeeRecipientCelo = {
          */
         gasPrice: string;
     };
-}
-
-export namespace UpdateFeeRecipientCelo {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
 }

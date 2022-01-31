@@ -6,11 +6,11 @@ export type CancelSellAssetOnMarketplaceCelo = {
     /**
      * Blockchain to work with.
      */
-    chain: CancelSellAssetOnMarketplaceCelo.chain;
+    chain: 'CELO';
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: CancelSellAssetOnMarketplaceCelo.feeCurrency;
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
      * Optional address of the ERC20 token, which will be used as a selling currency of the NFT.
      */
@@ -40,25 +40,4 @@ export type CancelSellAssetOnMarketplaceCelo = {
          */
         gasPrice: string;
     };
-}
-
-export namespace CancelSellAssetOnMarketplaceCelo {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
 }

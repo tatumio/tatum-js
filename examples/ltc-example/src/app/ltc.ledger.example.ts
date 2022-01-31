@@ -83,7 +83,7 @@ export async function ltcLedgerOrderBookExample() {
     pageSize: 10,
   })
   const newTrade = await ltcSDK.ledger.orderBook.newTrade({
-    type: CreateTrade.type.BUY,
+    type: 'BUY',
     price: '8650.4',
     amount: '15000',
     pair: 'LTC/EUR',
@@ -134,10 +134,10 @@ export async function ltcLedgerVirtualCurrencyExample() {
   const virtualCurrencyAcc = await ltcSDK.ledger.virtualCurrency.create({
     name: 'VC_VIRTUAL',
     supply: '1000000',
-    basePair: VirtualCurrency.basePair.LTC,
+    basePair: 'LTC',
     baseRate: 1,
     customer: {
-      accountingCurrency: VirtualCurrency.accountingCurrency.USD,
+      accountingCurrency: 'USD',
       customerCountry: 'US',
       externalId: '123654',
       providerCountry: 'US',
@@ -145,7 +145,7 @@ export async function ltcLedgerVirtualCurrencyExample() {
     description: 'My Virtual Token description.',
     accountCode: 'AC_1011_B',
     accountNumber: '1234567890',
-    accountingCurrency: VirtualCurrency.accountingCurrency.USD,
+    accountingCurrency: 'USD',
   })
   const virtualCurrency = await ltcSDK.ledger.virtualCurrency.getByName('VC_VIRTUAL')
   const mintTx = await ltcSDK.ledger.virtualCurrency.mint({
@@ -159,6 +159,6 @@ export async function ltcLedgerVirtualCurrencyExample() {
   await ltcSDK.ledger.virtualCurrency.update({
     name: 'VC_VIRTUAL',
     baseRate: 1,
-    basePair: VirtualCurrency.basePair.EUR,
+    basePair: 'EUR',
   })
 }

@@ -26,7 +26,7 @@ export type TransferCeloMnemonic = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: TransferCeloMnemonic.feeCurrency;
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
      * Gas limit for transaction in gas price. If not set, automatic calculation will be used.
      */
@@ -51,18 +51,4 @@ export type TransferCeloMnemonic = {
      * Note visible to owner of withdrawing account
      */
     senderNote?: string;
-}
-
-export namespace TransferCeloMnemonic {
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
 }

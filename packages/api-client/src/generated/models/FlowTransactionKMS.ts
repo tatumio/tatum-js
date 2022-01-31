@@ -10,7 +10,7 @@ export type FlowTransactionKMS = {
     /**
      * Type of asset to send
      */
-    currency: FlowTransactionKMS.currency;
+    currency: 'FLOW' | 'FUSD';
     /**
      * Blockchain address to send assets
      */
@@ -27,17 +27,4 @@ export type FlowTransactionKMS = {
      * If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic.
      */
     index?: number;
-}
-
-export namespace FlowTransactionKMS {
-
-    /**
-     * Type of asset to send
-     */
-    export enum currency {
-        FLOW = 'FLOW',
-        FUSD = 'FUSD',
-    }
-
-
 }

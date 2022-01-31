@@ -18,7 +18,7 @@ export type TransferKcsBlockchainKMS = {
     /**
      * Currency to transfer from Kcs Blockchain Account. ERC20 tokens BETH, BBTC, BADA, WMATIC, BDOT, BXRP, BLTC, BBCH, KCS are available only for mainnet use.
      */
-    currency: TransferKcsBlockchainKMS.currency;
+    currency: 'BETH' | 'BBTC' | 'BADA' | 'WMATIC' | 'BDOT' | 'BXRP' | 'BLTC' | 'BBCH' | 'MATIC' | 'KCS';
     /**
      * Custom defined fee. If not present, it will be calculated automatically.
      */
@@ -44,25 +44,4 @@ export type TransferKcsBlockchainKMS = {
      * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
      */
     signatureId: string;
-}
-
-export namespace TransferKcsBlockchainKMS {
-
-    /**
-     * Currency to transfer from Kcs Blockchain Account. ERC20 tokens BETH, BBTC, BADA, WMATIC, BDOT, BXRP, BLTC, BBCH, KCS are available only for mainnet use.
-     */
-    export enum currency {
-        BETH = 'BETH',
-        BBTC = 'BBTC',
-        BADA = 'BADA',
-        WMATIC = 'WMATIC',
-        BDOT = 'BDOT',
-        BXRP = 'BXRP',
-        BLTC = 'BLTC',
-        BBCH = 'BBCH',
-        MATIC = 'MATIC',
-        KCS = 'KCS',
-    }
-
-
 }

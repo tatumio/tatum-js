@@ -1,7 +1,6 @@
 import { TatumBchSDK } from '@tatumio/bch'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
 import { Currency } from '@tatumio/shared-core'
-import { CreateTrade, VirtualCurrency } from '@tatumio/api-client'
 
 const bchSDK = TatumBchSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
@@ -82,7 +81,7 @@ export async function bchLedgerOrderbookExample() {
     pageSize: 10,
   })
   const newTrade = await bchSDK.ledger.orderBook.newTrade({
-    type: CreateTrade.type.BUY,
+    type: 'BUY',
     price: '8650.4',
     amount: '15000',
     pair: 'BCH/EUR',
@@ -134,10 +133,10 @@ export async function bchLedgerVirtualCurrencyExample() {
   const virtualCurrencyAcc = await bchSDK.ledger.virtualCurrency.create({
     name: 'VC_VIRTUAL',
     supply: '1000000',
-    basePair: VirtualCurrency.basePair.BCH,
+    basePair: 'BCH',
     baseRate: 1,
     customer: {
-      accountingCurrency: VirtualCurrency.accountingCurrency.USD,
+      accountingCurrency: 'USD',
       customerCountry: 'US',
       externalId: '123654',
       providerCountry: 'US',
@@ -145,7 +144,7 @@ export async function bchLedgerVirtualCurrencyExample() {
     description: 'My Virtual Token description.',
     accountCode: 'AC_1011_B',
     accountNumber: '1234567890',
-    accountingCurrency: VirtualCurrency.accountingCurrency.USD,
+    accountingCurrency: 'USD',
   })
   const virtualCurrency = await bchSDK.ledger.virtualCurrency.getByName('VC_VIRTUAL')
   const mintTx = await bchSDK.ledger.virtualCurrency.mint({
@@ -159,6 +158,6 @@ export async function bchLedgerVirtualCurrencyExample() {
   await bchSDK.ledger.virtualCurrency.update({
     name: 'VC_VIRTUAL',
     baseRate: 1,
-    basePair: VirtualCurrency.basePair.EUR,
+    basePair: 'EUR',
   })
 }

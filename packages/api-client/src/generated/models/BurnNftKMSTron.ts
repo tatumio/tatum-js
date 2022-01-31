@@ -6,7 +6,7 @@ export type BurnNftKMSTron = {
     /**
      * Chain to work with.
      */
-    chain: BurnNftKMSTron.chain;
+    chain: 'TRON';
     /**
      * Blockchain address to perform transaction from
      */
@@ -31,16 +31,4 @@ export type BurnNftKMSTron = {
      * Max limit for fee to be paid, in TRX.
      */
     feeLimit: number;
-}
-
-export namespace BurnNftKMSTron {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        TRON = 'TRON',
-    }
-
-
 }

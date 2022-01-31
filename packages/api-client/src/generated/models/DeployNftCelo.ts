@@ -6,7 +6,7 @@ export type DeployNftCelo = {
     /**
      * Chain to work with.
      */
-    chain: DeployNftCelo.chain;
+    chain: 'CELO';
     /**
      * Name of the NFT token
      */
@@ -34,26 +34,5 @@ export type DeployNftCelo = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: DeployNftCelo.feeCurrency;
-}
-
-export namespace DeployNftCelo {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

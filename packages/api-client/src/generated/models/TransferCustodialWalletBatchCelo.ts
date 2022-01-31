@@ -6,7 +6,7 @@ export type TransferCustodialWalletBatchCelo = {
     /**
      * Blockchain to work with.
      */
-    chain: TransferCustodialWalletBatchCelo.chain;
+    chain: 'CELO';
     /**
      * Address of custodial wallet to transfer from
      */
@@ -38,7 +38,7 @@ export type TransferCustodialWalletBatchCelo = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: TransferCustodialWalletBatchCelo.feeCurrency;
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
      * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
      */
@@ -56,25 +56,4 @@ export type TransferCustodialWalletBatchCelo = {
          */
         gasPrice: string;
     };
-}
-
-export namespace TransferCustodialWalletBatchCelo {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
 }

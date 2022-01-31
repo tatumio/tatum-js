@@ -32,7 +32,7 @@ export type ListOderBookActiveBuyBody = {
     /**
      * Trade type.
      */
-    tradeType?: ListOderBookActiveBuyBody.tradeType;
+    tradeType?: 'FUTURE_BUY' | 'BUY';
     /**
      * Amount of the trade. AND is used between filter options.
      */
@@ -86,17 +86,4 @@ export type ListOderBookActiveBuyBody = {
         value: string;
     }>;
     sort?: OrderBookSort;
-}
-
-export namespace ListOderBookActiveBuyBody {
-
-    /**
-     * Trade type.
-     */
-    export enum tradeType {
-        FUTURE_BUY = 'FUTURE_BUY',
-        BUY = 'BUY',
-    }
-
-
 }
