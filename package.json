@@ -2,6 +2,7 @@
   "name": "tatumio",
   "version": "2.0.0-rc.6",
   "license": "MIT",
+  "repository": "https://github.com/tatumio/tatum-js",
   "scripts": {
     "start": "nx serve",
     "build": "nx affected:build",
@@ -17,10 +18,9 @@
     "registry:start": "nxpm registry:start",
     "registry:enable": "nxpm registry:enable",
     "registry:disable": "nxpm registry:disable",
-    "registry:statum": "nxpm registry:status\n",
+    "registry:status": "nxpm registry:status",
     "prepare": "husky install"
   },
-  "private": true,
   "dependencies": {
     "@tatumio/bitcoincashjs2-lib": "^4.1.2",
     "axios": "^0.24.0",
