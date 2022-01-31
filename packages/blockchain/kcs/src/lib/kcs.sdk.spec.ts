@@ -1,5 +1,7 @@
+import { DeployNft, TransferNft } from '@tatumio/api-client'
 import {
   erc20TestFactory,
+  erc721TestFactory,
   REPLACE_ME_WITH_TATUM_API_KEY,
   TEST_DATA,
   walletTestFactory,
@@ -47,6 +49,34 @@ describe('TatumKcsSDK', () => {
 
       describe('burnSignedTransaction', () => {
         erc20TestFactory.prepare.burnSignedTransaction(sdk.transaction.erc20, TEST_DATA.KCS)
+      })
+    })
+  })
+
+  describe('erc721', () => {
+    describe('prepare', () => {
+      describe('deploySignedTransaction', () => {
+        erc721TestFactory.prepare.deploySignedTransaction(
+          sdk.transaction.erc721,
+          TEST_DATA.KCS,
+          DeployNft.chain.KCS,
+        )
+      })
+
+      describe('transferSignedTransaction', () => {
+        erc721TestFactory.prepare.transferSignedTransaction(
+          sdk.transaction.erc721,
+          TEST_DATA.KCS,
+          TransferNft.chain.KCS,
+        )
+      })
+
+      describe('mintSignedTransaction', () => {
+        erc721TestFactory.prepare.mintSignedTransaction(sdk.transaction.erc721, TEST_DATA.KCS)
+      })
+
+      describe('burnSignedTransaction', () => {
+        erc721TestFactory.prepare.burnSignedTransaction(sdk.transaction.erc721, TEST_DATA.KCS)
       })
     })
   })
