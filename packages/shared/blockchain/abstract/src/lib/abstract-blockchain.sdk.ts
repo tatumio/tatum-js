@@ -1,5 +1,5 @@
 import {
-  BurnErc721,
+  BurnNft,
   CancelablePromise,
   ChainBurnErc20 as ApiChainBurnErc20,
   ChainMintErc20 as ApiChainMintErc20,
@@ -62,15 +62,15 @@ export type ChainBurnErc20 = FromPrivateKeyOrSignatureId<Omit<ApiChainBurnErc20,
 
 export type ChainDeployErc20 = FromPrivateKeyOrSignatureId<DeployErc20>
 
-export type ChainMintErc721 = MintErc721 & { fromPrivateKey?: string }
+export type ChainMintErc721 = MintErc721 & { fromPrivateKey?: string; chain: MintNft.chain }
 
 export type ChainMintNft = FromPrivateKeyOrSignatureId<MintNft>
 
 export type ChainMintMultipleNft = FromPrivateKeyOrSignatureId<MintMultipleNft> & {
-  erc20: string
+  erc20?: string
 }
 
-export type ChainBurnErc721 = FromPrivateKeyOrSignatureId<BurnErc721>
+export type ChainBurnErc721 = FromPrivateKeyOrSignatureId<BurnNft>
 
 export type ChainTransferErc721 = FromPrivateKeyOrSignatureId<TransferNft>
 

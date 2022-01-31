@@ -1,4 +1,4 @@
-import { DeployNft, TransferNft } from '@tatumio/api-client'
+import { BurnNft, DeployNft, MintNft, TransferNft } from '@tatumio/api-client'
 import { SdkWithErc721Functions } from '@tatumio/shared-blockchain-abstract'
 import { BlockchainTestData, expectHexString } from '../shared-testing'
 
@@ -11,7 +11,7 @@ export const erc721TestFactory = {
     ) => {
       it('valid with signatureId', async () => {
         const result = await sdk.prepare.deploySignedTransaction({
-          chain: chain,
+          chain,
           symbol: 'ERC_SYMBOL',
           name: '2123kd',
           signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -30,7 +30,7 @@ export const erc721TestFactory = {
 
       it('valid from privateKey', async () => {
         const result = await sdk.prepare.deploySignedTransaction({
-          chain: chain,
+          chain,
           symbol: 'ERC_SYMBOL',
           name: 'bO6AN',
           fromPrivateKey: testData.MAINNET.ERC_20.PRIVATE_KEY,
@@ -50,7 +50,7 @@ export const erc721TestFactory = {
     ) => {
       it('valid from signatureId', async () => {
         const result = await sdk.prepare.transferSignedTransaction({
-          chain: chain,
+          chain,
           to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
           tokenId: '112345678',
           contractAddress: testData.MAINNET.ERC_20.ADDRESS,
@@ -70,7 +70,7 @@ export const erc721TestFactory = {
 
       it('valid from privateKey', async () => {
         const result = await sdk.prepare.transferSignedTransaction({
-          chain: chain,
+          chain,
           to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
           contractAddress: testData.MAINNET.ERC_20.ADDRESS,
           fromPrivateKey: testData.MAINNET.ERC_20.PRIVATE_KEY,
@@ -87,7 +87,7 @@ export const erc721TestFactory = {
       it('invalid address', async () => {
         try {
           await sdk.prepare.transferSignedTransaction({
-            chain: chain,
+            chain,
             to: 'someinvalidaddress',
             contractAddress: testData.MAINNET.ERC_20.ADDRESS,
             fromPrivateKey: testData.MAINNET.ERC_20.PRIVATE_KEY,
@@ -104,7 +104,11 @@ export const erc721TestFactory = {
         }
       })
     },
-    mintSignedTransaction: (sdk: SdkWithErc721Functions, testData: BlockchainTestData) => {
+    mintSignedTransaction: (
+      sdk: SdkWithErc721Functions,
+      testData: BlockchainTestData,
+      chain: MintNft.chain,
+    ) => {
       xit('valid from privateKey', async () => {
         const result = await sdk.prepare.mintSignedTransaction({
           to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -112,6 +116,7 @@ export const erc721TestFactory = {
           fromPrivateKey: testData.MAINNET.ERC_20.PRIVATE_KEY,
           tokenId: '34839439',
           url: 'https://my_token_data.com',
+          chain,
         })
 
         expectHexString(result)
@@ -124,6 +129,7 @@ export const erc721TestFactory = {
           signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
           tokenId: '34839439',
           url: 'https://my_token_data.com',
+          chain,
         })
 
         const json = JSON.parse(result)
@@ -141,6 +147,7 @@ export const erc721TestFactory = {
             url: 'https://my_token_data.com',
             contractAddress: testData.MAINNET.ERC_20.ADDRESS,
             fromPrivateKey: testData.MAINNET.ERC_20.PRIVATE_KEY,
+            chain,
           })
           fail()
         } catch (e) {
@@ -148,12 +155,17 @@ export const erc721TestFactory = {
         }
       })
     },
-    burnSignedTransaction: (sdk: SdkWithErc721Functions, testData: BlockchainTestData) => {
+    burnSignedTransaction: (
+      sdk: SdkWithErc721Functions,
+      testData: BlockchainTestData,
+      chain: BurnNft.chain,
+    ) => {
       xit('valid from privateKey', async () => {
         const result = await sdk.prepare.burnSignedTransaction({
           tokenId: '34839439',
           contractAddress: testData.MAINNET.ERC_20.ADDRESS,
           fromPrivateKey: testData.MAINNET.ERC_20.PRIVATE_KEY,
+          chain,
         })
 
         expectHexString(result)
@@ -164,6 +176,7 @@ export const erc721TestFactory = {
           contractAddress: testData.MAINNET.ERC_20.ADDRESS,
           signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
           tokenId: '34839439',
+          chain,
         })
 
         const json = JSON.parse(result)
