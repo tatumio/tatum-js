@@ -57,9 +57,8 @@ jobs:
       - name: Config git name
         run: git config --global user.name "Hathoriel"
 
-      - run: npx nxpm release $(npm --no-git-tag-version version prerelease) --fix --ci
       - name: Publish packages
-        run: yarn publish:prerelease
+        run: npx nxpm release $(npm --no-git-tag-version version prerelease) --fix --ci
         env:
           GH_TOKEN: ${{ secrets.PAT_GITHUB }}
           GITHUB_TOKEN: ${{ secrets.PAT_GITHUB }}
