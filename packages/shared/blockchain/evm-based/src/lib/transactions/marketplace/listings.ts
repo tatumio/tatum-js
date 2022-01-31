@@ -23,7 +23,15 @@ const deploySignedTransaction = async (body: GenerateMarketplace, web3: EvmBased
     nonce: body.nonce,
   }
 
-  return prepareSignedTransactionAbstraction(client, tx, undefined, body.fromPrivateKey, web3, body.fee.gasLimit, body.fee.gasPrice)
+  return prepareSignedTransactionAbstraction(
+    client,
+    tx,
+    undefined,
+    body.fromPrivateKey,
+    web3,
+    body.fee.gasLimit,
+    body.fee.gasPrice,
+  )
 }
 
 export const listing = (args: {
@@ -40,7 +48,7 @@ export const listing = (args: {
       deploySignedTransaction: async (body: GenerateMarketplace, provider?: string) =>
         args.broadcastFunction({
           txData: await deploySignedTransaction(body, args.web3, provider),
-        })
-    }
+        }),
+    },
   }
 }
