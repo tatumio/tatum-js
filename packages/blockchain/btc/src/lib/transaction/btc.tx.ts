@@ -7,7 +7,7 @@ import {
   BtcTransactionFromUTXOKMS,
   TransactionHashKMS,
 } from '@tatumio/api-client'
-import { amountUtils, SdkErrorCode } from '@tatumio/abstract-sdk'
+import { amountUtils, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { BtcSdkError } from '../btc.sdk.errors'
 import { BtcBasedTx } from '@tatumio/shared-blockchain-btc-based'
 

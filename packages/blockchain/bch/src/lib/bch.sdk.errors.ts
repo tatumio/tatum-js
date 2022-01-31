@@ -1,4 +1,4 @@
-import { SdkError, SdkErrorCode } from '@tatumio/abstract-sdk'
+import { SdkError, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 export const BCH_ERRORS_MAPPING = {
   'Transaction has absurd fees': SdkErrorCode.BTC_FEE_IS_TOO_LARGE,

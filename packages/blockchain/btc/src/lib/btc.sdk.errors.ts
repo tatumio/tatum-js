@@ -1,4 +1,4 @@
-import { SdkError, SdkErrorCode } from '@tatumio/abstract-sdk'
+import { SdkError, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 /**
  * https://github.com/bitpay/bitcore/blob/v8.0.0/packages/bitcore-lib/lib/errors/spec.js
