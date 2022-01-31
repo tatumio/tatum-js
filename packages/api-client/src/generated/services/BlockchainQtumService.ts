@@ -8,38 +8,12 @@ import type { QtumIGetInfo } from '../models/QtumIGetInfo';
 import type { QtumIRawTransactionInfo } from '../models/QtumIRawTransactionInfo';
 import type { QtumIRawTransactions } from '../models/QtumIRawTransactions';
 import type { QtumIUTXO } from '../models/QtumIUTXO';
-import type { QtumWallet } from '../models/QtumWallet';
 import type { TransactionHashKMS } from '../models/TransactionHashKMS';
+import type { Wallet } from '../models/Wallet';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
 
 export class BlockchainQtumService {
-
-    /**
-     * Generate QTUM wallet
-     * <h4>1 credit per API call.</h4><br/><p>Tatum supports BIP44 HD wallets. It is very convenient and secure, since it can generate 2^31 addresses from 1 mnemonic phrase. Mnemonic phrase consists of 24 special words in defined order and can restore access to all generated addresses and private keys.<br/>Each address is identified by 3 main values:<ul><li>Private Key - your secret value, which should never be revealed</li><li>Public Key - public address to be published</li><li>Derivation index - index of generated address</li></ul></p><p>Tatum follows BIP44 specification and generates for Qtum wallet with derivation path m'/44'/2301'/0'/0. More about BIP44 HD wallets can be found here - <a target="_blank" href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki">https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki</a>.
-     * Generate BIP44 compatible QTum wallet.</p>
-     *
-     * @param mnemonic Mnemonic
-     * @returns QtumWallet OK
-     * @throws ApiError
-     */
-    public static qtumGenerateWallet(
-        mnemonic?: string,
-    ): CancelablePromise<QtumWallet> {
-        return __request({
-            method: 'GET',
-            path: `/v3/qtum/wallet`,
-            query: {
-                'mnemonic': mnemonic,
-            },
-            errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                500: `Internal server error. There was an error on the server during the processing of the request.`,
-            },
-        });
-    }
 
     /**
      * Generate QTUM account address from Extended public key
@@ -73,27 +47,23 @@ export class BlockchainQtumService {
     }
 
     /**
-     * Generate QTUM private key
-     * <h4>1 credit per API call.</h4><br/><p>Tatum supports BIP44 HD wallets. It is very convenient and secure, since it can generate 2^31 addresses from 1 mnemonic phrase. Mnemonic phrase consists of 24 special words in defined order and can restore access to all generated addresses and private keys.<br/>Each address is identified by 3 main values:<ul><li>Private Key - your secret value, which should never be revealed</li><li>Public Key - public address to be published</li><li>Derivation index - index of generated address</li></ul></p><p>Tatum follows BIP44 specification and generates for Qtum wallet with derivation path defined by QTUM. More about BIP44 HD wallets can be found here - <a target="_blank" href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki">https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki</a>.
-     * Generate BIP44 compatible QTUM wallet.</p>
+     * Generate QTUM wallet
+     * <h4>1 credit per API call.</h4><br/><p>Tatum supports BIP44 HD wallets. Because they can generate 2^31 addresses from 1 mnemonic phrase, they are very convenient and secure. A mnemonic phrase consists of 24 special words in a defined order and can restore access to all generated addresses and private keys.<br/>Each address is identified by 3 main values:<ul><li>Private Key - your secret value, which should never be revealed</li><li>Public Key - public address to be published</li><li>Derivation index - index of generated address</li></ul></p><p>Tatum follows BIP44 specification and generates for QTUM wallet with derivation path m/44'/2301'/0'/0. More about BIP44 HD wallets can be found here - <a target="_blank" href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki">https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki</a>.
+     * <br />Generate BIP44 compatible Qtum wallet.</p>
      *
-     * @param requestBody
-     * @returns any OK
+     * @param mnemonic Mnemonic to use for generation of extended public and private keys.
+     * @returns Wallet OK
      * @throws ApiError
      */
-    public static generatePrivateKeyFromMnemonic(
-        requestBody: GeneratePrivateKey,
-    ): CancelablePromise<{
-        /**
-         * key
-         */
-        key?: string;
-    }> {
+    public static qtumGenerateWallet(
+        mnemonic: string,
+    ): CancelablePromise<Wallet> {
         return __request({
-            method: 'POST',
-            path: `/v3/qtum/wallet/priv`,
-            body: requestBody,
-            mediaType: 'application/json',
+            method: 'GET',
+            path: `/v3/qtum/wallet`,
+            query: {
+                'mnemonic': mnemonic,
+            },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
@@ -105,10 +75,10 @@ export class BlockchainQtumService {
     /**
      * Get current block number
      * <h4>1 credit per API call.</h4><br/><p>Get QTUM current block number. This is the number of the latest block in the blockchain.</p>
-     * @returns number OK
+     * @returns string OK
      * @throws ApiError
      */
-    public static qtumGetCurrentBlock(): CancelablePromise<number> {
+    public static qtumGetCurrentBlock(): CancelablePromise<string> {
         return __request({
             method: 'GET',
             path: `/v3/qtum/block/current`,
@@ -141,20 +111,15 @@ export class BlockchainQtumService {
     }
 
     /**
-     * Generate QTUM Address from private key
+     * Generate QTUM Address
      * <h4>1 credit per API call.</h4><br/><p>Generate Address by private key</p>
      * @param key Private key
-     * @returns any OK
+     * @returns string OK
      * @throws ApiError
      */
     public static generateAddressPrivatekey(
         key: string,
-    ): CancelablePromise<{
-        /**
-         * Address
-         */
-        address?: string;
-    }> {
+    ): CancelablePromise<string> {
         return __request({
             method: 'GET',
             path: `/v3/qtum/address/${key}`,
@@ -167,7 +132,7 @@ export class BlockchainQtumService {
     }
 
     /**
-     * Get UTXO
+     * Generate QTUM Address
      * <h4>1 credit per API call.</h4><br/><p>Get UTXOS by address</p>
      * @param address address
      * @returns QtumIUTXO OK
@@ -211,16 +176,16 @@ export class BlockchainQtumService {
     /**
      * Get QTUM Transaction
      * <h4>1 credit per API call.</h4><br/><p>Get QTUM transaction by transaction hash.</p>
-     * @param id Transaction hash
+     * @param hash Transaction hash
      * @returns QtumIRawTransactionInfo OK
      * @throws ApiError
      */
     public static getQtumTransaction(
-        id: string,
+        hash: string,
     ): CancelablePromise<QtumIRawTransactionInfo> {
         return __request({
             method: 'GET',
-            path: `/v3/qtum/transaction/${id}`,
+            path: `/v3/qtum/transaction/${hash}`,
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
@@ -231,7 +196,7 @@ export class BlockchainQtumService {
     }
 
     /**
-     * Get QTUM Transactions by address
+     * Get QTUM Transactions by pagination
      * <h4>1 credit per API call.</h4><br/><p>Get QTUM paginated transactions by address.</p>
      * @param address Address
      * @param pageSize pageSize
@@ -242,7 +207,7 @@ export class BlockchainQtumService {
     public static getQtumPaginatedTransaction(
         address: string,
         pageSize: number,
-        offset?: number,
+        offset: number,
     ): CancelablePromise<QtumIRawTransactions> {
         return __request({
             method: 'GET',
@@ -326,6 +291,31 @@ export class BlockchainQtumService {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
+            },
+        });
+    }
+
+    /**
+     * Generate QTUM wallet
+     * <h4>1 credit per API call.</h4><br/><p>Tatum supports BIP44 HD wallets. It is very convenient and secure, since it can generate 2^31 addresses from 1 mnemonic phrase. Mnemonic phrase consists of 24 special words in defined order and can restore access to all generated addresses and private keys.<br/>Each address is identified by 3 main values:<ul><li>Private Key - your secret value, which should never be revealed</li><li>Public Key - public address to be published</li><li>Derivation index - index of generated address</li></ul></p><p>Tatum follows BIP44 specification and generates for Qtum wallet with derivation path defined by QTUM. More about BIP44 HD wallets can be found here - <a target="_blank" href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki">https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki</a>.
+     * Generate BIP44 compatible QTUM wallet.</p>
+     *
+     * @param requestBody
+     * @returns string OK
+     * @throws ApiError
+     */
+    public static generatePrivateKeyFromMnemonic(
+        requestBody: GeneratePrivateKey,
+    ): CancelablePromise<string> {
+        return __request({
+            method: 'POST',
+            path: `/v3/qtum/wallet/priv`,
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });

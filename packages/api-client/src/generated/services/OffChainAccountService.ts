@@ -11,7 +11,7 @@ export class OffChainAccountService {
 
     /**
      * Create new deposit address
-     * <h4>2 credits per API call and 5 credits for each address registered for scanning every day. If address is FLOW or FUSD, additional 3000 credits are consumed - see <a href="#operation/FlowGenerateAddress">Flow address generation.</a></h4><br/>
+     * <h4>2 credits per API call and 20 credits for each address registered for scanning every day. If address is FLOW or FUSD, additional 3000 credits are consumed - see <a href="#operation/FlowGenerateAddress">Flow address generation.</a></h4><br/>
      * <p>Create a new deposit address for the account. This method associates public blockchain's ledger address with the account on Tatum's private ledger.<br/>
      * It is possible to generate multiple blockchain addresses for the same ledger account. By this, it is possible to aggregate various blockchain transactions from different addresses into the same account.
      * Depending on the currency of an account, this method will either generate a public address for Bitcoin, Bitcoin Cash,
@@ -70,7 +70,7 @@ export class OffChainAccountService {
 
     /**
      * Create new deposit addresses in a batch call
-     * <h4>2 credits per API call, 1 credit for every address created and 5 credits for each address registered for scanning every day. If address is FLOW or FUSD, additional 3000 credits are consumed for each address - see <a href="#operation/FlowGenerateAddress">Flow address generation.<a/></h4><br/>
+     * <h4>2 credits per API call, 1 credit for every address created and 20 credits for each address registered for scanning every day. If address is FLOW or FUSD, additional 3000 credits are consumed for each address - see <a href="#operation/FlowGenerateAddress">Flow address generation.<a/></h4><br/>
      * <p>Create new deposit addressess for the account. This method associates public blockchain's ledger address with the account on Tatum's private ledger.<br/>
      * It is possible to generate multiple blockchain addresses for the same ledger account. By this, it is possible to aggregate various blockchain transactions from different addresses into the same account.
      * Depending on the currency of an account, this method will either generate a public address for Bitcoin, Bitcoin Cash,
@@ -140,7 +140,7 @@ export class OffChainAccountService {
      *
      * @param id Account ID
      * @param address Blockchain address
-     * @param index Destination tag or memo attribute for XRP or XLM addresses
+     * @param index Destination tag or memo attribute for XRP, BNB or XLM addresses
      * @returns void
      * @throws ApiError
      */
@@ -166,7 +166,7 @@ export class OffChainAccountService {
 
     /**
      * Assign address for account
-     * <h4>2 credits for API call and 5 credits for each address registered for scanning every day.</h4><br/>
+     * <h4>2 credits for API call and 20 credits for each address registered for scanning every day.</h4><br/>
      * <p>This method is used when the account has no default xpub assigned, and addresses are handled manually. It is possible to pair any number of blockchain address to the account.</p>
      *
      * @param id Account ID

@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type Error403BlockNotExists = {
+export type Error404BlockNotExists = {
     /**
      * block.hash.not.exists
      */
@@ -12,7 +12,7 @@ export type Error403BlockNotExists = {
      */
     message: string;
     /**
-     * 403
+     * 404
      */
     statusCode: number;
 }

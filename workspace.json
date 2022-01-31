@@ -24,6 +24,7 @@
     "sdk-ltc": "packages/blockchain/ltc",
     "sdk-one": "packages/blockchain/one",
     "sdk-polygon": "packages/blockchain/polygon",
+    "sdk-xlm": "packages/blockchain/xlm",
     "sdk-xrp": "packages/blockchain/xrp",
     "shared-abstract-sdk": "packages/shared/abstract-sdk",
     "shared-blockchain-abstract": "packages/shared/blockchain/abstract",
@@ -31,6 +32,7 @@
     "shared-blockchain-evm-based": "packages/shared/blockchain/evm-based",
     "shared-core": "packages/shared/core",
     "shared-testing": "packages/shared/testing",
+    "xlm-example": "examples/xlm-example",
     "xrp-example": "examples/xrp-example"
   }
 }

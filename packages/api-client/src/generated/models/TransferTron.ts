@@ -18,7 +18,7 @@ export type TransferTron = {
     /**
      * Private key of sender address. Either mnemonic and index, privateKey or signature Id must be present - depends on the type of account and xpub.
      */
-    privateKey: string;
+    fromPrivateKey: string;
     /**
      * Fee to be submitted as a transaction fee to blockchain. If none is set, default value of 2.5 TRX is used.
      */

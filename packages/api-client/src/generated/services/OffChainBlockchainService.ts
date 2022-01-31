@@ -4,6 +4,11 @@
 import type { CreateBnbAsset } from '../models/CreateBnbAsset';
 import type { CreateXlmAsset } from '../models/CreateXlmAsset';
 import type { CreateXrpAsset } from '../models/CreateXrpAsset';
+import type { DeployAlgoErc20OffchainKMSAddress } from '../models/DeployAlgoErc20OffchainKMSAddress';
+import type { DeployAlgoErc20OffchainMnemonicAddress } from '../models/DeployAlgoErc20OffchainMnemonicAddress';
+import type { DeployAlgoErc20OffchainPKAddress } from '../models/DeployAlgoErc20OffchainPKAddress';
+import type { DeployAlgoErc20Response } from '../models/DeployAlgoErc20Response';
+import type { DeployAlgoErc20SignatureResponse } from '../models/DeployAlgoErc20SignatureResponse';
 import type { DeployCeloErc20OffchainKMSAddress } from '../models/DeployCeloErc20OffchainKMSAddress';
 import type { DeployCeloErc20OffchainKMSXpub } from '../models/DeployCeloErc20OffchainKMSXpub';
 import type { DeployCeloErc20OffchainMnemonicAddress } from '../models/DeployCeloErc20OffchainMnemonicAddress';
@@ -18,6 +23,12 @@ import type { DeployErc20OffchainPKAddress } from '../models/DeployErc20Offchain
 import type { DeployErc20OffchainPKXpub } from '../models/DeployErc20OffchainPKXpub';
 import type { DeployErc20Response } from '../models/DeployErc20Response';
 import type { DeployErc20SignatureResponse } from '../models/DeployErc20SignatureResponse';
+import type { DeployKCSErc20OffchainKMSAddress } from '../models/DeployKCSErc20OffchainKMSAddress';
+import type { DeployKCSErc20OffchainKMSXpub } from '../models/DeployKCSErc20OffchainKMSXpub';
+import type { DeployKCSErc20OffchainMnemonicAddress } from '../models/DeployKCSErc20OffchainMnemonicAddress';
+import type { DeployKCSErc20OffchainMnemXpub } from '../models/DeployKCSErc20OffchainMnemXpub';
+import type { DeployKCSErc20OffchainPKAddress } from '../models/DeployKCSErc20OffchainPKAddress';
+import type { DeployKCSErc20OffchainPKXpub } from '../models/DeployKCSErc20OffchainPKXpub';
 import type { DeployTrcOffchainKMSAddress } from '../models/DeployTrcOffchainKMSAddress';
 import type { DeployTrcOffchainKMSXpub } from '../models/DeployTrcOffchainKMSXpub';
 import type { DeployTrcOffchainMnemonicAddress } from '../models/DeployTrcOffchainMnemonicAddress';
@@ -35,6 +46,7 @@ import type { TransferAda } from '../models/TransferAda';
 import type { TransferAdaKMS } from '../models/TransferAdaKMS';
 import type { TransferAdaMnemonic } from '../models/TransferAdaMnemonic';
 import type { TransferAlgo } from '../models/TransferAlgo';
+import type { TransferAlgoErc20 } from '../models/TransferAlgoErc20';
 import type { TransferAlgoKMS } from '../models/TransferAlgoKMS';
 import type { TransferBchKeyPair } from '../models/TransferBchKeyPair';
 import type { TransferBchKMS } from '../models/TransferBchKMS';
@@ -62,9 +74,14 @@ import type { TransferEthMnemonic } from '../models/TransferEthMnemonic';
 import type { TransferFlowKMS } from '../models/TransferFlowKMS';
 import type { TransferFlowMnemonic } from '../models/TransferFlowMnemonic';
 import type { TransferFlowPK } from '../models/TransferFlowPK';
+import type { TransferKCS } from '../models/TransferKCS';
+import type { TransferKCSKMS } from '../models/TransferKCSKMS';
+import type { TransferKCSMnemonic } from '../models/TransferKCSMnemonic';
 import type { TransferLtcKeyPair } from '../models/TransferLtcKeyPair';
 import type { TransferLtcKMS } from '../models/TransferLtcKMS';
 import type { TransferLtcMnemonic } from '../models/TransferLtcMnemonic';
+import type { TransferSol } from '../models/TransferSol';
+import type { TransferSolKMS } from '../models/TransferSolKMS';
 import type { TransferTron } from '../models/TransferTron';
 import type { TransferTronKMS } from '../models/TransferTronKMS';
 import type { TransferTronMnemonic } from '../models/TransferTronMnemonic';
@@ -424,7 +441,7 @@ export class OffChainBlockchainService {
     }
 
     /**
-     * Send KCS from Tatum ledger to blockchain
+     * Send KCS or Erc20 from Tatum ledger to blockchain
      * <h4>4 credits per API call.</h4><br/><p>Send KCS or ERC20 on KCS from Tatum Ledger to account. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
      * <ul>
      * <li>If KCS server connection is unavailable, withdrawal request is cancelled.</li>
@@ -443,7 +460,7 @@ export class OffChainBlockchainService {
      * @throws ApiError
      */
     public static kcsTransfer(
-        requestBody: (TransferEth | TransferEthMnemonic | TransferEthKMS),
+        requestBody: (TransferKCS | TransferKCSMnemonic | TransferKCSKMS),
     ): CancelablePromise<(OffchainTransactionResult | OffchainTransactionSignatureResult)> {
         return __request({
             method: 'POST',
@@ -973,12 +990,13 @@ export class OffChainBlockchainService {
     }
 
     /**
-     * Set ERC20/BEP20/HRM20/TRC20 token contract address
+     * Set ERC20/BEP20/HRM20/TRC20/KCS20 token contract address
      * <h4>2 credits per API call.</h4><br/>
      * <p>Set contract address of ERC20/BEP20/HRM20 token. This must be done in order to communicate with smart contract.
      * <br/>
      * <br/>
      * After creating and deploying ERC20 token to blockchain, smart contract address is generated and must be set within Tatum.
+     * In Algorand case the address should be token AssetID, for example: 55351976
      * Otherwise Tatum platform will not be able to detect incoming deposits of ERC20 and do withdrawals from Tatum accounts to other blockchain addresses.</p>
      *
      * @param address Contract address
@@ -1139,7 +1157,7 @@ export class OffChainBlockchainService {
      * @throws ApiError
      */
     public static kcsDeployErc20Ledger(
-        requestBody: (DeployErc20OffchainMnemonicAddress | DeployErc20OffchainMnemXpub | DeployErc20OffchainPKAddress | DeployErc20OffchainPKXpub | DeployErc20OffchainKMSAddress | DeployErc20OffchainKMSXpub),
+        requestBody: (DeployKCSErc20OffchainMnemonicAddress | DeployKCSErc20OffchainMnemXpub | DeployKCSErc20OffchainPKAddress | DeployKCSErc20OffchainPKXpub | DeployKCSErc20OffchainKMSAddress | DeployKCSErc20OffchainKMSXpub),
     ): CancelablePromise<(DeployErc20Response | DeployErc20SignatureResponse)> {
         return __request({
             method: 'POST',
@@ -1177,6 +1195,44 @@ export class OffChainBlockchainService {
         return __request({
             method: 'POST',
             path: `/v3/offchain/celo/erc20/${name}/${address}`,
+            errors: {
+                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                500: `Internal server error. There was an error on the server while processing the request.`,
+            },
+        });
+    }
+
+    /**
+     * Send SOL from Tatum ledger to blockchain
+     * <h4>10 credits per API call.</h4><br/><p>
+     * <p>Send SOL from virtual account to blockchain address. This will create Tatum internal withdrawal request with ID. When every system works as expected,
+     * withdrawal request is marked as complete and transaction id is assigned to it.
+     * <ul>
+     * <li>If SOL server connection is unavailable, withdrawal request is cancelled.</li>
+     * <li>If blockchain transfer is successful, but is it not possible to reach Tatum, transaction id of blockchain transaction is returned and withdrawal request must be completed manually, otherwise all other withdrawals will be pending.</li>
+     * </ul>
+     * It is possible to perform ledger to blockchain transaction for ledger accounts without blockchain address assigned to them.<br/>
+     * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+     * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and losing funds. In this method, it is possible to enter privateKey
+     * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+     * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
+     * Alternatively, using the Tatum client library for supported languages.
+     * </p>
+     *
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static solTransfer(
+        requestBody: (TransferSol | TransferSolKMS),
+    ): CancelablePromise<(OffchainTransactionResult | OffchainTransactionSignatureResult)> {
+        return __request({
+            method: 'POST',
+            path: `/v3/offchain/solana/transfer`,
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
@@ -1598,9 +1654,45 @@ export class OffChainBlockchainService {
     }
 
     /**
-     * Send ALGO from Tatum ledger to blockchain
+     * Deploy Algo ERC20 to Blockchain and Ledger
      * <h4>4 credits per API call.</h4><br/>
-     * <p>Send ALGO from Tatum Ledger to account. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
+     * <p>Deploy Algorand ERC20 Smart Contract. This is a helper method, which is combination of
+     * <a href="#operation/createErc20">Register new Algorand ERC20 token in the ledger</a> and <a href="#operation/AlgoDeployErc20Blockchain">Deploy blockchain ERC-20</a>.<br/>
+     * <br/>
+     * <br/>
+     * After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.<br/>
+     * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+     * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and losing funds. In this method, it is possible to enter privateKey
+     * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+     * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
+     * Alternatively, using the Tatum client library for supported languages.
+     * </p>
+     *
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static algoDeployErc20Ledger(
+        requestBody: (DeployAlgoErc20OffchainMnemonicAddress | DeployAlgoErc20OffchainPKAddress | DeployAlgoErc20OffchainKMSAddress),
+    ): CancelablePromise<(DeployAlgoErc20Response | DeployAlgoErc20SignatureResponse)> {
+        return __request({
+            method: 'POST',
+            path: `/v3/offchain/algo/erc20/deploy`,
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                500: `Internal server error. There was an error on the server while processing the request.`,
+            },
+        });
+    }
+
+    /**
+     * Send ALGO or Erc20 from Tatum ledger to blockchain
+     * <h4>4 credits per API call.</h4><br/>
+     * <p>Send ALGO or Erc20 from Tatum Ledger to account. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
      * <br/>
      * <br/>
      * <ul>
@@ -1613,6 +1705,7 @@ export class OffChainBlockchainService {
      * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
      * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
      * Alternatively, using the Tatum client library for supported languages.
+     * Before transfer Algorand Erc20, you need to do zero transfer for preparing to be enable receive the token on recepient.
      * </p>
      *
      * @param requestBody
@@ -1620,7 +1713,7 @@ export class OffChainBlockchainService {
      * @throws ApiError
      */
     public static algoTransfer(
-        requestBody: (TransferAlgo | TransferAlgoKMS),
+        requestBody: (TransferAlgo | TransferAlgoErc20 | TransferAlgoKMS),
     ): CancelablePromise<(OffchainTransactionResult | OffchainTransactionSignatureResult)> {
         return __request({
             method: 'POST',

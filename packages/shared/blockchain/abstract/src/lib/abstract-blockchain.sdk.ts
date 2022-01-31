@@ -10,6 +10,7 @@ import {
   TatumUrl,
   TransactionHashKMS,
   TronWallet,
+  XlmWallet,
   XrpWallet,
 } from '@tatumio/api-client'
 import { Blockchain, blockchainHelper, Fiat } from '@tatumio/shared-core'
@@ -40,7 +41,7 @@ export interface SdkWithWalletFunctions {
 }
 
 export interface SdkWithXrpLikeWalletFunction {
-  wallet(): CancelablePromise<XrpWallet>
+  wallet(): CancelablePromise<XrpWallet | XlmWallet>
 }
 
 type FromPrivateKeyOrSignatureId<T extends { fromPrivateKey: string }> = Omit<T, 'fromPrivateKey'> &
