@@ -7,6 +7,21 @@ on:
       - feature/release
 
 jobs:
+  agents:
+    runs-on: ubuntu-latest
+    name: Agent 1
+    timeout-minutes: 60
+    strategy:
+      matrix:
+        agent: [ 1, 2, 3 ]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+      - run: yarn
+      - name: Start Nx Agent ${{ matrix.agent }}
+        run: npx nx-cloud start-agent
   publish:
     runs-on: ubuntu-latest
     steps:
@@ -28,7 +43,13 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '14'
+
       - run: yarn --ignore-scripts --frozen-lockfile
+
+      - run: npx nx-cloud start-ci-run
+      - run: yarn build:all
+      - run: npx nx-cloud stop-all-agents
+
       - run: echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}" > ~/.npmrc
       - name: Config git email
         run: git config --global user.email "lukas.kotol@tatum.io"
