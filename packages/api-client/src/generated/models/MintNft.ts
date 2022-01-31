@@ -6,7 +6,7 @@ export type MintNft = {
     /**
      * Chain to work with.
      */
-    chain: MintNft.chain;
+    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC';
     /**
      * ID of token to be created.
      */
@@ -64,20 +64,4 @@ export type MintNft = {
          */
         gasPrice: string;
     };
-}
-
-export namespace MintNft {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        MATIC = 'MATIC',
-        KCS = 'KCS',
-        ONE = 'ONE',
-        BSC = 'BSC',
-    }
-
-
 }

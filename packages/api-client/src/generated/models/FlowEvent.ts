@@ -14,7 +14,7 @@ export type FlowEvent = {
         /**
          * Type of payload.
          */
-        type?: FlowEvent.type;
+        type?: 'Event';
         value?: {
             /**
              * Event type
@@ -53,16 +53,4 @@ export type FlowEvent = {
             }>;
         };
     };
-}
-
-export namespace FlowEvent {
-
-    /**
-     * Type of payload.
-     */
-    export enum type {
-        EVENT = 'Event',
-    }
-
-
 }

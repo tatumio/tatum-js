@@ -6,7 +6,7 @@ export type ApproveNftSpending = {
     /**
      * Blockchain to work with.
      */
-    chain: ApproveNftSpending.chain;
+    chain: 'ETH' | 'ONE' | 'BSC' | 'MATIC';
     /**
      * Address of the auction smart contract - new spender.
      */
@@ -44,19 +44,4 @@ export type ApproveNftSpending = {
          */
         gasPrice: string;
     };
-}
-
-export namespace ApproveNftSpending {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        ONE = 'ONE',
-        BSC = 'BSC',
-        MATIC = 'MATIC',
-    }
-
-
 }

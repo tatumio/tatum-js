@@ -6,11 +6,11 @@ export type GenerateCustodialWalletCelo = {
     /**
      * Blockchain to work with.
      */
-    chain: GenerateCustodialWalletCelo.chain;
+    chain: 'CELO';
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: GenerateCustodialWalletCelo.feeCurrency;
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
      * Private key of account, from which the transaction will be initiated.
      */
@@ -48,25 +48,4 @@ export type GenerateCustodialWalletCelo = {
      * Nonce to be set to the transaction. If not present, last known nonce will be used.
      */
     nonce?: number;
-}
-
-export namespace GenerateCustodialWalletCelo {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
 }

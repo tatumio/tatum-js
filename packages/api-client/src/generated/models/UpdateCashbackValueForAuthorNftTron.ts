@@ -6,7 +6,7 @@ export type UpdateCashbackValueForAuthorNftTron = {
     /**
      * Chain to work with.
      */
-    chain: UpdateCashbackValueForAuthorNftTron.chain;
+    chain: 'TRON';
     /**
      * ID of token to be updated.
      */
@@ -27,16 +27,4 @@ export type UpdateCashbackValueForAuthorNftTron = {
      * Max limit for fee to be paid, in TRX.
      */
     feeLimit: number;
-}
-
-export namespace UpdateCashbackValueForAuthorNftTron {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        TRON = 'TRON',
-    }
-
-
 }

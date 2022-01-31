@@ -6,7 +6,7 @@ const tatumSDK = TatumSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function ledgerSubscriptionsExample() {
   const subscription = await tatumSDK.subscriptions.createSubscription({
-    type: CreateSubscriptionIncoming.type.ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION,
+    type: 'ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION',
     attr: {
       id: '1',
       url: 'http://example.com',

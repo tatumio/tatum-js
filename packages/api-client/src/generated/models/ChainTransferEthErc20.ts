@@ -6,7 +6,7 @@ export type ChainTransferEthErc20 = {
     /**
      * Chain to work with.
      */
-    chain: ChainTransferEthErc20.chain;
+    chain: 'ETH' | 'BSC' | 'MATIC' | 'XDC' | 'ONE';
     /**
      * Blockchain address to send ERC20 token to
      */
@@ -44,20 +44,4 @@ export type ChainTransferEthErc20 = {
          */
         gasPrice: string;
     };
-}
-
-export namespace ChainTransferEthErc20 {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        BSC = 'BSC',
-        MATIC = 'MATIC',
-        XDC = 'XDC',
-        ONE = 'ONE',
-    }
-
-
 }

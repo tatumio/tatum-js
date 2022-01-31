@@ -18,11 +18,11 @@ export type TransferCeloBlockchain = {
     /**
      * Currency of the transaction
      */
-    currency: TransferCeloBlockchain.currency;
+    currency: 'CELO' | 'CUSD' | 'CEUR';
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: TransferCeloBlockchain.feeCurrency;
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
      * Amount to be sent in Celoer.
      */
@@ -31,27 +31,4 @@ export type TransferCeloBlockchain = {
      * Private key of sender address. Private key, or signature Id must be present.
      */
     fromPrivateKey: string;
-}
-
-export namespace TransferCeloBlockchain {
-
-    /**
-     * Currency of the transaction
-     */
-    export enum currency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
 }

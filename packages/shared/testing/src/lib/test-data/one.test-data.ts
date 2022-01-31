@@ -17,4 +17,7 @@ export const ONE_TEST_DATA: BlockchainTestData = {
       ADDRESS: '0x2627d16dcd27ddb6cf42341756aa6c5a8c6cb954',
     },
   },
+  BLOCK_HASH: '0x92bc4ed1d484e3babb490e36cf436d12a8236d92caabc12d1dbbc8d02eacc265',
+  BLOCK_HEIGHT: 22_366_731,
+  TX_HASH: '0xca22bfc703db8b4176007938f5ffd5277efd95a83f50b86e9499a76b27da78ac',
 }

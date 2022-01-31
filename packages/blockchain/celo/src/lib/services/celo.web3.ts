@@ -19,8 +19,9 @@ export const celoWeb3 = (args: { blockchain: EvmBasedBlockchain }) => {
     },
     async getGasPriceInWei(): Promise<string> {
       let gasStationUrl = THIRD_PARTY_API.ETH_GAS_STATION
-      if (process.env.TATUM_GAS_STATION_API_KEY) {
-        gasStationUrl = `${gasStationUrl}?apiKey=${process.env.TATUM_GAS_STATION_API_KEY}`
+      const gasStationApiKey = process.env['TATUM_GAS_STATION_API_KEY'] // @TODO
+      if (gasStationApiKey) {
+        gasStationUrl = `${gasStationUrl}?apiKey=${gasStationApiKey}`
       }
 
       const data = (await httpHelper.get(gasStationUrl)).data

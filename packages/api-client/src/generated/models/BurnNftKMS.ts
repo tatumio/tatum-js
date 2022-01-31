@@ -6,7 +6,7 @@ export type BurnNftKMS = {
     /**
      * Chain to work with.
      */
-    chain: BurnNftKMS.chain;
+    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC';
     /**
      * ID of token to be destroyed.
      */
@@ -40,20 +40,4 @@ export type BurnNftKMS = {
          */
         gasPrice: string;
     };
-}
-
-export namespace BurnNftKMS {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        MATIC = 'MATIC',
-        KCS = 'KCS',
-        ONE = 'ONE',
-        BSC = 'BSC',
-    }
-
-
 }

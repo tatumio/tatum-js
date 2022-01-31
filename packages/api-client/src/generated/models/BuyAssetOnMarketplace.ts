@@ -6,7 +6,7 @@ export type BuyAssetOnMarketplace = {
     /**
      * Blockchain to work with.
      */
-    chain: BuyAssetOnMarketplace.chain;
+    chain: 'ETH' | 'ONE' | 'BSC' | 'MATIC';
     /**
      * Address of the marketplace smart contract.
      */
@@ -48,19 +48,4 @@ export type BuyAssetOnMarketplace = {
          */
         gasPrice: string;
     };
-}
-
-export namespace BuyAssetOnMarketplace {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        ONE = 'ONE',
-        BSC = 'BSC',
-        MATIC = 'MATIC',
-    }
-
-
 }

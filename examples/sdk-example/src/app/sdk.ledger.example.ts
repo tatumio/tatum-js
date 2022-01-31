@@ -45,7 +45,7 @@ export async function ledgerCustomerExample() {
 export async function ledgerOrderBookExample() {
   // @TODO create accounts here
   const { id } = await tatumSDK.ledger.orderBook.newTrade({
-    type: CreateTrade.type.BUY,
+    type: 'BUY',
     price: '8650.4',
     amount: '15000',
     pair: 'VC_demoVC/EUR',
@@ -125,10 +125,10 @@ export async function ledgerVirtualCurrencyExample() {
   const account = await tatumSDK.ledger.virtualCurrency.create({
     name: 'VC_demoVC',
     supply: '1000000',
-    basePair: VirtualCurrency.basePair.EUR, // @TODO OPENAPI will be extracted
+    basePair: 'EUR', // @TODO OPENAPI will be extracted
     baseRate: 1,
     customer: {
-      accountingCurrency: VirtualCurrency.accountingCurrency.USD,
+      accountingCurrency: 'USD',
       externalId: '12',
     },
     description: 'My Virtual Token description.',

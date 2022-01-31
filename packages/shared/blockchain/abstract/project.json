@@ -4,14 +4,13 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/shared/blockchain/abstract",
         "tsConfig": "packages/shared/blockchain/abstract/tsconfig.lib.json",
         "packageJson": "packages/shared/blockchain/abstract/package.json",
-        "main": "packages/shared/blockchain/abstract/src/index.ts",
-        "assets": ["packages/shared/blockchain/abstract/*.md"]
+        "main": "packages/shared/blockchain/abstract/src/index.ts"
       }
     },
     "lint": {

@@ -10,8 +10,7 @@
         "outputPath": "dist/examples/doge-example",
         "main": "examples/doge-example/src/index.ts",
         "tsConfig": "examples/doge-example/tsconfig.app.json",
-        "packageJson": "examples/doge-example/package.json",
-        "assets": ["examples/doge-example/*.md"]
+        "packageJson": "examples/doge-example/package.json"
       }
     },
     "serve": {

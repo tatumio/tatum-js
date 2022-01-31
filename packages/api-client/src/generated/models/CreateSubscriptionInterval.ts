@@ -6,7 +6,7 @@ export type CreateSubscriptionInterval = {
     /**
      * Type of the subscription.
      */
-    type: CreateSubscriptionInterval.type;
+    type: 'TRANSACTION_HISTORY_REPORT';
     /**
      * Additional attributes based on the subscription type.
      */
@@ -16,16 +16,4 @@ export type CreateSubscriptionInterval = {
          */
         interval: number;
     };
-}
-
-export namespace CreateSubscriptionInterval {
-
-    /**
-     * Type of the subscription.
-     */
-    export enum type {
-        TRANSACTION_HISTORY_REPORT = 'TRANSACTION_HISTORY_REPORT',
-    }
-
-
 }

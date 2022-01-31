@@ -6,7 +6,7 @@ export type BurnNftFlowMnemonic = {
     /**
      * Chain to work with.
      */
-    chain: BurnNftFlowMnemonic.chain;
+    chain: 'FLOW';
     /**
      * ID of token to be destroyed.
      */
@@ -27,16 +27,4 @@ export type BurnNftFlowMnemonic = {
      * Derivation index of sender address.
      */
     index: number;
-}
-
-export namespace BurnNftFlowMnemonic {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        FLOW = 'FLOW',
-    }
-
-
 }

@@ -6,7 +6,7 @@ export type UpdateCashbackValueForAuthorNftCelo = {
     /**
      * Chain to work with.
      */
-    chain: UpdateCashbackValueForAuthorNftCelo.chain;
+    chain: 'CELO';
     /**
      * ID of token to be updated.
      */
@@ -30,26 +30,5 @@ export type UpdateCashbackValueForAuthorNftCelo = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: UpdateCashbackValueForAuthorNftCelo.feeCurrency;
-}
-
-export namespace UpdateCashbackValueForAuthorNftCelo {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

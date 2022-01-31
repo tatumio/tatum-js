@@ -18,7 +18,7 @@ export type WithdrawalObject = {
     /**
      * Status of the withdrawal
      */
-    status?: WithdrawalObject.status;
+    status?: 'InProgress' | 'Done' | 'Cancelled';
     /**
      * Blockchain address to send assets to. For BTC, LTC, DOGE and BCH, it is possible to enter list of multiple recipient blockchain addresses as a comma separated string.
      */
@@ -53,18 +53,4 @@ export type WithdrawalObject = {
      * Note visible to owner of withdrawing account
      */
     senderNote?: string;
-}
-
-export namespace WithdrawalObject {
-
-    /**
-     * Status of the withdrawal
-     */
-    export enum status {
-        IN_PROGRESS = 'InProgress',
-        DONE = 'Done',
-        CANCELLED = 'Cancelled',
-    }
-
-
 }

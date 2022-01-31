@@ -6,7 +6,7 @@ export type SellAssetOnMarketplace = {
     /**
      * Blockchain to work with.
      */
-    chain: SellAssetOnMarketplace.chain;
+    chain: 'ETH' | 'ONE' | 'BSC' | 'MATIC';
     /**
      * Address of the marketplace smart contract.
      */
@@ -28,7 +28,7 @@ export type SellAssetOnMarketplace = {
      */
     listingId: string;
     /**
-     * Amount of the assets to be sent. For ERC-721 tokens, enter 1.
+     * Amount of the assets to be sent. For ERC-721 tokens, enter amount only in case of native currency cashback.
      */
     amount?: string;
     /**
@@ -64,19 +64,4 @@ export type SellAssetOnMarketplace = {
          */
         gasPrice: string;
     };
-}
-
-export namespace SellAssetOnMarketplace {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        ONE = 'ONE',
-        BSC = 'BSC',
-        MATIC = 'MATIC',
-    }
-
-
 }

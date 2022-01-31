@@ -6,7 +6,7 @@ export type ChainTransferAlgoErc20KMS = {
     /**
      * Chain to work with.
      */
-    chain: ChainTransferAlgoErc20KMS.chain;
+    chain: 'ALGO';
     /**
      * Blockchain address to send ERC20 token to
      */
@@ -27,16 +27,4 @@ export type ChainTransferAlgoErc20KMS = {
      * Blockchain address to send ERC20 token to
      */
     from: string;
-}
-
-export namespace ChainTransferAlgoErc20KMS {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        ALGO = 'ALGO',
-    }
-
-
 }

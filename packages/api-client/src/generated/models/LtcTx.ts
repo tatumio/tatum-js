@@ -20,11 +20,15 @@ export type LtcTx = {
     /**
      * Height of the block this transaction belongs to.
      */
-    blockNumber?: number;
+    height?: number;
+    /**
+     * Hash of the block this transaction belongs to.
+     */
+    block?: string;
     /**
      * Time of the transaction.
      */
-    time?: number;
+    ts?: number;
     /**
      * Index of the transaction in the block.
      */

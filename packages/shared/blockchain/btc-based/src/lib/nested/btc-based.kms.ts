@@ -8,9 +8,7 @@ export const btcBasedKmsService = (args: { blockchain: Blockchain }) => {
     ...abstractBlockchainKms(args),
     async sign(tx: ChainTransactionKMS, privateKeys: string[]): Promise<string> {
       // @TODO why chain?
-      const chain: PendingTransaction.chain = blockchainHelper.getDefaultCurrencyByBlockchain(
-        args.blockchain,
-      ) as unknown as PendingTransaction.chain
+      const chain = blockchainHelper.getDefaultCurrencyByBlockchain(args.blockchain)
 
       const builder = new Transaction(JSON.parse(tx.serializedTransaction))
       for (const privateKey of privateKeys) {

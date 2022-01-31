@@ -6,7 +6,7 @@ export type CreateSubscriptionIncoming = {
     /**
      * Type of the subscription.
      */
-    type: CreateSubscriptionIncoming.type;
+    type: 'ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION';
     /**
      * Additional attributes based on the subscription type.
      */
@@ -20,16 +20,4 @@ export type CreateSubscriptionIncoming = {
          */
         url: string;
     };
-}
-
-export namespace CreateSubscriptionIncoming {
-
-    /**
-     * Type of the subscription.
-     */
-    export enum type {
-        ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION = 'ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION',
-    }
-
-
 }

@@ -11,7 +11,7 @@
     "format": "nx format:write",
     "test": "nx affected:test --parallel",
     "dep-graph": "nx dep-graph",
-    "generate-api": "openapi --exportCore false --client axios --input ./packages/api-client/src/api_schema.json --output ./packages/api-client/src/generated",
+    "generate-api": "openapi --exportCore false --useUnionTypes true --client axios --input ./packages/api-client/src/api_schema.json --output ./packages/api-client/src/generated",
     "prepare": "husky install"
   },
   "private": true,
@@ -32,6 +32,7 @@
     "form-data": "^4.0.0",
     "hdkey": "^2.0.1",
     "reflect-metadata": "^0.1.13",
+    "stellar-sdk": "^8.1.0",
     "ripple-lib": "^1.7.1",
     "tslib": "^2.0.0",
     "web3": "^1.7.0",

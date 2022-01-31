@@ -36,7 +36,7 @@ export async function kcsApiExample() {
     nonce: 0,
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     // TODO openapi bug
-    currency: TransferKcsBlockchain.currency.KCS,
+    currency: 'KCS',
     fee: {
       gasLimit: '40000',
       gasPrice: '20',

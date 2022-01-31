@@ -6,7 +6,7 @@ export type MintMultiTokenBatch = {
     /**
      * Chain to work with.
      */
-    chain: MintMultiTokenBatch.chain;
+    chain: 'ETH' | 'ONE' | 'MATIC' | 'KCS' | 'BSC';
     /**
      * Blockchain address to send Multi Token token to.
      */
@@ -48,20 +48,4 @@ export type MintMultiTokenBatch = {
          */
         gasPrice: string;
     };
-}
-
-export namespace MintMultiTokenBatch {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        ONE = 'ONE',
-        MATIC = 'MATIC',
-        KCS = 'KCS',
-        BSC = 'BSC',
-    }
-
-
 }

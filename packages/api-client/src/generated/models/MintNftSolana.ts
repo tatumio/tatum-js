@@ -6,7 +6,7 @@ export type MintNftSolana = {
     /**
      * Chain to work with.
      */
-    chain: MintNftSolana.chain;
+    chain: 'SOL';
     /**
      * Blockchain address to send NFT token to
      */
@@ -41,16 +41,4 @@ export type MintNftSolana = {
          */
         creators?: Array<any>;
     };
-}
-
-export namespace MintNftSolana {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        SOL = 'SOL',
-    }
-
-
 }

@@ -20,13 +20,19 @@ export enum Blockchain {
   TRON = 'TRON',
   EGLD = 'EGLD',
   XDC = 'XDC',
-  LYRA = 'LYRA',
+  SCRYPTA = 'SCRYPTA',
   CARDANO = 'CARDANO',
   ALGO = 'ALGO',
   KCS = 'KCS',
 }
 
-export const BtcBasedBlockchains = [Blockchain.BTC, Blockchain.LTC, Blockchain.DOGE, Blockchain.BCH]
+export const BtcBasedBlockchains = [
+  Blockchain.BTC,
+  Blockchain.LTC,
+  Blockchain.DOGE,
+  Blockchain.BCH,
+  Blockchain.SCRYPTA,
+]
 export const EvmBasedBlockchains = [
   Blockchain.ETH,
   Blockchain.CELO,
@@ -37,7 +43,13 @@ export const EvmBasedBlockchains = [
 ]
 
 // @TODO tmp solution
-export type BtcBasedBlockchain = Blockchain.BTC | Blockchain.LTC | Blockchain.DOGE | Blockchain.BCH
+export type BtcBasedBlockchain =
+  | Blockchain.BTC
+  | Blockchain.LTC
+  | Blockchain.DOGE
+  | Blockchain.BCH
+  | Blockchain.SCRYPTA
+
 export type EvmBasedBlockchain =
   | Blockchain.ETH
   | Blockchain.CELO

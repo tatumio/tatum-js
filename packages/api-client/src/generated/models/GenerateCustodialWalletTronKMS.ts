@@ -6,7 +6,7 @@ export type GenerateCustodialWalletTronKMS = {
     /**
      * Blockchain to work with.
      */
-    chain: GenerateCustodialWalletTronKMS.chain;
+    chain: 'TRON';
     /**
      * Fee in TRX to be paid.
      */
@@ -39,16 +39,4 @@ export type GenerateCustodialWalletTronKMS = {
      * If address should support batch transfers of the assets, it should be marked as true.
      */
     enableBatchTransactions: boolean;
-}
-
-export namespace GenerateCustodialWalletTronKMS {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        TRON = 'TRON',
-    }
-
-
 }

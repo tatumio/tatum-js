@@ -6,7 +6,7 @@ export type TransferMultiTokenCelo = {
     /**
      * Chain to work with.
      */
-    chain: TransferMultiTokenCelo.chain;
+    chain: 'CELO';
     /**
      * Blockchain address to send Multi Token token to
      */
@@ -38,26 +38,5 @@ export type TransferMultiTokenCelo = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency?: TransferMultiTokenCelo.feeCurrency;
-}
-
-export namespace TransferMultiTokenCelo {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency?: 'CELO' | 'CUSD' | 'CEUR';
 }

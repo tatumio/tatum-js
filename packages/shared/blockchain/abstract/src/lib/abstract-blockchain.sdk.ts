@@ -17,6 +17,7 @@ import {
   TransferNft,
   TronWallet,
   UpdateCashbackValueForAuthorNft,
+  XlmWallet,
   XrpWallet,
 } from '@tatumio/api-client'
 import { Blockchain, blockchainHelper, Fiat } from '@tatumio/shared-core'
@@ -47,7 +48,7 @@ export interface SdkWithWalletFunctions {
 }
 
 export interface SdkWithXrpLikeWalletFunction {
-  wallet(): CancelablePromise<XrpWallet>
+  wallet(): CancelablePromise<XrpWallet | XlmWallet>
 }
 
 type FromPrivateKeyOrSignatureId<T extends { fromPrivateKey: string }> = Omit<T, 'fromPrivateKey'> &
@@ -62,7 +63,7 @@ export type ChainBurnErc20 = FromPrivateKeyOrSignatureId<Omit<ApiChainBurnErc20,
 
 export type ChainDeployErc20 = FromPrivateKeyOrSignatureId<DeployErc20>
 
-export type ChainMintErc721 = MintErc721 & { fromPrivateKey?: string; chain: MintNft.chain }
+export type ChainMintErc721 = MintErc721 & { fromPrivateKey?: string; chain: string }
 
 export type ChainMintNft = FromPrivateKeyOrSignatureId<MintNft>
 

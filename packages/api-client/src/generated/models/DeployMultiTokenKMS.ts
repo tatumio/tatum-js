@@ -6,7 +6,7 @@ export type DeployMultiTokenKMS = {
     /**
      * Chain to work with.
      */
-    chain: DeployMultiTokenKMS.chain;
+    chain: 'ETH' | 'ONE' | 'MATIC' | 'KCS' | 'BSC';
     /**
      * URI of the Multi Token token
      */
@@ -36,20 +36,4 @@ export type DeployMultiTokenKMS = {
          */
         gasPrice: string;
     };
-}
-
-export namespace DeployMultiTokenKMS {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        ONE = 'ONE',
-        MATIC = 'MATIC',
-        KCS = 'KCS',
-        BSC = 'BSC',
-    }
-
-
 }

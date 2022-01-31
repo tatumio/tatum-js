@@ -6,7 +6,7 @@ export type CreateSubscriptionTxInTheBlock = {
     /**
      * Type of the subscription.
      */
-    type: CreateSubscriptionTxInTheBlock.type;
+    type: 'TRANSACTION_IN_THE_BLOCK';
     /**
      * Additional attributes based on the subscription type.
      */
@@ -16,16 +16,4 @@ export type CreateSubscriptionTxInTheBlock = {
          */
         url: string;
     };
-}
-
-export namespace CreateSubscriptionTxInTheBlock {
-
-    /**
-     * Type of the subscription.
-     */
-    export enum type {
-        TRANSACTION_IN_THE_BLOCK = 'TRANSACTION_IN_THE_BLOCK',
-    }
-
-
 }

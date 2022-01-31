@@ -36,7 +36,7 @@ export async function oneApiExample() {
     nonce: 0,
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     // TODO openapi bug
-    currency: TransferOneBlockchain.currency.ONE,
+    currency: 'ONE',
     fee: {
       gasLimit: '40000',
       gasPrice: '20',

@@ -4,14 +4,13 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/shared/blockchain/btc-based",
         "main": "packages/shared/blockchain/btc-based/src/index.ts",
         "packageJson": "packages/shared/blockchain/btc-based/package.json",
-        "tsConfig": "packages/shared/blockchain/btc-based/tsconfig.lib.json",
-        "assets": ["packages/shared/blockchain/btc-based/*.md"]
+        "tsConfig": "packages/shared/blockchain/btc-based/tsconfig.lib.json"
       }
     },
     "lint": {

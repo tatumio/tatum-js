@@ -10,7 +10,7 @@ export type TransferNftKMSCelo = {
     /**
      * Chain to work with.
      */
-    chain: TransferNftKMSCelo.chain;
+    chain: 'CELO';
     /**
      * Blockchain address to send NFT token to
      */
@@ -50,26 +50,5 @@ export type TransferNftKMSCelo = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: TransferNftKMSCelo.feeCurrency;
-}
-
-export namespace TransferNftKMSCelo {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

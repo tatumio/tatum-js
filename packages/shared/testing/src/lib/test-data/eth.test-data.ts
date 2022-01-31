@@ -22,6 +22,9 @@ export const ETH_TEST_DATA: BlockchainTestData = {
     PRIVATE_KEY_0: '0x254ac28e10916b3c2def004a37fec216649288ae71c8cac41faf106193263792',
     PRIVATE_KEY_100: '0x310d6940acde2a3e629e36fcd0f4bed1c2a1bc2613946836ffdd8d46e0e7cd15',
   },
+  BLOCK_HASH: '0xa12dd4f56064bf056dd0a4b6f922894f61dd6d1bad9c929709d7f9941ae83945',
+  BLOCK_HEIGHT: 10995793,
+  TX_HASH: '0x52fcb688992398b5c517f70ad7f1828d08ca0d896686f72ce02823700ff502ec',
   INVALID_XPUB_ERROR: 'Non-base58 character',
   INVALID_XPUB_CHILD_INDEX_ERROR:
     'The value of "value" is out of range. It must be >= 0 and <= 4294967295. Received -1',

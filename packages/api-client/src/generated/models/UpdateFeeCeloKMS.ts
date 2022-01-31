@@ -6,11 +6,11 @@ export type UpdateFeeCeloKMS = {
     /**
      * Blockchain to work with.
      */
-    chain: UpdateFeeCeloKMS.chain;
+    chain: 'CELO';
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: UpdateFeeCeloKMS.feeCurrency;
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
      * Percentage of the selling amount of the NFT asset. 100 - 1%
      */
@@ -40,25 +40,4 @@ export type UpdateFeeCeloKMS = {
          */
         gasPrice: string;
     };
-}
-
-export namespace UpdateFeeCeloKMS {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
 }

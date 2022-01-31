@@ -6,7 +6,7 @@ export type ApproveNftSpendingKMS = {
     /**
      * Blockchain to work with.
      */
-    chain: ApproveNftSpendingKMS.chain;
+    chain: 'ETH' | 'ONE' | 'BSC' | 'MATIC';
     /**
      * Address of the ERC20 token, which is used for buying NFT asset from the marketplace.
      */
@@ -48,19 +48,4 @@ export type ApproveNftSpendingKMS = {
          */
         gasPrice: string;
     };
-}
-
-export namespace ApproveNftSpendingKMS {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        ONE = 'ONE',
-        BSC = 'BSC',
-        MATIC = 'MATIC',
-    }
-
-
 }

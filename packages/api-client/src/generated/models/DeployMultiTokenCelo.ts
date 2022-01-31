@@ -6,7 +6,7 @@ export type DeployMultiTokenCelo = {
     /**
      * Chain to work with.
      */
-    chain: DeployMultiTokenCelo.chain;
+    chain: 'CELO';
     /**
      * URI of the Multi Token contract
      */
@@ -26,26 +26,5 @@ export type DeployMultiTokenCelo = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: DeployMultiTokenCelo.feeCurrency;
-}
-
-export namespace DeployMultiTokenCelo {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

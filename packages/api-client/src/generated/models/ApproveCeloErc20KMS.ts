@@ -6,7 +6,7 @@ export type ApproveCeloErc20KMS = {
     /**
      * Chain to work with.
      */
-    chain: ApproveCeloErc20KMS.chain;
+    chain: 'CELO';
     /**
      * Amount to be approved for the spender.
      */
@@ -30,26 +30,5 @@ export type ApproveCeloErc20KMS = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: ApproveCeloErc20KMS.feeCurrency;
-}
-
-export namespace ApproveCeloErc20KMS {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }
