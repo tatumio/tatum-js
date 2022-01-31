@@ -1,4 +1,4 @@
-import { TatumSDK } from '@tatumio/sdk'
+import { TatumSDK } from '@tatumio/tatum'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
 import { Blockchain } from '@tatumio/shared-core'
 

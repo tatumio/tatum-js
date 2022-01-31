@@ -54,7 +54,28 @@ jobs:
       - name: Config git email
         run: git config --global user.email "lukas.kotol@tatum.io"
 
-      - name: Config git name
+      - name: Config git nam
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         run: git config --global user.name "Hathoriel"
 
       - run: npx nxpm release $(npm --no-git-tag-version version prerelease) --fix --ci
