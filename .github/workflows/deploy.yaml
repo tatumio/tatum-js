@@ -51,6 +51,8 @@ jobs:
       - run: npx nx-cloud stop-all-agents
 
       - run: echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}" > ~/.npmrc
+      - run: npm config set tag-version-prefix ''
+
       - name: Config git email
         run: git config --global user.email "lukas.kotol@tatum.io"
 
