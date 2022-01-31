@@ -59,6 +59,7 @@ jobs:
       - name: Config git name
         run: git config --global user.name "Hathoriel"
 
+      - run: echo $(npm --no-git-tag-version version prerelease)
       - name: Publish packages
         run: yarn --ignore-scripts release:prerelease
         env:
