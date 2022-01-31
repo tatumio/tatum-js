@@ -24,7 +24,7 @@ export const bchWallet = (args: { blockchain: BtcBasedBlockchain }): SdkWithWall
     generateAddressFromPrivateKey: (privateKey: string, options?: { testnet: boolean }): string => {
       const network = blockchainUtils.getNetworkConfig(args.blockchain, options)
       const keyPair = ECPair.fromWIF(privateKey, network)
-      const legacy = payments.p2pkh({ pubkey: keyPair.publicKey, network }).address as string
+      const legacy = payments.p2pkh({ pubkey: keyPair.publicKey, network }).address
       const decoded = bcashAddressHelper.decode(legacy)
 
       return cashaddr.encode(decoded.prefix, decoded.type, decoded.hash)

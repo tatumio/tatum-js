@@ -105,20 +105,16 @@ const privateKeysFromUTXO = async (
     for (const item of body.fromUTXO) {
       const tx = await ApiServices.blockchain.bitcoin.btcGetRawTransaction(item.txHash)
 
-      if (!tx.outputs || !tx.outputs[item.index]) {
-        throw new BtcSdkError(SdkErrorCode.BTC_UTXO_NOT_FOUND)
-      }
+      const output = (tx.outputs ?? [])[item.index]
+      if (!output || !output.address || !output.value) throw new BtcSdkError(SdkErrorCode.BTC_UTXO_NOT_FOUND)
 
-      const address = tx.outputs[item.index].address
-      const value = tx.outputs[item.index].value
-
-      const script = Script.fromAddress(address!).toString()
+      const script = Script.fromAddress(output.address).toString()
       transaction.from([
         Transaction.UnspentOutput.fromObject({
           txId: item.txHash,
           outputIndex: item.index,
           script: script,
-          satoshis: value,
+          satoshis: output.value,
         }),
       ])
 

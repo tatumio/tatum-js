@@ -123,16 +123,14 @@ const privateKeysFromUTXO = async (
   for (const item of body.fromUTXO) {
     const tx = await ApiServices.blockchain.ltc.ltcGetRawTransaction(item.txHash)
 
-    if (!tx.outputs || !tx.outputs[item.index]) throw new LtcSdkError(SdkErrorCode.BTC_UTXO_NOT_FOUND)
-
-    const address = tx.outputs[item.index].address! // @TODO null check
-    const value = tx.outputs[item.index].value!
+    const output = (tx.outputs ?? [])[item.index]
+    if (!output || !output.address || !output.value) throw new LtcSdkError(SdkErrorCode.BTC_UTXO_NOT_FOUND)
 
     transaction.from({
       txId: item.txHash,
       outputIndex: item.index,
-      script: Script.fromAddress(address).toString(),
-      satoshis: amountUtils.toSatoshis(value),
+      script: Script.fromAddress(output.address).toString(),
+      satoshis: amountUtils.toSatoshis(output.value),
     })
 
     if ('signatureId' in item) privateKeysToSign.push(item.signatureId)

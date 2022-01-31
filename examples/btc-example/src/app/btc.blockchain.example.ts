@@ -5,7 +5,7 @@ import { BtcTransactionFromAddress } from '@tatumio/api-client'
 const btcSDK = TatumBtcSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function btcBlockchainExample() {
-  const mempoolTransactionIds = await btcSDK.blockchain.mempool
+  const mempoolTransactionIds = await btcSDK.blockchain.mempool()
   const block = await btcSDK.blockchain.getBlock(
     '0000000000000000000067de34da54c96ff76e6ba172f82c4ed8a25afb112a9e',
   )

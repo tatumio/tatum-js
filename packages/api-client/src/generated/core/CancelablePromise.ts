@@ -19,8 +19,6 @@ export interface OnCancel {
   (cancelHandler: () => void): void
 }
 
-//export type CancelablePromise<T> = Promise<T>
-
 export class CancelablePromise<T> implements Promise<T> {
   readonly [Symbol.toStringTag]: string
 

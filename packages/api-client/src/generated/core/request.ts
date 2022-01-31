@@ -222,33 +222,6 @@ function catchErrors(options: ApiRequestOptions, result: ApiResult): void {
   }
 }
 
-/**
- * Request using axios client
- * @param options The request options from the the service
- * @returns CancelablePromise<T>
- * @throws ApiError
- */
-/*export async function request<T>(options: ApiRequestOptions): CancelablePromise<T> {
-  const url = getUrl(options)
-  const formData = getFormData(options)
-  const body = getRequestBody(options)
-  const headers = await getHeaders(options, formData)
-
-  const response = await sendRequest(options, url, formData, body, headers)
-  const responseBody = getResponseBody(response)
-  const responseHeader = getResponseHeader(response, options.responseHeader)
-
-  const result: ApiResult = {
-    url,
-    ok: isSuccess(response.status),
-    status: response.status,
-    statusText: response.statusText,
-    body: responseHeader || responseBody,
-  }
-
-  return result.body
-}*/
-
 export function request<T>(options: ApiRequestOptions): CancelablePromise<T> {
   return new CancelablePromise(async (resolve, reject, onCancel) => {
     try {

@@ -34,6 +34,7 @@ const prepareSignedTransaction = async (
     const network = args.testnet
       ? coininfo.bitcoincash.test.toBitcoinJS()
       : coininfo.bitcoincash.main.toBitcoinJS()
+
     const transactionBuilder = new TransactionBuilder(network)
     const privateKeysToSign = []
     const amountToSign: number[] = []
@@ -98,7 +99,7 @@ const getTransactions = async (txHash: string[]): Promise<BchTx[]> => {
   for (const tx of txHash) {
     result.push(ApiServices.blockchain.bcash.bchGetRawTransaction(tx))
   }
-  return await Promise.all(result)
+  return Promise.all(result)
 }
 
 export const bchTransactions = (): BtcBasedTx<BchTransactionBody> => ({

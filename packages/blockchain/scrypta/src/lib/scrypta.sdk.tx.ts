@@ -21,35 +21,53 @@ const prepareSignedTransaction = async (body: ScryptaTransaction, options: { tes
   tx.setVersion(1)
 
   if (fromAddress) {
-    for (const item of fromAddress) {
-      const txs = await ApiServices.blockchain.scrypta.getScryptaspendableUtxo(50, 0, item.address)
-      for (const t of txs) {
-        try {
-          tx.addInput(t.txid, t.vout)
-          if (item.privateKey) {
-            privateKeysToSign.push(item.privateKey)
-          }
-        } catch (e) {
-          console.error(e.toString())
-        }
-      }
-    }
+    await privateKeysFromAddress(fromAddress, tx, privateKeysToSign)
   } else if (fromUTXO) {
-    for (const item of fromUTXO) {
-      tx.addInput(item.txHash, Number(item.index))
-      if (item.privateKey) {
-        privateKeysToSign.push(item.privateKey)
-      }
-    }
+    privateKeysFromUTXO(fromUTXO, tx, privateKeysToSign)
   }
+
   for (const item of to) {
     tx.addOutput(item.address, amountUtils.toSatoshis(item.value))
   }
+
   for (let i = 0; i < privateKeysToSign.length; i++) {
     const ecPair = ECPair.fromWIF(privateKeysToSign[i], network)
     tx.sign(i, ecPair)
   }
   return tx.build().toHex()
+}
+
+async function privateKeysFromAddress(
+  fromAddress: Array<{ signatureId?: string; address: string; privateKey?: string }>,
+  tx: TransactionBuilder,
+  privateKeysToSign: any[],
+) {
+  for (const item of fromAddress) {
+    const txs = await ApiServices.blockchain.scrypta.getScryptaspendableUtxo(50, 0, item.address)
+    for (const t of txs) {
+      try {
+        tx.addInput(t.txid, t.vout)
+        if (item.privateKey) {
+          privateKeysToSign.push(item.privateKey)
+        }
+      } catch (e) {
+        console.error(e.toString())
+      }
+    }
+  }
+}
+
+function privateKeysFromUTXO(
+  fromUTXO: Array<{ txHash: string; index: string; privateKey?: string; signatureId?: string }>,
+  tx: TransactionBuilder,
+  privateKeysToSign: any[],
+) {
+  for (const item of fromUTXO) {
+    tx.addInput(item.txHash, Number(item.index))
+    if (item.privateKey) {
+      privateKeysToSign.push(item.privateKey)
+    }
+  }
 }
 
 export const scryptaTransactions = (): BtcBasedTx<ScryptaTransaction> => ({
