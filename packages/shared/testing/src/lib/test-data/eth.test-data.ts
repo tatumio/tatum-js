@@ -13,6 +13,10 @@ export const ETH_TEST_DATA: BlockchainTestData = {
       PRIVATE_KEY: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
       ADDRESS: '0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea',
     },
+    ERC_721: {
+      PRIVATE_KEY: '0d6c13fe5fed644dfa02512d4bffde9453dcb48873afb0b0a4c0cebce160c279',
+      CONTRACT_ADDRESS: '0x2A42ae2a6346eEbC7FE2b2b7f02158634d5390dc',
+    },
   },
   TESTNET: {
     XPUB: 'xpub6Dwu4pG9LS4S3cSdR1nAoGL18AWLttx3WCYPqdvx3TPAEuemkbgdLSAQG13xPwTku21pkQsZjSuERGtiMsiNCVzzPnh1BVhwis2f1bYSYoH',

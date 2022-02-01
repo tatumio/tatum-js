@@ -14,6 +14,11 @@ export const POLYGON_TEST_DATA: BlockchainTestData = {
       PRIVATE_KEY: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
       ADDRESS: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     },
+    ERC_721: {
+      PRIVATE_KEY: '0d6c13fe5fed644dfa02512d4bffde9453dcb48873afb0b0a4c0cebce160c279',
+      CONTRACT_ADDRESS: '0x2A42ae2a6346eEbC7FE2b2b7f02158634d5390dc',
+      PROVIDER: 'https://matic-mumbai.chainstacklabs.com',
+    },
   },
   BLOCK_HASH: '0x0ad57222955e6297492447f5f0bcd0b415738d7179738217364853790edf718a',
   BLOCK_HEIGHT: 24_355_132,

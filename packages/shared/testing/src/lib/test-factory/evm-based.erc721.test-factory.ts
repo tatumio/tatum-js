@@ -8,6 +8,7 @@ export const erc721TestFactory = {
       testData: BlockchainTestData,
       chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'ALGO',
     ) => {
+      jest.setTimeout(99999)
       it('valid with signatureId', async () => {
         const result = await sdk.prepare.deploySignedTransaction({
           chain,
@@ -23,7 +24,6 @@ export const erc721TestFactory = {
         const json = JSON.parse(result)
 
         expect(json.gasPrice).toBe('20000000000')
-        expect(json.from).toBe(0)
         expectHexString(json.data)
       })
 
@@ -32,7 +32,7 @@ export const erc721TestFactory = {
           chain,
           symbol: 'ERC_SYMBOL',
           name: 'bO6AN',
-          fromPrivateKey: testData.MAINNET.ERC_20!.PRIVATE_KEY,
+          fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
           fee: {
             gasLimit: '326452',
             gasPrice: '20',
@@ -42,6 +42,7 @@ export const erc721TestFactory = {
         expectHexString(result)
       })
     },
+
     transferSignedTransaction: (
       sdk: SdkWithErc721Functions,
       testData: BlockchainTestData,
@@ -52,7 +53,7 @@ export const erc721TestFactory = {
           chain,
           to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
           tokenId: '112345678',
-          contractAddress: testData.MAINNET.ERC_20!.ADDRESS,
+          contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
           signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
           fee: {
             gasLimit: '50000',
@@ -63,7 +64,6 @@ export const erc721TestFactory = {
         const json = JSON.parse(result)
 
         expect(json.gasPrice).toBe('20000000000')
-        expect(json.from).toBe(0)
         expectHexString(json.data)
       })
 
@@ -71,8 +71,8 @@ export const erc721TestFactory = {
         const result = await sdk.prepare.transferSignedTransaction({
           chain,
           to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-          contractAddress: testData.MAINNET.ERC_20!.ADDRESS,
-          fromPrivateKey: testData.MAINNET.ERC_20!.PRIVATE_KEY,
+          contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+          fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
           tokenId: '112345678',
           fee: {
             gasLimit: '326452',
@@ -88,8 +88,8 @@ export const erc721TestFactory = {
           await sdk.prepare.transferSignedTransaction({
             chain,
             to: 'someinvalidaddress',
-            contractAddress: testData.MAINNET.ERC_20!.ADDRESS,
-            fromPrivateKey: testData.MAINNET.ERC_20!.PRIVATE_KEY,
+            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
             nonce: 3252345722143,
             tokenId: '112345678',
             fee: {
@@ -108,46 +108,56 @@ export const erc721TestFactory = {
       testData: BlockchainTestData,
       chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC',
     ) => {
-      xit('valid from privateKey', async () => {
-        const result = await sdk.prepare.mintSignedTransaction({
-          to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-          contractAddress: testData.MAINNET.ERC_20!.ADDRESS,
-          fromPrivateKey: testData.MAINNET.ERC_20!.PRIVATE_KEY,
-          tokenId: '34839439',
-          url: 'https://my_token_data.com',
-          chain,
-        })
+      const provider = testData.TESTNET.ERC_721?.PROVIDER ? testData.TESTNET.ERC_721?.PROVIDER : undefined
+      const address = testData.TESTNET.ERC_721?.ADDRESS
+        ? testData.TESTNET.ERC_721?.ADDRESS
+        : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
 
+      it('valid from privateKey', async () => {
+        const result = await sdk.prepare.mintSignedTransaction(
+          {
+            to: address,
+            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
+            tokenId: new Date().getTime().toString(),
+            url: 'https://my_token_data.com',
+            chain,
+          },
+          provider,
+        )
         expectHexString(result)
       })
 
-      xit('valid from SignatureId', async () => {
-        const result = await sdk.prepare.mintSignedTransaction({
-          to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-          contractAddress: testData.MAINNET.ERC_20!.ADDRESS,
-          signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-          tokenId: '34839439',
-          url: 'https://my_token_data.com',
-          chain,
-        })
+      it('valid from SignatureId', async () => {
+        const result = await sdk.prepare.mintSignedTransaction(
+          {
+            to: address,
+            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+            tokenId: new Date().getTime().toString(),
+            url: 'https://my_token_data.com',
+            chain,
+          },
+          provider,
+        )
 
         const json = JSON.parse(result)
-
-        expect(json.gasPrice).toBe('20000000000')
-        expect(json.from).toBe(0)
         expectHexString(json.data)
       })
 
-      xit('invalid address', async () => {
+      it('invalid address', async () => {
         try {
-          await sdk.prepare.mintSignedTransaction({
-            to: 'someinvalidaddress',
-            tokenId: '34839439',
-            url: 'https://my_token_data.com',
-            contractAddress: testData.MAINNET.ERC_20!.ADDRESS,
-            fromPrivateKey: testData.MAINNET.ERC_20!.PRIVATE_KEY,
-            chain,
-          })
+          await sdk.prepare.mintSignedTransaction(
+            {
+              to: 'someinvalidaddress',
+              tokenId: new Date().getTime().toString(),
+              url: 'https://my_token_data.com',
+              contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+              fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
+              chain,
+            },
+            provider,
+          )
           fail()
         } catch (e: any) {
           expect(e.reason).toMatch('invalid address')
@@ -159,29 +169,34 @@ export const erc721TestFactory = {
       testData: BlockchainTestData,
       chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'ALGO',
     ) => {
-      xit('valid from privateKey', async () => {
-        const result = await sdk.prepare.burnSignedTransaction({
-          tokenId: '34839439',
-          contractAddress: testData.MAINNET.ERC_20!.ADDRESS,
-          fromPrivateKey: testData.MAINNET.ERC_20!.PRIVATE_KEY,
-          chain,
-        })
+      const provider = testData.TESTNET.ERC_721?.PROVIDER ? testData.TESTNET.ERC_721?.PROVIDER : undefined
+
+      it('valid from privateKey', async () => {
+        const result = await sdk.prepare.burnSignedTransaction(
+          {
+            tokenId: new Date().getTime().toString(),
+            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
+            chain,
+          },
+          provider,
+        )
 
         expectHexString(result)
       })
 
-      xit('valid from SignatureId', async () => {
-        const result = await sdk.prepare.burnSignedTransaction({
-          contractAddress: testData.MAINNET.ERC_20!.ADDRESS,
-          signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-          tokenId: '34839439',
-          chain,
-        })
+      it('valid from SignatureId', async () => {
+        const result = await sdk.prepare.burnSignedTransaction(
+          {
+            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+            tokenId: new Date().getTime().toString(),
+            chain,
+          },
+          provider,
+        )
 
         const json = JSON.parse(result)
-
-        expect(json.gasPrice).toBe('20000000000')
-        expect(json.from).toBe(0)
         expectHexString(json.data)
       })
     },

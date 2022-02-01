@@ -16,6 +16,11 @@ export const ONE_TEST_DATA: BlockchainTestData = {
       PRIVATE_KEY: '0x0d6c13fe5fed644dfa02512d4bffde9453dcb48873afb0b0a4c0cebce160c279',
       ADDRESS: '0x2627d16dcd27ddb6cf42341756aa6c5a8c6cb954',
     },
+    ERC_721: {
+      PRIVATE_KEY: '0d6c13fe5fed644dfa02512d4bffde9453dcb48873afb0b0a4c0cebce160c279',
+      CONTRACT_ADDRESS: '0x6709bdda623af7eb152cb2fe2562ab7e031e564f',
+      ADDRESS: '0xcf9e127455d28e7362380aec1b92ddee8200b295',
+    },
   },
   BLOCK_HASH: '0x92bc4ed1d484e3babb490e36cf436d12a8236d92caabc12d1dbbc8d02eacc265',
   BLOCK_HEIGHT: 22_366_731,

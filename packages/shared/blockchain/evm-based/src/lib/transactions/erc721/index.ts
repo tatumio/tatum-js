@@ -13,7 +13,7 @@ import { TransactionConfig } from 'web3-core'
 import { Erc721Token, Erc721_Provenance } from '../../contracts'
 import { EvmBasedWeb3 } from '../../services/evm-based.web3'
 import { evmBasedUtils } from '../../evm-based.utils'
-import { BlockchainNftService, MintNftKMS } from '@tatumio/api-client'
+import { BlockchainNftService, MintErc721, MintNftKMS } from '@tatumio/api-client'
 import BigNumber from 'bignumber.js'
 
 const mintSignedTransaction = async (body: ChainMintErc721, web3: EvmBasedWeb3, provider?: string) => {
@@ -23,7 +23,7 @@ const mintSignedTransaction = async (body: ChainMintErc721, web3: EvmBasedWeb3, 
 
   if (contractAddress) {
     const tx: TransactionConfig = {
-      from: 0,
+      from: undefined,
       to: contractAddress.trim(),
       data: contract.methods.mintWithTokenURI(to.trim(), tokenId, url).encodeABI(),
       nonce: nonce,
@@ -63,7 +63,7 @@ const mintCashbackSignedTransaction = async (body: ChainMintNft, web3: EvmBasedW
   const cb = cashbacks.map((c) => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
   if (contractAddress) {
     const tx: TransactionConfig = {
-      from: 0,
+      from: undefined,
       to: contractAddress.trim(),
       data: erc20
         ? contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb, erc20).encodeABI()
@@ -111,7 +111,7 @@ export const mintMultipleCashbackSignedTransaction = async (
     cashback.map((c) => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`),
   )
   const tx: TransactionConfig = {
-    from: 0,
+    from: undefined,
     to: contractAddress.trim(),
     data: erc20
       ? contract.methods
@@ -158,7 +158,7 @@ const mintMultipleSignedTransaction = async (
   const contract = new client.eth.Contract(Erc721Token.abi as any, contractAddress)
 
   const tx: TransactionConfig = {
-    from: 0,
+    from: undefined,
     to: contractAddress.trim(),
     data: contract.methods
       .mintMultiple(
@@ -187,7 +187,7 @@ const burnSignedTransaction = async (body: ChainBurnErc721, web3: EvmBasedWeb3, 
 
   const contract = new client.eth.Contract(Erc721Token.abi as any, contractAddress)
   const tx: TransactionConfig = {
-    from: 0,
+    from: undefined,
     to: contractAddress.trim(),
     data: contract.methods.burn(tokenId).encodeABI(),
     nonce,
@@ -237,7 +237,7 @@ const transferSignedTransaction = async (
     : contract.methods.safeTransfer(to.trim(), tokenId).encodeABI()
 
   const tx: TransactionConfig = {
-    from: 0,
+    from: undefined,
     to: contractAddress.trim(),
     data: tokenData,
     nonce,
@@ -267,7 +267,7 @@ const updateCashbackForAuthorSignedTransaction = async (
   const contract = new client.eth.Contract(Erc721Token.abi as any, contractAddress)
 
   const tx: TransactionConfig = {
-    from: 0,
+    from: undefined,
     to: contractAddress.trim(),
     data: contract.methods
       .updateCashbackForAuthor(
@@ -307,7 +307,7 @@ const deploySignedTransaction = async (body: ChainDeployErc721, web3: EvmBasedWe
   })
 
   const tx: TransactionConfig = {
-    from: 0,
+    from: undefined,
     data: deploy.encodeABI(),
     nonce,
   }
@@ -349,7 +349,7 @@ const mintProvenanceSignedTransaction = async (body: ChainMintNft, web3: EvmBase
   }
   if (contractAddress) {
     const tx: TransactionConfig = {
-      from: 0,
+      from: undefined,
       to: contractAddress.trim(),
       data: contract.methods
         .mintWithTokenURI(
@@ -416,7 +416,7 @@ const mintMultipleProvenanceSignedTransaction = async (
     }
   }
   const tx: TransactionConfig = {
-    from: 0,
+    from: undefined,
     to: contractAddress.trim(),
     data: erc20
       ? contract.methods
@@ -552,11 +552,8 @@ export const erc721 = (args: {
        * @returns transaction id of the transaction in the blockchain
        */
       mintSignedTransaction: async (body: ChainMintErc721, provider?: string) => {
-        if (body.fromPrivateKey && body.signatureId) {
-          return BlockchainNftService.nftMintErc721(body as MintNftKMS)
-        }
-        return args.broadcastFunction({
-          txData: await mintSignedTransaction(body, args.web3, provider),
+        args.broadcastFunction({
+          txData: (await mintSignedTransaction(body, args.web3, provider)) as string,
           signatureId: body.signatureId,
         })
       },
@@ -569,7 +566,7 @@ export const erc721 = (args: {
        */
       mintCashbackSignedTransaction: async (body: ChainMintNft, provider?: string) =>
         args.broadcastFunction({
-          txData: await mintCashbackSignedTransaction(body, args.web3, provider),
+          txData: (await mintCashbackSignedTransaction(body, args.web3, provider)) as string,
           signatureId: body.signatureId,
         }),
       /**
@@ -581,7 +578,7 @@ export const erc721 = (args: {
        */
       mintMultipleCashbackSignedTransaction: async (body: ChainMintMultipleNft, provider?: string) =>
         args.broadcastFunction({
-          txData: await mintMultipleCashbackSignedTransaction(body, args.web3, provider),
+          txData: (await mintMultipleCashbackSignedTransaction(body, args.web3, provider)) as string,
           signatureId: body.signatureId,
         }),
       /**
@@ -593,7 +590,7 @@ export const erc721 = (args: {
        */
       mintMultipleSignedTransaction: async (body: ChainMintMultipleNft, provider?: string) =>
         args.broadcastFunction({
-          txData: await mintMultipleSignedTransaction(body, args.web3, provider),
+          txData: (await mintMultipleSignedTransaction(body, args.web3, provider)) as string,
           signatureId: body.signatureId,
         }),
       /**
@@ -605,7 +602,7 @@ export const erc721 = (args: {
        */
       burnSignedTransaction: async (body: ChainBurnErc721, provider?: string) =>
         args.broadcastFunction({
-          txData: await burnSignedTransaction(body, args.web3, provider),
+          txData: (await burnSignedTransaction(body, args.web3, provider)) as string,
           signatureId: body.signatureId,
         }),
       /**
@@ -617,7 +614,7 @@ export const erc721 = (args: {
        */
       transferSignedTransaction: async (body: ChainTransferErc721, provider?: string) =>
         args.broadcastFunction({
-          txData: await transferSignedTransaction(body, args.web3, provider),
+          txData: (await transferSignedTransaction(body, args.web3, provider)) as string,
           signatureId: body.signatureId,
         }),
       /**
@@ -629,7 +626,7 @@ export const erc721 = (args: {
        */
       updateCashbackForAuthorSignedTransaction: async (body: ChainUpdateCashbackErc721, provider?: string) =>
         args.broadcastFunction({
-          txData: await updateCashbackForAuthorSignedTransaction(body, args.web3, provider),
+          txData: (await updateCashbackForAuthorSignedTransaction(body, args.web3, provider)) as string,
           signatureId: body.signatureId,
         }),
       /**
@@ -641,7 +638,7 @@ export const erc721 = (args: {
        */
       deploySignedTransaction: async (body: ChainDeployErc721, provider?: string) =>
         args.broadcastFunction({
-          txData: await deploySignedTransaction(body, args.web3, provider),
+          txData: (await deploySignedTransaction(body, args.web3, provider)) as string,
           signatureId: body.signatureId,
         }),
       /**
@@ -653,7 +650,7 @@ export const erc721 = (args: {
        */
       mintProvenanceSignedTransaction: async (body: ChainMintNft, provider?: string) =>
         args.broadcastFunction({
-          txData: await mintProvenanceSignedTransaction(body, args.web3, provider),
+          txData: (await mintProvenanceSignedTransaction(body, args.web3, provider)) as string,
           signatureId: body.signatureId,
         }),
       /**
@@ -668,7 +665,7 @@ export const erc721 = (args: {
         provider?: string,
       ) =>
         args.broadcastFunction({
-          txData: await mintMultipleProvenanceSignedTransaction(body, args.web3, provider),
+          txData: (await mintMultipleProvenanceSignedTransaction(body, args.web3, provider)) as string,
           signatureId: body.signatureId,
         }),
     },

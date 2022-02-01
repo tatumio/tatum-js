@@ -198,7 +198,7 @@ export const erc20 = (args: {
        */
       deploySignedTransaction: async (body: ChainDeployErc20, provider?: string) =>
         args.broadcastFunction({
-          txData: await deploySignedTransaction(body, args.web3, provider),
+          txData: (await deploySignedTransaction(body, args.web3, provider)) as string,
           signatureId: body.signatureId,
         }),
       /**
@@ -210,7 +210,7 @@ export const erc20 = (args: {
        */
       transferSignedTransaction: async (body: ChainTransferErc20, provider?: string) =>
         args.broadcastFunction({
-          txData: await transferSignedTransaction(body, args.web3, provider),
+          txData: (await transferSignedTransaction(body, args.web3, provider)) as string,
           signatureId: body.signatureId,
         }),
       /**
@@ -222,7 +222,7 @@ export const erc20 = (args: {
        */
       mintSignedTransaction: async (body: ChainMintErc20, provider?: string) =>
         args.broadcastFunction({
-          txData: await mintSignedTransaction(body, args.web3, provider),
+          txData: (await mintSignedTransaction(body, args.web3, provider)) as string,
           signatureId: body.signatureId,
         }),
       /**
@@ -234,7 +234,7 @@ export const erc20 = (args: {
        */
       burnSignedTransaction: async (body: ChainBurnErc20, provider?: string) =>
         args.broadcastFunction({
-          txData: await burnSignedTransaction(body, args.web3, provider),
+          txData: (await burnSignedTransaction(body, args.web3, provider)) as string,
           signatureId: body.signatureId,
         }),
     },
