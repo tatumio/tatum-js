@@ -14,7 +14,7 @@
     "test": "nx affected:test --parallel",
     "dep-graph": "nx dep-graph",
     "generate-api": "openapi --exportCore false --useUnionTypes true --client axios --input ./packages/api-client/src/api_schema.json --output ./packages/api-client/src/generated",
-    "release:current": "nxpm release $(./scripts/package-version.sh) --ci --fix --dry-run",
+    "release:current": "nxpm release $(./scripts/package-version.sh) --ci --fix",
     "version:alpha": "npm --tag-version-prefix='' --no-git-tag-version version prerelease",
     "version:patch": "npm --no-git-tag-version version patch",
     "version:minor": "npm --no-git-tag-version version minor",
