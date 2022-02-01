@@ -3,10 +3,9 @@ import { BlockchainTestData, expectHexString } from '../shared-testing'
 
 export const erc20TestFactory = {
   decimals: (sdk: SdkWithErc20Functions, testData: BlockchainTestData) => {
-    xdescribe('mainnet', () => {
+    describe('mainnet', () => {
       it('valid', async () => {
-        // Returned values aren't valid, did it run Out of Gas? You might also see this error if you are not using the correct ABI for the contract you are retrieving data from, requesting data from a block number that does not exist, or querying a node which is not fully synced.
-        const result = await sdk.decimals(testData.MAINNET.CONTRACT_ADDRESS)
+        const result = await sdk.decimals(testData.TESTNET.ERC_20.CONTRACT_ADDRESS, testData.TESTNET.PROVIDER)
 
         expect(result).toBeDefined()
       })
@@ -20,7 +19,7 @@ export const erc20TestFactory = {
         const result = await sdk.prepare.deploySignedTransaction({
           symbol: 'ERC_SYMBOL',
           name: 'bO6AN',
-          address: testData.MAINNET.ERC_20.ADDRESS,
+          address: testData.TESTNET.ERC_20.ADDRESS,
           supply: '10000000',
           signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
           digits: 18,
@@ -30,7 +29,7 @@ export const erc20TestFactory = {
             gasLimit: '171864',
             gasPrice: '20',
           },
-        })
+        }, testData.TESTNET.PROVIDER)
 
         const json = JSON.parse(result)
 
@@ -45,9 +44,9 @@ export const erc20TestFactory = {
         const result = await sdk.prepare.deploySignedTransaction({
           symbol: 'ERC_SYMBOL',
           name: 'bO6AN',
-          address: testData.MAINNET.ERC_20.ADDRESS,
+          address: testData.TESTNET.ERC_20.ADDRESS,
           supply: '10000000',
-          fromPrivateKey: testData.MAINNET.ERC_20.PRIVATE_KEY,
+          fromPrivateKey: testData.TESTNET.ERC_20.PRIVATE_KEY,
           digits: 18,
           totalCap: '10000000',
           nonce,
@@ -55,7 +54,7 @@ export const erc20TestFactory = {
             gasLimit: '171864',
             gasPrice: '20',
           },
-        })
+        }, testData.TESTNET.PROVIDER)
 
         expectHexString(result)
       })
@@ -67,7 +66,7 @@ export const erc20TestFactory = {
             name: 'bO6AN',
             address: 'someinvalidaddress',
             supply: '10000000',
-            fromPrivateKey: testData.MAINNET.ERC_20.PRIVATE_KEY,
+            fromPrivateKey: testData.TESTNET.ERC_20.PRIVATE_KEY,
             digits: 18,
             totalCap: '10000000',
             nonce: 3252345722143,
@@ -75,7 +74,7 @@ export const erc20TestFactory = {
               gasLimit: '171864',
               gasPrice: '20',
             },
-          })
+          }, testData.TESTNET.PROVIDER)
           fail()
         } catch (e) {
           expect(e.reason).toMatch('invalid address')
@@ -89,7 +88,7 @@ export const erc20TestFactory = {
         const result = await sdk.prepare.transferSignedTransaction({
           to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
           amount: '10',
-          contractAddress: testData.MAINNET.ERC_20.ADDRESS,
+          contractAddress: testData.TESTNET.ERC_20.ADDRESS,
           signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
           digits: 18,
           nonce,
@@ -97,7 +96,7 @@ export const erc20TestFactory = {
             gasLimit: '53632',
             gasPrice: '20',
           },
-        })
+        }, testData.TESTNET.PROVIDER)
 
         const json = JSON.parse(result)
 
@@ -112,15 +111,15 @@ export const erc20TestFactory = {
         const result = await sdk.prepare.transferSignedTransaction({
           to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
           amount: '10',
-          contractAddress: testData.MAINNET.ERC_20.ADDRESS,
-          fromPrivateKey: testData.MAINNET.ERC_20.PRIVATE_KEY,
+          contractAddress: testData.TESTNET.ERC_20.ADDRESS,
+          fromPrivateKey: testData.TESTNET.ERC_20.PRIVATE_KEY,
           digits: 18,
           nonce,
           fee: {
             gasLimit: '53632',
             gasPrice: '20',
           },
-        })
+        }, testData.TESTNET.PROVIDER)
 
         expectHexString(result)
       })
@@ -129,16 +128,16 @@ export const erc20TestFactory = {
         try {
           await sdk.prepare.transferSignedTransaction({
             to: 'someinvalidaddress',
-            contractAddress: testData.MAINNET.ERC_20.ADDRESS,
+            contractAddress: testData.TESTNET.ERC_20.ADDRESS,
             amount: '10',
-            fromPrivateKey: testData.MAINNET.ERC_20.PRIVATE_KEY,
+            fromPrivateKey: testData.TESTNET.ERC_20.PRIVATE_KEY,
             digits: 18,
             nonce: 3252345722143,
             fee: {
               gasLimit: '53632',
               gasPrice: '20',
             },
-          })
+          }, testData.TESTNET.PROVIDER)
           fail()
         } catch (e) {
           expect(e.reason).toMatch('invalid address')
@@ -147,32 +146,14 @@ export const erc20TestFactory = {
     },
     mintSignedTransaction: (sdk: SdkWithErc20Functions, testData: BlockchainTestData) => {
       xit('valid from privateKey', async () => {
-        const nonce = 3252345722143
-
         const result = await sdk.prepare.mintSignedTransaction({
-          to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+          to: testData.TESTNET.ERC_20.ADDRESS,
           amount: '10',
-          contractAddress: testData.MAINNET.ERC_20.ADDRESS,
-          fromPrivateKey: testData.MAINNET.ERC_20.PRIVATE_KEY,
-          nonce,
-        })
+          contractAddress: testData.TESTNET.ERC_20.CONTRACT_ADDRESS,
+          fromPrivateKey: testData.TESTNET.ERC_20.PRIVATE_KEY,
+        }, testData.TESTNET.PROVIDER)
 
         expectHexString(result)
-      })
-
-      it('invalid address', async () => {
-        try {
-          await sdk.prepare.mintSignedTransaction({
-            to: 'someinvalidaddress',
-            amount: '10',
-            contractAddress: testData.MAINNET.ERC_20.ADDRESS,
-            fromPrivateKey: testData.MAINNET.ERC_20.PRIVATE_KEY,
-            nonce: 3252345722143,
-          })
-          fail()
-        } catch (e) {
-          expect(e.reason).toMatch('invalid address')
-        }
       })
     },
     burnSignedTransaction: (sdk: SdkWithErc20Functions, testData: BlockchainTestData) => {
@@ -181,30 +162,12 @@ export const erc20TestFactory = {
 
         const result = await sdk.prepare.burnSignedTransaction({
           amount: '10',
-          contractAddress: testData.MAINNET.ERC_20.ADDRESS,
-          fromPrivateKey: testData.MAINNET.ERC_20.PRIVATE_KEY,
+          contractAddress: testData.TESTNET.ERC_20.CONTRACT_ADDRESS,
+          fromPrivateKey: testData.TESTNET.ERC_20.PRIVATE_KEY,
           nonce,
-        })
+        }, testData.TESTNET.PROVIDER)
 
         expectHexString(result)
-      })
-
-      xit('valid from SignatureId', async () => {
-        const nonce = 3252345722143
-
-        const result = await sdk.prepare.burnSignedTransaction({
-          amount: '10',
-          contractAddress: testData.MAINNET.ERC_20.ADDRESS,
-          signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-          nonce,
-        })
-
-        const json = JSON.parse(result)
-
-        expect(json.nonce).toBe(nonce)
-        expect(json.gasPrice).toBe('20000000000')
-        expect(json.from).toBe(0)
-        expectHexString(json.data)
       })
     },
   },
