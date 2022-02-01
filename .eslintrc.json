@@ -45,7 +45,7 @@
               {
                 "sourceTag": "*",
                 "onlyDependOnLibsWithTags": ["*"],
-                "bannedExternalImports": ["@tatumio/sdk"]
+                "bannedExternalImports": ["@tatumio/tatum-*"]
               }
             ]
           }
