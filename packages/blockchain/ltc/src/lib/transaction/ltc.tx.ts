@@ -8,7 +8,7 @@ import {
   LtcTransactionUTXOKMS,
   TransactionHashKMS,
 } from '@tatumio/api-client'
-import { amountUtils, SdkErrorCode } from '@tatumio/abstract-sdk'
+import { amountUtils, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import BigNumber from 'bignumber.js'
 import { LtcSdkError } from '../ltc.sdk.errors'
 import { BtcBasedTx } from '@tatumio/shared-blockchain-btc-based'

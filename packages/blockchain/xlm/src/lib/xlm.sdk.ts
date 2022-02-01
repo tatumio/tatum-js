@@ -1,5 +1,5 @@
 import { BlockchainXlmService } from '@tatumio/api-client'
-import { SDKArguments } from '@tatumio/abstract-sdk'
+import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { abstractBlockchainSdk } from '@tatumio/shared-blockchain-abstract'
 import { Blockchain } from '@tatumio/shared-core'
 import { xlmOffchainService } from './services/xlm.offchain'

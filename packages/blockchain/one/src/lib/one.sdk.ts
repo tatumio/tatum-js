@@ -1,5 +1,5 @@
 import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
-import { SDKArguments } from '@tatumio/abstract-sdk'
+import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { BlockchainHarmonyOneService } from '@tatumio/api-client'
 import { oneWeb3 } from './services/one.web3'
 import { evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'

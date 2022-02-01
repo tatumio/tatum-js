@@ -4,11 +4,12 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nrwl/node:package",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/blockchain/scrypta",
         "main": "packages/blockchain/scrypta/src/index.ts",
+        "packageJson": "packages/blockchain/scrypta/package.json",
         "tsConfig": "packages/blockchain/scrypta/tsconfig.lib.json"
       }
     },

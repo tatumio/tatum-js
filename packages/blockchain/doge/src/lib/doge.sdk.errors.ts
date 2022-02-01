@@ -1,4 +1,4 @@
-import { SdkError, SdkErrorCode } from '@tatumio/abstract-sdk'
+import { SdkError, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 export const DOGE_ERRORS_MAPPING = {
   'dogecore.ErrorTransactionFeeErrorTooSmall': SdkErrorCode.BTC_FEE_TOO_SMALL,

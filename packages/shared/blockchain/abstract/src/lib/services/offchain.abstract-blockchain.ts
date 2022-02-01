@@ -1,4 +1,4 @@
-import { abstractSdkOffChain } from '@tatumio/abstract-sdk'
+import { abstractSdkOffChain } from '@tatumio/shared-abstract-sdk'
 import { Blockchain, blockchainHelper } from '@tatumio/shared-core'
 
 export const abstractBlockchainOffchain = (args: { blockchain: Blockchain }) => {

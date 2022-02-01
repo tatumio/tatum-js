@@ -7,7 +7,7 @@ import {
 } from '@tatumio/api-client'
 import { bcashAddressHelper } from './utils/bch.address'
 import { BchSdkError } from './bch.sdk.errors'
-import { amountUtils, SdkErrorCode } from '@tatumio/abstract-sdk'
+import { amountUtils, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 import coininfo from 'coininfo'
 import { ECPair, ECSignature, TransactionBuilder } from '@tatumio/bitcoincashjs2-lib'
