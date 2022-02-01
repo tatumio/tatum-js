@@ -7,7 +7,7 @@ const celoSDK = TatumCeloSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 export async function celoSubscriptionsExample() {
   const id = await celoSDK.subscriptions.createSubscription({
     // TODO openapi bug
-    type: CreateSubscriptionIncoming.type.ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION,
+    type: 'ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION',
     attr: {
       id: '5e6be8e9e6aa436299950c41',
       url: 'https://webhook.tatum.io/account',

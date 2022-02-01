@@ -24,4 +24,7 @@ export const BSC_TEST_DATA: BlockchainTestData = {
     },
     PROVIDER: 'https://data-seed-prebsc-1-s1.binance.org:8545',
   },
+  BLOCK_HASH: '0x635755346ca10c9d95fef3238d8466d2aa1adb9e2f878287b1dd5567fc314c2f',
+  BLOCK_HEIGHT: 14_826_647,
+  TX_HASH: '0xec1b50f8b708d1b5f122af3171123ffdc5748568c272370709ad60a320a5e635',
 }

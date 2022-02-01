@@ -6,7 +6,7 @@ export type DeployNftFlowKMS = {
     /**
      * Chain to work with.
      */
-    chain: DeployNftFlowKMS.chain;
+    chain: 'FLOW';
     /**
      * Blockchain address of the sender account.
      */
@@ -19,16 +19,4 @@ export type DeployNftFlowKMS = {
      * Derivation index of sender address.
      */
     index?: number;
-}
-
-export namespace DeployNftFlowKMS {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        FLOW = 'FLOW',
-    }
-
-
 }

@@ -23,19 +23,5 @@ export type DeployErc721CeloKMS = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: DeployErc721CeloKMS.feeCurrency;
-}
-
-export namespace DeployErc721CeloKMS {
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

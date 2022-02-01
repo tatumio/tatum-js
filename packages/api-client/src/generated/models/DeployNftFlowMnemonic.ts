@@ -6,7 +6,7 @@ export type DeployNftFlowMnemonic = {
     /**
      * Chain to work with.
      */
-    chain: DeployNftFlowMnemonic.chain;
+    chain: 'FLOW';
     /**
      * Blockchain address of the sender account.
      */
@@ -19,16 +19,4 @@ export type DeployNftFlowMnemonic = {
      * Derivation index of sender address.
      */
     index: number;
-}
-
-export namespace DeployNftFlowMnemonic {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        FLOW = 'FLOW',
-    }
-
-
 }

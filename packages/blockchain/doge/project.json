@@ -4,14 +4,13 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/blockchain/doge",
         "tsConfig": "packages/blockchain/doge/tsconfig.lib.json",
         "packageJson": "packages/blockchain/doge/package.json",
-        "main": "packages/blockchain/doge/src/index.ts",
-        "assets": ["packages/blockchain/doge/*.md"]
+        "main": "packages/blockchain/doge/src/index.ts"
       }
     },
     "lint": {

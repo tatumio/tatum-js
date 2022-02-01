@@ -6,7 +6,7 @@ export type CancelOrSettleAuction = {
     /**
      * Blockchain to work with.
      */
-    chain: CancelOrSettleAuction.chain;
+    chain: 'ETH' | 'ONE' | 'BSC' | 'MATIC';
     /**
      * Address of the marketplace smart contract.
      */
@@ -40,19 +40,4 @@ export type CancelOrSettleAuction = {
          */
         gasPrice: string;
     };
-}
-
-export namespace CancelOrSettleAuction {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        ONE = 'ONE',
-        BSC = 'BSC',
-        MATIC = 'MATIC',
-    }
-
-
 }

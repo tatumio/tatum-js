@@ -8,19 +8,5 @@ export type DeployCeloErc20OffchainKMSAddress = (DeployErc20OffchainKMSAddress &
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: DeployCeloErc20OffchainKMSAddress.feeCurrency;
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 });
-
-export namespace DeployCeloErc20OffchainKMSAddress {
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
-}

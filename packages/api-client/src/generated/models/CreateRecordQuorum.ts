@@ -10,7 +10,7 @@ export type CreateRecordQuorum = {
     /**
      * Blockchain, where to store log data.
      */
-    chain: CreateRecordQuorum.chain;
+    chain: 'QUORUM';
     /**
      * Blockchain address to store log on from.
      */
@@ -19,16 +19,4 @@ export type CreateRecordQuorum = {
      * Blockchain address to store log on. If not defined, it will be stored on an address, from which the transaction was being made.
      */
     to: string;
-}
-
-export namespace CreateRecordQuorum {
-
-    /**
-     * Blockchain, where to store log data.
-     */
-    export enum chain {
-        QUORUM = 'QUORUM',
-    }
-
-
 }

@@ -6,7 +6,7 @@ export type BidOnAuction = {
     /**
      * Blockchain to work with.
      */
-    chain: BidOnAuction.chain;
+    chain: 'ETH' | 'ONE' | 'BSC' | 'MATIC';
     /**
      * Address of the marketplace smart contract.
      */
@@ -48,19 +48,4 @@ export type BidOnAuction = {
          */
         gasPrice: string;
     };
-}
-
-export namespace BidOnAuction {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        ONE = 'ONE',
-        BSC = 'BSC',
-        MATIC = 'MATIC',
-    }
-
-
 }

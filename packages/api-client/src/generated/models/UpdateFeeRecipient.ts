@@ -6,7 +6,7 @@ export type UpdateFeeRecipient = {
     /**
      * Blockchain to work with.
      */
-    chain: UpdateFeeRecipient.chain;
+    chain: 'ETH' | 'ONE' | 'BSC' | 'MATIC';
     /**
      * Address of the marketplace smart contract.
      */
@@ -36,19 +36,4 @@ export type UpdateFeeRecipient = {
          */
         gasPrice: string;
     };
-}
-
-export namespace UpdateFeeRecipient {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        ONE = 'ONE',
-        BSC = 'BSC',
-        MATIC = 'MATIC',
-    }
-
-
 }

@@ -6,7 +6,7 @@ export type MintMultipleNftKMSCelo = {
     /**
      * Chain to work with.
      */
-    chain: MintMultipleNftKMSCelo.chain;
+    chain: 'CELO';
     /**
      * Blockchain address to send NFT token to.
      */
@@ -46,26 +46,5 @@ export type MintMultipleNftKMSCelo = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: MintMultipleNftKMSCelo.feeCurrency;
-}
-
-export namespace MintMultipleNftKMSCelo {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

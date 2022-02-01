@@ -14,7 +14,7 @@ export type TransferCeloBlockchainKMS = {
     /**
      * Currency of the transaction
      */
-    currency: TransferCeloBlockchainKMS.currency;
+    currency: 'CELO' | 'CUSD' | 'CEUR';
     /**
      * Blockchain address to send assets
      */
@@ -22,7 +22,7 @@ export type TransferCeloBlockchainKMS = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: TransferCeloBlockchainKMS.feeCurrency;
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
      * Amount to be sent in Celoer.
      */
@@ -35,27 +35,4 @@ export type TransferCeloBlockchainKMS = {
      * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
      */
     signatureId: string;
-}
-
-export namespace TransferCeloBlockchainKMS {
-
-    /**
-     * Currency of the transaction
-     */
-    export enum currency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
 }

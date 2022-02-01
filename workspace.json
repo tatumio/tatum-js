@@ -24,6 +24,7 @@
     "sdk-ltc": "packages/blockchain/ltc",
     "sdk-one": "packages/blockchain/one",
     "sdk-polygon": "packages/blockchain/polygon",
+    "sdk-scrypta": "packages/blockchain/scrypta",
     "sdk-xlm": "packages/blockchain/xlm",
     "sdk-xrp": "packages/blockchain/xrp",
     "shared-abstract-sdk": "packages/shared/abstract-sdk",

@@ -30,19 +30,5 @@ export type MintErc20KMSCelo = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: MintErc20KMSCelo.feeCurrency;
-}
-
-export namespace MintErc20KMSCelo {
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

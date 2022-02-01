@@ -6,7 +6,7 @@ export type DeployNftKMS = {
     /**
      * Chain to work with.
      */
-    chain: DeployNftKMS.chain;
+    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC';
     /**
      * Name of the NFT token
      */
@@ -48,20 +48,4 @@ export type DeployNftKMS = {
          */
         gasPrice: string;
     };
-}
-
-export namespace DeployNftKMS {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        MATIC = 'MATIC',
-        KCS = 'KCS',
-        ONE = 'ONE',
-        BSC = 'BSC',
-    }
-
-
 }

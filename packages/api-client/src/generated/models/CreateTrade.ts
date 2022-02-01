@@ -6,7 +6,7 @@ export type CreateTrade = {
     /**
      * Type of the trade, BUY, SELL, FUTURE_BUY, FUTURE_SELL
      */
-    type: CreateTrade.type;
+    type: 'BUY' | 'SELL' | 'FUTURE_BUY' | 'FUTURE_SELL';
     /**
      * Price to buy / sell
      */
@@ -52,19 +52,4 @@ export type CreateTrade = {
          */
         percentPenalty?: any;
     };
-}
-
-export namespace CreateTrade {
-
-    /**
-     * Type of the trade, BUY, SELL, FUTURE_BUY, FUTURE_SELL
-     */
-    export enum type {
-        BUY = 'BUY',
-        SELL = 'SELL',
-        FUTURE_BUY = 'FUTURE_BUY',
-        FUTURE_SELL = 'FUTURE_SELL',
-    }
-
-
 }

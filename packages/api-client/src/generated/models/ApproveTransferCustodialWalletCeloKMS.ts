@@ -6,7 +6,7 @@ export type ApproveTransferCustodialWalletCeloKMS = {
     /**
      * Blockchain to work with.
      */
-    chain: ApproveTransferCustodialWalletCeloKMS.chain;
+    chain: 'CELO';
     /**
      * Address of custodial wallet to transfer from
      */
@@ -18,7 +18,7 @@ export type ApproveTransferCustodialWalletCeloKMS = {
     /**
      * Type of the asset to transfer. 0 - ERC20, 1 - ERC721, 2 - ERC1155
      */
-    contractType: ApproveTransferCustodialWalletCeloKMS.contractType;
+    contractType: 0 | 1 | 2;
     /**
      * Blockchain address to allow spending.
      */
@@ -42,7 +42,7 @@ export type ApproveTransferCustodialWalletCeloKMS = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: ApproveTransferCustodialWalletCeloKMS.feeCurrency;
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
      * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
      */
@@ -60,34 +60,4 @@ export type ApproveTransferCustodialWalletCeloKMS = {
          */
         gasPrice: string;
     };
-}
-
-export namespace ApproveTransferCustodialWalletCeloKMS {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Type of the asset to transfer. 0 - ERC20, 1 - ERC721, 2 - ERC1155
-     */
-    export enum contractType {
-        '_0' = 0,
-        '_1' = 1,
-        '_2' = 2,
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
 }

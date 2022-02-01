@@ -18,7 +18,7 @@ export type TransferEthBlockchain = {
     /**
      * Currency to transfer from Ethereum Blockchain Account.
      */
-    currency: TransferEthBlockchain.currency;
+    currency: 'USDT' | 'LEO' | 'LINK' | 'UNI' | 'FREE' | 'GMC' | 'GMC_BSC' | 'RMD' | 'MKR' | 'USDC' | 'BAT' | 'TUSD' | 'BUSD' | 'PAX' | 'PAXG' | 'PLTC' | 'MMY' | 'WBTC' | 'XCON' | 'ETH';
     /**
      * Custom defined fee. If not present, it will be calculated automatically.
      */
@@ -40,35 +40,4 @@ export type TransferEthBlockchain = {
      * Private key of sender address. Private key, or signature Id must be present.
      */
     fromPrivateKey: string;
-}
-
-export namespace TransferEthBlockchain {
-
-    /**
-     * Currency to transfer from Ethereum Blockchain Account.
-     */
-    export enum currency {
-        USDT = 'USDT',
-        LEO = 'LEO',
-        LINK = 'LINK',
-        UNI = 'UNI',
-        FREE = 'FREE',
-        GMC = 'GMC',
-        GMC_BSC = 'GMC_BSC',
-        RMD = 'RMD',
-        MKR = 'MKR',
-        USDC = 'USDC',
-        BAT = 'BAT',
-        TUSD = 'TUSD',
-        BUSD = 'BUSD',
-        PAX = 'PAX',
-        PAXG = 'PAXG',
-        PLTC = 'PLTC',
-        MMY = 'MMY',
-        WBTC = 'WBTC',
-        XCON = 'XCON',
-        ETH = 'ETH',
-    }
-
-
 }

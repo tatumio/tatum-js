@@ -6,7 +6,7 @@ export type TransferCustodialWalletBatchTron = {
     /**
      * Blockchain to work with.
      */
-    chain: TransferCustodialWalletBatchTron.chain;
+    chain: 'TRON';
     /**
      * Address of custodial wallet to transfer from
      */
@@ -39,16 +39,4 @@ export type TransferCustodialWalletBatchTron = {
      * Fee in TRX to be paid.
      */
     feeLimit: number;
-}
-
-export namespace TransferCustodialWalletBatchTron {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        TRON = 'TRON',
-    }
-
-
 }

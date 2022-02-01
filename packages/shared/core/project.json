@@ -4,14 +4,13 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/shared/core",
         "tsConfig": "packages/shared/core/tsconfig.lib.json",
         "packageJson": "packages/shared/core/package.json",
-        "main": "packages/shared/core/src/index.ts",
-        "assets": ["packages/shared/core/*.md"]
+        "main": "packages/shared/core/src/index.ts"
       }
     },
     "lint": {

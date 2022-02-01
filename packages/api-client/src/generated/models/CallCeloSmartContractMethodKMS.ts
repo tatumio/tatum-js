@@ -47,19 +47,5 @@ export type CallCeloSmartContractMethodKMS = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: CallCeloSmartContractMethodKMS.feeCurrency;
-}
-
-export namespace CallCeloSmartContractMethodKMS {
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

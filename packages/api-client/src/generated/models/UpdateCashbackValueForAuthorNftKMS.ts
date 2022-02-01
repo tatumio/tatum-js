@@ -6,7 +6,7 @@ export type UpdateCashbackValueForAuthorNftKMS = {
     /**
      * Chain to work with.
      */
-    chain: UpdateCashbackValueForAuthorNftKMS.chain;
+    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC';
     /**
      * ID of token to be updated.
      */
@@ -44,20 +44,4 @@ export type UpdateCashbackValueForAuthorNftKMS = {
          */
         gasPrice: string;
     };
-}
-
-export namespace UpdateCashbackValueForAuthorNftKMS {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        MATIC = 'MATIC',
-        KCS = 'KCS',
-        ONE = 'ONE',
-        BSC = 'BSC',
-    }
-
-
 }

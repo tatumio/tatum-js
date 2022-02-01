@@ -43,7 +43,7 @@ export type TransactionFilter = {
     /**
      * Type of payment
      */
-    transactionType?: TransactionFilter.transactionType;
+    transactionType?: 'FAILED' | 'DEBIT_PAYMENT' | 'CREDIT_PAYMENT' | 'CREDIT_DEPOSIT' | 'DEBIT_WITHDRAWAL' | 'CANCEL_WITHDRAWAL' | 'DEBIT_OUTGOING_PAYMENT' | 'EXCHANGE_BUY' | 'EXCHANGE_SELL' | 'DEBIT_TRANSACTION' | 'CREDIT_INCOMING_PAYMENT';
     /**
      * Types of payment
      */
@@ -51,7 +51,7 @@ export type TransactionFilter = {
     /**
      * Type of operation
      */
-    opType?: TransactionFilter.opType;
+    opType?: 'PAYMENT' | 'WITHDRAWAL' | 'BLOCKCHAIN_TRANSACTION' | 'EXCHANGE' | 'FAILED' | 'DEPOSIT' | 'MINT' | 'REVOKE';
     /**
      * For bookkeeping to distinct transaction purpose.
      */
@@ -68,40 +68,4 @@ export type TransactionFilter = {
      * Sender note defined in payment order by sender.
      */
     senderNote?: string;
-}
-
-export namespace TransactionFilter {
-
-    /**
-     * Type of payment
-     */
-    export enum transactionType {
-        FAILED = 'FAILED',
-        DEBIT_PAYMENT = 'DEBIT_PAYMENT',
-        CREDIT_PAYMENT = 'CREDIT_PAYMENT',
-        CREDIT_DEPOSIT = 'CREDIT_DEPOSIT',
-        DEBIT_WITHDRAWAL = 'DEBIT_WITHDRAWAL',
-        CANCEL_WITHDRAWAL = 'CANCEL_WITHDRAWAL',
-        DEBIT_OUTGOING_PAYMENT = 'DEBIT_OUTGOING_PAYMENT',
-        EXCHANGE_BUY = 'EXCHANGE_BUY',
-        EXCHANGE_SELL = 'EXCHANGE_SELL',
-        DEBIT_TRANSACTION = 'DEBIT_TRANSACTION',
-        CREDIT_INCOMING_PAYMENT = 'CREDIT_INCOMING_PAYMENT',
-    }
-
-    /**
-     * Type of operation
-     */
-    export enum opType {
-        PAYMENT = 'PAYMENT',
-        WITHDRAWAL = 'WITHDRAWAL',
-        BLOCKCHAIN_TRANSACTION = 'BLOCKCHAIN_TRANSACTION',
-        EXCHANGE = 'EXCHANGE',
-        FAILED = 'FAILED',
-        DEPOSIT = 'DEPOSIT',
-        MINT = 'MINT',
-        REVOKE = 'REVOKE',
-    }
-
-
 }

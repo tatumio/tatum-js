@@ -6,7 +6,7 @@ export type MintMultipleNftKMSTron = {
     /**
      * Chain to work with.
      */
-    chain: MintMultipleNftKMSTron.chain;
+    chain: 'TRON';
     /**
      * Blockchain address to send NFT token to.
      */
@@ -39,16 +39,4 @@ export type MintMultipleNftKMSTron = {
      * Max limit for fee to be paid, in TRX.
      */
     feeLimit: number;
-}
-
-export namespace MintMultipleNftKMSTron {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        TRON = 'TRON',
-    }
-
-
 }

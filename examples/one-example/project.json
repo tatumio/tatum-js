@@ -10,8 +10,7 @@
         "outputPath": "dist/examples/one-example",
         "main": "examples/one-example/src/index.ts",
         "tsConfig": "examples/one-example/tsconfig.app.json",
-        "packageJson": "examples/one-example/package.json",
-        "assets": ["examples/one-example/*.md"]
+        "packageJson": "examples/one-example/package.json"
       }
     },
     "serve": {

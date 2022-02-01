@@ -6,7 +6,7 @@ export type ChainTransferCeloErc20Token = {
     /**
      * Chain to work with.
      */
-    chain: ChainTransferCeloErc20Token.chain;
+    chain: 'CELO';
     /**
      * Blockchain address to send ERC20 token to
      */
@@ -34,26 +34,5 @@ export type ChainTransferCeloErc20Token = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: ChainTransferCeloErc20Token.feeCurrency;
-}
-
-export namespace ChainTransferCeloErc20Token {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }
