@@ -47,7 +47,7 @@ jobs:
 
   publish:
     needs: [ pr ]
-    if: contains(github.ref, 'refs/heads/feature/release')
+    if: ${{ github.ref == 'refs/heads/release' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
