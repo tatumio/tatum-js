@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - feature/release-2.0
 
 jobs:
   agents:
