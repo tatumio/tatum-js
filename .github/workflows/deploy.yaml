@@ -53,10 +53,10 @@ jobs:
       - run: npm config set tag-version-prefix ''
 
       - name: Config git email
-        run: git config --global user.email "contact@tatum.io"
+        run: git config --global user.email "nick.papirnyi@tatum.io"
 
       - name: Config git name
-        run: git config --global user.name "CI"
+        run: git config --global user.name "Nick Papirniy"
 
       - name: Publish packages
         run: yarn --ignore-scripts release:prerelease
