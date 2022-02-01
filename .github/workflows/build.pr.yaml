@@ -48,10 +48,10 @@ jobs:
   hello:
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{github.ref}}
+      - run: echo ${{ github.head_ref }}
       - run: echo $GITHUB_REF
       - run: echo ${{github.event.head_commit.message}}
-      #- run: echo ${{GITHUB_REF == 'refs/heads/release'}}
+      - run: echo ${{ github.head_ref == 'refs/heads/release' }}
       - run: echo ${{!contains(github.event.head_commit.message, 'Release v')}}
 
   publish:
