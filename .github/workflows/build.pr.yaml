@@ -10,7 +10,7 @@ env:
 jobs:
   pr:
     runs-on: ubuntu-latest
-    if: ${{ github.ref != 'refs/heads/release' && !contains(github.event.head_commit.message, 'Release v') }}
+    if: ${{ github.ref == 'refs/heads/release' && !contains(github.event.head_commit.message, 'Release v') }}
     steps:
       - uses: actions/checkout@v2
         with:
