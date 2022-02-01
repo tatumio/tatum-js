@@ -38,7 +38,6 @@ jobs:
       - run: npx nx affected --target=lint --parallel --max-parallel=3
       - run: npx nx affected --target=build --parallel --max-parallel=3
       - run: yarn test:ci
-      - run: npx nx-cloud stop-all-agents
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v1.6
         env:
@@ -86,6 +85,34 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_GITHUB_ADMIN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  stop-agents-after-pr:
+    if: ${{ github.head_ref != 'release' }}
+    needs: [ pr ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+      - run: npx nx-cloud stop-all-agents
+
+  stop-agents-after-publish:
+    if: ${{ github.head_ref == 'release' && !contains(github.event.head_commit.message, 'Release v') }}
+    needs: [ publish ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+    - run: npx nx-cloud stop-all-agents
 
   agents:
     runs-on: ubuntu-latest
