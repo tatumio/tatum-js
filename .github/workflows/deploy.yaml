@@ -62,7 +62,6 @@ jobs:
       - name: Publish packages
         run: yarn --ignore-scripts release:prerelease
         env:
-          GH_TOKEN: ${{ secrets.PAT_GITHUB }}
-          GITHUB_TOKEN: ${{ secrets.PAT_GITHUB }}
+          GITHUB_TOKEN: ${{ secrets.PAT_GITHUB_ADMIN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
