@@ -1,4 +1,4 @@
-name: Build all packages
+name: PR
 
 on:
   pull_request:
@@ -47,7 +47,7 @@ jobs:
 
   publish:
     needs: [ pr ]
-    if: ${{ contains(github.ref, 'release') }}
+    if: contains(github.ref, 'refs/heads/feature/release')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
