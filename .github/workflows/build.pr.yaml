@@ -10,7 +10,7 @@ env:
 jobs:
   pr:
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, 'Release v')"
+    if: ${{ github.ref != 'refs/heads/release' && !contains(github.event.head_commit.message, 'Release v') }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -45,8 +45,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{github.ref}}
+      - run: echo ${{github.event.head_commit.message}}
+      - run: echo ${{github.ref == 'refs/heads/release'}}
+      - run: echo ${{!contains(github.event.head_commit.message, 'Release v')}}
+
   publish:
-    needs: [ pr ]
+    #needs: [ pr ]
     if: ${{ github.ref == 'refs/heads/release' && !contains(github.event.head_commit.message, 'Release v') }}
     runs-on: ubuntu-latest
     steps:
