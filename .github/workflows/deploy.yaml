@@ -30,8 +30,11 @@ jobs:
       - uses: actions/checkout@v2
         name: Checkout [main]
         with:
+          token: ${{ secrets.PAT_GITHUB_ADMIN }}
           fetch-depth: 0
-          persist-credentials: false
+      run: |
+        git config user.email "tatum@users.noreply.github.com"
+        git config user.name "CI"
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -56,11 +59,11 @@ jobs:
       - run: echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}" > ~/.npmrc
       - run: npm config set tag-version-prefix ''
 
-      - name: Config git email
-        run: git config --global user.email "info@tatum.io"
+#      - name: Config git email
+#        run: git config --global user.email "info@tatum.io"
 
-      - name: Config git name
-        run: git config --global user.name "CI"
+#      - name: Config git name
+#        run: git config --global user.name "CI"
 
       - name: Publish packages
         run: yarn --ignore-scripts release:prerelease
