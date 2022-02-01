@@ -99,6 +99,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '14'
+      - run: yarn --ignore-scripts --frozen-lockfile
       - run: npx nx-cloud stop-all-agents
 
   stop-agents-after-publish:
@@ -113,6 +114,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '14'
+      - run: yarn --ignore-scripts --frozen-lockfile
       - run: npx nx-cloud stop-all-agents
 
   agents:
