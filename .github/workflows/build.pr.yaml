@@ -10,7 +10,7 @@ env:
 jobs:
   pr:
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'pull_request' }}
+    if: "!contains(github.event.head_commit.message, 'Release v')"
     steps:
       - uses: actions/checkout@v2
         with:
@@ -47,7 +47,7 @@ jobs:
 
   publish:
     needs: [ pr ]
-    if: ${{ github.ref == 'refs/heads/release' }}
+    if: ${{ github.ref == 'refs/heads/release' && !contains(github.event.head_commit.message, 'Release v') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
