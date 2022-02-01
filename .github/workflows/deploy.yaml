@@ -61,7 +61,7 @@ jobs:
         run: git config --global user.name "CI"
 
       - name: Publish packages
-        run: yarn --ignore-scripts release:prerelease
+        run: yarn --ignore-scripts release:current
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_GITHUB_ADMIN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
