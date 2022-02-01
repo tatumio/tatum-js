@@ -19,7 +19,7 @@ export const marketplace = (args: {
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
       approveErc20Spending: async (body: ApproveErc20, provider?: string) =>
-        erc20(args).prepare.approveSignedTransaction(body, args.web3, provider)
+        erc20(args).prepare.approveSignedTransaction(body, args.web3, provider),
     },
     send: {
       /**
@@ -31,7 +31,7 @@ export const marketplace = (args: {
       approveErc20Spending: async (body: ApproveErc20, provider?: string) =>
         args.broadcastFunction({
           txData: await erc20(args).prepare.approveSignedTransaction(body, args.web3, provider),
-        })
+        }),
     },
     listing,
   }

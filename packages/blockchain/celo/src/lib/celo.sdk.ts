@@ -2,7 +2,7 @@ import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
 import { SDKArguments } from '@tatumio/abstract-sdk'
 import { BlockchainCeloService } from '@tatumio/api-client'
 import { celoWeb3 } from './services/celo.web3'
-import { evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
+import { evmBasedSdk, marketplace } from '@tatumio/shared-blockchain-evm-based'
 import { celoKmsService } from './services/celo.kms'
 import { celoTxService } from './services/celo.tx'
 
@@ -17,6 +17,11 @@ export const TatumCeloSDK = (args: SDKArguments) => {
     api,
     kms: celoKmsService({ blockchain, web3 }),
     transaction: celoTxService({ blockchain, web3 }),
+    marketplace: marketplace({
+      blockchain,
+      web3,
+      broadcastFunction: BlockchainCeloService.celoBroadcast,
+    }),
     httpDriver: async (request: Web3Request): Promise<Web3Response> => {
       return api.celoWeb3Driver(args.apiKey, { ...request, jsonrpc: '2.0' })
     },

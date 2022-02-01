@@ -1,4 +1,4 @@
-import { evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
+import { evmBasedSdk, marketplace } from '@tatumio/shared-blockchain-evm-based'
 import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
 import { BlockchainBscService } from '@tatumio/api-client'
 import { SDKArguments } from '@tatumio/abstract-sdk'
@@ -17,6 +17,11 @@ export const TatumBscSDK = (args: SDKArguments) => {
     api,
     kms: bscKmsService({ blockchain, web3 }),
     transaction: bscTxService({ blockchain, web3 }),
+    marketplace: marketplace({
+      blockchain,
+      web3,
+      broadcastFunction: BlockchainBscService.bscBroadcast,
+    }),
     httpDriver: async (request: Web3Request): Promise<Web3Response> => {
       return api.bscWeb3Driver(args.apiKey, { ...request, jsonrpc: '2.0' })
     },

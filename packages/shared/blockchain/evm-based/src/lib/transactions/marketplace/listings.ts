@@ -1,4 +1,10 @@
-import { BuyAssetOnMarketplace, CancelSellAssetOnMarketplace, GenerateMarketplace, UpdateFee, UpdateFeeRecipient } from '@tatumio/api-client'
+import {
+  BuyAssetOnMarketplace,
+  CancelSellAssetOnMarketplace,
+  GenerateMarketplace,
+  UpdateFee,
+  UpdateFeeRecipient,
+} from '@tatumio/api-client'
 import { BroadcastFunction } from '@tatumio/shared-blockchain-abstract'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
@@ -43,7 +49,9 @@ const updateFee = async (body: UpdateFee, web3: EvmBasedWeb3, provider?: string)
   const smartContractMethodName = 'setMarketplaceFee'
 
   // TODO remove any type
-  const data = new client.eth.Contract(ListingSmartContract.abi as any).methods[smartContractMethodName]([`0x${new BigNumber(body.marketplaceFee).toString(16)}`]).encodeABI()
+  const data = new client.eth.Contract(ListingSmartContract.abi as any).methods[smartContractMethodName]([
+    `0x${new BigNumber(body.marketplaceFee).toString(16)}`,
+  ]).encodeABI()
 
   const tx: TransactionConfig = {
     from: undefined,
@@ -70,7 +78,9 @@ const updateFeeRecipient = async (body: UpdateFeeRecipient, web3: EvmBasedWeb3, 
   const smartContractMethodName = 'setMarketplaceFeeRecipient'
 
   // TODO remove any type
-  const data = new client.eth.Contract(ListingSmartContract.abi as any).methods[smartContractMethodName]([body.feeRecipient]).encodeABI()
+  const data = new client.eth.Contract(ListingSmartContract.abi as any).methods[smartContractMethodName]([
+    body.feeRecipient,
+  ]).encodeABI()
 
   const tx: TransactionConfig = {
     from: undefined,
@@ -105,7 +115,9 @@ const buy = async (body: BuyAssetOnMarketplace, web3: EvmBasedWeb3, provider?: s
   }
 
   // TODO remove any type
-  const data = new client.eth.Contract(ListingSmartContract.abi as any).methods[smartContractMethodName](smartContractParams).encodeABI()
+  const data = new client.eth.Contract(ListingSmartContract.abi as any).methods[smartContractMethodName](
+    smartContractParams,
+  ).encodeABI()
 
   const tx: TransactionConfig = {
     from: undefined,
@@ -132,7 +144,9 @@ const cancel = async (body: CancelSellAssetOnMarketplace, web3: EvmBasedWeb3, pr
   const smartContractMethodName = 'cancelListing'
 
   // TODO remove any type
-  const data = new client.eth.Contract(ListingSmartContract.abi as any).methods[smartContractMethodName]([body.listingId]).encodeABI()
+  const data = new client.eth.Contract(ListingSmartContract.abi as any).methods[smartContractMethodName]([
+    body.listingId,
+  ]).encodeABI()
 
   const tx: TransactionConfig = {
     from: undefined,
@@ -187,7 +201,8 @@ export const listing = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      updateFeeRecipient: async (body: UpdateFeeRecipient, provider?: string) => updateFeeRecipient(body, args.web3, provider),
+      updateFeeRecipient: async (body: UpdateFeeRecipient, provider?: string) =>
+        updateFeeRecipient(body, args.web3, provider),
       /**
        * Buy listing on the marketplace. Buyer must either send native assets with this operation, or approve ERC20 token spending before.
        * After listing is sold, it's in a pending state to be processed by the marketplace. Noone receives the assets unless the marketplace operator processes that.
@@ -202,7 +217,8 @@ export const listing = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      cancel: async (body: CancelSellAssetOnMarketplace, provider?: string) => cancel(body, args.web3, provider),
+      cancel: async (body: CancelSellAssetOnMarketplace, provider?: string) =>
+        cancel(body, args.web3, provider),
     },
     send: {
       /**
@@ -213,7 +229,7 @@ export const listing = (args: {
        */
       updateFee: async (body: UpdateFee, provider?: string) =>
         args.broadcastFunction({
-          txData: await updateFee(body, args.web3, provider)
+          txData: await updateFee(body, args.web3, provider),
         }),
       /**
        * Update marketplace fee recipient.
@@ -223,7 +239,7 @@ export const listing = (args: {
        */
       updateFeeRecipient: async (body: UpdateFeeRecipient, provider?: string) =>
         args.broadcastFunction({
-          txData: await updateFeeRecipient(body, args.web3, provider)
+          txData: await updateFeeRecipient(body, args.web3, provider),
         }),
       /**
        * Buy listing on the marketplace. Buyer must either send native assets with this operation, or approve ERC20 token spending before.
@@ -234,7 +250,7 @@ export const listing = (args: {
        */
       buy: async (body: BuyAssetOnMarketplace, provider?: string) =>
         args.broadcastFunction({
-          txData: await buy(body, args.web3, provider)
+          txData: await buy(body, args.web3, provider),
         }),
       /**
        * Cancel listing on the marketplace. Only possible for the seller or the operator. There must be no buyer present for that listing. NFT asset is sent back to the seller.
@@ -245,7 +261,7 @@ export const listing = (args: {
       cancel: async (body: CancelSellAssetOnMarketplace, provider?: string) =>
         args.broadcastFunction({
           txData: await cancel(body, args.web3, provider),
-        })
+        }),
     },
     /**
      * Deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).

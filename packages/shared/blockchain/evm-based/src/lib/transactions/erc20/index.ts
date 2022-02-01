@@ -144,7 +144,9 @@ const approveSignedTransaction = async (body: ApproveErc20, web3: EvmBasedWeb3, 
   const smartContractMethodName = 'approve'
 
   // TODO remove any type
-  const data = new client.eth.Contract(Erc20Token.abi as any).methods[smartContractMethodName](params).encodeABI()
+  const data = new client.eth.Contract(Erc20Token.abi as any).methods[smartContractMethodName](
+    params,
+  ).encodeABI()
 
   const tx: TransactionConfig = {
     from: undefined,
@@ -153,13 +155,7 @@ const approveSignedTransaction = async (body: ApproveErc20, web3: EvmBasedWeb3, 
     nonce: body.nonce,
   }
 
-  return prepareSignedTransactionAbstraction(
-    client,
-    tx,
-    undefined,
-    body.fromPrivateKey,
-    web3,
-  )
+  return prepareSignedTransactionAbstraction(client, tx, undefined, body.fromPrivateKey, web3)
 }
 
 export const erc20 = (args: {
