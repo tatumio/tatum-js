@@ -74,6 +74,7 @@ jobs:
         with:
           node-version: '14'
 
+      - run: npx nx-cloud start-ci-run
       - run: yarn --ignore-scripts --frozen-lockfile
       - run: yarn build:all
 
