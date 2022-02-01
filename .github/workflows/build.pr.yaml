@@ -74,8 +74,8 @@ jobs:
         with:
           node-version: '14'
 
-      - run: npx nx-cloud start-ci-run
       - run: yarn --ignore-scripts --frozen-lockfile
+      - run: npx nx-cloud start-ci-run
       - run: yarn build:all
 
       - run: echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}" > ~/.npmrc
