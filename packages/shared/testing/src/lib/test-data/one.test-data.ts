@@ -19,5 +19,5 @@ export const ONE_TEST_DATA: BlockchainTestData = {
       ADDRESS: '0x23037f14fea064f0ed0130b6cc9fd685606c8e9c',
     },
     PROVIDER: 'https://api.s0.b.hmny.io/',
-  }
+  },
 }

@@ -41,10 +41,12 @@ describe('TatumEthSDK', () => {
         erc20TestFactory.prepare.transferSignedTransaction(sdk.transaction.erc20, TEST_DATA.ETH)
       })
 
+      // TODO:  Returned error: execution reverted
       xdescribe('mintSignedTransaction', () => {
         erc20TestFactory.prepare.mintSignedTransaction(sdk.transaction.erc20, TEST_DATA.ETH)
       })
 
+      // TODO:  Returned error: execution reverted
       xdescribe('burnSignedTransaction', () => {
         erc20TestFactory.prepare.burnSignedTransaction(sdk.transaction.erc20, TEST_DATA.ETH)
       })

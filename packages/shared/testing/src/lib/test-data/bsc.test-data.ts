@@ -15,4 +15,13 @@ export const BSC_TEST_DATA: BlockchainTestData = {
       ADDRESS: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     },
   },
+  TESTNET: {
+    ...ETH_TEST_DATA.TESTNET,
+    ERC_20: {
+      CONTRACT_ADDRESS: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+      PRIVATE_KEY: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+      ADDRESS: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    },
+    PROVIDER: 'https://data-seed-prebsc-1-s1.binance.org:8545',
+  },
 }
