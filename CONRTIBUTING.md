@@ -4,15 +4,15 @@
 
 ## EVM Based
 
-nx g @nrwl/js:library sdk-{BLOCKCHAIN_NAME} --directory=blockchain --simpleModuleName=true --buildable --publishable --importPath=@tatumio/{BLOCKCHAIN_NAME} --testEnvironment=node --tags=scope:sdk,scope:evm-based
+nx g @nrwl/node:library sdk-{BLOCKCHAIN_NAME} --directory=blockchain --simpleModuleName=true --buildable --publishable --importPath=@tatumio/{BLOCKCHAIN_NAME} --testEnvironment=node --tags=scope:sdk,scope:evm-based
 
 ## Btc Based
 
-nx g @nrwl/js:library sdk-{BLOCKCHAIN_NAME} --directory=blockchain --simpleModuleName=true --buildable --publishable --importPath=@tatumio/{BLOCKCHAIN_NAME} --testEnvironment=node --tags=scope:sdk,scope:btc-based
+nx g @nrwl/node:library sdk-{BLOCKCHAIN_NAME} --directory=blockchain --simpleModuleName=true --buildable --publishable --importPath=@tatumio/{BLOCKCHAIN_NAME} --testEnvironment=node --tags=scope:sdk,scope:btc-based
 
 ## Other (not evm and not btc)
 
-nx g @nrwl/js:library sdk-{BLOCKCHAIN_NAME} --directory=blockchain --simpleModuleName=true --buildable --publishable --importPath=@tatumio/{BLOCKCHAIN_NAME} --testEnvironment=node --tags=scope:sdk
+nx g @nrwl/node:library sdk-{BLOCKCHAIN_NAME} --directory=blockchain --simpleModuleName=true --buildable --publishable --importPath=@tatumio/{BLOCKCHAIN_NAME} --testEnvironment=node --tags=scope:sdk
 
 # Check workspace.json file to make sure module has correct name
 
