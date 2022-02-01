@@ -98,6 +98,13 @@ export interface SdkWithErc721Functions {
     transferSignedTransaction(body: ChainTransferErc721, provider?: string): Promise<string>
     mintSignedTransaction(body: ChainMintErc721, provider?: string): Promise<string>
     burnSignedTransaction(body: ChainBurnErc721, provider?: string): Promise<string>
+    mintMultipleSignedTransaction(body: ChainMintMultipleNft, provider?: string): Promise<string>
+    mintCashbackSignedTransaction(body: ChainMintNft, provider?: string): Promise<string>
+    mintMultipleCashbackSignedTransaction(body: ChainMintMultipleNft, provider?: string): Promise<string>
+    updateCashbackForAuthorSignedTransaction(
+      body: ChainUpdateCashbackErc721,
+      provider?: string,
+    ): Promise<string>
   }
 }
 

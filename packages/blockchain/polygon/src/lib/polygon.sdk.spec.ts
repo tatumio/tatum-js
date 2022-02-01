@@ -87,6 +87,38 @@ describe('TatumPolygonSDK', () => {
           Currency.MATIC,
         )
       })
+
+      describe('mintCashbackSignedTransaction', () => {
+        erc721TestFactory.prepare.mintCashbackSignedTransaction(
+          sdk.transaction.erc721,
+          TEST_DATA.POLYGON,
+          Currency.MATIC,
+        )
+      })
+
+      describe('mintMultipleCashbackSignedTransaction', () => {
+        erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(
+          sdk.transaction.erc721,
+          TEST_DATA.POLYGON,
+          Currency.MATIC,
+        )
+      })
+
+      describe('mintMultipleSignedTransaction', () => {
+        erc721TestFactory.prepare.mintMultipleSignedTransaction(
+          sdk.transaction.erc721,
+          TEST_DATA.POLYGON,
+          Currency.MATIC,
+        )
+      })
+
+      describe('updateCashbackForAuthorSignedTransaction', () => {
+        erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(
+          sdk.transaction.erc721,
+          TEST_DATA.POLYGON,
+          Currency.MATIC,
+        )
+      })
     })
   })
 })

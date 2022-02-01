@@ -164,6 +164,242 @@ export const erc721TestFactory = {
         }
       })
     },
+
+    mintMultipleSignedTransaction: (
+      sdk: SdkWithErc721Functions,
+      testData: BlockchainTestData,
+      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC',
+    ) => {
+      const provider = testData.TESTNET.ERC_721?.PROVIDER ? testData.TESTNET.ERC_721?.PROVIDER : undefined
+      const address = testData.TESTNET.ERC_721?.ADDRESS
+        ? testData.TESTNET.ERC_721?.ADDRESS
+        : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
+
+      it('valid from privateKey', async () => {
+        const result = await sdk.prepare.mintMultipleSignedTransaction(
+          {
+            to: [address, address],
+            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
+            tokenId: [new Date().getTime().toString(), new Date().getTime().toString()],
+            url: ['https://my_token_data.com', 'https://my_token_data.com'],
+            chain,
+          },
+          provider,
+        )
+        expectHexString(result)
+      })
+
+      it('valid from SignatureId', async () => {
+        const result = await sdk.prepare.mintMultipleSignedTransaction(
+          {
+            to: [address, address],
+            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+            tokenId: [new Date().getTime().toString(), new Date().getTime().toString()],
+            url: ['https://my_token_data.com', 'https://my_token_data.com'],
+            chain,
+          },
+          provider,
+        )
+        const json = JSON.parse(result)
+
+        expectHexString(json.data)
+      })
+
+      it('invalid address', async () => {
+        try {
+          await sdk.prepare.mintMultipleSignedTransaction(
+            {
+              to: ['invalid', 'invalid'],
+              contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+              fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
+              tokenId: [new Date().getTime().toString(), new Date().getTime().toString()],
+              url: ['https://my_token_data.com', 'https://my_token_data.com'],
+              chain,
+            },
+            provider,
+          )
+          fail()
+        } catch (e: any) {
+          expect(e.reason).toMatch('invalid address')
+        }
+      })
+    },
+
+    mintCashbackSignedTransaction: (
+      sdk: SdkWithErc721Functions,
+      testData: BlockchainTestData,
+      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC',
+    ) => {
+      const provider = testData.TESTNET.ERC_721?.PROVIDER ? testData.TESTNET.ERC_721?.PROVIDER : undefined
+      const address = testData.TESTNET.ERC_721?.ADDRESS
+        ? testData.TESTNET.ERC_721?.ADDRESS
+        : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
+
+      it('valid from privateKey', async () => {
+        const result = await sdk.prepare.mintCashbackSignedTransaction(
+          {
+            to: address,
+            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
+            tokenId: new Date().getTime().toString(),
+            url: 'https://my_token_data.com',
+            chain,
+            cashbackValues: ['0.5'],
+            authorAddresses: [address],
+          },
+          provider,
+        )
+
+        expectHexString(result)
+      })
+
+      it('valid from SignatureId', async () => {
+        const result = await sdk.prepare.mintCashbackSignedTransaction(
+          {
+            to: address,
+            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+            tokenId: new Date().getTime().toString(),
+            url: 'https://my_token_data.com',
+            chain,
+            cashbackValues: ['0.5'],
+            authorAddresses: [address],
+          },
+          provider,
+        )
+
+        const json = JSON.parse(result)
+        expectHexString(json.data)
+      })
+
+      it('invalid address', async () => {
+        try {
+          await sdk.prepare.mintCashbackSignedTransaction(
+            {
+              to: 'someinvalidaddress',
+              tokenId: new Date().getTime().toString(),
+              url: 'https://my_token_data.com',
+              contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+              fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
+              chain,
+              cashbackValues: ['0.5'],
+              authorAddresses: [address],
+            },
+            provider,
+          )
+          fail()
+        } catch (e: any) {
+          expect(e.reason).toMatch('invalid address')
+        }
+      })
+    },
+
+    mintMultipleCashbackSignedTransaction: (
+      sdk: SdkWithErc721Functions,
+      testData: BlockchainTestData,
+      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC',
+    ) => {
+      const provider = testData.TESTNET.ERC_721?.PROVIDER ? testData.TESTNET.ERC_721?.PROVIDER : undefined
+      const address = testData.TESTNET.ERC_721?.ADDRESS
+        ? testData.TESTNET.ERC_721?.ADDRESS
+        : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
+
+      it('valid from privateKey', async () => {
+        const result = await sdk.prepare.mintMultipleCashbackSignedTransaction(
+          {
+            to: [address, address],
+            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
+            tokenId: [new Date().getTime().toString(), new Date().getTime().toString()],
+            url: ['https://my_token_data.com', 'https://my_token_data.com'],
+            chain,
+            cashbackValues: [['0.5'], ['0.5']],
+            authorAddresses: [[address], [address]],
+          },
+          provider,
+        )
+        expectHexString(result)
+      })
+
+      it('valid from SignatureId', async () => {
+        const result = await sdk.prepare.mintMultipleSignedTransaction(
+          {
+            to: [address, address],
+            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+            tokenId: [new Date().getTime().toString(), new Date().getTime().toString()],
+            url: ['https://my_token_data.com', 'https://my_token_data.com'],
+            chain,
+            cashbackValues: [['0.5'], ['0.5']],
+            authorAddresses: [[address], [address]],
+          },
+          provider,
+        )
+        const json = JSON.parse(result)
+        expectHexString(json.data)
+      })
+
+      it('invalid address', async () => {
+        try {
+          await sdk.prepare.mintMultipleSignedTransaction(
+            {
+              to: ['invalid', 'invalid'],
+              contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+              fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
+              tokenId: [new Date().getTime().toString(), new Date().getTime().toString()],
+              url: ['https://my_token_data.com', 'https://my_token_data.com'],
+              chain,
+              cashbackValues: [['0.5'], ['0.5']],
+            },
+            provider,
+          )
+          fail()
+        } catch (e: any) {
+          expect(e.reason).toMatch('invalid address')
+        }
+      })
+    },
+
+    updateCashbackForAuthorSignedTransaction: (
+      sdk: SdkWithErc721Functions,
+      testData: BlockchainTestData,
+      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC',
+    ) => {
+      const provider = testData.TESTNET.ERC_721?.PROVIDER ? testData.TESTNET.ERC_721?.PROVIDER : undefined
+
+      it('valid from privateKey', async () => {
+        const result = await sdk.prepare.updateCashbackForAuthorSignedTransaction(
+          {
+            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
+            tokenId: new Date().getTime().toString(),
+            chain,
+            cashbackValue: '0.8',
+          },
+          provider,
+        )
+        expectHexString(result)
+      })
+
+      it('valid from SignatureId', async () => {
+        const result = await sdk.prepare.updateCashbackForAuthorSignedTransaction(
+          {
+            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+            tokenId: new Date().getTime().toString(),
+            chain,
+            cashbackValue: '0.8',
+          },
+          provider,
+        )
+
+        const json = JSON.parse(result)
+        expectHexString(json.data)
+      })
+    },
+
     burnSignedTransaction: (
       sdk: SdkWithErc721Functions,
       testData: BlockchainTestData,

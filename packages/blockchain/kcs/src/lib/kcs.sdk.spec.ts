@@ -74,6 +74,38 @@ describe('TatumKcsSDK', () => {
       describe('burnSignedTransaction', () => {
         erc721TestFactory.prepare.burnSignedTransaction(sdk.transaction.erc721, TEST_DATA.KCS, Currency.KCS)
       })
+
+      describe('mintCashbackSignedTransaction', () => {
+        erc721TestFactory.prepare.mintCashbackSignedTransaction(
+          sdk.transaction.erc721,
+          TEST_DATA.KCS,
+          Currency.KCS,
+        )
+      })
+
+      describe('mintMultipleCashbackSignedTransaction', () => {
+        erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(
+          sdk.transaction.erc721,
+          TEST_DATA.KCS,
+          Currency.KCS,
+        )
+      })
+
+      describe('mintMultipleSignedTransaction', () => {
+        erc721TestFactory.prepare.mintMultipleSignedTransaction(
+          sdk.transaction.erc721,
+          TEST_DATA.KCS,
+          Currency.KCS,
+        )
+      })
+
+      describe('updateCashbackForAuthorSignedTransaction', () => {
+        erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(
+          sdk.transaction.erc721,
+          TEST_DATA.KCS,
+          Currency.KCS,
+        )
+      })
     })
   })
 })

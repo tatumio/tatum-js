@@ -74,6 +74,38 @@ describe('TatumEthSDK', () => {
       describe('burnSignedTransaction', () => {
         erc721TestFactory.prepare.burnSignedTransaction(sdk.transaction.erc721, TEST_DATA.ETH, Currency.ETH)
       })
+
+      describe('mintCashbackSignedTransaction', () => {
+        erc721TestFactory.prepare.mintCashbackSignedTransaction(
+          sdk.transaction.erc721,
+          TEST_DATA.ETH,
+          Currency.ETH,
+        )
+      })
+
+      describe('mintMultipleCashbackSignedTransaction', () => {
+        erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(
+          sdk.transaction.erc721,
+          TEST_DATA.ETH,
+          Currency.ETH,
+        )
+      })
+
+      describe('mintMultipleSignedTransaction', () => {
+        erc721TestFactory.prepare.mintMultipleSignedTransaction(
+          sdk.transaction.erc721,
+          TEST_DATA.ETH,
+          Currency.ETH,
+        )
+      })
+
+      describe('updateCashbackForAuthorSignedTransaction', () => {
+        erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(
+          sdk.transaction.erc721,
+          TEST_DATA.ETH,
+          Currency.ETH,
+        )
+      })
     })
   })
 })
