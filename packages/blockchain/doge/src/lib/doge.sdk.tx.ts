@@ -7,7 +7,7 @@ import {
   TransactionHashKMS,
 } from '@tatumio/api-client'
 import { BtcBasedTx } from '@tatumio/shared-blockchain-btc-based'
-import { amountUtils } from '@tatumio/abstract-sdk'
+import { amountUtils } from '@tatumio/shared-abstract-sdk'
 import { DogeSdkError } from './doge.sdk.errors'
 
 export type DogeTransaction = DogeTransactionUTXO | DogeTransactionUTXOKMS

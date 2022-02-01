@@ -2,7 +2,7 @@ import '@tatumio/shared-testing'
 import * as apiClient from '@tatumio/api-client'
 import { BtcTx, ScryptaTransaction } from '@tatumio/api-client'
 import { btcBasedTxTestFactory, mockHelper } from '@tatumio/shared-testing'
-import { amountUtils } from '@tatumio/abstract-sdk'
+import { amountUtils } from '@tatumio/shared-abstract-sdk'
 import { scryptaTransactions } from '../scrypta.sdk.tx'
 
 jest.mock('@tatumio/api-client')

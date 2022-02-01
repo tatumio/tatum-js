@@ -1,7 +1,7 @@
 import { BtcBasedTx } from '@tatumio/shared-blockchain-btc-based'
 import { ApiServices, ScryptaTransaction, TransactionHashKMS } from '@tatumio/api-client'
 import { ECPair, TransactionBuilder } from 'bitcoinjs-lib'
-import { amountUtils } from '@tatumio/abstract-sdk'
+import { amountUtils } from '@tatumio/shared-abstract-sdk'
 import { Blockchain, getNetworkConfig } from '@tatumio/shared-core'
 
 const sendTransaction = async (

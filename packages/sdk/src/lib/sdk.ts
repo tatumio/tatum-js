@@ -1,7 +1,7 @@
 import { TatumBtcSDK } from '@tatumio/btc'
 import { walletSdk } from './services/sdk.wallet'
 import { BlockchainRecordService, TatumUrl } from '@tatumio/api-client'
-import { abstractSdk } from '@tatumio/abstract-sdk'
+import { abstractSdk } from '@tatumio/shared-abstract-sdk'
 import { sdkKms } from './services/sdk.kms'
 import { TatumEthSDK } from '@tatumio/eth'
 import { Currency, Web3Request, Web3Response } from '@tatumio/shared-core'

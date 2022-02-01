@@ -1,7 +1,7 @@
 import { Blockchain } from '@tatumio/shared-core'
 import { btcBasedSdk } from '@tatumio/shared-blockchain-btc-based'
 import { BlockchainBitcoinCashService } from '@tatumio/api-client'
-import { SDKArguments } from '@tatumio/abstract-sdk'
+import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { bchTransactions } from './bch.sdk.tx'
 import { bchWallet } from './bch.sdk.wallet'
 

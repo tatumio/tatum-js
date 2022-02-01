@@ -1,5 +1,5 @@
 import { Blockchain } from '@tatumio/shared-core'
-import { SDKArguments } from '@tatumio/abstract-sdk'
+import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { btcBasedSdk, btcBasedWallet } from '@tatumio/shared-blockchain-btc-based'
 import { BlockchainScryptaService } from '@tatumio/api-client'
 import { scryptaTransactions } from './scrypta.sdk.tx'
