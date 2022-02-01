@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - feature/release-2.0
 
 jobs:
   agents:
@@ -53,15 +54,14 @@ jobs:
       - run: npm config set tag-version-prefix ''
 
       - name: Config git email
-        run: git config --global user.email "lukas.kotol@tatum.io"
+        run: git config --global user.email "contact@tatum.io"
 
       - name: Config git name
-        run: git config --global user.name "Hathoriel"
+        run: git config --global user.name "CI"
 
       - name: Publish packages
         run: yarn --ignore-scripts release:prerelease
         env:
-          GH_TOKEN: ${{ secrets.PAT_GITHUB }}
-          GITHUB_TOKEN: ${{ secrets.PAT_GITHUB }}
+          GITHUB_TOKEN: ${{ secrets.PAT_GITHUB_ADMIN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
