@@ -1,4 +1,4 @@
-import { TatumSDK } from '@tatumio/tatum'
+import { TatumSDK } from '@tatumio/sdk'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
 import { CreateSubscriptionIncoming } from '@tatumio/api-client'
 
