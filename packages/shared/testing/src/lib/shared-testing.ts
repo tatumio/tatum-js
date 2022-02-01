@@ -27,7 +27,6 @@ export type BlockchainNetworkTestData = {
   ERC_721?: {
     PRIVATE_KEY: string
     CONTRACT_ADDRESS: string
-    PROVIDER?: string
     ADDRESS?: string
   }
 }
@@ -42,6 +41,7 @@ export interface BlockchainTestData {
   INVALID_XPUB_CHILD_INDEX_ERROR: string
   INVALID_PRIVATE_KEY_CHILD_INDEX_ERROR: string
   INVALID_PRIVATE_KEY_ERROR: string
+  PROVIDER?: string
 }
 
 export const TEST_DATA = {

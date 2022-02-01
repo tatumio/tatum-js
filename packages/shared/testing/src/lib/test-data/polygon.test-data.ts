@@ -3,6 +3,7 @@ import { ETH_TEST_DATA } from './eth.test-data'
 
 export const POLYGON_TEST_DATA: BlockchainTestData = {
   ...ETH_TEST_DATA,
+  PROVIDER: 'https://matic-mumbai.chainstacklabs.com',
   MAINNET: {
     ...ETH_TEST_DATA.MAINNET,
     XPUB: 'xpub6EoGPf2CXZV6PhvNxGkQAGhfPYBkkBmjpsBLNiA5FjcBs6CgZPNbWoJqgB4p8w8uPTUPZkEGDzskGw7AJrcNCU1Ze7wUBz6s4zSrBF8Af9q',
@@ -17,7 +18,6 @@ export const POLYGON_TEST_DATA: BlockchainTestData = {
     ERC_721: {
       PRIVATE_KEY: '0d6c13fe5fed644dfa02512d4bffde9453dcb48873afb0b0a4c0cebce160c279',
       CONTRACT_ADDRESS: '0x2A42ae2a6346eEbC7FE2b2b7f02158634d5390dc',
-      PROVIDER: 'https://matic-mumbai.chainstacklabs.com',
     },
   },
   BLOCK_HASH: '0x0ad57222955e6297492447f5f0bcd0b415738d7179738217364853790edf718a',

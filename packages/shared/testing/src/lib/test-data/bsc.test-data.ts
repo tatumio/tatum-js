@@ -3,6 +3,7 @@ import { ETH_TEST_DATA } from './eth.test-data'
 
 export const BSC_TEST_DATA: BlockchainTestData = {
   ...ETH_TEST_DATA,
+  PROVIDER: 'https://data-seed-prebsc-1-s1.binance.org:8545',
   MAINNET: {
     ...ETH_TEST_DATA.MAINNET,
     XPUB: 'xpub6EmVHAqPHkSRgsS7Km6Ynmjg4Kup6aD2NjX1zmVEwuwvJZPGefgmmg5a36eBX8QZpfhtPu7qHgcMmehDMLivrm8gY2L7v8iQDmxyYVhxPUs',
@@ -17,7 +18,6 @@ export const BSC_TEST_DATA: BlockchainTestData = {
     ERC_721: {
       CONTRACT_ADDRESS: '0x2A42ae2a6346eEbC7FE2b2b7f02158634d5390dc',
       PRIVATE_KEY: '0d6c13fe5fed644dfa02512d4bffde9453dcb48873afb0b0a4c0cebce160c279',
-      PROVIDER: 'https://data-seed-prebsc-1-s1.binance.org:8545',
     },
   },
   BLOCK_HASH: '0x635755346ca10c9d95fef3238d8466d2aa1adb9e2f878287b1dd5567fc314c2f',
