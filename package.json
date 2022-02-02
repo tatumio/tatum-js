@@ -1,6 +1,6 @@
 {
   "name": "tatumio",
-  "version": "2.0.1-alpha.223",
+  "version": "2.0.1-alpha.224",
   "license": "MIT",
   "repository": "https://github.com/tatumio/tatum-js",
   "scripts": {
@@ -18,7 +18,6 @@
     "version:alpha": "npm --tag-version-prefix='' --no-git-tag-version version prerelease",
     "version:patch": "npm --no-git-tag-version version patch",
     "version:minor": "npm --no-git-tag-version version minor",
-    "version:major": "npm --no-git-tag-version version major",
     "registry:start": "nxpm registry:start",
     "registry:enable": "nxpm registry:enable",
     "registry:disable": "nxpm registry:disable",
