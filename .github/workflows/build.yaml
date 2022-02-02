@@ -1,6 +1,10 @@
-name: PR
+name: Build all packages
 
 on:
+  push:
+    branches:
+      - master
+      - '!release'
   pull_request:
 
 env:
@@ -8,9 +12,45 @@ env:
   TATUM_API_KEY: ${{ secrets.TATUM_API_KEY }}
 
 jobs:
+  main:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'pull_request' }}
+    steps:
+      - uses: actions/checkout@v2
+        name: Checkout [main]
+        with:
+          fetch-depth: 0
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v2
+        with:
+          main-branch-name: 'master'
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+      - run: yarn --ignore-scripts --frozen-lockfile
+      - run: npx nx-cloud start-ci-run
+      - run: npx nx affected --target=lint --parallel --max-parallel=3
+      - run: npx nx affected --target=build --parallel --max-parallel=3
+      - run: yarn test:ci
+      - run: npx nx-cloud stop-all-agents
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v1.6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   pr:
     runs-on: ubuntu-latest
-    if: ${{ !contains(github.event.head_commit.message, 'Release v') }}
+    if: ${{ github.event_name == 'pull_request' }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -38,85 +78,12 @@ jobs:
       - run: npx nx affected --target=lint --parallel --max-parallel=3
       - run: npx nx affected --target=build --parallel --max-parallel=3
       - run: yarn test:ci
-#      - name: SonarCloud Scan
-#        uses: SonarSource/sonarcloud-github-action@v1.6
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-  publish:
-    needs: [ pr ]
-    if: ${{ github.head_ref == 'release' && !contains(github.event.head_commit.message, 'Release v') }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.PAT_GITHUB_ADMIN }}
-          fetch-depth: 0
-
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: Git config
-        run: |
-          git config --local user.name github-actions
-          git config --local user.email github-actions@github.com
-
-      - uses: actions/cache@v2
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '14'
-
-      - run: yarn --ignore-scripts --frozen-lockfile
-      - run: npx nx-cloud start-ci-run
-      - run: yarn build:all
-
-      - run: echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}" > ~/.npmrc
-      - run: npm config set tag-version-prefix ''
-
-      - name: Publish packages
-        run: yarn --ignore-scripts release:current
+      - run: npx nx-cloud stop-all-agents
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v1.6
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT_GITHUB_ADMIN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-  stop-agents-after-pr:
-    if: ${{ github.head_ref != 'release' }}
-    needs: [ pr ]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-          fetch-depth: 0
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '14'
-      - run: yarn --ignore-scripts --frozen-lockfile
-      - run: npx nx-cloud stop-all-agents
-
-  stop-agents-after-publish:
-    if: ${{ github.head_ref == 'release' && !contains(github.event.head_commit.message, 'Release v') }}
-    needs: [ publish ]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-          fetch-depth: 0
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '14'
-      - run: yarn --ignore-scripts --frozen-lockfile
-      - run: npx nx-cloud stop-all-agents
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   agents:
     runs-on: ubuntu-latest
@@ -124,7 +91,7 @@ jobs:
     timeout-minutes: 60
     strategy:
       matrix:
-        agent: [ 1, 2, 3 ]
+        agent: [1, 2, 3]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
