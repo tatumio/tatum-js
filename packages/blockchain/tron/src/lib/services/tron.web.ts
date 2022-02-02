@@ -25,6 +25,6 @@ export const tronWeb = (): ITronWeb => {
       tronWeb.setHeader({ 'TRON-PRO-API-KEY': process.env.TRON_PRO_API_KEY })
 
       return tronWeb
-    }
+    },
   }
 }
