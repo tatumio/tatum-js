@@ -7,7 +7,7 @@ on:
 
 jobs:
   agents:
-    if: "!contains(github.event.head_commit.message, 'Release ')"
+    if: ${{ !startsWith(github.event.head_commit.message, 'Release ') }}
     runs-on: ubuntu-latest
     name: Agent 1
     timeout-minutes: 60
@@ -26,7 +26,7 @@ jobs:
         run: npx nx-cloud start-agent
 
   publish:
-    if: "!contains(github.event.head_commit.message, 'Release ')"
+    if: ${{ !startsWith(github.event.head_commit.message, 'Release ') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
