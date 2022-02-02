@@ -1,1 +1,1 @@
-export * from './lib/blockchain-tron'
+export * from './lib/tron.sdk'
