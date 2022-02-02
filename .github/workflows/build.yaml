@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - '!release'
   pull_request:
 
 env:
@@ -50,7 +49,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   pr:
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'pull_request' }}
+    if: ${{ github.event_name == 'pull_request' && github.head_ref != 'release'  }}
     steps:
       - uses: actions/checkout@v2
         with:
