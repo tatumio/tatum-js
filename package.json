@@ -43,6 +43,7 @@
     "reflect-metadata": "^0.1.13",
     "ripple-lib": "^1.7.1",
     "stellar-sdk": "^8.1.0",
+    "tronweb": "^4.1.0",
     "tslib": "^2.0.0",
     "web3": "^1.7.0",
     "web3-core": "^1.7.0",
