@@ -3,10 +3,11 @@ name: Publish all packages
 on:
   push:
     branches:
-      - master
+      - release
 
 jobs:
   agents:
+    if: ${{ !startsWith(github.event.head_commit.message, 'Release ') }}
     runs-on: ubuntu-latest
     name: Agent 1
     timeout-minutes: 60
@@ -16,24 +17,32 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          token: ${{ secrets.PAT_GITHUB_ADMIN }}
+          fetch-depth: 0
       - uses: actions/setup-node@v1
         with:
           node-version: '14'
       - run: yarn
       - name: Start Nx Agent ${{ matrix.agent }}
         run: npx nx-cloud start-agent
+
   publish:
+    if: ${{ !startsWith(github.event.head_commit.message, 'Release ') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        name: Checkout [main]
+        name: Checkout
         with:
-          fetch-depth: 0
+          token: ${{ secrets.PAT_GITHUB_ADMIN }}
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Git config
+        run: |
+          git config --local user.name github-actions
+          git config --local user.email github-actions@github.com
+
       - uses: actions/cache@v2
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
@@ -41,6 +50,7 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
+
       - uses: actions/setup-node@v1
         with:
           node-version: '14'
@@ -52,16 +62,9 @@ jobs:
       - run: npx nx-cloud stop-all-agents
 
       - run: echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}" > ~/.npmrc
-      - run: npm config set tag-version-prefix ''
-
-      - name: Config git email
-        run: git config --global user.email "nick.papirnyi@tatum.io"
-
-      - name: Config git name
-        run: git config --global user.name "Nick Papirniy"
 
       - name: Publish packages
-        run: yarn --ignore-scripts release:prerelease
+        run: yarn --ignore-scripts release:current
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_GITHUB_ADMIN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
