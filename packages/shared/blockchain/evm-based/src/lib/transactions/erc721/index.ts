@@ -13,7 +13,6 @@ import { TransactionConfig } from 'web3-core'
 import { Erc721Token, Erc721_Provenance } from '../../contracts'
 import { EvmBasedWeb3 } from '../../services/evm-based.web3'
 import { evmBasedUtils } from '../../evm-based.utils'
-import { BlockchainNftService, MintErc721, MintNftKMS } from '@tatumio/api-client'
 import BigNumber from 'bignumber.js'
 
 const mintSignedTransaction = async (body: ChainMintErc721, web3: EvmBasedWeb3, provider?: string) => {

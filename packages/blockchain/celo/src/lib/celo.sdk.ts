@@ -16,7 +16,7 @@ export const TatumCeloSDK = (args: SDKArguments) => {
     ...evmBasedSdk({ ...args, blockchain, web3 }),
     api,
     kms: celoKmsService({ blockchain, web3 }),
-    transaction: celoTxService({ blockchain, web3 }),
+    transaction: celoTxService({ blockchain }),
     httpDriver: async (request: Web3Request): Promise<Web3Response> => {
       return api.celoWeb3Driver(args.apiKey, { ...request, jsonrpc: '2.0' })
     },
