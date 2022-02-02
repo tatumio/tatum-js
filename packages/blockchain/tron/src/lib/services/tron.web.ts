@@ -1,7 +1,8 @@
 import { TATUM_API_CONSTANTS } from '@tatumio/api-client'
+// tronweb lib dont have any typings (not even in @types)
+// @ts-ignore
 import TronWeb from 'tronweb'
 
-// tronweb lib dont have any typings (not even in @types)
 export type TronWebClient = any
 
 // TODO: name conflict with lib export TronWeb
@@ -22,7 +23,7 @@ export const tronWeb = (): ITronWeb => {
 
       const tronWeb = new TronWeb(fullNode, solidityNode, eventServer)
 
-      tronWeb.setHeader({ 'TRON-PRO-API-KEY': process.env.TRON_PRO_API_KEY })
+      tronWeb.setHeader({ 'TRON-PRO-API-KEY': process.env['TRON_PRO_API_KEY'] })
 
       return tronWeb
     },
