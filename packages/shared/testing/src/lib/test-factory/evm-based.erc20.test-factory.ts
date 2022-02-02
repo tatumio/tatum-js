@@ -1,5 +1,6 @@
 import { SdkWithErc20Functions } from '@tatumio/shared-blockchain-abstract'
 import { BlockchainTestData, expectHexString } from '../shared-testing'
+import { GanacheAccount } from '../ganacheHelper'
 
 export const erc20TestFactory = {
   decimals: (sdk: SdkWithErc20Functions, testData: BlockchainTestData) => {
@@ -10,27 +11,24 @@ export const erc20TestFactory = {
     })
   },
   prepare: {
-    deploySignedTransaction: (sdk: SdkWithErc20Functions, testData: BlockchainTestData) => {
+    deploySignedTransaction: (sdk: SdkWithErc20Functions, accounts: GanacheAccount[]) => {
       it('valid with signatureId', async () => {
         const nonce = 3252345722143
 
-        const result = await sdk.prepare.deploySignedTransaction(
-          {
-            symbol: 'ERC_SYMBOL',
-            name: 'bO6AN',
-            address: testData.TESTNET.ERC_20!.ADDRESS,
-            supply: '10000000',
-            signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-            digits: 18,
-            totalCap: '10000000',
-            nonce,
-            fee: {
-              gasLimit: '171864',
-              gasPrice: '20',
-            },
+        const result = await sdk.prepare.deploySignedTransaction({
+          symbol: 'ERC_SYMBOL',
+          name: 'bO6AN',
+          address: accounts[0].address,
+          supply: '10000000',
+          signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+          digits: 18,
+          totalCap: '10000000',
+          nonce,
+          fee: {
+            gasLimit: '171864',
+            gasPrice: '20',
           },
-          testData.TESTNET.PROVIDER,
-        )
+        })
 
         const json = JSON.parse(result)
 
@@ -42,71 +40,62 @@ export const erc20TestFactory = {
       it('valid from privateKey', async () => {
         const nonce = 3252345722143
 
-        const result = await sdk.prepare.deploySignedTransaction(
-          {
-            symbol: 'ERC_SYMBOL',
-            name: 'bO6AN',
-            address: testData.TESTNET.ERC_20!.ADDRESS,
-            supply: '10000000',
-            fromPrivateKey: testData.TESTNET.ERC_20!.PRIVATE_KEY,
-            digits: 18,
-            totalCap: '10000000',
-            nonce,
-            fee: {
-              gasLimit: '171864',
-              gasPrice: '20',
-            },
+        const result = await sdk.prepare.deploySignedTransaction({
+          symbol: 'ERC_SYMBOL',
+          name: 'bO6AN',
+          address: accounts[0].address,
+          supply: '10000000',
+          fromPrivateKey: accounts[0].privateKey, //testData.TESTNET.ERC_20!.PRIVATE_KEY,
+          digits: 18,
+          totalCap: '10000000',
+          nonce,
+          fee: {
+            gasLimit: '171864',
+            gasPrice: '20',
           },
-          testData.TESTNET.PROVIDER,
-        )
+        })
 
         expectHexString(result)
       })
 
       it('invalid address', async () => {
         try {
-          await sdk.prepare.deploySignedTransaction(
-            {
-              symbol: 'ERC_SYMBOL',
-              name: 'bO6AN',
-              address: 'someinvalidaddress',
-              supply: '10000000',
-              fromPrivateKey: testData.TESTNET.ERC_20!.PRIVATE_KEY,
-              digits: 18,
-              totalCap: '10000000',
-              nonce: 3252345722143,
-              fee: {
-                gasLimit: '171864',
-                gasPrice: '20',
-              },
+          await sdk.prepare.deploySignedTransaction({
+            symbol: 'ERC_SYMBOL',
+            name: 'bO6AN',
+            address: 'someinvalidaddress',
+            supply: '10000000',
+            fromPrivateKey: '@TODO', //testData.TESTNET.ERC_20!.PRIVATE_KEY,
+            digits: 18,
+            totalCap: '10000000',
+            nonce: 3252345722143,
+            fee: {
+              gasLimit: '171864',
+              gasPrice: '20',
             },
-            testData.TESTNET.PROVIDER,
-          )
+          })
           fail()
         } catch (e: any) {
           expect(e.reason).toMatch('invalid address')
         }
       })
     },
-    transferSignedTransaction: (sdk: SdkWithErc20Functions, testData: BlockchainTestData) => {
+    transferSignedTransaction: (sdk: SdkWithErc20Functions, accounts: GanacheAccount[]) => {
       it('valid from signatureId', async () => {
         const nonce = 3252345722143
 
-        const result = await sdk.prepare.transferSignedTransaction(
-          {
-            to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-            amount: '10',
-            contractAddress: testData.TESTNET.ERC_20!.ADDRESS,
-            signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-            digits: 18,
-            nonce,
-            fee: {
-              gasLimit: '53632',
-              gasPrice: '20',
-            },
+        const result = await sdk.prepare.transferSignedTransaction({
+          to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+          amount: '10',
+          contractAddress: accounts[0].address,
+          signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+          digits: 18,
+          nonce,
+          fee: {
+            gasLimit: '53632',
+            gasPrice: '20',
           },
-          testData.TESTNET.PROVIDER,
-        )
+        })
 
         const json = JSON.parse(result)
 
@@ -118,42 +107,36 @@ export const erc20TestFactory = {
       it('valid from privateKey', async () => {
         const nonce = 3252345722143
 
-        const result = await sdk.prepare.transferSignedTransaction(
-          {
-            to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-            amount: '10',
-            contractAddress: testData.TESTNET.ERC_20!.ADDRESS,
-            fromPrivateKey: testData.TESTNET.ERC_20!.PRIVATE_KEY,
-            digits: 18,
-            nonce,
-            fee: {
-              gasLimit: '53632',
-              gasPrice: '20',
-            },
+        const result = await sdk.prepare.transferSignedTransaction({
+          to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+          amount: '10',
+          contractAddress: accounts[0].address,
+          fromPrivateKey: accounts[0].privateKey,
+          digits: 18,
+          nonce,
+          fee: {
+            gasLimit: '53632',
+            gasPrice: '20',
           },
-          testData.TESTNET.PROVIDER,
-        )
+        })
 
         expectHexString(result)
       })
 
       it('invalid address', async () => {
         try {
-          await sdk.prepare.transferSignedTransaction(
-            {
-              to: 'someinvalidaddress',
-              contractAddress: testData.TESTNET.ERC_20!.ADDRESS,
-              amount: '10',
-              fromPrivateKey: testData.TESTNET.ERC_20!.PRIVATE_KEY,
-              digits: 18,
-              nonce: 3252345722143,
-              fee: {
-                gasLimit: '53632',
-                gasPrice: '20',
-              },
+          await sdk.prepare.transferSignedTransaction({
+            to: 'someinvalidaddress',
+            contractAddress: accounts[0].address,
+            amount: '10',
+            fromPrivateKey: accounts[0].privateKey,
+            digits: 18,
+            nonce: 3252345722143,
+            fee: {
+              gasLimit: '53632',
+              gasPrice: '20',
             },
-            testData.TESTNET.PROVIDER,
-          )
+          })
           fail()
         } catch (e: any) {
           expect(e.reason).toMatch('invalid address')
