@@ -4,7 +4,7 @@ import { BlockchainTestData, expectHexString } from '../shared-testing'
 export const erc20TestFactory = {
   decimals: (sdk: SdkWithErc20Functions, testData: BlockchainTestData) => {
     it('valid', async () => {
-      const result = await sdk.decimals(testData.TESTNET.ERC_20.CONTRACT_ADDRESS, testData.TESTNET.PROVIDER)
+      const result = await sdk.decimals(testData.TESTNET.ERC_20!.CONTRACT_ADDRESS, testData.TESTNET.PROVIDER)
 
       expect(result).toBeDefined()
     })
@@ -18,7 +18,7 @@ export const erc20TestFactory = {
           {
             symbol: 'ERC_SYMBOL',
             name: 'bO6AN',
-            address: testData.TESTNET.ERC_20.ADDRESS,
+            address: testData.TESTNET.ERC_20!.ADDRESS,
             supply: '10000000',
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
             digits: 18,
@@ -46,9 +46,9 @@ export const erc20TestFactory = {
           {
             symbol: 'ERC_SYMBOL',
             name: 'bO6AN',
-            address: testData.TESTNET.ERC_20.ADDRESS,
+            address: testData.TESTNET.ERC_20!.ADDRESS,
             supply: '10000000',
-            fromPrivateKey: testData.TESTNET.ERC_20.PRIVATE_KEY,
+            fromPrivateKey: testData.TESTNET.ERC_20!.PRIVATE_KEY,
             digits: 18,
             totalCap: '10000000',
             nonce,
@@ -71,7 +71,7 @@ export const erc20TestFactory = {
               name: 'bO6AN',
               address: 'someinvalidaddress',
               supply: '10000000',
-              fromPrivateKey: testData.TESTNET.ERC_20.PRIVATE_KEY,
+              fromPrivateKey: testData.TESTNET.ERC_20!.PRIVATE_KEY,
               digits: 18,
               totalCap: '10000000',
               nonce: 3252345722143,
@@ -83,7 +83,7 @@ export const erc20TestFactory = {
             testData.TESTNET.PROVIDER,
           )
           fail()
-        } catch (e) {
+        } catch (e: any) {
           expect(e.reason).toMatch('invalid address')
         }
       })
@@ -96,7 +96,7 @@ export const erc20TestFactory = {
           {
             to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
             amount: '10',
-            contractAddress: testData.TESTNET.ERC_20.ADDRESS,
+            contractAddress: testData.TESTNET.ERC_20!.ADDRESS,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
             digits: 18,
             nonce,
@@ -122,8 +122,8 @@ export const erc20TestFactory = {
           {
             to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
             amount: '10',
-            contractAddress: testData.TESTNET.ERC_20.ADDRESS,
-            fromPrivateKey: testData.TESTNET.ERC_20.PRIVATE_KEY,
+            contractAddress: testData.TESTNET.ERC_20!.ADDRESS,
+            fromPrivateKey: testData.TESTNET.ERC_20!.PRIVATE_KEY,
             digits: 18,
             nonce,
             fee: {
@@ -142,9 +142,9 @@ export const erc20TestFactory = {
           await sdk.prepare.transferSignedTransaction(
             {
               to: 'someinvalidaddress',
-              contractAddress: testData.TESTNET.ERC_20.ADDRESS,
+              contractAddress: testData.TESTNET.ERC_20!.ADDRESS,
               amount: '10',
-              fromPrivateKey: testData.TESTNET.ERC_20.PRIVATE_KEY,
+              fromPrivateKey: testData.TESTNET.ERC_20!.PRIVATE_KEY,
               digits: 18,
               nonce: 3252345722143,
               fee: {
@@ -155,7 +155,7 @@ export const erc20TestFactory = {
             testData.TESTNET.PROVIDER,
           )
           fail()
-        } catch (e) {
+        } catch (e: any) {
           expect(e.reason).toMatch('invalid address')
         }
       })
@@ -164,10 +164,10 @@ export const erc20TestFactory = {
       it('valid from privateKey', async () => {
         const result = await sdk.prepare.mintSignedTransaction(
           {
-            to: testData.TESTNET.ERC_20.ADDRESS,
+            to: testData.TESTNET.ERC_20!.ADDRESS,
             amount: '10',
-            contractAddress: testData.TESTNET.ERC_20.CONTRACT_ADDRESS,
-            fromPrivateKey: testData.TESTNET.ERC_20.PRIVATE_KEY,
+            contractAddress: testData.TESTNET.ERC_20!.CONTRACT_ADDRESS,
+            fromPrivateKey: testData.TESTNET.ERC_20!.PRIVATE_KEY,
           },
           testData.TESTNET.PROVIDER,
         )
@@ -182,8 +182,8 @@ export const erc20TestFactory = {
         const result = await sdk.prepare.burnSignedTransaction(
           {
             amount: '10',
-            contractAddress: testData.TESTNET.ERC_20.CONTRACT_ADDRESS,
-            fromPrivateKey: testData.TESTNET.ERC_20.PRIVATE_KEY,
+            contractAddress: testData.TESTNET.ERC_20!.CONTRACT_ADDRESS,
+            fromPrivateKey: testData.TESTNET.ERC_20!.PRIVATE_KEY,
             nonce,
           },
           testData.TESTNET.PROVIDER,

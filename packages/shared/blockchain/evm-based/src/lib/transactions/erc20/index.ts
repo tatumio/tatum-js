@@ -33,7 +33,15 @@ const prepareSignedTransactionAbstraction = async (
     return JSON.stringify(tx)
   }
 
+  if (!fromPrivateKey) {
+    throw new Error('signatureId or fromPrivateKey has to be defined')
+  }
+
   const signedTransaction = await client.eth.accounts.signTransaction(tx, fromPrivateKey)
+
+  if (!signedTransaction.rawTransaction) {
+    throw new Error('Unable to get signed tx data')
+  }
 
   return signedTransaction.rawTransaction
 }
@@ -112,8 +120,8 @@ const transferSignedTransaction = async (body: ChainTransferErc20, web3: EvmBase
     body.signatureId,
     body.fromPrivateKey,
     web3,
-    body.fee.gasLimit,
-    body.fee.gasPrice,
+    body.fee?.gasLimit,
+    body.fee?.gasPrice,
   )
 }
 
@@ -149,8 +157,8 @@ const deploySignedTransaction = async (body: ChainDeployErc20, web3: EvmBasedWeb
     signatureId,
     fromPrivateKey,
     web3,
-    body.fee.gasLimit,
-    body.fee.gasPrice,
+    body.fee?.gasLimit,
+    body.fee?.gasPrice,
   )
 }
 
