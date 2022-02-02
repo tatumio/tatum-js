@@ -1,7 +1,7 @@
 import { evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
 import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
 import { BlockchainKcsKcsService } from '@tatumio/api-client'
-import { SDKArguments } from '@tatumio/abstract-sdk'
+import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { kcsWeb3 } from './services/kcs.web3'
 import { kcsKmsService } from './services/kcs.kms'
 import { kcsTxService } from './services/kcs.tx'

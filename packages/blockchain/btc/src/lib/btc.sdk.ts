@@ -2,7 +2,7 @@ import { Blockchain } from '@tatumio/shared-core'
 import { btcBasedSdk } from '@tatumio/shared-blockchain-btc-based'
 import { BlockchainBitcoinService } from '@tatumio/api-client'
 import { btcTransactions } from './transaction/btc.tx'
-import { SDKArguments } from '@tatumio/abstract-sdk'
+import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 
 const blockchain = Blockchain.BTC
 

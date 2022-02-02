@@ -4,7 +4,7 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nrwl/node:package",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/sdk",

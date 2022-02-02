@@ -22,7 +22,7 @@ import {
   XrpWallet,
 } from '@tatumio/api-client'
 import { Blockchain, blockchainHelper, Fiat } from '@tatumio/shared-core'
-import { abstractSdk } from '@tatumio/abstract-sdk'
+import { abstractSdk } from '@tatumio/shared-abstract-sdk'
 import { abstractBlockchainKms } from './services/kms.abstract-blockchain'
 import { abstractBlockchainOffchain } from './services/offchain.abstract-blockchain'
 

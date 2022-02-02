@@ -1,6 +1,6 @@
 import { Blockchain, blockchainHelper } from '@tatumio/shared-core'
 import { ApiServices, CancelablePromise, PendingTransaction } from '@tatumio/api-client'
-import { abstractSdkKms } from '@tatumio/abstract-sdk'
+import { abstractSdkKms } from '@tatumio/shared-abstract-sdk'
 
 export const abstractBlockchainKms = (args: { blockchain: Blockchain }) => {
   const superObject = abstractSdkKms()

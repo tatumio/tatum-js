@@ -1,4 +1,4 @@
-import { SdkError, SdkErrorCode } from '@tatumio/abstract-sdk'
+import { SdkError, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 export const SCRYPTA_ERRORS_MAPPING = {}
 

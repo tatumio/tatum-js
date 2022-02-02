@@ -1,6 +1,6 @@
 import '../../index'
 import { BtcBasedTx } from '@tatumio/shared-blockchain-btc-based'
-import { SdkErrorCode } from '@tatumio/abstract-sdk'
+import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { testHelper } from '../test.helper'
 import { BroadcastKMS, CancelablePromise, TransactionHashKMS } from '@tatumio/api-client'
 

@@ -1,4 +1,5 @@
 {
-  "name": "@tatumio/abstract-sdk",
-  "version": "0.0.1"
+  "name": "@tatumio/shared-abstract-sdk",
+  "version": "2.0.1-alpha.228",
+  "license": "MIT"
 }
