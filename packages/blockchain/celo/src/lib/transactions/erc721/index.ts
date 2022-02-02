@@ -19,10 +19,12 @@ import {
 } from '../../utils/celo.utils'
 import Web3 from 'web3'
 
-const getProvider = (provider: string) =>
+const getProvider = (provider?: string) =>
   new CeloProvider(
     provider ||
-      `${process.env.TATUM_API_URL || TATUM_API_CONSTANTS.URL}/v3/celo/web3/${TATUM_API_CONSTANTS.API_KEY}`,
+      `${process.env['TATUM_API_URL'] || TATUM_API_CONSTANTS.URL}/v3/celo/web3/${
+        TATUM_API_CONSTANTS.API_KEY
+      }`,
   )
 
 const obtainWalletInformation = async (wallet: CeloWallet, feeCurrencyContractAddress?: string) => {
@@ -44,7 +46,7 @@ const obtainWalletInformation = async (wallet: CeloWallet, feeCurrencyContractAd
   }
 }
 
-const getFeeCurrency = (feeCurrency: 'CELO' | 'CUSD' | 'CEUR', testnet: boolean) => {
+const getFeeCurrency = (feeCurrency?: 'CELO' | 'CUSD' | 'CEUR', testnet?: boolean) => {
   switch (feeCurrency) {
     case Currency.CEUR:
       return testnet ? CELO_CONSTANTS.CEUR_ADDRESS_TESTNET : CELO_CONSTANTS.CEUR_ADDRESS_MAINNET
@@ -114,7 +116,7 @@ const mintSignedTransaction = async (body: ChainMintErc721Celo, provider?: strin
       })
     }
 
-    const wallet = new CeloWallet(fromPrivateKey, celoProvider)
+    const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
     const { txCount, gasPrice, from } = await obtainWalletInformation(wallet, feeCurrencyContractAddress)
 
     const tx: CeloTransactionConfig = {
@@ -744,7 +746,7 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
        * @returns transaction id of the transaction in the blockchain
        */
       mintSignedTransaction: async (body: ChainMintErc721Celo, provider?: string, testnet?: boolean) => {
-        args.broadcastFunction({
+        await args.broadcastFunction({
           txData: await mintSignedTransaction(body, provider, testnet),
           signatureId: body.signatureId,
         })
@@ -758,7 +760,7 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
        * @returns transaction id of the transaction in the blockchain
        */
       mintCashbackSignedTransaction: async (body: ChainMintNftCelo, provider?: string, testnet?: boolean) =>
-        args.broadcastFunction({
+        await args.broadcastFunction({
           txData: (await mintCashbackSignedTransaction(body, provider, testnet)) as string,
           signatureId: body.signatureId,
         }),
@@ -775,7 +777,7 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         provider?: string,
         testnet?: boolean,
       ) =>
-        args.broadcastFunction({
+        await args.broadcastFunction({
           txData: (await mintMultipleCashbackSignedTransaction(body, provider, testnet)) as string,
           signatureId: body.signatureId,
         }),
@@ -792,7 +794,7 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         provider?: string,
         testnet?: boolean,
       ) =>
-        args.broadcastFunction({
+        await args.broadcastFunction({
           txData: (await mintMultipleSignedTransaction(body, provider, testnet)) as string,
           signatureId: body.signatureId,
         }),
@@ -805,7 +807,7 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
        * @returns transaction id of the transaction in the blockchain
        */
       burnSignedTransaction: async (body: ChainBurnErc721Celo, provider?: string, testnet?: boolean) =>
-        args.broadcastFunction({
+        await args.broadcastFunction({
           txData: (await burnSignedTransaction(body, provider, testnet)) as string,
           signatureId: body.signatureId,
         }),
@@ -822,7 +824,7 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         provider?: string,
         testnet?: boolean,
       ) =>
-        args.broadcastFunction({
+        await args.broadcastFunction({
           txData: (await transferSignedTransaction(body, provider, testnet)) as string,
           signatureId: body.signatureId,
         }),
@@ -839,7 +841,7 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         provider?: string,
         testnet?: boolean,
       ) =>
-        args.broadcastFunction({
+        await args.broadcastFunction({
           txData: (await updateCashbackForAuthorSignedTransaction(body, provider, testnet)) as string,
           signatureId: body.signatureId,
         }),
@@ -852,7 +854,7 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
        * @returns transaction id of the transaction in the blockchain
        */
       deploySignedTransaction: async (body: ChainDeployErc721Celo, provider?: string, testnet?: boolean) =>
-        args.broadcastFunction({
+        await args.broadcastFunction({
           txData: (await deploySignedTransaction(body, provider, testnet)) as string,
           signatureId: body.signatureId,
         }),
@@ -865,7 +867,7 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
        * @returns transaction id of the transaction in the blockchain
        */
       mintProvenanceSignedTransaction: async (body: ChainMintNftCelo, provider?: string, testnet?: boolean) =>
-        args.broadcastFunction({
+        await args.broadcastFunction({
           txData: (await mintProvenanceSignedTransaction(body, provider, testnet)) as string,
           signatureId: body.signatureId,
         }),
@@ -882,7 +884,7 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         provider?: string,
         testnet?: boolean,
       ) =>
-        args.broadcastFunction({
+        await args.broadcastFunction({
           txData: (await mintMultipleProvenanceSignedTransaction(body, provider, testnet)) as string,
           signatureId: body.signatureId,
         }),

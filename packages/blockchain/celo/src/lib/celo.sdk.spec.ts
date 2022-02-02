@@ -4,7 +4,6 @@ import {
   TEST_DATA,
   walletTestFactory,
 } from '@tatumio/shared-testing'
-import { CELO_TEST_DATA } from 'packages/shared/testing/src/lib/test-data/celo.test-data'
 import { TatumCeloSDK } from './celo.sdk'
 
 describe('TatumCeloSDK', () => {
@@ -32,16 +31,16 @@ describe('TatumCeloSDK', () => {
   describe('erc721', () => {
     describe('prepare', () => {
       describe('mint', () => {
-        const provider = CELO_TEST_DATA?.PROVIDER
-        const address = CELO_TEST_DATA.TESTNET.ERC_721?.ADDRESS
-          ? CELO_TEST_DATA.TESTNET.ERC_721?.ADDRESS
+        const provider = TEST_DATA.CELO?.PROVIDER
+        const address = TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
+          ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
           : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
         it('should be valid from privateKey', async () => {
           const result = await sdk.transaction.erc721.prepare.mintSignedTransaction(
             {
               to: address,
-              contractAddress: CELO_TEST_DATA.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-              fromPrivateKey: CELO_TEST_DATA.MAINNET.ERC_721!.PRIVATE_KEY,
+              contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+              fromPrivateKey: TEST_DATA.CELO.MAINNET.ERC_721!.PRIVATE_KEY,
               tokenId: new Date().getTime().toString(),
               url: 'https://my_token_data.com',
               chain: 'CELO',
@@ -57,7 +56,7 @@ describe('TatumCeloSDK', () => {
           const result = await sdk.transaction.erc721.prepare.mintSignedTransaction(
             {
               to: address,
-              contractAddress: CELO_TEST_DATA.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+              contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
               signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
               tokenId: new Date().getTime().toString(),
               url: 'https://my_token_data.com',
@@ -78,8 +77,8 @@ describe('TatumCeloSDK', () => {
                 to: 'someinvalidaddress',
                 tokenId: new Date().getTime().toString(),
                 url: 'https://my_token_data.com',
-                contractAddress: CELO_TEST_DATA.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-                fromPrivateKey: CELO_TEST_DATA.MAINNET.ERC_721!.PRIVATE_KEY,
+                contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+                fromPrivateKey: TEST_DATA.CELO.MAINNET.ERC_721!.PRIVATE_KEY,
                 chain: 'CELO',
                 feeCurrency: 'CUSD',
               },
@@ -94,16 +93,16 @@ describe('TatumCeloSDK', () => {
       })
 
       describe('mint multiple', () => {
-        const provider = CELO_TEST_DATA?.PROVIDER
-        const address = CELO_TEST_DATA.TESTNET.ERC_721?.ADDRESS
-          ? CELO_TEST_DATA.TESTNET.ERC_721?.ADDRESS
+        const provider = TEST_DATA.CELO?.PROVIDER
+        const address = TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
+          ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
           : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
         it('should be valid from privateKey', async () => {
           const result = await sdk.transaction.erc721.prepare.mintMultipleSignedTransaction(
             {
               to: [address, address],
-              contractAddress: CELO_TEST_DATA.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-              fromPrivateKey: CELO_TEST_DATA.MAINNET.ERC_721!.PRIVATE_KEY,
+              contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+              fromPrivateKey: TEST_DATA.CELO.MAINNET.ERC_721!.PRIVATE_KEY,
               tokenId: [new Date().getTime().toString()],
               url: ['https://my_token_data.com', 'https://my_token_data2.com'],
               chain: 'CELO',
@@ -119,7 +118,7 @@ describe('TatumCeloSDK', () => {
           const result = await sdk.transaction.erc721.prepare.mintMultipleSignedTransaction(
             {
               to: [address, address],
-              contractAddress: CELO_TEST_DATA.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+              contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
               signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
               tokenId: [new Date().getTime().toString()],
               url: ['https://my_token_data.com', 'https://my_token_data2.com'],
@@ -140,8 +139,8 @@ describe('TatumCeloSDK', () => {
                 to: ['someinvalidaddress', 'onemoreinvalid'],
                 tokenId: [new Date().getTime().toString()],
                 url: ['https://my_token_data.com', 'https://my_token_data2.com'],
-                contractAddress: CELO_TEST_DATA.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-                fromPrivateKey: CELO_TEST_DATA.MAINNET.ERC_721!.PRIVATE_KEY,
+                contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+                fromPrivateKey: TEST_DATA.CELO.MAINNET.ERC_721!.PRIVATE_KEY,
                 chain: 'CELO',
                 feeCurrency: 'CUSD',
               },
@@ -156,16 +155,16 @@ describe('TatumCeloSDK', () => {
       })
 
       describe('mint cashback', () => {
-        const provider = CELO_TEST_DATA?.PROVIDER
-        const address = CELO_TEST_DATA.TESTNET.ERC_721?.ADDRESS
-          ? CELO_TEST_DATA.TESTNET.ERC_721?.ADDRESS
+        const provider = TEST_DATA.CELO?.PROVIDER
+        const address = TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
+          ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
           : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
         it('should be valid from privateKey', async () => {
           const result = await sdk.transaction.erc721.prepare.mintCashbackSignedTransaction(
             {
               to: address,
-              contractAddress: CELO_TEST_DATA.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-              fromPrivateKey: CELO_TEST_DATA.MAINNET.ERC_721!.PRIVATE_KEY,
+              contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+              fromPrivateKey: TEST_DATA.CELO.MAINNET.ERC_721!.PRIVATE_KEY,
               tokenId: new Date().getTime().toString(),
               url: 'https://my_token_data.com',
               chain: 'CELO',
@@ -183,7 +182,7 @@ describe('TatumCeloSDK', () => {
           const result = await sdk.transaction.erc721.prepare.mintCashbackSignedTransaction(
             {
               to: address,
-              contractAddress: CELO_TEST_DATA.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+              contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
               signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
               tokenId: new Date().getTime().toString(),
               url: 'https://my_token_data.com',
@@ -204,8 +203,8 @@ describe('TatumCeloSDK', () => {
             await sdk.transaction.erc721.prepare.mintCashbackSignedTransaction(
               {
                 to: 'invalidaddress',
-                contractAddress: CELO_TEST_DATA.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-                fromPrivateKey: CELO_TEST_DATA.MAINNET.ERC_721!.PRIVATE_KEY,
+                contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+                fromPrivateKey: TEST_DATA.CELO.MAINNET.ERC_721!.PRIVATE_KEY,
                 tokenId: new Date().getTime().toString(),
                 url: 'https://my_token_data.com',
                 chain: 'CELO',
@@ -225,16 +224,16 @@ describe('TatumCeloSDK', () => {
     })
 
     describe('mint multiple cashback', () => {
-      const provider = CELO_TEST_DATA?.PROVIDER
-      const address = CELO_TEST_DATA.TESTNET.ERC_721?.ADDRESS
-        ? CELO_TEST_DATA.TESTNET.ERC_721?.ADDRESS
+      const provider = TEST_DATA.CELO?.PROVIDER
+      const address = TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
+        ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
         : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       it('should be valid from privateKey', async () => {
         const result = await sdk.transaction.erc721.prepare.mintMultipleCashbackSignedTransaction(
           {
             to: [address, address],
-            contractAddress: CELO_TEST_DATA.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-            fromPrivateKey: CELO_TEST_DATA.MAINNET.ERC_721!.PRIVATE_KEY,
+            contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            fromPrivateKey: TEST_DATA.CELO.MAINNET.ERC_721!.PRIVATE_KEY,
             tokenId: [new Date().getTime().toString()],
             url: ['https://my_token_data.com', 'https://my_token_data2.com'],
             chain: 'CELO',
@@ -252,7 +251,7 @@ describe('TatumCeloSDK', () => {
         const result = await sdk.transaction.erc721.prepare.mintMultipleCashbackSignedTransaction(
           {
             to: [address, address],
-            contractAddress: CELO_TEST_DATA.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
             tokenId: [new Date().getTime().toString()],
             url: ['https://my_token_data.com', 'https://my_token_data2.com'],
@@ -275,8 +274,8 @@ describe('TatumCeloSDK', () => {
               to: ['someinvalidaddress', 'onemoreinvalid'],
               tokenId: [new Date().getTime().toString()],
               url: ['https://my_token_data.com', 'https://my_token_data2.com'],
-              contractAddress: CELO_TEST_DATA.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-              fromPrivateKey: CELO_TEST_DATA.MAINNET.ERC_721!.PRIVATE_KEY,
+              contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+              fromPrivateKey: TEST_DATA.CELO.MAINNET.ERC_721!.PRIVATE_KEY,
               chain: 'CELO',
               feeCurrency: 'CUSD',
               cashbackValues: [['0.5'], ['0.5']],
@@ -293,16 +292,16 @@ describe('TatumCeloSDK', () => {
     })
 
     describe('mint provenance', () => {
-      const provider = CELO_TEST_DATA?.PROVIDER
-      const address = CELO_TEST_DATA.TESTNET.ERC_721?.ADDRESS
-        ? CELO_TEST_DATA.TESTNET.ERC_721?.ADDRESS
+      const provider = TEST_DATA.CELO?.PROVIDER
+      const address = TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
+        ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
         : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       it('should be valid from privateKey', async () => {
         const result = await sdk.transaction.erc721.prepare.mintProvenanceSignedTransaction(
           {
             to: address,
-            contractAddress: CELO_TEST_DATA.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-            fromPrivateKey: CELO_TEST_DATA.MAINNET.ERC_721!.PRIVATE_KEY,
+            contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            fromPrivateKey: TEST_DATA.CELO.MAINNET.ERC_721!.PRIVATE_KEY,
             tokenId: new Date().getTime().toString(),
             url: 'https://my_token_data.com',
             chain: 'CELO',
@@ -320,7 +319,7 @@ describe('TatumCeloSDK', () => {
         const result = await sdk.transaction.erc721.prepare.mintProvenanceSignedTransaction(
           {
             to: address,
-            contractAddress: CELO_TEST_DATA.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
             tokenId: new Date().getTime().toString(),
             url: 'https://my_token_data.com',
@@ -341,8 +340,8 @@ describe('TatumCeloSDK', () => {
           await sdk.transaction.erc721.prepare.mintProvenanceSignedTransaction(
             {
               to: 'invalidaddress',
-              contractAddress: CELO_TEST_DATA.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-              fromPrivateKey: CELO_TEST_DATA.MAINNET.ERC_721!.PRIVATE_KEY,
+              contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+              fromPrivateKey: TEST_DATA.CELO.MAINNET.ERC_721!.PRIVATE_KEY,
               tokenId: new Date().getTime().toString(),
               url: 'https://my_token_data.com',
               chain: 'CELO',
@@ -361,16 +360,16 @@ describe('TatumCeloSDK', () => {
     })
 
     describe('mint multiple provenance', () => {
-      const provider = CELO_TEST_DATA?.PROVIDER
-      const address = CELO_TEST_DATA.TESTNET.ERC_721?.ADDRESS
-        ? CELO_TEST_DATA.TESTNET.ERC_721?.ADDRESS
+      const provider = TEST_DATA.CELO?.PROVIDER
+      const address = TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
+        ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
         : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       it('should be valid from privateKey', async () => {
         const result = await sdk.transaction.erc721.prepare.mintMultipleProvenanceSignedTransaction(
           {
             to: [address, address],
-            contractAddress: CELO_TEST_DATA.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-            fromPrivateKey: CELO_TEST_DATA.MAINNET.ERC_721!.PRIVATE_KEY,
+            contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            fromPrivateKey: TEST_DATA.CELO.MAINNET.ERC_721!.PRIVATE_KEY,
             tokenId: [new Date().getTime().toString()],
             url: ['https://my_token_data.com', 'https://my_token_data2.com'],
             chain: 'CELO',
@@ -389,7 +388,7 @@ describe('TatumCeloSDK', () => {
         const result = await sdk.transaction.erc721.prepare.mintMultipleProvenanceSignedTransaction(
           {
             to: [address, address],
-            contractAddress: CELO_TEST_DATA.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
             tokenId: [new Date().getTime().toString()],
             url: ['https://my_token_data.com', 'https://my_token_data2.com'],
@@ -413,8 +412,8 @@ describe('TatumCeloSDK', () => {
               to: ['someinvalidaddress', 'onemoreinvalid'],
               tokenId: [new Date().getTime().toString()],
               url: ['https://my_token_data.com', 'https://my_token_data2.com'],
-              contractAddress: CELO_TEST_DATA.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-              fromPrivateKey: CELO_TEST_DATA.MAINNET.ERC_721!.PRIVATE_KEY,
+              contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+              fromPrivateKey: TEST_DATA.CELO.MAINNET.ERC_721!.PRIVATE_KEY,
               chain: 'CELO',
               feeCurrency: 'CUSD',
               cashbackValues: [['0.5'], ['0.5']],
@@ -432,16 +431,16 @@ describe('TatumCeloSDK', () => {
     })
 
     describe('transfer', () => {
-      const provider = CELO_TEST_DATA?.PROVIDER
-      const address = CELO_TEST_DATA.TESTNET.ERC_721?.ADDRESS
-        ? CELO_TEST_DATA.TESTNET.ERC_721?.ADDRESS
+      const provider = TEST_DATA.CELO?.PROVIDER
+      const address = TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
+        ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
         : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       it('should be valid from privateKey', async () => {
         const result = await sdk.transaction.erc721.prepare.transferSignedTransaction(
           {
             to: address,
-            contractAddress: CELO_TEST_DATA.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-            fromPrivateKey: CELO_TEST_DATA.MAINNET.ERC_721!.PRIVATE_KEY,
+            contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            fromPrivateKey: TEST_DATA.CELO.MAINNET.ERC_721!.PRIVATE_KEY,
             tokenId: new Date().getTime().toString(),
             chain: 'CELO',
             feeCurrency: 'CUSD',
@@ -456,7 +455,7 @@ describe('TatumCeloSDK', () => {
         const result = await sdk.transaction.erc721.prepare.transferSignedTransaction(
           {
             to: address,
-            contractAddress: CELO_TEST_DATA.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
             tokenId: new Date().getTime().toString(),
             chain: 'CELO',
@@ -474,8 +473,8 @@ describe('TatumCeloSDK', () => {
           await sdk.transaction.erc721.prepare.transferSignedTransaction(
             {
               to: 'invalidaddress',
-              contractAddress: CELO_TEST_DATA.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-              fromPrivateKey: CELO_TEST_DATA.MAINNET.ERC_721!.PRIVATE_KEY,
+              contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+              fromPrivateKey: TEST_DATA.CELO.MAINNET.ERC_721!.PRIVATE_KEY,
               tokenId: new Date().getTime().toString(),
               chain: 'CELO',
               feeCurrency: 'CUSD',
@@ -491,15 +490,15 @@ describe('TatumCeloSDK', () => {
     })
 
     describe('update cashback', () => {
-      const provider = CELO_TEST_DATA?.PROVIDER
-      const address = CELO_TEST_DATA.TESTNET.ERC_721?.ADDRESS
-        ? CELO_TEST_DATA.TESTNET.ERC_721?.ADDRESS
+      const provider = TEST_DATA.CELO?.PROVIDER
+      const address = TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
+        ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
         : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       it('should be valid from privateKey', async () => {
         const result = await sdk.transaction.erc721.prepare.updateCashbackForAuthorSignedTransaction(
           {
-            contractAddress: CELO_TEST_DATA.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-            fromPrivateKey: CELO_TEST_DATA.MAINNET.ERC_721!.PRIVATE_KEY,
+            contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            fromPrivateKey: TEST_DATA.CELO.MAINNET.ERC_721!.PRIVATE_KEY,
             tokenId: new Date().getTime().toString(),
             chain: 'CELO',
             feeCurrency: 'CUSD',
@@ -514,7 +513,7 @@ describe('TatumCeloSDK', () => {
       it('should be valid from signatureId', async () => {
         const result = await sdk.transaction.erc721.prepare.updateCashbackForAuthorSignedTransaction(
           {
-            contractAddress: CELO_TEST_DATA.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
             tokenId: new Date().getTime().toString(),
             chain: 'CELO',
@@ -530,15 +529,15 @@ describe('TatumCeloSDK', () => {
     })
 
     describe('burn', () => {
-      const provider = CELO_TEST_DATA?.PROVIDER
-      const address = CELO_TEST_DATA.TESTNET.ERC_721?.ADDRESS
-        ? CELO_TEST_DATA.TESTNET.ERC_721?.ADDRESS
+      const provider = TEST_DATA.CELO?.PROVIDER
+      const address = TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
+        ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
         : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       it('should be valid from privateKey', async () => {
         const result = await sdk.transaction.erc721.prepare.burnSignedTransaction(
           {
-            contractAddress: CELO_TEST_DATA.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-            fromPrivateKey: CELO_TEST_DATA.MAINNET.ERC_721!.PRIVATE_KEY,
+            contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            fromPrivateKey: TEST_DATA.CELO.MAINNET.ERC_721!.PRIVATE_KEY,
             tokenId: new Date().getTime().toString(),
             chain: 'CELO',
             feeCurrency: 'CUSD',
@@ -552,7 +551,7 @@ describe('TatumCeloSDK', () => {
       it('should be valid from signatureId', async () => {
         const result = await sdk.transaction.erc721.prepare.burnSignedTransaction(
           {
-            contractAddress: CELO_TEST_DATA.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
             tokenId: new Date().getTime().toString(),
             chain: 'CELO',

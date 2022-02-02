@@ -22,7 +22,7 @@ export interface CeloTransactionConfig {
   nonce?: number
   chainId?: number
   chain?: string
-  feeCurrency: string
+  feeCurrency?: string
 }
 
 export type ChainMintErc721Celo =

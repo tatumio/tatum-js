@@ -551,7 +551,7 @@ export const erc721 = (args: {
        * @returns transaction id of the transaction in the blockchain
        */
       mintSignedTransaction: async (body: ChainMintErc721, provider?: string) => {
-        args.broadcastFunction({
+        await args.broadcastFunction({
           txData: (await mintSignedTransaction(body, args.web3, provider)) as string,
           signatureId: body.signatureId,
         })
