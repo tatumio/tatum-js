@@ -12,7 +12,7 @@ import { TransactionConfig } from 'web3-core'
 import { Erc20Token } from '../../contracts'
 import { EvmBasedWeb3 } from '../../services/evm-based.web3'
 
-const prepareSignedTransactionAbstraction = async (
+export const prepareSignedTransactionAbstraction = async (
   client: Web3,
   transaction: TransactionConfig,
   signatureId: string | undefined,

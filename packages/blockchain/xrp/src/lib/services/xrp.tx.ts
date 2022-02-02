@@ -26,6 +26,7 @@ const sendTransaction = async (body: TransferXrpBlockchain) => {
  * @returns transaction data to be broadcast to blockchain.
  */
 const prepareSignedTransaction = async (body: TransferXrpBlockchain) => {
+  // TODO validation
   const { fromAccount, fromSecret, to, amount, fee, sourceTag, destinationTag } = body
 
   const f = fee

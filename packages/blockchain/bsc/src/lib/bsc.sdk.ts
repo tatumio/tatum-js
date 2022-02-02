@@ -5,6 +5,7 @@ import { SDKArguments } from '@tatumio/abstract-sdk'
 import { bscWeb3 } from './services/bsc.web3'
 import { bscKmsService } from './services/bsc.kms'
 import { bscTxService } from './services/bsc.tx'
+import { bscAuctionService } from './services/bsc.auction'
 
 const blockchain = Blockchain.BSC
 
@@ -17,6 +18,9 @@ export const TatumBscSDK = (args: SDKArguments) => {
     api,
     kms: bscKmsService({ blockchain, web3 }),
     transaction: bscTxService({ blockchain, web3 }),
+    nft: {
+      auction: bscAuctionService({ blockchain, web3 }),
+    },
     httpDriver: async (request: Web3Request): Promise<Web3Response> => {
       return api.bscWeb3Driver(args.apiKey, { ...request, jsonrpc: '2.0' })
     },

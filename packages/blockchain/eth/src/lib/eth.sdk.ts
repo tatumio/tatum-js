@@ -5,6 +5,7 @@ import { ethWeb3 } from './services/eth.web3'
 import { ethKmsService } from './services/eth.kms'
 import { ethTx } from './services/eth.tx'
 import { SDKArguments } from '@tatumio/abstract-sdk'
+import { ethAuctionService } from './services/eth.auction'
 
 const blockchain = Blockchain.ETH
 
@@ -17,6 +18,9 @@ export const TatumEthSDK = (args: SDKArguments) => {
     api,
     kms: ethKmsService({ blockchain, web3 }),
     transaction: ethTx({ blockchain, web3 }),
+    nft: {
+      auction: ethAuctionService({ blockchain, web3 }),
+    },
     httpDriver: async (request: Web3Request): Promise<Web3Response> => {
       return api.ethWeb3Driver(args.apiKey, { ...request, jsonrpc: '2.0' })
     },

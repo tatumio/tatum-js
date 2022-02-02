@@ -5,6 +5,7 @@ import { SDKArguments } from '@tatumio/abstract-sdk'
 import { polygonWeb3 } from './services/polygon.web3'
 import { polygonKmsService } from './services/polygon.kms'
 import { polygonTxService } from './services/polygon.tx'
+import { polygonAuctionService } from './services/polygon.auction'
 
 const blockchain = Blockchain.POLYGON
 
@@ -17,6 +18,9 @@ export const TatumPolygonSDK = (args: SDKArguments) => {
     api,
     kms: polygonKmsService({ blockchain, web3 }),
     transaction: polygonTxService({ blockchain, web3 }),
+    nft: {
+      auction: polygonAuctionService({ blockchain, web3 }),
+    },
     httpDriver: async (request: Web3Request): Promise<Web3Response> => {
       return api.polygonWeb3Driver(args.apiKey, { ...request, jsonrpc: '2.0' })
     },

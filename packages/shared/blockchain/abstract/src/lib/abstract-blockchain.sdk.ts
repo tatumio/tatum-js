@@ -43,7 +43,7 @@ export interface SdkWithXrpLikeWalletFunction {
   wallet(): CancelablePromise<XrpWallet>
 }
 
-type FromPrivateKeyOrSignatureId<T extends { fromPrivateKey: string }> = Omit<T, 'fromPrivateKey'> &
+export type FromPrivateKeyOrSignatureId<T extends { fromPrivateKey: string }> = Omit<T, 'fromPrivateKey'> &
   Partial<SignatureId> &
   Partial<Pick<T, 'fromPrivateKey'>>
 

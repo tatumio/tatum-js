@@ -18,6 +18,7 @@ import { bscNftExample } from './app/bsc.nft.example'
 import { bscSubscriptionsExample } from './app/bsc.subscriptions.example'
 import { bscTxWithPrivateKeyExample, bscTxWithSignatureIdExample } from './app/bsc.tx.example'
 
+// TODO add auction example
 console.log(`Running ${bscApiExample()}`)
 console.log(`Running ${bscWalletExample()}`)
 console.log(`Running ${bscBlockchainExample()}`)

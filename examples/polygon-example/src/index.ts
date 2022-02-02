@@ -18,6 +18,7 @@ import { polygonNftExample } from './app/polygon.nft.example'
 import { polygonSubscriptionsExample } from './app/polygon.subscriptions.example'
 import { polygonTxWithPrivateKeyExample, polygonTxWithSignatureIdExample } from './app/polygon.tx.example'
 
+// TODO add auction example
 console.log(`Running ${polygonApiExample()}`)
 console.log(`Running ${polygonWalletExample()}`)
 console.log(`Running ${polygonBlockchainExample()}`)
