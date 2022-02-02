@@ -88,6 +88,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   agents:
+    if: ${{ github.head_ref != 'release'  }}
     runs-on: ubuntu-latest
     name: Agent 1
     timeout-minutes: 60
