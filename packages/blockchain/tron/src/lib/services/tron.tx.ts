@@ -106,7 +106,7 @@ const prepareSmartContractInvocation = async (
     contractAddressHex,
     methodName,
     {
-      feeLimit: client.toSun(body.fee.gasLimit),
+      feeLimit: client.toSun(body.fee?.gasLimit),
       from: sender,
       callValue: client.toSun(amount || 0),
     },
