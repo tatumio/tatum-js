@@ -4,6 +4,7 @@ import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { abstractBlockchainSdk } from '@tatumio/shared-blockchain-abstract'
 import { tronWeb } from './services/tron.web'
 import { tronTx } from './services/tron.tx'
+import { tronWallet } from './services/tron.wallet'
 
 const blockchain = Blockchain.TRON
 
@@ -18,6 +19,7 @@ export const TatumTronSDK = (args: SDKArguments) => {
     }),
     transaction: tronTx({ tronWeb: web }),
     api,
+    wallet: tronWallet(),
     blockchain: {
       broadcast: BlockchainTronService.tronBroadcast,
       getCurrentBlock: BlockchainTronService.tronGetCurrentBlock,
