@@ -1,11 +1,12 @@
 import {
   erc20TestFactory,
+  erc721TestFactory,
   ganacheHelper,
   REPLACE_ME_WITH_TATUM_API_KEY,
   TEST_DATA,
 } from '@tatumio/shared-testing'
 import { TatumKcsSDK } from '../kcs.sdk'
-import { Blockchain } from '@tatumio/shared-core'
+import { Blockchain, Currency } from '@tatumio/shared-core'
 import { kcsTxService } from '../services/kcs.tx'
 
 const blockchain = Blockchain.KCS
@@ -57,6 +58,62 @@ describe('KcsSDK - tx', () => {
        */
       xdescribe('burnSignedTransaction', () => {
         erc20TestFactory.prepare.burnSignedTransaction(kcsTx.erc20, TEST_DATA.KCS)
+      })
+    })
+  })
+
+  describe('erc721', () => {
+    describe('prepare', () => {
+      describe('deploySignedTransaction', () => {
+        erc721TestFactory.prepare.deploySignedTransaction(sdk.transaction.erc721, TEST_DATA.KCS, Currency.KCS)
+      })
+
+      describe('transferSignedTransaction', () => {
+        erc721TestFactory.prepare.transferSignedTransaction(
+          sdk.transaction.erc721,
+          TEST_DATA.KCS,
+          Currency.KCS,
+        )
+      })
+
+      describe('mintSignedTransaction', () => {
+        erc721TestFactory.prepare.mintSignedTransaction(sdk.transaction.erc721, TEST_DATA.KCS, Currency.KCS)
+      })
+
+      describe('burnSignedTransaction', () => {
+        erc721TestFactory.prepare.burnSignedTransaction(sdk.transaction.erc721, TEST_DATA.KCS, Currency.KCS)
+      })
+
+      describe('mintCashbackSignedTransaction', () => {
+        erc721TestFactory.prepare.mintCashbackSignedTransaction(
+          sdk.transaction.erc721,
+          TEST_DATA.KCS,
+          Currency.KCS,
+        )
+      })
+
+      describe('mintMultipleCashbackSignedTransaction', () => {
+        erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(
+          sdk.transaction.erc721,
+          TEST_DATA.KCS,
+          Currency.KCS,
+        )
+      })
+
+      describe('mintMultipleSignedTransaction', () => {
+        erc721TestFactory.prepare.mintMultipleSignedTransaction(
+          sdk.transaction.erc721,
+          TEST_DATA.KCS,
+          Currency.KCS,
+        )
+      })
+
+      describe('updateCashbackForAuthorSignedTransaction', () => {
+        erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(
+          sdk.transaction.erc721,
+          TEST_DATA.KCS,
+          Currency.KCS,
+        )
       })
     })
   })

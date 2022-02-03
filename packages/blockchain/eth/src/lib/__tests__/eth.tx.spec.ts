@@ -1,12 +1,13 @@
 import {
   erc20TestFactory,
+  erc721TestFactory,
   ganacheHelper,
   REPLACE_ME_WITH_TATUM_API_KEY,
   TEST_DATA,
 } from '@tatumio/shared-testing'
 import { TatumEthSDK } from '../eth.sdk'
 import { ethTx } from '../services/eth.tx'
-import { Blockchain } from '@tatumio/shared-core'
+import { Blockchain, Currency } from '@tatumio/shared-core'
 
 const blockchain = Blockchain.ETH
 
@@ -50,6 +51,62 @@ describe('EthSDK - tx', () => {
       // TODO:  Returned error: execution reverted
       xdescribe('burnSignedTransaction', () => {
         erc20TestFactory.prepare.burnSignedTransaction(sdk.transaction.erc20, TEST_DATA.ETH)
+      })
+    })
+  })
+
+  describe('erc721', () => {
+    describe('prepare', () => {
+      describe('deploySignedTransaction', () => {
+        erc721TestFactory.prepare.deploySignedTransaction(sdk.transaction.erc721, TEST_DATA.ETH, Currency.ETH)
+      })
+
+      describe('transferSignedTransaction', () => {
+        erc721TestFactory.prepare.transferSignedTransaction(
+          sdk.transaction.erc721,
+          TEST_DATA.ETH,
+          Currency.ETH,
+        )
+      })
+
+      describe('mintSignedTransaction', () => {
+        erc721TestFactory.prepare.mintSignedTransaction(sdk.transaction.erc721, TEST_DATA.ETH, Currency.ETH)
+      })
+
+      describe('burnSignedTransaction', () => {
+        erc721TestFactory.prepare.burnSignedTransaction(sdk.transaction.erc721, TEST_DATA.ETH, Currency.ETH)
+      })
+
+      describe('mintCashbackSignedTransaction', () => {
+        erc721TestFactory.prepare.mintCashbackSignedTransaction(
+          sdk.transaction.erc721,
+          TEST_DATA.ETH,
+          Currency.ETH,
+        )
+      })
+
+      describe('mintMultipleCashbackSignedTransaction', () => {
+        erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(
+          sdk.transaction.erc721,
+          TEST_DATA.ETH,
+          Currency.ETH,
+        )
+      })
+
+      describe('mintMultipleSignedTransaction', () => {
+        erc721TestFactory.prepare.mintMultipleSignedTransaction(
+          sdk.transaction.erc721,
+          TEST_DATA.ETH,
+          Currency.ETH,
+        )
+      })
+
+      describe('updateCashbackForAuthorSignedTransaction', () => {
+        erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(
+          sdk.transaction.erc721,
+          TEST_DATA.ETH,
+          Currency.ETH,
+        )
       })
     })
   })
