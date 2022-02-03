@@ -19,11 +19,12 @@ export type BlockchainNetworkTestData = {
   ADDRESS_100: string
   PRIVATE_KEY_0: string
   PRIVATE_KEY_100: string
-  CONTRACT_ADDRESS?: string
   ERC_20?: {
+    CONTRACT_ADDRESS: string
     PRIVATE_KEY: string
     ADDRESS: string
   }
+  PROVIDER?: string
   ERC_721?: {
     PRIVATE_KEY: string
     CONTRACT_ADDRESS: string

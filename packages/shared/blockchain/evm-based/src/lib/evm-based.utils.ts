@@ -62,7 +62,15 @@ export const evmBasedUtils = {
       return JSON.stringify(tx)
     }
 
-    const signedTransaction = await client.eth.accounts.signTransaction(tx, fromPrivateKey!)
+    if (!fromPrivateKey) {
+      throw new Error('signatureId or fromPrivateKey has to be defined')
+    }
+
+    const signedTransaction = await client.eth.accounts.signTransaction(tx, fromPrivateKey)
+
+    if (!signedTransaction.rawTransaction) {
+      throw new Error('Unable to get signed tx data')
+    }
 
     return signedTransaction.rawTransaction
   },

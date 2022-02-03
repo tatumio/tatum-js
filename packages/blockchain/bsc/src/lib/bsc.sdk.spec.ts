@@ -11,6 +11,8 @@ import { TatumBscSDK } from './bsc.sdk'
 describe('TatumBscSDK', () => {
   const sdk = TatumBscSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
+  jest.setTimeout(99999)
+
   describe('Wallet', () => {
     describe('Generate wallet', () => {
       walletTestFactory.generateBlockchainWallet(sdk.wallet, TEST_DATA.BSC)

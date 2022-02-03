@@ -28,6 +28,7 @@ const mintSignedTransaction = async (body: ChainMintErc20, web3: EvmBasedWeb3, p
 
   const tx: TransactionConfig = {
     from: undefined,
+    to: body.contractAddress.trim(),
     data,
     nonce: body.nonce,
   }
@@ -57,7 +58,8 @@ const burnSignedTransaction = async (body: ChainBurnErc20, web3: EvmBasedWeb3, p
     .encodeABI()
 
   const tx: TransactionConfig = {
-    from: 0,
+    from: undefined,
+    to: body.contractAddress,
     data,
     nonce: body.nonce,
   }
@@ -84,7 +86,8 @@ const transferSignedTransaction = async (body: ChainTransferErc20, web3: EvmBase
     .encodeABI()
 
   const tx: TransactionConfig = {
-    from: 0,
+    from: undefined,
+    to: body.to,
     data,
     nonce: body.nonce,
   }
@@ -121,7 +124,7 @@ const deploySignedTransaction = async (body: ChainDeployErc20, web3: EvmBasedWeb
   })
 
   const tx: TransactionConfig = {
-    from: 0,
+    from: undefined,
     data: deploy.encodeABI(),
     nonce,
   }
@@ -198,7 +201,7 @@ export const erc20 = (args: {
        */
       deploySignedTransaction: async (body: ChainDeployErc20, provider?: string) =>
         args.broadcastFunction({
-          txData: (await deploySignedTransaction(body, args.web3, provider)) as string,
+          txData: await deploySignedTransaction(body, args.web3, provider),
           signatureId: body.signatureId,
         }),
       /**
@@ -210,7 +213,7 @@ export const erc20 = (args: {
        */
       transferSignedTransaction: async (body: ChainTransferErc20, provider?: string) =>
         args.broadcastFunction({
-          txData: (await transferSignedTransaction(body, args.web3, provider)) as string,
+          txData: await transferSignedTransaction(body, args.web3, provider),
           signatureId: body.signatureId,
         }),
       /**
@@ -222,7 +225,7 @@ export const erc20 = (args: {
        */
       mintSignedTransaction: async (body: ChainMintErc20, provider?: string) =>
         args.broadcastFunction({
-          txData: (await mintSignedTransaction(body, args.web3, provider)) as string,
+          txData: await mintSignedTransaction(body, args.web3, provider),
           signatureId: body.signatureId,
         }),
       /**
@@ -234,7 +237,7 @@ export const erc20 = (args: {
        */
       burnSignedTransaction: async (body: ChainBurnErc20, provider?: string) =>
         args.broadcastFunction({
-          txData: (await burnSignedTransaction(body, args.web3, provider)) as string,
+          txData: await burnSignedTransaction(body, args.web3, provider),
           signatureId: body.signatureId,
         }),
     },
