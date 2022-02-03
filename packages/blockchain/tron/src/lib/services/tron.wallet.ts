@@ -4,6 +4,9 @@ import { fromPublicKey, fromSeed } from 'bip32'
 import { generateMnemonic, mnemonicToSeed } from 'bip39'
 import { bip32 } from 'bitcoinjs-lib'
 import { generateAddress } from './tron.utils'
+
+// tronweb lib dont have any typings (not even in @types)
+// @ts-ignore
 import TronWeb from 'tronweb'
 
 const generateBlockchainWallet = async (mnem: string): Promise<TronWallet> => {
