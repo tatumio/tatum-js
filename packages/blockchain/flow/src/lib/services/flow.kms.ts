@@ -1,6 +1,5 @@
-import { Blockchain, Currency } from '@tatumio/shared-core'
+import { Blockchain, Currency, ChainTransactionKMS } from '@tatumio/shared-core'
 import { flowTxService } from './flow.tx'
-import { ChainTransactionKMS } from '@tatumio/shared-core'
 import { abstractBlockchainKms } from '@tatumio/shared-blockchain-abstract'
 
 export const flowKmsService = (args: { blockchain: Blockchain }) => {
@@ -18,37 +17,37 @@ export const flowKmsService = (args: { blockchain: Blockchain }) => {
       )
       switch (type) {
         case FlowTxType.CREATE_ACCOUNT:
-          return await flowTxService().createAccountFromPublicKey(
+          return flowTxService().createAccountFromPublicKey(
             testnet,
             body.publicKey,
             body.account,
             fromPrivateKeys[0],
           )
         case FlowTxType.ADD_PK_TO_ACCOUNT:
-          return await flowTxService().addPublicKeyToAccount(
+          return flowTxService().addPublicKeyToAccount(
             testnet,
             body.publicKey,
             body.account,
             fromPrivateKeys[0],
           )
         case FlowTxType.TRANSFER:
-          return await flowTxService().sendTransaction(testnet, { ...body, privateKey: fromPrivateKeys[0] })
+          return flowTxService().sendTransaction(testnet, { ...body, privateKey: fromPrivateKeys[0] })
         case FlowTxType.TRANSFER_NFT:
-          return await flowTxService().sendNftTransferToken(testnet, {
+          return flowTxService().sendNftTransferToken(testnet, {
             ...body,
             privateKey: fromPrivateKeys[0],
           })
         case FlowTxType.MINT_NFT:
-          return await flowTxService().sendNftMintToken(testnet, { ...body, privateKey: fromPrivateKeys[0] })
+          return flowTxService().sendNftMintToken(testnet, { ...body, privateKey: fromPrivateKeys[0] })
         case FlowTxType.MINT_MULTIPLE_NFT:
-          return await flowTxService().sendNftMintMultipleToken(testnet, {
+          return flowTxService().sendNftMintMultipleToken(testnet, {
             ...body,
             privateKey: fromPrivateKeys[0],
           })
         case FlowTxType.BURN_NFT:
-          return await flowTxService().sendNftBurnToken(testnet, { ...body, privateKey: fromPrivateKeys[0] })
+          return flowTxService().sendNftBurnToken(testnet, { ...body, privateKey: fromPrivateKeys[0] })
         default:
-          return await flowTxService().sendCustomTransaction(testnet, {
+          return flowTxService().sendCustomTransaction(testnet, {
             ...body,
             privateKey: fromPrivateKeys[0],
           })
