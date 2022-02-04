@@ -5,29 +5,8 @@ import {
   TransferTronTrc10Blockchain,
   TransferTronTrc10BlockchainKMS,
 } from '@tatumio/api-client'
-import axios, { AxiosRequestConfig } from 'axios'
 import BigNumber from 'bignumber.js'
 import { ITronWeb } from './tron.web'
-
-// TODO refactor this mess - provider maybe work
-const getTrc10Precision = async (tokenId: string, testnet = false): Promise<number> => {
-  const config: AxiosRequestConfig = {
-    method: 'GET',
-    url: `/v1/assets/${tokenId}`,
-    baseURL: `${testnet ? 'https://api.shasta.trongrid.io' : 'https://api.trongrid.io'}`,
-    headers: {
-      'content-type': 'application/json',
-      'TRON-PRO-API-KEY': process.env['TRON_PRO_API_KEY']!,
-    },
-  }
-
-  const { data } = (await axios.request(config)).data
-  if (!data?.length) {
-    throw new Error('Unable to get tron precision')
-  }
-
-  return data[0].precision
-}
 
 function isTransferTronTrc10BlockchainKMS(
   input: TransferTronTrc10Blockchain | TransferTronTrc10BlockchainKMS,
@@ -35,10 +14,8 @@ function isTransferTronTrc10BlockchainKMS(
   return (input as TransferTronTrc10BlockchainKMS).signatureId !== undefined
 }
 
-// TODO support of signatureId
 const prepareSignedTransaction = async (
   body: TransferTronTrc10Blockchain | TransferTronTrc10BlockchainKMS,
-  testnet = false,
   tronWeb: ITronWeb,
   precision?: number,
   provider?: string,
@@ -47,7 +24,11 @@ const prepareSignedTransaction = async (
 
   const client = tronWeb.getClient(provider)
 
-  const definedPrecision = precision ?? (await getTrc10Precision(tokenId, testnet))
+  const definedPrecision = precision ?? (await BlockchainTronService.tronTrc10Detail(Number.parseInt(tokenId))).precision
+
+  if (!definedPrecision) {
+    throw new Error('Unable to obtain precision')
+  }
 
   if (isTransferTronTrc10BlockchainKMS(body)) {
     const tx = await client.transactionBuilder.sendToken(
@@ -128,10 +109,9 @@ export const tronTrc10 = (args: { tronWeb: ITronWeb }) => {
        */
       signedTransaction: async (
         body: TransferTronTrc10Blockchain | TransferTronTrc10BlockchainKMS,
-        testnet = false,
         precision?: number,
         provider?: string,
-      ) => prepareSignedTransaction(body, testnet, args.tronWeb, precision, provider),
+      ) => prepareSignedTransaction(body, args.tronWeb, precision, provider),
       /**
        * Sign create Tron TRC10 transaction with private keys locally. Nothing is broadcast to the blockchain.
        * @param body content of the transaction to broadcast
@@ -152,12 +132,11 @@ export const tronTrc10 = (args: { tronWeb: ITronWeb }) => {
        */
       signedTransaction: async (
         body: TransferTronTrc10Blockchain | TransferTronTrc10BlockchainKMS,
-        testnet = false,
         precision?: number,
         provider?: string,
       ) =>
         BlockchainTronService.tronBroadcast({
-          txData: await prepareSignedTransaction(body, testnet, args.tronWeb, precision, provider),
+          txData: await prepareSignedTransaction(body, args.tronWeb, precision, provider),
         }),
       /**
        * Create Tron TRC10 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
