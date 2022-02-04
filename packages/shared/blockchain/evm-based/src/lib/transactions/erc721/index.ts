@@ -343,8 +343,8 @@ const mintProvenanceSignedTransaction = async (body: ChainMintNft, web3: EvmBase
   const cb: string[] = []
   const fval: string[] = []
   if (authorAddresses && cashbackValues && fixedValues) {
-    cashbackValues.map((c) => cb.push(`0x${new BigNumber(c).multipliedBy(100).toString(16)}`))
-    fixedValues.map((c) => fval.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
+    cashbackValues.forEach((c) => cb.push(`0x${new BigNumber(c).multipliedBy(100).toString(16)}`))
+    fixedValues.forEach((c) => fval.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
   }
   if (contractAddress) {
     const tx: TransactionConfig = {
