@@ -10,10 +10,10 @@ export const flowKmsService = (args: { blockchain: Blockchain }) => {
       fromPrivateKeys: string[],
       testnet: boolean,
     ): Promise<{ txId: string; address: string } | { txId: string }> {
-      ;(tx as TransactionKMS).chain = 'FLOW' as any
+      const txWithChain = { ...tx, chain: Currency.FLOW }
 
       const { type, body }: { type: FlowTxType; apiManagedProposal: boolean; body: any } = JSON.parse(
-        tx.serializedTransaction,
+        txWithChain.serializedTransaction,
       )
       switch (type) {
         case FlowTxType.CREATE_ACCOUNT:
