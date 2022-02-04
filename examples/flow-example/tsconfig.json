@@ -19,7 +19,5 @@
       "path": "./tsconfig.spec.json"
     }
   ],
-  "typesRoot": [
-    "./types.d.ts"
-  ]
+  "typesRoot": ["./types.d.ts"]
 }
