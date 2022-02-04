@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
-import Blob from 'cross-blob'
+//import Blob from 'cross-blob'
 import FormData from 'form-data'
 
 import { ApiError } from './ApiError'

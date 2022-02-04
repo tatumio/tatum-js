@@ -16,6 +16,7 @@ import {
 import { polygonOffchainExample } from './app/polygon.offchain.example'
 import { polygonNftExample } from './app/polygon.nft.example'
 import { polygonSubscriptionsExample } from './app/polygon.subscriptions.example'
+import { polygonTxWithPrivateKeyExample, polygonTxWithSignatureIdExample } from './app/polygon.tx.example'
 
 console.log(`Running ${polygonApiExample()}`)
 console.log(`Running ${polygonWalletExample()}`)
@@ -34,3 +35,5 @@ console.log(`Running ${polygonLedgerVirtualCurrencyExample()}`)
 console.log(`Running ${polygonOffchainExample()}`)
 console.log(`Running ${polygonNftExample()}`)
 console.log(`Running ${polygonSubscriptionsExample()}`)
+console.log(`Runninf ${polygonTxWithPrivateKeyExample()}`)
+console.log(`Runninf ${polygonTxWithSignatureIdExample()}`)

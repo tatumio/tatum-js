@@ -1,4 +1,9 @@
-import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA, walletTestFactory } from '@tatumio/shared-testing'
+import {
+  erc20TestFactory,
+  REPLACE_ME_WITH_TATUM_API_KEY,
+  TEST_DATA,
+  walletTestFactory,
+} from '@tatumio/shared-testing'
 import { TatumKcsSDK } from './kcs.sdk'
 
 describe('TatumKcsSDK', () => {

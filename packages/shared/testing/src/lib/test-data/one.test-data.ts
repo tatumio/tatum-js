@@ -14,4 +14,13 @@ export const ONE_TEST_DATA: BlockchainTestData = {
   BLOCK_HASH: '0x92bc4ed1d484e3babb490e36cf436d12a8236d92caabc12d1dbbc8d02eacc265',
   BLOCK_HEIGHT: 22_366_731,
   TX_HASH: '0xca22bfc703db8b4176007938f5ffd5277efd95a83f50b86e9499a76b27da78ac',
+  TESTNET: {
+    ...ETH_TEST_DATA.TESTNET,
+    ERC_20: {
+      CONTRACT_ADDRESS: '0x2627d16dcd27ddb6cf42341756aa6c5a8c6cb954',
+      PRIVATE_KEY: '0d6c13fe5fed644dfa02512d4bffde9453dcb48873afb0b0a4c0cebce160c279',
+      ADDRESS: '0x23037f14fea064f0ed0130b6cc9fd685606c8e9c',
+    },
+    PROVIDER: 'https://api.s0.b.hmny.io/',
+  },
 }
