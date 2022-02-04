@@ -50,15 +50,15 @@
     "web3-utils": "^1.7.0"
   },
   "devDependencies": {
-    "@nrwl/cli": "13.5.3",
-    "@nrwl/eslint-plugin-nx": "13.5.3",
-    "@nrwl/jest": "13.5.3",
-    "@nrwl/js": "13.5.3",
-    "@nrwl/linter": "13.5.3",
-    "@nrwl/node": "13.5.3",
+    "@nrwl/cli": "13.7.2",
+    "@nrwl/eslint-plugin-nx": "13.7.2",
+    "@nrwl/jest": "13.7.2",
+    "@nrwl/js": "13.7.2",
+    "@nrwl/linter": "13.7.2",
+    "@nrwl/node": "13.7.2",
     "@nrwl/nx-cloud": "13.1.2",
-    "@nrwl/tao": "13.5.3",
-    "@nrwl/workspace": "13.5.3",
+    "@nrwl/tao": "13.7.2",
+    "@nrwl/workspace": "13.7.2",
     "@types/bignumber.js": "^5.0.0",
     "@types/bip32": "^2.0.0",
     "@types/bip39": "^3.0.0",
@@ -67,9 +67,9 @@
     "@types/hdkey": "^2.0.1",
     "@types/jest": "^27.4.0",
     "@types/node": "14.14.33",
-    "@typescript-eslint/eslint-plugin": "~5.9.1",
-    "@typescript-eslint/parser": "~5.9.1",
-    "eslint": "8.6.0",
+    "@typescript-eslint/eslint-plugin": "5.10.2",
+    "@typescript-eslint/parser": "5.10.2",
+    "eslint": "8.7.0",
     "eslint-config-prettier": "^8.3.0",
     "expect-more-jest": "^5.4.0",
     "faker": "^5.5.3",
@@ -84,3 +84,4 @@
     "typescript": "~4.5.4"
   }
 }
+
