@@ -32,6 +32,7 @@
     "shared-core": "packages/shared/core",
     "shared-testing": "packages/shared/testing",
     "solana": "packages/blockchain/solana",
+    "solana-example": "examples/solana-example",
     "xlm": "packages/blockchain/xlm",
     "xlm-example": "examples/xlm-example",
     "xrp": "packages/blockchain/xrp",
