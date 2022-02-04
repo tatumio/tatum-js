@@ -111,8 +111,8 @@ export const flowTxService = () => {
       signerAddress: string,
       signerPrivateKey: string,
       weight = 0,
-      proposer?: (...args: any[]) => any,
-      payer?: (...args: any[]) => any,
+      proposer?: (args: any) => any,
+      payer?: (args: any) => any,
     ): Promise<{ txId: string; address: string }> => {
       const code = prepareAddPublicKeyToAccountTxTemplate()
       const encodedPublicKey = encodeKey(publicKey, ECDSA_secp256k1, SHA3_256, weight)
@@ -405,14 +405,14 @@ const getPrivateKey = async (body: FlowMnemonicOrPrivateKeyOrSignatureId, tryMne
   const { mnemonic, index, privateKey } = body
   if (tryMnemFirst) {
     return mnemonic && index && index >= 0
-      ? await flowSdkWallet.generatePrivateKeyFromMnemonic(mnemonic, index)
+      ? flowSdkWallet.generatePrivateKeyFromMnemonic(mnemonic, index)
       : privateKey
   } else {
     if (privateKey) {
       return privateKey
     } else {
       if (mnemonic && index && index >= 0) {
-        return await flowSdkWallet.generatePrivateKeyFromMnemonic(mnemonic, index)
+        return flowSdkWallet.generatePrivateKeyFromMnemonic(mnemonic, index)
       } else throw new Error('Insufficient info provided. Either private key or mnemonic required.')
     }
   }
