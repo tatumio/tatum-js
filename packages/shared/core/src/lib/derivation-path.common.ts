@@ -22,7 +22,7 @@ export const DERIVATION_PATH: Record<Blockchain, string> = {
   CARDANO: '@TODO - TBD',
   EGLD: '@TODO - TBD',
   FABRIC: '@TODO - TBD',
-  FLOW: '@TODO - TBD',
+  FLOW: "m/44'/539'/0'/0",
   SCRYPTA: "m/44'/497'/0'/0",
   NEO: '@TODO - TBD',
   QTUM: '@TODO - TBD',

@@ -1,0 +1,33 @@
+{
+  "root": "packages/blockchain/flow",
+  "sourceRoot": "packages/blockchain/flow/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/blockchain/flow",
+        "tsConfig": "packages/blockchain/flow/tsconfig.lib.json",
+        "packageJson": "packages/blockchain/flow/package.json",
+        "main": "packages/blockchain/flow/src/index.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/blockchain/flow/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/blockchain/flow"],
+      "options": {
+        "jestConfig": "packages/blockchain/flow/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["scope:sdk"]
+}
