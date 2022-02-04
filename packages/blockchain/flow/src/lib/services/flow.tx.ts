@@ -18,6 +18,7 @@ import {
   TransferFlow,
   TransferFlowCustomTx,
   TransactionResult,
+  FlowMnemonicOrPrivateKeyOrSignatureId,
 } from '@tatumio/shared-core'
 import {
   burnNftTokenTxTemplate,
@@ -138,7 +139,7 @@ export const flowTxService = () => {
         { type: 'UInt64', value: id },
         { type: 'String', value: tokenType },
       ]
-      return await sendScript(testnet, code, args)
+      return sendScript(testnet, code, args)
     },
     getNftTokenByAddress: async (testnet: boolean, account: string, tokenType: string) => {
       const code = tokenByAddressNftTokenScript(testnet)
@@ -146,7 +147,7 @@ export const flowTxService = () => {
         { type: 'Address', value: account },
         { type: 'String', value: tokenType },
       ]
-      return await sendScript(testnet, code, args)
+      return sendScript(testnet, code, args)
     },
     /**
      * Send Flow NFT mint token transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -171,10 +172,8 @@ export const flowTxService = () => {
         { type: 'String', value: url },
         { type: 'String', value: tokenType },
       ]
-      const pk =
-        mnemonic && index && index >= 0
-          ? await flowSdkWallet.generatePrivateKeyFromMnemonic(mnemonic, index as number)
-          : (privateKey as string)
+      const pk = await getPrivateKey(body, true)
+      if (!pk) throw 'No private key available'
       const auth = getSigner(pk, account).signer
       const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getApiSigner(false)
       const result = await _sendTransaction(testnet, {
@@ -220,10 +219,8 @@ export const flowTxService = () => {
         },
         { type: 'String', value: tokenType },
       ]
-      const pk =
-        mnemonic && index && index >= 0
-          ? await flowSdkWallet.generatePrivateKeyFromMnemonic(mnemonic, index as number)
-          : (privateKey as string)
+      const pk = await getPrivateKey(body, true)
+      if (!pk) throw 'No private key available'
       const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getApiSigner(false)
       const auth = getSigner(pk, account).signer
       const result = await _sendTransaction(testnet, {
@@ -261,15 +258,13 @@ export const flowTxService = () => {
     ): Promise<{ txId: string }> => {
       ;(body as FlowTransferNft).chain = Currency.FLOW
       const code = transferNftTokenTxTemplate(testnet)
-      const { tokenId, to, mnemonic, index, account, privateKey } = body
+      const { tokenId, to, account } = body
       const args = [
         { type: 'Address', value: to },
         { type: 'UInt64', value: tokenId },
       ]
-      const pk =
-        mnemonic && index && index >= 0
-          ? await flowSdkWallet.generatePrivateKeyFromMnemonic(mnemonic, index as number)
-          : (privateKey as string)
+      const pk = await getPrivateKey(body, true)
+      if (!pk) throw 'No private key available'
       const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getApiSigner(false)
       const auth = getSigner(pk, account).signer
       const result = await _sendTransaction(testnet, {
@@ -302,15 +297,13 @@ export const flowTxService = () => {
     ): Promise<{ txId: string }> => {
       ;(body as FlowBurnNft).chain = Currency.FLOW
       const code = burnNftTokenTxTemplate(testnet)
-      const { tokenId, contractAddress: tokenType, mnemonic, index, account, privateKey } = body
+      const { tokenId, contractAddress: tokenType, account } = body
       const args = [
         { type: 'UInt64', value: tokenId },
         { type: 'String', value: tokenType },
       ]
-      const pk =
-        mnemonic && index && index >= 0
-          ? await flowSdkWallet.generatePrivateKeyFromMnemonic(mnemonic, index as number)
-          : (privateKey as string)
+      const pk = await getPrivateKey(body, true)
+      if (!pk) throw 'No private key available'
       const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getApiSigner(false)
       const auth = getSigner(pk, account).signer
       const result = await _sendTransaction(testnet, {
@@ -340,9 +333,8 @@ export const flowTxService = () => {
       proposer?: (isPayer: boolean) => any,
       payer?: (isPayer: boolean) => any,
     ): Promise<{ txId: string; events: any[] }> => {
-      const pk =
-        body.privateKey ||
-        (await flowSdkWallet.generatePrivateKeyFromMnemonic(body.mnemonic as string, body.index as number))
+      const pk = await getPrivateKey(body)
+      if (!pk) throw 'No private key available'
       const auth = getSigner(pk, body.account).signer
       const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getApiSigner(false)
       const result = await _sendTransaction(testnet, {
@@ -389,9 +381,8 @@ export const flowTxService = () => {
         { value: parseFloat(body.amount).toFixed(8), type: 'UFix64' },
         { value: body.to, type: 'Address' },
       ]
-      const pk =
-        body.privateKey ||
-        (await flowSdkWallet.generatePrivateKeyFromMnemonic(body.mnemonic as string, body.index as number))
+      const pk = await getPrivateKey(body)
+      if (!pk) throw 'No private key available'
       const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getApiSigner(false)
       const auth = getSigner(pk, body.account).signer
       const result = await _sendTransaction(testnet, {
@@ -407,6 +398,23 @@ export const flowTxService = () => {
       }
       return { txId: result.id }
     },
+  }
+}
+
+const getPrivateKey = async (body: FlowMnemonicOrPrivateKeyOrSignatureId, tryMnemFirst = false) => {
+  const { mnemonic, index, privateKey } = body
+  if (tryMnemFirst) {
+    return mnemonic && index && index >= 0
+      ? await flowSdkWallet.generatePrivateKeyFromMnemonic(mnemonic, index)
+      : privateKey
+  } else {
+    if (privateKey) {
+      return privateKey
+    } else {
+      if (mnemonic && index && index >= 0) {
+        return await flowSdkWallet.generatePrivateKeyFromMnemonic(mnemonic, index)
+      } else throw 'Insufficient info provided. Either private key or mnemonic required.'
+    }
   }
 }
 
@@ -464,24 +472,12 @@ const _sendTransaction = async (
   testnet: boolean,
   { code, args, proposer, authorizations, payer, keyHash }: Transaction,
 ): Promise<TransactionResult> => {
-  fcl
-    .config()
-    .put(
-      'accessNode.api',
-      testnet ? 'https://access-testnet.onflow.org' : 'https://access-mainnet-beta.onflow.org',
-    )
+  fcl.config().put('accessNode.api', networkUrl)
   let response
   try {
     response = await fcl.send([
       fcl.transaction(code),
-      fcl.args(
-        args.map((arg) =>
-          fcl.arg(
-            arg.type === 'UInt64' ? parseInt(arg.value as string) : arg.value,
-            arg.type === 'Array' ? types[arg.type](types[arg.subType as any]) : types[arg.type],
-          ),
-        ),
-      ),
+      fcl.args(args.map((arg) => fcl.arg(UInt64ArgValue(arg), ArrayArgValue(arg)))),
       fcl.proposer(proposer),
       fcl.authorizations(authorizations),
       fcl.payer(payer),
@@ -490,11 +486,7 @@ const _sendTransaction = async (
   } catch (e) {
     try {
       if (keyHash) {
-        await flowSdkBlockchain.broadcast(
-          '',
-          undefined,
-          keyHash ? parseInt((process.env[keyHash] || '0') as string) : undefined,
-        )
+        await flowSdkBlockchain.broadcast('', undefined, proposalKey(keyHash))
         delete process.env[keyHash]
       }
       // eslint-disable-next-line no-empty
@@ -513,11 +505,7 @@ const _sendTransaction = async (
   } finally {
     try {
       if (keyHash) {
-        await flowSdkBlockchain.broadcast(
-          transactionId,
-          undefined,
-          keyHash ? parseInt((process.env[keyHash] || '0') as string) : undefined,
-        )
+        await flowSdkBlockchain.broadcast(transactionId, undefined, proposalKey(keyHash))
         delete process.env[keyHash]
       }
       // eslint-disable-next-line no-empty
@@ -526,19 +514,23 @@ const _sendTransaction = async (
 }
 
 const sendScript = async (testnet: boolean, code: string, args: FlowArgs[]) => {
-  fcl
-    .config()
-    .put(
-      'accessNode.api',
-      testnet ? 'https://access-testnet.onflow.org' : 'https://access-mainnet-beta.onflow.org',
-    )
+  fcl.config().put('accessNode.api', networkUrl(testnet))
   const response = await fcl.send([
     fcl.script(code),
-    fcl.args(
-      args.map((arg) =>
-        fcl.arg(arg.type === 'UInt64' ? parseInt(arg.value as string) : arg.value, types[arg.type]),
-      ),
-    ),
+    fcl.args(args.map((arg) => fcl.arg(UInt64ArgValue(arg), types[arg.type]))),
   ])
   return fcl.decode(response)
+}
+
+const proposalKey = (keyHash: string) => {
+  return keyHash ? parseInt(process.env[keyHash] || '0') : undefined
+}
+const networkUrl = (testnet: boolean) => {
+  return testnet ? 'https://access-testnet.onflow.org' : 'https://access-mainnet-beta.onflow.org'
+}
+const UInt64ArgValue = (arg: FlowArgs) => {
+  return arg.type === 'UInt64' ? parseInt(arg.value as string) : arg.value
+}
+const ArrayArgValue = (arg: FlowArgs) => {
+  return arg.type === 'Array' ? types[arg.type](types[arg.subType as any]) : types[arg.type]
 }

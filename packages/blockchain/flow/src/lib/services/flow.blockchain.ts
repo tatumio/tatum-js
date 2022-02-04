@@ -23,14 +23,14 @@ const get = async <T>(url: string): Promise<T> => {
 export const flowBlockchain = () => {
   return {
     getSignKey: async (isPayer: boolean): Promise<{ keyId: number; address: string }> =>
-      await get(`/v3/flow/proposal/${isPayer}`),
+      get(`/v3/flow/proposal/${isPayer}`),
     signWithKey: async (data: string, isPayer: boolean): Promise<{ signature: string }> =>
-      await post('/v3/flow/sign', { data, isPayer }),
+      post('/v3/flow/sign', { data, isPayer }),
     broadcast: async (
       txData: string,
       signatureId?: string,
       proposalKey?: number,
     ): Promise<{ txId: string; failed?: boolean }> =>
-      await post('/v3/flow/broadcast', { txData, signatureId, proposalKey }),
+      post('/v3/flow/broadcast', { txData, signatureId, proposalKey }),
   }
 }
