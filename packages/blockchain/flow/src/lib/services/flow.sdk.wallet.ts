@@ -28,7 +28,7 @@ export const flowWallet = (): SdkWithWalletFunctions => {
       const key = fromSeed(await mnemonicToSeed(mnemonic))
         .derivePath(DERIVATION_PATH.FLOW)
         .derive(i).privateKey
-      if (!key) throw 'No key generated'
+      if (!key) throw new Error('No key generated')
       return new elliptic.ec('secp256k1').keyFromPrivate(key).getPrivate().toString(16)
     },
   }
