@@ -61,6 +61,9 @@ jobs:
 
       - run: echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}" > ~/.npmrc
 
+      - name: Update version of packages
+        run: yarn --ignore-scripts release:apply-version
+
       - name: Publish packages
         run: yarn --ignore-scripts release:current
         env:
