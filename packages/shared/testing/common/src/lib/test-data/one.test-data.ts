@@ -1,6 +1,5 @@
 import { BlockchainTestData } from '../shared-testing'
 import { ETH_TEST_DATA } from './eth.test-data'
-import Web3 from 'web3'
 
 export const ONE_TEST_DATA: BlockchainTestData = {
   ...ETH_TEST_DATA,
