@@ -25,6 +25,8 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@solana/spl-token": "^0.1.8",
+    "@solana/web3.js": "^1.32.0",
     "@tatumio/bitcoincashjs2-lib": "^4.1.2",
     "axios": "^0.24.0",
     "bignumber.js": "^9.0.2",

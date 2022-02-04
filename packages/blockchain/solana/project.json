@@ -1,0 +1,33 @@
+{
+  "root": "packages/blockchain/solana",
+  "sourceRoot": "packages/blockchain/solana/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/blockchain/solana",
+        "main": "packages/blockchain/solana/src/index.ts",
+        "tsConfig": "packages/blockchain/solana/tsconfig.lib.json",
+        "packageJson": "packages/blockchain/solana/package.json"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/blockchain/solana/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/blockchain/solana"],
+      "options": {
+        "jestConfig": "packages/blockchain/solana/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["scope:sdk"]
+}

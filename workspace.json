@@ -31,6 +31,7 @@
     "shared-blockchain-evm-based": "packages/shared/blockchain/evm-based",
     "shared-core": "packages/shared/core",
     "shared-testing": "packages/shared/testing",
+    "solana": "packages/blockchain/solana",
     "xlm": "packages/blockchain/xlm",
     "xlm-example": "examples/xlm-example",
     "xrp": "packages/blockchain/xrp",
