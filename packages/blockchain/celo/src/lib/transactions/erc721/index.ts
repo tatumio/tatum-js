@@ -1,7 +1,7 @@
 import { Currency, EvmBasedBlockchain } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
-import { MintNftCelo, TATUM_API_CONSTANTS, TransactionHashKMS } from '@tatumio/api-client'
-import { Erc721Token, Erc721_Provenance, EvmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
+import { MintNftCelo, TATUM_API_CONSTANTS } from '@tatumio/api-client'
+import { Erc721Token, Erc721_Provenance } from '@tatumio/shared-blockchain-evm-based'
 import { BroadcastFunction } from '@tatumio/shared-blockchain-abstract'
 import { BigNumber as BN } from '@ethersproject/bignumber'
 import { CeloProvider, CeloWallet } from '@celo-tools/celo-ethers-wrapper'
@@ -381,8 +381,8 @@ const mintProvenanceSignedTransaction = async (
     const cb: string[] = []
     const fv: string[] = []
     if (cashbackValues && fixedValues && authorAddresses) {
-      cashbackValues.map((c) => cb.push(`0x${new BigNumber(c).multipliedBy(100).toString(16)}`))
-      fixedValues.map((c) => fv.push(`0x${new BigNumber(Web3.utils.toWei(c, 'ether')).toString(16)}`))
+      cashbackValues.forEach((c) => cb.push(`0x${new BigNumber(c).multipliedBy(100).toString(16)}`))
+      fixedValues.forEach((c) => fv.push(`0x${new BigNumber(Web3.utils.toWei(c, 'ether')).toString(16)}`))
     }
     const data = erc20
       ? contract.methods
