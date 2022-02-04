@@ -9,6 +9,7 @@ export const erc721TestFactory = {
       chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'ALGO',
     ) => {
       jest.setTimeout(99999)
+      const provider = testData?.PROVIDER
       it('valid with signatureId', async () => {
         const result = await sdk.prepare.deploySignedTransaction({
           chain,
@@ -19,7 +20,7 @@ export const erc721TestFactory = {
             gasLimit: '326452',
             gasPrice: '20',
           },
-        })
+        }, provider)
 
         const json = JSON.parse(result)
 
@@ -37,7 +38,7 @@ export const erc721TestFactory = {
             gasLimit: '326452',
             gasPrice: '20',
           },
-        })
+        }, provider)
 
         expectHexString(result)
       })
@@ -48,6 +49,7 @@ export const erc721TestFactory = {
       testData: BlockchainTestData,
       chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'ALGO',
     ) => {
+      const provider = testData?.PROVIDER
       it('valid from signatureId', async () => {
         const result = await sdk.prepare.transferSignedTransaction({
           chain,
@@ -59,7 +61,7 @@ export const erc721TestFactory = {
             gasLimit: '50000',
             gasPrice: '20',
           },
-        })
+        }, provider)
 
         const json = JSON.parse(result)
 
@@ -78,7 +80,7 @@ export const erc721TestFactory = {
             gasLimit: '326452',
             gasPrice: '20',
           },
-        })
+        }, provider)
 
         expectHexString(result)
       })
@@ -96,7 +98,7 @@ export const erc721TestFactory = {
               gasLimit: '326452',
               gasPrice: '20',
             },
-          })
+          }, provider)
           fail()
         } catch (e: any) {
           expect(e.reason).toMatch('invalid address')

@@ -57,6 +57,7 @@ describe('KcsSDK - tx', () => {
   })
 
   describe('erc721', () => {
+    jest.setTimeout(99999)
     describe('prepare', () => {
       describe('deploySignedTransaction', () => {
         erc721TestFactory.prepare.deploySignedTransaction(sdk.transaction.erc721, TEST_DATA.KCS, Currency.KCS)
