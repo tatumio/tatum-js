@@ -1,5 +1,5 @@
 import { Fiat } from '@tatumio/shared-core'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 import { TatumPolygonSDK } from '@tatumio/polygon'
 
 const polygonSDK = TatumPolygonSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })

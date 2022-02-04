@@ -1,7 +1,7 @@
-import '../../index'
+import '@tatumio/shared-testing-common'
 import { BtcBasedTx } from '@tatumio/shared-blockchain-btc-based'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
-import { testHelper } from '../test.helper'
+import { testHelper } from '@tatumio/shared-testing-common'
 import { BroadcastKMS, CancelablePromise, TransactionHashKMS } from '@tatumio/api-client'
 
 export const btcBasedTxTestFactory = {

@@ -3,7 +3,7 @@ import {
   TEST_DATA,
   TestCasesApiCallMapping,
   testHelper,
-} from '@tatumio/shared-testing'
+} from '@tatumio/shared-testing-common'
 import { TatumBtcSDK } from '../btc.sdk'
 import * as apiClient from '@tatumio/api-client'
 import { BtcTransactionFromAddress } from '@tatumio/api-client'

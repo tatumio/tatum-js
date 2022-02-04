@@ -4,7 +4,6 @@ type Fn0Args = () => CancelablePromise<unknown>
 type Fn1Arg = (arg1: unknown) => CancelablePromise<unknown>
 type Fn2Arg = (arg1: unknown, arg2: unknown) => CancelablePromise<unknown>
 type Fn3Arg = (arg1: unknown, arg2: unknown, arg3: unknown) => CancelablePromise<unknown>
-type Fn = Fn0Args | Fn1Arg | Fn2Arg | Fn3Arg
 
 export type TestCasesApiCallMapping<T> = {
   [key in keyof T]:

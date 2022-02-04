@@ -1,7 +1,7 @@
 import * as ganache from 'ganache'
 import Web3 from 'web3'
 import { Blockchain, DERIVATION_PATH } from '@tatumio/shared-core'
-import { TEST_DATA } from './shared-testing'
+import { TEST_DATA } from '@tatumio/shared-testing-common'
 
 export type GanacheAccount = { address: string; privateKey: string }
 

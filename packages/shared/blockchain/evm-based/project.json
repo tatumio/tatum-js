@@ -29,5 +29,5 @@
       }
     }
   },
-  "tags": ["scope:shared", "scope:evm-based"]
+  "tags": ["scope:evm-based"]
 }
