@@ -14,4 +14,13 @@ export const KCS_TEST_DATA: BlockchainTestData = {
   BLOCK_HASH: '0xbf1d59d3e95aa8f03138588a0c5d211ae91a7e00273580df6c17b432b2adff67',
   BLOCK_HEIGHT: 7_009_962,
   TX_HASH: '0x43b35eee3ef3efb975a14625a893ed4b4ec39365e2927cddc0fe8003b5b9f012',
+  TESTNET: {
+    ...ETH_TEST_DATA.TESTNET,
+    ERC_20: {
+      CONTRACT_ADDRESS: '0x0b9808fce74030c87aae334a30f6c8f6c66b090d',
+      PRIVATE_KEY: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+      ADDRESS: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    },
+    PROVIDER: 'https://rpc-testnet.kcc.network',
+  },
 }

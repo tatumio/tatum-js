@@ -20,6 +20,12 @@ export type BlockchainNetworkTestData = {
   ADDRESS_100: string
   PRIVATE_KEY_0: string
   PRIVATE_KEY_100: string
+  ERC_20?: {
+    CONTRACT_ADDRESS: string
+    PRIVATE_KEY: string
+    ADDRESS: string
+  }
+  PROVIDER?: string
 }
 
 export interface BlockchainTestData {
@@ -51,6 +57,11 @@ export const TEST_DATA = {
   XLM: XLM_TEST_DATA,
   SCRYPTA: SCRYPTA_TEST_DATA,
   FLOW: FLOW_TEST_DATA,
+}
+
+export function expectHexString(value: string): void {
+  expect(value).toBeDefined()
+  expect(value).toMatch(/^(0x|0X)?[a-fA-F0-9]+$/)
 }
 
 /**
