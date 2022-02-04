@@ -1,6 +1,6 @@
-import '@tatumio/shared-testing'
+import '@tatumio/shared-testing-common'
 import { ltcTransactions } from './ltc.tx'
-import { btcBasedTxTestFactory, mockHelper } from '@tatumio/shared-testing'
+import { btcBasedTxTestFactory, mockHelper } from '@tatumio/shared-testing-common'
 import * as apiClient from '@tatumio/api-client'
 import { BtcTransactionFromAddress, LtcTransactionUTXO, LtcTx } from '@tatumio/api-client'
 

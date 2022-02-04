@@ -36,7 +36,7 @@
       "@tatumio/shared-blockchain-btc-based": ["packages/shared/blockchain/btc-based/src/index.ts"],
       "@tatumio/shared-blockchain-evm-based": ["packages/shared/blockchain/evm-based/src/index.ts"],
       "@tatumio/shared-core": ["packages/shared/core/src/index.ts"],
-      "@tatumio/shared-testing": ["packages/shared/testing/src/index.ts"],
+      "@tatumio/shared-testing-common": ["packages/shared/testing/common/src/index.ts"],
       "@tatumio/xlm": ["packages/blockchain/xlm/src/index.ts"],
       "@tatumio/xrp": ["packages/blockchain/xrp/src/index.ts"]
     }

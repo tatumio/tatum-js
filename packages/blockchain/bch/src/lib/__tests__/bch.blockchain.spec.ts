@@ -3,7 +3,7 @@ import {
   TEST_DATA,
   TestCasesApiCallMapping,
   testHelper,
-} from '@tatumio/shared-testing'
+} from '@tatumio/shared-testing-common'
 import * as apiClient from '@tatumio/api-client'
 import { BchTransaction } from '@tatumio/api-client'
 import { TatumBchSDK } from '../bch.sdk'

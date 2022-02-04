@@ -30,7 +30,7 @@
     "shared-blockchain-btc-based": "packages/shared/blockchain/btc-based",
     "shared-blockchain-evm-based": "packages/shared/blockchain/evm-based",
     "shared-core": "packages/shared/core",
-    "shared-testing": "packages/shared/testing",
+    "shared-testing-common": "packages/shared/testing/common",
     "xlm": "packages/blockchain/xlm",
     "xlm-example": "examples/xlm-example",
     "xrp": "packages/blockchain/xrp",

@@ -3,7 +3,7 @@ import {
   ganacheHelper,
   REPLACE_ME_WITH_TATUM_API_KEY,
   TEST_DATA,
-} from '@tatumio/shared-testing'
+} from '@tatumio/shared-testing-common'
 import { TatumBscSDK } from '../bsc.sdk'
 import { Blockchain } from '@tatumio/shared-core'
 import { bscTxService } from '../services/bsc.tx'

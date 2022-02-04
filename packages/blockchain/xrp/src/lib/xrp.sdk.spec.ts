@@ -1,5 +1,9 @@
 import { TatumXrpSDK } from './xrp.sdk'
-import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA, xrpLikeWalletTestFactory } from '@tatumio/shared-testing'
+import {
+  REPLACE_ME_WITH_TATUM_API_KEY,
+  TEST_DATA,
+  xrpLikeWalletTestFactory,
+} from '@tatumio/shared-testing-common'
 
 describe('TatumXrpSDK', () => {
   const sdk = TatumXrpSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })

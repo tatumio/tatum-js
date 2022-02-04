@@ -1,7 +1,7 @@
-import '@tatumio/shared-testing'
+import '@tatumio/shared-testing-common'
 import * as apiClient from '@tatumio/api-client'
 import { BtcTx, ScryptaTransaction } from '@tatumio/api-client'
-import { btcBasedTxTestFactory, mockHelper } from '@tatumio/shared-testing'
+import { btcBasedTxTestFactory, mockHelper } from '@tatumio/shared-testing-common'
 import { amountUtils } from '@tatumio/shared-abstract-sdk'
 import { scryptaTransactions } from '../scrypta.sdk.tx'
 
