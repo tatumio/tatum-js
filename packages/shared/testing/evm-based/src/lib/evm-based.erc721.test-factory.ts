@@ -1,5 +1,5 @@
 import { SdkWithErc721Functions } from '@tatumio/shared-blockchain-abstract'
-import { BlockchainTestData, expectHexString } from '@tatumio/shared-testing-common';
+import { BlockchainTestData, expectHexString } from '@tatumio/shared-testing-common'
 
 export const erc721TestFactory = {
   prepare: {
