@@ -1,6 +1,6 @@
 import { CreateSubscriptionIncoming } from '@tatumio/api-client'
 import { TatumPolygonSDK } from '@tatumio/polygon'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
 const polygonSDK = TatumPolygonSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 

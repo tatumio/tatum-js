@@ -1,1 +1,1 @@
-import '@tatumio/shared-testing'
+import '@tatumio/shared-testing-common'

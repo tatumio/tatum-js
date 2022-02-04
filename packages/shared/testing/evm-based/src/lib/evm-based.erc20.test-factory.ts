@@ -1,6 +1,6 @@
 import { SdkWithErc20Functions } from '@tatumio/shared-blockchain-abstract'
-import { BlockchainTestData, expectHexString } from '../shared-testing'
-import { GanacheAccount } from '../ganacheHelper'
+import { BlockchainTestData, expectHexString } from '@tatumio/shared-testing-common'
+import { GanacheAccount } from './ganacheHelper'
 
 export const erc20TestFactory = {
   decimals: (sdk: SdkWithErc20Functions, testData: BlockchainTestData) => {

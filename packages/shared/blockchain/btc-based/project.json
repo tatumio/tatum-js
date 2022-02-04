@@ -29,5 +29,5 @@
       }
     }
   },
-  "tags": ["scope:shared", "scope:btc-based"]
+  "tags": ["scope:btc-based"]
 }

@@ -1,6 +1,6 @@
 import { TransferBscBlockchain } from '@tatumio/api-client'
 import { TatumBscSDK } from '@tatumio/bsc'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
 const bscSDK = TatumBscSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 

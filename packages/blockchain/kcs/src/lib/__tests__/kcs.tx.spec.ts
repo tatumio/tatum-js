@@ -1,12 +1,8 @@
-import {
-  erc20TestFactory,
-  ganacheHelper,
-  REPLACE_ME_WITH_TATUM_API_KEY,
-  TEST_DATA,
-} from '@tatumio/shared-testing'
+import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testing-common'
 import { TatumKcsSDK } from '../kcs.sdk'
 import { Blockchain } from '@tatumio/shared-core'
 import { kcsTxService } from '../services/kcs.tx'
+import { erc20TestFactory, ganacheHelper } from '@tatumio/shared-testing-evm-based'
 
 const blockchain = Blockchain.KCS
 

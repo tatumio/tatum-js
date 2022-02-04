@@ -1,12 +1,8 @@
-import {
-  erc20TestFactory,
-  ganacheHelper,
-  REPLACE_ME_WITH_TATUM_API_KEY,
-  TEST_DATA,
-} from '@tatumio/shared-testing'
+import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testing-common'
 import { TatumBscSDK } from '../bsc.sdk'
 import { Blockchain } from '@tatumio/shared-core'
 import { bscTxService } from '../services/bsc.tx'
+import { erc20TestFactory, ganacheHelper } from '@tatumio/shared-testing-evm-based'
 
 describe('BscSDK - tx', () => {
   const sdk = TatumBscSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
