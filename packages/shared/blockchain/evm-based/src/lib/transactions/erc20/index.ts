@@ -7,44 +7,10 @@ import {
 } from '@tatumio/shared-blockchain-abstract'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
-import Web3 from 'web3'
 import { TransactionConfig } from 'web3-core'
 import { Erc20Token } from '../../contracts'
 import { EvmBasedWeb3 } from '../../services/evm-based.web3'
-
-const prepareSignedTransactionAbstraction = async (
-  client: Web3,
-  transaction: TransactionConfig,
-  signatureId: string | undefined,
-  fromPrivateKey: string | undefined,
-  web3: EvmBasedWeb3,
-  gasLimit?: string,
-  gasPrice?: string,
-) => {
-  const gasPriceDefined = gasPrice ? client.utils.toWei(gasPrice, 'gwei') : await web3.getGasPriceInWei()
-  const tx = {
-    ...transaction,
-    gasPrice: gasPriceDefined,
-  }
-
-  tx.gas = gasLimit ?? (await client.eth.estimateGas(tx))
-
-  if (signatureId) {
-    return JSON.stringify(tx)
-  }
-
-  if (!fromPrivateKey) {
-    throw new Error('signatureId or fromPrivateKey has to be defined')
-  }
-
-  const signedTransaction = await client.eth.accounts.signTransaction(tx, fromPrivateKey)
-
-  if (!signedTransaction.rawTransaction) {
-    throw new Error('Unable to get signed tx data')
-  }
-
-  return signedTransaction.rawTransaction
-}
+import { evmBasedUtils } from '../../evm-based.utils'
 
 const mintSignedTransaction = async (body: ChainMintErc20, web3: EvmBasedWeb3, provider?: string) => {
   // TODO: validation
@@ -67,7 +33,13 @@ const mintSignedTransaction = async (body: ChainMintErc20, web3: EvmBasedWeb3, p
     nonce: body.nonce,
   }
 
-  return prepareSignedTransactionAbstraction(client, tx, body.signatureId, body.fromPrivateKey, web3)
+  return evmBasedUtils.prepareSignedTransactionAbstraction(
+    client,
+    tx,
+    web3,
+    body.signatureId,
+    body.fromPrivateKey,
+  )
 }
 
 const burnSignedTransaction = async (body: ChainBurnErc20, web3: EvmBasedWeb3, provider?: string) => {
@@ -92,7 +64,13 @@ const burnSignedTransaction = async (body: ChainBurnErc20, web3: EvmBasedWeb3, p
     nonce: body.nonce,
   }
 
-  return prepareSignedTransactionAbstraction(client, tx, body.signatureId, body.fromPrivateKey, web3)
+  return evmBasedUtils.prepareSignedTransactionAbstraction(
+    client,
+    tx,
+    web3,
+    body.signatureId,
+    body.fromPrivateKey,
+  )
 }
 
 const transferSignedTransaction = async (body: ChainTransferErc20, web3: EvmBasedWeb3, provider?: string) => {
@@ -114,12 +92,12 @@ const transferSignedTransaction = async (body: ChainTransferErc20, web3: EvmBase
     nonce: body.nonce,
   }
 
-  return prepareSignedTransactionAbstraction(
+  return evmBasedUtils.prepareSignedTransactionAbstraction(
     client,
     tx,
+    web3,
     body.signatureId,
     body.fromPrivateKey,
-    web3,
     body.fee?.gasLimit,
     body.fee?.gasPrice,
   )
@@ -151,12 +129,12 @@ const deploySignedTransaction = async (body: ChainDeployErc20, web3: EvmBasedWeb
     nonce,
   }
 
-  return prepareSignedTransactionAbstraction(
+  return evmBasedUtils.prepareSignedTransactionAbstraction(
     client,
     tx,
+    web3,
     signatureId,
     fromPrivateKey,
-    web3,
     body.fee?.gasLimit,
     body.fee?.gasPrice,
   )

@@ -26,6 +26,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@celo-tools/celo-ethers-wrapper": "^0.1.0",
     "@tatumio/bitcoincashjs2-lib": "^4.1.2",
     "axios": "^0.24.0",
     "bignumber.js": "^9.0.2",
@@ -39,6 +40,7 @@
     "coininfo": "^5.1.0",
     "cross-blob": "^3.0.0",
     "ethereumjs-wallet": "^1.0.2",
+    "ethers": "^5.5.4",
     "form-data": "^4.0.0",
     "hdkey": "^2.0.1",
     "reflect-metadata": "^0.1.13",

@@ -3,6 +3,7 @@ import { ETH_TEST_DATA } from './eth.test-data'
 
 export const CELO_TEST_DATA: BlockchainTestData = {
   ...ETH_TEST_DATA,
+  PROVIDER: 'https://alfajores-forno.celo-testnet.org',
   MAINNET: {
     ...ETH_TEST_DATA.MAINNET,
     XPUB: 'xpub6Eq6pTogWo64mLHHJWadoF8HnZyYLrqK5ivoh2eWHVMxic8Q35rerC8hhgQUqyBwZRq3kwSCyT8eAp5mpyNiHwHKbVUJe6sFQgAbz3PPm45',
