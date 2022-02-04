@@ -14,6 +14,8 @@
     "doge-example": "examples/doge-example",
     "eth": "packages/blockchain/eth",
     "eth-example": "examples/eth-example",
+    "flow": "packages/blockchain/flow",
+    "flow-example": "examples/flow-example",
     "example": "examples/sdk-example",
     "kcs": "packages/blockchain/kcs",
     "kcs-example": "examples/kcs-example",
