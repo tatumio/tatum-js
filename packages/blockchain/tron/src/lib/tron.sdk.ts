@@ -19,7 +19,7 @@ export const TatumTronSDK = (args: SDKArguments) => {
     }),
     transaction: tronTx({ tronWeb: web }),
     api,
-    wallet: tronWallet(),
+    wallet: tronWallet({ tronWeb: web }),
     blockchain: {
       broadcast: BlockchainTronService.tronBroadcast,
       getCurrentBlock: BlockchainTronService.tronGetCurrentBlock,

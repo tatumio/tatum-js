@@ -8,6 +8,8 @@ import { generateAddress } from './tron.utils'
 // tronweb lib dont have any typings (not even in @types)
 // @ts-ignore
 import TronWeb from 'tronweb'
+import { tronCustodial } from './tron.custodial'
+import { ITronWeb } from './tron.web'
 
 const generateBlockchainWallet = async (mnem: string): Promise<TronWallet> => {
   const w = bip32.fromSeed(await mnemonicToSeed(mnem))
@@ -19,7 +21,7 @@ const generateBlockchainWallet = async (mnem: string): Promise<TronWallet> => {
   }
 }
 
-export const tronWallet = () => {
+export const tronWallet = (args: { tronWeb: ITronWeb }) => {
   return {
     /**
      * Generate Tron wallet
@@ -68,5 +70,6 @@ export const tronWallet = () => {
     generateAddressFromPrivatekey(privateKey: string): string {
       return TronWeb.address.fromPrivateKey(privateKey)
     },
+    custodial: tronCustodial(args),
   }
 }

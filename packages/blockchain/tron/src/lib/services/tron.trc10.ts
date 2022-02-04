@@ -24,7 +24,8 @@ const prepareSignedTransaction = async (
 
   const client = tronWeb.getClient(provider)
 
-  const definedPrecision = precision ?? (await BlockchainTronService.tronTrc10Detail(Number.parseInt(tokenId))).precision
+  const definedPrecision =
+    precision ?? (await BlockchainTronService.tronTrc10Detail(Number.parseInt(tokenId))).precision
 
   if (!definedPrecision) {
     throw new Error('Unable to obtain precision')
