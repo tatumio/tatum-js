@@ -1,5 +1,4 @@
 import { Blockchain, blockchainHelper, ChainTransactionKMS } from '@tatumio/shared-core'
-import { PendingTransaction } from '@tatumio/api-client'
 import { PrivateKey, Transaction } from 'bitcore-lib'
 import { abstractBlockchainKms } from '@tatumio/shared-blockchain-abstract'
 

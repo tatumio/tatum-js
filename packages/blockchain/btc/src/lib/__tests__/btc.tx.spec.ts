@@ -2,8 +2,9 @@ import '@tatumio/shared-testing-common'
 import * as apiClient from '@tatumio/api-client'
 import { BtcTransactionFromAddress, BtcTransactionFromUTXO, BtcTx } from '@tatumio/api-client'
 import { btcTransactions } from '../transaction/btc.tx'
-import { btcBasedTxTestFactory, mockHelper } from '@tatumio/shared-testing-common'
+import { mockHelper } from '@tatumio/shared-testing-common'
 import { amountUtils } from '@tatumio/shared-abstract-sdk'
+import { btcBasedTxTestFactory } from '@tatumio/shared-testing-btc-based'
 
 jest.mock('@tatumio/api-client')
 const mockedApi = mockHelper.mockApi(apiClient)

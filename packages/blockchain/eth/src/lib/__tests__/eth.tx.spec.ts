@@ -1,12 +1,8 @@
-import {
-  erc20TestFactory,
-  ganacheHelper,
-  REPLACE_ME_WITH_TATUM_API_KEY,
-  TEST_DATA,
-} from '@tatumio/shared-testing-common'
+import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testing-common'
 import { TatumEthSDK } from '../eth.sdk'
 import { ethTx } from '../services/eth.tx'
 import { Blockchain } from '@tatumio/shared-core'
+import { erc20TestFactory, ganacheHelper } from '@tatumio/shared-testing-evm-based'
 
 const blockchain = Blockchain.ETH
 

@@ -1,3 +1,4 @@
+import { BlockchainTestData, expectHexString } from '@tatumio/shared-testing-common'
 import { SdkWithXrpLikeWalletFunction } from '@tatumio/shared-blockchain-abstract'
 
 export const xrpLikeWalletTestFactory = {

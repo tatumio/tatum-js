@@ -1,0 +1,34 @@
+{
+  "root": "packages/shared/testing/evm-based",
+  "sourceRoot": "packages/shared/testing/evm-based/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/shared/testing/evm-based",
+        "tsConfig": "packages/shared/testing/evm-based/tsconfig.lib.json",
+        "packageJson": "packages/shared/testing/evm-based/package.json",
+        "main": "packages/shared/testing/evm-based/src/index.ts",
+        "assets": ["packages/shared/testing/evm-based/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/shared/testing/evm-based/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/shared/testing/evm-based"],
+      "options": {
+        "jestConfig": "packages/shared/testing/evm-based/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["scope:evm-based"]
+}
