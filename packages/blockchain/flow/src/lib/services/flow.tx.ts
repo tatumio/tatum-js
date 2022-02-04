@@ -13,12 +13,12 @@ import {
   FlowBurnNft,
   FlowMintMultipleNft,
   FlowMintNft,
+  FlowMnemonicOrPrivateKeyOrSignatureId,
   FlowTransferNft,
   Transaction,
+  TransactionResult,
   TransferFlow,
   TransferFlowCustomTx,
-  TransactionResult,
-  FlowMnemonicOrPrivateKeyOrSignatureId,
 } from '@tatumio/shared-core'
 import {
   burnNftTokenTxTemplate,
@@ -164,16 +164,16 @@ export const flowTxService = () => {
       proposer?: (isPayer: boolean) => any,
       payer?: (isPayer: boolean) => any,
     ): Promise<{ txId: string; tokenId: string }> => {
-      ;(body as FlowMintNft).chain = Currency.FLOW
+      const bodyWithChain: FlowMintNft = { ...body, chain: Currency.FLOW }
       const code = mintNftTokenTxTemplate(testnet)
-      const { url, contractAddress: tokenType, to, mnemonic, index, account, privateKey } = body
+      const { url, contractAddress: tokenType, to, account } = bodyWithChain
       const args = [
         { type: 'Address', value: to },
         { type: 'String', value: url },
         { type: 'String', value: tokenType },
       ]
-      const pk = await getPrivateKey(body, true)
-      if (!pk) throw 'No private key available'
+      const pk = await getPrivateKey(bodyWithChain, true)
+      if (!pk) throw new Error('No private key available')
       const auth = getSigner(pk, account).signer
       const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getApiSigner(false)
       const result = await _sendTransaction(testnet, {
@@ -207,9 +207,9 @@ export const flowTxService = () => {
       proposer?: (isPayer: boolean) => any,
       payer?: (isPayer: boolean) => any,
     ): Promise<{ txId: string; tokenId: number[] }> => {
-      ;(body as FlowMintMultipleNft).chain = Currency.FLOW
+      const bodyWithChain: FlowMintMultipleNft = { ...body, chain: Currency.FLOW }
       const code = mintMultipleNftTokenTxTemplate(testnet)
-      const { url, contractAddress: tokenType, to, mnemonic, index, account, privateKey } = body
+      const { url, contractAddress: tokenType, to, account } = bodyWithChain
       const args = [
         { type: 'Array', subType: 'Address', value: to },
         {
@@ -219,8 +219,8 @@ export const flowTxService = () => {
         },
         { type: 'String', value: tokenType },
       ]
-      const pk = await getPrivateKey(body, true)
-      if (!pk) throw 'No private key available'
+      const pk = await getPrivateKey(bodyWithChain, true)
+      if (!pk) throw new Error('No private key available')
       const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getApiSigner(false)
       const auth = getSigner(pk, account).signer
       const result = await _sendTransaction(testnet, {
@@ -256,15 +256,15 @@ export const flowTxService = () => {
       proposer?: (isPayer: boolean) => any,
       payer?: (isPayer: boolean) => any,
     ): Promise<{ txId: string }> => {
-      ;(body as FlowTransferNft).chain = Currency.FLOW
+      const bodyWithChain: FlowTransferNft = { ...body, chain: Currency.FLOW }
       const code = transferNftTokenTxTemplate(testnet)
-      const { tokenId, to, account } = body
+      const { tokenId, to, account } = bodyWithChain
       const args = [
         { type: 'Address', value: to },
         { type: 'UInt64', value: tokenId },
       ]
-      const pk = await getPrivateKey(body, true)
-      if (!pk) throw 'No private key available'
+      const pk = await getPrivateKey(bodyWithChain, true)
+      if (!pk) throw new Error('No private key available')
       const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getApiSigner(false)
       const auth = getSigner(pk, account).signer
       const result = await _sendTransaction(testnet, {
@@ -295,15 +295,15 @@ export const flowTxService = () => {
       proposer?: (isPayer: boolean) => any,
       payer?: (isPayer: boolean) => any,
     ): Promise<{ txId: string }> => {
-      ;(body as FlowBurnNft).chain = Currency.FLOW
+      const bodyWithChain: FlowBurnNft = { ...body, chain: Currency.FLOW }
       const code = burnNftTokenTxTemplate(testnet)
-      const { tokenId, contractAddress: tokenType, account } = body
+      const { tokenId, contractAddress: tokenType, account } = bodyWithChain
       const args = [
         { type: 'UInt64', value: tokenId },
         { type: 'String', value: tokenType },
       ]
-      const pk = await getPrivateKey(body, true)
-      if (!pk) throw 'No private key available'
+      const pk = await getPrivateKey(bodyWithChain, true)
+      if (!pk) throw new Error('No private key available')
       const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getApiSigner(false)
       const auth = getSigner(pk, account).signer
       const result = await _sendTransaction(testnet, {
@@ -334,7 +334,7 @@ export const flowTxService = () => {
       payer?: (isPayer: boolean) => any,
     ): Promise<{ txId: string; events: any[] }> => {
       const pk = await getPrivateKey(body)
-      if (!pk) throw 'No private key available'
+      if (!pk) throw new Error('No private key available')
       const auth = getSigner(pk, body.account).signer
       const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getApiSigner(false)
       const result = await _sendTransaction(testnet, {
@@ -382,7 +382,7 @@ export const flowTxService = () => {
         { value: body.to, type: 'Address' },
       ]
       const pk = await getPrivateKey(body)
-      if (!pk) throw 'No private key available'
+      if (!pk) throw new Error('No private key available')
       const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getApiSigner(false)
       const auth = getSigner(pk, body.account).signer
       const result = await _sendTransaction(testnet, {
@@ -413,7 +413,7 @@ const getPrivateKey = async (body: FlowMnemonicOrPrivateKeyOrSignatureId, tryMne
     } else {
       if (mnemonic && index && index >= 0) {
         return await flowSdkWallet.generatePrivateKeyFromMnemonic(mnemonic, index)
-      } else throw 'Insufficient info provided. Either private key or mnemonic required.'
+      } else throw new Error('Insufficient info provided. Either private key or mnemonic required.')
     }
   }
 }
