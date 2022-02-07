@@ -1,4 +1,4 @@
-import { CancelablePromise, SignatureId, TransactionHashKMS } from '@tatumio/api-client'
+import { SignatureId, TransactionHashKMS } from '@tatumio/api-client'
 import { BlockchainTestData, expectHexString } from '@tatumio/shared-testing-common'
 import {
   ChainApproveErc20,
@@ -6,6 +6,7 @@ import {
   ChainAuctionBid,
   ChainCancelAuction,
   ChainCreateAuction,
+  ChainDeployAuction,
   ChainSettleAuction,
   ChainUpdateFee,
   ChainUpdateFeeRecipient,
@@ -281,12 +282,12 @@ export const auctionTestFactory = {
 }
 
 export interface SdkWithAuctionFunctions {
-  getAuction(contractAddress: string, auctionId: string): CancelablePromise<Auction>
-  getAuctionFee(contractAddress: string): CancelablePromise<number>
-  getAuctionFeeRecipient(contractAddress: string): CancelablePromise<{ address?: string }>
-  updateFee(body: ChainUpdateFee): CancelablePromise<TransactionHashKMS | SignatureId>
+  getAuction(contractAddress: string, auctionId: string): Promise<Auction>
+  getAuctionFee(contractAddress: string): Promise<number>
+  getAuctionFeeRecipient(contractAddress: string): Promise<{ address?: string }>
+  updateFee(body: ChainUpdateFee): Promise<TransactionHashKMS | SignatureId>
   prepare: {
-    deployAuctionSignedTransaction(body, provider?: string): Promise<string>
+    deployAuctionSignedTransaction(body: ChainDeployAuction, provider?: string): Promise<string>
     auctionUpdateFeeRecipientSignedTransaction(body: ChainUpdateFeeRecipient, provider?): Promise<string>
     createAuctionSignedTransaction(body: ChainCreateAuction, provider?): Promise<string>
     auctionApproveNftTransferSignedTransaction(body: ChainApproveNftTransfer, provider?): Promise<string>
