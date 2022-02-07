@@ -35,6 +35,7 @@
     "shared-testing-evm-based": "packages/shared/testing/evm-based",
     "shared-testing-xrp-based": "packages/shared/testing/xrp-based",
     "tron": "packages/blockchain/tron",
+    "tron-example": "examples/tron-example",
     "xlm": "packages/blockchain/xlm",
     "xlm-example": "examples/xlm-example",
     "xrp": "packages/blockchain/xrp",
