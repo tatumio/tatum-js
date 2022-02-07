@@ -73,9 +73,10 @@ const prepareBscSignedTransactionAbstraction = async (
     client: Web3, transaction: TransactionConfig, signatureId: string | undefined, fromPrivateKey: string | undefined, fee?: Fee | undefined
 ) => {
     const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await bscGetGasPriceInWei()
-    const tx = {
+    const tx: TransactionConfig = {
         ...transaction,
         gasPrice,
+        gas: fee?.gasLimit || undefined,
     }
 
     if (signatureId) {

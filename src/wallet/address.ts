@@ -716,6 +716,7 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
         case Currency.GAMEE:
         case Currency.BUSD:
         case Currency.USDC_BSC:
+        case Currency.COIIN_BSC:
         case Currency.B2U_BSC:
         case Currency.CAKE:
         case Currency.HAG:
@@ -813,6 +814,7 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
         case Currency.WBNB:
         case Currency.BUSD:
         case Currency.USDC_BSC:
+        case Currency.COIIN_BSC:
         case Currency.B2U_BSC:
         case Currency.CAKE:
         case Currency.HAG:
