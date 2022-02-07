@@ -23,7 +23,7 @@ describe('TatumEthSDK', () => {
     })
   })
 
-  describe('auction', () => {
+  xdescribe('auction', () => {
     describe('getAuction', () => {
       auctionTestFactory.getAuction(sdk.auction, TEST_DATA.ETH)
     })
