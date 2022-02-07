@@ -4,6 +4,7 @@ import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 const kcsSDK = TatumKcsSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function kcsTxWithSignatureIdExample(): Promise<void> {
+  // ERC20(FUNGIBLE TOKEN)
   const preparedDeployErc20Transaction = await kcsSDK.transaction.erc20.prepare.deploySignedTransaction({
     symbol: 'ERC_SYMBOL',
     name: 'mytx',
@@ -90,6 +91,7 @@ export async function kcsTxWithSignatureIdExample(): Promise<void> {
     nonce: 3252345722143,
   })
 
+  // ERC721(NFT)
   const preparedDeployErc721Transaction = await kcsSDK.transaction.erc721.prepare.deploySignedTransaction({
     chain: 'KCS',
     name: 'MY_TOKEN',
@@ -323,9 +325,143 @@ export async function kcsTxWithSignatureIdExample(): Promise<void> {
       gasPrice: '20',
     },
   })
+
+  // ERC1155(MULTI TOKEN)
+  const preparedDeployMultiTokenTransaction =
+    await kcsSDK.transaction.multiToken.prepare.deployMultiTokenTransaction({
+      chain: 'KCS',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      uri: 'tatum',
+    })
+
+  const sentDeployMultiTokenTransaction =
+    await kcsSDK.transaction.multiToken.send.deployMultiTokenTransaction({
+      chain: 'KCS',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      uri: 'tatum',
+    })
+
+  const preparedMintMultiTokenTransaction =
+    await kcsSDK.transaction.multiToken.prepare.mintMultiTokenTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'KCS',
+      tokenId: '123',
+      amount: '1000',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const sentMintMultiTokenTransaction = await kcsSDK.transaction.multiToken.send.mintMultiTokenTransaction({
+    to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    chain: 'KCS',
+    tokenId: '123',
+    amount: '1000',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+  })
+
+  const preparedMintMultiTokenBatchTransaction =
+    await kcsSDK.transaction.multiToken.prepare.mintMultiTokenBatchTransaction({
+      to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
+      chain: 'KCS',
+      tokenId: [['123'], ['321']],
+      amounts: [['1000'], ['100']],
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const sentMintMultiTokenBatchTransaction =
+    await kcsSDK.transaction.multiToken.send.mintMultiTokenBatchTransaction({
+      to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
+      chain: 'KCS',
+      tokenId: [['123'], ['321']],
+      amounts: [['1000'], ['100']],
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const preparedTransferMultiTokenTransaction =
+    await kcsSDK.transaction.multiToken.prepare.transferMultiTokenTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'KCS',
+      tokenId: '123',
+      amount: '10',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const sentTransferMultiTokenTransaction =
+    await kcsSDK.transaction.multiToken.send.transferMultiTokenTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'KCS',
+      tokenId: '123',
+      amount: '10',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const preparedTransferMultiTokenBatchTransaction =
+    await kcsSDK.transaction.multiToken.prepare.transferMultiTokenBatchTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'KCS',
+      tokenId: ['123', '321'],
+      amounts: ['1000', '100'],
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const sentTransferMultiTokenBatchTransaction =
+    await kcsSDK.transaction.multiToken.send.transferMultiTokenBatchTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'KCS',
+      tokenId: ['123', '321'],
+      amounts: ['1000', '100'],
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const preparedBurnMultiTokenTransaction =
+    await kcsSDK.transaction.multiToken.prepare.burnMultiTokenTransaction({
+      chain: 'KCS',
+      tokenId: '123',
+      amount: '1',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+      account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    })
+
+  const sentBurnMultiTokenTransaction = await kcsSDK.transaction.multiToken.send.burnMultiTokenTransaction({
+    chain: 'KCS',
+    tokenId: '123',
+    amount: '1',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+  })
+
+  const preparedBurnMultiTokenBatchTransaction =
+    await kcsSDK.transaction.multiToken.prepare.burnMultiTokenBatchTransaction({
+      chain: 'KCS',
+      tokenId: ['123', '321'],
+      amounts: ['1000', '100'],
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+      account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    })
+
+  const sentMintBurnTokenBatchTransaction =
+    await kcsSDK.transaction.multiToken.send.burnMultiTokenBatchTransaction({
+      chain: 'KCS',
+      tokenId: ['123', '321'],
+      amounts: ['1000', '100'],
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+      account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    })
 }
 
 export async function kcsTxWithPrivateKeyExample(): Promise<void> {
+  // ERC20(FUNGIBLE TOKEN)
   const preparedDeployErc20Transaction = await kcsSDK.transaction.erc20.prepare.deploySignedTransaction({
     symbol: 'ERC_SYMBOL',
     name: 'mytx',
@@ -412,6 +548,7 @@ export async function kcsTxWithPrivateKeyExample(): Promise<void> {
     nonce: 3252345722143,
   })
 
+  //ERC721(NFT)
   const preparedDeployErc721Transaction = await kcsSDK.transaction.erc721.prepare.deploySignedTransaction({
     chain: 'KCS',
     name: 'MY_TOKEN',
@@ -645,4 +782,137 @@ export async function kcsTxWithPrivateKeyExample(): Promise<void> {
       gasPrice: '20',
     },
   })
+
+  // ERC1155(MULTI TOKEN)
+  const preparedDeployMultiTokenTransaction =
+    await kcsSDK.transaction.multiToken.prepare.deployMultiTokenTransaction({
+      chain: 'KCS',
+      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+      uri: 'tatum',
+    })
+
+  const sentDeployMultiTokenTransaction =
+    await kcsSDK.transaction.multiToken.send.deployMultiTokenTransaction({
+      chain: 'KCS',
+      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+      uri: 'tatum',
+    })
+
+  const preparedMintMultiTokenTransaction =
+    await kcsSDK.transaction.multiToken.prepare.mintMultiTokenTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'KCS',
+      tokenId: '123',
+      amount: '1000',
+      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const sentMintMultiTokenTransaction = await kcsSDK.transaction.multiToken.send.mintMultiTokenTransaction({
+    to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    chain: 'KCS',
+    tokenId: '123',
+    amount: '1000',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+  })
+
+  const preparedMintMultiTokenBatchTransaction =
+    await kcsSDK.transaction.multiToken.prepare.mintMultiTokenBatchTransaction({
+      to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
+      chain: 'KCS',
+      tokenId: [['123'], ['321']],
+      amounts: [['1000'], ['100']],
+      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const sentMintMultiTokenBatchTransaction =
+    await kcsSDK.transaction.multiToken.send.mintMultiTokenBatchTransaction({
+      to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
+      chain: 'KCS',
+      tokenId: [['123'], ['321']],
+      amounts: [['1000'], ['100']],
+      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const preparedTransferMultiTokenTransaction =
+    await kcsSDK.transaction.multiToken.prepare.transferMultiTokenTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'KCS',
+      tokenId: '123',
+      amount: '10',
+      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const sentTransferMultiTokenTransaction =
+    await kcsSDK.transaction.multiToken.send.transferMultiTokenTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'KCS',
+      tokenId: '123',
+      amount: '10',
+      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const preparedTransferMultiTokenBatchTransaction =
+    await kcsSDK.transaction.multiToken.prepare.transferMultiTokenBatchTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'KCS',
+      tokenId: ['123', '321'],
+      amounts: ['1000', '100'],
+      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const sentTransferMultiTokenBatchTransaction =
+    await kcsSDK.transaction.multiToken.send.transferMultiTokenBatchTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'KCS',
+      tokenId: ['123', '321'],
+      amounts: ['1000', '100'],
+      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const preparedBurnMultiTokenTransaction =
+    await kcsSDK.transaction.multiToken.prepare.burnMultiTokenTransaction({
+      chain: 'KCS',
+      tokenId: '123',
+      amount: '1',
+      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+      account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    })
+
+  const sentBurnMultiTokenTransaction = await kcsSDK.transaction.multiToken.send.burnMultiTokenTransaction({
+    chain: 'KCS',
+    tokenId: '123',
+    amount: '1',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+  })
+
+  const preparedBurnMultiTokenBatchTransaction =
+    await kcsSDK.transaction.multiToken.prepare.burnMultiTokenBatchTransaction({
+      chain: 'KCS',
+      tokenId: ['123', '321'],
+      amounts: ['1000', '100'],
+      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+      account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    })
+
+  const sentMintBurnTokenBatchTransaction =
+    await kcsSDK.transaction.multiToken.send.burnMultiTokenBatchTransaction({
+      chain: 'KCS',
+      tokenId: ['123', '321'],
+      amounts: ['1000', '100'],
+      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+      account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    })
 }

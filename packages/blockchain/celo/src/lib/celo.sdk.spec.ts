@@ -29,12 +29,12 @@ describe('TatumCeloSDK', () => {
 
   describe('erc721', () => {
     describe('prepare', () => {
-    jest.setTimeout(99999)
+      jest.setTimeout(99999)
       describe('mint', () => {
         const provider = TEST_DATA.CELO?.PROVIDER
         const address = TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
-        ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
-        : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
+          ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
+          : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
 
         it('should be valid from privateKey', async () => {
           const result = await sdk.transaction.erc721.prepare.mintSignedTransaction(

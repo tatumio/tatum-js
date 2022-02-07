@@ -431,128 +431,128 @@ export const multiToken = (args: {
         provider?: string,
         testnet?: boolean,
       ) => deployMultiTokenTransaction(body, provider, testnet),
-      send: {
-        /**
-         * Send Celo mint multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
-         * This operation is irreversible.
-         * @param testnet mainnet or testnet version
-         * @param body content of the transaction to broadcast
-         * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
-         * @returns transaction id of the transaction in the blockchain
-         */
-        mintMultiTokenTransaction: async (
-          body: ChainMintMultiTokenCelo,
-          provider?: string,
-          testnet?: boolean,
-        ) =>
-          await args.broadcastFunction({
-            txData: (await mintMultiTokenTransaction(body, provider, testnet)) as string,
-            signatureId: body.signatureId,
-          }),
-        /**
-         * Send Celo mint multiple tokens batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
-         * This operation is irreversible.
-         * @param testnet mainnet or testnet version
-         * @param body content of the transaction to broadcast
-         * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
-         * @returns transaction id of the transaction in the blockchain
-         */
-        mintMultiTokenBatchTransaction: async (
-          body: ChainMintMultiTokenBatchCelo,
-          provider?: string,
-          testnet?: boolean,
-        ) =>
-          await args.broadcastFunction({
-            txData: (await mintMultiTokenBatchTransaction(body, provider, testnet)) as string,
-            signatureId: body.signatureId,
-          }),
-        /**
-         * Send Celo transfer multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
-         * This operation is irreversible.
-         * @param testnet mainnet or testnet version
-         * @param body content of the transaction to broadcast
-         * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
-         * @returns transaction id of the transaction in the blockchain
-         */
-        transferMultiTokenTransaction: async (
-          body: ChainTransferMultiTokenCelo,
-          provider?: string,
-          testnet?: boolean,
-        ) =>
-          await args.broadcastFunction({
-            txData: (await transferMultiTokenTransaction(body, provider, testnet)) as string,
-            signatureId: body.signatureId,
-          }),
-        /**
-         * Send Celo transfer multiple tokens batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
-         * This operation is irreversible.
-         * @param testnet mainnet or testnet version
-         * @param body content of the transaction to broadcast
-         * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
-         * @returns transaction id of the transaction in the blockchain
-         */
-        transferMultiTokenBatchTransaction: async (
-          body: ChainTransferMultiTokenBatchCelo,
-          provider?: string,
-          testnet?: boolean,
-        ) =>
-          await args.broadcastFunction({
-            txData: (await transferMultiTokenBatchTransaction(body, provider, testnet)) as string,
-            signatureId: body.signatureId,
-          }),
-        /**
-         * Send Celo burn multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
-         * This operation is irreversible.
-         * @param testnet mainnet or testnet version
-         * @param body content of the transaction to broadcast
-         * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
-         * @returns transaction id of the transaction in the blockchain
-         */
-        burnMultiTokenTransaction: async (
-          body: ChainBurnMultiTokenCelo,
-          provider?: string,
-          testnet?: boolean,
-        ) =>
-          await args.broadcastFunction({
-            txData: (await burnMultiTokenTransaction(body, provider, testnet)) as string,
-            signatureId: body.signatureId,
-          }),
-        /**
-         * Send Celo burn multiple tokens batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
-         * This operation is irreversible.
-         * @param testnet mainnet or testnet version
-         * @param body content of the transaction to broadcast
-         * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
-         * @returns transaction id of the transaction in the blockchain
-         */
-        burnMultiTokenBatchTransaction: async (
-          body: ChainBurnMultiTokenBatchCelo,
-          provider?: string,
-          testnet?: boolean,
-        ) =>
-          await args.broadcastFunction({
-            txData: (await burnMultiTokenBatchTransaction(body, provider, testnet)) as string,
-            signatureId: body.signatureId,
-          }),
+    },
+    send: {
+      /**
+       * Send Celo mint multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+       * This operation is irreversible.
+       * @param testnet mainnet or testnet version
+       * @param body content of the transaction to broadcast
+       * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+       * @returns transaction id of the transaction in the blockchain
+       */
+      mintMultiTokenTransaction: async (
+        body: ChainMintMultiTokenCelo,
+        provider?: string,
+        testnet?: boolean,
+      ) =>
+        await args.broadcastFunction({
+          txData: (await mintMultiTokenTransaction(body, provider, testnet)) as string,
+          signatureId: body.signatureId,
+        }),
+      /**
+       * Send Celo mint multiple tokens batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+       * This operation is irreversible.
+       * @param testnet mainnet or testnet version
+       * @param body content of the transaction to broadcast
+       * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+       * @returns transaction id of the transaction in the blockchain
+       */
+      mintMultiTokenBatchTransaction: async (
+        body: ChainMintMultiTokenBatchCelo,
+        provider?: string,
+        testnet?: boolean,
+      ) =>
+        await args.broadcastFunction({
+          txData: (await mintMultiTokenBatchTransaction(body, provider, testnet)) as string,
+          signatureId: body.signatureId,
+        }),
+      /**
+       * Send Celo transfer multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+       * This operation is irreversible.
+       * @param testnet mainnet or testnet version
+       * @param body content of the transaction to broadcast
+       * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+       * @returns transaction id of the transaction in the blockchain
+       */
+      transferMultiTokenTransaction: async (
+        body: ChainTransferMultiTokenCelo,
+        provider?: string,
+        testnet?: boolean,
+      ) =>
+        await args.broadcastFunction({
+          txData: (await transferMultiTokenTransaction(body, provider, testnet)) as string,
+          signatureId: body.signatureId,
+        }),
+      /**
+       * Send Celo transfer multiple tokens batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+       * This operation is irreversible.
+       * @param testnet mainnet or testnet version
+       * @param body content of the transaction to broadcast
+       * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+       * @returns transaction id of the transaction in the blockchain
+       */
+      transferMultiTokenBatchTransaction: async (
+        body: ChainTransferMultiTokenBatchCelo,
+        provider?: string,
+        testnet?: boolean,
+      ) =>
+        await args.broadcastFunction({
+          txData: (await transferMultiTokenBatchTransaction(body, provider, testnet)) as string,
+          signatureId: body.signatureId,
+        }),
+      /**
+       * Send Celo burn multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+       * This operation is irreversible.
+       * @param testnet mainnet or testnet version
+       * @param body content of the transaction to broadcast
+       * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+       * @returns transaction id of the transaction in the blockchain
+       */
+      burnMultiTokenTransaction: async (
+        body: ChainBurnMultiTokenCelo,
+        provider?: string,
+        testnet?: boolean,
+      ) =>
+        await args.broadcastFunction({
+          txData: (await burnMultiTokenTransaction(body, provider, testnet)) as string,
+          signatureId: body.signatureId,
+        }),
+      /**
+       * Send Celo burn multiple tokens batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+       * This operation is irreversible.
+       * @param testnet mainnet or testnet version
+       * @param body content of the transaction to broadcast
+       * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+       * @returns transaction id of the transaction in the blockchain
+       */
+      burnMultiTokenBatchTransaction: async (
+        body: ChainBurnMultiTokenBatchCelo,
+        provider?: string,
+        testnet?: boolean,
+      ) =>
+        await args.broadcastFunction({
+          txData: (await burnMultiTokenBatchTransaction(body, provider, testnet)) as string,
+          signatureId: body.signatureId,
+        }),
 
-        /**
-         * Send Celo deploy multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
-         * This operation is irreversible.
-         * @param testnet mainnet or testnet version
-         * @param body content of the transaction to broadcast
-         * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
-         * @returns transaction id of the transaction in the blockchain
-         */
-        deployMultiTokenTransaction: async (
-          body: ChainDeployMultiTokenCelo,
-          provider?: string,
-          testnet?: boolean,
-        ) =>
-          await args.broadcastFunction({
-            txData: (await deployMultiTokenTransaction(body, provider, testnet)) as string,
-            signatureId: body.signatureId,
-          }),
-      },
+      /**
+       * Send Celo deploy multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+       * This operation is irreversible.
+       * @param testnet mainnet or testnet version
+       * @param body content of the transaction to broadcast
+       * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+       * @returns transaction id of the transaction in the blockchain
+       */
+      deployMultiTokenTransaction: async (
+        body: ChainDeployMultiTokenCelo,
+        provider?: string,
+        testnet?: boolean,
+      ) =>
+        await args.broadcastFunction({
+          txData: (await deployMultiTokenTransaction(body, provider, testnet)) as string,
+          signatureId: body.signatureId,
+        }),
     },
   }
 }
