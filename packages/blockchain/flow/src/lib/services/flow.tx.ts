@@ -132,20 +132,20 @@ export const flowTxService = () => {
       }
       return { txId: result.id, address: result.events[0].data.address }
     },
-    getNftMetadata: async (testnet: boolean, account: string, id: string, tokenType: string) => {
+    getNftMetadata: async (testnet: boolean, account: string, id: string, contractAddress: string) => {
       const code = metadataNftTokenScript(testnet)
       const args = [
         { type: 'Address', value: account },
         { type: 'UInt64', value: id },
-        { type: 'String', value: tokenType },
+        { type: 'String', value: contractAddress },
       ]
       return sendScript(testnet, code, args)
     },
-    getNftTokenByAddress: async (testnet: boolean, account: string, tokenType: string) => {
+    getNftTokenByAddress: async (testnet: boolean, account: string, contractAddress: string) => {
       const code = tokenByAddressNftTokenScript(testnet)
       const args = [
         { type: 'Address', value: account },
-        { type: 'String', value: tokenType },
+        { type: 'String', value: contractAddress },
       ]
       return sendScript(testnet, code, args)
     },
@@ -472,7 +472,11 @@ const _sendTransaction = async (
   testnet: boolean,
   { code, args, proposer, authorizations, payer, keyHash }: Transaction,
 ): Promise<TransactionResult> => {
-  fcl.config().put('accessNode.api', networkUrl)
+  console.log('work6')
+  const nw = networkUrl(testnet)
+  console.log('network', nw)
+  console.log('data', code, args, proposer, authorizations, payer, keyHash)
+  fcl.config().put('accessNode.api', nw)
   let response
   try {
     response = await fcl.send([
@@ -496,11 +500,19 @@ const _sendTransaction = async (
 
   const { transactionId } = response
   try {
-    const { error, events } = await fcl.tx(response).onceSealed()
-    return {
-      id: transactionId,
-      error,
-      events,
+    let error
+    let events
+    try {
+      const result = await fcl.tx(response).onceSealed()
+      error = result.error
+      events = result.events
+      return {
+        id: transactionId,
+        error,
+        events,
+      }
+    } catch (e) {
+      console.log('Error', e)
     }
   } finally {
     try {
