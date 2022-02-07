@@ -11,17 +11,6 @@ import { BSC_TEST_DATA } from './test-data/bsc.test-data'
 import { XRP_TEST_DATA } from './test-data/xrp.test-data'
 import { XLM_TEST_DATA } from './test-data/xlm.test-data'
 import { SCRYPTA_TEST_DATA } from './test-data/scrypta.test-data'
-import {
-  ChainApproveErc20Spending,
-  ChainApproveNftSpending,
-  ChainBidOnAuction,
-  ChainCancelAuction,
-  ChainCreateAuction,
-  ChainDeployAuction,
-  ChainSettleAuction,
-  ChainUpdateFee,
-  ChainUpdateFeeRecipient,
-} from '@tatumio/shared-blockchain-evm-based'
 
 export type BlockchainNetworkTestData = {
   XPUB: string
@@ -54,20 +43,8 @@ export interface BlockchainTestData {
   INVALID_XPUB_CHILD_INDEX_ERROR: string
   INVALID_PRIVATE_KEY_CHILD_INDEX_ERROR: string
   INVALID_PRIVATE_KEY_ERROR: string
-  NFT?: {
-    AUCTIONS: {
-      DEPLOY: { VALID: ChainDeployAuction; INVALID: ChainDeployAuction }
-      CREATE_AUCTION: { VALID: ChainCreateAuction; INVALID: ChainCreateAuction }
-      UPDATE_FEE_RECIPIENT: { VALID: ChainUpdateFeeRecipient; INVALID: ChainUpdateFeeRecipient }
-      UPDATE_FEE: { VALID: ChainUpdateFee; INVALID: ChainUpdateFee }
-      APPROVE_NFT_SPENDING: { VALID: ChainApproveNftSpending; INVALID: ChainApproveNftSpending }
-      APPROVE_ERC20_SPENDING: { VALID: ChainApproveErc20Spending; INVALID: ChainApproveErc20Spending }
-      BID: { VALID: ChainBidOnAuction; INVALID: ChainBidOnAuction }
-      CANCEL: { VALID: ChainCancelAuction; INVALID: ChainCancelAuction }
-      SETTLE: { VALID: ChainSettleAuction; INVALID: ChainSettleAuction }
-    }
-  }
   PROVIDER?: string
+  AUCTIONS?: any
 }
 
 export const TEST_DATA = {

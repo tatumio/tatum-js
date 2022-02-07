@@ -7,10 +7,6 @@ import {
   ChainTransferEthErc20,
   DeployErc20,
   DeployNft,
-  ChainBurnErc20 as ApiChainBurnErc20,
-  ChainMintErc20 as ApiChainMintErc20,
-  ChainTransferEthErc20,
-  DeployErc20,
   ExchangeRate,
   MintErc721,
   MintMultipleNft,
@@ -114,18 +110,6 @@ export interface SdkWithErc721Functions {
 
 export type BroadcastFunction = (requestBody: BroadcastKMS) => CancelablePromise<TransactionHashKMS>
 
-export type FromPrivateKeyOrSignatureId<T extends { fromPrivateKey: string }> = Omit<T, 'fromPrivateKey'> &
-  Partial<SignatureId> &
-  Partial<Pick<T, 'fromPrivateKey'>>
-
-export type ChainTransferErc20 = FromPrivateKeyOrSignatureId<Omit<ChainTransferEthErc20, 'chain'>>
-
-export type ChainMintErc20 = FromPrivateKeyOrSignatureId<Omit<ApiChainMintErc20, 'chain'>>
-
-export type ChainBurnErc20 = FromPrivateKeyOrSignatureId<Omit<ApiChainBurnErc20, 'chain'>>
-
-export type ChainDeployErc20 = FromPrivateKeyOrSignatureId<DeployErc20>
-
 export interface SdkWithErc20Functions {
   decimals(contractAddress: string, provider?: string): any
   prepare: {
@@ -135,7 +119,3 @@ export interface SdkWithErc20Functions {
     burnSignedTransaction(body: ChainBurnErc20, provider?: string): Promise<string>
   }
 }
-
-export type BroadcastFunction = (
-  requestBody: { txData: string } & SignatureId,
-) => CancelablePromise<TransactionHashKMS>

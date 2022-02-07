@@ -18,9 +18,7 @@ export const TatumBscSDK = (args: SDKArguments) => {
     api,
     kms: bscKmsService({ blockchain, web3 }),
     transaction: bscTxService({ blockchain, web3 }),
-    nft: {
-      auction: bscAuctionService({ blockchain, web3 }),
-    },
+    auction: bscAuctionService({ blockchain, web3 }),
     httpDriver: async (request: Web3Request): Promise<Web3Response> => {
       return api.bscWeb3Driver(args.apiKey, { ...request, jsonrpc: '2.0' })
     },

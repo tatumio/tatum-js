@@ -1,7 +1,12 @@
 import { CancelablePromise, SignatureId, TransactionHashKMS } from '@tatumio/api-client'
-import { BlockchainTestData, expectHexString } from '../shared-testing'
+import { BlockchainTestData, expectHexString } from '@tatumio/shared-testing-common'
 import {
+  ChainApproveErc20,
+  ChainApproveNftTransfer,
+  ChainAuctionBid,
+  ChainCancelAuction,
   ChainCreateAuction,
+  ChainSettleAuction,
   ChainUpdateFee,
   ChainUpdateFeeRecipient,
 } from '@tatumio/shared-blockchain-evm-based'
@@ -113,13 +118,13 @@ export const auctionTestFactory = {
   },
   updateFee: (sdk: SdkWithAuctionFunctions, testData: BlockchainTestData) => {
     it('valid', async () => {
-      const result = (await sdk.updateFee(testData.NFT.AUCTIONS.UPDATE_FEE.VALID)) as TransactionHashKMS
+      const result = (await sdk.updateFee(testData.AUCTIONS.UPDATE_FEE.VALID)) as TransactionHashKMS
       console.log('result', result)
       expectHexString(result.txId)
     })
     it('invalid address', async () => {
       try {
-        await sdk.updateFee(testData.NFT.AUCTIONS.UPDATE_FEE.INVALID)
+        await sdk.updateFee(testData.AUCTIONS.UPDATE_FEE.INVALID)
       } catch (e) {
         expect(e.toString()).toEqual(
           "Error: Provided address 0x687422eEA2cB73B5d3e242bA5456b782919AFc86 is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted.",
@@ -130,12 +135,12 @@ export const auctionTestFactory = {
   prepare: {
     deployAuctionSignedTransaction: (sdk: SdkWithAuctionFunctions, testData: BlockchainTestData) => {
       it('valid', async () => {
-        const tx = await sdk.prepare.deployAuctionSignedTransaction(testData.NFT.AUCTIONS.DEPLOY.VALID)
+        const tx = await sdk.prepare.deployAuctionSignedTransaction(testData.AUCTIONS.DEPLOY.VALID)
         expectHexString(tx)
       })
       it('invalid address', async () => {
         try {
-          await sdk.prepare.deployAuctionSignedTransaction(testData.NFT.AUCTIONS.DEPLOY.INVALID)
+          await sdk.prepare.deployAuctionSignedTransaction(testData.AUCTIONS.DEPLOY.INVALID)
         } catch (e) {
           expect(e.toString()).toEqual(
             'Error: bad address checksum (argument="address", value="0x687422eEA2cB73B5d3e242bA5456b782919AFc86", code=INVALID_ARGUMENT, version=address/5.5.0) (argument="feeRecipient", value="0x687422eEA2cB73B5d3e242bA5456b782919AFc86", code=INVALID_ARGUMENT, version=abi/5.0.7)',
@@ -149,14 +154,14 @@ export const auctionTestFactory = {
     ) => {
       it('valid', async () => {
         const tx = await sdk.prepare.auctionUpdateFeeRecipientSignedTransaction(
-          testData.NFT.AUCTIONS.UPDATE_FEE_RECIPIENT.VALID,
+          testData.AUCTIONS.UPDATE_FEE_RECIPIENT.VALID,
         )
         expectHexString(tx)
       })
       it('invalid address', async () => {
         try {
           await sdk.prepare.auctionUpdateFeeRecipientSignedTransaction(
-            testData.NFT.AUCTIONS.UPDATE_FEE_RECIPIENT.INVALID,
+            testData.AUCTIONS.UPDATE_FEE_RECIPIENT.INVALID,
           )
         } catch (e) {
           expect(e.toString()).toEqual(
@@ -167,14 +172,12 @@ export const auctionTestFactory = {
     },
     createAuctionSignedTransaction: (sdk: SdkWithAuctionFunctions, testData: BlockchainTestData) => {
       it('valid', async () => {
-        const tx = await sdk.prepare.createAuctionSignedTransaction(
-          testData.NFT.AUCTIONS.CREATE_AUCTION.VALID,
-        )
+        const tx = await sdk.prepare.createAuctionSignedTransaction(testData.AUCTIONS.CREATE_AUCTION.VALID)
         expectHexString(tx)
       })
       it('invalid address', async () => {
         try {
-          await sdk.prepare.createAuctionSignedTransaction(testData.NFT.AUCTIONS.CREATE_AUCTION.INVALID)
+          await sdk.prepare.createAuctionSignedTransaction(testData.AUCTIONS.CREATE_AUCTION.INVALID)
           fail()
         } catch (e) {
           expect(e.toString()).toEqual(
@@ -189,14 +192,14 @@ export const auctionTestFactory = {
     ) => {
       it('valid', async () => {
         const tx = await sdk.prepare.auctionApproveNftTransferSignedTransaction(
-          testData.NFT.AUCTIONS.APPROVE_NFT_SPENDING.VALID,
+          testData.AUCTIONS.APPROVE_NFT_SPENDING.VALID,
         )
         expectHexString(tx)
       })
       it('invalid address', async () => {
         try {
           await sdk.prepare.auctionApproveNftTransferSignedTransaction(
-            testData.NFT.AUCTIONS.APPROVE_NFT_SPENDING.INVALID,
+            testData.AUCTIONS.APPROVE_NFT_SPENDING.INVALID,
           )
         } catch (e) {
           expect(e.toString()).toEqual(
@@ -212,7 +215,7 @@ export const auctionTestFactory = {
       it('valid', async () => {
         const tx = await sdk.prepare.auctionApproveErc20TransferSignedTransaction(
           true,
-          testData.NFT.AUCTIONS.APPROVE_ERC20_SPENDING.VALID,
+          testData.AUCTIONS.APPROVE_ERC20_SPENDING.VALID,
         )
         expectHexString(tx)
       })
@@ -220,7 +223,7 @@ export const auctionTestFactory = {
         try {
           await sdk.prepare.auctionApproveErc20TransferSignedTransaction(
             true,
-            testData.NFT.AUCTIONS.APPROVE_ERC20_SPENDING.INVALID,
+            testData.AUCTIONS.APPROVE_ERC20_SPENDING.INVALID,
           )
         } catch (e) {
           expect(e.toString()).toEqual(
@@ -231,12 +234,12 @@ export const auctionTestFactory = {
     },
     auctionBidSignedTransaction: (sdk: SdkWithAuctionFunctions, testData: BlockchainTestData) => {
       it('valid', async () => {
-        const tx = await sdk.prepare.auctionBidSignedTransaction(true, testData.NFT.AUCTIONS.BID.VALID)
+        const tx = await sdk.prepare.auctionBidSignedTransaction(true, testData.AUCTIONS.BID.VALID)
         expectHexString(tx)
       })
       it('invalid address', async () => {
         try {
-          await sdk.prepare.auctionBidSignedTransaction(true, testData.NFT.AUCTIONS.BID.INVALID)
+          await sdk.prepare.auctionBidSignedTransaction(true, testData.AUCTIONS.BID.INVALID)
         } catch (e) {
           expect(e.toString()).toEqual(
             "Error: Provided address 0x487422eEA2cB73B5d3e242bA5456b782919AFc86 is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted.",
@@ -246,12 +249,12 @@ export const auctionTestFactory = {
     },
     auctionCancelSignedTransaction: (sdk: SdkWithAuctionFunctions, testData: BlockchainTestData) => {
       it('valid', async () => {
-        const tx = await sdk.prepare.auctionCancelSignedTransaction(testData.NFT.AUCTIONS.CANCEL.VALID)
+        const tx = await sdk.prepare.auctionCancelSignedTransaction(testData.AUCTIONS.CANCEL.VALID)
         expectHexString(tx)
       })
       it('invalid address', async () => {
         try {
-          await sdk.prepare.auctionCancelSignedTransaction(testData.NFT.AUCTIONS.CANCEL.INVALID)
+          await sdk.prepare.auctionCancelSignedTransaction(testData.AUCTIONS.CANCEL.INVALID)
         } catch (e) {
           expect(e.toString()).toEqual(
             "Error: Provided address 0x687422eEA2cB73B5d3e242bA5456b782919AFc86 is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted.",
@@ -261,12 +264,12 @@ export const auctionTestFactory = {
     },
     auctionSettleSignedTransaction: (sdk: SdkWithAuctionFunctions, testData: BlockchainTestData) => {
       it('valid', async () => {
-        const tx = await sdk.prepare.auctionSettleSignedTransaction(testData.NFT.AUCTIONS.SETTLE.VALID)
+        const tx = await sdk.prepare.auctionSettleSignedTransaction(testData.AUCTIONS.SETTLE.VALID)
         expectHexString(tx)
       })
       it('invalid address', async () => {
         try {
-          await sdk.prepare.auctionSettleSignedTransaction(testData.NFT.AUCTIONS.SETTLE.INVALID)
+          await sdk.prepare.auctionSettleSignedTransaction(testData.AUCTIONS.SETTLE.INVALID)
         } catch (e) {
           expect(e.toString()).toEqual(
             "Error: Provided address 0x687422eEA2cB73B5d3e242bA5456b782919AFc86 is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted.",
@@ -282,16 +285,15 @@ export interface SdkWithAuctionFunctions {
   getAuctionFee(contractAddress: string): CancelablePromise<number>
   getAuctionFeeRecipient(contractAddress: string): CancelablePromise<{ address?: string }>
   updateFee(body: ChainUpdateFee): CancelablePromise<TransactionHashKMS | SignatureId>
-  // TODO types
   prepare: {
     deployAuctionSignedTransaction(body, provider?: string): Promise<string>
     auctionUpdateFeeRecipientSignedTransaction(body: ChainUpdateFeeRecipient, provider?): Promise<string>
     createAuctionSignedTransaction(body: ChainCreateAuction, provider?): Promise<string>
-    auctionApproveNftTransferSignedTransaction(body, provider?): Promise<string>
-    auctionApproveErc20TransferSignedTransaction(testnet, body, provider?): Promise<string>
-    auctionBidSignedTransaction(testnet, body, provider?): Promise<string>
-    auctionCancelSignedTransaction(body, provider?): Promise<string>
-    auctionSettleSignedTransaction(body, provider?): Promise<string>
+    auctionApproveNftTransferSignedTransaction(body: ChainApproveNftTransfer, provider?): Promise<string>
+    auctionApproveErc20TransferSignedTransaction(testnet, body: ChainApproveErc20, provider?): Promise<string>
+    auctionBidSignedTransaction(testnet, body: ChainAuctionBid, provider?): Promise<string>
+    auctionCancelSignedTransaction(body: ChainCancelAuction, provider?): Promise<string>
+    auctionSettleSignedTransaction(body: ChainSettleAuction, provider?): Promise<string>
   }
 }
 
