@@ -1,20 +1,27 @@
 import {
   BroadcastKMS,
+  BurnMultiToken,
+  BurnMultiTokenBatch,
   BurnNft,
   CancelablePromise,
   ChainBurnErc20 as ApiChainBurnErc20,
   ChainMintErc20 as ApiChainMintErc20,
   ChainTransferEthErc20,
   DeployErc20,
+  DeployMultiToken,
   DeployNft,
   ExchangeRate,
   MintErc721,
   MintMultipleNft,
+  MintMultiToken,
+  MintMultiTokenBatch,
   MintNft,
   SignatureId,
   TatumServiceService,
   TatumUrl,
   TransactionHashKMS,
+  TransferMultiToken,
+  TransferMultiTokenBatch,
   TransferNft,
   TronWallet,
   UpdateCashbackValueForAuthorNft,
@@ -82,6 +89,21 @@ export type ChainTransferErc721 = FromPrivateKeyOrSignatureId<TransferNft>
 export type ChainUpdateCashbackErc721 = FromPrivateKeyOrSignatureId<UpdateCashbackValueForAuthorNft>
 
 export type ChainDeployErc721 = FromPrivateKeyOrSignatureId<DeployNft>
+
+export type ChainBurnMultiToken = FromPrivateKeyOrSignatureId<BurnMultiToken>
+
+export type ChainBurnMultiTokenBatch = FromPrivateKeyOrSignatureId<BurnMultiTokenBatch>
+
+export type ChainTransferMultiToken = FromPrivateKeyOrSignatureId<TransferMultiToken>
+
+export type ChainTransferMultiTokenBatch = FromPrivateKeyOrSignatureId<TransferMultiTokenBatch>
+
+export type ChainMintMultiToken = MintMultiToken & { fromPrivateKey?: string }
+
+export type ChainMintMultiTokenBatch = FromPrivateKeyOrSignatureId<MintMultiTokenBatch>
+
+export type ChainDeployMultiToken = FromPrivateKeyOrSignatureId<DeployMultiToken>
+
 export interface SdkWithErc20Functions {
   decimals(contractAddress: string, provider?: string): any
   prepare: {
@@ -105,6 +127,18 @@ export interface SdkWithErc721Functions {
       body: ChainUpdateCashbackErc721,
       provider?: string,
     ): Promise<string>
+  }
+}
+
+export interface SdkWithMultiTokenFunctions {
+  prepare: {
+    mintMultiTokenTransaction(body: ChainMintMultiToken, provider?: string): Promise<string>
+    mintMultiTokenBatchTransaction(body: ChainMintMultiTokenBatch, provider?: string): Promise<string>
+    transferMultiTokenTransaction(body: ChainTransferMultiToken, provider?: string): Promise<string>
+    transferMultiTokenBatchTransaction(body: ChainTransferMultiTokenBatch, provider?: string): Promise<string>
+    deployMultiTokenTransaction(body: ChainDeployMultiToken, provider?: string): Promise<string>
+    burnMultiTokenTransaction(body: ChainBurnMultiToken, provider?: string): Promise<string>
+    burnMultiTokenBatchTransaction(body: ChainBurnMultiTokenBatch, provider?: string): Promise<string>
   }
 }
 

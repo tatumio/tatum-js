@@ -31,6 +31,11 @@ export type BlockchainNetworkTestData = {
     CONTRACT_ADDRESS: string
     ADDRESS?: string
   }
+  MULTITOKEN?: {
+    PRIVATE_KEY: string
+    CONTRACT_ADDRESS: string
+    ADDRESS?: string
+  }
 }
 
 export interface BlockchainTestData {
