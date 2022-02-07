@@ -98,7 +98,7 @@ export type ChainTransferMultiToken = FromPrivateKeyOrSignatureId<TransferMultiT
 
 export type ChainTransferMultiTokenBatch = FromPrivateKeyOrSignatureId<TransferMultiTokenBatch>
 
-export type ChainMintMultiToken = MintMultiToken & { fromPrivateKey: string }
+export type ChainMintMultiToken = MintMultiToken & { fromPrivateKey?: string }
 
 export type ChainMintMultiTokenBatch = FromPrivateKeyOrSignatureId<MintMultiTokenBatch>
 
@@ -132,13 +132,13 @@ export interface SdkWithErc721Functions {
 
 export interface SdkWithMultiTokenFunctions {
   prepare: {
-    mintMultiTokenTransaction(body: ChainDeployErc721, provider?: string): Promise<string>
-    mintMultiTokenBatchTransaction(body: ChainTransferErc721, provider?: string): Promise<string>
-    transferMultiTokenTransaction(body: ChainMintErc721, provider?: string): Promise<string>
-    transferMultiTokenBatchTransaction(body: ChainBurnErc721, provider?: string): Promise<string>
-    deployMultiTokenTransaction(body: ChainMintMultipleNft, provider?: string): Promise<string>
-    burnMultiTokenTransaction(body: ChainMintNft, provider?: string): Promise<string>
-    burnMultiTokenBatchTransaction(body: ChainMintMultipleNft, provider?: string): Promise<string>
+    mintMultiTokenTransaction(body: ChainMintMultiToken, provider?: string): Promise<string>
+    mintMultiTokenBatchTransaction(body: ChainMintMultiTokenBatch, provider?: string): Promise<string>
+    transferMultiTokenTransaction(body: ChainTransferMultiToken, provider?: string): Promise<string>
+    transferMultiTokenBatchTransaction(body: ChainTransferMultiTokenBatch, provider?: string): Promise<string>
+    deployMultiTokenTransaction(body: ChainDeployMultiToken, provider?: string): Promise<string>
+    burnMultiTokenTransaction(body: ChainBurnMultiToken, provider?: string): Promise<string>
+    burnMultiTokenBatchTransaction(body: ChainBurnMultiTokenBatch, provider?: string): Promise<string>
   }
 }
 

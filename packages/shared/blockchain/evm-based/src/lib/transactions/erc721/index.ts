@@ -18,13 +18,16 @@ import BigNumber from 'bignumber.js'
 const mintSignedTransaction = async (body: ChainMintErc721, web3: EvmBasedWeb3, provider?: string) => {
   const { contractAddress, nonce, signatureId, fee, to, tokenId, url, fromPrivateKey } = body
   const client = web3.getClient(provider)
-  const contract = new client.eth.Contract(Erc721Token.abi as any, contractAddress)
+  const contract = new client.eth.Contract(
+    Erc721Token.abi as any,
+    evmBasedUtils.transformAddress(contractAddress),
+  )
 
   if (contractAddress) {
     const tx: TransactionConfig = {
       from: undefined,
-      to: contractAddress.trim(),
-      data: contract.methods.mintWithTokenURI(to.trim(), tokenId, url).encodeABI(),
+      to: evmBasedUtils.transformAddress(contractAddress).trim(),
+      data: contract.methods.mintWithTokenURI( evmBasedUtils.transformAddress(to).trim(), tokenId, url).encodeABI(),
       nonce: nonce,
     }
 
@@ -57,16 +60,39 @@ const mintCashbackSignedTransaction = async (body: ChainMintNft, web3: EvmBasedW
   } = body
 
   const client = web3.getClient(provider)
-  const contract = new client.eth.Contract(Erc721Token.abi as any, contractAddress)
+  const contract = new client.eth.Contract(
+    Erc721Token.abi as any,
+    evmBasedUtils.transformAddress(contractAddress),
+  )
   const cashbacks: string[] = cashbackValues!
   const cb = cashbacks.map((c) => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
+  const transformedAddresses = authorAddresses.map((a) => evmBasedUtils.transformAddress(a))
+  const transformedTo = evmBasedUtils.transformAddress(to).trim();
+
   if (contractAddress) {
     const tx: TransactionConfig = {
       from: undefined,
-      to: contractAddress.trim(),
+      to: evmBasedUtils.transformAddress(contractAddress).trim(),
       data: erc20
-        ? contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb, erc20).encodeABI()
-        : contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb).encodeABI(),
+        ? contract.methods
+            .mintWithCashback(
+              transformedTo,
+              tokenId,
+              url,
+              transformedAddresses,
+              cb,
+              erc20,
+            )
+            .encodeABI()
+        : contract.methods
+            .mintWithCashback(
+              transformedTo,
+              tokenId,
+              url,
+              transformedAddresses,
+              cb,
+            )
+            .encodeABI(),
       nonce,
     }
 
@@ -104,33 +130,26 @@ export const mintMultipleCashbackSignedTransaction = async (
 
   const client = await web3.getClient(provider)
 
-  const contract = new client.eth.Contract(Erc721Token.abi as any, contractAddress)
+  const contract = new client.eth.Contract(
+    Erc721Token.abi as any,
+    evmBasedUtils.transformAddress(contractAddress),
+  )
   const cashbacks: string[][] = cashbackValues!
   const cb = cashbacks.map((cashback) =>
     cashback.map((c) => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`),
   )
+  const transformedTo = to.map((t) => evmBasedUtils.transformAddress(t).trim())
+  const transformedAddresses = authorAddresses.map((a) => a.map((a1) => evmBasedUtils.transformAddress(a1)))
+  
   const tx: TransactionConfig = {
     from: undefined,
-    to: contractAddress.trim(),
+    to: evmBasedUtils.transformAddress(contractAddress).trim(),
     data: erc20
       ? contract.methods
-          .mintMultipleCashback(
-            to.map((t) => t.trim()),
-            tokenId,
-            url,
-            authorAddresses,
-            cb,
-            erc20,
-          )
+          .mintMultipleCashback(transformedTo, tokenId, url, transformedAddresses, cb, erc20)
           .encodeABI()
       : contract.methods
-          .mintMultipleCashback(
-            to.map((t) => t.trim()),
-            tokenId,
-            url,
-            authorAddresses,
-            cb,
-          )
+          .mintMultipleCashback(transformedTo, tokenId, url, transformedAddresses, cb)
           .encodeABI(),
     nonce,
   }
@@ -154,14 +173,17 @@ const mintMultipleSignedTransaction = async (
 
   const client = await web3.getClient(provider)
 
-  const contract = new client.eth.Contract(Erc721Token.abi as any, contractAddress)
+  const contract = new client.eth.Contract(
+    Erc721Token.abi as any,
+    evmBasedUtils.transformAddress(contractAddress),
+  )
 
   const tx: TransactionConfig = {
     from: undefined,
-    to: contractAddress.trim(),
+    to: evmBasedUtils.transformAddress(contractAddress).trim(),
     data: contract.methods
       .mintMultiple(
-        to.map((t) => t.trim()),
+        to.map((t) => evmBasedUtils.transformAddress(t).trim()),
         tokenId,
         url,
       )
@@ -184,10 +206,13 @@ const burnSignedTransaction = async (body: ChainBurnErc721, web3: EvmBasedWeb3, 
 
   const client = web3.getClient(provider)
 
-  const contract = new client.eth.Contract(Erc721Token.abi as any, contractAddress)
+  const contract = new client.eth.Contract(
+    Erc721Token.abi as any,
+    evmBasedUtils.transformAddress(contractAddress),
+  )
   const tx: TransactionConfig = {
     from: undefined,
-    to: contractAddress.trim(),
+    to: evmBasedUtils.transformAddress(contractAddress).trim(),
     data: contract.methods.burn(tokenId).encodeABI(),
     nonce,
   }
@@ -226,18 +251,20 @@ const transferSignedTransaction = async (
 
   const contract = new client.eth.Contract(
     provenance ? Erc721_Provenance.abi : (Erc721Token.abi as any),
-    contractAddress,
+    evmBasedUtils.transformAddress(contractAddress),
   )
   const dataBytes = provenance
     ? Buffer.from(provenanceData + "'''###'''" + client.utils.toWei(tokenPrice!, 'ether'), 'utf8')
     : ''
   const tokenData = provenance
-    ? contract.methods.safeTransfer(to.trim(), tokenId, `0x${dataBytes.toString('hex')}`).encodeABI()
-    : contract.methods.safeTransfer(to.trim(), tokenId).encodeABI()
+    ? contract.methods
+        .safeTransfer(evmBasedUtils.transformAddress(to).trim(), tokenId, `0x${dataBytes.toString('hex')}`)
+        .encodeABI()
+    : contract.methods.safeTransfer(evmBasedUtils.transformAddress(to).trim(), tokenId).encodeABI()
 
   const tx: TransactionConfig = {
     from: undefined,
-    to: contractAddress.trim(),
+    to: evmBasedUtils.transformAddress(contractAddress).trim(),
     data: tokenData,
     nonce,
     value: value ? `0x${new BigNumber(value).multipliedBy(1e18).toString(16)}` : undefined,
@@ -263,11 +290,14 @@ const updateCashbackForAuthorSignedTransaction = async (
 
   const client = await web3.getClient(provider)
 
-  const contract = new client.eth.Contract(Erc721Token.abi as any, contractAddress)
+  const contract = new client.eth.Contract(
+    Erc721Token.abi as any,
+    evmBasedUtils.transformAddress(contractAddress),
+  )
 
   const tx: TransactionConfig = {
     from: undefined,
-    to: contractAddress.trim(),
+    to: evmBasedUtils.transformAddress(contractAddress).trim(),
     data: contract.methods
       .updateCashbackForAuthor(
         tokenId,
@@ -339,23 +369,29 @@ const mintProvenanceSignedTransaction = async (body: ChainMintNft, web3: EvmBase
 
   const client = web3.getClient(provider)
 
-  const contract = new client.eth.Contract(Erc721_Provenance.abi as any, contractAddress)
+  const contract = new client.eth.Contract(
+    Erc721_Provenance.abi as any,
+    evmBasedUtils.transformAddress(contractAddress),
+  )
   const cb: string[] = []
   const fval: string[] = []
+  const authors: string[] = []
+  // const transformedAddresses =
   if (authorAddresses && cashbackValues && fixedValues) {
     cashbackValues.forEach((c) => cb.push(`0x${new BigNumber(c).multipliedBy(100).toString(16)}`))
     fixedValues.forEach((c) => fval.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
+    authorAddresses.map((a) => authors.push(evmBasedUtils.transformAddress(a)))
   }
   if (contractAddress) {
     const tx: TransactionConfig = {
       from: undefined,
-      to: contractAddress.trim(),
+      to: evmBasedUtils.transformAddress(contractAddress).trim(),
       data: contract.methods
         .mintWithTokenURI(
-          to.trim(),
+          evmBasedUtils.transformAddress(to).trim(),
           tokenId,
           url,
-          authorAddresses ? authorAddresses : [],
+          authors,
           cb,
           fval,
           erc20 ? erc20 : null,
@@ -399,9 +435,14 @@ const mintMultipleProvenanceSignedTransaction = async (
 
   const client = await web3.getClient(provider)
 
-  const contract = new client.eth.Contract(Erc721_Provenance.abi as any, contractAddress)
+  const contract = new client.eth.Contract(
+    Erc721_Provenance.abi as any,
+    evmBasedUtils.transformAddress(contractAddress),
+  )
   const cb: string[][] = []
   const fv: string[][] = []
+  const transformedTo = to.map((t) => evmBasedUtils.transformAddress(t).trim())
+  const transformedAddresses = authorAddresses.map((a) => a.map((a1) => evmBasedUtils.transformAddress(a1)))
   if (authorAddresses && cashbackValues && fixedValues) {
     for (let i = 0; i < cashbackValues.length; i++) {
       const cb2: string[] = []
@@ -416,28 +457,21 @@ const mintMultipleProvenanceSignedTransaction = async (
   }
   const tx: TransactionConfig = {
     from: undefined,
-    to: contractAddress.trim(),
+    to: evmBasedUtils.transformAddress(contractAddress).trim(),
     data: erc20
       ? contract.methods
           .mintMultiple(
-            to.map((t) => t.trim()),
+            transformedTo,
             tokenId,
             url,
-            authorAddresses ? authorAddresses : [],
+            authorAddresses ? transformedAddresses : [],
             cb,
             fv,
             erc20,
           )
           .encodeABI()
       : contract.methods
-          .mintMultiple(
-            to.map((t) => t.trim()),
-            tokenId,
-            url,
-            authorAddresses ? authorAddresses : [],
-            cb,
-            fv,
-          )
+          .mintMultiple(transformedTo, tokenId, url, authorAddresses ? transformedAddresses : [], cb, fv)
           .encodeABI(),
     nonce,
   }
