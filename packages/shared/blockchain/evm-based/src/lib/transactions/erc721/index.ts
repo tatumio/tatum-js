@@ -64,7 +64,7 @@ const mintCashbackSignedTransaction = async (body: ChainMintNft, web3: EvmBasedW
   const client = web3.getClient(provider)
   const contract = new client.eth.Contract(
     Erc721Token.abi as any,
-  // TODO: remove ! when type will be fixed
+    // TODO: remove ! when type will be fixed
     evmBasedUtils.transformAddress(contractAddress!),
   )
   const cashbacks: string[] = cashbackValues!

@@ -192,7 +192,7 @@ const transferMultiTokenTransaction = async (
       nonce,
       to: contractAddress.trim(),
       data: contract.methods
-      // TODO: remove ! when type will be fixed
+        // TODO: remove ! when type will be fixed
         .safeTransfer(to.trim(), tokenId, `0x${new BigNumber(amount!).toString(16)}`, data ? data : '0x0')
         .encodeABI(),
     })
