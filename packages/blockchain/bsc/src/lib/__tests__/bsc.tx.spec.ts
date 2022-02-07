@@ -2,14 +2,19 @@ import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testin
 import { TatumBscSDK } from '../bsc.sdk'
 import { Blockchain, Currency } from '@tatumio/shared-core'
 import { bscTxService } from '../services/bsc.tx'
-import { erc20TestFactory, ganacheHelper, erc721TestFactory } from '@tatumio/shared-testing-evm-based'
+import {
+  erc20TestFactory,
+  ganacheHelper,
+  erc721TestFactory,
+  multiTokenTestFactory,
+} from '@tatumio/shared-testing-evm-based'
 
 describe('BscSDK - tx', () => {
   const sdk = TatumBscSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
   const inmemoryBlockchain = ganacheHelper.inmemoryBlockchain(Blockchain.BSC)
 
   const bscTx = bscTxService({
-    blockchain: Blockchain.POLYGON,
+    blockchain: Blockchain.BSC,
     web3: {
       getClient: (provider?: string) => inmemoryBlockchain.web3,
       async getGasPriceInWei(): Promise<string> {
@@ -102,6 +107,42 @@ describe('BscSDK - tx', () => {
           TEST_DATA.BSC,
           Currency.BSC,
         )
+      })
+    })
+  })
+
+  describe('multiToken', () => {
+    describe('prepare', () => {
+      describe('deployMultiToken', () => {
+        multiTokenTestFactory.prepare.deployMultiTokenTransaction(bscTx.multiToken, TEST_DATA.BSC, 'BSC')
+      })
+
+      describe('mintMultiToken', () => {
+        multiTokenTestFactory.prepare.mintMultiTokenTransaction(bscTx.multiToken, TEST_DATA.BSC, 'BSC')
+      })
+
+      describe('mintMultiTokenBatch', () => {
+        multiTokenTestFactory.prepare.mintMultiTokenBatchTransaction(bscTx.multiToken, TEST_DATA.BSC, 'BSC')
+      })
+
+      describe('transferMultiToken', () => {
+        multiTokenTestFactory.prepare.transferMultiTokenTransaction(bscTx.multiToken, TEST_DATA.BSC, 'BSC')
+      })
+
+      describe('transferMultiTokenBatch', () => {
+        multiTokenTestFactory.prepare.transferMultiTokenBatchTransaction(
+          bscTx.multiToken,
+          TEST_DATA.BSC,
+          'BSC',
+        )
+      })
+
+      describe('burnMultiToken', () => {
+        multiTokenTestFactory.prepare.burnMultiTokenTransaction(bscTx.multiToken, TEST_DATA.BSC, 'BSC')
+      })
+
+      describe('burnMultiTokenBatch', () => {
+        multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(bscTx.multiToken, TEST_DATA.BSC, 'BSC')
       })
     })
   })

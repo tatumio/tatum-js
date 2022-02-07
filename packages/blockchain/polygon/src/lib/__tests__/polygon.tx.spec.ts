@@ -2,7 +2,12 @@ import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testin
 import { Blockchain, Currency } from '@tatumio/shared-core'
 import { polygonTxService } from '../services/polygon.tx'
 import { TatumPolygonSDK } from '../polygon.sdk'
-import { erc20TestFactory, ganacheHelper, erc721TestFactory } from '@tatumio/shared-testing-evm-based'
+import {
+  erc20TestFactory,
+  ganacheHelper,
+  erc721TestFactory,
+  multiTokenTestFactory,
+} from '@tatumio/shared-testing-evm-based'
 
 const blockchain = Blockchain.POLYGON
 
@@ -114,6 +119,66 @@ describe('PolygonSDK - tx', () => {
           sdk.transaction.erc721,
           TEST_DATA.POLYGON,
           Currency.MATIC,
+        )
+      })
+    })
+  })
+
+  describe('multiToken', () => {
+    describe('prepare', () => {
+      describe('deployMultiToken', () => {
+        multiTokenTestFactory.prepare.deployMultiTokenTransaction(
+          sdk.transaction.multiToken,
+          TEST_DATA.POLYGON,
+          'MATIC',
+        )
+      })
+
+      describe('mintMultiToken', () => {
+        multiTokenTestFactory.prepare.mintMultiTokenTransaction(
+          sdk.transaction.multiToken,
+          TEST_DATA.POLYGON,
+          'MATIC',
+        )
+      })
+
+      describe('mintMultiTokenBatch', () => {
+        multiTokenTestFactory.prepare.mintMultiTokenBatchTransaction(
+          sdk.transaction.multiToken,
+          TEST_DATA.POLYGON,
+          'MATIC',
+        )
+      })
+
+      describe('transferMultiToken', () => {
+        multiTokenTestFactory.prepare.transferMultiTokenTransaction(
+          sdk.transaction.multiToken,
+          TEST_DATA.POLYGON,
+          'MATIC',
+        )
+      })
+
+      describe('transferMultiTokenBatch', () => {
+        multiTokenTestFactory.prepare.transferMultiTokenBatchTransaction(
+          sdk.transaction.multiToken,
+          TEST_DATA.POLYGON,
+          'MATIC',
+        )
+      })
+
+      describe('burnMultiToken', () => {
+        multiTokenTestFactory.prepare.burnMultiTokenTransaction(
+          sdk.transaction.multiToken,
+          TEST_DATA.POLYGON,
+          'MATIC',
+        )
+      })
+
+      describe('burnMultiTokenBatch', () => {
+        multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(
+          sdk.transaction.multiToken,
+          TEST_DATA.POLYGON,
+          'MATIC',
         )
       })
     })

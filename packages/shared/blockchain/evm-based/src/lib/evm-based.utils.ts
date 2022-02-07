@@ -5,6 +5,7 @@ import { TronWallet } from '@tatumio/api-client'
 import Web3 from 'web3'
 import { TransactionConfig } from 'web3-core'
 import { EvmBasedWeb3 } from '..'
+import { HarmonyAddress } from '@harmony-js/crypto'
 
 export const evmBasedUtils = {
   generateAddressFromXPub: (xpub: string, i: number): string => {
@@ -58,6 +59,10 @@ export const evmBasedUtils = {
 
     tx.gas = gasLimit ?? (await client.eth.estimateGas(tx))
 
+    if (tx.to) {
+      evmBasedUtils.transformAddress(tx.to)
+    }
+
     if (signatureId) {
       return JSON.stringify(tx)
     }
@@ -73,5 +78,9 @@ export const evmBasedUtils = {
     }
 
     return signedTransaction.rawTransaction
+  },
+
+  transformAddress: (address: string) => {
+    return address.startsWith('one') ? new HarmonyAddress(address).basicHex : address
   },
 }
