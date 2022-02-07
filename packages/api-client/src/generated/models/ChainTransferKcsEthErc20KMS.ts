@@ -6,7 +6,7 @@ export type ChainTransferKcsEthErc20KMS = {
     /**
      * Chain to work with.
      */
-    chain: ChainTransferKcsEthErc20KMS.chain;
+    chain: 'KCS';
     /**
      * Blockchain address to send ERC20 token to
      */
@@ -44,16 +44,4 @@ export type ChainTransferKcsEthErc20KMS = {
          */
         gasPrice: string;
     };
-}
-
-export namespace ChainTransferKcsEthErc20KMS {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        KCS = 'KCS',
-    }
-
-
 }

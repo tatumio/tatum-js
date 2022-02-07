@@ -6,7 +6,7 @@ export type ChainCallSmartContractMethod = {
     /**
      * Chain to work with.
      */
-    chain: ChainCallSmartContractMethod.chain;
+    chain: 'ETH' | 'BSC' | 'XDC';
     /**
      * Address of ERC20 token
      */
@@ -44,18 +44,4 @@ export type ChainCallSmartContractMethod = {
          */
         gasPrice: string;
     };
-}
-
-export namespace ChainCallSmartContractMethod {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        BSC = 'BSC',
-        XDC = 'XDC',
-    }
-
-
 }

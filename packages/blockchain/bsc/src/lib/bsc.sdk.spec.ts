@@ -1,3 +1,4 @@
+import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA, walletTestFactory } from '@tatumio/shared-testing-common'
 import {
   erc20TestFactory,
   REPLACE_ME_WITH_TATUM_API_KEY,
@@ -8,6 +9,8 @@ import { TatumBscSDK } from './bsc.sdk'
 
 describe('TatumBscSDK', () => {
   const sdk = TatumBscSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+
+  jest.setTimeout(99999)
 
   describe('Wallet', () => {
     describe('Generate wallet', () => {

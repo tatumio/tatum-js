@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
-import Blob from 'cross-blob'
+//import Blob from 'cross-blob'
 import FormData from 'form-data'
 
 import { ApiError } from './ApiError'
@@ -222,29 +222,33 @@ function catchErrors(options: ApiRequestOptions, result: ApiResult): void {
   }
 }
 
-/**
- * Request using axios client
- * @param options The request options from the the service
- * @returns CancelablePromise<T>
- * @throws ApiError
- */
-export async function request<T>(options: ApiRequestOptions): CancelablePromise<T> {
-  const url = getUrl(options)
-  const formData = getFormData(options)
-  const body = getRequestBody(options)
-  const headers = await getHeaders(options, formData)
+export function request<T>(options: ApiRequestOptions): CancelablePromise<T> {
+  return new CancelablePromise(async (resolve, reject, onCancel) => {
+    try {
+      const url = getUrl(options)
+      const formData = getFormData(options)
+      const body = getRequestBody(options)
+      const headers = await getHeaders(options, formData)
 
-  const response = await sendRequest(options, url, formData, body, headers)
-  const responseBody = getResponseBody(response)
-  const responseHeader = getResponseHeader(response, options.responseHeader)
+      if (!onCancel.isCancelled) {
+        const response = await sendRequest(options, url, formData, body, headers, onCancel)
+        const responseBody = getResponseBody(response)
+        const responseHeader = getResponseHeader(response, options.responseHeader)
 
-  const result: ApiResult = {
-    url,
-    ok: isSuccess(response.status),
-    status: response.status,
-    statusText: response.statusText,
-    body: responseHeader || responseBody,
-  }
+        const result: ApiResult = {
+          url,
+          ok: isSuccess(response.status),
+          status: response.status,
+          statusText: response.statusText,
+          body: responseHeader || responseBody,
+        }
 
-  return result.body
+        catchErrors(options, result)
+
+        resolve(result.body)
+      }
+    } catch (error) {
+      reject(error)
+    }
+  })
 }

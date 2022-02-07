@@ -10,7 +10,7 @@ export type CreateRecord = {
     /**
      * Blockchain, where to store log data.
      */
-    chain: CreateRecord.chain;
+    chain: 'ETH' | 'ONE' | 'XDC' | 'BSC' | 'MATIC';
     /**
      * Private key of account, from which the transaction will be initiated. If not present, transaction fee will be debited from Tatum internal account and additional credits will be charged.
      */
@@ -23,20 +23,4 @@ export type CreateRecord = {
      * Blockchain address to store log on. If not defined, it will be stored on an address, from which the transaction was being made.
      */
     to?: string;
-}
-
-export namespace CreateRecord {
-
-    /**
-     * Blockchain, where to store log data.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        ONE = 'ONE',
-        XDC = 'XDC',
-        BSC = 'BSC',
-        MATIC = 'MATIC',
-    }
-
-
 }

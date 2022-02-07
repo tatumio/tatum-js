@@ -6,7 +6,7 @@ export type TransferNftFlowMnemonic = {
     /**
      * Chain to work with.
      */
-    chain: TransferNftFlowMnemonic.chain;
+    chain: 'FLOW';
     /**
      * Blockchain address to send NFT token to.
      */
@@ -31,16 +31,4 @@ export type TransferNftFlowMnemonic = {
      * Derivation index of sender address.
      */
     index: number;
-}
-
-export namespace TransferNftFlowMnemonic {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        FLOW = 'FLOW',
-    }
-
-
 }

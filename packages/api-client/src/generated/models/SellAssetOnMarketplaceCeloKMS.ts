@@ -6,11 +6,11 @@ export type SellAssetOnMarketplaceCeloKMS = {
     /**
      * Blockchain to work with.
      */
-    chain: SellAssetOnMarketplaceCeloKMS.chain;
+    chain: 'CELO';
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: SellAssetOnMarketplaceCeloKMS.feeCurrency;
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
      * Address of the marketplace smart contract.
      */
@@ -32,7 +32,7 @@ export type SellAssetOnMarketplaceCeloKMS = {
      */
     listingId: string;
     /**
-     * Amount of the assets to be sent. For ERC-721 tokens, enter 1.
+     * Amount of the assets to be sent. For ERC-721 tokens, enter amount only in case of natiev currency cashback.
      */
     amount?: string;
     /**
@@ -72,25 +72,4 @@ export type SellAssetOnMarketplaceCeloKMS = {
          */
         gasPrice: string;
     };
-}
-
-export namespace SellAssetOnMarketplaceCeloKMS {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
 }

@@ -30,19 +30,5 @@ export type MintErc721Celo = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: MintErc721Celo.feeCurrency;
-}
-
-export namespace MintErc721Celo {
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

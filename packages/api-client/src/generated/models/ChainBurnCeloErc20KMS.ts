@@ -6,7 +6,7 @@ export type ChainBurnCeloErc20KMS = {
     /**
      * Chain to work with.
      */
-    chain: ChainBurnCeloErc20KMS.chain;
+    chain: 'CELO';
     /**
      * Amount of tokens to be destroyed.
      */
@@ -26,26 +26,5 @@ export type ChainBurnCeloErc20KMS = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: ChainBurnCeloErc20KMS.feeCurrency;
-}
-
-export namespace ChainBurnCeloErc20KMS {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

@@ -52,13 +52,14 @@ export class AbstractSdkLedgerAccountService {
     let w
     if (generateNewWallet) {
       w = await generateNewWalletFn(undefined, { testnet })
-      account.xpub = w.xpub || w.address
+      // address not in Wallet
+      account.xpub = w.xpub // || w.address
     }
     const a = await LedgerAccountService.createAccount(account)
     const address = await ApiServices.offChain.account.generateDepositAddress(a.id)
     if (webhookUrl) {
       await ApiServices.ledger.subscriptions.createSubscription({
-        type: CreateSubscriptionIncoming.type.ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION,
+        type: 'ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION',
         attr: { url: webhookUrl, id: a.id },
       })
     }

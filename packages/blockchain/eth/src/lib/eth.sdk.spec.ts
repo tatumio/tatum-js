@@ -1,3 +1,4 @@
+import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA, walletTestFactory } from '@tatumio/shared-testing-common'
 import {
   erc20TestFactory,
   REPLACE_ME_WITH_TATUM_API_KEY,
@@ -8,8 +9,7 @@ import {
 import { TatumEthSDK } from './eth.sdk'
 
 describe('TatumEthSDK', () => {
-  // const sdk = TatumEthSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
-  const sdk = TatumEthSDK({ apiKey: 'd341d8f5-5f6a-43ca-a57c-c67839d1a1cb' })
+  const sdk = TatumEthSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
   describe('Wallet', () => {
     describe('Generate wallet', () => {

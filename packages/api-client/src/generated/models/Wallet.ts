@@ -4,11 +4,8 @@
 
 export type Wallet = {
     /**
-     * Generated mnemonic for wallet.
+     * Mnemonic to generate private key for the account of QTUM, from which the gas will be paid (index will be used).
      */
     mnemonic?: string;
-    /**
-     * Generated Extended public key for wallet with derivation path according to BIP44. This key can be used to generate addresses.
-     */
     xpub?: string;
 }

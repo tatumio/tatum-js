@@ -10,8 +10,7 @@
         "outputPath": "dist/packages/blockchain/kcs",
         "tsConfig": "packages/blockchain/kcs/tsconfig.lib.json",
         "packageJson": "packages/blockchain/kcs/package.json",
-        "main": "packages/blockchain/kcs/src/index.ts",
-        "assets": ["packages/blockchain/kcs/*.md"]
+        "main": "packages/blockchain/kcs/src/index.ts"
       }
     },
     "lint": {
@@ -30,5 +29,5 @@
       }
     }
   },
-  "tags": ["scope:sdk", "scope:evm-based"]
+  "tags": ["type:sdk", "scope:evm-based"]
 }

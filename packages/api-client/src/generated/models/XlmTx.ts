@@ -71,24 +71,9 @@ export type XlmTx = {
     /**
      * The type of memo.
      */
-    memo_type?: XlmTx.memo_type;
+    memo_type?: 'MEMO_TEXT' | 'MEMO_ID' | 'MEMO_HASH' | 'MEMO_RETURN';
     /**
      * An array of signatures used to sign this transaction.
      */
     signatures?: Array<string>;
-}
-
-export namespace XlmTx {
-
-    /**
-     * The type of memo.
-     */
-    export enum memo_type {
-        MEMO_TEXT = 'MEMO_TEXT',
-        MEMO_ID = 'MEMO_ID',
-        MEMO_HASH = 'MEMO_HASH',
-        MEMO_RETURN = 'MEMO_RETURN',
-    }
-
-
 }

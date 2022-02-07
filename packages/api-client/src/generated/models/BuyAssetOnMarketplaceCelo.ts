@@ -6,11 +6,11 @@ export type BuyAssetOnMarketplaceCelo = {
     /**
      * Blockchain to work with.
      */
-    chain: BuyAssetOnMarketplaceCelo.chain;
+    chain: 'CELO';
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: BuyAssetOnMarketplaceCelo.feeCurrency;
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
      * Address of the marketplace smart contract.
      */
@@ -52,25 +52,4 @@ export type BuyAssetOnMarketplaceCelo = {
          */
         gasPrice: string;
     };
-}
-
-export namespace BuyAssetOnMarketplaceCelo {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
 }

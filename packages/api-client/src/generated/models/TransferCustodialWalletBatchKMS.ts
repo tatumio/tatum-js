@@ -6,7 +6,7 @@ export type TransferCustodialWalletBatchKMS = {
     /**
      * Blockchain to work with.
      */
-    chain: TransferCustodialWalletBatchKMS.chain;
+    chain: 'ETH' | 'ONE' | 'BSC' | 'XDC' | 'MATIC';
     /**
      * Address of custodial wallet to transfer from
      */
@@ -56,20 +56,4 @@ export type TransferCustodialWalletBatchKMS = {
          */
         gasPrice: string;
     };
-}
-
-export namespace TransferCustodialWalletBatchKMS {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        ONE = 'ONE',
-        BSC = 'BSC',
-        XDC = 'XDC',
-        MATIC = 'MATIC',
-    }
-
-
 }

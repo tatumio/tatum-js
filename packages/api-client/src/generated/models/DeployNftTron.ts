@@ -6,7 +6,7 @@ export type DeployNftTron = {
     /**
      * Chain to work with.
      */
-    chain: DeployNftTron.chain;
+    chain: 'TRON';
     /**
      * Name of the NFT token
      */
@@ -23,16 +23,4 @@ export type DeployNftTron = {
      * Max limit for fee to be paid, in TRX. For deploy, around 580 TRX is consumed.
      */
     feeLimit: number;
-}
-
-export namespace DeployNftTron {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        TRON = 'TRON',
-    }
-
-
 }

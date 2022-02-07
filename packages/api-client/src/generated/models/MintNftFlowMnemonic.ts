@@ -6,7 +6,7 @@ export type MintNftFlowMnemonic = {
     /**
      * Chain to work with.
      */
-    chain: MintNftFlowMnemonic.chain;
+    chain: 'FLOW';
     /**
      * Blockchain address to send NFT token to.
      */
@@ -31,16 +31,4 @@ export type MintNftFlowMnemonic = {
      * Derivation index of sender address.
      */
     index: number;
-}
-
-export namespace MintNftFlowMnemonic {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        FLOW = 'FLOW',
-    }
-
-
 }

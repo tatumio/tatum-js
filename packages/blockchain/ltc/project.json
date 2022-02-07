@@ -10,7 +10,6 @@
         "outputPath": "dist/packages/blockchain/ltc",
         "main": "packages/blockchain/ltc/src/index.ts",
         "tsConfig": "packages/blockchain/ltc/tsconfig.lib.json",
-        "assets": ["packages/blockchain/ltc/*.md"],
         "packageJson": "packages/blockchain/ltc/package.json"
       }
     },
@@ -30,5 +29,5 @@
       }
     }
   },
-  "tags": ["scope:sdk", "scope:btc-based"]
+  "tags": ["type:sdk", "scope:btc-based"]
 }

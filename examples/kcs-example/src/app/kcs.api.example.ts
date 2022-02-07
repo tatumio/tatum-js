@@ -1,6 +1,6 @@
 import { TransferKcsBlockchain } from '@tatumio/api-client'
 import { TatumKcsSDK } from '@tatumio/kcs'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
 const kcsSDK = TatumKcsSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
@@ -36,7 +36,7 @@ export async function kcsApiExample() {
     nonce: 0,
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     // TODO openapi bug
-    currency: TransferKcsBlockchain.currency.KCS,
+    currency: 'KCS',
     fee: {
       gasLimit: '40000',
       gasPrice: '20',

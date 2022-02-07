@@ -4,14 +4,13 @@
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nrwl/node:build",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/examples/xrp-example",
         "main": "examples/xrp-example/src/index.ts",
         "tsConfig": "examples/xrp-example/tsconfig.app.json",
-        "packageJson": "examples/xrp-example/package.json",
-        "assets": ["examples/xrp-example/*.md"]
+        "packageJson": "examples/xrp-example/package.json"
       }
     },
     "serve": {

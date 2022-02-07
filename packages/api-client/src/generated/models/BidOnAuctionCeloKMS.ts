@@ -6,11 +6,11 @@ export type BidOnAuctionCeloKMS = {
     /**
      * Blockchain to work with.
      */
-    chain: BidOnAuctionCeloKMS.chain;
+    chain: 'CELO';
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: BidOnAuctionCeloKMS.feeCurrency;
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
      * Address of the marketplace smart contract.
      */
@@ -56,25 +56,4 @@ export type BidOnAuctionCeloKMS = {
          */
         gasPrice: string;
     };
-}
-
-export namespace BidOnAuctionCeloKMS {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
 }

@@ -6,11 +6,11 @@ export type EstimateFee = {
     /**
      * Blockchain to estimate fee for.
      */
-    chain: EstimateFee.chain;
+    chain: 'CELO' | 'ETH' | 'BSC' | 'XDC' | 'ONE' | 'MATIC';
     /**
      * Type of transaction
      */
-    type: EstimateFee.type;
+    type: 'DEPLOY_ERC20' | 'DEPLOY_NFT' | 'MINT_NFT' | 'BURN_NFT' | 'TRANSFER_NFT' | 'TRANSFER_ERC20' | 'DEPLOY_CUSTODIAL_WALLET' | 'DEPLOY_AUCTION' | 'DEPLOY_MARKETPLACE';
     /**
      * Sender address, if type is TRANSFER_ERC20
      */
@@ -43,36 +43,4 @@ export type EstimateFee = {
      * If address should support batch transfers of the assets, it should be marked as true. Valid only for DEPLOY_CUSTODIAL_WALLET option.
      */
     enableBatchTransactions?: boolean;
-}
-
-export namespace EstimateFee {
-
-    /**
-     * Blockchain to estimate fee for.
-     */
-    export enum chain {
-        CELO = 'CELO',
-        ETH = 'ETH',
-        BSC = 'BSC',
-        XDC = 'XDC',
-        ONE = 'ONE',
-        MATIC = 'MATIC',
-    }
-
-    /**
-     * Type of transaction
-     */
-    export enum type {
-        DEPLOY_ERC20 = 'DEPLOY_ERC20',
-        DEPLOY_NFT = 'DEPLOY_NFT',
-        MINT_NFT = 'MINT_NFT',
-        BURN_NFT = 'BURN_NFT',
-        TRANSFER_NFT = 'TRANSFER_NFT',
-        TRANSFER_ERC20 = 'TRANSFER_ERC20',
-        DEPLOY_CUSTODIAL_WALLET = 'DEPLOY_CUSTODIAL_WALLET',
-        DEPLOY_AUCTION = 'DEPLOY_AUCTION',
-        DEPLOY_MARKETPLACE = 'DEPLOY_MARKETPLACE',
-    }
-
-
 }

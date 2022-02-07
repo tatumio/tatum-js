@@ -6,7 +6,7 @@ export type UpdateCashbackValueForAuthorNftKMSCelo = {
     /**
      * Chain to work with.
      */
-    chain: UpdateCashbackValueForAuthorNftKMSCelo.chain;
+    chain: 'CELO';
     /**
      * ID of token to be updated.
      */
@@ -34,26 +34,5 @@ export type UpdateCashbackValueForAuthorNftKMSCelo = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: UpdateCashbackValueForAuthorNftKMSCelo.feeCurrency;
-}
-
-export namespace UpdateCashbackValueForAuthorNftKMSCelo {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

@@ -12,7 +12,7 @@ export type LtcBlock = {
     /**
      * The number of blocks preceding a particular block on a block chain.
      */
-    height?: number;
+    blockNumber?: number;
     /**
      * Block version.
      */
@@ -28,7 +28,7 @@ export type LtcBlock = {
     /**
      * Time of the block.
      */
-    ts?: number;
+    time?: number;
     bits?: number;
     /**
      * Arbitrary number that is used in Litecoin's proof of work consensus algorithm.

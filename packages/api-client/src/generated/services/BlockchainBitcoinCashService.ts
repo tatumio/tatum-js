@@ -44,6 +44,49 @@ export class BlockchainBitcoinCashService {
     }
 
     /**
+     * JSON RPC HTTP driver
+     * <h4>2 credits per API call.</h4><br/>
+     * <p>Use this endpoint URL as an http-based JSON RPC driver to connect directly to the node provided by Tatum.
+     * To learn more about JSON RPC, please visit <a href="https://github.com/gcash/bchd/blob/master/docs/json_rpc_api.md#Methods" target="_blank">Bitcoin Cash developers' guide.</a></p>
+     *
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static bchRpcDriver(
+        requestBody: {
+            /**
+             * Version of the JSON RPC.
+             */
+            jsonrpc?: string;
+            /**
+             * ID of the request, could be any arbitrary identifier.
+             */
+            id?: string;
+            /**
+             * Method to invoke on the node.
+             */
+            method?: string;
+            /**
+             * Params to the method call, if required.
+             */
+            params?: any[];
+        },
+    ): CancelablePromise<any> {
+        return __request({
+            method: 'POST',
+            path: `/v3/bcash/node`,
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                500: `Internal server error. There was an error on the server while processing the request.`,
+            },
+        });
+    }
+
+    /**
      * Get Bitcoin Cash Blockchain Information
      * <h4>5 credits per API call.</h4><br/><p>Get Bitcoin Cash Blockchain Information. Obtain basic info like testnet / mainnet version of the chain, current block number and it's hash.</p>
      * @returns BchInfo OK

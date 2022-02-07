@@ -4,7 +4,7 @@ import { BlockchainEthereumService } from '@tatumio/api-client'
 import { ethWeb3 } from './services/eth.web3'
 import { ethKmsService } from './services/eth.kms'
 import { ethTx } from './services/eth.tx'
-import { SDKArguments } from '@tatumio/abstract-sdk'
+import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { ethAuctionService } from './services/eth.auction'
 
 const blockchain = Blockchain.ETH

@@ -23,9 +23,10 @@ export type TransferXrpOffchain = TransferXrp & Withdrawal
 export const sendOffchainTransaction = async (body: TransferXrpOffchain) => {
   const { account, secret, ...withdrawal } = body
   if (!withdrawal.fee) {
-    withdrawal.fee = new BigNumber((await ApiServices.blockchain.xrp.xrpGetFee()).drops.base_fee)
-      .dividedBy(1000000)
-      .toString()
+    const xrpFee = await ApiServices.blockchain.xrp.xrpGetFee()
+
+    // @TODO null check
+    withdrawal.fee = new BigNumber(xrpFee!.drops!.base_fee!).dividedBy(1000000).toString()
   }
   const acc = await ApiServices.blockchain.xrp.xrpGetAccountInfo(account)
   const { id } = await ApiServices.offChain.withdrawal.storeWithdrawal(withdrawal)
@@ -44,7 +45,8 @@ export const sendOffchainTransaction = async (body: TransferXrpOffchain) => {
     )
   } catch (e) {
     console.error(e)
-    await ApiServices.offChain.withdrawal.cancelInProgressWithdrawal(id)
+    // @TODO id can be null
+    await ApiServices.offChain.withdrawal.cancelInProgressWithdrawal(id!)
     throw e
   }
   try {
@@ -59,7 +61,8 @@ export const sendOffchainTransaction = async (body: TransferXrpOffchain) => {
   } catch (e) {
     console.error(e)
     try {
-      await ApiServices.offChain.withdrawal.cancelInProgressWithdrawal(id)
+      // @TODO id can be null
+      await ApiServices.offChain.withdrawal.cancelInProgressWithdrawal(id!)
     } catch (e1) {
       console.log(e)
       return { id }

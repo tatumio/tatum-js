@@ -6,7 +6,7 @@ export type MintMultipleNft = {
     /**
      * Chain to work with.
      */
-    chain: MintMultipleNft.chain;
+    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC';
     /**
      * Blockchain address to send NFT token to.
      */
@@ -52,20 +52,4 @@ export type MintMultipleNft = {
          */
         gasPrice: string;
     };
-}
-
-export namespace MintMultipleNft {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        MATIC = 'MATIC',
-        KCS = 'KCS',
-        ONE = 'ONE',
-        BSC = 'BSC',
-    }
-
-
 }

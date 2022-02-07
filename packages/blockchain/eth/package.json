@@ -1,4 +1,5 @@
 {
   "name": "@tatumio/eth",
-  "version": "0.0.1"
+  "version": "2.0.1-alpha.230",
+  "license": "MIT"
 }

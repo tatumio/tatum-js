@@ -6,11 +6,11 @@ export type CancelOrSettleAuctionCelo = {
     /**
      * Blockchain to work with.
      */
-    chain: CancelOrSettleAuctionCelo.chain;
+    chain: 'CELO';
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: CancelOrSettleAuctionCelo.feeCurrency;
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
      * Address of the marketplace smart contract.
      */
@@ -44,25 +44,4 @@ export type CancelOrSettleAuctionCelo = {
          */
         gasPrice: string;
     };
-}
-
-export namespace CancelOrSettleAuctionCelo {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
 }

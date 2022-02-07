@@ -1,3 +1,5 @@
+import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
+import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { Blockchain, EvmBasedBlockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
 import { SDKArguments } from '@tatumio/abstract-sdk'
 import { BlockchainHarmonyOneService } from '@tatumio/api-client'
@@ -7,7 +9,6 @@ import { oneKmsService } from './services/one.kms'
 import { oneTxService } from './services/one.tx'
 import { oneAuctionService } from './services/one.auction'
 
-// TODO why harmony? API receives ONE
 const blockchain = Blockchain.HARMONY
 
 export const TatumOneSDK = (args: SDKArguments) => {

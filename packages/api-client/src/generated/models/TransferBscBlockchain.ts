@@ -18,7 +18,7 @@ export type TransferBscBlockchain = {
     /**
      * Currency to transfer from BSC Blockchain Account. BEP20 tokens BETH, BBTC, BADA, WBNB, BDOT, BXRP, BLTC, BBCH are available only for mainnet use.
      */
-    currency: TransferBscBlockchain.currency;
+    currency: 'BETH' | 'BBTC' | 'RMD' | 'USDC_BSC' | 'B2U_BSC' | 'BADA' | 'WBNB' | 'GMC_BSC' | 'BDOT' | 'BXRP' | 'BLTC' | 'BBCH' | 'HAG' | 'CAKE' | 'BUSD_BSC';
     /**
      * Custom defined fee. If not present, it will be calculated automatically.
      */
@@ -40,30 +40,4 @@ export type TransferBscBlockchain = {
      * Private key of sender address. Private key, or signature Id must be present.
      */
     fromPrivateKey: string;
-}
-
-export namespace TransferBscBlockchain {
-
-    /**
-     * Currency to transfer from BSC Blockchain Account. BEP20 tokens BETH, BBTC, BADA, WBNB, BDOT, BXRP, BLTC, BBCH are available only for mainnet use.
-     */
-    export enum currency {
-        BETH = 'BETH',
-        BBTC = 'BBTC',
-        RMD = 'RMD',
-        USDC_BSC = 'USDC_BSC',
-        B2U_BSC = 'B2U_BSC',
-        BADA = 'BADA',
-        WBNB = 'WBNB',
-        GMC_BSC = 'GMC_BSC',
-        BDOT = 'BDOT',
-        BXRP = 'BXRP',
-        BLTC = 'BLTC',
-        BBCH = 'BBCH',
-        HAG = 'HAG',
-        CAKE = 'CAKE',
-        BUSD_BSC = 'BUSD_BSC',
-    }
-
-
 }

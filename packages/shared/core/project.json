@@ -10,8 +10,7 @@
         "outputPath": "dist/packages/shared/core",
         "tsConfig": "packages/shared/core/tsconfig.lib.json",
         "packageJson": "packages/shared/core/package.json",
-        "main": "packages/shared/core/src/index.ts",
-        "assets": ["packages/shared/core/*.md"]
+        "main": "packages/shared/core/src/index.ts"
       }
     },
     "lint": {

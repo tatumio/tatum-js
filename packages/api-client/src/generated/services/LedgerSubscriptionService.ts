@@ -39,7 +39,8 @@ export class LedgerSubscriptionService {
          * "blockHash": "45af182a0ffab58e5ba32fee57b297b2260c6e23a1de5ddc76c7ee22d72dea99", // hash of the block, might not be present all the time
          * "blockHeight": 12345,
          * "from": "SENDER_ADDRESS", // might not ebe present all the time, for UTXO based blockchains it's not there
-         * "to": "RECIPIENT_ADDRESS_CONNECTED_TO_LEDGER_ACCOUNT" // blockchain address of the recipient
+         * "to": "RECIPIENT_ADDRESS_CONNECTED_TO_LEDGER_ACCOUNT", // blockchain address of the recipient
+         * "index": 5 // for UTXO based chains (BTC,LTC,DOGE,BCH,ADA) this is the index of the output in the transaction
          * }</pre>
          * 1 credit will be debited for every monitored account every day.</li>
          * <li><b>ACCOUNT_PENDING_BLOCKCHAIN_TRANSACTION</b> - Enable HTTP POST JSON notifications on incoming blockchain transactions on off-chain accounts.
@@ -56,7 +57,8 @@ export class LedgerSubscriptionService {
              * "blockHash": "45af182a0ffab58e5ba32fee57b297b2260c6e23a1de5ddc76c7ee22d72dea99", // hash of the block, might not be present all the time
              * "blockHeight": 12345,
              * "from": "SENDER_ADDRESS", // might not ebe present all the time, for UTXO based blockchains it's not there
-             * "to": "RECIPIENT_ADDRESS_CONNECTED_TO_LEDGER_ACCOUNT" // blockchain address of the recipient
+             * "to": "RECIPIENT_ADDRESS_CONNECTED_TO_LEDGER_ACCOUNT", // blockchain address of the recipient
+             * "index": 5 // for UTXO based chains (BTC,LTC,DOGE,BCH,ADA) this is the index of the output in the transaction
              * }</pre>
              * 1 credit will be debited for every monitored account every day.</li>
              * <li><b>CUSTOMER_TRADE_MATCH</b> - Enable HTTP POST JSON notifications on closed trade, which occurs on any customer account.
@@ -128,7 +130,9 @@ export class LedgerSubscriptionService {
                                  * 10 credits will be debited every day.</li>
                                  * <li><b>OFFCHAIN_WITHDRAWAL</b> - Off-chain scanning of outgoing transactions for BTC, BCH, LTC, DOGE and ETH blockchains - by default addresses in registered for off-chain
                                  * scanning are synchronized only against incoming transactions. By enabling this feature, off-chain accounts with connected blockchain addresses
-                                 * will be scanned also for outgoing transactions. 5 credits will be debited for every address registered for scanning every day.</li>
+                                 * will be scanned also for outgoing transactions. This transaction wil be recorder to the ledger and account balance will be decreased - don't use it if you perform your own transactions
+                                 * from the account to the blockchain.<br/>
+                                 * 20 credits will be debited for every address registered for scanning every day.</li>
                                  * <li><b>ACCOUNT_BALANCE_LIMIT</b> - Report with all account balances above desired limit.</li>
                                  * <li><b>TRANSACTION_HISTORY_REPORT</b> - Report with all ledger transactions for last X hours, where X is set by the subscription attribute as interval.
                                  * Maximum number of transactions returned by this report is 20000. Transactions are obtained from the time of the invocation of the GET method to obtain report - X hours.</li>

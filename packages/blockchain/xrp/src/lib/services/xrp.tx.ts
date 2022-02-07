@@ -29,11 +29,10 @@ const prepareSignedTransaction = async (body: TransferXrpBlockchain) => {
   // TODO validation
   const { fromAccount, fromSecret, to, amount, fee, sourceTag, destinationTag } = body
 
-  const f = fee
-    ? fee
-    : new BigNumber((await ApiServices.blockchain.xrp.xrpGetFee()).drops.base_fee)
-        .dividedBy(1000000)
-        .toString()
+  const xrpFee = await ApiServices.blockchain.xrp.xrpGetFee()
+
+  // @TODO not null checks
+  const f = fee ? fee : new BigNumber(xrpFee!.drops!.base_fee!).dividedBy(1000000).toString()
   const payment: Payment = {
     source: {
       address: fromAccount,
@@ -53,14 +52,14 @@ const prepareSignedTransaction = async (body: TransferXrpBlockchain) => {
     },
   }
   const accountInfo = await ApiServices.blockchain.xrp.xrpGetAccountInfo(fromAccount)
-  const sequence = accountInfo.account_data.Sequence
-  const maxLedgerVersion = accountInfo.ledger_current_index + 500
+  const sequence = accountInfo.account_data?.Sequence
+  const maxLedgerVersion = accountInfo.ledger_current_index! + 500
   const rippleAPI = new RippleAPI()
   const prepared = await rippleAPI.preparePayment(fromAccount, payment, {
     fee: f,
     sequence,
     maxLedgerVersion,
   })
-  const signed = await rippleAPI.sign(prepared.txJSON, fromSecret)
+  const signed = rippleAPI.sign(prepared.txJSON, fromSecret)
   return signed.signedTransaction
 }

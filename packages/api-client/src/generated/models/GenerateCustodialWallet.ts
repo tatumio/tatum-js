@@ -6,7 +6,7 @@ export type GenerateCustodialWallet = {
     /**
      * Blockchain to work with.
      */
-    chain: GenerateCustodialWallet.chain;
+    chain: 'ETH' | 'ONE' | 'BSC' | 'MATIC';
     /**
      * Private key of account, from which the transaction will be initiated.
      */
@@ -44,19 +44,4 @@ export type GenerateCustodialWallet = {
      * Nonce to be set to the transaction. If not present, last known nonce will be used.
      */
     nonce?: number;
-}
-
-export namespace GenerateCustodialWallet {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        ONE = 'ONE',
-        BSC = 'BSC',
-        MATIC = 'MATIC',
-    }
-
-
 }

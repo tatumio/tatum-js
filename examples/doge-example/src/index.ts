@@ -1,5 +1,5 @@
 import { dogeWalletExample } from './app/doge.wallet.example'
-import { dogeApiExample } from './app/doge.api.example'
+import { dogeBlockchainExample } from './app/doge.blockchain.example'
 import { dogeKmsExample } from './app/doge.kms.example'
 import {
   dogeLedgerAccountsExample,
@@ -14,7 +14,7 @@ import { exchangeRateExample } from './app/doge.root.example'
 import { dogeTransactionsExample } from './app/doge.tx.example'
 
 console.log(`Running ${dogeWalletExample()}`)
-console.log(`Running ${dogeApiExample()}`)
+console.log(`Running ${dogeBlockchainExample()}`)
 console.log(`Running ${dogeKmsExample()}`)
 console.log(`Running ${dogeLedgerAccountsExample()}`)
 console.log(`Running ${dogeLedgerBlockAmountExample()}`)

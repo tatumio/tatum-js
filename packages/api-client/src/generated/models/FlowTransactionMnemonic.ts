@@ -10,7 +10,7 @@ export type FlowTransactionMnemonic = {
     /**
      * Type of asset to send
      */
-    currency: FlowTransactionMnemonic.currency;
+    currency: 'FLOW' | 'FUSD';
     /**
      * Blockchain address to send assets
      */
@@ -27,17 +27,4 @@ export type FlowTransactionMnemonic = {
      * Index to the specific address from mnemonic.
      */
     index: number;
-}
-
-export namespace FlowTransactionMnemonic {
-
-    /**
-     * Type of asset to send
-     */
-    export enum currency {
-        FLOW = 'FLOW',
-        FUSD = 'FUSD',
-    }
-
-
 }

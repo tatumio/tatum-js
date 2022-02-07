@@ -6,7 +6,7 @@ export type GenerateCustodialWalletBatchTron = {
     /**
      * Blockchain to work with.
      */
-    chain: GenerateCustodialWalletBatchTron.chain;
+    chain: 'TRON';
     /**
      * Private key of account, from which the transaction will be initiated.
      */
@@ -23,16 +23,4 @@ export type GenerateCustodialWalletBatchTron = {
      * Fee limit to be set, in TRX
      */
     feeLimit: number;
-}
-
-export namespace GenerateCustodialWalletBatchTron {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        TRON = 'TRON',
-    }
-
-
 }

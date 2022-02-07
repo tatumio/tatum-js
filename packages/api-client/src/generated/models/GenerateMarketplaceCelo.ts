@@ -6,7 +6,7 @@ export type GenerateMarketplaceCelo = {
     /**
      * Blockchain to work with.
      */
-    chain: GenerateMarketplaceCelo.chain;
+    chain: 'CELO';
     /**
      * Address of the recipient of the fee for the trade.
      */
@@ -14,7 +14,7 @@ export type GenerateMarketplaceCelo = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: GenerateMarketplaceCelo.feeCurrency;
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
      * Percentage of the selling amount of the NFT asset. 100 - 1%
      */
@@ -40,25 +40,4 @@ export type GenerateMarketplaceCelo = {
          */
         gasPrice: string;
     };
-}
-
-export namespace GenerateMarketplaceCelo {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
 }

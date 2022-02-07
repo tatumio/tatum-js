@@ -10,7 +10,7 @@ export type TransferOneBlockchainKMS = {
     /**
      * Currency of the transfer.
      */
-    currency: TransferOneBlockchainKMS.currency;
+    currency: 'ONE';
     /**
      * Nonce to be set to ONE transaction. If not present, last known nonce will be used.
      */
@@ -44,16 +44,4 @@ export type TransferOneBlockchainKMS = {
      * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
      */
     signatureId: string;
-}
-
-export namespace TransferOneBlockchainKMS {
-
-    /**
-     * Currency of the transfer.
-     */
-    export enum currency {
-        ONE = 'ONE',
-    }
-
-
 }
