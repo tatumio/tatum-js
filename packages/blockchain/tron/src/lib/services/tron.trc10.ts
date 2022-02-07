@@ -138,6 +138,7 @@ export const tronTrc10 = (args: { tronWeb: ITronWeb }) => {
       ) =>
         BlockchainTronService.tronBroadcast({
           txData: await prepareSignedTransaction(body, args.tronWeb, precision, provider),
+          // TODO: SignatureID is missing in OpenApi
         }),
       /**
        * Create Tron TRC10 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -151,6 +152,7 @@ export const tronTrc10 = (args: { tronWeb: ITronWeb }) => {
       ) =>
         BlockchainTronService.tronBroadcast({
           txData: await prepareCreateSignedTransaction(body, args.tronWeb, provider),
+          // TODO: SignatureID is missing in OpenApi
         }),
     },
   }

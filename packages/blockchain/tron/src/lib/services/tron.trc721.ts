@@ -512,6 +512,7 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
       deploySignedTransaction: async (body: DeployNftTron | DeployNftTronKMS, provider?: string) =>
         BlockchainTronService.tronBroadcast({
           txData: await prepareDeploySignedTransaction(body, args.tronWeb, provider),
+          // TODO: SignatureID is missing in OpenApi
         }),
       /**
        * Send Tron mint cashback trc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -522,6 +523,7 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
       mintCashbackSignedTransaction: async (body: MintNftTron | MintNftKMSTron, provider?: string) =>
         BlockchainTronService.tronBroadcast({
           txData: await prepareMintCashbackSignedTransaction(body, args.tronWeb, provider),
+          // TODO: SignatureID is missing in OpenApi
         }),
       /**
        * Send Tron mint cashback trc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -532,6 +534,7 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
       mintSignedTransaction: async (body: MintNftTron | MintNftKMSTron, provider?: string) =>
         BlockchainTronService.tronBroadcast({
           txData: await prepareMintSignedTransaction(body, args.tronWeb, provider),
+          // TODO: SignatureID is missing in OpenApi
         }),
       /**
        * Send Tron transfer trc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -552,6 +555,7 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
       burnSignedTransaction: async (body: BurnNftTron | BurnNftKMSTron, provider?: string) =>
         BlockchainTronService.tronBroadcast({
           txData: await burnSignedTransaction(body, args.tronWeb, provider),
+          // TODO: SignatureID is missing in OpenApi
         }),
       /**
        * Send Tron mint multiple trc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -565,6 +569,7 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
       ) =>
         BlockchainTronService.tronBroadcast({
           txData: await prepareMintMultipleSignedTransaction(body, args.tronWeb, provider),
+          // TODO: SignatureID is missing in OpenApi
         }),
       /**
        * Send Tron update cashback for author trc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -578,6 +583,7 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
       ) =>
         BlockchainTronService.tronBroadcast({
           txData: await prepareUpdateCashbackValueForAuthorSignedTransaction(body, args.tronWeb, provider),
+          // TODO: SignatureID is missing in OpenApi
         }),
     },
   }

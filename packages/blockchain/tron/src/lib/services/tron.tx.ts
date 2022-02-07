@@ -319,6 +319,7 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
       ) =>
         BlockchainTronService.tronBroadcast({
           txData: await prepareSignedTransaction(body, args.tronWeb, provider),
+          // TODO: SignatureID is missing in OpenApi
         }),
       /**
        * Send Tron Freeze balance transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -329,6 +330,7 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
       freezeTransaction: async (body: FreezeTron | FreezeTronKMS, provider?: string) =>
         BlockchainTronService.tronBroadcast({
           txData: await prepareFreezeTransaction(body, args.tronWeb, provider),
+          // TODO: SignatureID is missing in OpenApi
         }),
       /**
        * Send Tron generate custodial wallet transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -342,6 +344,7 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
       ) =>
         BlockchainTronService.tronBroadcast({
           txData: await prepareGenerateCustodialWalletSignedTransaction(body, args.tronWeb, provider),
+          // TODO: SignatureID is missing in OpenApi
         }),
       /**
        * Deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
@@ -356,6 +359,7 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
       ) =>
         BlockchainTronService.tronBroadcast({
           txData: await prepareDeployMarketplaceListingSignedTransaction(body, args.tronWeb, provider),
+          // TODO: SignatureID is missing in OpenApi
         }),
     },
   }
