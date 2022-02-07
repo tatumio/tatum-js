@@ -34,9 +34,7 @@ export const tronWallet = (args: { tronWeb: ITronWeb }) => {
      * @returns wallet or a combination of address and private key
      */
     async generateWallet(mnemonic?: string): Promise<TronWallet> {
-      mnemonic ||= generateMnemonic(256)
-
-      return generateBlockchainWallet(mnemonic)
+      return generateBlockchainWallet(mnemonic ?? generateMnemonic(256))
     },
     /**
      * Generate address
