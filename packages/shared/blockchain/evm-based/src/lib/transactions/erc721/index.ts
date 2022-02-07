@@ -27,7 +27,9 @@ const mintSignedTransaction = async (body: ChainMintErc721, web3: EvmBasedWeb3, 
     const tx: TransactionConfig = {
       from: undefined,
       to: evmBasedUtils.transformAddress(contractAddress).trim(),
-      data: contract.methods.mintWithTokenURI( evmBasedUtils.transformAddress(to).trim(), tokenId, url).encodeABI(),
+      data: contract.methods
+        .mintWithTokenURI(evmBasedUtils.transformAddress(to).trim(), tokenId, url)
+        .encodeABI(),
       nonce: nonce,
     }
 
@@ -67,7 +69,7 @@ const mintCashbackSignedTransaction = async (body: ChainMintNft, web3: EvmBasedW
   const cashbacks: string[] = cashbackValues!
   const cb = cashbacks.map((c) => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
   const transformedAddresses = authorAddresses.map((a) => evmBasedUtils.transformAddress(a))
-  const transformedTo = evmBasedUtils.transformAddress(to).trim();
+  const transformedTo = evmBasedUtils.transformAddress(to).trim()
 
   if (contractAddress) {
     const tx: TransactionConfig = {
@@ -75,23 +77,10 @@ const mintCashbackSignedTransaction = async (body: ChainMintNft, web3: EvmBasedW
       to: evmBasedUtils.transformAddress(contractAddress).trim(),
       data: erc20
         ? contract.methods
-            .mintWithCashback(
-              transformedTo,
-              tokenId,
-              url,
-              transformedAddresses,
-              cb,
-              erc20,
-            )
+            .mintWithCashback(transformedTo, tokenId, url, transformedAddresses, cb, erc20)
             .encodeABI()
         : contract.methods
-            .mintWithCashback(
-              transformedTo,
-              tokenId,
-              url,
-              transformedAddresses,
-              cb,
-            )
+            .mintWithCashback(transformedTo, tokenId, url, transformedAddresses, cb)
             .encodeABI(),
       nonce,
     }
@@ -140,7 +129,7 @@ export const mintMultipleCashbackSignedTransaction = async (
   )
   const transformedTo = to.map((t) => evmBasedUtils.transformAddress(t).trim())
   const transformedAddresses = authorAddresses.map((a) => a.map((a1) => evmBasedUtils.transformAddress(a1)))
-  
+
   const tx: TransactionConfig = {
     from: undefined,
     to: evmBasedUtils.transformAddress(contractAddress).trim(),

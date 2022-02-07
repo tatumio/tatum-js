@@ -27,7 +27,12 @@ const mintMultiToken = async (body: ChainMintMultiToken, web3: EvmBasedWeb3, pro
     from: undefined,
     to: evmBasedUtils.transformAddress(contractAddress).trim(),
     data: contract.methods
-      .mint(evmBasedUtils.transformAddress(to).trim(), tokenId, `0x${new BigNumber(amount).toString(16)}`, data ? data : '0x0')
+      .mint(
+        evmBasedUtils.transformAddress(to).trim(),
+        tokenId,
+        `0x${new BigNumber(amount).toString(16)}`,
+        data ? data : '0x0',
+      )
       .encodeABI(),
     nonce,
   }
@@ -53,7 +58,7 @@ const mintMultiTokenBatch = async (body: ChainMintMultiTokenBatch, web3: EvmBase
   )
 
   const amts = amounts.map((amts) => amts.map((amt) => `0x${new BigNumber(amt).toString(16)}`))
-  const transformedTo = to.map(a => evmBasedUtils.transformAddress(a));
+  const transformedTo = to.map((a) => evmBasedUtils.transformAddress(a))
   const tx: TransactionConfig = {
     from: undefined,
     to: evmBasedUtils.transformAddress(contractAddress).trim(),
