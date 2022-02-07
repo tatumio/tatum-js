@@ -210,7 +210,7 @@ const transferSignedTransaction = async (
     { type: 'address', value: client.address.toHex(to) },
     {
       type: 'uint256',
-      value: `0x${new BigNumber(tokenId as string).toString(16)}`,
+      value: `0x${new BigNumber(tokenId).toString(16)}`,
     },
   ]
   const contractAddressHex = client.address.toHex(contractAddress)

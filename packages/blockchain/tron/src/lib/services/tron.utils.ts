@@ -58,7 +58,9 @@ const byte2hexStr = (byte) => {
 const byteArray2hexStr = (byteArray: Uint8Array) => {
   let str = ''
 
-  for (let i = 0; i < byteArray.length; i++) str += byte2hexStr(byteArray[i])
+  for (const byte of byteArray) {
+    str += byte2hexStr(byte)
+  }
 
   return str
 }

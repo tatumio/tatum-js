@@ -20,11 +20,11 @@ const FUNGIBLE_TOKEN_CONTRACT_TYPE = 0
 
 const prepareTransferFromCustodialWallet = async (
   body: TransferCustodialWalletTron | TransferCustodialWalletTronKMS,
-  decimals = 18,
   getContractDecimals: (contractAddress: string, provider?: string, testnet?: boolean) => Promise<number>,
-  testnet = false,
   tronWeb: ITronWeb,
   provider?: string,
+  decimals = 18,
+  testnet = false,
 ) => {
   const methodName = 'transfer'
 
@@ -63,11 +63,11 @@ const prepareTransferFromCustodialWallet = async (
 
 const prepareBatchTransferFromCustodialWallet = async (
   body: TransferCustodialWalletBatchTron | TransferCustodialWalletBatchTronKMS,
-  decimals = 6,
   getContractDecimals: (contractAddress: string, provider?: string, testnet?: boolean) => Promise<number>,
-  testnet = false,
   tronWeb: ITronWeb,
   provider?: string,
+  decimals = 6,
+  testnet = false,
 ) => {
   const methodName = 'transferBatch'
 
@@ -134,22 +134,22 @@ export const tronCustodial = (args: { tronWeb: ITronWeb }) => {
        */
       transferFromCustodialWallet: (
         body: TransferCustodialWalletTron | TransferCustodialWalletTronKMS,
-        decimals = 18,
         getContractDecimals: (
           contractAddress: string,
           provider?: string,
           testnet?: boolean,
         ) => Promise<number>,
-        testnet = false,
         provider?: string,
+        decimals = 18,
+        testnet = false,
       ) =>
         prepareTransferFromCustodialWallet(
           body,
-          decimals,
           getContractDecimals,
-          testnet,
           args.tronWeb,
           provider,
+          decimals,
+          testnet,
         ),
       /**
        * Prepare signed batch transaction from the custodial SC wallet.
@@ -160,22 +160,22 @@ export const tronCustodial = (args: { tronWeb: ITronWeb }) => {
        */
       batchTransferFromCustodialWallet: (
         body: TransferCustodialWalletBatchTron | TransferCustodialWalletBatchTronKMS,
-        decimals = 6,
         getContractDecimals: (
           contractAddress: string,
           provider?: string,
           testnet?: boolean,
         ) => Promise<number>,
-        testnet = false,
         provider?: string,
+        decimals = 6,
+        testnet = false,
       ) =>
         prepareBatchTransferFromCustodialWallet(
           body,
-          decimals,
           getContractDecimals,
-          testnet,
           args.tronWeb,
           provider,
+          decimals,
+          testnet,
         ),
     },
     send: {
@@ -199,23 +199,23 @@ export const tronCustodial = (args: { tronWeb: ITronWeb }) => {
        */
       transferFromCustodialWallet: async (
         body: TransferCustodialWalletTron | TransferCustodialWalletTronKMS,
-        decimals = 18,
         getContractDecimals: (
           contractAddress: string,
           provider?: string,
           testnet?: boolean,
         ) => Promise<number>,
-        testnet = false,
         provider?: string,
+        decimals = 18,
+        testnet = false,
       ) =>
         BlockchainTronService.tronBroadcast({
           txData: await prepareTransferFromCustodialWallet(
             body,
-            decimals,
             getContractDecimals,
-            testnet,
             args.tronWeb,
             provider,
+            decimals,
+            testnet,
           ),
         }),
       /**
@@ -227,23 +227,23 @@ export const tronCustodial = (args: { tronWeb: ITronWeb }) => {
        */
       batchTransferFromCustodialWallet: async (
         body: TransferCustodialWalletBatchTron | TransferCustodialWalletBatchTronKMS,
-        decimals = 6,
         getContractDecimals: (
           contractAddress: string,
           provider?: string,
           testnet?: boolean,
         ) => Promise<number>,
-        testnet = false,
         provider?: string,
+        decimals = 6,
+        testnet = false,
       ) =>
         BlockchainTronService.tronBroadcast({
           txData: await prepareBatchTransferFromCustodialWallet(
             body,
-            decimals,
             getContractDecimals,
-            testnet,
             args.tronWeb,
             provider,
+            decimals,
+            testnet,
           ),
         }),
     },

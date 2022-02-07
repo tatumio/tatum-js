@@ -21,13 +21,13 @@ export const tronWeb = (): ITronWeb => {
       const solidityNode = new HttpProvider(endpoint)
       const eventServer = new HttpProvider(endpoint)
 
-      const tronWeb = new TronWeb(fullNode, solidityNode, eventServer)
+      const tronWebInstace = new TronWeb(fullNode, solidityNode, eventServer)
 
-      tronWeb.setHeader({
+      tronWebInstace.setHeader({
         'TRON-PRO-API-KEY': process.env['TRON_PRO_API_KEY'] ?? TATUM_API_CONSTANTS.TRON_PRO_API_KEY,
       })
 
-      return tronWeb
+      return tronWebInstace
     },
   }
 }
