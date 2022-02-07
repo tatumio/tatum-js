@@ -2,7 +2,12 @@ import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testin
 import { TatumKcsSDK } from '../kcs.sdk'
 import { Blockchain, Currency } from '@tatumio/shared-core'
 import { kcsTxService } from '../services/kcs.tx'
-import { erc20TestFactory, ganacheHelper, erc721TestFactory } from '@tatumio/shared-testing-evm-based'
+import {
+  erc20TestFactory,
+  ganacheHelper,
+  erc721TestFactory,
+  multiTokenTestFactory,
+} from '@tatumio/shared-testing-evm-based'
 const blockchain = Blockchain.KCS
 
 describe('KcsSDK - tx', () => {
@@ -108,6 +113,66 @@ describe('KcsSDK - tx', () => {
           sdk.transaction.erc721,
           TEST_DATA.KCS,
           Currency.KCS,
+        )
+      })
+    })
+  })
+
+  describe('multiToken', () => {
+    describe('prepare', () => {
+      describe('deployMultiToken', () => {
+        multiTokenTestFactory.prepare.deployMultiTokenTransaction(
+          sdk.transaction.multiToken,
+          TEST_DATA.KCS,
+          'KCS',
+        )
+      })
+
+      describe('mintMultiToken', () => {
+        multiTokenTestFactory.prepare.mintMultiTokenTransaction(
+          sdk.transaction.multiToken,
+          TEST_DATA.KCS,
+          'KCS',
+        )
+      })
+
+      describe('mintMultiTokenBatch', () => {
+        multiTokenTestFactory.prepare.mintMultiTokenBatchTransaction(
+          sdk.transaction.multiToken,
+          TEST_DATA.KCS,
+          'KCS',
+        )
+      })
+
+      describe('transferMultiToken', () => {
+        multiTokenTestFactory.prepare.transferMultiTokenTransaction(
+          sdk.transaction.multiToken,
+          TEST_DATA.KCS,
+          'KCS',
+        )
+      })
+
+      describe('transferMultiTokenBatch', () => {
+        multiTokenTestFactory.prepare.transferMultiTokenBatchTransaction(
+          sdk.transaction.multiToken,
+          TEST_DATA.KCS,
+          'KCS',
+        )
+      })
+
+      describe('burnMultiToken', () => {
+        multiTokenTestFactory.prepare.burnMultiTokenTransaction(
+          sdk.transaction.multiToken,
+          TEST_DATA.KCS,
+          'KCS',
+        )
+      })
+
+      describe('burnMultiTokenBatch', () => {
+        multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(
+          sdk.transaction.multiToken,
+          TEST_DATA.KCS,
+          'KCS',
         )
       })
     })

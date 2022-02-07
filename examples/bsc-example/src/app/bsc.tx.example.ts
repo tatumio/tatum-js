@@ -4,6 +4,7 @@ import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 const bscSDK = TatumBscSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function bscTxWithSignatureIdExample(): Promise<void> {
+  // ERC20(FUNGIBLE TOKEN)
   const preparedDeployErc20Transaction = await bscSDK.transaction.erc20.prepare.deploySignedTransaction({
     symbol: 'ERC_SYMBOL',
     name: 'mytx',
@@ -90,6 +91,7 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
     nonce: 3252345722143,
   })
 
+  // ERC721(NFT)
   const preparedDeployErc721Transaction = await bscSDK.transaction.erc721.prepare.deploySignedTransaction({
     chain: 'BSC',
     name: 'MY_TOKEN',
@@ -385,9 +387,144 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
       gasPrice: '20',
     },
   })
+
+  // ERC1155(MULTI TOKEN)
+
+  const preparedDeployMultiTokenTransaction =
+    await bscSDK.transaction.multiToken.prepare.deployMultiTokenTransaction({
+      chain: 'BSC',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      uri: 'tatum',
+    })
+
+  const sentDeployMultiTokenTransaction =
+    await bscSDK.transaction.multiToken.send.deployMultiTokenTransaction({
+      chain: 'BSC',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      uri: 'tatum',
+    })
+
+  const preparedMintMultiTokenTransaction =
+    await bscSDK.transaction.multiToken.prepare.mintMultiTokenTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'BSC',
+      tokenId: '123',
+      amount: '1000',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const sentMintMultiTokenTransaction = await bscSDK.transaction.multiToken.send.mintMultiTokenTransaction({
+    to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    chain: 'BSC',
+    tokenId: '123',
+    amount: '1000',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+  })
+
+  const preparedMintMultiTokenBatchTransaction =
+    await bscSDK.transaction.multiToken.prepare.mintMultiTokenBatchTransaction({
+      to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
+      chain: 'BSC',
+      tokenId: [['123'], ['321']],
+      amounts: [['1000'], ['100']],
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const sentMintMultiTokenBatchTransaction =
+    await bscSDK.transaction.multiToken.send.mintMultiTokenBatchTransaction({
+      to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
+      chain: 'BSC',
+      tokenId: [['123'], ['321']],
+      amounts: [['1000'], ['100']],
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const preparedTransferMultiTokenTransaction =
+    await bscSDK.transaction.multiToken.prepare.transferMultiTokenTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'BSC',
+      tokenId: '123',
+      amount: '10',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const sentTransferMultiTokenTransaction =
+    await bscSDK.transaction.multiToken.send.transferMultiTokenTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'BSC',
+      tokenId: '123',
+      amount: '10',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const preparedTransferMultiTokenBatchTransaction =
+    await bscSDK.transaction.multiToken.prepare.transferMultiTokenBatchTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'BSC',
+      tokenId: ['123', '321'],
+      amounts: ['1000', '100'],
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const sentTransferMultiTokenBatchTransaction =
+    await bscSDK.transaction.multiToken.send.transferMultiTokenBatchTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'BSC',
+      tokenId: ['123', '321'],
+      amounts: ['1000', '100'],
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const preparedBurnMultiTokenTransaction =
+    await bscSDK.transaction.multiToken.prepare.burnMultiTokenTransaction({
+      chain: 'BSC',
+      tokenId: '123',
+      amount: '1',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+      account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    })
+
+  const sentBurnMultiTokenTransaction = await bscSDK.transaction.multiToken.send.burnMultiTokenTransaction({
+    chain: 'BSC',
+    tokenId: '123',
+    amount: '1',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+  })
+
+  const preparedBurnMultiTokenBatchTransaction =
+    await bscSDK.transaction.multiToken.prepare.burnMultiTokenBatchTransaction({
+      chain: 'BSC',
+      tokenId: ['123', '321'],
+      amounts: ['1000', '100'],
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+      account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    })
+
+  const sentMintBurnTokenBatchTransaction =
+    await bscSDK.transaction.multiToken.send.burnMultiTokenBatchTransaction({
+      chain: 'BSC',
+      tokenId: ['123', '321'],
+      amounts: ['1000', '100'],
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+      account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    })
 }
 
 export async function bscTxWithPrivateKeyExample(): Promise<void> {
+  // ERC20(FUNGIBLE TOKEN)
   const preparedDeployErc20Transaction = await bscSDK.transaction.erc20.prepare.deploySignedTransaction({
     symbol: 'ERC_SYMBOL',
     name: 'mytx',
@@ -474,6 +611,7 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
     nonce: 3252345722143,
   })
 
+  // ERC721(NFT)
   const preparedDeployErc721Transaction = await bscSDK.transaction.erc721.prepare.deploySignedTransaction({
     chain: 'BSC',
     name: 'MY_TOKEN',
@@ -769,4 +907,137 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
       gasPrice: '20',
     },
   })
+
+  // ERC1155(MULTI TOKEN)
+  const preparedDeployMultiTokenTransaction =
+    await bscSDK.transaction.multiToken.prepare.deployMultiTokenTransaction({
+      chain: 'BSC',
+      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+      uri: 'tatum',
+    })
+
+  const sentDeployMultiTokenTransaction =
+    await bscSDK.transaction.multiToken.send.deployMultiTokenTransaction({
+      chain: 'BSC',
+      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+      uri: 'tatum',
+    })
+
+  const preparedMintMultiTokenTransaction =
+    await bscSDK.transaction.multiToken.prepare.mintMultiTokenTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'BSC',
+      tokenId: '123',
+      amount: '1000',
+      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const sentMintMultiTokenTransaction = await bscSDK.transaction.multiToken.send.mintMultiTokenTransaction({
+    to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    chain: 'BSC',
+    tokenId: '123',
+    amount: '1000',
+    fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+  })
+
+  const preparedMintMultiTokenBatchTransaction =
+    await bscSDK.transaction.multiToken.prepare.mintMultiTokenBatchTransaction({
+      to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
+      chain: 'BSC',
+      tokenId: [['123'], ['321']],
+      amounts: [['1000'], ['100']],
+      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const sentMintMultiTokenBatchTransaction =
+    await bscSDK.transaction.multiToken.send.mintMultiTokenBatchTransaction({
+      to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
+      chain: 'BSC',
+      tokenId: [['123'], ['321']],
+      amounts: [['1000'], ['100']],
+      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const preparedTransferMultiTokenTransaction =
+    await bscSDK.transaction.multiToken.prepare.transferMultiTokenTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'BSC',
+      tokenId: '123',
+      amount: '10',
+      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const sentTransferMultiTokenTransaction =
+    await bscSDK.transaction.multiToken.send.transferMultiTokenTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'BSC',
+      tokenId: '123',
+      amount: '10',
+      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const preparedTransferMultiTokenBatchTransaction =
+    await bscSDK.transaction.multiToken.prepare.transferMultiTokenBatchTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'BSC',
+      tokenId: ['123', '321'],
+      amounts: ['1000', '100'],
+      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const sentTransferMultiTokenBatchTransaction =
+    await bscSDK.transaction.multiToken.send.transferMultiTokenBatchTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'BSC',
+      tokenId: ['123', '321'],
+      amounts: ['1000', '100'],
+      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const preparedBurnMultiTokenTransaction =
+    await bscSDK.transaction.multiToken.prepare.burnMultiTokenTransaction({
+      chain: 'BSC',
+      tokenId: '123',
+      amount: '1',
+      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+      account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    })
+
+  const sentBurnMultiTokenTransaction = await bscSDK.transaction.multiToken.send.burnMultiTokenTransaction({
+    chain: 'BSC',
+    tokenId: '123',
+    amount: '1',
+    fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+  })
+
+  const preparedBurnMultiTokenBatchTransaction =
+    await bscSDK.transaction.multiToken.prepare.burnMultiTokenBatchTransaction({
+      chain: 'BSC',
+      tokenId: ['123', '321'],
+      amounts: ['1000', '100'],
+      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+      account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    })
+
+  const sentMintBurnTokenBatchTransaction =
+    await bscSDK.transaction.multiToken.send.burnMultiTokenBatchTransaction({
+      chain: 'BSC',
+      tokenId: ['123', '321'],
+      amounts: ['1000', '100'],
+      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+      account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    })
 }

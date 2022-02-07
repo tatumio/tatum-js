@@ -4,6 +4,7 @@ import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 const ethSDK = TatumEthSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function ethTxWithSignatureIdExample(): Promise<void> {
+  // ERC20(FUNGIBLE TOKEN)
   const preparedDeployErc20Transaction = await ethSDK.transaction.erc20.prepare.deploySignedTransaction({
     symbol: 'ERC_SYMBOL',
     name: 'mytx',
@@ -90,6 +91,7 @@ export async function ethTxWithSignatureIdExample(): Promise<void> {
     nonce: 3252345722143,
   })
 
+  // ERC721(NFT)
   const preparedDeployErc721Transaction = await ethSDK.transaction.erc721.prepare.deploySignedTransaction({
     chain: 'ETH',
     name: 'MY_TOKEN',
@@ -385,9 +387,143 @@ export async function ethTxWithSignatureIdExample(): Promise<void> {
       gasPrice: '20',
     },
   })
+
+  // ERC1155(MULTI TOKEN)
+  const preparedDeployMultiTokenTransaction =
+    await ethSDK.transaction.multiToken.prepare.deployMultiTokenTransaction({
+      chain: 'ETH',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      uri: 'tatum',
+    })
+
+  const sentDeployMultiTokenTransaction =
+    await ethSDK.transaction.multiToken.send.deployMultiTokenTransaction({
+      chain: 'ETH',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      uri: 'tatum',
+    })
+
+  const preparedMintMultiTokenTransaction =
+    await ethSDK.transaction.multiToken.prepare.mintMultiTokenTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'ETH',
+      tokenId: '123',
+      amount: '1000',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const sentMintMultiTokenTransaction = await ethSDK.transaction.multiToken.send.mintMultiTokenTransaction({
+    to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    chain: 'ETH',
+    tokenId: '123',
+    amount: '1000',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+  })
+
+  const preparedMintMultiTokenBatchTransaction =
+    await ethSDK.transaction.multiToken.prepare.mintMultiTokenBatchTransaction({
+      to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
+      chain: 'ETH',
+      tokenId: [['123'], ['321']],
+      amounts: [['1000'], ['100']],
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const sentMintMultiTokenBatchTransaction =
+    await ethSDK.transaction.multiToken.send.mintMultiTokenBatchTransaction({
+      to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
+      chain: 'ETH',
+      tokenId: [['123'], ['321']],
+      amounts: [['1000'], ['100']],
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const preparedTransferMultiTokenTransaction =
+    await ethSDK.transaction.multiToken.prepare.transferMultiTokenTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'ETH',
+      tokenId: '123',
+      amount: '10',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const sentTransferMultiTokenTransaction =
+    await ethSDK.transaction.multiToken.send.transferMultiTokenTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'ETH',
+      tokenId: '123',
+      amount: '10',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const preparedTransferMultiTokenBatchTransaction =
+    await ethSDK.transaction.multiToken.prepare.transferMultiTokenBatchTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'ETH',
+      tokenId: ['123', '321'],
+      amounts: ['1000', '100'],
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const sentTransferMultiTokenBatchTransaction =
+    await ethSDK.transaction.multiToken.send.transferMultiTokenBatchTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'ETH',
+      tokenId: ['123', '321'],
+      amounts: ['1000', '100'],
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const preparedBurnMultiTokenTransaction =
+    await ethSDK.transaction.multiToken.prepare.burnMultiTokenTransaction({
+      chain: 'ETH',
+      tokenId: '123',
+      amount: '1',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+      account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    })
+
+  const sentBurnMultiTokenTransaction = await ethSDK.transaction.multiToken.send.burnMultiTokenTransaction({
+    chain: 'ETH',
+    tokenId: '123',
+    amount: '1',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+  })
+
+  const preparedBurnMultiTokenBatchTransaction =
+    await ethSDK.transaction.multiToken.prepare.burnMultiTokenBatchTransaction({
+      chain: 'ETH',
+      tokenId: ['123', '321'],
+      amounts: ['1000', '100'],
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+      account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    })
+
+  const sentMintBurnTokenBatchTransaction =
+    await ethSDK.transaction.multiToken.send.burnMultiTokenBatchTransaction({
+      chain: 'ETH',
+      tokenId: ['123', '321'],
+      amounts: ['1000', '100'],
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+      account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    })
 }
 
 export async function ethTxWithPrivateKeyExample(): Promise<void> {
+  // ERC20(FUNGIBLE TOKEN)
   const preparedDeployErc20Transaction = await ethSDK.transaction.erc20.prepare.deploySignedTransaction({
     symbol: 'ERC_SYMBOL',
     name: 'mytx',
@@ -474,6 +610,7 @@ export async function ethTxWithPrivateKeyExample(): Promise<void> {
     nonce: 3252345722143,
   })
 
+  // ERC721(NFT)
   const preparedDeployErc721Transaction = await ethSDK.transaction.erc721.prepare.deploySignedTransaction({
     chain: 'ETH',
     name: 'MY_TOKEN',
@@ -769,4 +906,137 @@ export async function ethTxWithPrivateKeyExample(): Promise<void> {
       gasPrice: '20',
     },
   })
+
+  // ERC1155(MULTI TOKEN)
+  const preparedDeployMultiTokenTransaction =
+    await ethSDK.transaction.multiToken.prepare.deployMultiTokenTransaction({
+      chain: 'ETH',
+      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+      uri: 'tatum',
+    })
+
+  const sentDeployMultiTokenTransaction =
+    await ethSDK.transaction.multiToken.send.deployMultiTokenTransaction({
+      chain: 'ETH',
+      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+      uri: 'tatum',
+    })
+
+  const preparedMintMultiTokenTransaction =
+    await ethSDK.transaction.multiToken.prepare.mintMultiTokenTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'ETH',
+      tokenId: '123',
+      amount: '1000',
+      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const sentMintMultiTokenTransaction = await ethSDK.transaction.multiToken.send.mintMultiTokenTransaction({
+    to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    chain: 'ETH',
+    tokenId: '123',
+    amount: '1000',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+  })
+
+  const preparedMintMultiTokenBatchTransaction =
+    await ethSDK.transaction.multiToken.prepare.mintMultiTokenBatchTransaction({
+      to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
+      chain: 'ETH',
+      tokenId: [['123'], ['321']],
+      amounts: [['1000'], ['100']],
+      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const sentMintMultiTokenBatchTransaction =
+    await ethSDK.transaction.multiToken.send.mintMultiTokenBatchTransaction({
+      to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
+      chain: 'ETH',
+      tokenId: [['123'], ['321']],
+      amounts: [['1000'], ['100']],
+      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const preparedTransferMultiTokenTransaction =
+    await ethSDK.transaction.multiToken.prepare.transferMultiTokenTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'ETH',
+      tokenId: '123',
+      amount: '10',
+      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const sentTransferMultiTokenTransaction =
+    await ethSDK.transaction.multiToken.send.transferMultiTokenTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'ETH',
+      tokenId: '123',
+      amount: '10',
+      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const preparedTransferMultiTokenBatchTransaction =
+    await ethSDK.transaction.multiToken.prepare.transferMultiTokenBatchTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'ETH',
+      tokenId: ['123', '321'],
+      amounts: ['1000', '100'],
+      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const sentTransferMultiTokenBatchTransaction =
+    await ethSDK.transaction.multiToken.send.transferMultiTokenBatchTransaction({
+      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+      chain: 'ETH',
+      tokenId: ['123', '321'],
+      amounts: ['1000', '100'],
+      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    })
+
+  const preparedBurnMultiTokenTransaction =
+    await ethSDK.transaction.multiToken.prepare.burnMultiTokenTransaction({
+      chain: 'ETH',
+      tokenId: '123',
+      amount: '1',
+      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+      account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    })
+
+  const sentBurnMultiTokenTransaction = await ethSDK.transaction.multiToken.send.burnMultiTokenTransaction({
+    chain: 'ETH',
+    tokenId: '123',
+    amount: '1',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+  })
+
+  const preparedBurnMultiTokenBatchTransaction =
+    await ethSDK.transaction.multiToken.prepare.burnMultiTokenBatchTransaction({
+      chain: 'ETH',
+      tokenId: ['123', '321'],
+      amounts: ['1000', '100'],
+      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+      account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    })
+
+  const sentMintBurnTokenBatchTransaction =
+    await ethSDK.transaction.multiToken.send.burnMultiTokenBatchTransaction({
+      chain: 'ETH',
+      tokenId: ['123', '321'],
+      amounts: ['1000', '100'],
+      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+      account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    })
 }
