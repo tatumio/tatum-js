@@ -7,7 +7,6 @@ import {
 import { TatumCeloSDK } from './celo.sdk'
 
 describe('TatumCeloSDK', () => {
-  jest.setTimeout(99999)
   const sdk = TatumCeloSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
   describe('Wallet', () => {
@@ -30,11 +29,13 @@ describe('TatumCeloSDK', () => {
 
   describe('erc721', () => {
     describe('prepare', () => {
+    jest.setTimeout(99999)
       describe('mint', () => {
         const provider = TEST_DATA.CELO?.PROVIDER
         const address = TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
-          ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
-          : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
+        ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
+        : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
+
         it('should be valid from privateKey', async () => {
           const result = await sdk.transaction.erc721.prepare.mintSignedTransaction(
             {
@@ -562,6 +563,320 @@ describe('TatumCeloSDK', () => {
         )
         const json = JSON.parse(result)
         expectHexString(json.data)
+      })
+    })
+  })
+
+  describe('multiToken', () => {
+    describe('prepare', () => {
+      const contractAddress = TEST_DATA.CELO.TESTNET?.MULTITOKEN?.CONTRACT_ADDRESS
+      const privateKey = TEST_DATA.CELO.TESTNET?.MULTITOKEN?.PRIVATE_KEY
+      const account = TEST_DATA.CELO.TESTNET?.MULTITOKEN?.ADDRESS
+      const provider = TEST_DATA.CELO.TESTNET?.PROVIDER
+      describe('mint', () => {
+        it('should be valid from privateKey', async () => {
+          const result = await sdk.transaction.multiToken.prepare.mintMultiTokenTransaction(
+            {
+              to: account,
+              contractAddress,
+              fromPrivateKey: privateKey,
+              tokenId: new Date().getTime().toString(),
+              chain: 'CELO',
+              feeCurrency: 'CUSD',
+              amount: '1',
+            },
+            provider,
+            true,
+          )
+          expectHexString(result)
+        })
+
+        it('should be valid from signatureId', async () => {
+          const result = await sdk.transaction.multiToken.prepare.mintMultiTokenTransaction(
+            {
+              to: account,
+              contractAddress,
+              signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+              tokenId: new Date().getTime().toString(),
+              chain: 'CELO',
+              feeCurrency: 'CUSD',
+              amount: '1',
+            },
+            provider,
+            true,
+          )
+          const json = JSON.parse(result)
+          expectHexString(json.data)
+        })
+
+        it('invalid address', async () => {
+          try {
+            await sdk.transaction.multiToken.prepare.mintMultiTokenTransaction(
+              {
+                to: 'someinvalidaddress',
+                tokenId: new Date().getTime().toString(),
+                contractAddress,
+                fromPrivateKey: privateKey,
+                chain: 'CELO',
+                feeCurrency: 'CUSD',
+                amount: '1',
+              },
+              provider,
+              true,
+            )
+            fail()
+          } catch (e: any) {
+            expect(e.reason).toMatch('invalid address')
+          }
+        })
+      })
+
+      describe('mint batch', () => {
+        it('should be valid from privateKey', async () => {
+          const result = await sdk.transaction.multiToken.prepare.mintMultiTokenBatchTransaction(
+            {
+              to: [account, account],
+              contractAddress,
+              fromPrivateKey: privateKey,
+              tokenId: [[new Date().getTime().toString()]],
+              chain: 'CELO',
+              feeCurrency: 'CUSD',
+              amounts: [['1'], ['1']],
+            },
+            provider,
+            true,
+          )
+          expectHexString(result)
+        })
+
+        it('should be valid from signatureId', async () => {
+          const result = await sdk.transaction.multiToken.prepare.mintMultiTokenBatchTransaction(
+            {
+              to: [account],
+              contractAddress,
+              signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+              chain: 'CELO',
+              feeCurrency: 'CUSD',
+              amounts: [['1'], ['1']],
+              tokenId: [[new Date().getTime().toString()]],
+            },
+            provider,
+            true,
+          )
+          const json = JSON.parse(result)
+          expectHexString(json.data)
+        })
+
+        it('invalid address', async () => {
+          try {
+            await sdk.transaction.multiToken.prepare.mintMultiTokenBatchTransaction(
+              {
+                to: ['someinvalidaddress', 'onemoreinvalid'],
+                tokenId: [[new Date().getTime().toString()]],
+                contractAddress,
+                fromPrivateKey: privateKey,
+                chain: 'CELO',
+                feeCurrency: 'CUSD',
+                amounts: [['1'], ['1']],
+              },
+              provider,
+              true,
+            )
+            fail()
+          } catch (e: any) {
+            expect(e.reason).toMatch('invalid address')
+          }
+        })
+      })
+
+      describe('transfer', () => {
+        it('should be valid from privateKey', async () => {
+          const result = await sdk.transaction.multiToken.prepare.transferMultiTokenTransaction(
+            {
+              to: account,
+              contractAddress,
+              fromPrivateKey: privateKey,
+              tokenId: new Date().getTime().toString(),
+              chain: 'CELO',
+              feeCurrency: 'CUSD',
+              amount: '1',
+            },
+            provider,
+            true,
+          )
+          expectHexString(result)
+        })
+
+        it('should be valid from signatureId', async () => {
+          const result = await sdk.transaction.multiToken.prepare.transferMultiTokenTransaction(
+            {
+              to: account,
+              contractAddress,
+              signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+              tokenId: new Date().getTime().toString(),
+              chain: 'CELO',
+              feeCurrency: 'CUSD',
+              amount: '1',
+            },
+            provider,
+            true,
+          )
+          const json = JSON.parse(result)
+          expectHexString(json.data)
+        })
+
+        it('invalid address', async () => {
+          try {
+            await sdk.transaction.multiToken.prepare.transferMultiTokenTransaction(
+              {
+                to: 'invalidaddress',
+                contractAddress,
+                fromPrivateKey: privateKey,
+                tokenId: new Date().getTime().toString(),
+                chain: 'CELO',
+                feeCurrency: 'CUSD',
+                amount: '1',
+              },
+              provider,
+              true,
+            )
+            fail()
+          } catch (e: any) {
+            expect(e.reason).toMatch('invalid address')
+          }
+        })
+      })
+
+      describe('transfer batch', () => {
+        it('should be valid from privateKey', async () => {
+          const result = await sdk.transaction.multiToken.prepare.transferMultiTokenBatchTransaction(
+            {
+              to: account,
+              contractAddress,
+              fromPrivateKey: privateKey,
+              tokenId: [new Date().getTime().toString()],
+              chain: 'CELO',
+              feeCurrency: 'CUSD',
+              amounts: ['1'],
+            },
+            provider,
+            true,
+          )
+          expectHexString(result)
+        })
+
+        it('should be valid from signatureId', async () => {
+          const result = await sdk.transaction.multiToken.prepare.transferMultiTokenBatchTransaction(
+            {
+              to: account,
+              contractAddress,
+              signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+              tokenId: [new Date().getTime().toString()],
+              chain: 'CELO',
+              feeCurrency: 'CUSD',
+              amounts: ['1'],
+            },
+            provider,
+            true,
+          )
+          const json = JSON.parse(result)
+          expectHexString(json.data)
+        })
+
+        it('invalid address', async () => {
+          try {
+            await sdk.transaction.multiToken.prepare.transferMultiTokenBatchTransaction(
+              {
+                to: 'invalidaddress',
+                contractAddress,
+                fromPrivateKey: privateKey,
+                tokenId: [new Date().getTime().toString()],
+                chain: 'CELO',
+                feeCurrency: 'CUSD',
+                amounts: ['1'],
+              },
+              provider,
+              true,
+            )
+            fail()
+          } catch (e: any) {
+            expect(e.reason).toMatch('invalid address')
+          }
+        })
+      })
+
+      describe('burn', () => {
+        it('should be valid from privateKey', async () => {
+          const result = await sdk.transaction.multiToken.prepare.burnMultiTokenTransaction(
+            {
+              contractAddress,
+              fromPrivateKey: privateKey,
+              tokenId: new Date().getTime().toString(),
+              chain: 'CELO',
+              feeCurrency: 'CUSD',
+              amount: '1',
+              account,
+            },
+            provider,
+            true,
+          )
+          expectHexString(result)
+        })
+
+        it('should be valid from signatureId', async () => {
+          const result = await sdk.transaction.multiToken.prepare.burnMultiTokenTransaction(
+            {
+              contractAddress,
+              signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+              tokenId: new Date().getTime().toString(),
+              chain: 'CELO',
+              feeCurrency: 'CUSD',
+              amount: '1',
+              account,
+            },
+            provider,
+            true,
+          )
+          const json = JSON.parse(result)
+          expectHexString(json.data)
+        })
+      })
+
+      describe('burn batch', () => {
+        it('should be valid from privateKey', async () => {
+          const result = await sdk.transaction.multiToken.prepare.burnMultiTokenBatchTransaction(
+            {
+              contractAddress,
+              fromPrivateKey: privateKey,
+              tokenId: [new Date().getTime().toString()],
+              chain: 'CELO',
+              feeCurrency: 'CUSD',
+              amounts: ['1'],
+              account,
+            },
+            provider,
+            true,
+          )
+          expectHexString(result)
+        })
+
+        it('should be valid from signatureId', async () => {
+          const result = await sdk.transaction.multiToken.prepare.burnMultiTokenBatchTransaction(
+            {
+              contractAddress,
+              signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+              tokenId: [new Date().getTime().toString()],
+              chain: 'CELO',
+              feeCurrency: 'CUSD',
+              amounts: ['1'],
+              account,
+            },
+            provider,
+            true,
+          )
+          const json = JSON.parse(result)
+          expectHexString(json.data)
+        })
       })
     })
   })
