@@ -1,4 +1,4 @@
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 import { TatumXrpSDK } from '@tatumio/xrp'
 import { Currency } from '@tatumio/shared-core'
 import { CreateTrade, VirtualCurrency } from '@tatumio/api-client'

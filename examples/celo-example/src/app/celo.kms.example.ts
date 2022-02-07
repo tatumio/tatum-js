@@ -1,4 +1,4 @@
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 import { TatumCeloSDK } from '@tatumio/celo'
 
 const celoSDK = TatumCeloSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })

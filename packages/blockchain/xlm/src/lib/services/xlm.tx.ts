@@ -29,7 +29,7 @@ const prepareSignedTransaction = async (testnet: boolean, body: TransferXlmBlock
   const { fromSecret, to, amount, message, initialize } = body
 
   let memPhrase
-  if(message){
+  if (message) {
     memPhrase = message?.length > 28 ? Memo.hash(message) : Memo.text(message)
   }
   const memo = memPhrase

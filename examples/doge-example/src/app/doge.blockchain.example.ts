@@ -1,4 +1,4 @@
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 import { TatumDogeSDK } from '@tatumio/doge'
 import { DogeTransactionUTXO } from '@tatumio/api-client'
 

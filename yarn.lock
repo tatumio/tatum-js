@@ -380,6 +380,11 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@celo-tools/celo-ethers-wrapper@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@celo-tools/celo-ethers-wrapper/-/celo-ethers-wrapper-0.1.0.tgz#ee925b20d56923315ab35ef95def24bcd5f1879b"
+  integrity sha512-kBpFi7viIRlysiVKfIIywuAGykO0l3w+lBZ+NFaEgw9GsVQl0NYj0e4/UhbglfU5XS6M8HCCordUuC8gVwCw7w==
+
 "@eslint/eslintrc@^1.0.5":
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-1.0.5.tgz#33f1b838dbf1f923bfa517e008362b78ddbbf318"
@@ -4556,7 +4561,7 @@ ethereumjs-wallet@^1.0.2:
     utf8 "^3.0.0"
     uuid "^8.3.2"
 
-ethers@^5.4.4:
+ethers@^5.4.4, ethers@^5.5.4:
   version "5.5.4"
   resolved "https://registry.yarnpkg.com/ethers/-/ethers-5.5.4.tgz#e1155b73376a2f5da448e4a33351b57a885f4352"
   integrity sha512-N9IAXsF8iKhgHIC6pquzRgPBJEzc9auw3JoRkaKe+y4Wl/LFBtDDunNe7YmdomontECAcC5APaAgWZBiu1kirw==

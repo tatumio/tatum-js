@@ -15,6 +15,7 @@ import {
 import { celoOffchainExample } from './app/celo.offchain.example'
 import { celoNftExample } from './app/celo.nft.example'
 import { celoSubscriptionsExample } from './app/celo.subscriptions.example'
+import { celoTxWithPrivateKeyExample, celoTxWithSignatureIdExample } from './app/celo.tx.example'
 
 console.log(`Running ${celoApiExample()}`)
 console.log(`Running ${celoWalletExample()}`)
@@ -32,3 +33,5 @@ console.log(`Running ${celoLedgerTransactionExample()}`)
 console.log(`Running ${celoOffchainExample()}`)
 console.log(`Running ${celoNftExample()}`)
 console.log(`Running ${celoSubscriptionsExample()}`)
+console.log(`Running ${celoTxWithPrivateKeyExample()}`)
+console.log(`Running ${celoTxWithSignatureIdExample()}`)

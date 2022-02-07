@@ -1,5 +1,5 @@
 import { TatumBtcSDK } from '../btc.sdk'
-import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA, walletTestFactory } from '@tatumio/shared-testing'
+import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA, walletTestFactory } from '@tatumio/shared-testing-common'
 
 describe('TatumBtcSDK - wallet', () => {
   const sdk = TatumBtcSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })

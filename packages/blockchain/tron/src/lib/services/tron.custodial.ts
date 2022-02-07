@@ -34,6 +34,11 @@ const prepareTransferFromCustodialWallet = async (
     amount = amount.multipliedBy(new BigNumber(10).pow(decimals))
   } else if (body.contractType === FUNGIBLE_TOKEN_CONTRACT_TYPE) {
     tokenId = new BigNumber(0)
+
+    if (!body.tokenAddress) {
+      throw new Error('No tokenAddress specified which is needed for FUNGIBLE_TOKEN_CONTRACT_TYPE')
+    }
+
     amount = amount.multipliedBy(
       new BigNumber(10).pow(await getContractDecimals(body.tokenAddress, provider, testnet)),
     )

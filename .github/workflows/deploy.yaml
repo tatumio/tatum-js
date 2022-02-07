@@ -55,6 +55,9 @@ jobs:
 
       - run: yarn --ignore-scripts --frozen-lockfile
 
+      - name: Update version of packages
+        run: yarn --ignore-scripts release:apply-version
+
       - run: npx nx-cloud start-ci-run
       - run: yarn build:all
       - run: npx nx-cloud stop-all-agents
