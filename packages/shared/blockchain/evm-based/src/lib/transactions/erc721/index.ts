@@ -64,17 +64,19 @@ const mintCashbackSignedTransaction = async (body: ChainMintNft, web3: EvmBasedW
   const client = web3.getClient(provider)
   const contract = new client.eth.Contract(
     Erc721Token.abi as any,
-    evmBasedUtils.transformAddress(contractAddress),
+  // TODO: remove ! when type will be fixed
+    evmBasedUtils.transformAddress(contractAddress!),
   )
   const cashbacks: string[] = cashbackValues!
   const cb = cashbacks.map((c) => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
-  const transformedAddresses = authorAddresses.map((a) => evmBasedUtils.transformAddress(a))
+  const transformedAddresses = authorAddresses?.map((a) => evmBasedUtils.transformAddress(a))
   const transformedTo = evmBasedUtils.transformAddress(to).trim()
 
   if (contractAddress) {
     const tx: TransactionConfig = {
       from: undefined,
-      to: evmBasedUtils.transformAddress(contractAddress).trim(),
+      // TODO: remove ! when type will be fixed
+      to: evmBasedUtils.transformAddress(contractAddress!).trim(),
       data: erc20
         ? contract.methods
             .mintWithCashback(transformedTo, tokenId, url, transformedAddresses, cb, erc20)
@@ -128,7 +130,7 @@ export const mintMultipleCashbackSignedTransaction = async (
     cashback.map((c) => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`),
   )
   const transformedTo = to.map((t) => evmBasedUtils.transformAddress(t).trim())
-  const transformedAddresses = authorAddresses.map((a) => a.map((a1) => evmBasedUtils.transformAddress(a1)))
+  const transformedAddresses = authorAddresses?.map((a) => a.map((a1) => evmBasedUtils.transformAddress(a1)))
 
   const tx: TransactionConfig = {
     from: undefined,
@@ -360,7 +362,8 @@ const mintProvenanceSignedTransaction = async (body: ChainMintNft, web3: EvmBase
 
   const contract = new client.eth.Contract(
     Erc721_Provenance.abi as any,
-    evmBasedUtils.transformAddress(contractAddress),
+    // TODO: remove ! when type will be fixed
+    evmBasedUtils.transformAddress(contractAddress!),
   )
   const cb: string[] = []
   const fval: string[] = []
@@ -369,7 +372,7 @@ const mintProvenanceSignedTransaction = async (body: ChainMintNft, web3: EvmBase
   if (authorAddresses && cashbackValues && fixedValues) {
     cashbackValues.forEach((c) => cb.push(`0x${new BigNumber(c).multipliedBy(100).toString(16)}`))
     fixedValues.forEach((c) => fval.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
-    authorAddresses.map((a) => authors.push(evmBasedUtils.transformAddress(a)))
+    authorAddresses?.map((a) => authors.push(evmBasedUtils.transformAddress(a)))
   }
   if (contractAddress) {
     const tx: TransactionConfig = {
@@ -431,7 +434,7 @@ const mintMultipleProvenanceSignedTransaction = async (
   const cb: string[][] = []
   const fv: string[][] = []
   const transformedTo = to.map((t) => evmBasedUtils.transformAddress(t).trim())
-  const transformedAddresses = authorAddresses.map((a) => a.map((a1) => evmBasedUtils.transformAddress(a1)))
+  const transformedAddresses = authorAddresses?.map((a) => a.map((a1) => evmBasedUtils.transformAddress(a1)))
   if (authorAddresses && cashbackValues && fixedValues) {
     for (let i = 0; i < cashbackValues.length; i++) {
       const cb2: string[] = []

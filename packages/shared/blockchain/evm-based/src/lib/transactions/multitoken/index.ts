@@ -81,7 +81,7 @@ const deployMultiToken = async (body: ChainDeployMultiToken, web3: EvmBasedWeb3,
   const { fromPrivateKey, fee, uri, nonce, signatureId } = body
 
   const client = web3.getClient(provider)
-  const contract = new client.eth.Contract(Erc1155.abi as any, null, {
+  const contract = new client.eth.Contract(Erc1155.abi as any, undefined, {
     data: Erc1155.bytecode,
   })
 
@@ -122,7 +122,8 @@ const transferMultiToken = async (body: ChainTransferMultiToken, web3: EvmBasedW
       .safeTransfer(
         evmBasedUtils.transformAddress(to).trim(),
         tokenId,
-        `0x${new BigNumber(amount).toString(16)}`,
+        // TODO: remove ! when type will be fixed
+        `0x${new BigNumber(amount!).toString(16)}`,
         data ? data : '0x0',
       )
       .encodeABI(),
