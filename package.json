@@ -29,7 +29,7 @@
     "@celo-tools/celo-ethers-wrapper": "^0.1.0",
     "@harmony-js/crypto": "^0.1.56",
     "@tatumio/bitcoincashjs2-lib": "^4.1.2",
-    "axios": "^0.24.0",
+    "axios": "^0.25.0",
     "bignumber.js": "^9.0.2",
     "bip32": "^2.0.5",
     "bip39": "^3.0.2",
