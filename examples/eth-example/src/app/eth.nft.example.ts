@@ -1,12 +1,3 @@
-import {
-  AddNftMinter,
-  BurnNft,
-  DeployNft,
-  MintMultipleNft,
-  MintNft,
-  TransferNft,
-  UpdateCashbackValueForAuthorNft,
-} from '@tatumio/api-client'
 import { TatumEthSDK } from '@tatumio/eth'
 import { Currency } from '@tatumio/shared-core'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
@@ -51,9 +42,8 @@ export async function ethNftExample() {
     '0x45871ED5F15203C0ce791eFE5f4B5044833aE10e',
   )
 
-  // TODO bug in openapi - chain and feeCurrency
   const mintedHash = await ethSDK.nft.mintNFT({
-    chain: MintNft.chain.ETH,
+    chain: 'ETH',
     tokenId: '100000',
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     erc20: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -74,8 +64,7 @@ export async function ethNftExample() {
   )
 
   const deployHash = await ethSDK.nft.deployNFTSmartContract({
-    // TODO openapi bug
-    chain: DeployNft.chain.ETH,
+    chain: 'ETH',
     name: 'My ERC721',
     symbol: 'ERC_SYMBOL',
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
@@ -89,8 +78,7 @@ export async function ethNftExample() {
   })
 
   const transferHash = await ethSDK.nft.transferNFT({
-    // TODO openapi bug
-    chain: TransferNft.chain.ETH,
+    chain: 'ETH',
     value: '1',
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     tokenId: '1000',
@@ -105,8 +93,7 @@ export async function ethNftExample() {
   })
 
   const mintMultipleHash = await ethSDK.nft.mintMultipleNFTs({
-    // TODO openapi bug
-    chain: MintMultipleNft.chain.ETH,
+    chain: 'ETH',
     to: ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
     tokenId: ['100000'],
     url: ['https://my_token_data.com'],
@@ -122,8 +109,7 @@ export async function ethNftExample() {
   })
 
   const burnHash = await ethSDK.nft.burnNFT({
-    // TODO openapi bug
-    chain: BurnNft.chain.ETH,
+    chain: 'ETH',
     tokenId: '100000',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
@@ -135,8 +121,7 @@ export async function ethNftExample() {
   })
 
   const addMinterHash = await ethSDK.nft.addNFTMinter({
-    // TODO openapi bug
-    chain: AddNftMinter.chain.ETH,
+    chain: 'ETH',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     minter: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
@@ -148,8 +133,7 @@ export async function ethNftExample() {
   })
 
   const updateRoyaltyHash = await ethSDK.nft.updateNFTRoyalty({
-    // TODO openapi bug
-    chain: UpdateCashbackValueForAuthorNft.chain.ETH,
+    chain: 'ETH',
     tokenId: '100000',
     cashbackValue: '0.1',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',

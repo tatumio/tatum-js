@@ -1,12 +1,3 @@
-import {
-  AddNftMinter,
-  BurnNft,
-  DeployNft,
-  MintMultipleNft,
-  MintNft,
-  TransferNft,
-  UpdateCashbackValueForAuthorNft,
-} from '@tatumio/api-client'
 import { TatumPolygonSDK } from '@tatumio/polygon'
 import { Currency } from '@tatumio/shared-core'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
@@ -58,8 +49,7 @@ export async function polygonNftExample() {
   )
 
   const mintedHash = await polygonSDK.nft.mintNFT({
-    // TODO openapi bug
-    chain: MintNft.chain.MATIC,
+    chain: 'MATIC',
     tokenId: '100000',
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     erc20: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -74,8 +64,7 @@ export async function polygonNftExample() {
   })
 
   const deployHash = await polygonSDK.nft.deployNFTSmartContract({
-    // TODO openapi bug
-    chain: DeployNft.chain.MATIC,
+    chain: 'MATIC',
     name: 'My ERC721',
     symbol: 'ERC_SYMBOL',
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
@@ -89,8 +78,7 @@ export async function polygonNftExample() {
   })
 
   const transferHash = await polygonSDK.nft.transferNFT({
-    // TODO openapi bug
-    chain: TransferNft.chain.MATIC,
+    chain: 'MATIC',
     value: '1',
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     tokenId: '1000',
@@ -105,8 +93,7 @@ export async function polygonNftExample() {
   })
 
   const mintMultipleHash = await polygonSDK.nft.mintMultipleNFTs({
-    // TODO openapi bug
-    chain: MintMultipleNft.chain.MATIC,
+    chain: 'MATIC',
     to: ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
     tokenId: ['100000'],
     url: ['https://my_token_data.com'],
@@ -122,8 +109,7 @@ export async function polygonNftExample() {
   })
 
   const burnHash = await polygonSDK.nft.burnNFT({
-    // TODO openapi bug
-    chain: BurnNft.chain.MATIC,
+    chain: 'MATIC',
     tokenId: '100000',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
@@ -135,8 +121,7 @@ export async function polygonNftExample() {
   })
 
   const addMinterHash = await polygonSDK.nft.addNFTMinter({
-    // TODO openapi bug
-    chain: AddNftMinter.chain.MATIC,
+    chain: 'MATIC',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     minter: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
@@ -148,8 +133,7 @@ export async function polygonNftExample() {
   })
 
   const updateRoyaltyHash = await polygonSDK.nft.updateNFTRoyalty({
-    // TODO openapi bug
-    chain: UpdateCashbackValueForAuthorNft.chain.MATIC,
+    chain: 'MATIC',
     tokenId: '100000',
     cashbackValue: '0.1',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',

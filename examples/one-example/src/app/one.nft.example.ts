@@ -1,12 +1,3 @@
-import {
-  AddNftMinter,
-  BurnNft,
-  DeployNft,
-  MintMultipleNft,
-  MintNft,
-  TransferNft,
-  UpdateCashbackValueForAuthorNft,
-} from '@tatumio/api-client'
 import { TatumOneSDK } from '@tatumio/one'
 import { Currency } from '@tatumio/shared-core'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
@@ -46,8 +37,7 @@ export async function oneNftExample() {
   )
 
   const mintedHash = await oneSDK.nft.mintNFT({
-    // TODO openapi bug
-    chain: MintNft.chain.ONE,
+    chain: 'ONE',
     tokenId: '100000',
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     erc20: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -62,8 +52,7 @@ export async function oneNftExample() {
   })
 
   const deployHash = await oneSDK.nft.deployNFTSmartContract({
-    // TODO openapi bug
-    chain: DeployNft.chain.ONE,
+    chain: 'ONE',
     name: 'My ERC721',
     symbol: 'ERC_SYMBOL',
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
@@ -77,8 +66,7 @@ export async function oneNftExample() {
   })
 
   const transferHash = await oneSDK.nft.transferNFT({
-    // TODO openapi bug
-    chain: TransferNft.chain.ONE,
+    chain: 'ONE',
     value: '1',
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     tokenId: '1000',
@@ -93,8 +81,7 @@ export async function oneNftExample() {
   })
 
   const mintMultipleHash = await oneSDK.nft.mintMultipleNFTs({
-    // TODO openapi bug
-    chain: MintMultipleNft.chain.ONE,
+    chain: 'ONE',
     to: ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
     tokenId: ['100000'],
     url: ['https://my_token_data.com'],
@@ -110,8 +97,7 @@ export async function oneNftExample() {
   })
 
   const burnHash = await oneSDK.nft.burnNFT({
-    // TODO openapi bug
-    chain: BurnNft.chain.ONE,
+    chain: 'ONE',
     tokenId: '100000',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
@@ -123,8 +109,7 @@ export async function oneNftExample() {
   })
 
   const addMinterHash = await oneSDK.nft.addNFTMinter({
-    // TODO openapi bug
-    chain: AddNftMinter.chain.ONE,
+    chain: 'ONE',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     minter: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
@@ -136,8 +121,7 @@ export async function oneNftExample() {
   })
 
   const updateRoyaltyHash = await oneSDK.nft.updateNFTRoyalty({
-    // TODO openapi bug
-    chain: UpdateCashbackValueForAuthorNft.chain.ONE,
+    chain: 'ONE',
     tokenId: '100000',
     cashbackValue: '0.1',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',

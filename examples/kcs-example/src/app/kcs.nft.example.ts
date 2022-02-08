@@ -1,12 +1,3 @@
-import {
-  AddNftMinter,
-  BurnNft,
-  DeployNft,
-  MintMultipleNft,
-  MintNft,
-  TransferNft,
-  UpdateCashbackValueForAuthorNft,
-} from '@tatumio/api-client'
 import { TatumKcsSDK } from '@tatumio/kcs'
 import { Currency } from '@tatumio/shared-core'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
@@ -46,7 +37,7 @@ export async function kcsNftExample() {
   )
 
   const mintedHash = await kcsSDK.nft.mintNFT({
-    chain: MintNft.chain.KCS,
+    chain: 'KCS',
     tokenId: '100000',
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     erc20: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -61,8 +52,7 @@ export async function kcsNftExample() {
   })
 
   const deployHash = await kcsSDK.nft.deployNFTSmartContract({
-    // TODO openapi bug
-    chain: DeployNft.chain.KCS,
+    chain: 'KCS',
     name: 'My ERC721',
     symbol: 'ERC_SYMBOL',
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
@@ -76,8 +66,7 @@ export async function kcsNftExample() {
   })
 
   const transferHash = await kcsSDK.nft.transferNFT({
-    // TODO openapi bug
-    chain: TransferNft.chain.KCS,
+    chain: 'KCS',
     value: '1',
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     tokenId: '1000',
@@ -92,8 +81,7 @@ export async function kcsNftExample() {
   })
 
   const mintMultipleHash = await kcsSDK.nft.mintMultipleNFTs({
-    // TODO openapi bug
-    chain: MintMultipleNft.chain.KCS,
+    chain: 'KCS',
     to: ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
     tokenId: ['100000'],
     url: ['https://my_token_data.com'],
@@ -109,8 +97,7 @@ export async function kcsNftExample() {
   })
 
   const burnHash = await kcsSDK.nft.burnNFT({
-    // TODO openapi bug
-    chain: BurnNft.chain.KCS,
+    chain: 'KCS',
     tokenId: '100000',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
@@ -122,8 +109,7 @@ export async function kcsNftExample() {
   })
 
   const addMinterHash = await kcsSDK.nft.addNFTMinter({
-    // TODO openapi bug
-    chain: AddNftMinter.chain.KCS,
+    chain: 'KCS',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     minter: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
@@ -135,8 +121,7 @@ export async function kcsNftExample() {
   })
 
   const updateRoyaltyHash = await kcsSDK.nft.updateNFTRoyalty({
-    // TODO openapi bug
-    chain: UpdateCashbackValueForAuthorNft.chain.KCS,
+    chain: 'KCS',
     tokenId: '100000',
     cashbackValue: '0.1',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',

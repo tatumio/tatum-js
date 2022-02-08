@@ -1,4 +1,3 @@
-import { CreateTrade } from '@tatumio/api-client'
 import { TatumKcsSDK } from '@tatumio/kcs'
 import { Currency } from '@tatumio/shared-core'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
@@ -65,7 +64,6 @@ export async function kcsLedgerOrderBookExample() {
   await kcsSDK.ledger.orderBook.cancel('7c21ed165e294db78b95f0f1')
   await kcsSDK.ledger.orderBook.cancelByAccount('5e68c66581f2ee32bc354087')
   const newTrade = await kcsSDK.ledger.orderBook.newTrade({
-    // TODO openapi bug
     type: 'BUY',
     price: '8650.4',
     amount: '15000',

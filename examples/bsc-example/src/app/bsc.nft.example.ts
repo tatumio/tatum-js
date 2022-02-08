@@ -1,11 +1,3 @@
-import {
-  AddNftMinter,
-  BurnNft,
-  DeployNft,
-  MintMultipleNft,
-  MintNft,
-  UpdateCashbackValueForAuthorNft,
-} from '@tatumio/api-client'
 import { TatumBscSDK } from '@tatumio/bsc'
 import { Currency } from '@tatumio/shared-core'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
@@ -45,8 +37,7 @@ export async function bscNftExample() {
   )
 
   const deployHash = await bscSDK.nft.deployNFTSmartContract({
-    // TODO openapi bug
-    chain: DeployNft.chain.BSC,
+    chain: 'BSC',
     name: 'My ERC721',
     symbol: 'ERC_SYMBOL',
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
@@ -60,8 +51,7 @@ export async function bscNftExample() {
   })
 
   const transferHash = await bscSDK.nft.transferNFT({
-    // TODO openapi bug
-    chain: DeployNft.chain.BSC,
+    chain: 'BSC',
     value: '1',
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     tokenId: '1000',
@@ -76,8 +66,7 @@ export async function bscNftExample() {
   })
 
   const mintMultipleHash = await bscSDK.nft.mintMultipleNFTs({
-    // TODO openapi bug
-    chain: MintMultipleNft.chain.BSC,
+    chain: 'BSC',
     to: ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
     tokenId: ['100000'],
     url: ['https://my_token_data.com'],
@@ -93,8 +82,7 @@ export async function bscNftExample() {
   })
 
   const minted = await bscSDK.nft.mintNFT({
-    // TODO openapi bug
-    chain: MintNft.chain.BSC,
+    chain: 'BSC',
     tokenId: '100000',
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     erc20: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -109,8 +97,7 @@ export async function bscNftExample() {
   })
 
   const burnHash = await bscSDK.nft.burnNFT({
-    // TODO openapi bug
-    chain: BurnNft.chain.BSC,
+    chain: 'BSC',
     tokenId: '100000',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
@@ -122,8 +109,7 @@ export async function bscNftExample() {
   })
 
   const addMinterHash = await bscSDK.nft.addNFTMinter({
-    // TODO openapi bug
-    chain: AddNftMinter.chain.BSC,
+    chain: 'BSC',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     minter: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
@@ -135,8 +121,7 @@ export async function bscNftExample() {
   })
 
   const updateRoyaltyHash = await bscSDK.nft.updateNFTRoyalty({
-    // TODO openapi bug
-    chain: UpdateCashbackValueForAuthorNft.chain.BSC,
+    chain: 'BSC',
     tokenId: '100000',
     cashbackValue: '0.1',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
