@@ -3,6 +3,7 @@ import {
   BurnMultiToken,
   BurnMultiTokenBatch,
   BurnNft,
+  CallSmartContractMethod,
   CancelablePromise,
   ChainBurnErc20 as ApiChainBurnErc20,
   ChainMintErc20 as ApiChainMintErc20,
@@ -11,6 +12,7 @@ import {
   DeployMultiToken,
   DeployNft,
   ExchangeRate,
+  GenerateCustodialWallet,
   MintErc721,
   MintMultipleNft,
   MintMultiToken,
@@ -103,6 +105,10 @@ export type ChainMintMultiToken = MintMultiToken & { fromPrivateKey?: string }
 export type ChainMintMultiTokenBatch = FromPrivateKeyOrSignatureId<MintMultiTokenBatch>
 
 export type ChainDeployMultiToken = FromPrivateKeyOrSignatureId<DeployMultiToken>
+
+export type ChainSmartContractMethodInvocation = FromPrivateKeyOrSignatureId<CallSmartContractMethod>
+
+export type ChainGenerateCustodialAddress = FromPrivateKeyOrSignatureId<GenerateCustodialWallet>
 
 export interface SdkWithErc20Functions {
   decimals(contractAddress: string, provider?: string): any

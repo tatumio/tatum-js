@@ -1,4 +1,5 @@
 import { GenerateCustodialWallet } from '@tatumio/api-client'
+import { ChainGenerateCustodialAddress } from '@tatumio/shared-blockchain-abstract'
 import {
   Custodial_1155_TokenWallet,
   Custodial_1155_TokenWalletWithBatch,
@@ -47,7 +48,7 @@ const MAPPING = {
 
 export const evmBasedCustodial = () => {
   return {
-    obtainCustodialAddressType: (body: GenerateCustodialWallet): ContractAbi => {
+    obtainCustodialAddressType: (body: ChainGenerateCustodialAddress): ContractAbi => {
       // @ts-ignore @TODO OPENAPI
       if (body.chain === 'TRON' && body.enableSemiFungibleTokens) {
         throw new Error('MultiToken not supported for TRON.')
