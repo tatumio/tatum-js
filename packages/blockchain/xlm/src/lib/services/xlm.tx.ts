@@ -1,6 +1,7 @@
 import { ApiServices, TransferXlmBlockchain } from '@tatumio/api-client'
 import { Account, Asset, Keypair, Memo, Networks, Operation, TransactionBuilder } from 'stellar-sdk'
 import { XlmSdkError } from '../xlm.sdk.errors'
+import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 export const xlmTxService = () => {
   return {
@@ -37,33 +38,30 @@ const prepareSignedTransaction = async (body: TransferXlmBlockchain, options?: {
     const memo = memPhrase
     const fromAccount = Keypair.fromSecret(fromSecret).publicKey()
     const account = await ApiServices.blockchain.xlm.xlmGetAccountInfo(fromAccount)
-    if (typeof account.sequence !== 'string') {
-      console.log('Account has no sequence')
-      return ''
+
+    if (!account?.sequence || typeof account.sequence !== 'string') {
+      throw new XlmSdkError(SdkErrorCode.XLM_NO_SEQUENCE)
     }
+
     const builder = new TransactionBuilder(new Account(fromAccount, account.sequence), {
       fee: '100',
       networkPassphrase: options?.testnet ? Networks.TESTNET : Networks.PUBLIC,
       memo,
     }).setTimeout(300)
-    const tx = initialize
-      ? builder
-          .addOperation(
-            Operation.createAccount({
-              destination: to.trim(),
-              startingBalance: amount,
-            }),
-          )
-          .build()
-      : builder
-          .addOperation(
-            Operation.payment({
-              destination: to.trim(),
-              asset: Asset.native(),
-              amount,
-            }),
-          )
-          .build()
+
+    const operation = initialize
+      ? Operation.createAccount({
+          destination: to.trim(),
+          startingBalance: amount,
+        })
+      : Operation.payment({
+          destination: to.trim(),
+          asset: Asset.native(),
+          amount,
+        })
+
+    const tx = builder.addOperation(operation).build()
+
     tx.sign(Keypair.fromSecret(fromSecret))
     return tx.toEnvelope().toXDR().toString('base64')
   } catch (e: any) {

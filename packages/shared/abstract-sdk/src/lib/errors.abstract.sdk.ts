@@ -88,6 +88,7 @@ export enum SdkErrorCode {
   VALIDATION_AMOUNT = 'validation.amount',
   SECRET_CHECKSUM = 'validation.secret.checksum',
   VALIDATION_TO_ADDRESS = 'validation.to-address',
+  XLM_NO_SEQUENCE = 'xlm.account.no-sequence',
 }
 
 // @TODO pass params?
@@ -109,4 +110,5 @@ export const SdkErrorMessage: Record<SdkErrorCode, string> = {
   // XLM
   [SdkErrorCode.SECRET_CHECKSUM]: `Secret is not valid. Please check your secret for typos`,
   [SdkErrorCode.VALIDATION_TO_ADDRESS]: `To address is wrong`,
+  [SdkErrorCode.XLM_NO_SEQUENCE]: `Account does not contain sequence. Please check account info`,
 }

@@ -54,6 +54,21 @@ describe('XlmSDK - tx', () => {
       expect(result).toContain(VALID_DATA)
     })
 
+    it('no sequence', async () => {
+      mockGetAccountInfo({})
+
+      await expect(
+        txService.prepareSignedTransaction(
+          {
+            amount: AMOUNT,
+            fromSecret: SECRET,
+            to: ADDRESS,
+          },
+          { testnet: true },
+        ),
+      ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.XLM_NO_SEQUENCE)
+    })
+
     describe('Wrong cases', () => {
       it.each([
         [

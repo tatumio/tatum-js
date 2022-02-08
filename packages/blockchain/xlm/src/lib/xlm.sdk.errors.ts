@@ -10,6 +10,7 @@ export type XlmSdkErrorCode =
   | SdkErrorCode.VALIDATION_AMOUNT
   | SdkErrorCode.SECRET_CHECKSUM
   | SdkErrorCode.VALIDATION_TO_ADDRESS
+  | SdkErrorCode.XLM_NO_SEQUENCE
 
 export class XlmSdkError extends SdkError {
   constructor(error: Error | XlmSdkErrorCode) {
