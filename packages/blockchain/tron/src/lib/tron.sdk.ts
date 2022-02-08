@@ -28,6 +28,7 @@ export const TatumTronSDK = (args: SDKArguments) => {
       getTrc10Detail: BlockchainTronService.tronTrc10Detail,
       getAccount: BlockchainTronService.tronGetAccount,
       getTransaction: BlockchainTronService.tronGetTransaction,
+      sendTransaction: BlockchainTronService.tronTransfer,
     },
   }
 }
