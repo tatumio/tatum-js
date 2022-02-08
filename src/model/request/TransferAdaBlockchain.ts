@@ -10,7 +10,7 @@ import { TransferBtcBasedBlockchain } from './'
 export class TransferAdaBlockchain extends TransferBtcBasedBlockchain {
   @IsNumberString()
   @IsOptional()
-  public fee: string
+  public fee?: string
 
   @IsNotEmpty()
   @IsString()

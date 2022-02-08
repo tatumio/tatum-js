@@ -8,23 +8,23 @@ import {
 import BigNumber from 'bignumber.js'
 import { adaBroadcast, adaGetBlockChainInfo, adaGetTransaction, adaGetUtxos } from '../blockchain/ada'
 import { validateBody } from '../connector/tatum'
-import { AdaUtxo, Currency, FromAddress, FromUTXO, To, TransactionKMS, TransferBtcBasedBlockchain } from '../model'
+import { AdaUtxo, Currency, FromAddress, FromUTXO, To, TransactionKMS, TransferAdaBlockchain } from '../model'
 
 /**
  * Prepare a signed Ada transaction with the private key locally. Nothing is broadcasted to the blockchain.
- * @param transferBtcBasedBlockchain content of the transaction to prepare.
+ * @param transferAdaBlockchain content of the transaction to prepare.
  * @returns raw transaction data in hex, to be broadcasted to blockchain.
  */
-export const prepareAdaTransaction = async (transferBtcBasedBlockchain: TransferBtcBasedBlockchain) => {
-  await validateBody(transferBtcBasedBlockchain, TransferBtcBasedBlockchain)
+export const prepareAdaTransaction = async (transferAdaBlockchain: TransferAdaBlockchain) => {
+  await validateBody(transferAdaBlockchain, TransferAdaBlockchain)
   const txBuilder = await initTransactionBuilder()
-  const { to } = transferBtcBasedBlockchain
+  const { to } = transferAdaBlockchain
 
-  const { privateKeysToSign, amount: fromAmount } = await addInputs(txBuilder, transferBtcBasedBlockchain)
+  const { privateKeysToSign, amount: fromAmount } = await addInputs(txBuilder, transferAdaBlockchain)
   const toAmount = addOutputs(txBuilder, to)
-  await processFeeAndRest(txBuilder, fromAmount, toAmount, transferBtcBasedBlockchain)
+  await processFeeAndRest(txBuilder, fromAmount, toAmount, transferAdaBlockchain)
 
-  return signTransaction(txBuilder, transferBtcBasedBlockchain, privateKeysToSign)
+  return signTransaction(txBuilder, transferAdaBlockchain, privateKeysToSign)
 }
 
 /**
@@ -33,7 +33,7 @@ export const prepareAdaTransaction = async (transferBtcBasedBlockchain: Transfer
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendAdaTransaction = async (body: TransferBtcBasedBlockchain) => {
+export const sendAdaTransaction = async (body: TransferAdaBlockchain) => {
   return adaBroadcast(await prepareAdaTransaction(body))
 }
 
@@ -47,13 +47,13 @@ export const signAdaKMSTransaction = async (tx: TransactionKMS, privateKeys: str
   if (tx.chain !== Currency.ADA) {
     throw Error('Unsupported chain.')
   }
-  const transferBtcBasedBlockchain = JSON.parse(tx.serializedTransaction).txData
+  const transferAdaBlockchain = JSON.parse(tx.serializedTransaction).txData
   const txBuilder = await initTransactionBuilder()
-  const { to } = transferBtcBasedBlockchain
+  const { to } = transferAdaBlockchain
 
-  const {amount: fromAmount } = await addInputs(txBuilder, transferBtcBasedBlockchain)
+  const {amount: fromAmount } = await addInputs(txBuilder, transferAdaBlockchain)
   const toAmount = addOutputs(txBuilder, to)
-  await processFeeAndRest(txBuilder, fromAmount, toAmount, transferBtcBasedBlockchain)
+  await processFeeAndRest(txBuilder, fromAmount, toAmount, transferAdaBlockchain)
 
   const txBody = txBuilder.build()
   const txHash = hash_transaction(txBody)
@@ -80,8 +80,8 @@ export const addOutputs = (transactionBuilder: TransactionBuilder, tos: To[]) =>
   return amount
 }
 
-export const addInputs = async (transactionBuilder: TransactionBuilder, transferBtcBasedBlockchain: TransferBtcBasedBlockchain) => {
-  const { fromUTXO, fromAddress } = transferBtcBasedBlockchain
+export const addInputs = async (transactionBuilder: TransactionBuilder, transferAdaBlockchain: TransferAdaBlockchain) => {
+  const { fromUTXO, fromAddress } = transferAdaBlockchain
   if (fromAddress) {
     return addAddressInputs(transactionBuilder, fromAddress)
   }
@@ -173,8 +173,8 @@ export const initTransactionBuilder = async () => {
   return txBuilder
 }
 
-export const createWitnesses = (transactionBody: TransactionBody, transferBtcBasedBlockchain: TransferBtcBasedBlockchain) => {
-  const { fromAddress, fromUTXO } = transferBtcBasedBlockchain
+export const createWitnesses = (transactionBody: TransactionBody, transferAdaBlockchain: TransferAdaBlockchain) => {
+  const { fromAddress, fromUTXO } = transferAdaBlockchain
   const txHash = hash_transaction(transactionBody)
   const vKeyWitnesses = Vkeywitnesses.new()
   if (fromAddress) {
@@ -205,8 +205,8 @@ export const makeWitness = (privateKey: string, txHash: TransactionHash, vKeyWit
 }
 
 export const processFeeAndRest = async (transactionBuilder: TransactionBuilder, fromAmount: BigNumber, toAmount: BigNumber,
-                                        transferBtcBasedBlockchain: TransferBtcBasedBlockchain) => {
-  const { fromAddress, fromUTXO } = transferBtcBasedBlockchain
+                                        transferAdaBlockchain: TransferAdaBlockchain) => {
+  const { fromAddress, fromUTXO } = transferAdaBlockchain
   if (fromAddress) {
     addFeeAndRest(transactionBuilder, fromAddress[0].address, fromAmount, toAmount)
   } else if (fromUTXO) {
@@ -232,15 +232,15 @@ export const addFeeAndRest = (transactionBuilder: TransactionBuilder, address: s
   transactionBuilder.set_fee(BigNum.from_str(String(fee)))
 }
 
-export const signTransaction = (transactionBuilder: TransactionBuilder, transferBtcBasedBlockchain: TransferBtcBasedBlockchain, privateKeysToSign: (string|undefined)[]) => {
+export const signTransaction = (transactionBuilder: TransactionBuilder, transferAdaBlockchain: TransferAdaBlockchain, privateKeysToSign: (string|undefined)[]) => {
   const txBody = transactionBuilder.build()
-  const { fromAddress, fromUTXO } = transferBtcBasedBlockchain
+  const { fromAddress, fromUTXO } = transferAdaBlockchain
 
   if ((fromAddress && fromAddress[0].signatureId) || (fromUTXO && fromUTXO[0].signatureId)) {
-    return JSON.stringify({ txData: transferBtcBasedBlockchain, privateKeysToSign })
+    return JSON.stringify({ txData: transferAdaBlockchain, privateKeysToSign })
   }
 
-  const witnesses = createWitnesses(txBody, transferBtcBasedBlockchain)
+  const witnesses = createWitnesses(txBody, transferAdaBlockchain)
 
   return Buffer.from(
     Transaction.new(txBody, witnesses).to_bytes(),
