@@ -3,6 +3,7 @@ import {
   BurnMultiToken,
   BurnMultiTokenBatch,
   BurnNft,
+  CallReadSmartContractMethod,
   CallSmartContractMethod,
   CancelablePromise,
   ChainBurnErc20 as ApiChainBurnErc20,
@@ -145,6 +146,30 @@ export interface SdkWithMultiTokenFunctions {
     deployMultiTokenTransaction(body: ChainDeployMultiToken, provider?: string): Promise<string>
     burnMultiTokenTransaction(body: ChainBurnMultiToken, provider?: string): Promise<string>
     burnMultiTokenBatchTransaction(body: ChainBurnMultiTokenBatch, provider?: string): Promise<string>
+  }
+}
+
+export interface SdkWithSmartContractFunctions {
+  prepare: {
+    smartContractWriteMethodInvocationTransaction(
+      body: ChainSmartContractMethodInvocation,
+      provider?: string,
+    ): Promise<string>
+  }
+  send: {
+    smartContractReadMethodInvocationTransaction(
+      body: CallReadSmartContractMethod,
+      provider?: string,
+    ): Promise<{ data: any }>
+  }
+}
+
+export interface SdkWithCustodialFunctions {
+  prepare: {
+    generateCustodialWalletSignedTransaction(
+      body: ChainGenerateCustodialAddress,
+      provider?: string,
+    ): Promise<string>
   }
 }
 

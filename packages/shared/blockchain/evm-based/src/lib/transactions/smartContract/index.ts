@@ -30,8 +30,8 @@ const smartContractWriteMethodInvocation = async (
     web3,
     signatureId,
     fromPrivateKey,
-    fee.gasLimit,
-    fee.gasPrice,
+    fee?.gasLimit,
+    fee?.gasPrice,
   )
 }
 
@@ -60,7 +60,7 @@ export const smartContract = (args: {
        * @param options.provider optional url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction data to be broadcast to blockchain.
        */
-      smartContractWriteMethodInvocation: async (
+      smartContractWriteMethodInvocationTransaction: async (
         body: ChainSmartContractMethodInvocation,
         provider?: string,
       ) => smartContractWriteMethodInvocation(body, args.web3, provider),
@@ -91,7 +91,7 @@ export const smartContract = (args: {
         if (body.methodABI.stateMutability === 'view') {
           return smartContractReadMethodInvocation(body, args.web3, provider)
         } else {
-          args.broadcastFunction({
+          return args.broadcastFunction({
             txData: await smartContractWriteMethodInvocation(body, args.web3, provider),
             signatureId: body.signatureId,
           })

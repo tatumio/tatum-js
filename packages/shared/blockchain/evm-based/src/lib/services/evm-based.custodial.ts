@@ -1,4 +1,3 @@
-import { GenerateCustodialWallet } from '@tatumio/api-client'
 import { ChainGenerateCustodialAddress } from '@tatumio/shared-blockchain-abstract'
 import {
   Custodial_1155_TokenWallet,
@@ -55,10 +54,10 @@ export const evmBasedCustodial = () => {
       }
 
       const mask =
-        (body.enableFungibleTokens && FUNGIBLE) |
-        (body.enableNonFungibleTokens && NON_FUNGIBLE) |
-        (body.enableSemiFungibleTokens && SEMI_FUNGIBLE) |
-        (body.enableBatchTransactions && BATCH)
+        ((body.enableFungibleTokens as any) && FUNGIBLE) |
+        ((body.enableNonFungibleTokens as any) && NON_FUNGIBLE) |
+        ((body.enableSemiFungibleTokens as any) && SEMI_FUNGIBLE) |
+        ((body.enableBatchTransactions as any) && BATCH)
 
       if (!mask) throw new Error('Unsupported combination of inputs.')
 

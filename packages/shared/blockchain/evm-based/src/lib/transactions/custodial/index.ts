@@ -30,8 +30,8 @@ const generateCustodialWallet = async (
     web3,
     body.signatureId,
     body.fromPrivateKey,
-    body.fee.gasLimit,
-    body.fee.gasPrice,
+    body.fee?.gasLimit,
+    body.fee?.gasPrice,
   )
 }
 
@@ -67,7 +67,7 @@ export const custodial = (args: {
       ) =>
         args.broadcastFunction({
           txData: await generateCustodialWallet(body, args.web3, provider),
-          signatureId: body.signatureId,
+          signatureId: 'body.signatureId',
         }),
     },
   }
