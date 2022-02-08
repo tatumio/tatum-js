@@ -1,5 +1,4 @@
 import { tronWalletExample } from './app/tron.wallet.example'
-import { tronApiExample } from './app/tron.api.example'
 import { tronKmsExample } from './app/tron.kms.example'
 import {
   tronLedgerAccountExample,
@@ -15,7 +14,6 @@ import { tronSubscriptionsExample } from './app/tron.subscriptions.example'
 import { tronTxWithPrivateKeyExample, tronTxWithSignatureIdExample } from './app/tron.tx.example'
 
 console.log(`Running ${tronWalletExample()}`)
-console.log(`Running ${tronApiExample()}`)
 console.log(`Running ${tronKmsExample()}`)
 console.log(`Running ${tronLedgerAccountExample()}`)
 console.log(`Running ${tronLedgerBlockAmountExample()}`)
