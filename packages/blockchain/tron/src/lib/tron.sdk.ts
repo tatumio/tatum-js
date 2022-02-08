@@ -11,7 +11,6 @@ const blockchain = Blockchain.TRON
 
 export const TatumTronSDK = (args: SDKArguments) => {
   const web = tronWeb()
-  const api = BlockchainTronService
 
   return {
     ...abstractBlockchainSdk({
@@ -19,7 +18,6 @@ export const TatumTronSDK = (args: SDKArguments) => {
       blockchain,
     }),
     transaction: tronTx({ tronWeb: web }),
-    api,
     wallet: tronWallet({ tronWeb: web }),
     tronWeb: web,
     record: tronRecord(),
