@@ -472,11 +472,7 @@ const _sendTransaction = async (
   testnet: boolean,
   { code, args, proposer, authorizations, payer, keyHash }: Transaction,
 ): Promise<TransactionResult> => {
-  console.log('work6')
-  const nw = networkUrl(testnet)
-  console.log('network', nw)
-  console.log('data', code, args, proposer, authorizations, payer, keyHash)
-  fcl.config().put('accessNode.api', nw)
+  fcl.config().put('accessNode.api', networkUrl(testnet))
   let response
   try {
     response = await fcl.send([
@@ -488,40 +484,40 @@ const _sendTransaction = async (
       fcl.limit(1000),
     ])
   } catch (e) {
+    console.error('Sending transaction with Flow client failed:', e)
     try {
       if (keyHash) {
         await flowSdkBlockchain.broadcast('', undefined, proposalKey(keyHash))
         delete process.env[keyHash]
       }
       // eslint-disable-next-line no-empty
-    } catch (_) {}
+    } catch (_) {
+      console.error('Broadcasting to Flow blockchain failed', e)
+      throw _
+    }
     throw e
   }
 
   const { transactionId } = response
   try {
-    let error
-    let events
-    try {
-      const result = await fcl.tx(response).onceSealed()
-      error = result.error
-      events = result.events
-      return {
-        id: transactionId,
-        error,
-        events,
-      }
-    } catch (e) {
-      console.log('Error', e)
+    const { error, events } = await fcl.tx(response).onceSealed()
+    return {
+      id: transactionId,
+      error,
+      events,
     }
+  } catch (e) {
+    console.log('Sealing transaction on Flow chain failed:', e)
+    throw e
   } finally {
     try {
       if (keyHash) {
         await flowSdkBlockchain.broadcast(transactionId, undefined, proposalKey(keyHash))
         delete process.env[keyHash]
       }
-      // eslint-disable-next-line no-empty
-    } catch (_) {}
+    } catch (_) {
+      console.error('Broadcasting to Flow blockchain failed', _)
+    }
   }
 }
 
