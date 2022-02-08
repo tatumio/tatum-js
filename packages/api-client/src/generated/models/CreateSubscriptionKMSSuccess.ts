@@ -6,7 +6,7 @@ export type CreateSubscriptionKMSSuccess = {
     /**
      * Type of the subscription.
      */
-    type: CreateSubscriptionKMSSuccess.type;
+    type: 'KMS_COMPLETED_TX';
     /**
      * Additional attributes based on the subscription type.
      */
@@ -16,16 +16,4 @@ export type CreateSubscriptionKMSSuccess = {
          */
         url: string;
     };
-}
-
-export namespace CreateSubscriptionKMSSuccess {
-
-    /**
-     * Type of the subscription.
-     */
-    export enum type {
-        KMS_COMPLETED_TX = 'KMS_COMPLETED_TX',
-    }
-
-
 }

@@ -6,7 +6,7 @@ export type TransferMultiTokenKMSCelo = {
     /**
      * Chain to work with.
      */
-    chain: TransferMultiTokenKMSCelo.chain;
+    chain: 'CELO';
     /**
      * Blockchain address to send Multi Token token to
      */
@@ -42,26 +42,5 @@ export type TransferMultiTokenKMSCelo = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: TransferMultiTokenKMSCelo.feeCurrency;
-}
-
-export namespace TransferMultiTokenKMSCelo {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

@@ -321,6 +321,28 @@ export class LedgerOrderBookService {
                     }
 
                     /**
+                     * List all matched orders from FUTURE_SELL/FUTURE_BUY trades
+                     * <h4>1 credit per API call.</h4><br/><p>List all matched orders from the FUTURE_BUY OR FUTURE_SELL orders.</p>
+                     * @param requestBody
+                     * @returns Trade OK
+                     * @throws ApiError
+                     */
+                    public static getMatchedTrades(
+                        requestBody: ListOderBookActiveSellBody,
+                    ): CancelablePromise<Array<Trade>> {
+                        return __request({
+                            method: 'POST',
+                            path: `/v3/trade/matched`,
+                            body: requestBody,
+                            mediaType: 'application/json',
+                            errors: {
+                                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                                500: `Internal server error. There was an error on the server while processing the request.`,
+                            },
+                        });
+                    }
+
+                    /**
                      * Get existing trade
                      * <h4>1 credit for API call</h4><br/><p>Get existing opened trade.</p>
                      * @param id Trade ID

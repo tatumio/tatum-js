@@ -6,11 +6,11 @@ export type GenerateCustodialWalletBatchCeloKMS = {
     /**
      * Blockchain to work with.
      */
-    chain: GenerateCustodialWalletBatchCeloKMS.chain;
+    chain: 'CELO';
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: GenerateCustodialWalletBatchCeloKMS.feeCurrency;
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
      * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
      */
@@ -44,25 +44,4 @@ export type GenerateCustodialWalletBatchCeloKMS = {
      * Nonce to be set to the transaction. If not present, last known nonce will be used.
      */
     nonce?: number;
-}
-
-export namespace GenerateCustodialWalletBatchCeloKMS {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
 }

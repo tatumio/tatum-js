@@ -34,12 +34,13 @@ export class LedgerAccountService {
      * <li><b>XRP</b> - xpub is the address field from <a href="#operation/XrpWallet">generate account</a></li>
      * <li><b>XLM</b> - xpub is the address field from <a href="#operation/XlmWallet">generate account</a></li>
      * <li><b>BNB</b> - xpub is the address field from <a href="#operation/BnbGenerateWallet">generate account</a></li>
-     * <li><b>BSC</b> - xpub is the address field from <a href="#operation/BscGenerateWallet">generate wallet</a></li>
-     * <li><b>EGLD</b> - no xpub, use mnemonic for the address field from <a href="#operation/EgldGenerateWallet">generate wallet</a></li>
-     * <li><b>ALGO</b> - no xpub, use mnemonic for the address field from <a href="#operation/AlgoGenerateWallet">generate wallet</a></li>
-     * <li><b>MATIC</b> - xpub is the address field from <a href="#operation/PolygonGenerateWallet">generate wallet</a></li>
-     * <li><b>KCS</b> - xpub is the address field from <a href="#operation/KcsGenerateWallet">generate wallet</a></li>
-     * <li><b>CELO, cEUR, cUSD and ERC20</b> - xpub is the address field from <a href="#operation/CeloGenerateWallet">generate wallet</a></li>
+     * <li><b>BSC</b> - xpub can be obtained from <a href="#operation/BscGenerateWallet">generate wallet</a></li>
+     * <li><b>EGLD</b> - no xpub, use address field from <a href="#operation/EgldGenerateWallet">generate wallet</a></li>
+     * <li><b>ALGO</b> - no xpub, use address field from <a href="#operation/AlgoGenerateWallet">generate wallet</a></li>
+     * <li><b>SOL</b> - no xpub, use address field from <a href="#operation/SolanaGenerateWallet">generate wallet</a></li>
+     * <li><b>MATIC</b> - xpub can be obtained from <a href="#operation/PolygonGenerateWallet">generate wallet</a></li>
+     * <li><b>KCS</b> - xpub can be obtained from <a href="#operation/KcsGenerateWallet">generate wallet</a></li>
+     * <li><b>CELO, cEUR, cUSD and ERC20</b> - xpub can be obtained from <a href="#operation/CeloGenerateWallet">generate wallet</a></li>
      * <li><b>TRON and TRC tokens</b> - xpub can be obtained from <a href="#operation/GenerateTronwallet">generate wallet</a></li>
      * <li><b>FLOW and FUSD</b> - xpub can be obtained from <a href="#operation/GenerateFlowwallet">generate wallet</a></li>
      * </ul>

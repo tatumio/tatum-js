@@ -6,7 +6,7 @@ export type ChainDeployCeloErc20KMS = {
     /**
      * Chain to work with.
      */
-    chain: ChainDeployCeloErc20KMS.chain;
+    chain: 'CELO';
     /**
      * Symbol of the ERC20 token
      */
@@ -42,26 +42,5 @@ export type ChainDeployCeloErc20KMS = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: ChainDeployCeloErc20KMS.feeCurrency;
-}
-
-export namespace ChainDeployCeloErc20KMS {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

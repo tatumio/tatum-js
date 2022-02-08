@@ -1,7 +1,7 @@
 import { CreateTrade, VirtualCurrency } from '@tatumio/api-client'
 import { TatumEthSDK } from '@tatumio/eth'
 import { Currency } from '@tatumio/shared-core'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
 const ethSDK = TatumEthSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
@@ -66,7 +66,7 @@ export async function ethLedgerOrderBookExample() {
   await ethSDK.ledger.orderBook.cancelByAccount('5e68c66581f2ee32bc354087')
   const newTrade = await ethSDK.ledger.orderBook.newTrade({
     // TODO openapi bug
-    type: CreateTrade.type.BUY,
+    type: 'BUY',
     price: '8650.4',
     amount: '15000',
     pair: 'ETH/EUR',
@@ -134,11 +134,11 @@ export async function ethLedgerVirtualCurrencyExample() {
     name: 'VC_VIRTUAL',
     supply: '1000000',
     // TODO openapi bug
-    basePair: VirtualCurrency.basePair.ETH,
+    basePair: 'ETH',
     baseRate: 1,
     customer: {
       // TODO openapi bug
-      accountingCurrency: VirtualCurrency.accountingCurrency.USD,
+      accountingCurrency: 'USD',
       customerCountry: 'US',
       externalId: '123654',
       providerCountry: 'US',
@@ -147,7 +147,7 @@ export async function ethLedgerVirtualCurrencyExample() {
     accountCode: 'AC_1011_B',
     accountNumber: '1234567890',
     // TODO openapi bug
-    accountingCurrency: VirtualCurrency.accountingCurrency.USD,
+    accountingCurrency: 'USD',
   })
   const virtualCurrency = await ethSDK.ledger.virtualCurrency.getByName('VC_VIRTUAL')
   const mintTx = await ethSDK.ledger.virtualCurrency.mint({
@@ -162,6 +162,6 @@ export async function ethLedgerVirtualCurrencyExample() {
     name: 'VC_VIRTUAL',
     baseRate: 1,
     // TODO openapi bug
-    basePair: VirtualCurrency.basePair.EUR,
+    basePair: 'USD',
   })
 }

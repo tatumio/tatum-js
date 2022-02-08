@@ -10,11 +10,11 @@ export type CreateRecordCelo = {
     /**
      * Blockchain, where to store log data.
      */
-    chain: CreateRecordCelo.chain;
+    chain: 'CELO';
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: CreateRecordCelo.feeCurrency;
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
      * Private key of account, from which the transaction will be initiated. If not present, transaction fee will be debited from Tatum internal account and additional credits will be charged.
      */
@@ -27,25 +27,4 @@ export type CreateRecordCelo = {
      * Blockchain address to store log on. If not defined, it will be stored on an address, from which the transaction was being made.
      */
     to?: string;
-}
-
-export namespace CreateRecordCelo {
-
-    /**
-     * Blockchain, where to store log data.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
 }

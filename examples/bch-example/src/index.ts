@@ -1,5 +1,5 @@
 import { bchWalletExample } from './app/bch.wallet.example'
-import { bchApiExample } from './app/bch.api.example'
+import { bchBlockchainExample } from './app/bch.blockchain.example'
 import { bchKmsExample } from './app/bch.kms.example'
 import {
   bchLedgerAccountsExample,
@@ -14,7 +14,7 @@ import { exchangeRateExample } from './app/bch.root.example'
 import { bchTransactionsExample } from './app/bch.tx.example'
 
 console.log(`Running ${bchWalletExample()}`)
-console.log(`Running ${bchApiExample()}`)
+console.log(`Running ${bchBlockchainExample()}`)
 console.log(`Running ${bchKmsExample()}`)
 console.log(`Running ${bchLedgerAccountsExample()}`)
 console.log(`Running ${bchLedgerBlockAmountExample()}`)

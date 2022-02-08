@@ -6,7 +6,7 @@ export type BurnMultiTokenCelo = {
     /**
      * Chain to work with.
      */
-    chain: BurnMultiTokenCelo.chain;
+    chain: 'CELO';
     /**
      * Address of holder
      */
@@ -34,26 +34,5 @@ export type BurnMultiTokenCelo = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: BurnMultiTokenCelo.feeCurrency;
-}
-
-export namespace BurnMultiTokenCelo {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

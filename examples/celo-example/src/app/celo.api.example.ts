@@ -1,7 +1,7 @@
 import { TransferCeloBlockchain } from '@tatumio/api-client'
 import { TatumCeloSDK } from '@tatumio/celo'
 import { Currency } from '@tatumio/shared-core'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
 const celoSDK = TatumCeloSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
@@ -40,9 +40,9 @@ export async function celoApiExample() {
     nonce: 0,
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     // TODO openapi bug
-    currency: TransferCeloBlockchain.currency.CELO,
+    currency: 'CELO',
     // TODO openapi bug
-    feeCurrency: TransferCeloBlockchain.feeCurrency.CELO,
+    feeCurrency: 'CELO',
     amount: '100000',
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a785',
   })

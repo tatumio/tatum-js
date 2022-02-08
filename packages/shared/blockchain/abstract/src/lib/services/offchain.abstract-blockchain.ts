@@ -1,4 +1,4 @@
-import { abstractSdkOffChain } from '@tatumio/abstract-sdk'
+import { abstractSdkOffChain } from '@tatumio/shared-abstract-sdk'
 import { Blockchain, blockchainHelper } from '@tatumio/shared-core'
 
 export const abstractBlockchainOffchain = (args: { blockchain: Blockchain }) => {
@@ -16,6 +16,7 @@ export const abstractBlockchainOffchain = (args: { blockchain: Blockchain }) => 
         ),
     },
     withdrawal: {
+      ...superObject.withdrawal,
       getAll: async (status?: 'InProgress' | 'Done' | 'Cancelled', pageSize = 50, offset = 0) =>
         superObject.withdrawal.getAll(
           pageSize,

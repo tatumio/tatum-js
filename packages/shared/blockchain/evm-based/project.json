@@ -10,8 +10,7 @@
         "outputPath": "dist/packages/shared/blockchain/evm-based",
         "tsConfig": "packages/shared/blockchain/evm-based/tsconfig.lib.json",
         "packageJson": "packages/shared/blockchain/evm-based/package.json",
-        "main": "packages/shared/blockchain/evm-based/src/index.ts",
-        "assets": ["packages/shared/blockchain/evm-based/*.md"]
+        "main": "packages/shared/blockchain/evm-based/src/index.ts"
       }
     },
     "lint": {
@@ -30,5 +29,5 @@
       }
     }
   },
-  "tags": ["scope:shared", "scope:evm-based"]
+  "tags": ["scope:evm-based"]
 }

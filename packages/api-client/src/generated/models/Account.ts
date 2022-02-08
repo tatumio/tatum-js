@@ -31,11 +31,7 @@ export type Account = {
      */
     accountCode?: string;
     /**
-     * Account number from external system.
-     */
-    accountNumber?: string;
-    /**
-     * Accounting currency of an account.
+     * All transaction will be accounted in this currency for all accounts.
      */
     accountingCurrency?: string;
     /**

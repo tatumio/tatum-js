@@ -6,11 +6,11 @@ export type ApproveNftSpendingCeloKMS = {
     /**
      * Blockchain to work with.
      */
-    chain: ApproveNftSpendingCeloKMS.chain;
+    chain: 'CELO';
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: ApproveNftSpendingCeloKMS.feeCurrency;
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
      * Address of the ERC20 token, which is used for buying NFT asset from the marketplace.
      */
@@ -52,25 +52,4 @@ export type ApproveNftSpendingCeloKMS = {
          */
         gasPrice: string;
     };
-}
-
-export namespace ApproveNftSpendingCeloKMS {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
 }

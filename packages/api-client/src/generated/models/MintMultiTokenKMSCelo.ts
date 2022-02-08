@@ -6,7 +6,7 @@ export type MintMultiTokenKMSCelo = {
     /**
      * Chain to work with.
      */
-    chain: MintMultiTokenKMSCelo.chain;
+    chain: 'CELO';
     /**
      * ID of token to be created.
      */
@@ -42,26 +42,5 @@ export type MintMultiTokenKMSCelo = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: MintMultiTokenKMSCelo.feeCurrency;
-}
-
-export namespace MintMultiTokenKMSCelo {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

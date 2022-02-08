@@ -6,7 +6,7 @@ export type GenerateMarketplaceTron = {
     /**
      * Blockchain to work with.
      */
-    chain?: GenerateMarketplaceTron.chain;
+    chain?: 'TRON';
     /**
      * Address of the recipient of the fee for the trade.
      */
@@ -23,16 +23,4 @@ export type GenerateMarketplaceTron = {
      * Fee in TRX to be paid.
      */
     feeLimit: number;
-}
-
-export namespace GenerateMarketplaceTron {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        TRON = 'TRON',
-    }
-
-
 }

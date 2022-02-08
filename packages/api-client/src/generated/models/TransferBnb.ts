@@ -30,7 +30,7 @@ export type TransferBnb = {
     /**
      * Private key of sender address.
      */
-    privateKey: string;
+    fromPrivateKey: string;
     /**
      * Note visible to owner of withdrawing account.
      */

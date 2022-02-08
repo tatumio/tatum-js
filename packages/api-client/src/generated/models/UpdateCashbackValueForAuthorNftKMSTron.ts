@@ -6,7 +6,7 @@ export type UpdateCashbackValueForAuthorNftKMSTron = {
     /**
      * Chain to work with.
      */
-    chain: UpdateCashbackValueForAuthorNftKMSTron.chain;
+    chain: 'TRON';
     /**
      * Blockchain address to perform transaction from
      */
@@ -35,16 +35,4 @@ export type UpdateCashbackValueForAuthorNftKMSTron = {
      * Max limit for fee to be paid, in TRX.
      */
     feeLimit: number;
-}
-
-export namespace UpdateCashbackValueForAuthorNftKMSTron {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        TRON = 'TRON',
-    }
-
-
 }

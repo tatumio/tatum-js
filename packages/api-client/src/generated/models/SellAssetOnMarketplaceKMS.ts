@@ -6,7 +6,7 @@ export type SellAssetOnMarketplaceKMS = {
     /**
      * Blockchain to work with.
      */
-    chain: SellAssetOnMarketplaceKMS.chain;
+    chain: 'ETH' | 'ONE' | 'BSC' | 'MATIC';
     /**
      * Address of the marketplace smart contract.
      */
@@ -28,7 +28,7 @@ export type SellAssetOnMarketplaceKMS = {
      */
     listingId: string;
     /**
-     * Amount of the assets to be sent. For ERC-721 tokens, enter 1.
+     * Amount of the assets to be sent. For ERC-721 tokens, enter amount only in case of natiev currency cashback.
      */
     amount?: string;
     /**
@@ -68,19 +68,4 @@ export type SellAssetOnMarketplaceKMS = {
          */
         gasPrice: string;
     };
-}
-
-export namespace SellAssetOnMarketplaceKMS {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        ONE = 'ONE',
-        BSC = 'BSC',
-        MATIC = 'MATIC',
-    }
-
-
 }

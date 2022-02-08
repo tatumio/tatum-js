@@ -6,7 +6,7 @@ export type BurnNftCelo = {
     /**
      * Chain to work with.
      */
-    chain: BurnNftCelo.chain;
+    chain: 'CELO';
     /**
      * ID of token to be destroyed.
      */
@@ -26,26 +26,5 @@ export type BurnNftCelo = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: BurnNftCelo.feeCurrency;
-}
-
-export namespace BurnNftCelo {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

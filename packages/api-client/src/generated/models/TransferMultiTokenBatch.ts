@@ -6,7 +6,7 @@ export type TransferMultiTokenBatch = {
     /**
      * Chain to work with.
      */
-    chain: TransferMultiTokenBatch.chain;
+    chain: 'ETH' | 'ONE' | 'MATIC' | 'KCS' | 'BSC';
     /**
      * Blockchain address to send Multi Token token to
      */
@@ -48,20 +48,4 @@ export type TransferMultiTokenBatch = {
          */
         gasPrice: string;
     };
-}
-
-export namespace TransferMultiTokenBatch {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        ONE = 'ONE',
-        MATIC = 'MATIC',
-        KCS = 'KCS',
-        BSC = 'BSC',
-    }
-
-
 }

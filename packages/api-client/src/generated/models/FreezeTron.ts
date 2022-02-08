@@ -18,22 +18,9 @@ export type FreezeTron = {
     /**
      * Resource to obtain, BANDWIDTH or ENERGY.
      */
-    resource: FreezeTron.resource;
+    resource: 'BANDWIDTH' | 'ENERGY';
     /**
      * Amount to be frozen in TRX.
      */
     amount: string;
-}
-
-export namespace FreezeTron {
-
-    /**
-     * Resource to obtain, BANDWIDTH or ENERGY.
-     */
-    export enum resource {
-        BANDWIDTH = 'BANDWIDTH',
-        ENERGY = 'ENERGY',
-    }
-
-
 }

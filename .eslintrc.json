@@ -17,30 +17,47 @@
             "allow": [],
             "depConstraints": [
               {
-                "sourceTag": "scope:shared",
-                "onlyDependOnLibsWithTags": ["scope:shared"]
+                "sourceTag": "type:sdk",
+                "onlyDependOnLibsWithTags": [
+                  "scope:shared",
+                  "scope:btc-based",
+                  "scope:evm-based",
+                  "scope:xrp-based"
+                ]
               },
               {
-                "sourceTag": "scope:sdk-main",
+                "sourceTag": "type:sdk-main",
                 "onlyDependOnLibsWithTags": ["*"]
               },
               {
-                "sourceTag": "scope:sdk",
-                "onlyDependOnLibsWithTags": ["scope:shared"]
+                "sourceTag": "type:example",
+                "onlyDependOnLibsWithTags": [
+                  "type:sdk",
+                  "type:sdk-main",
+                  "scope:shared",
+                  "scope:sdk",
+                  "scope:sdk-main"
+                ]
+              },
+              {
+                "sourceTag": "scope:shared",
+                "onlyDependOnLibsWithTags": ["scope:shared"],
+                "bannedExternalImports": ["bitco*", "*web3*", "*ethereum*"]
               },
               {
                 "sourceTag": "scope:btc-based",
-                "onlyDependOnLibsWithTags": ["scope:shared"],
+                "onlyDependOnLibsWithTags": ["scope:shared", "scope:btc-based"],
                 "bannedExternalImports": ["*web3*", "*ethereum*"]
               },
               {
                 "sourceTag": "scope:evm-based",
-                "onlyDependOnLibsWithTags": ["scope:shared"],
+                "onlyDependOnLibsWithTags": ["scope:shared", "scope:evm-based"],
                 "bannedExternalImports": ["bitco*"]
               },
               {
-                "sourceTag": "type:example",
-                "onlyDependOnLibsWithTags": ["scope:shared", "scope:sdk", "scope:sdk-main"]
+                "sourceTag": "scope:xrp-based",
+                "onlyDependOnLibsWithTags": ["scope:shared", "scope:xrp-based"],
+                "bannedExternalImports": ["*web3*", "*ethereum*", "bitco*"]
               },
               {
                 "sourceTag": "*",
@@ -57,6 +74,13 @@
       "extends": ["plugin:@nrwl/nx/typescript"],
       "rules": {
         "@typescript-eslint/ban-ts-comment": "off"
+      }
+    },
+    {
+      "files": ["*spec.ts"],
+      "extends": ["plugin:@nrwl/nx/typescript"],
+      "rules": {
+        "@typescript-eslint/no-empty-function": "off"
       }
     },
     {

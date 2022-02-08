@@ -6,7 +6,7 @@ export type CreateSubscriptionTradeMatch = {
     /**
      * Type of the subscription.
      */
-    type: CreateSubscriptionTradeMatch.type;
+    type: 'CUSTOMER_TRADE_MATCH';
     /**
      * Additional attributes based on the subscription type.
      */
@@ -20,16 +20,4 @@ export type CreateSubscriptionTradeMatch = {
          */
         url: string;
     };
-}
-
-export namespace CreateSubscriptionTradeMatch {
-
-    /**
-     * Type of the subscription.
-     */
-    export enum type {
-        CUSTOMER_TRADE_MATCH = 'CUSTOMER_TRADE_MATCH',
-    }
-
-
 }

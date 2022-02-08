@@ -6,7 +6,7 @@ export type ApproveErc20 = {
     /**
      * Chain to work with.
      */
-    chain: ApproveErc20.chain;
+    chain: 'ETH' | 'BSC' | 'MATIC' | 'ONE';
     /**
      * Amount to be approved for the spender.
      */
@@ -27,19 +27,4 @@ export type ApproveErc20 = {
      * Nonce to be set to transaction. If not present, last known nonce will be used.
      */
     nonce?: number;
-}
-
-export namespace ApproveErc20 {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        BSC = 'BSC',
-        MATIC = 'MATIC',
-        ONE = 'ONE',
-    }
-
-
 }

@@ -1,6 +1,6 @@
 import { TransferBscBlockchain } from '@tatumio/api-client'
 import { TatumBscSDK } from '@tatumio/bsc'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
 const bscSDK = TatumBscSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
@@ -36,7 +36,7 @@ export async function bscApiExample() {
     nonce: 0,
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     // TODO openapi bug
-    currency: TransferBscBlockchain.currency.B2U_BSC,
+    currency: 'B2U_BSC',
     fee: {
       gasLimit: '40000',
       gasPrice: '20',

@@ -1,6 +1,6 @@
 import { TransferOneBlockchain } from '@tatumio/api-client'
 import { TatumOneSDK } from '@tatumio/one'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
 const oneSDK = TatumOneSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
@@ -36,7 +36,7 @@ export async function oneApiExample() {
     nonce: 0,
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     // TODO openapi bug
-    currency: TransferOneBlockchain.currency.ONE,
+    currency: 'ONE',
     fee: {
       gasLimit: '40000',
       gasPrice: '20',

@@ -10,8 +10,7 @@
         "outputPath": "dist/packages/api-client",
         "main": "packages/api-client/src/index.ts",
         "packageJson": "packages/api-client/package.json",
-        "tsConfig": "packages/api-client/tsconfig.lib.json",
-        "assets": ["packages/api-client/*.md"]
+        "tsConfig": "packages/api-client/tsconfig.lib.json"
       }
     },
     "lint": {

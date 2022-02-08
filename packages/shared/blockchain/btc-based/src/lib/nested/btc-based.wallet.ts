@@ -1,4 +1,4 @@
-import { btcBasedUtils } from '../btc-based.utils'
+import { btcBasedWalletUtils } from '../btc-based.wallet.utils'
 import { TronWallet } from '@tatumio/api-client'
 import { BtcBasedBlockchain } from '@tatumio/shared-core'
 
@@ -11,7 +11,7 @@ export const btcBasedWallet = (args: { blockchain: BtcBasedBlockchain }) => {
      * @returns blockchain address
      */
     generateAddressFromXPub(xpub: string, i: number, options?: { testnet: boolean }): string {
-      return btcBasedUtils.generateAddressFromXPub(args.blockchain, xpub, i, options)
+      return btcBasedWalletUtils.generateAddressFromXPub(args.blockchain, xpub, i, options)
     },
 
     /**
@@ -26,7 +26,7 @@ export const btcBasedWallet = (args: { blockchain: BtcBasedBlockchain }) => {
       i: number,
       options?: { testnet: boolean },
     ): Promise<string> {
-      return btcBasedUtils.generatePrivateKeyFromMnemonic(args.blockchain, mnemonic, i, options)
+      return btcBasedWalletUtils.generatePrivateKeyFromMnemonic(args.blockchain, mnemonic, i, options)
     },
 
     /**
@@ -35,7 +35,7 @@ export const btcBasedWallet = (args: { blockchain: BtcBasedBlockchain }) => {
      * @returns blockchain private key to the address
      */
     generateAddressFromPrivateKey(privateKey: string, options?: { testnet: boolean }): string {
-      return btcBasedUtils.generateAddressFromPrivateKey(args.blockchain, privateKey, options)
+      return btcBasedWalletUtils.generateAddressFromPrivateKey(args.blockchain, privateKey, options)
     },
 
     // @TODO replace with general wallet (DTO)
@@ -46,7 +46,7 @@ export const btcBasedWallet = (args: { blockchain: BtcBasedBlockchain }) => {
      * @returns wallet or a combination of address and private key
      */
     async generateWallet(mnemonic?: string, options?: { testnet: boolean }): Promise<TronWallet> {
-      return btcBasedUtils.generateBlockchainWallet(args.blockchain, mnemonic, options)
+      return btcBasedWalletUtils.generateBlockchainWallet(args.blockchain, mnemonic, options)
     },
   }
 }

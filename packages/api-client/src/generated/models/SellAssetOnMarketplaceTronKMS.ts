@@ -6,7 +6,7 @@ export type SellAssetOnMarketplaceTronKMS = {
     /**
      * Blockchain to work with.
      */
-    chain: SellAssetOnMarketplaceTronKMS.chain;
+    chain: 'TRON';
     /**
      * Address of the marketplace smart contract.
      */
@@ -63,16 +63,4 @@ export type SellAssetOnMarketplaceTronKMS = {
      * Fee in TRX to be paid.
      */
     feeLimit: number;
-}
-
-export namespace SellAssetOnMarketplaceTronKMS {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        TRON = 'TRON',
-    }
-
-
 }

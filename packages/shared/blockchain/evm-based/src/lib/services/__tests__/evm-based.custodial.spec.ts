@@ -1,5 +1,4 @@
 import { evmBasedCustodial } from '../evm-based.custodial'
-import { GenerateCustodialWallet } from '@tatumio/api-client'
 import {
   Custodial_1155_TokenWallet,
   Custodial_1155_TokenWalletWithBatch,
@@ -17,7 +16,6 @@ import {
   CustodialFullTokenWalletWithBatch,
 } from '../../contracts'
 import { ContractAbi } from '../../contracts/common.contracts'
-import chain = GenerateCustodialWallet.chain
 
 describe('evmBasedCustodial', () => {
   const custodialService = evmBasedCustodial()
@@ -61,7 +59,7 @@ describe('evmBasedCustodial', () => {
         expected: ContractAbi,
       ) => {
         const result = custodialService.obtainCustodialAddressType({
-          chain: chain.ETH,
+          chain: 'ETH',
           fromPrivateKey: '',
           enableFungibleTokens,
           enableNonFungibleTokens,
@@ -75,7 +73,7 @@ describe('evmBasedCustodial', () => {
     it('All negative', async () => {
       expect(() => {
         custodialService.obtainCustodialAddressType({
-          chain: chain.ETH,
+          chain: 'ETH',
           fromPrivateKey: '',
           enableFungibleTokens: false,
           enableNonFungibleTokens: false,

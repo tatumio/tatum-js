@@ -10,8 +10,7 @@
         "outputPath": "dist/packages/sdk",
         "main": "packages/sdk/src/index.ts",
         "packageJson": "packages/sdk/package.json",
-        "tsConfig": "packages/sdk/tsconfig.lib.json",
-        "assets": ["packages/sdk/*.md"]
+        "tsConfig": "packages/sdk/tsconfig.lib.json"
       }
     },
     "lint": {
@@ -30,5 +29,5 @@
       }
     }
   },
-  "tags": ["scope:sdk-main"]
+  "tags": ["type:sdk-main"]
 }

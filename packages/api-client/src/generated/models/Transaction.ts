@@ -33,11 +33,11 @@ export type Transaction = {
     /**
      * Type of operation.
      */
-    operationType: Transaction.operationType;
+    operationType: 'PAYMENT' | 'WITHDRAWAL' | 'BLOCKCHAIN_TRANSACTION' | 'EXCHANGE' | 'FAILED' | 'DEPOSIT' | 'MINT' | 'REVOKE';
     /**
      * Type of payment.
      */
-    transactionType: Transaction.transactionType;
+    transactionType: 'FAILED' | 'DEBIT_PAYMENT' | 'CREDIT_PAYMENT' | 'CREDIT_DEPOSIT' | 'DEBIT_WITHDRAWAL' | 'CANCEL_WITHDRAWAL' | 'DEBIT_OUTGOING_PAYMENT' | 'CREDIT_INCOMING_PAYMENT' | 'EXCHANGE_BUY' | 'EXCHANGE_SELL';
     /**
      * Transaction internal reference - unique identifier within Tatum ledger. In order of failure, use this value to search for problems.
      */
@@ -70,39 +70,4 @@ export type Transaction = {
      * For operationType DEPOSIT, BLOCKCHAIN_TRANSACTION it represents transaction id, for which deposit occured.
      */
     txId?: string;
-}
-
-export namespace Transaction {
-
-    /**
-     * Type of operation.
-     */
-    export enum operationType {
-        PAYMENT = 'PAYMENT',
-        WITHDRAWAL = 'WITHDRAWAL',
-        BLOCKCHAIN_TRANSACTION = 'BLOCKCHAIN_TRANSACTION',
-        EXCHANGE = 'EXCHANGE',
-        FAILED = 'FAILED',
-        DEPOSIT = 'DEPOSIT',
-        MINT = 'MINT',
-        REVOKE = 'REVOKE',
-    }
-
-    /**
-     * Type of payment.
-     */
-    export enum transactionType {
-        FAILED = 'FAILED',
-        DEBIT_PAYMENT = 'DEBIT_PAYMENT',
-        CREDIT_PAYMENT = 'CREDIT_PAYMENT',
-        CREDIT_DEPOSIT = 'CREDIT_DEPOSIT',
-        DEBIT_WITHDRAWAL = 'DEBIT_WITHDRAWAL',
-        CANCEL_WITHDRAWAL = 'CANCEL_WITHDRAWAL',
-        DEBIT_OUTGOING_PAYMENT = 'DEBIT_OUTGOING_PAYMENT',
-        CREDIT_INCOMING_PAYMENT = 'CREDIT_INCOMING_PAYMENT',
-        EXCHANGE_BUY = 'EXCHANGE_BUY',
-        EXCHANGE_SELL = 'EXCHANGE_SELL',
-    }
-
-
 }

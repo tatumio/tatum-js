@@ -6,7 +6,7 @@ export type BurnNftTron = {
     /**
      * Chain to work with.
      */
-    chain: BurnNftTron.chain;
+    chain: 'TRON';
     /**
      * ID of token to be destroyed.
      */
@@ -23,16 +23,4 @@ export type BurnNftTron = {
      * Max limit for fee to be paid, in TRX.
      */
     feeLimit: number;
-}
-
-export namespace BurnNftTron {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        TRON = 'TRON',
-    }
-
-
 }

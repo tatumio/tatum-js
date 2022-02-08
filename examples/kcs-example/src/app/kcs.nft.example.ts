@@ -9,7 +9,7 @@ import {
 } from '@tatumio/api-client'
 import { TatumKcsSDK } from '@tatumio/kcs'
 import { Currency } from '@tatumio/shared-core'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
 const kcsSDK = TatumKcsSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
