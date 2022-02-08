@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
+    "algo": "packages/blockchain/algo",
     "api-client": "packages/api-client",
     "bch": "packages/blockchain/bch",
     "bch-example": "examples/bch-example",
