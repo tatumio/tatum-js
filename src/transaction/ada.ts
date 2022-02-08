@@ -80,6 +80,14 @@ export const addOutputs = (transactionBuilder: TransactionBuilder, tos: To[]) =>
   return amount
 }
 
+export const addFee = (txBuilder: TransactionBuilder, feeInLovelace: BigNumber) => {
+  txBuilder.set_fee(BigNum.from_str(feeInLovelace.toString()))
+}
+
+export const addChangeIfNeeded = (txBuilder: TransactionBuilder, changeAddress: string) => {
+  txBuilder.add_change_if_needed(Address.from_bech32(changeAddress))
+}
+
 export const addInputs = async (transactionBuilder: TransactionBuilder, transferAdaBlockchain: TransferAdaBlockchain) => {
   const { fromUTXO, fromAddress } = transferAdaBlockchain
   if (fromAddress) {
@@ -204,32 +212,22 @@ export const makeWitness = (privateKey: string, txHash: TransactionHash, vKeyWit
   vKeyWitnesses.add(make_vkey_witness(txHash, privateKeyCardano))
 }
 
-export const processFeeAndRest = async (transactionBuilder: TransactionBuilder, fromAmount: BigNumber, toAmount: BigNumber,
-                                        transferAdaBlockchain: TransferAdaBlockchain) => {
-  const { fromAddress, fromUTXO } = transferAdaBlockchain
-  if (fromAddress) {
-    addFeeAndRest(transactionBuilder, fromAddress[0].address, fromAmount, toAmount)
-  } else if (fromUTXO) {
-    const txHash = fromUTXO[0].txHash
-    const transaction = await adaGetTransaction(txHash)
-    const output = transaction.outputs.find(output => output.index === fromUTXO[0].index)
-    if (output) {
-      addFeeAndRest(transactionBuilder, output.address, fromAmount, toAmount)
-    }
+export const processFeeAndRest = async (
+  transactionBuilder: TransactionBuilder,
+  fromAmountInLovelace: BigNumber,
+  toAmountInLovelace: BigNumber,
+  transferAdaBlockchain: TransferAdaBlockchain,
+) => {
+  const feeInLovelace = new BigNumber(adaToLovelace(transferAdaBlockchain?.fee || 0))
+  const changeAddress = transferAdaBlockchain.changeAddress
+  if (feeInLovelace.isEqualTo(0)) {
+    addChangeIfNeeded(transactionBuilder, changeAddress)
   } else {
-    throw new Error('Field fromAddress or fromUTXO is not filled.')
+    const changeInLovelace = fromAmountInLovelace.minus(toAmountInLovelace).minus(feeInLovelace)
+    if (changeInLovelace.gt(0))
+      addOutputLovelace(transactionBuilder, changeAddress, changeInLovelace.toString())
+    addFee(transactionBuilder, feeInLovelace)
   }
-}
-
-export const addFeeAndRest = (transactionBuilder: TransactionBuilder, address: string, fromAmount: BigNumber, toAmount: BigNumber) => {
-  const fromRest = Address.from_bech32(address)
-  const tmpOutput = TransactionOutput.new(
-    fromRest,
-    Value.new(BigNum.from_str(String('1000000'))),
-  )
-  const fee = parseInt(transactionBuilder.min_fee().to_str()) + parseInt(transactionBuilder.fee_for_output(tmpOutput).to_str())
-  addOutputLovelace(transactionBuilder, address, fromAmount.minus(toAmount).minus(fee).toString())
-  transactionBuilder.set_fee(BigNum.from_str(String(fee)))
 }
 
 export const signTransaction = (transactionBuilder: TransactionBuilder, transferAdaBlockchain: TransferAdaBlockchain, privateKeysToSign: (string|undefined)[]) => {
