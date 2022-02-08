@@ -84,6 +84,10 @@ export enum SdkErrorCode {
   XRP_SECRET_DOES_NOT_MATCH = 'xrp.secret.does-not-match',
   FEE_TOO_SMALL = 'fee.too-small',
   TX_NOT_FOUND = 'tx.not.found',
+
+  VALIDATION_AMOUNT = 'validation.amount',
+  SECRET_CHECKSUM = 'validation.secret.checksum',
+  VALIDATION_TO_ADDRESS = 'validation.to-address',
 }
 
 // @TODO pass params?
@@ -91,6 +95,7 @@ export const SdkErrorMessage: Record<SdkErrorCode, string> = {
   [SdkErrorCode.API_ERROR]: `Error during api request`,
   [SdkErrorCode.COMMON_ERROR]: `Error during execution`,
   [SdkErrorCode.FEE_TOO_SMALL]: `Fee is too small`,
+  [SdkErrorCode.VALIDATION_AMOUNT]: `Amount has to be positive number`,
   // BTC
   [SdkErrorCode.BTC_FEE_TOO_SMALL]: `Fee is too small. Please make sure that amount to send < balance`,
   [SdkErrorCode.BTC_UTXO_NOT_FOUND]: `UTXO not found. Please check that outputs are valid`,
@@ -100,4 +105,8 @@ export const SdkErrorMessage: Record<SdkErrorCode, string> = {
 
   // XRP
   [SdkErrorCode.XRP_SECRET_DOES_NOT_MATCH]: `Secret not valid or doesn't match address`,
+
+  // XLM
+  [SdkErrorCode.SECRET_CHECKSUM]: `Secret is not valid. Please check your secret for typos`,
+  [SdkErrorCode.VALIDATION_TO_ADDRESS]: `To address is wrong`,
 }
