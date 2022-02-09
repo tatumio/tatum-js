@@ -20,17 +20,7 @@ import {
   TransferFlow,
   TransferFlowCustomTx,
 } from '@tatumio/shared-core'
-import {
-  burnNftTokenTxTemplate,
-  metadataNftTokenScript,
-  mintMultipleNftTokenTxTemplate,
-  mintNftTokenTxTemplate,
-  prepareAddPublicKeyToAccountTxTemplate,
-  prepareCreateAccountWithFUSDFromPublicKeyTxTemplate,
-  prepareTransferTxTemplate,
-  tokenByAddressNftTokenScript,
-  transferNftTokenTxTemplate,
-} from './transactions'
+import { flowTxTemplates } from './flow.tx.templates'
 import { flowWallet } from './flow.sdk.wallet'
 import { flowBlockchain } from './flow.blockchain'
 
@@ -50,6 +40,7 @@ export const FLOW_MAINNET_ADDRESSES = {
 
 const flowSdkWallet = flowWallet()
 const flowSdkBlockchain = flowBlockchain()
+const txTemplates = flowTxTemplates()
 
 export const flowTxService = () => {
   return {
@@ -74,7 +65,7 @@ export const flowTxService = () => {
       proposer?: (isPayer: boolean) => any,
       payer?: (isPayer: boolean) => any,
     ): Promise<{ txId: string; address: string }> => {
-      const code = prepareCreateAccountWithFUSDFromPublicKeyTxTemplate(testnet)
+      const code = txTemplates.prepareCreateAccountWithFUSDFromPublicKeyTxTemplate(testnet)
       const encodedPublicKey = encodeKey(publicKey, ECDSA_secp256k1, SHA3_256, 1000)
       const args = [{ type: 'String', value: encodedPublicKey }]
       const auth = getSigner(signerPrivateKey, signerAddress).signer
@@ -114,7 +105,7 @@ export const flowTxService = () => {
       proposer?: (args: any) => any,
       payer?: (args: any) => any,
     ): Promise<{ txId: string; address: string }> => {
-      const code = prepareAddPublicKeyToAccountTxTemplate()
+      const code = txTemplates.prepareAddPublicKeyToAccountTxTemplate()
       const encodedPublicKey = encodeKey(publicKey, ECDSA_secp256k1, SHA3_256, weight)
       const args = [{ type: 'String', value: encodedPublicKey }]
       const auth = getSigner(signerPrivateKey, signerAddress).signer
@@ -133,7 +124,7 @@ export const flowTxService = () => {
       return { txId: result.id, address: result.events[0].data.address }
     },
     getNftMetadata: async (testnet: boolean, account: string, id: string, contractAddress: string) => {
-      const code = metadataNftTokenScript(testnet)
+      const code = txTemplates.metadataNftTokenScript(testnet)
       const args = [
         { type: 'Address', value: account },
         { type: 'UInt64', value: id },
@@ -142,7 +133,7 @@ export const flowTxService = () => {
       return sendScript(testnet, code, args)
     },
     getNftTokenByAddress: async (testnet: boolean, account: string, contractAddress: string) => {
-      const code = tokenByAddressNftTokenScript(testnet)
+      const code = txTemplates.tokenByAddressNftTokenScript(testnet)
       const args = [
         { type: 'Address', value: account },
         { type: 'String', value: contractAddress },
@@ -165,7 +156,7 @@ export const flowTxService = () => {
       payer?: (isPayer: boolean) => any,
     ): Promise<{ txId: string; tokenId: string }> => {
       const bodyWithChain: FlowMintNft = { ...body, chain: Currency.FLOW }
-      const code = mintNftTokenTxTemplate(testnet)
+      const code = txTemplates.mintNftTokenTxTemplate(testnet)
       const { url, contractAddress: tokenType, to, account } = bodyWithChain
       const args = [
         { type: 'Address', value: to },
@@ -208,7 +199,7 @@ export const flowTxService = () => {
       payer?: (isPayer: boolean) => any,
     ): Promise<{ txId: string; tokenId: number[] }> => {
       const bodyWithChain: FlowMintMultipleNft = { ...body, chain: Currency.FLOW }
-      const code = mintMultipleNftTokenTxTemplate(testnet)
+      const code = txTemplates.mintMultipleNftTokenTxTemplate(testnet)
       const { url, contractAddress: tokenType, to, account } = bodyWithChain
       const args = [
         { type: 'Array', subType: 'Address', value: to },
@@ -257,7 +248,7 @@ export const flowTxService = () => {
       payer?: (isPayer: boolean) => any,
     ): Promise<{ txId: string }> => {
       const bodyWithChain: FlowTransferNft = { ...body, chain: Currency.FLOW }
-      const code = transferNftTokenTxTemplate(testnet)
+      const code = txTemplates.transferNftTokenTxTemplate(testnet)
       const { tokenId, to, account } = bodyWithChain
       const args = [
         { type: 'Address', value: to },
@@ -296,7 +287,7 @@ export const flowTxService = () => {
       payer?: (isPayer: boolean) => any,
     ): Promise<{ txId: string }> => {
       const bodyWithChain: FlowBurnNft = { ...body, chain: Currency.FLOW }
-      const code = burnNftTokenTxTemplate(testnet)
+      const code = txTemplates.burnNftTokenTxTemplate(testnet)
       const { tokenId, contractAddress: tokenType, account } = bodyWithChain
       const args = [
         { type: 'UInt64', value: tokenId },
@@ -376,7 +367,7 @@ export const flowTxService = () => {
         tokenName = 'FUSD'
         tokenStorage = 'fusd'
       }
-      const code = prepareTransferTxTemplate(testnet, tokenAddress, tokenName, tokenStorage)
+      const code = txTemplates.prepareTransferTxTemplate(testnet, tokenAddress, tokenName, tokenStorage)
       const args = [
         { value: parseFloat(body.amount).toFixed(8), type: 'UFix64' },
         { value: body.to, type: 'Address' },
