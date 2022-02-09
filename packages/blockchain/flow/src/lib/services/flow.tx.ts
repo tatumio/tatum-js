@@ -23,6 +23,8 @@ import {
 import { flowTxTemplates } from './flow.tx.templates'
 import { flowWallet } from './flow.sdk.wallet'
 import { flowBlockchain } from './flow.blockchain'
+import { FlowSdkError } from '../flow.sdk.errors'
+import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 export const FLOW_TESTNET_ADDRESSES = {
   FlowToken: '0x7e60df042a9c0868',
@@ -78,9 +80,6 @@ export const flowTxService = () => {
         payer: payer ? payer(true) : getApiSigner(true).signer,
         keyHash,
       })
-      if (result.error) {
-        throw new Error(result.error)
-      }
       return {
         txId: result.id,
         address: result.events.find((e: any) => e.type === 'flow.AccountCreated')?.data.address,
@@ -118,9 +117,6 @@ export const flowTxService = () => {
         keyHash,
         payer: payer ? payer(true) : getApiSigner(true).signer,
       })
-      if (result.error) {
-        throw new Error(result.error)
-      }
       return { txId: result.id, address: result.events[0].data.address }
     },
     getNftMetadata: async (testnet: boolean, account: string, id: string, contractAddress: string) => {
@@ -163,8 +159,8 @@ export const flowTxService = () => {
         { type: 'String', value: url },
         { type: 'String', value: tokenType },
       ]
-      const pk = await getPrivateKey(bodyWithChain, true)
-      if (!pk) throw new Error('No private key available')
+      const pk = await getPrivateKey(bodyWithChain)
+      if (!pk) throw new FlowSdkError(SdkErrorCode.FLOW_MISSING_PRIVATE_KEY)
       const auth = getSigner(pk, account).signer
       const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getApiSigner(false)
       const result = await _sendTransaction(testnet, {
@@ -175,9 +171,6 @@ export const flowTxService = () => {
         keyHash,
         payer: payer ? payer(true) : getApiSigner(true).signer,
       })
-      if (result.error) {
-        throw new Error(result.error)
-      }
       return {
         txId: result.id,
         tokenId: `${result.events.find((e: any) => e.type.includes('TatumMultiNFT.Minted'))?.data.id}`,
@@ -210,8 +203,8 @@ export const flowTxService = () => {
         },
         { type: 'String', value: tokenType },
       ]
-      const pk = await getPrivateKey(bodyWithChain, true)
-      if (!pk) throw new Error('No private key available')
+      const pk = await getPrivateKey(bodyWithChain)
+      if (!pk) throw new FlowSdkError(SdkErrorCode.FLOW_MISSING_PRIVATE_KEY)
       const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getApiSigner(false)
       const auth = getSigner(pk, account).signer
       const result = await _sendTransaction(testnet, {
@@ -222,9 +215,6 @@ export const flowTxService = () => {
         payer: payer ? payer(true) : getApiSigner(true).signer,
         keyHash,
       })
-      if (result.error) {
-        throw new Error(result.error)
-      }
       return {
         txId: result.id,
         tokenId: result.events
@@ -254,8 +244,8 @@ export const flowTxService = () => {
         { type: 'Address', value: to },
         { type: 'UInt64', value: tokenId },
       ]
-      const pk = await getPrivateKey(bodyWithChain, true)
-      if (!pk) throw new Error('No private key available')
+      const pk = await getPrivateKey(bodyWithChain)
+      if (!pk) throw new FlowSdkError(SdkErrorCode.FLOW_MISSING_PRIVATE_KEY)
       const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getApiSigner(false)
       const auth = getSigner(pk, account).signer
       const result = await _sendTransaction(testnet, {
@@ -266,9 +256,6 @@ export const flowTxService = () => {
         payer: payer ? payer(true) : getApiSigner(true).signer,
         keyHash,
       })
-      if (result.error) {
-        throw new Error(result.error)
-      }
       return { txId: result.id }
     },
     /**
@@ -293,8 +280,8 @@ export const flowTxService = () => {
         { type: 'UInt64', value: tokenId },
         { type: 'String', value: tokenType },
       ]
-      const pk = await getPrivateKey(bodyWithChain, true)
-      if (!pk) throw new Error('No private key available')
+      const pk = await getPrivateKey(bodyWithChain)
+      if (!pk) throw new FlowSdkError(SdkErrorCode.FLOW_MISSING_PRIVATE_KEY)
       const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getApiSigner(false)
       const auth = getSigner(pk, account).signer
       const result = await _sendTransaction(testnet, {
@@ -305,9 +292,6 @@ export const flowTxService = () => {
         payer: payer ? payer(true) : getApiSigner(true).signer,
         keyHash,
       })
-      if (result.error) {
-        throw new Error(result.error)
-      }
       return { txId: result.id }
     },
     /**
@@ -325,7 +309,7 @@ export const flowTxService = () => {
       payer?: (isPayer: boolean) => any,
     ): Promise<{ txId: string; events: any[] }> => {
       const pk = await getPrivateKey(body)
-      if (!pk) throw new Error('No private key available')
+      if (!pk) throw new FlowSdkError(SdkErrorCode.FLOW_MISSING_PRIVATE_KEY)
       const auth = getSigner(pk, body.account).signer
       const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getApiSigner(false)
       const result = await _sendTransaction(testnet, {
@@ -336,9 +320,6 @@ export const flowTxService = () => {
         keyHash,
         payer: payer ? payer(true) : getApiSigner(true).signer,
       })
-      if (result.error) {
-        throw new Error(result.error)
-      }
       return { txId: result.id, events: result.events }
     },
     /**
@@ -373,7 +354,7 @@ export const flowTxService = () => {
         { value: body.to, type: 'Address' },
       ]
       const pk = await getPrivateKey(body)
-      if (!pk) throw new Error('No private key available')
+      if (!pk) throw new FlowSdkError(SdkErrorCode.FLOW_MISSING_PRIVATE_KEY)
       const { signer: proposalSigner, keyHash } = proposer ? proposer(false) : getApiSigner(false)
       const auth = getSigner(pk, body.account).signer
       const result = await _sendTransaction(testnet, {
@@ -384,28 +365,19 @@ export const flowTxService = () => {
         payer: payer ? payer(true) : getApiSigner(true).signer,
         keyHash,
       })
-      if (result.error) {
-        throw new Error(result.error)
-      }
       return { txId: result.id }
     },
   }
 }
 
-const getPrivateKey = async (body: FlowMnemonicOrPrivateKeyOrSignatureId, tryMnemFirst = false) => {
+const getPrivateKey = async (body: FlowMnemonicOrPrivateKeyOrSignatureId) => {
   const { mnemonic, index, privateKey } = body
-  if (tryMnemFirst) {
-    return mnemonic && index && index >= 0
-      ? flowSdkWallet.generatePrivateKeyFromMnemonic(mnemonic, index)
-      : privateKey
+  if (privateKey) {
+    return privateKey
   } else {
-    if (privateKey) {
-      return privateKey
-    } else {
-      if (mnemonic && index && index >= 0) {
-        return flowSdkWallet.generatePrivateKeyFromMnemonic(mnemonic, index)
-      } else throw new Error('Insufficient info provided. Either private key or mnemonic required.')
-    }
+    if (mnemonic && index && index >= 0) {
+      return flowSdkWallet.generatePrivateKeyFromMnemonic(mnemonic, index)
+    } else throw new FlowSdkError(SdkErrorCode.FLOW_MISSING_MNEMONIC)
   }
 }
 
@@ -474,40 +446,40 @@ const _sendTransaction = async (
       fcl.payer(payer),
       fcl.limit(1000),
     ])
-  } catch (e) {
-    console.error('Sending transaction with Flow client failed:', e)
+  } catch (e: any) {
     try {
       if (keyHash) {
         await flowSdkBlockchain.broadcast('', undefined, proposalKey(keyHash))
         delete process.env[keyHash]
       }
       // eslint-disable-next-line no-empty
-    } catch (_) {
-      console.error('Broadcasting to Flow blockchain failed', e)
-      throw _
+    } catch (_: any) {
+      throw new FlowSdkError(_)
     }
-    throw e
+    throw new FlowSdkError(e)
   }
 
   const { transactionId } = response
   try {
     const { error, events } = await fcl.tx(response).onceSealed()
+    if (error) {
+      throw new FlowSdkError(error)
+    }
     return {
       id: transactionId,
-      error,
       events,
     }
-  } catch (e) {
-    console.log('Sealing transaction on Flow chain failed:', e)
-    throw e
+  } catch (e: any) {
+    throw new FlowSdkError(e)
   } finally {
     try {
       if (keyHash) {
         await flowSdkBlockchain.broadcast(transactionId, undefined, proposalKey(keyHash))
         delete process.env[keyHash]
       }
-    } catch (_) {
-      console.error('Broadcasting to Flow blockchain failed', _)
+    } catch (_: any) {
+      // eslint-disable-next-line no-unsafe-finally
+      throw new FlowSdkError(_)
     }
   }
 }

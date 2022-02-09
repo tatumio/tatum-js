@@ -28,7 +28,6 @@ export type Transaction = {
 
 export type TransactionResult = {
   id: string
-  error: string
   events: { data: any }[]
 }
 
