@@ -5,7 +5,7 @@ import { BlockchainAlgorandAlgoService } from '@tatumio/api-client'
 
 const blockchain = Blockchain.ALGO
 
-export const TatumBtcSDK = (args: SDKArguments) => {
+export const TatumAlgoSDK = (args: SDKArguments) => {
   return {
     ...abstractBlockchainSdk({
       ...args,
@@ -17,8 +17,7 @@ export const TatumBtcSDK = (args: SDKArguments) => {
       getCurrentBlock: BlockchainAlgorandAlgoService.algorandGetCurrentBlock,
       getBlockchainAccountBalance: BlockchainAlgorandAlgoService.algorandGetBalance,
       getTransaction: BlockchainAlgorandAlgoService.algorandGetTransaction,
-      getPayTransactionByFromAndTo: BlockchainAlgorandAlgoService.algorandGetPayTransactionsByFromTo,
-      sendTransaction: BlockchainAlgorandAlgoService.algorandBlockchainTransfer,
+      getPayTransactionByFromTo: BlockchainAlgorandAlgoService.algorandGetPayTransactionsByFromTo,
     },
   }
 }

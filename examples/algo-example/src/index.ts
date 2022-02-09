@@ -1,3 +1,3 @@
-import { algoExample } from './app/algo-example'
+import { algoBlockchainExample } from './app/algo.blockchain.example'
 
-console.log(`Running ${algoExample()}`)
+console.log(`Running ${algoBlockchainExample()}`)
