@@ -1,7 +1,7 @@
 import { Blockchain, Currency, ChainTransactionKMS } from '@tatumio/shared-core'
 import { flowTxService } from './flow.tx'
 import { abstractBlockchainKms } from '@tatumio/shared-blockchain-abstract'
-import { FlowTxType } from '../constants'
+import { FlowTxType } from '../flow.constants'
 
 export const flowKmsService = (args: { blockchain: Blockchain }) => {
   return {
