@@ -1,6 +1,7 @@
 import { Blockchain, Currency, ChainTransactionKMS } from '@tatumio/shared-core'
 import { flowTxService } from './flow.tx'
 import { abstractBlockchainKms } from '@tatumio/shared-blockchain-abstract'
+import { FlowTxType } from '../constants'
 
 export const flowKmsService = (args: { blockchain: Blockchain }) => {
   return {
@@ -54,18 +55,6 @@ export const flowKmsService = (args: { blockchain: Blockchain }) => {
       }
     },
   }
-}
-
-export enum FlowTxType {
-  CREATE_ACCOUNT,
-  ADD_PK_TO_ACCOUNT,
-  TRANSFER,
-  DEPLOY_NFT,
-  MINT_NFT,
-  MINT_MULTIPLE_NFT,
-  BURN_NFT,
-  TRANSFER_NFT,
-  CUSTOM_TX,
 }
 
 export interface TransactionKMS {
