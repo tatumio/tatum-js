@@ -129,22 +129,22 @@ export const obtainCustodialAddressType = (body: GenerateCustodialAddress) => {
 
 const getCustodialFactoryContractAddress = (chain: Currency, testnet: boolean) => {
     switch (chain) {
-        case Currency.CELO:
-            return testnet ? '0x481D6f967B120E094D3551DA2C4951242Be582af' : '0x014a09b194A2Ed928aB777E83E2F27BbAc9529D0';
-        case Currency.TRON:
-            return testnet ? 'TRM8P5gpzAr85p2a5BMvqb9UfEdFEwEgA7' : 'TG59uLNQvCR45F6yKHPXipvCu7wg5D88Wr';
-        case Currency.ONE:
-            return testnet ? '0xb1462fE8E9Cf82c0296022Cca7bEfA3Fd4c12B34' : '0x6d3C42602DDf00B5E40bD810aA2075815Dae5D4D';
-        case Currency.XDC:
-            return testnet ? 'xdc6709Bdda623aF7EB152cB2fE2562aB7e031e564f' : 'xdc6709Bdda623aF7EB152cB2fE2562aB7e031e564f';
-        case Currency.ETH:
-            return testnet ? (process.env.TESTNET_TYPE === 'ethereum-rinkeby' ? '0x4eC40a4A0dA042d46cC4529f918080957003b531' : '0x3485fdba44736859267789ac9c248cc4c1443956') : '0x4cb7933f595cb081804f8078f7fe7eff717bdc4b';
-        case Currency.MATIC:
-            return testnet ? '0x6792a82ffab4890cfbcee6c2c775ae9c898afe71' : '0xb87c97ceb7d75f908fa3045f386474515547c232';
-        case Currency.BSC:
-            return testnet ? '0xeac818b4CC468Cf6556f772C4BB86e132E6ac0F3' : '0x85ec2f5d5b53D5140ffCbAfABeDA6525485427Aa';
-        default:
-            throw new Error('Unsupported chain.');
+      case Currency.CELO:
+        return testnet ? '0x481D6f967B120E094D3551DA2C4951242Be582af' : '0xC7f23843d5A51221df4B6D0778910b39b40134b4';
+      case Currency.TRON:
+        return testnet ? 'TRM8P5gpzAr85p2a5BMvqb9UfEdFEwEgA7' : 'TG59uLNQvCR45F6yKHPXipvCu7wg5D88Wr';
+      case Currency.ONE:
+        return testnet ? '0xb1462fE8E9Cf82c0296022Cca7bEfA3Fd4c12B34' : '0x86e27174edd52469f928f6206f3d8e4316525f00';
+      case Currency.XDC:
+        return testnet ? 'xdc6709Bdda623aF7EB152cB2fE2562aB7e031e564f' : 'xdc3485fdba44736859267789ac9c248cc4c1443956';
+      case Currency.ETH:
+        return testnet ? (process.env.TESTNET_TYPE === 'ethereum-rinkeby' ? '0x4eC40a4A0dA042d46cC4529f918080957003b531' : '0x3485fdba44736859267789ac9c248cc4c1443956') : '0xd8050943c1E2764F750EC868ae1B375C4768d89A';
+      case Currency.MATIC:
+        return testnet ? '0x6792a82ffab4890cfbcee6c2c775ae9c898afe71' : '0xfc05d7fed6af03df8095cc93b674acac3f72756c';
+      case Currency.BSC:
+        return testnet ? '0xeac818b4CC468Cf6556f772C4BB86e132E6ac0F3' : '0x9067f90c0975679158331fe43ad7a0a105424e0d';
+      default:
+        throw new Error('Unsupported chain.');
     }
 };
 
