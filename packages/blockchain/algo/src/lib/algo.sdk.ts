@@ -3,6 +3,7 @@ import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { abstractBlockchainSdk } from '@tatumio/shared-blockchain-abstract'
 import { BlockchainAlgorandAlgoService } from '@tatumio/api-client'
 import { algoWeb } from './services/algo.web'
+import { algoRecord } from './services/algo.record'
 
 const blockchain = Blockchain.ALGO
 
@@ -15,6 +16,7 @@ export const TatumAlgoSDK = (args: SDKArguments) => {
       blockchain,
     }),
     algoWeb: web,
+    record: algoRecord(),
     blockchain: {
       broadcast: BlockchainAlgorandAlgoService.algoandBroadcast,
       getBlock: BlockchainAlgorandAlgoService.algorandGetBlock,
