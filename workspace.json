@@ -23,7 +23,6 @@
     "one-example": "examples/one-example",
     "polygon": "packages/blockchain/polygon",
     "polygon-example": "examples/polygon-example",
-    "scrypta": "packages/blockchain/scrypta",
     "sdk": "packages/sdk",
     "shared-abstract-sdk": "packages/shared/abstract-sdk",
     "shared-blockchain-abstract": "packages/shared/blockchain/abstract",
