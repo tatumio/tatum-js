@@ -1,9 +1,10 @@
 import {
+  blockchainTestFactory,
   REPLACE_ME_WITH_TATUM_API_KEY,
   TEST_DATA,
   TestCasesApiCallMapping,
   testHelper,
-} from '@tatumio/shared-testing'
+} from '@tatumio/shared-testing-common'
 import { TatumBtcSDK } from '../btc.sdk'
 import * as apiClient from '@tatumio/api-client'
 import { BtcTransactionFromAddress } from '@tatumio/api-client'
@@ -11,7 +12,7 @@ import { BtcTransactionFromAddress } from '@tatumio/api-client'
 jest.mock('@tatumio/api-client')
 const mockedApi = jest.mocked(apiClient.ApiServices, true)
 
-describe('TatumBtcSDK - blockchain', () => {
+describe('BtcSDK - blockchain', () => {
   const sdk = TatumBtcSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
   afterEach(() => {
@@ -41,11 +42,7 @@ describe('TatumBtcSDK - blockchain', () => {
     ],
   }
 
-  it.each(testHelper.testCasesFromMapping(blockchainFunctionsMapping))(
-    '%p',
-    async (sdkMethod: any, apiMethod: any, args: unknown[] = []) => {
-      await testHelper.callFnWithArgs(blockchain[sdkMethod], args)
-      testHelper.expectMockCalled(apiMethod, args)
-    },
-  )
+  describe('API methods mapping', () => {
+    blockchainTestFactory.apiMethods(blockchain, blockchainFunctionsMapping)
+  })
 })

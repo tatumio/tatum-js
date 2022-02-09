@@ -1,0 +1,33 @@
+{
+  "root": "packages/blockchain/tron",
+  "sourceRoot": "packages/blockchain/tron/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/blockchain/tron",
+        "tsConfig": "packages/blockchain/tron/tsconfig.lib.json",
+        "packageJson": "packages/blockchain/tron/package.json",
+        "main": "packages/blockchain/tron/src/index.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/blockchain/tron/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/blockchain/tron"],
+      "options": {
+        "jestConfig": "packages/blockchain/tron/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["scope:sdk"]
+}

@@ -9,24 +9,23 @@ import { xlmTxService } from './services/xlm.tx'
 const blockchain = Blockchain.XLM
 
 export const TatumXlmSDK = (args: SDKArguments) => {
-  const api = BlockchainXlmService
-
   return {
     ...abstractBlockchainSdk({ ...args, blockchain }),
-    api,
     offchain: xlmOffchainService({ blockchain }),
     kms: xlmKmsService({ blockchain }),
     transaction: xlmTxService(),
     wallet: BlockchainXlmService.xlmWallet,
     blockchain: {
+      info: BlockchainXlmService.xlmGetLastClosedLedger,
       getAccountInfo: BlockchainXlmService.xlmGetAccountInfo,
       broadcast: BlockchainXlmService.xlmBroadcast,
-      getCurrentLedger: BlockchainXlmService.xlmGetLastClosedLedger,
       getFee: BlockchainXlmService.xlmGetFee,
+      trustLine: BlockchainXlmService.xlmTrustLineBlockchain,
       getLedger: BlockchainXlmService.xlmGetLedger,
       getLedgerTx: BlockchainXlmService.xlmGetLedgerTx,
       getTransaction: BlockchainXlmService.xlmGetTransaction,
       getAccountTransactions: BlockchainXlmService.xlmGetAccountTx,
+      sendTransaction: BlockchainXlmService.xlmTransferBlockchain,
     },
   }
 }

@@ -59,6 +59,7 @@ export const TATUM_API_CONSTANTS = {
   HEADER_API_KEY: 'x-api-key',
   API_VERSION: 'v3',
   API_KEY: '',
+  TRON_PRO_API_KEY: '',
 }
 
 export function TatumApi(apiKey: string, url = TATUM_API_CONSTANTS.URL) {

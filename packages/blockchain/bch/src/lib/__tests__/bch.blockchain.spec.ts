@@ -1,9 +1,10 @@
 import {
+  blockchainTestFactory,
   REPLACE_ME_WITH_TATUM_API_KEY,
   TEST_DATA,
   TestCasesApiCallMapping,
   testHelper,
-} from '@tatumio/shared-testing'
+} from '@tatumio/shared-testing-common'
 import * as apiClient from '@tatumio/api-client'
 import { BchTransaction } from '@tatumio/api-client'
 import { TatumBchSDK } from '../bch.sdk'
@@ -38,11 +39,7 @@ describe('TatumBchSDK - blockchain', () => {
     ],
   }
 
-  it.each(testHelper.testCasesFromMapping(blockchainFunctionsMapping))(
-    '%p',
-    async (sdkMethod: any, apiMethod: any, args: unknown[] = []) => {
-      await testHelper.callFnWithArgs(blockchain[sdkMethod], args)
-      testHelper.expectMockCalled(apiMethod, args)
-    },
-  )
+  describe('API methods mapping', () => {
+    blockchainTestFactory.apiMethods(blockchain, blockchainFunctionsMapping)
+  })
 })

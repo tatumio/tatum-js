@@ -1,6 +1,6 @@
 import { TatumCeloSDK } from '@tatumio/celo'
 import { Currency } from '@tatumio/shared-core'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
 const celoSDK = TatumCeloSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 

@@ -29,5 +29,5 @@
       }
     }
   },
-  "tags": ["scope:sdk", "scope:btc-based"]
+  "tags": ["type:sdk", "scope:btc-based"]
 }
