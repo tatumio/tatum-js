@@ -22,4 +22,3 @@ export const TatumBtcSDK = (args: SDKArguments) => {
     },
   }
 }
-
