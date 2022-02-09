@@ -1,1 +1,1 @@
-export * from './lib/blockchain-algo'
+export * from './lib/algo.sdk'
