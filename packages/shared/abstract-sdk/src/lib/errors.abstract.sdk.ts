@@ -84,7 +84,8 @@ export enum SdkErrorCode {
   XRP_SECRET_DOES_NOT_MATCH = 'xrp.secret.does-not-match',
   FEE_TOO_SMALL = 'fee.too-small',
   TX_NOT_FOUND = 'tx.not.found',
-
+  FLOW_MISSING_PRIVATE_KEY = 'flow.private-key.missing',
+  FLOW_MISSING_MNEMONIC = 'flow.mnemonic.missing',
   VALIDATION_AMOUNT = 'validation.amount',
   SECRET_CHECKSUM = 'validation.secret.checksum',
   VALIDATION_TO_ADDRESS = 'validation.to-address',
@@ -111,4 +112,7 @@ export const SdkErrorMessage: Record<SdkErrorCode, string> = {
   [SdkErrorCode.SECRET_CHECKSUM]: `Secret is not valid. Please check your secret for typos`,
   [SdkErrorCode.VALIDATION_TO_ADDRESS]: `To address is wrong`,
   [SdkErrorCode.XLM_NO_SEQUENCE]: `Account does not contain sequence. Please check account info`,
+  // FLOW
+  [SdkErrorCode.FLOW_MISSING_PRIVATE_KEY]: `No private key available`,
+  [SdkErrorCode.FLOW_MISSING_MNEMONIC]: `Mnemonic required`,
 }
