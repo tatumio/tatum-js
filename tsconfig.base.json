@@ -30,7 +30,6 @@
       "@tatumio/ltc": ["packages/blockchain/ltc/src/index.ts"],
       "@tatumio/one": ["packages/blockchain/one/src/index.ts"],
       "@tatumio/polygon": ["packages/blockchain/polygon/src/index.ts"],
-      "@tatumio/scrypta": ["packages/blockchain/scrypta/src/index.ts"],
       "@tatumio/sdk": ["packages/sdk/src/index.ts"],
       "@tatumio/shared-abstract-sdk": ["packages/shared/abstract-sdk/src/index.ts"],
       "@tatumio/shared-blockchain-abstract": ["packages/shared/blockchain/abstract/src/index.ts"],
@@ -41,6 +40,7 @@
       "@tatumio/shared-testing-common": ["packages/shared/testing/common/src/index.ts"],
       "@tatumio/shared-testing-evm-based": ["packages/shared/testing/evm-based/src/index.ts"],
       "@tatumio/shared-testing-xrp-based": ["packages/shared/testing/xrp-based/src/index.ts"],
+      "@tatumio/tron": ["packages/blockchain/tron/src/index.ts"],
       "@tatumio/xlm": ["packages/blockchain/xlm/src/index.ts"],
       "@tatumio/xrp": ["packages/blockchain/xrp/src/index.ts"]
     }

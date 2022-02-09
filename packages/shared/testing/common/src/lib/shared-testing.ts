@@ -11,6 +11,7 @@ import { BSC_TEST_DATA } from './test-data/bsc.test-data'
 import { XRP_TEST_DATA } from './test-data/xrp.test-data'
 import { XLM_TEST_DATA } from './test-data/xlm.test-data'
 import { SCRYPTA_TEST_DATA } from './test-data/scrypta.test-data'
+import { TRON_TEST_DATA } from './test-data/tron.test-data'
 
 export type BlockchainNetworkTestData = {
   XPUB: string
@@ -66,6 +67,7 @@ export const TEST_DATA = {
   XRP: XRP_TEST_DATA,
   XLM: XLM_TEST_DATA,
   SCRYPTA: SCRYPTA_TEST_DATA,
+  TRON: TRON_TEST_DATA,
 }
 
 export function expectHexString(value: string): void {
