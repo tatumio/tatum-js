@@ -20,6 +20,7 @@ const get = async <T>(url: string): Promise<T> => {
   return data
 }
 
+// Flow specific methods performing internal tasks on the API
 export const flowBlockchain = () => {
   return {
     getSignKey: async (isPayer: boolean): Promise<{ keyId: number; address: string }> =>
