@@ -82,6 +82,8 @@ export enum SdkErrorCode {
   BTC_NOT_ENOUGH_BALANCE = 'btc.balance.not-enough',
   BTC_FEE_IS_TOO_LARGE = 'btc.fee.too-large',
   TX_NOT_FOUND = 'tx.not.found',
+  FLOW_MISSING_PRIVATE_KEY = 'flow.private-key.missing',
+  FLOW_MISSING_MNEMONIC = 'flow.mnemonic.missing',
 }
 
 // @TODO pass params?
@@ -94,4 +96,7 @@ export const SdkErrorMessage: Record<SdkErrorCode, string> = {
   [SdkErrorCode.BTC_NOT_ENOUGH_BALANCE]: `Not enough coins on address to perform this transaction`,
   [SdkErrorCode.BTC_FEE_IS_TOO_LARGE]: `Fee is to big, make sure it's not a mistake`,
   [SdkErrorCode.TX_NOT_FOUND]: `TX not found`,
+  // FLOW
+  [SdkErrorCode.FLOW_MISSING_PRIVATE_KEY]: `No private key available`,
+  [SdkErrorCode.FLOW_MISSING_MNEMONIC]: `Mnemonic required`,
 }
