@@ -1,5 +1,5 @@
 import { TatumSolanaSDK } from './solana.sdk'
-import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testing'
+import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testing-common'
 
 describe('TatumSolanaSDK', () => {
   jest.setTimeout(99999)
@@ -59,7 +59,7 @@ describe('TatumSolanaSDK', () => {
     })
 
     describe('transfer nft', () => {
-      it('should be valid from privateKey', async () => {
+     xit('should be valid from privateKey', async () => {
         const result = await sdk.transaction.transferNft(
           {
             to,

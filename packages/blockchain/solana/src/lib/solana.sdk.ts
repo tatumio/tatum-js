@@ -4,7 +4,7 @@ import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { abstractBlockchainSdk } from '@tatumio/shared-blockchain-abstract'
 import { SolanaWeb3, solanaWeb3 } from './services/solana.web3'
 import { solanaKmsService } from './services/solana.kms'
-import { MintSolanaNft, solanaTxService, TransferSolana, TransferSolanaNft } from './services/solana.tx'
+import { solanaTxService } from './services/solana.tx'
 
 const blockchain = Blockchain.SOL
 
