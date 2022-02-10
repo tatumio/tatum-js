@@ -31,6 +31,7 @@
     "@tatumio/bitcoincashjs2-lib": "^4.1.2",
     "algosdk": "^1.13.1",
     "axios": "^0.24.0",
+    "base32.js": "^0.1.0",
     "bignumber.js": "^9.0.2",
     "bip32": "^2.0.5",
     "bip39": "^3.0.2",
