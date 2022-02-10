@@ -59,7 +59,7 @@ describe('TatumSolanaSDK', () => {
     })
 
     describe('transfer nft', () => {
-     xit('should be valid from privateKey', async () => {
+      xit('should be valid from privateKey', async () => {
         const result = await sdk.transaction.transferNft(
           {
             to,
