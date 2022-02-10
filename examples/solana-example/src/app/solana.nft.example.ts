@@ -1,21 +1,16 @@
 import { TatumSolanaSDK } from '@tatumio/solana'
-import { Currency } from '@tatumio/shared-core'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
 const solanaSDK = TatumSolanaSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function solanaNftExample() {
   const metadataURI = await solanaSDK.nft.getNFTMetadataURI(
-    Currency.SOL,
+    'SOL',
     '0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326',
     '1',
   )
 
-  const royalty = await solanaSDK.nft.getNFTRoyalty(
-    Currency.SOL,
-    '0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326',
-    '1',
-  )
+  const royalty = await solanaSDK.nft.getNFTRoyalty('SOL', '0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326', '1')
 
   const minted = await solanaSDK.nft.mintNFT({
     chain: 'SOL',
@@ -33,7 +28,7 @@ export async function solanaNftExample() {
   })
 
   await solanaSDK.nft.prepareAddNFTMinterAbstraction(
-    Currency.SOL,
+    'SOL',
     '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     '1000',
   )

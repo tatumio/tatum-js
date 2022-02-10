@@ -1,15 +1,14 @@
 import { TatumSolanaSDK } from '@tatumio/solana'
-import { Currency } from '@tatumio/shared-core'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
 const solanaSDK = TatumSolanaSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function solanaLedgerAccountExample() {
   const account = await solanaSDK.ledger.account.create({
-    currency: Currency.SOL,
+    currency: 'SOL',
   })
   const accounts = await solanaSDK.ledger.account.createMultiple({
-    accounts: [{ currency: Currency.SOL }, { currency: Currency.SOL }],
+    accounts: [{ currency: 'SOL' }, { currency: 'SOL' }],
   })
   await solanaSDK.ledger.account.activate('5e68c66581f2ee32bc354087')
   await solanaSDK.ledger.account.deactivate('5e68c66581f2ee32bc354087')
