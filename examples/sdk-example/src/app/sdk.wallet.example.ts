@@ -1,5 +1,5 @@
 import { TatumSDK } from '@tatumio/sdk'
-import { Currency } from '@tatumio/shared-core'
+import { Currency } from '@tatumio/api-client'
 import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testing-common'
 
 const tatumSDK = TatumSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })

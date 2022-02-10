@@ -1,8 +1,6 @@
 import { getDerivationPath } from './lib/derivation-path.common'
 import { getNetworkConfig } from './lib/btc-based.network.common'
 
-export * from './lib/models/Currency'
-export * from './lib/models/Fiat'
 export * from './lib/models/Blockchain'
 export * from './lib/models/Web3'
 export * from './lib/models/ChainTransactionKMS'

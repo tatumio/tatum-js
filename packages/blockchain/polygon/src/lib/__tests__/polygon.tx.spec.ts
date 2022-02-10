@@ -1,5 +1,5 @@
 import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testing-common'
-import { Blockchain, Currency } from '@tatumio/shared-core'
+import { Blockchain } from '@tatumio/shared-core'
 import { polygonTxService } from '../services/polygon.tx'
 import { TatumPolygonSDK } from '../polygon.sdk'
 import {
@@ -8,6 +8,7 @@ import {
   erc721TestFactory,
   multiTokenTestFactory,
 } from '@tatumio/shared-testing-evm-based'
+import { Currency } from '@tatumio/api-client'
 
 const blockchain = Blockchain.POLYGON
 

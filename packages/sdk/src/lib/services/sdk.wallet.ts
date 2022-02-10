@@ -1,7 +1,7 @@
-import { blockchainHelper, Currency } from '@tatumio/shared-core'
+import { blockchainHelper } from '@tatumio/shared-core'
+import { Currency, TronWallet } from '@tatumio/api-client'
 import { btcBasedWalletUtils } from '@tatumio/shared-blockchain-btc-based'
 import { evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
-import { TronWallet } from '@tatumio/api-client'
 
 export const walletSdk = {
   /**

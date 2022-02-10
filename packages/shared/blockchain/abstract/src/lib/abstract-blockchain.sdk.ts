@@ -11,6 +11,7 @@ import {
   DeployMultiToken,
   DeployNft,
   ExchangeRate,
+  Fiat,
   MintErc721,
   MintMultipleNft,
   MintMultiToken,
@@ -28,7 +29,7 @@ import {
   XlmWallet,
   XrpWallet,
 } from '@tatumio/api-client'
-import { Blockchain, blockchainHelper, Fiat } from '@tatumio/shared-core'
+import { Blockchain, blockchainHelper } from '@tatumio/shared-core'
 import { abstractSdk } from '@tatumio/shared-abstract-sdk'
 import { abstractBlockchainKms } from './services/kms.abstract-blockchain'
 import { abstractBlockchainOffchain } from './services/offchain.abstract-blockchain'
@@ -50,8 +51,11 @@ export const abstractBlockchainSdk = (args: { apiKey: string; url?: TatumUrl; bl
 
 export interface SdkWithWalletFunctions {
   generateAddressFromXPub(xpub: string, i: number, options?: { testnet: boolean }): string
+
   generatePrivateKeyFromMnemonic(mnemonic: string, i: number, options?: { testnet: boolean }): Promise<string>
+
   generateAddressFromPrivateKey(privateKey: string, options?: { testnet: boolean }): string
+
   generateWallet(mnemonic?: string, options?: { testnet: boolean }): Promise<TronWallet>
 }
 
@@ -106,6 +110,7 @@ export type ChainDeployMultiToken = FromPrivateKeyOrSignatureId<DeployMultiToken
 
 export interface SdkWithErc20Functions {
   decimals(contractAddress: string, provider?: string): any
+
   prepare: {
     deploySignedTransaction(body: ChainDeployErc20, provider?: string): Promise<string>
     transferSignedTransaction(body: ChainTransferErc20, provider?: string): Promise<string>
