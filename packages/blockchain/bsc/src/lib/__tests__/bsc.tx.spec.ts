@@ -1,6 +1,6 @@
 import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testing-common'
 import { TatumBscSDK } from '../bsc.sdk'
-import { Blockchain, Currency } from '@tatumio/shared-core'
+import { Blockchain } from '@tatumio/shared-core'
 import { bscTxService } from '../services/bsc.tx'
 import {
   erc20TestFactory,
@@ -8,6 +8,7 @@ import {
   erc721TestFactory,
   multiTokenTestFactory,
 } from '@tatumio/shared-testing-evm-based'
+import { Currency } from '@tatumio/api-client'
 
 describe('BscSDK - tx', () => {
   const sdk = TatumBscSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })

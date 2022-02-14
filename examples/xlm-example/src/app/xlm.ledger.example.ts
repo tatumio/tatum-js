@@ -1,7 +1,6 @@
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 import { TatumXlmSDK } from '@tatumio/xlm'
-import { Currency } from '@tatumio/shared-core'
-import { CreateTrade, VirtualCurrency } from '@tatumio/api-client'
+import { Currency } from '@tatumio/api-client'
 
 const xlmSDK = TatumXlmSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 

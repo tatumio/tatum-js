@@ -8,7 +8,7 @@ import {
   MATIC_BASED_CURRENCIES,
   NativeCurrency,
   TRON_CURRENCIES,
-} from './Currency'
+} from '@tatumio/api-client'
 
 export const BlockchainCurrencyMapping: Record<
   Blockchain,
