@@ -7,9 +7,9 @@ import {
   erc721TestFactory,
   ganacheHelper,
   multiTokenTestFactory,
+  nativeTestFactory,
 } from '@tatumio/shared-testing-evm-based'
 import { Currency } from '@tatumio/api-client'
-import { nativeTestFactory } from '../../../../../shared/testing/evm-based/src/lib/evm-based.native.test-factory'
 
 const blockchain = Blockchain.KLAY
 
