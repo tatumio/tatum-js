@@ -27,11 +27,7 @@ describe('TatumAlgoSDK - blockchain', () => {
     getCurrentBlock: [api.algorandGetCurrentBlock, undefined],
     getBlockchainAccountBalance: [api.algorandGetBalance, testData.TESTNET.ADDRESS_0],
     getTransaction: [api.algorandGetTransaction, testData.TX_HASH],
-    getPayTransactionByFromTo: [
-      // todo
-      api.algorandGetPayTransactionsByFromTo as any,
-      { from: '1644830680', to: '1644830682' },
-    ],
+    getPayTransactionByFromTo: [api.algorandGetPayTransactionsByFromTo, '1644830680', '1644830682'],
   }
 
   describe('API methods mapping', () => {
