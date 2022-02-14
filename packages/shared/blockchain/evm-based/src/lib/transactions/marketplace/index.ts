@@ -281,7 +281,8 @@ export const marketplace = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      updateFee: async (body: ChainUpdateFee, provider?: string) => updateFee(body, args.web3, provider),
+      updateFee: async (body: ChainUpdateFee, provider?: string) =>
+       updateFee(body, args.web3, provider),
       /**
        * Update marketplace fee recipient.
        * @param body request data
