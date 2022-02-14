@@ -197,7 +197,7 @@ export const algoTx = (args: { algoWeb: AlgoWeb }) => {
        * @returns transaction data to be broadcast to blockchain
        */
       createNFTSignedTransaction: async (
-        body:  DeployNft | DeployNftKMS,
+        body: DeployNft | DeployNftKMS,
         testnet = false,
         provider?: string,
       ) => prepareCreateNFTSignedTransaction(body, testnet, args.algoWeb, provider),
@@ -245,7 +245,7 @@ export const algoTx = (args: { algoWeb: AlgoWeb }) => {
        * @returns transaction id of the transaction in the blockchain
        */
       createNFTSignedTransaction: async (
-        body:  DeployNft | DeployNftKMS,
+        body: DeployNft | DeployNftKMS,
         testnet = false,
         provider?: string,
       ) =>
