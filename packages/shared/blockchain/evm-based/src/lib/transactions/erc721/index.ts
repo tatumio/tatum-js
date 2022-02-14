@@ -79,11 +79,11 @@ const mintCashbackSignedTransaction = async (body: ChainMintNft, web3: EvmBasedW
       to: evmBasedUtils.transformAddress(contractAddress!).trim(),
       data: erc20
         ? contract.methods
-          .mintWithCashback(transformedTo, tokenId, url, transformedAddresses, cb, erc20)
-          .encodeABI()
+            .mintWithCashback(transformedTo, tokenId, url, transformedAddresses, cb, erc20)
+            .encodeABI()
         : contract.methods
-          .mintWithCashback(transformedTo, tokenId, url, transformedAddresses, cb)
-          .encodeABI(),
+            .mintWithCashback(transformedTo, tokenId, url, transformedAddresses, cb)
+            .encodeABI(),
       nonce,
     }
 
@@ -137,11 +137,11 @@ export const mintMultipleCashbackSignedTransaction = async (
     to: evmBasedUtils.transformAddress(contractAddress).trim(),
     data: erc20
       ? contract.methods
-        .mintMultipleCashback(transformedTo, tokenId, url, transformedAddresses, cb, erc20)
-        .encodeABI()
+          .mintMultipleCashback(transformedTo, tokenId, url, transformedAddresses, cb, erc20)
+          .encodeABI()
       : contract.methods
-        .mintMultipleCashback(transformedTo, tokenId, url, transformedAddresses, cb)
-        .encodeABI(),
+          .mintMultipleCashback(transformedTo, tokenId, url, transformedAddresses, cb)
+          .encodeABI(),
     nonce,
   }
   return await evmBasedUtils.prepareSignedTransactionAbstraction(
@@ -245,12 +245,12 @@ const transferSignedTransaction = async (
     evmBasedUtils.transformAddress(contractAddress),
   )
   const dataBytes = provenance
-    ? Buffer.from(provenanceData + '\'\'\'###\'\'\'' + client.utils.toWei(tokenPrice!, 'ether'), 'utf8')
+    ? Buffer.from(provenanceData + "'''###'''" + client.utils.toWei(tokenPrice!, 'ether'), 'utf8')
     : ''
   const tokenData = provenance
     ? contract.methods
-      .safeTransfer(evmBasedUtils.transformAddress(to).trim(), tokenId, `0x${dataBytes.toString('hex')}`)
-      .encodeABI()
+        .safeTransfer(evmBasedUtils.transformAddress(to).trim(), tokenId, `0x${dataBytes.toString('hex')}`)
+        .encodeABI()
     : contract.methods.safeTransfer(evmBasedUtils.transformAddress(to).trim(), tokenId).encodeABI()
 
   const tx: TransactionConfig = {
@@ -313,9 +313,7 @@ const deploySignedTransaction = async (body: ChainDeployErc721, web3: EvmBasedWe
 
   const client = await web3.getClient(provider, fromPrivateKey)
 
-  const contract = new client.eth.Contract(
-    provenance ? Erc721_Provenance.abi : (Erc721Token.abi as any),
-  )
+  const contract = new client.eth.Contract(provenance ? Erc721_Provenance.abi : (Erc721Token.abi as any))
 
   // @ts-ignore
   const deploy = contract.deploy({
@@ -449,19 +447,19 @@ const mintMultipleProvenanceSignedTransaction = async (
     to: evmBasedUtils.transformAddress(contractAddress).trim(),
     data: erc20
       ? contract.methods
-        .mintMultiple(
-          transformedTo,
-          tokenId,
-          url,
-          authorAddresses ? transformedAddresses : [],
-          cb,
-          fv,
-          erc20,
-        )
-        .encodeABI()
+          .mintMultiple(
+            transformedTo,
+            tokenId,
+            url,
+            authorAddresses ? transformedAddresses : [],
+            cb,
+            fv,
+            erc20,
+          )
+          .encodeABI()
       : contract.methods
-        .mintMultiple(transformedTo, tokenId, url, authorAddresses ? transformedAddresses : [], cb, fv)
-        .encodeABI(),
+          .mintMultiple(transformedTo, tokenId, url, authorAddresses ? transformedAddresses : [], cb, fv)
+          .encodeABI(),
     nonce,
   }
   return await evmBasedUtils.prepareSignedTransactionAbstraction(

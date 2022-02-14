@@ -93,19 +93,17 @@ export async function klaytnTxWithSignatureIdExample(): Promise<void> {
   })
 
   // ERC721(NFT)
-  const preparedDeployErc721Transaction = await klaytnSDK.transaction.erc721.prepare.deploySignedTransaction(
-    {
-      chain: 'KLAY',
-      name: 'MY_TOKEN',
-      symbol: '1oido3id3',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
+  const preparedDeployErc721Transaction = await klaytnSDK.transaction.erc721.prepare.deploySignedTransaction({
+    chain: 'KLAY',
+    name: 'MY_TOKEN',
+    symbol: '1oido3id3',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
     },
-  )
+  })
 
   const sentDeployErc721Transaction = await klaytnSDK.transaction.erc721.send.deploySignedTransaction({
     chain: 'KLAY',
@@ -415,15 +413,16 @@ export async function klaytnTxWithSignatureIdExample(): Promise<void> {
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
     })
 
-  const sentMintMultiTokenTransaction =
-    await klaytnSDK.transaction.multiToken.send.mintMultiTokenTransaction({
+  const sentMintMultiTokenTransaction = await klaytnSDK.transaction.multiToken.send.mintMultiTokenTransaction(
+    {
       to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
       chain: 'KLAY',
       tokenId: '123',
       amount: '1000',
       signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-    })
+    },
+  )
 
   const preparedMintMultiTokenBatchTransaction =
     await klaytnSDK.transaction.multiToken.prepare.mintMultiTokenBatchTransaction({
@@ -495,15 +494,16 @@ export async function klaytnTxWithSignatureIdExample(): Promise<void> {
       account: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     })
 
-  const sentBurnMultiTokenTransaction =
-    await klaytnSDK.transaction.multiToken.send.burnMultiTokenTransaction({
+  const sentBurnMultiTokenTransaction = await klaytnSDK.transaction.multiToken.send.burnMultiTokenTransaction(
+    {
       chain: 'KLAY',
       tokenId: '123',
       amount: '1',
       signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
       account: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-    })
+    },
+  )
 
   const preparedBurnMultiTokenBatchTransaction =
     await klaytnSDK.transaction.multiToken.prepare.burnMultiTokenBatchTransaction({
@@ -616,19 +616,17 @@ export async function klaytnTxWithPrivateKeyExample(): Promise<void> {
   })
 
   // ERC721(NFT)
-  const preparedDeployErc721Transaction = await klaytnSDK.transaction.erc721.prepare.deploySignedTransaction(
-    {
-      chain: 'KLAY',
-      name: 'MY_TOKEN',
-      symbol: '1oido3id3',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
+  const preparedDeployErc721Transaction = await klaytnSDK.transaction.erc721.prepare.deploySignedTransaction({
+    chain: 'KLAY',
+    name: 'MY_TOKEN',
+    symbol: '1oido3id3',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
     },
-  )
+  })
 
   const sentDeployErc721Transaction = await klaytnSDK.transaction.erc721.send.deploySignedTransaction({
     chain: 'KLAY',
@@ -938,15 +936,16 @@ export async function klaytnTxWithPrivateKeyExample(): Promise<void> {
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
     })
 
-  const sentMintMultiTokenTransaction =
-    await klaytnSDK.transaction.multiToken.send.mintMultiTokenTransaction({
+  const sentMintMultiTokenTransaction = await klaytnSDK.transaction.multiToken.send.mintMultiTokenTransaction(
+    {
       to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
       chain: 'KLAY',
       tokenId: '123',
       amount: '1000',
       fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-    })
+    },
+  )
 
   const preparedMintMultiTokenBatchTransaction =
     await klaytnSDK.transaction.multiToken.prepare.mintMultiTokenBatchTransaction({
@@ -1018,15 +1017,16 @@ export async function klaytnTxWithPrivateKeyExample(): Promise<void> {
       account: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     })
 
-  const sentBurnMultiTokenTransaction =
-    await klaytnSDK.transaction.multiToken.send.burnMultiTokenTransaction({
+  const sentBurnMultiTokenTransaction = await klaytnSDK.transaction.multiToken.send.burnMultiTokenTransaction(
+    {
       chain: 'KLAY',
       tokenId: '123',
       amount: '1',
       fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
       account: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-    })
+    },
+  )
 
   const preparedBurnMultiTokenBatchTransaction =
     await klaytnSDK.transaction.multiToken.prepare.burnMultiTokenBatchTransaction({

@@ -8,7 +8,7 @@ export const klaytnKmsService = (args: EvmBasedKMSServiceArgs) => {
     ...abstractBlockchainKms(args),
     async sign(tx: ChainTransactionKMS, fromPrivateKey: string, provider?: string): Promise<string> {
       // @TODO: probably bug in OpenAPI
-      (tx as PendingTransaction).chain = 'KLAY' as any
+      ;(tx as PendingTransaction).chain = 'KLAY' as any
       const client = args.web3.getClient(provider)
       const transactionConfig = JSON.parse(tx.serializedTransaction)
 
