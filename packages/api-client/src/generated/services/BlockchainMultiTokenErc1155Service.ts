@@ -468,7 +468,7 @@ export class BlockchainMultiTokenErc1155Service {
      * @throws ApiError
      */
     public static multiTokenGetContractAddress(
-        chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'CELO' | 'BSC',
+        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC',
         hash: string,
         xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
     ): CancelablePromise<{
@@ -502,7 +502,7 @@ export class BlockchainMultiTokenErc1155Service {
      * @throws ApiError
      */
     public static multiTokenGetTransaction(
-        chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'CELO' | 'BSC',
+        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC',
         hash: string,
         xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
     ): CancelablePromise<(CeloTx | EthTx)> {
@@ -579,7 +579,7 @@ export class BlockchainMultiTokenErc1155Service {
      * @throws ApiError
      */
     public static multiTokenGetBalance(
-        chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'CELO' | 'BSC',
+        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC',
         address: string,
         contractAddress: string,
         tokenId: string,
@@ -613,7 +613,7 @@ export class BlockchainMultiTokenErc1155Service {
      * @throws ApiError
      */
     public static multiTokenGetBalanceBatch(
-        chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'CELO' | 'BSC',
+        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC',
         contractAddress: string,
         tokenId: string,
         address: string,
@@ -649,7 +649,7 @@ export class BlockchainMultiTokenErc1155Service {
      * @throws ApiError
      */
     public static multiTokenGetMetadata(
-        chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'CELO' | 'BSC',
+        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC',
         token: string,
         contractAddress: string,
         xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',

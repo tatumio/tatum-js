@@ -5,10 +5,10 @@ const ltcSDK = TatumLtcSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function ltcKmsExample() {
   const pendingSignatureIds = await ltcSDK.kms.getAllPending()
-  const tx = await ltcSDK.kms.get(pendingSignatureIds.id)
-  const signedRawTx = await ltcSDK.kms.sign(pendingSignatureIds, [
+  const tx = await ltcSDK.kms.get(pendingSignatureIds[0].id)
+  const signedRawTx = await ltcSDK.kms.sign(tx, [
     'T63MUovVt5GN5rmfwYMr4M6YqFmisjbrZrfZYZ53qWmCwiP6xCHa',
   ])
-  await ltcSDK.kms.complete(pendingSignatureIds.id, pendingSignatureIds.txId!)
-  await ltcSDK.kms.delete(pendingSignatureIds.id)
+  await ltcSDK.kms.complete(tx.id, signedRawTx!)
+  await ltcSDK.kms.delete(tx.id)
 }

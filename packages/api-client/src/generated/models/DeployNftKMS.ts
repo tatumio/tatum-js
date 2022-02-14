@@ -6,7 +6,7 @@ export type DeployNftKMS = {
     /**
      * Chain to work with.
      */
-    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC';
+    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'BSC';
     /**
      * Name of the NFT token
      */

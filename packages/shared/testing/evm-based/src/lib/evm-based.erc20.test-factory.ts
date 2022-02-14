@@ -143,6 +143,29 @@ export const erc20TestFactory = {
         }
       })
     },
+
+    // deploySignedTransactionChain: (sdk: SdkWithErc20Functions, testData: BlockchainTestData) => {
+    //   it('valid from privateKey', async () => {
+    //     const result = await sdk.prepare.deploySignedTransaction(
+    //       {
+    //         address: testData.TESTNET.ADDRESS_0,
+    //         digits: 18,
+    //         name: 'TEST_TOKEN',
+    //         supply: '1000',
+    //         symbol: 'TT',
+    //         fee: {
+    //           gasLimit: '10000000',
+    //           gasPrice: '10',
+    //         },
+    //         fromPrivateKey: testData.TESTNET.PRIVATE_KEY_0,
+    //       },
+    //       testData.TESTNET.PROVIDER,
+    //     )
+    //
+    //     console.log(result)
+    //     expectHexString(result)
+    //   })
+    // },
     mintSignedTransaction: (sdk: SdkWithErc20Functions, testData: BlockchainTestData) => {
       it('valid from privateKey', async () => {
         const result = await sdk.prepare.mintSignedTransaction(

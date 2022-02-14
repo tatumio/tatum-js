@@ -169,7 +169,6 @@ export class BlockchainUtilsService {
      * <p>Generate new custodial smart contract address on the blockchain. This address enables custodial providers to
      * receive native assets, ERC20 / ERC721 / ERC1155 tokens on behalf of their customers on dedicated blockchain address, but in the same time it can initiate transfer of those assets away.
      * Gas required for the transfer from that address is going to be deducted from the providers address - the one, which was used to generate the address on the blockchain.<br/>
-     * <b>Due to smart contract incompatibility on USDT Tether on Ethereum chain, it's not possible to receive and transfer USDT from custodial addresses. We are in touch with team fromTether and trying to solve this issue.</b><br/>
      * This operation deploys a smart contract on the blockchain.<br/>
      * Supported blockchains:
      * <ul>

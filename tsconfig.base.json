@@ -26,6 +26,7 @@
       "@tatumio/doge": ["packages/blockchain/doge/src/index.ts"],
       "@tatumio/eth": ["packages/blockchain/eth/src/index.ts"],
       "@tatumio/kcs": ["packages/blockchain/kcs/src/index.ts"],
+      "@tatumio/klaytn": ["packages/blockchain/sdk-klaytn/src/index.ts"],
       "@tatumio/ltc": ["packages/blockchain/ltc/src/index.ts"],
       "@tatumio/one": ["packages/blockchain/one/src/index.ts"],
       "@tatumio/polygon": ["packages/blockchain/polygon/src/index.ts"],

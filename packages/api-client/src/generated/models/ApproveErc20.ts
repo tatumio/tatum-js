@@ -6,7 +6,7 @@ export type ApproveErc20 = {
     /**
      * Chain to work with.
      */
-    chain: 'ETH' | 'BSC' | 'MATIC' | 'ONE';
+    chain: 'ETH' | 'BSC' | 'MATIC' | 'KLAY' | 'ONE';
     /**
      * Amount to be approved for the spender.
      */

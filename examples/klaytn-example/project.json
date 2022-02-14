@@ -1,0 +1,39 @@
+{
+  "root": "examples/klaytn-example",
+  "sourceRoot": "examples/klaytn-example/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/examples/klaytn-example",
+        "main": "examples/klaytn-example/src/index.ts",
+        "tsConfig": "examples/klaytn-example/tsconfig.app.json",
+        "packageJson": "examples/klaytn-example/package.json"
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:execute",
+      "options": {
+        "buildTarget": "klaytn-example:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "examples/klaytn-example/**/*.ts"
+        ]
+      }
+    }
+  },
+  "tags": [
+    "type:example"
+  ]
+}

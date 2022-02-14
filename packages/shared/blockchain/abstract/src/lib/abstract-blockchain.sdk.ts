@@ -77,7 +77,7 @@ export type ChainDeployErc20 = FromPrivateKeyOrSignatureId<DeployErc20>
 
 export type ChainMintErc721 = MintErc721 & {
   fromPrivateKey?: string
-  chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC'
+  chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'KLAY'
 }
 
 export type ChainMintNft = FromPrivateKeyOrSignatureId<MintNft>
