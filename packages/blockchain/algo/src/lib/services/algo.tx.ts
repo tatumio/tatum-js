@@ -1,28 +1,29 @@
 import {
   BlockchainAlgorandAlgoService,
-  BurnNft,
+  BurnNft as ApiBurnNft,
   BurnNftKMS as ApiBurnNftKMS,
   DeployNft as ApiDeployNft,
   DeployNftKMS as ApiDeployNftKMS,
   TransferAlgo as ApiTransferAlgo,
   TransferAlgoKMS as ApiTransferAlgoKMS,
   TransferErc721,
-  TransferNft,
+  TransferNft as ApiTransferNft,
   TransferNftKMS as ApiTransferNftKMS,
 } from '@tatumio/api-client'
 import { AlgoWeb } from './algo.web'
 import * as algosdk from 'algosdk'
 import base32 from 'base32.js'
 import { algoWallet } from './algo.wallet'
-import { isWithSignatureId } from '@tatumio/shared-abstract-sdk'
+import { isWithSignatureId, WithoutChain } from '@tatumio/shared-abstract-sdk'
 
 function isTransferAlgoKMS(input: TransferAlgo | TransferAlgoKMS): input is TransferAlgoKMS {
   return (input as TransferAlgoKMS).signatureId !== undefined
 }
 
 // TODO: Probably missing in OpenAPI spec
-type TransferAlgo = ApiTransferAlgo & Pick<TransferErc721, 'fee'>
-type TransferAlgoKMS = ApiTransferAlgoKMS & Pick<TransferErc721, 'fee'>
+export type TransferAlgo = Omit<ApiTransferAlgo, 'senderAccountId'> & Pick<TransferErc721, 'fee'>
+export type TransferAlgoKMS = Omit<ApiTransferAlgoKMS, 'senderAccountId'> &
+  Pick<TransferErc721, 'fee'> & { from: string }
 
 const prepareSignedTransaction = async (
   body: TransferAlgo | TransferAlgoKMS,
@@ -60,8 +61,8 @@ const prepareSignedTransaction = async (
 }
 
 // TODO: from, url missing in OpenAPI spec
-export type DeployNftKMS = ApiDeployNftKMS & { from: string; url: string }
-export type DeployNft = ApiDeployNft & { url: string }
+export type DeployNftKMS = WithoutChain<ApiDeployNftKMS> & { from: string; url: string }
+export type DeployNft = WithoutChain<ApiDeployNft> & { url: string }
 
 const prepareCreateNFTSignedTransaction = async (
   body: DeployNft | DeployNftKMS,
@@ -106,7 +107,8 @@ const prepareCreateNFTSignedTransaction = async (
 }
 
 // TODO: OpenAPI bug -> missing from property
-type TransferNftKMS = ApiTransferNftKMS & { from: string }
+export type TransferNftKMS = WithoutChain<ApiTransferNftKMS> & { from: string }
+export type TransferNft = WithoutChain<ApiTransferNft>
 
 const prepareTransferNFTSignedTransaction = async (
   body: TransferNft | TransferNftKMS,
@@ -146,7 +148,8 @@ const prepareTransferNFTSignedTransaction = async (
 }
 
 // TODO: OpenAPI bug -> missing from property
-type BurnNftKMS = ApiBurnNftKMS & { from: string }
+export type BurnNftKMS = WithoutChain<ApiBurnNftKMS> & { from: string }
+export type BurnNft = WithoutChain<ApiBurnNft>
 
 const prepareBurnNFTSignedTransaction = async (
   body: BurnNft | BurnNftKMS,
@@ -183,7 +186,7 @@ export const algoTx = (args: { algoWeb: AlgoWeb }) => {
       /**
        * Algorand transaction signing
        * @param testnet if the algorand node is testnet or not
-       * @param tx content of the transaction to broadcast
+       * @param body content of the transaction to broadcast
        * @param provider url of the algorand server endpoint for purestake.io restapi
        * @returns transaction data to be broadcast to blockchain
        */
@@ -192,7 +195,7 @@ export const algoTx = (args: { algoWeb: AlgoWeb }) => {
       /**
        * Sign Algorand create NFT transaction with private key locally. Nothing is broadcast to the blockchain.
        * @param testnet mainnet or testnet version
-       * @param tx content of the transaction to broadcast
+       * @param body content of the transaction to broadcast
        * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
        * @returns transaction data to be broadcast to blockchain
        */
@@ -204,7 +207,7 @@ export const algoTx = (args: { algoWeb: AlgoWeb }) => {
       /**
        * Sign Algorand transfer NFT transaction with private key locally. Nothing is broadcast to the blockchain.
        * @param testnet mainnet or testnet version
-       * @param tx content of the transaction to broadcast
+       * @param body content of the transaction to broadcast
        * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
        * @returns transaction data to be broadcast to blockchain.
        */
@@ -216,7 +219,7 @@ export const algoTx = (args: { algoWeb: AlgoWeb }) => {
       /**
        * Sign Algorand burn NFT transaction with private key locally. Nothing is broadcast to the blockchain.
        * @param testnet mainnet or testnet version
-       * @param tx content of the transaction to broadcast
+       * @param body content of the transaction to broadcast
        * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
        * @returns transaction data to be broadcast to blockchain.
        */
@@ -228,7 +231,7 @@ export const algoTx = (args: { algoWeb: AlgoWeb }) => {
        * Send Algorand transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
        * @param testnet mainnet or testnet version
-       * @param tx content of the transaction to broadcast
+       * @param body content of the transaction to broadcast
        * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
@@ -240,7 +243,7 @@ export const algoTx = (args: { algoWeb: AlgoWeb }) => {
       /**
        * Send Algorand create NFT transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * @param testnet mainnet or testnet version
-       * @param tx content of the transaction to broadcast
+       * @param body content of the transaction to broadcast
        * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
@@ -256,7 +259,7 @@ export const algoTx = (args: { algoWeb: AlgoWeb }) => {
       /**
        * Send Algorand Transfer NFT transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * @param testnet mainnet or testnet version
-       * @param tx content of the transaction to broadcast
+       * @param body content of the transaction to broadcast
        * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain.
        */
@@ -272,7 +275,7 @@ export const algoTx = (args: { algoWeb: AlgoWeb }) => {
       /**
        * Send Algorand burn NFT transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * @param testnet mainnet or testnet version
-       * @param tx content of the transaction to broadcast
+       * @param body content of the transaction to broadcast
        * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain.
        */

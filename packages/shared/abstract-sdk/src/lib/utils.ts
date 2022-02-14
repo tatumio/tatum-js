@@ -17,3 +17,5 @@ export function isWithSignatureId<
 >(input: P | K): input is K {
   return (input as K).signatureId !== undefined
 }
+
+export type WithoutChain<T extends { chain: unknown }> = Omit<T, 'chain'>
