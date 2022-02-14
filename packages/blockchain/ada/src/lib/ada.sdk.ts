@@ -14,7 +14,7 @@ export const TatumAdaSDK = (args: SDKArguments) => {
       ...args,
       blockchain,
     }),
-    transaction: adaTx(),
+    // transaction: adaTx(),
     wallet: adaWallet(),
     kms: adaKmsService({ blockchain }),
     blockchain: {

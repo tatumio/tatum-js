@@ -164,7 +164,7 @@ const initTransactionBuilder = async () => {
 
   const txBuilder = TransactionBuilder.new(transactionBuilderConfig)
   const { tip } = await BlockchainAdaService.adaGetBlockChainInfo()
-  if(tip?.slotNo) {
+  if (tip?.slotNo) {
     txBuilder.set_ttl(tip.slotNo + 50000)
   }
   return txBuilder
