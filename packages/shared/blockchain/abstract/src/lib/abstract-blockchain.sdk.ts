@@ -24,6 +24,7 @@ import {
   TransferMultiToken,
   TransferMultiTokenBatch,
   TransferNft,
+  TransferPolygonBlockchain,
   TronWallet,
   UpdateCashbackValueForAuthorNft,
   XlmWallet,
@@ -108,6 +109,8 @@ export type ChainMintMultiTokenBatch = FromPrivateKeyOrSignatureId<MintMultiToke
 
 export type ChainDeployMultiToken = FromPrivateKeyOrSignatureId<DeployMultiToken>
 
+export type ChainTransferNative = FromPrivateKeyOrSignatureId<Omit<TransferPolygonBlockchain, 'currency'>>
+
 export interface SdkWithErc20Functions {
   decimals(contractAddress: string, provider?: string): any
 
@@ -116,6 +119,12 @@ export interface SdkWithErc20Functions {
     transferSignedTransaction(body: ChainTransferErc20, provider?: string): Promise<string>
     mintSignedTransaction(body: ChainMintErc20, provider?: string): Promise<string>
     burnSignedTransaction(body: ChainBurnErc20, provider?: string): Promise<string>
+  }
+}
+
+export interface SdkWithNativeFunctions {
+  prepare: {
+    transferSignedTransaction(body: ChainTransferNative, provider?: string): Promise<string>
   }
 }
 

@@ -9,6 +9,7 @@ import {
   multiTokenTestFactory,
 } from '@tatumio/shared-testing-evm-based'
 import { Currency } from '@tatumio/api-client'
+import { nativeTestFactory } from '../../../../../shared/testing/evm-based/src/lib/evm-based.native.test-factory'
 
 const blockchain = Blockchain.KLAY
 
@@ -28,6 +29,12 @@ describe('KlaytnSDK - tx', () => {
 
   beforeEach(async () => {
     await ganacheHelper.initWeb3(inmemoryBlockchain.web3)
+  })
+
+  describe('transaction', () => {
+    describe('native', () => {
+      nativeTestFactory.prepare.transferSignedTransaction(klaytnTx.native, inmemoryBlockchain.accounts)
+    })
   })
 
   // @TODO Deploy contract
