@@ -12,5 +12,4 @@ module.exports = {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
   coverageDirectory: '../../../coverage/packages/blockchain/algo',
-  setupFilesAfterEnv: ['./jest.setup.ts'],
 }
