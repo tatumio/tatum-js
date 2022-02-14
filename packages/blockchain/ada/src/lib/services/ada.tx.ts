@@ -5,7 +5,6 @@ import {
   Vkeywitnesses,
 } from '@emurgo/cardano-serialization-lib-nodejs'
 import { AdaTransaction, BlockchainAdaService } from '@tatumio/api-client'
-import { BroadcastFunction } from '@tatumio/shared-blockchain-abstract'
 import { ChainTransactionKMS } from '@tatumio/shared-core'
 import { adaUtils } from './ada.utils'
 
@@ -20,14 +19,14 @@ const transaction = async (transferAda: AdaTransaction) => {
   return adaUtils.signTransaction(txBuilder, transferAda, privateKeysToSign)
 }
 
-export const adaTx = (args?: { broadcastFunction?: BroadcastFunction }) => {
+export const adaTx = () => {
   return {
     prepare: {
       transaction: async (transferAda: AdaTransaction) => transaction(transferAda),
     },
     send: {
       transaction: async (transferAda: AdaTransaction) =>
-        await args.broadcastFunction({
+        await BlockchainAdaService.adaBroadcast({
           txData: await transaction(transferAda),
         }),
     },

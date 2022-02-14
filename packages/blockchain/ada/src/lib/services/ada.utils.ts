@@ -35,8 +35,8 @@ interface FromUTXO {
 const addInput = (transactionBuilder: TransactionBuilder, utxo: AdaUTXO, address: string) => {
   transactionBuilder.add_input(
     Address.from_bech32(address),
-    TransactionInput.new(TransactionHash.from_bytes(Buffer.from(utxo.txHash, 'hex')), utxo.index),
-    Value.new(BigNum.from_str(utxo.value)),
+    TransactionInput.new(TransactionHash.from_bytes(Buffer.from(utxo.txHash!, 'hex')), utxo.index!),
+    Value.new(BigNum.from_str(utxo.value!)),
   )
 }
 
@@ -56,11 +56,11 @@ const addUtxoInputs = async (transactionBuilder: TransactionBuilder, fromUTXOs: 
   const privateKeysToSign = []
   for (const utxo of fromUTXOs) {
     const transaction = await BlockchainAdaService.adaGetRawTransaction(utxo.txHash)
-    const output = transaction.outputs.find((output) => output.index === utxo.index)
+    const output = transaction?.outputs?.find((output) => output.index === utxo?.index)
     if (output) {
-      const value = output.value
+      const value = output.value!
       amount = amount.plus(value)
-      addInput(transactionBuilder, { value, ...utxo }, output.address)
+      addInput(transactionBuilder, { value, ...utxo }, output.address!)
       privateKeysToSign.push(utxo.signatureId || utxo.privateKey)
     }
   }
@@ -82,7 +82,7 @@ const addAddressInputsWithoutPrivateKey = async (
     const { address } = fromAddress
     const utxos: AdaUTXO[] = await BlockchainAdaService.adaGetUtxoByAddress(address)
     for (const utxo of utxos) {
-      amount = amount.plus(utxo.value)
+      amount = amount.plus(utxo.value!)
       addInput(transactionBuilder, utxo, address)
     }
   }
@@ -163,10 +163,10 @@ const initTransactionBuilder = async () => {
     .build()
 
   const txBuilder = TransactionBuilder.new(transactionBuilderConfig)
-  const {
-    tip: { slotNo },
-  } = await BlockchainAdaService.adaGetBlockChainInfo()
-  txBuilder.set_ttl(slotNo + 50000)
+  const { tip } = await BlockchainAdaService.adaGetBlockChainInfo()
+  if(tip?.slotNo) {
+    txBuilder.set_ttl(tip.slotNo + 50000)
+  }
   return txBuilder
 }
 
@@ -197,9 +197,9 @@ const processFeeAndRest = async (
   } else if (fromUTXO) {
     const txHash = fromUTXO[0].txHash
     const transaction = await BlockchainAdaService.adaGetRawTransaction(txHash)
-    const output = transaction.outputs.find((output) => output.index === fromUTXO[0].index)
+    const output = transaction?.outputs?.find((output) => output.index === fromUTXO[0].index)
     if (output) {
-      addFeeAndRest(transactionBuilder, output.address, fromAmount, toAmount)
+      addFeeAndRest(transactionBuilder, output.address!, fromAmount, toAmount)
     }
   } else {
     throw new Error('Field fromAddress or fromUTXO is not filled.')

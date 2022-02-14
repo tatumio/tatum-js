@@ -1,4 +1,4 @@
-import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA, walletTestFactory } from '@tatumio/shared-testing-common'
+import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testing-common'
 import { TatumAdaSDK } from './ada.sdk'
 
 describe('TatumAdaSDK', () => {
@@ -17,7 +17,7 @@ describe('TatumAdaSDK', () => {
 
       it('invalid input mnemonic', async () => {
         const wrongMnemonic = 'wrongmnemonic'
-        expect(async () => await sdk.wallet.generateBlockchainWallet(wrongMnemonic)).rejects.toThrow(
+        await expect(async () => await sdk.wallet.generateBlockchainWallet(wrongMnemonic)).rejects.toThrow(
           TEST_DATA.ADA.INVALUD_MNEMONIC_ERROR,
         )
       })

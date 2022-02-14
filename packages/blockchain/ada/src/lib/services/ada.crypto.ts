@@ -5,6 +5,7 @@ import {
   getPubKeyBlake2b224Hash,
   mnemonicToRootKeypair,
   packBaseAddress,
+  // @ts-ignore
 } from 'cardano-crypto.js'
 import { DERIVATION_PATH } from '@tatumio/shared-core'
 
@@ -43,7 +44,7 @@ export const generateXPublicKey = async (mnemonic: string): Promise<string> => {
   return spendXPub + stakeXPub
 }
 
-export const generateAddress = async (xpub: string, i: number, testnet: boolean): Promise<string> => {
+export const generateAddress = async (xpub: string, i: number, testnet?: boolean): Promise<string> => {
   const spendXPub = derivePublic(Buffer.from(xpub.substr(0, 128), 'hex'), i, ADA_DERIVATION_SCHEME)
   const stakeXPub = xpub.substr(128, 128)
   return bech32.encode(

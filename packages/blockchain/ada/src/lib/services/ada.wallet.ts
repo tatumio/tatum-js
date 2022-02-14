@@ -1,4 +1,3 @@
-import { Wallet } from '@tatumio/api-client'
 import { generateAddress, generatePrivateKey, generateXPublicKey } from './ada.crypto'
 import { generateMnemonic } from 'bip39'
 
@@ -28,7 +27,7 @@ export const adaWallet = () => {
      * @param mnemonic mnemonic seed to use
      * @returns wallet
      */
-    generateBlockchainWallet: async (mnemonic: string): Promise<Wallet> => {
+    generateBlockchainWallet: async (mnemonic: string): Promise<{ mnemonic: string; xpub: string }> => {
       return { mnemonic, xpub: await generateXPublicKey(mnemonic) }
     },
 
