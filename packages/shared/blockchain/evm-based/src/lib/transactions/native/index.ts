@@ -4,7 +4,11 @@ import { TransactionConfig } from 'web3-core'
 import { EvmBasedWeb3 } from '../../services/evm-based.web3'
 import { evmBasedUtils } from '../../evm-based.utils'
 
-const transferSignedTransaction = async (body: ChainTransferNative, web3: EvmBasedWeb3, provider?: string) => {
+const transferSignedTransaction = async (
+  body: ChainTransferNative,
+  web3: EvmBasedWeb3,
+  provider?: string,
+) => {
   // TODO
   // await validateBody(body, ChainTransferNative)
 
@@ -28,7 +32,6 @@ const transferSignedTransaction = async (body: ChainTransferNative, web3: EvmBas
     body.fee?.gasPrice,
   )
 }
-
 
 export const native = (args: {
   blockchain: EvmBasedBlockchain
