@@ -1,7 +1,7 @@
 import * as algosdk from 'algosdk'
 import Url from 'url-parse'
 
-export interface IAlgoWeb {
+export interface AlgoWeb {
   /**
    * Algod V2 Client
    * @param testnet if the algorand node is testnet or not
@@ -18,7 +18,7 @@ export interface IAlgoWeb {
   getIndexerClient(testnet: boolean, provider?: string): algosdk.Indexer
 }
 
-export const algoWeb = (): IAlgoWeb => {
+export const algoWeb = (): AlgoWeb => {
   return {
     getClient: (testnet, provider?: string) => {
       const tokenValue = testnet
