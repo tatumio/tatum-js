@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
+    "ada": "packages/blockchain/ada",
     "api-client": "packages/api-client",
     "bch": "packages/blockchain/bch",
     "bch-example": "examples/bch-example",

@@ -1,0 +1,33 @@
+{
+  "root": "packages/blockchain/ada",
+  "sourceRoot": "packages/blockchain/ada/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/blockchain/ada",
+        "main": "packages/blockchain/ada/src/index.ts",
+        "tsConfig": "packages/blockchain/ada/tsconfig.lib.json",
+        "packageJson": "packages/blockchain/ada/package.json"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/blockchain/ada/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/blockchain/ada"],
+      "options": {
+        "jestConfig": "packages/blockchain/ada/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["scope:sdk"]
+}

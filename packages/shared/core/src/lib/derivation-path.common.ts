@@ -18,7 +18,7 @@ export const DERIVATION_PATH: Record<Blockchain, string> = {
   TRON: "m/44'/195'/0'/0",
   // TBD
   ALGO: '@TODO - TBD',
-  CARDANO: '@TODO - TBD',
+  CARDANO: "m/1852'/1815'/0'",
   EGLD: '@TODO - TBD',
   FABRIC: '@TODO - TBD',
   FLOW: '@TODO - TBD',

@@ -385,6 +385,11 @@
   resolved "https://registry.yarnpkg.com/@celo-tools/celo-ethers-wrapper/-/celo-ethers-wrapper-0.1.0.tgz#ee925b20d56923315ab35ef95def24bcd5f1879b"
   integrity sha512-kBpFi7viIRlysiVKfIIywuAGykO0l3w+lBZ+NFaEgw9GsVQl0NYj0e4/UhbglfU5XS6M8HCCordUuC8gVwCw7w==
 
+"@emurgo/cardano-serialization-lib-nodejs@^10.0.3":
+  version "10.0.3"
+  resolved "https://registry.yarnpkg.com/@emurgo/cardano-serialization-lib-nodejs/-/cardano-serialization-lib-nodejs-10.0.3.tgz#c25d6b09ccd5857dba1ac3079321ae49a93230e1"
+  integrity sha512-Mjr9uWzL4Wg2Y8MgFGekh0oNqP+ug3rq0vns1Cl6usq3o57Uz/L9yq5sxSDGeKt6JXSgqm0CbIjwp836Ko3nPg==
+
 "@eslint/eslintrc@^1.0.5":
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-1.0.5.tgz#33f1b838dbf1f923bfa517e008362b78ddbbf318"
@@ -2709,7 +2714,7 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
-bech32@1.1.4, bech32@^1.1.2:
+bech32@1.1.4, bech32@^1.1.2, bech32@^1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/bech32/-/bech32-1.1.4.tgz#e38c9f37bf179b8eb16ae3a772b40c356d4832e9"
   integrity sha512-s0IrSOzLlbvX7yp4WBfPITzpAU8sqQcpsmwXDiKwrG4r491vwCO/XpejasRNl0piBMe/DvP4Tz0mIS/X1DPJBQ==
@@ -2956,6 +2961,19 @@ body-parser@1.19.1, body-parser@^1.16.0:
     qs "6.9.6"
     raw-body "2.4.2"
     type-is "~1.6.18"
+
+borc@^2.1.1:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/borc/-/borc-2.1.2.tgz#6ce75e7da5ce711b963755117dd1b187f6f8cf19"
+  integrity sha512-Sy9eoUi4OiKzq7VovMn246iTo17kzuyHJKomCfpWMlI6RpfN1gk95w7d7gH264nApVLg0HZfcpz62/g4VH1Y4w==
+  dependencies:
+    bignumber.js "^9.0.0"
+    buffer "^5.5.0"
+    commander "^2.15.0"
+    ieee754 "^1.1.13"
+    iso-url "~0.4.7"
+    json-text-sequence "~0.1.0"
+    readable-stream "^3.6.0"
 
 boxen@^4.2.0:
   version "4.2.0"
@@ -3248,6 +3266,16 @@ canonical-path@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/canonical-path/-/canonical-path-1.0.0.tgz#fcb470c23958def85081856be7a86e904f180d1d"
   integrity sha512-feylzsbDxi1gPZ1IjystzIQZagYYLvfKrSuygUCgf7z6x790VEzze5QEkdSV1U58RA7Hi0+v6fv4K54atOzATg==
+
+cardano-crypto.js@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/cardano-crypto.js/-/cardano-crypto.js-6.1.0.tgz#5743b30fd4a5b1b127fc1c2bbd9ea5f27bab7f51"
+  integrity sha512-mS4cgQYv3S05wGE00tS86EGrZPAN/zwYn6w5tGkfFZE2xiS5lF7KlpSgOIbO7Bip5XZf1rXCLYSiWgxj2Qnkpg==
+  dependencies:
+    bech32 "^1.1.4"
+    bip39 "^3.0.2"
+    borc "^2.1.1"
+    pbkdf2 "^3.0.17"
 
 cardinal@^2.1.1:
   version "2.1.1"
@@ -3574,7 +3602,7 @@ combined-stream@^1.0.6, combined-stream@^1.0.8, combined-stream@~1.0.6:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@^2.20.0:
+commander@^2.15.0, commander@^2.20.0:
   version "2.20.3"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
   integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
@@ -4014,6 +4042,11 @@ delayed-stream@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
   integrity sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
+
+delimit-stream@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/delimit-stream/-/delimit-stream-0.1.0.tgz#9b8319477c0e5f8aeb3ce357ae305fc25ea1cd2b"
+  integrity sha1-m4MZR3wOX4rrPONXrjBfwl6hzSs=
 
 depd@~1.1.2:
   version "1.1.2"
@@ -6249,6 +6282,11 @@ isexe@^2.0.0:
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
   integrity sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=
 
+iso-url@~0.4.7:
+  version "0.4.7"
+  resolved "https://registry.yarnpkg.com/iso-url/-/iso-url-0.4.7.tgz#de7e48120dae46921079fe78f325ac9e9217a385"
+  integrity sha512-27fFRDnPAMnHGLq36bWTpKET+eiXct3ENlCcdcMdk+mjXrb2kw3mhBUg1B7ewAC0kVzlOPhADzQgz1SE6Tglog==
+
 isobject@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
@@ -6930,6 +6968,13 @@ json-stringify-safe@~5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
   integrity sha1-Epai1Y/UXxmg9s4B1lcB4sc1tus=
+
+json-text-sequence@~0.1.0:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/json-text-sequence/-/json-text-sequence-0.1.1.tgz#a72f217dc4afc4629fff5feb304dc1bd51a2f3d2"
+  integrity sha1-py8hfcSvxGKf/1/rME3BvVGi89I=
+  dependencies:
+    delimit-stream "0.1.0"
 
 json5@2.x, json5@^2.1.2, json5@^2.1.3:
   version "2.2.0"
