@@ -1,6 +1,5 @@
 import { EvmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
-import { ChainTransactionKMS, EvmBasedBlockchain } from '@tatumio/shared-core'
-import { PendingTransaction, ApiServices } from '@tatumio/api-client'
+import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import { abstractBlockchainKms } from '@tatumio/shared-blockchain-abstract'
 
 export const celoKmsService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3 }) => {
