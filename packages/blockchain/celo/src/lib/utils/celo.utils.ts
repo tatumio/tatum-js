@@ -71,7 +71,8 @@ export type ChainBurnMultiTokenBatchCelo = FromPrivateKeyOrSignatureId<BurnMulti
 export type ChainDeployMultiTokenCelo = FromPrivateKeyOrSignatureId<DeployMultiTokenCelo>
 
 export type ChainTransferCeloBlockchain = FromPrivateKeyOrSignatureId<
-  Omit<TransferCeloBlockchain, 'currency'>>
+  Omit<TransferCeloBlockchain, 'currency'>
+>
 
 export type ChainGenerateCustodialAddressCelo = GenerateCustodialWalletCelo | GenerateCustodialWalletCeloKMS
 
