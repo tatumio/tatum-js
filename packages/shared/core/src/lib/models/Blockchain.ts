@@ -24,6 +24,7 @@ export enum Blockchain {
   CARDANO = 'CARDANO',
   ALGO = 'ALGO',
   KCS = 'KCS',
+  KLAY = 'KLAY',
 }
 
 export const BtcBasedBlockchains = [
@@ -57,3 +58,4 @@ export type EvmBasedBlockchain =
   | Blockchain.HARMONY
   | Blockchain.POLYGON
   | Blockchain.KCS
+  | Blockchain.KLAY

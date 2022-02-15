@@ -6,7 +6,7 @@ export type MintNft = {
     /**
      * Chain to work with.
      */
-    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC';
+    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'BSC';
     /**
      * ID of token to be created.
      */

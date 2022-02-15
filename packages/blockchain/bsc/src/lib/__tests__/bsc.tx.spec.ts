@@ -1,13 +1,15 @@
 import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testing-common'
 import { TatumBscSDK } from '../bsc.sdk'
-import { Blockchain, Currency } from '@tatumio/shared-core'
+import { Blockchain } from '@tatumio/shared-core'
 import { bscTxService } from '../services/bsc.tx'
 import {
   erc20TestFactory,
   ganacheHelper,
   erc721TestFactory,
   multiTokenTestFactory,
+  marketplaceTestFactory,
 } from '@tatumio/shared-testing-evm-based'
+import { Currency } from '@tatumio/api-client'
 
 describe('BscSDK - tx', () => {
   const sdk = TatumBscSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
@@ -106,6 +108,65 @@ describe('BscSDK - tx', () => {
           sdk.transaction.erc721,
           TEST_DATA.BSC,
           Currency.BSC,
+        )
+      })
+    })
+  })
+
+  describe('marketplace', () => {
+    describe('prepare', () => {
+      describe('generateMarketplace', () => {
+        marketplaceTestFactory.prepare.generateMarketplace(
+          sdk.marketplace,
+          TEST_DATA.BSC,
+          'BSC',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      describe('createMarketplaceListing', () => {
+        marketplaceTestFactory.prepare.createMarketplaceListing(
+          sdk.marketplace,
+          TEST_DATA.BSC,
+          'BSC',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      describe('createMarketplaceListingErc20', () => {
+        marketplaceTestFactory.prepare.createMarketplaceListingErc20(
+          sdk.marketplace,
+          TEST_DATA.BSC,
+          'BSC',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      describe('buyMarketplaceListing', () => {
+        marketplaceTestFactory.prepare.buyMarketplaceListing(
+          sdk.marketplace,
+          TEST_DATA.BSC,
+          'BSC',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      // @TODO: returns "Returned values aren't valid..."
+      xdescribe('buyMarketplaceListingErc20', () => {
+        marketplaceTestFactory.prepare.buyMarketplaceListingErc20(
+          sdk.marketplace,
+          TEST_DATA.BSC,
+          'BSC',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      describe('cancelMarketplaceListing', () => {
+        marketplaceTestFactory.prepare.cancelMarketplaceListing(
+          sdk.marketplace,
+          TEST_DATA.BSC,
+          'BSC',
+          inmemoryBlockchain.accounts,
         )
       })
     })

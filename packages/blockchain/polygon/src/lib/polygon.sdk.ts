@@ -1,4 +1,4 @@
-import { evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
+import { evmBasedMarketplace, evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
 import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
 import { BlockchainPolygonMaticService } from '@tatumio/api-client'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
@@ -18,6 +18,11 @@ export const TatumPolygonSDK = (args: SDKArguments) => {
     api,
     kms: polygonKmsService({ blockchain, web3 }),
     transaction: polygonTxService({ blockchain, web3 }),
+    marketplace: evmBasedMarketplace({
+      blockchain,
+      web3,
+      broadcastFunction: BlockchainPolygonMaticService.polygonBroadcast,
+    }),
     auction: polygonAuctionService({ blockchain, web3 }),
     httpDriver: async (request: Web3Request): Promise<Web3Response> => {
       return api.polygonWeb3Driver(args.apiKey, { ...request, jsonrpc: '2.0' })

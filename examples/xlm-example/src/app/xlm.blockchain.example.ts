@@ -12,7 +12,7 @@ export async function xlmBlockchainExample() {
     txData: '62BD544D1B9031EFC330A3E855CC3A0D51CA5131455C1AB3BCAC6D243F65460D',
   })
 
-  const currentLedger = await xlmSDK.blockchain.getCurrentLedger()
+  const currentLedger = await xlmSDK.blockchain.info()
 
   const fee = await xlmSDK.blockchain.getFee()
 

@@ -17,7 +17,7 @@ import BigNumber from 'bignumber.js'
 
 const mintMultiToken = async (body: ChainMintMultiToken, web3: EvmBasedWeb3, provider?: string) => {
   const { contractAddress, nonce, signatureId, fee, to, tokenId, fromPrivateKey, data, amount } = body
-  const client = web3.getClient(provider)
+  const client = web3.getClient(provider, fromPrivateKey)
   const contract = new client.eth.Contract(
     Erc1155.abi as any,
     evmBasedUtils.transformAddress(contractAddress),
@@ -51,7 +51,7 @@ const mintMultiToken = async (body: ChainMintMultiToken, web3: EvmBasedWeb3, pro
 const mintMultiTokenBatch = async (body: ChainMintMultiTokenBatch, web3: EvmBasedWeb3, provider?: string) => {
   const { fromPrivateKey, to, tokenId, contractAddress, nonce, data, fee, amounts, signatureId } = body
 
-  const client = web3.getClient(provider)
+  const client = web3.getClient(provider, fromPrivateKey)
   const contract = new client.eth.Contract(
     Erc1155.abi as any,
     evmBasedUtils.transformAddress(contractAddress),
@@ -80,13 +80,12 @@ const mintMultiTokenBatch = async (body: ChainMintMultiTokenBatch, web3: EvmBase
 const deployMultiToken = async (body: ChainDeployMultiToken, web3: EvmBasedWeb3, provider?: string) => {
   const { fromPrivateKey, fee, uri, nonce, signatureId } = body
 
-  const client = web3.getClient(provider)
-  const contract = new client.eth.Contract(Erc1155.abi as any, undefined, {
-    data: Erc1155.bytecode,
-  })
+  const client = web3.getClient(provider, fromPrivateKey)
+  const contract = new client.eth.Contract(Erc1155.abi as any)
 
   const deploy = contract.deploy({
     arguments: [uri],
+    data: Erc1155.bytecode,
   } as any)
 
   const tx: TransactionConfig = {
@@ -109,7 +108,7 @@ const deployMultiToken = async (body: ChainDeployMultiToken, web3: EvmBasedWeb3,
 const transferMultiToken = async (body: ChainTransferMultiToken, web3: EvmBasedWeb3, provider?: string) => {
   const { fromPrivateKey, to, tokenId, fee, contractAddress, nonce, signatureId, amount, data } = body
 
-  const client = web3.getClient(provider)
+  const client = web3.getClient(provider, fromPrivateKey)
   const contract = new client.eth.Contract(
     Erc1155.abi as any,
     evmBasedUtils.transformAddress(contractAddress),
@@ -148,7 +147,7 @@ const transferMultiTokenBatch = async (
 ) => {
   const { fromPrivateKey, to, tokenId, fee, contractAddress, nonce, signatureId, amounts, data } = body
 
-  const client = web3.getClient(provider)
+  const client = web3.getClient(provider, fromPrivateKey)
   const contract = new client.eth.Contract(
     Erc1155.abi as any,
     evmBasedUtils.transformAddress(contractAddress),
@@ -183,7 +182,7 @@ const transferMultiTokenBatch = async (
 const burnMultiToken = async (body: ChainBurnMultiToken, web3: EvmBasedWeb3, provider?: string) => {
   const { fromPrivateKey, account, tokenId, amount, fee, contractAddress, nonce, signatureId } = body
 
-  const client = web3.getClient(provider)
+  const client = web3.getClient(provider, fromPrivateKey)
   const contract = new client.eth.Contract(
     Erc1155.abi as any,
     evmBasedUtils.transformAddress(contractAddress),
@@ -210,7 +209,7 @@ const burnMultiToken = async (body: ChainBurnMultiToken, web3: EvmBasedWeb3, pro
 const burnMultiTokenBatch = async (body: ChainBurnMultiTokenBatch, web3: EvmBasedWeb3, provider?: string) => {
   const { fromPrivateKey, account, tokenId, amounts, fee, contractAddress, nonce, signatureId } = body
 
-  const client = web3.getClient(provider)
+  const client = web3.getClient(provider, fromPrivateKey)
   const contract = new client.eth.Contract(
     Erc1155.abi as any,
     evmBasedUtils.transformAddress(contractAddress),
