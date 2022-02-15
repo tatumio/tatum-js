@@ -27,6 +27,46 @@ describe('TatumCeloSDK', () => {
     })
   })
 
+  describe('native', () => {
+    describe('prepare', () => {
+      const provider = TEST_DATA.CELO?.PROVIDER
+      const address = TEST_DATA.CELO.TESTNET.ERC_20?.ADDRESS 
+        ? TEST_DATA.CELO.TESTNET.ERC_20?.ADDRESS 
+        : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
+
+      it('should be valid from privateKey', async () => {
+        const result = await sdk.transaction.native.prepare.transferSignedTransaction(
+          {
+            to: address,
+            fromPrivateKey: TEST_DATA.CELO.TESTNET.ERC_20?.PRIVATE_KEY,
+            feeCurrency: 'CUSD',
+            currency: 'CUSD',
+            amount: '1'
+          },
+          provider,
+          true
+        )
+        expectHexString(result)
+      })
+
+      it('should be valid from signatureId', async () => {
+        const result = await sdk.transaction.native.prepare.transferSignedTransaction(
+          {
+            to: address,
+            signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+            feeCurrency: 'CUSD',
+            currency: 'CUSD',
+            amount: '1'
+          },
+          provider,
+          true
+        )
+        const json = JSON.parse(result)
+        expectHexString(json.data)
+      })
+    })
+  })
+
   describe('erc721', () => {
     describe('prepare', () => {
       jest.setTimeout(99999)
