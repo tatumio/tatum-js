@@ -1,5 +1,5 @@
 import { TatumAlgoSDK } from '@tatumio/algo'
-import { Currency } from '@tatumio/shared-core'
+import { Currency } from '@tatumio/api-client'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
 const algoSDK = TatumAlgoSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
@@ -135,7 +135,7 @@ export async function algoLedgerVirtualCurrencyExample() {
     name: 'VC_VIRTUAL',
     supply: '1000000',
     // TODO openapi bug
-    basePair: 'ALGO',
+    basePair: 'ALGO' as any,
     baseRate: 1,
     customer: {
       // TODO openapi bug

@@ -6,7 +6,7 @@ export type UpdateFeeKMS = {
     /**
      * Blockchain to work with.
      */
-    chain: 'ETH' | 'ONE' | 'BSC' | 'MATIC';
+    chain: 'ETH' | 'ONE' | 'BSC' | 'KLAY' | 'MATIC';
     /**
      * Percentage of the selling amount of the NFT asset. 100 - 1%
      */

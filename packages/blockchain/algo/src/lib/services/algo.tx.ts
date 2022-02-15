@@ -16,6 +16,8 @@ import {
 } from '@tatumio/api-client'
 import { AlgoWeb } from './algo.web'
 import * as algosdk from 'algosdk'
+// No types for base32.js
+// @ts-ignore
 import base32 from 'base32.js'
 import { algoWallet } from './algo.wallet'
 import { isWithSignatureId, WithoutChain } from '@tatumio/shared-abstract-sdk'
@@ -129,12 +131,16 @@ const prepareTransferNFTSignedTransaction = async (
     ? body.from
     : algoWallet().generateAddressFromPrivatetKey(body.fromPrivateKey)
 
+  if (!body.value) {
+    throw new Error('No value specified')
+  }
+
   const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
     from,
     body.to,
     undefined,
     undefined,
-    body.value ? Number.parseInt(body.value) : undefined,
+    Number.parseInt(body.value),
     undefined,
     Number(body.contractAddress),
     params,

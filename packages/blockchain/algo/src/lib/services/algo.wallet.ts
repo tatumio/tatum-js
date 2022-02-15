@@ -1,5 +1,7 @@
 import { AlgoWallet } from '@tatumio/api-client'
 import * as algosdk from 'algosdk'
+// No types for base32.js
+// @ts-ignore
 import base32 from 'base32.js'
 
 export const algoWallet = () => {

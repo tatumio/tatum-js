@@ -10,7 +10,7 @@ export type TransferNft = {
     /**
      * Chain to work with.
      */
-    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'ALGO';
+    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'BSC' | 'ALGO';
     /**
      * Blockchain address to send NFT token to
      */

@@ -12,6 +12,7 @@ import { XRP_TEST_DATA } from './test-data/xrp.test-data'
 import { XLM_TEST_DATA } from './test-data/xlm.test-data'
 import { SCRYPTA_TEST_DATA } from './test-data/scrypta.test-data'
 import { TRON_TEST_DATA } from './test-data/tron.test-data'
+import { KLAYTN_TEST_DATA } from './test-data/klaytn.test-data'
 import { ALGO_TEST_DATA } from './test-data/algo.test-data'
 
 export type BlockchainNetworkTestData = {
@@ -62,6 +63,7 @@ export const TEST_DATA = {
   BCH: BCH_TEST_DATA,
   LTC: LTC_TEST_DATA,
   POLYGON: POLYGON_TEST_DATA,
+  KLAYTN: KLAYTN_TEST_DATA,
   KCS: KCS_TEST_DATA,
   ONE: ONE_TEST_DATA,
   BSC: BSC_TEST_DATA,

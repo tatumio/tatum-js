@@ -6,7 +6,7 @@ export type AddMultiTokenMinterKMS = {
     /**
      * Chain to work with.
      */
-    chain: 'ETH' | 'MATIC' | 'KCS' | 'CELO' | 'ONE' | 'BSC';
+    chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'CELO' | 'ONE' | 'BSC';
     /**
      * Address of MultiToken token
      */

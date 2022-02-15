@@ -22,15 +22,19 @@ export const algoWeb = (): AlgoWeb => {
   return {
     getClient: (testnet, provider?: string) => {
       const tokenValue = testnet
-        ? process.env.TATUM_ALGORAND_TESTNET_TOKEN
-        : process.env.TATUM_ALGORAND_MAINNET_TOKEN
+        ? process.env['TATUM_ALGORAND_TESTNET_TOKEN']
+        : process.env['TATUM_ALGORAND_MAINNET_TOKEN']
+
+      if (!tokenValue) {
+        throw new Error('No ALGORAND token specified')
+      }
 
       if (provider) {
         return new algosdk.Algodv2(tokenValue ?? 'DUMMYTOKEN', provider, Url(provider).port)
       } else {
         const server = testnet
-          ? process.env.TATUM_ALGORAND_TESTNET_THIRD_API_ALGOD_URL
-          : process.env.TATUM_ALGORAND_MAINNET_THIRD_API_ALGOD_URL
+          ? process.env['TATUM_ALGORAND_TESTNET_THIRD_API_ALGOD_URL']
+          : process.env['TATUM_ALGORAND_MAINNET_THIRD_API_ALGOD_URL']
 
         return new algosdk.Algodv2(
           {
@@ -42,15 +46,19 @@ export const algoWeb = (): AlgoWeb => {
     },
     getIndexerClient: (testnet: boolean, provider?: string) => {
       const tokenValue = testnet
-        ? process.env.TATUM_ALGORAND_TESTNET_TOKEN
-        : process.env.TATUM_ALGORAND_MAINNET_TOKEN
+        ? process.env['TATUM_ALGORAND_TESTNET_TOKEN']
+        : process.env['TATUM_ALGORAND_MAINNET_TOKEN']
+
+      if (!tokenValue) {
+        throw new Error('No ALGORAND token specified')
+      }
 
       if (provider) {
         return new algosdk.Indexer(tokenValue ?? 'DUMMYTOKEN', provider, Url(provider).port)
       } else {
         const server = testnet
-          ? process.env.TATUM_ALGORAND_TESTNET_THIRD_API_ALGOD_URL
-          : process.env.TATUM_ALGORAND_MAINNET_THIRD_API_ALGOD_URL
+          ? process.env['TATUM_ALGORAND_TESTNET_THIRD_API_ALGOD_URL']
+          : process.env['TATUM_ALGORAND_MAINNET_THIRD_API_ALGOD_URL']
 
         return new algosdk.Indexer(
           {

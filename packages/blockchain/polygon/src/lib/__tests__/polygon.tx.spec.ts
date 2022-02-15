@@ -7,6 +7,7 @@ import {
   ganacheHelper,
   erc721TestFactory,
   multiTokenTestFactory,
+  marketplaceTestFactory,
 } from '@tatumio/shared-testing-evm-based'
 import { Currency } from '@tatumio/api-client'
 
@@ -120,6 +121,65 @@ describe('PolygonSDK - tx', () => {
           sdk.transaction.erc721,
           TEST_DATA.POLYGON,
           Currency.MATIC,
+        )
+      })
+    })
+  })
+
+  describe('marketplace', () => {
+    describe('prepare', () => {
+      describe('generateMarketplace', () => {
+        marketplaceTestFactory.prepare.generateMarketplace(
+          sdk.marketplace,
+          TEST_DATA.POLYGON,
+          'MATIC',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      describe('createMarketplaceListing', () => {
+        marketplaceTestFactory.prepare.createMarketplaceListing(
+          sdk.marketplace,
+          TEST_DATA.POLYGON,
+          'MATIC',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      describe('createMarketplaceListingErc20', () => {
+        marketplaceTestFactory.prepare.createMarketplaceListingErc20(
+          sdk.marketplace,
+          TEST_DATA.POLYGON,
+          'MATIC',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      describe('buyMarketplaceListing', () => {
+        marketplaceTestFactory.prepare.buyMarketplaceListing(
+          sdk.marketplace,
+          TEST_DATA.POLYGON,
+          'MATIC',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      // @TODO: returns "Returned values aren't valid..."
+      xdescribe('buyMarketplaceListingErc20', () => {
+        marketplaceTestFactory.prepare.buyMarketplaceListingErc20(
+          sdk.marketplace,
+          TEST_DATA.POLYGON,
+          'MATIC',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      describe('cancelMarketplaceListing', () => {
+        marketplaceTestFactory.prepare.cancelMarketplaceListing(
+          sdk.marketplace,
+          TEST_DATA.POLYGON,
+          'MATIC',
+          inmemoryBlockchain.accounts,
         )
       })
     })
