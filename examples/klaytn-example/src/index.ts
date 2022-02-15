@@ -1,4 +1,3 @@
-import { klaytnApiExample } from './app/klaytn.api.example'
 import { klaytnBlockchainExample } from './app/klaytn.blockchain.example'
 import { klaytnKmsExample } from './app/klaytn.kms.example'
 import { klaytnLogRecordExample } from './app/klaytn.log.example'
@@ -18,7 +17,6 @@ import { klaytnNftExample } from './app/klaytn.nft.example'
 import { klaytnSubscriptionsExample } from './app/klaytn.subscriptions.example'
 import { klaytnTxWithPrivateKeyExample, klaytnTxWithSignatureIdExample } from './app/klaytn.tx.example'
 
-console.log(`Running ${klaytnApiExample()}`)
 console.log(`Running ${klaytnWalletExample()}`)
 console.log(`Running ${klaytnBlockchainExample()}`)
 console.log(`Running ${klaytnKmsExample()}`)

@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'blockchain-polygon',
+  displayName: 'blockchain-klaytn',
   preset: '../../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -11,5 +11,5 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
-  coverageDirectory: '../../../coverage/packages/blockchain/polygon',
+  coverageDirectory: '../../../coverage/packages/blockchain/klaytn',
 }
