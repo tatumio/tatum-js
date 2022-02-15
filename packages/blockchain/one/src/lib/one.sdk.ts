@@ -7,7 +7,7 @@ import { oneKmsService } from './services/one.kms'
 import { oneTxService } from './services/one.tx'
 import { oneAuctionService } from './services/one.auction'
 
-const blockchain = Blockchain.HARMONY
+const blockchain: EvmBasedBlockchain = Blockchain.HARMONY
 
 export const TatumOneSDK = (args: SDKArguments) => {
   const web3 = oneWeb3({ blockchain })
@@ -23,7 +23,7 @@ export const TatumOneSDK = (args: SDKArguments) => {
       web3,
       broadcastFunction: BlockchainHarmonyOneService.oneBroadcast,
     }),
-    auction: oneAuctionService({ blockchain: 'ONE' as EvmBasedBlockchain, web3 }),
+    auction: oneAuctionService({ blockchain, web3 }),
     httpDriver: async (request: Web3Request): Promise<Web3Response> => {
       return api.oneWeb3Driver(args.apiKey, { ...request, jsonrpc: '2.0' })
     },

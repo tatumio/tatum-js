@@ -194,13 +194,3 @@ export interface SdkWithMarketplaceFunctions {
 }
 
 export type BroadcastFunction = (requestBody: BroadcastKMS) => CancelablePromise<TransactionHashKMS>
-
-export interface SdkWithErc20Functions {
-  decimals(contractAddress: string, provider?: string): any
-  prepare: {
-    deploySignedTransaction(body: ChainDeployErc20, provider?: string): Promise<string>
-    transferSignedTransaction(body: ChainTransferErc20, provider?: string): Promise<string>
-    mintSignedTransaction(body: ChainMintErc20, provider?: string): Promise<string>
-    burnSignedTransaction(body: ChainBurnErc20, provider?: string): Promise<string>
-  }
-}

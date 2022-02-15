@@ -17,8 +17,8 @@ import { bscOffchainExample } from './app/bsc.offchain.example'
 import { bscNftExample } from './app/bsc.nft.example'
 import { bscSubscriptionsExample } from './app/bsc.subscriptions.example'
 import { bscTxWithPrivateKeyExample, bscTxWithSignatureIdExample } from './app/bsc.tx.example'
+import { bscAuctionExample } from './app/bsc.auction.example'
 
-// TODO add auction example
 console.log(`Running ${bscApiExample()}`)
 console.log(`Running ${bscWalletExample()}`)
 console.log(`Running ${bscBlockchainExample()}`)
@@ -36,5 +36,6 @@ console.log(`Running ${bscLedgerVirtualCurrencyExample()}`)
 console.log(`Running ${bscOffchainExample()}`)
 console.log(`Running ${bscNftExample()}`)
 console.log(`Running ${bscSubscriptionsExample()}`)
-console.log(`Runninf ${bscTxWithPrivateKeyExample()}`)
-console.log(`Runninf ${bscTxWithSignatureIdExample()}`)
+console.log(`Running ${bscTxWithPrivateKeyExample()}`)
+console.log(`Running ${bscTxWithSignatureIdExample()}`)
+console.log(`Running ${bscAuctionExample()}`)

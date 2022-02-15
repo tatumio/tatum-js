@@ -2,14 +2,12 @@ import {
   ApproveNftSpending,
   BlockchainMarketplaceService,
   GenerateAuction,
-  SignatureId,
-  TransactionHashKMS,
   UpdateFee,
   UpdateFeeCelo,
   UpdateFeeRecipient,
   Currency,
 } from '@tatumio/api-client'
-import { Blockchain } from '@tatumio/shared-core'
+import { Blockchain, EvmBasedBlockchain } from '@tatumio/shared-core'
 import { TransactionConfig } from 'web3-core'
 import { BroadcastFunction, FromPrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
 import BigNumber from 'bignumber.js'
@@ -17,14 +15,18 @@ import { EvmBasedWeb3 } from './evm-based.web3'
 import { Erc20Token, Erc1155, Erc721Token, MarketplaceSmartContract } from '../contracts'
 import { AbiItem, toWei } from 'web3-utils'
 import { evmBasedUtils } from '../evm-based.utils'
+import { erc20 } from '../transactions/erc20'
 
 export const evmBasedAuction = (args: {
-  blockchain: Blockchain
+  blockchain: EvmBasedBlockchain
   web3: EvmBasedWeb3
   broadcastFunction: BroadcastFunction
 }) => {
   const { blockchain, web3, broadcastFunction } = args
   return {
+    /**
+     * For more details, see <a href="https://tatum.io/apidoc#operation/MPAuction" target="_blank">Tatum API documentation</a>
+     */
     getAuction: async (contractAddress: string, auctionId: string) => {
       return BlockchainMarketplaceService.getAuction(
         blockchain as 'ETH' | 'ONE' | 'CELO' | 'MATIC' | 'BSC',
@@ -32,20 +34,23 @@ export const evmBasedAuction = (args: {
         auctionId,
       )
     },
+    /**
+     * For more details, see <a href="https://tatum.io/apidoc#operation/MPAuctionFee" target="_blank">Tatum API documentation</a>
+     */
     getAuctionFee: async (contractAddress: string) => {
       return BlockchainMarketplaceService.getAuctionFee(
         blockchain as 'ETH' | 'ONE' | 'CELO' | 'MATIC' | 'BSC',
         contractAddress,
       )
     },
+    /**
+     * For more details, see <a href="https://tatum.io/apidoc#operation/MPAuctionRecipient" target="_blank">Tatum API documentation</a>
+     */
     getAuctionFeeRecipient: async (contractAddress: string): Promise<{ address?: string }> => {
       return BlockchainMarketplaceService.getAuctionFeeRecipient(
         blockchain as 'ETH' | 'ONE' | 'CELO' | 'MATIC' | 'BSC',
         contractAddress,
       )
-    },
-    updateFee: async (body: ChainUpdateFee): Promise<TransactionHashKMS | SignatureId> => {
-      return BlockchainMarketplaceService.updateFee({ ...body, chain: blockchain } as any)
     },
     prepare: {
       /**
@@ -91,8 +96,7 @@ export const evmBasedAuction = (args: {
         testnet: boolean,
         body: ChainApproveErc20Spending,
         provider?: string,
-      ) =>
-        auctionApproveErc20TransferSignedTransaction(testnet, { ...body, chain: blockchain }, web3, provider),
+      ) => auctionApproveErc20TransferSignedTransaction({ ...body, chain: blockchain }, web3, provider),
       /**
        * Bid on the auction. Buyer must either send native assets with this operation, or approve ERC20 token spending before.
        * After auction is sold, it's in a pending state to be processed by the auction. Noone receives the assets unless the auction operator processes that.
@@ -102,7 +106,13 @@ export const evmBasedAuction = (args: {
        * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
        */
       auctionBidSignedTransaction: async (testnet: boolean, body: ChainAuctionBid, provider?: string) =>
-        auctionBidSignedTransaction(testnet, { ...body, chain: blockchain }, web3, provider),
+        auctionBidSignedTransaction(
+          { ...body, chain: blockchain },
+          blockchain,
+          broadcastFunction,
+          web3,
+          provider,
+        ),
       /**
        * Cancel auction on the auction. Only possible for the seller or the operator. There must be no buyer present for that auction. NFT asset is sent back to the seller.
        * @param body request data
@@ -199,7 +209,6 @@ export const evmBasedAuction = (args: {
       ) =>
         broadcastFunction({
           txData: await auctionApproveErc20TransferSignedTransaction(
-            testnet,
             { ...body, chain: blockchain },
             web3,
             provider,
@@ -208,7 +217,13 @@ export const evmBasedAuction = (args: {
         }),
       auctionBidSignedTransaction: async (testnet: boolean, body: ChainAuctionBid, provider?: string) =>
         broadcastFunction({
-          txData: await auctionBidSignedTransaction(testnet, { ...body, chain: blockchain }, web3, provider),
+          txData: await auctionBidSignedTransaction(
+            { ...body, chain: blockchain },
+            blockchain,
+            broadcastFunction,
+            web3,
+            provider,
+          ),
           signatureId: body.signatureId,
         }),
       /**
@@ -237,14 +252,14 @@ const deployAuctionSignedTransaction = async (
   provider?: string,
 ) => {
   const client = web3.getClient(provider)
-  // @ts-ignore
-  const contract = new client.eth.Contract(MarketplaceSmartContract.abi, null, {
+  // TODO any type
+  const contract = new client.eth.Contract(MarketplaceSmartContract.abi as any, undefined, {
     data: MarketplaceSmartContract.bytecode,
   })
 
-  // @ts-ignore
   const deploy = contract.deploy({
     arguments: [body.auctionFee, body.feeRecipient],
+    data: MarketplaceSmartContract.bytecode,
   })
 
   const tx: TransactionConfig = {
@@ -273,6 +288,7 @@ const auctionUpdateFeeRecipientSignedTransaction = (
 
   const methodName = 'setAuctionFeeRecipient'
   const methodAbi = MarketplaceSmartContract.abi.find((a) => a.name === methodName)
+  // TODO any type
   const contract = new client.eth.Contract([methodAbi as any])
   const params = [body.feeRecipient]
 
@@ -297,7 +313,7 @@ const auctionUpdateFeeRecipientSignedTransaction = (
   )
 }
 
-export const auctionApproveNftTransferSignedTransaction = async (
+const auctionApproveNftTransferSignedTransaction = async (
   body: ApproveNftTransfer,
   web3: EvmBasedWeb3,
   provider?: string,
@@ -307,6 +323,7 @@ export const auctionApproveNftTransferSignedTransaction = async (
   const methodName = body.isErc721 ? 'approve' : 'setApprovalForAll'
   const abi = body.isErc721 ? Erc721Token.abi : Erc1155.abi
   const methodAbi = abi.find((a) => a.name === methodName)
+  // TODO any type
   const contract = new client.eth.Contract([methodAbi as any])
 
   const params = body.isErc721
@@ -336,8 +353,7 @@ export const auctionApproveNftTransferSignedTransaction = async (
   )
 }
 
-export const auctionApproveErc20TransferSignedTransaction = async (
-  testnet: boolean,
+const auctionApproveErc20TransferSignedTransaction = async (
   body: ApproveErc20,
   web3: EvmBasedWeb3,
   provider?: string,
@@ -346,6 +362,7 @@ export const auctionApproveErc20TransferSignedTransaction = async (
   const amount = new BigNumber(body.amount)
     .multipliedBy(
       new BigNumber(10).pow(
+        // TODO any type
         await new client.eth.Contract(Erc20Token.abi as any, body.contractAddress.trim()).methods
           .decimals()
           .call(),
@@ -377,9 +394,10 @@ export const auctionApproveErc20TransferSignedTransaction = async (
   )
 }
 
-export const auctionBidSignedTransaction = async (
-  testnet: boolean,
+const auctionBidSignedTransaction = async (
   body: AuctionBid,
+  blockchain: EvmBasedBlockchain,
+  broadcastFunction: BroadcastFunction,
   web3: EvmBasedWeb3,
   provider?: string,
 ) => {
@@ -390,17 +408,16 @@ export const auctionBidSignedTransaction = async (
     .call()
   let decimals = 18
   let methodName = 'bid'
-  const b: any = { ...body }
+  let amount: string | undefined = undefined
   if (a[6] !== '0x0000000000000000000000000000000000000000') {
-    // @ts-ignore
-    decimals = await getErc20Decimals(body.chain, a[6], provider, testnet)
+    decimals = await erc20({ blockchain, web3, broadcastFunction }).decimals(a[6], provider)
     if (body.bidder) {
       methodName = 'bidForExternalBidder'
     }
   } else if (body.bidder) {
     throw new Error('Bidder could be present only for ERC20 based auctions.')
   } else {
-    b.amount = body.bidValue
+    amount = body.bidValue
   }
 
   const params = [
@@ -411,15 +428,14 @@ export const auctionBidSignedTransaction = async (
     params.push(body.bidder.trim())
   }
 
+  // TODO any type
   const contract = new client.eth.Contract([MarketplaceSmartContract.abi as any])
   const tx: TransactionConfig = {
     from: 0,
     to: body.contractAddress.trim(),
-    value: b.amount
-      ? `0x${new BigNumber(client.utils.toWei(b.amount, 'ether') as any).toString(16)}`
-      : undefined,
+    value: amount ? `0x${new BigNumber(client.utils.toWei(amount, 'ether')).toString(16)}` : undefined,
     data: contract.methods[methodName as string](...params).encodeABI(),
-    nonce: b.nonce,
+    nonce: body.nonce,
   }
 
   return evmBasedUtils.prepareSignedTransactionAbstraction(
@@ -433,14 +449,11 @@ export const auctionBidSignedTransaction = async (
   )
 }
 
-export const auctionCancelSignedTransaction = async (
-  body: CancelAuction,
-  web3: EvmBasedWeb3,
-  provider?: string,
-) => {
+const auctionCancelSignedTransaction = async (body: CancelAuction, web3: EvmBasedWeb3, provider?: string) => {
   const client = web3.getClient(provider)
 
   const params = [body.id]
+  // TODO any type
   const contract = new client.eth.Contract(MarketplaceSmartContract.abi as any, body.contractAddress.trim())
   const data = contract.methods['cancelAuction']({ arguments: params }).encodeABI()
 
@@ -465,16 +478,13 @@ export const auctionCancelSignedTransaction = async (
   )
 }
 
-export const auctionSettleSignedTransaction = async (
-  body: SettleAuction,
-  web3: EvmBasedWeb3,
-  provider?: string,
-) => {
+const auctionSettleSignedTransaction = async (body: SettleAuction, web3: EvmBasedWeb3, provider?: string) => {
   const client = web3.getClient(provider)
 
   const params = [body.id]
   const methodName = 'settleAuction'
   const methodAbi = MarketplaceSmartContract.abi.find((a) => a.name === methodName)
+  // TODO any type
   const contract = new client.eth.Contract([methodAbi as any])
 
   const tx: TransactionConfig = {
@@ -498,7 +508,7 @@ export const auctionSettleSignedTransaction = async (
   )
 }
 
-export const createAuctionSignedTransaction = async (
+const createAuctionSignedTransaction = async (
   body: CreateAuction,
   web3: EvmBasedWeb3,
   provider?: string,
@@ -519,12 +529,12 @@ export const createAuctionSignedTransaction = async (
 
   const methodName = 'createAuction'
   const methodAbi = MarketplaceSmartContract.abi.find((a) => a.name === methodName)
+  // TODO any type
   const contract = new client.eth.Contract([methodAbi as any])
 
   const tx: TransactionConfig = {
     from: 0,
     to: body.contractAddress.trim(),
-    value: body.amount ? `0x${new BigNumber(toWei(body.amount, 'ether') as any).toString(16)}` : undefined,
     data: contract.methods[methodName as string](...params).encodeABI(),
     nonce: body.nonce,
   }

@@ -1,23 +1,23 @@
-import { TatumEthSDK } from '@tatumio/eth'
+import { TatumBscSDK } from '@tatumio/bsc'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
-const ethSDK = TatumEthSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const bscSDK = TatumBscSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
-export const ethAuctionExample = async () => {
-  const auction = await ethSDK.auction.getAuction('0xe6e7340394958674cdf8606936d292f565e4ecc4', '1')
+export const bscAuctionExample = async () => {
+  const auction = await bscSDK.auction.getAuction('0xe6e7340394958674cdf8606936d292f565e4ecc4', '1')
 
-  const auctionFee = await ethSDK.auction.getAuctionFee('0xe6e7340394958674cdf8606936d292f565e4ecc4')
+  const auctionFee = await bscSDK.auction.getAuctionFee('0xe6e7340394958674cdf8606936d292f565e4ecc4')
 
-  const auctionFeeRecipient = await ethSDK.auction.getAuctionFeeRecipient(
+  const auctionFeeRecipient = await bscSDK.auction.getAuctionFeeRecipient(
     '0xe6e7340394958674cdf8606936d292f565e4ecc4',
   )
 
-  const deployAuctionTx = await ethSDK.auction.prepare.deployAuctionSignedTransaction({
+  const deployAuctionTx = await bscSDK.auction.prepare.deployAuctionSignedTransaction({
     auctionFee: 100,
     feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
   })
 
-  const updateFeeRecipientTx = await ethSDK.auction.prepare.auctionUpdateFeeRecipientSignedTransaction({
+  const updateFeeRecipientTx = await bscSDK.auction.prepare.auctionUpdateFeeRecipientSignedTransaction({
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
@@ -27,7 +27,7 @@ export const ethAuctionExample = async () => {
     },
   })
 
-  const createAuctionTx = await ethSDK.auction.prepare.createAuctionSignedTransaction({
+  const createAuctionTx = await bscSDK.auction.prepare.createAuctionSignedTransaction({
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     nftAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     id: 'string',
@@ -46,7 +46,7 @@ export const ethAuctionExample = async () => {
     bidValue: '100',
   })
 
-  const approveNftSpendingTx = await ethSDK.auction.prepare.auctionApproveNftTransferSignedTransaction({
+  const approveNftSpendingTx = await bscSDK.auction.prepare.auctionApproveNftTransferSignedTransaction({
     spender: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     isErc721: true,
     tokenId: '100000',
@@ -59,7 +59,7 @@ export const ethAuctionExample = async () => {
     },
   })
 
-  const approveErc20SpendingTx = await ethSDK.auction.prepare.auctionApproveErc20TransferSignedTransaction(
+  const approveErc20SpendingTx = await bscSDK.auction.prepare.auctionApproveErc20TransferSignedTransaction(
     true,
     {
       amount: '100000',
@@ -70,7 +70,7 @@ export const ethAuctionExample = async () => {
     },
   )
 
-  const bidAuctionTx = await ethSDK.auction.prepare.auctionBidSignedTransaction(true, {
+  const bidAuctionTx = await bscSDK.auction.prepare.auctionBidSignedTransaction(true, {
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     bidder: '0x587422eEA2cB73B5d3e242bA5456b782919AFc85',
     id: 'string',
@@ -83,7 +83,7 @@ export const ethAuctionExample = async () => {
     },
   })
 
-  const cancelAuctionTx = await ethSDK.auction.prepare.auctionCancelSignedTransaction({
+  const cancelAuctionTx = await bscSDK.auction.prepare.auctionCancelSignedTransaction({
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     id: 'string',
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
@@ -95,7 +95,7 @@ export const ethAuctionExample = async () => {
     bidValue: '100',
   })
 
-  const settleAuctionTx = await ethSDK.auction.prepare.auctionSettleSignedTransaction({
+  const settleAuctionTx = await bscSDK.auction.prepare.auctionSettleSignedTransaction({
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     id: 'string',
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
