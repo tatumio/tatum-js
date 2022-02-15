@@ -7,7 +7,7 @@ export const celoTxService = (args: { blockchain: EvmBasedBlockchain }) => {
     native: {
       ...native({
         ...args,
-        broadcastFunction: BlockchainCeloService.celoBroadcast
+        broadcastFunction: BlockchainCeloService.celoBroadcast,
       }),
     },
     erc721: {
