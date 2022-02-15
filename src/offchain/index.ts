@@ -1,4 +1,5 @@
 export * from './kms'
+export * from './klaytn'
 export * from './ada'
 export * from './bitcoin'
 export * from './litecoin'

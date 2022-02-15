@@ -1,39 +1,39 @@
-import { IsIn, IsNotEmpty, IsOptional, Length, Min, IsBoolean, ValidateIf } from 'class-validator';
-import {Currency} from './Currency'
-import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId'
+import { IsBoolean, IsIn, IsNotEmpty, IsOptional, Length, Min, ValidateIf } from 'class-validator';
+import { Currency } from './Currency'
+import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 
 export class DeployErc721 extends PrivateKeyOrSignatureId {
 
-    @IsNotEmpty()
-    @Length(1, 100)
-    public name: string;
+  @IsNotEmpty()
+  @Length(1, 100)
+  public name: string;
 
-    @IsNotEmpty()
-    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC, Currency.TRON, Currency.ONE, Currency.MATIC, Currency.ALGO])
-    public chain: Currency;
+  @IsNotEmpty()
+  @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC, Currency.KLAY, Currency.TRON, Currency.ONE, Currency.MATIC, Currency.ALGO])
+  public chain: Currency;
 
-    @IsNotEmpty()
-    @Length(1, 30)
-    public symbol: string;
+  @IsNotEmpty()
+  @Length(1, 30)
+  public symbol: string;
 
-    @Min(0)
-    @IsOptional()
-    public nonce?: number;
-    
-    @IsBoolean()
-    @IsOptional()
-    public provenance?: boolean;
+  @Min(0)
+  @IsOptional()
+  public nonce?: number;
 
-    @ValidateIf(o => o.chain === Currency.ALGO)
-    @IsNotEmpty()
-    public url?: string;
+  @IsBoolean()
+  @IsOptional()
+  public provenance?: boolean;
 
-    @ValidateIf(o => o.chain === Currency.ALGO && o.signatureId)
-    @IsNotEmpty()
-    @Length(42, 58)
-    public from?: string;
+  @ValidateIf(o => o.chain === Currency.ALGO)
+  @IsNotEmpty()
+  public url?: string;
 
-    @IsBoolean()
-    @IsOptional()
-    public publicMint?: boolean;
+  @ValidateIf(o => o.chain === Currency.ALGO && o.signatureId)
+  @IsNotEmpty()
+  @Length(42, 58)
+  public from?: string;
+
+  @IsBoolean()
+  @IsOptional()
+  public publicMint?: boolean;
 }

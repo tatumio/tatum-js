@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
-import {get, validateBody} from '../../connector/tatum';
-import {getErc20Decimals, prepareApproveErc20} from '../../fungible';
-import {helperBroadcastTx, helperPrepareSCCall} from '../../helpers';
+import { get, validateBody } from '../../connector/tatum';
+import { getErc20Decimals, prepareApproveErc20 } from '../../fungible';
+import { helperBroadcastTx, helperPrepareSCCall } from '../../helpers';
 import {
     ApproveErc20,
     CreateMarketplaceListing,
@@ -14,96 +14,98 @@ import {
     UpdateMarketplaceFee,
     UpdateMarketplaceFeeRecipient,
     UpdateTronMarketplaceFee,
-    UpdateTronMarketplaceFeeRecipient
+    UpdateTronMarketplaceFeeRecipient,
 } from '../../model';
 import {
     prepareBscDeployMarketplaceListingSignedTransaction,
     prepareCeloDeployMarketplaceListingSignedTransaction,
     prepareEthDeployMarketplaceListingSignedTransaction,
+    prepareKlaytnDeployMarketplaceListingSignedTransaction,
     prepareOneDeployMarketplaceListingSignedTransaction,
     preparePolygonDeployMarketplaceListingSignedTransaction,
     sendBscDeployMarketplaceListingSignedTransaction,
     sendCeloDeployMarketplaceListingSignedTransaction,
     sendEthDeployMarketplaceListingSignedTransaction,
+    sendKlaytnDeployMarketplaceListingSignedTransaction,
     sendOneDeployMarketplaceListingSignedTransaction,
-    sendPolygonDeployMarketplaceListingSignedTransaction
+    sendPolygonDeployMarketplaceListingSignedTransaction,
 } from '../../transaction';
 
 enum ListingState {
-    INITIATED = '0',
-    SOLD = '1',
-    CANCELLED = '2'
+  INITIATED = '0',
+  SOLD = '1',
+  CANCELLED = '2'
 }
 
 export interface MarketplaceListing {
-    /**
-     * ID of the listing
-     */
-    listingId: string;
+  /**
+   * ID of the listing
+   */
+  listingId: string;
 
-    /**
-     * whether listing is for ERC721 or ERC1155
-     */
-    isErc721: boolean;
+  /**
+   * whether listing is for ERC721 or ERC1155
+   */
+  isErc721: boolean;
 
-    /**
-     * State of the listing,
-     */
-    state: ListingState;
+  /**
+   * State of the listing,
+   */
+  state: ListingState;
 
-    /**
-     * Address of the NFT asset contract
-     */
-    nftAddress: string;
+  /**
+   * Address of the NFT asset contract
+   */
+  nftAddress: string;
 
-    /**
-     * Address of the seller
-     */
-    seller: string;
+  /**
+   * Address of the seller
+   */
+  seller: string;
 
-    /**
-     * Address of the ERC20 token, which will be used for paying. 0x0 if native asset is used
-     */
-    erc20Address: string;
+  /**
+   * Address of the ERC20 token, which will be used for paying. 0x0 if native asset is used
+   */
+  erc20Address: string;
 
-    /**
-     * TokenID to sell
-     */
-    tokenId: string;
+  /**
+   * TokenID to sell
+   */
+  tokenId: string;
 
-    /**
-     * Amount of assets to sell. Valid only for ERC1155.
-     */
-    amount: string;
+  /**
+   * Amount of assets to sell. Valid only for ERC1155.
+   */
+  amount: string;
 
-    /**
-     * Price to sell asset for.
-     */
-    price: string;
+  /**
+   * Price to sell asset for.
+   */
+  price: string;
 
-    /**
-     * Address of the buyer, if already exists.
-     */
-    buyer: string;
+  /**
+   * Address of the buyer, if already exists.
+   */
+  buyer: string;
 }
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/GetMarketplaceFee" target="_blank">Tatum API documentation</a>
  */
 export const getMarketplaceFee = async (chain: Currency, contractAddress: string): Promise<number> =>
-    get(`/v3/blockchain/marketplace/listing/${chain}/${contractAddress}/fee`);
+  get(`/v3/blockchain/marketplace/listing/${chain}/${contractAddress}/fee`);
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/GetMarketplaceListing" target="_blank">Tatum API documentation</a>
  */
 export const getMarketplaceListing = async (chain: Currency, contractAddress: string, listingId: string): Promise<MarketplaceListing> =>
-    get(`/v3/blockchain/marketplace/listing/${chain}/${contractAddress}/listing/${listingId}`);
+  get(`/v3/blockchain/marketplace/listing/${chain}/${contractAddress}/listing/${listingId}`);
 
 /**
  * For more details, see <a href="https://tatum.io/apidoc#operation/GetMarketplaceFeeRecipient" target="_blank">Tatum API documentation</a>
  */
 export const getMarketplaceFeeRecipient = async (chain: Currency, contractAddress: string): Promise<{ address: string }> =>
-    get(`/v3/blockchain/marketplace/listing/${chain}/${contractAddress}/recipient`);
+  get(`/v3/blockchain/marketplace/listing/${chain}/${contractAddress}/recipient`);
 
 /**
  * Deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
@@ -120,22 +122,24 @@ export const getMarketplaceFeeRecipient = async (chain: Currency, contractAddres
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const deployMarketplaceListing = async (testnet: boolean, body: DeployMarketplaceListing | DeployTronMarketplaceListing, provider?: string) => {
-    switch (body.chain) {
-        case Currency.CELO:
-            return await sendCeloDeployMarketplaceListingSignedTransaction(testnet, body, provider);
-        case Currency.ONE:
-            return await sendOneDeployMarketplaceListingSignedTransaction(testnet, body, provider);
-        case Currency.ETH:
-            return await sendEthDeployMarketplaceListingSignedTransaction(body, provider);
-        case Currency.BSC:
-            return await sendBscDeployMarketplaceListingSignedTransaction(body, provider);
-        case Currency.MATIC:
-            return await sendPolygonDeployMarketplaceListingSignedTransaction(testnet, body, provider);
-        // case Currency.TRON:
-        //     return await sendTronDeployMarketplaceListingSignedTransaction(testnet, body as DeployTronMarketplaceListing, provider)
-        default:
-            throw new Error('Unsupported chain');
-    }
+  switch (body.chain) {
+    case Currency.CELO:
+      return await sendCeloDeployMarketplaceListingSignedTransaction(testnet, body, provider);
+    case Currency.ONE:
+      return await sendOneDeployMarketplaceListingSignedTransaction(testnet, body, provider);
+    case Currency.ETH:
+      return await sendEthDeployMarketplaceListingSignedTransaction(body, provider);
+    case Currency.BSC:
+      return await sendBscDeployMarketplaceListingSignedTransaction(body, provider);
+    case Currency.MATIC:
+      return await sendPolygonDeployMarketplaceListingSignedTransaction(testnet, body, provider);
+    case Currency.KLAY:
+      return await sendKlaytnDeployMarketplaceListingSignedTransaction(testnet, body, provider);
+    // case Currency.TRON:
+    //     return await sendTronDeployMarketplaceListingSignedTransaction(testnet, body as DeployTronMarketplaceListing, provider)
+    default:
+      throw new Error('Unsupported chain');
+  }
 };
 
 /**
@@ -153,22 +157,24 @@ export const deployMarketplaceListing = async (testnet: boolean, body: DeployMar
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareDeployMarketplaceListing = async (testnet: boolean, body: DeployMarketplaceListing | DeployTronMarketplaceListing, provider?: string) => {
-    switch (body.chain) {
-        case Currency.CELO:
-            return await prepareCeloDeployMarketplaceListingSignedTransaction(testnet, body, provider);
-        case Currency.ONE:
-            return await prepareOneDeployMarketplaceListingSignedTransaction(testnet, body, provider);
-        case Currency.ETH:
-            return await prepareEthDeployMarketplaceListingSignedTransaction(body, provider);
-        case Currency.BSC:
-            return await prepareBscDeployMarketplaceListingSignedTransaction(body, provider);
-        case Currency.MATIC:
-            return await preparePolygonDeployMarketplaceListingSignedTransaction(testnet, body, provider);
-        // case Currency.TRON:
-        //     return await prepareTronDeployMarketplaceListingSignedTransaction(testnet, body as DeployTronMarketplaceListing, provider)
-        default:
-            throw new Error('Unsupported chain');
-    }
+  switch (body.chain) {
+    case Currency.CELO:
+      return await prepareCeloDeployMarketplaceListingSignedTransaction(testnet, body, provider);
+    case Currency.ONE:
+      return await prepareOneDeployMarketplaceListingSignedTransaction(testnet, body, provider);
+    case Currency.ETH:
+      return await prepareEthDeployMarketplaceListingSignedTransaction(body, provider);
+    case Currency.BSC:
+      return await prepareBscDeployMarketplaceListingSignedTransaction(body, provider);
+    case Currency.MATIC:
+      return await preparePolygonDeployMarketplaceListingSignedTransaction(testnet, body, provider);
+    case Currency.KLAY:
+      return await prepareKlaytnDeployMarketplaceListingSignedTransaction(testnet, body, provider);
+    // case Currency.TRON:
+    //     return await prepareTronDeployMarketplaceListingSignedTransaction(testnet, body as DeployTronMarketplaceListing, provider)
+    default:
+      throw new Error('Unsupported chain');
+  }
 };
 
 /**
@@ -179,17 +185,17 @@ export const prepareDeployMarketplaceListing = async (testnet: boolean, body: De
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceUpdateFee = async (testnet: boolean, body: UpdateMarketplaceFee | UpdateTronMarketplaceFee, provider?: string) => {
-    await validateBody(body, body.chain === Currency.TRON ? UpdateTronMarketplaceFee : UpdateMarketplaceFee);
-    const params = [`0x${new BigNumber(body.marketplaceFee).toString(16)}`];
-    if (body.chain === Currency.TRON) {
-        throw new Error('Unsupported chain');
-        // return await helperPrepareSCCall(testnet, body, UpdateTronMarketplaceFee, 'setMarketplaceFee',
-        //     [
-        //         {type: 'uint256', value: params[0]},
-        //     ], 'setMarketplaceFee(uint256)', provider)
-    } else {
-        return await helperPrepareSCCall(testnet, body, UpdateMarketplaceFee, 'setMarketplaceFee', params, undefined, provider);
-    }
+  await validateBody(body, body.chain === Currency.TRON ? UpdateTronMarketplaceFee : UpdateMarketplaceFee);
+  const params = [`0x${new BigNumber(body.marketplaceFee).toString(16)}`];
+  if (body.chain === Currency.TRON) {
+    throw new Error('Unsupported chain');
+    // return await helperPrepareSCCall(testnet, body, UpdateTronMarketplaceFee, 'setMarketplaceFee',
+    //     [
+    //         {type: 'uint256', value: params[0]},
+    //     ], 'setMarketplaceFee(uint256)', provider)
+  } else {
+    return await helperPrepareSCCall(testnet, body, UpdateMarketplaceFee, 'setMarketplaceFee', params, undefined, provider);
+  }
 };
 
 /**
@@ -200,17 +206,17 @@ export const prepareMarketplaceUpdateFee = async (testnet: boolean, body: Update
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceUpdateFeeRecipient = async (testnet: boolean, body: UpdateMarketplaceFeeRecipient | UpdateTronMarketplaceFeeRecipient, provider?: string) => {
-    await validateBody(body, body.chain === Currency.TRON ? UpdateTronMarketplaceFeeRecipient : UpdateMarketplaceFeeRecipient);
-    const params = [body.feeRecipient];
-    if (body.chain === Currency.TRON) {
-        throw new Error('Unsupported chain');
-        // return await helperPrepareSCCall(testnet, body, UpdateTronMarketplaceFeeRecipient, 'setMarketplaceFeeRecipient',
-        //     [
-        //         {type: 'address', value: convertAddressToHex(params[0])},
-        //     ], 'setMarketplaceFeeRecipient(address)', provider)
-    } else {
-        return await helperPrepareSCCall(testnet, body, UpdateMarketplaceFeeRecipient, 'setMarketplaceFeeRecipient', params, undefined, provider);
-    }
+  await validateBody(body, body.chain === Currency.TRON ? UpdateTronMarketplaceFeeRecipient : UpdateMarketplaceFeeRecipient);
+  const params = [body.feeRecipient];
+  if (body.chain === Currency.TRON) {
+    throw new Error('Unsupported chain');
+    // return await helperPrepareSCCall(testnet, body, UpdateTronMarketplaceFeeRecipient, 'setMarketplaceFeeRecipient',
+    //     [
+    //         {type: 'address', value: convertAddressToHex(params[0])},
+    //     ], 'setMarketplaceFeeRecipient(address)', provider)
+  } else {
+    return await helperPrepareSCCall(testnet, body, UpdateMarketplaceFeeRecipient, 'setMarketplaceFeeRecipient', params, undefined, provider);
+  }
 };
 
 /**
@@ -221,7 +227,7 @@ export const prepareMarketplaceUpdateFeeRecipient = async (testnet: boolean, bod
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceApproveErc20Spending = async (testnet: boolean, body: ApproveErc20, provider?: string) => {
-    return prepareApproveErc20(testnet, body, provider);
+  return prepareApproveErc20(testnet, body, provider);
 };
 
 /**
@@ -234,33 +240,33 @@ export const prepareMarketplaceApproveErc20Spending = async (testnet: boolean, b
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceCreateListing = async (testnet: boolean, body: CreateMarketplaceListing | CreateTronMarketplaceListing, provider?: string) => {
-    await validateBody(body, body.chain === Currency.TRON ? CreateTronMarketplaceListing : CreateMarketplaceListing);
-    const decimals = body.erc20Address ? await getErc20Decimals(testnet, body.chain, body.erc20Address, provider) : 18;
-    const params = [body.listingId, body.isErc721, body.nftAddress.trim(), `0x${new BigNumber(body.tokenId).toString(16)}`,
-        `0x${new BigNumber(body.price).multipliedBy(10 ** decimals).toString(16)}`, body.seller.trim(), `0x${new BigNumber(body.amount || 0).toString(16)}`,
-        body.erc20Address || '0x0000000000000000000000000000000000000000'];
-    if (body.chain === Currency.TRON) {
-        throw new Error('Unsupported chain');
-        // if (!body.erc20Address) {
-        //     params[7] = 'T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb';
-        // }
-        // return await helperPrepareSCCall(testnet, body, CreateTronMarketplaceListing, 'createListing',
-        //     [
-        //         {type: 'string', value: params[0]},
-        //         {type: 'bool', value: params[1]},
-        //         {type: 'address', value: convertAddressToHex(params[2] as string)},
-        //         {type: 'uint256', value: params[3]},
-        //         {type: 'uint256', value: params[4]},
-        //         {type: 'address', value: convertAddressToHex(params[5] as string)},
-        //         {type: 'uint256', value: params[6]},
-        //         {type: 'address', value: convertAddressToHex(params[7] as string)},
-        //     ], 'createListing(string,bool,address,uint256,uint256,address,uint256,address)', provider)
-    } else {
-        if(!body.isErc721){
-            body.amount = undefined;
-        }
-        return await helperPrepareSCCall(testnet, body, CreateMarketplaceListing, 'createListing', params, undefined, provider);
+  await validateBody(body, body.chain === Currency.TRON ? CreateTronMarketplaceListing : CreateMarketplaceListing);
+  const decimals = body.erc20Address ? await getErc20Decimals(testnet, body.chain, body.erc20Address, provider) : 18;
+  const params = [body.listingId, body.isErc721, body.nftAddress.trim(), `0x${new BigNumber(body.tokenId).toString(16)}`,
+    `0x${new BigNumber(body.price).multipliedBy(10 ** decimals).toString(16)}`, body.seller.trim(), `0x${new BigNumber(body.amount || 0).toString(16)}`,
+    body.erc20Address || '0x0000000000000000000000000000000000000000'];
+  if (body.chain === Currency.TRON) {
+    throw new Error('Unsupported chain');
+    // if (!body.erc20Address) {
+    //     params[7] = 'T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb';
+    // }
+    // return await helperPrepareSCCall(testnet, body, CreateTronMarketplaceListing, 'createListing',
+    //     [
+    //         {type: 'string', value: params[0]},
+    //         {type: 'bool', value: params[1]},
+    //         {type: 'address', value: convertAddressToHex(params[2] as string)},
+    //         {type: 'uint256', value: params[3]},
+    //         {type: 'uint256', value: params[4]},
+    //         {type: 'address', value: convertAddressToHex(params[5] as string)},
+    //         {type: 'uint256', value: params[6]},
+    //         {type: 'address', value: convertAddressToHex(params[7] as string)},
+    //     ], 'createListing(string,bool,address,uint256,uint256,address,uint256,address)', provider)
+  } else {
+    if (!body.isErc721) {
+      body.amount = undefined;
     }
+    return await helperPrepareSCCall(testnet, body, CreateMarketplaceListing, 'createListing', params, undefined, provider);
+  }
 };
 
 /**
@@ -272,26 +278,26 @@ export const prepareMarketplaceCreateListing = async (testnet: boolean, body: Cr
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceBuyListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation | InvokeTronMarketplaceListingOperation, provider?: string) => {
-    await validateBody(body, body.chain === Currency.TRON ? InvokeTronMarketplaceListingOperation : InvokeMarketplaceListingOperation);
-    const params = [body.listingId, body.erc20Address || '0x0000000000000000000000000000000000000000'];
-    let methodName = 'buyAssetFromListing';
-    if (body.erc20Address) {
-        body.amount = undefined;
-        if (body.buyer) {
-            params.push(body.buyer.trim());
-            methodName = 'buyAssetFromListingForExternalBuyer';
-        }
+  await validateBody(body, body.chain === Currency.TRON ? InvokeTronMarketplaceListingOperation : InvokeMarketplaceListingOperation);
+  const params = [body.listingId, body.erc20Address || '0x0000000000000000000000000000000000000000'];
+  let methodName = 'buyAssetFromListing';
+  if (body.erc20Address) {
+    body.amount = undefined;
+    if (body.buyer) {
+      params.push(body.buyer.trim());
+      methodName = 'buyAssetFromListingForExternalBuyer';
     }
-    if (body.chain === Currency.TRON) {
-        throw new Error('Unsupported chain');
-        // return await helperPrepareSCCall(testnet, body, InvokeTronMarketplaceListingOperation, 'buyAssetFromListing',
-        //     [
-        //         {type: 'string', value: params[0]},
-        //         {type: 'address', value: convertAddressToHex(params[1])},
-        //     ], 'buyAssetFromListing(string,address)', provider);
-    } else {
-        return await helperPrepareSCCall(testnet, body, InvokeMarketplaceListingOperation, methodName, params, undefined, provider);
-    }
+  }
+  if (body.chain === Currency.TRON) {
+    throw new Error('Unsupported chain');
+    // return await helperPrepareSCCall(testnet, body, InvokeTronMarketplaceListingOperation, 'buyAssetFromListing',
+    //     [
+    //         {type: 'string', value: params[0]},
+    //         {type: 'address', value: convertAddressToHex(params[1])},
+    //     ], 'buyAssetFromListing(string,address)', provider);
+  } else {
+    return await helperPrepareSCCall(testnet, body, InvokeMarketplaceListingOperation, methodName, params, undefined, provider);
+  }
 };
 
 /**
@@ -302,17 +308,17 @@ export const prepareMarketplaceBuyListing = async (testnet: boolean, body: Invok
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const prepareMarketplaceCancelListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation | InvokeTronMarketplaceListingOperation, provider?: string) => {
-    await validateBody(body, body.chain === Currency.TRON ? InvokeTronMarketplaceListingOperation : InvokeMarketplaceListingOperation);
-    const params = [body.listingId];
-    if (body.chain === Currency.TRON) {
-        throw new Error('Unsupported chain');
-        // return await helperPrepareSCCall(testnet, body, InvokeTronMarketplaceListingOperation, 'cancelListing',
-        //     [
-        //         {type: 'string', value: params[0]},
-        //     ], 'cancelListing(string)', provider)
-    } else {
-        return await helperPrepareSCCall(testnet, body, InvokeMarketplaceListingOperation, 'cancelListing', params, undefined, provider);
-    }
+  await validateBody(body, body.chain === Currency.TRON ? InvokeTronMarketplaceListingOperation : InvokeMarketplaceListingOperation);
+  const params = [body.listingId];
+  if (body.chain === Currency.TRON) {
+    throw new Error('Unsupported chain');
+    // return await helperPrepareSCCall(testnet, body, InvokeTronMarketplaceListingOperation, 'cancelListing',
+    //     [
+    //         {type: 'string', value: params[0]},
+    //     ], 'cancelListing(string)', provider)
+  } else {
+    return await helperPrepareSCCall(testnet, body, InvokeMarketplaceListingOperation, 'cancelListing', params, undefined, provider);
+  }
 };
 
 /**
@@ -323,7 +329,7 @@ export const prepareMarketplaceCancelListing = async (testnet: boolean, body: In
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendMarketplaceUpdateFee = async (testnet: boolean, body: UpdateMarketplaceFee | UpdateTronMarketplaceFee, provider?: string) =>
-    helperBroadcastTx(body.chain, await prepareMarketplaceUpdateFee(testnet, body, provider), body.signatureId);
+  helperBroadcastTx(body.chain, await prepareMarketplaceUpdateFee(testnet, body, provider), body.signatureId);
 /**
  * Update marketplace fee recipient.
  * @param testnet chain to work with
@@ -332,7 +338,7 @@ export const sendMarketplaceUpdateFee = async (testnet: boolean, body: UpdateMar
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendMarketplaceUpdateFeeRecipient = async (testnet: boolean, body: UpdateMarketplaceFeeRecipient | UpdateTronMarketplaceFeeRecipient, provider?: string) =>
-    helperBroadcastTx(body.chain, await prepareMarketplaceUpdateFeeRecipient(testnet, body, provider), body.signatureId);
+  helperBroadcastTx(body.chain, await prepareMarketplaceUpdateFeeRecipient(testnet, body, provider), body.signatureId);
 /**
  * Approve ERC20 spending for marketplace to perform buy with ERC20 token.
  * @param testnet chain to work with
@@ -341,7 +347,7 @@ export const sendMarketplaceUpdateFeeRecipient = async (testnet: boolean, body: 
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendMarketplaceApproveErc20Spending = async (testnet: boolean, body: ApproveErc20, provider?: string) =>
-    helperBroadcastTx(body.chain, await prepareMarketplaceApproveErc20Spending(testnet, body, provider), body.signatureId);
+  helperBroadcastTx(body.chain, await prepareMarketplaceApproveErc20Spending(testnet, body, provider), body.signatureId);
 /**
  * Create new listing on the marketplace.
  * After listing is created, seller must send the asset to the marketplace smart contract.
@@ -352,7 +358,7 @@ export const sendMarketplaceApproveErc20Spending = async (testnet: boolean, body
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendMarketplaceCreateListing = async (testnet: boolean, body: CreateMarketplaceListing | CreateTronMarketplaceListing, provider?: string) =>
-    helperBroadcastTx(body.chain, await prepareMarketplaceCreateListing(testnet, body, provider), body.signatureId);
+  helperBroadcastTx(body.chain, await prepareMarketplaceCreateListing(testnet, body, provider), body.signatureId);
 /**
  * Buy listing on the marketplace. Buyer must either send native assets with this operation, or approve ERC20 token spending before.
  * After listing is sold, it's in a pending state to be processed by the marketplace. Noone receives the assets unless the marketplace operator processes that.
@@ -362,7 +368,7 @@ export const sendMarketplaceCreateListing = async (testnet: boolean, body: Creat
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendMarketplaceBuyListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation | InvokeTronMarketplaceListingOperation, provider?: string) =>
-    helperBroadcastTx(body.chain, await prepareMarketplaceBuyListing(testnet, body, provider), body.signatureId);
+  helperBroadcastTx(body.chain, await prepareMarketplaceBuyListing(testnet, body, provider), body.signatureId);
 /**
  * Cancel listing on the marketplace. Only possible for the seller or the operator. There must be no buyer present for that listing. NFT asset is sent back to the seller.
  * @param testnet chain to work with
@@ -371,5 +377,5 @@ export const sendMarketplaceBuyListing = async (testnet: boolean, body: InvokeMa
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendMarketplaceCancelListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation | InvokeTronMarketplaceListingOperation, provider?: string) =>
-    helperBroadcastTx(body.chain, await prepareMarketplaceCancelListing(testnet, body, provider), body.signatureId);
+  helperBroadcastTx(body.chain, await prepareMarketplaceCancelListing(testnet, body, provider), body.signatureId);
 

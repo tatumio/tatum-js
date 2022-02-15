@@ -1,9 +1,16 @@
 import BigNumber from 'bignumber.js';
-import {validateBody} from '../connector/tatum';
+import { validateBody } from '../connector/tatum';
 import token_abi from '../contracts/erc20/token_abi';
-import {helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall} from '../helpers';
-import {ApproveErc20, Currency} from '../model';
-import {getBscBep20ContractDecimals, getCeloErc20ContractDecimals, getEthErc20ContractDecimals, getOne20ContractDecimals, getPolygonErc20ContractDecimals} from '../transaction';
+import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../helpers';
+import { ApproveErc20, Currency } from '../model';
+import {
+    getBscBep20ContractDecimals,
+    getCeloErc20ContractDecimals,
+    getEthErc20ContractDecimals,
+    getOne20ContractDecimals,
+    getPolygonErc20ContractDecimals,
+} from '../transaction';
+import Caver from 'caver-js'
 
 /**
  * Approve ERC20 transfer for spender.
@@ -13,7 +20,7 @@ import {getBscBep20ContractDecimals, getCeloErc20ContractDecimals, getEthErc20Co
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
 export const sendApproveErc20 = async (testnet: boolean, body: ApproveErc20, provider?: string) =>
-    helperBroadcastTx(body.chain, await prepareApproveErc20(testnet, body, provider), body.signatureId);
+  helperBroadcastTx(body.chain, await prepareApproveErc20(testnet, body, provider), body.signatureId);
 
 /**
  * Prepare approve ERC20 signed transaction.
@@ -22,30 +29,30 @@ export const sendApproveErc20 = async (testnet: boolean, body: ApproveErc20, pro
  * @param provider optional Web3 provider
  */
 export const prepareApproveErc20 = async (testnet: boolean, body: ApproveErc20, provider?: string) => {
-    await validateBody(body, ApproveErc20);
-    let amount;
-    switch (body.chain) {
-        case Currency.CELO:
-            amount = new BigNumber(body.amount).multipliedBy(new BigNumber(10).pow(await getCeloErc20ContractDecimals(testnet, body.contractAddress, provider))).toString(16);
-            break;
-        case Currency.ONE:
-            amount = new BigNumber(body.amount).multipliedBy(new BigNumber(10).pow(await getOne20ContractDecimals(testnet, body.contractAddress, provider))).toString(16);
-            break;
-        case Currency.ETH:
-            amount = new BigNumber(body.amount).multipliedBy(new BigNumber(10).pow(await getEthErc20ContractDecimals(testnet, body.contractAddress, provider))).toString(16);
-            break;
-        case Currency.BSC:
-            amount = new BigNumber(body.amount).multipliedBy(new BigNumber(10).pow(await getBscBep20ContractDecimals(testnet, body.contractAddress, provider))).toString(16);
-            break;
-        case Currency.MATIC:
-            amount = new BigNumber(body.amount).multipliedBy(new BigNumber(10).pow(await getPolygonErc20ContractDecimals(testnet, body.contractAddress, provider))).toString(16);
-            break;
-        default:
-            throw new Error('Unsupported combination of inputs.');
-    }
-    const params = [body.spender.trim(), `0x${amount}`];
-    body.amount = '0';
-    return await helperPrepareSCCall(testnet, body, ApproveErc20, 'approve', params, undefined, provider, token_abi);
+  await validateBody(body, ApproveErc20);
+  let amount;
+  switch (body.chain) {
+    case Currency.CELO:
+      amount = new BigNumber(body.amount).multipliedBy(new BigNumber(10).pow(await getCeloErc20ContractDecimals(testnet, body.contractAddress, provider))).toString(16);
+      break;
+    case Currency.ONE:
+      amount = new BigNumber(body.amount).multipliedBy(new BigNumber(10).pow(await getOne20ContractDecimals(testnet, body.contractAddress, provider))).toString(16);
+      break;
+    case Currency.ETH:
+      amount = new BigNumber(body.amount).multipliedBy(new BigNumber(10).pow(await getEthErc20ContractDecimals(testnet, body.contractAddress, provider))).toString(16);
+      break;
+    case Currency.BSC:
+      amount = new BigNumber(body.amount).multipliedBy(new BigNumber(10).pow(await getBscBep20ContractDecimals(testnet, body.contractAddress, provider))).toString(16);
+      break;
+    case Currency.MATIC:
+      amount = new BigNumber(body.amount).multipliedBy(new BigNumber(10).pow(await getPolygonErc20ContractDecimals(testnet, body.contractAddress, provider))).toString(16);
+      break;
+    default:
+      throw new Error('Unsupported combination of inputs.');
+  }
+  const params = [body.spender.trim(), `0x${amount}`];
+  body.amount = '0';
+  return await helperPrepareSCCall(testnet, body, ApproveErc20, 'approve', params, undefined, provider, token_abi);
 };
 
 /**
@@ -56,7 +63,8 @@ export const prepareApproveErc20 = async (testnet: boolean, body: ApproveErc20, 
  * @param provider optional provider
  */
 export const getErc20Decimals = async (testnet: boolean, chain: Currency, contractAddress: string, provider?: string) => {
-    const web3 = helperGetWeb3Client(testnet, chain, provider);
-    // @ts-ignore
-    return (new web3.eth.Contract(token_abi, contractAddress)).methods.decimals().call();
+  const web3 = helperGetWeb3Client(testnet, chain, provider);
+  const c = web3 instanceof Caver ? web3.klay : web3.eth
+  // @ts-ignore
+  return (new c.Contract(token_abi, contractAddress)).methods.decimals().call();
 };

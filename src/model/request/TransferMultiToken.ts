@@ -1,44 +1,44 @@
-import {Type} from 'class-transformer'
-import {IsIn, IsNotEmpty, IsOptional, Length, MaxLength, Min, ValidateNested, ValidateIf} from 'class-validator'
-import {Currency} from './Currency'
-import {Fee} from './Fee'
-import {PrivateKeyOrSignatureId} from './PrivateKeyOrSignatureId'
+import { Type } from 'class-transformer'
+import { IsIn, IsNotEmpty, IsOptional, Length, MaxLength, Min, ValidateIf, ValidateNested } from 'class-validator'
+import { Currency } from './Currency'
+import { Fee } from './Fee'
+import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
 
 export class TransferMultiToken extends PrivateKeyOrSignatureId {
 
-    @IsNotEmpty()
-    @Length(42, 58)
-    public to: string;
+  @IsNotEmpty()
+  @Length(42, 58)
+  public to: string;
 
-    @IsNotEmpty()
-    @MaxLength(256)
-    public tokenId: string;
+  @IsNotEmpty()
+  @MaxLength(256)
+  public tokenId: string;
 
-    @IsNotEmpty()
-    @Length(1, 43)
-    public contractAddress: string;
+  @IsNotEmpty()
+  @Length(1, 43)
+  public contractAddress: string;
 
-    @IsNotEmpty()
-    @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC, Currency.ALGO])
-    public chain: Currency;
+  @IsNotEmpty()
+  @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC, Currency.KLAY, Currency.ALGO, Currency.KLAY])
+  public chain: Currency;
 
-    @IsNotEmpty()
-    public amount: string;
+  @IsNotEmpty()
+  public amount: string;
 
-    @IsOptional()
-    public data: string;
+  @IsOptional()
+  public data: string;
 
-    @Min(0)
-    @IsOptional()
-    public nonce?: number;
+  @Min(0)
+  @IsOptional()
+  public nonce?: number;
 
-    @IsOptional()
-    @Type(() => Fee)
-    @ValidateNested()
-    public fee?: Fee;
+  @IsOptional()
+  @Type(() => Fee)
+  @ValidateNested()
+  public fee?: Fee;
 
-    @ValidateIf(o => o.chain === Currency.ALGO && o.signatureId)
-    @IsNotEmpty()
-    @Length(42, 58)
-    public from?: string;
+  @ValidateIf(o => o.chain === Currency.ALGO && o.signatureId)
+  @IsNotEmpty()
+  @Length(42, 58)
+  public from?: string;
 }

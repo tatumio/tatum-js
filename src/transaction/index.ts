@@ -1,4 +1,5 @@
 export * from './bitcoin'
+export * from './klaytn'
 export * from './bnb'
 export * from './litecoin'
 export * from './flow'
