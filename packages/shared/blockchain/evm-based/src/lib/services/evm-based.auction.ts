@@ -7,8 +7,9 @@ import {
   UpdateFee,
   UpdateFeeCelo,
   UpdateFeeRecipient,
+  Currency,
 } from '@tatumio/api-client'
-import { Blockchain, Currency } from '@tatumio/shared-core'
+import { Blockchain } from '@tatumio/shared-core'
 import { TransactionConfig } from 'web3-core'
 import { BroadcastFunction, FromPrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
 import BigNumber from 'bignumber.js'
