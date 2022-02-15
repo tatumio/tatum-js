@@ -30,6 +30,7 @@ import {
   TransferMultiToken,
   TransferMultiTokenBatch,
   TransferNft,
+  TransferPolygonBlockchain,
   TronWallet,
   UpdateCashbackValueForAuthorNft,
   UpdateFee,
@@ -85,7 +86,7 @@ export type ChainDeployErc20 = FromPrivateKeyOrSignatureId<DeployErc20>
 
 export type ChainMintErc721 = MintErc721 & {
   fromPrivateKey?: string
-  chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC'
+  chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'KLAY'
 }
 
 export type ChainMintNft = FromPrivateKeyOrSignatureId<MintNft>
@@ -116,6 +117,8 @@ export type ChainMintMultiTokenBatch = FromPrivateKeyOrSignatureId<MintMultiToke
 
 export type ChainDeployMultiToken = FromPrivateKeyOrSignatureId<DeployMultiToken>
 
+export type ChainTransferNative = FromPrivateKeyOrSignatureId<Omit<TransferPolygonBlockchain, 'currency'>>
+
 export type ChainGenerateMarketplace = FromPrivateKeyOrSignatureId<GenerateMarketplace>
 
 export type ChainUpdateFee = FromPrivateKeyOrSignatureId<UpdateFee>
@@ -127,6 +130,7 @@ export type ChainBuyAssetOnMarketplace = FromPrivateKeyOrSignatureId<BuyAssetOnM
 export type ChainSellAssetOnMarketplace = FromPrivateKeyOrSignatureId<SellAssetOnMarketplace>
 
 export type ChainCancelSellAssetOnMarketplace = FromPrivateKeyOrSignatureId<CancelSellAssetOnMarketplace>
+
 export interface SdkWithErc20Functions {
   decimals(contractAddress: string, provider?: string): any
 
@@ -135,6 +139,12 @@ export interface SdkWithErc20Functions {
     transferSignedTransaction(body: ChainTransferErc20, provider?: string): Promise<string>
     mintSignedTransaction(body: ChainMintErc20, provider?: string): Promise<string>
     burnSignedTransaction(body: ChainBurnErc20, provider?: string): Promise<string>
+  }
+}
+
+export interface SdkWithNativeFunctions {
+  prepare: {
+    transferSignedTransaction(body: ChainTransferNative, provider?: string): Promise<string>
   }
 }
 

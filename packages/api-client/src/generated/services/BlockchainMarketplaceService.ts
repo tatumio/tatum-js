@@ -70,6 +70,7 @@ export class BlockchainMarketplaceService {
      * <li>Harmony.ONE</li>
      * <li>Ethereum</li>
      * <li>Celo</li>
+     * <li>Klaytn</li>
      * <li>Polygon (Matic)</li>
      * </ul>
      * </p>
@@ -108,6 +109,7 @@ export class BlockchainMarketplaceService {
      * <li>Ethereum</li>
      * <li>Celo</li>
      * <li>Polygon (Matic)</li>
+     * <li>Klaytn</li>
      * </ul>
      * *Note:
      * In the new tatum ERC721 smart contract, we have added an option for the author to set royalties on every transfer and in any currency.
@@ -150,6 +152,7 @@ export class BlockchainMarketplaceService {
      * <li>Ethereum</li>
      * <li>Celo</li>
      * <li>Polygon (Matic)</li>
+     * <li>Klaytn</li>
      * </ul>
      * *Note:
      * In the new tatum ERC721 smart contract, we have added an option for the author to set royalties on every transfer and in any currency.
@@ -193,6 +196,7 @@ export class BlockchainMarketplaceService {
      * <li>Ethereum</li>
      * <li>Celo</li>
      * <li>Polygon (Matic)</li>
+     * <li>Klaytn</li>
      * </ul>
      * *Note:
      * In the new tatum ERC721 smart contract, we have added an option for the author to set royalties on every transfer and in any currency.
@@ -377,6 +381,7 @@ export class BlockchainMarketplaceService {
      * <li>Ethereum</li>
      * <li>Celo</li>
      * <li>Polygon (Matic)</li>
+     * <li>Klaytn</li>
      * </ul>
      * </p>
      *
@@ -412,6 +417,7 @@ export class BlockchainMarketplaceService {
      * <li>Ethereum</li>
      * <li>Celo</li>
      * <li>Polygon (Matic)</li>
+     * <li>Klaytn</li>
      * </ul>
      * </p>
      *
@@ -455,6 +461,7 @@ export class BlockchainMarketplaceService {
      * <li>Ethereum</li>
      * <li>Celo</li>
      * <li>Polygon (Matic)</li>
+     * <li>Klaytn</li>
      * </ul>
      * </p>
      *
@@ -492,6 +499,7 @@ export class BlockchainMarketplaceService {
      * <li>Ethereum</li>
      * <li>Celo</li>
      * <li>Polygon (Matic)</li>
+     * <li>Klaytn</li>
      * </ul>
      * </p>
      *
@@ -528,6 +536,7 @@ export class BlockchainMarketplaceService {
      * <li>Ethereum</li>
      * <li>Celo</li>
      * <li>Polygon (Matic)</li>
+     * <li>Klaytn</li>
      * </ul>
      * *Note:
      * In the new tatum ERC721 smart contract, we have added an option for the author to set royalties on every transfer and in any currency.
@@ -570,6 +579,7 @@ export class BlockchainMarketplaceService {
      * <li>Ethereum</li>
      * <li>Celo</li>
      * <li>Polygon (Matic)</li>
+     * <li>Klaytn</li>
      * </ul>
      * *Note:
      * In the new tatum ERC721 smart contract, we have added an option for the author to set royalties on every transfer and in any currency.
@@ -612,6 +622,7 @@ export class BlockchainMarketplaceService {
      * <li>Ethereum</li>
      * <li>Celo</li>
      * <li>Polygon (Matic)</li>
+     * <li>Klaytn</li>
      * </ul>
      * *Note:
      * In the new tatum ERC721 smart contract, we have added an option for the author to set royalties on every transfer and in any currency.
@@ -654,6 +665,7 @@ export class BlockchainMarketplaceService {
      * <li>Ethereum</li>
      * <li>Celo</li>
      * <li>Polygon (Matic)</li>
+     * <li>Klaytn</li>
      * </ul>
      * </p>
      *
@@ -809,6 +821,7 @@ export class BlockchainMarketplaceService {
      * <li>Ethereum</li>
      * <li>Celo</li>
      * <li>Polygon (Matic)</li>
+     * <li>Klaytn</li>
      * </ul>
      * </p>
      *
@@ -844,6 +857,7 @@ export class BlockchainMarketplaceService {
      * <li>Ethereum</li>
      * <li>Celo</li>
      * <li>Polygon (Matic)</li>
+     * <li>Klaytn</li>
      * </ul>
      * </p>
      *
@@ -879,6 +893,7 @@ export class BlockchainMarketplaceService {
      * <li>Ethereum</li>
      * <li>Celo</li>
      * <li>Polygon (Matic)</li>
+     * <li>Klaytn</li>
      * </ul>
      * </p>
      *

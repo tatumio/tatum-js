@@ -10,14 +10,14 @@ import {
 } from '@tatumio/shared-blockchain-abstract'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import { TransactionConfig } from 'web3-core'
-import { Erc721Token, Erc721_Provenance } from '../../contracts'
+import { Erc721_Provenance, Erc721Token } from '../../contracts'
 import { EvmBasedWeb3 } from '../../services/evm-based.web3'
 import { evmBasedUtils } from '../../evm-based.utils'
 import BigNumber from 'bignumber.js'
 
 const mintSignedTransaction = async (body: ChainMintErc721, web3: EvmBasedWeb3, provider?: string) => {
   const { contractAddress, nonce, signatureId, fee, to, tokenId, url, fromPrivateKey } = body
-  const client = web3.getClient(provider)
+  const client = web3.getClient(provider, fromPrivateKey)
   const contract = new client.eth.Contract(
     Erc721Token.abi as any,
     evmBasedUtils.transformAddress(contractAddress),
@@ -61,7 +61,7 @@ const mintCashbackSignedTransaction = async (body: ChainMintNft, web3: EvmBasedW
     erc20,
   } = body
 
-  const client = web3.getClient(provider)
+  const client = web3.getClient(provider, fromPrivateKey)
   const contract = new client.eth.Contract(
     Erc721Token.abi as any,
     // TODO: remove ! when type will be fixed
@@ -119,7 +119,7 @@ export const mintMultipleCashbackSignedTransaction = async (
     erc20,
   } = body
 
-  const client = await web3.getClient(provider)
+  const client = await web3.getClient(provider, fromPrivateKey)
 
   const contract = new client.eth.Contract(
     Erc721Token.abi as any,
@@ -162,7 +162,7 @@ const mintMultipleSignedTransaction = async (
 ) => {
   const { fromPrivateKey, to, tokenId, contractAddress, url, nonce, signatureId, fee } = body
 
-  const client = await web3.getClient(provider)
+  const client = await web3.getClient(provider, fromPrivateKey)
 
   const contract = new client.eth.Contract(
     Erc721Token.abi as any,
@@ -195,7 +195,7 @@ const mintMultipleSignedTransaction = async (
 const burnSignedTransaction = async (body: ChainBurnErc721, web3: EvmBasedWeb3, provider?: string) => {
   const { fromPrivateKey, tokenId, fee, contractAddress, nonce, signatureId } = body
 
-  const client = web3.getClient(provider)
+  const client = web3.getClient(provider, fromPrivateKey)
 
   const contract = new client.eth.Contract(
     Erc721Token.abi as any,
@@ -238,7 +238,7 @@ const transferSignedTransaction = async (
     tokenPrice,
   } = body
 
-  const client = await web3.getClient(provider)
+  const client = await web3.getClient(provider, fromPrivateKey)
 
   const contract = new client.eth.Contract(
     provenance ? Erc721_Provenance.abi : (Erc721Token.abi as any),
@@ -279,7 +279,7 @@ const updateCashbackForAuthorSignedTransaction = async (
 ) => {
   const { fromPrivateKey, cashbackValue, tokenId, fee, contractAddress, nonce, signatureId } = body
 
-  const client = await web3.getClient(provider)
+  const client = await web3.getClient(provider, fromPrivateKey)
 
   const contract = new client.eth.Contract(
     Erc721Token.abi as any,
@@ -311,19 +311,14 @@ const updateCashbackForAuthorSignedTransaction = async (
 const deploySignedTransaction = async (body: ChainDeployErc721, web3: EvmBasedWeb3, provider?: string) => {
   const { fromPrivateKey, fee, name, symbol, nonce, signatureId, provenance } = body
 
-  const client = await web3.getClient(provider)
+  const client = await web3.getClient(provider, fromPrivateKey)
 
-  const contract = new client.eth.Contract(
-    provenance ? Erc721_Provenance.abi : (Erc721Token.abi as any),
-    undefined,
-    {
-      data: provenance ? Erc721_Provenance.bytecode : Erc721Token.bytecode,
-    },
-  )
+  const contract = new client.eth.Contract(provenance ? Erc721_Provenance.abi : (Erc721Token.abi as any))
 
   // @ts-ignore
   const deploy = contract.deploy({
     arguments: [name, symbol],
+    data: provenance ? Erc721_Provenance.bytecode : Erc721Token.bytecode,
   })
 
   const tx: TransactionConfig = {
@@ -358,7 +353,7 @@ const mintProvenanceSignedTransaction = async (body: ChainMintNft, web3: EvmBase
     erc20,
   } = body
 
-  const client = web3.getClient(provider)
+  const client = web3.getClient(provider, fromPrivateKey)
 
   const contract = new client.eth.Contract(
     Erc721_Provenance.abi as any,
@@ -425,7 +420,7 @@ const mintMultipleProvenanceSignedTransaction = async (
     fee,
   } = body
 
-  const client = await web3.getClient(provider)
+  const client = await web3.getClient(provider, fromPrivateKey)
 
   const contract = new client.eth.Contract(
     Erc721_Provenance.abi as any,

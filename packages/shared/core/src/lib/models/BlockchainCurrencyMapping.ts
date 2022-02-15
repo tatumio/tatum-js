@@ -16,6 +16,7 @@ export const BlockchainCurrencyMapping: Record<
 > = {
   BTC: Currency.BTC,
   LTC: Currency.LTC,
+  KLAY: Currency.KLAY,
   DOGE: Currency.DOGE,
   BCH: Currency.BCH,
   FABRIC: Currency.FABRIC,

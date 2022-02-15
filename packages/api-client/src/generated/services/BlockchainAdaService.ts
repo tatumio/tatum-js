@@ -4,13 +4,13 @@
 import type { AdaAccount } from '../models/AdaAccount';
 import type { AdaBlock } from '../models/AdaBlock';
 import type { AdaInfo } from '../models/AdaInfo';
+import type { AdaTransactionFromAddress } from '../models/AdaTransactionFromAddress';
+import type { AdaTransactionFromAddressKMS } from '../models/AdaTransactionFromAddressKMS';
+import type { AdaTransactionFromUTXO } from '../models/AdaTransactionFromUTXO';
+import type { AdaTransactionFromUTXOKMS } from '../models/AdaTransactionFromUTXOKMS';
 import type { AdaTx } from '../models/AdaTx';
 import type { AdaUTXO } from '../models/AdaUTXO';
 import type { BroadcastKMS } from '../models/BroadcastKMS';
-import type { BtcTransactionFromAddress } from '../models/BtcTransactionFromAddress';
-import type { BtcTransactionFromAddressKMS } from '../models/BtcTransactionFromAddressKMS';
-import type { BtcTransactionFromUTXO } from '../models/BtcTransactionFromUTXO';
-import type { BtcTransactionFromUTXOKMS } from '../models/BtcTransactionFromUTXOKMS';
 import type { PrivKey } from '../models/PrivKey';
 import type { PrivKeyRequest } from '../models/PrivKeyRequest';
 import type { SignatureId } from '../models/SignatureId';
@@ -256,7 +256,7 @@ export class BlockchainAdaService {
      * When the UTXO is entered into the transaction, the whole amount is included and must be spent. For example, address A receives 2 transactions, T1 with 1 ADA and T2 with 2 ADA.
      * The transaction, which will consume the UTXOs for T1 and T2, will have an available amount to spend of 3 ADA = 1 ADA (T1) + 2 ADA(T2).<br/><br/>
      * There can be multiple recipients of the transactions. In the <b>to</b> section, every recipient address has its own corresponding amount.
-     * When the amount of funds that the recipient should receive is lower than the amount of funds from the UTXOs, the difference is used as a transaction fee.<br/><br/>
+     * When the amount of funds that the recipient should receive is lower than the amount of funds from the UTXOs, the difference is split as transaction fee and change, which will be send to change address..<br/><br/>
      * This operation requires the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
      * No one should ever send their private keys to the Internet because there is a strong possibility that they will be stolen and the funds will be lost. In this method, it is possible to enter a privateKey
      * or signatureId. The privateKey should be used only for quick development on testnet versions of blockchains when there is no risk of losing funds. In production,
@@ -269,7 +269,7 @@ export class BlockchainAdaService {
      * @throws ApiError
      */
     public static adaTransferBlockchain(
-        requestBody: (BtcTransactionFromAddress | BtcTransactionFromAddressKMS | BtcTransactionFromUTXO | BtcTransactionFromUTXOKMS),
+        requestBody: (AdaTransactionFromAddress | AdaTransactionFromAddressKMS | AdaTransactionFromUTXO | AdaTransactionFromUTXOKMS),
     ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
         return __request({
             method: 'POST',

@@ -6,7 +6,7 @@ export type BurnNft = {
     /**
      * Chain to work with.
      */
-    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'ALGO';
+    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'BSC' | 'ALGO';
     /**
      * ID of token to be destroyed.
      */

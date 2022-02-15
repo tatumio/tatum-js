@@ -6,7 +6,7 @@ export type TransferCustodialWalletBatchKMS = {
     /**
      * Blockchain to work with.
      */
-    chain: 'ETH' | 'ONE' | 'BSC' | 'XDC' | 'MATIC';
+    chain: 'ETH' | 'ONE' | 'BSC' | 'KLAY' | 'XDC' | 'MATIC';
     /**
      * Address of custodial wallet to transfer from
      */

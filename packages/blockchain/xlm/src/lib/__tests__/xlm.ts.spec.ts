@@ -26,6 +26,7 @@ describe('XlmSDK - tx', () => {
 
       const result = await txService.sendTransaction(
         {
+          fromAccount: ADDRESS,
           amount: AMOUNT,
           fromSecret: SECRET,
           to: ADDRESS,
@@ -44,6 +45,7 @@ describe('XlmSDK - tx', () => {
 
       const result = await txService.prepareSignedTransaction(
         {
+          fromAccount: ADDRESS,
           amount: AMOUNT,
           fromSecret: SECRET,
           to: ADDRESS,
@@ -60,6 +62,7 @@ describe('XlmSDK - tx', () => {
       await expect(
         txService.prepareSignedTransaction(
           {
+            fromAccount: ADDRESS,
             amount: AMOUNT,
             fromSecret: SECRET,
             to: ADDRESS,
@@ -73,6 +76,7 @@ describe('XlmSDK - tx', () => {
       it.each([
         [
           {
+            fromAccount: ADDRESS,
             amount: '0',
             fromSecret: SECRET,
             to: ADDRESS,
@@ -81,6 +85,7 @@ describe('XlmSDK - tx', () => {
         ],
         [
           {
+            fromAccount: ADDRESS,
             amount: AMOUNT,
             fromSecret: 'SCFCTIS5326CRI3XFFBEWGXFWZK3HTUFI2AOI5IJUZAX2W5KM2PXIFII',
             to: ADDRESS,
@@ -89,6 +94,7 @@ describe('XlmSDK - tx', () => {
         ],
         [
           {
+            fromAccount: ADDRESS,
             amount: AMOUNT,
             fromSecret: SECRET,
             to: 'GB4HCKVMM6SVPVSO7SFYS7DUU2C5KESP3ZOVGOHG32MLC7T4B6G4ZBLL',

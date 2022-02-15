@@ -629,7 +629,7 @@ export class BlockchainNftService {
              * @throws ApiError
              */
             public static nftGetContractAddress(
-                chain: 'ETH' | 'ONE' | 'CELO' | 'TRON' | 'FLOW' | 'MATIC' | 'KCS' | 'BSC',
+                chain: 'ETH' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'MATIC' | 'KCS' | 'BSC',
                 hash: string,
                 xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
             ): CancelablePromise<{
@@ -663,7 +663,7 @@ export class BlockchainNftService {
              * @throws ApiError
              */
             public static nftGetTransactErc721(
-                chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'CELO' | 'TRON' | 'FLOW' | 'BSC',
+                chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'BSC',
                 hash: string,
                 xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
             ): CancelablePromise<(CeloTx | EthTx | FlowTx)> {
@@ -739,7 +739,7 @@ export class BlockchainNftService {
              * @throws ApiError
              */
             public static nftGetBalanceErc721(
-                chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'CELO' | 'TRON' | 'FLOW' | 'BSC',
+                chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'BSC',
                 address: string,
                 contractAddress: string,
                 xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
@@ -770,7 +770,7 @@ export class BlockchainNftService {
              * @throws ApiError
              */
             public static nftGetProvenanceDataErc721(
-                chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'CELO' | 'BSC',
+                chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'CELO' | 'BSC',
                 tokenId: string,
                 contractAddress: string,
                 xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
@@ -805,7 +805,7 @@ export class BlockchainNftService {
              * @throws ApiError
              */
             public static nftGetMetadataErc721(
-                chain: 'ETH' | 'MATIC' | 'KCS' | 'SOL' | 'ONE' | 'CELO' | 'TRON' | 'FLOW' | 'BSC',
+                chain: 'ETH' | 'MATIC' | 'KCS' | 'SOL' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'BSC',
                 contractAddress: string,
                 token: string,
                 account?: string,
@@ -845,7 +845,7 @@ export class BlockchainNftService {
              * @throws ApiError
              */
             public static nftGetRoyaltyErc721(
-                chain: 'ETH' | 'MATIC' | 'KCS' | 'SOL' | 'ONE' | 'CELO' | 'TRON' | 'BSC',
+                chain: 'ETH' | 'MATIC' | 'KCS' | 'SOL' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'BSC',
                 contractAddress: string,
                 token: string,
                 xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',

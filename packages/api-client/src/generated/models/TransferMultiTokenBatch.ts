@@ -6,7 +6,7 @@ export type TransferMultiTokenBatch = {
     /**
      * Chain to work with.
      */
-    chain: 'ETH' | 'ONE' | 'MATIC' | 'KCS' | 'BSC';
+    chain: 'ETH' | 'ONE' | 'MATIC' | 'KCS' | 'KLAY' | 'BSC';
     /**
      * Blockchain address to send Multi Token token to
      */

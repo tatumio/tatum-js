@@ -8,6 +8,7 @@ import type { Id } from '../models/Id';
 import type { ListOderBookActiveBuyBody } from '../models/ListOderBookActiveBuyBody';
 import type { ListOderBookActiveSellBody } from '../models/ListOderBookActiveSellBody';
 import type { ListOderBookHistoryBody } from '../models/ListOderBookHistoryBody';
+import type { ListOderBookMatchedBody } from '../models/ListOderBookMatchedBody';
 import type { Trade } from '../models/Trade';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
@@ -328,7 +329,7 @@ export class LedgerOrderBookService {
                      * @throws ApiError
                      */
                     public static getMatchedTrades(
-                        requestBody: ListOderBookActiveSellBody,
+                        requestBody: ListOderBookMatchedBody,
                     ): CancelablePromise<Array<Trade>> {
                         return __request({
                             method: 'POST',

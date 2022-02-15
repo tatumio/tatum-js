@@ -6,7 +6,7 @@ export type CancelSellAssetOnMarketplaceKMS = {
     /**
      * Blockchain to work with.
      */
-    chain: 'ETH' | 'ONE' | 'BSC' | 'MATIC';
+    chain: 'ETH' | 'ONE' | 'BSC' | 'KLAY' | 'MATIC';
     /**
      * Optional address of the ERC20 token, which will be used as a selling currency of the NFT.
      */

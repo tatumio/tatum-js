@@ -7,7 +7,7 @@ export const marketplaceTestFactory = {
     generateMarketplace: (
       sdk: SdkWithMarketplaceFunctions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC',
+      chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC' | 'KLAY',
       accounts: GanacheAccount[],
     ) => {
       jest.setTimeout(99999)
@@ -18,6 +18,10 @@ export const marketplaceTestFactory = {
         const result = await sdk.prepare.generateMarketplace(
           {
             chain,
+            fee: {
+              gasLimit: '1000000',
+              gasPrice: '20',
+            },
             feeRecipient: accounts[0].address,
             marketplaceFee: 150,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -34,6 +38,10 @@ export const marketplaceTestFactory = {
         const result = await sdk.prepare.generateMarketplace(
           {
             chain,
+            fee: {
+              gasLimit: '1000000',
+              gasPrice: '20',
+            },
             feeRecipient: accounts[0].address,
             marketplaceFee: 150,
             fromPrivateKey: accounts[0].privateKey,
@@ -48,7 +56,7 @@ export const marketplaceTestFactory = {
     createMarketplaceListing: (
       sdk: SdkWithMarketplaceFunctions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC',
+      chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC' | 'KLAY',
       accounts: GanacheAccount[],
     ) => {
       const provider = testData?.PROVIDER
@@ -56,6 +64,10 @@ export const marketplaceTestFactory = {
       it('valid from signatureId', async () => {
         const result = await sdk.prepare.createMarketplaceListing({
           chain,
+          fee: {
+            gasLimit: '1000000',
+            gasPrice: '20',
+          },
           signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
           contractAddress: '0xd093bEd4BC06403bfEABB54667B42C48533D3Fd9',
           nftAddress: '0x1214BEada6b25bc98f7494C7BDBf22C095FDCaBD',
@@ -74,6 +86,10 @@ export const marketplaceTestFactory = {
         const result = await sdk.prepare.createMarketplaceListing(
           {
             chain,
+            fee: {
+              gasLimit: '1000000',
+              gasPrice: '20',
+            },
             fromPrivateKey: accounts[0].privateKey,
             contractAddress: '0xd093bEd4BC06403bfEABB54667B42C48533D3Fd9',
             nftAddress: '0x1214BEada6b25bc98f7494C7BDBf22C095FDCaBD',
@@ -93,7 +109,7 @@ export const marketplaceTestFactory = {
     createMarketplaceListingErc20: (
       sdk: SdkWithMarketplaceFunctions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC',
+      chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC' | 'KLAY',
       accounts: GanacheAccount[],
     ) => {
       const provider = testData?.PROVIDER
@@ -101,6 +117,10 @@ export const marketplaceTestFactory = {
       it('valid from signatureId', async () => {
         const result = await sdk.prepare.createMarketplaceListing({
           chain,
+          fee: {
+            gasLimit: '1000000',
+            gasPrice: '20',
+          },
           signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
           contractAddress: '0xd093bEd4BC06403bfEABB54667B42C48533D3Fd9',
           nftAddress: '0x1214BEada6b25bc98f7494C7BDBf22C095FDCaBD',
@@ -121,6 +141,10 @@ export const marketplaceTestFactory = {
         const result = await sdk.prepare.createMarketplaceListing(
           {
             chain,
+            fee: {
+              gasLimit: '1000000',
+              gasPrice: '20',
+            },
             fromPrivateKey: accounts[0].privateKey,
             contractAddress: '0xd093bEd4BC06403bfEABB54667B42C48533D3Fd9',
             nftAddress: '0x1214BEada6b25bc98f7494C7BDBf22C095FDCaBD',
@@ -142,7 +166,7 @@ export const marketplaceTestFactory = {
     buyMarketplaceListing: (
       sdk: SdkWithMarketplaceFunctions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC',
+      chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC' | 'KLAY',
       accounts: GanacheAccount[],
     ) => {
       const provider = testData?.PROVIDER
@@ -151,6 +175,10 @@ export const marketplaceTestFactory = {
         const result = await sdk.prepare.buyMarketplaceListing(
           {
             chain,
+            fee: {
+              gasLimit: '1000000',
+              gasPrice: '20',
+            },
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
             contractAddress: '0xd093bEd4BC06403bfEABB54667B42C48533D3Fd9',
             listingId: '1',
@@ -167,6 +195,10 @@ export const marketplaceTestFactory = {
         const result = await sdk.prepare.buyMarketplaceListing(
           {
             chain,
+            fee: {
+              gasLimit: '1000000',
+              gasPrice: '20',
+            },
             fromPrivateKey: accounts[0].privateKey,
             contractAddress: '0xd093bEd4BC06403bfEABB54667B42C48533D3Fd9',
             listingId: '1',
@@ -183,7 +215,7 @@ export const marketplaceTestFactory = {
     buyMarketplaceListingErc20: (
       sdk: SdkWithMarketplaceFunctions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC',
+      chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC' | 'KLAY',
       accounts: GanacheAccount[],
     ) => {
       jest.setTimeout(99999)
@@ -194,6 +226,10 @@ export const marketplaceTestFactory = {
         const approve = await sdk.prepare.approveErc20Spending(
           {
             chain,
+            fee: {
+              gasLimit: '1000000',
+              gasPrice: '20',
+            },
             fromPrivateKey: accounts[0].privateKey,
             contractAddress: '0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1',
             spender: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
@@ -211,15 +247,15 @@ export const marketplaceTestFactory = {
         const result = await sdk.prepare.buyMarketplaceListing(
           {
             chain,
+            fee: {
+              gasLimit: '1000000',
+              gasPrice: '20',
+            },
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
             contractAddress: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
             erc20Address: 'xxx',
             listingId: '2',
             amount: '1.015',
-            fee: {
-              gasPrice: '5',
-              gasLimit: '300000',
-            },
           },
           provider,
         )
@@ -232,15 +268,15 @@ export const marketplaceTestFactory = {
         const result = await sdk.prepare.buyMarketplaceListing(
           {
             chain,
+            fee: {
+              gasLimit: '1000000',
+              gasPrice: '20',
+            },
             fromPrivateKey: accounts[0].privateKey,
             contractAddress: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
             erc20Address: 'xxx',
             listingId: '2',
             amount: '1.015',
-            fee: {
-              gasPrice: '5',
-              gasLimit: '300000',
-            },
           },
           provider,
         )
@@ -252,7 +288,7 @@ export const marketplaceTestFactory = {
     cancelMarketplaceListing: (
       sdk: SdkWithMarketplaceFunctions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC',
+      chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC' | 'KLAY',
       accounts: GanacheAccount[],
     ) => {
       const provider = testData?.PROVIDER
@@ -261,6 +297,10 @@ export const marketplaceTestFactory = {
         const result = await sdk.prepare.cancelMarketplaceListing(
           {
             chain,
+            fee: {
+              gasLimit: '1000000',
+              gasPrice: '20',
+            },
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
             contractAddress: '0xd093bEd4BC06403bfEABB54667B42C48533D3Fd9',
             listingId: '1',
@@ -276,6 +316,10 @@ export const marketplaceTestFactory = {
         const result = await sdk.prepare.cancelMarketplaceListing(
           {
             chain,
+            fee: {
+              gasLimit: '1000000',
+              gasPrice: '20',
+            },
             fromPrivateKey: accounts[0].privateKey,
             contractAddress: '0xd093bEd4BC06403bfEABB54667B42C48533D3Fd9',
             listingId: '1',

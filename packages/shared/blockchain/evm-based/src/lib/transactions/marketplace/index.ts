@@ -1,10 +1,10 @@
 import { ApproveErc20 } from '@tatumio/api-client'
 import {
   BroadcastFunction,
-  ChainGenerateMarketplace,
   ChainBuyAssetOnMarketplace,
-  ChainSellAssetOnMarketplace,
   ChainCancelSellAssetOnMarketplace,
+  ChainGenerateMarketplace,
+  ChainSellAssetOnMarketplace,
   ChainUpdateFee,
   ChainUpdateFeeRecipient,
 } from '@tatumio/shared-blockchain-abstract'
@@ -18,7 +18,7 @@ import { erc20 } from '../erc20'
 
 /** Deploy contract (generate Marketplace) */
 const generateMarketplace = async (body: ChainGenerateMarketplace, web3: EvmBasedWeb3, provider?: string) => {
-  const client = web3.getClient(provider)
+  const client = web3.getClient(provider, body.fromPrivateKey)
   const { fromPrivateKey, signatureId, nonce, marketplaceFee, feeRecipient, fee } = body
 
   // TODO: remove any type
@@ -48,7 +48,7 @@ const generateMarketplace = async (body: ChainGenerateMarketplace, web3: EvmBase
 
 /* Update Marketplace fee */
 const updateFee = async (body: ChainUpdateFee, web3: EvmBasedWeb3, provider?: string) => {
-  const client = web3.getClient(provider)
+  const client = web3.getClient(provider, body.fromPrivateKey)
   const { fromPrivateKey, contractAddress, nonce, signatureId, fee, marketplaceFee } = body
 
   const smartContractMethodName = 'setMarketplaceFee'
@@ -81,7 +81,7 @@ const updateFee = async (body: ChainUpdateFee, web3: EvmBasedWeb3, provider?: st
 
 /** Update Marketplace fee recipient */
 const updateFeeRecipient = async (body: ChainUpdateFeeRecipient, web3: EvmBasedWeb3, provider?: string) => {
-  const client = web3.getClient(provider)
+  const client = web3.getClient(provider, body.fromPrivateKey)
   const { contractAddress, feeRecipient, signatureId, fromPrivateKey, nonce, fee } = body
 
   const smartContractMethodName = 'setMarketplaceFeeRecipient'
@@ -114,7 +114,7 @@ const updateFeeRecipient = async (body: ChainUpdateFeeRecipient, web3: EvmBasedW
 
 /** Buy Marketplace asset */
 const buyAsset = async (body: ChainBuyAssetOnMarketplace, web3: EvmBasedWeb3, provider?: string) => {
-  const client = web3.getClient(provider)
+  const client = web3.getClient(provider, body.fromPrivateKey)
   const { listingId, erc20Address, buyer, contractAddress, nonce, signatureId, fromPrivateKey, fee } = body
 
   const smartContractParams = [listingId, erc20Address ?? '0x0000000000000000000000000000000000000000']
@@ -153,7 +153,7 @@ const buyAsset = async (body: ChainBuyAssetOnMarketplace, web3: EvmBasedWeb3, pr
 
 /** Sell Marketplace asset */
 const sellAsset = async (body: ChainSellAssetOnMarketplace, web3: EvmBasedWeb3, provider?: string) => {
-  const client = web3.getClient(provider)
+  const client = web3.getClient(provider, body.fromPrivateKey)
   const {
     contractAddress,
     erc20Address,
@@ -214,7 +214,7 @@ const cancelListing = async (
   web3: EvmBasedWeb3,
   provider?: string,
 ) => {
-  const client = web3.getClient(provider)
+  const client = web3.getClient(provider, body.fromPrivateKey)
   const { listingId, contractAddress, nonce, signatureId, fromPrivateKey, fee } = body
 
   const smartContractMethodName = 'cancelListing'
