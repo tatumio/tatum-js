@@ -6,7 +6,7 @@ export type ChainMintErc20 = {
     /**
      * Chain to work with.
      */
-    chain: 'ETH' | 'BSC' | 'MATIC' | 'XDC' | 'ONE';
+    chain: 'ETH' | 'BSC' | 'MATIC' | 'KLAY' | 'XDC' | 'ONE';
     /**
      * Amount to be minted and transfered to the recipient.
      */

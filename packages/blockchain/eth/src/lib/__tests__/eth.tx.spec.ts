@@ -1,7 +1,7 @@
 import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testing-common'
 import { TatumEthSDK } from '../eth.sdk'
 import { ethTx } from '../services/eth.tx'
-import { Blockchain, Currency } from '@tatumio/shared-core'
+import { Blockchain } from '@tatumio/shared-core'
 import {
   erc20TestFactory,
   ganacheHelper,
@@ -9,7 +9,9 @@ import {
   multiTokenTestFactory,
   smartContractTestFactory,
   custodialTestFactory,
+  marketplaceTestFactory,
 } from '@tatumio/shared-testing-evm-based'
+import { Currency } from '@tatumio/api-client'
 
 const blockchain = Blockchain.ETH
 
@@ -109,6 +111,65 @@ describe('EthSDK - tx', () => {
           sdk.transaction.erc721,
           TEST_DATA.ETH,
           Currency.ETH,
+        )
+      })
+    })
+  })
+
+  describe('marketplace', () => {
+    describe('prepare', () => {
+      describe('generateMarketplace', () => {
+        marketplaceTestFactory.prepare.generateMarketplace(
+          sdk.marketplace,
+          TEST_DATA.ETH,
+          'ETH',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      describe('createMarketplaceListing', () => {
+        marketplaceTestFactory.prepare.createMarketplaceListing(
+          sdk.marketplace,
+          TEST_DATA.ETH,
+          'ETH',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      describe('createMarketplaceListingErc20', () => {
+        marketplaceTestFactory.prepare.createMarketplaceListingErc20(
+          sdk.marketplace,
+          TEST_DATA.ETH,
+          'ETH',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      describe('buyMarketplaceListing', () => {
+        marketplaceTestFactory.prepare.buyMarketplaceListing(
+          sdk.marketplace,
+          TEST_DATA.ETH,
+          'ETH',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      // @TODO: returns "Returned values aren't valid..."
+      xdescribe('buyMarketplaceListingErc20', () => {
+        marketplaceTestFactory.prepare.buyMarketplaceListingErc20(
+          sdk.marketplace,
+          TEST_DATA.ETH,
+          'ETH',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      describe('cancelMarketplaceListing', () => {
+        marketplaceTestFactory.prepare.cancelMarketplaceListing(
+          sdk.marketplace,
+          TEST_DATA.ETH,
+          'ETH',
+          inmemoryBlockchain.accounts,
         )
       })
     })

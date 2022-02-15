@@ -1,4 +1,4 @@
-import { Currency } from '@tatumio/shared-core'
+import { Currency } from '@tatumio/api-client'
 import { FromPrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
 import {
   BurnMultiTokenBatchCelo,

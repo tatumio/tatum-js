@@ -1,11 +1,15 @@
 import {
+  ApproveErc20,
+  BlockchainMarketplaceService,
   BroadcastKMS,
   BurnMultiToken,
   BurnMultiTokenBatch,
   BurnNft,
   CallReadSmartContractMethod,
   CallSmartContractMethod,
+  BuyAssetOnMarketplace,
   CancelablePromise,
+  CancelSellAssetOnMarketplace,
   ChainBurnErc20 as ApiChainBurnErc20,
   ChainMintErc20 as ApiChainMintErc20,
   ChainTransferEthErc20,
@@ -14,11 +18,14 @@ import {
   DeployNft,
   ExchangeRate,
   GenerateCustodialWallet,
+  Fiat,
+  GenerateMarketplace,
   MintErc721,
   MintMultipleNft,
   MintMultiToken,
   MintMultiTokenBatch,
   MintNft,
+  SellAssetOnMarketplace,
   SignatureId,
   TatumServiceService,
   TatumUrl,
@@ -26,12 +33,15 @@ import {
   TransferMultiToken,
   TransferMultiTokenBatch,
   TransferNft,
+  TransferPolygonBlockchain,
   TronWallet,
   UpdateCashbackValueForAuthorNft,
+  UpdateFee,
+  UpdateFeeRecipient,
   XlmWallet,
   XrpWallet,
 } from '@tatumio/api-client'
-import { Blockchain, blockchainHelper, Fiat } from '@tatumio/shared-core'
+import { Blockchain, blockchainHelper } from '@tatumio/shared-core'
 import { abstractSdk } from '@tatumio/shared-abstract-sdk'
 import { abstractBlockchainKms } from './services/kms.abstract-blockchain'
 import { abstractBlockchainOffchain } from './services/offchain.abstract-blockchain'
@@ -53,8 +63,11 @@ export const abstractBlockchainSdk = (args: { apiKey: string; url?: TatumUrl; bl
 
 export interface SdkWithWalletFunctions {
   generateAddressFromXPub(xpub: string, i: number, options?: { testnet: boolean }): string
+
   generatePrivateKeyFromMnemonic(mnemonic: string, i: number, options?: { testnet: boolean }): Promise<string>
+
   generateAddressFromPrivateKey(privateKey: string, options?: { testnet: boolean }): string
+
   generateWallet(mnemonic?: string, options?: { testnet: boolean }): Promise<TronWallet>
 }
 
@@ -76,7 +89,7 @@ export type ChainDeployErc20 = FromPrivateKeyOrSignatureId<DeployErc20>
 
 export type ChainMintErc721 = MintErc721 & {
   fromPrivateKey?: string
-  chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC'
+  chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'KLAY'
 }
 
 export type ChainMintNft = FromPrivateKeyOrSignatureId<MintNft>
@@ -111,13 +124,34 @@ export type ChainSmartContractMethodInvocation = FromPrivateKeyOrSignatureId<Cal
 
 export type ChainGenerateCustodialAddress = FromPrivateKeyOrSignatureId<GenerateCustodialWallet>
 
+export type ChainTransferNative = FromPrivateKeyOrSignatureId<Omit<TransferPolygonBlockchain, 'currency'>>
+
+export type ChainGenerateMarketplace = FromPrivateKeyOrSignatureId<GenerateMarketplace>
+
+export type ChainUpdateFee = FromPrivateKeyOrSignatureId<UpdateFee>
+
+export type ChainUpdateFeeRecipient = FromPrivateKeyOrSignatureId<UpdateFeeRecipient>
+
+export type ChainBuyAssetOnMarketplace = FromPrivateKeyOrSignatureId<BuyAssetOnMarketplace>
+
+export type ChainSellAssetOnMarketplace = FromPrivateKeyOrSignatureId<SellAssetOnMarketplace>
+
+export type ChainCancelSellAssetOnMarketplace = FromPrivateKeyOrSignatureId<CancelSellAssetOnMarketplace>
+
 export interface SdkWithErc20Functions {
   decimals(contractAddress: string, provider?: string): any
+
   prepare: {
     deploySignedTransaction(body: ChainDeployErc20, provider?: string): Promise<string>
     transferSignedTransaction(body: ChainTransferErc20, provider?: string): Promise<string>
     mintSignedTransaction(body: ChainMintErc20, provider?: string): Promise<string>
     burnSignedTransaction(body: ChainBurnErc20, provider?: string): Promise<string>
+  }
+}
+
+export interface SdkWithNativeFunctions {
+  prepare: {
+    transferSignedTransaction(body: ChainTransferNative, provider?: string): Promise<string>
   }
 }
 
@@ -171,6 +205,22 @@ export interface SdkWithCustodialFunctions {
       provider?: string,
     ): Promise<string>
   }
+}
+export interface SdkWithMarketplaceFunctions {
+  prepare: {
+    approveErc20Spending(body: ApproveErc20, provider?: string): Promise<string>
+    generateMarketplace(body: ChainGenerateMarketplace, provider?: string): Promise<string>
+    updateFee(body: ChainUpdateFee, provider?: string): Promise<string>
+    updateFeeRecipient(body: ChainUpdateFeeRecipient, provider?: string): Promise<string>
+    buyMarketplaceListing(body: ChainBuyAssetOnMarketplace, provider?: string): Promise<string>
+    createMarketplaceListing(body: ChainSellAssetOnMarketplace, provider?: string): Promise<string>
+    cancelMarketplaceListing(body: ChainCancelSellAssetOnMarketplace, provider?: string): Promise<string>
+  }
+
+  getMarketplaceListing: typeof BlockchainMarketplaceService.getMarketplaceListing
+  getMarketplaceListings: typeof BlockchainMarketplaceService.getMarketplaceListings
+  getMarketplaceFee: typeof BlockchainMarketplaceService.getMarketplaceFee
+  getMarketplaceFeeRecipient: typeof BlockchainMarketplaceService.getMarketplaceFeeRecipient
 }
 
 export type BroadcastFunction = (requestBody: BroadcastKMS) => CancelablePromise<TransactionHashKMS>

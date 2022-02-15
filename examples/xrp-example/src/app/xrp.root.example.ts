@@ -1,4 +1,4 @@
-import { Fiat } from '@tatumio/shared-core'
+import { Fiat } from '@tatumio/api-client'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 import { TatumXrpSDK } from '@tatumio/xrp'
 

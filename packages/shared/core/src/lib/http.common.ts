@@ -28,6 +28,7 @@ const EndpointsMapping: Record<Blockchain, string> = {
   XDC: 'xdc',
   XLM: 'xlm',
   KCS: 'kcs',
+  KLAY: 'klaytn',
 }
 
 export const httpHelper = {

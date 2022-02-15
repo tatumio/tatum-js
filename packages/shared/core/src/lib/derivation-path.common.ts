@@ -13,8 +13,10 @@ export const DERIVATION_PATH: Record<Blockchain, string> = {
   POLYGON: "m/44'/966'/0'/0",
   KCS: "m/44'/60'/0'/0",
   HARMONY: "m/44'/1023'/0'/0",
+  KLAY: "m/44'/8217'/0'/0",
   BSC: "m/44'/60'/0'/0",
   BCH: "m/44'/145'/0'/0",
+  TRON: "m/44'/195'/0'/0",
   // TBD
   ALGO: '@TODO - TBD',
   CARDANO: '@TODO - TBD',
@@ -26,7 +28,6 @@ export const DERIVATION_PATH: Record<Blockchain, string> = {
   QTUM: '@TODO - TBD',
   QUORUM: '@TODO - TBD',
   SOL: '@TODO - TBD',
-  TRON: '@TODO - TBD',
   VET: '@TODO - TBD',
   XDC: '@TODO - TBD',
   XLM: '@TODO - TBD',

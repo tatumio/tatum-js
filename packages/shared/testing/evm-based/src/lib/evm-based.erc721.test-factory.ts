@@ -6,7 +6,7 @@ export const erc721TestFactory = {
     deploySignedTransaction: (
       sdk: SdkWithErc721Functions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'ALGO',
+      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'ALGO' | 'KLAY',
     ) => {
       jest.setTimeout(99999)
       const provider = testData?.PROVIDER
@@ -53,7 +53,7 @@ export const erc721TestFactory = {
     transferSignedTransaction: (
       sdk: SdkWithErc721Functions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'ALGO',
+      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'ALGO' | 'KLAY',
     ) => {
       const provider = testData?.PROVIDER
       it('valid from signatureId', async () => {
@@ -123,7 +123,7 @@ export const erc721TestFactory = {
     mintSignedTransaction: (
       sdk: SdkWithErc721Functions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC',
+      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'KLAY',
     ) => {
       const provider = testData?.PROVIDER
       const address = testData.TESTNET.ERC_721?.ADDRESS
@@ -197,7 +197,7 @@ export const erc721TestFactory = {
     mintMultipleSignedTransaction: (
       sdk: SdkWithErc721Functions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC',
+      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'KLAY',
     ) => {
       const provider = testData?.PROVIDER
       const address = testData.TESTNET.ERC_721?.ADDRESS
@@ -271,7 +271,7 @@ export const erc721TestFactory = {
     mintCashbackSignedTransaction: (
       sdk: SdkWithErc721Functions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC',
+      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'KLAY',
     ) => {
       const provider = testData?.PROVIDER
       const address = testData.TESTNET.ERC_721?.ADDRESS
@@ -352,7 +352,7 @@ export const erc721TestFactory = {
     mintMultipleCashbackSignedTransaction: (
       sdk: SdkWithErc721Functions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC',
+      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'KLAY',
     ) => {
       const provider = testData?.PROVIDER
       const address = testData.TESTNET.ERC_721?.ADDRESS
@@ -430,7 +430,7 @@ export const erc721TestFactory = {
     updateCashbackForAuthorSignedTransaction: (
       sdk: SdkWithErc721Functions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC',
+      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'KLAY',
     ) => {
       const provider = testData.PROVIDER
 
@@ -476,7 +476,7 @@ export const erc721TestFactory = {
     burnSignedTransaction: (
       sdk: SdkWithErc721Functions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'ALGO',
+      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'ALGO' | 'KLAY',
     ) => {
       const provider = testData?.PROVIDER
 

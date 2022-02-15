@@ -1,6 +1,6 @@
 import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testing-common'
 import { TatumKcsSDK } from '../kcs.sdk'
-import { Blockchain, Currency } from '@tatumio/shared-core'
+import { Blockchain } from '@tatumio/shared-core'
 import { kcsTxService } from '../services/kcs.tx'
 import {
   erc20TestFactory,
@@ -9,6 +9,7 @@ import {
   multiTokenTestFactory,
   smartContractTestFactory,
 } from '@tatumio/shared-testing-evm-based'
+import { Currency } from '@tatumio/api-client'
 const blockchain = Blockchain.KCS
 
 describe('KcsSDK - tx', () => {
