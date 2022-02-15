@@ -6,6 +6,8 @@ import {
   BurnNftCelo,
   DeployMultiTokenCelo,
   DeployNftCelo,
+  GenerateCustodialWalletCelo,
+  GenerateCustodialWalletCeloKMS,
   MintMultipleNftCelo,
   MintMultiTokenBatchCelo,
   MintMultiTokenCelo,
@@ -70,7 +72,8 @@ export type ChainDeployMultiTokenCelo = FromPrivateKeyOrSignatureId<DeployMultiT
 
 export type ChainTransferCeloBlockchain = FromPrivateKeyOrSignatureId<
   Omit<TransferCeloBlockchain, 'currency'>
->
+
+export type ChainGenerateCustodialAddressCelo = GenerateCustodialWalletCelo | GenerateCustodialWalletCeloKMS
 
 export const CELO_CONSTANTS = {
   CEUR_ADDRESS_MAINNET: '0xd8763cba276a3738e6de85b4b3bf5fded6d6ca73',

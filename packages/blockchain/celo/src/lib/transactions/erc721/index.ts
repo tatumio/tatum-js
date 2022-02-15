@@ -1,7 +1,7 @@
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
-import { MintNftCelo } from '@tatumio/api-client'
 import BigNumber from 'bignumber.js'
-import { Erc721_Provenance, Erc721Token } from '@tatumio/shared-blockchain-evm-based'
+import { MintNftCelo } from '@tatumio/api-client'
+import { Erc721Token, Erc721_Provenance } from '@tatumio/shared-blockchain-evm-based'
 import { BroadcastFunction } from '@tatumio/shared-blockchain-abstract'
 import { CeloWallet } from '@celo-tools/celo-ethers-wrapper'
 import {

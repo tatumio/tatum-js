@@ -125,7 +125,7 @@ describe('TatumCeloSDK', () => {
               true,
             )
             fail()
-          } catch (e: any) {
+          } catch (e) {
             expect(e.reason).toMatch('invalid address')
           }
         })
@@ -187,7 +187,7 @@ describe('TatumCeloSDK', () => {
               true,
             )
             fail()
-          } catch (e: any) {
+          } catch (e) {
             expect(e.reason).toMatch('invalid address')
           }
         })
@@ -255,7 +255,7 @@ describe('TatumCeloSDK', () => {
               true,
             )
             fail()
-          } catch (e: any) {
+          } catch (e) {
             expect(e.reason).toMatch('invalid address')
           }
         })
@@ -530,9 +530,6 @@ describe('TatumCeloSDK', () => {
 
     describe('update cashback', () => {
       const provider = TEST_DATA.CELO?.PROVIDER
-      const address = TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
-        ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
-        : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       it('should be valid from privateKey', async () => {
         const result = await sdk.transaction.erc721.prepare.updateCashbackForAuthorSignedTransaction(
           {
@@ -569,9 +566,6 @@ describe('TatumCeloSDK', () => {
 
     describe('burn', () => {
       const provider = TEST_DATA.CELO?.PROVIDER
-      const address = TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
-        ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
-        : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       it('should be valid from privateKey', async () => {
         const result = await sdk.transaction.erc721.prepare.burnSignedTransaction(
           {
@@ -916,6 +910,52 @@ describe('TatumCeloSDK', () => {
           expectHexString(json.data)
         })
       })
+    })
+  })
+
+  describe('custodial', () => {
+    describe('prepare', () => {
+      it('valid with signatureId', async () => {
+        const result = await sdk.transaction.custodial.prepare.generateCustodialWalletSignedTransaction(
+          {
+            chain: 'CELO',
+            feeCurrency: 'CUSD',
+            signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+            enableFungibleTokens: true,
+            enableNonFungibleTokens: true,
+            enableSemiFungibleTokens: false,
+            enableBatchTransactions: true,
+            fee: {
+              gasLimit: '326452',
+              gasPrice: '20',
+            },
+          },
+          TEST_DATA.CELO?.PROVIDER,
+          true,
+        )
+        expect(result).not.toBeNull()
+      })
+    })
+
+    it('valid from privateKey', async () => {
+      const result = await sdk.transaction.custodial.prepare.generateCustodialWalletSignedTransaction(
+        {
+          chain: 'CELO',
+          feeCurrency: 'CUSD',
+          fromPrivateKey: '0xfc1d28660e7a8a874e846044bf8fcb0d825216300f581fa048cf719c0c6e89fc',
+          enableFungibleTokens: true,
+          enableNonFungibleTokens: true,
+          enableSemiFungibleTokens: false,
+          enableBatchTransactions: true,
+          fee: {
+            gasLimit: '326452',
+            gasPrice: '20',
+          },
+        },
+        TEST_DATA.CELO?.PROVIDER,
+        true,
+      )
+      expect(result).not.toBeNull()
     })
   })
 })

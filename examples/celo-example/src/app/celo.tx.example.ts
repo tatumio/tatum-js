@@ -402,6 +402,36 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
       account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
       feeCurrency: 'CUSD',
     })
+
+  const preparedCustodialWalletSignedTransaction =
+    await celoSDK.transaction.custodial.prepare.generateCustodialWalletSignedTransaction({
+      chain: 'CELO',
+      feeCurrency: 'CUSD',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      enableFungibleTokens: true,
+      enableNonFungibleTokens: true,
+      enableSemiFungibleTokens: false,
+      enableBatchTransactions: true,
+      fee: {
+        gasLimit: '326452',
+        gasPrice: '20',
+      },
+    })
+
+  const sentCustodialWalletSignedTransaction =
+    await celoSDK.transaction.custodial.send.generateCustodialWalletSignedTransaction({
+      chain: 'CELO',
+      feeCurrency: 'CUSD',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      enableFungibleTokens: true,
+      enableNonFungibleTokens: true,
+      enableSemiFungibleTokens: false,
+      enableBatchTransactions: true,
+      fee: {
+        gasLimit: '326452',
+        gasPrice: '20',
+      },
+    })
 }
 
 export async function celoTxWithPrivateKeyExample(): Promise<void> {
@@ -781,5 +811,35 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
       account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
       feeCurrency: 'CUSD',
+    })
+
+  const preparedCustodialWalletSignedTransaction =
+    await celoSDK.transaction.custodial.prepare.generateCustodialWalletSignedTransaction({
+      chain: 'CELO',
+      feeCurrency: 'CUSD',
+      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+      enableFungibleTokens: true,
+      enableNonFungibleTokens: true,
+      enableSemiFungibleTokens: false,
+      enableBatchTransactions: true,
+      fee: {
+        gasLimit: '326452',
+        gasPrice: '20',
+      },
+    })
+
+  const sentCustodialWalletSignedTransaction =
+    await celoSDK.transaction.custodial.send.generateCustodialWalletSignedTransaction({
+      chain: 'CELO',
+      feeCurrency: 'CUSD',
+      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+      enableFungibleTokens: true,
+      enableNonFungibleTokens: true,
+      enableSemiFungibleTokens: false,
+      enableBatchTransactions: true,
+      fee: {
+        gasLimit: '326452',
+        gasPrice: '20',
+      },
     })
 }
