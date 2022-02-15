@@ -1,4 +1,4 @@
-import { evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
+import { evmBasedMarketplace, evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
 import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
 import { BlockchainKlaytnService } from '@tatumio/api-client'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
@@ -15,6 +15,13 @@ export const TatumKlaytnSDK = (args: SDKArguments) => {
     ...evmBasedSdk({ ...args, blockchain, web3 }),
     kms: klaytnKmsService({ blockchain, web3 }),
     transaction: klaytnTxService({ blockchain, web3 }),
+    marketplace: {
+      ...evmBasedMarketplace({
+        blockchain, web3,
+        broadcastFunction: BlockchainKlaytnService.klaytnBroadcast,
+      }),
+    },
+
     httpDriver: async (request: Web3Request): Promise<Web3Response> => {
       return BlockchainKlaytnService.klaytnWeb3Driver(args.apiKey, { ...request, jsonrpc: '2.0' })
     },

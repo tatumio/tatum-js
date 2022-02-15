@@ -7,7 +7,7 @@ export const marketplaceTestFactory = {
     generateMarketplace: (
       sdk: SdkWithMarketplaceFunctions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC',
+      chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC' | 'KLAY',
       accounts: GanacheAccount[],
     ) => {
       jest.setTimeout(99999)
@@ -48,7 +48,7 @@ export const marketplaceTestFactory = {
     createMarketplaceListing: (
       sdk: SdkWithMarketplaceFunctions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC',
+      chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC' | 'KLAY',
       accounts: GanacheAccount[],
     ) => {
       const provider = testData?.PROVIDER
@@ -93,7 +93,7 @@ export const marketplaceTestFactory = {
     createMarketplaceListingErc20: (
       sdk: SdkWithMarketplaceFunctions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC',
+      chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC' | 'KLAY',
       accounts: GanacheAccount[],
     ) => {
       const provider = testData?.PROVIDER
@@ -142,7 +142,7 @@ export const marketplaceTestFactory = {
     buyMarketplaceListing: (
       sdk: SdkWithMarketplaceFunctions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC',
+      chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC' | 'KLAY',
       accounts: GanacheAccount[],
     ) => {
       const provider = testData?.PROVIDER
@@ -183,7 +183,7 @@ export const marketplaceTestFactory = {
     buyMarketplaceListingErc20: (
       sdk: SdkWithMarketplaceFunctions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC',
+      chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC' | 'KLAY',
       accounts: GanacheAccount[],
     ) => {
       jest.setTimeout(99999)
@@ -252,7 +252,7 @@ export const marketplaceTestFactory = {
     cancelMarketplaceListing: (
       sdk: SdkWithMarketplaceFunctions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC',
+      chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC' | 'KLAY',
       accounts: GanacheAccount[],
     ) => {
       const provider = testData?.PROVIDER

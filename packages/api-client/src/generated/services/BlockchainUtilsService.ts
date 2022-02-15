@@ -176,6 +176,7 @@ export class BlockchainUtilsService {
      * <li>Binance Smart Chain</li>
      * <li>Celo</li>
      * <li>Polygon (Matic)</li>
+     * <li>Klaytn</li>
      * <li>Harmony.ONE</li>
      * <li>XDC Network (XinFin)</li>
      * <li>Tron</li>
@@ -217,7 +218,7 @@ export class BlockchainUtilsService {
      * @throws ApiError
      */
     public static scGetCustodialAddresses(
-        chain: 'CELO' | 'MATIC' | 'BSC',
+        chain: 'CELO' | 'MATIC' | 'KLAY' | 'ETH' | 'ONE' | 'BSC',
         hash: string,
     ): CancelablePromise<Array<string>> {
         return __request({
@@ -241,6 +242,7 @@ export class BlockchainUtilsService {
      * <li>Binance Smart Chain</li>
      * <li>Harmony.ONE</li>
      * <li>Ethereum</li>
+     * <li>Klaytn</li>
      * <li>Celo</li>
      * <li>Harmony.ONE</li>
      * <li>XDC Network (XinFin)</li>
@@ -279,6 +281,7 @@ export class BlockchainUtilsService {
      * <li>Binance Smart Chain</li>
      * <li>Harmony.ONE</li>
      * <li>Ethereum</li>
+     * <li>Klaytn</li>
      * <li>Celo</li>
      * <li>TRON</li>
      * <li>XDC Network (XinFin)</li>
@@ -318,6 +321,7 @@ export class BlockchainUtilsService {
      * <li>Harmony.ONE</li>
      * <li>XDC Network (XinFin)</li>
      * <li>Ethereum</li>
+     * <li>Klaytn</li>
      * <li>Celo</li>
      * <li>Tron</li>
      * <li>Polygon (Matic)</li>
