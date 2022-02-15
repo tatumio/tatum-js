@@ -33,9 +33,6 @@ describe('TatumEthSDK', () => {
     describe('getAuctionFeeRecipient', () => {
       auctionTestFactory.getAuctionFeeRecipient(sdk.auction, TEST_DATA.ETH)
     })
-    describe('update fee', () => {
-      auctionTestFactory.updateFee(sdk.auction, TEST_DATA.ETH)
-    })
     describe('prepare', () => {
       describe('deploy auction', () => {
         auctionTestFactory.prepare.deployAuctionSignedTransaction(sdk.auction, TEST_DATA.ETH)

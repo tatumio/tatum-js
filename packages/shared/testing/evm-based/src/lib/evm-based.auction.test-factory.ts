@@ -1,4 +1,4 @@
-import { SignatureId, TransactionHashKMS } from '@tatumio/api-client'
+import { TransactionHashKMS } from '@tatumio/api-client'
 import { BlockchainTestData, expectHexString } from '@tatumio/shared-testing-common'
 import {
   ChainApproveErc20,
@@ -8,7 +8,6 @@ import {
   ChainCreateAuction,
   ChainDeployAuction,
   ChainSettleAuction,
-  ChainUpdateFee,
   ChainUpdateFeeRecipient,
 } from '@tatumio/shared-blockchain-evm-based'
 
@@ -115,22 +114,6 @@ export const auctionTestFactory = {
           expect(e.reason).toMatch('invalid address')
         }
       })
-    })
-  },
-  updateFee: (sdk: SdkWithAuctionFunctions, testData: BlockchainTestData) => {
-    it('valid', async () => {
-      const result = (await sdk.updateFee(testData.AUCTIONS.UPDATE_FEE.VALID)) as TransactionHashKMS
-      console.log('result', result)
-      expectHexString(result.txId)
-    })
-    it('invalid address', async () => {
-      try {
-        await sdk.updateFee(testData.AUCTIONS.UPDATE_FEE.INVALID)
-      } catch (e) {
-        expect(e.toString()).toEqual(
-          "Error: Provided address 0x687422eEA2cB73B5d3e242bA5456b782919AFc86 is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted.",
-        )
-      }
     })
   },
   prepare: {
@@ -285,7 +268,6 @@ export interface SdkWithAuctionFunctions {
   getAuction(contractAddress: string, auctionId: string): Promise<Auction>
   getAuctionFee(contractAddress: string): Promise<number>
   getAuctionFeeRecipient(contractAddress: string): Promise<{ address?: string }>
-  updateFee(body: ChainUpdateFee): Promise<TransactionHashKMS | SignatureId>
   prepare: {
     deployAuctionSignedTransaction(body: ChainDeployAuction, provider?: string): Promise<string>
     auctionUpdateFeeRecipientSignedTransaction(body: ChainUpdateFeeRecipient, provider?): Promise<string>
