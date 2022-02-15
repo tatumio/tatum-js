@@ -1,4 +1,3 @@
-import { CreateTrade, VirtualCurrency } from '@tatumio/api-client'
 import { TatumBscSDK } from '@tatumio/bsc'
 import { Currency } from '@tatumio/api-client'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
@@ -66,7 +65,6 @@ export async function bscLedgerOrderBookExample() {
   await bscSDK.ledger.orderBook.cancel('7c21ed165e294db78b95f0f1')
   await bscSDK.ledger.orderBook.cancelByAccount('5e68c66581f2ee32bc354087')
   const newTrade = await bscSDK.ledger.orderBook.newTrade({
-    // TODO openapi bug
     type: 'BUY',
     price: '8650.4',
     amount: '15000',
@@ -136,11 +134,9 @@ export async function bscLedgerVirtualCurrencyExample() {
   const virtualCurrencyAcc = await bscSDK.ledger.virtualCurrency.create({
     name: 'VC_VIRTUAL',
     supply: '1000000',
-    // TODO openapi bug
     basePair: 'GMC_BSC',
     baseRate: 1,
     customer: {
-      // TODO openapi bug
       accountingCurrency: 'USD',
       customerCountry: 'US',
       externalId: '123654',
@@ -149,7 +145,6 @@ export async function bscLedgerVirtualCurrencyExample() {
     description: 'My Virtual Token description.',
     accountCode: 'AC_1011_B',
     accountNumber: '1234567890',
-    // TODO openapi bug
     accountingCurrency: 'USD',
   })
 
@@ -168,7 +163,6 @@ export async function bscLedgerVirtualCurrencyExample() {
   await bscSDK.ledger.virtualCurrency.update({
     name: 'VC_VIRTUAL',
     baseRate: 1,
-    // TODO openapi bug
     basePair: 'EUR',
   })
 }
