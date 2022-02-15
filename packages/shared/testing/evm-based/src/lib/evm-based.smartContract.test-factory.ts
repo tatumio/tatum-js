@@ -12,7 +12,7 @@ export const smartContractTestFactory = {
       const contractAddress = testData.TESTNET?.MULTITOKEN?.CONTRACT_ADDRESS
 
       it('valid with signatureId', async () => {
-        const result = await sdk.prepare.smartContractWriteMethodInvocationTransaction(
+        const resultWithSignatureId = await sdk.prepare.smartContractWriteMethodInvocationTransaction(
           {
             contractAddress,
             methodName: 'transferFrom',
@@ -53,12 +53,11 @@ export const smartContractTestFactory = {
           },
           provider,
         )
-        console.log('scinvocation res: ', result)
-        expect(result).not.toBeNull()
+        expect(resultWithSignatureId).not.toBeNull()
       })
 
       it('valid from privateKey', async () => {
-        const result = await sdk.prepare.smartContractWriteMethodInvocationTransaction(
+        const resultWithPrivateKey = await sdk.prepare.smartContractWriteMethodInvocationTransaction(
           {
             contractAddress,
             methodName: 'transferFrom',
@@ -99,8 +98,7 @@ export const smartContractTestFactory = {
           },
           provider,
         )
-        console.log('scinvocation res: ', result)
-        expect(result).not.toBeNull()
+        expect(resultWithPrivateKey).not.toBeNull()
       })
     },
   },
@@ -140,10 +138,8 @@ export const smartContractTestFactory = {
             },
             provider,
           )
-          console.log('read invocation res: ', result)
           expect(result).not.toBeNull()
         } catch (e) {
-          console.log('read invocation err: ', e)
           expect(e).not.toBeDefined()
         }
       })
