@@ -6,10 +6,10 @@ const algoSDK = TatumAlgoSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function algoLedgerAccountExample() {
   const account = await algoSDK.ledger.account.create({
-    currency: Currency.ETH,
+    currency: Currency.ALGO,
   })
   const accounts = await algoSDK.ledger.account.createMultiple({
-    accounts: [{ currency: Currency.ETH }, { currency: Currency.ETH }],
+    accounts: [{ currency: Currency.ALGO }, { currency: Currency.ALGO }],
   })
   await algoSDK.ledger.account.activate('5e68c66581f2ee32bc354087')
   await algoSDK.ledger.account.deactivate('5e68c66581f2ee32bc354087')
@@ -68,7 +68,7 @@ export async function algoLedgerOrderBookExample() {
     type: 'BUY',
     price: '8650.4',
     amount: '15000',
-    pair: 'ETH/EUR',
+    pair: 'ALGO/EUR',
     currency1AccountId: '7c21ed165e294db78b95f0f1',
     currency2AccountId: '7c21ed165e294db78b95f0f1',
     feeAccountId: '7c21ed165e294db78b95f0f1',
@@ -135,7 +135,7 @@ export async function algoLedgerVirtualCurrencyExample() {
     name: 'VC_VIRTUAL',
     supply: '1000000',
     // TODO openapi bug
-    basePair: 'ETH',
+    basePair: 'ALGO',
     baseRate: 1,
     customer: {
       // TODO openapi bug
