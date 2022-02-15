@@ -5,16 +5,18 @@ const oneSDK = TatumOneSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function oneTxWithSignatureIdExample(): Promise<void> {
   // NATIVE
-  const preparedTransferNativeTransaction = await oneSDK.transaction.native.prepare.transferSignedTransaction({
-    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-    amount: '10',
-    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-    nonce: 3252345722143,
-    fee: {
-      gasLimit: '53632',
-      gasPrice: '20',
+  const preparedTransferNativeTransaction = await oneSDK.transaction.native.prepare.transferSignedTransaction(
+    {
+      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+      amount: '10',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      nonce: 3252345722143,
+      fee: {
+        gasLimit: '53632',
+        gasPrice: '20',
+      },
     },
-  })
+  )
 
   const sentTransferNativeTransaction = await oneSDK.transaction.native.send.transferSignedTransaction({
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
