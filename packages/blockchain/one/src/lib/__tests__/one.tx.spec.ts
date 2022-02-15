@@ -8,6 +8,7 @@ import {
   erc721TestFactory,
   multiTokenTestFactory,
   marketplaceTestFactory,
+  nativeTestFactory,
 } from '@tatumio/shared-testing-evm-based'
 import { Currency } from '@tatumio/api-client'
 
@@ -25,6 +26,12 @@ describe('OneSDK - tx', () => {
         return '@TODO'
       },
     },
+  })
+
+  describe('transaction', () => {
+    describe('native', () => {
+      nativeTestFactory.prepare.transferSignedTransaction(oneTx.native, inmemoryBlockchain.accounts)
+    })
   })
 
   describe('erc20', () => {
