@@ -7,6 +7,7 @@ import {
   ganacheHelper,
   erc721TestFactory,
   multiTokenTestFactory,
+  marketplaceTestFactory,
 } from '@tatumio/shared-testing-evm-based'
 import { Currency } from '@tatumio/api-client'
 
@@ -48,6 +49,65 @@ describe('OneSDK - tx', () => {
       // TODO: Returned error: evm: execution reverted
       xdescribe('burnSignedTransaction', () => {
         erc20TestFactory.prepare.burnSignedTransaction(oneTx.erc20, TEST_DATA.ONE)
+      })
+    })
+  })
+
+  describe('marketplace', () => {
+    describe('prepare', () => {
+      describe('generateMarketplace', () => {
+        marketplaceTestFactory.prepare.generateMarketplace(
+          sdk.marketplace,
+          TEST_DATA.ONE,
+          'ONE',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      describe('createMarketplaceListing', () => {
+        marketplaceTestFactory.prepare.createMarketplaceListing(
+          sdk.marketplace,
+          TEST_DATA.ONE,
+          'ONE',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      describe('createMarketplaceListingErc20', () => {
+        marketplaceTestFactory.prepare.createMarketplaceListingErc20(
+          sdk.marketplace,
+          TEST_DATA.ONE,
+          'ONE',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      describe('buyMarketplaceListing', () => {
+        marketplaceTestFactory.prepare.buyMarketplaceListing(
+          sdk.marketplace,
+          TEST_DATA.ONE,
+          'ONE',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      // @TODO: returns "Returned values aren't valid..."
+      xdescribe('buyMarketplaceListingErc20', () => {
+        marketplaceTestFactory.prepare.buyMarketplaceListingErc20(
+          sdk.marketplace,
+          TEST_DATA.ONE,
+          'ONE',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      describe('cancelMarketplaceListing', () => {
+        marketplaceTestFactory.prepare.cancelMarketplaceListing(
+          sdk.marketplace,
+          TEST_DATA.ONE,
+          'ONE',
+          inmemoryBlockchain.accounts,
+        )
       })
     })
   })

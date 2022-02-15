@@ -1,3 +1,4 @@
+import { ApproveErc20 } from '@tatumio/api-client'
 import {
   BroadcastFunction,
   ChainTransferErc20,
@@ -155,6 +156,38 @@ const deploySignedTransaction = async (body: ChainDeployErc20, web3: EvmBasedWeb
   )
 }
 
+const decimals = async (contractAddress: string, web3: EvmBasedWeb3, provider?: string) => {
+  const client = web3.getClient(provider)
+
+  return new client.eth.Contract(Erc20Token.abi as any, contractAddress).methods.decimals().call()
+}
+
+const approveSignedTransaction = async (body: ApproveErc20, web3: EvmBasedWeb3, provider?: string) => {
+  const amount = new BigNumber(body.amount)
+    .multipliedBy(new BigNumber(10).pow(await decimals(body.contractAddress, web3, provider)))
+    .toString(16)
+
+  const params = [body.spender.trim(), `0x${amount}`]
+
+  const client = web3.getClient(provider)
+
+  const smartContractMethodName = 'approve'
+
+  // TODO remove any type
+  const data = new client.eth.Contract(Erc20Token.abi as any).methods[smartContractMethodName](
+    params,
+  ).encodeABI()
+
+  const tx: TransactionConfig = {
+    from: undefined,
+    data,
+    to: body.contractAddress,
+    nonce: body.nonce,
+  }
+
+  return evmBasedUtils.prepareSignedTransactionAbstraction(client, tx, web3, undefined, body.fromPrivateKey)
+}
+
 export const erc20 = (args: {
   blockchain: EvmBasedBlockchain
   web3: EvmBasedWeb3
@@ -210,6 +243,13 @@ export const erc20 = (args: {
        */
       burnSignedTransaction: async (body: ChainBurnErc20, provider?: string) =>
         burnSignedTransaction(body, args.web3, provider),
+      /**
+       * Prepare approve ERC20 signed transaction.
+       * @param body body of the approve operation
+       * @param provider optional Web3 provider
+       */
+      approveSignedTransaction: async (body: ApproveErc20, web3: EvmBasedWeb3, provider?: string) =>
+        approveSignedTransaction(body, args.web3, provider),
     },
     send: {
       /**

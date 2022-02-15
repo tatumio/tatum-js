@@ -3,7 +3,7 @@ import { ETH_TEST_DATA } from './eth.test-data'
 
 export const BSC_TEST_DATA: BlockchainTestData = {
   ...ETH_TEST_DATA,
-  PROVIDER: 'https://data-seed-prebsc-1-s1.binance.org:8545',
+  PROVIDER: 'https://data-seed-prebsc-1-s2.binance.org:8545/',
   MAINNET: {
     ...ETH_TEST_DATA.MAINNET,
     XPUB: 'xpub6EmVHAqPHkSRgsS7Km6Ynmjg4Kup6aD2NjX1zmVEwuwvJZPGefgmmg5a36eBX8QZpfhtPu7qHgcMmehDMLivrm8gY2L7v8iQDmxyYVhxPUs',
@@ -28,7 +28,7 @@ export const BSC_TEST_DATA: BlockchainTestData = {
       PRIVATE_KEY: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
       ADDRESS: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
     },
-    PROVIDER: 'https://data-seed-prebsc-1-s2.binance.org:8545',
+    PROVIDER: 'https://data-seed-prebsc-1-s2.binance.org:8545/',
   },
   BLOCK_HASH: '0x635755346ca10c9d95fef3238d8466d2aa1adb9e2f878287b1dd5567fc314c2f',
   BLOCK_HEIGHT: 14_826_647,
