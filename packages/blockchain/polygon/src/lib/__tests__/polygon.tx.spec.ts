@@ -8,6 +8,7 @@ import {
   erc721TestFactory,
   multiTokenTestFactory,
   marketplaceTestFactory,
+  nativeTestFactory,
 } from '@tatumio/shared-testing-evm-based'
 import { Currency } from '@tatumio/api-client'
 
@@ -29,6 +30,12 @@ describe('PolygonSDK - tx', () => {
 
   beforeEach(async () => {
     await ganacheHelper.initWeb3(inmemoryBlockchain.web3)
+  })
+
+  describe('transaction', () => {
+    describe('native', () => {
+      nativeTestFactory.prepare.transferSignedTransaction(polygonTx.native, inmemoryBlockchain.accounts)
+    })
   })
 
   // @TODO Deploy contract
