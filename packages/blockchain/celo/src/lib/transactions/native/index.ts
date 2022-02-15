@@ -14,20 +14,18 @@ const transferSignedTransaction = async (
   // TODO
   // await validateBody(body, ChainTransferCeloBlockchain)
 
-  const { fromPrivateKey, signatureId, to, currency, feeCurrency, amount, nonce } = body
+  const { fromPrivateKey, signatureId, to, feeCurrency, amount, nonce } = body
   const celoProvider = celoUtils.getProvider(provider)
 
-  if (to && currency && feeCurrency && amount) {
+  if (to && feeCurrency && amount) {
     const network = await celoProvider.ready
     const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
-    const currencyContractAddress = celoUtils.getFeeCurrency(currency, testnet)
     const contract = new new Web3().eth.Contract(Erc20Token.abi as any, to.trim())
 
     if (signatureId) {
       return JSON.stringify({
         chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
-        currency: currencyContractAddress, // see below
         nonce,
         to: to.trim(),
         data: contract.methods.transfer(to.trim(), `0x${new BigNumber(amount).toString(16)}`).encodeABI(),
@@ -37,10 +35,6 @@ const transferSignedTransaction = async (
     const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
     const { txCount, from } = await celoUtils.obtainWalletInformation(wallet, feeCurrencyContractAddress)
 
-    /**
-     * "invalid object key - currency (argument="transaction:currency""
-     * this does not pass with currency appended to the tx (???) removed currency extension to TransactionConfig for now
-     */
     const tx: CeloTransactionConfig = {
       chainId: network.chainId,
       from: from,

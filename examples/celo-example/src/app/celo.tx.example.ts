@@ -10,7 +10,6 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
       signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
       nonce: 46533715.43995557,
       feeCurrency: 'CUSD',
-      currency: 'CELO',
       amount: '1',
     })
 
@@ -19,7 +18,6 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
     signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
     nonce: 46533715.43995557,
     feeCurrency: 'CUSD',
-    currency: 'CELO',
     amount: '1',
   })
 
