@@ -17,7 +17,8 @@ export const TatumKlaytnSDK = (args: SDKArguments) => {
     transaction: klaytnTxService({ blockchain, web3 }),
     marketplace: {
       ...evmBasedMarketplace({
-        blockchain, web3,
+        blockchain,
+        web3,
         broadcastFunction: BlockchainKlaytnService.klaytnBroadcast,
       }),
     },
