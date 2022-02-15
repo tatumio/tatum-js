@@ -4,7 +4,7 @@ import { generateMnemonic, mnemonicToSeed } from 'bip39'
 import { TronWallet } from '@tatumio/api-client'
 import Web3 from 'web3'
 import { TransactionConfig } from 'web3-core'
-import { EvmBasedWeb3 } from '..'
+import { Erc20Token, EvmBasedWeb3 } from '..'
 import { HarmonyAddress } from '@harmony-js/crypto'
 import { toWei, Unit } from 'web3-utils'
 
@@ -88,5 +88,16 @@ export const evmBasedUtils = {
 
   transformAmount: (amount: string, unit = 'ether') => {
     return toWei(amount, unit as Unit)
+  },
+
+  decimals: async (contractAddress: string, web3: EvmBasedWeb3, provider?: string) => {
+    const client = web3.getClient(provider)
+
+    return new client.eth.Contract(
+      Erc20Token.abi as any,
+      evmBasedUtils.transformAddress(contractAddress),
+    ).methods
+      .decimals()
+      .call()
   },
 }

@@ -35,6 +35,12 @@ export const POLYGON_TEST_DATA: BlockchainTestData = {
       CONTRACT_ADDRESS: '0x0b9808fce74030c87aae334a30f6c8f6c66b090d',
       PRIVATE_KEY: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
     },
+    CUSTODIAL: {
+      PRIVATE_KEY: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+      SIGNATURE_ID: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      CONTRACT_ADDRESS: '0xe2a8d7c5b2b4acad7e5b9aec0998cdbbeed45e49',
+      TOKEN_ADDRESS: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    },
     PROVIDER: 'https://matic-mumbai.chainstacklabs.com/',
   },
 }

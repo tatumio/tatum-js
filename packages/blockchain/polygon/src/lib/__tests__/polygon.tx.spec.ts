@@ -276,6 +276,38 @@ describe('PolygonSDK - tx', () => {
           'MATIC',
         )
       })
+
+      xdescribe('transfer from custodial wallet', () => {
+        custodialTestFactory.prepare.transferFromCustodialWallet(
+          sdk.transaction.custodial,
+          TEST_DATA.POLYGON,
+          'MATIC',
+        )
+      })
+
+      xdescribe('batch transfer from custodial wallet', () => {
+        custodialTestFactory.prepare.batchTransferFromCustodialWallet(
+          sdk.transaction.custodial,
+          TEST_DATA.POLYGON,
+          'MATIC',
+        )
+      })
+
+      xdescribe('approve from custodial wallet', () => {
+        custodialTestFactory.prepare.approveFromCustodialWallet(
+          sdk.transaction.custodial,
+          TEST_DATA.POLYGON,
+          'MATIC',
+        )
+      })
+
+      xdescribe('generate batch custodial wallet', () => {
+        custodialTestFactory.prepare.custodialWalletBatch(
+          sdk.transaction.custodial,
+          TEST_DATA.POLYGON,
+          'MATIC',
+        )
+      })
     })
   })
 })

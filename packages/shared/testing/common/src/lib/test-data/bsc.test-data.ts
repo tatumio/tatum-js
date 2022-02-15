@@ -32,6 +32,12 @@ export const BSC_TEST_DATA: BlockchainTestData = {
       CONTRACT_ADDRESS: '0xd7d3e5e2174b530fdfb6d680c07c8b34495e2195',
       PRIVATE_KEY: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
     },
+    CUSTODIAL: {
+      PRIVATE_KEY: '0x37b091fc4ce46a56da643f021254612551dbe0944679a6e09cb5724d3085c9ab',
+      SIGNATURE_ID: '695a3b3e-649f-4e5b-9524-c388c4f45230',
+      CONTRACT_ADDRESS: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+      TOKEN_ADDRESS: '0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867',
+    },
     PROVIDER: 'https://data-seed-prebsc-1-s2.binance.org:8545/',
   },
   BLOCK_HASH: '0x635755346ca10c9d95fef3238d8466d2aa1adb9e2f878287b1dd5567fc314c2f',

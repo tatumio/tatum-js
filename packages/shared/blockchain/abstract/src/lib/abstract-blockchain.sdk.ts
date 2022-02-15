@@ -41,6 +41,18 @@ import {
   XlmWallet,
   XrpWallet,
   AddNftMinter,
+  TransferCustodialWallet,
+  TransferCustodialWalletCelo,
+  TransferCustodialWalletBatch,
+  TransferCustodialWalletBatchCelo,
+  ApproveTransferCustodialWallet,
+  ApproveTransferCustodialWalletCelo,
+  TransferCustodialWalletKMS,
+  GenerateCustodialWalletBatch,
+  GenerateCustodialWalletBatchKMS,
+  GenerateCustodialWalletCelo,
+  GenerateCustodialWalletCeloKMS,
+  CallSmartContractMethodKMS,
 } from '@tatumio/api-client'
 import { Blockchain, blockchainHelper } from '@tatumio/shared-core'
 import { abstractSdk } from '@tatumio/shared-abstract-sdk'
@@ -141,6 +153,25 @@ export type ChainSellAssetOnMarketplace = FromPrivateKeyOrSignatureId<SellAssetO
 
 export type ChainCancelSellAssetOnMarketplace = FromPrivateKeyOrSignatureId<CancelSellAssetOnMarketplace>
 
+export type ChainTransferCustodialWallet =
+  | (FromPrivateKeyOrSignatureId<TransferCustodialWallet> & { index?: number })
+  | (FromPrivateKeyOrSignatureId<TransferCustodialWalletCelo> & { index?: number })
+export type ChainBatchTransferCustodialWallet =
+  | (FromPrivateKeyOrSignatureId<TransferCustodialWalletBatch> & { index?: number })
+  | (FromPrivateKeyOrSignatureId<TransferCustodialWalletBatchCelo> & { index?: number })
+export type ChainApproveCustodialTransfer =
+  | (FromPrivateKeyOrSignatureId<ApproveTransferCustodialWallet> & { index?: number })
+  | (FromPrivateKeyOrSignatureId<ApproveTransferCustodialWalletCelo> & { index?: number })
+export type ChainTransferFromCustodialAddress = TransferCustodialWalletKMS | TransferCustodialWallet
+export type ChainGenerateCustodialWalletBatch = GenerateCustodialWalletBatch | GenerateCustodialWalletBatchKMS
+
+export type ChainGenerateCustodialWalletCelo = FromPrivateKeyOrSignatureId<GenerateCustodialWalletCelo> & {
+  index?: number
+}
+export type ChainCallSmartContractMethod = FromPrivateKeyOrSignatureId<CallSmartContractMethod> & {
+  index?: number
+}
+
 export interface SdkWithErc20Functions {
   decimals(contractAddress: string, provider?: string): any
 
@@ -207,6 +238,22 @@ export interface SdkWithCustodialFunctions {
       body: ChainGenerateCustodialAddress,
       provider?: string,
     ): Promise<string>
+    transferFromCustodialWallet(
+      body: ChainTransferCustodialWallet,
+      testnet?: boolean,
+      provider?: string,
+    ): Promise<string>
+    batchTransferFromCustodialWallet: (
+      body: ChainBatchTransferCustodialWallet,
+      testnet: boolean,
+      provider?: string,
+    ) => Promise<string>
+    approveFromCustodialWallet: (body: ChainApproveCustodialTransfer, provider?: string) => Promise<string>
+    custodialWalletBatch: (
+      body: ChainGenerateCustodialWalletBatch,
+      testnet: boolean,
+      provider?: string,
+    ) => Promise<string>
   }
 }
 export interface SdkWithMarketplaceFunctions {
