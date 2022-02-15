@@ -68,7 +68,9 @@ export type ChainBurnMultiTokenBatchCelo = FromPrivateKeyOrSignatureId<BurnMulti
 
 export type ChainDeployMultiTokenCelo = FromPrivateKeyOrSignatureId<DeployMultiTokenCelo>
 
-export type ChainTransferCeloBlockchain = FromPrivateKeyOrSignatureId<Omit<TransferCeloBlockchain, "currency">>
+export type ChainTransferCeloBlockchain = FromPrivateKeyOrSignatureId<
+  Omit<TransferCeloBlockchain, 'currency'>
+>
 
 export const CELO_CONSTANTS = {
   CEUR_ADDRESS_MAINNET: '0xd8763cba276a3738e6de85b4b3bf5fded6d6ca73',
