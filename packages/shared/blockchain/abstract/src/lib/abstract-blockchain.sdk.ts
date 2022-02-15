@@ -40,6 +40,7 @@ import {
   UpdateFeeRecipient,
   XlmWallet,
   XrpWallet,
+  AddNftMinter,
 } from '@tatumio/api-client'
 import { Blockchain, blockchainHelper } from '@tatumio/shared-core'
 import { abstractSdk } from '@tatumio/shared-abstract-sdk'
@@ -120,7 +121,9 @@ export type ChainMintMultiTokenBatch = FromPrivateKeyOrSignatureId<MintMultiToke
 
 export type ChainDeployMultiToken = FromPrivateKeyOrSignatureId<DeployMultiToken>
 
-export type ChainSmartContractMethodInvocation = FromPrivateKeyOrSignatureId<CallSmartContractMethod>
+export type ChainSmartContractMethodInvocation = FromPrivateKeyOrSignatureId<CallSmartContractMethod> & {
+  index?: number
+}
 
 export type ChainGenerateCustodialAddress = FromPrivateKeyOrSignatureId<GenerateCustodialWallet>
 
