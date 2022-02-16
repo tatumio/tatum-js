@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-xlm",
-  "version": "2.0.0-alpha.100",
+  "version": "2.0.0-alpha.101",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
