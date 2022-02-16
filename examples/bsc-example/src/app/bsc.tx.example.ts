@@ -550,6 +550,106 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
         gasPrice: '20',
       },
     })
+
+  const preparedTransferFromCustodialWallet =
+    await bscSDK.transaction.custodial.prepare.transferFromCustodialWallet({
+      chain: 'BSC',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractType: 0,
+      custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+      tokenAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+      recipient: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+      tokenId: '20',
+    })
+
+  const sentTransferFromCustodialWallet = await bscSDK.transaction.custodial.send.transferFromCustodialWallet(
+    {
+      chain: 'BSC',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractType: 0,
+      custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+      tokenAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+      recipient: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+      tokenId: '20',
+    },
+  )
+
+  const preparedBatchTransferFromCustodialWallet =
+    await bscSDK.transaction.custodial.prepare.batchTransferFromCustodialWallet({
+      chain: 'BSC',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractType: [0, 1, 2, 3],
+      custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+      tokenAddress: [
+        '0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867',
+        '0x9b0eea3aa1e61b8ecb7d1c8260cd426eb2a9a698',
+        '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
+        '0',
+      ],
+      recipient: [
+        '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+        '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+        '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+        '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+      ],
+      amount: ['1', '0', '1', '3'],
+    })
+
+  const sentBatchTransferFromCustodialWallet =
+    await bscSDK.transaction.custodial.send.batchTransferFromCustodialWallet({
+      chain: 'BSC',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractType: [0, 1, 2, 3],
+      custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+      tokenAddress: [
+        '0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867',
+        '0x9b0eea3aa1e61b8ecb7d1c8260cd426eb2a9a698',
+        '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
+        '0',
+      ],
+      recipient: [
+        '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+        '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+        '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+        '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+      ],
+      amount: ['1', '0', '1', '3'],
+    })
+
+  const preparedApproveFromCustodialWallet =
+    await bscSDK.transaction.custodial.prepare.approveFromCustodialWallet({
+      chain: 'BSC',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      contractType: 0,
+      custodialAddress: '0x95abdd7406a6aca49797e833bacc3edaa394853a',
+      tokenAddress: '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
+      spender: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+      amount: '1',
+    })
+
+  const sentApproveFromCustodialWallet = await bscSDK.transaction.custodial.send.approveFromCustodialWallet({
+    chain: 'BSC',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractType: 0,
+    custodialAddress: '0x95abdd7406a6aca49797e833bacc3edaa394853a',
+    tokenAddress: '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
+    spender: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+    amount: '1',
+  })
+
+  const preparedCustodialWalletBatch = await bscSDK.transaction.custodial.prepare.custodialWalletBatch({
+    chain: 'BSC',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    batchCount: 100,
+    owner: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+  })
+
+  const sentCustodialWalletBatch = await bscSDK.transaction.custodial.send.custodialWalletBatch({
+    chain: 'BSC',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    batchCount: 100,
+    owner: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+  })
 }
 
 export async function bscTxWithPrivateKeyExample(): Promise<void> {
@@ -1098,4 +1198,104 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
         gasPrice: '20',
       },
     })
+
+  const preparedTransferFromCustodialWallet =
+    await bscSDK.transaction.custodial.prepare.transferFromCustodialWallet({
+      chain: 'BSC',
+      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+      contractType: 0,
+      custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+      tokenAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+      recipient: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+      tokenId: '20',
+    })
+
+  const sentTransferFromCustodialWallet = await bscSDK.transaction.custodial.send.transferFromCustodialWallet(
+    {
+      chain: 'BSC',
+      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+      contractType: 0,
+      custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+      tokenAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+      recipient: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+      tokenId: '20',
+    },
+  )
+
+  const preparedBatchTransferFromCustodialWallet =
+    await bscSDK.transaction.custodial.prepare.batchTransferFromCustodialWallet({
+      chain: 'BSC',
+      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+      contractType: [0, 1, 2, 3],
+      custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+      tokenAddress: [
+        '0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867',
+        '0x9b0eea3aa1e61b8ecb7d1c8260cd426eb2a9a698',
+        '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
+        '0',
+      ],
+      recipient: [
+        '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+        '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+        '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+        '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+      ],
+      amount: ['1', '0', '1', '3'],
+    })
+
+  const sentBatchTransferFromCustodialWallet =
+    await bscSDK.transaction.custodial.send.batchTransferFromCustodialWallet({
+      chain: 'BSC',
+      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+      contractType: [0, 1, 2, 3],
+      custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+      tokenAddress: [
+        '0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867',
+        '0x9b0eea3aa1e61b8ecb7d1c8260cd426eb2a9a698',
+        '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
+        '0',
+      ],
+      recipient: [
+        '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+        '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+        '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+        '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+      ],
+      amount: ['1', '0', '1', '3'],
+    })
+
+  const preparedApproveFromCustodialWallet =
+    await bscSDK.transaction.custodial.prepare.approveFromCustodialWallet({
+      chain: 'BSC',
+      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+      contractType: 0,
+      custodialAddress: '0x95abdd7406a6aca49797e833bacc3edaa394853a',
+      tokenAddress: '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
+      spender: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+      amount: '1',
+    })
+
+  const sentApproveFromCustodialWallet = await bscSDK.transaction.custodial.send.approveFromCustodialWallet({
+    chain: 'BSC',
+    fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+    contractType: 0,
+    custodialAddress: '0x95abdd7406a6aca49797e833bacc3edaa394853a',
+    tokenAddress: '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
+    spender: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+    amount: '1',
+  })
+
+  const preparedCustodialWalletBatch = await bscSDK.transaction.custodial.prepare.custodialWalletBatch({
+    chain: 'BSC',
+    fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+    batchCount: 100,
+    owner: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+  })
+
+  const sentCustodialWalletBatch = await bscSDK.transaction.custodial.send.custodialWalletBatch({
+    chain: 'BSC',
+    fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+    batchCount: 100,
+    owner: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+  })
 }

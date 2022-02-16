@@ -161,8 +161,8 @@ export const custodial = (args: {
        */
       transferFromCustodialWallet: async (
         body: ChainTransferCustodialWallet,
-        testnet: boolean,
-        provider: string,
+        testnet?: boolean,
+        provider?: string,
       ) => transferFromCustodialWallet(body, args.web3, testnet, provider),
       /**
        * Prepare signed batch transaction from the custodial SC wallet.
@@ -173,7 +173,7 @@ export const custodial = (args: {
        */
       batchTransferFromCustodialWallet: async (
         body: ChainBatchTransferCustodialWallet,
-        testnet: boolean,
+        testnet?: boolean,
         provider?: string,
       ) => batchTransferFromCustodialWallet(body, args.web3, testnet, provider),
       /**
@@ -194,7 +194,7 @@ export const custodial = (args: {
        */
       custodialWalletBatch: async (
         body: ChainGenerateCustodialWalletBatch,
-        testnet: boolean,
+        testnet?: boolean,
         provider?: string,
       ) => custodialWalletBatch(body, args.web3, testnet, provider),
     },
@@ -223,8 +223,8 @@ export const custodial = (args: {
        */
       transferFromCustodialWallet: async (
         body: ChainTransferCustodialWallet,
-        testnet: boolean,
-        provider: string,
+        testnet?: boolean,
+        provider?: string,
       ) =>
         args.broadcastFunction({
           txData: await transferFromCustodialWallet(body, args.web3, testnet, provider),
@@ -240,8 +240,8 @@ export const custodial = (args: {
        */
       batchTransferFromCustodialWallet: async (
         body: ChainBatchTransferCustodialWallet,
-        testnet: boolean,
-        provider: string,
+        testnet?: boolean,
+        provider?: string,
       ) =>
         args.broadcastFunction({
           txData: await batchTransferFromCustodialWallet(body, args.web3, testnet, provider),
@@ -253,7 +253,7 @@ export const custodial = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      approveFromCustodialWallet: async (body: ChainApproveCustodialTransfer, provider: string) =>
+      approveFromCustodialWallet: async (body: ChainApproveCustodialTransfer, provider?: string) =>
         args.broadcastFunction({
           txData: await approveFromCustodialWallet(body, args.web3, provider),
           signatureId: body.signatureId,
@@ -268,8 +268,8 @@ export const custodial = (args: {
        */
       custodialWalletBatch: async (
         body: ChainGenerateCustodialWalletBatch,
-        testnet: boolean,
-        provider: string,
+        testnet?: boolean,
+        provider?: string,
       ) =>
         args.broadcastFunction({
           txData: await custodialWalletBatch(body, args.web3, testnet, provider),

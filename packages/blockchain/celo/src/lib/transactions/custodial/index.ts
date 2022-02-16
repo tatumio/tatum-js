@@ -91,8 +91,8 @@ export const custodial = (args: {
        */
       transferFromCustodialWallet: async (
         body: ChainTransferCustodialWallet,
-        testnet: boolean,
-        provider: string,
+        testnet?: boolean,
+        provider?: string,
       ) => evmCustodialService.prepare.transferFromCustodialWallet(body, testnet, provider),
       /**
        * Prepare signed batch transaction from the custodial SC wallet.
@@ -103,7 +103,7 @@ export const custodial = (args: {
        */
       batchTransferFromCustodialWallet: async (
         body: ChainBatchTransferCustodialWallet,
-        testnet: boolean,
+        testnet?: boolean,
         provider?: string,
       ) => evmCustodialService.prepare.batchTransferFromCustodialWallet(body, testnet, provider),
       /**
@@ -124,7 +124,7 @@ export const custodial = (args: {
        */
       custodialWalletBatch: async (
         body: ChainGenerateCustodialWalletBatch,
-        testnet: boolean,
+        testnet?: boolean,
         provider?: string,
       ) => evmCustodialService.prepare.custodialWalletBatch(body, testnet, provider),
     },
@@ -154,8 +154,8 @@ export const custodial = (args: {
        */
       transferFromCustodialWallet: async (
         body: ChainTransferCustodialWallet,
-        testnet: boolean,
-        provider: string,
+        testnet?: boolean,
+        provider?: string,
       ) => await evmCustodialService.send.transferFromCustodialWallet(body, testnet, provider),
       /**
        * Send signed batch transaction from the custodial SC wallet.
@@ -166,8 +166,8 @@ export const custodial = (args: {
        */
       batchTransferFromCustodialWallet: async (
         body: ChainBatchTransferCustodialWallet,
-        testnet: boolean,
-        provider: string,
+        testnet?: boolean,
+        provider?: string,
       ) => await evmCustodialService.send.batchTransferFromCustodialWallet(body, testnet, provider),
       /**
        * Send signed approve transaction from the custodial SC wallet.
@@ -175,7 +175,7 @@ export const custodial = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      approveFromCustodialWallet: async (body: ChainApproveCustodialTransfer, provider: string) =>
+      approveFromCustodialWallet: async (body: ChainApproveCustodialTransfer, provider?: string) =>
         await evmCustodialService.send.approveFromCustodialWallet(body, provider),
       /**
        * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, but transaction costs connected to the withdrawal
@@ -187,8 +187,8 @@ export const custodial = (args: {
        */
       custodialWalletBatch: async (
         body: ChainGenerateCustodialWalletBatch,
-        testnet: boolean,
-        provider: string,
+        testnet?: boolean,
+        provider?: string,
       ) => await evmCustodialService.send.custodialWalletBatch(body, testnet, provider),
     },
   }
