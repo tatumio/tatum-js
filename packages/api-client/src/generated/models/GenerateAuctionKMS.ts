@@ -6,7 +6,7 @@ export type GenerateAuctionKMS = {
     /**
      * Blockchain to work with.
      */
-    chain: 'ETH' | 'ONE' | 'BSC' | 'MATIC';
+    chain: 'ETH' | 'ONE' | 'KLAY' | 'BSC' | 'MATIC';
     /**
      * Address of the recipient of the fee for the trade.
      */

@@ -6,7 +6,7 @@ export const erc721TestFactory = {
     deploySignedTransaction: (
       sdk: SdkWithErc721Functions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'ALGO',
+      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'ALGO' | 'KLAY',
     ) => {
       jest.setTimeout(99999)
       const provider = testData?.PROVIDER
@@ -53,7 +53,7 @@ export const erc721TestFactory = {
     transferSignedTransaction: (
       sdk: SdkWithErc721Functions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'ALGO',
+      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'ALGO' | 'KLAY',
     ) => {
       const provider = testData?.PROVIDER
       it('valid from signatureId', async () => {
@@ -87,7 +87,7 @@ export const erc721TestFactory = {
             fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
             tokenId: '112345678',
             fee: {
-              gasLimit: '326452',
+              gasLimit: '50000',
               gasPrice: '20',
             },
           },
@@ -108,7 +108,7 @@ export const erc721TestFactory = {
               nonce: 3252345722143,
               tokenId: '112345678',
               fee: {
-                gasLimit: '326452',
+                gasLimit: '50000',
                 gasPrice: '20',
               },
             },
@@ -123,7 +123,7 @@ export const erc721TestFactory = {
     mintSignedTransaction: (
       sdk: SdkWithErc721Functions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC',
+      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'KLAY',
     ) => {
       const provider = testData?.PROVIDER
       const address = testData.TESTNET.ERC_721?.ADDRESS
@@ -139,6 +139,10 @@ export const erc721TestFactory = {
             tokenId: new Date().getTime().toString(),
             url: 'https://my_token_data.com',
             chain,
+            fee: {
+              gasLimit: '3264521',
+              gasPrice: '20',
+            },
           },
           provider,
         )
@@ -154,6 +158,10 @@ export const erc721TestFactory = {
             tokenId: new Date().getTime().toString(),
             url: 'https://my_token_data.com',
             chain,
+            fee: {
+              gasLimit: '3264521',
+              gasPrice: '20',
+            },
           },
           provider,
         )
@@ -172,6 +180,10 @@ export const erc721TestFactory = {
               contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
               fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
               chain,
+              fee: {
+                gasLimit: '3264521',
+                gasPrice: '20',
+              },
             },
             provider,
           )
@@ -185,7 +197,7 @@ export const erc721TestFactory = {
     mintMultipleSignedTransaction: (
       sdk: SdkWithErc721Functions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC',
+      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'KLAY',
     ) => {
       const provider = testData?.PROVIDER
       const address = testData.TESTNET.ERC_721?.ADDRESS
@@ -201,6 +213,10 @@ export const erc721TestFactory = {
             tokenId: [new Date().getTime().toString(), new Date().getTime().toString()],
             url: ['https://my_token_data.com', 'https://my_token_data.com'],
             chain,
+            fee: {
+              gasLimit: '3264521',
+              gasPrice: '20',
+            },
           },
           provider,
         )
@@ -216,6 +232,10 @@ export const erc721TestFactory = {
             tokenId: [new Date().getTime().toString(), new Date().getTime().toString()],
             url: ['https://my_token_data.com', 'https://my_token_data.com'],
             chain,
+            fee: {
+              gasLimit: '3264521',
+              gasPrice: '20',
+            },
           },
           provider,
         )
@@ -234,6 +254,10 @@ export const erc721TestFactory = {
               tokenId: [new Date().getTime().toString(), new Date().getTime().toString()],
               url: ['https://my_token_data.com', 'https://my_token_data.com'],
               chain,
+              fee: {
+                gasLimit: '3264521',
+                gasPrice: '20',
+              },
             },
             provider,
           )
@@ -247,7 +271,7 @@ export const erc721TestFactory = {
     mintCashbackSignedTransaction: (
       sdk: SdkWithErc721Functions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC',
+      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'KLAY',
     ) => {
       const provider = testData?.PROVIDER
       const address = testData.TESTNET.ERC_721?.ADDRESS
@@ -265,6 +289,10 @@ export const erc721TestFactory = {
             chain,
             cashbackValues: ['0.5'],
             authorAddresses: [address],
+            fee: {
+              gasLimit: '3264521',
+              gasPrice: '20',
+            },
           },
           provider,
         )
@@ -283,6 +311,10 @@ export const erc721TestFactory = {
             chain,
             cashbackValues: ['0.5'],
             authorAddresses: [address],
+            fee: {
+              gasLimit: '3264521',
+              gasPrice: '20',
+            },
           },
           provider,
         )
@@ -303,6 +335,10 @@ export const erc721TestFactory = {
               chain,
               cashbackValues: ['0.5'],
               authorAddresses: [address],
+              fee: {
+                gasLimit: '3264521',
+                gasPrice: '20',
+              },
             },
             provider,
           )
@@ -316,7 +352,7 @@ export const erc721TestFactory = {
     mintMultipleCashbackSignedTransaction: (
       sdk: SdkWithErc721Functions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC',
+      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'KLAY',
     ) => {
       const provider = testData?.PROVIDER
       const address = testData.TESTNET.ERC_721?.ADDRESS
@@ -334,6 +370,10 @@ export const erc721TestFactory = {
             chain,
             cashbackValues: [['0.5'], ['0.5']],
             authorAddresses: [[address], [address]],
+            fee: {
+              gasLimit: '3264521',
+              gasPrice: '20',
+            },
           },
           provider,
         )
@@ -351,6 +391,10 @@ export const erc721TestFactory = {
             chain,
             cashbackValues: [['0.5'], ['0.5']],
             authorAddresses: [[address], [address]],
+            fee: {
+              gasLimit: '3264521',
+              gasPrice: '20',
+            },
           },
           provider,
         )
@@ -369,6 +413,10 @@ export const erc721TestFactory = {
               url: ['https://my_token_data.com', 'https://my_token_data.com'],
               chain,
               cashbackValues: [['0.5'], ['0.5']],
+              fee: {
+                gasLimit: '3264521',
+                gasPrice: '20',
+              },
             },
             provider,
           )
@@ -382,7 +430,7 @@ export const erc721TestFactory = {
     updateCashbackForAuthorSignedTransaction: (
       sdk: SdkWithErc721Functions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC',
+      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'KLAY',
     ) => {
       const provider = testData.PROVIDER
 
@@ -394,6 +442,10 @@ export const erc721TestFactory = {
             tokenId: new Date().getTime().toString(),
             chain,
             cashbackValue: '0.8',
+            fee: {
+              gasLimit: '3264521',
+              gasPrice: '20',
+            },
           },
           provider,
         )
@@ -408,6 +460,10 @@ export const erc721TestFactory = {
             tokenId: new Date().getTime().toString(),
             chain,
             cashbackValue: '0.8',
+            fee: {
+              gasLimit: '3264521',
+              gasPrice: '20',
+            },
           },
           provider,
         )
@@ -420,7 +476,7 @@ export const erc721TestFactory = {
     burnSignedTransaction: (
       sdk: SdkWithErc721Functions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'ALGO',
+      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'ALGO' | 'KLAY',
     ) => {
       const provider = testData?.PROVIDER
 
@@ -431,6 +487,10 @@ export const erc721TestFactory = {
             contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
             fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
             chain,
+            fee: {
+              gasLimit: '3264521',
+              gasPrice: '20',
+            },
           },
           provider,
         )
@@ -445,6 +505,10 @@ export const erc721TestFactory = {
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
             tokenId: new Date().getTime().toString(),
             chain,
+            fee: {
+              gasLimit: '3264521',
+              gasPrice: '20',
+            },
           },
           provider,
         )

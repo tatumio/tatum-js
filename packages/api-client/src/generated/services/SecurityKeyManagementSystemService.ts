@@ -16,9 +16,9 @@ export class SecurityKeyManagementSystemService {
      * @throws ApiError
      */
     public static getPendingTransactionsToSign(
-        chain: 'BNB' | 'BTC' | 'ETH' | 'XLM' | 'XRP' | 'BCH' | 'LTC' | 'DOGE' | 'VET' | 'BSC' | 'ADA' | 'MATIC' | 'CELO' | 'FLOW' | 'TRON' | 'ONE' | 'XDC' | 'EGLD',
+        chain: 'BNB' | 'BTC' | 'ETH' | 'XLM' | 'XRP' | 'BCH' | 'LTC' | 'DOGE' | 'VET' | 'BSC' | 'ADA' | 'MATIC' | 'CELO' | 'FLOW' | 'TRON' | 'ONE' | 'XDC' | 'EGLD' | 'KLAY' | 'SOL',
         signatures?: string,
-    ): CancelablePromise<PendingTransaction> {
+    ): CancelablePromise<Array<PendingTransaction>> {
         return __request({
             method: 'GET',
             path: `/v3/kms/pending/${chain}`,

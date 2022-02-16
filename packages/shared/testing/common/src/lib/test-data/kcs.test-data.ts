@@ -31,6 +31,10 @@ export const KCS_TEST_DATA: BlockchainTestData = {
       PRIVATE_KEY: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
       ADDRESS: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
     },
+    SMART_CONTRACT: {
+      CONTRACT_ADDRESS: '0x0b9808fce74030c87aae334a30f6c8f6c66b090d',
+      PRIVATE_KEY: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
+    },
     PROVIDER: 'https://rpc-testnet.kcc.network',
   },
 }

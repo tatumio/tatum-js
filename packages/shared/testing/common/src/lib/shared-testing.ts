@@ -13,6 +13,7 @@ import { XLM_TEST_DATA } from './test-data/xlm.test-data'
 import { SCRYPTA_TEST_DATA } from './test-data/scrypta.test-data'
 import { TRON_TEST_DATA } from './test-data/tron.test-data'
 import { ADA_TEST_DATA } from './test-data/ada.test-data'
+import { KLAYTN_TEST_DATA } from './test-data/klaytn.test-data'
 
 export type BlockchainNetworkTestData = {
   XPUB: string
@@ -36,6 +37,10 @@ export type BlockchainNetworkTestData = {
     PRIVATE_KEY: string
     CONTRACT_ADDRESS: string
     ADDRESS?: string
+  }
+  SMART_CONTRACT?: {
+    PRIVATE_KEY: string
+    CONTRACT_ADDRESS: string
   }
 }
 
@@ -62,6 +67,7 @@ export const TEST_DATA = {
   BCH: BCH_TEST_DATA,
   LTC: LTC_TEST_DATA,
   POLYGON: POLYGON_TEST_DATA,
+  KLAYTN: KLAYTN_TEST_DATA,
   KCS: KCS_TEST_DATA,
   ONE: ONE_TEST_DATA,
   BSC: BSC_TEST_DATA,

@@ -6,7 +6,7 @@ export type TransferCustodialWallet = {
     /**
      * Blockchain to work with.
      */
-    chain: 'ETH' | 'ONE' | 'XDC' | 'BSC' | 'MATIC';
+    chain: 'ETH' | 'ONE' | 'XDC' | 'BSC' | 'KLAY' | 'MATIC';
     /**
      * Address of custodial wallet to transfer from
      */
