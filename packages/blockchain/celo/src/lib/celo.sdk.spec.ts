@@ -30,6 +30,41 @@ describe('TatumCeloSDK', () => {
   describe('erc721', () => {
     describe('prepare', () => {
       jest.setTimeout(99999)
+      describe('deploy', () => {
+        const provider = TEST_DATA.CELO?.PROVIDER
+        
+        it('should be valid from privateKey', async () => {
+          const result = await sdk.transaction.erc721.prepare.deploySignedTransaction(
+            {
+              chain: 'CELO',
+              name: 'My ERC721',
+              fromPrivateKey: TEST_DATA.CELO.MAINNET.ERC_721!.PRIVATE_KEY,
+              feeCurrency: 'CUSD',
+              symbol: 'ERC_SYMBOL',
+            },
+            provider,
+            true,
+          )
+          expectHexString(result)
+        })
+
+        it('should be valid from signatureId', async () => {
+          const result = await sdk.transaction.erc721.prepare.deploySignedTransaction(
+            {
+              chain: 'CELO',
+              name: 'My ERC721',
+              signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+              feeCurrency: 'CUSD',
+              symbol: 'ERC_SYMBOL',
+            },
+            provider,
+            true,
+          )
+          const json = JSON.parse(result)
+          expectHexString(json.data)
+        })
+      })
+
       describe('mint', () => {
         const provider = TEST_DATA.CELO?.PROVIDER
         const address = TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
@@ -89,6 +124,27 @@ describe('TatumCeloSDK', () => {
             fail()
           } catch (e) {
             expect(e.reason).toMatch('invalid address')
+          }
+        })
+
+        it('missing address', async () => {
+          try {
+            await sdk.transaction.erc721.prepare.mintSignedTransaction(
+              {
+                to: address,
+                tokenId: new Date().getTime().toString(),
+                url: 'https://my_token_data.com',
+                contractAddress: '',
+                fromPrivateKey: TEST_DATA.CELO.MAINNET.ERC_721!.PRIVATE_KEY,
+                chain: 'CELO',
+                feeCurrency: 'CUSD',
+              },
+              provider,
+              true,
+            )
+            fail()
+          } catch (e) {
+            expect(e.message).toMatch('Contract address and fee currency should not be empty')
           }
         })
       })
@@ -219,6 +275,29 @@ describe('TatumCeloSDK', () => {
             fail()
           } catch (e) {
             expect(e.reason).toMatch('invalid address')
+          }
+        })
+
+        it('missing address', async () => {
+          try {
+            await sdk.transaction.erc721.prepare.mintCashbackSignedTransaction(
+              {
+                to: address,
+                contractAddress: '',
+                fromPrivateKey: TEST_DATA.CELO.MAINNET.ERC_721!.PRIVATE_KEY,
+                tokenId: new Date().getTime().toString(),
+                url: 'https://my_token_data.com',
+                chain: 'CELO',
+                feeCurrency: 'CUSD',
+                cashbackValues: ['0.5'],
+                authorAddresses: [address],
+              },
+              provider,
+              true,
+            )
+            fail()
+          } catch (e) {
+            expect(e.message).toMatch('Contract address and fee currency should not be empty!')
           }
         })
       })
@@ -356,6 +435,29 @@ describe('TatumCeloSDK', () => {
           fail()
         } catch (e: any) {
           expect(e.reason).toMatch('invalid address')
+        }
+      })
+
+      it('missing address', async () => {
+        try {
+          await sdk.transaction.erc721.prepare.mintProvenanceSignedTransaction(
+            {
+              to: address,
+              contractAddress: '',
+              fromPrivateKey: TEST_DATA.CELO.MAINNET.ERC_721!.PRIVATE_KEY,
+              tokenId: new Date().getTime().toString(),
+              url: 'https://my_token_data.com',
+              chain: 'CELO',
+              feeCurrency: 'CUSD',
+              cashbackValues: ['0.5'],
+              authorAddresses: [address],
+            },
+            provider,
+            true,
+          )
+          fail()
+        } catch (e: any) {
+          expect(e.message).toMatch('Contract address and fee currency should not be empty!')
         }
       })
     })
@@ -567,6 +669,41 @@ describe('TatumCeloSDK', () => {
       const privateKey = TEST_DATA.CELO.TESTNET?.MULTITOKEN?.PRIVATE_KEY
       const account = TEST_DATA.CELO.TESTNET?.MULTITOKEN?.ADDRESS
       const provider = TEST_DATA.CELO.TESTNET?.PROVIDER
+
+      describe('deploy', () => {
+        // UNPREDICTABLE_GAS_LIMIT error
+        /*it('should be valid from privateKey', async () => {
+          const result = await sdk.transaction.multiToken.prepare.deployMultiTokenTransaction(
+            {
+              chain: 'CELO',
+              uri: 'example.com',
+              fromPrivateKey: privateKey,
+              feeCurrency: 'CUSD',
+              publicMint: true,
+            },
+            provider,
+            true,
+          )
+          expectHexString(result)
+        })*/
+
+        it('should be valid from signatureId', async () => {
+          const result = await sdk.transaction.multiToken.prepare.deployMultiTokenTransaction(
+            {
+              chain: 'CELO',
+              uri: 'example.com',
+              signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+              feeCurrency: 'CUSD',
+              publicMint: true,
+            },
+            provider,
+            true,
+          )
+          const json = JSON.parse(result)
+          expectHexString(json.data)
+        })
+      })
+
       describe('mint', () => {
         it('should be valid from privateKey', async () => {
           const result = await sdk.transaction.multiToken.prepare.mintMultiTokenTransaction(
@@ -621,6 +758,27 @@ describe('TatumCeloSDK', () => {
             fail()
           } catch (e: any) {
             expect(e.reason).toMatch('invalid address')
+          }
+        })
+
+        it('missing address', async () => {
+          try {
+            await sdk.transaction.multiToken.prepare.mintMultiTokenTransaction(
+              {
+                to: account,
+                tokenId: new Date().getTime().toString(),
+                contractAddress: '', // false
+                fromPrivateKey: privateKey,
+                chain: 'CELO',
+                feeCurrency: 'CUSD',
+                amount: '1',
+              },
+              provider,
+              true,
+            )
+            fail()
+          } catch (e: any) {
+            expect(e.message).toMatch('Contract address and fee currency should not be empty')
           }
         })
       })
