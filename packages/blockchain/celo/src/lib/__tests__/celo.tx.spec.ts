@@ -1,8 +1,4 @@
-import {
-  REPLACE_ME_WITH_TATUM_API_KEY,
-  TEST_DATA,
-  expectHexString,
-} from '@tatumio/shared-testing-common'
+import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA, expectHexString } from '@tatumio/shared-testing-common'
 import { Blockchain } from '@tatumio/shared-core'
 import { celoWeb3 } from '../services/celo.web3'
 import { TatumCeloSDK } from '../celo.sdk'

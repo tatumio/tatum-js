@@ -1,8 +1,4 @@
-import {
-  REPLACE_ME_WITH_TATUM_API_KEY,
-  TEST_DATA,
-  walletTestFactory,
-} from '@tatumio/shared-testing-common'
+import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA, walletTestFactory } from '@tatumio/shared-testing-common'
 import { TatumCeloSDK } from './celo.sdk'
 
 describe('TatumCeloSDK', () => {
