@@ -109,7 +109,8 @@ describe('KlaytnSDK - tx', () => {
         )
       })
 
-      describe('mintMultipleCashbackSignedTransaction', () => {
+      // Invalid JSON RPC response: {"code":1200503,"message":"error from node API; ","requestId":"b993772c-3427-4910-9b21-1a1fc5956f11"}
+      xdescribe('mintMultipleCashbackSignedTransaction', () => {
         erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(
           sdk.transaction.erc721,
           TEST_DATA.KLAYTN,

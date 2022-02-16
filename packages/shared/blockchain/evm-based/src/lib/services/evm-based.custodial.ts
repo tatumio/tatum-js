@@ -153,7 +153,7 @@ export const evmBasedCustodial = () => {
         provider?: string,
       ) => Promise<string>,
       decimals: number,
-      testnet: boolean,
+      testnet?: boolean,
       provider?: string,
     ) => {
       const amounts = []
@@ -206,8 +206,8 @@ export const evmBasedCustodial = () => {
     prepareCustodialWalletBatchAbstract: async (
       body: ChainGenerateCustodialWalletBatch,
       web3: EvmBasedWeb3,
-      getCustodialFactoryContractAddress: (testnet: boolean) => string,
-      testnet: boolean,
+      getCustodialFactoryContractAddress: (testnet?: boolean) => string,
+      testnet?: boolean,
       convertAddressToHex?: (address: string) => string,
     ) => {
       const params = [body.owner.trim(), `0x${new BigNumber(body.batchCount).toString(16)}`]

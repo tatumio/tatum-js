@@ -10,7 +10,6 @@ import { CUSTODIAL_PROXY_ABI, EvmBasedBlockchain } from '@tatumio/shared-core'
 import { TransactionConfig } from 'web3-core'
 import { EvmBasedWeb3 } from '../../services/evm-based.web3'
 import { evmBasedCustodial } from '../../services/evm-based.custodial'
-import { GenerateCustodialWalletBatch } from '@tatumio/api-client'
 import { smartContractWriteMethodInvocation } from '../smartContract'
 import BigNumber from 'bignumber.js'
 import { CustodialFullTokenWallet } from '../../contracts'
@@ -67,7 +66,7 @@ const transferFromCustodialWallet = async (
 const batchTransferFromCustodialWallet = async (
   body: ChainBatchTransferCustodialWallet,
   web3: EvmBasedWeb3,
-  testnet: boolean,
+  testnet?: boolean,
   provider?: string,
 ) => {
   return evmBasedCustodial().prepareBatchTransferFromCustodialWalletAbstract(
@@ -81,7 +80,7 @@ const batchTransferFromCustodialWallet = async (
   )
 }
 
-const getCustodialFactoryContractAddress = (testnet: boolean) => {
+const getCustodialFactoryContractAddress = (testnet?: boolean) => {
   return testnet ? '0x6709Bdda623aF7EB152cB2fE2562aB7e031e564f' : '0x1cfc7878Cf6Ae32A50F84481690F6fB04574de21'
 }
 
@@ -117,7 +116,7 @@ const approveFromCustodialWallet = async (
 const custodialWalletBatch = async (
   body: ChainGenerateCustodialWalletBatch,
   web3: EvmBasedWeb3,
-  testnet: boolean,
+  testnet?: boolean,
   provider?: string,
 ) => {
   const { params, methodName, bodyWithContractAddress } =
@@ -193,8 +192,11 @@ export const custodial = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      custodialWalletBatch: async (body: GenerateCustodialWalletBatch, testnet: boolean, provider?: string) =>
-        custodialWalletBatch(body, args.web3, testnet, provider),
+      custodialWalletBatch: async (
+        body: ChainGenerateCustodialWalletBatch,
+        testnet: boolean,
+        provider?: string,
+      ) => custodialWalletBatch(body, args.web3, testnet, provider),
     },
     send: {
       /**
@@ -243,7 +245,7 @@ export const custodial = (args: {
       ) =>
         args.broadcastFunction({
           txData: await batchTransferFromCustodialWallet(body, args.web3, testnet, provider),
-          signatureId: body.signatureId,
+          signatureId: 'signatureId' in body ? body.signatureId : undefined,
         }),
       /**
        * Send signed approve transaction from the custodial SC wallet.

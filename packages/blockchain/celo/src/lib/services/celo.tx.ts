@@ -4,7 +4,7 @@ import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import { erc721, multiToken } from '../transactions'
 import { custodial } from '../transactions/custodial'
 
-export const celoTxService = (args: { blockchain: EvmBasedBlockchain; web3?: EvmBasedWeb3 }) => {
+export const celoTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3 }) => {
   return {
     erc721: {
       ...erc721({

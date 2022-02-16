@@ -240,7 +240,7 @@ describe('BscSDK - tx', () => {
         )
       })
 
-      xdescribe('transfer from custodial wallet', () => {
+      describe('transfer from custodial wallet', () => {
         custodialTestFactory.prepare.transferFromCustodialWallet(
           sdk.transaction.custodial,
           TEST_DATA.BSC,
@@ -248,7 +248,7 @@ describe('BscSDK - tx', () => {
         )
       })
 
-      xdescribe('batch transfer from custodial wallet', () => {
+      describe('batch transfer from custodial wallet', () => {
         custodialTestFactory.prepare.batchTransferFromCustodialWallet(
           sdk.transaction.custodial,
           TEST_DATA.BSC,
@@ -256,6 +256,7 @@ describe('BscSDK - tx', () => {
         )
       })
 
+      // Returned error: execution reverted
       xdescribe('approve from custodial wallet', () => {
         custodialTestFactory.prepare.approveFromCustodialWallet(
           sdk.transaction.custodial,
@@ -264,7 +265,7 @@ describe('BscSDK - tx', () => {
         )
       })
 
-      xdescribe('generate batch custodial wallet', () => {
+      describe('generate batch custodial wallet', () => {
         custodialTestFactory.prepare.custodialWalletBatch(sdk.transaction.custodial, TEST_DATA.BSC, 'BSC')
       })
     })

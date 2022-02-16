@@ -1,5 +1,5 @@
 import { SdkWithCustodialFunctions } from '@tatumio/shared-blockchain-abstract'
-import { BlockchainTestData } from '@tatumio/shared-testing-common'
+import { BlockchainTestData, expectHexString } from '@tatumio/shared-testing-common'
 
 type Chains = 'ETH' | 'ONE' | 'BSC' | 'MATIC'
 export const custodialTestFactory = {
@@ -77,7 +77,8 @@ export const custodialTestFactory = {
             true,
             provider,
           )
-          expect(result).not.toBeNull()
+          const json = JSON.parse(result)
+          expectHexString(json.data)
         } catch (e) {
           console.log(e)
           expect(e).not.toBeDefined()
@@ -98,7 +99,7 @@ export const custodialTestFactory = {
           true,
           provider,
         )
-        expect(result).not.toBeNull()
+        expectHexString(result)
       })
     },
 
@@ -133,7 +134,8 @@ export const custodialTestFactory = {
           true,
           provider,
         )
-        expect(result).not.toBeNull()
+        const json = JSON.parse(result)
+        expectHexString(json.data)
       })
 
       it('valid from privateKey', async () => {
@@ -159,7 +161,7 @@ export const custodialTestFactory = {
           true,
           provider,
         )
-        expect(result).not.toBeNull()
+        expectHexString(result)
       })
     },
     approveFromCustodialWallet: (
@@ -171,7 +173,7 @@ export const custodialTestFactory = {
       const fromPrivateKey = testData.TESTNET?.MULTITOKEN?.PRIVATE_KEY
 
       it('valid with signatureId', async () => {
-        const result = sdk.prepare.approveFromCustodialWallet(
+        const result = await sdk.prepare.approveFromCustodialWallet(
           {
             chain,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -185,11 +187,12 @@ export const custodialTestFactory = {
           provider,
         )
 
-        expect(result).toBeDefined()
+        const json = JSON.parse(result)
+        expectHexString(json.data)
       })
 
       it('valid from privateKey', async () => {
-        const result = sdk.prepare.approveFromCustodialWallet(
+        const result = await sdk.prepare.approveFromCustodialWallet(
           {
             chain,
             fromPrivateKey,
@@ -203,7 +206,7 @@ export const custodialTestFactory = {
           provider,
         )
 
-        expect(result).toBeDefined()
+        expectHexString(result)
       })
     },
     custodialWalletBatch: (
@@ -215,7 +218,7 @@ export const custodialTestFactory = {
       const fromPrivateKey = testData.TESTNET?.MULTITOKEN?.PRIVATE_KEY
 
       it('valid with signatureId', async () => {
-        const result = sdk.prepare.custodialWalletBatch(
+        const result = await sdk.prepare.custodialWalletBatch(
           {
             chain,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -226,11 +229,12 @@ export const custodialTestFactory = {
           provider,
         )
 
-        expect(result).toBeDefined()
+        const json = JSON.parse(result)
+        expectHexString(json.data)
       })
 
       it('valid from privateKey', async () => {
-        const result = sdk.prepare.custodialWalletBatch(
+        const result = await sdk.prepare.custodialWalletBatch(
           {
             chain,
             fromPrivateKey,
@@ -241,7 +245,7 @@ export const custodialTestFactory = {
           provider,
         )
 
-        expect(result).toBeDefined()
+        expectHexString(result)
       })
     },
   },
