@@ -135,7 +135,7 @@ describe('KlaytnSDK - tx', () => {
     })
   })
 
-  describe('marketplace', () => {
+  xdescribe('marketplace', () => {
     describe('prepare', () => {
       describe('generateMarketplace', () => {
         marketplaceTestFactory.prepare.generateMarketplace(

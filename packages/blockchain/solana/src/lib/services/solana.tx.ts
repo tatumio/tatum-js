@@ -25,7 +25,7 @@ import {
   METADATA_SCHEMA,
   SolanaNftMetadata,
   SolanaNftMetadataCreator,
-} from '../schema/schema'
+} from '../schema'
 import BN from 'bn.js'
 
 export type TransferSolana = FromPrivateKeyOrSignatureId<TransferSolanaBlockchain>

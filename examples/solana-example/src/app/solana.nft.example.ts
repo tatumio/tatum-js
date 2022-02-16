@@ -26,10 +26,4 @@ export async function solanaNftExample() {
       creators: [],
     },
   })
-
-  await solanaSDK.nft.prepareAddNFTMinterAbstraction(
-    'SOL',
-    '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    '1000',
-  )
 }

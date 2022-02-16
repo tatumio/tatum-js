@@ -1,4 +1,3 @@
-import { solanaApiExample } from './app/solana.api.example'
 import { solanaBlockchainExample } from './app/solana.blockchain.example'
 import { solanaKmsExample } from './app/solana.kms.example'
 import { solanaChangeRateExample } from './app/solana.root.example'
@@ -16,7 +15,6 @@ import { solanaNftExample } from './app/solana.nft.example'
 import { solanaSubscriptionsExample } from './app/solana.subscriptions.example'
 import { solanaTxWithSignatureIdExample, solanaTxWithPrivateKeyExample } from './app/solana.tx.example'
 
-console.log(`Running ${solanaApiExample()}`)
 console.log(`Running ${solanaWalletExample()}`)
 console.log(`Running ${solanaBlockchainExample()}`)
 console.log(`Running ${solanaKmsExample()}`)

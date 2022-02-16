@@ -124,6 +124,7 @@ export class Metadata {
   }
 }
 
+// TODO: add types
 export const METADATA_SCHEMA = new Map<any, any>([
   [
     CreateMetadataArgs,
@@ -210,6 +211,7 @@ export const decodeMetadata = (buffer: Buffer): Metadata => {
   return metadata
 }
 
+// TODO: move to separate file
 export const extendBorsh = () => {
   ;(BinaryReader.prototype as any).readPubkey = function () {
     const reader = this as unknown as BinaryReader

@@ -1,9 +1,11 @@
-import { ChainTransactionKMS } from '@tatumio/shared-core'
+import { Blockchain, ChainTransactionKMS } from '@tatumio/shared-core'
 import { Message, Transaction } from '@solana/web3.js'
 import { SolanaWeb3 } from './solana.web3'
+import { abstractBlockchainKms } from '@tatumio/shared-blockchain-abstract'
 
-export const solanaKmsService = (args: { web3: SolanaWeb3 }) => {
+export const solanaKmsService = (args: { web3: SolanaWeb3; blockchain: Blockchain }) => {
   return {
+    ...abstractBlockchainKms(args),
     async sign(tx: ChainTransactionKMS, fromPrivateKey: string, provider?: string): Promise<string> {
       const connection = args.web3.getClient(provider)
       const { txData, mintPK } = JSON.parse(tx.serializedTransaction)
