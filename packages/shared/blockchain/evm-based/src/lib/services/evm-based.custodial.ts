@@ -168,7 +168,10 @@ export const evmBasedCustodial = () => {
         let tokenId = new BigNumber(body.tokenId ? body.tokenId[i] : 0)
         if (body.contractType[i] === ContractType.NATIVE_ASSET) {
           amount = amount.multipliedBy(new BigNumber(10).pow(decimals))
-        } else if (body.contractType[i] === ContractType.NON_FUNGIBLE_TOKEN) {
+        } else if (
+          body.contractType[i] === ContractType.NON_FUNGIBLE_TOKEN ||
+          body.contractType[i] === ContractType.SEMI_FUNGIBLE
+        ) {
           amount = new BigNumber(0)
         } else if (body.contractType[i] === ContractType.FUNGIBLE_TOKEN && body.tokenAddress) {
           tokenId = new BigNumber(0)
