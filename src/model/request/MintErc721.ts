@@ -14,13 +14,21 @@ export class MintErc721 extends PrivateKeyOrSignatureIdBuiltInPrivateKey {
   public url: string;
 
   @Validate(Mint721BuiltInPrivateKeyValidator)
+  @IsOptional()
+  @MaxLength(256)
   public tokenId?: string;
+
+  @IsOptional()
+  @Length(42, 43)
+  public minter?: string;
 
   @IsNotEmpty()
   @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC, Currency.KLAY, Currency.TRON, Currency.ONE, Currency.MATIC])
   public chain: Currency;
 
   @Validate(Mint721BuiltInPrivateKeyValidator)
+  @IsOptional()
+  @Length(42, 43)
   public contractAddress?: string;
 
   @Min(0)

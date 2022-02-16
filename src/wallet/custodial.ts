@@ -3,12 +3,13 @@ import {
   bscBroadcast,
   celoBroadcast,
   ethBroadcast,
+  klaytnBroadcast,
   oneBroadcast,
   polygonBroadcast,
   tronBroadcast,
   xdcBroadcast,
 } from '../blockchain';
-import { get, validateBody } from '../connector/tatum';
+import { get, post, validateBody } from '../connector/tatum';
 import { CUSTODIAL_PROXY_ABI } from '../constants';
 import {
   Custodial_1155_TokenWallet,
@@ -37,6 +38,7 @@ import {
   GenerateCustodialAddressBatch,
   GenerateTronCustodialAddress,
   SmartContractMethodInvocation,
+  TransactionHash,
   TransferFromCustodialAddress,
   TransferFromCustodialAddressBatch,
   TransferFromTronCustodialAddress,
@@ -72,7 +74,8 @@ import {
   sendPolygonGenerateCustodialWalletSignedTransaction,
   sendTronGenerateCustodialWalletSignedTransaction,
 } from '../transaction';
-import { klaytnBroadcast } from '../blockchain/klay'
+
+const generateBatch = (body: GenerateCustodialAddressBatch): Promise<TransactionHash> => post('/v3/blockchain/sc/custodial/batch', body)
 
 export const obtainCustodialAddressType = (body: GenerateCustodialAddress) => {
   if (body.chain === Currency.TRON && body.enableSemiFungibleTokens) {
@@ -220,6 +223,9 @@ export const prepareCustodialWallet = async (testnet: boolean, body: GenerateCus
  */
 export const generateCustodialWalletBatch = async (testnet: boolean, body: GenerateCustodialAddressBatch, provider?: string) => {
   const txData = await prepareCustodialWalletBatch(testnet, body, provider);
+  if (body.feesCovered) {
+    return await generateBatch(body);
+  }
   switch (body.chain) {
     case Currency.CELO:
       return await celoBroadcast(txData, body.signatureId);

@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsIn, IsNotEmpty, IsNumber, IsOptional, Length, Max, Min, ValidateIf } from 'class-validator';
+import { IsBoolean, IsIn, IsNotEmpty, IsNumber, IsOptional, Length, Max, Min, ValidateIf } from 'class-validator';
 import { Currency } from './Currency';
 import { Fee } from './Fee';
 import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId';
@@ -7,7 +7,7 @@ import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId';
 export class GenerateCustodialAddressBatch extends PrivateKeyOrSignatureId {
 
   @IsNotEmpty()
-  @IsIn([Currency.MATIC, Currency.CELO, Currency.BSC, Currency.ETH, Currency.TRON, Currency.ONE, Currency.XDC, Currency.KLAY, Currency.KLAY])
+  @IsIn([Currency.MATIC, Currency.CELO, Currency.BSC, Currency.ETH, Currency.TRON, Currency.ONE, Currency.XDC, Currency.KLAY])
   public chain: Currency;
 
   @IsNumber()
@@ -32,7 +32,7 @@ export class GenerateCustodialAddressBatch extends PrivateKeyOrSignatureId {
   @IsIn([Currency.CELO, Currency.CUSD, Currency.CEUR])
   public feeCurrency?: Currency;
 
-  @ValidateIf(o => o.signatureId && o.chain === Currency.TRON)
+  @ValidateIf(o => !o.feesCovered && o.signatureId && o.chain === Currency.TRON)
   @IsNotEmpty()
   @Length(34, 34)
   public from?: string;
@@ -41,4 +41,8 @@ export class GenerateCustodialAddressBatch extends PrivateKeyOrSignatureId {
   @IsNotEmpty()
   @Min(0)
   public feeLimit?: number;
+
+  @ValidateIf(o => !o.fromPrivateKey && !o.signatureId)
+  @IsBoolean()
+  public feesCovered?: boolean
 }
