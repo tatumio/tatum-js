@@ -1,8 +1,8 @@
 import { Currency } from './Currency'
-import { BaseMintErc721 } from './BaseMintErc721'
 import { IsIn, IsOptional } from 'class-validator'
+import { EthMintErc721 } from './EthMintErc721'
 
-export class CeloMintErc721 extends BaseMintErc721 {
+export class CeloMintErc721 extends EthMintErc721 {
   @IsOptional()
   @IsIn([Currency.CELO, Currency.CUSD, Currency.CEUR])
   public feeCurrency? = Currency.CELO

@@ -70,6 +70,7 @@ export enum Currency {
   ALGO = 'ALGO',
   SOL = 'SOL',
   KCS = 'KCS',
+  KLAY = 'KLAY',
   NEO = 'NEO',
 }
 
