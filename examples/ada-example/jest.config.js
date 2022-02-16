@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'bsc-example',
+  displayName: 'ada-example',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -9,6 +9,6 @@ module.exports = {
   transform: {
     '^.+\\.[tj]s$': 'ts-jest',
   },
-  moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/examples/bsc-example',
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
+  coverageDirectory: '../../coverage/examples/ada-example',
 }

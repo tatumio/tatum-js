@@ -1,4 +1,4 @@
-import { BlockchainAdaService, BlockchainTronService } from '@tatumio/api-client'
+import { BlockchainTronService } from '@tatumio/api-client'
 import { Blockchain } from '@tatumio/shared-core'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { abstractBlockchainSdk } from '@tatumio/shared-blockchain-abstract'
