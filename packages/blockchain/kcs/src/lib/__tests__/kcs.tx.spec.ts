@@ -7,6 +7,7 @@ import {
   ganacheHelper,
   erc721TestFactory,
   multiTokenTestFactory,
+  smartContractTestFactory,
 } from '@tatumio/shared-testing-evm-based'
 import { Currency } from '@tatumio/api-client'
 const blockchain = Blockchain.KCS
@@ -174,6 +175,26 @@ describe('KcsSDK - tx', () => {
           sdk.transaction.multiToken,
           TEST_DATA.KCS,
           'KCS',
+        )
+      })
+    })
+  })
+
+  describe('smart contract', () => {
+    describe('prepare', () => {
+      describe('smart contract write method invocation', () => {
+        smartContractTestFactory.prepare.smartContractWriteMethodInvocationTransaction(
+          sdk.transaction.smartContract,
+          TEST_DATA.KCS,
+        )
+      })
+    })
+
+    xdescribe('send', () => {
+      describe('smart contract read method invocation', () => {
+        smartContractTestFactory.send.smartContractReadMethodInvocationTransaction(
+          sdk.transaction.smartContract,
+          TEST_DATA.KCS,
         )
       })
     })
