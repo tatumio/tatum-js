@@ -41,10 +41,4 @@ export async function tronNftExample() {
     'NTAESFCB3WOD7SAOL42KSPVARLB3JFA3MNX3AESWHYVT2RMYDVZI6YLG4Y',
     '0x45871ED5F15203C0ce791eFE5f4B5044833aE10e',
   )
-
-  await tronSDK.nft.prepareAddNFTMinterAbstraction(
-    Currency.ETH,
-    '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    '1000',
-  )
 }
