@@ -67,7 +67,7 @@ describe('KlaytnSDK - tx', () => {
     })
   })
 
-  describe('erc721', () => {
+  xdescribe('erc721', () => {
     describe('prepare', () => {
       describe('deploySignedTransaction', () => {
         erc721TestFactory.prepare.deploySignedTransaction(
@@ -136,7 +136,7 @@ describe('KlaytnSDK - tx', () => {
     })
   })
 
-  describe('marketplace', () => {
+  xdescribe('marketplace', () => {
     describe('prepare', () => {
       describe('generateMarketplace', () => {
         marketplaceTestFactory.prepare.generateMarketplace(
