@@ -32,7 +32,7 @@ describe('TatumCeloSDK', () => {
       jest.setTimeout(99999)
       describe('deploy', () => {
         const provider = TEST_DATA.CELO?.PROVIDER
-        
+
         it('should be valid from privateKey', async () => {
           const result = await sdk.transaction.erc721.prepare.deploySignedTransaction(
             {
