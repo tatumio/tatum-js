@@ -4,10 +4,11 @@ import {
   ChainCallSmartContractMethod,
   ChainGenerateCustodialAddress,
   ChainGenerateCustodialWalletBatch,
-  ChainGenerateCustodialWalletCelo,
   ChainTransferCustodialWallet,
+  ChainTransferCustodialWalletCelo,
 } from '@tatumio/shared-blockchain-abstract'
 import BigNumber from 'bignumber.js'
+
 import {
   Custodial_1155_TokenWallet,
   Custodial_1155_TokenWalletWithBatch,
@@ -60,9 +61,7 @@ const MAPPING = {
 
 export const evmBasedCustodial = () => {
   return {
-    obtainCustodialAddressType: (
-      body: ChainGenerateCustodialAddress | ChainGenerateCustodialWalletCelo,
-    ): ContractAbi => {
+    obtainCustodialAddressType: (body: ChainGenerateCustodialAddress): ContractAbi => {
       // @ts-ignore @TODO OPENAPI
       if (body.chain === 'TRON' && body.enableSemiFungibleTokens) {
         throw new Error('MultiToken not supported for TRON.')
@@ -83,7 +82,7 @@ export const evmBasedCustodial = () => {
     },
 
     prepareTransferFromCustodialWalletAbstract: async <SCBody extends CallSmartContractMethod>(
-      body: ChainTransferCustodialWallet,
+      body: ChainTransferCustodialWallet | ChainTransferCustodialWalletCelo,
       web3: EvmBasedWeb3,
       getContractDecimals: (
         contractAddress: string,
@@ -198,9 +197,7 @@ export const evmBasedCustodial = () => {
       }
 
       return await prepareSmartContractWriteMethodInvocation(
-        (body.chain === Currency.CELO
-          ? { ...r, feeCurrency: body.feeCurrency || Currency.CELO }
-          : r) as SCBody,
+        (body.chain === 'CELO' ? { ...r, feeCurrency: body.feeCurrency || Currency.CELO } : r) as SCBody,
         web3,
         provider,
       )

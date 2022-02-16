@@ -40,7 +40,6 @@ import {
   UpdateFeeRecipient,
   XlmWallet,
   XrpWallet,
-  AddNftMinter,
   TransferCustodialWallet,
   TransferCustodialWalletCelo,
   TransferCustodialWalletBatch,
@@ -51,8 +50,10 @@ import {
   GenerateCustodialWalletBatch,
   GenerateCustodialWalletBatchKMS,
   GenerateCustodialWalletCelo,
-  GenerateCustodialWalletCeloKMS,
-  CallSmartContractMethodKMS,
+  CallCeloSmartContractMethod,
+  TransferCustodialWalletCeloKMS,
+  GenerateCustodialWalletBatchCelo,
+  GenerateCustodialWalletBatchCeloKMS,
 } from '@tatumio/api-client'
 import { Blockchain, blockchainHelper } from '@tatumio/shared-core'
 import { abstractSdk } from '@tatumio/shared-abstract-sdk'
@@ -137,7 +138,9 @@ export type ChainSmartContractMethodInvocation = FromPrivateKeyOrSignatureId<Cal
   index?: number
 }
 
-export type ChainGenerateCustodialAddress = FromPrivateKeyOrSignatureId<GenerateCustodialWallet>
+export type ChainGenerateCustodialAddress =
+  | FromPrivateKeyOrSignatureId<GenerateCustodialWallet>
+  | FromPrivateKeyOrSignatureId<GenerateCustodialWalletCelo>
 
 export type ChainTransferNative = FromPrivateKeyOrSignatureId<Omit<TransferPolygonBlockchain, 'currency'>>
 
@@ -154,21 +157,43 @@ export type ChainSellAssetOnMarketplace = FromPrivateKeyOrSignatureId<SellAssetO
 export type ChainCancelSellAssetOnMarketplace = FromPrivateKeyOrSignatureId<CancelSellAssetOnMarketplace>
 
 export type ChainTransferCustodialWallet =
-  | (FromPrivateKeyOrSignatureId<TransferCustodialWallet> & { index?: number })
-  | (FromPrivateKeyOrSignatureId<TransferCustodialWalletCelo> & { index?: number })
+  | (FromPrivateKeyOrSignatureId<TransferCustodialWallet> & {
+      index?: number
+    })
+  | (FromPrivateKeyOrSignatureId<TransferCustodialWalletCelo> & {
+      index?: number
+    })
+
 export type ChainBatchTransferCustodialWallet =
   | (FromPrivateKeyOrSignatureId<TransferCustodialWalletBatch> & { index?: number })
   | (FromPrivateKeyOrSignatureId<TransferCustodialWalletBatchCelo> & { index?: number })
+
 export type ChainApproveCustodialTransfer =
   | (FromPrivateKeyOrSignatureId<ApproveTransferCustodialWallet> & { index?: number })
   | (FromPrivateKeyOrSignatureId<ApproveTransferCustodialWalletCelo> & { index?: number })
-export type ChainTransferFromCustodialAddress = TransferCustodialWalletKMS | TransferCustodialWallet
-export type ChainGenerateCustodialWalletBatch = GenerateCustodialWalletBatch | GenerateCustodialWalletBatchKMS
 
-export type ChainGenerateCustodialWalletCelo = FromPrivateKeyOrSignatureId<GenerateCustodialWalletCelo> & {
-  index?: number
-}
-export type ChainCallSmartContractMethod = FromPrivateKeyOrSignatureId<CallSmartContractMethod> & {
+export type ChainTransferFromCustodialAddress =
+  | TransferCustodialWalletKMS
+  | TransferCustodialWallet
+  | TransferCustodialWalletCelo
+  | TransferCustodialWalletCeloKMS
+
+export type ChainGenerateCustodialWalletBatch =
+  | GenerateCustodialWalletBatch
+  | GenerateCustodialWalletBatchKMS
+  | GenerateCustodialWalletBatchCelo
+  | GenerateCustodialWalletBatchCeloKMS
+
+export type ChainCallSmartContractMethod =
+  | (FromPrivateKeyOrSignatureId<CallSmartContractMethod> & {
+      index?: number
+    })
+  | (FromPrivateKeyOrSignatureId<CallCeloSmartContractMethod> & {
+      index?: number
+      chain: 'CELO'
+    })
+
+export type ChainTransferCustodialWalletCelo = FromPrivateKeyOrSignatureId<TransferCustodialWalletCelo> & {
   index?: number
 }
 
