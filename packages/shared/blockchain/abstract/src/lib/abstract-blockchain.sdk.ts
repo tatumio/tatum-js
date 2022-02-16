@@ -5,6 +5,8 @@ import {
   BurnMultiToken,
   BurnMultiTokenBatch,
   BurnNft,
+  CallReadSmartContractMethod,
+  CallSmartContractMethod,
   BuyAssetOnMarketplace,
   CancelablePromise,
   CancelSellAssetOnMarketplace,
@@ -15,6 +17,7 @@ import {
   DeployMultiToken,
   DeployNft,
   ExchangeRate,
+  GenerateCustodialWallet,
   Fiat,
   GenerateMarketplace,
   MintErc721,
@@ -37,6 +40,7 @@ import {
   UpdateFeeRecipient,
   XlmWallet,
   XrpWallet,
+  AddNftMinter,
 } from '@tatumio/api-client'
 import { Blockchain, blockchainHelper } from '@tatumio/shared-core'
 import { abstractSdk } from '@tatumio/shared-abstract-sdk'
@@ -117,6 +121,12 @@ export type ChainMintMultiTokenBatch = FromPrivateKeyOrSignatureId<MintMultiToke
 
 export type ChainDeployMultiToken = FromPrivateKeyOrSignatureId<DeployMultiToken>
 
+export type ChainSmartContractMethodInvocation = FromPrivateKeyOrSignatureId<CallSmartContractMethod> & {
+  index?: number
+}
+
+export type ChainGenerateCustodialAddress = FromPrivateKeyOrSignatureId<GenerateCustodialWallet>
+
 export type ChainTransferNative = FromPrivateKeyOrSignatureId<Omit<TransferPolygonBlockchain, 'currency'>>
 
 export type ChainGenerateMarketplace = FromPrivateKeyOrSignatureId<GenerateMarketplace>
@@ -176,6 +186,29 @@ export interface SdkWithMultiTokenFunctions {
   }
 }
 
+export interface SdkWithSmartContractFunctions {
+  prepare: {
+    smartContractWriteMethodInvocationTransaction(
+      body: ChainSmartContractMethodInvocation,
+      provider?: string,
+    ): Promise<string>
+  }
+  send: {
+    smartContractReadMethodInvocationTransaction(
+      body: CallReadSmartContractMethod,
+      provider?: string,
+    ): Promise<{ data: any }>
+  }
+}
+
+export interface SdkWithCustodialFunctions {
+  prepare: {
+    generateCustodialWalletSignedTransaction(
+      body: ChainGenerateCustodialAddress,
+      provider?: string,
+    ): Promise<string>
+  }
+}
 export interface SdkWithMarketplaceFunctions {
   prepare: {
     approveErc20Spending(body: ApproveErc20, provider?: string): Promise<string>

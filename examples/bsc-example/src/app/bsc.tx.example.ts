@@ -544,6 +544,35 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
       account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
     })
+
+  // CUSTODIAL
+  const preparedCustodialWalletSignedTransaction =
+    await bscSDK.transaction.custodial.prepare.generateCustodialWalletSignedTransaction({
+      chain: 'BSC',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      enableFungibleTokens: true,
+      enableNonFungibleTokens: true,
+      enableSemiFungibleTokens: false,
+      enableBatchTransactions: true,
+      fee: {
+        gasLimit: '326452',
+        gasPrice: '20',
+      },
+    })
+
+  const sentCustodialWalletSignedTransaction =
+    await bscSDK.transaction.custodial.send.generateCustodialWalletSignedTransaction({
+      chain: 'BSC',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      enableFungibleTokens: true,
+      enableNonFungibleTokens: true,
+      enableSemiFungibleTokens: false,
+      enableBatchTransactions: true,
+      fee: {
+        gasLimit: '326452',
+        gasPrice: '20',
+      },
+    })
 }
 
 export async function bscTxWithPrivateKeyExample(): Promise<void> {
@@ -1062,5 +1091,34 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
       fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
       account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    })
+
+  // CUSTODIAL
+  const preparedCustodialWalletSignedTransaction =
+    await bscSDK.transaction.custodial.prepare.generateCustodialWalletSignedTransaction({
+      chain: 'BSC',
+      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+      enableFungibleTokens: true,
+      enableNonFungibleTokens: true,
+      enableSemiFungibleTokens: false,
+      enableBatchTransactions: true,
+      fee: {
+        gasLimit: '326452',
+        gasPrice: '20',
+      },
+    })
+
+  const sentCustodialWalletSignedTransaction =
+    await bscSDK.transaction.custodial.send.generateCustodialWalletSignedTransaction({
+      chain: 'BSC',
+      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+      enableFungibleTokens: true,
+      enableNonFungibleTokens: true,
+      enableSemiFungibleTokens: false,
+      enableBatchTransactions: true,
+      fee: {
+        gasLimit: '326452',
+        gasPrice: '20',
+      },
     })
 }
