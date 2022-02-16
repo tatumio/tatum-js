@@ -1,4 +1,3 @@
-import { CreateSubscriptionIncoming } from '@tatumio/api-client'
 import { TatumPolygonSDK } from '@tatumio/polygon'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
@@ -6,7 +5,6 @@ const polygonSDK = TatumPolygonSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function polygonSubscriptionsExample() {
   const id = await polygonSDK.subscriptions.createSubscription({
-    // TODO openapi bug
     type: 'ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION',
     attr: {
       id: '5e6be8e9e6aa436299950c41',

@@ -2,7 +2,7 @@ import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { BlockchainHarmonyOneService } from '@tatumio/api-client'
 import { oneWeb3 } from './services/one.web3'
-import { evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
+import { evmBasedSdk, evmBasedMarketplace } from '@tatumio/shared-blockchain-evm-based'
 import { oneKmsService } from './services/one.kms'
 import { oneTxService } from './services/one.tx'
 
@@ -17,6 +17,11 @@ export const TatumOneSDK = (args: SDKArguments) => {
     api,
     kms: oneKmsService({ blockchain, web3 }),
     transaction: oneTxService({ blockchain, web3 }),
+    marketplace: evmBasedMarketplace({
+      blockchain,
+      web3,
+      broadcastFunction: BlockchainHarmonyOneService.oneBroadcast,
+    }),
     httpDriver: async (request: Web3Request): Promise<Web3Response> => {
       return api.oneWeb3Driver(args.apiKey, { ...request, jsonrpc: '2.0' })
     },

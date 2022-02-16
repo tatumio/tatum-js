@@ -7,7 +7,6 @@ export const abstractBlockchainKms = (args: { blockchain: Blockchain }) => {
 
   return {
     ...superObject,
-    // @TODO looks like a bug - should be array
     /**
      * Get pending transactions to sign
      * <h4>1 credit per API call.</h4><br/><p>Get list of pending transaction to be signed and broadcast using Tatum KMS.</p>
@@ -15,7 +14,7 @@ export const abstractBlockchainKms = (args: { blockchain: Blockchain }) => {
      * @returns PendingTransaction OK
      * @throws ApiError
      */
-    getAllPending(signatures?: string): CancelablePromise<PendingTransaction> {
+    getAllPending(signatures?: string): CancelablePromise<PendingTransaction[]> {
       return ApiServices.kms.getPendingTransactionsToSign(
         // @ts-ignore @TODO
         blockchainHelper.getDefaultCurrencyByBlockchain(args.blockchain),

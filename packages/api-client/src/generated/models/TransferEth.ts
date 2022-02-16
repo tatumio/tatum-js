@@ -22,7 +22,7 @@ export type TransferEth = {
     /**
      * Private key of sender address. Either mnemonic and index, privateKey or signature Id must be present - depends on the type of account and xpub.
      */
-    fromPrivateKey: string;
+    privateKey: string;
     /**
      * Identifier of the payment, shown for created Transaction within Tatum sender account.
      */

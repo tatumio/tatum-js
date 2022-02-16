@@ -1,13 +1,17 @@
 import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testing-common'
 import { TatumOneSDK } from '../one.sdk'
-import { Blockchain, Currency } from '@tatumio/shared-core'
+import { Blockchain } from '@tatumio/shared-core'
 import { oneTxService } from '../services/one.tx'
 import {
   erc20TestFactory,
   ganacheHelper,
   erc721TestFactory,
   multiTokenTestFactory,
+  smartContractTestFactory,
+  custodialTestFactory,
+  marketplaceTestFactory,
 } from '@tatumio/shared-testing-evm-based'
+import { Currency } from '@tatumio/api-client'
 
 const blockchain = Blockchain.HARMONY
 
@@ -47,6 +51,65 @@ describe('OneSDK - tx', () => {
       // TODO: Returned error: evm: execution reverted
       xdescribe('burnSignedTransaction', () => {
         erc20TestFactory.prepare.burnSignedTransaction(oneTx.erc20, TEST_DATA.ONE)
+      })
+    })
+  })
+
+  describe('marketplace', () => {
+    describe('prepare', () => {
+      describe('generateMarketplace', () => {
+        marketplaceTestFactory.prepare.generateMarketplace(
+          sdk.marketplace,
+          TEST_DATA.ONE,
+          'ONE',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      describe('createMarketplaceListing', () => {
+        marketplaceTestFactory.prepare.createMarketplaceListing(
+          sdk.marketplace,
+          TEST_DATA.ONE,
+          'ONE',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      describe('createMarketplaceListingErc20', () => {
+        marketplaceTestFactory.prepare.createMarketplaceListingErc20(
+          sdk.marketplace,
+          TEST_DATA.ONE,
+          'ONE',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      describe('buyMarketplaceListing', () => {
+        marketplaceTestFactory.prepare.buyMarketplaceListing(
+          sdk.marketplace,
+          TEST_DATA.ONE,
+          'ONE',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      // @TODO: returns "Returned values aren't valid..."
+      xdescribe('buyMarketplaceListingErc20', () => {
+        marketplaceTestFactory.prepare.buyMarketplaceListingErc20(
+          sdk.marketplace,
+          TEST_DATA.ONE,
+          'ONE',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      describe('cancelMarketplaceListing', () => {
+        marketplaceTestFactory.prepare.cancelMarketplaceListing(
+          sdk.marketplace,
+          TEST_DATA.ONE,
+          'ONE',
+          inmemoryBlockchain.accounts,
+        )
       })
     })
   })
@@ -160,6 +223,38 @@ describe('OneSDK - tx', () => {
       describe('burnMultiTokenBatch', () => {
         multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(
           sdk.transaction.multiToken,
+          TEST_DATA.ONE,
+          'ONE',
+        )
+      })
+    })
+  })
+
+  describe('smart contract', () => {
+    describe('prepare', () => {
+      describe('smart contract write method invocation', () => {
+        smartContractTestFactory.prepare.smartContractWriteMethodInvocationTransaction(
+          sdk.transaction.smartContract,
+          TEST_DATA.ONE,
+        )
+      })
+    })
+
+    describe('send', () => {
+      describe('smart contract read method invocation', () => {
+        smartContractTestFactory.send.smartContractReadMethodInvocationTransaction(
+          sdk.transaction.smartContract,
+          TEST_DATA.ONE,
+        )
+      })
+    })
+  })
+
+  describe('custodial', () => {
+    describe('prepare', () => {
+      describe('smart contract write method invocation', () => {
+        custodialTestFactory.prepare.generateCustodialWalletSignedTransaction(
+          sdk.transaction.custodial,
           TEST_DATA.ONE,
           'ONE',
         )

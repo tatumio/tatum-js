@@ -17,6 +17,8 @@
     "example": "examples/sdk-example",
     "kcs": "packages/blockchain/kcs",
     "kcs-example": "examples/kcs-example",
+    "klaytn": "packages/blockchain/klaytn",
+    "klaytn-example": "examples/klaytn-example",
     "ltc": "packages/blockchain/ltc",
     "ltc-example": "examples/ltc-example",
     "one": "packages/blockchain/one",

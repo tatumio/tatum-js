@@ -1,5 +1,6 @@
 import { SDKS } from '../sdk.common'
-import { Blockchain, blockchainHelper, Currency, Web3Request, Web3Response } from '@tatumio/shared-core'
+import { Blockchain, blockchainHelper, Web3Request, Web3Response } from '@tatumio/shared-core'
+import { Currency } from '@tatumio/api-client'
 
 // @TODO replace with evm
 export const httpDriver = (sdks: SDKS, currency: Currency, request: Web3Request): Promise<Web3Response> => {

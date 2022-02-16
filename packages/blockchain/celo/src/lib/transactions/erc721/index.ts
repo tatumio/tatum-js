@@ -1,10 +1,9 @@
-import { Currency, EvmBasedBlockchain } from '@tatumio/shared-core'
+import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
-import { MintNftCelo, TATUM_API_CONSTANTS } from '@tatumio/api-client'
+import { MintNftCelo } from '@tatumio/api-client'
 import { Erc721Token, Erc721_Provenance } from '@tatumio/shared-blockchain-evm-based'
 import { BroadcastFunction } from '@tatumio/shared-blockchain-abstract'
-import { BigNumber as BN } from '@ethersproject/bignumber'
-import { CeloProvider, CeloWallet } from '@celo-tools/celo-ethers-wrapper'
+import { CeloWallet } from '@celo-tools/celo-ethers-wrapper'
 import {
   CeloTransactionConfig,
   celoUtils,

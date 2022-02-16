@@ -1,4 +1,4 @@
-import { Currency } from './models/Currency'
+import { Currency } from '@tatumio/api-client'
 
 export const CONTRACT_ADDRESSES = {
   [Currency.USDT.toString()]: '0xdac17f958d2ee523a2206206994597c13d831ec7',

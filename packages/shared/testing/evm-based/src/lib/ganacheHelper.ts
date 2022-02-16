@@ -36,6 +36,12 @@ export const ganacheHelper = {
     const initialAccounts = provider.getInitialAccounts()
 
     const web3 = new Web3(provider as any)
+    web3.eth.accounts.wallet.add(initialAccounts[Object.keys(initialAccounts)[0]].secretKey)
+    web3.eth.defaultAccount = Object.keys(initialAccounts)[0]
+    Object.keys(initialAccounts).forEach((k) => ({
+      address: k,
+      privateKey: initialAccounts[k].secretKey,
+    }))
 
     return {
       web3,

@@ -1,6 +1,7 @@
 import { BigNumber } from 'bignumber.js'
 import { ApiServices, TransferXrp, Withdrawal } from '@tatumio/api-client'
-import { Blockchain, Currency } from '@tatumio/shared-core'
+import { Blockchain } from '@tatumio/shared-core'
+import { Currency } from '@tatumio/api-client'
 import { RippleAPI } from 'ripple-lib'
 import { abstractBlockchainOffchain } from '@tatumio/shared-blockchain-abstract'
 
