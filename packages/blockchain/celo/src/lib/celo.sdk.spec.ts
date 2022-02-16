@@ -34,25 +34,20 @@ describe('TatumCeloSDK', () => {
       const provider = TEST_DATA.CELO?.PROVIDER
 
       it('should return valid web3 client', async () => {
-        const client = await sdk.httpDriver(
-          {
-            jsonrpc: '2.0',
-            method: 'web3_clientVersion',
-            params: [],
-            id: 2,
-          }
-        )
+        const client = await sdk.httpDriver({
+          jsonrpc: '2.0',
+          method: 'web3_clientVersion',
+          params: [],
+          id: 2,
+        })
 
         expect(client.result).toBeDefined()
         expect(String(client.result).length).toBeGreaterThan(0)
       })
 
       it('should return valid web3 client with privateKey', async () => {
-        const web3 = celoWeb3({blockchain: Blockchain.CELO})
-        const client = web3.getClient(
-          provider, 
-          TEST_DATA.CELO.MAINNET.ERC_721!.PRIVATE_KEY,
-        )
+        const web3 = celoWeb3({ blockchain: Blockchain.CELO })
+        const client = web3.getClient(provider, TEST_DATA.CELO.MAINNET.ERC_721!.PRIVATE_KEY)
 
         expect(client).toBeDefined()
       })
@@ -61,7 +56,7 @@ describe('TatumCeloSDK', () => {
     describe('Get gas price in wei', () => {
       it('should return gas price', async () => {
         const gasPrice = await sdk.getGasPriceInWei()
-        
+
         expect(gasPrice).toBeDefined()
         expect(parseInt(gasPrice)).toBeGreaterThan(0)
       })
