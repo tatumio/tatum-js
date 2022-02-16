@@ -1,9 +1,11 @@
 import { BlockchainHarmonyOneService } from '@tatumio/api-client'
 import {
+  custodial,
   erc20,
   erc721,
   EvmBasedWeb3,
   multiToken,
+  smartContract,
   marketplace,
   native,
 } from '@tatumio/shared-blockchain-evm-based'
@@ -37,6 +39,18 @@ export const oneTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBa
     },
     multiToken: {
       ...multiToken({
+        ...args,
+        broadcastFunction: BlockchainHarmonyOneService.oneBroadcast,
+      }),
+    },
+    custodial: {
+      ...custodial({
+        ...args,
+        broadcastFunction: BlockchainHarmonyOneService.oneBroadcast,
+      }),
+    },
+    smartContract: {
+      ...smartContract({
         ...args,
         broadcastFunction: BlockchainHarmonyOneService.oneBroadcast,
       }),

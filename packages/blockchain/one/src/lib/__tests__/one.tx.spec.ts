@@ -7,6 +7,8 @@ import {
   ganacheHelper,
   erc721TestFactory,
   multiTokenTestFactory,
+  smartContractTestFactory,
+  custodialTestFactory,
   marketplaceTestFactory,
   nativeTestFactory,
 } from '@tatumio/shared-testing-evm-based'
@@ -228,6 +230,38 @@ describe('OneSDK - tx', () => {
       describe('burnMultiTokenBatch', () => {
         multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(
           sdk.transaction.multiToken,
+          TEST_DATA.ONE,
+          'ONE',
+        )
+      })
+    })
+  })
+
+  describe('smart contract', () => {
+    describe('prepare', () => {
+      describe('smart contract write method invocation', () => {
+        smartContractTestFactory.prepare.smartContractWriteMethodInvocationTransaction(
+          sdk.transaction.smartContract,
+          TEST_DATA.ONE,
+        )
+      })
+    })
+
+    describe('send', () => {
+      describe('smart contract read method invocation', () => {
+        smartContractTestFactory.send.smartContractReadMethodInvocationTransaction(
+          sdk.transaction.smartContract,
+          TEST_DATA.ONE,
+        )
+      })
+    })
+  })
+
+  describe('custodial', () => {
+    describe('prepare', () => {
+      describe('smart contract write method invocation', () => {
+        custodialTestFactory.prepare.generateCustodialWalletSignedTransaction(
+          sdk.transaction.custodial,
           TEST_DATA.ONE,
           'ONE',
         )

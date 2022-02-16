@@ -31,6 +31,10 @@ export const ONE_TEST_DATA: BlockchainTestData = {
       PRIVATE_KEY: '0x4cda6d2c33b0f9a041e46474a638ac59aee0734cf208aa9aa2f05ef887bd09e1',
       ADDRESS: 'one13t9ul0yvudlk7e60fwvxr5l0azfg3kyl474xmc',
     },
+    SMART_CONTRACT: {
+      CONTRACT_ADDRESS: '0x27c133a613f11870fa935ecbb03c0cf55f93e5de',
+      PRIVATE_KEY: '0x4cda6d2c33b0f9a041e46474a638ac59aee0734cf208aa9aa2f05ef887bd09e1',
+    },
     PROVIDER: 'https://api.s0.b.hmny.io/',
   },
 }
