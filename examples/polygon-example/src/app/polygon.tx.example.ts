@@ -526,34 +526,6 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
     })
 
   // CUSTODIAL
-  const preparedCustodialWalletSignedTransaction =
-    await polygonSDK.transaction.custodial.prepare.generateCustodialWalletSignedTransaction({
-      chain: 'MATIC',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      enableFungibleTokens: true,
-      enableNonFungibleTokens: true,
-      enableSemiFungibleTokens: false,
-      enableBatchTransactions: true,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
-
-  const sentCustodialWalletSignedTransaction =
-    await polygonSDK.transaction.custodial.send.generateCustodialWalletSignedTransaction({
-      chain: 'MATIC',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      enableFungibleTokens: true,
-      enableNonFungibleTokens: true,
-      enableSemiFungibleTokens: false,
-      enableBatchTransactions: true,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
-
   const preparedTransferFromCustodialWallet =
     await polygonSDK.transaction.custodial.prepare.transferFromCustodialWallet({
       chain: 'MATIC',
@@ -1178,34 +1150,6 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
     })
 
   // CUSTODIAL
-  const preparedCustodialWalletSignedTransaction =
-    await polygonSDK.transaction.custodial.prepare.generateCustodialWalletSignedTransaction({
-      chain: 'MATIC',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      enableFungibleTokens: true,
-      enableNonFungibleTokens: true,
-      enableSemiFungibleTokens: false,
-      enableBatchTransactions: true,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
-
-  const sentCustodialWalletSignedTransaction =
-    await polygonSDK.transaction.custodial.send.generateCustodialWalletSignedTransaction({
-      chain: 'MATIC',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      enableFungibleTokens: true,
-      enableNonFungibleTokens: true,
-      enableSemiFungibleTokens: false,
-      enableBatchTransactions: true,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
-
   const preparedTransferFromCustodialWallet =
     await polygonSDK.transaction.custodial.prepare.transferFromCustodialWallet({
       chain: 'MATIC',

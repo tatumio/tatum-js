@@ -877,56 +877,36 @@ describe('TatumCeloSDK', () => {
 
   describe('custodial', () => {
     describe('prepare', () => {
-      it('valid with signatureId', async () => {
-        const result = await sdk.transaction.custodial.prepare.generateCustodialWalletSignedTransaction(
-          {
-            chain: 'CELO',
-            feeCurrency: 'CUSD',
-            signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-            enableFungibleTokens: true,
-            enableNonFungibleTokens: true,
-            enableSemiFungibleTokens: false,
-            enableBatchTransactions: true,
-            fee: {
-              gasLimit: '326452',
-              gasPrice: '20',
-            },
-          },
-          TEST_DATA.CELO?.PROVIDER,
-          true,
-        )
-        expect(result).not.toBeNull()
-      })
-    })
+      xdescribe('Transfer from custodial wallet', () => {
+        it('valid with signatureId', async () => {
+          try {
+            const result = await sdk.transaction.custodial.prepare.transferFromCustodialWallet(
+              {
+                chain: 'CELO',
+                signatureId: TEST_DATA.CELO.TESTNET.CUSTODIAL.SIGNATURE_ID,
+                custodialAddress: TEST_DATA.CELO.TESTNET.CUSTODIAL.CONTRACT_ADDRESS,
+                recipient: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+                tokenAddress: TEST_DATA.CELO.TESTNET.CUSTODIAL.TOKEN_ADDRESS,
+                amount: '1',
+                contractType: 0,
+                feeCurrency: 'CELO',
+              },
+              true,
+              TEST_DATA.CELO?.PROVIDER,
+            )
+            const json = JSON.parse(result)
+            expectHexString(json.data)
+          } catch (e) {
+            console.log(e)
+            expect(e).not.toBeDefined()
+          }
+        })
 
-    it('valid from privateKey', async () => {
-      const result = await sdk.transaction.custodial.prepare.generateCustodialWalletSignedTransaction(
-        {
-          chain: 'CELO',
-          feeCurrency: 'CUSD',
-          fromPrivateKey: '0xfc1d28660e7a8a874e846044bf8fcb0d825216300f581fa048cf719c0c6e89fc',
-          enableFungibleTokens: true,
-          enableNonFungibleTokens: true,
-          enableSemiFungibleTokens: false,
-          enableBatchTransactions: true,
-          fee: {
-            gasLimit: '326452',
-            gasPrice: '20',
-          },
-        },
-        TEST_DATA.CELO?.PROVIDER,
-        true,
-      )
-      expect(result).not.toBeNull()
-    })
-
-    xdescribe('Transfer from custodial wallet', () => {
-      it('valid with signatureId', async () => {
-        try {
+        it('valid with privateKey', async () => {
           const result = await sdk.transaction.custodial.prepare.transferFromCustodialWallet(
             {
               chain: 'CELO',
-              signatureId: TEST_DATA.CELO.TESTNET.CUSTODIAL.SIGNATURE_ID,
+              fromPrivateKey: TEST_DATA.CELO.TESTNET.CUSTODIAL.PRIVATE_KEY,
               custodialAddress: TEST_DATA.CELO.TESTNET.CUSTODIAL.CONTRACT_ADDRESS,
               recipient: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
               tokenAddress: TEST_DATA.CELO.TESTNET.CUSTODIAL.TOKEN_ADDRESS,
@@ -939,100 +919,100 @@ describe('TatumCeloSDK', () => {
           )
           const json = JSON.parse(result)
           expectHexString(json.data)
-        } catch (e) {
-          console.log(e)
-          expect(e).not.toBeDefined()
-        }
+        })
       })
 
-      it('valid with privateKey', async () => {
-        const result = await sdk.transaction.custodial.prepare.transferFromCustodialWallet(
-          {
-            chain: 'CELO',
-            fromPrivateKey: TEST_DATA.CELO.TESTNET.CUSTODIAL.PRIVATE_KEY,
-            custodialAddress: TEST_DATA.CELO.TESTNET.CUSTODIAL.CONTRACT_ADDRESS,
-            recipient: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-            tokenAddress: TEST_DATA.CELO.TESTNET.CUSTODIAL.TOKEN_ADDRESS,
-            amount: '1',
-            contractType: 0,
-            feeCurrency: 'CELO',
-          },
-          true,
-          TEST_DATA.CELO?.PROVIDER,
-        )
-        const json = JSON.parse(result)
-        expectHexString(json.data)
-      })
-    })
-
-    xdescribe('Batch transfer from custodial wallet', () => {
-      it('valid with signatureId', async () => {
-        const result = await sdk.transaction.custodial.prepare.batchTransferFromCustodialWallet(
-          {
-            chain: 'CELO',
-            feeCurrency: 'CELO',
-            signatureId: TEST_DATA.CELO.TESTNET.CUSTODIAL.SIGNATURE_ID,
-            custodialAddress: TEST_DATA.CELO.TESTNET.CUSTODIAL.SIGNATURE_ID,
-            tokenId: ['0', '1', '0'],
-            amount: ['1', '1', '0.00001'],
-            contractType: [0, 2, 3],
-            tokenAddress: [
-              '0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867',
-              '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
-              '0',
-            ],
-            recipient: [
-              '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-              '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-              '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-            ],
-          },
-          true,
-          TEST_DATA.CELO?.PROVIDER,
-        )
-
-        const json = JSON.parse(result)
-        expectHexString(json.data)
-      })
-
-      it('valid from privateKey', async () => {
-        const result = await sdk.transaction.custodial.prepare.batchTransferFromCustodialWallet(
-          {
-            chain: 'CELO',
-            feeCurrency: 'CELO',
-            fromPrivateKey: TEST_DATA.CELO.TESTNET.CUSTODIAL.PRIVATE_KEY,
-            custodialAddress: TEST_DATA.CELO.TESTNET.CUSTODIAL.CONTRACT_ADDRESS,
-            tokenId: ['0', '1', '0'],
-            amount: ['1', '1', '0.00001'],
-            contractType: [0, 2, 3],
-            tokenAddress: [
-              '0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867',
-              '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
-              '0',
-            ],
-            recipient: [
-              '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-              '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-              '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-            ],
-          },
-          true,
-          TEST_DATA.CELO?.PROVIDER,
-        )
-        const json = JSON.parse(result)
-        expectHexString(json.data)
-      })
-    })
-
-    // Returned error: execution reverted
-    xdescribe('Approve from custodial wallet', () => {
-      it('valid with signatureId', async () => {
-        try {
-          const result = await sdk.transaction.custodial.prepare.approveFromCustodialWallet(
+      xdescribe('Batch transfer from custodial wallet', () => {
+        it('valid with signatureId', async () => {
+          const result = await sdk.transaction.custodial.prepare.batchTransferFromCustodialWallet(
             {
               chain: 'CELO',
               feeCurrency: 'CELO',
               signatureId: TEST_DATA.CELO.TESTNET.CUSTODIAL.SIGNATURE_ID,
+              custodialAddress: TEST_DATA.CELO.TESTNET.CUSTODIAL.SIGNATURE_ID,
+              tokenId: ['0', '1', '0'],
+              amount: ['1', '1', '0.00001'],
+              contractType: [0, 2, 3],
+              tokenAddress: [
+                '0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867',
+                '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
+                '0',
+              ],
+              recipient: [
+                '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+                '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+                '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+              ],
+            },
+            true,
+            TEST_DATA.CELO?.PROVIDER,
+          )
+
+          const json = JSON.parse(result)
+          expectHexString(json.data)
+        })
+
+        it('valid from privateKey', async () => {
+          const result = await sdk.transaction.custodial.prepare.batchTransferFromCustodialWallet(
+            {
+              chain: 'CELO',
+              feeCurrency: 'CELO',
+              fromPrivateKey: TEST_DATA.CELO.TESTNET.CUSTODIAL.PRIVATE_KEY,
+              custodialAddress: TEST_DATA.CELO.TESTNET.CUSTODIAL.CONTRACT_ADDRESS,
+              tokenId: ['0', '1', '0'],
+              amount: ['1', '1', '0.00001'],
+              contractType: [0, 2, 3],
+              tokenAddress: [
+                '0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867',
+                '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
+                '0',
+              ],
+              recipient: [
+                '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+                '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+                '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+              ],
+            },
+            true,
+            TEST_DATA.CELO?.PROVIDER,
+          )
+          const json = JSON.parse(result)
+          expectHexString(json.data)
+        })
+      })
+
+      // Returned error: execution reverted
+      xdescribe('Approve from custodial wallet', () => {
+        it('valid with signatureId', async () => {
+          try {
+            const result = await sdk.transaction.custodial.prepare.approveFromCustodialWallet(
+              {
+                chain: 'CELO',
+                feeCurrency: 'CELO',
+                signatureId: TEST_DATA.CELO.TESTNET.CUSTODIAL.SIGNATURE_ID,
+                contractType: 0,
+                custodialAddress: TEST_DATA.CELO.TESTNET.CUSTODIAL.CONTRACT_ADDRESS,
+                tokenAddress: TEST_DATA.CELO.TESTNET.CUSTODIAL.TOKEN_ADDRESS,
+                spender: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+                tokenId: '1',
+                amount: '1',
+              },
+              TEST_DATA.CELO?.PROVIDER,
+            )
+            const json = JSON.parse(result)
+            expectHexString(json.data)
+          } catch (e) {
+            console.log('Approve error: ', e)
+            expect(e).not.toBeDefined()
+          }
+        })
+
+        it('valid from privateKey', async () => {
+          const result = await sdk.transaction.custodial.prepare.approveFromCustodialWallet(
+            {
+              chain: 'CELO',
+              feeCurrency: 'CELO',
+              fromPrivateKey: TEST_DATA.CELO.TESTNET.CUSTODIAL.PRIVATE_KEY,
               contractType: 0,
               custodialAddress: TEST_DATA.CELO.TESTNET.CUSTODIAL.CONTRACT_ADDRESS,
               tokenAddress: TEST_DATA.CELO.TESTNET.CUSTODIAL.TOKEN_ADDRESS,
@@ -1042,66 +1022,44 @@ describe('TatumCeloSDK', () => {
             },
             TEST_DATA.CELO?.PROVIDER,
           )
+
           const json = JSON.parse(result)
           expectHexString(json.data)
-        } catch (e) {
-          console.log('Approve error: ', e)
-          expect(e).not.toBeDefined()
-        }
+        })
       })
 
-      it('valid from privateKey', async () => {
-        const result = await sdk.transaction.custodial.prepare.approveFromCustodialWallet(
-          {
-            chain: 'CELO',
-            feeCurrency: 'CELO',
-            fromPrivateKey: TEST_DATA.CELO.TESTNET.CUSTODIAL.PRIVATE_KEY,
-            contractType: 0,
-            custodialAddress: TEST_DATA.CELO.TESTNET.CUSTODIAL.CONTRACT_ADDRESS,
-            tokenAddress: TEST_DATA.CELO.TESTNET.CUSTODIAL.TOKEN_ADDRESS,
-            spender: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-            tokenId: '1',
-            amount: '1',
-          },
-          TEST_DATA.CELO?.PROVIDER,
-        )
+      describe('Custodial wallet batch', () => {
+        it('valid with signatureId', async () => {
+          const result = await sdk.transaction.custodial.prepare.custodialWalletBatch(
+            {
+              chain: 'CELO',
+              feeCurrency: 'CELO',
+              signatureId: TEST_DATA.CELO.TESTNET.CUSTODIAL.SIGNATURE_ID,
+              owner: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+              batchCount: 1,
+            },
+            true,
+            TEST_DATA.CELO?.PROVIDER,
+          )
+          const json = JSON.parse(result)
+          expectHexString(json.data)
+        })
 
-        const json = JSON.parse(result)
-        expectHexString(json.data)
-      })
-    })
+        it('valid from privateKey', async () => {
+          const result = await sdk.transaction.custodial.prepare.custodialWalletBatch(
+            {
+              chain: 'CELO',
+              feeCurrency: 'CUSD',
+              fromPrivateKey: TEST_DATA.CELO.TESTNET.CUSTODIAL.PRIVATE_KEY,
+              owner: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+              batchCount: 1,
+            },
+            true,
+            TEST_DATA.CELO?.PROVIDER,
+          )
 
-    describe('Custodial wallet batch', () => {
-      it('valid with signatureId', async () => {
-        const result = await sdk.transaction.custodial.prepare.custodialWalletBatch(
-          {
-            chain: 'CELO',
-            feeCurrency: 'CELO',
-            signatureId: TEST_DATA.CELO.TESTNET.CUSTODIAL.SIGNATURE_ID,
-            owner: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-            batchCount: 1,
-          },
-          true,
-          TEST_DATA.CELO?.PROVIDER,
-        )
-        const json = JSON.parse(result)
-        expectHexString(json.data)
-      })
-
-      it('valid from privateKey', async () => {
-        const result = await sdk.transaction.custodial.prepare.custodialWalletBatch(
-          {
-            chain: 'CELO',
-            feeCurrency: 'CUSD',
-            fromPrivateKey: TEST_DATA.CELO.TESTNET.CUSTODIAL.PRIVATE_KEY,
-            owner: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-            batchCount: 1,
-          },
-          true,
-          TEST_DATA.CELO?.PROVIDER,
-        )
-
-        expectHexString(result)
+          expectHexString(result)
+        })
       })
     })
   })

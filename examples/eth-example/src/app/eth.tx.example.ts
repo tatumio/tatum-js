@@ -522,33 +522,6 @@ export async function ethTxWithSignatureIdExample(): Promise<void> {
     })
 
   // CUSTODIAL
-  const preparedCustodialWalletSignedTransaction =
-    await ethSDK.transaction.custodial.prepare.generateCustodialWalletSignedTransaction({
-      chain: 'ETH',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      enableFungibleTokens: true,
-      enableNonFungibleTokens: true,
-      enableSemiFungibleTokens: false,
-      enableBatchTransactions: true,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
-
-  const sentCustodialWalletSignedTransaction =
-    await ethSDK.transaction.custodial.send.generateCustodialWalletSignedTransaction({
-      chain: 'ETH',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      enableFungibleTokens: true,
-      enableNonFungibleTokens: true,
-      enableSemiFungibleTokens: false,
-      enableBatchTransactions: true,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
 
   const preparedTransferFromCustodialWallet =
     await ethSDK.transaction.custodial.prepare.transferFromCustodialWallet({
@@ -1170,34 +1143,6 @@ export async function ethTxWithPrivateKeyExample(): Promise<void> {
     })
 
   // CUSTODIAL
-  const preparedCustodialWalletSignedTransaction =
-    await ethSDK.transaction.custodial.prepare.generateCustodialWalletSignedTransaction({
-      chain: 'ETH',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      enableFungibleTokens: true,
-      enableNonFungibleTokens: true,
-      enableSemiFungibleTokens: false,
-      enableBatchTransactions: true,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
-
-  const sentCustodialWalletSignedTransaction =
-    await ethSDK.transaction.custodial.send.generateCustodialWalletSignedTransaction({
-      chain: 'ETH',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      enableFungibleTokens: true,
-      enableNonFungibleTokens: true,
-      enableSemiFungibleTokens: false,
-      enableBatchTransactions: true,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
-
   const preparedTransferFromCustodialWallet =
     await ethSDK.transaction.custodial.prepare.transferFromCustodialWallet({
       chain: 'ETH',

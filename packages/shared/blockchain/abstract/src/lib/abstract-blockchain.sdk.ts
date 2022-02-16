@@ -259,10 +259,6 @@ export interface SdkWithSmartContractFunctions {
 
 export interface SdkWithCustodialFunctions {
   prepare: {
-    generateCustodialWalletSignedTransaction(
-      body: ChainGenerateCustodialAddress,
-      provider?: string,
-    ): Promise<string>
     transferFromCustodialWallet(
       body: ChainTransferCustodialWallet,
       testnet?: boolean,

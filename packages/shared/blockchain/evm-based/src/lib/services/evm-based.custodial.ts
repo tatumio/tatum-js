@@ -32,9 +32,13 @@ const FUNGIBLE = 1
 const NON_FUNGIBLE = 2
 const SEMI_FUNGIBLE = 4
 const BATCH = 8
-const NATIVE_ASSET = 3
-const FUNGIBLE_TOKEN = 0
-const NON_FUNGIBLE_TOKEN = 1
+
+enum ContractType {
+  NATIVE_ASSET = 3,
+  FUNGIBLE_TOKEN = 0,
+  NON_FUNGIBLE_TOKEN = 1,
+  SEMI_FUNGIBLE = 2,
+}
 
 const MAPPING = {
   [FUNGIBLE]: Custodial_20_TokenWallet,
@@ -121,10 +125,10 @@ export const evmBasedCustodial = () => {
       }
 
       // @TODO OPENAPI NATIVE_ASSET
-      if (body.contractType === NATIVE_ASSET) {
+      if (body.contractType === ContractType.NATIVE_ASSET) {
         amount = amount.multipliedBy(new BigNumber(10).pow(decimals))
         // @TODO OPENAPI FUNGIBLE_TOKEN
-      } else if (body.contractType === FUNGIBLE_TOKEN) {
+      } else if (body.contractType === ContractType.FUNGIBLE_TOKEN) {
         tokenId = new BigNumber(0)
         amount = amount.multipliedBy(
           new BigNumber(10).pow(await getContractDecimals(body.tokenAddress!, web3, provider, testnet)),
@@ -162,11 +166,11 @@ export const evmBasedCustodial = () => {
       for (let i = 0; i < body.contractType.length; i++) {
         let amount = new BigNumber(body.amount ? body.amount[i] : 0)
         let tokenId = new BigNumber(body.tokenId ? body.tokenId[i] : 0)
-        if (body.contractType[i] === NATIVE_ASSET) {
+        if (body.contractType[i] === ContractType.NATIVE_ASSET) {
           amount = amount.multipliedBy(new BigNumber(10).pow(decimals))
-        } else if (body.contractType[i] === NON_FUNGIBLE_TOKEN) {
+        } else if (body.contractType[i] === ContractType.NON_FUNGIBLE_TOKEN) {
           amount = new BigNumber(0)
-        } else if (body.contractType[i] === FUNGIBLE_TOKEN && body.tokenAddress) {
+        } else if (body.contractType[i] === ContractType.FUNGIBLE_TOKEN && body.tokenAddress) {
           tokenId = new BigNumber(0)
           amount = amount.multipliedBy(
             new BigNumber(10).pow(await getContractDecimals(body.tokenAddress[i], web3, provider, testnet)),
@@ -206,9 +210,7 @@ export const evmBasedCustodial = () => {
     prepareCustodialWalletBatchAbstract: async (
       body: ChainGenerateCustodialWalletBatch,
       web3: EvmBasedWeb3,
-      getCustodialFactoryContractAddress: (testnet?: boolean) => string,
       testnet?: boolean,
-      convertAddressToHex?: (address: string) => string,
     ) => {
       const params = [body.owner.trim(), `0x${new BigNumber(body.batchCount).toString(16)}`]
 
@@ -216,9 +218,51 @@ export const evmBasedCustodial = () => {
       const methodSig = undefined
       const bodyWithContractAddress = {
         ...body,
-        contractAddress: getCustodialFactoryContractAddress(testnet),
+        contractAddress: evmBasedCustodial().getCustodialFactoryContractAddress(body.chain, testnet),
       }
       return { params, methodName, methodSig, bodyWithContractAddress }
+    },
+
+    getCustodialFactoryContractAddress: (
+      chain: 'CELO' | 'TRON' | 'ONE' | 'XDC' | 'ETH' | 'MATIC' | 'KLAY' | 'BSC',
+      testnet?: boolean,
+    ) => {
+      switch (chain) {
+        case Currency.CELO:
+          return testnet
+            ? '0x481D6f967B120E094D3551DA2C4951242Be582af'
+            : '0xC7f23843d5A51221df4B6D0778910b39b40134b4'
+        case Currency.TRON:
+          return testnet ? 'TRM8P5gpzAr85p2a5BMvqb9UfEdFEwEgA7' : 'TG59uLNQvCR45F6yKHPXipvCu7wg5D88Wr'
+        case Currency.ONE:
+          return testnet
+            ? '0xb1462fE8E9Cf82c0296022Cca7bEfA3Fd4c12B34'
+            : '0x86e27174edd52469f928f6206f3d8e4316525f00'
+        case Currency.XDC:
+          return testnet
+            ? 'xdc6709Bdda623aF7EB152cB2fE2562aB7e031e564f'
+            : 'xdc3485fdba44736859267789ac9c248cc4c1443956'
+        case Currency.ETH:
+          return testnet
+            ? process.env['TESTNET_TYPE'] === 'ethereum-rinkeby'
+              ? '0x4eC40a4A0dA042d46cC4529f918080957003b531'
+              : '0x3485fdba44736859267789ac9c248cc4c1443956'
+            : '0xd8050943c1E2764F750EC868ae1B375C4768d89A'
+        case Currency.MATIC:
+          return testnet
+            ? '0x6792a82ffab4890cfbcee6c2c775ae9c898afe71'
+            : '0xfc05d7fed6af03df8095cc93b674acac3f72756c'
+        case Currency.KLAY:
+          return testnet
+            ? '0xd68c48173ccb0313442b23aed68b71961c618ade'
+            : '0xb1462fE8E9Cf82c0296022Cca7bEfA3Fd4c12B34'
+        case Currency.BSC:
+          return testnet
+            ? '0xeac818b4CC468Cf6556f772C4BB86e132E6ac0F3'
+            : '0x9067f90c0975679158331fe43ad7a0a105424e0d'
+        default:
+          throw new Error('Unsupported chain.')
+      }
     },
   }
 }

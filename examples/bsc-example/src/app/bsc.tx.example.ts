@@ -523,34 +523,6 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
     })
 
   // CUSTODIAL
-  const preparedCustodialWalletSignedTransaction =
-    await bscSDK.transaction.custodial.prepare.generateCustodialWalletSignedTransaction({
-      chain: 'BSC',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      enableFungibleTokens: true,
-      enableNonFungibleTokens: true,
-      enableSemiFungibleTokens: false,
-      enableBatchTransactions: true,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
-
-  const sentCustodialWalletSignedTransaction =
-    await bscSDK.transaction.custodial.send.generateCustodialWalletSignedTransaction({
-      chain: 'BSC',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      enableFungibleTokens: true,
-      enableNonFungibleTokens: true,
-      enableSemiFungibleTokens: false,
-      enableBatchTransactions: true,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
-
   const preparedTransferFromCustodialWallet =
     await bscSDK.transaction.custodial.prepare.transferFromCustodialWallet({
       chain: 'BSC',
@@ -1171,34 +1143,6 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
     })
 
   // CUSTODIAL
-  const preparedCustodialWalletSignedTransaction =
-    await bscSDK.transaction.custodial.prepare.generateCustodialWalletSignedTransaction({
-      chain: 'BSC',
-      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
-      enableFungibleTokens: true,
-      enableNonFungibleTokens: true,
-      enableSemiFungibleTokens: false,
-      enableBatchTransactions: true,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
-
-  const sentCustodialWalletSignedTransaction =
-    await bscSDK.transaction.custodial.send.generateCustodialWalletSignedTransaction({
-      chain: 'BSC',
-      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
-      enableFungibleTokens: true,
-      enableNonFungibleTokens: true,
-      enableSemiFungibleTokens: false,
-      enableBatchTransactions: true,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
-
   const preparedTransferFromCustodialWallet =
     await bscSDK.transaction.custodial.prepare.transferFromCustodialWallet({
       chain: 'BSC',

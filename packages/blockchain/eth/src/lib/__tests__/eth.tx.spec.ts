@@ -257,14 +257,6 @@ describe('EthSDK - tx', () => {
 
   describe('custodial', () => {
     describe('prepare', () => {
-      describe('smart contract write method invocation', () => {
-        custodialTestFactory.prepare.generateCustodialWalletSignedTransaction(
-          sdk.transaction.custodial,
-          TEST_DATA.ETH,
-          'ETH',
-        )
-      })
-
       xdescribe('transfer from custodial wallet', () => {
         custodialTestFactory.prepare.transferFromCustodialWallet(
           sdk.transaction.custodial,

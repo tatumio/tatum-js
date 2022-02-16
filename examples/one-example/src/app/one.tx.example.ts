@@ -522,34 +522,6 @@ export async function oneTxWithSignatureIdExample(): Promise<void> {
     })
 
   // CUSTODIAL
-  const preparedCustodialWalletSignedTransaction =
-    await oneSDK.transaction.custodial.prepare.generateCustodialWalletSignedTransaction({
-      chain: 'ONE',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      enableFungibleTokens: true,
-      enableNonFungibleTokens: true,
-      enableSemiFungibleTokens: false,
-      enableBatchTransactions: true,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
-
-  const sentCustodialWalletSignedTransaction =
-    await oneSDK.transaction.custodial.send.generateCustodialWalletSignedTransaction({
-      chain: 'ONE',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      enableFungibleTokens: true,
-      enableNonFungibleTokens: true,
-      enableSemiFungibleTokens: false,
-      enableBatchTransactions: true,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
-
   const preparedTransferFromCustodialWallet =
     await oneSDK.transaction.custodial.prepare.transferFromCustodialWallet({
       chain: 'ONE',
@@ -1170,34 +1142,6 @@ export async function oneTxWithPrivateKeyExample(): Promise<void> {
     })
 
   // CUSTODIAL
-  const preparedCustodialWalletSignedTransaction =
-    await oneSDK.transaction.custodial.prepare.generateCustodialWalletSignedTransaction({
-      chain: 'ONE',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      enableFungibleTokens: true,
-      enableNonFungibleTokens: true,
-      enableSemiFungibleTokens: false,
-      enableBatchTransactions: true,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
-
-  const sentCustodialWalletSignedTransaction =
-    await oneSDK.transaction.custodial.send.generateCustodialWalletSignedTransaction({
-      chain: 'ONE',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      enableFungibleTokens: true,
-      enableNonFungibleTokens: true,
-      enableSemiFungibleTokens: false,
-      enableBatchTransactions: true,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
-
   const preparedTransferFromCustodialWallet =
     await oneSDK.transaction.custodial.prepare.transferFromCustodialWallet({
       chain: 'ONE',
