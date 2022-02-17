@@ -23,7 +23,7 @@ describe('EthSDK - tx', () => {
   const ethTxService = ethTx({
     blockchain: blockchain,
     web3: {
-      getClient: (provider?: string) => inmemoryBlockchain.web3,
+      getClient: () => inmemoryBlockchain.web3,
       async getGasPriceInWei(): Promise<string> {
         return '@TODO'
       },

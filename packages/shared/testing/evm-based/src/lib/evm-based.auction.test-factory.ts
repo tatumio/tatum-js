@@ -9,22 +9,58 @@ import {
   ChainSettleAuction,
   ChainUpdateFeeRecipient,
 } from '@tatumio/shared-blockchain-evm-based'
+import { GanacheAccount } from './ganacheHelper'
 
 export const auctionTestFactory = {
   prepare: {
-    deployAuctionSignedTransaction: (sdk: SdkWithAuctionFunctions, testData: BlockchainTestData) => {
-      it('valid', async () => {
-        const tx = await sdk.prepare.deployAuctionSignedTransaction(testData.AUCTIONS.DEPLOY.VALID)
+    deployAuctionSignedTransaction: (sdk: SdkWithAuctionFunctions, accounts: GanacheAccount[]) => {
+      it('valid from privateKey', async () => {
+        const tx = await sdk.prepare.deployAuctionSignedTransaction({
+          feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+          auctionFee: 150,
+          fromPrivateKey: accounts[0].privateKey,
+          nonce: 1,
+          fee: {
+            gasLimit: '300000',
+            gasPrice: '20',
+          },
+        })
+
         expectHexString(tx)
       })
+      it('valid from signatureId', async () => {
+        const nonce = 1
+        const tx = await sdk.prepare.deployAuctionSignedTransaction({
+          feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+          auctionFee: 150,
+          signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+          nonce,
+          fee: {
+            gasLimit: '300000',
+            gasPrice: '20',
+          },
+        })
+
+        const json = JSON.parse(tx)
+
+        expect(json.nonce).toBe(nonce)
+        expect(json.gasPrice).toBe('20000000000')
+      })
       it('invalid address', async () => {
-        try {
-          await sdk.prepare.deployAuctionSignedTransaction(testData.AUCTIONS.DEPLOY.INVALID)
-        } catch (e) {
-          expect(e.toString()).toEqual(
-            'Error: bad address checksum (argument="address", value="0x687422eEA2cB73B5d3e242bA5456b782919AFc86", code=INVALID_ARGUMENT, version=address/5.5.0) (argument="feeRecipient", value="0x687422eEA2cB73B5d3e242bA5456b782919AFc86", code=INVALID_ARGUMENT, version=abi/5.0.7)',
-          )
-        }
+        await expect(async () =>
+          sdk.prepare.deployAuctionSignedTransaction({
+            feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc86',
+            auctionFee: 150,
+            fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
+            nonce: 1,
+            fee: {
+              gasLimit: '300000',
+              gasPrice: '20',
+            },
+          }),
+        ).rejects.toThrow(
+          'bad address checksum (argument="address", value="0x687422eEA2cB73B5d3e242bA5456b782919AFc86", code=INVALID_ARGUMENT, version=address/5.5.0) (argument="feeRecipient", value="0x687422eEA2cB73B5d3e242bA5456b782919AFc86", code=INVALID_ARGUMENT, version=abi/5.0.7)',
+        )
       })
     },
     auctionUpdateFeeRecipientSignedTransaction: (
