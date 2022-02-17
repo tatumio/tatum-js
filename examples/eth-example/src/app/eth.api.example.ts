@@ -1,4 +1,3 @@
-import { TransferEthBlockchain } from '@tatumio/api-client'
 import { TatumEthSDK } from '@tatumio/eth'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
@@ -42,7 +41,6 @@ export async function ethApiExample() {
     data: 'My note to recipient.',
     nonce: 0,
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    // TODO openapi bug
     currency: 'ETH',
     fee: {
       gasLimit: '40000',
