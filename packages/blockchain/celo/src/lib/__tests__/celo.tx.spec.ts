@@ -54,7 +54,9 @@ describe('CeloSDK - tx', () => {
           )
           fail()
         } catch (e: any) {
-          expect(e.message).toMatch('The target (to) address, currency, feeCurrency or the amount cannot be empty');
+          expect(e.message).toMatch(
+            'The target (to) address, currency, feeCurrency or the amount cannot be empty',
+          )
         }
       })
     })
