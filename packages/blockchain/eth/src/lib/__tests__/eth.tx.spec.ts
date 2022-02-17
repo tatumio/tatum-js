@@ -7,7 +7,10 @@ import {
   ganacheHelper,
   erc721TestFactory,
   multiTokenTestFactory,
+  smartContractTestFactory,
+  custodialTestFactory,
   marketplaceTestFactory,
+  nativeTestFactory,
 } from '@tatumio/shared-testing-evm-based'
 import { Currency } from '@tatumio/api-client'
 
@@ -29,6 +32,12 @@ describe('EthSDK - tx', () => {
 
   beforeEach(async () => {
     await ganacheHelper.initWeb3(inmemoryBlockchain.web3)
+  })
+
+  describe('transaction', () => {
+    describe('native', () => {
+      nativeTestFactory.prepare.transferSignedTransaction(ethTxService.native, inmemoryBlockchain.accounts)
+    })
   })
 
   describe('erc20', () => {
@@ -226,6 +235,38 @@ describe('EthSDK - tx', () => {
       describe('burnMultiTokenBatch', () => {
         multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(
           sdk.transaction.multiToken,
+          TEST_DATA.ETH,
+          'ETH',
+        )
+      })
+    })
+  })
+
+  describe('smart contract', () => {
+    describe('prepare', () => {
+      describe('smart contract write method invocation', () => {
+        smartContractTestFactory.prepare.smartContractWriteMethodInvocationTransaction(
+          sdk.transaction.smartContract,
+          TEST_DATA.ETH,
+        )
+      })
+    })
+
+    describe('send', () => {
+      describe('smart contract read method invocation', () => {
+        smartContractTestFactory.send.smartContractReadMethodInvocationTransaction(
+          sdk.transaction.smartContract,
+          TEST_DATA.ETH,
+        )
+      })
+    })
+  })
+
+  describe('custodial', () => {
+    describe('prepare', () => {
+      describe('smart contract write method invocation', () => {
+        custodialTestFactory.prepare.generateCustodialWalletSignedTransaction(
+          sdk.transaction.custodial,
           TEST_DATA.ETH,
           'ETH',
         )

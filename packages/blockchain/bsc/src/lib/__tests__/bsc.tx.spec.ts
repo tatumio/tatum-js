@@ -7,7 +7,10 @@ import {
   ganacheHelper,
   erc721TestFactory,
   multiTokenTestFactory,
+  smartContractTestFactory,
+  custodialTestFactory,
   marketplaceTestFactory,
+  nativeTestFactory,
 } from '@tatumio/shared-testing-evm-based'
 import { Currency } from '@tatumio/api-client'
 
@@ -23,6 +26,12 @@ describe('BscSDK - tx', () => {
         return '@TODO'
       },
     },
+  })
+
+  describe('transaction', () => {
+    describe('native', () => {
+      nativeTestFactory.prepare.transferSignedTransaction(bscTx.native, inmemoryBlockchain.accounts)
+    })
   })
 
   describe('erc20', () => {
@@ -204,6 +213,38 @@ describe('BscSDK - tx', () => {
 
       describe('burnMultiTokenBatch', () => {
         multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(bscTx.multiToken, TEST_DATA.BSC, 'BSC')
+      })
+    })
+  })
+
+  describe('smart contract', () => {
+    describe('prepare', () => {
+      describe('smart contract write method invocation', () => {
+        smartContractTestFactory.prepare.smartContractWriteMethodInvocationTransaction(
+          sdk.transaction.smartContract,
+          TEST_DATA.BSC,
+        )
+      })
+    })
+
+    xdescribe('send', () => {
+      describe('smart contract read method invocation', () => {
+        smartContractTestFactory.send.smartContractReadMethodInvocationTransaction(
+          sdk.transaction.smartContract,
+          TEST_DATA.BSC,
+        )
+      })
+    })
+  })
+
+  describe('custodial', () => {
+    describe('prepare', () => {
+      describe('smart contract write method invocation', () => {
+        custodialTestFactory.prepare.generateCustodialWalletSignedTransaction(
+          sdk.transaction.custodial,
+          TEST_DATA.BSC,
+          'BSC',
+        )
       })
     })
   })

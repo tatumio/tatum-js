@@ -4,6 +4,29 @@ import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 const ethSDK = TatumEthSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function ethTxWithSignatureIdExample(): Promise<void> {
+  // NATIVE
+  const preparedTransferNativeTransaction = await ethSDK.transaction.native.prepare.transferSignedTransaction({
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    amount: '10',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 3252345722143,
+    fee: {
+      gasLimit: '53632',
+      gasPrice: '20',
+    },
+  })
+
+  const sentTransferNativeTransaction = await ethSDK.transaction.native.send.transferSignedTransaction({
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    amount: '10',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 3252345722143,
+    fee: {
+      gasLimit: '53632',
+      gasPrice: '20',
+    },
+  })
+
   // ERC20(FUNGIBLE TOKEN)
   const preparedDeployErc20Transaction = await ethSDK.transaction.erc20.prepare.deploySignedTransaction({
     symbol: 'ERC_SYMBOL',
@@ -519,6 +542,35 @@ export async function ethTxWithSignatureIdExample(): Promise<void> {
       signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
       account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    })
+
+  // CUSTODIAL
+  const preparedCustodialWalletSignedTransaction =
+    await ethSDK.transaction.custodial.prepare.generateCustodialWalletSignedTransaction({
+      chain: 'ETH',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      enableFungibleTokens: true,
+      enableNonFungibleTokens: true,
+      enableSemiFungibleTokens: false,
+      enableBatchTransactions: true,
+      fee: {
+        gasLimit: '326452',
+        gasPrice: '20',
+      },
+    })
+
+  const sentCustodialWalletSignedTransaction =
+    await ethSDK.transaction.custodial.send.generateCustodialWalletSignedTransaction({
+      chain: 'ETH',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      enableFungibleTokens: true,
+      enableNonFungibleTokens: true,
+      enableSemiFungibleTokens: false,
+      enableBatchTransactions: true,
+      fee: {
+        gasLimit: '326452',
+        gasPrice: '20',
+      },
     })
 }
 
@@ -1038,5 +1090,34 @@ export async function ethTxWithPrivateKeyExample(): Promise<void> {
       fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
       account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    })
+
+  // CUSTODIAL
+  const preparedCustodialWalletSignedTransaction =
+    await ethSDK.transaction.custodial.prepare.generateCustodialWalletSignedTransaction({
+      chain: 'ETH',
+      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+      enableFungibleTokens: true,
+      enableNonFungibleTokens: true,
+      enableSemiFungibleTokens: false,
+      enableBatchTransactions: true,
+      fee: {
+        gasLimit: '326452',
+        gasPrice: '20',
+      },
+    })
+
+  const sentCustodialWalletSignedTransaction =
+    await ethSDK.transaction.custodial.send.generateCustodialWalletSignedTransaction({
+      chain: 'ETH',
+      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+      enableFungibleTokens: true,
+      enableNonFungibleTokens: true,
+      enableSemiFungibleTokens: false,
+      enableBatchTransactions: true,
+      fee: {
+        gasLimit: '326452',
+        gasPrice: '20',
+      },
     })
 }

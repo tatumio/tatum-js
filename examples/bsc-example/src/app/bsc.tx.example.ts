@@ -4,6 +4,29 @@ import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 const bscSDK = TatumBscSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function bscTxWithSignatureIdExample(): Promise<void> {
+  // NATIVE
+  const preparedTransferNativeTransaction = await bscSDK.transaction.native.prepare.transferSignedTransaction({
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    amount: '10',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 3252345722143,
+    fee: {
+      gasLimit: '53632',
+      gasPrice: '20',
+    },
+  })
+
+  const sentTransferNativeTransaction = await bscSDK.transaction.native.send.transferSignedTransaction({
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    amount: '10',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 3252345722143,
+    fee: {
+      gasLimit: '53632',
+      gasPrice: '20',
+    },
+  })
+
   // ERC20(FUNGIBLE TOKEN)
   const preparedDeployErc20Transaction = await bscSDK.transaction.erc20.prepare.deploySignedTransaction({
     symbol: 'ERC_SYMBOL',
@@ -520,6 +543,35 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
       signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
       account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    })
+
+  // CUSTODIAL
+  const preparedCustodialWalletSignedTransaction =
+    await bscSDK.transaction.custodial.prepare.generateCustodialWalletSignedTransaction({
+      chain: 'BSC',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      enableFungibleTokens: true,
+      enableNonFungibleTokens: true,
+      enableSemiFungibleTokens: false,
+      enableBatchTransactions: true,
+      fee: {
+        gasLimit: '326452',
+        gasPrice: '20',
+      },
+    })
+
+  const sentCustodialWalletSignedTransaction =
+    await bscSDK.transaction.custodial.send.generateCustodialWalletSignedTransaction({
+      chain: 'BSC',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      enableFungibleTokens: true,
+      enableNonFungibleTokens: true,
+      enableSemiFungibleTokens: false,
+      enableBatchTransactions: true,
+      fee: {
+        gasLimit: '326452',
+        gasPrice: '20',
+      },
     })
 }
 
@@ -1039,5 +1091,34 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
       fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
       account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    })
+
+  // CUSTODIAL
+  const preparedCustodialWalletSignedTransaction =
+    await bscSDK.transaction.custodial.prepare.generateCustodialWalletSignedTransaction({
+      chain: 'BSC',
+      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+      enableFungibleTokens: true,
+      enableNonFungibleTokens: true,
+      enableSemiFungibleTokens: false,
+      enableBatchTransactions: true,
+      fee: {
+        gasLimit: '326452',
+        gasPrice: '20',
+      },
+    })
+
+  const sentCustodialWalletSignedTransaction =
+    await bscSDK.transaction.custodial.send.generateCustodialWalletSignedTransaction({
+      chain: 'BSC',
+      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+      enableFungibleTokens: true,
+      enableNonFungibleTokens: true,
+      enableSemiFungibleTokens: false,
+      enableBatchTransactions: true,
+      fee: {
+        gasLimit: '326452',
+        gasPrice: '20',
+      },
     })
 }

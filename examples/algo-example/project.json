@@ -1,0 +1,31 @@
+{
+  "root": "examples/algo-example",
+  "sourceRoot": "examples/algo-example/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/examples/algo-example",
+        "main": "examples/algo-example/src/index.ts",
+        "packageJson": "examples/algo-example/package.json",
+        "tsConfig": "examples/algo-example/tsconfig.app.json"
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/js:execute",
+      "options": {
+        "buildTarget": "algo-example:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["examples/algo-example/**/*.ts"]
+      }
+    }
+  },
+  "tags": ["type:example"]
+}
