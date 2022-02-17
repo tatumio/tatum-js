@@ -4,6 +4,23 @@ import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 const celoSDK = TatumCeloSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function celoTxWithSignatureIdExample(): Promise<void> {
+  const preparedTransferNativeTransaction =
+    await celoSDK.transaction.native.prepare.transferSignedTransaction({
+      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+      nonce: 46533715.43995557,
+      feeCurrency: 'CUSD',
+      amount: '1',
+    })
+
+  const sentTransferNativeTransaction = await celoSDK.transaction.native.send.transferSignedTransaction({
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 46533715.43995557,
+    feeCurrency: 'CUSD',
+    amount: '1',
+  })
+
   const preparedDeployErc721Transaction = await celoSDK.transaction.erc721.prepare.deploySignedTransaction({
     chain: 'CELO',
     name: 'MY_TOKEN',

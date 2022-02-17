@@ -1,41 +1,63 @@
 import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA, expectHexString } from '@tatumio/shared-testing-common'
-import { Blockchain } from '@tatumio/shared-core'
-import { celoWeb3 } from '../services/celo.web3'
 import { TatumCeloSDK } from '../celo.sdk'
 
 describe('CeloSDK - tx', () => {
   const sdk = TatumCeloSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
-  describe('Web3', () => {
-    describe('Get client', () => {
+  describe('native', () => {
+    describe('prepare', () => {
       const provider = TEST_DATA.CELO?.PROVIDER
+      const address = TEST_DATA.CELO.TESTNET.ERC_20?.ADDRESS
+        ? TEST_DATA.CELO.TESTNET.ERC_20?.ADDRESS
+        : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
 
-      it('should return valid web3 client', async () => {
-        const client = await sdk.httpDriver({
-          jsonrpc: '2.0',
-          method: 'web3_clientVersion',
-          params: [],
-          id: 2,
-        })
-
-        expect(client.result).toBeDefined()
-        expect(String(client.result).length).toBeGreaterThan(0)
+      it('should be valid from privateKey', async () => {
+        const result = await sdk.transaction.native.prepare.transferSignedTransaction(
+          {
+            to: address,
+            fromPrivateKey: TEST_DATA.CELO.TESTNET.ERC_20?.PRIVATE_KEY,
+            feeCurrency: 'CUSD',
+            amount: '1',
+          },
+          provider,
+          true,
+        )
+        expectHexString(result)
       })
 
-      it('should return valid web3 client with privateKey', async () => {
-        const web3 = celoWeb3({ blockchain: Blockchain.CELO })
-        const client = web3.getClient(provider, TEST_DATA.CELO.MAINNET.ERC_721!.PRIVATE_KEY)
-
-        expect(client).toBeDefined()
+      it('should be valid from signatureId', async () => {
+        const result = await sdk.transaction.native.prepare.transferSignedTransaction(
+          {
+            to: address,
+            signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+            feeCurrency: 'CUSD',
+            amount: '1',
+          },
+          provider,
+          true,
+        )
+        const json = JSON.parse(result)
+        expectHexString(json.data)
       })
-    })
 
-    describe('Get gas price in wei', () => {
-      it('should return gas price', async () => {
-        const gasPrice = await sdk.getGasPriceInWei()
-
-        expect(gasPrice).toBeDefined()
-        expect(parseInt(gasPrice)).toBeGreaterThan(0)
+      it('should throw', async () => {
+        try {
+          await sdk.transaction.native.prepare.transferSignedTransaction(
+            {
+              to: '',
+              signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+              feeCurrency: 'CUSD',
+              amount: '',
+            },
+            provider,
+            true,
+          )
+          fail()
+        } catch (e: any) {
+          expect(e.message).toMatch(
+            'The target (to) address, currency, feeCurrency or the amount cannot be empty',
+          )
+        }
       })
     })
   })
@@ -135,7 +157,7 @@ describe('CeloSDK - tx', () => {
               true,
             )
             fail()
-          } catch (e) {
+          } catch (e: any) {
             expect(e.reason).toMatch('invalid address')
           }
         })
@@ -156,7 +178,7 @@ describe('CeloSDK - tx', () => {
               true,
             )
             fail()
-          } catch (e) {
+          } catch (e: any) {
             expect(e.message).toMatch('Contract address and fee currency should not be empty')
           }
         })
@@ -218,7 +240,7 @@ describe('CeloSDK - tx', () => {
               true,
             )
             fail()
-          } catch (e) {
+          } catch (e: any) {
             expect(e.reason).toMatch('invalid address')
           }
         })
@@ -286,7 +308,7 @@ describe('CeloSDK - tx', () => {
               true,
             )
             fail()
-          } catch (e) {
+          } catch (e: any) {
             expect(e.reason).toMatch('invalid address')
           }
         })
@@ -309,7 +331,7 @@ describe('CeloSDK - tx', () => {
               true,
             )
             fail()
-          } catch (e) {
+          } catch (e: any) {
             expect(e.message).toMatch('Contract address and fee currency should not be empty!')
           }
         })
