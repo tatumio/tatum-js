@@ -220,122 +220,140 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
     trc10: tronTrc10(args),
     trc20: tronTrc20(args),
     trc721: tronTrc721(args),
-    prepare: {
-      /**
-       * Sign Tron transaction with private keys locally. Nothing is broadcast to the blockchain.
-       * @param body content of the transaction to broadcast
-       * @param provider
-       * @returns transaction data to be broadcast to blockchain.
-       */
-      signedTransaction: async (
-        body: TransferTronBlockchain | TransferTronBlockchainKMS,
-        provider?: string,
-      ) => prepareSignedTransaction(body, args.tronWeb, provider),
-      /**
-       * Sign Tron Freeze balance transaction with private keys locally. Nothing is broadcast to the blockchain.
-       * @param body content of the transaction to broadcast
-       * @param provider optional provider to enter. if not present, Tatum provider will be used.
-       * @returns transaction data to be broadcast to blockchain.
-       */
-      freezeTransaction: async (body: FreezeTron | FreezeTronKMS, provider?: string) =>
-        prepareFreezeTransaction(body, args.tronWeb, provider),
-      /**
-       * Sign Tron custodial transfer transaction with private keys locally. Nothing is broadcast to the blockchain.
-       * @param body content of the transaction to broadcast
-       * @param provider
-       * @returns transaction data to be broadcast to blockchain.
-       */
-      smartContractInvocation: async (
-        body: CallSmartContractMethod | CallSmartContractMethodKMS,
-        provider?: string,
-      ) => prepareSmartContractInvocation(body, args.tronWeb, provider),
-      /**
-       * Sign Tron custodial transfer batch transaction with private keys locally. Nothing is broadcast to the blockchain.
-       * @param body content of the transaction to broadcast
-       * @param provider
-       * @returns transaction data to be broadcast to blockchain.
-       */
-      custodialTransferBatch: async (
-        body: CallSmartContractMethod | CallSmartContractMethodKMS,
-        provider?: string,
-      ) => prepareCustodialTransferBatch(body, args.tronWeb, provider),
-      /**
-       * Sign Tron generate custodial wallet transaction with private keys locally. Nothing is broadcast to the blockchain.
-       * @param body content of the transaction to broadcast
-       * @param provider
-       * @returns transaction data to be broadcast to blockchain.
-       */
-      generateCustodialWalletSignedTransaction: async (
-        body: GenerateCustodialWalletTron | GenerateCustodialWalletTronKMS,
-        provider?: string,
-      ) => prepareGenerateCustodialWalletSignedTransaction(body, args.tronWeb, provider),
-      /**
-       * Sign TRON deploy new smart contract for NFT marketplace transaction. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
-       * @param body request data
-       * @param provider optional provider to enter. if not present, Tatum provider will be used.
-       * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
-       */
-      deployMarketplaceListingSignedTransaction: async (
-        body: GenerateMarketplaceTron | GenerateMarketplaceTronKMS,
-        tronWeb: ITronWeb,
-        provider?: string,
-      ) => prepareDeployMarketplaceListingSignedTransaction(body, args.tronWeb, provider),
+    native: {
+      prepare: {
+        /**
+         * Sign Tron transaction with private keys locally. Nothing is broadcast to the blockchain.
+         * @param body content of the transaction to broadcast
+         * @param provider
+         * @returns transaction data to be broadcast to blockchain.
+         */
+        signedTransaction: async (
+          body: TransferTronBlockchain | TransferTronBlockchainKMS,
+          provider?: string,
+        ) => prepareSignedTransaction(body, args.tronWeb, provider),
+        /**
+         * Sign Tron Freeze balance transaction with private keys locally. Nothing is broadcast to the blockchain.
+         * @param body content of the transaction to broadcast
+         * @param provider optional provider to enter. if not present, Tatum provider will be used.
+         * @returns transaction data to be broadcast to blockchain.
+         */
+        freezeTransaction: async (body: FreezeTron | FreezeTronKMS, provider?: string) =>
+          prepareFreezeTransaction(body, args.tronWeb, provider),
+      },
+      send: {
+        /**
+         * Send Tron transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+         * This operation is irreversible.
+         * @param body content of the transaction to broadcast
+         * @returns transaction id of the transaction in the blockchain
+         */
+        signedTransaction: async (
+          body: TransferTronBlockchain | TransferTronBlockchainKMS,
+          provider?: string,
+        ) =>
+          BlockchainTronService.tronBroadcast({
+            txData: await prepareSignedTransaction(body, args.tronWeb, provider),
+            // TODO: SignatureID is missing in OpenApi
+          }),
+        /**
+         * Send Tron Freeze balance transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+         * This operation is irreversible.
+         * @param body content of the transaction to broadcast
+         * @returns transaction id of the transaction in the blockchain
+         */
+        freezeTransaction: async (body: FreezeTron | FreezeTronKMS, provider?: string) =>
+          BlockchainTronService.tronBroadcast({
+            txData: await prepareFreezeTransaction(body, args.tronWeb, provider),
+            // TODO: SignatureID is missing in OpenApi
+          }),
+      },
     },
-    send: {
-      /**
-       * Send Tron transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
-       * This operation is irreversible.
-       * @param body content of the transaction to broadcast
-       * @returns transaction id of the transaction in the blockchain
-       */
-      signedTransaction: async (
-        body: TransferTronBlockchain | TransferTronBlockchainKMS,
-        provider?: string,
-      ) =>
-        BlockchainTronService.tronBroadcast({
-          txData: await prepareSignedTransaction(body, args.tronWeb, provider),
-          // TODO: SignatureID is missing in OpenApi
-        }),
-      /**
-       * Send Tron Freeze balance transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
-       * This operation is irreversible.
-       * @param body content of the transaction to broadcast
-       * @returns transaction id of the transaction in the blockchain
-       */
-      freezeTransaction: async (body: FreezeTron | FreezeTronKMS, provider?: string) =>
-        BlockchainTronService.tronBroadcast({
-          txData: await prepareFreezeTransaction(body, args.tronWeb, provider),
-          // TODO: SignatureID is missing in OpenApi
-        }),
-      /**
-       * Send Tron generate custodial wallet transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
-       * This operation is irreversible.
-       * @param body content of the transaction to broadcast
-       * @returns transaction id of the transaction in the blockchain
-       */
-      generateCustodialWalletSignedTransaction: async (
-        body: GenerateCustodialWalletTron | GenerateCustodialWalletTronKMS,
-        provider?: string,
-      ) =>
-        BlockchainTronService.tronBroadcast({
-          txData: await prepareGenerateCustodialWalletSignedTransaction(body, args.tronWeb, provider),
-          // TODO: SignatureID is missing in OpenApi
-        }),
-      /**
-       * Deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
-       * @param body request data
-       * @param provider optional provider to enter. if not present, Tatum provider will be used.
-       * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
-       */
-      deployMarketplaceListingSignedTransaction: async (
-        body: GenerateMarketplaceTron | GenerateMarketplaceTronKMS,
-        tronWeb: ITronWeb,
-        provider?: string,
-      ) =>
-        BlockchainTronService.tronBroadcast({
-          txData: await prepareDeployMarketplaceListingSignedTransaction(body, args.tronWeb, provider),
-          // TODO: SignatureID is missing in OpenApi
-        }),
+    smartContract: {
+      prepare: {
+        /**
+         * Sign Tron custodial transfer transaction with private keys locally. Nothing is broadcast to the blockchain.
+         * @param body content of the transaction to broadcast
+         * @param provider
+         * @returns transaction data to be broadcast to blockchain.
+         */
+        smartContractInvocation: async (
+          body: CallSmartContractMethod | CallSmartContractMethodKMS,
+          provider?: string,
+        ) => prepareSmartContractInvocation(body, args.tronWeb, provider),
+      },
+    },
+    custodial: {
+      prepare: {
+        /**
+         * Sign Tron custodial transfer batch transaction with private keys locally. Nothing is broadcast to the blockchain.
+         * @param body content of the transaction to broadcast
+         * @param provider
+         * @returns transaction data to be broadcast to blockchain.
+         */
+        custodialTransferBatch: async (
+          body: CallSmartContractMethod | CallSmartContractMethodKMS,
+          provider?: string,
+        ) => prepareCustodialTransferBatch(body, args.tronWeb, provider),
+        /**
+         * Sign Tron generate custodial wallet transaction with private keys locally. Nothing is broadcast to the blockchain.
+         * @param body content of the transaction to broadcast
+         * @param provider
+         * @returns transaction data to be broadcast to blockchain.
+         */
+        generateCustodialWalletSignedTransaction: async (
+          body: GenerateCustodialWalletTron | GenerateCustodialWalletTronKMS,
+          provider?: string,
+        ) => prepareGenerateCustodialWalletSignedTransaction(body, args.tronWeb, provider),
+      },
+      send: {
+        /**
+         * Send Tron generate custodial wallet transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+         * This operation is irreversible.
+         * @param body content of the transaction to broadcast
+         * @returns transaction id of the transaction in the blockchain
+         */
+        generateCustodialWalletSignedTransaction: async (
+          body: GenerateCustodialWalletTron | GenerateCustodialWalletTronKMS,
+          provider?: string,
+        ) =>
+          BlockchainTronService.tronBroadcast({
+            txData: await prepareGenerateCustodialWalletSignedTransaction(body, args.tronWeb, provider),
+            // TODO: SignatureID is missing in OpenApi
+          }),
+      },
+    },
+    marketplace: {
+      prepare: {
+        /**
+         * Sign TRON deploy new smart contract for NFT marketplace transaction. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
+         * @param body request data
+         * @param provider optional provider to enter. if not present, Tatum provider will be used.
+         * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+         */
+        deployMarketplaceListingSignedTransaction: async (
+          body: GenerateMarketplaceTron | GenerateMarketplaceTronKMS,
+          tronWeb: ITronWeb,
+          provider?: string,
+        ) => prepareDeployMarketplaceListingSignedTransaction(body, args.tronWeb, provider),
+      },
+      send: {
+        /**
+         * Deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
+         * @param body request data
+         * @param provider optional provider to enter. if not present, Tatum provider will be used.
+         * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+         */
+        deployMarketplaceListingSignedTransaction: async (
+          body: GenerateMarketplaceTron | GenerateMarketplaceTronKMS,
+          tronWeb: ITronWeb,
+          provider?: string,
+        ) =>
+          BlockchainTronService.tronBroadcast({
+            txData: await prepareDeployMarketplaceListingSignedTransaction(body, args.tronWeb, provider),
+            // TODO: SignatureID is missing in OpenApi
+          }),
+      },
     },
   }
 }
