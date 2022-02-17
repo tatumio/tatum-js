@@ -4,10 +4,10 @@ import {
   ChainApproveNftTransfer,
   ChainAuctionBid,
   ChainCancelAuction,
-  ChainCreateAuction,
   ChainDeployAuction,
   ChainSettleAuction,
   ChainUpdateFeeRecipient,
+  CreateAuction,
 } from '@tatumio/shared-blockchain-evm-based'
 import { GanacheAccount } from './ganacheHelper'
 
@@ -65,40 +65,95 @@ export const auctionTestFactory = {
     },
     auctionUpdateFeeRecipientSignedTransaction: (
       sdk: SdkWithAuctionFunctions,
-      testData: BlockchainTestData,
+      accounts: GanacheAccount[]
     ) => {
-      it('valid', async () => {
-        const tx = await sdk.prepare.auctionUpdateFeeRecipientSignedTransaction(
-          testData.AUCTIONS.UPDATE_FEE_RECIPIENT.VALID,
-        )
-        expectHexString(tx)
-      })
-      it('invalid address', async () => {
-        try {
-          await sdk.prepare.auctionUpdateFeeRecipientSignedTransaction(
-            testData.AUCTIONS.UPDATE_FEE_RECIPIENT.INVALID,
-          )
-        } catch (e) {
-          expect(e.toString()).toEqual(
-            "Error: Provided address 0x687422eEA2cB73B5d3e242bA5456b782919AFc86 is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted.",
-          )
-        }
-      })
+      // it('valid', async () => {
+      //   const tx = await sdk.prepare.auctionUpdateFeeRecipientSignedTransaction(
+
+      //   )
+      //   expectHexString(tx)
+      // })
+      // it('invalid address', async () => {
+      //   try {
+      //     await sdk.prepare.auctionUpdateFeeRecipientSignedTransaction(
+      //       testData.AUCTIONS.UPDATE_FEE_RECIPIENT.INVALID,
+      //     )
+      //   } catch (e) {
+      //     expect(e.toString()).toEqual(
+      //       "Error: Provided address 0x687422eEA2cB73B5d3e242bA5456b782919AFc86 is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted.",
+      //     )
+      //   }
+      // })
     },
-    createAuctionSignedTransaction: (sdk: SdkWithAuctionFunctions, testData: BlockchainTestData) => {
-      it('valid', async () => {
-        const tx = await sdk.prepare.createAuctionSignedTransaction(testData.AUCTIONS.CREATE_AUCTION.VALID)
+    createAuctionSignedTransaction: (sdk: SdkWithAuctionFunctions,       accounts: GanacheAccount[]
+      ) => {
+      it('valid from privateKey', async () => {
+        const tx = await sdk.prepare.createAuctionSignedTransaction(          {
+          contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+          nftAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+          seller: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+          erc20Address: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+          id: 'string',
+          amount: '1',
+          tokenId: '100000',
+          endedAt: 100000,
+          isErc721: true,
+          fromPrivateKey: accounts[0].privateKey,
+          nonce: 1,
+          fee: {
+            gasLimit: '40000',
+            gasPrice: '20',
+          },
+        })
+
         expectHexString(tx)
       })
+      it('valid from signatureId', async () => {
+        const nonce = 1
+
+        const tx = await sdk.prepare.createAuctionSignedTransaction(          {
+          contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+          nftAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+          seller: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+          erc20Address: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+          id: 'string',
+          amount: '1',
+          tokenId: '100000',
+          endedAt: 100000,
+          isErc721: true,
+          signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+          nonce: 1,
+          fee: {
+            gasLimit: '40000',
+            gasPrice: '20',
+          },
+        })
+
+        const json = JSON.parse(tx)
+
+        expect(json.nonce).toBe(nonce)
+        expect(json.gasPrice).toBe('20000000000')
+      })
       it('invalid address', async () => {
-        try {
-          await sdk.prepare.createAuctionSignedTransaction(testData.AUCTIONS.CREATE_AUCTION.INVALID)
-          fail()
-        } catch (e) {
-          expect(e.toString()).toEqual(
-            "Error: Provided address 0x687422eEA2cB73B5d3e242bA5456b782919AFc86 is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted.",
+          await expect(async () => sdk.prepare.createAuctionSignedTransaction({
+            contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc86',
+            nftAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+            seller: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+            erc20Address: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+            id: 'string',
+            amount: '1',
+            tokenId: '100000',
+            endedAt: 100000,
+            isErc721: true,
+            fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
+            nonce: 1,
+            fee: {
+              gasLimit: '40000',
+              gasPrice: '20',
+            },
+          })).rejects.toThrow(
+            `Provided address 0x687422eEA2cB73B5d3e242bA5456b782919AFc86 is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted.`
           )
-        }
       })
     },
     auctionApproveNftTransferSignedTransaction: (
@@ -202,7 +257,7 @@ export interface SdkWithAuctionFunctions {
   prepare: {
     deployAuctionSignedTransaction(body: ChainDeployAuction, provider?: string): Promise<string>
     auctionUpdateFeeRecipientSignedTransaction(body: ChainUpdateFeeRecipient, provider?): Promise<string>
-    createAuctionSignedTransaction(body: ChainCreateAuction, provider?): Promise<string>
+    createAuctionSignedTransaction(body: CreateAuction, provider?): Promise<string>
     auctionApproveNftTransferSignedTransaction(body: ChainApproveNftTransfer, provider?): Promise<string>
     auctionApproveErc20TransferSignedTransaction(testnet, body: ChainApproveErc20, provider?): Promise<string>
     auctionBidSignedTransaction(testnet, body: ChainAuctionBid, provider?): Promise<string>
@@ -211,6 +266,7 @@ export interface SdkWithAuctionFunctions {
   }
 }
 
+// TODO get rid of it
 type Auction = {
   /**
    * Amount of NFTs to sold in this auction. Valid only for ERC1155 listings.

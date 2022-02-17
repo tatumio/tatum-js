@@ -75,8 +75,8 @@ export const evmBasedAuction = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
        */
-      createAuctionSignedTransaction: async (body: ChainCreateAuction, provider?: string) =>
-        createAuctionSignedTransaction({ ...body, chain: blockchain } as CreateAuction, web3, provider),
+      createAuctionSignedTransaction: async (body: CreateAuction, provider?: string) =>
+        createAuctionSignedTransaction(body, web3, provider),
       /**
        * Approve NFT transfer for auction to perform listing of the asset.
        * @param body request data
@@ -175,9 +175,9 @@ export const evmBasedAuction = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      createAuctionSignedTransaction: async (body: ChainCreateAuction, provider?: string) =>
+      createAuctionSignedTransaction: async (body: CreateAuction, provider?: string) =>
         broadcastFunction({
-          txData: await createAuctionSignedTransaction({ ...body, chain: blockchain }, web3, provider),
+          txData: await createAuctionSignedTransaction(body, web3, provider),
           signatureId: body.signatureId,
         }),
       /**
@@ -626,7 +626,6 @@ export interface ApproveErc20 extends AuthProps {
 
 export interface CreateAuction extends AuthProps {
   contractAddress: string
-  chain: Blockchain
   id: string
   nftAddress: string
   seller: string
@@ -647,9 +646,7 @@ export interface CancelAuction extends InvokeAuctionOperation, AuthProps {
 export interface SettleAuction extends InvokeAuctionOperation, AuthProps {
   amount?: string
 }
-export interface CreateAuction extends InvokeAuctionOperation, AuthProps {}
 export type ChainAuctionBid = Omit<AuctionBid, 'chain'>
 export type ChainCancelAuction = Omit<CancelAuction, 'chain'>
 export type ChainSettleAuction = Omit<SettleAuction, 'chain'>
-export type ChainCreateAuction = Omit<CreateAuction, 'chain'>
 export type ChainApproveErc20 = Omit<ApproveErc20, 'chain'>

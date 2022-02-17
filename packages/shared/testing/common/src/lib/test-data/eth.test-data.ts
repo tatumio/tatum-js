@@ -47,44 +47,6 @@ export const ETH_TEST_DATA: BlockchainTestData = {
     'The value of "value" is out of range. It must be >= 0 and <= 4294967295. Received -1',
   INVALID_PRIVATE_KEY_ERROR: 'Expected private key to be an Uint8Array with length 32',
   AUCTIONS: {
-    CREATE_AUCTION: {
-      VALID: {
-        contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-        nftAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-        seller: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-        erc20Address: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-        id: 'string',
-        amount: '1',
-        tokenId: '100000',
-        endedAt: 100000,
-        isErc721: true,
-        fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-        nonce: 1,
-        fee: {
-          gasLimit: '40000',
-          gasPrice: '20',
-        },
-        bidValue: '10',
-      },
-      INVALID: {
-        contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc86',
-        nftAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-        seller: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-        erc20Address: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-        id: 'string',
-        amount: '1',
-        tokenId: '100000',
-        endedAt: 100000,
-        isErc721: true,
-        fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-        nonce: 1,
-        fee: {
-          gasLimit: '40000',
-          gasPrice: '20',
-        },
-        bidValue: '10',
-      },
-    },
     UPDATE_FEE_RECIPIENT: {
       VALID: {
         contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',

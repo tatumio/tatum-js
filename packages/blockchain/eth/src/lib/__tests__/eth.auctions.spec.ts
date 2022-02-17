@@ -62,11 +62,11 @@ fdescribe('EthSDK - auctions', () => {
       await ganacheHelper.initWeb3(inmemoryBlockchain.web3)
     })
 
-    fdescribe('deploy auction', () => {
+    describe('deploy auction', () => {
       auctionTestFactory.prepare.deployAuctionSignedTransaction(auctionService, inmemoryBlockchain.accounts)
     })
-    xdescribe('create auction', () => {
-      auctionTestFactory.prepare.createAuctionSignedTransaction(sdk.marketplace.auction, TEST_DATA.ETH)
+    describe('create auction', () => {
+      auctionTestFactory.prepare.createAuctionSignedTransaction(auctionService, inmemoryBlockchain.accounts)
     })
     xdescribe('update auction fee recipient', () => {
       auctionTestFactory.prepare.auctionUpdateFeeRecipientSignedTransaction(
