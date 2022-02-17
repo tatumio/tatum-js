@@ -8,12 +8,7 @@ import {
 import BigNumber from 'bignumber.js'
 import { ITronWeb } from './tron.web'
 import { Trc20Token } from '@tatumio/shared-blockchain-evm-based'
-
-function isTransferTronTrc20BlockchainKMS(
-  input: TransferTronTrc20Blockchain | TransferTronTrc20BlockchainKMS,
-): input is TransferTronTrc20BlockchainKMS {
-  return (input as TransferTronTrc20BlockchainKMS).signatureId !== undefined
-}
+import { isWithSignatureId } from '@tatumio/shared-abstract-sdk'
 
 const prepareSignedTransaction = async (
   body: TransferTronTrc20Blockchain | TransferTronTrc20BlockchainKMS,
@@ -38,7 +33,7 @@ const prepareSignedTransaction = async (
   ]
   const feeLimitSun = client.toSun(feeLimit)
 
-  if (isTransferTronTrc20BlockchainKMS(body)) {
+  if (isWithSignatureId(body)) {
     const { transaction } = await client.transactionBuilder.triggerSmartContract(
       tokenAddressHex,
       methodName,
@@ -65,12 +60,6 @@ const prepareSignedTransaction = async (
   }
 }
 
-function isCreateTronTrc20BlockchainKMS(
-  input: CreateTronTrc20Blockchain | CreateTronTrc20BlockchainKMS,
-): input is CreateTronTrc20BlockchainKMS {
-  return (input as CreateTronTrc20BlockchainKMS).signatureId !== undefined
-}
-
 const prepareCreateSignedTransaction = async (
   body: CreateTronTrc20Blockchain | CreateTronTrc20BlockchainKMS,
   tronWeb: ITronWeb,
@@ -91,7 +80,7 @@ const prepareCreateSignedTransaction = async (
     name,
   }
 
-  if (isCreateTronTrc20BlockchainKMS(body)) {
+  if (isWithSignatureId(body)) {
     const tx = await client.transactionBuilder.createSmartContract(params, body.from)
 
     return JSON.stringify(tx)

@@ -10,6 +10,7 @@ import { TatumBscSDK } from '@tatumio/bsc'
 import { TatumXrpSDK } from '@tatumio/xrp'
 import { TatumSolanaSDK } from '@tatumio/solana'
 import { TatumTronSDK } from '@tatumio/tron'
+import { TatumAlgoSDK } from '@tatumio/algo'
 
 export type SDKS = {
   btc: ReturnType<typeof TatumBtcSDK>
@@ -24,4 +25,5 @@ export type SDKS = {
   xrp: ReturnType<typeof TatumXrpSDK>
   sol: ReturnType<typeof TatumSolanaSDK>
   tron: ReturnType<typeof TatumTronSDK>
+  algo: ReturnType<typeof TatumAlgoSDK>
 }

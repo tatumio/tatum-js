@@ -11,17 +11,12 @@ import {
   TransferTronBlockchain,
   TransferTronBlockchainKMS,
 } from '@tatumio/api-client'
+import { isWithSignatureId } from '@tatumio/shared-abstract-sdk'
 import { ListingSmartContract } from '@tatumio/shared-blockchain-evm-based'
 import { tronTrc10 } from './tron.trc10'
 import { tronTrc20 } from './tron.trc20'
 import { tronTrc721 } from './tron.trc721'
 import { ITronWeb } from './tron.web'
-
-function isTransferTronBlockchainKMS(
-  input: TransferTronBlockchain | TransferTronBlockchainKMS,
-): input is TransferTronBlockchainKMS {
-  return (input as TransferTronBlockchainKMS).signatureId !== undefined
-}
 
 const prepareSignedTransaction = async (
   body: TransferTronBlockchain | TransferTronBlockchainKMS,
@@ -31,7 +26,7 @@ const prepareSignedTransaction = async (
   const { to, amount } = body
   const client = tronWeb.getClient(provider)
 
-  if (isTransferTronBlockchainKMS(body)) {
+  if (isWithSignatureId(body)) {
     const tx = await client.transactionBuilder.sendTrx(to, client.toSun(amount), body.from)
 
     return JSON.stringify(tx)
@@ -46,10 +41,6 @@ const prepareSignedTransaction = async (
   }
 }
 
-function isFreezeTronKMS(input: FreezeTron | FreezeTronKMS): input is FreezeTronKMS {
-  return (input as FreezeTronKMS).signatureId !== undefined
-}
-
 const prepareFreezeTransaction = async (
   body: FreezeTron | FreezeTronKMS,
   tronWeb: ITronWeb,
@@ -58,7 +49,7 @@ const prepareFreezeTransaction = async (
   const { receiver, amount, resource, duration } = body
   const client = tronWeb.getClient(provider)
 
-  if (isFreezeTronKMS(body)) {
+  if (isWithSignatureId(body)) {
     const tx = await client.transactionBuilder.freezeBalance(
       client.toSun(parseFloat(amount)),
       duration,
@@ -161,12 +152,6 @@ const prepareCustodialTransferBatch = async (
   return JSON.stringify(await client.trx.sign(transaction, body.fromPrivateKey))
 }
 
-function isGenerateCustodialWalletTronKMS(
-  input: GenerateCustodialWalletTron | GenerateCustodialWalletTronKMS,
-): input is GenerateCustodialWalletTronKMS {
-  return (input as GenerateCustodialWalletTronKMS).signatureId !== undefined
-}
-
 const prepareGenerateCustodialWalletSignedTransaction = async (
   body: GenerateCustodialWalletTron | GenerateCustodialWalletTronKMS,
   tronWeb: ITronWeb,
@@ -177,9 +162,7 @@ const prepareGenerateCustodialWalletSignedTransaction = async (
   // TODO: implement obtainCustodialAddressType
   const { abi, code } = {} as any
 
-  const sender = isGenerateCustodialWalletTronKMS(body)
-    ? body.from
-    : client.address.fromPrivateKey(body.fromPrivateKey)
+  const sender = isWithSignatureId(body) ? body.from : client.address.fromPrivateKey(body.fromPrivateKey)
 
   const tx = await client.transactionBuilder.createSmartContract(
     {
@@ -195,17 +178,11 @@ const prepareGenerateCustodialWalletSignedTransaction = async (
     sender,
   )
 
-  if (isGenerateCustodialWalletTronKMS(body)) {
+  if (isWithSignatureId(body)) {
     return JSON.stringify(tx)
   }
 
   return JSON.stringify(await client.trx.sign(tx, body.fromPrivateKey))
-}
-
-function isGenerateMarketplaceTronKMS(
-  input: GenerateMarketplaceTron | GenerateMarketplaceTronKMS,
-): input is GenerateMarketplaceTronKMS {
-  return (input as GenerateMarketplaceTronKMS).signatureId !== undefined
 }
 
 const prepareDeployMarketplaceListingSignedTransaction = async (
@@ -215,9 +192,7 @@ const prepareDeployMarketplaceListingSignedTransaction = async (
 ) => {
   const client = tronWeb.getClient(provider)
 
-  const sender = isGenerateMarketplaceTronKMS(body)
-    ? body.from
-    : client.address.fromPrivateKey(body.fromPrivateKey)
+  const sender = isWithSignatureId(body) ? body.from : client.address.fromPrivateKey(body.fromPrivateKey)
 
   const tx = await client.transactionBuilder.createSmartContract(
     {
@@ -233,7 +208,7 @@ const prepareDeployMarketplaceListingSignedTransaction = async (
     sender,
   )
 
-  if (isGenerateMarketplaceTronKMS(body)) {
+  if (isWithSignatureId(body)) {
     return JSON.stringify(tx)
   }
 
