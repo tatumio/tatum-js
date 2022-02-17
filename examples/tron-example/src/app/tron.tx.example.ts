@@ -124,66 +124,61 @@ export async function tronTxWithPrivateKeyExample(): Promise<void> {
     fromPrivateKey: '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701',
   })
 
-  const preparedMintMultipleSignedTransaction =
-    await tronSDK.trc721.prepare.mintMultipleSignedTransaction({
-      chain: 'TRON',
-      to: ['TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh'],
-      tokenId: ['345634563', '53545345'],
-      url: ['https://my_token_data.com', 'https://my_token_data2.com'],
-      contractAddress: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
-      feeLimit: 100,
-      account: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
-      fromPrivateKey: '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701',
-    })
+  const preparedMintMultipleSignedTransaction = await tronSDK.trc721.prepare.mintMultipleSignedTransaction({
+    chain: 'TRON',
+    to: ['TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh'],
+    tokenId: ['345634563', '53545345'],
+    url: ['https://my_token_data.com', 'https://my_token_data2.com'],
+    contractAddress: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
+    feeLimit: 100,
+    account: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
+    fromPrivateKey: '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701',
+  })
 
-  const sentMintMultipleSignedTransaction =
-    await tronSDK.trc721.send.mintMultipleSignedTransaction({
-      chain: 'TRON',
-      to: ['TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh'],
-      tokenId: ['345634563', '53545345'],
-      url: ['https://my_token_data.com', 'https://my_token_data2.com'],
-      contractAddress: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
-      feeLimit: 100,
-      account: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
-      fromPrivateKey: '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701',
-    })
+  const sentMintMultipleSignedTransaction = await tronSDK.trc721.send.mintMultipleSignedTransaction({
+    chain: 'TRON',
+    to: ['TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh'],
+    tokenId: ['345634563', '53545345'],
+    url: ['https://my_token_data.com', 'https://my_token_data2.com'],
+    contractAddress: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
+    feeLimit: 100,
+    account: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
+    fromPrivateKey: '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701',
+  })
 
-  const preparedMintCashbackSignedTransaction =
-    await tronSDK.trc721.prepare.mintCashbackSignedTransaction({
-      chain: 'TRON',
-      to: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
-      tokenId: '45343653',
-      url: 'https://my_token_data.com',
-      cashbackValues: ['0.5', '0.5'],
-      contractAddress: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
-      feeLimit: 100,
-      account: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
-      fromPrivateKey: '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701',
-    })
+  const preparedMintCashbackSignedTransaction = await tronSDK.trc721.prepare.mintCashbackSignedTransaction({
+    chain: 'TRON',
+    to: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
+    tokenId: '45343653',
+    url: 'https://my_token_data.com',
+    cashbackValues: ['0.5', '0.5'],
+    contractAddress: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
+    feeLimit: 100,
+    account: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
+    fromPrivateKey: '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701',
+  })
 
-  const sentMintCashbackSignedTransaction =
-    await tronSDK.trc721.send.mintCashbackSignedTransaction({
-      chain: 'TRON',
-      to: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
-      tokenId: '45343653',
-      url: 'https://my_token_data.com',
-      cashbackValues: ['0.5', '0.5'],
-      contractAddress: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
-      feeLimit: 100,
-      account: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
-      fromPrivateKey: '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701',
-    })
+  const sentMintCashbackSignedTransaction = await tronSDK.trc721.send.mintCashbackSignedTransaction({
+    chain: 'TRON',
+    to: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
+    tokenId: '45343653',
+    url: 'https://my_token_data.com',
+    cashbackValues: ['0.5', '0.5'],
+    contractAddress: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
+    feeLimit: 100,
+    account: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
+    fromPrivateKey: '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701',
+  })
 
-  const preparedTransferSignedTransaction =
-    await tronSDK.trc721.prepare.transferSignedTransaction({
-      chain: 'TRON',
-      tokenId: '453453',
-      to: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
-      contractAddress: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
-      feeLimit: 100,
-      account: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
-      fromPrivateKey: '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701',
-    })
+  const preparedTransferSignedTransaction = await tronSDK.trc721.prepare.transferSignedTransaction({
+    chain: 'TRON',
+    tokenId: '453453',
+    to: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
+    contractAddress: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
+    feeLimit: 100,
+    account: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
+    fromPrivateKey: '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701',
+  })
 
   const sentTransferSignedTransaction = await tronSDK.trc721.send.transferSignedTransaction({
     chain: 'TRON',
@@ -371,76 +366,71 @@ export async function tronTxWithSignatureIdExample(): Promise<void> {
     index: 1,
   })
 
-  const preparedMintMultipleSignedTransaction =
-    await tronSDK.trc721.prepare.mintMultipleSignedTransaction({
-      chain: 'TRON',
-      to: ['TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh'],
-      tokenId: ['345634563', '53545345'],
-      url: ['https://my_token_data.com', 'https://my_token_data2.com'],
-      contractAddress: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
-      feeLimit: 100,
-      account: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      from: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
-      index: 1,
-    })
+  const preparedMintMultipleSignedTransaction = await tronSDK.trc721.prepare.mintMultipleSignedTransaction({
+    chain: 'TRON',
+    to: ['TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh'],
+    tokenId: ['345634563', '53545345'],
+    url: ['https://my_token_data.com', 'https://my_token_data2.com'],
+    contractAddress: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
+    feeLimit: 100,
+    account: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    from: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
+    index: 1,
+  })
 
-  const sentMintMultipleSignedTransaction =
-    await tronSDK.trc721.send.mintMultipleSignedTransaction({
-      chain: 'TRON',
-      to: ['TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh'],
-      tokenId: ['345634563', '53545345'],
-      url: ['https://my_token_data.com', 'https://my_token_data2.com'],
-      contractAddress: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
-      feeLimit: 100,
-      account: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      from: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
-      index: 1,
-    })
+  const sentMintMultipleSignedTransaction = await tronSDK.trc721.send.mintMultipleSignedTransaction({
+    chain: 'TRON',
+    to: ['TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh'],
+    tokenId: ['345634563', '53545345'],
+    url: ['https://my_token_data.com', 'https://my_token_data2.com'],
+    contractAddress: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
+    feeLimit: 100,
+    account: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    from: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
+    index: 1,
+  })
 
-  const preparedMintCashbackSignedTransaction =
-    await tronSDK.trc721.prepare.mintCashbackSignedTransaction({
-      chain: 'TRON',
-      to: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
-      tokenId: '45343653',
-      url: 'https://my_token_data.com',
-      cashbackValues: ['0.5', '0.5'],
-      contractAddress: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
-      feeLimit: 100,
-      account: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      from: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
-      index: 1,
-    })
+  const preparedMintCashbackSignedTransaction = await tronSDK.trc721.prepare.mintCashbackSignedTransaction({
+    chain: 'TRON',
+    to: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
+    tokenId: '45343653',
+    url: 'https://my_token_data.com',
+    cashbackValues: ['0.5', '0.5'],
+    contractAddress: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
+    feeLimit: 100,
+    account: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    from: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
+    index: 1,
+  })
 
-  const sentMintCashbackSignedTransaction =
-    await tronSDK.trc721.send.mintCashbackSignedTransaction({
-      chain: 'TRON',
-      to: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
-      tokenId: '45343653',
-      url: 'https://my_token_data.com',
-      cashbackValues: ['0.5', '0.5'],
-      contractAddress: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
-      feeLimit: 100,
-      account: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      from: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
-      index: 1,
-    })
+  const sentMintCashbackSignedTransaction = await tronSDK.trc721.send.mintCashbackSignedTransaction({
+    chain: 'TRON',
+    to: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
+    tokenId: '45343653',
+    url: 'https://my_token_data.com',
+    cashbackValues: ['0.5', '0.5'],
+    contractAddress: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
+    feeLimit: 100,
+    account: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    from: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
+    index: 1,
+  })
 
-  const preparedTransferSignedTransaction =
-    await tronSDK.trc721.prepare.transferSignedTransaction({
-      chain: 'TRON',
-      tokenId: '453453',
-      to: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
-      contractAddress: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
-      feeLimit: 100,
-      account: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      from: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
-      index: 1,
-    })
+  const preparedTransferSignedTransaction = await tronSDK.trc721.prepare.transferSignedTransaction({
+    chain: 'TRON',
+    tokenId: '453453',
+    to: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
+    contractAddress: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
+    feeLimit: 100,
+    account: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    from: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
+    index: 1,
+  })
 
   const sentTransferSignedTransaction = await tronSDK.trc721.send.transferSignedTransaction({
     chain: 'TRON',

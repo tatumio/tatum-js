@@ -5,17 +5,16 @@ const polygonSDK = TatumPolygonSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function polygonTxWithSignatureIdExample(): Promise<void> {
   // NATIVE
-  const preparedTransferNativeTransaction =
-    await polygonSDK.transaction.prepare.transferSignedTransaction({
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      amount: '10',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      nonce: 3252345722143,
-      fee: {
-        gasLimit: '53632',
-        gasPrice: '20',
-      },
-    })
+  const preparedTransferNativeTransaction = await polygonSDK.transaction.prepare.transferSignedTransaction({
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    amount: '10',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 3252345722143,
+    fee: {
+      gasLimit: '53632',
+      gasPrice: '20',
+    },
+  })
 
   const sentTransferNativeTransaction = await polygonSDK.transaction.send.transferSignedTransaction({
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -59,19 +58,18 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const preparedTransferErc20Transaction =
-    await polygonSDK.erc20.prepare.transferSignedTransaction({
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      amount: '10',
-      contractAddress: '0x0b9808fce74030c87aae334a30f6c8f6c66b090d',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      digits: 18,
-      nonce: 3252345722143,
-      fee: {
-        gasLimit: '53632',
-        gasPrice: '20',
-      },
-    })
+  const preparedTransferErc20Transaction = await polygonSDK.erc20.prepare.transferSignedTransaction({
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    amount: '10',
+    contractAddress: '0x0b9808fce74030c87aae334a30f6c8f6c66b090d',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    digits: 18,
+    nonce: 3252345722143,
+    fee: {
+      gasLimit: '53632',
+      gasPrice: '20',
+    },
+  })
 
   const sentTransferErc20Transaction = await polygonSDK.erc20.send.transferSignedTransaction({
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -117,19 +115,17 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
   })
 
   // ERC721(NFT)
-  const preparedDeployErc721Transaction = await polygonSDK.erc721.prepare.deploySignedTransaction(
-    {
-      chain: 'MATIC',
-      name: 'MY_TOKEN',
-      symbol: '1oido3id3',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
+  const preparedDeployErc721Transaction = await polygonSDK.erc721.prepare.deploySignedTransaction({
+    chain: 'MATIC',
+    name: 'MY_TOKEN',
+    symbol: '1oido3id3',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
     },
-  )
+  })
 
   const sentDeployErc721Transaction = await polygonSDK.erc721.send.deploySignedTransaction({
     chain: 'MATIC',
@@ -171,8 +167,8 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const preparedMintMultipleSignedTransaction =
-    await polygonSDK.erc721.prepare.mintMultipleSignedTransaction({
+  const preparedMintMultipleSignedTransaction = await polygonSDK.erc721.prepare.mintMultipleSignedTransaction(
+    {
       chain: 'MATIC',
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       tokenId: ['345634563', '53545345'],
@@ -188,45 +184,29 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
         gasLimit: '326452',
         gasPrice: '20',
       },
-    })
+    },
+  )
 
-  const sentMintMultipleSignedTransaction =
-    await polygonSDK.erc721.send.mintMultipleSignedTransaction({
-      chain: 'MATIC',
-      to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-      tokenId: ['345634563', '53545345'],
-      url: ['https://my_token_data.com', 'https://my_token_data2.com'],
-      authorAddresses: [
-        ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-        ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
-      ],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
+  const sentMintMultipleSignedTransaction = await polygonSDK.erc721.send.mintMultipleSignedTransaction({
+    chain: 'MATIC',
+    to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+    tokenId: ['345634563', '53545345'],
+    url: ['https://my_token_data.com', 'https://my_token_data2.com'],
+    authorAddresses: [
+      ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+      ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
+    ],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
 
-  const preparedMintCashbackSignedTransaction =
-    await polygonSDK.erc721.prepare.mintCashbackSignedTransaction({
-      chain: 'MATIC',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      tokenId: '45343653',
-      url: 'https://my_token_data.com',
-      cashbackValues: ['0.5', '0.5'],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
-
-  const sentMintCashbackSignedTransaction =
-    await polygonSDK.erc721.send.mintCashbackSignedTransaction({
+  const preparedMintCashbackSignedTransaction = await polygonSDK.erc721.prepare.mintCashbackSignedTransaction(
+    {
       chain: 'MATIC',
       to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
       tokenId: '45343653',
@@ -239,7 +219,23 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
         gasLimit: '326452',
         gasPrice: '20',
       },
-    })
+    },
+  )
+
+  const sentMintCashbackSignedTransaction = await polygonSDK.erc721.send.mintCashbackSignedTransaction({
+    chain: 'MATIC',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    tokenId: '45343653',
+    url: 'https://my_token_data.com',
+    cashbackValues: ['0.5', '0.5'],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
 
   const preparedMintMultipleCashbackSignedTransaction =
     await polygonSDK.erc721.prepare.mintMultipleCashbackSignedTransaction({
@@ -288,20 +284,19 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
       },
     })
 
-  const sentMintProvenanceSignedTransaction =
-    await polygonSDK.erc721.send.mintProvenanceSignedTransaction({
-      chain: 'MATIC',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      tokenId: '5435345',
-      url: 'https://my_token_data.com',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
+  const sentMintProvenanceSignedTransaction = await polygonSDK.erc721.send.mintProvenanceSignedTransaction({
+    chain: 'MATIC',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    tokenId: '5435345',
+    url: 'https://my_token_data.com',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
 
   const preparedMintMultipleProvenanceSignedTransaction =
     await polygonSDK.erc721.prepare.mintMultipleProvenanceSignedTransaction({
@@ -335,19 +330,18 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
       },
     })
 
-  const preparedTransferSignedTransaction =
-    await polygonSDK.erc721.prepare.transferSignedTransaction({
-      chain: 'MATIC',
-      tokenId: '453453',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
+  const preparedTransferSignedTransaction = await polygonSDK.erc721.prepare.transferSignedTransaction({
+    chain: 'MATIC',
+    tokenId: '453453',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
 
   const sentTransferSignedTransaction = await polygonSDK.erc721.send.transferSignedTransaction({
     chain: 'MATIC',
@@ -415,39 +409,37 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
   })
 
   // ERC1155(MULTI TOKEN)
-  const preparedDeployMultiTokenTransaction =
-    await polygonSDK.multiToken.prepare.deployMultiTokenTransaction({
+  const preparedDeployMultiTokenTransaction = await polygonSDK.multiToken.prepare.deployMultiTokenTransaction(
+    {
       chain: 'MATIC',
       signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
       uri: 'tatum',
-    })
+    },
+  )
 
-  const sentDeployMultiTokenTransaction =
-    await polygonSDK.multiToken.send.deployMultiTokenTransaction({
-      chain: 'MATIC',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      uri: 'tatum',
-    })
+  const sentDeployMultiTokenTransaction = await polygonSDK.multiToken.send.deployMultiTokenTransaction({
+    chain: 'MATIC',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    uri: 'tatum',
+  })
 
-  const preparedMintMultiTokenTransaction =
-    await polygonSDK.multiToken.prepare.mintMultiTokenTransaction({
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      chain: 'MATIC',
-      tokenId: '123',
-      amount: '1000',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-    })
+  const preparedMintMultiTokenTransaction = await polygonSDK.multiToken.prepare.mintMultiTokenTransaction({
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    chain: 'MATIC',
+    tokenId: '123',
+    amount: '1000',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+  })
 
-  const sentMintMultiTokenTransaction =
-    await polygonSDK.multiToken.send.mintMultiTokenTransaction({
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      chain: 'MATIC',
-      tokenId: '123',
-      amount: '1000',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-    })
+  const sentMintMultiTokenTransaction = await polygonSDK.multiToken.send.mintMultiTokenTransaction({
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    chain: 'MATIC',
+    tokenId: '123',
+    amount: '1000',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+  })
 
   const preparedMintMultiTokenBatchTransaction =
     await polygonSDK.multiToken.prepare.mintMultiTokenBatchTransaction({
@@ -459,15 +451,14 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
     })
 
-  const sentMintMultiTokenBatchTransaction =
-    await polygonSDK.multiToken.send.mintMultiTokenBatchTransaction({
-      to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-      chain: 'MATIC',
-      tokenId: [['123'], ['321']],
-      amounts: [['1000'], ['100']],
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-    })
+  const sentMintMultiTokenBatchTransaction = await polygonSDK.multiToken.send.mintMultiTokenBatchTransaction({
+    to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+    chain: 'MATIC',
+    tokenId: [['123'], ['321']],
+    amounts: [['1000'], ['100']],
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+  })
 
   const preparedTransferMultiTokenTransaction =
     await polygonSDK.multiToken.prepare.transferMultiTokenTransaction({
@@ -479,15 +470,14 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
     })
 
-  const sentTransferMultiTokenTransaction =
-    await polygonSDK.multiToken.send.transferMultiTokenTransaction({
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      chain: 'MATIC',
-      tokenId: '123',
-      amount: '10',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-    })
+  const sentTransferMultiTokenTransaction = await polygonSDK.multiToken.send.transferMultiTokenTransaction({
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    chain: 'MATIC',
+    tokenId: '123',
+    amount: '10',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+  })
 
   const preparedTransferMultiTokenBatchTransaction =
     await polygonSDK.multiToken.prepare.transferMultiTokenBatchTransaction({
@@ -509,25 +499,23 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
     })
 
-  const preparedBurnMultiTokenTransaction =
-    await polygonSDK.multiToken.prepare.burnMultiTokenTransaction({
-      chain: 'MATIC',
-      tokenId: '123',
-      amount: '1',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-      account: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-    })
+  const preparedBurnMultiTokenTransaction = await polygonSDK.multiToken.prepare.burnMultiTokenTransaction({
+    chain: 'MATIC',
+    tokenId: '123',
+    amount: '1',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    account: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+  })
 
-  const sentBurnMultiTokenTransaction =
-    await polygonSDK.multiToken.send.burnMultiTokenTransaction({
-      chain: 'MATIC',
-      tokenId: '123',
-      amount: '1',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-      account: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-    })
+  const sentBurnMultiTokenTransaction = await polygonSDK.multiToken.send.burnMultiTokenTransaction({
+    chain: 'MATIC',
+    tokenId: '123',
+    amount: '1',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    account: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+  })
 
   const preparedBurnMultiTokenBatchTransaction =
     await polygonSDK.multiToken.prepare.burnMultiTokenBatchTransaction({
@@ -539,15 +527,14 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
       account: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     })
 
-  const sentMintBurnTokenBatchTransaction =
-    await polygonSDK.multiToken.send.burnMultiTokenBatchTransaction({
-      chain: 'MATIC',
-      tokenId: ['123', '321'],
-      amounts: ['1000', '100'],
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-      account: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-    })
+  const sentMintBurnTokenBatchTransaction = await polygonSDK.multiToken.send.burnMultiTokenBatchTransaction({
+    chain: 'MATIC',
+    tokenId: ['123', '321'],
+    amounts: ['1000', '100'],
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    account: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+  })
 
   // CUSTODIAL
   const preparedCustodialWalletSignedTransaction =
@@ -611,19 +598,18 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const preparedTransferErc20Transaction =
-    await polygonSDK.erc20.prepare.transferSignedTransaction({
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      amount: '10',
-      contractAddress: '0x0b9808fce74030c87aae334a30f6c8f6c66b090d',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      digits: 18,
-      nonce: 3252345722143,
-      fee: {
-        gasLimit: '53632',
-        gasPrice: '20',
-      },
-    })
+  const preparedTransferErc20Transaction = await polygonSDK.erc20.prepare.transferSignedTransaction({
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    amount: '10',
+    contractAddress: '0x0b9808fce74030c87aae334a30f6c8f6c66b090d',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    digits: 18,
+    nonce: 3252345722143,
+    fee: {
+      gasLimit: '53632',
+      gasPrice: '20',
+    },
+  })
 
   const sentTransferErc20Transaction = await polygonSDK.erc20.send.transferSignedTransaction({
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -669,19 +655,17 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
   })
 
   // ERC721(NFT)
-  const preparedDeployErc721Transaction = await polygonSDK.erc721.prepare.deploySignedTransaction(
-    {
-      chain: 'MATIC',
-      name: 'MY_TOKEN',
-      symbol: '1oido3id3',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
+  const preparedDeployErc721Transaction = await polygonSDK.erc721.prepare.deploySignedTransaction({
+    chain: 'MATIC',
+    name: 'MY_TOKEN',
+    symbol: '1oido3id3',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
     },
-  )
+  })
 
   const sentDeployErc721Transaction = await polygonSDK.erc721.send.deploySignedTransaction({
     chain: 'MATIC',
@@ -723,8 +707,8 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const preparedMintMultipleSignedTransaction =
-    await polygonSDK.erc721.prepare.mintMultipleSignedTransaction({
+  const preparedMintMultipleSignedTransaction = await polygonSDK.erc721.prepare.mintMultipleSignedTransaction(
+    {
       chain: 'MATIC',
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       tokenId: ['345634563', '53545345'],
@@ -740,45 +724,29 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
         gasLimit: '326452',
         gasPrice: '20',
       },
-    })
+    },
+  )
 
-  const sentMintMultipleSignedTransaction =
-    await polygonSDK.erc721.send.mintMultipleSignedTransaction({
-      chain: 'MATIC',
-      to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-      tokenId: ['345634563', '53545345'],
-      url: ['https://my_token_data.com', 'https://my_token_data2.com'],
-      authorAddresses: [
-        ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-        ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
-      ],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
+  const sentMintMultipleSignedTransaction = await polygonSDK.erc721.send.mintMultipleSignedTransaction({
+    chain: 'MATIC',
+    to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+    tokenId: ['345634563', '53545345'],
+    url: ['https://my_token_data.com', 'https://my_token_data2.com'],
+    authorAddresses: [
+      ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+      ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
+    ],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
 
-  const preparedMintCashbackSignedTransaction =
-    await polygonSDK.erc721.prepare.mintCashbackSignedTransaction({
-      chain: 'MATIC',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      tokenId: '45343653',
-      url: 'https://my_token_data.com',
-      cashbackValues: ['0.5', '0.5'],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
-
-  const sentMintCashbackSignedTransaction =
-    await polygonSDK.erc721.send.mintCashbackSignedTransaction({
+  const preparedMintCashbackSignedTransaction = await polygonSDK.erc721.prepare.mintCashbackSignedTransaction(
+    {
       chain: 'MATIC',
       to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
       tokenId: '45343653',
@@ -791,7 +759,23 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
         gasLimit: '326452',
         gasPrice: '20',
       },
-    })
+    },
+  )
+
+  const sentMintCashbackSignedTransaction = await polygonSDK.erc721.send.mintCashbackSignedTransaction({
+    chain: 'MATIC',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    tokenId: '45343653',
+    url: 'https://my_token_data.com',
+    cashbackValues: ['0.5', '0.5'],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
 
   const preparedMintMultipleCashbackSignedTransaction =
     await polygonSDK.erc721.prepare.mintMultipleCashbackSignedTransaction({
@@ -840,20 +824,19 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
       },
     })
 
-  const sentMintProvenanceSignedTransaction =
-    await polygonSDK.erc721.send.mintProvenanceSignedTransaction({
-      chain: 'MATIC',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      tokenId: '5435345',
-      url: 'https://my_token_data.com',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
+  const sentMintProvenanceSignedTransaction = await polygonSDK.erc721.send.mintProvenanceSignedTransaction({
+    chain: 'MATIC',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    tokenId: '5435345',
+    url: 'https://my_token_data.com',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
 
   const preparedMintMultipleProvenanceSignedTransaction =
     await polygonSDK.erc721.prepare.mintMultipleProvenanceSignedTransaction({
@@ -887,19 +870,18 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
       },
     })
 
-  const preparedTransferSignedTransaction =
-    await polygonSDK.erc721.prepare.transferSignedTransaction({
-      chain: 'MATIC',
-      tokenId: '453453',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
+  const preparedTransferSignedTransaction = await polygonSDK.erc721.prepare.transferSignedTransaction({
+    chain: 'MATIC',
+    tokenId: '453453',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
 
   const sentTransferSignedTransaction = await polygonSDK.erc721.send.transferSignedTransaction({
     chain: 'MATIC',
@@ -967,39 +949,37 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
   })
 
   // ERC1155(MULTI TOKEN)
-  const preparedDeployMultiTokenTransaction =
-    await polygonSDK.multiToken.prepare.deployMultiTokenTransaction({
+  const preparedDeployMultiTokenTransaction = await polygonSDK.multiToken.prepare.deployMultiTokenTransaction(
+    {
       chain: 'MATIC',
       fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
       uri: 'tatum',
-    })
+    },
+  )
 
-  const sentDeployMultiTokenTransaction =
-    await polygonSDK.multiToken.send.deployMultiTokenTransaction({
-      chain: 'MATIC',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      uri: 'tatum',
-    })
+  const sentDeployMultiTokenTransaction = await polygonSDK.multiToken.send.deployMultiTokenTransaction({
+    chain: 'MATIC',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    uri: 'tatum',
+  })
 
-  const preparedMintMultiTokenTransaction =
-    await polygonSDK.multiToken.prepare.mintMultiTokenTransaction({
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      chain: 'MATIC',
-      tokenId: '123',
-      amount: '1000',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-    })
+  const preparedMintMultiTokenTransaction = await polygonSDK.multiToken.prepare.mintMultiTokenTransaction({
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    chain: 'MATIC',
+    tokenId: '123',
+    amount: '1000',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+  })
 
-  const sentMintMultiTokenTransaction =
-    await polygonSDK.multiToken.send.mintMultiTokenTransaction({
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      chain: 'MATIC',
-      tokenId: '123',
-      amount: '1000',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-    })
+  const sentMintMultiTokenTransaction = await polygonSDK.multiToken.send.mintMultiTokenTransaction({
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    chain: 'MATIC',
+    tokenId: '123',
+    amount: '1000',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+  })
 
   const preparedMintMultiTokenBatchTransaction =
     await polygonSDK.multiToken.prepare.mintMultiTokenBatchTransaction({
@@ -1011,15 +991,14 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
     })
 
-  const sentMintMultiTokenBatchTransaction =
-    await polygonSDK.multiToken.send.mintMultiTokenBatchTransaction({
-      to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-      chain: 'MATIC',
-      tokenId: [['123'], ['321']],
-      amounts: [['1000'], ['100']],
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-    })
+  const sentMintMultiTokenBatchTransaction = await polygonSDK.multiToken.send.mintMultiTokenBatchTransaction({
+    to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+    chain: 'MATIC',
+    tokenId: [['123'], ['321']],
+    amounts: [['1000'], ['100']],
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+  })
 
   const preparedTransferMultiTokenTransaction =
     await polygonSDK.multiToken.prepare.transferMultiTokenTransaction({
@@ -1031,15 +1010,14 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
     })
 
-  const sentTransferMultiTokenTransaction =
-    await polygonSDK.multiToken.send.transferMultiTokenTransaction({
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      chain: 'MATIC',
-      tokenId: '123',
-      amount: '10',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-    })
+  const sentTransferMultiTokenTransaction = await polygonSDK.multiToken.send.transferMultiTokenTransaction({
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    chain: 'MATIC',
+    tokenId: '123',
+    amount: '10',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+  })
 
   const preparedTransferMultiTokenBatchTransaction =
     await polygonSDK.multiToken.prepare.transferMultiTokenBatchTransaction({
@@ -1061,25 +1039,23 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
     })
 
-  const preparedBurnMultiTokenTransaction =
-    await polygonSDK.multiToken.prepare.burnMultiTokenTransaction({
-      chain: 'MATIC',
-      tokenId: '123',
-      amount: '1',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-      account: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-    })
+  const preparedBurnMultiTokenTransaction = await polygonSDK.multiToken.prepare.burnMultiTokenTransaction({
+    chain: 'MATIC',
+    tokenId: '123',
+    amount: '1',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    account: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+  })
 
-  const sentBurnMultiTokenTransaction =
-    await polygonSDK.multiToken.send.burnMultiTokenTransaction({
-      chain: 'MATIC',
-      tokenId: '123',
-      amount: '1',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-      account: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-    })
+  const sentBurnMultiTokenTransaction = await polygonSDK.multiToken.send.burnMultiTokenTransaction({
+    chain: 'MATIC',
+    tokenId: '123',
+    amount: '1',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    account: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+  })
 
   const preparedBurnMultiTokenBatchTransaction =
     await polygonSDK.multiToken.prepare.burnMultiTokenBatchTransaction({
@@ -1091,15 +1067,14 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
       account: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     })
 
-  const sentMintBurnTokenBatchTransaction =
-    await polygonSDK.multiToken.send.burnMultiTokenBatchTransaction({
-      chain: 'MATIC',
-      tokenId: ['123', '321'],
-      amounts: ['1000', '100'],
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-      account: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-    })
+  const sentMintBurnTokenBatchTransaction = await polygonSDK.multiToken.send.burnMultiTokenBatchTransaction({
+    chain: 'MATIC',
+    tokenId: ['123', '321'],
+    amounts: ['1000', '100'],
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    account: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+  })
 
   // CUSTODIAL
   const preparedCustodialWalletSignedTransaction =

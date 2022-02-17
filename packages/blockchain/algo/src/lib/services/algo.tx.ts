@@ -435,10 +435,8 @@ export const algoTx = (args: { algoWeb: AlgoWeb }) => {
          */
         burnNFTSignedTransaction: async (body: BurnNft | BurnNftKMS, testnet = false, provider?: string) =>
           prepareBurnNFTSignedTransaction(body, testnet, args.algoWeb, provider),
-  
       },
       send: {
-  
         /**
          * Send Algorand create NFT transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
          * @param testnet mainnet or testnet version
@@ -483,7 +481,6 @@ export const algoTx = (args: { algoWeb: AlgoWeb }) => {
             txData: await prepareBurnNFTSignedTransaction(body, testnet, args.algoWeb, provider),
             ...(isWithSignatureId(body) && { signatureId: body.signatureId }),
           }),
-        
       },
     },
 
@@ -495,9 +492,9 @@ export const algoTx = (args: { algoWeb: AlgoWeb }) => {
          * @param body content of the transaction to broadcast
          * @param provider url of the algorand server endpoint for purestake.io restapi
          * @returns transaction data to be broadcast to blockchain
-       */
+         */
         signedTransaction: async (body: TransferAlgo | TransferAlgoKMS, testnet = false, provider?: string) =>
-         prepareSignedTransaction(body, testnet, args.algoWeb, provider),
+          prepareSignedTransaction(body, testnet, args.algoWeb, provider),
       },
       send: {
         /**
@@ -509,10 +506,10 @@ export const algoTx = (args: { algoWeb: AlgoWeb }) => {
          * @returns transaction id of the transaction in the blockchain
          */
         signedTransaction: async (body: TransferAlgo | TransferAlgoKMS, testnet = false, provider?: string) =>
-        BlockchainAlgorandAlgoService.algoandBroadcast({
-          txData: await prepareSignedTransaction(body, testnet, args.algoWeb, provider),
-          ...(isTransferAlgoKMS(body) && { signatureId: body.signatureId }),
-        }),
+          BlockchainAlgorandAlgoService.algoandBroadcast({
+            txData: await prepareSignedTransaction(body, testnet, args.algoWeb, provider),
+            ...(isTransferAlgoKMS(body) && { signatureId: body.signatureId }),
+          }),
       },
     },
   }

@@ -167,75 +167,71 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const preparedMintMultipleSignedTransaction =
-    await bscSDK.erc721.prepare.mintMultipleSignedTransaction({
-      chain: 'BSC',
-      to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-      tokenId: ['345634563', '53545345'],
-      url: ['https://my_token_data.com', 'https://my_token_data2.com'],
-      authorAddresses: [
-        ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-        ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
-      ],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
+  const preparedMintMultipleSignedTransaction = await bscSDK.erc721.prepare.mintMultipleSignedTransaction({
+    chain: 'BSC',
+    to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+    tokenId: ['345634563', '53545345'],
+    url: ['https://my_token_data.com', 'https://my_token_data2.com'],
+    authorAddresses: [
+      ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+      ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
+    ],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
 
-  const sentMintMultipleSignedTransaction =
-    await bscSDK.erc721.send.mintMultipleSignedTransaction({
-      chain: 'BSC',
-      to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-      tokenId: ['345634563', '53545345'],
-      url: ['https://my_token_data.com', 'https://my_token_data2.com'],
-      authorAddresses: [
-        ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-        ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
-      ],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
+  const sentMintMultipleSignedTransaction = await bscSDK.erc721.send.mintMultipleSignedTransaction({
+    chain: 'BSC',
+    to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+    tokenId: ['345634563', '53545345'],
+    url: ['https://my_token_data.com', 'https://my_token_data2.com'],
+    authorAddresses: [
+      ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+      ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
+    ],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
 
-  const preparedMintCashbackSignedTransaction =
-    await bscSDK.erc721.prepare.mintCashbackSignedTransaction({
-      chain: 'BSC',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      tokenId: '45343653',
-      url: 'https://my_token_data.com',
-      cashbackValues: ['0.5', '0.5'],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
+  const preparedMintCashbackSignedTransaction = await bscSDK.erc721.prepare.mintCashbackSignedTransaction({
+    chain: 'BSC',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    tokenId: '45343653',
+    url: 'https://my_token_data.com',
+    cashbackValues: ['0.5', '0.5'],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
 
-  const sentMintCashbackSignedTransaction =
-    await bscSDK.erc721.send.mintCashbackSignedTransaction({
-      chain: 'BSC',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      tokenId: '45343653',
-      url: 'https://my_token_data.com',
-      cashbackValues: ['0.5', '0.5'],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
+  const sentMintCashbackSignedTransaction = await bscSDK.erc721.send.mintCashbackSignedTransaction({
+    chain: 'BSC',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    tokenId: '45343653',
+    url: 'https://my_token_data.com',
+    cashbackValues: ['0.5', '0.5'],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
 
   const preparedMintMultipleCashbackSignedTransaction =
     await bscSDK.erc721.prepare.mintMultipleCashbackSignedTransaction({
@@ -269,8 +265,8 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
       },
     })
 
-  const preparedMintProvenanceSignedTransaction =
-    await bscSDK.erc721.prepare.mintProvenanceSignedTransaction({
+  const preparedMintProvenanceSignedTransaction = await bscSDK.erc721.prepare.mintProvenanceSignedTransaction(
+    {
       chain: 'BSC',
       tokenId: '5435345',
       to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -282,22 +278,22 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
         gasLimit: '326452',
         gasPrice: '20',
       },
-    })
+    },
+  )
 
-  const sentMintProvenanceSignedTransaction =
-    await bscSDK.erc721.send.mintProvenanceSignedTransaction({
-      chain: 'BSC',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      tokenId: '5435345',
-      url: 'https://my_token_data.com',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
+  const sentMintProvenanceSignedTransaction = await bscSDK.erc721.send.mintProvenanceSignedTransaction({
+    chain: 'BSC',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    tokenId: '5435345',
+    url: 'https://my_token_data.com',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
 
   const preparedMintMultipleProvenanceSignedTransaction =
     await bscSDK.erc721.prepare.mintMultipleProvenanceSignedTransaction({
@@ -331,20 +327,18 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
       },
     })
 
-  const preparedTransferSignedTransaction = await bscSDK.erc721.prepare.transferSignedTransaction(
-    {
-      chain: 'BSC',
-      tokenId: '453453',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
+  const preparedTransferSignedTransaction = await bscSDK.erc721.prepare.transferSignedTransaction({
+    chain: 'BSC',
+    tokenId: '453453',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
     },
-  )
+  })
 
   const sentTransferSignedTransaction = await bscSDK.erc721.send.transferSignedTransaction({
     chain: 'BSC',
@@ -413,29 +407,26 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
 
   // ERC1155(MULTI TOKEN)
 
-  const preparedDeployMultiTokenTransaction =
-    await bscSDK.multiToken.prepare.deployMultiTokenTransaction({
-      chain: 'BSC',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      uri: 'tatum',
-    })
+  const preparedDeployMultiTokenTransaction = await bscSDK.multiToken.prepare.deployMultiTokenTransaction({
+    chain: 'BSC',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    uri: 'tatum',
+  })
 
-  const sentDeployMultiTokenTransaction =
-    await bscSDK.multiToken.send.deployMultiTokenTransaction({
-      chain: 'BSC',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      uri: 'tatum',
-    })
+  const sentDeployMultiTokenTransaction = await bscSDK.multiToken.send.deployMultiTokenTransaction({
+    chain: 'BSC',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    uri: 'tatum',
+  })
 
-  const preparedMintMultiTokenTransaction =
-    await bscSDK.multiToken.prepare.mintMultiTokenTransaction({
-      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-      chain: 'BSC',
-      tokenId: '123',
-      amount: '1000',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-    })
+  const preparedMintMultiTokenTransaction = await bscSDK.multiToken.prepare.mintMultiTokenTransaction({
+    to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    chain: 'BSC',
+    tokenId: '123',
+    amount: '1000',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+  })
 
   const sentMintMultiTokenTransaction = await bscSDK.multiToken.send.mintMultiTokenTransaction({
     to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
@@ -456,35 +447,34 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
     })
 
-  const sentMintMultiTokenBatchTransaction =
-    await bscSDK.multiToken.send.mintMultiTokenBatchTransaction({
-      to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
-      chain: 'BSC',
-      tokenId: [['123'], ['321']],
-      amounts: [['1000'], ['100']],
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-    })
+  const sentMintMultiTokenBatchTransaction = await bscSDK.multiToken.send.mintMultiTokenBatchTransaction({
+    to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
+    chain: 'BSC',
+    tokenId: [['123'], ['321']],
+    amounts: [['1000'], ['100']],
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+  })
 
-  const preparedTransferMultiTokenTransaction =
-    await bscSDK.multiToken.prepare.transferMultiTokenTransaction({
+  const preparedTransferMultiTokenTransaction = await bscSDK.multiToken.prepare.transferMultiTokenTransaction(
+    {
       to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
       chain: 'BSC',
       tokenId: '123',
       amount: '10',
       signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-    })
+    },
+  )
 
-  const sentTransferMultiTokenTransaction =
-    await bscSDK.multiToken.send.transferMultiTokenTransaction({
-      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-      chain: 'BSC',
-      tokenId: '123',
-      amount: '10',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-    })
+  const sentTransferMultiTokenTransaction = await bscSDK.multiToken.send.transferMultiTokenTransaction({
+    to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    chain: 'BSC',
+    tokenId: '123',
+    amount: '10',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+  })
 
   const preparedTransferMultiTokenBatchTransaction =
     await bscSDK.multiToken.prepare.transferMultiTokenBatchTransaction({
@@ -506,15 +496,14 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
     })
 
-  const preparedBurnMultiTokenTransaction =
-    await bscSDK.multiToken.prepare.burnMultiTokenTransaction({
-      chain: 'BSC',
-      tokenId: '123',
-      amount: '1',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-      account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-    })
+  const preparedBurnMultiTokenTransaction = await bscSDK.multiToken.prepare.burnMultiTokenTransaction({
+    chain: 'BSC',
+    tokenId: '123',
+    amount: '1',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+  })
 
   const sentBurnMultiTokenTransaction = await bscSDK.multiToken.send.burnMultiTokenTransaction({
     chain: 'BSC',
@@ -535,15 +524,14 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
       account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
     })
 
-  const sentMintBurnTokenBatchTransaction =
-    await bscSDK.multiToken.send.burnMultiTokenBatchTransaction({
-      chain: 'BSC',
-      tokenId: ['123', '321'],
-      amounts: ['1000', '100'],
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-      account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-    })
+  const sentMintBurnTokenBatchTransaction = await bscSDK.multiToken.send.burnMultiTokenBatchTransaction({
+    chain: 'BSC',
+    tokenId: ['123', '321'],
+    amounts: ['1000', '100'],
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+  })
 
   // CUSTODIAL
   const preparedCustodialWalletSignedTransaction =
@@ -716,75 +704,71 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const preparedMintMultipleSignedTransaction =
-    await bscSDK.erc721.prepare.mintMultipleSignedTransaction({
-      chain: 'BSC',
-      to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-      tokenId: ['345634563', '53545345'],
-      url: ['https://my_token_data.com', 'https://my_token_data2.com'],
-      authorAddresses: [
-        ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-        ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
-      ],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
+  const preparedMintMultipleSignedTransaction = await bscSDK.erc721.prepare.mintMultipleSignedTransaction({
+    chain: 'BSC',
+    to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+    tokenId: ['345634563', '53545345'],
+    url: ['https://my_token_data.com', 'https://my_token_data2.com'],
+    authorAddresses: [
+      ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+      ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
+    ],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
 
-  const sentMintMultipleSignedTransaction =
-    await bscSDK.erc721.send.mintMultipleSignedTransaction({
-      chain: 'BSC',
-      to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-      tokenId: ['345634563', '53545345'],
-      url: ['https://my_token_data.com', 'https://my_token_data2.com'],
-      authorAddresses: [
-        ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-        ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
-      ],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
+  const sentMintMultipleSignedTransaction = await bscSDK.erc721.send.mintMultipleSignedTransaction({
+    chain: 'BSC',
+    to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+    tokenId: ['345634563', '53545345'],
+    url: ['https://my_token_data.com', 'https://my_token_data2.com'],
+    authorAddresses: [
+      ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+      ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
+    ],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
 
-  const preparedMintCashbackSignedTransaction =
-    await bscSDK.erc721.prepare.mintCashbackSignedTransaction({
-      chain: 'BSC',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      tokenId: '45343653',
-      url: 'https://my_token_data.com',
-      cashbackValues: ['0.5', '0.5'],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
+  const preparedMintCashbackSignedTransaction = await bscSDK.erc721.prepare.mintCashbackSignedTransaction({
+    chain: 'BSC',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    tokenId: '45343653',
+    url: 'https://my_token_data.com',
+    cashbackValues: ['0.5', '0.5'],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
 
-  const sentMintCashbackSignedTransaction =
-    await bscSDK.erc721.send.mintCashbackSignedTransaction({
-      chain: 'BSC',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      tokenId: '45343653',
-      url: 'https://my_token_data.com',
-      cashbackValues: ['0.5', '0.5'],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
+  const sentMintCashbackSignedTransaction = await bscSDK.erc721.send.mintCashbackSignedTransaction({
+    chain: 'BSC',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    tokenId: '45343653',
+    url: 'https://my_token_data.com',
+    cashbackValues: ['0.5', '0.5'],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
 
   const preparedMintMultipleCashbackSignedTransaction =
     await bscSDK.erc721.prepare.mintMultipleCashbackSignedTransaction({
@@ -818,8 +802,8 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
       },
     })
 
-  const preparedMintProvenanceSignedTransaction =
-    await bscSDK.erc721.prepare.mintProvenanceSignedTransaction({
+  const preparedMintProvenanceSignedTransaction = await bscSDK.erc721.prepare.mintProvenanceSignedTransaction(
+    {
       chain: 'BSC',
       tokenId: '5435345',
       to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -831,22 +815,22 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
         gasLimit: '326452',
         gasPrice: '20',
       },
-    })
+    },
+  )
 
-  const sentMintProvenanceSignedTransaction =
-    await bscSDK.erc721.send.mintProvenanceSignedTransaction({
-      chain: 'BSC',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      tokenId: '5435345',
-      url: 'https://my_token_data.com',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
+  const sentMintProvenanceSignedTransaction = await bscSDK.erc721.send.mintProvenanceSignedTransaction({
+    chain: 'BSC',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    tokenId: '5435345',
+    url: 'https://my_token_data.com',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
 
   const preparedMintMultipleProvenanceSignedTransaction =
     await bscSDK.erc721.prepare.mintMultipleProvenanceSignedTransaction({
@@ -880,20 +864,18 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
       },
     })
 
-  const preparedTransferSignedTransaction = await bscSDK.erc721.prepare.transferSignedTransaction(
-    {
-      chain: 'BSC',
-      tokenId: '453453',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
+  const preparedTransferSignedTransaction = await bscSDK.erc721.prepare.transferSignedTransaction({
+    chain: 'BSC',
+    tokenId: '453453',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
     },
-  )
+  })
 
   const sentTransferSignedTransaction = await bscSDK.erc721.send.transferSignedTransaction({
     chain: 'BSC',
@@ -961,29 +943,26 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
   })
 
   // ERC1155(MULTI TOKEN)
-  const preparedDeployMultiTokenTransaction =
-    await bscSDK.multiToken.prepare.deployMultiTokenTransaction({
-      chain: 'BSC',
-      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
-      uri: 'tatum',
-    })
+  const preparedDeployMultiTokenTransaction = await bscSDK.multiToken.prepare.deployMultiTokenTransaction({
+    chain: 'BSC',
+    fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+    uri: 'tatum',
+  })
 
-  const sentDeployMultiTokenTransaction =
-    await bscSDK.multiToken.send.deployMultiTokenTransaction({
-      chain: 'BSC',
-      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
-      uri: 'tatum',
-    })
+  const sentDeployMultiTokenTransaction = await bscSDK.multiToken.send.deployMultiTokenTransaction({
+    chain: 'BSC',
+    fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+    uri: 'tatum',
+  })
 
-  const preparedMintMultiTokenTransaction =
-    await bscSDK.multiToken.prepare.mintMultiTokenTransaction({
-      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-      chain: 'BSC',
-      tokenId: '123',
-      amount: '1000',
-      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-    })
+  const preparedMintMultiTokenTransaction = await bscSDK.multiToken.prepare.mintMultiTokenTransaction({
+    to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    chain: 'BSC',
+    tokenId: '123',
+    amount: '1000',
+    fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+  })
 
   const sentMintMultiTokenTransaction = await bscSDK.multiToken.send.mintMultiTokenTransaction({
     to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
@@ -1004,35 +983,34 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
     })
 
-  const sentMintMultiTokenBatchTransaction =
-    await bscSDK.multiToken.send.mintMultiTokenBatchTransaction({
-      to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
-      chain: 'BSC',
-      tokenId: [['123'], ['321']],
-      amounts: [['1000'], ['100']],
-      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-    })
+  const sentMintMultiTokenBatchTransaction = await bscSDK.multiToken.send.mintMultiTokenBatchTransaction({
+    to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
+    chain: 'BSC',
+    tokenId: [['123'], ['321']],
+    amounts: [['1000'], ['100']],
+    fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+  })
 
-  const preparedTransferMultiTokenTransaction =
-    await bscSDK.multiToken.prepare.transferMultiTokenTransaction({
+  const preparedTransferMultiTokenTransaction = await bscSDK.multiToken.prepare.transferMultiTokenTransaction(
+    {
       to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
       chain: 'BSC',
       tokenId: '123',
       amount: '10',
       fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-    })
+    },
+  )
 
-  const sentTransferMultiTokenTransaction =
-    await bscSDK.multiToken.send.transferMultiTokenTransaction({
-      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-      chain: 'BSC',
-      tokenId: '123',
-      amount: '10',
-      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-    })
+  const sentTransferMultiTokenTransaction = await bscSDK.multiToken.send.transferMultiTokenTransaction({
+    to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    chain: 'BSC',
+    tokenId: '123',
+    amount: '10',
+    fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+  })
 
   const preparedTransferMultiTokenBatchTransaction =
     await bscSDK.multiToken.prepare.transferMultiTokenBatchTransaction({
@@ -1054,15 +1032,14 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
     })
 
-  const preparedBurnMultiTokenTransaction =
-    await bscSDK.multiToken.prepare.burnMultiTokenTransaction({
-      chain: 'BSC',
-      tokenId: '123',
-      amount: '1',
-      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-      account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-    })
+  const preparedBurnMultiTokenTransaction = await bscSDK.multiToken.prepare.burnMultiTokenTransaction({
+    chain: 'BSC',
+    tokenId: '123',
+    amount: '1',
+    fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+  })
 
   const sentBurnMultiTokenTransaction = await bscSDK.multiToken.send.burnMultiTokenTransaction({
     chain: 'BSC',
@@ -1083,15 +1060,14 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
       account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
     })
 
-  const sentMintBurnTokenBatchTransaction =
-    await bscSDK.multiToken.send.burnMultiTokenBatchTransaction({
-      chain: 'BSC',
-      tokenId: ['123', '321'],
-      amounts: ['1000', '100'],
-      fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-      account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-    })
+  const sentMintBurnTokenBatchTransaction = await bscSDK.multiToken.send.burnMultiTokenBatchTransaction({
+    chain: 'BSC',
+    tokenId: ['123', '321'],
+    amounts: ['1000', '100'],
+    fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+  })
 
   // CUSTODIAL
   const preparedCustodialWalletSignedTransaction =

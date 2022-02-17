@@ -44,63 +44,59 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
     feeCurrency: 'CUSD',
   })
 
-  const preparedMintMultipleSignedTransaction =
-    await celoSDK.erc721.prepare.mintMultipleSignedTransaction({
-      chain: 'CELO',
-      to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-      tokenId: ['345634563', '53545345'],
-      url: ['https://my_token_data.com', 'https://my_token_data2.com'],
-      authorAddresses: [
-        ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-        ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
-      ],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      nonce: 46533715.43995557,
-      feeCurrency: 'CUSD',
-    })
+  const preparedMintMultipleSignedTransaction = await celoSDK.erc721.prepare.mintMultipleSignedTransaction({
+    chain: 'CELO',
+    to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+    tokenId: ['345634563', '53545345'],
+    url: ['https://my_token_data.com', 'https://my_token_data2.com'],
+    authorAddresses: [
+      ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+      ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
+    ],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 46533715.43995557,
+    feeCurrency: 'CUSD',
+  })
 
-  const sentMintMultipleSignedTransaction =
-    await celoSDK.erc721.send.mintMultipleSignedTransaction({
-      chain: 'CELO',
-      to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-      tokenId: ['345634563', '53545345'],
-      url: ['https://my_token_data.com', 'https://my_token_data2.com'],
-      authorAddresses: [
-        ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-        ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
-      ],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      nonce: 46533715.43995557,
-      feeCurrency: 'CUSD',
-    })
+  const sentMintMultipleSignedTransaction = await celoSDK.erc721.send.mintMultipleSignedTransaction({
+    chain: 'CELO',
+    to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+    tokenId: ['345634563', '53545345'],
+    url: ['https://my_token_data.com', 'https://my_token_data2.com'],
+    authorAddresses: [
+      ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+      ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
+    ],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 46533715.43995557,
+    feeCurrency: 'CUSD',
+  })
 
-  const preparedMintCashbackSignedTransaction =
-    await celoSDK.erc721.prepare.mintCashbackSignedTransaction({
-      chain: 'CELO',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      tokenId: '45343653',
-      url: 'https://my_token_data.com',
-      cashbackValues: ['0.5', '0.5'],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      nonce: 46533715.43995557,
-      feeCurrency: 'CUSD',
-    })
+  const preparedMintCashbackSignedTransaction = await celoSDK.erc721.prepare.mintCashbackSignedTransaction({
+    chain: 'CELO',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    tokenId: '45343653',
+    url: 'https://my_token_data.com',
+    cashbackValues: ['0.5', '0.5'],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 46533715.43995557,
+    feeCurrency: 'CUSD',
+  })
 
-  const sentMintCashbackSignedTransaction =
-    await celoSDK.erc721.send.mintCashbackSignedTransaction({
-      chain: 'CELO',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      tokenId: '45343653',
-      url: 'https://my_token_data.com',
-      cashbackValues: ['0.5', '0.5'],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      nonce: 46533715.43995557,
-      feeCurrency: 'CUSD',
-    })
+  const sentMintCashbackSignedTransaction = await celoSDK.erc721.send.mintCashbackSignedTransaction({
+    chain: 'CELO',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    tokenId: '45343653',
+    url: 'https://my_token_data.com',
+    cashbackValues: ['0.5', '0.5'],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 46533715.43995557,
+    feeCurrency: 'CUSD',
+  })
 
   const preparedMintMultipleCashbackSignedTransaction =
     await celoSDK.erc721.prepare.mintMultipleCashbackSignedTransaction({
@@ -140,17 +136,16 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
       feeCurrency: 'CUSD',
     })
 
-  const sentMintProvenanceSignedTransaction =
-    await celoSDK.erc721.send.mintProvenanceSignedTransaction({
-      chain: 'CELO',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      tokenId: '5435345',
-      url: 'https://my_token_data.com',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      nonce: 46533715.43995557,
-      feeCurrency: 'CUSD',
-    })
+  const sentMintProvenanceSignedTransaction = await celoSDK.erc721.send.mintProvenanceSignedTransaction({
+    chain: 'CELO',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    tokenId: '5435345',
+    url: 'https://my_token_data.com',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 46533715.43995557,
+    feeCurrency: 'CUSD',
+  })
 
   const preparedMintMultipleProvenanceSignedTransaction =
     await celoSDK.erc721.prepare.mintMultipleProvenanceSignedTransaction({
@@ -178,16 +173,15 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
       feeCurrency: 'CUSD',
     })
 
-  const preparedTransferSignedTransaction =
-    await celoSDK.erc721.prepare.transferSignedTransaction({
-      chain: 'CELO',
-      tokenId: '453453',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      nonce: 46533715.43995557,
-      feeCurrency: 'CUSD',
-    })
+  const preparedTransferSignedTransaction = await celoSDK.erc721.prepare.transferSignedTransaction({
+    chain: 'CELO',
+    tokenId: '453453',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    nonce: 46533715.43995557,
+    feeCurrency: 'CUSD',
+  })
 
   const sentTransferSignedTransaction = await celoSDK.erc721.send.transferSignedTransaction({
     chain: 'CELO',
@@ -240,32 +234,29 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
   })
 
   // ERC1155(MULTI TOKEN)
-  const preparedDeployMultiTokenTransaction =
-    await celoSDK.multiToken.prepare.deployMultiTokenTransaction({
-      chain: 'CELO',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      uri: 'tatum',
-      feeCurrency: 'CUSD',
-    })
+  const preparedDeployMultiTokenTransaction = await celoSDK.multiToken.prepare.deployMultiTokenTransaction({
+    chain: 'CELO',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    uri: 'tatum',
+    feeCurrency: 'CUSD',
+  })
 
-  const sentDeployMultiTokenTransaction =
-    await celoSDK.multiToken.send.deployMultiTokenTransaction({
-      chain: 'CELO',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      uri: 'tatum',
-      feeCurrency: 'CUSD',
-    })
+  const sentDeployMultiTokenTransaction = await celoSDK.multiToken.send.deployMultiTokenTransaction({
+    chain: 'CELO',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    uri: 'tatum',
+    feeCurrency: 'CUSD',
+  })
 
-  const preparedMintMultiTokenTransaction =
-    await celoSDK.multiToken.prepare.mintMultiTokenTransaction({
-      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-      chain: 'CELO',
-      tokenId: '123',
-      amount: '1000',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-      feeCurrency: 'CUSD',
-    })
+  const preparedMintMultiTokenTransaction = await celoSDK.multiToken.prepare.mintMultiTokenTransaction({
+    to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    chain: 'CELO',
+    tokenId: '123',
+    amount: '1000',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    feeCurrency: 'CUSD',
+  })
 
   const sentMintMultiTokenTransaction = await celoSDK.multiToken.send.mintMultiTokenTransaction({
     to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
@@ -288,16 +279,15 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
       feeCurrency: 'CUSD',
     })
 
-  const sentMintMultiTokenBatchTransaction =
-    await celoSDK.multiToken.send.mintMultiTokenBatchTransaction({
-      to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
-      chain: 'CELO',
-      tokenId: [['123'], ['321']],
-      amounts: [['1000'], ['100']],
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-      feeCurrency: 'CUSD',
-    })
+  const sentMintMultiTokenBatchTransaction = await celoSDK.multiToken.send.mintMultiTokenBatchTransaction({
+    to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
+    chain: 'CELO',
+    tokenId: [['123'], ['321']],
+    amounts: [['1000'], ['100']],
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    feeCurrency: 'CUSD',
+  })
 
   const preparedTransferMultiTokenTransaction =
     await celoSDK.multiToken.prepare.transferMultiTokenTransaction({
@@ -310,16 +300,15 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
       feeCurrency: 'CUSD',
     })
 
-  const sentTransferMultiTokenTransaction =
-    await celoSDK.multiToken.send.transferMultiTokenTransaction({
-      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-      chain: 'CELO',
-      tokenId: '123',
-      amount: '10',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-      feeCurrency: 'CUSD',
-    })
+  const sentTransferMultiTokenTransaction = await celoSDK.multiToken.send.transferMultiTokenTransaction({
+    to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    chain: 'CELO',
+    tokenId: '123',
+    amount: '10',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    feeCurrency: 'CUSD',
+  })
 
   const preparedTransferMultiTokenBatchTransaction =
     await celoSDK.multiToken.prepare.transferMultiTokenBatchTransaction({
@@ -343,16 +332,15 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
       feeCurrency: 'CUSD',
     })
 
-  const preparedBurnMultiTokenTransaction =
-    await celoSDK.multiToken.prepare.burnMultiTokenTransaction({
-      chain: 'CELO',
-      tokenId: '123',
-      amount: '1',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-      account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-      feeCurrency: 'CUSD',
-    })
+  const preparedBurnMultiTokenTransaction = await celoSDK.multiToken.prepare.burnMultiTokenTransaction({
+    chain: 'CELO',
+    tokenId: '123',
+    amount: '1',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    feeCurrency: 'CUSD',
+  })
 
   const sentBurnMultiTokenTransaction = await celoSDK.multiToken.send.burnMultiTokenTransaction({
     chain: 'CELO',
@@ -375,16 +363,15 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
       feeCurrency: 'CUSD',
     })
 
-  const sentMintBurnTokenBatchTransaction =
-    await celoSDK.multiToken.send.burnMultiTokenBatchTransaction({
-      chain: 'CELO',
-      tokenId: ['123', '321'],
-      amounts: ['1000', '100'],
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-      account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-      feeCurrency: 'CUSD',
-    })
+  const sentMintBurnTokenBatchTransaction = await celoSDK.multiToken.send.burnMultiTokenBatchTransaction({
+    chain: 'CELO',
+    tokenId: ['123', '321'],
+    amounts: ['1000', '100'],
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    feeCurrency: 'CUSD',
+  })
 
   const preparedCustodialWalletSignedTransaction =
     await celoSDK.custodial.prepare.generateCustodialWalletSignedTransaction({
@@ -458,63 +445,59 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
     feeCurrency: 'CUSD',
   })
 
-  const preparedMintMultipleSignedTransaction =
-    await celoSDK.erc721.prepare.mintMultipleSignedTransaction({
-      chain: 'CELO',
-      to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-      tokenId: ['345634563', '53545345'],
-      url: ['https://my_token_data.com', 'https://my_token_data2.com'],
-      authorAddresses: [
-        ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-        ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
-      ],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      nonce: 46533715.43995557,
-      feeCurrency: 'CUSD',
-    })
+  const preparedMintMultipleSignedTransaction = await celoSDK.erc721.prepare.mintMultipleSignedTransaction({
+    chain: 'CELO',
+    to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+    tokenId: ['345634563', '53545345'],
+    url: ['https://my_token_data.com', 'https://my_token_data2.com'],
+    authorAddresses: [
+      ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+      ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
+    ],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    nonce: 46533715.43995557,
+    feeCurrency: 'CUSD',
+  })
 
-  const sentMintMultipleSignedTransaction =
-    await celoSDK.erc721.send.mintMultipleSignedTransaction({
-      chain: 'CELO',
-      to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-      tokenId: ['345634563', '53545345'],
-      url: ['https://my_token_data.com', 'https://my_token_data2.com'],
-      authorAddresses: [
-        ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-        ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
-      ],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      nonce: 46533715.43995557,
-      feeCurrency: 'CUSD',
-    })
+  const sentMintMultipleSignedTransaction = await celoSDK.erc721.send.mintMultipleSignedTransaction({
+    chain: 'CELO',
+    to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+    tokenId: ['345634563', '53545345'],
+    url: ['https://my_token_data.com', 'https://my_token_data2.com'],
+    authorAddresses: [
+      ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+      ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
+    ],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    nonce: 46533715.43995557,
+    feeCurrency: 'CUSD',
+  })
 
-  const preparedMintCashbackSignedTransaction =
-    await celoSDK.erc721.prepare.mintCashbackSignedTransaction({
-      chain: 'CELO',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      tokenId: '45343653',
-      url: 'https://my_token_data.com',
-      cashbackValues: ['0.5', '0.5'],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      nonce: 46533715.43995557,
-      feeCurrency: 'CUSD',
-    })
+  const preparedMintCashbackSignedTransaction = await celoSDK.erc721.prepare.mintCashbackSignedTransaction({
+    chain: 'CELO',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    tokenId: '45343653',
+    url: 'https://my_token_data.com',
+    cashbackValues: ['0.5', '0.5'],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    nonce: 46533715.43995557,
+    feeCurrency: 'CUSD',
+  })
 
-  const sentMintCashbackSignedTransaction =
-    await celoSDK.erc721.send.mintCashbackSignedTransaction({
-      chain: 'CELO',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      tokenId: '45343653',
-      url: 'https://my_token_data.com',
-      cashbackValues: ['0.5', '0.5'],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      nonce: 46533715.43995557,
-      feeCurrency: 'CUSD',
-    })
+  const sentMintCashbackSignedTransaction = await celoSDK.erc721.send.mintCashbackSignedTransaction({
+    chain: 'CELO',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    tokenId: '45343653',
+    url: 'https://my_token_data.com',
+    cashbackValues: ['0.5', '0.5'],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    nonce: 46533715.43995557,
+    feeCurrency: 'CUSD',
+  })
 
   const preparedMintMultipleCashbackSignedTransaction =
     await celoSDK.erc721.prepare.mintMultipleCashbackSignedTransaction({
@@ -554,17 +537,16 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
       feeCurrency: 'CUSD',
     })
 
-  const sentMintProvenanceSignedTransaction =
-    await celoSDK.erc721.send.mintProvenanceSignedTransaction({
-      chain: 'CELO',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      tokenId: '5435345',
-      url: 'https://my_token_data.com',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      nonce: 46533715.43995557,
-      feeCurrency: 'CUSD',
-    })
+  const sentMintProvenanceSignedTransaction = await celoSDK.erc721.send.mintProvenanceSignedTransaction({
+    chain: 'CELO',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    tokenId: '5435345',
+    url: 'https://my_token_data.com',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    nonce: 46533715.43995557,
+    feeCurrency: 'CUSD',
+  })
 
   const preparedMintMultipleProvenanceSignedTransaction =
     await celoSDK.erc721.prepare.mintMultipleProvenanceSignedTransaction({
@@ -592,16 +574,15 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
       feeCurrency: 'CUSD',
     })
 
-  const preparedTransferSignedTransaction =
-    await celoSDK.erc721.prepare.transferSignedTransaction({
-      chain: 'CELO',
-      tokenId: '453453',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      nonce: 46533715.43995557,
-      feeCurrency: 'CUSD',
-    })
+  const preparedTransferSignedTransaction = await celoSDK.erc721.prepare.transferSignedTransaction({
+    chain: 'CELO',
+    tokenId: '453453',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    nonce: 46533715.43995557,
+    feeCurrency: 'CUSD',
+  })
 
   const sentTransferSignedTransaction = await celoSDK.erc721.send.transferSignedTransaction({
     chain: 'CELO',
@@ -654,32 +635,29 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
   })
 
   // ERC1155(MULTI TOKEN)
-  const preparedDeployMultiTokenTransaction =
-    await celoSDK.multiToken.prepare.deployMultiTokenTransaction({
-      chain: 'CELO',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      uri: 'tatum',
-      feeCurrency: 'CUSD',
-    })
+  const preparedDeployMultiTokenTransaction = await celoSDK.multiToken.prepare.deployMultiTokenTransaction({
+    chain: 'CELO',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    uri: 'tatum',
+    feeCurrency: 'CUSD',
+  })
 
-  const sentDeployMultiTokenTransaction =
-    await celoSDK.multiToken.send.deployMultiTokenTransaction({
-      chain: 'CELO',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      uri: 'tatum',
-      feeCurrency: 'CUSD',
-    })
+  const sentDeployMultiTokenTransaction = await celoSDK.multiToken.send.deployMultiTokenTransaction({
+    chain: 'CELO',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    uri: 'tatum',
+    feeCurrency: 'CUSD',
+  })
 
-  const preparedMintMultiTokenTransaction =
-    await celoSDK.multiToken.prepare.mintMultiTokenTransaction({
-      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-      chain: 'CELO',
-      tokenId: '123',
-      amount: '1000',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-      feeCurrency: 'CUSD',
-    })
+  const preparedMintMultiTokenTransaction = await celoSDK.multiToken.prepare.mintMultiTokenTransaction({
+    to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    chain: 'CELO',
+    tokenId: '123',
+    amount: '1000',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    feeCurrency: 'CUSD',
+  })
 
   const sentMintMultiTokenTransaction = await celoSDK.multiToken.send.mintMultiTokenTransaction({
     to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
@@ -702,16 +680,15 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
       feeCurrency: 'CUSD',
     })
 
-  const sentMintMultiTokenBatchTransaction =
-    await celoSDK.multiToken.send.mintMultiTokenBatchTransaction({
-      to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
-      chain: 'CELO',
-      tokenId: [['123'], ['321']],
-      amounts: [['1000'], ['100']],
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-      feeCurrency: 'CUSD',
-    })
+  const sentMintMultiTokenBatchTransaction = await celoSDK.multiToken.send.mintMultiTokenBatchTransaction({
+    to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
+    chain: 'CELO',
+    tokenId: [['123'], ['321']],
+    amounts: [['1000'], ['100']],
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    feeCurrency: 'CUSD',
+  })
 
   const preparedTransferMultiTokenTransaction =
     await celoSDK.multiToken.prepare.transferMultiTokenTransaction({
@@ -723,15 +700,14 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
     })
 
-  const sentTransferMultiTokenTransaction =
-    await celoSDK.multiToken.send.transferMultiTokenTransaction({
-      to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-      chain: 'CELO',
-      tokenId: '123',
-      amount: '10',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-    })
+  const sentTransferMultiTokenTransaction = await celoSDK.multiToken.send.transferMultiTokenTransaction({
+    to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    chain: 'CELO',
+    tokenId: '123',
+    amount: '10',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+  })
 
   const preparedTransferMultiTokenBatchTransaction =
     await celoSDK.multiToken.prepare.transferMultiTokenBatchTransaction({
@@ -753,16 +729,15 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
     })
 
-  const preparedBurnMultiTokenTransaction =
-    await celoSDK.multiToken.prepare.burnMultiTokenTransaction({
-      chain: 'CELO',
-      tokenId: '123',
-      amount: '1',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-      account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-      feeCurrency: 'CUSD',
-    })
+  const preparedBurnMultiTokenTransaction = await celoSDK.multiToken.prepare.burnMultiTokenTransaction({
+    chain: 'CELO',
+    tokenId: '123',
+    amount: '1',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    feeCurrency: 'CUSD',
+  })
 
   const sentBurnMultiTokenTransaction = await celoSDK.multiToken.send.burnMultiTokenTransaction({
     chain: 'CELO',
@@ -785,16 +760,15 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
       feeCurrency: 'CUSD',
     })
 
-  const sentMintBurnTokenBatchTransaction =
-    await celoSDK.multiToken.send.burnMultiTokenBatchTransaction({
-      chain: 'CELO',
-      tokenId: ['123', '321'],
-      amounts: ['1000', '100'],
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-      account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-      feeCurrency: 'CUSD',
-    })
+  const sentMintBurnTokenBatchTransaction = await celoSDK.multiToken.send.burnMultiTokenBatchTransaction({
+    chain: 'CELO',
+    tokenId: ['123', '321'],
+    amounts: ['1000', '100'],
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    account: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    feeCurrency: 'CUSD',
+  })
 
   const preparedCustodialWalletSignedTransaction =
     await celoSDK.custodial.prepare.generateCustodialWalletSignedTransaction({

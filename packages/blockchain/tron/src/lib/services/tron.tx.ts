@@ -223,11 +223,11 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
     native: {
       prepare: {
         /**
-        * Sign Tron transaction with private keys locally. Nothing is broadcast to the blockchain.
-        * @param body content of the transaction to broadcast
-        * @param provider
-        * @returns transaction data to be broadcast to blockchain.
-        */
+         * Sign Tron transaction with private keys locally. Nothing is broadcast to the blockchain.
+         * @param body content of the transaction to broadcast
+         * @param provider
+         * @returns transaction data to be broadcast to blockchain.
+         */
         signedTransaction: async (
           body: TransferTronBlockchain | TransferTronBlockchainKMS,
           provider?: string,
@@ -239,7 +239,7 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
          * @returns transaction data to be broadcast to blockchain.
          */
         freezeTransaction: async (body: FreezeTron | FreezeTronKMS, provider?: string) =>
-        prepareFreezeTransaction(body, args.tronWeb, provider),
+          prepareFreezeTransaction(body, args.tronWeb, provider),
       },
       send: {
         /**
@@ -252,10 +252,10 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
           body: TransferTronBlockchain | TransferTronBlockchainKMS,
           provider?: string,
         ) =>
-        BlockchainTronService.tronBroadcast({
+          BlockchainTronService.tronBroadcast({
             txData: await prepareSignedTransaction(body, args.tronWeb, provider),
             // TODO: SignatureID is missing in OpenApi
-        }),
+          }),
         /**
          * Send Tron Freeze balance transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
          * This operation is irreversible.
@@ -263,10 +263,10 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
          * @returns transaction id of the transaction in the blockchain
          */
         freezeTransaction: async (body: FreezeTron | FreezeTronKMS, provider?: string) =>
-        BlockchainTronService.tronBroadcast({
-          txData: await prepareFreezeTransaction(body, args.tronWeb, provider),
-          // TODO: SignatureID is missing in OpenApi
-        }),
+          BlockchainTronService.tronBroadcast({
+            txData: await prepareFreezeTransaction(body, args.tronWeb, provider),
+            // TODO: SignatureID is missing in OpenApi
+          }),
       },
     },
     smartContract: {
@@ -317,10 +317,10 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
           body: GenerateCustodialWalletTron | GenerateCustodialWalletTronKMS,
           provider?: string,
         ) =>
-        BlockchainTronService.tronBroadcast({
-          txData: await prepareGenerateCustodialWalletSignedTransaction(body, args.tronWeb, provider),
-          // TODO: SignatureID is missing in OpenApi
-        }),
+          BlockchainTronService.tronBroadcast({
+            txData: await prepareGenerateCustodialWalletSignedTransaction(body, args.tronWeb, provider),
+            // TODO: SignatureID is missing in OpenApi
+          }),
       },
     },
     marketplace: {
@@ -354,6 +354,6 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
             // TODO: SignatureID is missing in OpenApi
           }),
       },
-    }
+    },
   }
 }

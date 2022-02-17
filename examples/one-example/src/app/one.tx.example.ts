@@ -5,18 +5,16 @@ const oneSDK = TatumOneSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function oneTxWithSignatureIdExample(): Promise<void> {
   // NATIVE
-  const preparedTransferNativeTransaction = await oneSDK.transaction.prepare.transferSignedTransaction(
-    {
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      amount: '10',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      nonce: 3252345722143,
-      fee: {
-        gasLimit: '53632',
-        gasPrice: '20',
-      },
+  const preparedTransferNativeTransaction = await oneSDK.transaction.prepare.transferSignedTransaction({
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    amount: '10',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 3252345722143,
+    fee: {
+      gasLimit: '53632',
+      gasPrice: '20',
     },
-  )
+  })
 
   const sentTransferNativeTransaction = await oneSDK.transaction.send.transferSignedTransaction({
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -169,75 +167,71 @@ export async function oneTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const preparedMintMultipleSignedTransaction =
-    await oneSDK.erc721.prepare.mintMultipleSignedTransaction({
-      chain: 'ONE',
-      to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-      tokenId: ['345634563', '53545345'],
-      url: ['https://my_token_data.com', 'https://my_token_data2.com'],
-      authorAddresses: [
-        ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-        ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
-      ],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
+  const preparedMintMultipleSignedTransaction = await oneSDK.erc721.prepare.mintMultipleSignedTransaction({
+    chain: 'ONE',
+    to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+    tokenId: ['345634563', '53545345'],
+    url: ['https://my_token_data.com', 'https://my_token_data2.com'],
+    authorAddresses: [
+      ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+      ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
+    ],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
 
-  const sentMintMultipleSignedTransaction =
-    await oneSDK.erc721.send.mintMultipleSignedTransaction({
-      chain: 'ONE',
-      to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-      tokenId: ['345634563', '53545345'],
-      url: ['https://my_token_data.com', 'https://my_token_data2.com'],
-      authorAddresses: [
-        ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-        ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
-      ],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
+  const sentMintMultipleSignedTransaction = await oneSDK.erc721.send.mintMultipleSignedTransaction({
+    chain: 'ONE',
+    to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+    tokenId: ['345634563', '53545345'],
+    url: ['https://my_token_data.com', 'https://my_token_data2.com'],
+    authorAddresses: [
+      ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+      ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
+    ],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
 
-  const preparedMintCashbackSignedTransaction =
-    await oneSDK.erc721.prepare.mintCashbackSignedTransaction({
-      chain: 'ONE',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      tokenId: '45343653',
-      url: 'https://my_token_data.com',
-      cashbackValues: ['0.5', '0.5'],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
+  const preparedMintCashbackSignedTransaction = await oneSDK.erc721.prepare.mintCashbackSignedTransaction({
+    chain: 'ONE',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    tokenId: '45343653',
+    url: 'https://my_token_data.com',
+    cashbackValues: ['0.5', '0.5'],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
 
-  const sentMintCashbackSignedTransaction =
-    await oneSDK.erc721.send.mintCashbackSignedTransaction({
-      chain: 'ONE',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      tokenId: '45343653',
-      url: 'https://my_token_data.com',
-      cashbackValues: ['0.5', '0.5'],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
+  const sentMintCashbackSignedTransaction = await oneSDK.erc721.send.mintCashbackSignedTransaction({
+    chain: 'ONE',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    tokenId: '45343653',
+    url: 'https://my_token_data.com',
+    cashbackValues: ['0.5', '0.5'],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
 
   const preparedMintMultipleCashbackSignedTransaction =
     await oneSDK.erc721.prepare.mintMultipleCashbackSignedTransaction({
@@ -271,8 +265,8 @@ export async function oneTxWithSignatureIdExample(): Promise<void> {
       },
     })
 
-  const preparedMintProvenanceSignedTransaction =
-    await oneSDK.erc721.prepare.mintProvenanceSignedTransaction({
+  const preparedMintProvenanceSignedTransaction = await oneSDK.erc721.prepare.mintProvenanceSignedTransaction(
+    {
       chain: 'ONE',
       tokenId: '5435345',
       to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -284,22 +278,22 @@ export async function oneTxWithSignatureIdExample(): Promise<void> {
         gasLimit: '326452',
         gasPrice: '20',
       },
-    })
+    },
+  )
 
-  const sentMintProvenanceSignedTransaction =
-    await oneSDK.erc721.send.mintProvenanceSignedTransaction({
-      chain: 'ONE',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      tokenId: '5435345',
-      url: 'https://my_token_data.com',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
+  const sentMintProvenanceSignedTransaction = await oneSDK.erc721.send.mintProvenanceSignedTransaction({
+    chain: 'ONE',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    tokenId: '5435345',
+    url: 'https://my_token_data.com',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
 
   const preparedMintMultipleProvenanceSignedTransaction =
     await oneSDK.erc721.prepare.mintMultipleProvenanceSignedTransaction({
@@ -333,20 +327,18 @@ export async function oneTxWithSignatureIdExample(): Promise<void> {
       },
     })
 
-  const preparedTransferSignedTransaction = await oneSDK.erc721.prepare.transferSignedTransaction(
-    {
-      chain: 'ONE',
-      tokenId: '453453',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
+  const preparedTransferSignedTransaction = await oneSDK.erc721.prepare.transferSignedTransaction({
+    chain: 'ONE',
+    tokenId: '453453',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
     },
-  )
+  })
 
   const sentTransferSignedTransaction = await oneSDK.erc721.send.transferSignedTransaction({
     chain: 'ONE',
@@ -414,29 +406,26 @@ export async function oneTxWithSignatureIdExample(): Promise<void> {
   })
 
   // ERC1155(MULTI TOKEN)
-  const preparedDeployMultiTokenTransaction =
-    await oneSDK.multiToken.prepare.deployMultiTokenTransaction({
-      chain: 'ONE',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      uri: 'tatum',
-    })
+  const preparedDeployMultiTokenTransaction = await oneSDK.multiToken.prepare.deployMultiTokenTransaction({
+    chain: 'ONE',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    uri: 'tatum',
+  })
 
-  const sentDeployMultiTokenTransaction =
-    await oneSDK.multiToken.send.deployMultiTokenTransaction({
-      chain: 'ONE',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      uri: 'tatum',
-    })
+  const sentDeployMultiTokenTransaction = await oneSDK.multiToken.send.deployMultiTokenTransaction({
+    chain: 'ONE',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    uri: 'tatum',
+  })
 
-  const preparedMintMultiTokenTransaction =
-    await oneSDK.multiToken.prepare.mintMultiTokenTransaction({
-      to: 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde',
-      chain: 'ONE',
-      tokenId: '123',
-      amount: '1000',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-    })
+  const preparedMintMultiTokenTransaction = await oneSDK.multiToken.prepare.mintMultiTokenTransaction({
+    to: 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde',
+    chain: 'ONE',
+    tokenId: '123',
+    amount: '1000',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+  })
 
   const sentMintMultiTokenTransaction = await oneSDK.multiToken.send.mintMultiTokenTransaction({
     to: 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde',
@@ -457,35 +446,34 @@ export async function oneTxWithSignatureIdExample(): Promise<void> {
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
     })
 
-  const sentMintMultiTokenBatchTransaction =
-    await oneSDK.multiToken.send.mintMultiTokenBatchTransaction({
-      to: ['one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde', 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde'],
-      chain: 'ONE',
-      tokenId: [['123'], ['321']],
-      amounts: [['1000'], ['100']],
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-    })
+  const sentMintMultiTokenBatchTransaction = await oneSDK.multiToken.send.mintMultiTokenBatchTransaction({
+    to: ['one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde', 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde'],
+    chain: 'ONE',
+    tokenId: [['123'], ['321']],
+    amounts: [['1000'], ['100']],
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+  })
 
-  const preparedTransferMultiTokenTransaction =
-    await oneSDK.multiToken.prepare.transferMultiTokenTransaction({
+  const preparedTransferMultiTokenTransaction = await oneSDK.multiToken.prepare.transferMultiTokenTransaction(
+    {
       to: 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde',
       chain: 'ONE',
       tokenId: '123',
       amount: '10',
       signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-    })
+    },
+  )
 
-  const sentTransferMultiTokenTransaction =
-    await oneSDK.multiToken.send.transferMultiTokenTransaction({
-      to: 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde',
-      chain: 'ONE',
-      tokenId: '123',
-      amount: '10',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-    })
+  const sentTransferMultiTokenTransaction = await oneSDK.multiToken.send.transferMultiTokenTransaction({
+    to: 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde',
+    chain: 'ONE',
+    tokenId: '123',
+    amount: '10',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+  })
 
   const preparedTransferMultiTokenBatchTransaction =
     await oneSDK.multiToken.prepare.transferMultiTokenBatchTransaction({
@@ -507,15 +495,14 @@ export async function oneTxWithSignatureIdExample(): Promise<void> {
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
     })
 
-  const preparedBurnMultiTokenTransaction =
-    await oneSDK.multiToken.prepare.burnMultiTokenTransaction({
-      chain: 'ONE',
-      tokenId: '123',
-      amount: '1',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-      account: 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde',
-    })
+  const preparedBurnMultiTokenTransaction = await oneSDK.multiToken.prepare.burnMultiTokenTransaction({
+    chain: 'ONE',
+    tokenId: '123',
+    amount: '1',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    account: 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde',
+  })
 
   const sentBurnMultiTokenTransaction = await oneSDK.multiToken.send.burnMultiTokenTransaction({
     chain: 'ONE',
@@ -536,15 +523,14 @@ export async function oneTxWithSignatureIdExample(): Promise<void> {
       account: 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde',
     })
 
-  const sentMintBurnTokenBatchTransaction =
-    await oneSDK.multiToken.send.burnMultiTokenBatchTransaction({
-      chain: 'ONE',
-      tokenId: ['123', '321'],
-      amounts: ['1000', '100'],
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-      account: 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde',
-    })
+  const sentMintBurnTokenBatchTransaction = await oneSDK.multiToken.send.burnMultiTokenBatchTransaction({
+    chain: 'ONE',
+    tokenId: ['123', '321'],
+    amounts: ['1000', '100'],
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    account: 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde',
+  })
 
   // CUSTODIAL
   const preparedCustodialWalletSignedTransaction =
@@ -717,75 +703,71 @@ export async function oneTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const preparedMintMultipleSignedTransaction =
-    await oneSDK.erc721.prepare.mintMultipleSignedTransaction({
-      chain: 'ONE',
-      to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-      tokenId: ['345634563', '53545345'],
-      url: ['https://my_token_data.com', 'https://my_token_data2.com'],
-      authorAddresses: [
-        ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-        ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
-      ],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
+  const preparedMintMultipleSignedTransaction = await oneSDK.erc721.prepare.mintMultipleSignedTransaction({
+    chain: 'ONE',
+    to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+    tokenId: ['345634563', '53545345'],
+    url: ['https://my_token_data.com', 'https://my_token_data2.com'],
+    authorAddresses: [
+      ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+      ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
+    ],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
 
-  const sentMintMultipleSignedTransaction =
-    await oneSDK.erc721.send.mintMultipleSignedTransaction({
-      chain: 'ONE',
-      to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-      tokenId: ['345634563', '53545345'],
-      url: ['https://my_token_data.com', 'https://my_token_data2.com'],
-      authorAddresses: [
-        ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-        ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
-      ],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
+  const sentMintMultipleSignedTransaction = await oneSDK.erc721.send.mintMultipleSignedTransaction({
+    chain: 'ONE',
+    to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+    tokenId: ['345634563', '53545345'],
+    url: ['https://my_token_data.com', 'https://my_token_data2.com'],
+    authorAddresses: [
+      ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+      ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
+    ],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
 
-  const preparedMintCashbackSignedTransaction =
-    await oneSDK.erc721.prepare.mintCashbackSignedTransaction({
-      chain: 'ONE',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      tokenId: '45343653',
-      url: 'https://my_token_data.com',
-      cashbackValues: ['0.5', '0.5'],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
+  const preparedMintCashbackSignedTransaction = await oneSDK.erc721.prepare.mintCashbackSignedTransaction({
+    chain: 'ONE',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    tokenId: '45343653',
+    url: 'https://my_token_data.com',
+    cashbackValues: ['0.5', '0.5'],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
 
-  const sentMintCashbackSignedTransaction =
-    await oneSDK.erc721.send.mintCashbackSignedTransaction({
-      chain: 'ONE',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      tokenId: '45343653',
-      url: 'https://my_token_data.com',
-      cashbackValues: ['0.5', '0.5'],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
+  const sentMintCashbackSignedTransaction = await oneSDK.erc721.send.mintCashbackSignedTransaction({
+    chain: 'ONE',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    tokenId: '45343653',
+    url: 'https://my_token_data.com',
+    cashbackValues: ['0.5', '0.5'],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
 
   const preparedMintMultipleCashbackSignedTransaction =
     await oneSDK.erc721.prepare.mintMultipleCashbackSignedTransaction({
@@ -819,8 +801,8 @@ export async function oneTxWithPrivateKeyExample(): Promise<void> {
       },
     })
 
-  const preparedMintProvenanceSignedTransaction =
-    await oneSDK.erc721.prepare.mintProvenanceSignedTransaction({
+  const preparedMintProvenanceSignedTransaction = await oneSDK.erc721.prepare.mintProvenanceSignedTransaction(
+    {
       chain: 'ONE',
       tokenId: '5435345',
       to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -832,22 +814,22 @@ export async function oneTxWithPrivateKeyExample(): Promise<void> {
         gasLimit: '326452',
         gasPrice: '20',
       },
-    })
+    },
+  )
 
-  const sentMintProvenanceSignedTransaction =
-    await oneSDK.erc721.send.mintProvenanceSignedTransaction({
-      chain: 'ONE',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      tokenId: '5435345',
-      url: 'https://my_token_data.com',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
-    })
+  const sentMintProvenanceSignedTransaction = await oneSDK.erc721.send.mintProvenanceSignedTransaction({
+    chain: 'ONE',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    tokenId: '5435345',
+    url: 'https://my_token_data.com',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
 
   const preparedMintMultipleProvenanceSignedTransaction =
     await oneSDK.erc721.prepare.mintMultipleProvenanceSignedTransaction({
@@ -881,20 +863,18 @@ export async function oneTxWithPrivateKeyExample(): Promise<void> {
       },
     })
 
-  const preparedTransferSignedTransaction = await oneSDK.erc721.prepare.transferSignedTransaction(
-    {
-      chain: 'ONE',
-      tokenId: '453453',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
+  const preparedTransferSignedTransaction = await oneSDK.erc721.prepare.transferSignedTransaction({
+    chain: 'ONE',
+    tokenId: '453453',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
     },
-  )
+  })
 
   const sentTransferSignedTransaction = await oneSDK.erc721.send.transferSignedTransaction({
     chain: 'ONE',
@@ -962,29 +942,26 @@ export async function oneTxWithPrivateKeyExample(): Promise<void> {
   })
 
   // ERC1155(MULTI TOKEN)
-  const preparedDeployMultiTokenTransaction =
-    await oneSDK.multiToken.prepare.deployMultiTokenTransaction({
-      chain: 'ONE',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      uri: 'tatum',
-    })
+  const preparedDeployMultiTokenTransaction = await oneSDK.multiToken.prepare.deployMultiTokenTransaction({
+    chain: 'ONE',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    uri: 'tatum',
+  })
 
-  const sentDeployMultiTokenTransaction =
-    await oneSDK.multiToken.send.deployMultiTokenTransaction({
-      chain: 'ONE',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      uri: 'tatum',
-    })
+  const sentDeployMultiTokenTransaction = await oneSDK.multiToken.send.deployMultiTokenTransaction({
+    chain: 'ONE',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    uri: 'tatum',
+  })
 
-  const preparedMintMultiTokenTransaction =
-    await oneSDK.multiToken.prepare.mintMultiTokenTransaction({
-      to: 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde',
-      chain: 'ONE',
-      tokenId: '123',
-      amount: '1000',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-    })
+  const preparedMintMultiTokenTransaction = await oneSDK.multiToken.prepare.mintMultiTokenTransaction({
+    to: 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde',
+    chain: 'ONE',
+    tokenId: '123',
+    amount: '1000',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+  })
 
   const sentMintMultiTokenTransaction = await oneSDK.multiToken.send.mintMultiTokenTransaction({
     to: 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde',
@@ -1005,35 +982,34 @@ export async function oneTxWithPrivateKeyExample(): Promise<void> {
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
     })
 
-  const sentMintMultiTokenBatchTransaction =
-    await oneSDK.multiToken.send.mintMultiTokenBatchTransaction({
-      to: ['one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde', 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde'],
-      chain: 'ONE',
-      tokenId: [['123'], ['321']],
-      amounts: [['1000'], ['100']],
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-    })
+  const sentMintMultiTokenBatchTransaction = await oneSDK.multiToken.send.mintMultiTokenBatchTransaction({
+    to: ['one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde', 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde'],
+    chain: 'ONE',
+    tokenId: [['123'], ['321']],
+    amounts: [['1000'], ['100']],
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+  })
 
-  const preparedTransferMultiTokenTransaction =
-    await oneSDK.multiToken.prepare.transferMultiTokenTransaction({
+  const preparedTransferMultiTokenTransaction = await oneSDK.multiToken.prepare.transferMultiTokenTransaction(
+    {
       to: 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde',
       chain: 'ONE',
       tokenId: '123',
       amount: '10',
       fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-    })
+    },
+  )
 
-  const sentTransferMultiTokenTransaction =
-    await oneSDK.multiToken.send.transferMultiTokenTransaction({
-      to: 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde',
-      chain: 'ONE',
-      tokenId: '123',
-      amount: '10',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-    })
+  const sentTransferMultiTokenTransaction = await oneSDK.multiToken.send.transferMultiTokenTransaction({
+    to: 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde',
+    chain: 'ONE',
+    tokenId: '123',
+    amount: '10',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+  })
 
   const preparedTransferMultiTokenBatchTransaction =
     await oneSDK.multiToken.prepare.transferMultiTokenBatchTransaction({
@@ -1055,15 +1031,14 @@ export async function oneTxWithPrivateKeyExample(): Promise<void> {
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
     })
 
-  const preparedBurnMultiTokenTransaction =
-    await oneSDK.multiToken.prepare.burnMultiTokenTransaction({
-      chain: 'ONE',
-      tokenId: '123',
-      amount: '1',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-      account: 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde',
-    })
+  const preparedBurnMultiTokenTransaction = await oneSDK.multiToken.prepare.burnMultiTokenTransaction({
+    chain: 'ONE',
+    tokenId: '123',
+    amount: '1',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    account: 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde',
+  })
 
   const sentBurnMultiTokenTransaction = await oneSDK.multiToken.send.burnMultiTokenTransaction({
     chain: 'ONE',
@@ -1084,15 +1059,14 @@ export async function oneTxWithPrivateKeyExample(): Promise<void> {
       account: 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde',
     })
 
-  const sentMintBurnTokenBatchTransaction =
-    await oneSDK.multiToken.send.burnMultiTokenBatchTransaction({
-      chain: 'ONE',
-      tokenId: ['123', '321'],
-      amounts: ['1000', '100'],
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-      account: 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde',
-    })
+  const sentMintBurnTokenBatchTransaction = await oneSDK.multiToken.send.burnMultiTokenBatchTransaction({
+    chain: 'ONE',
+    tokenId: ['123', '321'],
+    amounts: ['1000', '100'],
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
+    account: 'one1yvph79875pj0pmgpxzmve87ks4sxer5u3jyfde',
+  })
 
   // CUSTODIAL
   const preparedCustodialWalletSignedTransaction =
