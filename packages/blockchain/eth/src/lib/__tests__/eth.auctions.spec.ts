@@ -1,22 +1,10 @@
-import {
-  blockchainTestFactory,
-  REPLACE_ME_WITH_TATUM_API_KEY,
-  TestCasesApiCallMapping,
-  TEST_DATA,
-} from '@tatumio/shared-testing-common'
 import { auctionTestFactory, ganacheHelper } from '@tatumio/shared-testing-evm-based'
-import { TatumEthSDK } from '../eth.sdk'
-import * as apiClient from '@tatumio/api-client'
 import { Blockchain } from '@tatumio/shared-core'
 import { ethAuctionService } from '../services/eth.auction'
-
-jest.mock('@tatumio/api-client')
-const mockedApi = jest.mocked(apiClient.BlockchainMarketplaceService, true)
 
 const blockchain = Blockchain.ETH
 
 fdescribe('EthSDK - auctions', () => {
-  const sdk = TatumEthSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
   const inmemoryBlockchain = ganacheHelper.inmemoryBlockchain(blockchain)
 
   const auctionService = ethAuctionService({
@@ -27,34 +15,6 @@ fdescribe('EthSDK - auctions', () => {
         return '@TODO'
       },
     },
-  })
-
-  describe('API methods', () => {
-    afterEach(() => {
-      jest.clearAllMocks()
-    })
-
-    const auctionApiCalls = {
-      getAuction: sdk.marketplace.auction.getAuction,
-      getAuctionFee: sdk.marketplace.auction.getAuctionFee,
-      getAuctionFeeRecipient: sdk.marketplace.auction.getAuctionFeeRecipient,
-    }
-    const testData = TEST_DATA.ETH
-
-    const auctionFunctionsMapping: TestCasesApiCallMapping<typeof auctionApiCalls> = {
-      getAuction: [mockedApi.getAuction, Blockchain.ETH, testData.TESTNET.CONTRACT_ADDRESS, '1'],
-      getAuctionFee: [mockedApi.getAuctionFee, Blockchain.ETH, testData.TESTNET.CONTRACT_ADDRESS],
-      getAuctionFeeRecipient: [
-        mockedApi.getAuctionFeeRecipient,
-        Blockchain.ETH,
-        testData.TESTNET.CONTRACT_ADDRESS,
-      ],
-    }
-
-    // TODO: It cannot handle first hardcoded params (ETH) in SDK
-    xdescribe('API methods mapping', () => {
-      blockchainTestFactory.apiMethods(auctionApiCalls, auctionFunctionsMapping)
-    })
   })
 
   describe('prepare', () => {
@@ -74,26 +34,34 @@ fdescribe('EthSDK - auctions', () => {
         inmemoryBlockchain.accounts,
       )
     })
-    xdescribe('approve nft spending', () => {
+    describe('approve nft spending', () => {
       auctionTestFactory.prepare.auctionApproveNftTransferSignedTransaction(
-        sdk.marketplace.auction,
-        TEST_DATA.ETH,
+        auctionService,
+        inmemoryBlockchain.accounts,
       )
     })
+    /**
+     * TODO: Returned values aren't valid, did it run Out of Gas? You might also see this error if you are not using the correct ABI for the contract you are retrieving data from, requesting data from a block number that does not exist, or querying a node which is not fully synced.
+     * after decimal method call
+     */
     xdescribe('approve erc20 spending', () => {
       auctionTestFactory.prepare.auctionApproveErc20TransferSignedTransaction(
-        sdk.marketplace.auction,
-        TEST_DATA.ETH,
+        auctionService,
+        inmemoryBlockchain.accounts,
       )
     })
+    /**
+     * TODO: Returned values aren't valid, did it run Out of Gas? You might also see this error if you are not using the correct ABI for the contract you are retrieving data from, requesting data from a block number that does not exist, or querying a node which is not fully synced.
+     * after decimal method call
+     */
     xdescribe('bid auction', () => {
-      auctionTestFactory.prepare.auctionBidSignedTransaction(sdk.marketplace.auction, TEST_DATA.ETH)
+      auctionTestFactory.prepare.auctionBidSignedTransaction(auctionService, inmemoryBlockchain.accounts)
     })
-    xdescribe('cancel auction', () => {
-      auctionTestFactory.prepare.auctionCancelSignedTransaction(sdk.marketplace.auction, TEST_DATA.ETH)
+    describe('cancel auction', () => {
+      auctionTestFactory.prepare.auctionCancelSignedTransaction(auctionService, inmemoryBlockchain.accounts)
     })
-    xdescribe('settle auction', () => {
-      auctionTestFactory.prepare.auctionSettleSignedTransaction(sdk.marketplace.auction, TEST_DATA.ETH)
+    describe('settle auction', () => {
+      auctionTestFactory.prepare.auctionSettleSignedTransaction(auctionService, inmemoryBlockchain.accounts)
     })
   })
 })

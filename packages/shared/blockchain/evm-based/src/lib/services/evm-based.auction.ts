@@ -87,25 +87,22 @@ export const evmBasedAuction = (args: {
         auctionApproveNftTransferSignedTransaction({ ...body, chain: blockchain }, web3, provider),
       /**
        * Approve ERC20 transfer for auction to perform bidding on the asset in the auction.
-       * @param testnet chain to work with
        * @param body request data
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
        */
       auctionApproveErc20TransferSignedTransaction: async (
-        testnet: boolean,
         body: ChainApproveErc20Spending,
         provider?: string,
       ) => auctionApproveErc20TransferSignedTransaction({ ...body, chain: blockchain }, web3, provider),
       /**
        * Bid on the auction. Buyer must either send native assets with this operation, or approve ERC20 token spending before.
        * After auction is sold, it's in a pending state to be processed by the auction. Noone receives the assets unless the auction operator processes that.
-       * @param testnet chain to work with
        * @param body request data
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
        */
-      auctionBidSignedTransaction: async (testnet: boolean, body: ChainAuctionBid, provider?: string) =>
+      auctionBidSignedTransaction: async (body: ChainAuctionBid, provider?: string) =>
         auctionBidSignedTransaction(
           { ...body, chain: blockchain },
           blockchain,
@@ -202,11 +199,7 @@ export const evmBasedAuction = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      auctionApproveErc20TransferSignedTransaction: async (
-        testnet: boolean,
-        body: ChainApproveErc20,
-        provider?: string,
-      ) =>
+      auctionApproveErc20TransferSignedTransaction: async (body: ChainApproveErc20, provider?: string) =>
         broadcastFunction({
           txData: await auctionApproveErc20TransferSignedTransaction(
             { ...body, chain: blockchain },
@@ -215,7 +208,7 @@ export const evmBasedAuction = (args: {
           ),
           signatureId: body.signatureId,
         }),
-      auctionBidSignedTransaction: async (testnet: boolean, body: ChainAuctionBid, provider?: string) =>
+      auctionBidSignedTransaction: async (body: ChainAuctionBid, provider?: string) =>
         broadcastFunction({
           txData: await auctionBidSignedTransaction(
             { ...body, chain: blockchain },
