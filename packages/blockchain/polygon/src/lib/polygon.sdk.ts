@@ -11,12 +11,18 @@ const blockchain = Blockchain.POLYGON
 export const TatumPolygonSDK = (args: SDKArguments) => {
   const web3 = polygonWeb3({ blockchain })
   const api = BlockchainPolygonMaticService
+  const txService = polygonTxService({ blockchain, web3 })
 
   return {
     ...evmBasedSdk({ ...args, blockchain, web3 }),
     api,
     kms: polygonKmsService({ blockchain, web3 }),
-    transaction: polygonTxService({ blockchain, web3 }),
+    transaction: txService.native,
+    erc20: txService.erc20,
+    erc721: txService.erc721,
+    multiToken: txService.multiToken,
+    smartContract: txService.smartContract,
+    custodial: txService.custodial,
     marketplace: evmBasedMarketplace({
       blockchain,
       web3,

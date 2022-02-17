@@ -11,12 +11,18 @@ const blockchain = Blockchain.ETH
 export const TatumEthSDK = (args: SDKArguments) => {
   const web3 = ethWeb3({ blockchain })
   const api = BlockchainEthereumService
+  const txService = ethTx({ blockchain, web3 })
 
   return {
     ...evmBasedSdk({ ...args, blockchain, web3 }),
     api,
     kms: ethKmsService({ blockchain, web3 }),
-    transaction: ethTx({ blockchain, web3 }),
+    transaction: txService.native,
+    erc20: txService.erc20,
+    erc721: txService.erc721,
+    multiToken: txService.multiToken,
+    smartContract: txService.smartContract,
+    custodial: txService.custodial,
     marketplace: evmBasedMarketplace({
       blockchain,
       web3,

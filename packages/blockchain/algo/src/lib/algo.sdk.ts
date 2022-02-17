@@ -11,6 +11,7 @@ const blockchain = Blockchain.ALGO
 
 export const TatumAlgoSDK = (args: SDKArguments) => {
   const web = algoWeb()
+  const txService = algoTx({ algoWeb: web })
 
   return {
     ...abstractBlockchainSdk({
@@ -20,9 +21,9 @@ export const TatumAlgoSDK = (args: SDKArguments) => {
     algoWeb: web,
     record: algoRecord(),
     wallet: algoWallet(),
-    transaction: algoTx({
-      algoWeb: web,
-    }),
+    transaction: txService.native,
+    erc20: txService.erc20,
+    erc721: txService.erc721,
     blockchain: {
       broadcast: BlockchainAlgorandAlgoService.algoandBroadcast,
       getBlock: BlockchainAlgorandAlgoService.algorandGetBlock,
