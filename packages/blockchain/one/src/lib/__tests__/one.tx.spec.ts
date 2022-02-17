@@ -128,11 +128,7 @@ describe('OneSDK - tx', () => {
       })
 
       describe('transferSignedTransaction', () => {
-        erc721TestFactory.prepare.transferSignedTransaction(
-          sdk.erc721,
-          TEST_DATA.ONE,
-          Currency.ONE,
-        )
+        erc721TestFactory.prepare.transferSignedTransaction(sdk.erc721, TEST_DATA.ONE, Currency.ONE)
       })
 
       describe('mintSignedTransaction', () => {
@@ -144,11 +140,7 @@ describe('OneSDK - tx', () => {
       })
 
       describe('mintCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintCashbackSignedTransaction(
-          sdk.erc721,
-          TEST_DATA.ONE,
-          Currency.ONE,
-        )
+        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.erc721, TEST_DATA.ONE, Currency.ONE)
       })
 
       describe('mintMultipleCashbackSignedTransaction', () => {
@@ -160,11 +152,7 @@ describe('OneSDK - tx', () => {
       })
 
       describe('mintMultipleSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleSignedTransaction(
-          sdk.erc721,
-          TEST_DATA.ONE,
-          Currency.ONE,
-        )
+        erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.erc721, TEST_DATA.ONE, Currency.ONE)
       })
 
       describe('updateCashbackForAuthorSignedTransaction', () => {
@@ -180,59 +168,31 @@ describe('OneSDK - tx', () => {
   describe('multiToken', () => {
     describe('prepare', () => {
       describe('deployMultiToken', () => {
-        multiTokenTestFactory.prepare.deployMultiTokenTransaction(
-          sdk.multiToken,
-          TEST_DATA.ONE,
-          'ONE',
-        )
+        multiTokenTestFactory.prepare.deployMultiTokenTransaction(sdk.multiToken, TEST_DATA.ONE, 'ONE')
       })
 
       describe('mintMultiToken', () => {
-        multiTokenTestFactory.prepare.mintMultiTokenTransaction(
-          sdk.multiToken,
-          TEST_DATA.ONE,
-          'ONE',
-        )
+        multiTokenTestFactory.prepare.mintMultiTokenTransaction(sdk.multiToken, TEST_DATA.ONE, 'ONE')
       })
 
       describe('mintMultiTokenBatch', () => {
-        multiTokenTestFactory.prepare.mintMultiTokenBatchTransaction(
-          sdk.multiToken,
-          TEST_DATA.ONE,
-          'ONE',
-        )
+        multiTokenTestFactory.prepare.mintMultiTokenBatchTransaction(sdk.multiToken, TEST_DATA.ONE, 'ONE')
       })
 
       describe('transferMultiToken', () => {
-        multiTokenTestFactory.prepare.transferMultiTokenTransaction(
-          sdk.multiToken,
-          TEST_DATA.ONE,
-          'ONE',
-        )
+        multiTokenTestFactory.prepare.transferMultiTokenTransaction(sdk.multiToken, TEST_DATA.ONE, 'ONE')
       })
 
       describe('transferMultiTokenBatch', () => {
-        multiTokenTestFactory.prepare.transferMultiTokenBatchTransaction(
-          sdk.multiToken,
-          TEST_DATA.ONE,
-          'ONE',
-        )
+        multiTokenTestFactory.prepare.transferMultiTokenBatchTransaction(sdk.multiToken, TEST_DATA.ONE, 'ONE')
       })
 
       describe('burnMultiToken', () => {
-        multiTokenTestFactory.prepare.burnMultiTokenTransaction(
-          sdk.multiToken,
-          TEST_DATA.ONE,
-          'ONE',
-        )
+        multiTokenTestFactory.prepare.burnMultiTokenTransaction(sdk.multiToken, TEST_DATA.ONE, 'ONE')
       })
 
       describe('burnMultiTokenBatch', () => {
-        multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(
-          sdk.multiToken,
-          TEST_DATA.ONE,
-          'ONE',
-        )
+        multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(sdk.multiToken, TEST_DATA.ONE, 'ONE')
       })
     })
   })

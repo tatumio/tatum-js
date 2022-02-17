@@ -74,11 +74,7 @@ describe('EthSDK - tx', () => {
       })
 
       describe('transferSignedTransaction', () => {
-        erc721TestFactory.prepare.transferSignedTransaction(
-          sdk.erc721,
-          TEST_DATA.ETH,
-          Currency.ETH,
-        )
+        erc721TestFactory.prepare.transferSignedTransaction(sdk.erc721, TEST_DATA.ETH, Currency.ETH)
       })
 
       describe('mintSignedTransaction', () => {
@@ -90,11 +86,7 @@ describe('EthSDK - tx', () => {
       })
 
       describe('mintCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintCashbackSignedTransaction(
-          sdk.erc721,
-          TEST_DATA.ETH,
-          Currency.ETH,
-        )
+        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.erc721, TEST_DATA.ETH, Currency.ETH)
       })
 
       describe('mintMultipleCashbackSignedTransaction', () => {
@@ -106,11 +98,7 @@ describe('EthSDK - tx', () => {
       })
 
       describe('mintMultipleSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleSignedTransaction(
-          sdk.erc721,
-          TEST_DATA.ETH,
-          Currency.ETH,
-        )
+        erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.erc721, TEST_DATA.ETH, Currency.ETH)
       })
 
       describe('updateCashbackForAuthorSignedTransaction', () => {
@@ -185,59 +173,31 @@ describe('EthSDK - tx', () => {
   describe('multiToken', () => {
     describe('prepare', () => {
       describe('deployMultiToken', () => {
-        multiTokenTestFactory.prepare.deployMultiTokenTransaction(
-          sdk.multiToken,
-          TEST_DATA.ETH,
-          'ETH',
-        )
+        multiTokenTestFactory.prepare.deployMultiTokenTransaction(sdk.multiToken, TEST_DATA.ETH, 'ETH')
       })
 
       describe('mintMultiToken', () => {
-        multiTokenTestFactory.prepare.mintMultiTokenTransaction(
-          sdk.multiToken,
-          TEST_DATA.ETH,
-          'ETH',
-        )
+        multiTokenTestFactory.prepare.mintMultiTokenTransaction(sdk.multiToken, TEST_DATA.ETH, 'ETH')
       })
 
       describe('mintMultiTokenBatch', () => {
-        multiTokenTestFactory.prepare.mintMultiTokenBatchTransaction(
-          sdk.multiToken,
-          TEST_DATA.ETH,
-          'ETH',
-        )
+        multiTokenTestFactory.prepare.mintMultiTokenBatchTransaction(sdk.multiToken, TEST_DATA.ETH, 'ETH')
       })
 
       describe('transferMultiToken', () => {
-        multiTokenTestFactory.prepare.transferMultiTokenTransaction(
-          sdk.multiToken,
-          TEST_DATA.ETH,
-          'ETH',
-        )
+        multiTokenTestFactory.prepare.transferMultiTokenTransaction(sdk.multiToken, TEST_DATA.ETH, 'ETH')
       })
 
       describe('transferMultiTokenBatch', () => {
-        multiTokenTestFactory.prepare.transferMultiTokenBatchTransaction(
-          sdk.multiToken,
-          TEST_DATA.ETH,
-          'ETH',
-        )
+        multiTokenTestFactory.prepare.transferMultiTokenBatchTransaction(sdk.multiToken, TEST_DATA.ETH, 'ETH')
       })
 
       describe('burnMultiToken', () => {
-        multiTokenTestFactory.prepare.burnMultiTokenTransaction(
-          sdk.multiToken,
-          TEST_DATA.ETH,
-          'ETH',
-        )
+        multiTokenTestFactory.prepare.burnMultiTokenTransaction(sdk.multiToken, TEST_DATA.ETH, 'ETH')
       })
 
       describe('burnMultiTokenBatch', () => {
-        multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(
-          sdk.multiToken,
-          TEST_DATA.ETH,
-          'ETH',
-        )
+        multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(sdk.multiToken, TEST_DATA.ETH, 'ETH')
       })
     })
   })

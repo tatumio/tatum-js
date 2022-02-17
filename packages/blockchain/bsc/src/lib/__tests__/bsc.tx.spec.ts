@@ -73,11 +73,7 @@ describe('BscSDK - tx', () => {
       })
 
       describe('transferSignedTransaction', () => {
-        erc721TestFactory.prepare.transferSignedTransaction(
-          sdk.erc721,
-          TEST_DATA.BSC,
-          Currency.BSC,
-        )
+        erc721TestFactory.prepare.transferSignedTransaction(sdk.erc721, TEST_DATA.BSC, Currency.BSC)
       })
 
       describe('mintSignedTransaction', () => {
@@ -89,11 +85,7 @@ describe('BscSDK - tx', () => {
       })
 
       describe('mintCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintCashbackSignedTransaction(
-          sdk.erc721,
-          TEST_DATA.BSC,
-          Currency.BSC,
-        )
+        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.erc721, TEST_DATA.BSC, Currency.BSC)
       })
 
       describe('mintMultipleCashbackSignedTransaction', () => {
@@ -105,11 +97,7 @@ describe('BscSDK - tx', () => {
       })
 
       describe('mintMultipleSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleSignedTransaction(
-          sdk.erc721,
-          TEST_DATA.BSC,
-          Currency.BSC,
-        )
+        erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.erc721, TEST_DATA.BSC, Currency.BSC)
       })
 
       describe('updateCashbackForAuthorSignedTransaction', () => {

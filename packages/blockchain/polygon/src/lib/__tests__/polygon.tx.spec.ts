@@ -70,43 +70,23 @@ describe('PolygonSDK - tx', () => {
   describe('erc721', () => {
     describe('prepare', () => {
       describe('deploySignedTransaction', () => {
-        erc721TestFactory.prepare.deploySignedTransaction(
-          sdk.erc721,
-          TEST_DATA.POLYGON,
-          Currency.MATIC,
-        )
+        erc721TestFactory.prepare.deploySignedTransaction(sdk.erc721, TEST_DATA.POLYGON, Currency.MATIC)
       })
 
       describe('transferSignedTransaction', () => {
-        erc721TestFactory.prepare.transferSignedTransaction(
-          sdk.erc721,
-          TEST_DATA.POLYGON,
-          Currency.MATIC,
-        )
+        erc721TestFactory.prepare.transferSignedTransaction(sdk.erc721, TEST_DATA.POLYGON, Currency.MATIC)
       })
 
       describe('mintSignedTransaction', () => {
-        erc721TestFactory.prepare.mintSignedTransaction(
-          sdk.erc721,
-          TEST_DATA.POLYGON,
-          Currency.MATIC,
-        )
+        erc721TestFactory.prepare.mintSignedTransaction(sdk.erc721, TEST_DATA.POLYGON, Currency.MATIC)
       })
 
       describe('burnSignedTransaction', () => {
-        erc721TestFactory.prepare.burnSignedTransaction(
-          sdk.erc721,
-          TEST_DATA.POLYGON,
-          Currency.MATIC,
-        )
+        erc721TestFactory.prepare.burnSignedTransaction(sdk.erc721, TEST_DATA.POLYGON, Currency.MATIC)
       })
 
       describe('mintCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintCashbackSignedTransaction(
-          sdk.erc721,
-          TEST_DATA.POLYGON,
-          Currency.MATIC,
-        )
+        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.erc721, TEST_DATA.POLYGON, Currency.MATIC)
       })
 
       describe('mintMultipleCashbackSignedTransaction', () => {
@@ -118,11 +98,7 @@ describe('PolygonSDK - tx', () => {
       })
 
       describe('mintMultipleSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleSignedTransaction(
-          sdk.erc721,
-          TEST_DATA.POLYGON,
-          Currency.MATIC,
-        )
+        erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.erc721, TEST_DATA.POLYGON, Currency.MATIC)
       })
 
       describe('updateCashbackForAuthorSignedTransaction', () => {
@@ -197,19 +173,11 @@ describe('PolygonSDK - tx', () => {
   describe('multiToken', () => {
     describe('prepare', () => {
       describe('deployMultiToken', () => {
-        multiTokenTestFactory.prepare.deployMultiTokenTransaction(
-          sdk.multiToken,
-          TEST_DATA.POLYGON,
-          'MATIC',
-        )
+        multiTokenTestFactory.prepare.deployMultiTokenTransaction(sdk.multiToken, TEST_DATA.POLYGON, 'MATIC')
       })
 
       describe('mintMultiToken', () => {
-        multiTokenTestFactory.prepare.mintMultiTokenTransaction(
-          sdk.multiToken,
-          TEST_DATA.POLYGON,
-          'MATIC',
-        )
+        multiTokenTestFactory.prepare.mintMultiTokenTransaction(sdk.multiToken, TEST_DATA.POLYGON, 'MATIC')
       })
 
       describe('mintMultiTokenBatch', () => {
@@ -237,11 +205,7 @@ describe('PolygonSDK - tx', () => {
       })
 
       describe('burnMultiToken', () => {
-        multiTokenTestFactory.prepare.burnMultiTokenTransaction(
-          sdk.multiToken,
-          TEST_DATA.POLYGON,
-          'MATIC',
-        )
+        multiTokenTestFactory.prepare.burnMultiTokenTransaction(sdk.multiToken, TEST_DATA.POLYGON, 'MATIC')
       })
 
       describe('burnMultiTokenBatch', () => {

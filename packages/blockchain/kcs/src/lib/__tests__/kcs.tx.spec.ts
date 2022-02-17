@@ -78,11 +78,7 @@ describe('KcsSDK - tx', () => {
       })
 
       describe('transferSignedTransaction', () => {
-        erc721TestFactory.prepare.transferSignedTransaction(
-          sdk.erc721,
-          TEST_DATA.KCS,
-          Currency.KCS,
-        )
+        erc721TestFactory.prepare.transferSignedTransaction(sdk.erc721, TEST_DATA.KCS, Currency.KCS)
       })
 
       describe('mintSignedTransaction', () => {
@@ -94,11 +90,7 @@ describe('KcsSDK - tx', () => {
       })
 
       describe('mintCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintCashbackSignedTransaction(
-          sdk.erc721,
-          TEST_DATA.KCS,
-          Currency.KCS,
-        )
+        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.erc721, TEST_DATA.KCS, Currency.KCS)
       })
 
       describe('mintMultipleCashbackSignedTransaction', () => {
@@ -110,11 +102,7 @@ describe('KcsSDK - tx', () => {
       })
 
       describe('mintMultipleSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleSignedTransaction(
-          sdk.erc721,
-          TEST_DATA.KCS,
-          Currency.KCS,
-        )
+        erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.erc721, TEST_DATA.KCS, Currency.KCS)
       })
 
       describe('updateCashbackForAuthorSignedTransaction', () => {
@@ -130,59 +118,31 @@ describe('KcsSDK - tx', () => {
   describe('multiToken', () => {
     describe('prepare', () => {
       describe('deployMultiToken', () => {
-        multiTokenTestFactory.prepare.deployMultiTokenTransaction(
-          sdk.multiToken,
-          TEST_DATA.KCS,
-          'KCS',
-        )
+        multiTokenTestFactory.prepare.deployMultiTokenTransaction(sdk.multiToken, TEST_DATA.KCS, 'KCS')
       })
 
       describe('mintMultiToken', () => {
-        multiTokenTestFactory.prepare.mintMultiTokenTransaction(
-          sdk.multiToken,
-          TEST_DATA.KCS,
-          'KCS',
-        )
+        multiTokenTestFactory.prepare.mintMultiTokenTransaction(sdk.multiToken, TEST_DATA.KCS, 'KCS')
       })
 
       describe('mintMultiTokenBatch', () => {
-        multiTokenTestFactory.prepare.mintMultiTokenBatchTransaction(
-          sdk.multiToken,
-          TEST_DATA.KCS,
-          'KCS',
-        )
+        multiTokenTestFactory.prepare.mintMultiTokenBatchTransaction(sdk.multiToken, TEST_DATA.KCS, 'KCS')
       })
 
       describe('transferMultiToken', () => {
-        multiTokenTestFactory.prepare.transferMultiTokenTransaction(
-          sdk.multiToken,
-          TEST_DATA.KCS,
-          'KCS',
-        )
+        multiTokenTestFactory.prepare.transferMultiTokenTransaction(sdk.multiToken, TEST_DATA.KCS, 'KCS')
       })
 
       describe('transferMultiTokenBatch', () => {
-        multiTokenTestFactory.prepare.transferMultiTokenBatchTransaction(
-          sdk.multiToken,
-          TEST_DATA.KCS,
-          'KCS',
-        )
+        multiTokenTestFactory.prepare.transferMultiTokenBatchTransaction(sdk.multiToken, TEST_DATA.KCS, 'KCS')
       })
 
       describe('burnMultiToken', () => {
-        multiTokenTestFactory.prepare.burnMultiTokenTransaction(
-          sdk.multiToken,
-          TEST_DATA.KCS,
-          'KCS',
-        )
+        multiTokenTestFactory.prepare.burnMultiTokenTransaction(sdk.multiToken, TEST_DATA.KCS, 'KCS')
       })
 
       describe('burnMultiTokenBatch', () => {
-        multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(
-          sdk.multiToken,
-          TEST_DATA.KCS,
-          'KCS',
-        )
+        multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(sdk.multiToken, TEST_DATA.KCS, 'KCS')
       })
     })
   })
