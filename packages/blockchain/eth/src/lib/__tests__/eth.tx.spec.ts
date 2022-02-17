@@ -42,7 +42,7 @@ describe('EthSDK - tx', () => {
 
   describe('erc20', () => {
     describe('decimals', () => {
-      erc20TestFactory.decimals(sdk.transaction.erc20, TEST_DATA.ETH)
+      erc20TestFactory.decimals(sdk.erc20, TEST_DATA.ETH)
     })
 
     describe('prepare', () => {
@@ -61,7 +61,7 @@ describe('EthSDK - tx', () => {
 
       // TODO:  Returned error: execution reverted
       xdescribe('burnSignedTransaction', () => {
-        erc20TestFactory.prepare.burnSignedTransaction(sdk.transaction.erc20, TEST_DATA.ETH)
+        erc20TestFactory.prepare.burnSignedTransaction(sdk.erc20, TEST_DATA.ETH)
       })
     })
   })
@@ -70,28 +70,28 @@ describe('EthSDK - tx', () => {
     jest.setTimeout(99999)
     describe('prepare', () => {
       describe('deploySignedTransaction', () => {
-        erc721TestFactory.prepare.deploySignedTransaction(sdk.transaction.erc721, TEST_DATA.ETH, Currency.ETH)
+        erc721TestFactory.prepare.deploySignedTransaction(sdk.erc721, TEST_DATA.ETH, Currency.ETH)
       })
 
       describe('transferSignedTransaction', () => {
         erc721TestFactory.prepare.transferSignedTransaction(
-          sdk.transaction.erc721,
+          sdk.erc721,
           TEST_DATA.ETH,
           Currency.ETH,
         )
       })
 
       describe('mintSignedTransaction', () => {
-        erc721TestFactory.prepare.mintSignedTransaction(sdk.transaction.erc721, TEST_DATA.ETH, Currency.ETH)
+        erc721TestFactory.prepare.mintSignedTransaction(sdk.erc721, TEST_DATA.ETH, Currency.ETH)
       })
 
       describe('burnSignedTransaction', () => {
-        erc721TestFactory.prepare.burnSignedTransaction(sdk.transaction.erc721, TEST_DATA.ETH, Currency.ETH)
+        erc721TestFactory.prepare.burnSignedTransaction(sdk.erc721, TEST_DATA.ETH, Currency.ETH)
       })
 
       describe('mintCashbackSignedTransaction', () => {
         erc721TestFactory.prepare.mintCashbackSignedTransaction(
-          sdk.transaction.erc721,
+          sdk.erc721,
           TEST_DATA.ETH,
           Currency.ETH,
         )
@@ -99,7 +99,7 @@ describe('EthSDK - tx', () => {
 
       describe('mintMultipleCashbackSignedTransaction', () => {
         erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(
-          sdk.transaction.erc721,
+          sdk.erc721,
           TEST_DATA.ETH,
           Currency.ETH,
         )
@@ -107,7 +107,7 @@ describe('EthSDK - tx', () => {
 
       describe('mintMultipleSignedTransaction', () => {
         erc721TestFactory.prepare.mintMultipleSignedTransaction(
-          sdk.transaction.erc721,
+          sdk.erc721,
           TEST_DATA.ETH,
           Currency.ETH,
         )
@@ -115,7 +115,7 @@ describe('EthSDK - tx', () => {
 
       describe('updateCashbackForAuthorSignedTransaction', () => {
         erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(
-          sdk.transaction.erc721,
+          sdk.erc721,
           TEST_DATA.ETH,
           Currency.ETH,
         )
@@ -186,7 +186,7 @@ describe('EthSDK - tx', () => {
     describe('prepare', () => {
       describe('deployMultiToken', () => {
         multiTokenTestFactory.prepare.deployMultiTokenTransaction(
-          sdk.transaction.multiToken,
+          sdk.multiToken,
           TEST_DATA.ETH,
           'ETH',
         )
@@ -194,7 +194,7 @@ describe('EthSDK - tx', () => {
 
       describe('mintMultiToken', () => {
         multiTokenTestFactory.prepare.mintMultiTokenTransaction(
-          sdk.transaction.multiToken,
+          sdk.multiToken,
           TEST_DATA.ETH,
           'ETH',
         )
@@ -202,7 +202,7 @@ describe('EthSDK - tx', () => {
 
       describe('mintMultiTokenBatch', () => {
         multiTokenTestFactory.prepare.mintMultiTokenBatchTransaction(
-          sdk.transaction.multiToken,
+          sdk.multiToken,
           TEST_DATA.ETH,
           'ETH',
         )
@@ -210,7 +210,7 @@ describe('EthSDK - tx', () => {
 
       describe('transferMultiToken', () => {
         multiTokenTestFactory.prepare.transferMultiTokenTransaction(
-          sdk.transaction.multiToken,
+          sdk.multiToken,
           TEST_DATA.ETH,
           'ETH',
         )
@@ -218,7 +218,7 @@ describe('EthSDK - tx', () => {
 
       describe('transferMultiTokenBatch', () => {
         multiTokenTestFactory.prepare.transferMultiTokenBatchTransaction(
-          sdk.transaction.multiToken,
+          sdk.multiToken,
           TEST_DATA.ETH,
           'ETH',
         )
@@ -226,7 +226,7 @@ describe('EthSDK - tx', () => {
 
       describe('burnMultiToken', () => {
         multiTokenTestFactory.prepare.burnMultiTokenTransaction(
-          sdk.transaction.multiToken,
+          sdk.multiToken,
           TEST_DATA.ETH,
           'ETH',
         )
@@ -234,7 +234,7 @@ describe('EthSDK - tx', () => {
 
       describe('burnMultiTokenBatch', () => {
         multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(
-          sdk.transaction.multiToken,
+          sdk.multiToken,
           TEST_DATA.ETH,
           'ETH',
         )
@@ -246,7 +246,7 @@ describe('EthSDK - tx', () => {
     describe('prepare', () => {
       describe('smart contract write method invocation', () => {
         smartContractTestFactory.prepare.smartContractWriteMethodInvocationTransaction(
-          sdk.transaction.smartContract,
+          sdk.smartContract,
           TEST_DATA.ETH,
         )
       })
@@ -255,7 +255,7 @@ describe('EthSDK - tx', () => {
     describe('send', () => {
       describe('smart contract read method invocation', () => {
         smartContractTestFactory.send.smartContractReadMethodInvocationTransaction(
-          sdk.transaction.smartContract,
+          sdk.smartContract,
           TEST_DATA.ETH,
         )
       })
@@ -266,7 +266,7 @@ describe('EthSDK - tx', () => {
     describe('prepare', () => {
       describe('smart contract write method invocation', () => {
         custodialTestFactory.prepare.generateCustodialWalletSignedTransaction(
-          sdk.transaction.custodial,
+          sdk.custodial,
           TEST_DATA.ETH,
           'ETH',
         )

@@ -71,7 +71,7 @@ describe('KlaytnSDK - tx', () => {
     describe('prepare', () => {
       describe('deploySignedTransaction', () => {
         erc721TestFactory.prepare.deploySignedTransaction(
-          sdk.transaction.erc721,
+          sdk.erc721,
           TEST_DATA.KLAYTN,
           Currency.KLAY,
         )
@@ -79,7 +79,7 @@ describe('KlaytnSDK - tx', () => {
 
       describe('transferSignedTransaction', () => {
         erc721TestFactory.prepare.transferSignedTransaction(
-          sdk.transaction.erc721,
+          sdk.erc721,
           TEST_DATA.KLAYTN,
           Currency.KLAY,
         )
@@ -87,7 +87,7 @@ describe('KlaytnSDK - tx', () => {
 
       describe('mintSignedTransaction', () => {
         erc721TestFactory.prepare.mintSignedTransaction(
-          sdk.transaction.erc721,
+          sdk.erc721,
           TEST_DATA.KLAYTN,
           Currency.KLAY,
         )
@@ -95,7 +95,7 @@ describe('KlaytnSDK - tx', () => {
 
       describe('burnSignedTransaction', () => {
         erc721TestFactory.prepare.burnSignedTransaction(
-          sdk.transaction.erc721,
+          sdk.erc721,
           TEST_DATA.KLAYTN,
           Currency.KLAY,
         )
@@ -103,7 +103,7 @@ describe('KlaytnSDK - tx', () => {
 
       describe('mintCashbackSignedTransaction', () => {
         erc721TestFactory.prepare.mintCashbackSignedTransaction(
-          sdk.transaction.erc721,
+          sdk.erc721,
           TEST_DATA.KLAYTN,
           Currency.KLAY,
         )
@@ -111,7 +111,7 @@ describe('KlaytnSDK - tx', () => {
 
       describe('mintMultipleCashbackSignedTransaction', () => {
         erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(
-          sdk.transaction.erc721,
+          sdk.erc721,
           TEST_DATA.KLAYTN,
           Currency.KLAY,
         )
@@ -119,7 +119,7 @@ describe('KlaytnSDK - tx', () => {
 
       describe('mintMultipleSignedTransaction', () => {
         erc721TestFactory.prepare.mintMultipleSignedTransaction(
-          sdk.transaction.erc721,
+          sdk.erc721,
           TEST_DATA.KLAYTN,
           Currency.KLAY,
         )
@@ -127,7 +127,7 @@ describe('KlaytnSDK - tx', () => {
 
       describe('updateCashbackForAuthorSignedTransaction', () => {
         erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(
-          sdk.transaction.erc721,
+          sdk.erc721,
           TEST_DATA.KLAYTN,
           Currency.KLAY,
         )
@@ -198,7 +198,7 @@ describe('KlaytnSDK - tx', () => {
     describe('prepare', () => {
       describe('deployMultiToken', () => {
         multiTokenTestFactory.prepare.deployMultiTokenTransaction(
-          sdk.transaction.multiToken,
+          sdk.multiToken,
           TEST_DATA.KLAYTN,
           'KLAY',
         )
@@ -206,7 +206,7 @@ describe('KlaytnSDK - tx', () => {
 
       describe('mintMultiToken', () => {
         multiTokenTestFactory.prepare.mintMultiTokenTransaction(
-          sdk.transaction.multiToken,
+          sdk.multiToken,
           TEST_DATA.KLAYTN,
           'KLAY',
         )
@@ -214,7 +214,7 @@ describe('KlaytnSDK - tx', () => {
 
       describe('mintMultiTokenBatch', () => {
         multiTokenTestFactory.prepare.mintMultiTokenBatchTransaction(
-          sdk.transaction.multiToken,
+          sdk.multiToken,
           TEST_DATA.KLAYTN,
           'KLAY',
         )
@@ -222,7 +222,7 @@ describe('KlaytnSDK - tx', () => {
 
       describe('transferMultiToken', () => {
         multiTokenTestFactory.prepare.transferMultiTokenTransaction(
-          sdk.transaction.multiToken,
+          sdk.multiToken,
           TEST_DATA.KLAYTN,
           'KLAY',
         )
@@ -230,7 +230,7 @@ describe('KlaytnSDK - tx', () => {
 
       describe('transferMultiTokenBatch', () => {
         multiTokenTestFactory.prepare.transferMultiTokenBatchTransaction(
-          sdk.transaction.multiToken,
+          sdk.multiToken,
           TEST_DATA.KLAYTN,
           'KLAY',
         )
@@ -238,7 +238,7 @@ describe('KlaytnSDK - tx', () => {
 
       describe('burnMultiToken', () => {
         multiTokenTestFactory.prepare.burnMultiTokenTransaction(
-          sdk.transaction.multiToken,
+          sdk.multiToken,
           TEST_DATA.KLAYTN,
           'KLAY',
         )
@@ -246,7 +246,7 @@ describe('KlaytnSDK - tx', () => {
 
       describe('burnMultiTokenBatch', () => {
         multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(
-          sdk.transaction.multiToken,
+          sdk.multiToken,
           TEST_DATA.KLAYTN,
           'KLAY',
         )
