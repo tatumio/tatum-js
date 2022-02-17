@@ -10,6 +10,7 @@ import {
   smartContractTestFactory,
   custodialTestFactory,
   marketplaceTestFactory,
+  nativeTestFactory,
 } from '@tatumio/shared-testing-evm-based'
 import { Currency } from '@tatumio/api-client'
 
@@ -25,6 +26,12 @@ describe('BscSDK - tx', () => {
         return '@TODO'
       },
     },
+  })
+
+  describe('transaction', () => {
+    describe('native', () => {
+      nativeTestFactory.prepare.transferSignedTransaction(bscTx.native, inmemoryBlockchain.accounts)
+    })
   })
 
   describe('erc20', () => {
