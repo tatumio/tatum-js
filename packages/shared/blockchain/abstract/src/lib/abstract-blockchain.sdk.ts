@@ -171,6 +171,11 @@ export interface SdkWithErc721Functions {
       body: ChainUpdateCashbackErc721,
       provider?: string,
     ): Promise<string>
+    mintProvenanceSignedTransaction(body: ChainMintNft, provider?: string): Promise<string>
+    mintMultipleProvenanceSignedTransaction(
+      body: ChainMintMultipleNft & { fixedValues: string[][] },
+      provider?: string,
+    ): Promise<string>
   }
 }
 

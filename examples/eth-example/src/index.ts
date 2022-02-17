@@ -1,5 +1,4 @@
 import { ethWalletExample } from './app/eth.wallet.example'
-import { ethApiExample } from './app/eth.api.example'
 import { ethKmsExample } from './app/eth.kms.example'
 import {
   ethLedgerAccountExample,
@@ -15,7 +14,6 @@ import { ethSubscriptionsExample } from './app/eth.subscriptions.example'
 import { ethTxWithPrivateKeyExample, ethTxWithSignatureIdExample } from './app/eth.tx.example'
 
 console.log(`Running ${ethWalletExample()}`)
-console.log(`Running ${ethApiExample()}`)
 console.log(`Running ${ethKmsExample()}`)
 console.log(`Running ${ethLedgerAccountExample()}`)
 console.log(`Running ${ethLedgerBlockAmountExample()}`)

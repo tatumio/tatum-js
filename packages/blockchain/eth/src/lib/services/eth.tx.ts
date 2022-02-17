@@ -41,14 +41,5 @@ export const ethTx = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3
         broadcastFunction: BlockchainEthereumService.ethBroadcast,
       }),
     },
-    //custodial: prepareGenerateCustodialWalletSignedTransaction()
   }
 }
-
-/*
-
-export const ethCustodial = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3 }) => {
-  return {
-    prepareGenerateCustodialWalletSignedTransaction = async (body: GenerateCustodialAddress, provider?: string) => {
-  }
-}*/
