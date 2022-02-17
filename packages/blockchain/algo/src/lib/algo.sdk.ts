@@ -31,5 +31,10 @@ export const TatumAlgoSDK = (args: SDKArguments) => {
       getTransaction: BlockchainAlgorandAlgoService.algorandGetTransaction,
       getPayTransactionByFromTo: BlockchainAlgorandAlgoService.algorandGetPayTransactionsByFromTo,
     },
+    node: {
+      indexerGetDriver: BlockchainAlgorandAlgoService.algoNodeIndexerGetDriver,
+      getDriver: BlockchainAlgorandAlgoService.algoNodeGetDriver,
+      postDriver: BlockchainAlgorandAlgoService.algoNodePostDriver,
+    },
   }
 }
