@@ -65,30 +65,55 @@ export const auctionTestFactory = {
     },
     auctionUpdateFeeRecipientSignedTransaction: (
       sdk: SdkWithAuctionFunctions,
-      accounts: GanacheAccount[]
+      accounts: GanacheAccount[],
     ) => {
-      // it('valid', async () => {
-      //   const tx = await sdk.prepare.auctionUpdateFeeRecipientSignedTransaction(
-
-      //   )
-      //   expectHexString(tx)
-      // })
-      // it('invalid address', async () => {
-      //   try {
-      //     await sdk.prepare.auctionUpdateFeeRecipientSignedTransaction(
-      //       testData.AUCTIONS.UPDATE_FEE_RECIPIENT.INVALID,
-      //     )
-      //   } catch (e) {
-      //     expect(e.toString()).toEqual(
-      //       "Error: Provided address 0x687422eEA2cB73B5d3e242bA5456b782919AFc86 is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted.",
-      //     )
-      //   }
-      // })
-    },
-    createAuctionSignedTransaction: (sdk: SdkWithAuctionFunctions,       accounts: GanacheAccount[]
-      ) => {
       it('valid from privateKey', async () => {
-        const tx = await sdk.prepare.createAuctionSignedTransaction(          {
+        const tx = await sdk.prepare.auctionUpdateFeeRecipientSignedTransaction({
+          contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+          feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+          fromPrivateKey: accounts[0].privateKey,
+          fee: {
+            gasLimit: '40000',
+            gasPrice: '20',
+          },
+        })
+
+        expectHexString(tx)
+      })
+      it('valid from signatureId', async () => {
+        const tx = await sdk.prepare.auctionUpdateFeeRecipientSignedTransaction({
+          contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+          feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+          signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+          fee: {
+            gasLimit: '40000',
+            gasPrice: '20',
+          },
+        })
+
+        const json = JSON.parse(tx)
+
+        expect(json.gasPrice).toBe('20000000000')
+      })
+      it('invalid address', async () => {
+        await expect(async () =>
+          sdk.prepare.auctionUpdateFeeRecipientSignedTransaction({
+            contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc86',
+            feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+            fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
+            fee: {
+              gasLimit: '40000',
+              gasPrice: '20',
+            },
+          }),
+        ).rejects.toThrow(
+          `Provided address 0x687422eEA2cB73B5d3e242bA5456b782919AFc86 is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted.`,
+        )
+      })
+    },
+    createAuctionSignedTransaction: (sdk: SdkWithAuctionFunctions, accounts: GanacheAccount[]) => {
+      it('valid from privateKey', async () => {
+        const tx = await sdk.prepare.createAuctionSignedTransaction({
           contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           nftAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           seller: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -111,7 +136,7 @@ export const auctionTestFactory = {
       it('valid from signatureId', async () => {
         const nonce = 1
 
-        const tx = await sdk.prepare.createAuctionSignedTransaction(          {
+        const tx = await sdk.prepare.createAuctionSignedTransaction({
           contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           nftAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           seller: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -135,7 +160,8 @@ export const auctionTestFactory = {
         expect(json.gasPrice).toBe('20000000000')
       })
       it('invalid address', async () => {
-          await expect(async () => sdk.prepare.createAuctionSignedTransaction({
+        await expect(async () =>
+          sdk.prepare.createAuctionSignedTransaction({
             contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc86',
             nftAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
             seller: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -151,9 +177,10 @@ export const auctionTestFactory = {
               gasLimit: '40000',
               gasPrice: '20',
             },
-          })).rejects.toThrow(
-            `Provided address 0x687422eEA2cB73B5d3e242bA5456b782919AFc86 is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted.`
-          )
+          }),
+        ).rejects.toThrow(
+          `Provided address 0x687422eEA2cB73B5d3e242bA5456b782919AFc86 is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted.`,
+        )
       })
     },
     auctionApproveNftTransferSignedTransaction: (

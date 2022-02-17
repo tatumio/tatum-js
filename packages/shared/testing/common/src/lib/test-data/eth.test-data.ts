@@ -47,26 +47,6 @@ export const ETH_TEST_DATA: BlockchainTestData = {
     'The value of "value" is out of range. It must be >= 0 and <= 4294967295. Received -1',
   INVALID_PRIVATE_KEY_ERROR: 'Expected private key to be an Uint8Array with length 32',
   AUCTIONS: {
-    UPDATE_FEE_RECIPIENT: {
-      VALID: {
-        contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-        feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-        fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-        fee: {
-          gasLimit: '40000',
-          gasPrice: '20',
-        },
-      },
-      INVALID: {
-        contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc86',
-        feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-        fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-        fee: {
-          gasLimit: '40000',
-          gasPrice: '20',
-        },
-      },
-    },
     UPDATE_FEE: {
       VALID: {
         contractAddress: '0xe6e7340394958674cdf8606936d292f565e4ecc4',

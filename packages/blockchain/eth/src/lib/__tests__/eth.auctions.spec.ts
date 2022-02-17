@@ -68,10 +68,10 @@ fdescribe('EthSDK - auctions', () => {
     describe('create auction', () => {
       auctionTestFactory.prepare.createAuctionSignedTransaction(auctionService, inmemoryBlockchain.accounts)
     })
-    xdescribe('update auction fee recipient', () => {
+    describe('update auction fee recipient', () => {
       auctionTestFactory.prepare.auctionUpdateFeeRecipientSignedTransaction(
-        sdk.marketplace.auction,
-        TEST_DATA.ETH,
+        auctionService,
+        inmemoryBlockchain.accounts,
       )
     })
     xdescribe('approve nft spending', () => {
