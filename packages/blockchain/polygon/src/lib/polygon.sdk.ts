@@ -5,6 +5,7 @@ import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { polygonWeb3 } from './services/polygon.web3'
 import { polygonKmsService } from './services/polygon.kms'
 import { polygonTxService } from './services/polygon.tx'
+import { polygonAuctionService } from './services/polygon.auction'
 
 const blockchain = Blockchain.POLYGON
 
@@ -23,11 +24,14 @@ export const TatumPolygonSDK = (args: SDKArguments) => {
     multiToken: txService.multiToken,
     smartContract: txService.smartContract,
     custodial: txService.custodial,
-    marketplace: evmBasedMarketplace({
-      blockchain,
-      web3,
-      broadcastFunction: BlockchainPolygonMaticService.polygonBroadcast,
-    }),
+    marketplace: {
+      ...evmBasedMarketplace({
+        blockchain,
+        web3,
+        broadcastFunction: BlockchainPolygonMaticService.polygonBroadcast,
+      }),
+      auction: polygonAuctionService({ blockchain, web3 }),
+    },
     httpDriver: async (request: Web3Request): Promise<Web3Response> => {
       return api.polygonWeb3Driver(args.apiKey, { ...request, jsonrpc: '2.0' })
     },
