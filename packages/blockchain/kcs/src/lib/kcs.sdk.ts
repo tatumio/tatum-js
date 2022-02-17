@@ -18,12 +18,14 @@ export const TatumKcsSDK = (args: SDKArguments) => {
     api,
     kms: kcsKmsService({ blockchain, web3 }),
     transaction: kcsTxService({ blockchain, web3 }),
-    marketplace: evmBasedMarketplace({
-      blockchain,
-      web3,
-      broadcastFunction: BlockchainKcsKcsService.kcsBroadcast,
-    }),
-    auction: kcsAuctionService({ blockchain, web3 }),
+    marketplace: {
+      ...evmBasedMarketplace({
+        blockchain,
+        web3,
+        broadcastFunction: BlockchainKcsKcsService.kcsBroadcast,
+      }),
+      auction: kcsAuctionService({ blockchain, web3 }),
+    },
     httpDriver: async (request: Web3Request): Promise<Web3Response> => {
       return api.kcsWeb3Driver(args.apiKey, { ...request, jsonrpc: '2.0' })
     },

@@ -4,30 +4,36 @@ import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 const bscSDK = TatumBscSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export const bscAuctionExample = async () => {
-  const auction = await bscSDK.auction.getAuction('0xe6e7340394958674cdf8606936d292f565e4ecc4', '1')
+  const auction = await bscSDK.marketplace.auction.getAuction(
+    '0xe6e7340394958674cdf8606936d292f565e4ecc4',
+    '1',
+  )
 
-  const auctionFee = await bscSDK.auction.getAuctionFee('0xe6e7340394958674cdf8606936d292f565e4ecc4')
-
-  const auctionFeeRecipient = await bscSDK.auction.getAuctionFeeRecipient(
+  const auctionFee = await bscSDK.marketplace.auction.getAuctionFee(
     '0xe6e7340394958674cdf8606936d292f565e4ecc4',
   )
 
-  const deployAuctionTx = await bscSDK.auction.prepare.deployAuctionSignedTransaction({
+  const auctionFeeRecipient = await bscSDK.marketplace.auction.getAuctionFeeRecipient(
+    '0xe6e7340394958674cdf8606936d292f565e4ecc4',
+  )
+
+  const deployAuctionTx = await bscSDK.marketplace.auction.prepare.deployAuctionSignedTransaction({
     auctionFee: 100,
     feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
   })
 
-  const updateFeeRecipientTx = await bscSDK.auction.prepare.auctionUpdateFeeRecipientSignedTransaction({
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
+  const updateFeeRecipientTx =
+    await bscSDK.marketplace.auction.prepare.auctionUpdateFeeRecipientSignedTransaction({
+      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+      feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+      fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
+      fee: {
+        gasLimit: '40000',
+        gasPrice: '20',
+      },
+    })
 
-  const createAuctionTx = await bscSDK.auction.prepare.createAuctionSignedTransaction({
+  const createAuctionTx = await bscSDK.marketplace.auction.prepare.createAuctionSignedTransaction({
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     nftAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     id: 'string',
@@ -46,31 +52,30 @@ export const bscAuctionExample = async () => {
     bidValue: '100',
   })
 
-  const approveNftSpendingTx = await bscSDK.auction.prepare.auctionApproveNftTransferSignedTransaction({
-    spender: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    isErc721: true,
-    tokenId: '100000',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 1,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
+  const approveNftSpendingTx =
+    await bscSDK.marketplace.auction.prepare.auctionApproveNftTransferSignedTransaction({
+      spender: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+      isErc721: true,
+      tokenId: '100000',
+      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+      fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
+      nonce: 1,
+      fee: {
+        gasLimit: '40000',
+        gasPrice: '20',
+      },
+    })
 
-  const approveErc20SpendingTx = await bscSDK.auction.prepare.auctionApproveErc20TransferSignedTransaction(
-    true,
-    {
+  const approveErc20SpendingTx =
+    await bscSDK.marketplace.auction.prepare.auctionApproveErc20TransferSignedTransaction(true, {
       amount: '100000',
       spender: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
       contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
       fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
       nonce: 0,
-    },
-  )
+    })
 
-  const bidAuctionTx = await bscSDK.auction.prepare.auctionBidSignedTransaction(true, {
+  const bidAuctionTx = await bscSDK.marketplace.auction.prepare.auctionBidSignedTransaction(true, {
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     bidder: '0x587422eEA2cB73B5d3e242bA5456b782919AFc85',
     id: 'string',
@@ -83,7 +88,7 @@ export const bscAuctionExample = async () => {
     },
   })
 
-  const cancelAuctionTx = await bscSDK.auction.prepare.auctionCancelSignedTransaction({
+  const cancelAuctionTx = await bscSDK.marketplace.auction.prepare.auctionCancelSignedTransaction({
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     id: 'string',
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
@@ -95,7 +100,7 @@ export const bscAuctionExample = async () => {
     bidValue: '100',
   })
 
-  const settleAuctionTx = await bscSDK.auction.prepare.auctionSettleSignedTransaction({
+  const settleAuctionTx = await bscSDK.marketplace.auction.prepare.auctionSettleSignedTransaction({
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     id: 'string',
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',

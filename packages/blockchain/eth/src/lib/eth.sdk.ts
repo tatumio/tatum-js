@@ -18,12 +18,14 @@ export const TatumEthSDK = (args: SDKArguments) => {
     api,
     kms: ethKmsService({ blockchain, web3 }),
     transaction: ethTx({ blockchain, web3 }),
-    marketplace: evmBasedMarketplace({
-      blockchain,
-      web3,
-      broadcastFunction: BlockchainEthereumService.ethBroadcast,
-    }),
-    auction: ethAuctionService({ blockchain, web3 }),
+    marketplace: {
+      ...evmBasedMarketplace({
+        blockchain,
+        web3,
+        broadcastFunction: BlockchainEthereumService.ethBroadcast,
+      }),
+      auction: ethAuctionService({ blockchain, web3 }),
+    },
     httpDriver: async (request: Web3Request): Promise<Web3Response> => {
       return api.ethWeb3Driver(args.apiKey, { ...request, jsonrpc: '2.0' })
     },
