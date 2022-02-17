@@ -17,7 +17,7 @@ import { algoWeb3Example } from './app/algo.web3.example'
 console.log(`Running ${algoBlockchainExample()}`)
 console.log(`Running ${algoWeb3Example()}`)
 console.log(`Running ${algoKmsExample()}`)
-console.log(`Running ${algoWalletExample}`)
+console.log(`Running ${algoWalletExample()}`)
 console.log(`Running ${algoLogRecordExample()}`)
 console.log(`Running ${algoLedgerAccountExample()}`)
 console.log(`Running ${algoLedgerBlockAmountExample()}`)
