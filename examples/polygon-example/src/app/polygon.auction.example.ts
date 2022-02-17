@@ -49,7 +49,6 @@ export const polygonAuctionExample = async () => {
       gasLimit: '40000',
       gasPrice: '20',
     },
-    bidValue: '100',
   })
 
   const approveNftSpendingTx =
@@ -67,7 +66,7 @@ export const polygonAuctionExample = async () => {
     })
 
   const approveErc20SpendingTx =
-    await polygonSDK.marketplace.auction.prepare.auctionApproveErc20TransferSignedTransaction(true, {
+    await polygonSDK.marketplace.auction.prepare.auctionApproveErc20TransferSignedTransaction({
       amount: '100000',
       spender: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
       contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -75,7 +74,7 @@ export const polygonAuctionExample = async () => {
       nonce: 0,
     })
 
-  const bidAuctionTx = await polygonSDK.marketplace.auction.prepare.auctionBidSignedTransaction(true, {
+  const bidAuctionTx = await polygonSDK.marketplace.auction.prepare.auctionBidSignedTransaction({
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     bidder: '0x587422eEA2cB73B5d3e242bA5456b782919AFc85',
     id: 'string',

@@ -41,6 +41,7 @@
       "@tatumio/shared-testing-common": ["packages/shared/testing/common/src/index.ts"],
       "@tatumio/shared-testing-evm-based": ["packages/shared/testing/evm-based/src/index.ts"],
       "@tatumio/shared-testing-xrp-based": ["packages/shared/testing/xrp-based/src/index.ts"],
+      "@tatumio/solana": ["packages/blockchain/solana/src/index.ts"],
       "@tatumio/tron": ["packages/blockchain/tron/src/index.ts"],
       "@tatumio/xlm": ["packages/blockchain/xlm/src/index.ts"],
       "@tatumio/xrp": ["packages/blockchain/xrp/src/index.ts"]

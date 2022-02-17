@@ -1,41 +1,63 @@
 import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA, expectHexString } from '@tatumio/shared-testing-common'
-import { Blockchain } from '@tatumio/shared-core'
-import { celoWeb3 } from '../services/celo.web3'
 import { TatumCeloSDK } from '../celo.sdk'
 
 describe('CeloSDK - tx', () => {
   const sdk = TatumCeloSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
-  describe('Web3', () => {
-    describe('Get client', () => {
+  describe('native', () => {
+    describe('prepare', () => {
       const provider = TEST_DATA.CELO?.PROVIDER
+      const address = TEST_DATA.CELO.TESTNET.ERC_20?.ADDRESS
+        ? TEST_DATA.CELO.TESTNET.ERC_20?.ADDRESS
+        : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
 
-      it('should return valid web3 client', async () => {
-        const client = await sdk.httpDriver({
-          jsonrpc: '2.0',
-          method: 'web3_clientVersion',
-          params: [],
-          id: 2,
-        })
-
-        expect(client.result).toBeDefined()
-        expect(String(client.result).length).toBeGreaterThan(0)
+      it('should be valid from privateKey', async () => {
+        const result = await sdk.transaction.prepare.transferSignedTransaction(
+          {
+            to: address,
+            fromPrivateKey: TEST_DATA.CELO.TESTNET.ERC_20?.PRIVATE_KEY,
+            feeCurrency: 'CUSD',
+            amount: '1',
+          },
+          provider,
+          true,
+        )
+        expectHexString(result)
       })
 
-      it('should return valid web3 client with privateKey', async () => {
-        const web3 = celoWeb3({ blockchain: Blockchain.CELO })
-        const client = web3.getClient(provider, TEST_DATA.CELO.MAINNET.ERC_721!.PRIVATE_KEY)
-
-        expect(client).toBeDefined()
+      it('should be valid from signatureId', async () => {
+        const result = await sdk.transaction.prepare.transferSignedTransaction(
+          {
+            to: address,
+            signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+            feeCurrency: 'CUSD',
+            amount: '1',
+          },
+          provider,
+          true,
+        )
+        const json = JSON.parse(result)
+        expectHexString(json.data)
       })
-    })
 
-    describe('Get gas price in wei', () => {
-      it('should return gas price', async () => {
-        const gasPrice = await sdk.getGasPriceInWei()
-
-        expect(gasPrice).toBeDefined()
-        expect(parseInt(gasPrice)).toBeGreaterThan(0)
+      it('should throw', async () => {
+        try {
+          await sdk.transaction.prepare.transferSignedTransaction(
+            {
+              to: '',
+              signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+              feeCurrency: 'CUSD',
+              amount: '',
+            },
+            provider,
+            true,
+          )
+          fail()
+        } catch (e: any) {
+          expect(e.message).toMatch(
+            'The target (to) address, currency, feeCurrency or the amount cannot be empty',
+          )
+        }
       })
     })
   })
@@ -47,7 +69,7 @@ describe('CeloSDK - tx', () => {
         const provider = TEST_DATA.CELO?.PROVIDER
 
         it('should be valid from privateKey', async () => {
-          const result = await sdk.transaction.erc721.prepare.deploySignedTransaction(
+          const result = await sdk.erc721.prepare.deploySignedTransaction(
             {
               chain: 'CELO',
               name: 'My ERC721',
@@ -62,7 +84,7 @@ describe('CeloSDK - tx', () => {
         })
 
         it('should be valid from signatureId', async () => {
-          const result = await sdk.transaction.erc721.prepare.deploySignedTransaction(
+          const result = await sdk.erc721.prepare.deploySignedTransaction(
             {
               chain: 'CELO',
               name: 'My ERC721',
@@ -85,7 +107,7 @@ describe('CeloSDK - tx', () => {
           : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
 
         it('should be valid from privateKey', async () => {
-          const result = await sdk.transaction.erc721.prepare.mintSignedTransaction(
+          const result = await sdk.erc721.prepare.mintSignedTransaction(
             {
               to: address,
               contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
@@ -102,7 +124,7 @@ describe('CeloSDK - tx', () => {
         })
 
         it('should be valid from signatureId', async () => {
-          const result = await sdk.transaction.erc721.prepare.mintSignedTransaction(
+          const result = await sdk.erc721.prepare.mintSignedTransaction(
             {
               to: address,
               contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
@@ -121,7 +143,7 @@ describe('CeloSDK - tx', () => {
 
         it('invalid address', async () => {
           try {
-            await sdk.transaction.erc721.prepare.mintSignedTransaction(
+            await sdk.erc721.prepare.mintSignedTransaction(
               {
                 to: 'someinvalidaddress',
                 tokenId: new Date().getTime().toString(),
@@ -135,14 +157,14 @@ describe('CeloSDK - tx', () => {
               true,
             )
             fail()
-          } catch (e) {
+          } catch (e: any) {
             expect(e.reason).toMatch('invalid address')
           }
         })
 
         it('missing address', async () => {
           try {
-            await sdk.transaction.erc721.prepare.mintSignedTransaction(
+            await sdk.erc721.prepare.mintSignedTransaction(
               {
                 to: address,
                 tokenId: new Date().getTime().toString(),
@@ -156,7 +178,7 @@ describe('CeloSDK - tx', () => {
               true,
             )
             fail()
-          } catch (e) {
+          } catch (e: any) {
             expect(e.message).toMatch('Contract address and fee currency should not be empty')
           }
         })
@@ -168,7 +190,7 @@ describe('CeloSDK - tx', () => {
           ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
           : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
         it('should be valid from privateKey', async () => {
-          const result = await sdk.transaction.erc721.prepare.mintMultipleSignedTransaction(
+          const result = await sdk.erc721.prepare.mintMultipleSignedTransaction(
             {
               to: [address, address],
               contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
@@ -185,7 +207,7 @@ describe('CeloSDK - tx', () => {
         })
 
         it('should be valid from signatureId', async () => {
-          const result = await sdk.transaction.erc721.prepare.mintMultipleSignedTransaction(
+          const result = await sdk.erc721.prepare.mintMultipleSignedTransaction(
             {
               to: [address, address],
               contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
@@ -204,7 +226,7 @@ describe('CeloSDK - tx', () => {
 
         it('invalid address', async () => {
           try {
-            await sdk.transaction.erc721.prepare.mintMultipleSignedTransaction(
+            await sdk.erc721.prepare.mintMultipleSignedTransaction(
               {
                 to: ['someinvalidaddress', 'onemoreinvalid'],
                 tokenId: [new Date().getTime().toString()],
@@ -218,7 +240,7 @@ describe('CeloSDK - tx', () => {
               true,
             )
             fail()
-          } catch (e) {
+          } catch (e: any) {
             expect(e.reason).toMatch('invalid address')
           }
         })
@@ -230,7 +252,7 @@ describe('CeloSDK - tx', () => {
           ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
           : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
         it('should be valid from privateKey', async () => {
-          const result = await sdk.transaction.erc721.prepare.mintCashbackSignedTransaction(
+          const result = await sdk.erc721.prepare.mintCashbackSignedTransaction(
             {
               to: address,
               contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
@@ -249,7 +271,7 @@ describe('CeloSDK - tx', () => {
         })
 
         it('should be valid from signatureId', async () => {
-          const result = await sdk.transaction.erc721.prepare.mintCashbackSignedTransaction(
+          const result = await sdk.erc721.prepare.mintCashbackSignedTransaction(
             {
               to: address,
               contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
@@ -270,7 +292,7 @@ describe('CeloSDK - tx', () => {
 
         it('invalid address', async () => {
           try {
-            await sdk.transaction.erc721.prepare.mintCashbackSignedTransaction(
+            await sdk.erc721.prepare.mintCashbackSignedTransaction(
               {
                 to: 'invalidaddress',
                 contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
@@ -286,14 +308,14 @@ describe('CeloSDK - tx', () => {
               true,
             )
             fail()
-          } catch (e) {
+          } catch (e: any) {
             expect(e.reason).toMatch('invalid address')
           }
         })
 
         it('missing address', async () => {
           try {
-            await sdk.transaction.erc721.prepare.mintCashbackSignedTransaction(
+            await sdk.erc721.prepare.mintCashbackSignedTransaction(
               {
                 to: address,
                 contractAddress: '',
@@ -309,7 +331,7 @@ describe('CeloSDK - tx', () => {
               true,
             )
             fail()
-          } catch (e) {
+          } catch (e: any) {
             expect(e.message).toMatch('Contract address and fee currency should not be empty!')
           }
         })
@@ -322,7 +344,7 @@ describe('CeloSDK - tx', () => {
         ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
         : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       it('should be valid from privateKey', async () => {
-        const result = await sdk.transaction.erc721.prepare.mintMultipleCashbackSignedTransaction(
+        const result = await sdk.erc721.prepare.mintMultipleCashbackSignedTransaction(
           {
             to: [address, address],
             contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
@@ -341,7 +363,7 @@ describe('CeloSDK - tx', () => {
       })
 
       it('should be valid from signatureId', async () => {
-        const result = await sdk.transaction.erc721.prepare.mintMultipleCashbackSignedTransaction(
+        const result = await sdk.erc721.prepare.mintMultipleCashbackSignedTransaction(
           {
             to: [address, address],
             contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
@@ -362,7 +384,7 @@ describe('CeloSDK - tx', () => {
 
       it('invalid address', async () => {
         try {
-          await sdk.transaction.erc721.prepare.mintMultipleCashbackSignedTransaction(
+          await sdk.erc721.prepare.mintMultipleCashbackSignedTransaction(
             {
               to: ['someinvalidaddress', 'onemoreinvalid'],
               tokenId: [new Date().getTime().toString()],
@@ -390,7 +412,7 @@ describe('CeloSDK - tx', () => {
         ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
         : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       it('should be valid from privateKey', async () => {
-        const result = await sdk.transaction.erc721.prepare.mintProvenanceSignedTransaction(
+        const result = await sdk.erc721.prepare.mintProvenanceSignedTransaction(
           {
             to: address,
             contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
@@ -409,7 +431,7 @@ describe('CeloSDK - tx', () => {
       })
 
       it('should be valid from signatureId', async () => {
-        const result = await sdk.transaction.erc721.prepare.mintProvenanceSignedTransaction(
+        const result = await sdk.erc721.prepare.mintProvenanceSignedTransaction(
           {
             to: address,
             contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
@@ -430,7 +452,7 @@ describe('CeloSDK - tx', () => {
 
       it('invalid address', async () => {
         try {
-          await sdk.transaction.erc721.prepare.mintProvenanceSignedTransaction(
+          await sdk.erc721.prepare.mintProvenanceSignedTransaction(
             {
               to: 'invalidaddress',
               contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
@@ -453,7 +475,7 @@ describe('CeloSDK - tx', () => {
 
       it('missing address', async () => {
         try {
-          await sdk.transaction.erc721.prepare.mintProvenanceSignedTransaction(
+          await sdk.erc721.prepare.mintProvenanceSignedTransaction(
             {
               to: address,
               contractAddress: '',
@@ -481,7 +503,7 @@ describe('CeloSDK - tx', () => {
         ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
         : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       it('should be valid from privateKey', async () => {
-        const result = await sdk.transaction.erc721.prepare.mintMultipleProvenanceSignedTransaction(
+        const result = await sdk.erc721.prepare.mintMultipleProvenanceSignedTransaction(
           {
             to: [address, address],
             contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
@@ -501,7 +523,7 @@ describe('CeloSDK - tx', () => {
       })
 
       it('should be valid from signatureId', async () => {
-        const result = await sdk.transaction.erc721.prepare.mintMultipleProvenanceSignedTransaction(
+        const result = await sdk.erc721.prepare.mintMultipleProvenanceSignedTransaction(
           {
             to: [address, address],
             contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
@@ -523,7 +545,7 @@ describe('CeloSDK - tx', () => {
 
       it('invalid address', async () => {
         try {
-          await sdk.transaction.erc721.prepare.mintMultipleProvenanceSignedTransaction(
+          await sdk.erc721.prepare.mintMultipleProvenanceSignedTransaction(
             {
               to: ['someinvalidaddress', 'onemoreinvalid'],
               tokenId: [new Date().getTime().toString()],
@@ -552,7 +574,7 @@ describe('CeloSDK - tx', () => {
         ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
         : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       it('should be valid from privateKey', async () => {
-        const result = await sdk.transaction.erc721.prepare.transferSignedTransaction(
+        const result = await sdk.erc721.prepare.transferSignedTransaction(
           {
             to: address,
             contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
@@ -568,7 +590,7 @@ describe('CeloSDK - tx', () => {
       })
 
       it('should be valid from signatureId', async () => {
-        const result = await sdk.transaction.erc721.prepare.transferSignedTransaction(
+        const result = await sdk.erc721.prepare.transferSignedTransaction(
           {
             to: address,
             contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
@@ -586,7 +608,7 @@ describe('CeloSDK - tx', () => {
 
       it('invalid address', async () => {
         try {
-          await sdk.transaction.erc721.prepare.transferSignedTransaction(
+          await sdk.erc721.prepare.transferSignedTransaction(
             {
               to: 'invalidaddress',
               contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
@@ -608,7 +630,7 @@ describe('CeloSDK - tx', () => {
     describe('update cashback', () => {
       const provider = TEST_DATA.CELO?.PROVIDER
       it('should be valid from privateKey', async () => {
-        const result = await sdk.transaction.erc721.prepare.updateCashbackForAuthorSignedTransaction(
+        const result = await sdk.erc721.prepare.updateCashbackForAuthorSignedTransaction(
           {
             contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
             fromPrivateKey: TEST_DATA.CELO.MAINNET.ERC_721!.PRIVATE_KEY,
@@ -624,7 +646,7 @@ describe('CeloSDK - tx', () => {
       })
 
       it('should be valid from signatureId', async () => {
-        const result = await sdk.transaction.erc721.prepare.updateCashbackForAuthorSignedTransaction(
+        const result = await sdk.erc721.prepare.updateCashbackForAuthorSignedTransaction(
           {
             contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -644,7 +666,7 @@ describe('CeloSDK - tx', () => {
     describe('burn', () => {
       const provider = TEST_DATA.CELO?.PROVIDER
       it('should be valid from privateKey', async () => {
-        const result = await sdk.transaction.erc721.prepare.burnSignedTransaction(
+        const result = await sdk.erc721.prepare.burnSignedTransaction(
           {
             contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
             fromPrivateKey: TEST_DATA.CELO.MAINNET.ERC_721!.PRIVATE_KEY,
@@ -659,7 +681,7 @@ describe('CeloSDK - tx', () => {
       })
 
       it('should be valid from signatureId', async () => {
-        const result = await sdk.transaction.erc721.prepare.burnSignedTransaction(
+        const result = await sdk.erc721.prepare.burnSignedTransaction(
           {
             contractAddress: TEST_DATA.CELO.MAINNET.ERC_721!.CONTRACT_ADDRESS,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -686,7 +708,7 @@ describe('CeloSDK - tx', () => {
       describe('deploy', () => {
         // UNPREDICTABLE_GAS_LIMIT error
         /*it('should be valid from privateKey', async () => {
-          const result = await sdk.transaction.multiToken.prepare.deployMultiTokenTransaction(
+          const result = await sdk.multiToken.prepare.deployMultiTokenTransaction(
             {
               chain: 'CELO',
               uri: 'example.com',
@@ -701,7 +723,7 @@ describe('CeloSDK - tx', () => {
         })*/
 
         it('should be valid from signatureId', async () => {
-          const result = await sdk.transaction.multiToken.prepare.deployMultiTokenTransaction(
+          const result = await sdk.multiToken.prepare.deployMultiTokenTransaction(
             {
               chain: 'CELO',
               uri: 'example.com',
@@ -719,7 +741,7 @@ describe('CeloSDK - tx', () => {
 
       describe('mint', () => {
         it('should be valid from privateKey', async () => {
-          const result = await sdk.transaction.multiToken.prepare.mintMultiTokenTransaction(
+          const result = await sdk.multiToken.prepare.mintMultiTokenTransaction(
             {
               to: account,
               contractAddress,
@@ -736,7 +758,7 @@ describe('CeloSDK - tx', () => {
         })
 
         it('should be valid from signatureId', async () => {
-          const result = await sdk.transaction.multiToken.prepare.mintMultiTokenTransaction(
+          const result = await sdk.multiToken.prepare.mintMultiTokenTransaction(
             {
               to: account,
               contractAddress,
@@ -755,7 +777,7 @@ describe('CeloSDK - tx', () => {
 
         it('invalid address', async () => {
           try {
-            await sdk.transaction.multiToken.prepare.mintMultiTokenTransaction(
+            await sdk.multiToken.prepare.mintMultiTokenTransaction(
               {
                 to: 'someinvalidaddress',
                 tokenId: new Date().getTime().toString(),
@@ -776,7 +798,7 @@ describe('CeloSDK - tx', () => {
 
         it('missing address', async () => {
           try {
-            await sdk.transaction.multiToken.prepare.mintMultiTokenTransaction(
+            await sdk.multiToken.prepare.mintMultiTokenTransaction(
               {
                 to: account,
                 tokenId: new Date().getTime().toString(),
@@ -798,7 +820,7 @@ describe('CeloSDK - tx', () => {
 
       describe('mint batch', () => {
         it('should be valid from privateKey', async () => {
-          const result = await sdk.transaction.multiToken.prepare.mintMultiTokenBatchTransaction(
+          const result = await sdk.multiToken.prepare.mintMultiTokenBatchTransaction(
             {
               to: [account, account],
               contractAddress,
@@ -815,7 +837,7 @@ describe('CeloSDK - tx', () => {
         })
 
         it('should be valid from signatureId', async () => {
-          const result = await sdk.transaction.multiToken.prepare.mintMultiTokenBatchTransaction(
+          const result = await sdk.multiToken.prepare.mintMultiTokenBatchTransaction(
             {
               to: [account],
               contractAddress,
@@ -834,7 +856,7 @@ describe('CeloSDK - tx', () => {
 
         it('invalid address', async () => {
           try {
-            await sdk.transaction.multiToken.prepare.mintMultiTokenBatchTransaction(
+            await sdk.multiToken.prepare.mintMultiTokenBatchTransaction(
               {
                 to: ['someinvalidaddress', 'onemoreinvalid'],
                 tokenId: [[new Date().getTime().toString()]],
@@ -856,7 +878,7 @@ describe('CeloSDK - tx', () => {
 
       describe('transfer', () => {
         it('should be valid from privateKey', async () => {
-          const result = await sdk.transaction.multiToken.prepare.transferMultiTokenTransaction(
+          const result = await sdk.multiToken.prepare.transferMultiTokenTransaction(
             {
               to: account,
               contractAddress,
@@ -873,7 +895,7 @@ describe('CeloSDK - tx', () => {
         })
 
         it('should be valid from signatureId', async () => {
-          const result = await sdk.transaction.multiToken.prepare.transferMultiTokenTransaction(
+          const result = await sdk.multiToken.prepare.transferMultiTokenTransaction(
             {
               to: account,
               contractAddress,
@@ -892,7 +914,7 @@ describe('CeloSDK - tx', () => {
 
         it('invalid address', async () => {
           try {
-            await sdk.transaction.multiToken.prepare.transferMultiTokenTransaction(
+            await sdk.multiToken.prepare.transferMultiTokenTransaction(
               {
                 to: 'invalidaddress',
                 contractAddress,
@@ -914,7 +936,7 @@ describe('CeloSDK - tx', () => {
 
       describe('transfer batch', () => {
         it('should be valid from privateKey', async () => {
-          const result = await sdk.transaction.multiToken.prepare.transferMultiTokenBatchTransaction(
+          const result = await sdk.multiToken.prepare.transferMultiTokenBatchTransaction(
             {
               to: account,
               contractAddress,
@@ -931,7 +953,7 @@ describe('CeloSDK - tx', () => {
         })
 
         it('should be valid from signatureId', async () => {
-          const result = await sdk.transaction.multiToken.prepare.transferMultiTokenBatchTransaction(
+          const result = await sdk.multiToken.prepare.transferMultiTokenBatchTransaction(
             {
               to: account,
               contractAddress,
@@ -950,7 +972,7 @@ describe('CeloSDK - tx', () => {
 
         it('invalid address', async () => {
           try {
-            await sdk.transaction.multiToken.prepare.transferMultiTokenBatchTransaction(
+            await sdk.multiToken.prepare.transferMultiTokenBatchTransaction(
               {
                 to: 'invalidaddress',
                 contractAddress,
@@ -972,7 +994,7 @@ describe('CeloSDK - tx', () => {
 
       describe('burn', () => {
         it('should be valid from privateKey', async () => {
-          const result = await sdk.transaction.multiToken.prepare.burnMultiTokenTransaction(
+          const result = await sdk.multiToken.prepare.burnMultiTokenTransaction(
             {
               contractAddress,
               fromPrivateKey: privateKey,
@@ -989,7 +1011,7 @@ describe('CeloSDK - tx', () => {
         })
 
         it('should be valid from signatureId', async () => {
-          const result = await sdk.transaction.multiToken.prepare.burnMultiTokenTransaction(
+          const result = await sdk.multiToken.prepare.burnMultiTokenTransaction(
             {
               contractAddress,
               signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -1009,7 +1031,7 @@ describe('CeloSDK - tx', () => {
 
       describe('burn batch', () => {
         it('should be valid from privateKey', async () => {
-          const result = await sdk.transaction.multiToken.prepare.burnMultiTokenBatchTransaction(
+          const result = await sdk.multiToken.prepare.burnMultiTokenBatchTransaction(
             {
               contractAddress,
               fromPrivateKey: privateKey,
@@ -1026,7 +1048,7 @@ describe('CeloSDK - tx', () => {
         })
 
         it('should be valid from signatureId', async () => {
-          const result = await sdk.transaction.multiToken.prepare.burnMultiTokenBatchTransaction(
+          const result = await sdk.multiToken.prepare.burnMultiTokenBatchTransaction(
             {
               contractAddress,
               signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -1049,7 +1071,7 @@ describe('CeloSDK - tx', () => {
   describe('custodial', () => {
     describe('prepare', () => {
       it('valid with signatureId', async () => {
-        const result = await sdk.transaction.custodial.prepare.generateCustodialWalletSignedTransaction(
+        const result = await sdk.custodial.prepare.generateCustodialWalletSignedTransaction(
           {
             chain: 'CELO',
             feeCurrency: 'CUSD',
@@ -1071,7 +1093,7 @@ describe('CeloSDK - tx', () => {
     })
 
     it('valid from privateKey', async () => {
-      const result = await sdk.transaction.custodial.prepare.generateCustodialWalletSignedTransaction(
+      const result = await sdk.custodial.prepare.generateCustodialWalletSignedTransaction(
         {
           chain: 'CELO',
           feeCurrency: 'CUSD',

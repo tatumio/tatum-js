@@ -40,7 +40,7 @@ describe('KcsSDK - tx', () => {
      *  Returned values aren't valid, did it run Out of Gas? You might also see this error if you are not using the correct ABI for the contract you are retrieving data from, requesting data from a block number that does not exist, or querying a node which is not fully synced.
      */
     xdescribe('decimals', () => {
-      erc20TestFactory.decimals(sdk.transaction.erc20, TEST_DATA.KCS)
+      erc20TestFactory.decimals(sdk.erc20, TEST_DATA.KCS)
     })
 
     describe('prepare', () => {
@@ -74,52 +74,40 @@ describe('KcsSDK - tx', () => {
     jest.setTimeout(99999)
     describe('prepare', () => {
       describe('deploySignedTransaction', () => {
-        erc721TestFactory.prepare.deploySignedTransaction(sdk.transaction.erc721, TEST_DATA.KCS, Currency.KCS)
+        erc721TestFactory.prepare.deploySignedTransaction(sdk.erc721, TEST_DATA.KCS, Currency.KCS)
       })
 
       describe('transferSignedTransaction', () => {
-        erc721TestFactory.prepare.transferSignedTransaction(
-          sdk.transaction.erc721,
-          TEST_DATA.KCS,
-          Currency.KCS,
-        )
+        erc721TestFactory.prepare.transferSignedTransaction(sdk.erc721, TEST_DATA.KCS, Currency.KCS)
       })
 
       describe('mintSignedTransaction', () => {
-        erc721TestFactory.prepare.mintSignedTransaction(sdk.transaction.erc721, TEST_DATA.KCS, Currency.KCS)
+        erc721TestFactory.prepare.mintSignedTransaction(sdk.erc721, TEST_DATA.KCS, Currency.KCS)
       })
 
       describe('burnSignedTransaction', () => {
-        erc721TestFactory.prepare.burnSignedTransaction(sdk.transaction.erc721, TEST_DATA.KCS, Currency.KCS)
+        erc721TestFactory.prepare.burnSignedTransaction(sdk.erc721, TEST_DATA.KCS, Currency.KCS)
       })
 
       describe('mintCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintCashbackSignedTransaction(
-          sdk.transaction.erc721,
-          TEST_DATA.KCS,
-          Currency.KCS,
-        )
+        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.erc721, TEST_DATA.KCS, Currency.KCS)
       })
 
       describe('mintMultipleCashbackSignedTransaction', () => {
         erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(
-          sdk.transaction.erc721,
+          sdk.erc721,
           TEST_DATA.KCS,
           Currency.KCS,
         )
       })
 
       describe('mintMultipleSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleSignedTransaction(
-          sdk.transaction.erc721,
-          TEST_DATA.KCS,
-          Currency.KCS,
-        )
+        erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.erc721, TEST_DATA.KCS, Currency.KCS)
       })
 
       describe('updateCashbackForAuthorSignedTransaction', () => {
         erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(
-          sdk.transaction.erc721,
+          sdk.erc721,
           TEST_DATA.KCS,
           Currency.KCS,
         )
@@ -130,59 +118,31 @@ describe('KcsSDK - tx', () => {
   describe('multiToken', () => {
     describe('prepare', () => {
       describe('deployMultiToken', () => {
-        multiTokenTestFactory.prepare.deployMultiTokenTransaction(
-          sdk.transaction.multiToken,
-          TEST_DATA.KCS,
-          'KCS',
-        )
+        multiTokenTestFactory.prepare.deployMultiTokenTransaction(sdk.multiToken, TEST_DATA.KCS, 'KCS')
       })
 
       describe('mintMultiToken', () => {
-        multiTokenTestFactory.prepare.mintMultiTokenTransaction(
-          sdk.transaction.multiToken,
-          TEST_DATA.KCS,
-          'KCS',
-        )
+        multiTokenTestFactory.prepare.mintMultiTokenTransaction(sdk.multiToken, TEST_DATA.KCS, 'KCS')
       })
 
       describe('mintMultiTokenBatch', () => {
-        multiTokenTestFactory.prepare.mintMultiTokenBatchTransaction(
-          sdk.transaction.multiToken,
-          TEST_DATA.KCS,
-          'KCS',
-        )
+        multiTokenTestFactory.prepare.mintMultiTokenBatchTransaction(sdk.multiToken, TEST_DATA.KCS, 'KCS')
       })
 
       describe('transferMultiToken', () => {
-        multiTokenTestFactory.prepare.transferMultiTokenTransaction(
-          sdk.transaction.multiToken,
-          TEST_DATA.KCS,
-          'KCS',
-        )
+        multiTokenTestFactory.prepare.transferMultiTokenTransaction(sdk.multiToken, TEST_DATA.KCS, 'KCS')
       })
 
       describe('transferMultiTokenBatch', () => {
-        multiTokenTestFactory.prepare.transferMultiTokenBatchTransaction(
-          sdk.transaction.multiToken,
-          TEST_DATA.KCS,
-          'KCS',
-        )
+        multiTokenTestFactory.prepare.transferMultiTokenBatchTransaction(sdk.multiToken, TEST_DATA.KCS, 'KCS')
       })
 
       describe('burnMultiToken', () => {
-        multiTokenTestFactory.prepare.burnMultiTokenTransaction(
-          sdk.transaction.multiToken,
-          TEST_DATA.KCS,
-          'KCS',
-        )
+        multiTokenTestFactory.prepare.burnMultiTokenTransaction(sdk.multiToken, TEST_DATA.KCS, 'KCS')
       })
 
       describe('burnMultiTokenBatch', () => {
-        multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(
-          sdk.transaction.multiToken,
-          TEST_DATA.KCS,
-          'KCS',
-        )
+        multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(sdk.multiToken, TEST_DATA.KCS, 'KCS')
       })
     })
   })
@@ -191,7 +151,7 @@ describe('KcsSDK - tx', () => {
     describe('prepare', () => {
       describe('smart contract write method invocation', () => {
         smartContractTestFactory.prepare.smartContractWriteMethodInvocationTransaction(
-          sdk.transaction.smartContract,
+          sdk.smartContract,
           TEST_DATA.KCS,
         )
       })
@@ -200,7 +160,7 @@ describe('KcsSDK - tx', () => {
     xdescribe('send', () => {
       describe('smart contract read method invocation', () => {
         smartContractTestFactory.send.smartContractReadMethodInvocationTransaction(
-          sdk.transaction.smartContract,
+          sdk.smartContract,
           TEST_DATA.KCS,
         )
       })

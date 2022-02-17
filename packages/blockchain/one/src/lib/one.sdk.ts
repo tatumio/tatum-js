@@ -12,12 +12,18 @@ const blockchain: EvmBasedBlockchain = Blockchain.HARMONY
 export const TatumOneSDK = (args: SDKArguments) => {
   const web3 = oneWeb3({ blockchain })
   const api = BlockchainHarmonyOneService
+  const txService = oneTxService({ blockchain, web3 })
 
   return {
     ...evmBasedSdk({ ...args, blockchain, web3 }),
     api,
     kms: oneKmsService({ blockchain, web3 }),
-    transaction: oneTxService({ blockchain, web3 }),
+    transaction: txService.native,
+    erc20: txService.erc20,
+    erc721: txService.erc721,
+    multiToken: txService.multiToken,
+    smartContract: txService.smartContract,
+    custodial: txService.custodial,
     marketplace: {
       ...evmBasedMarketplace({
         blockchain,

@@ -12,12 +12,17 @@ const blockchain = Blockchain.KCS
 export const TatumKcsSDK = (args: SDKArguments) => {
   const web3 = kcsWeb3({ blockchain })
   const api = BlockchainKcsKcsService
+  const txService = kcsTxService({ blockchain, web3 })
 
   return {
     ...evmBasedSdk({ ...args, blockchain, web3 }),
     api,
     kms: kcsKmsService({ blockchain, web3 }),
-    transaction: kcsTxService({ blockchain, web3 }),
+    transaction: txService.native,
+    erc20: txService.erc20,
+    erc721: txService.erc721,
+    multiToken: txService.multiToken,
+    smartContract: txService.smartContract,
     marketplace: {
       ...evmBasedMarketplace({
         blockchain,

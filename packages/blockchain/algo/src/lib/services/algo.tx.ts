@@ -310,191 +310,207 @@ const prepareBurnFTSignedTransaction = async (
 
 export const algoTx = (args: { algoWeb: AlgoWeb }) => {
   return {
-    prepare: {
-      /**
-       * Algorand transaction signing
-       * @param testnet if the algorand node is testnet or not
-       * @param body content of the transaction to broadcast
-       * @param provider url of the algorand server endpoint for purestake.io restapi
-       * @returns transaction data to be broadcast to blockchain
-       */
-      signedTransaction: async (body: TransferAlgo | TransferAlgoKMS, testnet = false, provider?: string) =>
-        prepareSignedTransaction(body, testnet, args.algoWeb, provider),
-      /**
-       * Sign Algorand create NFT transaction with private key locally. Nothing is broadcast to the blockchain.
-       * @param testnet mainnet or testnet version
-       * @param body content of the transaction to broadcast
-       * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
-       * @returns transaction data to be broadcast to blockchain
-       */
-      createNFTSignedTransaction: async (
-        body: DeployNft | DeployNftKMS,
-        testnet = false,
-        provider?: string,
-      ) => prepareCreateNFTSignedTransaction(body, testnet, args.algoWeb, provider),
-      /**
-       * Sign Algorand transfer NFT transaction with private key locally. Nothing is broadcast to the blockchain.
-       * @param testnet mainnet or testnet version
-       * @param body content of the transaction to broadcast
-       * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
-       * @returns transaction data to be broadcast to blockchain.
-       */
-      transferNFTSignedTransaction: async (
-        body: TransferNft | TransferNftKMS,
-        testnet = false,
-        provider?: string,
-      ) => prepareTransferNFTSignedTransaction(body, testnet, args.algoWeb, provider),
-      /**
-       * Sign Algorand burn NFT transaction with private key locally. Nothing is broadcast to the blockchain.
-       * @param testnet mainnet or testnet version
-       * @param body content of the transaction to broadcast
-       * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
-       * @returns transaction data to be broadcast to blockchain.
-       */
-      burnNFTSignedTransaction: async (body: BurnNft | BurnNftKMS, testnet = false, provider?: string) =>
-        prepareBurnNFTSignedTransaction(body, testnet, args.algoWeb, provider),
-      /**
-       * Sign Algorand create FT transaction with private key locally. Nothing is broadcast to the blockchain.
-       * @param testnet mainnet or testnet version
-       * @param body content of the transaction to broadcast
-       * @param provider url of the Algorand Server to connnect to. If not set, default public server will be used.
-       * @returns transaction data to be broadcast to blockchain.
-       */
-      createFTSignedTransaction: async (
-        body: DeployErc20 | DeployErc20KMS,
-        testnet = false,
-        provider?: string,
-      ) => prepareCreateFTSignedTransaction(body, testnet, args.algoWeb, provider),
-      /**
-       * Sign Algorand transfer FT transaction with private kwy locally. Nothing is broadcast to the blockchain.
-       * @param testnet mainnet or testnet version
-       * @param tx content of the transaction to broadcast
-       * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
-       * @returns transaction data to be broadcast to blockchain.
-       */
-      transferFTSignedTransaction: async (
-        body: ChainTransferAlgoErc20 | ChainTransferAlgoErc20KMS,
-        testnet = false,
-        provider?: string,
-      ) => prepareTransferFTSignedTransaction(body, testnet, args.algoWeb, provider),
-      /**
-       * Sign ALgorand burn FT transaction with private key locally. Nothing is broadcast to the blockchain.
-       * @param testnet mainnet or testnet version
-       * @param body content of the transaction to broadcast
-       * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
-       * @returns transaction data to be broadcast to blockchain.
-       */
-      burnFTSignedTransaction: async (
-        body: ChainTransferAlgoErc20 | ChainTransferAlgoErc20KMS,
-        testnet = false,
-        provider?: string,
-      ) => prepareBurnFTSignedTransaction(body, testnet, args.algoWeb, provider),
+    erc20: {
+      prepare: {
+        /**
+         * Sign Algorand create FT transaction with private key locally. Nothing is broadcast to the blockchain.
+         * @param testnet mainnet or testnet version
+         * @param body content of the transaction to broadcast
+         * @param provider url of the Algorand Server to connnect to. If not set, default public server will be used.
+         * @returns transaction data to be broadcast to blockchain.
+         */
+        createFTSignedTransaction: async (
+          body: DeployErc20 | DeployErc20KMS,
+          testnet = false,
+          provider?: string,
+        ) => prepareCreateFTSignedTransaction(body, testnet, args.algoWeb, provider),
+        /**
+         * Sign Algorand transfer FT transaction with private kwy locally. Nothing is broadcast to the blockchain.
+         * @param testnet mainnet or testnet version
+         * @param tx content of the transaction to broadcast
+         * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
+         * @returns transaction data to be broadcast to blockchain.
+         */
+        transferFTSignedTransaction: async (
+          body: ChainTransferAlgoErc20 | ChainTransferAlgoErc20KMS,
+          testnet = false,
+          provider?: string,
+        ) => prepareTransferFTSignedTransaction(body, testnet, args.algoWeb, provider),
+        /**
+         * Sign ALgorand burn FT transaction with private key locally. Nothing is broadcast to the blockchain.
+         * @param testnet mainnet or testnet version
+         * @param body content of the transaction to broadcast
+         * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
+         * @returns transaction data to be broadcast to blockchain.
+         */
+        burnFTSignedTransaction: async (
+          body: ChainTransferAlgoErc20 | ChainTransferAlgoErc20KMS,
+          testnet = false,
+          provider?: string,
+        ) => prepareBurnFTSignedTransaction(body, testnet, args.algoWeb, provider),
+      },
+      send: {
+        /**
+         * Send Algorand create FT transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+         * @param testnet mainnet or testnet version
+         * @param body content of the transaction to broadcast
+         * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
+         * @returns transaction id of the transaction in the blockchain.
+         */
+        createFTSignedTransaction: async (
+          body: DeployErc20 | DeployErc20KMS,
+          testnet = false,
+          provider?: string,
+        ) =>
+          BlockchainAlgorandAlgoService.algoandBroadcast({
+            txData: await prepareCreateFTSignedTransaction(body, testnet, args.algoWeb, provider),
+            ...(isWithSignatureId(body) && { signatureId: body.signatureId }),
+          }),
+        /**
+         * Send Algorand transfer FT transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+         * @param testnet mainnet or testnet version
+         * @param body content of the transaction to broadcast
+         * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
+         * @returns transaction id of the transaction in the blockchain.
+         */
+        transferFTSignedTransaction: async (
+          body: ChainTransferAlgoErc20 | ChainTransferAlgoErc20KMS,
+          testnet = false,
+          provider?: string,
+        ) =>
+          BlockchainAlgorandAlgoService.algoandBroadcast({
+            txData: await prepareTransferFTSignedTransaction(body, testnet, args.algoWeb, provider),
+          }),
+        /**
+         * Sned Algorand burn FT transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+         * @param testnet mainnet or testnet version
+         * @param body content of the transaction to broadcast
+         * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
+         * @returns transaction id of the transaction in the blockchain.
+         */
+        burnFTSignedTransaction: async (
+          body: ChainTransferAlgoErc20 | ChainTransferAlgoErc20KMS,
+          testnet = false,
+          provider?: string,
+        ) =>
+          BlockchainAlgorandAlgoService.algoandBroadcast({
+            txData: await prepareBurnFTSignedTransaction(body, testnet, args.algoWeb, provider),
+            ...(isWithSignatureId(body) && { signatureId: body.signatureId }),
+          }),
+      },
     },
-    send: {
-      /**
-       * Send Algorand transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
-       * This operation is irreversible.
-       * @param testnet mainnet or testnet version
-       * @param body content of the transaction to broadcast
-       * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
-       * @returns transaction id of the transaction in the blockchain
-       */
-      signedTransaction: async (body: TransferAlgo | TransferAlgoKMS, testnet = false, provider?: string) =>
-        BlockchainAlgorandAlgoService.algoandBroadcast({
-          txData: await prepareSignedTransaction(body, testnet, args.algoWeb, provider),
-          ...(isTransferAlgoKMS(body) && { signatureId: body.signatureId }),
-        }),
-      /**
-       * Send Algorand create NFT transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
-       * @param testnet mainnet or testnet version
-       * @param body content of the transaction to broadcast
-       * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
-       * @returns transaction id of the transaction in the blockchain
-       */
-      createNFTSignedTransaction: async (
-        body: DeployNft | DeployNftKMS,
-        testnet = false,
-        provider?: string,
-      ) =>
-        BlockchainAlgorandAlgoService.algoandBroadcast({
-          txData: await prepareCreateNFTSignedTransaction(body, testnet, args.algoWeb, provider),
-          ...(isWithSignatureId(body) && { signatureId: body.signatureId }),
-        }),
-      /**
-       * Send Algorand Transfer NFT transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
-       * @param testnet mainnet or testnet version
-       * @param body content of the transaction to broadcast
-       * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
-       * @returns transaction id of the transaction in the blockchain.
-       */
-      transferNFTSignedTransaction: async (
-        body: TransferNft | TransferNftKMS,
-        testnet = false,
-        provider?: string,
-      ) =>
-        BlockchainAlgorandAlgoService.algoandBroadcast({
-          txData: await prepareTransferNFTSignedTransaction(body, testnet, args.algoWeb, provider),
-          ...(isWithSignatureId(body) && { signatureId: body.signatureId }),
-        }),
-      /**
-       * Send Algorand burn NFT transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
-       * @param testnet mainnet or testnet version
-       * @param body content of the transaction to broadcast
-       * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
-       * @returns transaction id of the transaction in the blockchain.
-       */
-      burnNFTSignedTransaction: async (body: BurnNft | BurnNftKMS, testnet = false, provider?: string) =>
-        BlockchainAlgorandAlgoService.algoandBroadcast({
-          txData: await prepareBurnNFTSignedTransaction(body, testnet, args.algoWeb, provider),
-          ...(isWithSignatureId(body) && { signatureId: body.signatureId }),
-        }),
-      /**
-       * Send Algorand create FT transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
-       * @param testnet mainnet or testnet version
-       * @param body content of the transaction to broadcast
-       * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
-       * @returns transaction id of the transaction in the blockchain.
-       */
-      createFTSignedTransaction: async (
-        body: DeployErc20 | DeployErc20KMS,
-        testnet = false,
-        provider?: string,
-      ) =>
-        BlockchainAlgorandAlgoService.algoandBroadcast({
-          txData: await prepareCreateFTSignedTransaction(body, testnet, args.algoWeb, provider),
-          ...(isWithSignatureId(body) && { signatureId: body.signatureId }),
-        }),
-      /**
-       * Send Algorand transfer FT transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
-       * @param testnet mainnet or testnet version
-       * @param body content of the transaction to broadcast
-       * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
-       * @returns transaction id of the transaction in the blockchain.
-       */
-      transferFTSignedTransaction: async (
-        body: ChainTransferAlgoErc20 | ChainTransferAlgoErc20KMS,
-        testnet = false,
-        provider?: string,
-      ) =>
-        BlockchainAlgorandAlgoService.algoandBroadcast({
-          txData: await prepareTransferFTSignedTransaction(body, testnet, args.algoWeb, provider),
-        }),
-      /**
-       * Sned Algorand burn FT transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
-       * @param testnet mainnet or testnet version
-       * @param body content of the transaction to broadcast
-       * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
-       * @returns transaction id of the transaction in the blockchain.
-       */
-      burnFTSignedTransaction: async (
-        body: ChainTransferAlgoErc20 | ChainTransferAlgoErc20KMS,
-        testnet = false,
-        provider?: string,
-      ) =>
-        BlockchainAlgorandAlgoService.algoandBroadcast({
-          txData: await prepareBurnFTSignedTransaction(body, testnet, args.algoWeb, provider),
-          ...(isWithSignatureId(body) && { signatureId: body.signatureId }),
-        }),
+
+    erc721: {
+      prepare: {
+        /**
+         * Sign Algorand create NFT transaction with private key locally. Nothing is broadcast to the blockchain.
+         * @param testnet mainnet or testnet version
+         * @param body content of the transaction to broadcast
+         * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
+         * @returns transaction data to be broadcast to blockchain
+         */
+        createNFTSignedTransaction: async (
+          body: DeployNft | DeployNftKMS,
+          testnet = false,
+          provider?: string,
+        ) => prepareCreateNFTSignedTransaction(body, testnet, args.algoWeb, provider),
+        /**
+         * Sign Algorand transfer NFT transaction with private key locally. Nothing is broadcast to the blockchain.
+         * @param testnet mainnet or testnet version
+         * @param body content of the transaction to broadcast
+         * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
+         * @returns transaction data to be broadcast to blockchain.
+         */
+        transferNFTSignedTransaction: async (
+          body: TransferNft | TransferNftKMS,
+          testnet = false,
+          provider?: string,
+        ) => prepareTransferNFTSignedTransaction(body, testnet, args.algoWeb, provider),
+        /**
+         * Sign Algorand burn NFT transaction with private key locally. Nothing is broadcast to the blockchain.
+         * @param testnet mainnet or testnet version
+         * @param body content of the transaction to broadcast
+         * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
+         * @returns transaction data to be broadcast to blockchain.
+         */
+        burnNFTSignedTransaction: async (body: BurnNft | BurnNftKMS, testnet = false, provider?: string) =>
+          prepareBurnNFTSignedTransaction(body, testnet, args.algoWeb, provider),
+      },
+      send: {
+        /**
+         * Send Algorand create NFT transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+         * @param testnet mainnet or testnet version
+         * @param body content of the transaction to broadcast
+         * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
+         * @returns transaction id of the transaction in the blockchain
+         */
+        createNFTSignedTransaction: async (
+          body: DeployNft | DeployNftKMS,
+          testnet = false,
+          provider?: string,
+        ) =>
+          BlockchainAlgorandAlgoService.algoandBroadcast({
+            txData: await prepareCreateNFTSignedTransaction(body, testnet, args.algoWeb, provider),
+            ...(isWithSignatureId(body) && { signatureId: body.signatureId }),
+          }),
+        /**
+         * Send Algorand Transfer NFT transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+         * @param testnet mainnet or testnet version
+         * @param body content of the transaction to broadcast
+         * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
+         * @returns transaction id of the transaction in the blockchain.
+         */
+        transferNFTSignedTransaction: async (
+          body: TransferNft | TransferNftKMS,
+          testnet = false,
+          provider?: string,
+        ) =>
+          BlockchainAlgorandAlgoService.algoandBroadcast({
+            txData: await prepareTransferNFTSignedTransaction(body, testnet, args.algoWeb, provider),
+            ...(isWithSignatureId(body) && { signatureId: body.signatureId }),
+          }),
+        /**
+         * Send Algorand burn NFT transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+         * @param testnet mainnet or testnet version
+         * @param body content of the transaction to broadcast
+         * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
+         * @returns transaction id of the transaction in the blockchain.
+         */
+        burnNFTSignedTransaction: async (body: BurnNft | BurnNftKMS, testnet = false, provider?: string) =>
+          BlockchainAlgorandAlgoService.algoandBroadcast({
+            txData: await prepareBurnNFTSignedTransaction(body, testnet, args.algoWeb, provider),
+            ...(isWithSignatureId(body) && { signatureId: body.signatureId }),
+          }),
+      },
+    },
+
+    native: {
+      prepare: {
+        /**
+         * Algorand transaction signing
+         * @param testnet if the algorand node is testnet or not
+         * @param body content of the transaction to broadcast
+         * @param provider url of the algorand server endpoint for purestake.io restapi
+         * @returns transaction data to be broadcast to blockchain
+         */
+        signedTransaction: async (body: TransferAlgo | TransferAlgoKMS, testnet = false, provider?: string) =>
+          prepareSignedTransaction(body, testnet, args.algoWeb, provider),
+      },
+      send: {
+        /**
+         * Send Algorand transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+         * This operation is irreversible.
+         * @param testnet mainnet or testnet version
+         * @param body content of the transaction to broadcast
+         * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
+         * @returns transaction id of the transaction in the blockchain
+         */
+        signedTransaction: async (body: TransferAlgo | TransferAlgoKMS, testnet = false, provider?: string) =>
+          BlockchainAlgorandAlgoService.algoandBroadcast({
+            txData: await prepareSignedTransaction(body, testnet, args.algoWeb, provider),
+            ...(isTransferAlgoKMS(body) && { signatureId: body.signatureId }),
+          }),
+      },
     },
   }
 }
