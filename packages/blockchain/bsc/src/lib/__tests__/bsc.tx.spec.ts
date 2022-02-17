@@ -10,6 +10,7 @@ import {
   smartContractTestFactory,
   custodialTestFactory,
   marketplaceTestFactory,
+  nativeTestFactory,
 } from '@tatumio/shared-testing-evm-based'
 import { Currency } from '@tatumio/api-client'
 
@@ -27,13 +28,19 @@ describe('BscSDK - tx', () => {
     },
   })
 
+  describe('transaction', () => {
+    describe('native', () => {
+      nativeTestFactory.prepare.transferSignedTransaction(bscTx.native, inmemoryBlockchain.accounts)
+    })
+  })
+
   describe('erc20', () => {
     /**
      * TODO:
      *  Returned values aren't valid, did it run Out of Gas? You might also see this error if you are not using the correct ABI for the contract you are retrieving data from, requesting data from a block number that does not exist, or querying a node which is not fully synced.
      */
     xdescribe('decimals', () => {
-      erc20TestFactory.decimals(sdk.transaction.erc20, TEST_DATA.BSC)
+      erc20TestFactory.decimals(sdk.erc20, TEST_DATA.BSC)
     })
 
     describe('prepare', () => {
@@ -54,7 +61,7 @@ describe('BscSDK - tx', () => {
        *  Invalid JSON RPC response: "<html>\r\n<head><title>504 Gateway Time-out</title></head>\r\n<body>\r\n<center><h1>504 Gateway Time-out</h1></center>\r\n</body>\r\n</html>\r\n"
        */
       xdescribe('burnSignedTransaction', () => {
-        erc20TestFactory.prepare.burnSignedTransaction(sdk.transaction.erc20, TEST_DATA.BSC)
+        erc20TestFactory.prepare.burnSignedTransaction(sdk.erc20, TEST_DATA.BSC)
       })
     })
   })
@@ -62,52 +69,40 @@ describe('BscSDK - tx', () => {
   describe('erc721', () => {
     describe('prepare', () => {
       describe('deploySignedTransaction', () => {
-        erc721TestFactory.prepare.deploySignedTransaction(sdk.transaction.erc721, TEST_DATA.BSC, Currency.BSC)
+        erc721TestFactory.prepare.deploySignedTransaction(sdk.erc721, TEST_DATA.BSC, Currency.BSC)
       })
 
       describe('transferSignedTransaction', () => {
-        erc721TestFactory.prepare.transferSignedTransaction(
-          sdk.transaction.erc721,
-          TEST_DATA.BSC,
-          Currency.BSC,
-        )
+        erc721TestFactory.prepare.transferSignedTransaction(sdk.erc721, TEST_DATA.BSC, Currency.BSC)
       })
 
       describe('mintSignedTransaction', () => {
-        erc721TestFactory.prepare.mintSignedTransaction(sdk.transaction.erc721, TEST_DATA.BSC, Currency.BSC)
+        erc721TestFactory.prepare.mintSignedTransaction(sdk.erc721, TEST_DATA.BSC, Currency.BSC)
       })
 
       describe('burnSignedTransaction', () => {
-        erc721TestFactory.prepare.burnSignedTransaction(sdk.transaction.erc721, TEST_DATA.BSC, Currency.BSC)
+        erc721TestFactory.prepare.burnSignedTransaction(sdk.erc721, TEST_DATA.BSC, Currency.BSC)
       })
 
       describe('mintCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintCashbackSignedTransaction(
-          sdk.transaction.erc721,
-          TEST_DATA.BSC,
-          Currency.BSC,
-        )
+        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.erc721, TEST_DATA.BSC, Currency.BSC)
       })
 
       describe('mintMultipleCashbackSignedTransaction', () => {
         erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(
-          sdk.transaction.erc721,
+          sdk.erc721,
           TEST_DATA.BSC,
           Currency.BSC,
         )
       })
 
       describe('mintMultipleSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleSignedTransaction(
-          sdk.transaction.erc721,
-          TEST_DATA.BSC,
-          Currency.BSC,
-        )
+        erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.erc721, TEST_DATA.BSC, Currency.BSC)
       })
 
       describe('updateCashbackForAuthorSignedTransaction', () => {
         erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(
-          sdk.transaction.erc721,
+          sdk.erc721,
           TEST_DATA.BSC,
           Currency.BSC,
         )
@@ -214,7 +209,7 @@ describe('BscSDK - tx', () => {
     describe('prepare', () => {
       describe('smart contract write method invocation', () => {
         smartContractTestFactory.prepare.smartContractWriteMethodInvocationTransaction(
-          sdk.transaction.smartContract,
+          sdk.smartContract,
           TEST_DATA.BSC,
         )
       })
@@ -223,7 +218,7 @@ describe('BscSDK - tx', () => {
     xdescribe('send', () => {
       describe('smart contract read method invocation', () => {
         smartContractTestFactory.send.smartContractReadMethodInvocationTransaction(
-          sdk.transaction.smartContract,
+          sdk.smartContract,
           TEST_DATA.BSC,
         )
       })
@@ -234,7 +229,7 @@ describe('BscSDK - tx', () => {
     describe('prepare', () => {
       describe('smart contract write method invocation', () => {
         custodialTestFactory.prepare.generateCustodialWalletSignedTransaction(
-          sdk.transaction.custodial,
+          sdk.custodial,
           TEST_DATA.BSC,
           'BSC',
         )

@@ -13,16 +13,13 @@ import {
   UpdateCashbackValueForAuthorNftTron,
   UpdateCashbackValueForAuthorNftKMSTron as ApiUpdateCashbackValueForAuthorNftKMSTron,
 } from '@tatumio/api-client'
+import { isWithSignatureId } from '@tatumio/shared-abstract-sdk'
 import { Trc721Token } from '@tatumio/shared-blockchain-evm-based'
 import BigNumber from 'bignumber.js'
 import { ITronWeb } from './tron.web'
 
 // TODO: OpenAPI bug -> missing from property
 type DeployNftTronKMS = ApiDeployNftTronKMS & { from: string }
-
-function isDeployNftTronKMS(input: DeployNftTron | DeployNftTronKMS): input is DeployNftTronKMS {
-  return (input as DeployNftTronKMS).signatureId !== undefined
-}
 
 const prepareDeploySignedTransaction = async (
   body: DeployNftTron | DeployNftTronKMS,
@@ -44,7 +41,7 @@ const prepareDeploySignedTransaction = async (
     name,
   }
 
-  if (isDeployNftTronKMS(body)) {
+  if (isWithSignatureId(body)) {
     const tx = await client.transactionBuilder.createSmartContract(params, body.from)
 
     return JSON.stringify(tx)
@@ -60,10 +57,6 @@ const prepareDeploySignedTransaction = async (
 
 // TODO: OpenAPI bug -> missing from property
 type MintNftKMSTron = ApiMintNftKMSTron & { from: string }
-
-function isMintNftKMSTron(input: MintNftTron | MintNftKMSTron): input is MintNftKMSTron {
-  return (input as MintNftKMSTron).signatureId !== undefined
-}
 
 const prepareMintCashbackSignedTransaction = async (
   body: MintNftTron | MintNftKMSTron,
@@ -104,7 +97,7 @@ const prepareMintCashbackSignedTransaction = async (
     },
   ]
 
-  if (isMintNftKMSTron(body)) {
+  if (isWithSignatureId(body)) {
     const { transaction } = await client.transactionBuilder.triggerSmartContract(
       contractAddressHex,
       methodName,
@@ -160,7 +153,7 @@ const prepareMintSignedTransaction = async (
     },
   ]
 
-  if (isMintNftKMSTron(body)) {
+  if (isWithSignatureId(body)) {
     const { transaction } = await client.transactionBuilder.triggerSmartContract(
       contractAddressHex,
       methodName,
@@ -194,10 +187,6 @@ const prepareMintSignedTransaction = async (
 // TODO: OpenAPI bug -> missing from property
 type TransferNftKMSTron = ApiTransferNftKMSTron & { from: string }
 
-function isTransferNftKMSTron(input: TransferNftTron | TransferNftKMSTron): input is TransferNftKMSTron {
-  return (input as TransferNftKMSTron).signatureId !== undefined
-}
-
 const transferSignedTransaction = async (
   body: TransferNftTron | TransferNftKMSTron,
   tronWeb: ITronWeb,
@@ -218,7 +207,7 @@ const transferSignedTransaction = async (
 
   client.setAddress(contractAddress)
 
-  if (isTransferNftKMSTron(body)) {
+  if (isWithSignatureId(body)) {
     const { transaction } = await client.transactionBuilder.triggerSmartContract(
       contractAddressHex,
       methodName,
@@ -254,10 +243,6 @@ const transferSignedTransaction = async (
 // TODO: OpenAPI bug -> missing from property
 type BurnNftKMSTron = ApiBurnNftKMSTron & { from: string }
 
-function isBurnNftKMSTron(input: BurnNftTron | BurnNftKMSTron): input is BurnNftKMSTron {
-  return (input as BurnNftKMSTron).signatureId !== undefined
-}
-
 const burnSignedTransaction = async (
   body: BurnNftTron | BurnNftKMSTron,
   tronWeb: ITronWeb,
@@ -277,7 +262,7 @@ const burnSignedTransaction = async (
     },
   ]
 
-  if (isBurnNftKMSTron(body)) {
+  if (isWithSignatureId(body)) {
     const { transaction } = await client.transactionBuilder.triggerSmartContract(
       contractAddressHex,
       methodName,
@@ -311,12 +296,6 @@ const burnSignedTransaction = async (
 // TODO: OpenAPI bug -> missing from property
 type MintMultipleNftKMSTron = ApiMintMultipleNftKMSTron & { from: string }
 
-function isMintMultipleNftKMSTron(
-  input: MintMultipleNftTron | MintMultipleNftKMSTron,
-): input is MintMultipleNftKMSTron {
-  return (input as MintMultipleNftKMSTron).signatureId !== undefined
-}
-
 const prepareMintMultipleSignedTransaction = async (
   body: MintMultipleNftTron | MintMultipleNftKMSTron,
   tronWeb: ITronWeb,
@@ -344,7 +323,7 @@ const prepareMintMultipleSignedTransaction = async (
     },
   ]
 
-  if (isMintMultipleNftKMSTron(body)) {
+  if (isWithSignatureId(body)) {
     const { transaction } = await client.transactionBuilder.triggerSmartContract(
       contractAddressHex,
       methodName,
@@ -378,12 +357,6 @@ const prepareMintMultipleSignedTransaction = async (
 // TODO: OpenAPI bug -> missing from property
 type UpdateCashbackValueForAuthorNftKMSTron = ApiUpdateCashbackValueForAuthorNftKMSTron & { from: string }
 
-function isUpdateCashbackValueForAuthorNftKMSTron(
-  input: UpdateCashbackValueForAuthorNftTron | UpdateCashbackValueForAuthorNftKMSTron,
-): input is UpdateCashbackValueForAuthorNftKMSTron {
-  return (input as UpdateCashbackValueForAuthorNftKMSTron).signatureId !== undefined
-}
-
 const prepareUpdateCashbackValueForAuthorSignedTransaction = async (
   body: UpdateCashbackValueForAuthorNftTron | UpdateCashbackValueForAuthorNftKMSTron,
   tronWeb: ITronWeb,
@@ -407,7 +380,7 @@ const prepareUpdateCashbackValueForAuthorSignedTransaction = async (
     },
   ]
 
-  if (isUpdateCashbackValueForAuthorNftKMSTron(body)) {
+  if (isWithSignatureId(body)) {
     const { transaction } = await client.transactionBuilder.triggerSmartContract(
       contractAddressHex,
       methodName,

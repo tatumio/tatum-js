@@ -10,11 +10,15 @@ const blockchain = Blockchain.KLAY
 
 export const TatumKlaytnSDK = (args: SDKArguments) => {
   const web3 = klaytnWeb3({ blockchain })
+  const txService = klaytnTxService({ blockchain, web3 })
 
   return {
     ...evmBasedSdk({ ...args, blockchain, web3 }),
     kms: klaytnKmsService({ blockchain, web3 }),
-    transaction: klaytnTxService({ blockchain, web3 }),
+    transaction: txService.native,
+    erc20: txService.erc20,
+    erc721: txService.erc721,
+    multiToken: txService.multiToken,
     marketplace: {
       ...evmBasedMarketplace({
         blockchain,
