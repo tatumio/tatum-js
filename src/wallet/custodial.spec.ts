@@ -42,6 +42,7 @@ import {
   prepareBatchTransferFromCustodialWallet,
   prepareTransferFromCustodialWallet,
 } from './custodial';
+import { validateBody } from '../connector/tatum'
 
 describe('Custodial wallet tests', () => {
 
@@ -226,6 +227,16 @@ describe('Custodial wallet tests', () => {
       body.owner = '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA';
       await generateCustodialWalletBatch(true, body, 'https://alfajores-forno.celo-testnet.org');
       fail('Should fail on validation')
+    });
+
+    it('should OK on CELO - feesCovered entered without OK or signatureId', async () => {
+      const body = new GenerateCustodialAddressBatch();
+      body.feesCovered = true
+      body.chain = Currency.CELO;
+      body.feeCurrency = Currency.CUSD;
+      body.batchCount = 200;
+      body.owner = '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA';
+      await validateBody(body, GenerateCustodialAddressBatch)
     });
 
     it('should create on MATIC', async () => {

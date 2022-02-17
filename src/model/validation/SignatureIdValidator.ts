@@ -12,8 +12,12 @@ export class SignatureIdValidator implements ValidatorConstraintInterface {
       if (data.fromPrivateKey || data.signatureId || data.privateKey || data.secret || data.fromSecret) {
         return false;
       }
+      return true
     }
     if (data.fromPrivateKey && data.signatureId) {
+      return false
+    }
+    if (!data.fromPrivateKey && !data.signatureId) {
       return false
     }
     if (data.privateKey && data.signatureId) {
