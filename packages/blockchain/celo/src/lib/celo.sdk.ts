@@ -17,7 +17,7 @@ export const TatumCeloSDK = (args: SDKArguments) => {
     ...evmBasedSdk({ ...args, blockchain, web3 }),
     api,
     kms: celoKmsService({ blockchain, web3 }),
-    transaction: celoTxService({ blockchain }), // @native after merge of pr
+    transaction: txService.native,
     erc721: txService.erc721,
     multiToken: txService.multiToken,
     custodial: txService.custodial,
