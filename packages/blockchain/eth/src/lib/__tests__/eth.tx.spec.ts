@@ -102,16 +102,12 @@ describe('EthSDK - tx', () => {
       })
 
       describe('mintProvenanceSignedTransaction', () => {
-        erc721TestFactory.prepare.mintProvenanceSignedTransaction(
-          sdk.transaction.erc721,
-          TEST_DATA.ETH,
-          Currency.ETH,
-        )
+        erc721TestFactory.prepare.mintProvenanceSignedTransaction(sdk.erc721, TEST_DATA.ETH, Currency.ETH)
       })
 
       describe('mintMultipleProvenanceSignedTransaction', () => {
         erc721TestFactory.prepare.mintMultipleProvenanceSignedTransaction(
-          sdk.transaction.erc721,
+          sdk.erc721,
           TEST_DATA.ETH,
           Currency.ETH,
         )
