@@ -25,7 +25,7 @@ const deploySignedTransaction = async (body: ChainDeployErc721Celo, provider?: s
   const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
   const contract = new new Web3().eth.Contract(provenance ? Erc721_Provenance.abi : (Erc721Token.abi as any))
   const deploy = contract.deploy({
-    data: provenance ? Erc721_Provenance.bytecode : (Erc721Token.abi as any),
+    data: provenance ? Erc721_Provenance.bytecode : Erc721Token.bytecode,
     arguments: [name, symbol],
   })
 

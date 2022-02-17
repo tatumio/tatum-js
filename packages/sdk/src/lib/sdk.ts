@@ -18,6 +18,7 @@ import { TatumKcsSDK } from '@tatumio/kcs'
 import { TatumOneSDK } from '@tatumio/one'
 import { TatumBscSDK } from '@tatumio/bsc'
 import { TatumTronSDK } from '@tatumio/tron'
+import { TatumAlgoSDK } from '@tatumio/algo'
 
 export const TatumSDK = (args: { apiKey: string; url?: TatumUrl }) => {
   const blockchainSpecificSDKs: SDKS = {
@@ -32,6 +33,7 @@ export const TatumSDK = (args: { apiKey: string; url?: TatumUrl }) => {
     bsc: TatumBscSDK(args),
     xrp: TatumXrpSDK(args),
     tron: TatumTronSDK(args),
+    algo: TatumAlgoSDK(args),
   }
   return {
     ...abstractSdk(args),

@@ -16,7 +16,7 @@ export const TatumEthSDK = (args: SDKArguments) => {
     ...evmBasedSdk({ ...args, blockchain, web3 }),
     api,
     kms: ethKmsService({ blockchain, web3 }),
-    transaction: ethTx({ blockchain, web3 }),
+    ...ethTx({ blockchain, web3 }),
     marketplace: evmBasedMarketplace({
       blockchain,
       web3,

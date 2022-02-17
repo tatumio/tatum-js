@@ -7,6 +7,7 @@ import {
   ganacheHelper,
   erc721TestFactory,
   multiTokenTestFactory,
+  nativeTestFactory,
   smartContractTestFactory,
 } from '@tatumio/shared-testing-evm-based'
 import { Currency } from '@tatumio/api-client'
@@ -25,6 +26,12 @@ describe('KcsSDK - tx', () => {
         return '@TODO'
       },
     },
+  })
+
+  describe('transaction', () => {
+    describe('native', () => {
+      nativeTestFactory.prepare.transferSignedTransaction(kcsTx.native, inmemoryBlockchain.accounts)
+    })
   })
 
   describe('erc20', () => {
