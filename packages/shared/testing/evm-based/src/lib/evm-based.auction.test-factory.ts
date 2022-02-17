@@ -1,4 +1,3 @@
-import { TransactionHashKMS } from '@tatumio/api-client'
 import { BlockchainTestData, expectHexString } from '@tatumio/shared-testing-common'
 import {
   ChainApproveErc20,
