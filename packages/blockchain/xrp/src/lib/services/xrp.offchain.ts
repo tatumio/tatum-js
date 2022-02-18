@@ -28,17 +28,19 @@ export const sendOffchainTransaction = async (body: TransferXrpOffchain) => {
 
   if (!withdrawal.fee) {
     try {
-      withdrawal.fee = new BigNumber(await (await ApiServices.blockchain.xrp.xrpGetFee()).drops.base_fee).dividedBy(1000000).toString()
+      withdrawal.fee = new BigNumber(await (await ApiServices.blockchain.xrp.xrpGetFee()).drops.base_fee)
+        .dividedBy(1000000)
+        .toString()
     } catch (e) {
       withdrawal.fee = '0'
     }
   }
-  
-  if (!withdrawal.fee || Number(withdrawal.fee)<=0) throw new XrpSdkError(SdkErrorCode.FEE_TOO_SMALL)
+
+  if (!withdrawal.fee || Number(withdrawal.fee) <= 0) throw new XrpSdkError(SdkErrorCode.FEE_TOO_SMALL)
 
   const { id } = await ApiServices.offChain.withdrawal.storeWithdrawal(withdrawal)
   const { amount, fee, address } = withdrawal
-  let txData:string
+  let txData: string
 
   try {
     txData = await prepareSignedOffchainTransaction(
@@ -51,7 +53,7 @@ export const sendOffchainTransaction = async (body: TransferXrpOffchain) => {
       withdrawal.attr,
     )
   } catch (e) {
-    id && await ApiServices.offChain.withdrawal.cancelInProgressWithdrawal(id)
+    id && (await ApiServices.offChain.withdrawal.cancelInProgressWithdrawal(id))
     throw e
   }
 
@@ -65,7 +67,7 @@ export const sendOffchainTransaction = async (body: TransferXrpOffchain) => {
       id,
     }
   } catch (e) {
-    id && await ApiServices.offChain.withdrawal.cancelInProgressWithdrawal(id)
+    id && (await ApiServices.offChain.withdrawal.cancelInProgressWithdrawal(id))
     throw e
   }
 }
