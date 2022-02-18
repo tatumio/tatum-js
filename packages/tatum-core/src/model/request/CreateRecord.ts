@@ -25,13 +25,12 @@ export class CreateRecord {
   @IsNotEmpty()
   @IsIn([
     Currency.ETH,
-    Currency.QUORUM,
-    Currency.FABRIC,
     Currency.BSC,
     Currency.CELO,
     Currency.MATIC,
     Currency.XDC,
     Currency.ONE,
+    Currency.KLAY,
     Currency.EGLD,
     Currency.KCS,
     Currency.GLMR,
