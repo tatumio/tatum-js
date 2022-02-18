@@ -1,8 +1,5 @@
 import { SdkWithKmsFunctions } from '@tatumio/shared-blockchain-abstract'
-import {
-  BlockchainTestData,
-  expectHexString,
-} from '@tatumio/shared-testing-common'
+import { BlockchainTestData, expectHexString } from '@tatumio/shared-testing-common'
 
 export const kmsTestFactory = {
   sign: (sdk: SdkWithKmsFunctions, testData: BlockchainTestData) => {
