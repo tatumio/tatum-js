@@ -5,6 +5,7 @@ import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { bscWeb3 } from './services/bsc.web3'
 import { bscKmsService } from './services/bsc.kms'
 import { bscTxService } from './services/bsc.tx'
+import { bscAuctionService } from './services/bsc.auction'
 
 const blockchain = Blockchain.BSC
 
@@ -23,11 +24,14 @@ export const TatumBscSDK = (args: SDKArguments) => {
     smartContract: txService.smartContract,
     multiToken: txService.multiToken,
     custodial: txService.custodial,
-    marketplace: evmBasedMarketplace({
-      blockchain,
-      web3,
-      broadcastFunction: BlockchainBscService.bscBroadcast,
-    }),
+    marketplace: {
+      auction: bscAuctionService({ blockchain, web3 }),
+      ...evmBasedMarketplace({
+        blockchain,
+        web3,
+        broadcastFunction: BlockchainBscService.bscBroadcast,
+      }),
+    },
     httpDriver: async (request: Web3Request): Promise<Web3Response> => {
       return api.bscWeb3Driver(args.apiKey, { ...request, jsonrpc: '2.0' })
     },

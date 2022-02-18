@@ -15,6 +15,7 @@ import {
 import { oneOffchainExample } from './app/one.offchain.example'
 import { oneSubscriptionsExample } from './app/one.subscriptions.example'
 import { oneTxWithPrivateKeyExample, oneTxWithSignatureIdExample } from './app/one.tx.example'
+import { oneAuctionExample } from './app/one.auction.example'
 
 console.log(`Running ${oneApiExample()}`)
 console.log(`Running ${oneWalletExample()}`)
@@ -33,3 +34,4 @@ console.log(`Running ${oneOffchainExample()}`)
 console.log(`Running ${oneSubscriptionsExample()}`)
 console.log(`Runninf ${oneTxWithPrivateKeyExample()}`)
 console.log(`Runninf ${oneTxWithSignatureIdExample()}`)
+console.log(`Running ${oneAuctionExample()}`)
