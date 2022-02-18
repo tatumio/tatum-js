@@ -730,6 +730,7 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
     case Currency.BETH:
     case Currency.GAMEE:
     case Currency.BUSD:
+    case Currency.KLAY:
     case Currency.USDC_BSC:
     case Currency.COIIN_BSC:
     case Currency.B2U_BSC:
