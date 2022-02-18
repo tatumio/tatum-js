@@ -39,6 +39,12 @@ export const TatumBscSDK = (args: SDKArguments) => {
       getBlockchainAccountBalance: BlockchainBscService.bscGetBalance,
       get: BlockchainBscService.bscGetTransaction,
       estimateGas: BlockchainBscService.bscEstimateGas,
+      smartContractInvocation: BlockchainBscService.bscBlockchainSmartContractInvocation,
+      blockchainTransfer: BlockchainBscService.bscBlockchainTransfer,
+      generateAddress: BlockchainBscService.bscGenerateAddress,
+      generateAddressPrivateKey: BlockchainBscService.bscGenerateAddressPrivateKey,
+      generateWallet: BlockchainBscService.bscGenerateWallet,
+      web3Driver: BlockchainBscService.bscWeb3Driver,
     },
   }
 }
