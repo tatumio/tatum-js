@@ -28,7 +28,9 @@ export const sendOffchainTransaction = async (body: TransferXrpOffchain) => {
 
   if (!withdrawal.fee) {
     try {
-      withdrawal.fee = new BigNumber(await (await ApiServices.blockchain.xrp.xrpGetFee())?.drops?.base_fee || 0)
+      withdrawal.fee = new BigNumber(
+        (await (await ApiServices.blockchain.xrp.xrpGetFee())?.drops?.base_fee) || 0,
+      )
         .dividedBy(1000000)
         .toString()
     } catch (e) {
