@@ -12,20 +12,20 @@ import {
 import { listing } from '../contracts/marketplace';
 import { CeloSmartContractMethodInvocation, Currency, SmartContractMethodInvocation } from '../model';
 import {
-    getBscClient,
-    getCeloClient,
-    getClient,
-    getXdcClient,
-    prepareBscSmartContractWriteMethodInvocation,
-    prepareCeloSmartContractWriteMethodInvocation,
-    prepareKlaytnClient,
-    prepareOneClient,
-    prepareOneSmartContractWriteMethodInvocation,
-    preparePolygonClient,
-    preparePolygonSmartContractWriteMethodInvocation,
-    prepareSmartContractWriteMethodInvocation,
-    prepareTronSmartContractInvocation,
-    prepareXdcSmartContractWriteMethodInvocation,
+  getBscClient,
+  getCeloClient,
+  getClient,
+  getXdcClient,
+  prepareBscSmartContractWriteMethodInvocation,
+  prepareCeloSmartContractWriteMethodInvocation,
+  prepareKlaytnClient, prepareKlaytnSmartContractWriteMethodInvocation,
+  prepareOneClient,
+  prepareOneSmartContractWriteMethodInvocation,
+  preparePolygonClient,
+  preparePolygonSmartContractWriteMethodInvocation,
+  prepareSmartContractWriteMethodInvocation,
+  prepareTronSmartContractInvocation,
+  prepareXdcSmartContractWriteMethodInvocation,
 } from '../transaction';
 import Caver from 'caver-js'
 
@@ -106,6 +106,8 @@ export const helperPrepareSCCall = async (testnet: boolean, body: any, clazz: Cl
       return await prepareBscSmartContractWriteMethodInvocation(r, provider);
     case Currency.MATIC:
       return await preparePolygonSmartContractWriteMethodInvocation(testnet, r, provider);
+    case Currency.KLAY:
+      return await prepareKlaytnSmartContractWriteMethodInvocation(testnet, r, provider);
     case Currency.TRON:
       r.methodName = methodSig as string;
       return await prepareTronSmartContractInvocation(testnet, r, body.feeLimit, body.from, provider);
