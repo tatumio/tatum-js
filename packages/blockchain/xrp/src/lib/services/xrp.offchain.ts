@@ -28,7 +28,7 @@ export const sendOffchainTransaction = async (body: TransferXrpOffchain) => {
 
   if (!withdrawal.fee) {
     try {
-      withdrawal.fee = new BigNumber(await (await ApiServices.blockchain.xrp.xrpGetFee()).drops.base_fee)
+      withdrawal.fee = new BigNumber(await (await ApiServices.blockchain.xrp.xrpGetFee())?.drops?.base_fee || 0)
         .dividedBy(1000000)
         .toString()
     } catch (e) {
@@ -120,8 +120,8 @@ export const prepareSignedOffchainTransaction = async (
   const rippleAPI = new RippleAPI()
   const prepared = await rippleAPI.preparePayment(address, payment, {
     fee: `${fee}`,
-    sequence: accountInfo?.account_data.Sequence,
-    maxLedgerVersion: accountInfo?.ledger_current_index + 5,
+    sequence: accountInfo?.account_data ? accountInfo.account_data.Sequence : undefined,
+    maxLedgerVersion: accountInfo?.ledger_current_index ? accountInfo.ledger_current_index + 5 : undefined,
   })
 
   return (await rippleAPI.sign(prepared.txJSON, secret)).signedTransaction
