@@ -5,6 +5,7 @@ import { celoWeb3 } from './services/celo.web3'
 import { evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
 import { celoKmsService } from './services/celo.kms'
 import { celoTxService } from './services/celo.tx'
+import { celoAuctionService } from './services/celo.auction'
 
 const blockchain = Blockchain.CELO
 
@@ -21,6 +22,9 @@ export const TatumCeloSDK = (args: SDKArguments) => {
     erc721: txService.erc721,
     multiToken: txService.multiToken,
     custodial: txService.custodial,
+    marketplace: {
+      auction: celoAuctionService({ blockchain, web3 }),
+    },
     httpDriver: async (request: Web3Request): Promise<Web3Response> => {
       return api.celoWeb3Driver(args.apiKey, { ...request, jsonrpc: '2.0' })
     },
