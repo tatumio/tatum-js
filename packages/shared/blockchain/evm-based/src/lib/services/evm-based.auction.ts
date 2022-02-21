@@ -395,6 +395,10 @@ const auctionBidSignedTransaction = async (
     amount = body.bidValue
   }
 
+  if (!body.bidValue) {
+    throw new Error('No budValue set')
+  }
+
   const params = [
     body.id,
     `0x${new BigNumber(body.bidValue).multipliedBy(new BigNumber(10).pow(decimals)).toString(16)}`,
