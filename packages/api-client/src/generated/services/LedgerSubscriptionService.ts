@@ -67,6 +67,13 @@ export class LedgerSubscriptionService {
      * <td>25 credits / day / address</td>
      * </tr>
      * <tr>
+     * <td>Klaytn</td>
+     * <td>Yes/Yes</td>
+     * <td>Klay, Internal transfers, ERC20, ERC721, ERC1155</td>
+     * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
+     * <td>25 credits / day / address</td>
+     * </tr>
+     * <tr>
      * <td>Bitcoin</td>
      * <td>Yes/Yes</td>
      * <td>BTC</td>
