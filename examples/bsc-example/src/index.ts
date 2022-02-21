@@ -1,4 +1,3 @@
-import { bscApiExample } from './app/bsc.api.example'
 import { bscBlockchainExample } from './app/bsc.blockchain.example'
 import { bscKmsExample } from './app/bsc.kms.example'
 import { bscLogRecordExample } from './app/bsc.log.example'
@@ -23,7 +22,6 @@ import {
 } from './app/bsc.tx.example'
 import { bscAuctionExample } from './app/bsc.auction.example'
 
-console.log(`Running ${bscApiExample()}`)
 console.log(`Running ${bscWalletExample()}`)
 console.log(`Running ${bscBlockchainExample()}`)
 console.log(`Running ${bscKmsExample()}`)

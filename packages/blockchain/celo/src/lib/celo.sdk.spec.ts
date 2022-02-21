@@ -42,7 +42,7 @@ describe('TatumCeloSDK', () => {
 
       it('should return valid web3 client with privateKey', async () => {
         const web3 = celoWeb3({ blockchain: Blockchain.CELO })
-        const client = web3.getClient(provider, TEST_DATA.CELO.MAINNET.ERC_721!.PRIVATE_KEY)
+        const client = web3.getClient(provider, TEST_DATA.CELO.TESTNET.ERC_721!.PRIVATE_KEY)
 
         expect(client).toBeDefined()
       })

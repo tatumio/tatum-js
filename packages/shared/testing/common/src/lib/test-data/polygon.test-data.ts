@@ -11,10 +11,6 @@ export const POLYGON_TEST_DATA: BlockchainTestData = {
     PRIVATE_KEY_100: '0x33ce3dce4140bc780e2721f6ec1f9a9cb6a7f93a49cb769f7d963301f6adc16e',
     ADDRESS_0: '0x914552827a997e033885d380382b64374c7a9c6a',
     ADDRESS_100: '0x4d8fb78b021bf939e9df68cc6f2cf0ccd71beff2',
-    ERC_721: {
-      PRIVATE_KEY: '0d6c13fe5fed644dfa02512d4bffde9453dcb48873afb0b0a4c0cebce160c279',
-      CONTRACT_ADDRESS: '0x2A42ae2a6346eEbC7FE2b2b7f02158634d5390dc',
-    },
   },
   BLOCK_HASH: '0x0ad57222955e6297492447f5f0bcd0b415738d7179738217364853790edf718a',
   BLOCK_HEIGHT: 24_355_132,
@@ -40,6 +36,10 @@ export const POLYGON_TEST_DATA: BlockchainTestData = {
       SIGNATURE_ID: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
       CONTRACT_ADDRESS: '0xe2a8d7c5b2b4acad7e5b9aec0998cdbbeed45e49',
       TOKEN_ADDRESS: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
+    },
+    ERC_721: {
+      PRIVATE_KEY: '0d6c13fe5fed644dfa02512d4bffde9453dcb48873afb0b0a4c0cebce160c279',
+      CONTRACT_ADDRESS: '0x2A42ae2a6346eEbC7FE2b2b7f02158634d5390dc',
     },
     PROVIDER: 'https://matic-mumbai.chainstacklabs.com/',
   },

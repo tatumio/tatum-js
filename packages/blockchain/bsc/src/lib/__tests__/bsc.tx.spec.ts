@@ -44,7 +44,7 @@ describe('BscSDK - tx', () => {
     })
 
     describe('prepare', () => {
-      xdescribe('deploySignedTransaction', () => {
+      describe('deploySignedTransaction', () => {
         erc20TestFactory.prepare.deploySignedTransaction(bscTx.erc20, inmemoryBlockchain.accounts)
       })
 
