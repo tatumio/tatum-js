@@ -15,11 +15,11 @@ export const TatumFlowSDK = (args: SDKArguments) => {
   return {
     ...abstractBlockchainSdk({ ...args, blockchain }),
     api,
-    kms: flowKmsService({ blockchain }),
+    kms: flowKmsService({ ...args, blockchain }),
     wallet: flowWallet(),
-    transaction: flowTxService(),
+    transaction: flowTxService(args),
     blockchain: {
-      ...flowBlockchain(),
+      ...flowBlockchain(args),
       getCurrentBlock: BlockchainFlowService.flowGetBlockChainInfo,
       getBlock: BlockchainFlowService.flowGetBlock,
       getAccount: BlockchainFlowService.flowGetAccount,

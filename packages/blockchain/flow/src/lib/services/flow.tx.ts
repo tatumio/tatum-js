@@ -4,11 +4,11 @@ import * as types from '@onflow/types'
 import { ECDSA_secp256k1, encodeKey, SHA3_256 } from '@onflow/util-encode-key'
 import SHA3 from 'sha3'
 import {
+  Blockchain,
   ChainFlowBurnNft,
   ChainFlowMintMultipleNft,
   ChainFlowMintNft,
   ChainFlowTransferNft,
-  Currency,
   FlowArgs,
   FlowBurnNft,
   FlowMintMultipleNft,
@@ -24,7 +24,7 @@ import { flowTxTemplates } from './flow.tx.templates'
 import { flowWallet } from './flow.sdk.wallet'
 import { flowBlockchain } from './flow.blockchain'
 import { FlowSdkError } from '../flow.sdk.errors'
-import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
+import { SDKArguments, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 export const FLOW_TESTNET_ADDRESSES = {
   FlowToken: '0x7e60df042a9c0868',
@@ -40,11 +40,61 @@ export const FLOW_MAINNET_ADDRESSES = {
   TatumMultiNFT: '0x354e6721564ccd2c',
 }
 
-const flowSdkWallet = flowWallet()
-const flowSdkBlockchain = flowBlockchain()
-const txTemplates = flowTxTemplates()
+export const flowTxService = (args: SDKArguments) => {
+  const flowSdkWallet = flowWallet()
+  const flowSdkBlockchain = flowBlockchain(args)
+  const txTemplates = flowTxTemplates()
+  const sign = (pk: string, msg: Buffer) => {
+    const keyPair = new elliptic.ec('secp256k1').keyFromPrivate(pk)
+    const signature = keyPair.sign(new SHA3(256).update(msg).digest())
+    const r = signature.r.toArrayLike(Buffer, 'be', 32)
+    const s = signature.s.toArrayLike(Buffer, 'be', 32)
 
-export const flowTxService = () => {
+    return Buffer.concat([r, s]).toString('hex')
+  }
+  const getSigner = (pk: string, address: string, keyId = 0) => {
+    return {
+      signer: (account: any) => {
+        return {
+          ...account,
+          tempId: `${address}-${keyId}`,
+          addr: fcl.sansPrefix(address),
+          keyId: Number(keyId),
+          signingFunction: async (data: any) => {
+            return {
+              addr: fcl.withPrefix(address),
+              keyId: Number(keyId),
+              signature: sign(pk, Buffer.from(data.message, 'hex')),
+            }
+          },
+        }
+      },
+    }
+  }
+  const getApiSigner = (isPayer: boolean) => {
+    const keyHash = Date.now()
+    const signer = async (account: any) => {
+      const { address, keyId } = await flowSdkBlockchain.getSignKey(isPayer)
+      if (!isPayer) {
+        process.env[`FLOW_PROPOSAL_KEY_${keyHash}`] = `${keyId}`
+      }
+      return {
+        ...account,
+        tempId: `${address}-${keyId}`,
+        addr: fcl.sansPrefix(address),
+        keyId,
+        signingFunction: async (data: { message: string }) => {
+          return {
+            addr: fcl.withPrefix(address),
+            keyId: Number(keyId),
+            signature: (await flowSdkBlockchain.signWithKey(data.message, isPayer)).signature,
+          }
+        },
+      }
+    }
+    return { signer, keyHash: `FLOW_PROPOSAL_KEY_${keyHash}` }
+  }
+
   return {
     sign,
     getSigner,
@@ -151,7 +201,7 @@ export const flowTxService = () => {
       proposer?: (isPayer: boolean) => any,
       payer?: (isPayer: boolean) => any,
     ): Promise<{ txId: string; tokenId: string }> => {
-      const bodyWithChain: FlowMintNft = { ...body, chain: Currency.FLOW }
+      const bodyWithChain: FlowMintNft = { ...body, chain: Blockchain.FLOW }
       const code = txTemplates.mintNftTokenTxTemplate(testnet)
       const { url, contractAddress: tokenType, to, account } = bodyWithChain
       const args = [
@@ -191,7 +241,7 @@ export const flowTxService = () => {
       proposer?: (isPayer: boolean) => any,
       payer?: (isPayer: boolean) => any,
     ): Promise<{ txId: string; tokenId: number[] }> => {
-      const bodyWithChain: FlowMintMultipleNft = { ...body, chain: Currency.FLOW }
+      const bodyWithChain: FlowMintMultipleNft = { ...body, chain: Blockchain.FLOW }
       const code = txTemplates.mintMultipleNftTokenTxTemplate(testnet)
       const { url, contractAddress: tokenType, to, account } = bodyWithChain
       const args = [
@@ -237,7 +287,7 @@ export const flowTxService = () => {
       proposer?: (isPayer: boolean) => any,
       payer?: (isPayer: boolean) => any,
     ): Promise<{ txId: string }> => {
-      const bodyWithChain: FlowTransferNft = { ...body, chain: Currency.FLOW }
+      const bodyWithChain: FlowTransferNft = { ...body, chain: Blockchain.FLOW }
       const code = txTemplates.transferNftTokenTxTemplate(testnet)
       const { tokenId, to, account } = bodyWithChain
       const args = [
@@ -273,7 +323,7 @@ export const flowTxService = () => {
       proposer?: (isPayer: boolean) => any,
       payer?: (isPayer: boolean) => any,
     ): Promise<{ txId: string }> => {
-      const bodyWithChain: FlowBurnNft = { ...body, chain: Currency.FLOW }
+      const bodyWithChain: FlowBurnNft = { ...body, chain: Blockchain.FLOW }
       const code = txTemplates.burnNftTokenTxTemplate(testnet)
       const { tokenId, contractAddress: tokenType, account } = bodyWithChain
       const args = [
@@ -339,7 +389,7 @@ export const flowTxService = () => {
       let tokenAddress
       let tokenName
       let tokenStorage
-      if (body.currency === Currency.FLOW) {
+      if (body.currency === Blockchain.FLOW) {
         tokenAddress = testnet ? FLOW_TESTNET_ADDRESSES.FlowToken : FLOW_MAINNET_ADDRESSES.FlowToken
         tokenName = 'FlowToken'
         tokenStorage = 'flowToken'
@@ -368,140 +418,88 @@ export const flowTxService = () => {
       return { txId: result.id }
     },
   }
-}
-
-const getPrivateKey = async (body: FlowMnemonicOrPrivateKeyOrSignatureId) => {
-  const { mnemonic, index, privateKey } = body
-  if (privateKey) {
-    return privateKey
-  } else {
-    if (mnemonic && index && index >= 0) {
-      return flowSdkWallet.generatePrivateKeyFromMnemonic(mnemonic, index)
-    } else throw new FlowSdkError(SdkErrorCode.FLOW_MISSING_MNEMONIC)
-  }
-}
-
-const sign = (pk: string, msg: Buffer) => {
-  const keyPair = new elliptic.ec('secp256k1').keyFromPrivate(pk)
-  const signature = keyPair.sign(new SHA3(256).update(msg).digest())
-  const r = signature.r.toArrayLike(Buffer, 'be', 32)
-  const s = signature.s.toArrayLike(Buffer, 'be', 32)
-
-  return Buffer.concat([r, s]).toString('hex')
-}
-const getSigner = (pk: string, address: string, keyId = 0) => {
-  return {
-    signer: (account: any) => {
-      return {
-        ...account,
-        tempId: `${address}-${keyId}`,
-        addr: fcl.sansPrefix(address),
-        keyId: Number(keyId),
-        signingFunction: async (data: any) => {
-          return {
-            addr: fcl.withPrefix(address),
-            keyId: Number(keyId),
-            signature: flowTxService().sign(pk, Buffer.from(data.message, 'hex')),
-          }
-        },
-      }
-    },
-  }
-}
-const getApiSigner = (isPayer: boolean) => {
-  const keyHash = Date.now()
-  const signer = async (account: any) => {
-    const { address, keyId } = await flowSdkBlockchain.getSignKey(isPayer)
-    if (!isPayer) {
-      process.env[`FLOW_PROPOSAL_KEY_${keyHash}`] = `${keyId}`
-    }
-    return {
-      ...account,
-      tempId: `${address}-${keyId}`,
-      addr: fcl.sansPrefix(address),
-      keyId,
-      signingFunction: async (data: { message: string }) => {
-        return {
-          addr: fcl.withPrefix(address),
-          keyId: Number(keyId),
-          signature: (await flowSdkBlockchain.signWithKey(data.message, isPayer)).signature,
+  async function _sendTransaction(
+    testnet: boolean,
+    { code, args, proposer, authorizations, payer, keyHash }: Transaction,
+  ): Promise<TransactionResult> {
+    fcl.config().put('accessNode.api', networkUrl(testnet))
+    let response
+    try {
+      response = await fcl.send([
+        fcl.transaction(code),
+        fcl.args(args.map((arg) => fcl.arg(UInt64ArgValue(arg), ArrayArgValue(arg)))),
+        fcl.proposer(proposer),
+        fcl.authorizations(authorizations),
+        fcl.payer(payer),
+        fcl.limit(1000),
+      ])
+    } catch (e: any) {
+      try {
+        if (keyHash) {
+          await flowSdkBlockchain.broadcast('', undefined, proposalKey(keyHash))
+          delete process.env[keyHash]
         }
-      },
+        // eslint-disable-next-line no-empty
+      } catch (_: any) {
+        throw new FlowSdkError(_)
+      }
+      throw new FlowSdkError(e)
+    }
+
+    const { transactionId } = response
+    try {
+      const { error, events } = await fcl.tx(response).onceSealed()
+      if (error) {
+        throw new FlowSdkError(error)
+      }
+      return {
+        id: transactionId,
+        events,
+      }
+    } catch (e: any) {
+      throw new FlowSdkError(e)
+    } finally {
+      try {
+        if (keyHash) {
+          await flowSdkBlockchain.broadcast(transactionId, undefined, proposalKey(keyHash))
+          delete process.env[keyHash]
+        }
+      } catch (_: any) {
+        // eslint-disable-next-line no-unsafe-finally
+        throw new FlowSdkError(_)
+      }
     }
   }
-  return { signer, keyHash: `FLOW_PROPOSAL_KEY_${keyHash}` }
-}
-const _sendTransaction = async (
-  testnet: boolean,
-  { code, args, proposer, authorizations, payer, keyHash }: Transaction,
-): Promise<TransactionResult> => {
-  fcl.config().put('accessNode.api', networkUrl(testnet))
-  let response
-  try {
-    response = await fcl.send([
-      fcl.transaction(code),
-      fcl.args(args.map((arg) => fcl.arg(UInt64ArgValue(arg), ArrayArgValue(arg)))),
-      fcl.proposer(proposer),
-      fcl.authorizations(authorizations),
-      fcl.payer(payer),
-      fcl.limit(1000),
+  async function getPrivateKey(body: FlowMnemonicOrPrivateKeyOrSignatureId) {
+    const { mnemonic, index, privateKey } = body
+    if (privateKey) {
+      return privateKey
+    } else {
+      if (mnemonic && index && index >= 0) {
+        return flowSdkWallet.generatePrivateKeyFromMnemonic(mnemonic, index)
+      } else throw new FlowSdkError(SdkErrorCode.FLOW_MISSING_MNEMONIC)
+    }
+  }
+
+  async function sendScript(testnet: boolean, code: string, args: FlowArgs[]) {
+    fcl.config().put('accessNode.api', networkUrl(testnet))
+    const response = await fcl.send([
+      fcl.script(code),
+      fcl.args(args.map((arg) => fcl.arg(UInt64ArgValue(arg), types[arg.type]))),
     ])
-  } catch (e: any) {
-    try {
-      if (keyHash) {
-        await flowSdkBlockchain.broadcast('', undefined, proposalKey(keyHash))
-        delete process.env[keyHash]
-      }
-      // eslint-disable-next-line no-empty
-    } catch (_: any) {
-      throw new FlowSdkError(_)
-    }
-    throw new FlowSdkError(e)
+    return fcl.decode(response)
   }
 
-  const { transactionId } = response
-  try {
-    const { error, events } = await fcl.tx(response).onceSealed()
-    if (error) {
-      throw new FlowSdkError(error)
-    }
-    return {
-      id: transactionId,
-      events,
-    }
-  } catch (e: any) {
-    throw new FlowSdkError(e)
-  } finally {
-    try {
-      if (keyHash) {
-        await flowSdkBlockchain.broadcast(transactionId, undefined, proposalKey(keyHash))
-        delete process.env[keyHash]
-      }
-    } catch (_: any) {
-      // eslint-disable-next-line no-unsafe-finally
-      throw new FlowSdkError(_)
-    }
+  function proposalKey(keyHash: string) {
+    return keyHash ? parseInt(process.env[keyHash] || '0') : undefined
   }
-}
-
-const sendScript = async (testnet: boolean, code: string, args: FlowArgs[]) => {
-  fcl.config().put('accessNode.api', networkUrl(testnet))
-  const response = await fcl.send([
-    fcl.script(code),
-    fcl.args(args.map((arg) => fcl.arg(UInt64ArgValue(arg), types[arg.type]))),
-  ])
-  return fcl.decode(response)
-}
-
-const proposalKey = (keyHash: string) => {
-  return keyHash ? parseInt(process.env[keyHash] || '0') : undefined
-}
-const networkUrl = (testnet: boolean) => {
-  return testnet ? 'https://access-testnet.onflow.org' : 'https://access-mainnet-beta.onflow.org'
-}
-const UInt64ArgValue = (arg: FlowArgs) => {
-  return arg.type === 'UInt64' ? parseInt(arg.value as string) : arg.value
-}
-const ArrayArgValue = (arg: FlowArgs) => {
-  return arg.type === 'Array' ? types[arg.type](types[arg.subType as any]) : types[arg.type]
+  function networkUrl(testnet: boolean) {
+    return testnet ? 'https://access-testnet.onflow.org' : 'https://access-mainnet-beta.onflow.org'
+  }
+  function UInt64ArgValue(arg: FlowArgs) {
+    return arg.type === 'UInt64' ? parseInt(arg.value as string) : arg.value
+  }
+  function ArrayArgValue(arg: FlowArgs) {
+    return arg.type === 'Array' ? types[arg.type](types[arg.subType as any]) : types[arg.type]
+  }
 }
