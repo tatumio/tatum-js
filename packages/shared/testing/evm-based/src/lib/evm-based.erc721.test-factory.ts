@@ -37,7 +37,7 @@ export const erc721TestFactory = {
             chain,
             symbol: 'ERC_SYMBOL',
             name: 'bO6AN',
-            fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
+            fromPrivateKey: testData.TESTNET.ERC_721!.PRIVATE_KEY,
             fee: {
               gasLimit: '326452',
               gasPrice: '20',
@@ -62,7 +62,7 @@ export const erc721TestFactory = {
             chain,
             to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
             tokenId: '112345678',
-            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            contractAddress: testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
             fee: {
               gasLimit: '50000',
@@ -83,8 +83,8 @@ export const erc721TestFactory = {
           {
             chain,
             to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-            fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
+            contractAddress: testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
+            fromPrivateKey: testData.TESTNET.ERC_721!.PRIVATE_KEY,
             tokenId: '112345678',
             fee: {
               gasLimit: '50000',
@@ -103,8 +103,8 @@ export const erc721TestFactory = {
             {
               chain,
               to: 'someinvalidaddress',
-              contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-              fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
+              contractAddress: testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
+              fromPrivateKey: testData.TESTNET.ERC_721!.PRIVATE_KEY,
               nonce: 3252345722143,
               tokenId: '112345678',
               fee: {
@@ -134,8 +134,8 @@ export const erc721TestFactory = {
         const result = await sdk.prepare.mintSignedTransaction(
           {
             to: address,
-            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-            fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
+            contractAddress: testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
+            fromPrivateKey: testData.TESTNET.ERC_721!.PRIVATE_KEY,
             tokenId: new Date().getTime().toString(),
             url: 'https://my_token_data.com',
             chain,
@@ -153,7 +153,7 @@ export const erc721TestFactory = {
         const result = await sdk.prepare.mintSignedTransaction(
           {
             to: address,
-            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            contractAddress: testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
             tokenId: new Date().getTime().toString(),
             url: 'https://my_token_data.com',
@@ -177,8 +177,8 @@ export const erc721TestFactory = {
               to: 'someinvalidaddress',
               tokenId: new Date().getTime().toString(),
               url: 'https://my_token_data.com',
-              contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-              fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
+              contractAddress: testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
+              fromPrivateKey: testData.TESTNET.ERC_721!.PRIVATE_KEY,
               chain,
               fee: {
                 gasLimit: '3264521',
@@ -208,8 +208,8 @@ export const erc721TestFactory = {
         const result = await sdk.prepare.mintMultipleSignedTransaction(
           {
             to: [address, address],
-            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-            fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
+            contractAddress: testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
+            fromPrivateKey: testData.TESTNET.ERC_721!.PRIVATE_KEY,
             tokenId: [new Date().getTime().toString(), new Date().getTime().toString()],
             url: ['https://my_token_data.com', 'https://my_token_data.com'],
             chain,
@@ -227,7 +227,7 @@ export const erc721TestFactory = {
         const result = await sdk.prepare.mintMultipleSignedTransaction(
           {
             to: [address, address],
-            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            contractAddress: testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
             tokenId: [new Date().getTime().toString(), new Date().getTime().toString()],
             url: ['https://my_token_data.com', 'https://my_token_data.com'],
@@ -249,8 +249,8 @@ export const erc721TestFactory = {
           await sdk.prepare.mintMultipleSignedTransaction(
             {
               to: ['invalid', 'invalid'],
-              contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-              fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
+              contractAddress: testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
+              fromPrivateKey: testData.TESTNET.ERC_721!.PRIVATE_KEY,
               tokenId: [new Date().getTime().toString(), new Date().getTime().toString()],
               url: ['https://my_token_data.com', 'https://my_token_data.com'],
               chain,
@@ -282,8 +282,8 @@ export const erc721TestFactory = {
         const result = await sdk.prepare.mintCashbackSignedTransaction(
           {
             to: address,
-            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-            fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
+            contractAddress: testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
+            fromPrivateKey: testData.TESTNET.ERC_721!.PRIVATE_KEY,
             tokenId: new Date().getTime().toString(),
             url: 'https://my_token_data.com',
             chain,
@@ -304,7 +304,7 @@ export const erc721TestFactory = {
         const result = await sdk.prepare.mintCashbackSignedTransaction(
           {
             to: address,
-            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            contractAddress: testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
             tokenId: new Date().getTime().toString(),
             url: 'https://my_token_data.com',
@@ -330,8 +330,8 @@ export const erc721TestFactory = {
               to: 'someinvalidaddress',
               tokenId: new Date().getTime().toString(),
               url: 'https://my_token_data.com',
-              contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-              fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
+              contractAddress: testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
+              fromPrivateKey: testData.TESTNET.ERC_721!.PRIVATE_KEY,
               chain,
               cashbackValues: ['0.5'],
               authorAddresses: [address],
@@ -363,8 +363,8 @@ export const erc721TestFactory = {
         const result = await sdk.prepare.mintMultipleCashbackSignedTransaction(
           {
             to: [address, address],
-            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-            fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
+            contractAddress: testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
+            fromPrivateKey: testData.TESTNET.ERC_721!.PRIVATE_KEY,
             tokenId: [new Date().getTime().toString(), new Date().getTime().toString()],
             url: ['https://my_token_data.com', 'https://my_token_data.com'],
             chain,
@@ -384,7 +384,7 @@ export const erc721TestFactory = {
         const result = await sdk.prepare.mintMultipleSignedTransaction(
           {
             to: [address, address],
-            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            contractAddress: testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
             tokenId: [new Date().getTime().toString(), new Date().getTime().toString()],
             url: ['https://my_token_data.com', 'https://my_token_data.com'],
@@ -407,8 +407,8 @@ export const erc721TestFactory = {
           await sdk.prepare.mintMultipleSignedTransaction(
             {
               to: ['invalid', 'invalid'],
-              contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-              fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
+              contractAddress: testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
+              fromPrivateKey: testData.TESTNET.ERC_721!.PRIVATE_KEY,
               tokenId: [new Date().getTime().toString(), new Date().getTime().toString()],
               url: ['https://my_token_data.com', 'https://my_token_data.com'],
               chain,
@@ -437,8 +437,8 @@ export const erc721TestFactory = {
       it('valid from privateKey', async () => {
         const result = await sdk.prepare.updateCashbackForAuthorSignedTransaction(
           {
-            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-            fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
+            contractAddress: testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
+            fromPrivateKey: testData.TESTNET.ERC_721!.PRIVATE_KEY,
             tokenId: new Date().getTime().toString(),
             chain,
             cashbackValue: '0.8',
@@ -455,7 +455,7 @@ export const erc721TestFactory = {
       it('valid from SignatureId', async () => {
         const result = await sdk.prepare.updateCashbackForAuthorSignedTransaction(
           {
-            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            contractAddress: testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
             tokenId: new Date().getTime().toString(),
             chain,
@@ -484,8 +484,8 @@ export const erc721TestFactory = {
         const result = await sdk.prepare.burnSignedTransaction(
           {
             tokenId: new Date().getTime().toString(),
-            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-            fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
+            contractAddress: testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
+            fromPrivateKey: testData.TESTNET.ERC_721!.PRIVATE_KEY,
             chain,
             fee: {
               gasLimit: '3264521',
@@ -501,7 +501,7 @@ export const erc721TestFactory = {
       it('valid from SignatureId', async () => {
         const result = await sdk.prepare.burnSignedTransaction(
           {
-            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            contractAddress: testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
             tokenId: new Date().getTime().toString(),
             chain,

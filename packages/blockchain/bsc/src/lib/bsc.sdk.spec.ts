@@ -44,7 +44,7 @@ describe('TatumBscSDK', () => {
 
       it('should return valid web3 client with privateKey', async () => {
         const web3 = evmBasedWeb3({ blockchain: Blockchain.BSC })
-        const client = web3.getClient(provider, TEST_DATA.BSC.MAINNET.ERC_721!.PRIVATE_KEY)
+        const client = web3.getClient(provider, TEST_DATA.BSC.TESTNET.ERC_721!.PRIVATE_KEY)
 
         expect(client).toBeDefined()
       })
