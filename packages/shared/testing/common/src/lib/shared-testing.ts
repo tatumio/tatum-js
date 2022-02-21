@@ -24,6 +24,7 @@ export type BlockchainNetworkTestData = {
   PRIVATE_KEY_0: string
   PRIVATE_KEY_100: string
   CONTRACT_ADDRESS?: string
+  SERIALIZED_TX?: string
   ERC_20?: {
     CONTRACT_ADDRESS: string
     PRIVATE_KEY: string
