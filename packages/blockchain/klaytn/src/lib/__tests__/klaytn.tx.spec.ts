@@ -70,65 +70,41 @@ describe('KlaytnSDK - tx', () => {
   xdescribe('erc721', () => {
     describe('prepare', () => {
       describe('deploySignedTransaction', () => {
-        erc721TestFactory.prepare.deploySignedTransaction(
-          sdk.transaction.erc721,
-          TEST_DATA.KLAYTN,
-          Currency.KLAY,
-        )
+        erc721TestFactory.prepare.deploySignedTransaction(sdk.erc721, TEST_DATA.KLAYTN, Currency.KLAY)
       })
 
       describe('transferSignedTransaction', () => {
-        erc721TestFactory.prepare.transferSignedTransaction(
-          sdk.transaction.erc721,
-          TEST_DATA.KLAYTN,
-          Currency.KLAY,
-        )
+        erc721TestFactory.prepare.transferSignedTransaction(sdk.erc721, TEST_DATA.KLAYTN, Currency.KLAY)
       })
 
       describe('mintSignedTransaction', () => {
-        erc721TestFactory.prepare.mintSignedTransaction(
-          sdk.transaction.erc721,
-          TEST_DATA.KLAYTN,
-          Currency.KLAY,
-        )
+        erc721TestFactory.prepare.mintSignedTransaction(sdk.erc721, TEST_DATA.KLAYTN, Currency.KLAY)
       })
 
       describe('burnSignedTransaction', () => {
-        erc721TestFactory.prepare.burnSignedTransaction(
-          sdk.transaction.erc721,
-          TEST_DATA.KLAYTN,
-          Currency.KLAY,
-        )
+        erc721TestFactory.prepare.burnSignedTransaction(sdk.erc721, TEST_DATA.KLAYTN, Currency.KLAY)
       })
 
       describe('mintCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintCashbackSignedTransaction(
-          sdk.transaction.erc721,
-          TEST_DATA.KLAYTN,
-          Currency.KLAY,
-        )
+        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.erc721, TEST_DATA.KLAYTN, Currency.KLAY)
       })
 
       // Invalid JSON RPC response: {"code":1200503,"message":"error from node API; ","requestId":"b993772c-3427-4910-9b21-1a1fc5956f11"}
       xdescribe('mintMultipleCashbackSignedTransaction', () => {
         erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(
-          sdk.transaction.erc721,
+          sdk.erc721,
           TEST_DATA.KLAYTN,
           Currency.KLAY,
         )
       })
 
       describe('mintMultipleSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleSignedTransaction(
-          sdk.transaction.erc721,
-          TEST_DATA.KLAYTN,
-          Currency.KLAY,
-        )
+        erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.erc721, TEST_DATA.KLAYTN, Currency.KLAY)
       })
 
       describe('updateCashbackForAuthorSignedTransaction', () => {
         erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(
-          sdk.transaction.erc721,
+          sdk.erc721,
           TEST_DATA.KLAYTN,
           Currency.KLAY,
         )
@@ -198,59 +174,35 @@ describe('KlaytnSDK - tx', () => {
   describe('multiToken', () => {
     describe('prepare', () => {
       describe('deployMultiToken', () => {
-        multiTokenTestFactory.prepare.deployMultiTokenTransaction(
-          sdk.transaction.multiToken,
-          TEST_DATA.KLAYTN,
-          'KLAY',
-        )
+        multiTokenTestFactory.prepare.deployMultiTokenTransaction(sdk.multiToken, TEST_DATA.KLAYTN, 'KLAY')
       })
 
       describe('mintMultiToken', () => {
-        multiTokenTestFactory.prepare.mintMultiTokenTransaction(
-          sdk.transaction.multiToken,
-          TEST_DATA.KLAYTN,
-          'KLAY',
-        )
+        multiTokenTestFactory.prepare.mintMultiTokenTransaction(sdk.multiToken, TEST_DATA.KLAYTN, 'KLAY')
       })
 
       describe('mintMultiTokenBatch', () => {
-        multiTokenTestFactory.prepare.mintMultiTokenBatchTransaction(
-          sdk.transaction.multiToken,
-          TEST_DATA.KLAYTN,
-          'KLAY',
-        )
+        multiTokenTestFactory.prepare.mintMultiTokenBatchTransaction(sdk.multiToken, TEST_DATA.KLAYTN, 'KLAY')
       })
 
       describe('transferMultiToken', () => {
-        multiTokenTestFactory.prepare.transferMultiTokenTransaction(
-          sdk.transaction.multiToken,
-          TEST_DATA.KLAYTN,
-          'KLAY',
-        )
+        multiTokenTestFactory.prepare.transferMultiTokenTransaction(sdk.multiToken, TEST_DATA.KLAYTN, 'KLAY')
       })
 
       describe('transferMultiTokenBatch', () => {
         multiTokenTestFactory.prepare.transferMultiTokenBatchTransaction(
-          sdk.transaction.multiToken,
+          sdk.multiToken,
           TEST_DATA.KLAYTN,
           'KLAY',
         )
       })
 
       describe('burnMultiToken', () => {
-        multiTokenTestFactory.prepare.burnMultiTokenTransaction(
-          sdk.transaction.multiToken,
-          TEST_DATA.KLAYTN,
-          'KLAY',
-        )
+        multiTokenTestFactory.prepare.burnMultiTokenTransaction(sdk.multiToken, TEST_DATA.KLAYTN, 'KLAY')
       })
 
       describe('burnMultiTokenBatch', () => {
-        multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(
-          sdk.transaction.multiToken,
-          TEST_DATA.KLAYTN,
-          'KLAY',
-        )
+        multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(sdk.multiToken, TEST_DATA.KLAYTN, 'KLAY')
       })
     })
   })

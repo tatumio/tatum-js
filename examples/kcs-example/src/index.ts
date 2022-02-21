@@ -15,6 +15,7 @@ import {
 import { kcsOffchainExample } from './app/kcs.offchain.example'
 import { kcsSubscriptionsExample } from './app/kcs.subscriptions.example'
 import { kcsTxWithPrivateKeyExample, kcsTxWithSignatureIdExample } from './app/kcs.tx.example'
+import { kcsAuctionExample } from './app/kcs.auction.example'
 
 console.log(`Running ${kcsApiExample()}`)
 console.log(`Running ${kcsWalletExample()}`)
@@ -33,3 +34,4 @@ console.log(`Running ${kcsOffchainExample()}`)
 console.log(`Running ${kcsSubscriptionsExample()}`)
 console.log(`Runninf ${kcsTxWithPrivateKeyExample()}`)
 console.log(`Runninf ${kcsTxWithSignatureIdExample()}`)
+console.log(`Running ${kcsAuctionExample()}`)

@@ -5,23 +5,33 @@ import { ethWeb3 } from './services/eth.web3'
 import { ethKmsService } from './services/eth.kms'
 import { ethTx } from './services/eth.tx'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
+import { ethAuctionService } from './services/eth.auction'
 
 const blockchain = Blockchain.ETH
 
 export const TatumEthSDK = (args: SDKArguments) => {
   const web3 = ethWeb3({ blockchain })
   const api = BlockchainEthereumService
+  const txService = ethTx({ blockchain, web3 })
 
   return {
     ...evmBasedSdk({ ...args, blockchain, web3 }),
     api,
     kms: ethKmsService({ blockchain, web3 }),
-    transaction: ethTx({ blockchain, web3 }),
-    marketplace: evmBasedMarketplace({
-      blockchain,
-      web3,
-      broadcastFunction: BlockchainEthereumService.ethBroadcast,
-    }),
+    transaction: txService.native,
+    erc20: txService.erc20,
+    erc721: txService.erc721,
+    multiToken: txService.multiToken,
+    smartContract: txService.smartContract,
+    custodial: txService.custodial,
+    marketplace: {
+      ...evmBasedMarketplace({
+        blockchain,
+        web3,
+        broadcastFunction: BlockchainEthereumService.ethBroadcast,
+      }),
+      auction: ethAuctionService({ blockchain, web3 }),
+    },
     httpDriver: async (request: Web3Request): Promise<Web3Response> => {
       return api.ethWeb3Driver(args.apiKey, { ...request, jsonrpc: '2.0' })
     },

@@ -11,13 +11,20 @@ const blockchain = Blockchain.TRON
 
 export const TatumTronSDK = (args: SDKArguments) => {
   const web = tronWeb()
+  const txService = tronTx({ tronWeb: web })
 
   return {
     ...abstractBlockchainSdk({
       ...args,
       blockchain,
     }),
-    transaction: tronTx({ tronWeb: web }),
+    transaction: txService.native,
+    trc10: txService.trc10,
+    trc20: txService.trc20,
+    trc721: txService.trc721,
+    marketplace: txService.marketplace,
+    smartContract: txService.smartContract,
+    custodial: txService.custodial,
     wallet: tronWallet({ tronWeb: web }),
     tronWeb: web,
     record: tronRecord(),
