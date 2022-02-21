@@ -1,10 +1,10 @@
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 import { TatumFlowSDK } from '@tatumio/flow'
 
 const flowSDK = TatumFlowSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function flowKmsExample() {
-  const pendingSignatureIds = await flowSDK.kms.getAllPending()
+  const [pendingSignatureIds] = await flowSDK.kms.getAllPending()
   const tx = await flowSDK.kms.get(pendingSignatureIds.id)
 
   await flowSDK.kms.complete(pendingSignatureIds.id, pendingSignatureIds.txId!)

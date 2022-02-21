@@ -1,6 +1,6 @@
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 import { TatumFlowSDK } from '@tatumio/flow'
-import { Currency } from '@tatumio/shared-core'
+import { Currency } from '@tatumio/api-client'
 
 const flowSDK = TatumFlowSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 

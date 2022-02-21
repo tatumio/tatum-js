@@ -1,11 +1,11 @@
 import { TatumFlowSDK } from './flow.sdk'
+import { SdkWithWalletFunctions } from '@tatumio/shared-blockchain-abstract'
 import {
   BlockchainTestData,
   REPLACE_ME_WITH_TATUM_API_KEY,
   TEST_DATA,
   walletTestFactory,
-} from '@tatumio/shared-testing'
-import { SdkWithWalletFunctions } from '@tatumio/shared-blockchain-abstract'
+} from '@tatumio/shared-testing-common'
 
 describe('TatumFlowSDK', () => {
   const sdk = TatumFlowSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
