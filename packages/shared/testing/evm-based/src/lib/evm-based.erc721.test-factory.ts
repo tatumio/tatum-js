@@ -363,8 +363,8 @@ export const erc721TestFactory = {
         const result = await sdk.prepare.mintProvenanceSignedTransaction(
           {
             to: address,
-            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-            fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
+            contractAddress: testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
+            fromPrivateKey: testData.TESTNET.ERC_721!.PRIVATE_KEY,
             tokenId: new Date().getTime().toString(),
             url: 'https://my_token_data.com',
             chain,
@@ -385,7 +385,7 @@ export const erc721TestFactory = {
         const result = await sdk.prepare.mintProvenanceSignedTransaction(
           {
             to: address,
-            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            contractAddress: testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
             tokenId: new Date().getTime().toString(),
             url: 'https://my_token_data.com',
@@ -411,8 +411,8 @@ export const erc721TestFactory = {
               to: 'someinvalidaddress',
               tokenId: new Date().getTime().toString(),
               url: 'https://my_token_data.com',
-              contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-              fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
+              contractAddress: testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
+              fromPrivateKey: testData.TESTNET.ERC_721!.PRIVATE_KEY,
               chain,
               provenance: true,
               authorAddresses: [address],
@@ -522,8 +522,8 @@ export const erc721TestFactory = {
         const result = await sdk.prepare.mintMultipleProvenanceSignedTransaction(
           {
             to: [address, address],
-            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-            fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
+            contractAddress: testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
+            fromPrivateKey: testData.TESTNET.ERC_721!.PRIVATE_KEY,
             tokenId: [new Date().getTime().toString(), new Date().getTime().toString()],
             url: ['https://my_token_data.com', 'https://my_token_data.com'],
             chain,
@@ -543,7 +543,7 @@ export const erc721TestFactory = {
         const result = await sdk.prepare.mintMultipleProvenanceSignedTransaction(
           {
             to: [address, address],
-            contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
+            contractAddress: testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
             tokenId: [new Date().getTime().toString(), new Date().getTime().toString()],
             url: ['https://my_token_data.com', 'https://my_token_data.com'],
@@ -566,8 +566,8 @@ export const erc721TestFactory = {
           await sdk.prepare.mintMultipleProvenanceSignedTransaction(
             {
               to: ['invalid', 'invalid'],
-              contractAddress: testData.MAINNET.ERC_721!.CONTRACT_ADDRESS,
-              fromPrivateKey: testData.MAINNET.ERC_721!.PRIVATE_KEY,
+              contractAddress: testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
+              fromPrivateKey: testData.TESTNET.ERC_721!.PRIVATE_KEY,
               tokenId: [new Date().getTime().toString(), new Date().getTime().toString()],
               url: ['https://my_token_data.com', 'https://my_token_data.com'],
               chain,

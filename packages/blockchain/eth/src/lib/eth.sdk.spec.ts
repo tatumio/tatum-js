@@ -41,7 +41,7 @@ describe('TatumEthSDK', () => {
 
         it('should return valid web3 client with privateKey', async () => {
           const web3 = evmBasedWeb3({ blockchain: Blockchain.ETH })
-          const client = web3.getClient(provider, TEST_DATA.ETH.MAINNET.ERC_721!.PRIVATE_KEY)
+          const client = web3.getClient(provider, TEST_DATA.ETH.TESTNET.ERC_721!.PRIVATE_KEY)
 
           expect(client).toBeDefined()
         })
