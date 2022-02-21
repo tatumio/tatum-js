@@ -13,6 +13,7 @@ import {
   MintMultiTokenCelo,
   MintNftCelo,
   TATUM_API_CONSTANTS,
+  TransferCeloBlockchain,
   TransferMultiTokenBatchCelo,
   TransferMultiTokenCelo,
   TransferNftCelo,
@@ -68,6 +69,10 @@ export type ChainBurnMultiTokenCelo = FromPrivateKeyOrSignatureId<BurnMultiToken
 export type ChainBurnMultiTokenBatchCelo = FromPrivateKeyOrSignatureId<BurnMultiTokenBatchCelo>
 
 export type ChainDeployMultiTokenCelo = FromPrivateKeyOrSignatureId<DeployMultiTokenCelo>
+
+export type ChainTransferCeloBlockchain = FromPrivateKeyOrSignatureId<
+  Omit<TransferCeloBlockchain, 'currency'>
+>
 
 export type ChainGenerateCustodialAddressCelo = GenerateCustodialWalletCelo | GenerateCustodialWalletCeloKMS
 

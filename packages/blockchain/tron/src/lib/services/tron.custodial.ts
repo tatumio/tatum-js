@@ -58,7 +58,7 @@ const prepareTransferFromCustodialWallet = async (
     ],
   }
 
-  return tronTx({ tronWeb }).prepare.smartContractInvocation(params, provider)
+  return tronTx({ tronWeb }).smartContract.prepare.smartContractInvocation(params, provider)
 }
 
 const prepareBatchTransferFromCustodialWallet = async (
@@ -107,7 +107,7 @@ const prepareBatchTransferFromCustodialWallet = async (
     ],
   }
 
-  return tronTx({ tronWeb }).prepare.smartContractInvocation(params, provider)
+  return tronTx({ tronWeb }).smartContract.prepare.smartContractInvocation(params, provider)
 }
 
 export const tronCustodial = (args: { tronWeb: ITronWeb }) => {
@@ -124,7 +124,7 @@ export const tronCustodial = (args: { tronWeb: ITronWeb }) => {
       custodialWallet: async (
         body: GenerateCustodialWalletTron | GenerateCustodialWalletTronKMS,
         provider?: string,
-      ) => tronTx(args).prepare.generateCustodialWalletSignedTransaction(body, provider),
+      ) => tronTx(args).custodial.prepare.generateCustodialWalletSignedTransaction(body, provider),
       /**
        * Prepare signed transaction from the custodial SC wallet.
        * @param testnet chain to work with
@@ -189,7 +189,7 @@ export const tronCustodial = (args: { tronWeb: ITronWeb }) => {
       custodialWallet: async (
         body: GenerateCustodialWalletTron | GenerateCustodialWalletTronKMS,
         provider?: string,
-      ) => tronTx(args).send.generateCustodialWalletSignedTransaction(body, provider),
+      ) => tronTx(args).custodial.send.generateCustodialWalletSignedTransaction(body, provider),
       /**
        * Send signed transaction from the custodial SC wallet.
        * @param testnet chain to work with

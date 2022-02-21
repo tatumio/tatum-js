@@ -5,14 +5,9 @@ import {
   TransferTronTrc10Blockchain,
   TransferTronTrc10BlockchainKMS,
 } from '@tatumio/api-client'
+import { isWithSignatureId } from '@tatumio/shared-abstract-sdk'
 import BigNumber from 'bignumber.js'
 import { ITronWeb } from './tron.web'
-
-function isTransferTronTrc10BlockchainKMS(
-  input: TransferTronTrc10Blockchain | TransferTronTrc10BlockchainKMS,
-): input is TransferTronTrc10BlockchainKMS {
-  return (input as TransferTronTrc10BlockchainKMS).signatureId !== undefined
-}
 
 const prepareSignedTransaction = async (
   body: TransferTronTrc10Blockchain | TransferTronTrc10BlockchainKMS,
@@ -31,7 +26,7 @@ const prepareSignedTransaction = async (
     throw new Error('Unable to obtain precision')
   }
 
-  if (isTransferTronTrc10BlockchainKMS(body)) {
+  if (isWithSignatureId(body)) {
     const tx = await client.transactionBuilder.sendToken(
       to,
       new BigNumber(amount).multipliedBy(new BigNumber(10).pow(definedPrecision)),
@@ -50,12 +45,6 @@ const prepareSignedTransaction = async (
 
     return JSON.stringify(await client.trx.sign(tx, body.fromPrivateKey))
   }
-}
-
-function isCreateTronTrc10BlockchainKMS(
-  input: CreateTronTrc10Blockchain | CreateTronTrc10BlockchainKMS,
-): input is CreateTronTrc10BlockchainKMS {
-  return (input as CreateTronTrc10BlockchainKMS).signatureId !== undefined
 }
 
 const prepareCreateSignedTransaction = async (
@@ -84,7 +73,7 @@ const prepareCreateSignedTransaction = async (
     precision: decimals,
   }
 
-  if (isCreateTronTrc10BlockchainKMS(body)) {
+  if (isWithSignatureId(body)) {
     const tx = await client.transactionBuilder.createToken(createTokenParams, body.from)
 
     return JSON.stringify(tx)

@@ -3,6 +3,8 @@
   "projects": {
     "ada": "packages/blockchain/ada",
     "ada-example": "examples/ada-example",
+    "algo": "packages/blockchain/algo",
+    "algo-example": "examples/algo-example",
     "api-client": "packages/api-client",
     "bch": "packages/blockchain/bch",
     "bch-example": "examples/bch-example",
@@ -37,6 +39,8 @@
     "shared-testing-common": "packages/shared/testing/common",
     "shared-testing-evm-based": "packages/shared/testing/evm-based",
     "shared-testing-xrp-based": "packages/shared/testing/xrp-based",
+    "solana": "packages/blockchain/solana",
+    "solana-example": "examples/solana-example",
     "tron": "packages/blockchain/tron",
     "tron-example": "examples/tron-example",
     "xlm": "packages/blockchain/xlm",
