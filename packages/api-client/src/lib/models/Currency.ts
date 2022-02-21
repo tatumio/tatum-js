@@ -141,6 +141,7 @@ export const NATIVE_CURRENCIES = [
   Currency.ALGO,
   Currency.SOL,
   Currency.KCS,
+  Currency.KLAY,
 ]
 
 export const TRON_CURRENCIES = [Currency.TRON, Currency.USDT_TRON, Currency.INRT_TRON]
@@ -164,6 +165,7 @@ export const NFT_SUPPORTED_CURRENCIES = [
   Currency.TRON,
   Currency.FLOW,
   Currency.BSC,
+  Currency.KLAY,
 ]
 
 export type NftSupportedCurrencies = typeof NFT_SUPPORTED_CURRENCIES[number]
