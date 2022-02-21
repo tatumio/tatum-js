@@ -307,7 +307,7 @@ export const marketplace = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      createMarketplaceListing: async (body: ChainSellAssetOnMarketplace, provider?: string) =>
+      sellMarketplaceListing: async (body: ChainSellAssetOnMarketplace, provider?: string) =>
         sellAsset(body, args.web3, provider),
 
       /**
@@ -386,7 +386,7 @@ export const marketplace = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      createMarketplaceListing: async (body: ChainSellAssetOnMarketplace, provider?: string) =>
+      sellMarketplaceListing: async (body: ChainSellAssetOnMarketplace, provider?: string) =>
         args.broadcastFunction({
           txData: await sellAsset(body, args.web3, provider),
         }),

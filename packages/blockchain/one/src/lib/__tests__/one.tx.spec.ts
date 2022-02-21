@@ -73,17 +73,8 @@ describe('OneSDK - tx', () => {
         )
       })
 
-      describe('createMarketplaceListing', () => {
-        marketplaceTestFactory.prepare.createMarketplaceListing(
-          sdk.marketplace,
-          TEST_DATA.ONE,
-          'ONE',
-          inmemoryBlockchain.accounts,
-        )
-      })
-
-      describe('createMarketplaceListingErc20', () => {
-        marketplaceTestFactory.prepare.createMarketplaceListingErc20(
+      describe('sellMarketplaceListing', () => {
+        marketplaceTestFactory.prepare.sellMarketplaceListing(
           sdk.marketplace,
           TEST_DATA.ONE,
           'ONE',

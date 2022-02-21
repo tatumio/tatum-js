@@ -222,7 +222,7 @@ export interface SdkWithMarketplaceFunctions {
     updateFee(body: ChainUpdateFee, provider?: string): Promise<string>
     updateFeeRecipient(body: ChainUpdateFeeRecipient, provider?: string): Promise<string>
     buyMarketplaceListing(body: ChainBuyAssetOnMarketplace, provider?: string): Promise<string>
-    createMarketplaceListing(body: ChainSellAssetOnMarketplace, provider?: string): Promise<string>
+    sellMarketplaceListing(body: ChainSellAssetOnMarketplace, provider?: string): Promise<string>
     cancelMarketplaceListing(body: ChainCancelSellAssetOnMarketplace, provider?: string): Promise<string>
   }
 

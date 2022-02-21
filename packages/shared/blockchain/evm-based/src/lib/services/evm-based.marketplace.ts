@@ -31,8 +31,8 @@ export const evmBasedMarketplace = (args: {
       updateFeeRecipient: (body: ChainUpdateFeeRecipient, provider?: string) =>
         marketplace(args).prepare.updateFeeRecipient(body, provider),
 
-      createMarketplaceListing: (body: ChainSellAssetOnMarketplace, provider?: string) =>
-        marketplace(args).prepare.createMarketplaceListing(body, provider),
+      sellMarketplaceListing: (body: ChainSellAssetOnMarketplace, provider?: string) =>
+        marketplace(args).prepare.sellMarketplaceListing(body, provider),
 
       cancelMarketplaceListing: (body: ChainCancelSellAssetOnMarketplace, provider?: string) =>
         marketplace(args).prepare.cancelMarketplaceListing(body, provider),
@@ -54,8 +54,8 @@ export const evmBasedMarketplace = (args: {
       updateFeeRecipient: (body: ChainUpdateFeeRecipient, provider?: string) =>
         marketplace(args).send.updateFeeRecipient(body, provider),
 
-      createMarketplaceListing: (body: ChainSellAssetOnMarketplace, provider?: string) =>
-        marketplace(args).send.createMarketplaceListing(body, provider),
+      sellMarketplaceListing: (body: ChainSellAssetOnMarketplace, provider?: string) =>
+        marketplace(args).send.sellMarketplaceListing(body, provider),
 
       cancelMarketplaceListing: (body: ChainCancelSellAssetOnMarketplace, provider?: string) =>
         marketplace(args).send.cancelMarketplaceListing(body, provider),
