@@ -3,7 +3,7 @@ import { TatumBscSDK } from '../bsc.sdk'
 import { Blockchain } from '@tatumio/shared-core'
 import { ganacheHelper, kmsTestFactory } from '@tatumio/shared-testing-evm-based'
 import { bscKmsService } from '../services/bsc.kms'
-import { Currency } from '@tatumio/api-client';
+import { Currency } from '@tatumio/api-client'
 
 const blockchain = Blockchain.BSC
 

@@ -1,4 +1,4 @@
-import { Currency } from '@tatumio/api-client';
+import { Currency } from '@tatumio/api-client'
 import { SdkWithKmsFunctions } from '@tatumio/shared-blockchain-abstract'
 import { BlockchainTestData, expectHexString } from '@tatumio/shared-testing-common'
 
