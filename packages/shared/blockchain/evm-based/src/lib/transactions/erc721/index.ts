@@ -363,27 +363,35 @@ const mintProvenanceSignedTransaction = async (body: ChainMintNft, web3: EvmBase
   const cb: string[] = []
   const fval: string[] = []
   const authors: string[] = []
-  // const transformedAddresses =
   if (authorAddresses && cashbackValues && fixedValues) {
     cashbackValues.forEach((c) => cb.push(`0x${new BigNumber(c).multipliedBy(100).toString(16)}`))
     fixedValues.forEach((c) => fval.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
     authorAddresses?.map((a) => authors.push(evmBasedUtils.transformAddress(a)))
   }
+
+  const data = erc20
+    ? contract.methods.mintWithTokenURI(
+        evmBasedUtils.transformAddress(to).trim(),
+        tokenId,
+        url,
+        authors,
+        cb,
+        fval,
+        erc20,
+      )
+    : contract.methods.mintWithTokenURI(
+        evmBasedUtils.transformAddress(to).trim(),
+        tokenId,
+        url,
+        authors,
+        cb,
+        fval,
+      )
   if (contractAddress) {
     const tx: TransactionConfig = {
       from: undefined,
       to: evmBasedUtils.transformAddress(contractAddress).trim(),
-      data: contract.methods
-        .mintWithTokenURI(
-          evmBasedUtils.transformAddress(to).trim(),
-          tokenId,
-          url,
-          authors,
-          cb,
-          fval,
-          erc20 ? erc20 : null,
-        )
-        .encodeABI(),
+      data: data.encodeABI(),
       nonce,
     }
 
@@ -442,6 +450,7 @@ const mintMultipleProvenanceSignedTransaction = async (
       fv.push(fv2)
     }
   }
+
   const tx: TransactionConfig = {
     from: undefined,
     to: evmBasedUtils.transformAddress(contractAddress).trim(),

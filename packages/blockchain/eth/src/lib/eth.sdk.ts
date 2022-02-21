@@ -16,7 +16,6 @@ export const TatumEthSDK = (args: SDKArguments) => {
 
   return {
     ...evmBasedSdk({ ...args, blockchain, web3 }),
-    api,
     kms: ethKmsService({ blockchain, web3 }),
     transaction: txService.native,
     erc20: txService.erc20,
@@ -45,6 +44,13 @@ export const TatumEthSDK = (args: SDKArguments) => {
       getAccountTransactions: BlockchainEthereumService.ethGetTransactionByAddress,
       estimateGas: BlockchainEthereumService.ethEstimateGas,
       estimateGasBatch: BlockchainEthereumService.ethEstimateGasBatch,
+      smartContractInvocation: BlockchainEthereumService.ethBlockchainSmartContractInvocation,
+      blockchainTransfer: BlockchainEthereumService.ethBlockchainTransfer,
+      generateAddress: BlockchainEthereumService.ethGenerateAddress,
+      generateAddressPrivateKey: BlockchainEthereumService.ethGenerateAddressPrivateKey,
+      generateWallet: BlockchainEthereumService.ethGenerateWallet,
+      getInternalTransaction: BlockchainEthereumService.ethGetInternalTransactionByAddress,
+      web3Driver: BlockchainEthereumService.ethWeb3Driver,
     },
   }
 }

@@ -1,5 +1,4 @@
 import { ethWalletExample } from './app/eth.wallet.example'
-import { ethApiExample } from './app/eth.api.example'
 import { ethKmsExample } from './app/eth.kms.example'
 import {
   ethLedgerAccountExample,
@@ -17,7 +16,6 @@ import { ethAuctionExample } from './app/eth.auction.example'
 
 console.log(`Running ${ethAuctionExample()}`)
 console.log(`Running ${ethWalletExample()}`)
-console.log(`Running ${ethApiExample()}`)
 console.log(`Running ${ethKmsExample()}`)
 console.log(`Running ${ethLedgerAccountExample()}`)
 console.log(`Running ${ethLedgerBlockAmountExample()}`)

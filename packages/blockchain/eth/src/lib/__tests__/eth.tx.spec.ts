@@ -101,6 +101,18 @@ describe('EthSDK - tx', () => {
         erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.erc721, TEST_DATA.ETH, Currency.ETH)
       })
 
+      describe('mintProvenanceSignedTransaction', () => {
+        erc721TestFactory.prepare.mintProvenanceSignedTransaction(sdk.erc721, TEST_DATA.ETH, Currency.ETH)
+      })
+
+      describe('mintMultipleProvenanceSignedTransaction', () => {
+        erc721TestFactory.prepare.mintMultipleProvenanceSignedTransaction(
+          sdk.erc721,
+          TEST_DATA.ETH,
+          Currency.ETH,
+        )
+      })
+
       describe('updateCashbackForAuthorSignedTransaction', () => {
         erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(
           sdk.erc721,
