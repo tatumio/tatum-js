@@ -12,7 +12,9 @@ import { ethOffchainExample } from './app/eth.offchain.example'
 import { exchangeRateExample } from './app/eth.root.example'
 import { ethSubscriptionsExample } from './app/eth.subscriptions.example'
 import { ethTxWithPrivateKeyExample, ethTxWithSignatureIdExample } from './app/eth.tx.example'
+import { ethAuctionExample } from './app/eth.auction.example'
 
+console.log(`Running ${ethAuctionExample()}`)
 console.log(`Running ${ethWalletExample()}`)
 console.log(`Running ${ethKmsExample()}`)
 console.log(`Running ${ethLedgerAccountExample()}`)

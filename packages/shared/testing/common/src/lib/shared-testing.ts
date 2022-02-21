@@ -23,6 +23,8 @@ export type BlockchainNetworkTestData = {
   ADDRESS_100: string
   PRIVATE_KEY_0: string
   PRIVATE_KEY_100: string
+  CONTRACT_ADDRESS?: string
+  SERIALIZED_TX?: string
   ERC_20?: {
     CONTRACT_ADDRESS: string
     PRIVATE_KEY: string
@@ -56,6 +58,7 @@ export interface BlockchainTestData {
   INVALID_PRIVATE_KEY_CHILD_INDEX_ERROR: string
   INVALID_PRIVATE_KEY_ERROR: string
   PROVIDER?: string
+  AUCTIONS?: any
 }
 
 export const TEST_DATA = {
