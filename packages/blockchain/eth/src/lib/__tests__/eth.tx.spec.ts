@@ -122,17 +122,8 @@ describe('EthSDK - tx', () => {
         )
       })
 
-      describe('createMarketplaceListing', () => {
-        marketplaceTestFactory.prepare.createMarketplaceListing(
-          sdk.marketplace,
-          TEST_DATA.ETH,
-          'ETH',
-          inmemoryBlockchain.accounts,
-        )
-      })
-
-      describe('createMarketplaceListingErc20', () => {
-        marketplaceTestFactory.prepare.createMarketplaceListingErc20(
+      describe('sellMarketplaceListing', () => {
+        marketplaceTestFactory.prepare.sellMarketplaceListing(
           sdk.marketplace,
           TEST_DATA.ETH,
           'ETH',
