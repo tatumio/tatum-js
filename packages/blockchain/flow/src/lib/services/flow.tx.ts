@@ -439,7 +439,6 @@ export const flowTxService = (args: SDKArguments) => {
           await flowSdkBlockchain.broadcast('', undefined, proposalKey(keyHash))
           delete process.env[keyHash]
         }
-        // eslint-disable-next-line no-empty
       } catch (_: any) {
         throw new FlowSdkError(_)
       }
@@ -459,14 +458,9 @@ export const flowTxService = (args: SDKArguments) => {
     } catch (e: any) {
       throw new FlowSdkError(e)
     } finally {
-      try {
-        if (keyHash) {
-          await flowSdkBlockchain.broadcast(transactionId, undefined, proposalKey(keyHash))
-          delete process.env[keyHash]
-        }
-      } catch (_: any) {
-        // eslint-disable-next-line no-unsafe-finally
-        throw new FlowSdkError(_)
+      if (keyHash) {
+        await flowSdkBlockchain.broadcast(transactionId, undefined, proposalKey(keyHash))
+        delete process.env[keyHash]
       }
     }
   }
