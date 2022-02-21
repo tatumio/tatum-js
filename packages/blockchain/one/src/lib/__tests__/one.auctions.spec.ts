@@ -1,13 +1,13 @@
 import { auctionTestFactory, ganacheHelper } from '@tatumio/shared-testing-evm-based'
 import { Blockchain } from '@tatumio/shared-core'
-import { ethAuctionService } from '../services/eth.auction'
+import { oneAuctionService } from '../services/one.auction'
 
-const blockchain = Blockchain.ETH
+const blockchain = Blockchain.HARMONY
 
-describe('EthSDK - auctions', () => {
+describe('OneSDK - auctions', () => {
   const inmemoryBlockchain = ganacheHelper.inmemoryBlockchain(blockchain)
 
-  const auctionService = ethAuctionService({
+  const auctionService = oneAuctionService({
     blockchain,
     web3: {
       getClient: () => inmemoryBlockchain.web3,
@@ -42,7 +42,7 @@ describe('EthSDK - auctions', () => {
     })
     /**
      * TODO: Returned values aren't valid, did it run Out of Gas? You might also see this error if you are not using the correct ABI for the contract you are retrieving data from, requesting data from a block number that does not exist, or querying a node which is not fully synced.
-     * after decimal method call
+     * after decimal moneod call
      */
     xdescribe('approve erc20 spending', () => {
       auctionTestFactory.prepare.auctionApproveErc20TransferSignedTransaction(
@@ -52,7 +52,7 @@ describe('EthSDK - auctions', () => {
     })
     /**
      * TODO: Returned values aren't valid, did it run Out of Gas? You might also see this error if you are not using the correct ABI for the contract you are retrieving data from, requesting data from a block number that does not exist, or querying a node which is not fully synced.
-     * after decimal method call
+     * after decimal moneod call
      */
     xdescribe('bid auction', () => {
       auctionTestFactory.prepare.auctionBidSignedTransaction(auctionService, inmemoryBlockchain.accounts)

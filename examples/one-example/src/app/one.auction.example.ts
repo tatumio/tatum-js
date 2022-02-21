@@ -31,6 +31,7 @@ export const oneAuctionExample = async () => {
         gasLimit: '40000',
         gasPrice: '20',
       },
+      amount: '10000',
     })
 
   const createAuctionTx = await oneSDK.marketplace.auction.prepare.createAuctionSignedTransaction({
@@ -63,6 +64,7 @@ export const oneAuctionExample = async () => {
         gasLimit: '40000',
         gasPrice: '20',
       },
+      amount: '10000',
     })
 
   const approveErc20SpendingTx =
@@ -72,6 +74,8 @@ export const oneAuctionExample = async () => {
       contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
       fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
       nonce: 0,
+      isErc721: true,
+      tokenId: '1223',
     })
 
   const bidAuctionTx = await oneSDK.marketplace.auction.prepare.auctionBidSignedTransaction({
@@ -96,7 +100,6 @@ export const oneAuctionExample = async () => {
       gasLimit: '40000',
       gasPrice: '20',
     },
-    bidValue: '100',
   })
 
   const settleAuctionTx = await oneSDK.marketplace.auction.prepare.auctionSettleSignedTransaction({
@@ -108,6 +111,5 @@ export const oneAuctionExample = async () => {
       gasLimit: '40000',
       gasPrice: '20',
     },
-    bidValue: '100',
   })
 }

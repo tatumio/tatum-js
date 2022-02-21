@@ -1,15 +1,15 @@
-import { BlockchainTestData, expectHexString } from '@tatumio/shared-testing-common'
+import { expectHexString } from '@tatumio/shared-testing-common'
 import {
-  ChainApproveErc20,
-  ChainApproveNftTransfer,
-  ChainAuctionBid,
-  ChainCancelAuction,
-  ChainDeployAuction,
-  ChainSettleAuction,
-  ChainUpdateFeeRecipient,
+  ApproveNftTransfer,
+  AuctionBid,
+  CancelAuction,
   CreateAuction,
+  DeployNftAuction,
+  SettleAuction,
+  UpdateAuctionFeeRecipient,
 } from '@tatumio/shared-blockchain-evm-based'
 import { GanacheAccount } from './ganacheHelper'
+import { BlockchainMarketplaceService } from '@tatumio/api-client'
 
 export const auctionTestFactory = {
   prepare: {
@@ -76,6 +76,7 @@ export const auctionTestFactory = {
             gasLimit: '40000',
             gasPrice: '20',
           },
+          amount: '10000',
         })
 
         expectHexString(tx)
@@ -89,6 +90,7 @@ export const auctionTestFactory = {
             gasLimit: '40000',
             gasPrice: '20',
           },
+          amount: '10000',
         })
 
         const json = JSON.parse(tx)
@@ -105,6 +107,7 @@ export const auctionTestFactory = {
               gasLimit: '40000',
               gasPrice: '20',
             },
+            amount: '10000',
           }),
         ).rejects.toThrow(
           `Provided address 0x687422eEA2cB73B5d3e242bA5456b782919AFc86 is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted.`,
@@ -199,6 +202,7 @@ export const auctionTestFactory = {
             gasLimit: '40000',
             gasPrice: '20',
           },
+          amount: '10000',
         })
 
         expectHexString(tx)
@@ -216,6 +220,7 @@ export const auctionTestFactory = {
             gasLimit: '40000',
             gasPrice: '20',
           },
+          amount: '10000',
         })
 
         const json = JSON.parse(tx)
@@ -236,6 +241,7 @@ export const auctionTestFactory = {
               gasLimit: '40000',
               gasPrice: '20',
             },
+            amount: '10000',
           }),
         ).rejects.toThrow(
           `Provided address 0x687422eEA2cB73B5d3e242bA5456b782919AFc86 is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted.`,
@@ -253,6 +259,8 @@ export const auctionTestFactory = {
           contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           fromPrivateKey: accounts[0].privateKey,
           nonce: 0,
+          isErc721: false,
+          tokenId: '1',
         })
 
         expectHexString(tx)
@@ -266,6 +274,8 @@ export const auctionTestFactory = {
           contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
           nonce: 0,
+          isErc721: false,
+          tokenId: '1',
         })
 
         const json = JSON.parse(tx)
@@ -281,6 +291,8 @@ export const auctionTestFactory = {
             contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc86',
             fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
             nonce: 0,
+            isErc721: false,
+            tokenId: '1',
           }),
         ).rejects.toThrow(
           `Provided address 0x687422eEA2cB73B5d3e242bA5456b782919AFc86 is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted.`,
@@ -354,7 +366,7 @@ export const auctionTestFactory = {
             gasLimit: '40000',
             gasPrice: '20',
           },
-          bidValue: '10',
+          amount: '10000',
         })
 
         expectHexString(tx)
@@ -371,7 +383,7 @@ export const auctionTestFactory = {
             gasLimit: '40000',
             gasPrice: '20',
           },
-          bidValue: '10',
+          amount: '10000',
         })
 
         const json = JSON.parse(tx)
@@ -390,7 +402,7 @@ export const auctionTestFactory = {
               gasLimit: '40000',
               gasPrice: '20',
             },
-            bidValue: '10',
+            amount: '10000',
           }),
         ).rejects.toThrow(
           `Provided address 0x687422eEA2cB73B5d3e242bA5456b782919AFc86 is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted.`,
@@ -408,7 +420,7 @@ export const auctionTestFactory = {
             gasLimit: '40000',
             gasPrice: '20',
           },
-          bidValue: '10',
+          amount: '10000',
         })
 
         expectHexString(tx)
@@ -425,7 +437,7 @@ export const auctionTestFactory = {
             gasLimit: '40000',
             gasPrice: '20',
           },
-          bidValue: '10',
+          amount: '10000',
         })
 
         const json = JSON.parse(tx)
@@ -444,7 +456,7 @@ export const auctionTestFactory = {
               gasLimit: '40000',
               gasPrice: '20',
             },
-            bidValue: '10',
+            amount: '10000',
           }),
         ).rejects.toThrow(
           `Provided address 0x687422eEA2cB73B5d3e242bA5456b782919AFc86 is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted.`,
@@ -455,61 +467,14 @@ export const auctionTestFactory = {
 }
 
 export interface SdkWithAuctionFunctions {
-  getAuction(contractAddress: string, auctionId: string): Promise<Auction>
-  getAuctionFee(contractAddress: string): Promise<number>
-  getAuctionFeeRecipient(contractAddress: string): Promise<{ address?: string }>
   prepare: {
-    deployAuctionSignedTransaction(body: ChainDeployAuction, provider?: string): Promise<string>
-    auctionUpdateFeeRecipientSignedTransaction(body: ChainUpdateFeeRecipient, provider?): Promise<string>
+    deployAuctionSignedTransaction(body: DeployNftAuction, provider?: string): Promise<string>
+    auctionUpdateFeeRecipientSignedTransaction(body: UpdateAuctionFeeRecipient, provider?): Promise<string>
     createAuctionSignedTransaction(body: CreateAuction, provider?): Promise<string>
-    auctionApproveNftTransferSignedTransaction(body: ChainApproveNftTransfer, provider?): Promise<string>
-    auctionApproveErc20TransferSignedTransaction(body: ChainApproveErc20, provider?): Promise<string>
-    auctionBidSignedTransaction(body: ChainAuctionBid, provider?): Promise<string>
-    auctionCancelSignedTransaction(body: ChainCancelAuction, provider?): Promise<string>
-    auctionSettleSignedTransaction(body: ChainSettleAuction, provider?): Promise<string>
+    auctionApproveNftTransferSignedTransaction(body: ApproveNftTransfer, provider?): Promise<string>
+    auctionApproveErc20TransferSignedTransaction(body: ApproveNftTransfer, provider?): Promise<string>
+    auctionBidSignedTransaction(body: AuctionBid, provider?): Promise<string>
+    auctionCancelSignedTransaction(body: CancelAuction, provider?): Promise<string>
+    auctionSettleSignedTransaction(body: SettleAuction, provider?): Promise<string>
   }
-}
-
-// TODO get rid of it
-type Auction = {
-  /**
-   * Amount of NFTs to sold in this auction. Valid only for ERC1155 listings.
-   */
-  amount?: string
-  /**
-   * Address of the highest buyer, if exists.
-   */
-  bidder?: string
-  /**
-   * Address of the ERC20 token smart contract, which should be used for paying for the asset..
-   */
-  erc20Address?: string
-  /**
-   * If the listing is for ERC721 or ERC1155 token.
-   */
-  isErc721?: boolean
-  /**
-   * Block height this auction started at.
-   */
-  startedAt?: string
-  /**
-   * Block height this auction ended at.
-   */
-  endedAt?: string
-  /**
-   * Address of the NFT smart contract.
-   */
-  nftAddress?: string
-  /**
-   * Final auction price of the NFT asset in native currency or ERC20 token based on the presence of erc20Address field.
-   */
-  endingPrice?: string
-  /**
-   * Address of the seller.
-   */
-  seller?: string
-  /**
-   * Current highest bid of the NFT asset in native currency or ERC20 token based on the presence of erc20Address field.
-   */
-  highestBid?: string
 }

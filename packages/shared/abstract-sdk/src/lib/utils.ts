@@ -13,7 +13,7 @@ export const amountUtils = {
 
 export function isWithSignatureId<
   P extends { fromPrivateKey: string },
-  K extends SignatureId & { from: string },
+  K extends SignatureId & { from?: string },
 >(input: P | K): input is K {
   return (input as K).signatureId !== undefined
 }
