@@ -241,11 +241,7 @@ describe('PolygonSDK - tx', () => {
   describe('custodial', () => {
     describe('prepare', () => {
       xdescribe('transfer from custodial wallet', () => {
-        custodialTestFactory.prepare.transferFromCustodialWallet(
-          sdk.custodial,
-          TEST_DATA.POLYGON,
-          'MATIC',
-        )
+        custodialTestFactory.prepare.transferFromCustodialWallet(sdk.custodial, TEST_DATA.POLYGON, 'MATIC')
       })
 
       xdescribe('batch transfer from custodial wallet', () => {
@@ -257,19 +253,11 @@ describe('PolygonSDK - tx', () => {
       })
 
       xdescribe('approve from custodial wallet', () => {
-        custodialTestFactory.prepare.approveFromCustodialWallet(
-          sdk.custodial,
-          TEST_DATA.POLYGON,
-          'MATIC',
-        )
+        custodialTestFactory.prepare.approveFromCustodialWallet(sdk.custodial, TEST_DATA.POLYGON, 'MATIC')
       })
 
       xdescribe('generate batch custodial wallet', () => {
-        custodialTestFactory.prepare.custodialWalletBatch(
-          sdk.custodial,
-          TEST_DATA.POLYGON,
-          'MATIC',
-        )
+        custodialTestFactory.prepare.custodialWalletBatch(sdk.custodial, TEST_DATA.POLYGON, 'MATIC')
       })
     })
   })

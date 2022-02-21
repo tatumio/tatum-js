@@ -225,27 +225,15 @@ describe('EthSDK - tx', () => {
   describe('custodial', () => {
     describe('prepare', () => {
       xdescribe('transfer from custodial wallet', () => {
-        custodialTestFactory.prepare.transferFromCustodialWallet(
-          sdk.custodial,
-          TEST_DATA.ETH,
-          'ETH',
-        )
+        custodialTestFactory.prepare.transferFromCustodialWallet(sdk.custodial, TEST_DATA.ETH, 'ETH')
       })
 
       xdescribe('batch transfer from custodial wallet', () => {
-        custodialTestFactory.prepare.batchTransferFromCustodialWallet(
-          sdk.custodial,
-          TEST_DATA.ETH,
-          'ETH',
-        )
+        custodialTestFactory.prepare.batchTransferFromCustodialWallet(sdk.custodial, TEST_DATA.ETH, 'ETH')
       })
 
       xdescribe('approve from custodial wallet', () => {
-        custodialTestFactory.prepare.approveFromCustodialWallet(
-          sdk.custodial,
-          TEST_DATA.ETH,
-          'ETH',
-        )
+        custodialTestFactory.prepare.approveFromCustodialWallet(sdk.custodial, TEST_DATA.ETH, 'ETH')
       })
 
       xdescribe('generate batch custodial wallet', () => {

@@ -537,27 +537,25 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
   })
 
   // CUSTODIAL
-  const preparedTransferFromCustodialWallet =
-    await polygonSDK.custodial.prepare.transferFromCustodialWallet({
-      chain: 'MATIC',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractType: 0,
-      custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
-      tokenAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
-      recipient: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
-      tokenId: '20',
-    })
+  const preparedTransferFromCustodialWallet = await polygonSDK.custodial.prepare.transferFromCustodialWallet({
+    chain: 'MATIC',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractType: 0,
+    custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+    tokenAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+    recipient: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+    tokenId: '20',
+  })
 
-  const sentTransferFromCustodialWallet =
-    await polygonSDK.custodial.send.transferFromCustodialWallet({
-      chain: 'MATIC',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractType: 0,
-      custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
-      tokenAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
-      recipient: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
-      tokenId: '20',
-    })
+  const sentTransferFromCustodialWallet = await polygonSDK.custodial.send.transferFromCustodialWallet({
+    chain: 'MATIC',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractType: 0,
+    custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+    tokenAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+    recipient: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+    tokenId: '20',
+  })
 
   const preparedBatchTransferFromCustodialWallet =
     await polygonSDK.custodial.prepare.batchTransferFromCustodialWallet({
@@ -601,27 +599,25 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
       amount: ['1', '0', '1', '3'],
     })
 
-  const preparedApproveFromCustodialWallet =
-    await polygonSDK.custodial.prepare.approveFromCustodialWallet({
-      chain: 'MATIC',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractType: 0,
-      custodialAddress: '0x95abdd7406a6aca49797e833bacc3edaa394853a',
-      tokenAddress: '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
-      spender: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-      amount: '1',
-    })
+  const preparedApproveFromCustodialWallet = await polygonSDK.custodial.prepare.approveFromCustodialWallet({
+    chain: 'MATIC',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractType: 0,
+    custodialAddress: '0x95abdd7406a6aca49797e833bacc3edaa394853a',
+    tokenAddress: '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
+    spender: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+    amount: '1',
+  })
 
-  const sentApproveFromCustodialWallet =
-    await polygonSDK.custodial.send.approveFromCustodialWallet({
-      chain: 'MATIC',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractType: 0,
-      custodialAddress: '0x95abdd7406a6aca49797e833bacc3edaa394853a',
-      tokenAddress: '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
-      spender: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-      amount: '1',
-    })
+  const sentApproveFromCustodialWallet = await polygonSDK.custodial.send.approveFromCustodialWallet({
+    chain: 'MATIC',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractType: 0,
+    custodialAddress: '0x95abdd7406a6aca49797e833bacc3edaa394853a',
+    tokenAddress: '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
+    spender: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+    amount: '1',
+  })
 
   const preparedCustodialWalletBatch = await polygonSDK.custodial.prepare.custodialWalletBatch({
     chain: 'MATIC',
@@ -1149,27 +1145,25 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
   })
 
   // CUSTODIAL
-  const preparedTransferFromCustodialWallet =
-    await polygonSDK.custodial.prepare.transferFromCustodialWallet({
-      chain: 'MATIC',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractType: 0,
-      custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
-      tokenAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
-      recipient: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
-      tokenId: '20',
-    })
+  const preparedTransferFromCustodialWallet = await polygonSDK.custodial.prepare.transferFromCustodialWallet({
+    chain: 'MATIC',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractType: 0,
+    custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+    tokenAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+    recipient: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+    tokenId: '20',
+  })
 
-  const sentTransferFromCustodialWallet =
-    await polygonSDK.custodial.send.transferFromCustodialWallet({
-      chain: 'MATIC',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractType: 0,
-      custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
-      tokenAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
-      recipient: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
-      tokenId: '20',
-    })
+  const sentTransferFromCustodialWallet = await polygonSDK.custodial.send.transferFromCustodialWallet({
+    chain: 'MATIC',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractType: 0,
+    custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+    tokenAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+    recipient: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+    tokenId: '20',
+  })
 
   const preparedBatchTransferFromCustodialWallet =
     await polygonSDK.custodial.prepare.batchTransferFromCustodialWallet({
@@ -1213,27 +1207,25 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
       amount: ['1', '0', '1', '3'],
     })
 
-  const preparedApproveFromCustodialWallet =
-    await polygonSDK.custodial.prepare.approveFromCustodialWallet({
-      chain: 'MATIC',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractType: 0,
-      custodialAddress: '0x95abdd7406a6aca49797e833bacc3edaa394853a',
-      tokenAddress: '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
-      spender: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-      amount: '1',
-    })
+  const preparedApproveFromCustodialWallet = await polygonSDK.custodial.prepare.approveFromCustodialWallet({
+    chain: 'MATIC',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractType: 0,
+    custodialAddress: '0x95abdd7406a6aca49797e833bacc3edaa394853a',
+    tokenAddress: '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
+    spender: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+    amount: '1',
+  })
 
-  const sentApproveFromCustodialWallet =
-    await polygonSDK.custodial.send.approveFromCustodialWallet({
-      chain: 'MATIC',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractType: 0,
-      custodialAddress: '0x95abdd7406a6aca49797e833bacc3edaa394853a',
-      tokenAddress: '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
-      spender: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-      amount: '1',
-    })
+  const sentApproveFromCustodialWallet = await polygonSDK.custodial.send.approveFromCustodialWallet({
+    chain: 'MATIC',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractType: 0,
+    custodialAddress: '0x95abdd7406a6aca49797e833bacc3edaa394853a',
+    tokenAddress: '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
+    spender: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+    amount: '1',
+  })
 
   const preparedCustodialWalletBatch = await polygonSDK.custodial.prepare.custodialWalletBatch({
     chain: 'MATIC',
@@ -1247,5 +1239,14 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
     fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
     batchCount: 100,
     owner: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+  })
+}
+
+export async function polygonTxFeesCovered(): Promise<void> {
+  const generateCustodialWalletBatch = await polygonSDK.custodial.generateCustodialBatch({
+    chain: 'MATIC',
+    batchCount: 100,
+    owner: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+    feesCovered: true,
   })
 }

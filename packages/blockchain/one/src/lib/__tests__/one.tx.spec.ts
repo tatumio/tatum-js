@@ -220,27 +220,15 @@ describe('OneSDK - tx', () => {
   describe('custodial', () => {
     describe('prepare', () => {
       xdescribe('transfer from custodial wallet', () => {
-        custodialTestFactory.prepare.transferFromCustodialWallet(
-          sdk.custodial,
-          TEST_DATA.ONE,
-          'ONE',
-        )
+        custodialTestFactory.prepare.transferFromCustodialWallet(sdk.custodial, TEST_DATA.ONE, 'ONE')
       })
 
       xdescribe('batch transfer from custodial wallet', () => {
-        custodialTestFactory.prepare.batchTransferFromCustodialWallet(
-          sdk.custodial,
-          TEST_DATA.ONE,
-          'ONE',
-        )
+        custodialTestFactory.prepare.batchTransferFromCustodialWallet(sdk.custodial, TEST_DATA.ONE, 'ONE')
       })
 
       xdescribe('approve from custodial wallet', () => {
-        custodialTestFactory.prepare.approveFromCustodialWallet(
-          sdk.custodial,
-          TEST_DATA.ONE,
-          'ONE',
-        )
+        custodialTestFactory.prepare.approveFromCustodialWallet(sdk.custodial, TEST_DATA.ONE, 'ONE')
       })
 
       xdescribe('generate batch custodial wallet', () => {

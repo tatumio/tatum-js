@@ -13,6 +13,7 @@ import BigNumber from 'bignumber.js'
 import { CustodialFullTokenWallet } from '../../contracts'
 import { evmBasedSmartContract } from '../../services/evm-based.smartContract'
 import { evmBasedUtils } from '../../evm-based.utils'
+import { ApiServices } from '@tatumio/api-client'
 
 const transferFromCustodialWallet = async (
   body: ChainTransferCustodialWallet,
@@ -100,6 +101,7 @@ export const custodial = (args: {
   broadcastFunction: BroadcastFunction
 }) => {
   return {
+    generateCustodialBatch: ApiServices.blockchain.utils.generateCustodialWalletBatch,
     prepare: {
       /**
        * Prepare signed transaction from the custodial SC wallet.

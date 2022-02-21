@@ -533,28 +533,25 @@ export async function ethTxWithSignatureIdExample(): Promise<void> {
   })
 
   // CUSTODIAL
-  const preparedTransferFromCustodialWallet =
-    await ethSDK.custodial.prepare.transferFromCustodialWallet({
-      chain: 'ETH',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractType: 0,
-      custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
-      tokenAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
-      recipient: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
-      tokenId: '20',
-    })
+  const preparedTransferFromCustodialWallet = await ethSDK.custodial.prepare.transferFromCustodialWallet({
+    chain: 'ETH',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractType: 0,
+    custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+    tokenAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+    recipient: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+    tokenId: '20',
+  })
 
-  const sentTransferFromCustodialWallet = await ethSDK.custodial.send.transferFromCustodialWallet(
-    {
-      chain: 'ETH',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractType: 0,
-      custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
-      tokenAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
-      recipient: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
-      tokenId: '20',
-    },
-  )
+  const sentTransferFromCustodialWallet = await ethSDK.custodial.send.transferFromCustodialWallet({
+    chain: 'ETH',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractType: 0,
+    custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+    tokenAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+    recipient: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+    tokenId: '20',
+  })
 
   const preparedBatchTransferFromCustodialWallet =
     await ethSDK.custodial.prepare.batchTransferFromCustodialWallet({
@@ -577,37 +574,35 @@ export async function ethTxWithSignatureIdExample(): Promise<void> {
       amount: ['1', '0', '1', '3'],
     })
 
-  const sentBatchTransferFromCustodialWallet =
-    await ethSDK.custodial.send.batchTransferFromCustodialWallet({
-      chain: 'ETH',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractType: [0, 1, 2, 3],
-      custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
-      tokenAddress: [
-        '0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867',
-        '0x9b0eea3aa1e61b8ecb7d1c8260cd426eb2a9a698',
-        '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
-        '0',
-      ],
-      recipient: [
-        '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-        '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-        '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-        '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-      ],
-      amount: ['1', '0', '1', '3'],
-    })
+  const sentBatchTransferFromCustodialWallet = await ethSDK.custodial.send.batchTransferFromCustodialWallet({
+    chain: 'ETH',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractType: [0, 1, 2, 3],
+    custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+    tokenAddress: [
+      '0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867',
+      '0x9b0eea3aa1e61b8ecb7d1c8260cd426eb2a9a698',
+      '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
+      '0',
+    ],
+    recipient: [
+      '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+      '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+      '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+      '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+    ],
+    amount: ['1', '0', '1', '3'],
+  })
 
-  const preparedApproveFromCustodialWallet =
-    await ethSDK.custodial.prepare.approveFromCustodialWallet({
-      chain: 'ETH',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      contractType: 0,
-      custodialAddress: '0x95abdd7406a6aca49797e833bacc3edaa394853a',
-      tokenAddress: '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
-      spender: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-      amount: '1',
-    })
+  const preparedApproveFromCustodialWallet = await ethSDK.custodial.prepare.approveFromCustodialWallet({
+    chain: 'ETH',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    contractType: 0,
+    custodialAddress: '0x95abdd7406a6aca49797e833bacc3edaa394853a',
+    tokenAddress: '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
+    spender: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+    amount: '1',
+  })
 
   const sentApproveFromCustodialWallet = await ethSDK.custodial.send.approveFromCustodialWallet({
     chain: 'ETH',
@@ -1141,28 +1136,25 @@ export async function ethTxWithPrivateKeyExample(): Promise<void> {
   })
 
   // CUSTODIAL
-  const preparedTransferFromCustodialWallet =
-    await ethSDK.custodial.prepare.transferFromCustodialWallet({
-      chain: 'ETH',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractType: 0,
-      custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
-      tokenAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
-      recipient: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
-      tokenId: '20',
-    })
+  const preparedTransferFromCustodialWallet = await ethSDK.custodial.prepare.transferFromCustodialWallet({
+    chain: 'ETH',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractType: 0,
+    custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+    tokenAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+    recipient: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+    tokenId: '20',
+  })
 
-  const sentTransferFromCustodialWallet = await ethSDK.custodial.send.transferFromCustodialWallet(
-    {
-      chain: 'ETH',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractType: 0,
-      custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
-      tokenAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
-      recipient: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
-      tokenId: '20',
-    },
-  )
+  const sentTransferFromCustodialWallet = await ethSDK.custodial.send.transferFromCustodialWallet({
+    chain: 'ETH',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractType: 0,
+    custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+    tokenAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+    recipient: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+    tokenId: '20',
+  })
 
   const preparedBatchTransferFromCustodialWallet =
     await ethSDK.custodial.prepare.batchTransferFromCustodialWallet({
@@ -1185,37 +1177,35 @@ export async function ethTxWithPrivateKeyExample(): Promise<void> {
       amount: ['1', '0', '1', '3'],
     })
 
-  const sentBatchTransferFromCustodialWallet =
-    await ethSDK.custodial.send.batchTransferFromCustodialWallet({
-      chain: 'ETH',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractType: [0, 1, 2, 3],
-      custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
-      tokenAddress: [
-        '0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867',
-        '0x9b0eea3aa1e61b8ecb7d1c8260cd426eb2a9a698',
-        '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
-        '0',
-      ],
-      recipient: [
-        '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-        '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-        '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-        '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-      ],
-      amount: ['1', '0', '1', '3'],
-    })
+  const sentBatchTransferFromCustodialWallet = await ethSDK.custodial.send.batchTransferFromCustodialWallet({
+    chain: 'ETH',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractType: [0, 1, 2, 3],
+    custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+    tokenAddress: [
+      '0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867',
+      '0x9b0eea3aa1e61b8ecb7d1c8260cd426eb2a9a698',
+      '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
+      '0',
+    ],
+    recipient: [
+      '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+      '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+      '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+      '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+    ],
+    amount: ['1', '0', '1', '3'],
+  })
 
-  const preparedApproveFromCustodialWallet =
-    await ethSDK.custodial.prepare.approveFromCustodialWallet({
-      chain: 'ETH',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      contractType: 0,
-      custodialAddress: '0x95abdd7406a6aca49797e833bacc3edaa394853a',
-      tokenAddress: '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
-      spender: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-      amount: '1',
-    })
+  const preparedApproveFromCustodialWallet = await ethSDK.custodial.prepare.approveFromCustodialWallet({
+    chain: 'ETH',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    contractType: 0,
+    custodialAddress: '0x95abdd7406a6aca49797e833bacc3edaa394853a',
+    tokenAddress: '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
+    spender: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+    amount: '1',
+  })
 
   const sentApproveFromCustodialWallet = await ethSDK.custodial.send.approveFromCustodialWallet({
     chain: 'ETH',
@@ -1239,5 +1229,14 @@ export async function ethTxWithPrivateKeyExample(): Promise<void> {
     fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
     batchCount: 100,
     owner: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+  })
+}
+
+export async function ethTxFeesCovered(): Promise<void> {
+  const generateCustodialWalletBatch = await ethSDK.custodial.generateCustodialBatch({
+    chain: 'ETH',
+    batchCount: 100,
+    owner: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+    feesCovered: true,
   })
 }
