@@ -44,22 +44,16 @@ describe('flowTxService', () => {
     })
     describe('getApiSigner', () => {
       it('get api signer', async () => {
-        try {
-          const apiSigner = txService.getApiSigner(true)
-          expect(apiSigner.keyHash.startsWith('FLOW_PROPOSAL_KEY')).toBeTruthy()
-          expect(
-            await (
-              await apiSigner.signer({ account: 'account' })
-            ).signingFunction({ message: 'some message' }),
-          ).toEqual({
-            addr: '0x87fe4ebd0cddde06',
-            keyId: 0,
-            signature:
-              'a1c86ebfe1a60cb4a710c25b2655f0878f929b0a7a47420e65d3f256b5703f9200be814628be0ded12855ff2bd13427f74e298fd6d80a780660e019608311b24',
-          })
-        } catch (e) {
-          console.log('ERR:', e)
-        }
+        const apiSigner = txService.getApiSigner(true)
+        expect(apiSigner.keyHash.startsWith('FLOW_PROPOSAL_KEY')).toBeTruthy()
+        expect(
+          await (await apiSigner.signer({ account: 'account' })).signingFunction({ message: 'some message' }),
+        ).toEqual({
+          addr: '0x87fe4ebd0cddde06',
+          keyId: 0,
+          signature:
+            'a1c86ebfe1a60cb4a710c25b2655f0878f929b0a7a47420e65d3f256b5703f9200be814628be0ded12855ff2bd13427f74e298fd6d80a780660e019608311b24',
+        })
       })
     })
     it('create account from public key', async () => {
