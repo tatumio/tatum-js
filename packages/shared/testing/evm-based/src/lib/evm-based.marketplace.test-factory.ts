@@ -330,5 +330,65 @@ export const marketplaceTestFactory = {
         expectHexString(result)
       })
     },
+
+    approveSpending: (sdk: SdkWithMarketplaceFunctions, accounts: GanacheAccount[]) => {
+      it('valid from privateKey', async () => {
+        const tx = await sdk.prepare.approveSpending({
+          spender: accounts[0].address,
+          isErc721: true,
+          tokenId: '100000',
+          contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+          fromPrivateKey: accounts[0].privateKey,
+          nonce: 1,
+          fee: {
+            gasLimit: '40000',
+            gasPrice: '20',
+          },
+          amount: '10000',
+        })
+
+        expectHexString(tx)
+      })
+      it('valid from signatureId', async () => {
+        const nonce = 1
+        const tx = await sdk.prepare.approveSpending({
+          spender: accounts[0].address,
+          isErc721: true,
+          tokenId: '100000',
+          contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+          signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+          nonce,
+          fee: {
+            gasLimit: '40000',
+            gasPrice: '20',
+          },
+          amount: '10000',
+        })
+
+        const json = JSON.parse(tx)
+
+        expect(json.nonce).toBe(nonce)
+        expect(json.gasPrice).toBe('20000000000')
+      })
+      it('invalid address', async () => {
+        await expect(async () =>
+          sdk.prepare.approveSpending({
+            spender: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+            isErc721: true,
+            tokenId: '100000',
+            contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc86',
+            fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
+            nonce: 1,
+            fee: {
+              gasLimit: '40000',
+              gasPrice: '20',
+            },
+            amount: '10000',
+          }),
+        ).rejects.toThrow(
+          `Provided address 0x687422eEA2cB73B5d3e242bA5456b782919AFc86 is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted.`,
+        )
+      })
+    },
   },
 }

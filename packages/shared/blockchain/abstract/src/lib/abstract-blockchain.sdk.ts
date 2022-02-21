@@ -40,10 +40,10 @@ import {
   UpdateFeeRecipient,
   XlmWallet,
   XrpWallet,
-  AddNftMinter,
+  ApproveNftSpending,
 } from '@tatumio/api-client'
 import { Blockchain, blockchainHelper } from '@tatumio/shared-core'
-import { abstractSdk } from '@tatumio/shared-abstract-sdk'
+import { abstractSdk, WithoutChain } from '@tatumio/shared-abstract-sdk'
 import { abstractBlockchainKms } from './services/kms.abstract-blockchain'
 import { abstractBlockchainOffchain } from './services/offchain.abstract-blockchain'
 
@@ -212,6 +212,10 @@ export interface SdkWithCustodialFunctions {
 export interface SdkWithMarketplaceFunctions {
   prepare: {
     approveErc20Spending(body: ApproveErc20, provider?: string): Promise<string>
+    approveSpending(
+      body: FromPrivateKeyOrSignatureId<WithoutChain<ApproveNftSpending>> & { amount: string },
+      provider?: string,
+    ): Promise<string>
     generateMarketplace(body: ChainGenerateMarketplace, provider?: string): Promise<string>
     updateFee(body: ChainUpdateFee, provider?: string): Promise<string>
     updateFeeRecipient(body: ChainUpdateFeeRecipient, provider?: string): Promise<string>

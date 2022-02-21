@@ -10,6 +10,7 @@ import {
 } from '@tatumio/shared-blockchain-abstract'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import { marketplace } from '../transactions/marketplace'
+import { ApproveNftTransfer } from './evm-based.auction'
 import { EvmBasedWeb3 } from './evm-based.web3'
 
 export const evmBasedMarketplace = (args: {
@@ -21,6 +22,9 @@ export const evmBasedMarketplace = (args: {
     prepare: {
       approveErc20Spending: (body: ApproveErc20, provider?: string) =>
         marketplace(args).prepare.approveErc20Spending(body, provider),
+
+      approveSpending: async (body: ApproveNftTransfer, provider?: string) =>
+        marketplace(args).prepare.approveSpending(body, provider),
 
       generateMarketplace: (body: ChainGenerateMarketplace, provider?: string) =>
         marketplace(args).prepare.generateMarketplace(body, provider),

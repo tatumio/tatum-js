@@ -9,7 +9,6 @@ import {
   UpdateAuctionFeeRecipient,
 } from '@tatumio/shared-blockchain-evm-based'
 import { GanacheAccount } from './ganacheHelper'
-import { BlockchainMarketplaceService } from '@tatumio/api-client'
 
 export const auctionTestFactory = {
   prepare: {

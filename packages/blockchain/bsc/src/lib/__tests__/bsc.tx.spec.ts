@@ -121,6 +121,10 @@ describe('BscSDK - tx', () => {
         )
       })
 
+      describe('approveSpending', () => {
+        marketplaceTestFactory.prepare.approveSpending(sdk.marketplace, inmemoryBlockchain.accounts)
+      })
+
       describe('createMarketplaceListing', () => {
         marketplaceTestFactory.prepare.createMarketplaceListing(
           sdk.marketplace,
