@@ -13,7 +13,7 @@ export const TatumBscSDK = (args: SDKArguments) => {
   const web3 = bscWeb3({ blockchain })
   const api = BlockchainBscService
   const txService = bscTxService({ blockchain, web3 })
-  const {nft, ...evmSdk} = evmBasedSdk({ ...args, blockchain, web3 })
+  const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
 
   return {
     ...evmSdk,

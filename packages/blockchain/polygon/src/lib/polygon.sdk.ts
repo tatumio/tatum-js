@@ -13,7 +13,7 @@ export const TatumPolygonSDK = (args: SDKArguments) => {
   const web3 = polygonWeb3({ blockchain })
   const api = BlockchainPolygonMaticService
   const txService = polygonTxService({ blockchain, web3 })
-  const {nft, ...evmSdk} = evmBasedSdk({ ...args, blockchain, web3 })
+  const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
 
   return {
     ...evmSdk,

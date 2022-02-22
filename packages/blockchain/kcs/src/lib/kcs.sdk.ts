@@ -13,7 +13,7 @@ export const TatumKcsSDK = (args: SDKArguments) => {
   const web3 = kcsWeb3({ blockchain })
   const api = BlockchainKcsKcsService
   const txService = kcsTxService({ blockchain, web3 })
-  const {nft, ...evmSdk} = evmBasedSdk({ ...args, blockchain, web3 })
+  const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
 
   return {
     ...evmSdk,

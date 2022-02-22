@@ -13,7 +13,7 @@ export const TatumOneSDK = (args: SDKArguments) => {
   const web3 = oneWeb3({ blockchain })
   const api = BlockchainHarmonyOneService
   const txService = oneTxService({ blockchain, web3 })
-  const {nft, ...evmSdk} = evmBasedSdk({ ...args, blockchain, web3 })
+  const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
 
   return {
     ...evmSdk,
