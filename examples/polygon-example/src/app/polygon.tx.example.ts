@@ -167,25 +167,23 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const preparedMintMultipleSignedTransaction = await polygonSDK.nft.prepare.mintMultipleSignedTransaction(
-    {
-      chain: 'MATIC',
-      to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-      tokenId: ['345634563', '53545345'],
-      url: ['https://my_token_data.com', 'https://my_token_data2.com'],
-      authorAddresses: [
-        ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-        ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
-      ],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
+  const preparedMintMultipleSignedTransaction = await polygonSDK.nft.prepare.mintMultipleSignedTransaction({
+    chain: 'MATIC',
+    to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+    tokenId: ['345634563', '53545345'],
+    url: ['https://my_token_data.com', 'https://my_token_data2.com'],
+    authorAddresses: [
+      ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+      ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
+    ],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
     },
-  )
+  })
 
   const sentMintMultipleSignedTransaction = await polygonSDK.nft.send.mintMultipleSignedTransaction({
     chain: 'MATIC',
@@ -205,22 +203,20 @@ export async function polygonTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const preparedMintCashbackSignedTransaction = await polygonSDK.nft.prepare.mintCashbackSignedTransaction(
-    {
-      chain: 'MATIC',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      tokenId: '45343653',
-      url: 'https://my_token_data.com',
-      cashbackValues: ['0.5', '0.5'],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
+  const preparedMintCashbackSignedTransaction = await polygonSDK.nft.prepare.mintCashbackSignedTransaction({
+    chain: 'MATIC',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    tokenId: '45343653',
+    url: 'https://my_token_data.com',
+    cashbackValues: ['0.5', '0.5'],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
     },
-  )
+  })
 
   const sentMintCashbackSignedTransaction = await polygonSDK.nft.send.mintCashbackSignedTransaction({
     chain: 'MATIC',
@@ -707,25 +703,23 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const preparedMintMultipleSignedTransaction = await polygonSDK.nft.prepare.mintMultipleSignedTransaction(
-    {
-      chain: 'MATIC',
-      to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-      tokenId: ['345634563', '53545345'],
-      url: ['https://my_token_data.com', 'https://my_token_data2.com'],
-      authorAddresses: [
-        ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
-        ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
-      ],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
+  const preparedMintMultipleSignedTransaction = await polygonSDK.nft.prepare.mintMultipleSignedTransaction({
+    chain: 'MATIC',
+    to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+    tokenId: ['345634563', '53545345'],
+    url: ['https://my_token_data.com', 'https://my_token_data2.com'],
+    authorAddresses: [
+      ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
+      ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
+    ],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
     },
-  )
+  })
 
   const sentMintMultipleSignedTransaction = await polygonSDK.nft.send.mintMultipleSignedTransaction({
     chain: 'MATIC',
@@ -745,22 +739,20 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const preparedMintCashbackSignedTransaction = await polygonSDK.nft.prepare.mintCashbackSignedTransaction(
-    {
-      chain: 'MATIC',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      tokenId: '45343653',
-      url: 'https://my_token_data.com',
-      cashbackValues: ['0.5', '0.5'],
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
+  const preparedMintCashbackSignedTransaction = await polygonSDK.nft.prepare.mintCashbackSignedTransaction({
+    chain: 'MATIC',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    tokenId: '45343653',
+    url: 'https://my_token_data.com',
+    cashbackValues: ['0.5', '0.5'],
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
     },
-  )
+  })
 
   const sentMintCashbackSignedTransaction = await polygonSDK.nft.send.mintCashbackSignedTransaction({
     chain: 'MATIC',

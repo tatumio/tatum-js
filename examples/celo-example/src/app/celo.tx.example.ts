@@ -140,17 +140,16 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
       feeCurrency: 'CUSD',
     })
 
-  const preparedMintProvenanceSignedTransaction =
-    await celoSDK.nft.prepare.mintProvenanceSignedTransaction({
-      chain: 'CELO',
-      tokenId: '5435345',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      url: 'https://my_token_data.com',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      nonce: 46533715.43995557,
-      feeCurrency: 'CUSD',
-    })
+  const preparedMintProvenanceSignedTransaction = await celoSDK.nft.prepare.mintProvenanceSignedTransaction({
+    chain: 'CELO',
+    tokenId: '5435345',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    url: 'https://my_token_data.com',
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 46533715.43995557,
+    feeCurrency: 'CUSD',
+  })
 
   const sentMintProvenanceSignedTransaction = await celoSDK.nft.send.mintProvenanceSignedTransaction({
     chain: 'CELO',
@@ -541,17 +540,16 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
       feeCurrency: 'CUSD',
     })
 
-  const preparedMintProvenanceSignedTransaction =
-    await celoSDK.nft.prepare.mintProvenanceSignedTransaction({
-      chain: 'CELO',
-      tokenId: '5435345',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      url: 'https://my_token_data.com',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      nonce: 46533715.43995557,
-      feeCurrency: 'CUSD',
-    })
+  const preparedMintProvenanceSignedTransaction = await celoSDK.nft.prepare.mintProvenanceSignedTransaction({
+    chain: 'CELO',
+    tokenId: '5435345',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    url: 'https://my_token_data.com',
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    nonce: 46533715.43995557,
+    feeCurrency: 'CUSD',
+  })
 
   const sentMintProvenanceSignedTransaction = await celoSDK.nft.send.mintProvenanceSignedTransaction({
     chain: 'CELO',
