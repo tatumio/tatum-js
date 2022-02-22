@@ -1,6 +1,9 @@
-import { BlockchainHarmonyOneService } from '@tatumio/api-client'
-import { custodial, erc20, erc721, EvmBasedWeb3, marketplace } from '@tatumio/shared-blockchain-evm-based'
+import { EvmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
+import { oneCustodial } from './one.custodial'
+import { oneErc20 } from './one.erc20'
+import { oneErc721 } from './one.erc721'
+import { oneMarketplace } from './one.marketplace'
 import { oneMultiToken } from './one.multitoken'
 import { oneNative } from './one.native'
 import { oneSmartContract } from './one.smartContract'
@@ -8,31 +11,11 @@ import { oneSmartContract } from './one.smartContract'
 export const oneTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3 }) => {
   return {
     native: oneNative(args),
-    erc20: {
-      ...erc20({
-        ...args,
-        broadcastFunction: BlockchainHarmonyOneService.oneBroadcast,
-      }),
-    },
-    erc721: {
-      ...erc721({
-        ...args,
-        broadcastFunction: BlockchainHarmonyOneService.oneBroadcast,
-      }),
-    },
-    marketplace: {
-      ...marketplace({
-        ...args,
-        broadcastFunction: BlockchainHarmonyOneService.oneBroadcast,
-      }),
-    },
+    erc20: oneErc20(args),
+    erc721: oneErc721(args),
+    marketplace: oneMarketplace(args),
     multiToken: oneMultiToken(args),
-    custodial: {
-      ...custodial({
-        ...args,
-        broadcastFunction: BlockchainHarmonyOneService.oneBroadcast,
-      }),
-    },
+    custodial: oneCustodial(args),
     smartContract: oneSmartContract(args),
   }
 }

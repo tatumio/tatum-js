@@ -40,7 +40,7 @@ export const oneNative = (args: {
        * @returns transaction id of the transaction in the blockchain
        */
       transferSignedTransaction: async (
-        ...params: Parameters<typeof unpatchedNative.prepare.transferSignedTransaction>
+        ...params: Parameters<typeof unpatchedNative.send.transferSignedTransaction>
       ) =>
         unpatchedNative.send.transferSignedTransaction(
           {
