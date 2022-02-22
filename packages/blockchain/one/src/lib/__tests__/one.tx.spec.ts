@@ -135,11 +135,7 @@ describe('OneSDK - tx', () => {
       })
 
       describe('mintMultipleCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(
-          sdk.nft,
-          TEST_DATA.ONE,
-          Currency.ONE,
-        )
+        erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(sdk.nft, TEST_DATA.ONE, Currency.ONE)
       })
 
       describe('mintMultipleSignedTransaction', () => {

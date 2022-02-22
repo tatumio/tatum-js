@@ -89,11 +89,7 @@ describe('BscSDK - tx', () => {
       })
 
       describe('mintMultipleCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(
-          sdk.nft,
-          TEST_DATA.BSC,
-          Currency.BSC,
-        )
+        erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(sdk.nft, TEST_DATA.BSC, Currency.BSC)
       })
 
       describe('mintMultipleSignedTransaction', () => {

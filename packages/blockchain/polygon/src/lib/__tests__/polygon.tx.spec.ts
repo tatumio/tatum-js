@@ -110,11 +110,7 @@ describe('PolygonSDK - tx', () => {
       })
 
       describe('mintProvenanceSignedTransaction', () => {
-        erc721TestFactory.prepare.mintProvenanceSignedTransaction(
-          sdk.nft,
-          TEST_DATA.POLYGON,
-          Currency.MATIC,
-        )
+        erc721TestFactory.prepare.mintProvenanceSignedTransaction(sdk.nft, TEST_DATA.POLYGON, Currency.MATIC)
       })
 
       describe('mintMultipleProvenanceSignedTransaction', () => {

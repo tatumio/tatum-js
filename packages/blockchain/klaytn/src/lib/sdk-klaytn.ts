@@ -25,7 +25,7 @@ export const TatumKlaytnSDK = (args: SDKArguments) => {
     },
     nft: {
       ...txService.erc721,
-      ...nft
+      ...nft,
     },
     multiToken: txService.multiToken,
     marketplace: {

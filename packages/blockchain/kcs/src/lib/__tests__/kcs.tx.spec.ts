@@ -94,11 +94,7 @@ describe('KcsSDK - tx', () => {
       })
 
       describe('mintMultipleCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(
-          sdk.nft,
-          TEST_DATA.KCS,
-          Currency.KCS,
-        )
+        erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(sdk.nft, TEST_DATA.KCS, Currency.KCS)
       })
 
       describe('mintMultipleSignedTransaction', () => {

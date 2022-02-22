@@ -90,11 +90,7 @@ describe('EthSDK - tx', () => {
       })
 
       describe('mintMultipleCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(
-          sdk.nft,
-          TEST_DATA.ETH,
-          Currency.ETH,
-        )
+        erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(sdk.nft, TEST_DATA.ETH, Currency.ETH)
       })
 
       describe('mintMultipleSignedTransaction', () => {
