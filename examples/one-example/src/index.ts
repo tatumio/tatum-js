@@ -1,4 +1,3 @@
-import { oneApiExample } from './app/one.api.example'
 import { oneBlockchainExample } from './app/one.blockchain.example'
 import { oneKmsExample } from './app/one.kms.example'
 import { oneLogRecordExample } from './app/one.log.example'
@@ -17,7 +16,6 @@ import { oneSubscriptionsExample } from './app/one.subscriptions.example'
 import { oneTxWithPrivateKeyExample, oneTxWithSignatureIdExample } from './app/one.tx.example'
 import { oneAuctionExample } from './app/one.auction.example'
 
-console.log(`Running ${oneApiExample()}`)
 console.log(`Running ${oneWalletExample()}`)
 console.log(`Running ${oneBlockchainExample()}`)
 console.log(`Running ${oneKmsExample()}`)

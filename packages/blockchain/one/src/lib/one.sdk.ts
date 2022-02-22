@@ -16,7 +16,6 @@ export const TatumOneSDK = (args: SDKArguments) => {
 
   return {
     ...evmBasedSdk({ ...args, blockchain, web3 }),
-    api,
     kms: oneKmsService({ blockchain, web3 }),
     transaction: txService.native,
     erc20: txService.erc20,
@@ -42,6 +41,13 @@ export const TatumOneSDK = (args: SDKArguments) => {
       getBlock: BlockchainHarmonyOneService.oneGetBlock,
       getBlockchainAccountBalance: BlockchainHarmonyOneService.oneGetBalance,
       get: BlockchainHarmonyOneService.oneGetTransaction,
+      smartContractInvocation: BlockchainHarmonyOneService.oneBlockchainSmartContractInvocation,
+      formatAddress: BlockchainHarmonyOneService.oneFormatAddress,
+      generateAddress: BlockchainHarmonyOneService.oneGenerateAddress,
+      generateAddressPrivateKey: BlockchainHarmonyOneService.oneGenerateAddressPrivateKey,
+      generateWallet: BlockchainHarmonyOneService.oneGenerateWallet,
+      web3Driver: BlockchainHarmonyOneService.oneWeb3Driver,
+      blockchainTransfer: BlockchainHarmonyOneService.oneBlockchainTransfer,
     },
   }
 }
