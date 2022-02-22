@@ -1,5 +1,6 @@
 import {
   BlockchainAlgorandAlgoService,
+  BlockchainMultiTokenErc1155Service,
   BurnNft as ApiBurnNft,
   BurnNftKMS as ApiBurnNftKMS,
   ChainTransferAlgoErc20 as ApiChainTransferAlgoErc20,

@@ -1,6 +1,6 @@
 import { evmBasedMarketplace, evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
 import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
-import { BlockchainKlaytnService } from '@tatumio/api-client'
+import { BlockchainKlaytnService, BlockchainFungibleTokenService } from '@tatumio/api-client'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { klaytnWeb3 } from './services/klaytn.web3'
 import { klaytnKmsService } from './services/klaytn.kms'
@@ -17,7 +17,11 @@ export const TatumKlaytnSDK = (args: SDKArguments) => {
     ...evmBasedSdk({ ...args, blockchain, web3 }),
     kms: klaytnKmsService({ blockchain, web3 }),
     transaction: txService.native,
-    erc20: txService.erc20,
+    erc20: {
+      ...txService.erc20,
+      getErc20TransactionByAddress: BlockchainFungibleTokenService.erc20GetTransactionByAddress,
+      getErc20AccountBalance: BlockchainFungibleTokenService.erc20GetBalance,
+    },
     erc721: txService.erc721,
     multiToken: txService.multiToken,
     marketplace: {

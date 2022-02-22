@@ -1,6 +1,6 @@
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { Blockchain, EvmBasedBlockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
-import { BlockchainHarmonyOneService } from '@tatumio/api-client'
+import { BlockchainHarmonyOneService, BlockchainFungibleTokenService } from '@tatumio/api-client'
 import { oneWeb3 } from './services/one.web3'
 import { evmBasedSdk, evmBasedMarketplace } from '@tatumio/shared-blockchain-evm-based'
 import { oneKmsService } from './services/one.kms'
@@ -13,14 +13,22 @@ export const TatumOneSDK = (args: SDKArguments) => {
   const web3 = oneWeb3({ blockchain })
   const api = BlockchainHarmonyOneService
   const txService = oneTxService({ blockchain, web3 })
+  const {nft, ...evmSdk} = evmBasedSdk({ ...args, blockchain, web3 })
 
   return {
-    ...evmBasedSdk({ ...args, blockchain, web3 }),
+    ...evmSdk,
     api,
     kms: oneKmsService({ blockchain, web3 }),
     transaction: txService.native,
-    erc20: txService.erc20,
-    erc721: txService.erc721,
+    erc20: {
+      ...txService.erc20,
+      getErc20TransactionByAddress: BlockchainFungibleTokenService.erc20GetTransactionByAddress,
+      getErc20AccountBalance: BlockchainFungibleTokenService.erc20GetBalance,
+    },
+    nft: {
+      ...txService.erc721,
+      ...nft,
+    },
     multiToken: txService.multiToken,
     smartContract: txService.smartContract,
     custodial: txService.custodial,
