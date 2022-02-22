@@ -115,7 +115,7 @@ export async function klaytnTxWithSignatureIdExample(): Promise<void> {
   })
 
   // ERC721(NFT)
-  const preparedDeployErc721Transaction = await klaytnSDK.erc721.prepare.deploySignedTransaction({
+  const preparedDeployErc721Transaction = await klaytnSDK.nft.prepare.deploySignedTransaction({
     chain: 'KLAY',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
@@ -127,7 +127,7 @@ export async function klaytnTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const sentDeployErc721Transaction = await klaytnSDK.erc721.send.deploySignedTransaction({
+  const sentDeployErc721Transaction = await klaytnSDK.nft.send.deploySignedTransaction({
     chain: 'KLAY',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
@@ -139,7 +139,7 @@ export async function klaytnTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const preparedMintSignedTransaction = await klaytnSDK.erc721.prepare.mintSignedTransaction({
+  const preparedMintSignedTransaction = await klaytnSDK.nft.prepare.mintSignedTransaction({
     chain: 'KLAY',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -153,7 +153,7 @@ export async function klaytnTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const sentMintSignedTransaction = await klaytnSDK.erc721.send.mintSignedTransaction({
+  const sentMintSignedTransaction = await klaytnSDK.nft.send.mintSignedTransaction({
     chain: 'KLAY',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -167,7 +167,7 @@ export async function klaytnTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const preparedMintMultipleSignedTransaction = await klaytnSDK.erc721.prepare.mintMultipleSignedTransaction({
+  const preparedMintMultipleSignedTransaction = await klaytnSDK.nft.prepare.mintMultipleSignedTransaction({
     chain: 'KLAY',
     to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
     tokenId: ['345634563', '53545345'],
@@ -185,7 +185,7 @@ export async function klaytnTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const sentMintMultipleSignedTransaction = await klaytnSDK.erc721.send.mintMultipleSignedTransaction({
+  const sentMintMultipleSignedTransaction = await klaytnSDK.nft.send.mintMultipleSignedTransaction({
     chain: 'KLAY',
     to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
     tokenId: ['345634563', '53545345'],
@@ -203,7 +203,7 @@ export async function klaytnTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const preparedMintCashbackSignedTransaction = await klaytnSDK.erc721.prepare.mintCashbackSignedTransaction({
+  const preparedMintCashbackSignedTransaction = await klaytnSDK.nft.prepare.mintCashbackSignedTransaction({
     chain: 'KLAY',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     tokenId: '45343653',
@@ -218,7 +218,7 @@ export async function klaytnTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const sentMintCashbackSignedTransaction = await klaytnSDK.erc721.send.mintCashbackSignedTransaction({
+  const sentMintCashbackSignedTransaction = await klaytnSDK.nft.send.mintCashbackSignedTransaction({
     chain: 'KLAY',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     tokenId: '45343653',
@@ -234,7 +234,7 @@ export async function klaytnTxWithSignatureIdExample(): Promise<void> {
   })
 
   const preparedMintMultipleCashbackSignedTransaction =
-    await klaytnSDK.erc721.prepare.mintMultipleCashbackSignedTransaction({
+    await klaytnSDK.nft.prepare.mintMultipleCashbackSignedTransaction({
       chain: 'KLAY',
       tokenId: ['53564656', '536456456'],
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
@@ -250,7 +250,7 @@ export async function klaytnTxWithSignatureIdExample(): Promise<void> {
     })
 
   const sentMintMultipleCashbackSignedTransaction =
-    await klaytnSDK.erc721.send.mintMultipleCashbackSignedTransaction({
+    await klaytnSDK.nft.send.mintMultipleCashbackSignedTransaction({
       chain: 'KLAY',
       tokenId: ['53564656', '536456456'],
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
@@ -266,7 +266,7 @@ export async function klaytnTxWithSignatureIdExample(): Promise<void> {
     })
 
   const preparedMintProvenanceSignedTransaction =
-    await klaytnSDK.erc721.prepare.mintProvenanceSignedTransaction({
+    await klaytnSDK.nft.prepare.mintProvenanceSignedTransaction({
       chain: 'KLAY',
       tokenId: '5435345',
       to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -280,7 +280,7 @@ export async function klaytnTxWithSignatureIdExample(): Promise<void> {
       },
     })
 
-  const sentMintProvenanceSignedTransaction = await klaytnSDK.erc721.send.mintProvenanceSignedTransaction({
+  const sentMintProvenanceSignedTransaction = await klaytnSDK.nft.send.mintProvenanceSignedTransaction({
     chain: 'KLAY',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -295,7 +295,7 @@ export async function klaytnTxWithSignatureIdExample(): Promise<void> {
   })
 
   const preparedMintMultipleProvenanceSignedTransaction =
-    await klaytnSDK.erc721.prepare.mintMultipleProvenanceSignedTransaction({
+    await klaytnSDK.nft.prepare.mintMultipleProvenanceSignedTransaction({
       chain: 'KLAY',
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       tokenId: ['53564656', '536456456'],
@@ -311,7 +311,7 @@ export async function klaytnTxWithSignatureIdExample(): Promise<void> {
     })
 
   const sentMintMultipleProvenanceSignedTransaction =
-    await klaytnSDK.erc721.send.mintMultipleProvenanceSignedTransaction({
+    await klaytnSDK.nft.send.mintMultipleProvenanceSignedTransaction({
       chain: 'KLAY',
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       tokenId: ['53564656', '536456456'],
@@ -326,7 +326,7 @@ export async function klaytnTxWithSignatureIdExample(): Promise<void> {
       },
     })
 
-  const preparedTransferSignedTransaction = await klaytnSDK.erc721.prepare.transferSignedTransaction({
+  const preparedTransferSignedTransaction = await klaytnSDK.nft.prepare.transferSignedTransaction({
     chain: 'KLAY',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -339,7 +339,7 @@ export async function klaytnTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const sentTransferSignedTransaction = await klaytnSDK.erc721.send.transferSignedTransaction({
+  const sentTransferSignedTransaction = await klaytnSDK.nft.send.transferSignedTransaction({
     chain: 'KLAY',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -353,7 +353,7 @@ export async function klaytnTxWithSignatureIdExample(): Promise<void> {
   })
 
   const preparedUpdateCashbackForAuthorSignedTransaction =
-    await klaytnSDK.erc721.prepare.updateCashbackForAuthorSignedTransaction({
+    await klaytnSDK.nft.prepare.updateCashbackForAuthorSignedTransaction({
       chain: 'KLAY',
       tokenId: '453453',
       cashbackValue: '0.8',
@@ -367,7 +367,7 @@ export async function klaytnTxWithSignatureIdExample(): Promise<void> {
     })
 
   const sentUpdateCashbackForAuthorSignedTransaction =
-    await klaytnSDK.erc721.send.updateCashbackForAuthorSignedTransaction({
+    await klaytnSDK.nft.send.updateCashbackForAuthorSignedTransaction({
       chain: 'KLAY',
       tokenId: '453453',
       cashbackValue: '0.8',
@@ -380,7 +380,7 @@ export async function klaytnTxWithSignatureIdExample(): Promise<void> {
       },
     })
 
-  const preparedBurnErc721Transaction = await klaytnSDK.erc721.prepare.burnSignedTransaction({
+  const preparedBurnErc721Transaction = await klaytnSDK.nft.prepare.burnSignedTransaction({
     chain: 'KLAY',
     tokenId: '45343653',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -392,7 +392,7 @@ export async function klaytnTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const sentBurnErc721Transaction = await klaytnSDK.erc721.send.burnSignedTransaction({
+  const sentBurnErc721Transaction = await klaytnSDK.nft.send.burnSignedTransaction({
     chain: 'KLAY',
     tokenId: '45343653',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -620,7 +620,7 @@ export async function klaytnTxWithPrivateKeyExample(): Promise<void> {
   })
 
   // ERC721(NFT)
-  const preparedDeployErc721Transaction = await klaytnSDK.erc721.prepare.deploySignedTransaction({
+  const preparedDeployErc721Transaction = await klaytnSDK.nft.prepare.deploySignedTransaction({
     chain: 'KLAY',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
@@ -632,7 +632,7 @@ export async function klaytnTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const sentDeployErc721Transaction = await klaytnSDK.erc721.send.deploySignedTransaction({
+  const sentDeployErc721Transaction = await klaytnSDK.nft.send.deploySignedTransaction({
     chain: 'KLAY',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
@@ -644,7 +644,7 @@ export async function klaytnTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const preparedMintSignedTransaction = await klaytnSDK.erc721.prepare.mintSignedTransaction({
+  const preparedMintSignedTransaction = await klaytnSDK.nft.prepare.mintSignedTransaction({
     chain: 'KLAY',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -658,7 +658,7 @@ export async function klaytnTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const sentMintSignedTransaction = await klaytnSDK.erc721.send.mintSignedTransaction({
+  const sentMintSignedTransaction = await klaytnSDK.nft.send.mintSignedTransaction({
     chain: 'KLAY',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -672,7 +672,7 @@ export async function klaytnTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const preparedMintMultipleSignedTransaction = await klaytnSDK.erc721.prepare.mintMultipleSignedTransaction({
+  const preparedMintMultipleSignedTransaction = await klaytnSDK.nft.prepare.mintMultipleSignedTransaction({
     chain: 'KLAY',
     to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
     tokenId: ['345634563', '53545345'],
@@ -690,7 +690,7 @@ export async function klaytnTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const sentMintMultipleSignedTransaction = await klaytnSDK.erc721.send.mintMultipleSignedTransaction({
+  const sentMintMultipleSignedTransaction = await klaytnSDK.nft.send.mintMultipleSignedTransaction({
     chain: 'KLAY',
     to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
     tokenId: ['345634563', '53545345'],
@@ -708,7 +708,7 @@ export async function klaytnTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const preparedMintCashbackSignedTransaction = await klaytnSDK.erc721.prepare.mintCashbackSignedTransaction({
+  const preparedMintCashbackSignedTransaction = await klaytnSDK.nft.prepare.mintCashbackSignedTransaction({
     chain: 'KLAY',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     tokenId: '45343653',
@@ -723,7 +723,7 @@ export async function klaytnTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const sentMintCashbackSignedTransaction = await klaytnSDK.erc721.send.mintCashbackSignedTransaction({
+  const sentMintCashbackSignedTransaction = await klaytnSDK.nft.send.mintCashbackSignedTransaction({
     chain: 'KLAY',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     tokenId: '45343653',
@@ -739,7 +739,7 @@ export async function klaytnTxWithPrivateKeyExample(): Promise<void> {
   })
 
   const preparedMintMultipleCashbackSignedTransaction =
-    await klaytnSDK.erc721.prepare.mintMultipleCashbackSignedTransaction({
+    await klaytnSDK.nft.prepare.mintMultipleCashbackSignedTransaction({
       chain: 'KLAY',
       tokenId: ['53564656', '536456456'],
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
@@ -755,7 +755,7 @@ export async function klaytnTxWithPrivateKeyExample(): Promise<void> {
     })
 
   const sentMintMultipleCashbackSignedTransaction =
-    await klaytnSDK.erc721.send.mintMultipleCashbackSignedTransaction({
+    await klaytnSDK.nft.send.mintMultipleCashbackSignedTransaction({
       chain: 'KLAY',
       tokenId: ['53564656', '536456456'],
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
@@ -771,7 +771,7 @@ export async function klaytnTxWithPrivateKeyExample(): Promise<void> {
     })
 
   const preparedMintProvenanceSignedTransaction =
-    await klaytnSDK.erc721.prepare.mintProvenanceSignedTransaction({
+    await klaytnSDK.nft.prepare.mintProvenanceSignedTransaction({
       chain: 'KLAY',
       tokenId: '5435345',
       to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -785,7 +785,7 @@ export async function klaytnTxWithPrivateKeyExample(): Promise<void> {
       },
     })
 
-  const sentMintProvenanceSignedTransaction = await klaytnSDK.erc721.send.mintProvenanceSignedTransaction({
+  const sentMintProvenanceSignedTransaction = await klaytnSDK.nft.send.mintProvenanceSignedTransaction({
     chain: 'KLAY',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -800,7 +800,7 @@ export async function klaytnTxWithPrivateKeyExample(): Promise<void> {
   })
 
   const preparedMintMultipleProvenanceSignedTransaction =
-    await klaytnSDK.erc721.prepare.mintMultipleProvenanceSignedTransaction({
+    await klaytnSDK.nft.prepare.mintMultipleProvenanceSignedTransaction({
       chain: 'KLAY',
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       tokenId: ['53564656', '536456456'],
@@ -816,7 +816,7 @@ export async function klaytnTxWithPrivateKeyExample(): Promise<void> {
     })
 
   const sentMintMultipleProvenanceSignedTransaction =
-    await klaytnSDK.erc721.send.mintMultipleProvenanceSignedTransaction({
+    await klaytnSDK.nft.send.mintMultipleProvenanceSignedTransaction({
       chain: 'KLAY',
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       tokenId: ['53564656', '536456456'],
@@ -831,7 +831,7 @@ export async function klaytnTxWithPrivateKeyExample(): Promise<void> {
       },
     })
 
-  const preparedTransferSignedTransaction = await klaytnSDK.erc721.prepare.transferSignedTransaction({
+  const preparedTransferSignedTransaction = await klaytnSDK.nft.prepare.transferSignedTransaction({
     chain: 'KLAY',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -844,7 +844,7 @@ export async function klaytnTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const sentTransferSignedTransaction = await klaytnSDK.erc721.send.transferSignedTransaction({
+  const sentTransferSignedTransaction = await klaytnSDK.nft.send.transferSignedTransaction({
     chain: 'KLAY',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -858,7 +858,7 @@ export async function klaytnTxWithPrivateKeyExample(): Promise<void> {
   })
 
   const preparedUpdateCashbackForAuthorSignedTransaction =
-    await klaytnSDK.erc721.prepare.updateCashbackForAuthorSignedTransaction({
+    await klaytnSDK.nft.prepare.updateCashbackForAuthorSignedTransaction({
       chain: 'KLAY',
       tokenId: '453453',
       cashbackValue: '0.8',
@@ -872,7 +872,7 @@ export async function klaytnTxWithPrivateKeyExample(): Promise<void> {
     })
 
   const sentUpdateCashbackForAuthorSignedTransaction =
-    await klaytnSDK.erc721.send.updateCashbackForAuthorSignedTransaction({
+    await klaytnSDK.nft.send.updateCashbackForAuthorSignedTransaction({
       chain: 'KLAY',
       tokenId: '453453',
       cashbackValue: '0.8',
@@ -885,7 +885,7 @@ export async function klaytnTxWithPrivateKeyExample(): Promise<void> {
       },
     })
 
-  const preparedBurnErc721Transaction = await klaytnSDK.erc721.prepare.burnSignedTransaction({
+  const preparedBurnErc721Transaction = await klaytnSDK.nft.prepare.burnSignedTransaction({
     chain: 'KLAY',
     tokenId: '45343653',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -897,7 +897,7 @@ export async function klaytnTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const sentBurnErc721Transaction = await klaytnSDK.erc721.send.burnSignedTransaction({
+  const sentBurnErc721Transaction = await klaytnSDK.nft.send.burnSignedTransaction({
     chain: 'KLAY',
     tokenId: '45343653',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
