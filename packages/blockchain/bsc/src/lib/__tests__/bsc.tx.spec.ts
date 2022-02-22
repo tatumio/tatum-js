@@ -107,6 +107,18 @@ describe('BscSDK - tx', () => {
           Currency.BSC,
         )
       })
+
+      describe('mintProvenanceSignedTransaction', () => {
+        erc721TestFactory.prepare.mintProvenanceSignedTransaction(sdk.erc721, TEST_DATA.BSC, Currency.BSC)
+      })
+
+      describe('mintMultipleProvenanceSignedTransaction', () => {
+        erc721TestFactory.prepare.mintMultipleProvenanceSignedTransaction(
+          sdk.erc721,
+          TEST_DATA.BSC,
+          Currency.BSC,
+        )
+      })
     })
   })
 
