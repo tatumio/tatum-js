@@ -52,7 +52,8 @@ describe('ADA transactions', () => {
           value: 1,
         },
         {
-          address: 'addr_test1qqr585tvlc7ylnqvz8pyqwauzrdu0mxag3m7q56grgmgu7sxu2hyfhlkwuxupa9d5085eunq2qywy7hvmvej456flknswgndm3',
+          address:
+            'addr_test1qqr585tvlc7ylnqvz8pyqwauzrdu0mxag3m7q56grgmgu7sxu2hyfhlkwuxupa9d5085eunq2qywy7hvmvej456flknswgndm3',
           value: 1,
         },
       ],
@@ -60,7 +61,7 @@ describe('ADA transactions', () => {
 
     try {
       const txData = await sdk.transaction.prepare.transaction(body)
-      expectHexString(txData);
+      expectHexString(txData)
     } catch (e) {
       expect(e).not.toBeDefined()
     }
@@ -85,7 +86,7 @@ describe('ADA transactions', () => {
     }
     try {
       const txData = await sdk.transaction.prepare.transaction(body)
-      const result = JSON.parse(txData);
+      const result = JSON.parse(txData)
       expect(result).toHaveProperty('txData')
     } catch (e) {
       expect(e).not.toBeDefined()
@@ -107,5 +108,3 @@ describe('ADA transactions', () => {
     expect(transactionToBroadcast).not.toBeNull()
   })
 })
-
-
