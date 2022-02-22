@@ -12,7 +12,7 @@ const blockchain = Blockchain.CELO
 export const TatumCeloSDK = (args: SDKArguments) => {
   const web3 = celoWeb3({ blockchain })
   const api = BlockchainCeloService
-  const txService = celoTxService({ blockchain })
+  const txService = celoTxService({ blockchain, web3 })
 
   return {
     ...evmBasedSdk({ ...args, blockchain, web3 }),

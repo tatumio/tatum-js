@@ -230,12 +230,21 @@ describe('BscSDK - tx', () => {
 
   describe('custodial', () => {
     describe('prepare', () => {
-      describe('smart contract write method invocation', () => {
-        custodialTestFactory.prepare.generateCustodialWalletSignedTransaction(
-          sdk.custodial,
-          TEST_DATA.BSC,
-          'BSC',
-        )
+      describe('transfer from custodial wallet', () => {
+        custodialTestFactory.prepare.transferFromCustodialWallet(sdk.custodial, TEST_DATA.BSC, 'BSC')
+      })
+
+      describe('batch transfer from custodial wallet', () => {
+        custodialTestFactory.prepare.batchTransferFromCustodialWallet(sdk.custodial, TEST_DATA.BSC, 'BSC')
+      })
+
+      // Returned error: execution reverted
+      xdescribe('approve from custodial wallet', () => {
+        custodialTestFactory.prepare.approveFromCustodialWallet(sdk.custodial, TEST_DATA.BSC, 'BSC')
+      })
+
+      describe('generate batch custodial wallet', () => {
+        custodialTestFactory.prepare.custodialWalletBatch(sdk.custodial, TEST_DATA.BSC, 'BSC')
       })
     })
   })

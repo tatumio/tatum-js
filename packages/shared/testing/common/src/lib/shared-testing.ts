@@ -45,6 +45,12 @@ export type BlockchainNetworkTestData = {
     PRIVATE_KEY: string
     CONTRACT_ADDRESS: string
   }
+  CUSTODIAL?: {
+    PRIVATE_KEY: string
+    SIGNATURE_ID: string
+    CONTRACT_ADDRESS: string
+    TOKEN_ADDRESS: string
+  }
 }
 
 export interface BlockchainTestData {
