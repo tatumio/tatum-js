@@ -42,6 +42,12 @@ export const TatumKcsSDK = (args: SDKArguments) => {
       getBlockchainAccountBalance: BlockchainKcsKcsService.kcsGetBalance,
       get: BlockchainKcsKcsService.kcsGetTransaction,
       estimateGas: BlockchainKcsKcsService.kcsEstimateGas,
+      smartContractInvocation: BlockchainKcsKcsService.kcsBlockchainSmartContractInvocation,
+      blockchainTransfer: BlockchainKcsKcsService.kcsBlockchainTransfer,
+      generateAddress: BlockchainKcsKcsService.kcsGenerateAddress,
+      generateAddressPrivateKey: BlockchainKcsKcsService.kcsGenerateAddressPrivateKey,
+      generateWallet: BlockchainKcsKcsService.kcsGenerateWallet,
+      web3Driver: BlockchainKcsKcsService.kcsWeb3Driver,
     },
   }
 }

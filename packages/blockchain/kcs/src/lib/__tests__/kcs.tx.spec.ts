@@ -112,6 +112,18 @@ describe('KcsSDK - tx', () => {
           Currency.KCS,
         )
       })
+
+      describe('mintProvenanceSignedTransaction', () => {
+        erc721TestFactory.prepare.mintProvenanceSignedTransaction(sdk.erc721, TEST_DATA.KCS, Currency.KCS)
+      })
+
+      describe('mintMultipleProvenanceSignedTransaction', () => {
+        erc721TestFactory.prepare.mintMultipleProvenanceSignedTransaction(
+          sdk.erc721,
+          TEST_DATA.KCS,
+          Currency.KCS,
+        )
+      })
     })
   })
 

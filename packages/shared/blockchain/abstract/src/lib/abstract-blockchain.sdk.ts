@@ -40,7 +40,20 @@ import {
   UpdateFeeRecipient,
   XlmWallet,
   XrpWallet,
-  AddNftMinter,
+  TransferCustodialWallet,
+  TransferCustodialWalletCelo,
+  TransferCustodialWalletBatch,
+  TransferCustodialWalletBatchCelo,
+  ApproveTransferCustodialWallet,
+  ApproveTransferCustodialWalletCelo,
+  TransferCustodialWalletKMS,
+  GenerateCustodialWalletBatch,
+  GenerateCustodialWalletBatchKMS,
+  GenerateCustodialWalletCelo,
+  CallCeloSmartContractMethod,
+  TransferCustodialWalletCeloKMS,
+  GenerateCustodialWalletBatchCelo,
+  GenerateCustodialWalletBatchCeloKMS,
   PendingTransaction,
 } from '@tatumio/api-client'
 import { Blockchain, blockchainHelper, ChainTransactionKMS } from '@tatumio/shared-core'
@@ -126,7 +139,9 @@ export type ChainSmartContractMethodInvocation = FromPrivateKeyOrSignatureId<Cal
   index?: number
 }
 
-export type ChainGenerateCustodialAddress = FromPrivateKeyOrSignatureId<GenerateCustodialWallet>
+export type ChainGenerateCustodialAddress =
+  | FromPrivateKeyOrSignatureId<GenerateCustodialWallet>
+  | FromPrivateKeyOrSignatureId<GenerateCustodialWalletCelo>
 
 export type ChainTransferNative = FromPrivateKeyOrSignatureId<Omit<TransferPolygonBlockchain, 'currency'>>
 
@@ -141,6 +156,47 @@ export type ChainBuyAssetOnMarketplace = FromPrivateKeyOrSignatureId<BuyAssetOnM
 export type ChainSellAssetOnMarketplace = FromPrivateKeyOrSignatureId<SellAssetOnMarketplace>
 
 export type ChainCancelSellAssetOnMarketplace = FromPrivateKeyOrSignatureId<CancelSellAssetOnMarketplace>
+
+export type ChainTransferCustodialWallet =
+  | (FromPrivateKeyOrSignatureId<TransferCustodialWallet> & {
+      index?: number
+    })
+  | (FromPrivateKeyOrSignatureId<TransferCustodialWalletCelo> & {
+      index?: number
+    })
+
+export type ChainBatchTransferCustodialWallet =
+  | (FromPrivateKeyOrSignatureId<TransferCustodialWalletBatch> & { index?: number })
+  | (FromPrivateKeyOrSignatureId<TransferCustodialWalletBatchCelo> & { index?: number })
+
+export type ChainApproveCustodialTransfer =
+  | (FromPrivateKeyOrSignatureId<ApproveTransferCustodialWallet> & { index?: number })
+  | (FromPrivateKeyOrSignatureId<ApproveTransferCustodialWalletCelo> & { index?: number })
+
+export type ChainTransferFromCustodialAddress =
+  | TransferCustodialWalletKMS
+  | TransferCustodialWallet
+  | TransferCustodialWalletCelo
+  | TransferCustodialWalletCeloKMS
+
+export type ChainGenerateCustodialWalletBatch =
+  | GenerateCustodialWalletBatch
+  | GenerateCustodialWalletBatchKMS
+  | GenerateCustodialWalletBatchCelo
+  | GenerateCustodialWalletBatchCeloKMS
+
+export type ChainCallSmartContractMethod =
+  | (FromPrivateKeyOrSignatureId<CallSmartContractMethod> & {
+      index?: number
+    })
+  | (FromPrivateKeyOrSignatureId<CallCeloSmartContractMethod> & {
+      index?: number
+      chain: 'CELO'
+    })
+
+export type ChainTransferCustodialWalletCelo = FromPrivateKeyOrSignatureId<TransferCustodialWalletCelo> & {
+  index?: number
+}
 
 export interface SdkWithErc20Functions {
   decimals(contractAddress: string, provider?: string): any
@@ -170,6 +226,11 @@ export interface SdkWithErc721Functions {
     mintMultipleCashbackSignedTransaction(body: ChainMintMultipleNft, provider?: string): Promise<string>
     updateCashbackForAuthorSignedTransaction(
       body: ChainUpdateCashbackErc721,
+      provider?: string,
+    ): Promise<string>
+    mintProvenanceSignedTransaction(body: ChainMintNft, provider?: string): Promise<string>
+    mintMultipleProvenanceSignedTransaction(
+      body: ChainMintMultipleNft & { fixedValues: string[][] },
       provider?: string,
     ): Promise<string>
   }
@@ -204,10 +265,22 @@ export interface SdkWithSmartContractFunctions {
 
 export interface SdkWithCustodialFunctions {
   prepare: {
-    generateCustodialWalletSignedTransaction(
-      body: ChainGenerateCustodialAddress,
+    transferFromCustodialWallet(
+      body: ChainTransferCustodialWallet,
+      testnet?: boolean,
       provider?: string,
     ): Promise<string>
+    batchTransferFromCustodialWallet: (
+      body: ChainBatchTransferCustodialWallet,
+      testnet: boolean,
+      provider?: string,
+    ) => Promise<string>
+    approveFromCustodialWallet: (body: ChainApproveCustodialTransfer, provider?: string) => Promise<string>
+    custodialWalletBatch: (
+      body: ChainGenerateCustodialWalletBatch,
+      testnet: boolean,
+      provider?: string,
+    ) => Promise<string>
   }
 }
 export interface SdkWithMarketplaceFunctions {
@@ -217,7 +290,7 @@ export interface SdkWithMarketplaceFunctions {
     updateFee(body: ChainUpdateFee, provider?: string): Promise<string>
     updateFeeRecipient(body: ChainUpdateFeeRecipient, provider?: string): Promise<string>
     buyMarketplaceListing(body: ChainBuyAssetOnMarketplace, provider?: string): Promise<string>
-    createMarketplaceListing(body: ChainSellAssetOnMarketplace, provider?: string): Promise<string>
+    sellMarketplaceListing(body: ChainSellAssetOnMarketplace, provider?: string): Promise<string>
     cancelMarketplaceListing(body: ChainCancelSellAssetOnMarketplace, provider?: string): Promise<string>
   }
 

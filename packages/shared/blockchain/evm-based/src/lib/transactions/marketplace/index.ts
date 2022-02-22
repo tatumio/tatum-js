@@ -259,7 +259,7 @@ export const marketplace = (args: {
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
       approveErc20Spending: async (body: ApproveErc20, provider?: string) =>
-        erc20(args).prepare.approveSignedTransaction(body, args.web3, provider),
+        erc20(args).prepare.approveSignedTransaction(body, provider),
       /**
        * Prepare signed transaction for deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
        * Operator can set a fee in percentage, which will be paid on top of the price of the asset.
@@ -307,7 +307,7 @@ export const marketplace = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      createMarketplaceListing: async (body: ChainSellAssetOnMarketplace, provider?: string) =>
+      sellMarketplaceListing: async (body: ChainSellAssetOnMarketplace, provider?: string) =>
         sellAsset(body, args.web3, provider),
 
       /**
@@ -328,7 +328,7 @@ export const marketplace = (args: {
        */
       approveErc20Spending: async (body: ApproveErc20, provider?: string) =>
         args.broadcastFunction({
-          txData: await erc20(args).prepare.approveSignedTransaction(body, args.web3, provider),
+          txData: await erc20(args).prepare.approveSignedTransaction(body, provider),
         }),
       /**
        * Deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
@@ -386,7 +386,7 @@ export const marketplace = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      createMarketplaceListing: async (body: ChainSellAssetOnMarketplace, provider?: string) =>
+      sellMarketplaceListing: async (body: ChainSellAssetOnMarketplace, provider?: string) =>
         args.broadcastFunction({
           txData: await sellAsset(body, args.web3, provider),
         }),

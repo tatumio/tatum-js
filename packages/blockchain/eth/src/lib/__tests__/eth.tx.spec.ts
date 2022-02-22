@@ -101,6 +101,18 @@ describe('EthSDK - tx', () => {
         erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.erc721, TEST_DATA.ETH, Currency.ETH)
       })
 
+      describe('mintProvenanceSignedTransaction', () => {
+        erc721TestFactory.prepare.mintProvenanceSignedTransaction(sdk.erc721, TEST_DATA.ETH, Currency.ETH)
+      })
+
+      describe('mintMultipleProvenanceSignedTransaction', () => {
+        erc721TestFactory.prepare.mintMultipleProvenanceSignedTransaction(
+          sdk.erc721,
+          TEST_DATA.ETH,
+          Currency.ETH,
+        )
+      })
+
       describe('updateCashbackForAuthorSignedTransaction', () => {
         erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(
           sdk.erc721,
@@ -122,17 +134,8 @@ describe('EthSDK - tx', () => {
         )
       })
 
-      describe('createMarketplaceListing', () => {
-        marketplaceTestFactory.prepare.createMarketplaceListing(
-          sdk.marketplace,
-          TEST_DATA.ETH,
-          'ETH',
-          inmemoryBlockchain.accounts,
-        )
-      })
-
-      describe('createMarketplaceListingErc20', () => {
-        marketplaceTestFactory.prepare.createMarketplaceListingErc20(
+      describe('sellMarketplaceListing', () => {
+        marketplaceTestFactory.prepare.sellMarketplaceListing(
           sdk.marketplace,
           TEST_DATA.ETH,
           'ETH',
@@ -224,12 +227,20 @@ describe('EthSDK - tx', () => {
 
   describe('custodial', () => {
     describe('prepare', () => {
-      describe('smart contract write method invocation', () => {
-        custodialTestFactory.prepare.generateCustodialWalletSignedTransaction(
-          sdk.custodial,
-          TEST_DATA.ETH,
-          'ETH',
-        )
+      xdescribe('transfer from custodial wallet', () => {
+        custodialTestFactory.prepare.transferFromCustodialWallet(sdk.custodial, TEST_DATA.ETH, 'ETH')
+      })
+
+      xdescribe('batch transfer from custodial wallet', () => {
+        custodialTestFactory.prepare.batchTransferFromCustodialWallet(sdk.custodial, TEST_DATA.ETH, 'ETH')
+      })
+
+      xdescribe('approve from custodial wallet', () => {
+        custodialTestFactory.prepare.approveFromCustodialWallet(sdk.custodial, TEST_DATA.ETH, 'ETH')
+      })
+
+      xdescribe('generate batch custodial wallet', () => {
+        custodialTestFactory.prepare.custodialWalletBatch(sdk.custodial, TEST_DATA.ETH, 'ETH')
       })
     })
   })

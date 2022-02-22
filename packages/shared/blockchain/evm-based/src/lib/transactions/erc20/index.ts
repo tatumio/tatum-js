@@ -248,7 +248,7 @@ export const erc20 = (args: {
        * @param body body of the approve operation
        * @param provider optional Web3 provider
        */
-      approveSignedTransaction: async (body: ApproveErc20, web3: EvmBasedWeb3, provider?: string) =>
+      approveSignedTransaction: async (body: ApproveErc20, provider?: string) =>
         approveSignedTransaction(body, args.web3, provider),
     },
     send: {

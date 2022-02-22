@@ -16,7 +16,11 @@ import {
 import { polygonOffchainExample } from './app/polygon.offchain.example'
 import { polygonNftExample } from './app/polygon.nft.example'
 import { polygonSubscriptionsExample } from './app/polygon.subscriptions.example'
-import { polygonTxWithPrivateKeyExample, polygonTxWithSignatureIdExample } from './app/polygon.tx.example'
+import {
+  polygonTxWithPrivateKeyExample,
+  polygonTxWithSignatureIdExample,
+  polygonTxFeesCovered,
+} from './app/polygon.tx.example'
 import { polygonAuctionExample } from './app/polygon.auction.example'
 
 // TODO add auction example
@@ -39,4 +43,5 @@ console.log(`Running ${polygonNftExample()}`)
 console.log(`Running ${polygonSubscriptionsExample()}`)
 console.log(`Runninf ${polygonTxWithPrivateKeyExample()}`)
 console.log(`Runninf ${polygonTxWithSignatureIdExample()}`)
+console.log(`Runninf ${polygonTxFeesCovered()}`)
 console.log(`Running ${polygonAuctionExample()}`)
