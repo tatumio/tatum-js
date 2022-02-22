@@ -108,6 +108,22 @@ describe('PolygonSDK - tx', () => {
           Currency.MATIC,
         )
       })
+
+      describe('mintProvenanceSignedTransaction', () => {
+        erc721TestFactory.prepare.mintProvenanceSignedTransaction(
+          sdk.erc721,
+          TEST_DATA.POLYGON,
+          Currency.MATIC,
+        )
+      })
+
+      describe('mintMultipleProvenanceSignedTransaction', () => {
+        erc721TestFactory.prepare.mintMultipleProvenanceSignedTransaction(
+          sdk.erc721,
+          TEST_DATA.POLYGON,
+          Currency.MATIC,
+        )
+      })
     })
   })
 
