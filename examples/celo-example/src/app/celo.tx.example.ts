@@ -20,7 +20,7 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
     amount: '1',
   })
 
-  const preparedDeployErc721Transaction = await celoSDK.erc721.prepare.deploySignedTransaction({
+  const preparedDeployErc721Transaction = await celoSDK.nft.prepare.deploySignedTransaction({
     chain: 'CELO',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
@@ -29,7 +29,7 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
     feeCurrency: 'CUSD',
   })
 
-  const sentDeployErc721Transaction = await celoSDK.erc721.send.deploySignedTransaction({
+  const sentDeployErc721Transaction = await celoSDK.nft.send.deploySignedTransaction({
     chain: 'CELO',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
@@ -38,7 +38,7 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
     feeCurrency: 'CUSD',
   })
 
-  const preparedMintSignedTransaction = await celoSDK.erc721.prepare.mintSignedTransaction({
+  const preparedMintSignedTransaction = await celoSDK.nft.prepare.mintSignedTransaction({
     chain: 'CELO',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -49,7 +49,7 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
     feeCurrency: 'CUSD',
   })
 
-  const sentMintSignedTransaction = await celoSDK.erc721.send.mintSignedTransaction({
+  const sentMintSignedTransaction = await celoSDK.nft.send.mintSignedTransaction({
     chain: 'CELO',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -60,7 +60,7 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
     feeCurrency: 'CUSD',
   })
 
-  const preparedMintMultipleSignedTransaction = await celoSDK.erc721.prepare.mintMultipleSignedTransaction({
+  const preparedMintMultipleSignedTransaction = await celoSDK.nft.prepare.mintMultipleSignedTransaction({
     chain: 'CELO',
     to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
     tokenId: ['345634563', '53545345'],
@@ -75,7 +75,7 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
     feeCurrency: 'CUSD',
   })
 
-  const sentMintMultipleSignedTransaction = await celoSDK.erc721.send.mintMultipleSignedTransaction({
+  const sentMintMultipleSignedTransaction = await celoSDK.nft.send.mintMultipleSignedTransaction({
     chain: 'CELO',
     to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
     tokenId: ['345634563', '53545345'],
@@ -90,7 +90,7 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
     feeCurrency: 'CUSD',
   })
 
-  const preparedMintCashbackSignedTransaction = await celoSDK.erc721.prepare.mintCashbackSignedTransaction({
+  const preparedMintCashbackSignedTransaction = await celoSDK.nft.prepare.mintCashbackSignedTransaction({
     chain: 'CELO',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     tokenId: '45343653',
@@ -102,7 +102,7 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
     feeCurrency: 'CUSD',
   })
 
-  const sentMintCashbackSignedTransaction = await celoSDK.erc721.send.mintCashbackSignedTransaction({
+  const sentMintCashbackSignedTransaction = await celoSDK.nft.send.mintCashbackSignedTransaction({
     chain: 'CELO',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     tokenId: '45343653',
@@ -115,7 +115,7 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
   })
 
   const preparedMintMultipleCashbackSignedTransaction =
-    await celoSDK.erc721.prepare.mintMultipleCashbackSignedTransaction({
+    await celoSDK.nft.prepare.mintMultipleCashbackSignedTransaction({
       chain: 'CELO',
       tokenId: ['53564656', '536456456'],
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
@@ -128,7 +128,7 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
     })
 
   const sentMintMultipleCashbackSignedTransaction =
-    await celoSDK.erc721.send.mintMultipleCashbackSignedTransaction({
+    await celoSDK.nft.send.mintMultipleCashbackSignedTransaction({
       chain: 'CELO',
       tokenId: ['53564656', '536456456'],
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
@@ -141,7 +141,7 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
     })
 
   const preparedMintProvenanceSignedTransaction =
-    await celoSDK.erc721.prepare.mintProvenanceSignedTransaction({
+    await celoSDK.nft.prepare.mintProvenanceSignedTransaction({
       chain: 'CELO',
       tokenId: '5435345',
       to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -152,7 +152,7 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
       feeCurrency: 'CUSD',
     })
 
-  const sentMintProvenanceSignedTransaction = await celoSDK.erc721.send.mintProvenanceSignedTransaction({
+  const sentMintProvenanceSignedTransaction = await celoSDK.nft.send.mintProvenanceSignedTransaction({
     chain: 'CELO',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -164,7 +164,7 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
   })
 
   const preparedMintMultipleProvenanceSignedTransaction =
-    await celoSDK.erc721.prepare.mintMultipleProvenanceSignedTransaction({
+    await celoSDK.nft.prepare.mintMultipleProvenanceSignedTransaction({
       chain: 'CELO',
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       tokenId: ['53564656', '536456456'],
@@ -177,7 +177,7 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
     })
 
   const sentMintMultipleProvenanceSignedTransaction =
-    await celoSDK.erc721.send.mintMultipleProvenanceSignedTransaction({
+    await celoSDK.nft.send.mintMultipleProvenanceSignedTransaction({
       chain: 'CELO',
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       tokenId: ['53564656', '536456456'],
@@ -189,7 +189,7 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
       feeCurrency: 'CUSD',
     })
 
-  const preparedTransferSignedTransaction = await celoSDK.erc721.prepare.transferSignedTransaction({
+  const preparedTransferSignedTransaction = await celoSDK.nft.prepare.transferSignedTransaction({
     chain: 'CELO',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -199,7 +199,7 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
     feeCurrency: 'CUSD',
   })
 
-  const sentTransferSignedTransaction = await celoSDK.erc721.send.transferSignedTransaction({
+  const sentTransferSignedTransaction = await celoSDK.nft.send.transferSignedTransaction({
     chain: 'CELO',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -210,7 +210,7 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
   })
 
   const preparedUpdateCashbackForAuthorSignedTransaction =
-    await celoSDK.erc721.prepare.updateCashbackForAuthorSignedTransaction({
+    await celoSDK.nft.prepare.updateCashbackForAuthorSignedTransaction({
       chain: 'CELO',
       tokenId: '453453',
       cashbackValue: '0.8',
@@ -221,7 +221,7 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
     })
 
   const sentUpdateCashbackForAuthorSignedTransaction =
-    await celoSDK.erc721.send.updateCashbackForAuthorSignedTransaction({
+    await celoSDK.nft.send.updateCashbackForAuthorSignedTransaction({
       chain: 'CELO',
       tokenId: '453453',
       cashbackValue: '0.8',
@@ -231,7 +231,7 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
       feeCurrency: 'CUSD',
     })
 
-  const preparedBurnErc721Transaction = await celoSDK.erc721.prepare.burnSignedTransaction({
+  const preparedBurnErc721Transaction = await celoSDK.nft.prepare.burnSignedTransaction({
     chain: 'CELO',
     tokenId: '45343653',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -240,7 +240,7 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
     feeCurrency: 'CUSD',
   })
 
-  const sentBurnErc721Transaction = await celoSDK.erc721.send.burnSignedTransaction({
+  const sentBurnErc721Transaction = await celoSDK.nft.send.burnSignedTransaction({
     chain: 'CELO',
     tokenId: '45343653',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -421,7 +421,7 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
 }
 
 export async function celoTxWithPrivateKeyExample(): Promise<void> {
-  const preparedDeployErc721Transaction = await celoSDK.erc721.prepare.deploySignedTransaction({
+  const preparedDeployErc721Transaction = await celoSDK.nft.prepare.deploySignedTransaction({
     chain: 'CELO',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
@@ -430,7 +430,7 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
     feeCurrency: 'CUSD',
   })
 
-  const sentDeployErc721Transaction = await celoSDK.erc721.send.deploySignedTransaction({
+  const sentDeployErc721Transaction = await celoSDK.nft.send.deploySignedTransaction({
     chain: 'CELO',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
@@ -439,7 +439,7 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
     feeCurrency: 'CUSD',
   })
 
-  const preparedMintSignedTransaction = await celoSDK.erc721.prepare.mintSignedTransaction({
+  const preparedMintSignedTransaction = await celoSDK.nft.prepare.mintSignedTransaction({
     chain: 'CELO',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -450,7 +450,7 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
     feeCurrency: 'CUSD',
   })
 
-  const sentMintSignedTransaction = await celoSDK.erc721.send.mintSignedTransaction({
+  const sentMintSignedTransaction = await celoSDK.nft.send.mintSignedTransaction({
     chain: 'CELO',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -461,7 +461,7 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
     feeCurrency: 'CUSD',
   })
 
-  const preparedMintMultipleSignedTransaction = await celoSDK.erc721.prepare.mintMultipleSignedTransaction({
+  const preparedMintMultipleSignedTransaction = await celoSDK.nft.prepare.mintMultipleSignedTransaction({
     chain: 'CELO',
     to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
     tokenId: ['345634563', '53545345'],
@@ -476,7 +476,7 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
     feeCurrency: 'CUSD',
   })
 
-  const sentMintMultipleSignedTransaction = await celoSDK.erc721.send.mintMultipleSignedTransaction({
+  const sentMintMultipleSignedTransaction = await celoSDK.nft.send.mintMultipleSignedTransaction({
     chain: 'CELO',
     to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
     tokenId: ['345634563', '53545345'],
@@ -491,7 +491,7 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
     feeCurrency: 'CUSD',
   })
 
-  const preparedMintCashbackSignedTransaction = await celoSDK.erc721.prepare.mintCashbackSignedTransaction({
+  const preparedMintCashbackSignedTransaction = await celoSDK.nft.prepare.mintCashbackSignedTransaction({
     chain: 'CELO',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     tokenId: '45343653',
@@ -503,7 +503,7 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
     feeCurrency: 'CUSD',
   })
 
-  const sentMintCashbackSignedTransaction = await celoSDK.erc721.send.mintCashbackSignedTransaction({
+  const sentMintCashbackSignedTransaction = await celoSDK.nft.send.mintCashbackSignedTransaction({
     chain: 'CELO',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     tokenId: '45343653',
@@ -516,7 +516,7 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
   })
 
   const preparedMintMultipleCashbackSignedTransaction =
-    await celoSDK.erc721.prepare.mintMultipleCashbackSignedTransaction({
+    await celoSDK.nft.prepare.mintMultipleCashbackSignedTransaction({
       chain: 'CELO',
       tokenId: ['53564656', '536456456'],
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
@@ -529,7 +529,7 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
     })
 
   const sentMintMultipleCashbackSignedTransaction =
-    await celoSDK.erc721.send.mintMultipleCashbackSignedTransaction({
+    await celoSDK.nft.send.mintMultipleCashbackSignedTransaction({
       chain: 'CELO',
       tokenId: ['53564656', '536456456'],
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
@@ -542,7 +542,7 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
     })
 
   const preparedMintProvenanceSignedTransaction =
-    await celoSDK.erc721.prepare.mintProvenanceSignedTransaction({
+    await celoSDK.nft.prepare.mintProvenanceSignedTransaction({
       chain: 'CELO',
       tokenId: '5435345',
       to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -553,7 +553,7 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
       feeCurrency: 'CUSD',
     })
 
-  const sentMintProvenanceSignedTransaction = await celoSDK.erc721.send.mintProvenanceSignedTransaction({
+  const sentMintProvenanceSignedTransaction = await celoSDK.nft.send.mintProvenanceSignedTransaction({
     chain: 'CELO',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -565,7 +565,7 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
   })
 
   const preparedMintMultipleProvenanceSignedTransaction =
-    await celoSDK.erc721.prepare.mintMultipleProvenanceSignedTransaction({
+    await celoSDK.nft.prepare.mintMultipleProvenanceSignedTransaction({
       chain: 'CELO',
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       tokenId: ['53564656', '536456456'],
@@ -578,7 +578,7 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
     })
 
   const sentMintMultipleProvenanceSignedTransaction =
-    await celoSDK.erc721.send.mintMultipleProvenanceSignedTransaction({
+    await celoSDK.nft.send.mintMultipleProvenanceSignedTransaction({
       chain: 'CELO',
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       tokenId: ['53564656', '536456456'],
@@ -590,7 +590,7 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
       feeCurrency: 'CUSD',
     })
 
-  const preparedTransferSignedTransaction = await celoSDK.erc721.prepare.transferSignedTransaction({
+  const preparedTransferSignedTransaction = await celoSDK.nft.prepare.transferSignedTransaction({
     chain: 'CELO',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -600,7 +600,7 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
     feeCurrency: 'CUSD',
   })
 
-  const sentTransferSignedTransaction = await celoSDK.erc721.send.transferSignedTransaction({
+  const sentTransferSignedTransaction = await celoSDK.nft.send.transferSignedTransaction({
     chain: 'CELO',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -611,7 +611,7 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
   })
 
   const preparedUpdateCashbackForAuthorSignedTransaction =
-    await celoSDK.erc721.prepare.updateCashbackForAuthorSignedTransaction({
+    await celoSDK.nft.prepare.updateCashbackForAuthorSignedTransaction({
       chain: 'CELO',
       tokenId: '453453',
       cashbackValue: '0.8',
@@ -622,7 +622,7 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
     })
 
   const sentUpdateCashbackForAuthorSignedTransaction =
-    await celoSDK.erc721.send.updateCashbackForAuthorSignedTransaction({
+    await celoSDK.nft.send.updateCashbackForAuthorSignedTransaction({
       chain: 'CELO',
       tokenId: '453453',
       cashbackValue: '0.8',
@@ -632,7 +632,7 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
       feeCurrency: 'CUSD',
     })
 
-  const preparedBurnErc721Transaction = await celoSDK.erc721.prepare.burnSignedTransaction({
+  const preparedBurnErc721Transaction = await celoSDK.nft.prepare.burnSignedTransaction({
     chain: 'CELO',
     tokenId: '45343653',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -641,7 +641,7 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
     feeCurrency: 'CUSD',
   })
 
-  const sentBurnErc721Transaction = await celoSDK.erc721.send.burnSignedTransaction({
+  const sentBurnErc721Transaction = await celoSDK.nft.send.burnSignedTransaction({
     chain: 'CELO',
     tokenId: '45343653',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',

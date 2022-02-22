@@ -115,7 +115,7 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
   })
 
   // ERC721(NFT)
-  const preparedDeployErc721Transaction = await bscSDK.erc721.prepare.deploySignedTransaction({
+  const preparedDeployErc721Transaction = await bscSDK.nft.prepare.deploySignedTransaction({
     chain: 'BSC',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
@@ -127,7 +127,7 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const sentDeployErc721Transaction = await bscSDK.erc721.send.deploySignedTransaction({
+  const sentDeployErc721Transaction = await bscSDK.nft.send.deploySignedTransaction({
     chain: 'BSC',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
@@ -139,7 +139,7 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const preparedMintSignedTransaction = await bscSDK.erc721.prepare.mintSignedTransaction({
+  const preparedMintSignedTransaction = await bscSDK.nft.prepare.mintSignedTransaction({
     chain: 'BSC',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -153,7 +153,7 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const sentMintSignedTransaction = await bscSDK.erc721.send.mintSignedTransaction({
+  const sentMintSignedTransaction = await bscSDK.nft.send.mintSignedTransaction({
     chain: 'BSC',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -167,7 +167,7 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const preparedMintMultipleSignedTransaction = await bscSDK.erc721.prepare.mintMultipleSignedTransaction({
+  const preparedMintMultipleSignedTransaction = await bscSDK.nft.prepare.mintMultipleSignedTransaction({
     chain: 'BSC',
     to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
     tokenId: ['345634563', '53545345'],
@@ -185,7 +185,7 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const sentMintMultipleSignedTransaction = await bscSDK.erc721.send.mintMultipleSignedTransaction({
+  const sentMintMultipleSignedTransaction = await bscSDK.nft.send.mintMultipleSignedTransaction({
     chain: 'BSC',
     to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
     tokenId: ['345634563', '53545345'],
@@ -203,7 +203,7 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const preparedMintCashbackSignedTransaction = await bscSDK.erc721.prepare.mintCashbackSignedTransaction({
+  const preparedMintCashbackSignedTransaction = await bscSDK.nft.prepare.mintCashbackSignedTransaction({
     chain: 'BSC',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     tokenId: '45343653',
@@ -218,7 +218,7 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const sentMintCashbackSignedTransaction = await bscSDK.erc721.send.mintCashbackSignedTransaction({
+  const sentMintCashbackSignedTransaction = await bscSDK.nft.send.mintCashbackSignedTransaction({
     chain: 'BSC',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     tokenId: '45343653',
@@ -234,7 +234,7 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
   })
 
   const preparedMintMultipleCashbackSignedTransaction =
-    await bscSDK.erc721.prepare.mintMultipleCashbackSignedTransaction({
+    await bscSDK.nft.prepare.mintMultipleCashbackSignedTransaction({
       chain: 'BSC',
       tokenId: ['53564656', '536456456'],
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
@@ -250,7 +250,7 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
     })
 
   const sentMintMultipleCashbackSignedTransaction =
-    await bscSDK.erc721.send.mintMultipleCashbackSignedTransaction({
+    await bscSDK.nft.send.mintMultipleCashbackSignedTransaction({
       chain: 'BSC',
       tokenId: ['53564656', '536456456'],
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
@@ -265,7 +265,7 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
       },
     })
 
-  const preparedMintProvenanceSignedTransaction = await bscSDK.erc721.prepare.mintProvenanceSignedTransaction(
+  const preparedMintProvenanceSignedTransaction = await bscSDK.nft.prepare.mintProvenanceSignedTransaction(
     {
       chain: 'BSC',
       tokenId: '5435345',
@@ -281,7 +281,7 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
     },
   )
 
-  const sentMintProvenanceSignedTransaction = await bscSDK.erc721.send.mintProvenanceSignedTransaction({
+  const sentMintProvenanceSignedTransaction = await bscSDK.nft.send.mintProvenanceSignedTransaction({
     chain: 'BSC',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -296,7 +296,7 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
   })
 
   const preparedMintMultipleProvenanceSignedTransaction =
-    await bscSDK.erc721.prepare.mintMultipleProvenanceSignedTransaction({
+    await bscSDK.nft.prepare.mintMultipleProvenanceSignedTransaction({
       chain: 'BSC',
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       tokenId: ['53564656', '536456456'],
@@ -312,7 +312,7 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
     })
 
   const sentMintMultipleProvenanceSignedTransaction =
-    await bscSDK.erc721.send.mintMultipleProvenanceSignedTransaction({
+    await bscSDK.nft.send.mintMultipleProvenanceSignedTransaction({
       chain: 'BSC',
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       tokenId: ['53564656', '536456456'],
@@ -327,7 +327,7 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
       },
     })
 
-  const preparedTransferSignedTransaction = await bscSDK.erc721.prepare.transferSignedTransaction({
+  const preparedTransferSignedTransaction = await bscSDK.nft.prepare.transferSignedTransaction({
     chain: 'BSC',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -340,7 +340,7 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const sentTransferSignedTransaction = await bscSDK.erc721.send.transferSignedTransaction({
+  const sentTransferSignedTransaction = await bscSDK.nft.send.transferSignedTransaction({
     chain: 'BSC',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -354,7 +354,7 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
   })
 
   const preparedUpdateCashbackForAuthorSignedTransaction =
-    await bscSDK.erc721.prepare.updateCashbackForAuthorSignedTransaction({
+    await bscSDK.nft.prepare.updateCashbackForAuthorSignedTransaction({
       chain: 'BSC',
       tokenId: '453453',
       cashbackValue: '0.8',
@@ -368,7 +368,7 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
     })
 
   const sentUpdateCashbackForAuthorSignedTransaction =
-    await bscSDK.erc721.send.updateCashbackForAuthorSignedTransaction({
+    await bscSDK.nft.send.updateCashbackForAuthorSignedTransaction({
       chain: 'BSC',
       tokenId: '453453',
       cashbackValue: '0.8',
@@ -381,7 +381,7 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
       },
     })
 
-  const preparedBurnErc721Transaction = await bscSDK.erc721.prepare.burnSignedTransaction({
+  const preparedBurnErc721Transaction = await bscSDK.nft.prepare.burnSignedTransaction({
     chain: 'BSC',
     tokenId: '45343653',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -393,7 +393,7 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const sentBurnErc721Transaction = await bscSDK.erc721.send.burnSignedTransaction({
+  const sentBurnErc721Transaction = await bscSDK.nft.send.burnSignedTransaction({
     chain: 'BSC',
     tokenId: '45343653',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -652,7 +652,7 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
   })
 
   // ERC721(NFT)
-  const preparedDeployErc721Transaction = await bscSDK.erc721.prepare.deploySignedTransaction({
+  const preparedDeployErc721Transaction = await bscSDK.nft.prepare.deploySignedTransaction({
     chain: 'BSC',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
@@ -664,7 +664,7 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const sentDeployErc721Transaction = await bscSDK.erc721.send.deploySignedTransaction({
+  const sentDeployErc721Transaction = await bscSDK.nft.send.deploySignedTransaction({
     chain: 'BSC',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
@@ -676,7 +676,7 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const preparedMintSignedTransaction = await bscSDK.erc721.prepare.mintSignedTransaction({
+  const preparedMintSignedTransaction = await bscSDK.nft.prepare.mintSignedTransaction({
     chain: 'BSC',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -690,7 +690,7 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const sentMintSignedTransaction = await bscSDK.erc721.send.mintSignedTransaction({
+  const sentMintSignedTransaction = await bscSDK.nft.send.mintSignedTransaction({
     chain: 'BSC',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -704,7 +704,7 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const preparedMintMultipleSignedTransaction = await bscSDK.erc721.prepare.mintMultipleSignedTransaction({
+  const preparedMintMultipleSignedTransaction = await bscSDK.nft.prepare.mintMultipleSignedTransaction({
     chain: 'BSC',
     to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
     tokenId: ['345634563', '53545345'],
@@ -722,7 +722,7 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const sentMintMultipleSignedTransaction = await bscSDK.erc721.send.mintMultipleSignedTransaction({
+  const sentMintMultipleSignedTransaction = await bscSDK.nft.send.mintMultipleSignedTransaction({
     chain: 'BSC',
     to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
     tokenId: ['345634563', '53545345'],
@@ -740,7 +740,7 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const preparedMintCashbackSignedTransaction = await bscSDK.erc721.prepare.mintCashbackSignedTransaction({
+  const preparedMintCashbackSignedTransaction = await bscSDK.nft.prepare.mintCashbackSignedTransaction({
     chain: 'BSC',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     tokenId: '45343653',
@@ -755,7 +755,7 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const sentMintCashbackSignedTransaction = await bscSDK.erc721.send.mintCashbackSignedTransaction({
+  const sentMintCashbackSignedTransaction = await bscSDK.nft.send.mintCashbackSignedTransaction({
     chain: 'BSC',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     tokenId: '45343653',
@@ -771,7 +771,7 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
   })
 
   const preparedMintMultipleCashbackSignedTransaction =
-    await bscSDK.erc721.prepare.mintMultipleCashbackSignedTransaction({
+    await bscSDK.nft.prepare.mintMultipleCashbackSignedTransaction({
       chain: 'BSC',
       tokenId: ['53564656', '536456456'],
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
@@ -787,7 +787,7 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
     })
 
   const sentMintMultipleCashbackSignedTransaction =
-    await bscSDK.erc721.send.mintMultipleCashbackSignedTransaction({
+    await bscSDK.nft.send.mintMultipleCashbackSignedTransaction({
       chain: 'BSC',
       tokenId: ['53564656', '536456456'],
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
@@ -802,7 +802,7 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
       },
     })
 
-  const preparedMintProvenanceSignedTransaction = await bscSDK.erc721.prepare.mintProvenanceSignedTransaction(
+  const preparedMintProvenanceSignedTransaction = await bscSDK.nft.prepare.mintProvenanceSignedTransaction(
     {
       chain: 'BSC',
       tokenId: '5435345',
@@ -818,7 +818,7 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
     },
   )
 
-  const sentMintProvenanceSignedTransaction = await bscSDK.erc721.send.mintProvenanceSignedTransaction({
+  const sentMintProvenanceSignedTransaction = await bscSDK.nft.send.mintProvenanceSignedTransaction({
     chain: 'BSC',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -833,7 +833,7 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
   })
 
   const preparedMintMultipleProvenanceSignedTransaction =
-    await bscSDK.erc721.prepare.mintMultipleProvenanceSignedTransaction({
+    await bscSDK.nft.prepare.mintMultipleProvenanceSignedTransaction({
       chain: 'BSC',
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       tokenId: ['53564656', '536456456'],
@@ -849,7 +849,7 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
     })
 
   const sentMintMultipleProvenanceSignedTransaction =
-    await bscSDK.erc721.send.mintMultipleProvenanceSignedTransaction({
+    await bscSDK.nft.send.mintMultipleProvenanceSignedTransaction({
       chain: 'BSC',
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       tokenId: ['53564656', '536456456'],
@@ -864,7 +864,7 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
       },
     })
 
-  const preparedTransferSignedTransaction = await bscSDK.erc721.prepare.transferSignedTransaction({
+  const preparedTransferSignedTransaction = await bscSDK.nft.prepare.transferSignedTransaction({
     chain: 'BSC',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -877,7 +877,7 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const sentTransferSignedTransaction = await bscSDK.erc721.send.transferSignedTransaction({
+  const sentTransferSignedTransaction = await bscSDK.nft.send.transferSignedTransaction({
     chain: 'BSC',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -891,7 +891,7 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
   })
 
   const preparedUpdateCashbackForAuthorSignedTransaction =
-    await bscSDK.erc721.prepare.updateCashbackForAuthorSignedTransaction({
+    await bscSDK.nft.prepare.updateCashbackForAuthorSignedTransaction({
       chain: 'BSC',
       tokenId: '453453',
       cashbackValue: '0.8',
@@ -905,7 +905,7 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
     })
 
   const sentUpdateCashbackForAuthorSignedTransaction =
-    await bscSDK.erc721.send.updateCashbackForAuthorSignedTransaction({
+    await bscSDK.nft.send.updateCashbackForAuthorSignedTransaction({
       chain: 'BSC',
       tokenId: '453453',
       cashbackValue: '0.8',
@@ -918,7 +918,7 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
       },
     })
 
-  const preparedBurnErc721Transaction = await bscSDK.erc721.prepare.burnSignedTransaction({
+  const preparedBurnErc721Transaction = await bscSDK.nft.prepare.burnSignedTransaction({
     chain: 'BSC',
     tokenId: '45343653',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -930,7 +930,7 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const sentBurnErc721Transaction = await bscSDK.erc721.send.burnSignedTransaction({
+  const sentBurnErc721Transaction = await bscSDK.nft.send.burnSignedTransaction({
     chain: 'BSC',
     tokenId: '45343653',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',

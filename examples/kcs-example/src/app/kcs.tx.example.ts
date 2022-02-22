@@ -115,7 +115,7 @@ export async function kcsTxWithSignatureIdExample(): Promise<void> {
   })
 
   // ERC721(NFT)
-  const preparedDeployErc721Transaction = await kcsSDK.erc721.prepare.deploySignedTransaction({
+  const preparedDeployErc721Transaction = await kcsSDK.nft.prepare.deploySignedTransaction({
     chain: 'KCS',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
@@ -127,7 +127,7 @@ export async function kcsTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const sentDeployErc721Transaction = await kcsSDK.erc721.send.deploySignedTransaction({
+  const sentDeployErc721Transaction = await kcsSDK.nft.send.deploySignedTransaction({
     chain: 'KCS',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
@@ -139,7 +139,7 @@ export async function kcsTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const preparedMintSignedTransaction = await kcsSDK.erc721.prepare.mintSignedTransaction({
+  const preparedMintSignedTransaction = await kcsSDK.nft.prepare.mintSignedTransaction({
     chain: 'KCS',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -153,7 +153,7 @@ export async function kcsTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const sentMintSignedTransaction = await kcsSDK.erc721.send.mintSignedTransaction({
+  const sentMintSignedTransaction = await kcsSDK.nft.send.mintSignedTransaction({
     chain: 'KCS',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -167,7 +167,7 @@ export async function kcsTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const preparedMintMultipleSignedTransaction = await kcsSDK.erc721.prepare.mintMultipleSignedTransaction({
+  const preparedMintMultipleSignedTransaction = await kcsSDK.nft.prepare.mintMultipleSignedTransaction({
     chain: 'KCS',
     to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
     tokenId: ['345634563', '53545345'],
@@ -185,7 +185,7 @@ export async function kcsTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const sentMintMultipleSignedTransaction = await kcsSDK.erc721.send.mintMultipleSignedTransaction({
+  const sentMintMultipleSignedTransaction = await kcsSDK.nft.send.mintMultipleSignedTransaction({
     chain: 'KCS',
     to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
     tokenId: ['345634563', '53545345'],
@@ -203,7 +203,7 @@ export async function kcsTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const preparedMintCashbackSignedTransaction = await kcsSDK.erc721.prepare.mintCashbackSignedTransaction({
+  const preparedMintCashbackSignedTransaction = await kcsSDK.nft.prepare.mintCashbackSignedTransaction({
     chain: 'KCS',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     tokenId: '45343653',
@@ -218,7 +218,7 @@ export async function kcsTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const sentMintCashbackSignedTransaction = await kcsSDK.erc721.send.mintCashbackSignedTransaction({
+  const sentMintCashbackSignedTransaction = await kcsSDK.nft.send.mintCashbackSignedTransaction({
     chain: 'KCS',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     tokenId: '45343653',
@@ -234,7 +234,7 @@ export async function kcsTxWithSignatureIdExample(): Promise<void> {
   })
 
   const preparedMintMultipleCashbackSignedTransaction =
-    await kcsSDK.erc721.prepare.mintMultipleCashbackSignedTransaction({
+    await kcsSDK.nft.prepare.mintMultipleCashbackSignedTransaction({
       chain: 'KCS',
       tokenId: ['53564656', '536456456'],
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
@@ -250,7 +250,7 @@ export async function kcsTxWithSignatureIdExample(): Promise<void> {
     })
 
   const sentMintMultipleCashbackSignedTransaction =
-    await kcsSDK.erc721.send.mintMultipleCashbackSignedTransaction({
+    await kcsSDK.nft.send.mintMultipleCashbackSignedTransaction({
       chain: 'KCS',
       tokenId: ['53564656', '536456456'],
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
@@ -265,7 +265,7 @@ export async function kcsTxWithSignatureIdExample(): Promise<void> {
       },
     })
 
-  const preparedTransferSignedTransaction = await kcsSDK.erc721.prepare.transferSignedTransaction({
+  const preparedTransferSignedTransaction = await kcsSDK.nft.prepare.transferSignedTransaction({
     chain: 'KCS',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -278,7 +278,7 @@ export async function kcsTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const sentTransferSignedTransaction = await kcsSDK.erc721.send.transferSignedTransaction({
+  const sentTransferSignedTransaction = await kcsSDK.nft.send.transferSignedTransaction({
     chain: 'KCS',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -292,7 +292,7 @@ export async function kcsTxWithSignatureIdExample(): Promise<void> {
   })
 
   const preparedUpdateCashbackForAuthorSignedTransaction =
-    await kcsSDK.erc721.prepare.updateCashbackForAuthorSignedTransaction({
+    await kcsSDK.nft.prepare.updateCashbackForAuthorSignedTransaction({
       chain: 'KCS',
       tokenId: '453453',
       cashbackValue: '0.8',
@@ -306,7 +306,7 @@ export async function kcsTxWithSignatureIdExample(): Promise<void> {
     })
 
   const sentUpdateCashbackForAuthorSignedTransaction =
-    await kcsSDK.erc721.send.updateCashbackForAuthorSignedTransaction({
+    await kcsSDK.nft.send.updateCashbackForAuthorSignedTransaction({
       chain: 'KCS',
       tokenId: '453453',
       cashbackValue: '0.8',
@@ -319,7 +319,7 @@ export async function kcsTxWithSignatureIdExample(): Promise<void> {
       },
     })
 
-  const preparedBurnErc721Transaction = await kcsSDK.erc721.prepare.burnSignedTransaction({
+  const preparedBurnErc721Transaction = await kcsSDK.nft.prepare.burnSignedTransaction({
     chain: 'KCS',
     tokenId: '45343653',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -331,7 +331,7 @@ export async function kcsTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const sentBurnErc721Transaction = await kcsSDK.erc721.send.burnSignedTransaction({
+  const sentBurnErc721Transaction = await kcsSDK.nft.send.burnSignedTransaction({
     chain: 'KCS',
     tokenId: '45343653',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -560,7 +560,7 @@ export async function kcsTxWithPrivateKeyExample(): Promise<void> {
   })
 
   //ERC721(NFT)
-  const preparedDeployErc721Transaction = await kcsSDK.erc721.prepare.deploySignedTransaction({
+  const preparedDeployErc721Transaction = await kcsSDK.nft.prepare.deploySignedTransaction({
     chain: 'KCS',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
@@ -572,7 +572,7 @@ export async function kcsTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const sentDeployErc721Transaction = await kcsSDK.erc721.send.deploySignedTransaction({
+  const sentDeployErc721Transaction = await kcsSDK.nft.send.deploySignedTransaction({
     chain: 'KCS',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
@@ -584,7 +584,7 @@ export async function kcsTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const preparedMintSignedTransaction = await kcsSDK.erc721.prepare.mintSignedTransaction({
+  const preparedMintSignedTransaction = await kcsSDK.nft.prepare.mintSignedTransaction({
     chain: 'KCS',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -598,7 +598,7 @@ export async function kcsTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const sentMintSignedTransaction = await kcsSDK.erc721.send.mintSignedTransaction({
+  const sentMintSignedTransaction = await kcsSDK.nft.send.mintSignedTransaction({
     chain: 'KCS',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -612,7 +612,7 @@ export async function kcsTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const preparedMintMultipleSignedTransaction = await kcsSDK.erc721.prepare.mintMultipleSignedTransaction({
+  const preparedMintMultipleSignedTransaction = await kcsSDK.nft.prepare.mintMultipleSignedTransaction({
     chain: 'KCS',
     to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
     tokenId: ['345634563', '53545345'],
@@ -630,7 +630,7 @@ export async function kcsTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const sentMintMultipleSignedTransaction = await kcsSDK.erc721.send.mintMultipleSignedTransaction({
+  const sentMintMultipleSignedTransaction = await kcsSDK.nft.send.mintMultipleSignedTransaction({
     chain: 'KCS',
     to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
     tokenId: ['345634563', '53545345'],
@@ -648,7 +648,7 @@ export async function kcsTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const preparedMintCashbackSignedTransaction = await kcsSDK.erc721.prepare.mintCashbackSignedTransaction({
+  const preparedMintCashbackSignedTransaction = await kcsSDK.nft.prepare.mintCashbackSignedTransaction({
     chain: 'KCS',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     tokenId: '45343653',
@@ -663,7 +663,7 @@ export async function kcsTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const sentMintCashbackSignedTransaction = await kcsSDK.erc721.send.mintCashbackSignedTransaction({
+  const sentMintCashbackSignedTransaction = await kcsSDK.nft.send.mintCashbackSignedTransaction({
     chain: 'KCS',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     tokenId: '45343653',
@@ -679,7 +679,7 @@ export async function kcsTxWithPrivateKeyExample(): Promise<void> {
   })
 
   const preparedMintMultipleCashbackSignedTransaction =
-    await kcsSDK.erc721.prepare.mintMultipleCashbackSignedTransaction({
+    await kcsSDK.nft.prepare.mintMultipleCashbackSignedTransaction({
       chain: 'KCS',
       tokenId: ['53564656', '536456456'],
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
@@ -695,7 +695,7 @@ export async function kcsTxWithPrivateKeyExample(): Promise<void> {
     })
 
   const sentMintMultipleCashbackSignedTransaction =
-    await kcsSDK.erc721.send.mintMultipleCashbackSignedTransaction({
+    await kcsSDK.nft.send.mintMultipleCashbackSignedTransaction({
       chain: 'KCS',
       tokenId: ['53564656', '536456456'],
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
@@ -710,7 +710,7 @@ export async function kcsTxWithPrivateKeyExample(): Promise<void> {
       },
     })
 
-  const preparedTransferSignedTransaction = await kcsSDK.erc721.prepare.transferSignedTransaction({
+  const preparedTransferSignedTransaction = await kcsSDK.nft.prepare.transferSignedTransaction({
     chain: 'KCS',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -723,7 +723,7 @@ export async function kcsTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const sentTransferSignedTransaction = await kcsSDK.erc721.send.transferSignedTransaction({
+  const sentTransferSignedTransaction = await kcsSDK.nft.send.transferSignedTransaction({
     chain: 'KCS',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -737,7 +737,7 @@ export async function kcsTxWithPrivateKeyExample(): Promise<void> {
   })
 
   const preparedUpdateCashbackForAuthorSignedTransaction =
-    await kcsSDK.erc721.prepare.updateCashbackForAuthorSignedTransaction({
+    await kcsSDK.nft.prepare.updateCashbackForAuthorSignedTransaction({
       chain: 'KCS',
       tokenId: '453453',
       cashbackValue: '0.8',
@@ -751,7 +751,7 @@ export async function kcsTxWithPrivateKeyExample(): Promise<void> {
     })
 
   const sentUpdateCashbackForAuthorSignedTransaction =
-    await kcsSDK.erc721.send.updateCashbackForAuthorSignedTransaction({
+    await kcsSDK.nft.send.updateCashbackForAuthorSignedTransaction({
       chain: 'KCS',
       tokenId: '453453',
       cashbackValue: '0.8',
@@ -764,7 +764,7 @@ export async function kcsTxWithPrivateKeyExample(): Promise<void> {
       },
     })
 
-  const preparedBurnErc721Transaction = await kcsSDK.erc721.prepare.burnSignedTransaction({
+  const preparedBurnErc721Transaction = await kcsSDK.nft.prepare.burnSignedTransaction({
     chain: 'KCS',
     tokenId: '45343653',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -776,7 +776,7 @@ export async function kcsTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const sentBurnErc721Transaction = await kcsSDK.erc721.send.burnSignedTransaction({
+  const sentBurnErc721Transaction = await kcsSDK.nft.send.burnSignedTransaction({
     chain: 'KCS',
     tokenId: '45343653',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
