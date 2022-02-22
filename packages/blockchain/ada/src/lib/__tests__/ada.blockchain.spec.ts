@@ -6,10 +6,7 @@ import {
 } from '@tatumio/shared-testing-common'
 import { TatumAdaSDK } from '../ada.sdk'
 import * as apiClient from '@tatumio/api-client'
-import {
-  AdaTransactionFromAddress,
-  PrivKeyRequest,
-} from '@tatumio/api-client'
+import { AdaTransactionFromAddress, PrivKeyRequest } from '@tatumio/api-client'
 
 jest.mock('@tatumio/api-client')
 const mockedApi = jest.mocked(apiClient.ApiServices, true)

@@ -22,11 +22,11 @@ const transaction = async (transferAda: AdaTransaction) => {
 export const adaTx = () => {
   return {
     prepare: {
-      transaction: async (transferAda: AdaTransaction) => transaction(transferAda),
+      transaction: async (transferAda: AdaTransaction) => await transaction(transferAda),
     },
     send: {
       transaction: async (transferAda: AdaTransaction) =>
-        await BlockchainAdaService.adaBroadcast({
+        BlockchainAdaService.adaBroadcast({
           txData: await transaction(transferAda),
         }),
     },

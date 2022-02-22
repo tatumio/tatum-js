@@ -89,7 +89,7 @@ const addAddressInputsWithoutPrivateKey = async (
   return amount
 }
 
-const addInputsPrivateKeys = async (froms: FromAddress[] | FromAddress[]) => {
+const addInputsPrivateKeys = async (froms: FromAddress[] | FromUTXO[]) => {
   const privateKeysToSign = []
   for (const from of froms) {
     privateKeysToSign.push(from.signatureId || from.privateKey)
