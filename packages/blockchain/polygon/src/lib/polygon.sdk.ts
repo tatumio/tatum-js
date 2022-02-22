@@ -52,6 +52,12 @@ export const TatumPolygonSDK = (args: SDKArguments) => {
       get: BlockchainPolygonMaticService.polygonGetTransaction,
       getAccountTransactions: BlockchainPolygonMaticService.polygonGetTransactionByAddress,
       estimateGas: BlockchainPolygonMaticService.polygonEstimateGas,
+      smartContractInvocation: BlockchainPolygonMaticService.polygonBlockchainSmartContractInvocation,
+      blockchainTransfer: BlockchainPolygonMaticService.polygonBlockchainTransfer,
+      generateAddress: BlockchainPolygonMaticService.polygonGenerateAddress,
+      generateAddressPrivateKey: BlockchainPolygonMaticService.polygonGenerateAddressPrivateKey,
+      generateWallet: BlockchainPolygonMaticService.polygonGenerateWallet,
+      web3Driver: BlockchainPolygonMaticService.polygonWeb3Driver,
     },
   }
 }

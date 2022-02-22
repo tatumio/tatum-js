@@ -6,7 +6,7 @@ import { EvmBasedWeb3 } from '../../services/evm-based.web3'
 import { evmBasedUtils } from '../../evm-based.utils'
 import { CallReadSmartContractMethod } from '@tatumio/api-client'
 
-const smartContractWriteMethodInvocation = async (
+export const smartContractWriteMethodInvocation = async (
   body: ChainSmartContractMethodInvocation,
   web3: EvmBasedWeb3,
   provider?: string,
@@ -18,7 +18,7 @@ const smartContractWriteMethodInvocation = async (
   const contract = new client.eth.Contract([methodABI])
 
   const tx: TransactionConfig = {
-    from: 0,
+    from: undefined,
     to: evmBasedUtils.transformAddress(contractAddress).trim(),
     value: amount ? `0x${new BigNumber(client.utils.toWei(amount, 'ether')).toString(16)}` : undefined,
     data: contract.methods[methodName as string](...params).encodeABI(),
