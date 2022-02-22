@@ -260,7 +260,7 @@ export const marketplace = (args: {
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
       approveErc20Spending: async (body: ApproveErc20, provider?: string) =>
-        erc20(args).prepare.approveSignedTransaction(body, args.web3, provider),
+        erc20(args).prepare.approveSignedTransaction(body, provider),
       /**
        * Approve NFT transfer for listing.
        * @param body request data
@@ -316,7 +316,7 @@ export const marketplace = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      createMarketplaceListing: async (body: ChainSellAssetOnMarketplace, provider?: string) =>
+      sellMarketplaceListing: async (body: ChainSellAssetOnMarketplace, provider?: string) =>
         sellAsset(body, args.web3, provider),
 
       /**
@@ -337,7 +337,7 @@ export const marketplace = (args: {
        */
       approveErc20Spending: async (body: ApproveErc20, provider?: string) =>
         args.broadcastFunction({
-          txData: await erc20(args).prepare.approveSignedTransaction(body, args.web3, provider),
+          txData: await erc20(args).prepare.approveSignedTransaction(body, provider),
         }),
       /**
        * Approve NFT transfer for listing.
@@ -409,7 +409,7 @@ export const marketplace = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      createMarketplaceListing: async (body: ChainSellAssetOnMarketplace, provider?: string) =>
+      sellMarketplaceListing: async (body: ChainSellAssetOnMarketplace, provider?: string) =>
         args.broadcastFunction({
           txData: await sellAsset(body, args.web3, provider),
         }),

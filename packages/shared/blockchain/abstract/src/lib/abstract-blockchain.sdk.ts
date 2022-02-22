@@ -172,6 +172,11 @@ export interface SdkWithErc721Functions {
       body: ChainUpdateCashbackErc721,
       provider?: string,
     ): Promise<string>
+    mintProvenanceSignedTransaction(body: ChainMintNft, provider?: string): Promise<string>
+    mintMultipleProvenanceSignedTransaction(
+      body: ChainMintMultipleNft & { fixedValues: string[][] },
+      provider?: string,
+    ): Promise<string>
   }
 }
 
@@ -221,7 +226,7 @@ export interface SdkWithMarketplaceFunctions {
     updateFee(body: ChainUpdateFee, provider?: string): Promise<string>
     updateFeeRecipient(body: ChainUpdateFeeRecipient, provider?: string): Promise<string>
     buyMarketplaceListing(body: ChainBuyAssetOnMarketplace, provider?: string): Promise<string>
-    createMarketplaceListing(body: ChainSellAssetOnMarketplace, provider?: string): Promise<string>
+    sellMarketplaceListing(body: ChainSellAssetOnMarketplace, provider?: string): Promise<string>
     cancelMarketplaceListing(body: ChainCancelSellAssetOnMarketplace, provider?: string): Promise<string>
   }
 

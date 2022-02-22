@@ -126,17 +126,8 @@ describe('KlaytnSDK - tx', () => {
         marketplaceTestFactory.prepare.approveSpending(sdk.marketplace, inmemoryBlockchain.accounts)
       })
 
-      describe('createMarketplaceListing', () => {
-        marketplaceTestFactory.prepare.createMarketplaceListing(
-          sdk.marketplace,
-          TEST_DATA.KLAYTN,
-          'KLAY',
-          inmemoryBlockchain.accounts,
-        )
-      })
-
-      describe('createMarketplaceListingErc20', () => {
-        marketplaceTestFactory.prepare.createMarketplaceListingErc20(
+      describe('sellMarketplaceListing', () => {
+        marketplaceTestFactory.prepare.sellMarketplaceListing(
           sdk.marketplace,
           TEST_DATA.KLAYTN,
           'KLAY',

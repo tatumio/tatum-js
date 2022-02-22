@@ -53,7 +53,7 @@ export const marketplaceTestFactory = {
       })
     },
 
-    createMarketplaceListing: (
+    sellMarketplaceListing: (
       sdk: SdkWithMarketplaceFunctions,
       testData: BlockchainTestData,
       chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC' | 'KLAY',
@@ -62,7 +62,7 @@ export const marketplaceTestFactory = {
       const provider = testData?.PROVIDER
 
       it('valid from signatureId', async () => {
-        const result = await sdk.prepare.createMarketplaceListing({
+        const result = await sdk.prepare.sellMarketplaceListing({
           chain,
           fee: {
             gasLimit: '1000000',
@@ -83,7 +83,7 @@ export const marketplaceTestFactory = {
       })
 
       it('valid from privateKey', async () => {
-        const result = await sdk.prepare.createMarketplaceListing(
+        const result = await sdk.prepare.sellMarketplaceListing(
           {
             chain,
             fee: {
@@ -98,63 +98,6 @@ export const marketplaceTestFactory = {
             isErc721: true,
             price: '1',
             seller: '0x48d4bA7B2698A4b89635b9a2E391152350DB740f',
-          },
-          provider,
-        )
-
-        expectHexString(result)
-      })
-    },
-
-    createMarketplaceListingErc20: (
-      sdk: SdkWithMarketplaceFunctions,
-      testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC' | 'KLAY',
-      accounts: GanacheAccount[],
-    ) => {
-      const provider = testData?.PROVIDER
-
-      it('valid from signatureId', async () => {
-        const result = await sdk.prepare.createMarketplaceListing({
-          chain,
-          fee: {
-            gasLimit: '1000000',
-            gasPrice: '20',
-          },
-          signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-          contractAddress: '0xd093bEd4BC06403bfEABB54667B42C48533D3Fd9',
-          nftAddress: '0x1214BEada6b25bc98f7494C7BDBf22C095FDCaBD',
-          tokenId: '33333',
-          listingId: '1',
-          isErc721: true,
-          price: '1',
-          seller: '0x48d4bA7B2698A4b89635b9a2E391152350DB740f',
-          erc20Address: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-          amount: '1',
-        })
-
-        const json = JSON.parse(result)
-        expectHexString(json.data)
-      })
-
-      it('valid from privateKey', async () => {
-        const result = await sdk.prepare.createMarketplaceListing(
-          {
-            chain,
-            fee: {
-              gasLimit: '1000000',
-              gasPrice: '20',
-            },
-            fromPrivateKey: accounts[0].privateKey,
-            contractAddress: '0xd093bEd4BC06403bfEABB54667B42C48533D3Fd9',
-            nftAddress: '0x1214BEada6b25bc98f7494C7BDBf22C095FDCaBD',
-            tokenId: '33333',
-            listingId: '2',
-            isErc721: true,
-            price: '1',
-            seller: '0x48d4bA7B2698A4b89635b9a2E391152350DB740f',
-            erc20Address: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-            amount: '1',
           },
           provider,
         )
