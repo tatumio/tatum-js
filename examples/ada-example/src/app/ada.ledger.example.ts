@@ -128,36 +128,3 @@ export async function adaLedgerTransactionExample() {
     ],
   })
 }
-
-// export async function adaLedgerVirtualCurrencyExample() {
-//   const virtualCurrencyAcc = await adaSDK.ledger.virtualCurrency.create({
-//     name: 'VC_VIRTUAL',
-//     supply: '1000000',
-//     basePair: 'CARDANO',
-//     baseRate: 1,
-//     customer: {
-//       accountingCurrency: 'USD',
-//       customerCountry: 'US',
-//       externalId: '123654',
-//       providerCountry: 'US',
-//     },
-//     description: 'My Virtual Token description.',
-//     accountCode: 'AC_1011_B',
-//     accountNumber: '1234567890',
-//     accountingCurrency: 'USD',
-//   })
-//   const virtualCurrency = await adaSDK.ledger.virtualCurrency.getByName('VC_VIRTUAL')
-//   const mintTx = await adaSDK.ledger.virtualCurrency.mint({
-//     accountId: '5e68c66581f2ee32bc354087',
-//     amount: '1.5',
-//   })
-//   const revokeTx = await adaSDK.ledger.virtualCurrency.revoke({
-//     accountId: '5e68c66581f2ee32bc354087',
-//     amount: '1.5',
-//   })
-//   await adaSDK.ledger.virtualCurrency.update({
-//     name: 'VC_VIRTUAL',
-//     baseRate: 1,
-//     basePair: 'EUR',
-//   })
-// }

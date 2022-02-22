@@ -25,6 +25,11 @@ export const TatumAdaSDK = (args: SDKArguments) => {
       getTransaction: BlockchainAdaService.adaGetRawTransaction,
       getTransactionByAddress: BlockchainAdaService.adaGetTxByAddress,
       getUTXOs: BlockchainAdaService.adaGetUtxoByAddress,
+      generateAddress: BlockchainAdaService.adaGenerateAddress,
+      generateAddressPrivateKey: BlockchainAdaService.adaGenerateAddressPrivateKey,
+      generateWallet: BlockchainAdaService.adaGenerateWallet,
+      graphQL: BlockchainAdaService.adaGraphQl,
+      blockchainTransfer: BlockchainAdaService.adaTransferBlockchain,
     },
   }
 }

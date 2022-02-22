@@ -9,4 +9,6 @@ export const ADA_TEST_DATA = {
   INVALID_XPUB_ERROR: 'Non-base58 character',
   INVALUD_MNEMONIC_ERROR: 'Invalid or unsupported mnemonic format:',
   INVALID_PRIVATE_KEY_CHILD_INDEX_ERROR: 'Invalid buffer length',
+  BLOCK_HASH: '0x5d40698ee1b1ec589035f2a39c6162287e9056868cc79d66cfb248ba9f66c3fc',
+  TX_HASH: '0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7',
 }

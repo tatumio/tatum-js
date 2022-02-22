@@ -5,8 +5,6 @@ describe('TatumAdaSDK', () => {
   const sdk = TatumAdaSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
   const testData = TEST_DATA.ADA.TESTNET
 
-  jest.setTimeout(99999)
-
   describe('Wallet', () => {
     describe('Generate wallet', () => {
       it('valid input mnemonic', async () => {
