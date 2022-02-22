@@ -4,21 +4,16 @@ import {
   erc20,
   erc721,
   EvmBasedWeb3,
-  multiToken,
   smartContract,
   marketplace,
-  native,
 } from '@tatumio/shared-blockchain-evm-based'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
+import { oneMultiToken } from './one.multitoken'
+import { oneNative } from './one.native'
 
 export const oneTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3 }) => {
   return {
-    native: {
-      ...native({
-        ...args,
-        broadcastFunction: BlockchainHarmonyOneService.oneBroadcast,
-      }),
-    },
+    native: oneNative(args),
     erc20: {
       ...erc20({
         ...args,
@@ -37,12 +32,7 @@ export const oneTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBa
         broadcastFunction: BlockchainHarmonyOneService.oneBroadcast,
       }),
     },
-    multiToken: {
-      ...multiToken({
-        ...args,
-        broadcastFunction: BlockchainHarmonyOneService.oneBroadcast,
-      }),
-    },
+    multiToken: oneMultiToken(args),
     custodial: {
       ...custodial({
         ...args,

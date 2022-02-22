@@ -282,12 +282,11 @@ export const multiToken = (args: {
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction data to be broadcast to blockchain.
        */
-      mintMultiTokenTransaction: async (body: ChainMintMultiToken, provider?: string) => {
-        await args.broadcastFunction({
+      mintMultiTokenTransaction: async (body: ChainMintMultiToken, provider?: string) =>
+        args.broadcastFunction({
           txData: (await mintMultiToken(body, args.web3, provider)) as string,
           signatureId: body.signatureId,
-        })
-      },
+        }),
       /**
        * Send MultiToken mint batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * @param body content of the transaction to broadcast
