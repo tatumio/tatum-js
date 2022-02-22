@@ -1,8 +1,19 @@
-import { IsArray, IsBoolean, IsIn, IsNotEmpty, IsOptional, Length, Min, ValidateIf } from 'class-validator'
+import {
+  IsArray,
+  IsBoolean,
+  IsIn,
+  IsNotEmpty,
+  IsOptional,
+  IsUUID,
+  Length,
+  Min,
+  Validate,
+  ValidateIf,
+} from 'class-validator'
 import { Currency } from './Currency'
-import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId'
+import { Mint721BatchBuiltInPrivateKeyValidator } from '../validation/Mint721BatchBuiltInPrivateKeyValidator'
 
-export class MintMultipleErc721 extends PrivateKeyOrSignatureId {
+export class MintMultipleErc721 {
 
   @IsNotEmpty()
   @IsArray()
@@ -12,12 +23,17 @@ export class MintMultipleErc721 extends PrivateKeyOrSignatureId {
   @IsArray()
   public tokenId: string[];
 
+  @Validate(Mint721BatchBuiltInPrivateKeyValidator)
   @IsNotEmpty()
   @IsArray()
   public url: string[];
 
+  @IsOptional()
+  @Length(42, 43)
+  public minter?: string;
+
   @IsNotEmpty()
-  @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC, Currency.KLAY, Currency.TRON, Currency.ONE, Currency.MATIC])
+  @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.KLAY, Currency.ONE, Currency.MATIC])
   public chain: Currency;
 
   @IsNotEmpty()
@@ -51,4 +67,17 @@ export class MintMultipleErc721 extends PrivateKeyOrSignatureId {
   @IsOptional()
   @ValidateIf(o => o.authorAddresses && o.cashbackValues)
   public erc20?: string;
+
+  @IsOptional()
+  @Length(64, 66)
+  public fromPrivateKey?: string;
+
+  @IsOptional()
+  @IsUUID('4')
+  public signatureId?: string;
+
+  @ValidateIf(o => o.signatureId)
+  @IsOptional()
+  @Min(0)
+  public index?: number;
 }
