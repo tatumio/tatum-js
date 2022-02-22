@@ -265,8 +265,8 @@ export async function klaytnTxWithSignatureIdExample(): Promise<void> {
       },
     })
 
-  const preparedMintProvenanceSignedTransaction =
-    await klaytnSDK.nft.prepare.mintProvenanceSignedTransaction({
+  const preparedMintProvenanceSignedTransaction = await klaytnSDK.nft.prepare.mintProvenanceSignedTransaction(
+    {
       chain: 'KLAY',
       tokenId: '5435345',
       to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -278,7 +278,8 @@ export async function klaytnTxWithSignatureIdExample(): Promise<void> {
         gasLimit: '326452',
         gasPrice: '20',
       },
-    })
+    },
+  )
 
   const sentMintProvenanceSignedTransaction = await klaytnSDK.nft.send.mintProvenanceSignedTransaction({
     chain: 'KLAY',
@@ -770,8 +771,8 @@ export async function klaytnTxWithPrivateKeyExample(): Promise<void> {
       },
     })
 
-  const preparedMintProvenanceSignedTransaction =
-    await klaytnSDK.nft.prepare.mintProvenanceSignedTransaction({
+  const preparedMintProvenanceSignedTransaction = await klaytnSDK.nft.prepare.mintProvenanceSignedTransaction(
+    {
       chain: 'KLAY',
       tokenId: '5435345',
       to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -783,7 +784,8 @@ export async function klaytnTxWithPrivateKeyExample(): Promise<void> {
         gasLimit: '326452',
         gasPrice: '20',
       },
-    })
+    },
+  )
 
   const sentMintProvenanceSignedTransaction = await klaytnSDK.nft.send.mintProvenanceSignedTransaction({
     chain: 'KLAY',
