@@ -136,16 +136,14 @@ export const oneMultiToken = (args: {
       mintMultiTokenTransaction: async (
         ...params: Parameters<typeof unpatchedMultiToken.send.mintMultiTokenTransaction>
       ) =>
-        await BlockchainHarmonyOneService.oneBroadcast({
-          txData: await unpatchedMultiToken.prepare.mintMultiTokenTransaction(
-            {
-              ...params[0],
-              to: oneUtils.transformAddress(params[0].to),
-            },
-            params[1],
-          ),
-          signatureId: params[0].signatureId,
-        }),
+        unpatchedMultiToken.send.mintMultiTokenTransaction(
+          {
+            ...params[0],
+            contractAddress: oneUtils.transformAddress(params[0].contractAddress),
+            to: oneUtils.transformAddress(params[0].to),
+          },
+          params[1],
+        ),
       /**
        * Send MultiToken mint batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * @param body content of the transaction to broadcast
@@ -155,17 +153,14 @@ export const oneMultiToken = (args: {
       mintMultiTokenBatchTransaction: async (
         ...params: Parameters<typeof unpatchedMultiToken.send.mintMultiTokenBatchTransaction>
       ) =>
-        BlockchainHarmonyOneService.oneBroadcast({
-          txData: await unpatchedMultiToken.prepare.mintMultiTokenBatchTransaction(
-            {
-              ...params[0],
-              to: params[0].to.map((t) => oneUtils.transformAddress(t)),
-              contractAddress: oneUtils.transformAddress(params[0].contractAddress),
-            },
-            params[1],
-          ),
-          signatureId: params[0].signatureId,
-        }),
+        unpatchedMultiToken.send.mintMultiTokenBatchTransaction(
+          {
+            ...params[0],
+            contractAddress: oneUtils.transformAddress(params[0].contractAddress),
+            to: params[0].to.map((t) => oneUtils.transformAddress(t)),
+          },
+          params[1],
+        ),
       /**
        * Send MultiToken transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -176,17 +171,14 @@ export const oneMultiToken = (args: {
       transferMultiTokenTransaction: async (
         ...params: Parameters<typeof unpatchedMultiToken.send.transferMultiTokenTransaction>
       ) =>
-        BlockchainHarmonyOneService.oneBroadcast({
-          txData: await unpatchedMultiToken.prepare.transferMultiTokenTransaction(
-            {
-              ...params[0],
-              to: oneUtils.transformAddress(params[0].to),
-              contractAddress: oneUtils.transformAddress(params[0].contractAddress),
-            },
-            params[1],
-          ),
-          signatureId: params[0].signatureId,
-        }),
+        unpatchedMultiToken.send.transferMultiTokenTransaction(
+          {
+            ...params[0],
+            contractAddress: oneUtils.transformAddress(params[0].contractAddress),
+            to: oneUtils.transformAddress(params[0].to),
+          },
+          params[1],
+        ),
       /**
        * Send MultiToken batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -197,17 +189,14 @@ export const oneMultiToken = (args: {
       transferMultiTokenBatchTransaction: async (
         ...params: Parameters<typeof unpatchedMultiToken.send.transferMultiTokenBatchTransaction>
       ) =>
-        BlockchainHarmonyOneService.oneBroadcast({
-          txData: await unpatchedMultiToken.prepare.transferMultiTokenBatchTransaction(
-            {
-              ...params[0],
-              to: oneUtils.transformAddress(params[0].to),
-              contractAddress: oneUtils.transformAddress(params[0].contractAddress),
-            },
-            params[1],
-          ),
-          signatureId: params[0].signatureId,
-        }),
+        unpatchedMultiToken.send.transferMultiTokenBatchTransaction(
+          {
+            ...params[0],
+            contractAddress: oneUtils.transformAddress(params[0].contractAddress),
+            to: oneUtils.transformAddress(params[0].to),
+          },
+          params[1],
+        ),
       /**
        ** Send MultiToken deploy transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * @param body content of the transaction to broadcast
@@ -224,17 +213,14 @@ export const oneMultiToken = (args: {
       burnMultiTokenTransaction: async (
         ...params: Parameters<typeof unpatchedMultiToken.send.burnMultiTokenTransaction>
       ) =>
-        BlockchainHarmonyOneService.oneBroadcast({
-          txData: await unpatchedMultiToken.prepare.burnMultiTokenTransaction(
-            {
-              ...params[0],
-              contractAddress: oneUtils.transformAddress(params[0].contractAddress),
-              account: oneUtils.transformAddress(params[0].account),
-            },
-            params[1],
-          ),
-          signatureId: params[0].signatureId,
-        }),
+        unpatchedMultiToken.send.burnMultiTokenTransaction(
+          {
+            ...params[0],
+            contractAddress: oneUtils.transformAddress(params[0].contractAddress),
+            account: oneUtils.transformAddress(params[0].account),
+          },
+          params[1],
+        ),
 
       /**
        * Send MultiToken butn batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -245,17 +231,14 @@ export const oneMultiToken = (args: {
       burnMultiTokenBatchTransaction: async (
         ...params: Parameters<typeof unpatchedMultiToken.send.burnMultiTokenBatchTransaction>
       ) =>
-        BlockchainHarmonyOneService.oneBroadcast({
-          txData: await unpatchedMultiToken.prepare.burnMultiTokenBatchTransaction(
-            {
-              ...params[0],
-              contractAddress: oneUtils.transformAddress(params[0].contractAddress),
-              account: oneUtils.transformAddress(params[0].account),
-            },
-            params[1],
-          ),
-          signatureId: params[0].signatureId,
-        }),
+        unpatchedMultiToken.send.burnMultiTokenBatchTransaction(
+          {
+            ...params[0],
+            contractAddress: oneUtils.transformAddress(params[0].contractAddress),
+            account: oneUtils.transformAddress(params[0].account),
+          },
+          params[1],
+        ),
     },
   }
 }

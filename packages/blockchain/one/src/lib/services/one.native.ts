@@ -42,16 +42,13 @@ export const oneNative = (args: {
       transferSignedTransaction: async (
         ...params: Parameters<typeof unpatchedNative.prepare.transferSignedTransaction>
       ) =>
-        BlockchainHarmonyOneService.oneBroadcast({
-          txData: await unpatchedNative.prepare.transferSignedTransaction(
-            {
-              ...params[0],
-              to: oneUtils.transformAddress(params[0].to),
-            },
-            params[1],
-          ),
-          signatureId: params[0].signatureId,
-        }),
+        unpatchedNative.send.transferSignedTransaction(
+          {
+            ...params[0],
+            to: oneUtils.transformAddress(params[0].to),
+          },
+          params[1],
+        ),
     },
   }
 }
