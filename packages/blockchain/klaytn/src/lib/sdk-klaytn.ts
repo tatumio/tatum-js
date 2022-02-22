@@ -12,9 +12,10 @@ const blockchain = Blockchain.KLAY
 export const TatumKlaytnSDK = (args: SDKArguments) => {
   const web3 = klaytnWeb3({ blockchain })
   const txService = klaytnTxService({ blockchain, web3 })
+  const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
 
   return {
-    ...evmBasedSdk({ ...args, blockchain, web3 }),
+    ...evmSdk,
     kms: klaytnKmsService({ blockchain, web3 }),
     transaction: txService.native,
     erc20: {
@@ -22,7 +23,10 @@ export const TatumKlaytnSDK = (args: SDKArguments) => {
       getErc20TransactionByAddress: BlockchainFungibleTokenService.erc20GetTransactionByAddress,
       getErc20AccountBalance: BlockchainFungibleTokenService.erc20GetBalance,
     },
-    erc721: txService.erc721,
+    nft: {
+      ...txService.erc721,
+      ...nft
+    },
     multiToken: txService.multiToken,
     marketplace: {
       ...evmBasedMarketplace({

@@ -70,44 +70,44 @@ describe('EthSDK - tx', () => {
     jest.setTimeout(99999)
     describe('prepare', () => {
       describe('deploySignedTransaction', () => {
-        erc721TestFactory.prepare.deploySignedTransaction(sdk.erc721, TEST_DATA.ETH, Currency.ETH)
+        erc721TestFactory.prepare.deploySignedTransaction(sdk.nft, TEST_DATA.ETH, Currency.ETH)
       })
 
       describe('transferSignedTransaction', () => {
-        erc721TestFactory.prepare.transferSignedTransaction(sdk.erc721, TEST_DATA.ETH, Currency.ETH)
+        erc721TestFactory.prepare.transferSignedTransaction(sdk.nft, TEST_DATA.ETH, Currency.ETH)
       })
 
       describe('mintSignedTransaction', () => {
-        erc721TestFactory.prepare.mintSignedTransaction(sdk.erc721, TEST_DATA.ETH, Currency.ETH)
+        erc721TestFactory.prepare.mintSignedTransaction(sdk.nft, TEST_DATA.ETH, Currency.ETH)
       })
 
       describe('burnSignedTransaction', () => {
-        erc721TestFactory.prepare.burnSignedTransaction(sdk.erc721, TEST_DATA.ETH, Currency.ETH)
+        erc721TestFactory.prepare.burnSignedTransaction(sdk.nft, TEST_DATA.ETH, Currency.ETH)
       })
 
       describe('mintCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.erc721, TEST_DATA.ETH, Currency.ETH)
+        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.nft, TEST_DATA.ETH, Currency.ETH)
       })
 
       describe('mintMultipleCashbackSignedTransaction', () => {
         erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(
-          sdk.erc721,
+          sdk.nft,
           TEST_DATA.ETH,
           Currency.ETH,
         )
       })
 
       describe('mintMultipleSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.erc721, TEST_DATA.ETH, Currency.ETH)
+        erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.nft, TEST_DATA.ETH, Currency.ETH)
       })
 
       describe('mintProvenanceSignedTransaction', () => {
-        erc721TestFactory.prepare.mintProvenanceSignedTransaction(sdk.erc721, TEST_DATA.ETH, Currency.ETH)
+        erc721TestFactory.prepare.mintProvenanceSignedTransaction(sdk.nft, TEST_DATA.ETH, Currency.ETH)
       })
 
       describe('mintMultipleProvenanceSignedTransaction', () => {
         erc721TestFactory.prepare.mintMultipleProvenanceSignedTransaction(
-          sdk.erc721,
+          sdk.nft,
           TEST_DATA.ETH,
           Currency.ETH,
         )
@@ -115,7 +115,7 @@ describe('EthSDK - tx', () => {
 
       describe('updateCashbackForAuthorSignedTransaction', () => {
         erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(
-          sdk.erc721,
+          sdk.nft,
           TEST_DATA.ETH,
           Currency.ETH,
         )

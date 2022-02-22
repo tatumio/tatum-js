@@ -115,40 +115,40 @@ describe('OneSDK - tx', () => {
   describe('erc721', () => {
     describe('prepare', () => {
       describe('deploySignedTransaction', () => {
-        erc721TestFactory.prepare.deploySignedTransaction(sdk.erc721, TEST_DATA.ONE, Currency.ONE)
+        erc721TestFactory.prepare.deploySignedTransaction(sdk.nft, TEST_DATA.ONE, Currency.ONE)
       })
 
       describe('transferSignedTransaction', () => {
-        erc721TestFactory.prepare.transferSignedTransaction(sdk.erc721, TEST_DATA.ONE, Currency.ONE)
+        erc721TestFactory.prepare.transferSignedTransaction(sdk.nft, TEST_DATA.ONE, Currency.ONE)
       })
 
       describe('mintSignedTransaction', () => {
-        erc721TestFactory.prepare.mintSignedTransaction(sdk.erc721, TEST_DATA.ONE, Currency.ONE)
+        erc721TestFactory.prepare.mintSignedTransaction(sdk.nft, TEST_DATA.ONE, Currency.ONE)
       })
 
       describe('burnSignedTransaction', () => {
-        erc721TestFactory.prepare.burnSignedTransaction(sdk.erc721, TEST_DATA.ONE, Currency.ONE)
+        erc721TestFactory.prepare.burnSignedTransaction(sdk.nft, TEST_DATA.ONE, Currency.ONE)
       })
 
       describe('mintCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.erc721, TEST_DATA.ONE, Currency.ONE)
+        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.nft, TEST_DATA.ONE, Currency.ONE)
       })
 
       describe('mintMultipleCashbackSignedTransaction', () => {
         erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(
-          sdk.erc721,
+          sdk.nft,
           TEST_DATA.ONE,
           Currency.ONE,
         )
       })
 
       describe('mintMultipleSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.erc721, TEST_DATA.ONE, Currency.ONE)
+        erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.nft, TEST_DATA.ONE, Currency.ONE)
       })
 
       describe('updateCashbackForAuthorSignedTransaction', () => {
         erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(
-          sdk.erc721,
+          sdk.nft,
           TEST_DATA.ONE,
           Currency.ONE,
         )
