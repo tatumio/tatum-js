@@ -57,14 +57,9 @@ const mintCashbackSignedTransaction = async (body: ChainMintNft, web3: EvmBasedW
   } = body
 
   const client = web3.getClient(provider, fromPrivateKey)
-  const contract = new client.eth.Contract(
-    Erc721Token.abi as any,
-    // TODO: remove ! when type will be fixed
-    contractAddress!,
-  )
+  const contract = new client.eth.Contract(Erc721Token.abi as any, contractAddress)
   const cashbacks: string[] = cashbackValues!
   const cb = cashbacks.map((c) => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
-  const transformedAddresses = authorAddresses?.map((a) => a)
   const transformedTo = to.trim()
 
   if (contractAddress) {
@@ -327,11 +322,7 @@ const mintProvenanceSignedTransaction = async (body: ChainMintNft, web3: EvmBase
 
   const client = web3.getClient(provider, fromPrivateKey)
 
-  const contract = new client.eth.Contract(
-    Erc721_Provenance.abi as any,
-    // TODO: remove ! when type will be fixed
-    contractAddress!,
-  )
+  const contract = new client.eth.Contract(Erc721_Provenance.abi as any, contractAddress)
   const cb: string[] = []
   const fval: string[] = []
   const authors: string[] = []
