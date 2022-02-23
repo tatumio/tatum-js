@@ -115,7 +115,7 @@ export async function ethTxWithSignatureIdExample(): Promise<void> {
   })
 
   // ERC721(NFT)
-  const preparedDeployErc721Transaction = await ethSDK.erc721.prepare.deploySignedTransaction({
+  const preparedDeployErc721Transaction = await ethSDK.nft.prepare.deploySignedTransaction({
     chain: 'ETH',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
@@ -127,7 +127,7 @@ export async function ethTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const sentDeployErc721Transaction = await ethSDK.erc721.send.deploySignedTransaction({
+  const sentDeployErc721Transaction = await ethSDK.nft.send.deploySignedTransaction({
     chain: 'ETH',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
@@ -139,7 +139,7 @@ export async function ethTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const preparedMintSignedTransaction = await ethSDK.erc721.prepare.mintSignedTransaction({
+  const preparedMintSignedTransaction = await ethSDK.nft.prepare.mintSignedTransaction({
     chain: 'ETH',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -153,7 +153,7 @@ export async function ethTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const sentMintSignedTransaction = await ethSDK.erc721.send.mintSignedTransaction({
+  const sentMintSignedTransaction = await ethSDK.nft.send.mintSignedTransaction({
     chain: 'ETH',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -167,7 +167,7 @@ export async function ethTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const preparedMintMultipleSignedTransaction = await ethSDK.erc721.prepare.mintMultipleSignedTransaction({
+  const preparedMintMultipleSignedTransaction = await ethSDK.nft.prepare.mintMultipleSignedTransaction({
     chain: 'ETH',
     to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
     tokenId: ['345634563', '53545345'],
@@ -185,7 +185,7 @@ export async function ethTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const sentMintMultipleSignedTransaction = await ethSDK.erc721.send.mintMultipleSignedTransaction({
+  const sentMintMultipleSignedTransaction = await ethSDK.nft.send.mintMultipleSignedTransaction({
     chain: 'ETH',
     to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
     tokenId: ['345634563', '53545345'],
@@ -203,7 +203,7 @@ export async function ethTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const preparedMintCashbackSignedTransaction = await ethSDK.erc721.prepare.mintCashbackSignedTransaction({
+  const preparedMintCashbackSignedTransaction = await ethSDK.nft.prepare.mintCashbackSignedTransaction({
     chain: 'ETH',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     tokenId: '45343653',
@@ -218,7 +218,7 @@ export async function ethTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const sentMintCashbackSignedTransaction = await ethSDK.erc721.send.mintCashbackSignedTransaction({
+  const sentMintCashbackSignedTransaction = await ethSDK.nft.send.mintCashbackSignedTransaction({
     chain: 'ETH',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     tokenId: '45343653',
@@ -234,7 +234,7 @@ export async function ethTxWithSignatureIdExample(): Promise<void> {
   })
 
   const preparedMintMultipleCashbackSignedTransaction =
-    await ethSDK.erc721.prepare.mintMultipleCashbackSignedTransaction({
+    await ethSDK.nft.prepare.mintMultipleCashbackSignedTransaction({
       chain: 'ETH',
       tokenId: ['53564656', '536456456'],
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
@@ -250,7 +250,7 @@ export async function ethTxWithSignatureIdExample(): Promise<void> {
     })
 
   const sentMintMultipleCashbackSignedTransaction =
-    await ethSDK.erc721.send.mintMultipleCashbackSignedTransaction({
+    await ethSDK.nft.send.mintMultipleCashbackSignedTransaction({
       chain: 'ETH',
       tokenId: ['53564656', '536456456'],
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
@@ -265,23 +265,21 @@ export async function ethTxWithSignatureIdExample(): Promise<void> {
       },
     })
 
-  const preparedMintProvenanceSignedTransaction = await ethSDK.erc721.prepare.mintProvenanceSignedTransaction(
-    {
-      chain: 'ETH',
-      tokenId: '5435345',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      url: 'https://my_token_data.com',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
+  const preparedMintProvenanceSignedTransaction = await ethSDK.nft.prepare.mintProvenanceSignedTransaction({
+    chain: 'ETH',
+    tokenId: '5435345',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    url: 'https://my_token_data.com',
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
     },
-  )
+  })
 
-  const sentMintProvenanceSignedTransaction = await ethSDK.erc721.send.mintProvenanceSignedTransaction({
+  const sentMintProvenanceSignedTransaction = await ethSDK.nft.send.mintProvenanceSignedTransaction({
     chain: 'ETH',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -296,7 +294,7 @@ export async function ethTxWithSignatureIdExample(): Promise<void> {
   })
 
   const preparedMintMultipleProvenanceSignedTransaction =
-    await ethSDK.erc721.prepare.mintMultipleProvenanceSignedTransaction({
+    await ethSDK.nft.prepare.mintMultipleProvenanceSignedTransaction({
       chain: 'ETH',
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       tokenId: ['53564656', '536456456'],
@@ -312,7 +310,7 @@ export async function ethTxWithSignatureIdExample(): Promise<void> {
     })
 
   const sentMintMultipleProvenanceSignedTransaction =
-    await ethSDK.erc721.send.mintMultipleProvenanceSignedTransaction({
+    await ethSDK.nft.send.mintMultipleProvenanceSignedTransaction({
       chain: 'ETH',
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       tokenId: ['53564656', '536456456'],
@@ -327,7 +325,7 @@ export async function ethTxWithSignatureIdExample(): Promise<void> {
       },
     })
 
-  const preparedTransferSignedTransaction = await ethSDK.erc721.prepare.transferSignedTransaction({
+  const preparedTransferSignedTransaction = await ethSDK.nft.prepare.transferSignedTransaction({
     chain: 'ETH',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -340,7 +338,7 @@ export async function ethTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const sentTransferSignedTransaction = await ethSDK.erc721.send.transferSignedTransaction({
+  const sentTransferSignedTransaction = await ethSDK.nft.send.transferSignedTransaction({
     chain: 'ETH',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -354,7 +352,7 @@ export async function ethTxWithSignatureIdExample(): Promise<void> {
   })
 
   const preparedUpdateCashbackForAuthorSignedTransaction =
-    await ethSDK.erc721.prepare.updateCashbackForAuthorSignedTransaction({
+    await ethSDK.nft.prepare.updateCashbackForAuthorSignedTransaction({
       chain: 'ETH',
       tokenId: '453453',
       cashbackValue: '0.8',
@@ -368,7 +366,7 @@ export async function ethTxWithSignatureIdExample(): Promise<void> {
     })
 
   const sentUpdateCashbackForAuthorSignedTransaction =
-    await ethSDK.erc721.send.updateCashbackForAuthorSignedTransaction({
+    await ethSDK.nft.send.updateCashbackForAuthorSignedTransaction({
       chain: 'ETH',
       tokenId: '453453',
       cashbackValue: '0.8',
@@ -381,7 +379,7 @@ export async function ethTxWithSignatureIdExample(): Promise<void> {
       },
     })
 
-  const preparedBurnErc721Transaction = await ethSDK.erc721.prepare.burnSignedTransaction({
+  const preparedBurnErc721Transaction = await ethSDK.nft.prepare.burnSignedTransaction({
     chain: 'ETH',
     tokenId: '45343653',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -393,7 +391,7 @@ export async function ethTxWithSignatureIdExample(): Promise<void> {
     },
   })
 
-  const sentBurnErc721Transaction = await ethSDK.erc721.send.burnSignedTransaction({
+  const sentBurnErc721Transaction = await ethSDK.nft.send.burnSignedTransaction({
     chain: 'ETH',
     tokenId: '45343653',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -718,7 +716,7 @@ export async function ethTxWithPrivateKeyExample(): Promise<void> {
   })
 
   // ERC721(NFT)
-  const preparedDeployErc721Transaction = await ethSDK.erc721.prepare.deploySignedTransaction({
+  const preparedDeployErc721Transaction = await ethSDK.nft.prepare.deploySignedTransaction({
     chain: 'ETH',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
@@ -730,7 +728,7 @@ export async function ethTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const sentDeployErc721Transaction = await ethSDK.erc721.send.deploySignedTransaction({
+  const sentDeployErc721Transaction = await ethSDK.nft.send.deploySignedTransaction({
     chain: 'ETH',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
@@ -742,7 +740,7 @@ export async function ethTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const preparedMintSignedTransaction = await ethSDK.erc721.prepare.mintSignedTransaction({
+  const preparedMintSignedTransaction = await ethSDK.nft.prepare.mintSignedTransaction({
     chain: 'ETH',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -756,7 +754,7 @@ export async function ethTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const sentMintSignedTransaction = await ethSDK.erc721.send.mintSignedTransaction({
+  const sentMintSignedTransaction = await ethSDK.nft.send.mintSignedTransaction({
     chain: 'ETH',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -770,7 +768,7 @@ export async function ethTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const preparedMintMultipleSignedTransaction = await ethSDK.erc721.prepare.mintMultipleSignedTransaction({
+  const preparedMintMultipleSignedTransaction = await ethSDK.nft.prepare.mintMultipleSignedTransaction({
     chain: 'ETH',
     to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
     tokenId: ['345634563', '53545345'],
@@ -788,7 +786,7 @@ export async function ethTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const sentMintMultipleSignedTransaction = await ethSDK.erc721.send.mintMultipleSignedTransaction({
+  const sentMintMultipleSignedTransaction = await ethSDK.nft.send.mintMultipleSignedTransaction({
     chain: 'ETH',
     to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
     tokenId: ['345634563', '53545345'],
@@ -806,7 +804,7 @@ export async function ethTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const preparedMintCashbackSignedTransaction = await ethSDK.erc721.prepare.mintCashbackSignedTransaction({
+  const preparedMintCashbackSignedTransaction = await ethSDK.nft.prepare.mintCashbackSignedTransaction({
     chain: 'ETH',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     tokenId: '45343653',
@@ -821,7 +819,7 @@ export async function ethTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const sentMintCashbackSignedTransaction = await ethSDK.erc721.send.mintCashbackSignedTransaction({
+  const sentMintCashbackSignedTransaction = await ethSDK.nft.send.mintCashbackSignedTransaction({
     chain: 'ETH',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     tokenId: '45343653',
@@ -837,7 +835,7 @@ export async function ethTxWithPrivateKeyExample(): Promise<void> {
   })
 
   const preparedMintMultipleCashbackSignedTransaction =
-    await ethSDK.erc721.prepare.mintMultipleCashbackSignedTransaction({
+    await ethSDK.nft.prepare.mintMultipleCashbackSignedTransaction({
       chain: 'ETH',
       tokenId: ['53564656', '536456456'],
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
@@ -853,7 +851,7 @@ export async function ethTxWithPrivateKeyExample(): Promise<void> {
     })
 
   const sentMintMultipleCashbackSignedTransaction =
-    await ethSDK.erc721.send.mintMultipleCashbackSignedTransaction({
+    await ethSDK.nft.send.mintMultipleCashbackSignedTransaction({
       chain: 'ETH',
       tokenId: ['53564656', '536456456'],
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
@@ -868,23 +866,21 @@ export async function ethTxWithPrivateKeyExample(): Promise<void> {
       },
     })
 
-  const preparedMintProvenanceSignedTransaction = await ethSDK.erc721.prepare.mintProvenanceSignedTransaction(
-    {
-      chain: 'ETH',
-      tokenId: '5435345',
-      to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-      url: 'https://my_token_data.com',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
-      nonce: 46533715.43995557,
-      fee: {
-        gasLimit: '326452',
-        gasPrice: '20',
-      },
+  const preparedMintProvenanceSignedTransaction = await ethSDK.nft.prepare.mintProvenanceSignedTransaction({
+    chain: 'ETH',
+    tokenId: '5435345',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    url: 'https://my_token_data.com',
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
     },
-  )
+  })
 
-  const sentMintProvenanceSignedTransaction = await ethSDK.erc721.send.mintProvenanceSignedTransaction({
+  const sentMintProvenanceSignedTransaction = await ethSDK.nft.send.mintProvenanceSignedTransaction({
     chain: 'ETH',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -899,7 +895,7 @@ export async function ethTxWithPrivateKeyExample(): Promise<void> {
   })
 
   const preparedMintMultipleProvenanceSignedTransaction =
-    await ethSDK.erc721.prepare.mintMultipleProvenanceSignedTransaction({
+    await ethSDK.nft.prepare.mintMultipleProvenanceSignedTransaction({
       chain: 'ETH',
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       tokenId: ['53564656', '536456456'],
@@ -915,7 +911,7 @@ export async function ethTxWithPrivateKeyExample(): Promise<void> {
     })
 
   const sentMintMultipleProvenanceSignedTransaction =
-    await ethSDK.erc721.send.mintMultipleProvenanceSignedTransaction({
+    await ethSDK.nft.send.mintMultipleProvenanceSignedTransaction({
       chain: 'ETH',
       to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
       tokenId: ['53564656', '536456456'],
@@ -930,7 +926,7 @@ export async function ethTxWithPrivateKeyExample(): Promise<void> {
       },
     })
 
-  const preparedTransferSignedTransaction = await ethSDK.erc721.prepare.transferSignedTransaction({
+  const preparedTransferSignedTransaction = await ethSDK.nft.prepare.transferSignedTransaction({
     chain: 'ETH',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -943,7 +939,7 @@ export async function ethTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const sentTransferSignedTransaction = await ethSDK.erc721.send.transferSignedTransaction({
+  const sentTransferSignedTransaction = await ethSDK.nft.send.transferSignedTransaction({
     chain: 'ETH',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -957,7 +953,7 @@ export async function ethTxWithPrivateKeyExample(): Promise<void> {
   })
 
   const preparedUpdateCashbackForAuthorSignedTransaction =
-    await ethSDK.erc721.prepare.updateCashbackForAuthorSignedTransaction({
+    await ethSDK.nft.prepare.updateCashbackForAuthorSignedTransaction({
       chain: 'ETH',
       tokenId: '453453',
       cashbackValue: '0.8',
@@ -971,7 +967,7 @@ export async function ethTxWithPrivateKeyExample(): Promise<void> {
     })
 
   const sentUpdateCashbackForAuthorSignedTransaction =
-    await ethSDK.erc721.send.updateCashbackForAuthorSignedTransaction({
+    await ethSDK.nft.send.updateCashbackForAuthorSignedTransaction({
       chain: 'ETH',
       tokenId: '453453',
       cashbackValue: '0.8',
@@ -984,7 +980,7 @@ export async function ethTxWithPrivateKeyExample(): Promise<void> {
       },
     })
 
-  const preparedBurnErc721Transaction = await ethSDK.erc721.prepare.burnSignedTransaction({
+  const preparedBurnErc721Transaction = await ethSDK.nft.prepare.burnSignedTransaction({
     chain: 'ETH',
     tokenId: '45343653',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -996,7 +992,7 @@ export async function ethTxWithPrivateKeyExample(): Promise<void> {
     },
   })
 
-  const sentBurnErc721Transaction = await ethSDK.erc721.send.burnSignedTransaction({
+  const sentBurnErc721Transaction = await ethSDK.nft.send.burnSignedTransaction({
     chain: 'ETH',
     tokenId: '45343653',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',

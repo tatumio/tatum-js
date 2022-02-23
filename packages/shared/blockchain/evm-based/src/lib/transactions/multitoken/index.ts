@@ -8,6 +8,7 @@ import {
   ChainTransferMultiToken,
   ChainTransferMultiTokenBatch,
 } from '@tatumio/shared-blockchain-abstract'
+import { BlockchainMultiTokenErc1155Service } from '@tatumio/api-client'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import { TransactionConfig } from 'web3-core'
 import { Erc1155 } from '../../contracts'
@@ -381,5 +382,12 @@ export const multiToken = (args: {
           signatureId: body.signatureId,
         }),
     },
+
+    getTransactionByAddress: BlockchainMultiTokenErc1155Service.multiTokenGetTransactionByAddress,
+    getTransaction: BlockchainMultiTokenErc1155Service.multiTokenGetTransaction,
+    getAddressBalance: BlockchainMultiTokenErc1155Service.multiTokenGetAddressBalance,
+    getBalance: BlockchainMultiTokenErc1155Service.multiTokenGetBalance,
+    getBalanceBatch: BlockchainMultiTokenErc1155Service.multiTokenGetBalanceBatch,
+    getMetadata: BlockchainMultiTokenErc1155Service.multiTokenGetMetadata,
   }
 }
