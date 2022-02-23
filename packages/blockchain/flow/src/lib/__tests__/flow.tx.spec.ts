@@ -167,18 +167,9 @@ describe('flowTxService', () => {
       expect(result.events).toBeDefined()
     })
 
-    /*
-    Error: failed to execute the script on the execution node execution-48601e8a1568f18ca4a574a656710342857f939f598679280a6941cc7b800b6f@execution-003.devnet33.nodes.onflow.org:3569=100: rpc error: code = InvalidArgument desc = failed to execute script: failed to execute script at block (4842fe2c37a757ba6b8d13174c196e6297650c77acd991ee0f565e37309f3519): [Error Code: 1101] cadence runtime error Execution failed:
-error: panic: Token doesnt have correct type.
-   --> 87fe4ebd0cddde06.TatumMultiNFT:110:16
-     */
-    xit('should get NFT token by address', async () => {
+    it('should get NFT token by address', async () => {
       await mintNFT()
-      const result = await txService.getNftTokenByAddress(
-        true,
-        '0x10247089e55180c9',
-        '2d103773-50e2-4a37-ac3d-61bc6af8faee',
-      )
+      const result = await txService.getNftTokenByAddress(true, '0x10247089e55180c9', 'String')
       expect(result).toBeDefined()
     })
 
