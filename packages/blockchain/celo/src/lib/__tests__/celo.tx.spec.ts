@@ -69,7 +69,7 @@ describe('CeloSDK - tx', () => {
         const provider = TEST_DATA.CELO?.PROVIDER
 
         it('should be valid from privateKey', async () => {
-          const result = await sdk.erc721.prepare.deploySignedTransaction(
+          const result = await sdk.nft.prepare.deploySignedTransaction(
             {
               chain: 'CELO',
               name: 'My ERC721',
@@ -84,7 +84,7 @@ describe('CeloSDK - tx', () => {
         })
 
         it('should be valid from signatureId', async () => {
-          const result = await sdk.erc721.prepare.deploySignedTransaction(
+          const result = await sdk.nft.prepare.deploySignedTransaction(
             {
               chain: 'CELO',
               name: 'My ERC721',
@@ -107,7 +107,7 @@ describe('CeloSDK - tx', () => {
           : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
 
         it('should be valid from privateKey', async () => {
-          const result = await sdk.erc721.prepare.mintSignedTransaction(
+          const result = await sdk.nft.prepare.mintSignedTransaction(
             {
               to: address,
               contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
@@ -124,7 +124,7 @@ describe('CeloSDK - tx', () => {
         })
 
         it('should be valid from signatureId', async () => {
-          const result = await sdk.erc721.prepare.mintSignedTransaction(
+          const result = await sdk.nft.prepare.mintSignedTransaction(
             {
               to: address,
               contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
@@ -143,7 +143,7 @@ describe('CeloSDK - tx', () => {
 
         it('invalid address', async () => {
           try {
-            await sdk.erc721.prepare.mintSignedTransaction(
+            await sdk.nft.prepare.mintSignedTransaction(
               {
                 to: 'someinvalidaddress',
                 tokenId: new Date().getTime().toString(),
@@ -164,7 +164,7 @@ describe('CeloSDK - tx', () => {
 
         it('missing address', async () => {
           try {
-            await sdk.erc721.prepare.mintSignedTransaction(
+            await sdk.nft.prepare.mintSignedTransaction(
               {
                 to: address,
                 tokenId: new Date().getTime().toString(),
@@ -190,7 +190,7 @@ describe('CeloSDK - tx', () => {
           ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
           : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
         it('should be valid from privateKey', async () => {
-          const result = await sdk.erc721.prepare.mintMultipleSignedTransaction(
+          const result = await sdk.nft.prepare.mintMultipleSignedTransaction(
             {
               to: [address, address],
               contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
@@ -207,7 +207,7 @@ describe('CeloSDK - tx', () => {
         })
 
         it('should be valid from signatureId', async () => {
-          const result = await sdk.erc721.prepare.mintMultipleSignedTransaction(
+          const result = await sdk.nft.prepare.mintMultipleSignedTransaction(
             {
               to: [address, address],
               contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
@@ -226,7 +226,7 @@ describe('CeloSDK - tx', () => {
 
         it('invalid address', async () => {
           try {
-            await sdk.erc721.prepare.mintMultipleSignedTransaction(
+            await sdk.nft.prepare.mintMultipleSignedTransaction(
               {
                 to: ['someinvalidaddress', 'onemoreinvalid'],
                 tokenId: [new Date().getTime().toString()],
@@ -252,7 +252,7 @@ describe('CeloSDK - tx', () => {
           ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
           : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
         it('should be valid from privateKey', async () => {
-          const result = await sdk.erc721.prepare.mintCashbackSignedTransaction(
+          const result = await sdk.nft.prepare.mintCashbackSignedTransaction(
             {
               to: address,
               contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
@@ -271,7 +271,7 @@ describe('CeloSDK - tx', () => {
         })
 
         it('should be valid from signatureId', async () => {
-          const result = await sdk.erc721.prepare.mintCashbackSignedTransaction(
+          const result = await sdk.nft.prepare.mintCashbackSignedTransaction(
             {
               to: address,
               contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
@@ -292,7 +292,7 @@ describe('CeloSDK - tx', () => {
 
         it('invalid address', async () => {
           try {
-            await sdk.erc721.prepare.mintCashbackSignedTransaction(
+            await sdk.nft.prepare.mintCashbackSignedTransaction(
               {
                 to: 'invalidaddress',
                 contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
@@ -315,7 +315,7 @@ describe('CeloSDK - tx', () => {
 
         it('missing address', async () => {
           try {
-            await sdk.erc721.prepare.mintCashbackSignedTransaction(
+            await sdk.nft.prepare.mintCashbackSignedTransaction(
               {
                 to: address,
                 contractAddress: '',
@@ -344,7 +344,7 @@ describe('CeloSDK - tx', () => {
         ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
         : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       it('should be valid from privateKey', async () => {
-        const result = await sdk.erc721.prepare.mintMultipleCashbackSignedTransaction(
+        const result = await sdk.nft.prepare.mintMultipleCashbackSignedTransaction(
           {
             to: [address, address],
             contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
@@ -363,7 +363,7 @@ describe('CeloSDK - tx', () => {
       })
 
       it('should be valid from signatureId', async () => {
-        const result = await sdk.erc721.prepare.mintMultipleCashbackSignedTransaction(
+        const result = await sdk.nft.prepare.mintMultipleCashbackSignedTransaction(
           {
             to: [address, address],
             contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
@@ -384,7 +384,7 @@ describe('CeloSDK - tx', () => {
 
       it('invalid address', async () => {
         try {
-          await sdk.erc721.prepare.mintMultipleCashbackSignedTransaction(
+          await sdk.nft.prepare.mintMultipleCashbackSignedTransaction(
             {
               to: ['someinvalidaddress', 'onemoreinvalid'],
               tokenId: [new Date().getTime().toString()],
@@ -412,7 +412,7 @@ describe('CeloSDK - tx', () => {
         ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
         : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       it('should be valid from privateKey', async () => {
-        const result = await sdk.erc721.prepare.mintProvenanceSignedTransaction(
+        const result = await sdk.nft.prepare.mintProvenanceSignedTransaction(
           {
             to: address,
             contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
@@ -431,7 +431,7 @@ describe('CeloSDK - tx', () => {
       })
 
       it('should be valid from signatureId', async () => {
-        const result = await sdk.erc721.prepare.mintProvenanceSignedTransaction(
+        const result = await sdk.nft.prepare.mintProvenanceSignedTransaction(
           {
             to: address,
             contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
@@ -452,7 +452,7 @@ describe('CeloSDK - tx', () => {
 
       it('invalid address', async () => {
         try {
-          await sdk.erc721.prepare.mintProvenanceSignedTransaction(
+          await sdk.nft.prepare.mintProvenanceSignedTransaction(
             {
               to: 'invalidaddress',
               contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
@@ -475,7 +475,7 @@ describe('CeloSDK - tx', () => {
 
       it('missing address', async () => {
         try {
-          await sdk.erc721.prepare.mintProvenanceSignedTransaction(
+          await sdk.nft.prepare.mintProvenanceSignedTransaction(
             {
               to: address,
               contractAddress: '',
@@ -503,7 +503,7 @@ describe('CeloSDK - tx', () => {
         ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
         : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       it('should be valid from privateKey', async () => {
-        const result = await sdk.erc721.prepare.mintMultipleProvenanceSignedTransaction(
+        const result = await sdk.nft.prepare.mintMultipleProvenanceSignedTransaction(
           {
             to: [address, address],
             contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
@@ -523,7 +523,7 @@ describe('CeloSDK - tx', () => {
       })
 
       it('should be valid from signatureId', async () => {
-        const result = await sdk.erc721.prepare.mintMultipleProvenanceSignedTransaction(
+        const result = await sdk.nft.prepare.mintMultipleProvenanceSignedTransaction(
           {
             to: [address, address],
             contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
@@ -545,7 +545,7 @@ describe('CeloSDK - tx', () => {
 
       it('invalid address', async () => {
         try {
-          await sdk.erc721.prepare.mintMultipleProvenanceSignedTransaction(
+          await sdk.nft.prepare.mintMultipleProvenanceSignedTransaction(
             {
               to: ['someinvalidaddress', 'onemoreinvalid'],
               tokenId: [new Date().getTime().toString()],
@@ -574,7 +574,7 @@ describe('CeloSDK - tx', () => {
         ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
         : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       it('should be valid from privateKey', async () => {
-        const result = await sdk.erc721.prepare.transferSignedTransaction(
+        const result = await sdk.nft.prepare.transferSignedTransaction(
           {
             to: address,
             contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
@@ -590,7 +590,7 @@ describe('CeloSDK - tx', () => {
       })
 
       it('should be valid from signatureId', async () => {
-        const result = await sdk.erc721.prepare.transferSignedTransaction(
+        const result = await sdk.nft.prepare.transferSignedTransaction(
           {
             to: address,
             contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
@@ -608,7 +608,7 @@ describe('CeloSDK - tx', () => {
 
       it('invalid address', async () => {
         try {
-          await sdk.erc721.prepare.transferSignedTransaction(
+          await sdk.nft.prepare.transferSignedTransaction(
             {
               to: 'invalidaddress',
               contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
@@ -630,7 +630,7 @@ describe('CeloSDK - tx', () => {
     describe('update cashback', () => {
       const provider = TEST_DATA.CELO?.PROVIDER
       it('should be valid from privateKey', async () => {
-        const result = await sdk.erc721.prepare.updateCashbackForAuthorSignedTransaction(
+        const result = await sdk.nft.prepare.updateCashbackForAuthorSignedTransaction(
           {
             contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
             fromPrivateKey: TEST_DATA.CELO.TESTNET.ERC_721!.PRIVATE_KEY,
@@ -646,7 +646,7 @@ describe('CeloSDK - tx', () => {
       })
 
       it('should be valid from signatureId', async () => {
-        const result = await sdk.erc721.prepare.updateCashbackForAuthorSignedTransaction(
+        const result = await sdk.nft.prepare.updateCashbackForAuthorSignedTransaction(
           {
             contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -666,7 +666,7 @@ describe('CeloSDK - tx', () => {
     describe('burn', () => {
       const provider = TEST_DATA.CELO?.PROVIDER
       it('should be valid from privateKey', async () => {
-        const result = await sdk.erc721.prepare.burnSignedTransaction(
+        const result = await sdk.nft.prepare.burnSignedTransaction(
           {
             contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
             fromPrivateKey: TEST_DATA.CELO.TESTNET.ERC_721!.PRIVATE_KEY,
@@ -681,7 +681,7 @@ describe('CeloSDK - tx', () => {
       })
 
       it('should be valid from signatureId', async () => {
-        const result = await sdk.erc721.prepare.burnSignedTransaction(
+        const result = await sdk.nft.prepare.burnSignedTransaction(
           {
             contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -1070,47 +1070,190 @@ describe('CeloSDK - tx', () => {
 
   describe('custodial', () => {
     describe('prepare', () => {
-      it('valid with signatureId', async () => {
-        const result = await sdk.custodial.prepare.generateCustodialWalletSignedTransaction(
-          {
-            chain: 'CELO',
-            feeCurrency: 'CUSD',
-            signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-            enableFungibleTokens: true,
-            enableNonFungibleTokens: true,
-            enableSemiFungibleTokens: false,
-            enableBatchTransactions: true,
-            fee: {
-              gasLimit: '326452',
-              gasPrice: '20',
-            },
-          },
-          TEST_DATA.CELO?.PROVIDER,
-          true,
-        )
-        expect(result).not.toBeNull()
-      })
-    })
+      xdescribe('Transfer from custodial wallet', () => {
+        it('valid with signatureId', async () => {
+          try {
+            const result = await sdk.custodial.prepare.transferFromCustodialWallet(
+              {
+                chain: 'CELO',
+                signatureId: TEST_DATA.CELO.TESTNET.CUSTODIAL.SIGNATURE_ID,
+                custodialAddress: TEST_DATA.CELO.TESTNET.CUSTODIAL.CONTRACT_ADDRESS,
+                recipient: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+                tokenAddress: TEST_DATA.CELO.TESTNET.CUSTODIAL.TOKEN_ADDRESS,
+                amount: '1',
+                contractType: 0,
+                feeCurrency: 'CELO',
+              },
+              true,
+              TEST_DATA.CELO?.PROVIDER,
+            )
+            const json = JSON.parse(result)
+            expectHexString(json.data)
+          } catch (e) {
+            console.log(e)
+            expect(e).not.toBeDefined()
+          }
+        })
 
-    it('valid from privateKey', async () => {
-      const result = await sdk.custodial.prepare.generateCustodialWalletSignedTransaction(
-        {
-          chain: 'CELO',
-          feeCurrency: 'CUSD',
-          fromPrivateKey: '0xfc1d28660e7a8a874e846044bf8fcb0d825216300f581fa048cf719c0c6e89fc',
-          enableFungibleTokens: true,
-          enableNonFungibleTokens: true,
-          enableSemiFungibleTokens: false,
-          enableBatchTransactions: true,
-          fee: {
-            gasLimit: '326452',
-            gasPrice: '20',
-          },
-        },
-        TEST_DATA.CELO?.PROVIDER,
-        true,
-      )
-      expect(result).not.toBeNull()
+        it('valid with privateKey', async () => {
+          const result = await sdk.custodial.prepare.transferFromCustodialWallet(
+            {
+              chain: 'CELO',
+              fromPrivateKey: TEST_DATA.CELO.TESTNET.CUSTODIAL.PRIVATE_KEY,
+              custodialAddress: TEST_DATA.CELO.TESTNET.CUSTODIAL.CONTRACT_ADDRESS,
+              recipient: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+              tokenAddress: TEST_DATA.CELO.TESTNET.CUSTODIAL.TOKEN_ADDRESS,
+              amount: '1',
+              contractType: 0,
+              feeCurrency: 'CELO',
+            },
+            true,
+            TEST_DATA.CELO?.PROVIDER,
+          )
+          const json = JSON.parse(result)
+          expectHexString(json.data)
+        })
+      })
+
+      xdescribe('Batch transfer from custodial wallet', () => {
+        it('valid with signatureId', async () => {
+          const result = await sdk.custodial.prepare.batchTransferFromCustodialWallet(
+            {
+              chain: 'CELO',
+              feeCurrency: 'CELO',
+              signatureId: TEST_DATA.CELO.TESTNET.CUSTODIAL.SIGNATURE_ID,
+              custodialAddress: TEST_DATA.CELO.TESTNET.CUSTODIAL.SIGNATURE_ID,
+              tokenId: ['0', '1', '0'],
+              amount: ['1', '1', '0.00001'],
+              contractType: [0, 2, 3],
+              tokenAddress: [
+                '0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867',
+                '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
+                '0',
+              ],
+              recipient: [
+                '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+                '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+                '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+              ],
+            },
+            true,
+            TEST_DATA.CELO?.PROVIDER,
+          )
+
+          const json = JSON.parse(result)
+          expectHexString(json.data)
+        })
+
+        it('valid from privateKey', async () => {
+          const result = await sdk.custodial.prepare.batchTransferFromCustodialWallet(
+            {
+              chain: 'CELO',
+              feeCurrency: 'CELO',
+              fromPrivateKey: TEST_DATA.CELO.TESTNET.CUSTODIAL.PRIVATE_KEY,
+              custodialAddress: TEST_DATA.CELO.TESTNET.CUSTODIAL.CONTRACT_ADDRESS,
+              tokenId: ['0', '1', '0'],
+              amount: ['1', '1', '0.00001'],
+              contractType: [0, 2, 3],
+              tokenAddress: [
+                '0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867',
+                '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
+                '0',
+              ],
+              recipient: [
+                '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+                '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+                '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+              ],
+            },
+            true,
+            TEST_DATA.CELO?.PROVIDER,
+          )
+          const json = JSON.parse(result)
+          expectHexString(json.data)
+        })
+      })
+
+      // Returned error: execution reverted
+      xdescribe('Approve from custodial wallet', () => {
+        it('valid with signatureId', async () => {
+          try {
+            const result = await sdk.custodial.prepare.approveFromCustodialWallet(
+              {
+                chain: 'CELO',
+                feeCurrency: 'CELO',
+                signatureId: TEST_DATA.CELO.TESTNET.CUSTODIAL.SIGNATURE_ID,
+                contractType: 0,
+                custodialAddress: TEST_DATA.CELO.TESTNET.CUSTODIAL.CONTRACT_ADDRESS,
+                tokenAddress: TEST_DATA.CELO.TESTNET.CUSTODIAL.TOKEN_ADDRESS,
+                spender: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+                tokenId: '1',
+                amount: '1',
+              },
+              TEST_DATA.CELO?.PROVIDER,
+            )
+            const json = JSON.parse(result)
+            expectHexString(json.data)
+          } catch (e) {
+            console.log('Approve error: ', e)
+            expect(e).not.toBeDefined()
+          }
+        })
+
+        it('valid from privateKey', async () => {
+          const result = await sdk.custodial.prepare.approveFromCustodialWallet(
+            {
+              chain: 'CELO',
+              feeCurrency: 'CELO',
+              fromPrivateKey: TEST_DATA.CELO.TESTNET.CUSTODIAL.PRIVATE_KEY,
+              contractType: 0,
+              custodialAddress: TEST_DATA.CELO.TESTNET.CUSTODIAL.CONTRACT_ADDRESS,
+              tokenAddress: TEST_DATA.CELO.TESTNET.CUSTODIAL.TOKEN_ADDRESS,
+              spender: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+              tokenId: '1',
+              amount: '1',
+            },
+            TEST_DATA.CELO?.PROVIDER,
+          )
+
+          const json = JSON.parse(result)
+          expectHexString(json.data)
+        })
+      })
+
+      describe('Custodial wallet batch', () => {
+        it('valid with signatureId', async () => {
+          const result = await sdk.custodial.prepare.custodialWalletBatch(
+            {
+              chain: 'CELO',
+              feeCurrency: 'CELO',
+              signatureId: TEST_DATA.CELO.TESTNET.CUSTODIAL.SIGNATURE_ID,
+              owner: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+              batchCount: 1,
+            },
+            true,
+            TEST_DATA.CELO?.PROVIDER,
+          )
+          const json = JSON.parse(result)
+          expectHexString(json.data)
+        })
+
+        it('valid from privateKey', async () => {
+          const result = await sdk.custodial.prepare.custodialWalletBatch(
+            {
+              chain: 'CELO',
+              feeCurrency: 'CUSD',
+              fromPrivateKey: TEST_DATA.CELO.TESTNET.CUSTODIAL.PRIVATE_KEY,
+              owner: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+              batchCount: 1,
+            },
+            true,
+            TEST_DATA.CELO?.PROVIDER,
+          )
+
+          expectHexString(result)
+        })
+      })
     })
   })
 })

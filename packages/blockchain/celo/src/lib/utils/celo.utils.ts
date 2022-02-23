@@ -76,6 +76,20 @@ export type ChainTransferCeloBlockchain = FromPrivateKeyOrSignatureId<
 
 export type ChainGenerateCustodialAddressCelo = GenerateCustodialWalletCelo | GenerateCustodialWalletCeloKMS
 
+// export type ChainTransferCustodialWalletCelo = FromPrivateKeyOrSignatureId<TransferCustodialWalletCelo> & {
+//   index?: number
+// }
+
+// export type ChainBatchTransferCustodialWalletCelo =
+//   FromPrivateKeyOrSignatureId<TransferCustodialWalletBatchCelo> & { index?: number }
+
+// export type ChainApproveCustodialTransferCelo =
+//   FromPrivateKeyOrSignatureId<ApproveTransferCustodialWalletCelo> & { index?: number }
+
+// export type ChainGenerateCustodialWalletCelo = FromPrivateKeyOrSignatureId<GenerateCustodialWalletCelo> & {
+//   index?: number
+// }
+
 export const CELO_CONSTANTS = {
   CEUR_ADDRESS_MAINNET: '0xd8763cba276a3738e6de85b4b3bf5fded6d6ca73',
   CEUR_ADDRESS_TESTNET: '0x10c892a6ec43a53e45d0b916b4b7d383b1b78c0f',
