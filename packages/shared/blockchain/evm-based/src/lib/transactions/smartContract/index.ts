@@ -19,7 +19,7 @@ export const smartContractWriteMethodInvocation = async (
 
   const tx: TransactionConfig = {
     from: undefined,
-    to: evmBasedUtils.transformAddress(contractAddress).trim(),
+    to: contractAddress.trim(),
     value: amount ? `0x${new BigNumber(client.utils.toWei(amount, 'ether')).toString(16)}` : undefined,
     data: contract.methods[methodName as string](...params).encodeABI(),
     nonce,

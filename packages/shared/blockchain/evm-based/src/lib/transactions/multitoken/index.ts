@@ -8,6 +8,7 @@ import {
   ChainTransferMultiToken,
   ChainTransferMultiTokenBatch,
 } from '@tatumio/shared-blockchain-abstract'
+import { BlockchainMultiTokenErc1155Service } from '@tatumio/api-client'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import { TransactionConfig } from 'web3-core'
 import { Erc1155 } from '../../contracts'
@@ -18,21 +19,13 @@ import BigNumber from 'bignumber.js'
 const mintMultiToken = async (body: ChainMintMultiToken, web3: EvmBasedWeb3, provider?: string) => {
   const { contractAddress, nonce, signatureId, fee, to, tokenId, fromPrivateKey, data, amount } = body
   const client = web3.getClient(provider, fromPrivateKey)
-  const contract = new client.eth.Contract(
-    Erc1155.abi as any,
-    evmBasedUtils.transformAddress(contractAddress),
-  )
+  const contract = new client.eth.Contract(Erc1155.abi as any, contractAddress)
 
   const tx: TransactionConfig = {
     from: undefined,
-    to: evmBasedUtils.transformAddress(contractAddress).trim(),
+    to: contractAddress.trim(),
     data: contract.methods
-      .mint(
-        evmBasedUtils.transformAddress(to).trim(),
-        tokenId,
-        `0x${new BigNumber(amount).toString(16)}`,
-        data ? data : '0x0',
-      )
+      .mint(to.trim(), tokenId, `0x${new BigNumber(amount).toString(16)}`, data ? data : '0x0')
       .encodeABI(),
     nonce,
   }
@@ -52,17 +45,13 @@ const mintMultiTokenBatch = async (body: ChainMintMultiTokenBatch, web3: EvmBase
   const { fromPrivateKey, to, tokenId, contractAddress, nonce, data, fee, amounts, signatureId } = body
 
   const client = web3.getClient(provider, fromPrivateKey)
-  const contract = new client.eth.Contract(
-    Erc1155.abi as any,
-    evmBasedUtils.transformAddress(contractAddress),
-  )
+  const contract = new client.eth.Contract(Erc1155.abi as any, contractAddress)
 
   const amts = amounts.map((amts) => amts.map((amt) => `0x${new BigNumber(amt).toString(16)}`))
-  const transformedTo = to.map((a) => evmBasedUtils.transformAddress(a))
   const tx: TransactionConfig = {
     from: undefined,
-    to: evmBasedUtils.transformAddress(contractAddress).trim(),
-    data: contract.methods.mintBatch(transformedTo, tokenId, amts, data ? data : '0x0').encodeABI(),
+    to: contractAddress.trim(),
+    data: contract.methods.mintBatch(to, tokenId, amts, data ? data : '0x0').encodeABI(),
     nonce,
   }
 
@@ -109,17 +98,14 @@ const transferMultiToken = async (body: ChainTransferMultiToken, web3: EvmBasedW
   const { fromPrivateKey, to, tokenId, fee, contractAddress, nonce, signatureId, amount, data } = body
 
   const client = web3.getClient(provider, fromPrivateKey)
-  const contract = new client.eth.Contract(
-    Erc1155.abi as any,
-    evmBasedUtils.transformAddress(contractAddress),
-  )
+  const contract = new client.eth.Contract(Erc1155.abi as any, contractAddress)
 
   const tx: TransactionConfig = {
     from: undefined,
-    to: evmBasedUtils.transformAddress(contractAddress).trim(),
+    to: contractAddress.trim(),
     data: contract.methods
       .safeTransfer(
-        evmBasedUtils.transformAddress(to).trim(),
+        to.trim(),
         tokenId,
         // TODO: remove ! when type will be fixed
         `0x${new BigNumber(amount!).toString(16)}`,
@@ -148,18 +134,15 @@ const transferMultiTokenBatch = async (
   const { fromPrivateKey, to, tokenId, fee, contractAddress, nonce, signatureId, amounts, data } = body
 
   const client = web3.getClient(provider, fromPrivateKey)
-  const contract = new client.eth.Contract(
-    Erc1155.abi as any,
-    evmBasedUtils.transformAddress(contractAddress),
-  )
+  const contract = new client.eth.Contract(Erc1155.abi as any, contractAddress)
   const amts = amounts.map((amt) => `0x${new BigNumber(amt).toString(16)}`)
 
   const tx: TransactionConfig = {
     from: undefined,
-    to: evmBasedUtils.transformAddress(contractAddress).trim(),
+    to: contractAddress.trim(),
     data: contract.methods
       .safeBatchTransfer(
-        evmBasedUtils.transformAddress(to).trim(),
+        to.trim(),
         tokenId.map((token) => token.trim()),
         amts,
         data ? data : '0x0',
@@ -183,15 +166,12 @@ const burnMultiToken = async (body: ChainBurnMultiToken, web3: EvmBasedWeb3, pro
   const { fromPrivateKey, account, tokenId, amount, fee, contractAddress, nonce, signatureId } = body
 
   const client = web3.getClient(provider, fromPrivateKey)
-  const contract = new client.eth.Contract(
-    Erc1155.abi as any,
-    evmBasedUtils.transformAddress(contractAddress),
-  )
+  const contract = new client.eth.Contract(Erc1155.abi as any, contractAddress)
 
   const tx: TransactionConfig = {
     from: undefined,
-    to: evmBasedUtils.transformAddress(contractAddress).trim(),
-    data: contract.methods.burn(evmBasedUtils.transformAddress(account), tokenId, amount).encodeABI(),
+    to: contractAddress.trim(),
+    data: contract.methods.burn(account, tokenId, amount).encodeABI(),
     nonce,
   }
 
@@ -210,15 +190,12 @@ const burnMultiTokenBatch = async (body: ChainBurnMultiTokenBatch, web3: EvmBase
   const { fromPrivateKey, account, tokenId, amounts, fee, contractAddress, nonce, signatureId } = body
 
   const client = web3.getClient(provider, fromPrivateKey)
-  const contract = new client.eth.Contract(
-    Erc1155.abi as any,
-    evmBasedUtils.transformAddress(contractAddress),
-  )
+  const contract = new client.eth.Contract(Erc1155.abi as any, contractAddress)
 
   const tx: TransactionConfig = {
     from: undefined,
-    to: evmBasedUtils.transformAddress(contractAddress).trim(),
-    data: contract.methods.burnBatch(evmBasedUtils.transformAddress(account), tokenId, amounts).encodeABI(),
+    to: contractAddress.trim(),
+    data: contract.methods.burnBatch(account, tokenId, amounts).encodeABI(),
     nonce,
   }
 
@@ -306,12 +283,11 @@ export const multiToken = (args: {
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction data to be broadcast to blockchain.
        */
-      mintMultiTokenTransaction: async (body: ChainMintMultiToken, provider?: string) => {
-        await args.broadcastFunction({
+      mintMultiTokenTransaction: async (body: ChainMintMultiToken, provider?: string) =>
+        args.broadcastFunction({
           txData: (await mintMultiToken(body, args.web3, provider)) as string,
           signatureId: body.signatureId,
-        })
-      },
+        }),
       /**
        * Send MultiToken mint batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * @param body content of the transaction to broadcast
@@ -381,5 +357,12 @@ export const multiToken = (args: {
           signatureId: body.signatureId,
         }),
     },
+
+    getTransactionByAddress: BlockchainMultiTokenErc1155Service.multiTokenGetTransactionByAddress,
+    getTransaction: BlockchainMultiTokenErc1155Service.multiTokenGetTransaction,
+    getAddressBalance: BlockchainMultiTokenErc1155Service.multiTokenGetAddressBalance,
+    getBalance: BlockchainMultiTokenErc1155Service.multiTokenGetBalance,
+    getBalanceBatch: BlockchainMultiTokenErc1155Service.multiTokenGetBalanceBatch,
+    getMetadata: BlockchainMultiTokenErc1155Service.multiTokenGetMetadata,
   }
 }

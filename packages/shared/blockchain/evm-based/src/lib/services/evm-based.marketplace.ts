@@ -41,7 +41,7 @@ export const evmBasedMarketplace = (args: {
         marketplace(args).prepare.buyMarketplaceListing(body, provider),
     },
 
-    deploy: {
+    send: {
       approveErc20Spending: (body: ApproveErc20, provider?: string) =>
         marketplace(args).send.approveErc20Spending(body, provider),
 
@@ -64,7 +64,6 @@ export const evmBasedMarketplace = (args: {
         marketplace(args).send.buyMarketplaceListing(body, provider),
     },
 
-    // @TODO
     getMarketplaceListing: BlockchainMarketplaceService.getMarketplaceListing,
     getMarketplaceListings: BlockchainMarketplaceService.getMarketplaceListings,
     getMarketplaceFee: BlockchainMarketplaceService.getMarketplaceFee,
