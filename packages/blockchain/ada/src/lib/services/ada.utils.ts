@@ -32,6 +32,7 @@ interface FromUTXO {
   privateKey?: string
 }
 
+// TODO: openapi bug AdaUTXO - all fields optional should be required
 const addInput = (transactionBuilder: TransactionBuilder, utxo: AdaUTXO, address: string) => {
   transactionBuilder.add_input(
     Address.from_bech32(address),
@@ -80,6 +81,7 @@ const addAddressInputsWithoutPrivateKey = async (
   let amount = new BigNumber(0)
   for (const fromAddress of fromAddresses) {
     const { address } = fromAddress
+    // TODO: openapi bug AdaUTXO - all fields optional should be required
     const utxos: AdaUTXO[] = await BlockchainAdaService.adaGetUtxoByAddress(address)
     for (const utxo of utxos) {
       amount = amount.plus(utxo.value!)

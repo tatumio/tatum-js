@@ -6,6 +6,7 @@ import {
   getPubKeyBlake2b224Hash,
   mnemonicToRootKeypair,
   packBaseAddress,
+  // ignore for missing types
   // @ts-ignore
 } from 'cardano-crypto.js'
 import { DERIVATION_PATH } from '@tatumio/shared-core'

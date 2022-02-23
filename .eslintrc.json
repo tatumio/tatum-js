@@ -65,6 +65,11 @@
                 "bannedExternalImports": ["*web3*", "*ethereum*", "bitco*"]
               },
               {
+                "sourceTag": "scope:ada-based",
+                "onlyDependOnLibsWithTags": ["scope:shared", "scope:ada-based"],
+                "bannedExternalImports": ["*web3*", "*ethereum*", "bitco*"]
+              },
+              {
                 "sourceTag": "*",
                 "onlyDependOnLibsWithTags": ["*"],
                 "bannedExternalImports": ["@tatumio/tatum-*"]
