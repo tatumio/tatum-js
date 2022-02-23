@@ -84,7 +84,7 @@ export async function tronTxWithPrivateKeyExample(): Promise<void> {
     symbol: 'TTM',
   })
 
-  const preparedDeployTrc721Transaction = await tronSDK.trc721.prepare.deploySignedTransaction({
+  const preparedDeployTrc721Transaction = await tronSDK.nft.prepare.deploySignedTransaction({
     chain: 'TRON',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
@@ -93,7 +93,7 @@ export async function tronTxWithPrivateKeyExample(): Promise<void> {
     fromPrivateKey: '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701',
   })
 
-  const sentDeployTrc721Transaction = await tronSDK.trc721.send.deploySignedTransaction({
+  const sentDeployTrc721Transaction = await tronSDK.nft.send.deploySignedTransaction({
     chain: 'TRON',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
@@ -102,7 +102,7 @@ export async function tronTxWithPrivateKeyExample(): Promise<void> {
     fromPrivateKey: '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701',
   })
 
-  const preparedMintSignedTransaction = await tronSDK.trc721.prepare.mintSignedTransaction({
+  const preparedMintSignedTransaction = await tronSDK.nft.prepare.mintSignedTransaction({
     chain: 'TRON',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -113,7 +113,7 @@ export async function tronTxWithPrivateKeyExample(): Promise<void> {
     fromPrivateKey: '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701',
   })
 
-  const sentMintSignedTransaction = await tronSDK.trc721.send.mintSignedTransaction({
+  const sentMintSignedTransaction = await tronSDK.nft.send.mintSignedTransaction({
     chain: 'TRON',
     tokenId: '453453',
     to: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
@@ -124,7 +124,7 @@ export async function tronTxWithPrivateKeyExample(): Promise<void> {
     fromPrivateKey: '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701',
   })
 
-  const preparedMintMultipleSignedTransaction = await tronSDK.trc721.prepare.mintMultipleSignedTransaction({
+  const preparedMintMultipleSignedTransaction = await tronSDK.nft.prepare.mintMultipleSignedTransaction({
     chain: 'TRON',
     to: ['TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh'],
     tokenId: ['345634563', '53545345'],
@@ -135,7 +135,7 @@ export async function tronTxWithPrivateKeyExample(): Promise<void> {
     fromPrivateKey: '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701',
   })
 
-  const sentMintMultipleSignedTransaction = await tronSDK.trc721.send.mintMultipleSignedTransaction({
+  const sentMintMultipleSignedTransaction = await tronSDK.nft.send.mintMultipleSignedTransaction({
     chain: 'TRON',
     to: ['TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh'],
     tokenId: ['345634563', '53545345'],
@@ -146,7 +146,7 @@ export async function tronTxWithPrivateKeyExample(): Promise<void> {
     fromPrivateKey: '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701',
   })
 
-  const preparedMintCashbackSignedTransaction = await tronSDK.trc721.prepare.mintCashbackSignedTransaction({
+  const preparedMintCashbackSignedTransaction = await tronSDK.nft.prepare.mintCashbackSignedTransaction({
     chain: 'TRON',
     to: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
     tokenId: '45343653',
@@ -158,7 +158,7 @@ export async function tronTxWithPrivateKeyExample(): Promise<void> {
     fromPrivateKey: '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701',
   })
 
-  const sentMintCashbackSignedTransaction = await tronSDK.trc721.send.mintCashbackSignedTransaction({
+  const sentMintCashbackSignedTransaction = await tronSDK.nft.send.mintCashbackSignedTransaction({
     chain: 'TRON',
     to: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
     tokenId: '45343653',
@@ -170,7 +170,7 @@ export async function tronTxWithPrivateKeyExample(): Promise<void> {
     fromPrivateKey: '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701',
   })
 
-  const preparedTransferSignedTransaction = await tronSDK.trc721.prepare.transferSignedTransaction({
+  const preparedTransferSignedTransaction = await tronSDK.nft.prepare.transferSignedTransaction({
     chain: 'TRON',
     tokenId: '453453',
     to: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
@@ -180,7 +180,7 @@ export async function tronTxWithPrivateKeyExample(): Promise<void> {
     fromPrivateKey: '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701',
   })
 
-  const sentTransferSignedTransaction = await tronSDK.trc721.send.transferSignedTransaction({
+  const sentTransferSignedTransaction = await tronSDK.nft.send.transferSignedTransaction({
     chain: 'TRON',
     tokenId: '453453',
     to: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
@@ -191,7 +191,7 @@ export async function tronTxWithPrivateKeyExample(): Promise<void> {
   })
 
   const preparedUpdateCashbackForAuthorSignedTransaction =
-    await tronSDK.trc721.prepare.updateCashbackValueForAuthorSignedTransaction({
+    await tronSDK.nft.prepare.updateCashbackValueForAuthorSignedTransaction({
       chain: 'TRON',
       tokenId: '453453',
       cashbackValue: '0.8',
@@ -202,7 +202,7 @@ export async function tronTxWithPrivateKeyExample(): Promise<void> {
     })
 
   const sentUpdateCashbackForAuthorSignedTransaction =
-    await tronSDK.trc721.send.updateCashbackValueForAuthorSignedTransaction({
+    await tronSDK.nft.send.updateCashbackValueForAuthorSignedTransaction({
       chain: 'TRON',
       tokenId: '453453',
       cashbackValue: '0.8',
@@ -212,7 +212,7 @@ export async function tronTxWithPrivateKeyExample(): Promise<void> {
       fromPrivateKey: '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701',
     })
 
-  const preparedBurnTrc721Transaction = await tronSDK.trc721.prepare.burnSignedTransaction({
+  const preparedBurnTrc721Transaction = await tronSDK.nft.prepare.burnSignedTransaction({
     chain: 'TRON',
     tokenId: '45343653',
     contractAddress: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
@@ -221,7 +221,7 @@ export async function tronTxWithPrivateKeyExample(): Promise<void> {
     feeLimit: 100,
   })
 
-  const sentBurnTrc721Transaction = await tronSDK.trc721.send.burnSignedTransaction({
+  const sentBurnTrc721Transaction = await tronSDK.nft.send.burnSignedTransaction({
     chain: 'TRON',
     tokenId: '45343653',
     contractAddress: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
@@ -318,7 +318,7 @@ export async function tronTxWithSignatureIdExample(): Promise<void> {
     symbol: 'TTM',
   })
 
-  const preparedDeployTrc721Transaction = await tronSDK.trc721.prepare.deploySignedTransaction({
+  const preparedDeployTrc721Transaction = await tronSDK.nft.prepare.deploySignedTransaction({
     chain: 'TRON',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
@@ -329,7 +329,7 @@ export async function tronTxWithSignatureIdExample(): Promise<void> {
     index: 1,
   })
 
-  const sentDeployTrc721Transaction = await tronSDK.trc721.send.deploySignedTransaction({
+  const sentDeployTrc721Transaction = await tronSDK.nft.send.deploySignedTransaction({
     chain: 'TRON',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
@@ -340,7 +340,7 @@ export async function tronTxWithSignatureIdExample(): Promise<void> {
     index: 1,
   })
 
-  const preparedMintSignedTransaction = await tronSDK.trc721.prepare.mintSignedTransaction({
+  const preparedMintSignedTransaction = await tronSDK.nft.prepare.mintSignedTransaction({
     chain: 'TRON',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
@@ -353,7 +353,7 @@ export async function tronTxWithSignatureIdExample(): Promise<void> {
     index: 1,
   })
 
-  const sentMintSignedTransaction = await tronSDK.trc721.send.mintSignedTransaction({
+  const sentMintSignedTransaction = await tronSDK.nft.send.mintSignedTransaction({
     chain: 'TRON',
     tokenId: '453453',
     to: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
@@ -366,7 +366,7 @@ export async function tronTxWithSignatureIdExample(): Promise<void> {
     index: 1,
   })
 
-  const preparedMintMultipleSignedTransaction = await tronSDK.trc721.prepare.mintMultipleSignedTransaction({
+  const preparedMintMultipleSignedTransaction = await tronSDK.nft.prepare.mintMultipleSignedTransaction({
     chain: 'TRON',
     to: ['TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh'],
     tokenId: ['345634563', '53545345'],
@@ -379,7 +379,7 @@ export async function tronTxWithSignatureIdExample(): Promise<void> {
     index: 1,
   })
 
-  const sentMintMultipleSignedTransaction = await tronSDK.trc721.send.mintMultipleSignedTransaction({
+  const sentMintMultipleSignedTransaction = await tronSDK.nft.send.mintMultipleSignedTransaction({
     chain: 'TRON',
     to: ['TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh'],
     tokenId: ['345634563', '53545345'],
@@ -392,7 +392,7 @@ export async function tronTxWithSignatureIdExample(): Promise<void> {
     index: 1,
   })
 
-  const preparedMintCashbackSignedTransaction = await tronSDK.trc721.prepare.mintCashbackSignedTransaction({
+  const preparedMintCashbackSignedTransaction = await tronSDK.nft.prepare.mintCashbackSignedTransaction({
     chain: 'TRON',
     to: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
     tokenId: '45343653',
@@ -406,7 +406,7 @@ export async function tronTxWithSignatureIdExample(): Promise<void> {
     index: 1,
   })
 
-  const sentMintCashbackSignedTransaction = await tronSDK.trc721.send.mintCashbackSignedTransaction({
+  const sentMintCashbackSignedTransaction = await tronSDK.nft.send.mintCashbackSignedTransaction({
     chain: 'TRON',
     to: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
     tokenId: '45343653',
@@ -420,7 +420,7 @@ export async function tronTxWithSignatureIdExample(): Promise<void> {
     index: 1,
   })
 
-  const preparedTransferSignedTransaction = await tronSDK.trc721.prepare.transferSignedTransaction({
+  const preparedTransferSignedTransaction = await tronSDK.nft.prepare.transferSignedTransaction({
     chain: 'TRON',
     tokenId: '453453',
     to: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
@@ -432,7 +432,7 @@ export async function tronTxWithSignatureIdExample(): Promise<void> {
     index: 1,
   })
 
-  const sentTransferSignedTransaction = await tronSDK.trc721.send.transferSignedTransaction({
+  const sentTransferSignedTransaction = await tronSDK.nft.send.transferSignedTransaction({
     chain: 'TRON',
     tokenId: '453453',
     to: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
@@ -445,7 +445,7 @@ export async function tronTxWithSignatureIdExample(): Promise<void> {
   })
 
   const preparedUpdateCashbackForAuthorSignedTransaction =
-    await tronSDK.trc721.prepare.updateCashbackValueForAuthorSignedTransaction({
+    await tronSDK.nft.prepare.updateCashbackValueForAuthorSignedTransaction({
       chain: 'TRON',
       tokenId: '453453',
       cashbackValue: '0.8',
@@ -458,7 +458,7 @@ export async function tronTxWithSignatureIdExample(): Promise<void> {
     })
 
   const sentUpdateCashbackForAuthorSignedTransaction =
-    await tronSDK.trc721.send.updateCashbackValueForAuthorSignedTransaction({
+    await tronSDK.nft.send.updateCashbackValueForAuthorSignedTransaction({
       chain: 'TRON',
       tokenId: '453453',
       cashbackValue: '0.8',
@@ -470,7 +470,7 @@ export async function tronTxWithSignatureIdExample(): Promise<void> {
       index: 1,
     })
 
-  const preparedBurnTrc721Transaction = await tronSDK.trc721.prepare.burnSignedTransaction({
+  const preparedBurnTrc721Transaction = await tronSDK.nft.prepare.burnSignedTransaction({
     chain: 'TRON',
     tokenId: '45343653',
     contractAddress: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
@@ -481,7 +481,7 @@ export async function tronTxWithSignatureIdExample(): Promise<void> {
     feeLimit: 100,
   })
 
-  const sentBurnTrc721Transaction = await tronSDK.trc721.send.burnSignedTransaction({
+  const sentBurnTrc721Transaction = await tronSDK.nft.send.burnSignedTransaction({
     chain: 'TRON',
     tokenId: '45343653',
     contractAddress: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',

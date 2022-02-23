@@ -73,17 +73,8 @@ describe('OneSDK - tx', () => {
         )
       })
 
-      describe('createMarketplaceListing', () => {
-        marketplaceTestFactory.prepare.createMarketplaceListing(
-          sdk.marketplace,
-          TEST_DATA.ONE,
-          'ONE',
-          inmemoryBlockchain.accounts,
-        )
-      })
-
-      describe('createMarketplaceListingErc20', () => {
-        marketplaceTestFactory.prepare.createMarketplaceListingErc20(
+      describe('sellMarketplaceListing', () => {
+        marketplaceTestFactory.prepare.sellMarketplaceListing(
           sdk.marketplace,
           TEST_DATA.ONE,
           'ONE',
@@ -124,40 +115,36 @@ describe('OneSDK - tx', () => {
   describe('erc721', () => {
     describe('prepare', () => {
       describe('deploySignedTransaction', () => {
-        erc721TestFactory.prepare.deploySignedTransaction(sdk.erc721, TEST_DATA.ONE, Currency.ONE)
+        erc721TestFactory.prepare.deploySignedTransaction(sdk.nft, TEST_DATA.ONE, Currency.ONE)
       })
 
       describe('transferSignedTransaction', () => {
-        erc721TestFactory.prepare.transferSignedTransaction(sdk.erc721, TEST_DATA.ONE, Currency.ONE)
+        erc721TestFactory.prepare.transferSignedTransaction(sdk.nft, TEST_DATA.ONE, Currency.ONE)
       })
 
       describe('mintSignedTransaction', () => {
-        erc721TestFactory.prepare.mintSignedTransaction(sdk.erc721, TEST_DATA.ONE, Currency.ONE)
+        erc721TestFactory.prepare.mintSignedTransaction(sdk.nft, TEST_DATA.ONE, Currency.ONE)
       })
 
       describe('burnSignedTransaction', () => {
-        erc721TestFactory.prepare.burnSignedTransaction(sdk.erc721, TEST_DATA.ONE, Currency.ONE)
+        erc721TestFactory.prepare.burnSignedTransaction(sdk.nft, TEST_DATA.ONE, Currency.ONE)
       })
 
       describe('mintCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.erc721, TEST_DATA.ONE, Currency.ONE)
+        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.nft, TEST_DATA.ONE, Currency.ONE)
       })
 
       describe('mintMultipleCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(
-          sdk.erc721,
-          TEST_DATA.ONE,
-          Currency.ONE,
-        )
+        erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(sdk.nft, TEST_DATA.ONE, Currency.ONE)
       })
 
       describe('mintMultipleSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.erc721, TEST_DATA.ONE, Currency.ONE)
+        erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.nft, TEST_DATA.ONE, Currency.ONE)
       })
 
       describe('updateCashbackForAuthorSignedTransaction', () => {
         erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(
-          sdk.erc721,
+          sdk.nft,
           TEST_DATA.ONE,
           Currency.ONE,
         )
@@ -219,12 +206,20 @@ describe('OneSDK - tx', () => {
 
   describe('custodial', () => {
     describe('prepare', () => {
-      describe('smart contract write method invocation', () => {
-        custodialTestFactory.prepare.generateCustodialWalletSignedTransaction(
-          sdk.custodial,
-          TEST_DATA.ONE,
-          'ONE',
-        )
+      xdescribe('transfer from custodial wallet', () => {
+        custodialTestFactory.prepare.transferFromCustodialWallet(sdk.custodial, TEST_DATA.ONE, 'ONE')
+      })
+
+      xdescribe('batch transfer from custodial wallet', () => {
+        custodialTestFactory.prepare.batchTransferFromCustodialWallet(sdk.custodial, TEST_DATA.ONE, 'ONE')
+      })
+
+      xdescribe('approve from custodial wallet', () => {
+        custodialTestFactory.prepare.approveFromCustodialWallet(sdk.custodial, TEST_DATA.ONE, 'ONE')
+      })
+
+      xdescribe('generate batch custodial wallet', () => {
+        custodialTestFactory.prepare.custodialWalletBatch(sdk.custodial, TEST_DATA.ONE, 'ONE')
       })
     })
   })

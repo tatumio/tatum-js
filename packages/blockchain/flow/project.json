@@ -29,5 +29,5 @@
       }
     }
   },
-  "tags": ["type:sdk"]
+  "tags": ["type:sdk", "scope:flow-based"]
 }

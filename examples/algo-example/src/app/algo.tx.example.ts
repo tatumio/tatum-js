@@ -21,7 +21,7 @@ export async function algoTxWithPrivateKeyExample(): Promise<void> {
     account: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
   })
 
-  const preparedDeployNFTTransaction = await algoSDK.erc721.prepare.createNFTSignedTransaction({
+  const preparedDeployNFTTransaction = await algoSDK.nft.prepare.createNFTSignedTransaction({
     fromPrivateKey:
       '72TCV5BRQPBMSAFPYO3CPWVDBYWNGAYNMTW5QHENOMQF7I6QLNMJWCJZ7A3V5YKD7QD6ZZPEHG2PV2ZVVEDDO6BCRGXWIL3DIUMSUCI',
     name: 'SomeArt',
@@ -29,7 +29,7 @@ export async function algoTxWithPrivateKeyExample(): Promise<void> {
     url: 'google.com',
   })
 
-  const sentDeployNFTTransaction = await algoSDK.erc721.send.createNFTSignedTransaction({
+  const sentDeployNFTTransaction = await algoSDK.nft.send.createNFTSignedTransaction({
     fromPrivateKey:
       '72TCV5BRQPBMSAFPYO3CPWVDBYWNGAYNMTW5QHENOMQF7I6QLNMJWCJZ7A3V5YKD7QD6ZZPEHG2PV2ZVVEDDO6BCRGXWIL3DIUMSUCI',
     name: 'SomeArt',
@@ -37,7 +37,7 @@ export async function algoTxWithPrivateKeyExample(): Promise<void> {
     url: 'google.com',
   })
 
-  const preparedTransferSignedTransaction = await algoSDK.erc721.prepare.transferNFTSignedTransaction({
+  const preparedTransferSignedTransaction = await algoSDK.nft.prepare.transferNFTSignedTransaction({
     fromPrivateKey:
       '72TCV5BRQPBMSAFPYO3CPWVDBYWNGAYNMTW5QHENOMQF7I6QLNMJWCJZ7A3V5YKD7QD6ZZPEHG2PV2ZVVEDDO6BCRGXWIL3DIUMSUCI',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -45,7 +45,7 @@ export async function algoTxWithPrivateKeyExample(): Promise<void> {
     tokenId: '453453',
   })
 
-  const sentTransferSignedTransaction = await algoSDK.erc721.send.transferNFTSignedTransaction({
+  const sentTransferSignedTransaction = await algoSDK.nft.send.transferNFTSignedTransaction({
     fromPrivateKey:
       '72TCV5BRQPBMSAFPYO3CPWVDBYWNGAYNMTW5QHENOMQF7I6QLNMJWCJZ7A3V5YKD7QD6ZZPEHG2PV2ZVVEDDO6BCRGXWIL3DIUMSUCI',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -53,14 +53,14 @@ export async function algoTxWithPrivateKeyExample(): Promise<void> {
     tokenId: '453453',
   })
 
-  const preparedMintSignedTransaction = await algoSDK.erc721.prepare.burnNFTSignedTransaction({
+  const preparedMintSignedTransaction = await algoSDK.nft.prepare.burnNFTSignedTransaction({
     fromPrivateKey:
       '72TCV5BRQPBMSAFPYO3CPWVDBYWNGAYNMTW5QHENOMQF7I6QLNMJWCJZ7A3V5YKD7QD6ZZPEHG2PV2ZVVEDDO6BCRGXWIL3DIUMSUCI',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     tokenId: '453453',
   })
 
-  const sentMintSignedTransaction = await algoSDK.erc721.send.burnNFTSignedTransaction({
+  const sentMintSignedTransaction = await algoSDK.nft.send.burnNFTSignedTransaction({
     fromPrivateKey:
       '72TCV5BRQPBMSAFPYO3CPWVDBYWNGAYNMTW5QHENOMQF7I6QLNMJWCJZ7A3V5YKD7QD6ZZPEHG2PV2ZVVEDDO6BCRGXWIL3DIUMSUCI',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -85,7 +85,7 @@ export async function algoTxWithSignatureIdExample(): Promise<void> {
     from: '687422eEA2cB73B5d3e242bA5456b782919AFc85',
   })
 
-  const preparedDeployNFTTransaction = await algoSDK.erc721.prepare.createNFTSignedTransaction({
+  const preparedDeployNFTTransaction = await algoSDK.nft.prepare.createNFTSignedTransaction({
     signatureId: '26d3883e-4e17-48b3-a0ee-09a3e484ac83',
     from: '687422eEA2cB73B5d3e242bA5456b782919AFc85',
     name: 'SomeArt',
@@ -93,7 +93,7 @@ export async function algoTxWithSignatureIdExample(): Promise<void> {
     url: 'google.com',
   })
 
-  const sentDeployNFTTransaction = await algoSDK.erc721.send.createNFTSignedTransaction({
+  const sentDeployNFTTransaction = await algoSDK.nft.send.createNFTSignedTransaction({
     signatureId: '26d3883e-4e17-48b3-a0ee-09a3e484ac83',
     from: '687422eEA2cB73B5d3e242bA5456b782919AFc85',
     name: 'SomeArt',
@@ -101,7 +101,7 @@ export async function algoTxWithSignatureIdExample(): Promise<void> {
     url: 'google.com',
   })
 
-  const preparedTransferSignedTransaction = await algoSDK.erc721.prepare.transferNFTSignedTransaction({
+  const preparedTransferSignedTransaction = await algoSDK.nft.prepare.transferNFTSignedTransaction({
     signatureId: '26d3883e-4e17-48b3-a0ee-09a3e484ac83',
     from: '687422eEA2cB73B5d3e242bA5456b782919AFc85',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -109,7 +109,7 @@ export async function algoTxWithSignatureIdExample(): Promise<void> {
     tokenId: '453453',
   })
 
-  const sentTransferSignedTransaction = await algoSDK.erc721.send.transferNFTSignedTransaction({
+  const sentTransferSignedTransaction = await algoSDK.nft.send.transferNFTSignedTransaction({
     signatureId: '26d3883e-4e17-48b3-a0ee-09a3e484ac83',
     from: '687422eEA2cB73B5d3e242bA5456b782919AFc85',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -117,14 +117,14 @@ export async function algoTxWithSignatureIdExample(): Promise<void> {
     tokenId: '453453',
   })
 
-  const preparedMintSignedTransaction = await algoSDK.erc721.prepare.burnNFTSignedTransaction({
+  const preparedMintSignedTransaction = await algoSDK.nft.prepare.burnNFTSignedTransaction({
     signatureId: '26d3883e-4e17-48b3-a0ee-09a3e484ac83',
     from: '687422eEA2cB73B5d3e242bA5456b782919AFc85',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     tokenId: '453453',
   })
 
-  const sentMintSignedTransaction = await algoSDK.erc721.send.burnNFTSignedTransaction({
+  const sentMintSignedTransaction = await algoSDK.nft.send.burnNFTSignedTransaction({
     signatureId: '26d3883e-4e17-48b3-a0ee-09a3e484ac83',
     from: '687422eEA2cB73B5d3e242bA5456b782919AFc85',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',

@@ -70,40 +70,52 @@ describe('PolygonSDK - tx', () => {
   describe('erc721', () => {
     describe('prepare', () => {
       describe('deploySignedTransaction', () => {
-        erc721TestFactory.prepare.deploySignedTransaction(sdk.erc721, TEST_DATA.POLYGON, Currency.MATIC)
+        erc721TestFactory.prepare.deploySignedTransaction(sdk.nft, TEST_DATA.POLYGON, Currency.MATIC)
       })
 
       describe('transferSignedTransaction', () => {
-        erc721TestFactory.prepare.transferSignedTransaction(sdk.erc721, TEST_DATA.POLYGON, Currency.MATIC)
+        erc721TestFactory.prepare.transferSignedTransaction(sdk.nft, TEST_DATA.POLYGON, Currency.MATIC)
       })
 
       describe('mintSignedTransaction', () => {
-        erc721TestFactory.prepare.mintSignedTransaction(sdk.erc721, TEST_DATA.POLYGON, Currency.MATIC)
+        erc721TestFactory.prepare.mintSignedTransaction(sdk.nft, TEST_DATA.POLYGON, Currency.MATIC)
       })
 
       describe('burnSignedTransaction', () => {
-        erc721TestFactory.prepare.burnSignedTransaction(sdk.erc721, TEST_DATA.POLYGON, Currency.MATIC)
+        erc721TestFactory.prepare.burnSignedTransaction(sdk.nft, TEST_DATA.POLYGON, Currency.MATIC)
       })
 
       describe('mintCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.erc721, TEST_DATA.POLYGON, Currency.MATIC)
+        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.nft, TEST_DATA.POLYGON, Currency.MATIC)
       })
 
       describe('mintMultipleCashbackSignedTransaction', () => {
         erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(
-          sdk.erc721,
+          sdk.nft,
           TEST_DATA.POLYGON,
           Currency.MATIC,
         )
       })
 
       describe('mintMultipleSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.erc721, TEST_DATA.POLYGON, Currency.MATIC)
+        erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.nft, TEST_DATA.POLYGON, Currency.MATIC)
       })
 
       describe('updateCashbackForAuthorSignedTransaction', () => {
         erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(
-          sdk.erc721,
+          sdk.nft,
+          TEST_DATA.POLYGON,
+          Currency.MATIC,
+        )
+      })
+
+      describe('mintProvenanceSignedTransaction', () => {
+        erc721TestFactory.prepare.mintProvenanceSignedTransaction(sdk.nft, TEST_DATA.POLYGON, Currency.MATIC)
+      })
+
+      describe('mintMultipleProvenanceSignedTransaction', () => {
+        erc721TestFactory.prepare.mintMultipleProvenanceSignedTransaction(
+          sdk.nft,
           TEST_DATA.POLYGON,
           Currency.MATIC,
         )
@@ -123,16 +135,7 @@ describe('PolygonSDK - tx', () => {
       })
 
       describe('createMarketplaceListing', () => {
-        marketplaceTestFactory.prepare.createMarketplaceListing(
-          sdk.marketplace,
-          TEST_DATA.POLYGON,
-          'MATIC',
-          inmemoryBlockchain.accounts,
-        )
-      })
-
-      describe('createMarketplaceListingErc20', () => {
-        marketplaceTestFactory.prepare.createMarketplaceListingErc20(
+        marketplaceTestFactory.prepare.sellMarketplaceListing(
           sdk.marketplace,
           TEST_DATA.POLYGON,
           'MATIC',
@@ -240,12 +243,24 @@ describe('PolygonSDK - tx', () => {
 
   describe('custodial', () => {
     describe('prepare', () => {
-      describe('smart contract write method invocation', () => {
-        custodialTestFactory.prepare.generateCustodialWalletSignedTransaction(
+      xdescribe('transfer from custodial wallet', () => {
+        custodialTestFactory.prepare.transferFromCustodialWallet(sdk.custodial, TEST_DATA.POLYGON, 'MATIC')
+      })
+
+      xdescribe('batch transfer from custodial wallet', () => {
+        custodialTestFactory.prepare.batchTransferFromCustodialWallet(
           sdk.custodial,
           TEST_DATA.POLYGON,
           'MATIC',
         )
+      })
+
+      xdescribe('approve from custodial wallet', () => {
+        custodialTestFactory.prepare.approveFromCustodialWallet(sdk.custodial, TEST_DATA.POLYGON, 'MATIC')
+      })
+
+      xdescribe('generate batch custodial wallet', () => {
+        custodialTestFactory.prepare.custodialWalletBatch(sdk.custodial, TEST_DATA.POLYGON, 'MATIC')
       })
     })
   })

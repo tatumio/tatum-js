@@ -17,16 +17,4 @@ export const flowBlockchainExample = async () => {
   const transactions = await flowSDK.blockchain.getTransaction(
     'd60631d8e5c8b6eb0557b5181cf28564d771c628a08abc414e87ad7c05ff2fc2',
   )
-
-  const { keyId, address } = await flowSDK.blockchain.getSignKey(true)
-
-  const { signature } = await flowSDK.blockchain.signWithKey(
-    '62BD544D1B9031EFC330A3E855CC3A0D51CA5131455C1AB3BCAC6D243F65460D',
-    true,
-  )
-
-  const tx = await flowSDK.blockchain.broadcast(
-    '62BD544D1B9031EFC330A3E855CC3A0D51CA5131455C1AB3BCAC6D243F65460D',
-    '1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6',
-  )
 }
