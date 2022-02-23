@@ -61,12 +61,12 @@ describe('OneSDK - tx', () => {
       })
 
       describe('mintProvenanceSignedTransaction', () => {
-        erc721TestFactory.prepare.mintProvenanceSignedTransaction(sdk.erc721, TEST_DATA.ONE, Currency.ONE)
+        erc721TestFactory.prepare.mintProvenanceSignedTransaction(sdk.nft, TEST_DATA.ONE, Currency.ONE)
       })
 
       describe('mintMultipleProvenanceSignedTransaction', () => {
         erc721TestFactory.prepare.mintMultipleProvenanceSignedTransaction(
-          sdk.erc721,
+          sdk.nft,
           TEST_DATA.ONE,
           Currency.ONE,
         )

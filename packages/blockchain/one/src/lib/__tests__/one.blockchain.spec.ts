@@ -6,8 +6,6 @@ import {
 } from '@tatumio/shared-testing-common'
 import { TatumOneSDK } from '../one.sdk'
 import * as apiClient from '@tatumio/api-client'
-import { CallSmartContractMethod, PrivKeyRequest, TransferOneBlockchain } from '@tatumio/api-client'
-import { Web3Request } from '@tatumio/shared-core'
 
 jest.mock('@tatumio/api-client')
 const mockedApi = jest.mocked(apiClient.ApiServices, true)
@@ -47,7 +45,7 @@ describe('OneSDK - blockchain', () => {
         fromPrivateKey: testData.TESTNET.ERC_20.PRIVATE_KEY,
         nonce: 0,
         fee: { gasLimit: '40000', gasPrice: '20' },
-      } as CallSmartContractMethod,
+      },
     ],
     blockchainTransfer: [
       api.oneBlockchainTransfer,
@@ -59,7 +57,7 @@ describe('OneSDK - blockchain', () => {
         fee: { gasLimit: '40000', gasPrice: '20' },
         amount: '100000',
         fromPrivateKey: testData.TESTNET.ERC_20.PRIVATE_KEY,
-      } as TransferOneBlockchain,
+      },
     ],
     generateAddress: [api.oneGenerateAddress, testData.TESTNET.XPUB, 1],
     generateAddressPrivateKey: [
@@ -67,7 +65,7 @@ describe('OneSDK - blockchain', () => {
       {
         index: 0,
         mnemonic: TEST_DATA.MNEMONIC,
-      } as PrivKeyRequest,
+      },
     ],
     generateWallet: [api.oneGenerateWallet, TEST_DATA.MNEMONIC],
     web3Driver: [
@@ -78,7 +76,7 @@ describe('OneSDK - blockchain', () => {
         method: 'web3_clientVersion',
         params: [],
         id: 2,
-      } as Web3Request,
+      },
     ],
     formatAddress: [api.oneFormatAddress, 'one13t9ul0yvudlk7e60fwvxr5l0azfg3kyl474xmc'],
   }
