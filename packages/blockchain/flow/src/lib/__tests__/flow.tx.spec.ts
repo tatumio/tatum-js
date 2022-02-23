@@ -127,30 +127,13 @@ describe('flowTxService', () => {
       expect(result.tokenId).toBeDefined()
     })
 
-    /*
-     * TODO  "errorCode": "[Error Code: 1101] cadence runtime error Execution failed:\nerror: dereference failed\n --> 87fe4ebd0cddde06.TatumMultiNFT:0:0\n"
-     */
-    xit('should burn NFT FLOW API signer transaction', async () => {
+    it('should burn NFT FLOW API signer transaction', async () => {
+      const { tokenId } = await mintNFT()
       const body: ChainFlowBurnNft = {
-        tokenId: '637',
+        tokenId,
         contractAddress: '2d103773-50e2-4a37-ac3d-61bc6af8faee',
         account: '0x10247089e55180c9',
         privateKey: '3881849dd540a0c80383c3727951d35e3e9e8c238ec82a581726c3fc2ca17bc4',
-      }
-      const result = await txService.sendNftBurnToken(true, body)
-      expect(result.txId).toBeDefined()
-    })
-
-    /*
-     * TODO  "errorCode": "[Error Code: 1101] cadence runtime error Execution failed:\nerror: dereference failed\n --> 87fe4ebd0cddde06.TatumMultiNFT:0:0\n"
-     */
-    xit('should transfer NFT FLOW API signer transaction', async () => {
-      const body: ChainFlowTransferNft = {
-        tokenId: '199',
-        contractAddress: '2d103773-50e2-4a37-ac3d-61bc6af8faee',
-        account: '0x10247089e55180c9',
-        privateKey: '3881849dd540a0c80383c3727951d35e3e9e8c238ec82a581726c3fc2ca17bc4',
-        to: '0x10247089e55180c9',
       }
       const result = await txService.sendNftBurnToken(true, body)
       expect(result.txId).toBeDefined()
@@ -185,54 +168,53 @@ describe('flowTxService', () => {
     })
 
     /*
-     * TODO failed to execute the script on the execution node execution-5f6c73a22445d7d958c6a37c1f3be99c72cacd39894a3e46d6647a9adb007b4d@execution-001.devnet33.nodes.onflow.org:3569=100: rpc error: code = InvalidArgument desc = failed to execute script: failed to execute script at block (5fdc3e960370a9e93fa9a4e99a970a32a9d4b1560b8f3dfd3ee47568c562f6ff): [Error Code: 1101] cadence runtime error Execution failed:
-    error: failed to load type: A.c4b2a5119c7c6cd6.TatumMultiNFT.Collection
-     --> 7e686d4374ad840837a3a0ff0ea340e3f46efde7f054a63c29739472681fef94:3:0
-      |
-    3 | let collectionRef = getAccount(address)
-      | ^
+    Error: failed to execute the script on the execution node execution-48601e8a1568f18ca4a574a656710342857f939f598679280a6941cc7b800b6f@execution-003.devnet33.nodes.onflow.org:3569=100: rpc error: code = InvalidArgument desc = failed to execute script: failed to execute script at block (4842fe2c37a757ba6b8d13174c196e6297650c77acd991ee0f565e37309f3519): [Error Code: 1101] cadence runtime error Execution failed:
+error: panic: Token doesnt have correct type.
+   --> 87fe4ebd0cddde06.TatumMultiNFT:110:16
      */
     xit('should get NFT token by address', async () => {
+      await mintNFT()
       const result = await txService.getNftTokenByAddress(
         true,
-        '0x2d0d7b39db4e3a08',
-        '27320939-3087-490e-a65e-a53c8b06fcd9',
+        '0x10247089e55180c9',
+        '2d103773-50e2-4a37-ac3d-61bc6af8faee',
       )
       expect(result).toBeDefined()
     })
 
-    /*
-     * TODO failed to execute the script on the execution node execution-5f6c73a22445d7d958c6a37c1f3be99c72cacd39894a3e46d6647a9adb007b4d@execution-001.devnet33.nodes.onflow.org:3569=100: rpc error: code = InvalidArgument desc = failed to execute script: failed to execute script at block (5fdc3e960370a9e93fa9a4e99a970a32a9d4b1560b8f3dfd3ee47568c562f6ff): [Error Code: 1101] cadence runtime error Execution failed:
-    error: failed to load type: A.c4b2a5119c7c6cd6.TatumMultiNFT.Collection
-     --> 7e686d4374ad840837a3a0ff0ea340e3f46efde7f054a63c29739472681fef94:3:0
-      |
-    3 | let collectionRef = getAccount(address)
-      | ^
-     */
-    xit('should get NFT token metadata', async () => {
+    it('should get NFT token metadata', async () => {
+      const { tokenId } = await mintNFT()
       const result = await txService.getNftMetadata(
         true,
-        '0x2d0d7b39db4e3a08',
-        '8',
-        '27320939-3087-490e-a65e-a53c8b06fcd9',
+        '0x10247089e55180c9',
+        tokenId,
+        '2d103773-50e2-4a37-ac3d-61bc6af8faee',
       )
       expect(result).toBeDefined()
     })
 
-    /*
-    * TODO  "errorCode": "[Error Code: 1101] cadence runtime error Execution failed:\nerror: panic: Could not borrow a reference to the owner's collection\n --> 4239bd22ec15d4ffb1957685388c34ed294ae7df74cc55c4dc5c1e8aced1bc74:8:11\n  |\n8 |         ?? panic(\"Could not borrow a reference to the owner's collection\")\n  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"
-
-     */
-    xit('sendNftTransferToken', async () => {
+    it('sendNftTransferToken', async () => {
+      const { tokenId } = await mintNFT()
       const body: ChainFlowTransferNft = {
-        to: '0x21cbd745a4df66f1',
-        account: '0x4f09d8d43e4967b7',
+        to: '0x10247089e55180c9',
+        account: '0x10247089e55180c9',
         contractAddress: '2d103773-50e2-4a37-ac3d-61bc6af8faee',
-        tokenId: '199',
-        privateKey: '44179e42e147b391d3deb8a7a160b9490941cd7292936e6cc7277166a99ef058',
+        tokenId,
+        privateKey: '3881849dd540a0c80383c3727951d35e3e9e8c238ec82a581726c3fc2ca17bc4',
       }
       const result = await txService.sendNftTransferToken(true, body)
       expect(result.txId).toBeDefined()
     })
   })
+
+  async function mintNFT() {
+    const body: ChainFlowMintNft = {
+      to: '0x10247089e55180c9',
+      contractAddress: '2d103773-50e2-4a37-ac3d-61bc6af8faee',
+      url: 'https://www.my-nft-url.com',
+      account: '0x10247089e55180c9',
+      privateKey: '3881849dd540a0c80383c3727951d35e3e9e8c238ec82a581726c3fc2ca17bc4',
+    }
+    return await txService.sendNftMintToken(true, body)
+  }
 })

@@ -178,11 +178,11 @@ export const flowTxService = (args: SDKArguments) => {
       ]
       return sendScript(testnet, code, args)
     },
-    getNftTokenByAddress: async (testnet: boolean, account: string, contractAddress: string) => {
+    getNftTokenByAddress: async (testnet: boolean, account: string, tokenType: string) => {
       const code = txTemplates.tokenByAddressNftTokenScript(testnet)
       const args = [
         { type: 'Address', value: account },
-        { type: 'String', value: contractAddress },
+        { type: 'String', value: tokenType },
       ]
       return sendScript(testnet, code, args)
     },
