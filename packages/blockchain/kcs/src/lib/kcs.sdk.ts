@@ -17,7 +17,6 @@ export const TatumKcsSDK = (args: SDKArguments) => {
 
   return {
     ...evmSdk,
-    api,
     kms: kcsKmsService({ blockchain, web3 }),
     transaction: txService.native,
     erc20: {

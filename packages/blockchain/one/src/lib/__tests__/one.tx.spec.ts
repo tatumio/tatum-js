@@ -59,6 +59,18 @@ describe('OneSDK - tx', () => {
       xdescribe('burnSignedTransaction', () => {
         erc20TestFactory.prepare.burnSignedTransaction(oneTx.erc20, TEST_DATA.ONE)
       })
+
+      describe('mintProvenanceSignedTransaction', () => {
+        erc721TestFactory.prepare.mintProvenanceSignedTransaction(sdk.nft, TEST_DATA.ONE, Currency.ONE)
+      })
+
+      describe('mintMultipleProvenanceSignedTransaction', () => {
+        erc721TestFactory.prepare.mintMultipleProvenanceSignedTransaction(
+          sdk.nft,
+          TEST_DATA.ONE,
+          Currency.ONE,
+        )
+      })
     })
   })
 
