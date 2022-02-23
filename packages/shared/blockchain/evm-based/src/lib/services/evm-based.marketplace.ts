@@ -31,8 +31,8 @@ export const evmBasedMarketplace = (args: {
       updateFeeRecipient: (body: ChainUpdateFeeRecipient, provider?: string) =>
         marketplace(args).prepare.updateFeeRecipient(body, provider),
 
-      createMarketplaceListing: (body: ChainSellAssetOnMarketplace, provider?: string) =>
-        marketplace(args).prepare.createMarketplaceListing(body, provider),
+      sellMarketplaceListing: (body: ChainSellAssetOnMarketplace, provider?: string) =>
+        marketplace(args).prepare.sellMarketplaceListing(body, provider),
 
       cancelMarketplaceListing: (body: ChainCancelSellAssetOnMarketplace, provider?: string) =>
         marketplace(args).prepare.cancelMarketplaceListing(body, provider),
@@ -41,7 +41,7 @@ export const evmBasedMarketplace = (args: {
         marketplace(args).prepare.buyMarketplaceListing(body, provider),
     },
 
-    deploy: {
+    send: {
       approveErc20Spending: (body: ApproveErc20, provider?: string) =>
         marketplace(args).send.approveErc20Spending(body, provider),
 
@@ -54,8 +54,8 @@ export const evmBasedMarketplace = (args: {
       updateFeeRecipient: (body: ChainUpdateFeeRecipient, provider?: string) =>
         marketplace(args).send.updateFeeRecipient(body, provider),
 
-      createMarketplaceListing: (body: ChainSellAssetOnMarketplace, provider?: string) =>
-        marketplace(args).send.createMarketplaceListing(body, provider),
+      sellMarketplaceListing: (body: ChainSellAssetOnMarketplace, provider?: string) =>
+        marketplace(args).send.sellMarketplaceListing(body, provider),
 
       cancelMarketplaceListing: (body: ChainCancelSellAssetOnMarketplace, provider?: string) =>
         marketplace(args).send.cancelMarketplaceListing(body, provider),
@@ -64,7 +64,6 @@ export const evmBasedMarketplace = (args: {
         marketplace(args).send.buyMarketplaceListing(body, provider),
     },
 
-    // @TODO
     getMarketplaceListing: BlockchainMarketplaceService.getMarketplaceListing,
     getMarketplaceListings: BlockchainMarketplaceService.getMarketplaceListings,
     getMarketplaceFee: BlockchainMarketplaceService.getMarketplaceFee,

@@ -74,40 +74,48 @@ describe('KcsSDK - tx', () => {
     jest.setTimeout(99999)
     describe('prepare', () => {
       describe('deploySignedTransaction', () => {
-        erc721TestFactory.prepare.deploySignedTransaction(sdk.erc721, TEST_DATA.KCS, Currency.KCS)
+        erc721TestFactory.prepare.deploySignedTransaction(sdk.nft, TEST_DATA.KCS, Currency.KCS)
       })
 
       describe('transferSignedTransaction', () => {
-        erc721TestFactory.prepare.transferSignedTransaction(sdk.erc721, TEST_DATA.KCS, Currency.KCS)
+        erc721TestFactory.prepare.transferSignedTransaction(sdk.nft, TEST_DATA.KCS, Currency.KCS)
       })
 
       describe('mintSignedTransaction', () => {
-        erc721TestFactory.prepare.mintSignedTransaction(sdk.erc721, TEST_DATA.KCS, Currency.KCS)
+        erc721TestFactory.prepare.mintSignedTransaction(sdk.nft, TEST_DATA.KCS, Currency.KCS)
       })
 
       describe('burnSignedTransaction', () => {
-        erc721TestFactory.prepare.burnSignedTransaction(sdk.erc721, TEST_DATA.KCS, Currency.KCS)
+        erc721TestFactory.prepare.burnSignedTransaction(sdk.nft, TEST_DATA.KCS, Currency.KCS)
       })
 
       describe('mintCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.erc721, TEST_DATA.KCS, Currency.KCS)
+        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.nft, TEST_DATA.KCS, Currency.KCS)
       })
 
       describe('mintMultipleCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(
-          sdk.erc721,
+        erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(sdk.nft, TEST_DATA.KCS, Currency.KCS)
+      })
+
+      describe('mintMultipleSignedTransaction', () => {
+        erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.nft, TEST_DATA.KCS, Currency.KCS)
+      })
+
+      describe('updateCashbackForAuthorSignedTransaction', () => {
+        erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(
+          sdk.nft,
           TEST_DATA.KCS,
           Currency.KCS,
         )
       })
 
-      describe('mintMultipleSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.erc721, TEST_DATA.KCS, Currency.KCS)
+      describe('mintProvenanceSignedTransaction', () => {
+        erc721TestFactory.prepare.mintProvenanceSignedTransaction(sdk.nft, TEST_DATA.KCS, Currency.KCS)
       })
 
-      describe('updateCashbackForAuthorSignedTransaction', () => {
-        erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(
-          sdk.erc721,
+      describe('mintMultipleProvenanceSignedTransaction', () => {
+        erc721TestFactory.prepare.mintMultipleProvenanceSignedTransaction(
+          sdk.nft,
           TEST_DATA.KCS,
           Currency.KCS,
         )

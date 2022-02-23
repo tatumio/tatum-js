@@ -1,6 +1,6 @@
 import { evmBasedSdk, evmBasedMarketplace } from '@tatumio/shared-blockchain-evm-based'
 import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
-import { BlockchainBscService } from '@tatumio/api-client'
+import { BlockchainBscService, BlockchainFungibleTokenService } from '@tatumio/api-client'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { bscWeb3 } from './services/bsc.web3'
 import { bscKmsService } from './services/bsc.kms'
@@ -13,13 +13,21 @@ export const TatumBscSDK = (args: SDKArguments) => {
   const web3 = bscWeb3({ blockchain })
   const api = BlockchainBscService
   const txService = bscTxService({ blockchain, web3 })
+  const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
 
   return {
-    ...evmBasedSdk({ ...args, blockchain, web3 }),
+    ...evmSdk,
     kms: bscKmsService({ blockchain, web3 }),
     transaction: txService.native,
-    erc20: txService.erc20,
-    erc721: txService.erc721,
+    erc20: {
+      ...txService.erc20,
+      getErc20TransactionByAddress: BlockchainFungibleTokenService.erc20GetTransactionByAddress,
+      getErc20AccountBalance: BlockchainFungibleTokenService.erc20GetBalance,
+    },
+    nft: {
+      ...txService.erc721,
+      ...nft,
+    },
     smartContract: txService.smartContract,
     multiToken: txService.multiToken,
     custodial: txService.custodial,
