@@ -81,7 +81,7 @@ export const flowLedgerTransactionExample = async () => {
   const transaction = await flowSDK.ledger.transaction.countByAccount({
     id: '5e6be8e9e6aa436299950c41',
   })
-  const transactionByCustomer = await flowSDK.ledger.transaction.countByCustomer({
+  const countByCustomer = await flowSDK.ledger.transaction.countByCustomer({
     id: '5e6be8e9e6aa436299950c41',
   })
   const transactions = await flowSDK.ledger.transaction.getAll({})
@@ -89,7 +89,7 @@ export const flowLedgerTransactionExample = async () => {
   const transactionByAccount = await flowSDK.ledger.transaction.getAllByAccount({
     id: '5e6645712b55823de7ea82f1',
   })
-  const transactionByCustomer = await flowSDK.ledger.transaction.getAllByCustomer({
+  const getAllByCustomer = await flowSDK.ledger.transaction.getAllByCustomer({
     id: '5e6be8e9e6aa436299950c41',
   })
   const transactionByReference = await flowSDK.ledger.transaction.getAllByReference(
