@@ -12,6 +12,8 @@
     "celo-example": "examples/celo-example",
     "doge": "packages/blockchain/doge",
     "doge-example": "examples/doge-example",
+    "egld": "packages/blockchain/egld",
+    "egld-example": "examples/egld-example",
     "eth": "packages/blockchain/eth",
     "eth-example": "examples/eth-example",
     "example": "examples/sdk-example",

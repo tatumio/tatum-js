@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@celo-tools/celo-ethers-wrapper": "^0.1.0",
+    "@elrondnetwork/erdjs": "^8.0.1-alpha.11",
     "@harmony-js/crypto": "^0.1.56",
     "@tatumio/bitcoincashjs2-lib": "^4.1.2",
     "axios": "^0.24.0",
@@ -40,6 +41,7 @@
     "cashaddrjs": "^0.4.4",
     "coininfo": "^5.1.0",
     "cross-blob": "^3.0.0",
+    "ed25519-hd-key": "^1.1.2",
     "ethereumjs-wallet": "^1.0.2",
     "ethers": "^5.5.4",
     "form-data": "^4.0.0",

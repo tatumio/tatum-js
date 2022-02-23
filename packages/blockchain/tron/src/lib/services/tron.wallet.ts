@@ -65,7 +65,7 @@ export const tronWallet = (args: { tronWeb: ITronWeb }) => {
      * @param privateKey private key to use
      * @returns blockchain private key to the address
      */
-    generateAddressFromPrivatekey(privateKey: string): string {
+    generateAddressFromPrivateKey(privateKey: string): string {
       return TronWeb.address.fromPrivateKey(privateKey)
     },
     custodial: tronCustodial(args),

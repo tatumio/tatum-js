@@ -24,6 +24,7 @@
       "@tatumio/btc": ["packages/blockchain/btc/src/index.ts"],
       "@tatumio/celo": ["packages/blockchain/celo/src/index.ts"],
       "@tatumio/doge": ["packages/blockchain/doge/src/index.ts"],
+      "@tatumio/egld": ["packages/blockchain/egld/src/index.ts"],
       "@tatumio/eth": ["packages/blockchain/eth/src/index.ts"],
       "@tatumio/kcs": ["packages/blockchain/kcs/src/index.ts"],
       "@tatumio/ltc": ["packages/blockchain/ltc/src/index.ts"],
