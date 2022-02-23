@@ -60,6 +60,11 @@
                 "bannedExternalImports": ["bitco*"]
               },
               {
+                "sourceTag": "scope:tron-based",
+                "onlyDependOnLibsWithTags": ["scope:shared", "scope:evm-based"],
+                "bannedExternalImports": ["bitco*"]
+              },
+              {
                 "sourceTag": "scope:xrp-based",
                 "onlyDependOnLibsWithTags": ["scope:shared", "scope:xrp-based"],
                 "bannedExternalImports": ["*web3*", "*ethereum*", "bitco*"]
