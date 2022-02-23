@@ -50,6 +50,7 @@ import {
   getBscBep20ContractDecimals,
   getCeloErc20ContractDecimals,
   getEthErc20ContractDecimals,
+  getKlayErc20ContractDecimals,
   getOne20ContractDecimals,
   getPolygonErc20ContractDecimals,
   getTronTrc20ContractDecimals,
@@ -58,6 +59,8 @@ import {
   prepareCeloGenerateCustodialWalletSignedTransaction,
   prepareCeloSmartContractWriteMethodInvocation,
   prepareEthGenerateCustodialWalletSignedTransaction,
+  prepareKlaytnGenerateCustodialWalletSignedTransaction,
+  prepareKlaytnSmartContractWriteMethodInvocation,
   prepareOneGenerateCustodialWalletSignedTransaction,
   prepareOneSmartContractWriteMethodInvocation,
   preparePolygonGenerateCustodialWalletSignedTransaction,
@@ -298,6 +301,9 @@ export const sendCustodialWallet = async (testnet: boolean, body: GenerateCustod
     case Currency.MATIC:
       txData = await preparePolygonGenerateCustodialWalletSignedTransaction(testnet, body, provider);
       break;
+    case Currency.KLAY:
+      txData = await prepareKlaytnGenerateCustodialWalletSignedTransaction(testnet, body, provider);
+      break;
     case Currency.TRON:
       txData = await prepareTronGenerateCustodialWalletSignedTransaction(testnet, body, provider);
       break;
@@ -361,6 +367,9 @@ export const prepareTransferFromCustodialWallet = async (testnet: boolean, body:
       case Currency.MATIC:
         amount = amount.multipliedBy(new BigNumber(10).pow(await getPolygonErc20ContractDecimals(testnet, body.tokenAddress, provider)));
         break;
+      case Currency.KLAY:
+        amount = amount.multipliedBy(new BigNumber(10).pow(await getKlayErc20ContractDecimals(testnet, body.tokenAddress, provider)));
+        break;
       case Currency.TRON:
         amount = amount.multipliedBy(new BigNumber(10).pow(await getTronTrc20ContractDecimals(testnet, body.tokenAddress, provider)));
         break;
@@ -386,6 +395,8 @@ export const prepareTransferFromCustodialWallet = async (testnet: boolean, body:
       return await prepareBscSmartContractWriteMethodInvocation(r, provider);
     case Currency.MATIC:
       return await preparePolygonSmartContractWriteMethodInvocation(testnet, r, provider);
+    case Currency.KLAY:
+      return await prepareKlaytnSmartContractWriteMethodInvocation(testnet, r, provider);
     case Currency.TRON: {
       const { feeLimit, from } = body as TransferFromTronCustodialAddress;
       r.methodName = 'transfer(address,uint256,address,uint256,uint256)';
@@ -473,6 +484,9 @@ export const prepareBatchTransferFromCustodialWallet = async (testnet: boolean,
         case Currency.MATIC:
           amount = amount.multipliedBy(new BigNumber(10).pow(await getPolygonErc20ContractDecimals(testnet, body.tokenAddress[i], provider)));
           break;
+        case Currency.KLAY:
+          amount = amount.multipliedBy(new BigNumber(10).pow(await getKlayErc20ContractDecimals(testnet, body.tokenAddress[i], provider)));
+          break;
         case Currency.TRON:
           amount = amount.multipliedBy(new BigNumber(10).pow(await getTronTrc20ContractDecimals(testnet, body.tokenAddress[i], provider)));
           break;
@@ -501,6 +515,8 @@ export const prepareBatchTransferFromCustodialWallet = async (testnet: boolean,
       return await prepareBscSmartContractWriteMethodInvocation(r, provider);
     case Currency.MATIC:
       return await preparePolygonSmartContractWriteMethodInvocation(testnet, r, provider);
+    case Currency.KLAY:
+      return await prepareKlaytnSmartContractWriteMethodInvocation(testnet, r, provider);
     case Currency.TRON: {
       const body1 = body as TransferFromTronCustodialAddressBatch;
       return await prepareTronCustodialTransferBatch(testnet, r, body1.feeLimit as number, body1.from, provider);
