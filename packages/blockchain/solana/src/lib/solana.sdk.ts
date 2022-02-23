@@ -11,18 +11,20 @@ const blockchain = Blockchain.SOL
 export const TatumSolanaSDK = (args: SDKArguments) => {
   const api = BlockchainSolanaService
   const web3: SolanaWeb3 = solanaWeb3()
+  const { nft, ...abstractSdk } = abstractBlockchainSdk({ ...args, blockchain })
+  const txService = solanaTxService({ web3 })
 
   return {
-    ...abstractBlockchainSdk({
-      ...args,
-      blockchain,
-    }),
+    ...abstractSdk,
     wallet: BlockchainSolanaService.solanaGenerateWallet,
     httpDriver: async (request: Web3Request): Promise<Web3Response> => {
       return api.solanaWeb3Driver(args.apiKey, { ...request, jsonrpc: '2.0' })
     },
     kms: solanaKmsService({ web3, blockchain }),
-    transaction: solanaTxService({ web3 }),
+    transaction: txService,
+    nft: {
+      ...nft,
+    },
     blockchain: {
       getCurrentBlock: BlockchainSolanaService.solanaGetCurrentBlock,
       getBlock: BlockchainSolanaService.solanaGetBlock,
