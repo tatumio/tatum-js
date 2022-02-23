@@ -13,6 +13,7 @@ export const oneMultiToken = (args: {
   })
 
   return {
+    ...unpatchedMultiToken,
     prepare: {
       /**
        * Sign mint MultiToken transaction with private keys locally. Nothing is broadcast to the blockchain.
