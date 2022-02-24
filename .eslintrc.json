@@ -73,6 +73,11 @@
                 "sourceTag": "*",
                 "onlyDependOnLibsWithTags": ["*"],
                 "bannedExternalImports": ["@tatumio/tatum-*"]
+              },
+              {
+                "sourceTag": "scope:flow-based",
+                "onlyDependOnLibsWithTags": ["scope:shared", "scope:evm-based"],
+                "bannedExternalImports": ["bitco*", "@harmony*", "*ethereum*"]
               }
             ]
           }
