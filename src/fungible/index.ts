@@ -4,11 +4,12 @@ import token_abi from '../contracts/erc20/token_abi';
 import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../helpers';
 import { ApproveErc20, Currency } from '../model';
 import {
-    getBscBep20ContractDecimals,
-    getCeloErc20ContractDecimals,
-    getEthErc20ContractDecimals,
-    getOne20ContractDecimals,
-    getPolygonErc20ContractDecimals,
+  getBscBep20ContractDecimals,
+  getCeloErc20ContractDecimals,
+  getEthErc20ContractDecimals,
+  getKlayErc20ContractDecimals,
+  getOne20ContractDecimals,
+  getPolygonErc20ContractDecimals,
 } from '../transaction';
 import Caver from 'caver-js'
 
@@ -46,6 +47,9 @@ export const prepareApproveErc20 = async (testnet: boolean, body: ApproveErc20, 
       break;
     case Currency.MATIC:
       amount = new BigNumber(body.amount).multipliedBy(new BigNumber(10).pow(await getPolygonErc20ContractDecimals(testnet, body.contractAddress, provider))).toString(16);
+      break;
+    case Currency.KLAY:
+      amount = new BigNumber(body.amount).multipliedBy(new BigNumber(10).pow(await getKlayErc20ContractDecimals(testnet, body.contractAddress, provider))).toString(16);
       break;
     default:
       throw new Error('Unsupported combination of inputs.');
