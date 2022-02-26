@@ -53,11 +53,6 @@ import {
   generatePrivateKeyFromMnemonic as generateEgldPrivateKey,
 } from '@tatumio/tatum-egld'
 import { generateAddressFromXPub as generateVetAddress, generatePrivateKeyFromMnemonic as generateVetPrivateKey } from '@tatumio/tatum-vet'
-import {
-  generateAddressFromPrivatekey as convertLyraPrivateKey,
-  generateAddressFromXPub as generateLyraAddress,
-  generatePrivateKeyFromMnemonic as generateLyraPrivateKey,
-} from '@tatumio/tatum-scrypta'
 import { generateAddress as generateCardanoAddress, generatePrivateKey as generateCardanoPrivateKey } from '@tatumio/tatum-ada'
 import { generatePrivateKeyFromMnemonic as generatePolygonPrivateKey } from '@tatumio/tatum-polygon'
 import { generateAddressFromPrivatekey as getAddressFromPrivateKey } from '@tatumio/tatum-bnb'
@@ -146,8 +141,6 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
       return generateEgldAddress(testnet, xpub, i)
     case Currency.VET:
       return generateVetAddress(xpub, i)
-    case Currency.LYRA:
-      return generateLyraAddress(testnet, xpub, i)
     case Currency.ADA:
       return generateCardanoAddress(testnet, xpub, i)
     case Currency.GLMR:
@@ -240,8 +233,6 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
       return generateEgldPrivateKey(testnet, mnemonic, i)
     case Currency.VET:
       return generateVetPrivateKey(testnet, mnemonic, i)
-    case Currency.LYRA:
-      return generateLyraPrivateKey(testnet, mnemonic, i)
     case Currency.ADA:
       return generateCardanoPrivateKey(mnemonic, i)
     case Currency.GLMR:
@@ -264,8 +255,6 @@ export const generateAddressFromPrivatekey = (currency: Currency, testnet: boole
       return convertBtcPrivateKey(testnet, privateKey)
     case Currency.QTUM:
       return convertQTUMPrivateKey(testnet, privateKey)
-    case Currency.LYRA:
-      return convertLyraPrivateKey(testnet, privateKey)
     case Currency.BNB:
       return getAddressFromPrivateKey(testnet, privateKey)
     case Currency.TRON:

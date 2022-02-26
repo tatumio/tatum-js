@@ -15,7 +15,6 @@ import { generateWallet as generateNeoWallet } from '@tatumio/tatum-neo'
 import { generateWallet as generateOneWallet } from '@tatumio/tatum-one'
 import { generateWallet as generateQtumWallet } from '@tatumio/tatum-qtum'
 import { generateWallet as generatePolygonWallet } from '@tatumio/tatum-polygon'
-import { generateWallet as generateLyraWallet } from '@tatumio/tatum-scrypta'
 import { generateWallet as generateTronWallet } from '@tatumio/tatum-tron'
 import { generateWallet as generateVetWallet } from '@tatumio/tatum-vet'
 import { generateWallet as generateXdcWallet } from '@tatumio/tatum-xdc'
@@ -117,8 +116,6 @@ export const generateWallet = (
       return generateNeoWallet()
     case Currency.BNB:
       return generateBnbWallet(undefined, { testnet })
-    case Currency.LYRA:
-      return generateLyraWallet(mnem, { testnet })
     case Currency.ADA:
       return generateAdaWallet(mnem)
     case Currency.ALGO:

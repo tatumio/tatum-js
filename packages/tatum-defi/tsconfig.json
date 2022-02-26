@@ -26,8 +26,6 @@
     { "path": "../tatum-neo" },
     { "path": "../tatum-polygon" },
     { "path": "../tatum-qtum" },
-    { "path": "../tatum-quorum" },
-    { "path": "../tatum-scrypta" },
     { "path": "../tatum-solana" },
     { "path": "../tatum-tron" },
     { "path": "../tatum-vet" },

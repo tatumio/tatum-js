@@ -31,8 +31,6 @@
     "@tatumio/tatum-one": "file:../tatum-one",
     "@tatumio/tatum-polygon": "file:../tatum-polygon",
     "@tatumio/tatum-qtum": "file:../tatum-qtum",
-    "@tatumio/tatum-quorum": "file:../tatum-quorum",
-    "@tatumio/tatum-scrypta": "file:../tatum-scrypta",
     "@tatumio/tatum-solana": "file:../tatum-solana",
     "@tatumio/tatum-tron": "file:../tatum-tron",
     "@tatumio/tatum-vet": "file:../tatum-vet",

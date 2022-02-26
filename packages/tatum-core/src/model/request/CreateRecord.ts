@@ -1,6 +1,16 @@
 import { Type } from 'class-transformer'
-import { IsIn, IsNotEmpty, IsOptional, IsUUID, Length, Min, Validate, ValidateIf, ValidateNested } from 'class-validator'
-import { SignatureIdValidator } from '../validation/SignatureIdValidator'
+import {
+  IsIn,
+  IsNotEmpty,
+  IsOptional,
+  IsUUID,
+  Length,
+  Min,
+  Validate,
+  ValidateIf,
+  ValidateNested,
+} from 'class-validator'
+import { SignatureIdValidator } from '../validation'
 import { Currency } from './Currency'
 import { Fee } from './Fee'
 
@@ -43,17 +53,13 @@ export class CreateRecord {
   public feeCurrency?: Currency
 
   @IsNotEmpty()
-  @ValidateIf((o) => o.chain === Currency.QUORUM)
+  @ValidateIf((o) => o.chain === Currency.EGLD)
   @Length(42, 43)
   public from: string
 
-  @ValidateIf((o) => o.chain === Currency.QUORUM || o.signatureId)
+  @ValidateIf((o) => o.signatureId)
   @Length(42, 43)
   public to?: string
-
-  @ValidateIf((o) => o.chain === Currency.FABRIC)
-  @IsNotEmpty()
-  public key: string
 
   @Min(0)
   @IsOptional()
