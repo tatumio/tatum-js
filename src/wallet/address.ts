@@ -11,31 +11,30 @@ import * as elliptic from 'elliptic';
 import ethWallet, { hdkey as ethHdKey } from 'ethereumjs-wallet';
 // @ts-ignore
 import {
-    BCH_DERIVATION_PATH,
-    BTC_DERIVATION_PATH,
-    CELO_DERIVATION_PATH,
-    DOGE_DERIVATION_PATH,
-    DOGE_NETWORK,
-    DOGE_TEST_NETWORK,
-    EGLD_DERIVATION_PATH,
-    ETH_DERIVATION_PATH,
-    FLOW_DERIVATION_PATH,
-    KLAYTN_DERIVATION_PATH,
-    LTC_DERIVATION_PATH,
-    LTC_NETWORK,
-    LTC_TEST_NETWORK,
-    LYRA_DERIVATION_PATH,
-    LYRA_NETWORK,
-    LYRA_TEST_NETWORK,
-    MATIC_DERIVATION_PATH,
-    ONE_DERIVATION_PATH,
-    QTUM_DERIVATION_PATH,
-    QTUM_NETWORK_MAINNET,
-    QTUM_NETWORK_TESTNET,
-    TESTNET_DERIVATION_PATH,
-    TRON_DERIVATION_PATH,
-    VET_DERIVATION_PATH,
-    XDC_DERIVATION_PATH,
+  BCH_DERIVATION_PATH,
+  BTC_DERIVATION_PATH,
+  CELO_DERIVATION_PATH,
+  DOGE_DERIVATION_PATH,
+  DOGE_NETWORK,
+  DOGE_TEST_NETWORK,
+  EGLD_DERIVATION_PATH,
+  ETH_DERIVATION_PATH,
+  FLOW_DERIVATION_PATH,
+  KLAYTN_DERIVATION_PATH,
+  LTC_DERIVATION_PATH,
+  LTC_NETWORK,
+  LTC_TEST_NETWORK,
+  LYRA_NETWORK,
+  LYRA_TEST_NETWORK,
+  MATIC_DERIVATION_PATH,
+  ONE_DERIVATION_PATH,
+  QTUM_DERIVATION_PATH,
+  QTUM_NETWORK_MAINNET,
+  QTUM_NETWORK_TESTNET,
+  TESTNET_DERIVATION_PATH,
+  TRON_DERIVATION_PATH,
+  VET_DERIVATION_PATH,
+  XDC_DERIVATION_PATH,
 } from '../constants';
 import { Currency } from '../model';
 import cardano from './cardano.crypto';
@@ -562,21 +561,6 @@ const generateVetPrivateKey = async (testnet: boolean, mnemonic: string, i: numb
 }
 
 /**
- * Generate Scrypta private key from mnemonic seed
- * @param testnet testnet or mainnet version of address
- * @param mnemonic mnemonic to generate private key from
- * @param i derivation index of private key to generate.
- * @returns blockchain private key to the address
- */
-const generateLyraPrivateKey = async (testnet: boolean, mnemonic: string, i: number) => {
-  const network = testnet ? LYRA_TEST_NETWORK : LYRA_NETWORK
-  return fromSeed(await mnemonicToSeed(mnemonic), network)
-    .derivePath(LYRA_DERIVATION_PATH)
-    .derive(i)
-    .toWIF()
-}
-
-/**
  * Convert Bitcoin Private Key to Address
  * @param testnet testnet or mainnet version of address
  * @param privkey private key to use
@@ -757,8 +741,6 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
       return generateEgldAddress(testnet, xpub, i)
     case Currency.VET:
       return generateVetAddress(testnet, xpub, i)
-    case Currency.LYRA:
-      return generateLyraAddress(testnet, xpub, i)
     case Currency.ADA:
       return cardano.generateAddress(testnet, xpub, i)
     default:
@@ -853,8 +835,6 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
       return generateEgldPrivateKey(testnet, mnemonic, i)
     case Currency.VET:
       return generateVetPrivateKey(testnet, mnemonic, i)
-    case Currency.LYRA:
-      return generateLyraPrivateKey(testnet, mnemonic, i)
     case Currency.ADA:
       return cardano.generatePrivateKey(mnemonic, i)
     default:
@@ -875,8 +855,6 @@ export const generateAddressFromPrivatekey = (currency: Currency, testnet: boole
       return convertBtcPrivateKey(testnet, privateKey)
     case Currency.QTUM:
       return convertQTUMPrivateKey(testnet, privateKey)
-    case Currency.LYRA:
-      return convertLyraPrivateKey(testnet, privateKey)
     case Currency.BNB:
       return getAddressFromPrivateKey(privateKey, testnet ? 'tbnb' : 'bnb')
     case Currency.TRON:

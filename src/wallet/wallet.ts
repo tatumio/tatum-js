@@ -8,30 +8,27 @@ import hdkey from 'hdkey';
 import { RippleAPI } from 'ripple-lib';
 import { Keypair } from 'stellar-sdk';
 import {
-    BCH_DERIVATION_PATH,
-    BTC_DERIVATION_PATH,
-    CELO_DERIVATION_PATH,
-    DOGE_DERIVATION_PATH,
-    DOGE_NETWORK,
-    DOGE_TEST_NETWORK,
-    ETH_DERIVATION_PATH,
-    FLOW_DERIVATION_PATH,
-    KLAYTN_DERIVATION_PATH,
-    LTC_DERIVATION_PATH,
-    LTC_NETWORK,
-    LTC_TEST_NETWORK,
-    LYRA_DERIVATION_PATH,
-    LYRA_NETWORK,
-    LYRA_TEST_NETWORK,
-    MATIC_DERIVATION_PATH,
-    ONE_DERIVATION_PATH,
-    QTUM_DERIVATION_PATH,
-    QTUM_NETWORK_MAINNET,
-    QTUM_NETWORK_TESTNET,
-    TESTNET_DERIVATION_PATH,
-    TRON_DERIVATION_PATH,
-    VET_DERIVATION_PATH,
-    XDC_DERIVATION_PATH,
+  BCH_DERIVATION_PATH,
+  BTC_DERIVATION_PATH,
+  CELO_DERIVATION_PATH,
+  DOGE_DERIVATION_PATH,
+  DOGE_NETWORK,
+  DOGE_TEST_NETWORK,
+  ETH_DERIVATION_PATH,
+  FLOW_DERIVATION_PATH,
+  KLAYTN_DERIVATION_PATH,
+  LTC_DERIVATION_PATH,
+  LTC_NETWORK,
+  LTC_TEST_NETWORK,
+  MATIC_DERIVATION_PATH,
+  ONE_DERIVATION_PATH,
+  QTUM_DERIVATION_PATH,
+  QTUM_NETWORK_MAINNET,
+  QTUM_NETWORK_TESTNET,
+  TESTNET_DERIVATION_PATH,
+  TRON_DERIVATION_PATH,
+  VET_DERIVATION_PATH,
+  XDC_DERIVATION_PATH,
 } from '../constants';
 import { Currency } from '../model';
 import cardano from './cardano.crypto';
@@ -309,17 +306,6 @@ export const generateXlmWallet = (secret?: string) => {
 }
 
 /**
- * Generate Scrypta wallet
- * @param testnet testnet or mainnet version of address
- * @param mnem mnemonic seed to use
- * @returns wallet
- */
-export const generateLyraWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
-  const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? LYRA_TEST_NETWORK.bip32 : LYRA_NETWORK.bip32)
-  return { mnemonic: mnem, xpub: hdwallet.derive(LYRA_DERIVATION_PATH).toJSON().xpub }
-}
-
-/**
  * Generate ADA wallet
  * @param mnemonic mnemonic seed to use
  * @returns wallet
@@ -437,8 +423,6 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
       return generateNeoWallet()
     case Currency.BNB:
       return generateBnbWallet(testnet)
-    case Currency.LYRA:
-      return generateLyraWallet(testnet, mnem)
     case Currency.ADA:
       return generateAdaWallet(mnem)
     case Currency.ALGO:
