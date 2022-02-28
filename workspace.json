@@ -17,6 +17,8 @@
     "eth": "packages/blockchain/eth",
     "eth-example": "examples/eth-example",
     "example": "examples/sdk-example",
+    "flow": "packages/blockchain/flow",
+    "flow-example": "examples/flow-example",
     "kcs": "packages/blockchain/kcs",
     "kcs-example": "examples/kcs-example",
     "klaytn": "packages/blockchain/klaytn",

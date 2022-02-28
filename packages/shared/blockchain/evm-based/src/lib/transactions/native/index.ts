@@ -16,7 +16,7 @@ const transferSignedTransaction = async (
 
   const tx: TransactionConfig = {
     from: undefined,
-    to: evmBasedUtils.transformAddress(body.to),
+    to: body.to,
     data: body.data,
     value: evmBasedUtils.transformAmount(body.amount),
     nonce: body.nonce,

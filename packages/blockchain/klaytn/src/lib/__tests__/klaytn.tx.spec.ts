@@ -70,41 +70,41 @@ describe('KlaytnSDK - tx', () => {
   xdescribe('erc721', () => {
     describe('prepare', () => {
       describe('deploySignedTransaction', () => {
-        erc721TestFactory.prepare.deploySignedTransaction(sdk.erc721, TEST_DATA.KLAYTN, Currency.KLAY)
+        erc721TestFactory.prepare.deploySignedTransaction(sdk.nft, TEST_DATA.KLAYTN, Currency.KLAY)
       })
 
       describe('transferSignedTransaction', () => {
-        erc721TestFactory.prepare.transferSignedTransaction(sdk.erc721, TEST_DATA.KLAYTN, Currency.KLAY)
+        erc721TestFactory.prepare.transferSignedTransaction(sdk.nft, TEST_DATA.KLAYTN, Currency.KLAY)
       })
 
       describe('mintSignedTransaction', () => {
-        erc721TestFactory.prepare.mintSignedTransaction(sdk.erc721, TEST_DATA.KLAYTN, Currency.KLAY)
+        erc721TestFactory.prepare.mintSignedTransaction(sdk.nft, TEST_DATA.KLAYTN, Currency.KLAY)
       })
 
       describe('burnSignedTransaction', () => {
-        erc721TestFactory.prepare.burnSignedTransaction(sdk.erc721, TEST_DATA.KLAYTN, Currency.KLAY)
+        erc721TestFactory.prepare.burnSignedTransaction(sdk.nft, TEST_DATA.KLAYTN, Currency.KLAY)
       })
 
       describe('mintCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.erc721, TEST_DATA.KLAYTN, Currency.KLAY)
+        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.nft, TEST_DATA.KLAYTN, Currency.KLAY)
       })
 
       // Invalid JSON RPC response: {"code":1200503,"message":"error from node API; ","requestId":"b993772c-3427-4910-9b21-1a1fc5956f11"}
       xdescribe('mintMultipleCashbackSignedTransaction', () => {
         erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(
-          sdk.erc721,
+          sdk.nft,
           TEST_DATA.KLAYTN,
           Currency.KLAY,
         )
       })
 
       describe('mintMultipleSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.erc721, TEST_DATA.KLAYTN, Currency.KLAY)
+        erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.nft, TEST_DATA.KLAYTN, Currency.KLAY)
       })
 
       describe('updateCashbackForAuthorSignedTransaction', () => {
         erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(
-          sdk.erc721,
+          sdk.nft,
           TEST_DATA.KLAYTN,
           Currency.KLAY,
         )
