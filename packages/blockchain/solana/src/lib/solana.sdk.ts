@@ -14,12 +14,7 @@ export const TatumSolanaSDK = (args: SDKArguments) => {
   const { nft, ...abstractSdk } = abstractBlockchainSdk({ ...args, blockchain })
   const txService = solanaTxService({ web3 })
 
-  const { 
-    mintNFT,
-    transferNFT,
-    getNFTMetadataURI,
-    getNFTRoyalty,
-  } = nft;
+  const { mintNFT, transferNFT, getNFTMetadataURI, getNFTRoyalty } = nft
 
   return {
     ...abstractSdk,

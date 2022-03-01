@@ -12,16 +12,16 @@ export const TatumFlowSDK = (args: SDKArguments) => {
   const api = BlockchainFlowService
   const { nft, ...abstractSdk } = abstractBlockchainSdk({ ...args, blockchain })
 
-  const { 
+  const {
     deployNFTSmartContract,
     mintNFT,
-    transferNFT, 
+    transferNFT,
     mintMultipleNFTs,
-    burnNFT, 
+    burnNFT,
     getNFTTransaction,
     getNFTAccountBalance,
     getNFTMetadataURI,
-  } = nft;
+  } = nft
 
   return {
     ...abstractSdk,
@@ -32,9 +32,9 @@ export const TatumFlowSDK = (args: SDKArguments) => {
     nft: {
       deployNFTSmartContract,
       mintNFT,
-      transferNFT, 
+      transferNFT,
       mintMultipleNFTs,
-      burnNFT, 
+      burnNFT,
       getNFTTransaction,
       getNFTAccountBalance,
       getNFTMetadataURI,

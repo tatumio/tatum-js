@@ -15,12 +15,12 @@ export const TatumBscSDK = (args: SDKArguments) => {
   const txService = bscTxService({ blockchain, web3 })
   const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
 
-  const { 
+  const {
     deployNFTSmartContract,
     mintNFT,
-    transferNFT, 
+    transferNFT,
     mintMultipleNFTs,
-    burnNFT, 
+    burnNFT,
     addNFTMinter,
     updateNFTRoyalty,
     getNFTTransaction,
@@ -28,7 +28,7 @@ export const TatumBscSDK = (args: SDKArguments) => {
     getNFTProvenanceData,
     getNFTMetadataURI,
     getNFTRoyalty,
-  } = nft;
+  } = nft
 
   return {
     ...evmSdk,
@@ -43,9 +43,9 @@ export const TatumBscSDK = (args: SDKArguments) => {
       ...txService.erc721,
       deployNFTSmartContract,
       mintNFT,
-      transferNFT, 
+      transferNFT,
       mintMultipleNFTs,
-      burnNFT, 
+      burnNFT,
       addNFTMinter,
       updateNFTRoyalty,
       getNFTTransaction,

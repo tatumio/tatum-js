@@ -15,12 +15,12 @@ export const TatumKcsSDK = (args: SDKArguments) => {
   const txService = kcsTxService({ blockchain, web3 })
   const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
 
-  const { 
+  const {
     deployNFTSmartContract,
     mintNFT,
-    transferNFT, 
+    transferNFT,
     mintMultipleNFTs,
-    burnNFT, 
+    burnNFT,
     addNFTMinter,
     updateNFTRoyalty,
     getNFTTransaction,
@@ -28,8 +28,8 @@ export const TatumKcsSDK = (args: SDKArguments) => {
     getNFTProvenanceData,
     getNFTMetadataURI,
     getNFTRoyalty,
-  } = nft;
-  
+  } = nft
+
   return {
     ...evmSdk,
     kms: kcsKmsService({ blockchain, web3 }),
@@ -43,9 +43,9 @@ export const TatumKcsSDK = (args: SDKArguments) => {
       ...txService.erc721,
       deployNFTSmartContract,
       mintNFT,
-      transferNFT, 
+      transferNFT,
       mintMultipleNFTs,
-      burnNFT, 
+      burnNFT,
       addNFTMinter,
       updateNFTRoyalty,
       getNFTTransaction,
