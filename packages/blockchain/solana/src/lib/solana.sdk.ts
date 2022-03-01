@@ -14,6 +14,13 @@ export const TatumSolanaSDK = (args: SDKArguments) => {
   const { nft, ...abstractSdk } = abstractBlockchainSdk({ ...args, blockchain })
   const txService = solanaTxService({ web3 })
 
+  const { 
+    mintNFT,
+    transferNFT,
+    getNFTMetadataURI,
+    getNFTRoyalty,
+  } = nft;
+
   return {
     ...abstractSdk,
     wallet: BlockchainSolanaService.solanaGenerateWallet,
@@ -23,7 +30,10 @@ export const TatumSolanaSDK = (args: SDKArguments) => {
     kms: solanaKmsService({ web3, blockchain }),
     transaction: txService,
     nft: {
-      ...nft,
+      mintNFT,
+      transferNFT,
+      getNFTMetadataURI,
+      getNFTRoyalty,
     },
     blockchain: {
       getCurrentBlock: BlockchainSolanaService.solanaGetCurrentBlock,
