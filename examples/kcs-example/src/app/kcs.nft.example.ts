@@ -24,11 +24,6 @@ export async function kcsNftExample() {
     Currency.KCS,
     '0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7',
   )
-  const nftByAddress = await kcsSDK.nft.getNFTsByAddress(
-    Currency.KCS,
-    'NTAESFCB3WOD7SAOL42KSPVARLB3JFA3MNX3AESWHYVT2RMYDVZI6YLG4Y',
-    '0x45871ED5F15203C0ce791eFE5f4B5044833aE10e',
-  )
 
   const nftAccountBalance = await kcsSDK.nft.getNFTAccountBalance(
     Currency.KCS,
