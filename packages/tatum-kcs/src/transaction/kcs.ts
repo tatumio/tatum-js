@@ -1,62 +1,65 @@
 import {
   auction,
   BurnErc20,
+  BurnErc721,
+  BurnMultiToken,
+  BurnMultiTokenBatch,
+  ChainBaseBurnMultiToken,
+  ChainBaseBurnMultiTokenBatch,
+  ChainBurnErc721,
+  ChainBurnMultiToken,
+  ChainBurnMultiTokenBatch,
+  ChainCreateRecord,
+  ChainDeployErc721,
+  ChainDeployMarketplaceListing,
+  ChainDeployMultiToken,
+  ChainDeployNftAuction,
+  ChainGenerateCustodialAddress,
+  ChainMintErc721,
+  ChainMintMultipleErc721,
+  ChainMintMultiToken,
+  ChainMintMultiTokenBatch,
+  ChainTransactionKMS,
+  ChainTransferErc20,
+  ChainTransferErc721,
+  ChainTransferMultiToken,
+  ChainTransferMultiTokenBatch,
+  ChainUpdateCashbackErc721,
   CreateRecord,
   Currency,
   DeployErc20,
+  DeployErc721,
   DeployMarketplaceListing,
+  DeployMultiToken,
   DeployNftAuction,
-  erc1155TokenBytecode,
-  erc20TokenBytecode,
-  erc721TokenBytecode,
-  erc721TokenABI,
-  erc20TokenABI,
   erc1155TokenABI,
+  erc1155TokenBytecode,
+  erc20TokenABI,
+  erc20TokenBytecode,
+  erc721General_abi,
+  erc721General_bytecode,
+  erc721Provenance_abi,
   erc721Provenance_bytecode,
+  erc721TokenABI,
+  erc721TokenBytecode,
   GenerateCustodialAddress,
   listing,
   MintErc20,
+  MintErc721,
+  MintMultipleErc721,
   MintMultiToken,
   MintMultiTokenBatch,
+  obtainCustodialAddressType,
   SmartContractMethodInvocation,
   SmartContractReadMethodInvocation,
   TATUM_API_URL,
   TransactionKMS,
   TransferErc20,
+  TransferErc721,
   TransferMultiToken,
   TransferMultiTokenBatch,
   UpdateCashbackErc721,
   validateBody,
-  MintErc721,
-  MintMultipleErc721,
-  BurnErc721,
-  TransferErc721,
-  DeployErc721,
-  BurnMultiToken,
-  BurnMultiTokenBatch,
-  DeployMultiToken,
-  ChainTransferErc20,
-  ChainTransactionKMS,
-  ChainGenerateCustodialAddress,
-  ChainCreateRecord,
-  ChainMintErc721,
-  ChainMintMultipleErc721,
-  ChainBurnErc721,
-  ChainTransferErc721,
-  ChainUpdateCashbackErc721,
-  ChainDeployErc721,
-  ChainDeployMarketplaceListing,
-  ChainDeployNftAuction,
-  ChainBurnMultiToken,
-  ChainBurnMultiTokenBatch,
-  ChainTransferMultiToken,
-  ChainTransferMultiTokenBatch,
-  ChainMintMultiToken,
-  ChainMintMultiTokenBatch,
-  ChainDeployMultiToken,
-  ChainBaseBurnMultiToken,
-  ChainBaseBurnMultiTokenBatch,
-  obtainCustodialAddressType,
 } from '@tatumio/tatum-core'
 import { BigNumber } from 'bignumber.js'
 import Web3 from 'web3'
@@ -81,7 +84,7 @@ const prepareGeneralTx = async (
   nonce?: number,
   data?: string,
   gasLimit?: string,
-  gasPrice?: string
+  gasPrice?: string,
 ) => {
   const tx: TransactionConfig = {
     from: 0,
@@ -183,7 +186,7 @@ export const prepareGenerateCustodialWalletSignedTransaction = async (body: Chai
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice
+    body.fee?.gasPrice,
   )
 }
 
@@ -207,7 +210,7 @@ export const prepareSignedTransaction = async (body: ChainTransferErc20, provide
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice
+    body.fee?.gasPrice,
   )
 }
 
@@ -231,7 +234,7 @@ export const prepareStoreDataTransaction = async (body: ChainCreateRecord, provi
     body.nonce,
     hexData,
     body.ethFee?.gasLimit,
-    body.ethFee?.gasPrice
+    body.ethFee?.gasPrice,
   )
 }
 
@@ -257,7 +260,7 @@ export const prepareMintErc20SignedTransaction = async (body: MintErc20, provide
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice
+    body.fee?.gasPrice,
   )
 }
 
@@ -283,7 +286,7 @@ export const prepareBurnErc20SignedTransaction = async (body: BurnErc20, provide
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice
+    body.fee?.gasPrice,
   )
 }
 
@@ -310,7 +313,7 @@ export const prepareTransferErc20SignedTransaction = async (body: ChainTransferE
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice
+    body.fee?.gasPrice,
   )
 }
 
@@ -347,7 +350,7 @@ export const prepareDeployErc20SignedTransaction = async (body: DeployErc20, pro
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice
+    body.fee?.gasPrice,
   )
 }
 
@@ -375,7 +378,7 @@ export const prepareMintErc721SignedTransaction = async (body: ChainMintErc721, 
       body.nonce,
       data,
       body.fee?.gasLimit,
-      body.fee?.gasPrice
+      body.fee?.gasPrice,
     )
   }
   throw new Error('Contract address should not be empty!')
@@ -407,7 +410,7 @@ export const prepareMintCashbackErc721SignedTransaction = async (body: ChainMint
       body.nonce,
       data,
       body.fee?.gasLimit,
-      body.fee?.gasPrice
+      body.fee?.gasPrice,
     )
   }
   throw new Error('Contract address should not be empty!')
@@ -432,7 +435,7 @@ export const prepareMintMultipleCashbackErc721SignedTransaction = async (body: C
       body.tokenId,
       body.url,
       body.authorAddresses,
-      cb
+      cb,
     )
     .encodeABI()
   return prepareGeneralTx(
@@ -444,7 +447,7 @@ export const prepareMintMultipleCashbackErc721SignedTransaction = async (body: C
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice
+    body.fee?.gasPrice,
   )
 }
 
@@ -463,7 +466,7 @@ export const prepareMintMultipleErc721SignedTransaction = async (body: ChainMint
     .mintMultiple(
       body.to.map((t) => t.trim()),
       body.tokenId,
-      body.url
+      body.url,
     )
     .encodeABI()
   return prepareGeneralTx(
@@ -475,7 +478,7 @@ export const prepareMintMultipleErc721SignedTransaction = async (body: ChainMint
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice
+    body.fee?.gasPrice,
   )
 }
 
@@ -500,7 +503,7 @@ export const prepareBurnErc721SignedTransaction = async (body: ChainBurnErc721, 
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice
+    body.fee?.gasPrice,
   )
 }
 
@@ -527,7 +530,7 @@ export const prepareTransferErc721SignedTransaction = async (body: ChainTransfer
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice
+    body.fee?.gasPrice,
   )
 }
 
@@ -554,7 +557,7 @@ export const prepareUpdateCashbackForAuthorErc721SignedTransaction = async (body
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice
+    body.fee?.gasPrice,
   )
 }
 
@@ -568,11 +571,23 @@ export const prepareDeployErc721SignedTransaction = async (body: ChainDeployErc7
   ;(body as DeployErc721).chain = Currency.KCS
   await validateBody(body, DeployErc721)
   const client = await prepareClient(provider, body.fromPrivateKey)
+  if (body.provenance && body.cashback) {
+    throw new Error('Only one of provenance or cashback must be present and true.')
+  }
+  let abi = erc721General_abi
+  let deployData: string = erc721General_bytecode
+  if (body.provenance) {
+    abi = erc721Provenance_abi
+    deployData = erc721Provenance_bytecode
+  } else if (body.cashback) {
+    abi = erc721TokenABI
+    deployData = erc721TokenBytecode
+  }
   // @ts-ignore
-  const data = new client.eth.Contract(erc721TokenABI)
+  const data = new client.eth.Contract(abi)
     .deploy({
-      arguments: [body.name, body.symbol],
-      data: body.provenance ? erc721Provenance_bytecode : erc721TokenBytecode,
+      arguments: [body.name, body.symbol, body.publicMint ? body.publicMint : false],
+      data: deployData,
     })
     .encodeABI()
   return prepareGeneralTx(
@@ -584,7 +599,7 @@ export const prepareDeployErc721SignedTransaction = async (body: ChainDeployErc7
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice
+    body.fee?.gasPrice,
   )
 }
 
@@ -614,7 +629,7 @@ export const prepareDeployMarketplaceListingSignedTransaction = async (body: Cha
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice
+    body.fee?.gasPrice,
   )
 }
 /**
@@ -643,7 +658,7 @@ export const prepareDeployAuctionSignedTransaction = async (body: ChainDeployNft
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice
+    body.fee?.gasPrice,
   )
 }
 
@@ -670,7 +685,7 @@ export const prepareBurnMultiTokenSignedTransaction = async (body: ChainBurnMult
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice
+    body.fee?.gasPrice,
   )
 }
 
@@ -697,7 +712,7 @@ export const prepareBurnMultiTokenBatchSignedTransaction = async (body: ChainBur
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice
+    body.fee?.gasPrice,
   )
 }
 
@@ -724,7 +739,7 @@ export const prepareTransferMultiTokenSignedTransaction = async (body: ChainTran
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice
+    body.fee?.gasPrice,
   )
 }
 
@@ -745,7 +760,7 @@ export const prepareBatchTransferMultiTokenSignedTransaction = async (body: Chai
       body.to.trim(),
       body.tokenId.map((token: string) => token.trim()),
       amts,
-      body.data ? body.data : '0x0'
+      body.data ? body.data : '0x0',
     )
     .encodeABI()
   return prepareGeneralTx(
@@ -757,7 +772,7 @@ export const prepareBatchTransferMultiTokenSignedTransaction = async (body: Chai
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice
+    body.fee?.gasPrice,
   )
 }
 
@@ -784,7 +799,7 @@ export const prepareMintMultiTokenSignedTransaction = async (body: ChainMintMult
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice
+    body.fee?.gasPrice,
   )
 }
 
@@ -812,7 +827,7 @@ export const prepareMintMultiTokenBatchSignedTransaction = async (body: ChainMin
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice
+    body.fee?.gasPrice,
   )
 }
 
@@ -842,7 +857,7 @@ export const prepareDeployMultiTokenSignedTransaction = async (body: ChainDeploy
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice
+    body.fee?.gasPrice,
   )
 }
 
@@ -1093,7 +1108,7 @@ export const sendGenerateCustodialWalletSignedTransaction = async (body: ChainGe
  */
 export const sendSmartContractMethodInvocationTransaction = async (
   body: SmartContractMethodInvocation | SmartContractReadMethodInvocation,
-  provider?: string
+  provider?: string,
 ) => {
   if (body.methodABI.stateMutability === 'view') {
     return sendSmartContractReadMethodInvocationTransaction(body as SmartContractReadMethodInvocation, provider)
