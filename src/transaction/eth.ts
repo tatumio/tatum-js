@@ -10,41 +10,43 @@ import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode';
 import erc20_abi from '../contracts/erc20/token_abi';
 import erc20TokenABI from '../contracts/erc20/token_abi';
 import erc20TokenBytecode from '../contracts/erc20/token_bytecode';
-import erc721TokenABI from '../contracts/erc721/erc721_abi';
-import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
+import erc721CashbackTokenABI from '../contracts/erc721Cashback/erc721_abi';
+import erc721CashbackTokenBytecode from '../contracts/erc721Cashback/erc721_bytecode';
 import erc721Provenance_abi from '../contracts/erc721Provenance/erc721Provenance_abi';
 import erc721Provenance_bytecode from '../contracts/erc721Provenance/erc721Provenance_bytecode';
 import { auction, listing } from '../contracts/marketplace';
 import {
-    BurnErc20,
-    CreateRecord,
-    Currency,
-    DeployErc20,
-    DeployMarketplaceListing,
-    DeployNftAuction,
-    EthBurnErc721,
-    EthBurnMultiToken,
-    EthBurnMultiTokenBatch,
-    EthDeployErc721,
-    EthDeployMultiToken,
-    EthMintErc721,
-    EthMintMultipleErc721,
-    EthTransferErc721,
-    Fee,
-    GenerateCustodialAddress,
-    MintErc20,
-    MintMultiToken,
-    MintMultiTokenBatch,
-    SmartContractMethodInvocation,
-    SmartContractReadMethodInvocation,
-    TransactionKMS,
-    TransferErc20,
-    TransferMultiToken,
-    TransferMultiTokenBatch,
-    UpdateCashbackErc721,
+  BurnErc20,
+  CreateRecord,
+  Currency,
+  DeployErc20,
+  DeployMarketplaceListing,
+  DeployNftAuction,
+  EthBurnErc721,
+  EthBurnMultiToken,
+  EthBurnMultiTokenBatch,
+  EthDeployErc721,
+  EthDeployMultiToken,
+  EthMintErc721,
+  EthMintMultipleErc721,
+  EthTransferErc721,
+  Fee,
+  GenerateCustodialAddress,
+  MintErc20,
+  MintMultiToken,
+  MintMultiTokenBatch,
+  SmartContractMethodInvocation,
+  SmartContractReadMethodInvocation,
+  TransactionKMS,
+  TransferErc20,
+  TransferMultiToken,
+  TransferMultiTokenBatch,
+  UpdateCashbackErc721,
 } from '../model';
 import { mintNFT } from '../nft';
 import { obtainCustodialAddressType } from '../wallet';
+import erc721GeneralTokenABI from '../contracts/erc721General/erc721_abi'
+import erc721GeneralTokenBytecode from '../contracts/erc721General/erc721_bytecode'
 
 /**
  * Estimate Gas price for the transaction.
@@ -568,7 +570,7 @@ export const prepareEthMintErc721SignedTransaction = async (body: EthMintErc721,
   const client = getClient(provider, fromPrivateKey)
 
   // @ts-ignore
-  const contract = new (client).eth.Contract(erc721TokenABI, contractAddress)
+  const contract = new (client).eth.Contract(erc721CashbackTokenABI, contractAddress)
   if (contractAddress) {
     const tx: TransactionConfig = {
       from: 0,
@@ -605,7 +607,7 @@ export const prepareEthMintCashbackErc721SignedTransaction = async (body: EthMin
   const client = await getClient(provider, fromPrivateKey)
 
   // @ts-ignore
-  const contract = new (client).eth.Contract(erc721TokenABI, contractAddress)
+  const contract = new (client).eth.Contract(erc721CashbackTokenABI, contractAddress)
   const cashbacks: string[] = cashbackValues!
   // tslint:disable-next-line: prefer-for-of
   const cb = cashbacks.map(c => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
@@ -645,7 +647,7 @@ export const prepareEthMintMultipleCashbackErc721SignedTransaction = async (body
   const client = await getClient(provider, fromPrivateKey)
 
   // @ts-ignore
-  const contract = new (client).eth.Contract(erc721TokenABI, contractAddress)
+  const contract = new (client).eth.Contract(erc721CashbackTokenABI, contractAddress)
   const cashbacks: string[][] = cashbackValues!
   const cb = cashbacks.map(cashback => cashback.map(c => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
   const tx: TransactionConfig = {
@@ -678,7 +680,7 @@ export const prepareEthMintMultipleErc721SignedTransaction = async (body: EthMin
   const client = await getClient(provider, fromPrivateKey)
 
   // @ts-ignore
-  const contract = new (client).eth.Contract(erc721TokenABI, contractAddress)
+  const contract = new (client).eth.Contract(erc721CashbackTokenABI, contractAddress)
   const tx: TransactionConfig = {
     from: 0,
     to: contractAddress.trim(),
@@ -708,7 +710,7 @@ export const prepareEthBurnErc721SignedTransaction = async (body: EthBurnErc721,
   const client = getClient(provider, fromPrivateKey)
 
   // @ts-ignore
-  const contract = new (client).eth.Contract(erc721TokenABI, contractAddress)
+  const contract = new (client).eth.Contract(erc721CashbackTokenABI, contractAddress)
   const tx: TransactionConfig = {
     from: 0,
     to: contractAddress.trim(),
@@ -739,7 +741,7 @@ export const prepareEthUpdateCashbackForAuthorErc721SignedTransaction = async (b
   const client = getClient(provider, fromPrivateKey)
 
   // @ts-ignore
-  const contract = new (client).eth.Contract(erc721TokenABI, contractAddress)
+  const contract = new (client).eth.Contract(erc721CashbackTokenABI, contractAddress)
   const tx: TransactionConfig = {
     from: 0,
     to: contractAddress.trim(),
@@ -774,7 +776,7 @@ export const prepareEthTransferErc721SignedTransaction = async (body: EthTransfe
   const client = await getClient(provider, fromPrivateKey);
 
   // @ts-ignore
-  const contract = new (client).eth.Contract(provenance ? erc721Provenance_abi : erc721TokenABI, contractAddress);
+  const contract = new (client).eth.Contract(provenance ? erc721Provenance_abi : erc721CashbackTokenABI, contractAddress);
   const dataBytes = provenance ? Buffer.from(provenanceData + '\'\'\'###\'\'\'' + toWei(tokenPrice!, 'ether'), 'utf8') : '';
   const tokenData = provenance ? contract.methods.safeTransfer(to.trim(), tokenId, `0x${dataBytes.toString('hex')}`).encodeABI() : contract.methods.safeTransfer(to.trim(), tokenId).encodeABI();
   const tx: TransactionConfig = {
@@ -1035,14 +1037,26 @@ export const prepareEthDeployErc721SignedTransaction = async (body: EthDeployErc
     nonce,
     signatureId,
     provenance,
+    cashback,
     publicMint,
   } = body
 
   const client = await getClient(provider, fromPrivateKey)
-
+  if (provenance && cashback) {
+    throw new Error('Only one of provenance or cashback must be present and true.')
+  }
+  let abi = erc721GeneralTokenABI
+  let data = erc721GeneralTokenBytecode
+  if (provenance) {
+    abi = erc721Provenance_abi
+    data = erc721Provenance_bytecode
+  } else if (cashback) {
+    abi = erc721CashbackTokenABI
+    data = erc721CashbackTokenBytecode
+  }
   // @ts-ignore
-  const contract = new client.eth.Contract(erc721TokenABI, null, {
-    data: provenance ? erc721Provenance_bytecode : erc721TokenBytecode,
+  const contract = new client.eth.Contract(abi, null, {
+    data,
   })
 
   // @ts-ignore

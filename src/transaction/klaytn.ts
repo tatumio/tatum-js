@@ -9,8 +9,8 @@ import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode';
 import erc20_abi from '../contracts/erc20/token_abi';
 import erc20TokenABI from '../contracts/erc20/token_abi';
 import erc20TokenBytecode from '../contracts/erc20/token_bytecode';
-import erc721TokenABI from '../contracts/erc721/erc721_abi';
-import erc721TokenBytecode from '../contracts/erc721/erc721_bytecode';
+import erc721CashbackTokenABI from '../contracts/erc721Cashback/erc721_abi';
+import erc721CashbackTokenBytecode from '../contracts/erc721Cashback/erc721_bytecode';
 import erc721Provenance_abi from '../contracts/erc721Provenance/erc721Provenance_abi';
 import erc721Provenance_bytecode from '../contracts/erc721Provenance/erc721Provenance_bytecode';
 import { auction, listing } from '../contracts/marketplace';
@@ -46,6 +46,8 @@ import {
 import { mintNFT } from '../nft';
 import { obtainCustodialAddressType } from '../wallet';
 import Caver from 'caver-js'
+import erc721GeneralTokenABI from '../contracts/erc721General/erc721_abi'
+import erc721GeneralTokenBytecode from '../contracts/erc721General/erc721_bytecode'
 
 /**
  * Estimate Gas price for the transaction.
@@ -285,7 +287,7 @@ export const prepareKlaytnMintErc721SignedTransaction = async (testnet: boolean,
   await validateBody(body, EthMintErc721)
   const client = await prepareKlaytnClient(testnet, provider, body.fromPrivateKey)
   // @ts-ignore
-  const data = new client.klay.Contract(erc721TokenABI, body.contractAddress.trim()).methods
+  const data = new client.klay.Contract(erc721CashbackTokenABI, body.contractAddress.trim()).methods
     .mintWithTokenURI(body.to.trim(), body.tokenId, body.url).encodeABI()
   if (body.contractAddress) {
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), undefined, body.nonce, data,
@@ -344,7 +346,7 @@ export const prepareKlaytnMintCashbackErc721SignedTransaction = async (testnet: 
   const cb = cashbacks.map(c => `0x${new BigNumber(toWei(c, 'ether')).toString(16)}`)
   if (body.erc20) {
     // @ts-ignore
-    const data = new client.klay.Contract(erc721TokenABI, body.contractAddress.trim()).methods
+    const data = new client.klay.Contract(erc721CashbackTokenABI, body.contractAddress.trim()).methods
       .mintWithCashback(body.to.trim(), body.tokenId, body.url, body.authorAddresses, cb, body.erc20).encodeABI()
     if (body.contractAddress) {
       return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), undefined, body.nonce, data,
@@ -353,7 +355,7 @@ export const prepareKlaytnMintCashbackErc721SignedTransaction = async (testnet: 
     throw new Error('Contract address should not be empty!')
   } else {
     // @ts-ignore
-    const data = new client.klay.Contract(erc721TokenABI, body.contractAddress.trim()).methods
+    const data = new client.klay.Contract(erc721CashbackTokenABI, body.contractAddress.trim()).methods
       .mintWithCashback(body.to.trim(), body.tokenId, body.url, body.authorAddresses, cb).encodeABI()
     if (body.contractAddress) {
       return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), undefined, body.nonce, data,
@@ -418,14 +420,14 @@ export const prepareKlaytnMintMultipleCashbackErc721SignedTransaction = async (t
   const cb = cashbacks.map(cashback => cashback.map(c => `0x${new BigNumber(toWei(c, 'ether')).toString(16)}`))
   if (body.erc20) {
     // @ts-ignore
-    const data = new client.klay.Contract(erc721TokenABI, body.contractAddress.trim()).methods
+    const data = new client.klay.Contract(erc721CashbackTokenABI, body.contractAddress.trim()).methods
       .mintMultipleCashback(body.to.map(t => t.trim()), body.tokenId, body.url,
         body.authorAddresses, cb, body.erc20).encodeABI()
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), undefined, body.nonce, data,
       body.fee?.gasLimit, body.fee?.gasPrice)
   } else {
     // @ts-ignore
-    const data = new client.klay.Contract(erc721TokenABI, body.contractAddress.trim()).methods
+    const data = new client.klay.Contract(erc721CashbackTokenABI, body.contractAddress.trim()).methods
       .mintMultipleCashback(body.to.map(t => t.trim()), body.tokenId, body.url,
         body.authorAddresses, cb).encodeABI()
     return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), undefined, body.nonce, data,
@@ -445,7 +447,7 @@ export const prepareKlaytnMintMultipleErc721SignedTransaction = async (testnet: 
   await validateBody(body, EthMintMultipleErc721)
   const client = await prepareKlaytnClient(testnet, provider, body.fromPrivateKey)
   // @ts-ignore
-  const data = new client.klay.Contract(erc721TokenABI, body.contractAddress.trim())
+  const data = new client.klay.Contract(erc721CashbackTokenABI, body.contractAddress.trim())
     .methods.mintMultiple(body.to.map(t => t.trim()), body.tokenId, body.url).encodeABI()
   return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), undefined, body.nonce, data,
     body.fee?.gasLimit, body.fee?.gasPrice)
@@ -462,7 +464,7 @@ export const prepareKlaytnBurnErc721SignedTransaction = async (testnet: boolean,
   await validateBody(body, EthBurnErc721)
   const client = await prepareKlaytnClient(testnet, provider, body.fromPrivateKey)
   // @ts-ignore
-  const data = new client.klay.Contract(erc721TokenABI, body.contractAddress.trim()).methods.burn(body.tokenId).encodeABI()
+  const data = new client.klay.Contract(erc721CashbackTokenABI, body.contractAddress.trim()).methods.burn(body.tokenId).encodeABI()
   return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), undefined, body.nonce, data,
     body.fee?.gasLimit, body.fee?.gasPrice)
 }
@@ -478,7 +480,7 @@ export const prepareKlaytnTransferErc721SignedTransaction = async (testnet: bool
   await validateBody(body, EthTransferErc721);
   const client = await prepareKlaytnClient(testnet, provider, body.fromPrivateKey);
   // @ts-ignore
-  const contract = new client.klay.Contract(body.provenance ? erc721Provenance_abi : erc721TokenABI, body.contractAddress.trim());
+  const contract = new client.klay.Contract(body.provenance ? erc721Provenance_abi : erc721CashbackTokenABI, body.contractAddress.trim());
   const dataBytes = body.provenance ? Buffer.from(body.provenanceData + '\'\'\'###\'\'\'' + toWei(body.tokenPrice!, 'ether'), 'utf8') : '';
   const data = body.provenance ? contract.methods.safeTransfer(body.to.trim(), body.tokenId, `0x${dataBytes.toString('hex')}`).encodeABI() : contract.methods.safeTransfer(body.to.trim(), body.tokenId).encodeABI();
   return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), body.value, body.nonce, data,
@@ -496,7 +498,7 @@ export const prepareKlaytnUpdateCashbackForAuthorErc721SignedTransaction = async
   await validateBody(body, UpdateCashbackErc721)
   const client = await prepareKlaytnClient(testnet, provider, body.fromPrivateKey)
   // @ts-ignore
-  const data = new client.klay.Contract(erc721TokenABI, body.contractAddress.trim()).methods
+  const data = new client.klay.Contract(erc721CashbackTokenABI, body.contractAddress.trim()).methods
     .updateCashbackForAuthor(body.tokenId, `0x${new BigNumber(toWei(body.cashbackValue, 'ether')).toString(16)}`).encodeABI()
   return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, body.contractAddress.trim(), undefined, body.nonce, data,
     body.fee?.gasLimit, body.fee?.gasPrice)
@@ -512,10 +514,22 @@ export const prepareKlaytnUpdateCashbackForAuthorErc721SignedTransaction = async
 export const prepareKlaytnDeployErc721SignedTransaction = async (testnet: boolean, body: EthDeployErc721, provider?: string) => {
   await validateBody(body, EthDeployErc721)
   const client = await prepareKlaytnClient(testnet, provider, body.fromPrivateKey)
+  if (body.provenance && body.cashback) {
+    throw new Error('Only one of provenance or cashback must be present and true.')
+  }
+  let abi = erc721GeneralTokenABI
+  let deployData = erc721GeneralTokenBytecode
+  if (body.provenance) {
+    abi = erc721Provenance_abi
+    deployData = erc721Provenance_bytecode
+  } else if (body.cashback) {
+    abi = erc721CashbackTokenABI
+    deployData = erc721CashbackTokenBytecode
+  }
   // @ts-ignore
-  const data = new client.klay.Contract(body.provenance ? erc721Provenance_abi : erc721TokenABI).deploy({
+  const data = new client.klay.Contract(abi).deploy({
     arguments: [body.name, body.symbol, body.publicMint ? body.publicMint : false],
-    data: body.provenance ? erc721Provenance_bytecode : erc721TokenBytecode,
+    data: deployData,
   }).encodeABI()
   return prepareGeneralTx(client, testnet, body.fromPrivateKey, body.signatureId, undefined, undefined, body.nonce, data,
     body.fee?.gasLimit, body.fee?.gasPrice)
