@@ -5,8 +5,10 @@ const tronSDK = TatumTronSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function tronKmsExample() {
   const pendingSignatureIds = await tronSDK.kms.getAllPending()
-  const tx = await tronSDK.kms.get(pendingSignatureIds.id)
+  const tx = await tronSDK.kms.get(pendingSignatureIds[0].id)
 
-  await tronSDK.kms.complete(pendingSignatureIds.id, pendingSignatureIds.txId!)
-  await tronSDK.kms.delete(pendingSignatureIds.id)
+  // TODO: fix this
+  // const signedRawTx = await tronSDK.kms.sign(tx, '0x9483c22a4b68745d41500ba87d2a66f7b220790a373116716a83d987cb10b4a6')
+  // await tronSDK.kms.complete(tx.id, signedRawTx!)
+  await tronSDK.kms.delete(tx.id)
 }

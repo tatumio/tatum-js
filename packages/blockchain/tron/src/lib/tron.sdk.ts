@@ -11,13 +11,43 @@ const blockchain = Blockchain.TRON
 
 export const TatumTronSDK = (args: SDKArguments) => {
   const web = tronWeb()
+  const txService = tronTx({ tronWeb: web })
+  const { nft, ...abstractSdk } = abstractBlockchainSdk({ ...args, blockchain })
+
+  const {
+    deployNFTSmartContract,
+    mintNFT,
+    transferNFT,
+    mintMultipleNFTs,
+    burnNFT,
+    updateNFTRoyalty,
+    getNFTTransaction,
+    getNFTAccountBalance,
+    getNFTMetadataURI,
+    getNFTRoyalty,
+  } = nft
 
   return {
-    ...abstractBlockchainSdk({
-      ...args,
-      blockchain,
-    }),
-    transaction: tronTx({ tronWeb: web }),
+    ...abstractSdk,
+    transaction: txService.native,
+    trc10: txService.trc10,
+    trc20: txService.trc20,
+    nft: {
+      ...txService.trc721,
+      deployNFTSmartContract,
+      mintNFT,
+      transferNFT,
+      mintMultipleNFTs,
+      burnNFT,
+      updateNFTRoyalty,
+      getNFTTransaction,
+      getNFTAccountBalance,
+      getNFTMetadataURI,
+      getNFTRoyalty,
+    },
+    marketplace: txService.marketplace,
+    smartContract: txService.smartContract,
+    custodial: txService.custodial,
     wallet: tronWallet({ tronWeb: web }),
     tronWeb: web,
     record: tronRecord(),

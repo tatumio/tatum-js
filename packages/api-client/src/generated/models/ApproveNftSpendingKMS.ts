@@ -6,7 +6,7 @@ export type ApproveNftSpendingKMS = {
     /**
      * Blockchain to work with.
      */
-    chain: 'ETH' | 'ONE' | 'BSC' | 'MATIC';
+    chain: 'ETH' | 'ONE' | 'BSC' | 'KLAY' | 'MATIC';
     /**
      * Address of the ERC20 token, which is used for buying NFT asset from the marketplace.
      */

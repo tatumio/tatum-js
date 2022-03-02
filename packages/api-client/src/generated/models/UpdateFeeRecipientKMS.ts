@@ -6,7 +6,7 @@ export type UpdateFeeRecipientKMS = {
     /**
      * Blockchain to work with.
      */
-    chain: 'ETH' | 'ONE' | 'BSC' | 'MATIC';
+    chain: 'ETH' | 'ONE' | 'BSC' | 'KLAY' | 'MATIC';
     /**
      * Recipient address of the marketplace fee.
      */
