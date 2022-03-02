@@ -134,6 +134,10 @@ describe('PolygonSDK - tx', () => {
         )
       })
 
+      describe('approveSpending', () => {
+        marketplaceTestFactory.prepare.approveSpending(sdk.marketplace, inmemoryBlockchain.accounts)
+      })
+
       describe('createMarketplaceListing', () => {
         marketplaceTestFactory.prepare.sellMarketplaceListing(
           sdk.marketplace,

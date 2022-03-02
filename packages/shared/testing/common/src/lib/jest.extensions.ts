@@ -25,3 +25,22 @@ export const toThrowSdkErrorWithCode = (value: Error, code: string): jest.Custom
       return errorCode === code
     },
   })
+
+export const toThrowErrorWithMessageThatIncludes = (
+  value: unknown,
+  message: string,
+): jest.CustomMatcherResult =>
+  createResult({
+    message: () => `expected ${value} to have error message ${message}`,
+    notMessage: () => `expected ${value} not to have error message ${message}`,
+    pass: () => {
+      let error: Error
+      try {
+        error = JSON.parse(JSON.stringify(value, Object.getOwnPropertyNames(value)))
+      } catch (e) {
+        return false
+      }
+
+      return error.message.includes(message)
+    },
+  })

@@ -130,6 +130,10 @@ describe('EthSDK - tx', () => {
         )
       })
 
+      describe('approveSpending', () => {
+        marketplaceTestFactory.prepare.approveSpending(sdk.marketplace, inmemoryBlockchain.accounts)
+      })
+
       describe('sellMarketplaceListing', () => {
         marketplaceTestFactory.prepare.sellMarketplaceListing(
           sdk.marketplace,
