@@ -9,6 +9,7 @@ import {
   UpdateAuctionFeeRecipient,
 } from '@tatumio/shared-blockchain-evm-based'
 import { GanacheAccount } from './ganacheHelper'
+import { invalidProvidedAddressWeb3ErrorMessage } from './evm-based.utils'
 
 export const auctionTestFactory = {
   prepare: {
@@ -108,8 +109,8 @@ export const auctionTestFactory = {
             },
             amount: '10000',
           }),
-        ).rejects.toThrow(
-          `Provided address 0x687422eEA2cB73B5d3e242bA5456b782919AFc86 is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted.`,
+        ).rejects.toThrowErrorWithMessageThatIncludes(
+          invalidProvidedAddressWeb3ErrorMessage('0x687422eEA2cB73B5d3e242bA5456b782919AFc86'),
         )
       })
     },
@@ -180,8 +181,8 @@ export const auctionTestFactory = {
               gasPrice: '20',
             },
           }),
-        ).rejects.toThrow(
-          `Provided address 0x687422eEA2cB73B5d3e242bA5456b782919AFc86 is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted.`,
+        ).rejects.toThrowErrorWithMessageThatIncludes(
+          invalidProvidedAddressWeb3ErrorMessage('0x687422eEA2cB73B5d3e242bA5456b782919AFc86'),
         )
       })
     },
@@ -242,8 +243,8 @@ export const auctionTestFactory = {
             },
             amount: '10000',
           }),
-        ).rejects.toThrow(
-          `Provided address 0x687422eEA2cB73B5d3e242bA5456b782919AFc86 is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted.`,
+        ).rejects.toThrowErrorWithMessageThatIncludes(
+          invalidProvidedAddressWeb3ErrorMessage('0x687422eEA2cB73B5d3e242bA5456b782919AFc86'),
         )
       })
     },
@@ -293,8 +294,8 @@ export const auctionTestFactory = {
             isErc721: false,
             tokenId: '1',
           }),
-        ).rejects.toThrow(
-          `Provided address 0x687422eEA2cB73B5d3e242bA5456b782919AFc86 is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted.`,
+        ).rejects.toThrowErrorWithMessageThatIncludes(
+          invalidProvidedAddressWeb3ErrorMessage('0x687422eEA2cB73B5d3e242bA5456b782919AFc86'),
         )
       })
     },
@@ -349,8 +350,8 @@ export const auctionTestFactory = {
               gasPrice: '20',
             },
           }),
-        ).rejects.toThrow(
-          `Provided address 0x487422eEA2cB73B5d3e242bA5456b782919AFc85 is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted.`,
+        ).rejects.toThrowErrorWithMessageThatIncludes(
+          invalidProvidedAddressWeb3ErrorMessage('0x687422eEA2cB73B5d3e242bA5456b782919AFc86'),
         )
       })
     },
@@ -403,8 +404,8 @@ export const auctionTestFactory = {
             },
             amount: '10000',
           }),
-        ).rejects.toThrow(
-          `Provided address 0x687422eEA2cB73B5d3e242bA5456b782919AFc86 is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted.`,
+        ).rejects.toThrowErrorWithMessageThatIncludes(
+          invalidProvidedAddressWeb3ErrorMessage('0x687422eEA2cB73B5d3e242bA5456b782919AFc86'),
         )
       })
     },
@@ -457,8 +458,8 @@ export const auctionTestFactory = {
             },
             amount: '10000',
           }),
-        ).rejects.toThrow(
-          `Provided address 0x687422eEA2cB73B5d3e242bA5456b782919AFc86 is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted.`,
+        ).rejects.toThrowErrorWithMessageThatIncludes(
+          invalidProvidedAddressWeb3ErrorMessage('0x687422eEA2cB73B5d3e242bA5456b782919AFc86'),
         )
       })
     },
