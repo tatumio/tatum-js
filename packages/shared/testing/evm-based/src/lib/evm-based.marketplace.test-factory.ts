@@ -1,5 +1,6 @@
 import { SdkWithMarketplaceFunctions } from '@tatumio/shared-blockchain-abstract'
 import { BlockchainTestData, expectHexString } from '@tatumio/shared-testing-common'
+import { invalidProvidedAddressWeb3ErrorMessage } from './evm-based.utils'
 import { GanacheAccount } from './ganacheHelper'
 
 export const marketplaceTestFactory = {
@@ -328,8 +329,8 @@ export const marketplaceTestFactory = {
             },
             amount: '10000',
           }),
-        ).rejects.toThrow(
-          `Provided address 0x687422eEA2cB73B5d3e242bA5456b782919AFc86 is invalid, the capitalization checksum test failed, or it's an indirect IBAN address which can't be converted.`,
+        ).rejects.toThrowErrorWithMessageThatIncludes(
+          invalidProvidedAddressWeb3ErrorMessage('0x687422eEA2cB73B5d3e242bA5456b782919AFc86'),
         )
       })
     },
