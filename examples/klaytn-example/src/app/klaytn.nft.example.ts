@@ -47,11 +47,4 @@ export async function klaytnNftExample() {
   //   nonce: 0,
   //   feeCurrency: Currency.KLAY
   // })
-
-  await klaytnSDK.nft.prepareAddNftMinterAbstraction({
-    chain: Currency.KLAY,
-    minter: '0x80d8bac9a6901698b3749fe336bbd1385c1f98f2',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    signatureId: '695a3b3e-649f-4e5b-9524-c388c4f45230',
-  })
 }

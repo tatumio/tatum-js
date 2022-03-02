@@ -10,13 +10,35 @@ const blockchain = Blockchain.FLOW
 
 export const TatumFlowSDK = (args: SDKArguments) => {
   const api = BlockchainFlowService
+  const { nft, ...abstractSdk } = abstractBlockchainSdk({ ...args, blockchain })
+
+  const {
+    deployNFTSmartContract,
+    mintNFT,
+    transferNFT,
+    mintMultipleNFTs,
+    burnNFT,
+    getNFTTransaction,
+    getNFTAccountBalance,
+    getNFTMetadataURI,
+  } = nft
 
   return {
-    ...abstractBlockchainSdk({ ...args, blockchain }),
+    ...abstractSdk,
     api,
     kms: flowKmsService({ ...args, blockchain }),
     wallet: flowWallet(),
     transaction: flowTxService(args),
+    nft: {
+      deployNFTSmartContract,
+      mintNFT,
+      transferNFT,
+      mintMultipleNFTs,
+      burnNFT,
+      getNFTTransaction,
+      getNFTAccountBalance,
+      getNFTMetadataURI,
+    },
     blockchain: {
       getCurrentBlock: BlockchainFlowService.flowGetBlockChainInfo,
       getBlock: BlockchainFlowService.flowGetBlock,
