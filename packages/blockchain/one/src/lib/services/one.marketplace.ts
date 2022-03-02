@@ -119,6 +119,21 @@ export const oneMarketplace = (args: {
           contractAddress: oneUtils.transformAddress(params[0].contractAddress),
           ...(params[0].erc20Address && { erc20Address: oneUtils.transformAddress(params[0].erc20Address) }),
         }),
+      /**
+       * Approve NFT transfer for listing.
+       * @param body request data
+       * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+       * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
+       */
+      approveSpending: async (...params: Parameters<typeof unpatchedMarketplace.prepare.approveSpending>) =>
+        unpatchedMarketplace.prepare.approveSpending(
+          {
+            ...params[0],
+            contractAddress: oneUtils.transformAddress(params[0].contractAddress),
+            spender: oneUtils.transformAddress(params[0].spender),
+          },
+          params[1],
+        ),
     },
     send: {
       /**
@@ -226,6 +241,23 @@ export const oneMarketplace = (args: {
           contractAddress: oneUtils.transformAddress(params[0].contractAddress),
           ...(params[0].erc20Address && { erc20Address: oneUtils.transformAddress(params[0].erc20Address) }),
         }),
+      /**
+       * Approve NFT transfer for listing.
+       * @param body request data
+       * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+       * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+       */
+      auctionApproveNftTransferSignedTransaction: async (
+        ...params: Parameters<typeof unpatchedMarketplace.send.auctionApproveNftTransferSignedTransaction>
+      ) =>
+        unpatchedMarketplace.send.auctionApproveNftTransferSignedTransaction(
+          {
+            ...params[0],
+            contractAddress: oneUtils.transformAddress(params[0].contractAddress),
+            spender: oneUtils.transformAddress(params[0].spender),
+          },
+          params[1],
+        ),
     },
   }
 }
