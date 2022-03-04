@@ -21,7 +21,7 @@ const deploySignedTransaction = async (body: ChainDeployErc721Celo, provider?: s
   const { fromPrivateKey, name, symbol, feeCurrency, nonce, signatureId, provenance } = body
 
   const celoProvider = celoUtils.getProvider(provider)
-  const network = await celoProvider.ready
+  await celoProvider.ready
   const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
   const contract = new new Web3().eth.Contract(provenance ? Erc721_Provenance.abi : (Erc721Token.abi as any))
   const deploy = contract.deploy({
@@ -31,7 +31,6 @@ const deploySignedTransaction = async (body: ChainDeployErc721Celo, provider?: s
 
   if (signatureId) {
     return JSON.stringify({
-      chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
       nonce,
       gasLimit: '0',
@@ -46,7 +45,6 @@ const deploySignedTransaction = async (body: ChainDeployErc721Celo, provider?: s
   )
 
   const tx: CeloTransactionConfig = {
-    chainId: network.chainId,
     feeCurrency: feeCurrencyContractAddress,
     nonce: nonce || txCount,
     gasLimit: '0',
@@ -62,7 +60,7 @@ const mintSignedTransaction = async (body: ChainMintErc721Celo, provider?: strin
   const { contractAddress, nonce, signatureId, feeCurrency, to, tokenId, url, fromPrivateKey } = body
 
   const celoProvider = celoUtils.getProvider(provider)
-  const network = await celoProvider.ready
+  await celoProvider.ready
 
   if (contractAddress && feeCurrency) {
     const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
@@ -70,7 +68,6 @@ const mintSignedTransaction = async (body: ChainMintErc721Celo, provider?: strin
 
     if (signatureId) {
       return JSON.stringify({
-        chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
         nonce,
         to: contractAddress.trim(),
@@ -86,7 +83,6 @@ const mintSignedTransaction = async (body: ChainMintErc721Celo, provider?: strin
     )
 
     const tx: CeloTransactionConfig = {
-      chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
       to: contractAddress.trim(),
       data: contract.methods.mintWithTokenURI(to.trim(), tokenId, url).encodeABI(),
@@ -109,13 +105,12 @@ const mintMultipleSignedTransaction = async (
   const { fromPrivateKey, to, tokenId, contractAddress, url, feeCurrency, nonce, signatureId } = body
 
   const celoProvider = celoUtils.getProvider(provider)
-  const network = await celoProvider.ready
+  await celoProvider.ready
   const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
   const contract = new new Web3().eth.Contract(Erc721Token.abi as any, contractAddress.trim())
 
   if (signatureId) {
     return JSON.stringify({
-      chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
       nonce,
       gasLimit: '0',
@@ -137,7 +132,6 @@ const mintMultipleSignedTransaction = async (
   )
 
   const tx: CeloTransactionConfig = {
-    chainId: network.chainId,
     feeCurrency: feeCurrencyContractAddress,
     nonce: nonce || txCount,
     gasLimit: '0',
@@ -176,7 +170,7 @@ const mintCashbackSignedTransaction = async (
   } = body
 
   const celoProvider = celoUtils.getProvider(provider)
-  const network = await celoProvider.ready
+  await celoProvider.ready
 
   if (contractAddress && feeCurrency) {
     const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
@@ -188,7 +182,6 @@ const mintCashbackSignedTransaction = async (
 
     if (signatureId) {
       return JSON.stringify({
-        chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
         nonce,
         to: contractAddress.trim(),
@@ -206,7 +199,6 @@ const mintCashbackSignedTransaction = async (
     )
 
     const tx: CeloTransactionConfig = {
-      chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
       nonce: nonce || txCount,
       gasLimit: '0',
@@ -243,7 +235,7 @@ export const mintMultipleCashbackSignedTransaction = async (
   } = body
 
   const celoProvider = celoUtils.getProvider(provider)
-  const network = await celoProvider.ready
+  await celoProvider.ready
   const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
   const contract = new new Web3().eth.Contract(Erc721Token.abi as any, contractAddress.trim())
 
@@ -260,7 +252,6 @@ export const mintMultipleCashbackSignedTransaction = async (
 
   if (signatureId) {
     return JSON.stringify({
-      chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
       nonce,
       gasLimit: '0',
@@ -295,7 +286,6 @@ export const mintMultipleCashbackSignedTransaction = async (
   )
 
   const tx: CeloTransactionConfig = {
-    chainId: network.chainId,
     feeCurrency: feeCurrencyContractAddress,
     nonce: nonce || txCount,
     gasLimit: '0',
@@ -347,7 +337,7 @@ const mintProvenanceSignedTransaction = async (
   } = body
 
   const celoProvider = celoUtils.getProvider(provider)
-  const network = await celoProvider.ready
+  await celoProvider.ready
 
   if (contractAddress && feeCurrency) {
     const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
@@ -369,7 +359,6 @@ const mintProvenanceSignedTransaction = async (
 
     if (signatureId) {
       return JSON.stringify({
-        chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
         nonce,
         to: contractAddress.trim(),
@@ -385,7 +374,6 @@ const mintProvenanceSignedTransaction = async (
     )
 
     const tx: CeloTransactionConfig = {
-      chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
       nonce: nonce || txCount,
       gasLimit: '0',
@@ -421,7 +409,7 @@ const mintMultipleProvenanceSignedTransaction = async (
   } = body
 
   const celoProvider = celoUtils.getProvider(provider)
-  const network = await celoProvider.ready
+  await celoProvider.ready
   const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
   const contract = new new Web3().eth.Contract(Erc721_Provenance.abi as any, contractAddress.trim())
 
@@ -464,7 +452,6 @@ const mintMultipleProvenanceSignedTransaction = async (
 
   if (signatureId) {
     return JSON.stringify({
-      chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
       nonce,
       gasLimit: '0',
@@ -480,7 +467,6 @@ const mintMultipleProvenanceSignedTransaction = async (
   )
 
   const tx: CeloTransactionConfig = {
-    chainId: network.chainId,
     feeCurrency: feeCurrencyContractAddress,
     nonce: nonce || txCount,
     gasLimit: '0',
@@ -512,7 +498,7 @@ const transferSignedTransaction = async (
   } = body
 
   const celoProvider = celoUtils.getProvider(provider)
-  const network = await celoProvider.ready
+  await celoProvider.ready
   const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
   const contract = new new Web3().eth.Contract(
     provenance ? Erc721_Provenance.abi : (Erc721Token.abi as any),
@@ -527,7 +513,6 @@ const transferSignedTransaction = async (
 
   if (signatureId) {
     return JSON.stringify({
-      chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
       gasLimit: '0',
       nonce,
@@ -544,7 +529,6 @@ const transferSignedTransaction = async (
   )
 
   const tx: CeloTransactionConfig = {
-    chainId: network.chainId,
     feeCurrency: feeCurrencyContractAddress,
     nonce: nonce || txCount,
     gasLimit: '0',
@@ -565,13 +549,12 @@ const updateCashbackForAuthorSignedTransaction = async (
   const { fromPrivateKey, cashbackValue, tokenId, contractAddress, feeCurrency, nonce, signatureId } = body
 
   const celoProvider = celoUtils.getProvider(provider)
-  const network = await celoProvider.ready
+  await celoProvider.ready
   const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
   const contract = new new Web3().eth.Contract(Erc721Token.abi as any, contractAddress.trim())
 
   if (signatureId) {
     return JSON.stringify({
-      chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
       nonce,
       gasLimit: '0',
@@ -592,7 +575,6 @@ const updateCashbackForAuthorSignedTransaction = async (
   )
 
   const tx: CeloTransactionConfig = {
-    chainId: network.chainId,
     feeCurrency: feeCurrencyContractAddress,
     nonce: nonce || txCount,
     gasLimit: '0',
@@ -613,13 +595,12 @@ const burnSignedTransaction = async (body: ChainBurnErc721Celo, provider?: strin
   const { fromPrivateKey, tokenId, contractAddress, feeCurrency, nonce, signatureId } = body
 
   const celoProvider = celoUtils.getProvider(provider)
-  const network = await celoProvider.ready
+  await celoProvider.ready
   const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
   const contract = new new Web3().eth.Contract(Erc721Token.abi as any, contractAddress.trim())
 
   if (signatureId) {
     return JSON.stringify({
-      chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
       nonce,
       gasLimit: '0',
@@ -635,7 +616,6 @@ const burnSignedTransaction = async (body: ChainBurnErc721Celo, provider?: strin
   )
 
   const tx: CeloTransactionConfig = {
-    chainId: network.chainId,
     feeCurrency: feeCurrencyContractAddress,
     nonce: nonce || txCount,
     gasLimit: '0',
