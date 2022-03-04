@@ -3957,10 +3957,10 @@ catharsis@^0.9.0:
   dependencies:
     lodash "^4.17.15"
 
-caver-js@^1.6.7:
-  version "1.6.7"
-  resolved "https://registry.yarnpkg.com/caver-js/-/caver-js-1.6.7.tgz#8b338c68749c131acdfce5115e89827db7678ed6"
-  integrity sha512-AJn0Hd43kHYjdKwXiMGHiQQy4YegjwzEJiJn5orcGmRAM9OGyhjAA5ssbi8WixfpmK9GJuWFbvu3MmONQa2UqA==
+caver-js@^1.6.8:
+  version "1.6.8"
+  resolved "https://registry.yarnpkg.com/caver-js/-/caver-js-1.6.8.tgz#c25c249b4871f1e5e8ed380d3a0522a6db079d89"
+  integrity sha512-0LCHk+8AusJe6pJHxaqqlwtDkB8DjuPgC27N9eGJbqe+4m81NSfLZf9i3HmAQ3vV6R5acIUm0LB499AXSs1F3Q==
   dependencies:
     "@babel/runtime" "7.3.1"
     "@ethersproject/abi" "5.0.7"
@@ -3983,7 +3983,7 @@ caver-js@^1.6.7:
     lodash "4.17.21"
     mocha "8.3.2"
     multihashes "4.0.2"
-    node-fetch "2.6.1"
+    node-fetch "2.6.7"
     number-to-bn "1.7.0"
     oboe "2.1.3"
     os "^0.1.2"
@@ -8723,11 +8723,6 @@ node-fetch-npm@^2.0.2:
     encoding "^0.1.11"
     json-parse-better-errors "^1.0.0"
     safe-buffer "^5.1.1"
-
-node-fetch@2.6.1:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
-  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
 
 node-fetch@2.6.7, node-fetch@^2.6.0, node-fetch@^2.6.5, node-fetch@^2.6.7:
   version "2.6.7"
