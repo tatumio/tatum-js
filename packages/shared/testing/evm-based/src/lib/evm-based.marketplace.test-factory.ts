@@ -1,5 +1,6 @@
 import { SdkWithMarketplaceFunctions } from '@tatumio/shared-blockchain-abstract'
 import { BlockchainTestData, expectHexString } from '@tatumio/shared-testing-common'
+import { invalidProvidedAddressWeb3ErrorMessage } from './evm-based.utils'
 import { GanacheAccount } from './ganacheHelper'
 
 export const marketplaceTestFactory = {
@@ -53,7 +54,7 @@ export const marketplaceTestFactory = {
       })
     },
 
-    createMarketplaceListing: (
+    sellMarketplaceListing: (
       sdk: SdkWithMarketplaceFunctions,
       testData: BlockchainTestData,
       chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC' | 'KLAY',
@@ -62,7 +63,7 @@ export const marketplaceTestFactory = {
       const provider = testData?.PROVIDER
 
       it('valid from signatureId', async () => {
-        const result = await sdk.prepare.createMarketplaceListing({
+        const result = await sdk.prepare.sellMarketplaceListing({
           chain,
           fee: {
             gasLimit: '1000000',
@@ -83,7 +84,7 @@ export const marketplaceTestFactory = {
       })
 
       it('valid from privateKey', async () => {
-        const result = await sdk.prepare.createMarketplaceListing(
+        const result = await sdk.prepare.sellMarketplaceListing(
           {
             chain,
             fee: {
@@ -98,63 +99,6 @@ export const marketplaceTestFactory = {
             isErc721: true,
             price: '1',
             seller: '0x48d4bA7B2698A4b89635b9a2E391152350DB740f',
-          },
-          provider,
-        )
-
-        expectHexString(result)
-      })
-    },
-
-    createMarketplaceListingErc20: (
-      sdk: SdkWithMarketplaceFunctions,
-      testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC' | 'KLAY',
-      accounts: GanacheAccount[],
-    ) => {
-      const provider = testData?.PROVIDER
-
-      it('valid from signatureId', async () => {
-        const result = await sdk.prepare.createMarketplaceListing({
-          chain,
-          fee: {
-            gasLimit: '1000000',
-            gasPrice: '20',
-          },
-          signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-          contractAddress: '0xd093bEd4BC06403bfEABB54667B42C48533D3Fd9',
-          nftAddress: '0x1214BEada6b25bc98f7494C7BDBf22C095FDCaBD',
-          tokenId: '33333',
-          listingId: '1',
-          isErc721: true,
-          price: '1',
-          seller: '0x48d4bA7B2698A4b89635b9a2E391152350DB740f',
-          erc20Address: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-          amount: '1',
-        })
-
-        const json = JSON.parse(result)
-        expectHexString(json.data)
-      })
-
-      it('valid from privateKey', async () => {
-        const result = await sdk.prepare.createMarketplaceListing(
-          {
-            chain,
-            fee: {
-              gasLimit: '1000000',
-              gasPrice: '20',
-            },
-            fromPrivateKey: accounts[0].privateKey,
-            contractAddress: '0xd093bEd4BC06403bfEABB54667B42C48533D3Fd9',
-            nftAddress: '0x1214BEada6b25bc98f7494C7BDBf22C095FDCaBD',
-            tokenId: '33333',
-            listingId: '2',
-            isErc721: true,
-            price: '1',
-            seller: '0x48d4bA7B2698A4b89635b9a2E391152350DB740f',
-            erc20Address: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-            amount: '1',
           },
           provider,
         )
@@ -328,6 +272,66 @@ export const marketplaceTestFactory = {
         )
 
         expectHexString(result)
+      })
+    },
+
+    approveSpending: (sdk: SdkWithMarketplaceFunctions, accounts: GanacheAccount[]) => {
+      it('valid from privateKey', async () => {
+        const tx = await sdk.prepare.approveSpending({
+          spender: accounts[0].address,
+          isErc721: true,
+          tokenId: '100000',
+          contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+          fromPrivateKey: accounts[0].privateKey,
+          nonce: 1,
+          fee: {
+            gasLimit: '40000',
+            gasPrice: '20',
+          },
+          amount: '10000',
+        })
+
+        expectHexString(tx)
+      })
+      it('valid from signatureId', async () => {
+        const nonce = 1
+        const tx = await sdk.prepare.approveSpending({
+          spender: accounts[0].address,
+          isErc721: true,
+          tokenId: '100000',
+          contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+          signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+          nonce,
+          fee: {
+            gasLimit: '40000',
+            gasPrice: '20',
+          },
+          amount: '10000',
+        })
+
+        const json = JSON.parse(tx)
+
+        expect(json.nonce).toBe(nonce)
+        expect(json.gasPrice).toBe('20000000000')
+      })
+      it('invalid address', async () => {
+        await expect(async () =>
+          sdk.prepare.approveSpending({
+            spender: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+            isErc721: true,
+            tokenId: '100000',
+            contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc86',
+            fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
+            nonce: 1,
+            fee: {
+              gasLimit: '40000',
+              gasPrice: '20',
+            },
+            amount: '10000',
+          }),
+        ).rejects.toThrowErrorWithMessageThatIncludes(
+          invalidProvidedAddressWeb3ErrorMessage('0x687422eEA2cB73B5d3e242bA5456b782919AFc86'),
+        )
       })
     },
   },

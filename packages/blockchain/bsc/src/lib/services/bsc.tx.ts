@@ -6,11 +6,18 @@ import {
   multiToken,
   custodial,
   smartContract,
+  native,
 } from '@tatumio/shared-blockchain-evm-based'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 
 export const bscTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3 }) => {
   return {
+    native: {
+      ...native({
+        ...args,
+        broadcastFunction: BlockchainBscService.bscBroadcast,
+      }),
+    },
     erc20: {
       ...erc20({
         ...args,

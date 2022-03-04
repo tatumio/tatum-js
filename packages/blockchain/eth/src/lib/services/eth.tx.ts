@@ -6,11 +6,18 @@ import {
   EvmBasedWeb3,
   multiToken,
   smartContract,
+  native,
 } from '@tatumio/shared-blockchain-evm-based'
 import { BlockchainEthereumService } from '@tatumio/api-client'
 
 export const ethTx = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3 }) => {
   return {
+    native: {
+      ...native({
+        ...args,
+        broadcastFunction: BlockchainEthereumService.ethBroadcast,
+      }),
+    },
     erc20: {
       ...erc20({
         ...args,
@@ -41,14 +48,5 @@ export const ethTx = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3
         broadcastFunction: BlockchainEthereumService.ethBroadcast,
       }),
     },
-    //custodial: prepareGenerateCustodialWalletSignedTransaction()
   }
 }
-
-/*
-
-export const ethCustodial = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3 }) => {
-  return {
-    prepareGenerateCustodialWalletSignedTransaction = async (body: GenerateCustodialAddress, provider?: string) => {
-  }
-}*/

@@ -15,6 +15,7 @@ import { ListingSmartContract } from '../../contracts'
 import { EvmBasedWeb3 } from '../../services/evm-based.web3'
 import { evmBasedUtils } from '../../evm-based.utils'
 import { erc20 } from '../erc20'
+import { ApproveNftTransfer, evmBasedAuction } from '../../services/evm-based.auction'
 
 /** Deploy contract (generate Marketplace) */
 const generateMarketplace = async (body: ChainGenerateMarketplace, web3: EvmBasedWeb3, provider?: string) => {
@@ -259,7 +260,15 @@ export const marketplace = (args: {
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
       approveErc20Spending: async (body: ApproveErc20, provider?: string) =>
-        erc20(args).prepare.approveSignedTransaction(body, args.web3, provider),
+        erc20(args).prepare.approveSignedTransaction(body, provider),
+      /**
+       * Approve NFT transfer for listing.
+       * @param body request data
+       * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+       * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
+       */
+      approveSpending: async (body: ApproveNftTransfer, provider?: string) =>
+        evmBasedAuction(args).prepare.auctionApproveNftTransferSignedTransaction(body, provider),
       /**
        * Prepare signed transaction for deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
        * Operator can set a fee in percentage, which will be paid on top of the price of the asset.
@@ -307,7 +316,7 @@ export const marketplace = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      createMarketplaceListing: async (body: ChainSellAssetOnMarketplace, provider?: string) =>
+      sellMarketplaceListing: async (body: ChainSellAssetOnMarketplace, provider?: string) =>
         sellAsset(body, args.web3, provider),
 
       /**
@@ -328,7 +337,21 @@ export const marketplace = (args: {
        */
       approveErc20Spending: async (body: ApproveErc20, provider?: string) =>
         args.broadcastFunction({
-          txData: await erc20(args).prepare.approveSignedTransaction(body, args.web3, provider),
+          txData: await erc20(args).prepare.approveSignedTransaction(body, provider),
+        }),
+      /**
+       * Approve NFT transfer for listing.
+       * @param body request data
+       * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
+       * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
+       */
+      auctionApproveNftTransferSignedTransaction: async (body: ApproveNftTransfer, provider?: string) =>
+        args.broadcastFunction({
+          txData: await evmBasedAuction(args).prepare.auctionApproveNftTransferSignedTransaction(
+            body,
+            provider,
+          ),
+          signatureId: body.signatureId,
         }),
       /**
        * Deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
@@ -386,7 +409,7 @@ export const marketplace = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      createMarketplaceListing: async (body: ChainSellAssetOnMarketplace, provider?: string) =>
+      sellMarketplaceListing: async (body: ChainSellAssetOnMarketplace, provider?: string) =>
         args.broadcastFunction({
           txData: await sellAsset(body, args.web3, provider),
         }),

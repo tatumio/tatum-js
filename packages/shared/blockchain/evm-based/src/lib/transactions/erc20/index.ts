@@ -20,22 +20,16 @@ const mintSignedTransaction = async (body: ChainMintErc20, web3: EvmBasedWeb3, p
   const client = web3.getClient(provider)
 
   // TODO: any type
-  const contract = new client.eth.Contract(
-    Erc20Token.abi as any,
-    evmBasedUtils.transformAddress(body.contractAddress).trim().trim(),
-  )
+  const contract = new client.eth.Contract(Erc20Token.abi as any, body.contractAddress.trim().trim())
 
   const digits = new BigNumber(10).pow(await contract.methods.decimals().call())
   const data = contract.methods
-    .mint(
-      evmBasedUtils.transformAddress(body.to).trim(),
-      `0x${new BigNumber(body.amount).multipliedBy(digits).toString(16)}`,
-    )
+    .mint(body.to.trim(), `0x${new BigNumber(body.amount).multipliedBy(digits).toString(16)}`)
     .encodeABI()
 
   const tx: TransactionConfig = {
     from: undefined,
-    to: evmBasedUtils.transformAddress(body.contractAddress).trim(),
+    to: body.contractAddress.trim(),
     data,
     nonce: body.nonce,
   }
@@ -56,10 +50,7 @@ const burnSignedTransaction = async (body: ChainBurnErc20, web3: EvmBasedWeb3, p
   const client = web3.getClient(provider)
 
   // TODO: any type
-  const contract = new client.eth.Contract(
-    Erc20Token.abi as any,
-    evmBasedUtils.transformAddress(body.contractAddress).trim().trim(),
-  )
+  const contract = new client.eth.Contract(Erc20Token.abi as any, body.contractAddress.trim().trim())
 
   const digits = new BigNumber(10).pow(await contract.methods.decimals().call())
 
@@ -69,7 +60,7 @@ const burnSignedTransaction = async (body: ChainBurnErc20, web3: EvmBasedWeb3, p
 
   const tx: TransactionConfig = {
     from: undefined,
-    to: evmBasedUtils.transformAddress(body.contractAddress),
+    to: body.contractAddress,
     data,
     nonce: body.nonce,
   }
@@ -91,19 +82,13 @@ const transferSignedTransaction = async (body: ChainTransferErc20, web3: EvmBase
 
   const decimals = new BigNumber(10).pow(body.digits as number)
   // TODO
-  const data = new client.eth.Contract(
-    Erc20Token.abi as any,
-    evmBasedUtils.transformAddress(body.contractAddress).trim().trim(),
-  ).methods
-    .transfer(
-      evmBasedUtils.transformAddress(body.to).trim(),
-      `0x${new BigNumber(body.amount).multipliedBy(decimals).toString(16)}`,
-    )
+  const data = new client.eth.Contract(Erc20Token.abi as any, body.contractAddress.trim().trim()).methods
+    .transfer(body.to.trim(), `0x${new BigNumber(body.amount).multipliedBy(decimals).toString(16)}`)
     .encodeABI()
 
   const tx: TransactionConfig = {
     from: undefined,
-    to: evmBasedUtils.transformAddress(body.to),
+    to: body.to,
     data,
     nonce: body.nonce,
   }
@@ -132,7 +117,7 @@ const deploySignedTransaction = async (body: ChainDeployErc20, web3: EvmBasedWeb
     arguments: [
       name,
       symbol,
-      evmBasedUtils.transformAddress(address),
+      address,
       digits,
       `0x${new BigNumber(totalCap || supply).multipliedBy(new BigNumber(10).pow(digits)).toString(16)}`,
       `0x${new BigNumber(supply).multipliedBy(new BigNumber(10).pow(digits)).toString(16)}`,
@@ -203,12 +188,7 @@ export const erc20 = (args: {
       const web3 = args.web3.getClient(provider)
 
       // TODO: any type
-      return new web3.eth.Contract(
-        Erc20Token.abi as any,
-        evmBasedUtils.transformAddress(contractAddress),
-      ).methods
-        .decimals()
-        .call()
+      return new web3.eth.Contract(Erc20Token.abi as any, contractAddress).methods.decimals().call()
     },
     prepare: {
       /**
@@ -248,7 +228,7 @@ export const erc20 = (args: {
        * @param body body of the approve operation
        * @param provider optional Web3 provider
        */
-      approveSignedTransaction: async (body: ApproveErc20, web3: EvmBasedWeb3, provider?: string) =>
+      approveSignedTransaction: async (body: ApproveErc20, provider?: string) =>
         approveSignedTransaction(body, args.web3, provider),
     },
     send: {

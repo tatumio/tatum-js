@@ -8,6 +8,14 @@ export type KlaytnTx = {
      */
     blockHash?: string;
     /**
+     * Type of Klaytn Transaction
+     */
+    type?: string;
+    /**
+     * Type of Klaytn Transaction
+     */
+    typeInt?: number;
+    /**
      * TRUE if the transaction was successful, FALSE, if the EVM reverted the transaction.
      */
     status?: boolean;
