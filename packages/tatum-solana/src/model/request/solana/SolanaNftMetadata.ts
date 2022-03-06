@@ -1,22 +1,24 @@
 import { Type } from 'class-transformer'
-import { IsArray, IsNotEmpty, IsNumber, MaxLength, ValidateIf, ValidateNested } from 'class-validator'
+import {IsArray, IsNotEmpty, IsNumber, Max, MaxLength, Min, ValidateIf, ValidateNested} from 'class-validator'
 import { SolanaNftMetadataCreator } from './SolanaNftMetadataCreator'
 
 export class SolanaNftMetadata {
   @IsNotEmpty()
-  @MaxLength(255)
+  @MaxLength(32)
   public name: string
 
   @IsNotEmpty()
-  @MaxLength(255)
+  @MaxLength(10)
   public symbol: string
 
   @IsNotEmpty()
-  @MaxLength(500)
+  @MaxLength(200)
   public uri: string
 
   @IsNotEmpty()
   @IsNumber()
+  @Min(0)
+  @Max(10000)
   public sellerFeeBasisPoints: number
 
   @Type(() => SolanaNftMetadataCreator)
