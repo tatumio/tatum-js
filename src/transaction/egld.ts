@@ -362,7 +362,7 @@ const prepareSignedTransactionAbstraction = async (
 
     const egldTx: EgldSendTransaction = {
         nonce,
-        value: new BigNumber(transaction.value as string).isLessThan(0) ? '0' : new BigNumber(transaction.value as string).multipliedBy(1e18).toString(),
+        value: new BigNumber(transaction.value as string).isLessThan(0) ? '0' : new BigNumber(transaction.value as string).multipliedBy(1e18).toFixed(),
         receiver: transaction.to as string,
         sender,
         gasPrice,
