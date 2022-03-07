@@ -16,6 +16,7 @@ import type { GenerateCustodialWalletBatch } from '../models/GenerateCustodialWa
 import type { GenerateCustodialWalletBatchCelo } from '../models/GenerateCustodialWalletBatchCelo';
 import type { GenerateCustodialWalletBatchCeloKMS } from '../models/GenerateCustodialWalletBatchCeloKMS';
 import type { GenerateCustodialWalletBatchKMS } from '../models/GenerateCustodialWalletBatchKMS';
+import type { GenerateCustodialWalletBatchPayer } from '../models/GenerateCustodialWalletBatchPayer';
 import type { GenerateCustodialWalletBatchTron } from '../models/GenerateCustodialWalletBatchTron';
 import type { GenerateCustodialWalletBatchTronKMS } from '../models/GenerateCustodialWalletBatchTronKMS';
 import type { GenerateCustodialWalletCelo } from '../models/GenerateCustodialWalletCelo';
@@ -169,14 +170,15 @@ export class BlockchainUtilsService {
      * <p>Generate new custodial smart contract address on the blockchain. This address enables custodial providers to
      * receive native assets, ERC20 / ERC721 / ERC1155 tokens on behalf of their customers on dedicated blockchain address, but in the same time it can initiate transfer of those assets away.
      * Gas required for the transfer from that address is going to be deducted from the providers address - the one, which was used to generate the address on the blockchain.<br/>
-     * <b>Due to smart contract incompatibility on USDT Tether on Ethereum chain, it's not possible to receive and transfer USDT from custodial addresses. We are in touch with team fromTether and trying to solve this issue.</b><br/>
      * This operation deploys a smart contract on the blockchain.<br/>
+     * For paid plans, it is possible to pay for the gas costs - you don't have to provide private key or signatureId. Blockchain fees will be covered by your credits.
      * Supported blockchains:
      * <ul>
      * <li>Ethereum</li>
      * <li>Binance Smart Chain</li>
      * <li>Celo</li>
      * <li>Polygon (Matic)</li>
+     * <li>Klaytn</li>
      * <li>Harmony.ONE</li>
      * <li>XDC Network (XinFin)</li>
      * <li>Tron</li>
@@ -189,7 +191,7 @@ export class BlockchainUtilsService {
      * @throws ApiError
      */
     public static generateCustodialWalletBatch(
-        requestBody: (GenerateCustodialWalletBatch | GenerateCustodialWalletBatchKMS | GenerateCustodialWalletBatchCelo | GenerateCustodialWalletBatchCeloKMS | GenerateCustodialWalletBatchTron | GenerateCustodialWalletBatchTronKMS),
+        requestBody: (GenerateCustodialWalletBatchPayer | GenerateCustodialWalletBatch | GenerateCustodialWalletBatchKMS | GenerateCustodialWalletBatchCelo | GenerateCustodialWalletBatchCeloKMS | GenerateCustodialWalletBatchTron | GenerateCustodialWalletBatchTronKMS),
         xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
     ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
         return __request({
@@ -218,7 +220,7 @@ export class BlockchainUtilsService {
      * @throws ApiError
      */
     public static scGetCustodialAddresses(
-        chain: 'CELO' | 'MATIC' | 'BSC',
+        chain: 'CELO' | 'MATIC' | 'KLAY' | 'ETH' | 'ONE' | 'BSC',
         hash: string,
     ): CancelablePromise<Array<string>> {
         return __request({
@@ -242,6 +244,7 @@ export class BlockchainUtilsService {
      * <li>Binance Smart Chain</li>
      * <li>Harmony.ONE</li>
      * <li>Ethereum</li>
+     * <li>Klaytn</li>
      * <li>Celo</li>
      * <li>Harmony.ONE</li>
      * <li>XDC Network (XinFin)</li>
@@ -280,6 +283,7 @@ export class BlockchainUtilsService {
      * <li>Binance Smart Chain</li>
      * <li>Harmony.ONE</li>
      * <li>Ethereum</li>
+     * <li>Klaytn</li>
      * <li>Celo</li>
      * <li>TRON</li>
      * <li>XDC Network (XinFin)</li>
@@ -319,6 +323,7 @@ export class BlockchainUtilsService {
      * <li>Harmony.ONE</li>
      * <li>XDC Network (XinFin)</li>
      * <li>Ethereum</li>
+     * <li>Klaytn</li>
      * <li>Celo</li>
      * <li>Tron</li>
      * <li>Polygon (Matic)</li>

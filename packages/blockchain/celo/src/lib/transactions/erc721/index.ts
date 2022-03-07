@@ -1,10 +1,9 @@
-import { Currency, EvmBasedBlockchain } from '@tatumio/shared-core'
+import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
-import { MintNftCelo, TATUM_API_CONSTANTS } from '@tatumio/api-client'
+import { MintNftCelo } from '@tatumio/api-client'
 import { Erc721Token, Erc721_Provenance } from '@tatumio/shared-blockchain-evm-based'
 import { BroadcastFunction } from '@tatumio/shared-blockchain-abstract'
-import { BigNumber as BN } from '@ethersproject/bignumber'
-import { CeloProvider, CeloWallet } from '@celo-tools/celo-ethers-wrapper'
+import { CeloWallet } from '@celo-tools/celo-ethers-wrapper'
 import {
   CeloTransactionConfig,
   celoUtils,
@@ -26,7 +25,7 @@ const deploySignedTransaction = async (body: ChainDeployErc721Celo, provider?: s
   const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
   const contract = new new Web3().eth.Contract(provenance ? Erc721_Provenance.abi : (Erc721Token.abi as any))
   const deploy = contract.deploy({
-    data: provenance ? Erc721_Provenance.bytecode : (Erc721Token.abi as any),
+    data: provenance ? Erc721_Provenance.bytecode : Erc721Token.bytecode,
     arguments: [name, symbol],
   })
 

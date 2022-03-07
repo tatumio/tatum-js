@@ -1,4 +1,5 @@
 import {
+  blockchainTestFactory,
   REPLACE_ME_WITH_TATUM_API_KEY,
   TEST_DATA,
   TestCasesApiCallMapping,
@@ -41,11 +42,7 @@ describe('TatumLtcSDK - blockchain', () => {
     ],
   }
 
-  it.each(testHelper.testCasesFromMapping(blockchainFunctionsMapping))(
-    '%p',
-    async (sdkMethod: any, apiMethod: any, args: unknown[] = []) => {
-      await testHelper.callFnWithArgs(blockchain[sdkMethod], args)
-      testHelper.expectMockCalled(apiMethod, args)
-    },
-  )
+  describe('API methods mapping', () => {
+    blockchainTestFactory.apiMethods(blockchain, blockchainFunctionsMapping)
+  })
 })

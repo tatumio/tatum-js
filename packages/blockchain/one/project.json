@@ -29,5 +29,5 @@
       }
     }
   },
-  "tags": ["type:sdk", "scope:evm-based"]
+  "tags": ["type:sdk", "scope:harmony-based"]
 }

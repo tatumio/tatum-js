@@ -6,7 +6,7 @@ export type DeployMultiTokenKMS = {
     /**
      * Chain to work with.
      */
-    chain: 'ETH' | 'ONE' | 'MATIC' | 'KCS' | 'BSC';
+    chain: 'ETH' | 'ONE' | 'MATIC' | 'KCS' | 'KLAY' | 'BSC';
     /**
      * URI of the Multi Token token
      */

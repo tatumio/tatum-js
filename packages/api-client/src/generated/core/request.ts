@@ -24,8 +24,25 @@ function isStringWithValue(value: any): value is string {
   return isString(value) && value !== ''
 }
 
-function isBlob(value: any): value is Blob {
-  return value instanceof Blob
+const isBlob = (value: any): value is Blob => {
+  return (
+    typeof value === 'object' &&
+    typeof value.type === 'string' &&
+    typeof value.stream === 'function' &&
+    typeof value.arrayBuffer === 'function' &&
+    typeof value.constructor === 'function' &&
+    typeof value.constructor.name === 'string' &&
+    /^(Blob|File)$/.test(value.constructor.name) &&
+    /^(Blob|File)$/.test(value[Symbol.toStringTag])
+  );
+};
+
+function isFile(value: any): value is File {
+  return (
+    typeof value.name === 'string' &&
+    typeof value.lastModified === 'number' &&
+    isBlob(value)
+  )
 }
 
 function isSuccess(status: number): boolean {
@@ -74,12 +91,15 @@ function getUrl(options: ApiRequestOptions): string {
   return url
 }
 
-function getFormData(options: ApiRequestOptions): FormData | undefined {
+async function getFormData(options: ApiRequestOptions): Promise<FormData | undefined> {
   if (options.formData) {
     const formData = new FormData()
 
-    const append = (key: string, value: any) => {
-      if (isString(value) || isBlob(value)) {
+    const append = async (key: string, value: any) => {
+      if (isBlob(value) || isFile(value)) {
+        const buffer = Buffer.from(await value.arrayBuffer())
+        formData.append(key, buffer, isFile(value) ? value.name : undefined)
+      } else if (isString(value)) {
         formData.append(key, value)
       } else {
         formData.append(key, JSON.stringify(value))
@@ -226,7 +246,7 @@ export function request<T>(options: ApiRequestOptions): CancelablePromise<T> {
   return new CancelablePromise(async (resolve, reject, onCancel) => {
     try {
       const url = getUrl(options)
-      const formData = getFormData(options)
+      const formData = await getFormData(options)
       const body = getRequestBody(options)
       const headers = await getHeaders(options, formData)
 

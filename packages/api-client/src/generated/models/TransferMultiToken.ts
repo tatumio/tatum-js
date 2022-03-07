@@ -6,7 +6,7 @@ export type TransferMultiToken = {
     /**
      * Chain to work with.
      */
-    chain: 'ETH' | 'ONE' | 'MATIC' | 'KCS' | 'BSC' | 'ALGO';
+    chain: 'ETH' | 'ONE' | 'MATIC' | 'KCS' | 'KLAY' | 'BSC' | 'ALGO';
     /**
      * Blockchain address to send Multi Token token to
      */

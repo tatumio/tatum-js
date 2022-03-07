@@ -81,17 +81,39 @@ export enum SdkErrorCode {
   BTC_UTXO_NOT_FOUND = 'btc.utxo.not-found',
   BTC_NOT_ENOUGH_BALANCE = 'btc.balance.not-enough',
   BTC_FEE_IS_TOO_LARGE = 'btc.fee.too-large',
+  XRP_SECRET_DOES_NOT_MATCH = 'xrp.secret.does-not-match',
+  FEE_TOO_SMALL = 'fee.too-small',
   TX_NOT_FOUND = 'tx.not.found',
+
+  VALIDATION_AMOUNT = 'validation.amount',
+  SECRET_CHECKSUM = 'validation.secret.checksum',
+  VALIDATION_TO_ADDRESS = 'validation.to-address',
+  XLM_NO_SEQUENCE = 'xlm.account.no-sequence',
+  FLOW_MISSING_PRIVATE_KEY = 'flow.private-key.missing',
+  FLOW_MISSING_MNEMONIC = 'flow.mnemonic.missing',
 }
 
 // @TODO pass params?
 export const SdkErrorMessage: Record<SdkErrorCode, string> = {
   [SdkErrorCode.API_ERROR]: `Error during api request`,
   [SdkErrorCode.COMMON_ERROR]: `Error during execution`,
+  [SdkErrorCode.FEE_TOO_SMALL]: `Fee is too small`,
+  [SdkErrorCode.VALIDATION_AMOUNT]: `Amount has to be positive number`,
   // BTC
   [SdkErrorCode.BTC_FEE_TOO_SMALL]: `Fee is too small. Please make sure that amount to send < balance`,
   [SdkErrorCode.BTC_UTXO_NOT_FOUND]: `UTXO not found. Please check that outputs are valid`,
   [SdkErrorCode.BTC_NOT_ENOUGH_BALANCE]: `Not enough coins on address to perform this transaction`,
   [SdkErrorCode.BTC_FEE_IS_TOO_LARGE]: `Fee is to big, make sure it's not a mistake`,
   [SdkErrorCode.TX_NOT_FOUND]: `TX not found`,
+
+  // XRP
+  [SdkErrorCode.XRP_SECRET_DOES_NOT_MATCH]: `Secret not valid or doesn't match address`,
+
+  // XLM
+  [SdkErrorCode.SECRET_CHECKSUM]: `Secret is not valid. Please check your secret for typos`,
+  [SdkErrorCode.VALIDATION_TO_ADDRESS]: `To address is wrong`,
+  [SdkErrorCode.XLM_NO_SEQUENCE]: `Account does not contain sequence. Please check account info`,
+  // FLOW
+  [SdkErrorCode.FLOW_MISSING_PRIVATE_KEY]: `No private key available`,
+  [SdkErrorCode.FLOW_MISSING_MNEMONIC]: `Mnemonic required`,
 }

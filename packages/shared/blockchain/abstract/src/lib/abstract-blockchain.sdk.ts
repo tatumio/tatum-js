@@ -1,9 +1,15 @@
 import {
+  ApproveErc20,
+  BlockchainMarketplaceService,
   BroadcastKMS,
   BurnMultiToken,
   BurnMultiTokenBatch,
   BurnNft,
+  CallReadSmartContractMethod,
+  CallSmartContractMethod,
+  BuyAssetOnMarketplace,
   CancelablePromise,
+  CancelSellAssetOnMarketplace,
   ChainBurnErc20 as ApiChainBurnErc20,
   ChainMintErc20 as ApiChainMintErc20,
   ChainTransferEthErc20,
@@ -11,11 +17,15 @@ import {
   DeployMultiToken,
   DeployNft,
   ExchangeRate,
+  GenerateCustodialWallet,
+  Fiat,
+  GenerateMarketplace,
   MintErc721,
   MintMultipleNft,
   MintMultiToken,
   MintMultiTokenBatch,
   MintNft,
+  SellAssetOnMarketplace,
   SignatureId,
   TatumServiceService,
   TatumUrl,
@@ -23,13 +33,32 @@ import {
   TransferMultiToken,
   TransferMultiTokenBatch,
   TransferNft,
+  TransferPolygonBlockchain,
   TronWallet,
   UpdateCashbackValueForAuthorNft,
+  UpdateFee,
+  UpdateFeeRecipient,
   XlmWallet,
   XrpWallet,
+  TransferCustodialWallet,
+  TransferCustodialWalletCelo,
+  TransferCustodialWalletBatch,
+  TransferCustodialWalletBatchCelo,
+  ApproveTransferCustodialWallet,
+  ApproveTransferCustodialWalletCelo,
+  TransferCustodialWalletKMS,
+  GenerateCustodialWalletBatch,
+  GenerateCustodialWalletBatchKMS,
+  GenerateCustodialWalletCelo,
+  CallCeloSmartContractMethod,
+  TransferCustodialWalletCeloKMS,
+  GenerateCustodialWalletBatchCelo,
+  GenerateCustodialWalletBatchCeloKMS,
+  PendingTransaction,
+  ApproveNftSpending,
 } from '@tatumio/api-client'
-import { Blockchain, blockchainHelper, Fiat } from '@tatumio/shared-core'
-import { abstractSdk } from '@tatumio/shared-abstract-sdk'
+import { Blockchain, blockchainHelper, ChainTransactionKMS } from '@tatumio/shared-core'
+import { abstractSdk, WithoutChain } from '@tatumio/shared-abstract-sdk'
 import { abstractBlockchainKms } from './services/kms.abstract-blockchain'
 import { abstractBlockchainOffchain } from './services/offchain.abstract-blockchain'
 
@@ -50,8 +79,11 @@ export const abstractBlockchainSdk = (args: { apiKey: string; url?: TatumUrl; bl
 
 export interface SdkWithWalletFunctions {
   generateAddressFromXPub(xpub: string, i: number, options?: { testnet: boolean }): string
+
   generatePrivateKeyFromMnemonic(mnemonic: string, i: number, options?: { testnet: boolean }): Promise<string>
+
   generateAddressFromPrivateKey(privateKey: string, options?: { testnet: boolean }): string
+
   generateWallet(mnemonic?: string, options?: { testnet: boolean }): Promise<TronWallet>
 }
 
@@ -73,7 +105,7 @@ export type ChainDeployErc20 = FromPrivateKeyOrSignatureId<DeployErc20>
 
 export type ChainMintErc721 = MintErc721 & {
   fromPrivateKey?: string
-  chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC'
+  chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'KLAY'
 }
 
 export type ChainMintNft = FromPrivateKeyOrSignatureId<MintNft>
@@ -104,13 +136,83 @@ export type ChainMintMultiTokenBatch = FromPrivateKeyOrSignatureId<MintMultiToke
 
 export type ChainDeployMultiToken = FromPrivateKeyOrSignatureId<DeployMultiToken>
 
+export type ChainSmartContractMethodInvocation = FromPrivateKeyOrSignatureId<CallSmartContractMethod> & {
+  index?: number
+}
+
+export type ChainGenerateCustodialAddress =
+  | FromPrivateKeyOrSignatureId<GenerateCustodialWallet>
+  | FromPrivateKeyOrSignatureId<GenerateCustodialWalletCelo>
+
+export type ChainTransferNative = FromPrivateKeyOrSignatureId<Omit<TransferPolygonBlockchain, 'currency'>>
+
+export type ChainGenerateMarketplace = FromPrivateKeyOrSignatureId<GenerateMarketplace>
+
+export type ChainUpdateFee = FromPrivateKeyOrSignatureId<UpdateFee>
+
+export type ChainUpdateFeeRecipient = FromPrivateKeyOrSignatureId<UpdateFeeRecipient>
+
+export type ChainBuyAssetOnMarketplace = FromPrivateKeyOrSignatureId<BuyAssetOnMarketplace>
+
+export type ChainSellAssetOnMarketplace = FromPrivateKeyOrSignatureId<SellAssetOnMarketplace>
+
+export type ChainCancelSellAssetOnMarketplace = FromPrivateKeyOrSignatureId<CancelSellAssetOnMarketplace>
+
+export type ChainTransferCustodialWallet =
+  | (FromPrivateKeyOrSignatureId<TransferCustodialWallet> & {
+      index?: number
+    })
+  | (FromPrivateKeyOrSignatureId<TransferCustodialWalletCelo> & {
+      index?: number
+    })
+
+export type ChainBatchTransferCustodialWallet =
+  | (FromPrivateKeyOrSignatureId<TransferCustodialWalletBatch> & { index?: number })
+  | (FromPrivateKeyOrSignatureId<TransferCustodialWalletBatchCelo> & { index?: number })
+
+export type ChainApproveCustodialTransfer =
+  | (FromPrivateKeyOrSignatureId<ApproveTransferCustodialWallet> & { index?: number })
+  | (FromPrivateKeyOrSignatureId<ApproveTransferCustodialWalletCelo> & { index?: number })
+
+export type ChainTransferFromCustodialAddress =
+  | TransferCustodialWalletKMS
+  | TransferCustodialWallet
+  | TransferCustodialWalletCelo
+  | TransferCustodialWalletCeloKMS
+
+export type ChainGenerateCustodialWalletBatch =
+  | GenerateCustodialWalletBatch
+  | GenerateCustodialWalletBatchKMS
+  | GenerateCustodialWalletBatchCelo
+  | GenerateCustodialWalletBatchCeloKMS
+
+export type ChainCallSmartContractMethod =
+  | (FromPrivateKeyOrSignatureId<CallSmartContractMethod> & {
+      index?: number
+    })
+  | (FromPrivateKeyOrSignatureId<CallCeloSmartContractMethod> & {
+      index?: number
+      chain: 'CELO'
+    })
+
+export type ChainTransferCustodialWalletCelo = FromPrivateKeyOrSignatureId<TransferCustodialWalletCelo> & {
+  index?: number
+}
+
 export interface SdkWithErc20Functions {
   decimals(contractAddress: string, provider?: string): any
+
   prepare: {
     deploySignedTransaction(body: ChainDeployErc20, provider?: string): Promise<string>
     transferSignedTransaction(body: ChainTransferErc20, provider?: string): Promise<string>
     mintSignedTransaction(body: ChainMintErc20, provider?: string): Promise<string>
     burnSignedTransaction(body: ChainBurnErc20, provider?: string): Promise<string>
+  }
+}
+
+export interface SdkWithNativeFunctions {
+  prepare: {
+    transferSignedTransaction(body: ChainTransferNative, provider?: string): Promise<string>
   }
 }
 
@@ -127,6 +229,11 @@ export interface SdkWithErc721Functions {
       body: ChainUpdateCashbackErc721,
       provider?: string,
     ): Promise<string>
+    mintProvenanceSignedTransaction(body: ChainMintNft, provider?: string): Promise<string>
+    mintMultipleProvenanceSignedTransaction(
+      body: ChainMintMultipleNft & { fixedValues: string[][] },
+      provider?: string,
+    ): Promise<string>
   }
 }
 
@@ -140,6 +247,68 @@ export interface SdkWithMultiTokenFunctions {
     burnMultiTokenTransaction(body: ChainBurnMultiToken, provider?: string): Promise<string>
     burnMultiTokenBatchTransaction(body: ChainBurnMultiTokenBatch, provider?: string): Promise<string>
   }
+}
+
+export interface SdkWithSmartContractFunctions {
+  prepare: {
+    smartContractWriteMethodInvocationTransaction(
+      body: ChainSmartContractMethodInvocation,
+      provider?: string,
+    ): Promise<string>
+  }
+  send: {
+    smartContractReadMethodInvocationTransaction(
+      body: CallReadSmartContractMethod,
+      provider?: string,
+    ): Promise<{ data: any }>
+  }
+}
+
+export interface SdkWithCustodialFunctions {
+  prepare: {
+    transferFromCustodialWallet(
+      body: ChainTransferCustodialWallet,
+      testnet?: boolean,
+      provider?: string,
+    ): Promise<string>
+    batchTransferFromCustodialWallet: (
+      body: ChainBatchTransferCustodialWallet,
+      testnet: boolean,
+      provider?: string,
+    ) => Promise<string>
+    approveFromCustodialWallet: (body: ChainApproveCustodialTransfer, provider?: string) => Promise<string>
+    custodialWalletBatch: (
+      body: ChainGenerateCustodialWalletBatch,
+      testnet: boolean,
+      provider?: string,
+    ) => Promise<string>
+  }
+}
+export interface SdkWithMarketplaceFunctions {
+  prepare: {
+    approveErc20Spending(body: ApproveErc20, provider?: string): Promise<string>
+    approveSpending(
+      body: FromPrivateKeyOrSignatureId<WithoutChain<ApproveNftSpending>> & { amount: string },
+      provider?: string,
+    ): Promise<string>
+    generateMarketplace(body: ChainGenerateMarketplace, provider?: string): Promise<string>
+    updateFee(body: ChainUpdateFee, provider?: string): Promise<string>
+    updateFeeRecipient(body: ChainUpdateFeeRecipient, provider?: string): Promise<string>
+    buyMarketplaceListing(body: ChainBuyAssetOnMarketplace, provider?: string): Promise<string>
+    sellMarketplaceListing(body: ChainSellAssetOnMarketplace, provider?: string): Promise<string>
+    cancelMarketplaceListing(body: ChainCancelSellAssetOnMarketplace, provider?: string): Promise<string>
+  }
+
+  getMarketplaceListing: typeof BlockchainMarketplaceService.getMarketplaceListing
+  getMarketplaceListings: typeof BlockchainMarketplaceService.getMarketplaceListings
+  getMarketplaceFee: typeof BlockchainMarketplaceService.getMarketplaceFee
+  getMarketplaceFeeRecipient: typeof BlockchainMarketplaceService.getMarketplaceFeeRecipient
+}
+
+export interface SdkWithKmsFunctions {
+  sign(tx: ChainTransactionKMS, fromPrivateKey: string, provider?: string): Promise<string>
+  getAllPending(signatures?: string): CancelablePromise<PendingTransaction[]>
+  get(id: string): CancelablePromise<PendingTransaction>
 }
 
 export type BroadcastFunction = (requestBody: BroadcastKMS) => CancelablePromise<TransactionHashKMS>

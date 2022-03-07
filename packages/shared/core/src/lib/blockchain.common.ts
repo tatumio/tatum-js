@@ -6,7 +6,7 @@ import {
   EvmBasedBlockchains,
 } from './models/Blockchain'
 
-import { Currency, NativeCurrency } from './models/Currency'
+import { Currency, NativeCurrency } from '@tatumio/api-client'
 import {
   BlockchainToNativeCurrencyMapping,
   CurrencyToBlockchainMapping,

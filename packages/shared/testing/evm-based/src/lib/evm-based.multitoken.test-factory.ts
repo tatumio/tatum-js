@@ -1,7 +1,7 @@
 import { SdkWithMultiTokenFunctions } from '@tatumio/shared-blockchain-abstract'
 import { BlockchainTestData, expectHexString } from '@tatumio/shared-testing-common'
 
-type Chains = 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC'
+type Chains = 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'KLAY'
 export const multiTokenTestFactory = {
   prepare: {
     deployMultiTokenTransaction: (

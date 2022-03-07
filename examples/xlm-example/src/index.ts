@@ -1,4 +1,3 @@
-import { xlmApiExample } from './app/xlm.api.example'
 import { xlmBlockchainExample } from './app/xlm.blockchain.example'
 import { xlmKmsExample } from './app/xlm.kms.example'
 import { xlmChangeRateExample } from './app/xlm.root.example'
@@ -14,7 +13,6 @@ import {
   xlmLedgerVirtualCurrencyExample,
 } from './app/xlm.ledger.example'
 
-console.log(`Running ${xlmApiExample()}`)
 console.log(`Running ${xlmBlockchainExample()}`)
 console.log(`Running ${xlmKmsExample()}`)
 console.log(`Running ${xlmLedgerAccountExample()}`)

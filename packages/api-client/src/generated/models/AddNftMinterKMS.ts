@@ -6,7 +6,7 @@ export type AddNftMinterKMS = {
     /**
      * Chain to work with.
      */
-    chain: 'ETH' | 'MATIC' | 'KCS' | 'CELO' | 'ONE' | 'BSC';
+    chain: 'ETH' | 'MATIC' | 'KCS' | 'CELO' | 'ONE' | 'KLAY' | 'BSC';
     /**
      * Address of NFT token
      */

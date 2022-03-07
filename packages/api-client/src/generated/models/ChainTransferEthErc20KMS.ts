@@ -6,7 +6,7 @@ export type ChainTransferEthErc20KMS = {
     /**
      * Chain to work with.
      */
-    chain: 'ETH' | 'BSC' | 'MATIC' | 'XDC' | 'ONE';
+    chain: 'ETH' | 'BSC' | 'MATIC' | 'KLAY' | 'XDC' | 'ONE';
     /**
      * Blockchain address to send ERC20 token to
      */
