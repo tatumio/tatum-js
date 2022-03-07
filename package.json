@@ -46,7 +46,7 @@
     "cashaddrjs": "^0.4.4",
     "caver-js": "^1.6.8",
     "coininfo": "^5.1.0",
-    "cross-blob": "^3.0.0",
+    "cross-blob": "^3.0.1",
     "dedent-js": "^1.0.1",
     "ethereumjs-wallet": "^1.0.2",
     "ethers": "^5.5.4",
