@@ -6,7 +6,7 @@ export type GenerateCustodialWalletBatchKMS = {
     /**
      * Blockchain to work with.
      */
-    chain: 'MATIC' | 'ETH' | 'ONE' | 'XDC' | 'BSC';
+    chain: 'MATIC' | 'ETH' | 'ONE' | 'XDC' | 'KLAY' | 'BSC';
     /**
      * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
      */

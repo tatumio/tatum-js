@@ -50,6 +50,7 @@ export class BlockchainMultiTokenErc1155Service {
      * <li><b>Ethereum</b></li>
      * <li><b>Polygon (Matic)</b></li>
      * <li><b>Kcs (KCS)</b></li>
+     * <li><b>Klaytn</b></li>
      * <li><b>Celo</b></li>
      * <li><b>Harmony.ONE</b></li>
      * <li><b>Binance Smart Chain</b></li>
@@ -99,6 +100,7 @@ export class BlockchainMultiTokenErc1155Service {
      * <li><b>Polygon (Matic)</b></li>
      * <li><b>Kcs (KCS)</b></li>
      * <li><b>Celo</b></li>
+     * <li><b>Klaytn</b></li>
      * <li><b>Harmony.ONE</b></li>
      * <li><b>Binance Smart Chain</b></li>
      * <li><b>Algorand</b></li>
@@ -146,6 +148,7 @@ export class BlockchainMultiTokenErc1155Service {
      * <li><b>Polygon (Matic)</b></li>
      * <li><b>Kcs (KCS)</b></li>
      * <li><b>Celo</b></li>
+     * <li><b>Klaytn</b></li>
      * <li><b>Harmony.ONE</b></li>
      * <li><b>Binance Smart Chain</b></li>
      * </ul>
@@ -192,6 +195,7 @@ export class BlockchainMultiTokenErc1155Service {
      * <li><b>Polygon (Matic)</b></li>
      * <li><b>Kcs (Matic)</b></li>
      * <li><b>Celo</b></li>
+     * <li><b>Klaytn</b></li>
      * <li><b>Harmony.ONE</b></li>
      * <li><b>Binance Smart Chain</b></li>
      * <li><b>Algorand</b></li>
@@ -239,6 +243,7 @@ export class BlockchainMultiTokenErc1155Service {
      * <li><b>Polygon (Matic)</b></li>
      * <li><b>Kcs (KCS)</b></li>
      * <li><b>Celo</b></li>
+     * <li><b>Klaytn</b></li>
      * <li><b>Harmony.ONE</b></li>
      * <li><b>Binance Smart Chain</b></li>
      * </ul>
@@ -287,6 +292,7 @@ export class BlockchainMultiTokenErc1155Service {
      * <li><b>Kcs (KCS)</b></li>
      * <li><b>Celo</b></li>
      * <li><b>Harmony.ONE</b></li>
+     * <li><b>Klaytn</b></li>
      * <li><b>Binance Smart Chain</b></li>
      * <li><b>Algorand</b></li>
      * </ul>
@@ -333,6 +339,7 @@ export class BlockchainMultiTokenErc1155Service {
      * <li><b>Ethereum</b></li>
      * <li><b>Polygon (Matic)</b></li>
      * <li><b>Kcs (KCS)</b></li>
+     * <li><b>Klaytn</b></li>
      * <li><b>Celo</b></li>
      * <li><b>Harmony.ONE</b></li>
      * <li><b>Binance Smart Chain</b></li>
@@ -380,6 +387,7 @@ export class BlockchainMultiTokenErc1155Service {
      * <li><b>Polygon (Matic)</b></li>
      * <li><b>Kcs (KCS)</b></li>
      * <li><b>Celo</b></li>
+     * <li><b>Klaytn</b></li>
      * <li><b>Harmony.ONE</b></li>
      * <li><b>Binance Smart Chain</b></li>
      * </ul>

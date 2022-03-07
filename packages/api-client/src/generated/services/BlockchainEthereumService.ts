@@ -28,7 +28,7 @@ export class BlockchainEthereumService {
      * Generates a BIP44 compatible Ethereum wallet.</p>
      *
      * @param mnemonic Mnemonic to use for generating extended public and private keys.
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
      * @returns Wallet OK
      * @throws ApiError
      */
@@ -61,7 +61,7 @@ export class BlockchainEthereumService {
      *
      * @param xpub Extended public key of wallet.
      * @param index Derivation index of the address to be generated.
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
      * @returns any OK
      * @throws ApiError
      */
@@ -96,7 +96,7 @@ export class BlockchainEthereumService {
      * can generate up to 2^32 private keys starting from index 0 until 2^31 - 1.</p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
      * @returns PrivKey OK
      * @throws ApiError
      */
@@ -128,7 +128,7 @@ export class BlockchainEthereumService {
      *
      * @param xApiKey Tatum X-API-Key used for authorization.
      * @param requestBody
-     * @param testnetType Type of Ethereum testnet. Defaults to ropsten.
+     * @param testnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
      * @returns any OK
      * @throws ApiError
      */
@@ -156,7 +156,7 @@ export class BlockchainEthereumService {
     /**
      * Get current block number
      * <h4>1 credit per API call.</h4><br/><p>Gets the current Ethereum block number. This is the number of the latest block in the blockchain.</p>
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
      * @returns number OK
      * @throws ApiError
      */
@@ -180,7 +180,7 @@ export class BlockchainEthereumService {
      * Get Ethereum block by hash
      * <h4>1 credit per API call.</h4><br/><p>Gets an Ethereum block-by-block hash or block number.</p>
      * @param hash Block hash or block number
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
      * @returns EthBlock OK
      * @throws ApiError
      */
@@ -206,7 +206,7 @@ export class BlockchainEthereumService {
      * Get Ethereum account balance
      * <h4>1 credit per API call.</h4><br/><p>Gets an Ethereum account balance in ETH. This method does not display the balance of ERC20 or ERC721 tokens in the account.</p>
      * @param address Account address
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
      * @returns any OK
      * @throws ApiError
      */
@@ -237,7 +237,7 @@ export class BlockchainEthereumService {
      * Get Ethereum Transaction
      * <h4>1 credit per API call.</h4><br/><p>Get Ethereum transaction by transaction hash.</p>
      * @param hash Transaction hash
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
      * @returns EthTx OK
      * @throws ApiError
      */
@@ -268,7 +268,7 @@ export class BlockchainEthereumService {
      * the order of the transaction in the list of outgoing transactions.</p>
      *
      * @param address address
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
      * @returns number OK
      * @throws ApiError
      */
@@ -299,7 +299,7 @@ export class BlockchainEthereumService {
      * @param from Transactions from this block onwords will be included.
      * @param to Transactions up to this block will be included.
      * @param sort Sorting of the data. ASC - oldest first, DESC - newest first.
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
      * @returns EthTx OK
      * @throws ApiError
      */
@@ -345,7 +345,7 @@ export class BlockchainEthereumService {
      * </p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
      * @returns any OK
      * @throws ApiError
      */
@@ -377,7 +377,7 @@ export class BlockchainEthereumService {
      * </p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
      * @returns any OK
      * @throws ApiError
      */
@@ -409,6 +409,10 @@ export class BlockchainEthereumService {
              * Fast gas price in wei.
              */
             fast: string;
+            /**
+             * Base fee for EIP-1559 transactions in wei.
+             */
+            baseFee: string;
         };
     }> {
         return __request({
@@ -437,7 +441,7 @@ export class BlockchainEthereumService {
      * </p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
      * @returns any OK
      * @throws ApiError
      */
@@ -485,6 +489,10 @@ export class BlockchainEthereumService {
                      * Fast gas price in wei.
                      */
                     fast: string;
+                    /**
+                     * Base fee for EIP-1559 transactions in wei.
+                     */
+                    baseFee: string;
                 };
             };
             /**
@@ -522,7 +530,7 @@ export class BlockchainEthereumService {
      * Alternatively, using the Tatum client library for supported languages.</p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
      * @returns any OK
      * @throws ApiError
      */
@@ -555,7 +563,7 @@ export class BlockchainEthereumService {
      * @param address Account address
      * @param pageSize Max number of items per page is 50.
      * @param offset Offset to obtain next page of the data.
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
      * @returns EthTxInternal OK
      * @throws ApiError
      */
@@ -590,7 +598,7 @@ export class BlockchainEthereumService {
      * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
      * @returns TransactionHashKMS OK
      * @throws ApiError
      */

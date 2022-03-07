@@ -9,7 +9,8 @@ export class SecurityAddressService {
     /**
      * Check malicous address
      * <h4>1 credit per API call.</h4><br/>
-     * <p>Check, if the blockchain address is malicous. Malicous address can contain assets from the DarkWeb, is connected to the scam projects or contains stolen funds.</p>
+     * <p>Check, if the blockchain address is malicous. Malicous address can contain assets from the DarkWeb, is connected to the scam projects or contains stolen funds.</p><br/>
+     * <p>Supported Chains: ETH, BTC, LTC</p>
      *
      * @param address Blockchain Address to check
      * @returns any OK
