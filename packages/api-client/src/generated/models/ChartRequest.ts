@@ -18,28 +18,5 @@ export type ChartRequest = {
     /**
      * Time frame of the chart.
      */
-    timeFrame: ChartRequest.timeFrame;
-}
-
-export namespace ChartRequest {
-
-    /**
-     * Time frame of the chart.
-     */
-    export enum timeFrame {
-        MIN_1 = 'MIN_1',
-        MIN_3 = 'MIN_3',
-        MIN_5 = 'MIN_5',
-        MIN_15 = 'MIN_15',
-        MIN_30 = 'MIN_30',
-        HOUR_1 = 'HOUR_1',
-        HOUR_4 = 'HOUR_4',
-        HOUR_12 = 'HOUR_12',
-        DAY = 'DAY',
-        WEEK = 'WEEK',
-        MONTH = 'MONTH',
-        YEAR = 'YEAR',
-    }
-
-
+    timeFrame: 'MIN_1' | 'MIN_3' | 'MIN_5' | 'MIN_15' | 'MIN_30' | 'HOUR_1' | 'HOUR_4' | 'HOUR_12' | 'DAY' | 'WEEK' | 'MONTH' | 'YEAR';
 }

@@ -6,7 +6,7 @@ export type TransferCustodialWallet = {
     /**
      * Blockchain to work with.
      */
-    chain: TransferCustodialWallet.chain;
+    chain: 'ETH' | 'ONE' | 'XDC' | 'BSC' | 'KLAY' | 'MATIC';
     /**
      * Address of custodial wallet to transfer from
      */
@@ -18,7 +18,7 @@ export type TransferCustodialWallet = {
     /**
      * Type of the asset to transfer. 0 - ERC20, 1 - ERC721, 2 - ERC1155, 3 - native asset
      */
-    contractType: TransferCustodialWallet.contractType;
+    contractType: 0 | 1 | 2 | 3;
     /**
      * Blockchain address to send assets to
      */
@@ -52,30 +52,4 @@ export type TransferCustodialWallet = {
          */
         gasPrice: string;
     };
-}
-
-export namespace TransferCustodialWallet {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        ONE = 'ONE',
-        XDC = 'XDC',
-        BSC = 'BSC',
-        MATIC = 'MATIC',
-    }
-
-    /**
-     * Type of the asset to transfer. 0 - ERC20, 1 - ERC721, 2 - ERC1155, 3 - native asset
-     */
-    export enum contractType {
-        '_0' = 0,
-        '_1' = 1,
-        '_2' = 2,
-        '_3' = 3,
-    }
-
-
 }

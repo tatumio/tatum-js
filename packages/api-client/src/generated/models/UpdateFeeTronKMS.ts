@@ -6,7 +6,7 @@ export type UpdateFeeTronKMS = {
     /**
      * Blockchain to work with.
      */
-    chain: UpdateFeeTronKMS.chain;
+    chain: 'TRON';
     /**
      * Address of the marketplace smart contract.
      */
@@ -35,16 +35,4 @@ export type UpdateFeeTronKMS = {
      * Fee in TRX to be paid.
      */
     feeLimit: number;
-}
-
-export namespace UpdateFeeTronKMS {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        TRON = 'TRON',
-    }
-
-
 }

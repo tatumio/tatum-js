@@ -10,8 +10,7 @@
         "outputPath": "dist/packages/blockchain/bsc",
         "main": "packages/blockchain/bsc/src/index.ts",
         "tsConfig": "packages/blockchain/bsc/tsconfig.lib.json",
-        "packageJson": "packages/blockchain/bsc/package.json",
-        "assets": ["packages/blockchain/bsc/*.md"]
+        "packageJson": "packages/blockchain/bsc/package.json"
       }
     },
     "lint": {
@@ -30,5 +29,5 @@
       }
     }
   },
-  "tags": ["scope:sdk", "scope:evm-based"]
+  "tags": ["type:sdk", "scope:evm-based"]
 }

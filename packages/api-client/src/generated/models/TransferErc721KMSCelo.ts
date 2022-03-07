@@ -30,19 +30,5 @@ export type TransferErc721KMSCelo = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: TransferErc721KMSCelo.feeCurrency;
-}
-
-export namespace TransferErc721KMSCelo {
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

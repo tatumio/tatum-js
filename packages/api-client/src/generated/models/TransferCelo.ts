@@ -34,7 +34,7 @@ export type TransferCelo = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: TransferCelo.feeCurrency;
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
      * Note visible to owner of withdrawing account
      */
@@ -47,18 +47,4 @@ export type TransferCelo = {
      * Gas price in Gwei. If not set, automatic calculation will be used.
      */
     gasPrice?: string;
-}
-
-export namespace TransferCelo {
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
 }

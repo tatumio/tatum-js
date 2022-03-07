@@ -6,7 +6,7 @@ export type GenerateCustodialWalletKMS = {
     /**
      * Blockchain to work with.
      */
-    chain: GenerateCustodialWalletKMS.chain;
+    chain: 'ETH' | 'ONE' | 'BSC' | 'MATIC';
     /**
      * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
      */
@@ -48,19 +48,4 @@ export type GenerateCustodialWalletKMS = {
      * Nonce to be set to the transaction. If not present, last known nonce will be used.
      */
     nonce?: number;
-}
-
-export namespace GenerateCustodialWalletKMS {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        ONE = 'ONE',
-        BSC = 'BSC',
-        MATIC = 'MATIC',
-    }
-
-
 }

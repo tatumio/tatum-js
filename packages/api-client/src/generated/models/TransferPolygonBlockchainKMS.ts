@@ -18,7 +18,7 @@ export type TransferPolygonBlockchainKMS = {
     /**
      * Currency to transfer from Polygon Blockchain Account. ERC20 tokens BETH, BBTC, BADA, WMATIC, BDOT, BXRP, BLTC, BBCH are available only for mainnet use.
      */
-    currency: TransferPolygonBlockchainKMS.currency;
+    currency: 'BETH' | 'BBTC' | 'BADA' | 'WMATIC' | 'BDOT' | 'BXRP' | 'BLTC' | 'BBCH' | 'MATIC';
     /**
      * Custom defined fee. If not present, it will be calculated automatically.
      */
@@ -44,24 +44,4 @@ export type TransferPolygonBlockchainKMS = {
      * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
      */
     signatureId: string;
-}
-
-export namespace TransferPolygonBlockchainKMS {
-
-    /**
-     * Currency to transfer from Polygon Blockchain Account. ERC20 tokens BETH, BBTC, BADA, WMATIC, BDOT, BXRP, BLTC, BBCH are available only for mainnet use.
-     */
-    export enum currency {
-        BETH = 'BETH',
-        BBTC = 'BBTC',
-        BADA = 'BADA',
-        WMATIC = 'WMATIC',
-        BDOT = 'BDOT',
-        BXRP = 'BXRP',
-        BLTC = 'BLTC',
-        BBCH = 'BBCH',
-        MATIC = 'MATIC',
-    }
-
-
 }

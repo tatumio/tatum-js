@@ -6,7 +6,7 @@ export type CreateSubscriptionPending = {
     /**
      * Type of the subscription.
      */
-    type: CreateSubscriptionPending.type;
+    type: 'ACCOUNT_PENDING_BLOCKCHAIN_TRANSACTION';
     /**
      * Additional attributes based on the subscription type.
      */
@@ -20,16 +20,4 @@ export type CreateSubscriptionPending = {
          */
         url: string;
     };
-}
-
-export namespace CreateSubscriptionPending {
-
-    /**
-     * Type of the subscription.
-     */
-    export enum type {
-        ACCOUNT_PENDING_BLOCKCHAIN_TRANSACTION = 'ACCOUNT_PENDING_BLOCKCHAIN_TRANSACTION',
-    }
-
-
 }

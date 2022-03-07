@@ -6,7 +6,7 @@ export type ChainMintKcsErc20KMS = {
     /**
      * Chain to work with.
      */
-    chain: ChainMintKcsErc20KMS.chain;
+    chain: 'KCS';
     /**
      * Amount to be minted and transfered to the recipient.
      */
@@ -27,16 +27,4 @@ export type ChainMintKcsErc20KMS = {
      * Nonce to be set to transaction. If not present, last known nonce will be used.
      */
     nonce?: number;
-}
-
-export namespace ChainMintKcsErc20KMS {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        KCS = 'KCS',
-    }
-
-
 }

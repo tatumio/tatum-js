@@ -6,7 +6,7 @@ export type CreateAuctionKMS = {
     /**
      * Blockchain to work with.
      */
-    chain: CreateAuctionKMS.chain;
+    chain: 'ETH' | 'ONE' | 'BSC' | 'KLAY' | 'MATIC';
     /**
      * Address of the auction smart contract.
      */
@@ -68,19 +68,4 @@ export type CreateAuctionKMS = {
          */
         gasPrice: string;
     };
-}
-
-export namespace CreateAuctionKMS {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        ONE = 'ONE',
-        BSC = 'BSC',
-        MATIC = 'MATIC',
-    }
-
-
 }

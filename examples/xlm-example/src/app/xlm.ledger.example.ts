@@ -1,7 +1,6 @@
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 import { TatumXlmSDK } from '@tatumio/xlm'
-import { Currency } from '@tatumio/shared-core'
-import { CreateTrade, VirtualCurrency } from '@tatumio/api-client'
+import { Currency } from '@tatumio/api-client'
 
 const xlmSDK = TatumXlmSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
@@ -62,7 +61,7 @@ export const xlmLedgerOrderBookExample = async () => {
     pageSize: 10,
   })
   const newTrade = await xlmSDK.ledger.orderBook.newTrade({
-    type: CreateTrade.type.BUY,
+    type: 'BUY',
     price: '8650.4',
     amount: '15000',
     pair: 'XLM/EUR',
@@ -114,10 +113,10 @@ export const xlmLedgerVirtualCurrencyExample = async () => {
   const virtualCurrencyAcc = await xlmSDK.ledger.virtualCurrency.create({
     name: 'VC_VIRTUAL',
     supply: '1000000',
-    basePair: VirtualCurrency.basePair.XLM,
+    basePair: 'XLM',
     baseRate: 1,
     customer: {
-      accountingCurrency: VirtualCurrency.accountingCurrency.USD,
+      accountingCurrency: 'USD',
       customerCountry: 'US',
       externalId: '123654',
       providerCountry: 'US',
@@ -125,7 +124,7 @@ export const xlmLedgerVirtualCurrencyExample = async () => {
     description: 'My Virtual Token description.',
     accountCode: 'AC_1011_B',
     accountNumber: '1234567890',
-    accountingCurrency: VirtualCurrency.accountingCurrency.USD,
+    accountingCurrency: 'USD',
   })
   const virtualCurrency = await xlmSDK.ledger.virtualCurrency.getByName('VC_VIRTUAL')
   const mintTx = await xlmSDK.ledger.virtualCurrency.mint({
@@ -139,7 +138,7 @@ export const xlmLedgerVirtualCurrencyExample = async () => {
   await xlmSDK.ledger.virtualCurrency.update({
     name: 'VC_VIRTUAL',
     baseRate: 1,
-    basePair: VirtualCurrency.basePair.EUR,
+    basePair: 'EUR',
   })
 }
 

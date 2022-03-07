@@ -13,20 +13,21 @@ export const DERIVATION_PATH: Record<Blockchain, string> = {
   POLYGON: "m/44'/966'/0'/0",
   KCS: "m/44'/60'/0'/0",
   HARMONY: "m/44'/1023'/0'/0",
+  KLAY: "m/44'/8217'/0'/0",
   BSC: "m/44'/60'/0'/0",
   BCH: "m/44'/145'/0'/0",
+  TRON: "m/44'/195'/0'/0",
   // TBD
   ALGO: '@TODO - TBD',
   CARDANO: '@TODO - TBD',
   EGLD: '@TODO - TBD',
   FABRIC: '@TODO - TBD',
-  FLOW: '@TODO - TBD',
-  LYRA: '@TODO - TBD',
+  FLOW: "m/44'/539'/0'/0",
+  SCRYPTA: "m/44'/497'/0'/0",
   NEO: '@TODO - TBD',
   QTUM: '@TODO - TBD',
   QUORUM: '@TODO - TBD',
   SOL: '@TODO - TBD',
-  TRON: '@TODO - TBD',
   VET: '@TODO - TBD',
   XDC: '@TODO - TBD',
   XLM: '@TODO - TBD',
@@ -54,4 +55,5 @@ const TESTNET_DERIVATION_PATH: Record<Blockchain, string> = {
    * It's not right, but changing it will break production users experience
    */
   BCH: DERIVATION_PATH.BCH,
+  SCRYPTA: DERIVATION_PATH.SCRYPTA,
 }

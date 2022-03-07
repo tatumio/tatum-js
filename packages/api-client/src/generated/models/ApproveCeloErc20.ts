@@ -6,7 +6,7 @@ export type ApproveCeloErc20 = {
     /**
      * Chain to work with.
      */
-    chain: ApproveCeloErc20.chain;
+    chain: 'CELO';
     /**
      * Amount to be approved for the spender.
      */
@@ -24,32 +24,24 @@ export type ApproveCeloErc20 = {
      */
     fromPrivateKey: string;
     /**
+     * Custom defined fee. If not present, it will be calculated automatically.
+     */
+    fee?: {
+        /**
+         * Gas limit for transaction in gas price.
+         */
+        gasLimit: string;
+        /**
+         * Gas price in Gwei.
+         */
+        gasPrice: string;
+    };
+    /**
      * Nonce to be set to Celo transaction. If not present, last known nonce will be used.
      */
     nonce?: number;
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: ApproveCeloErc20.feeCurrency;
-}
-
-export namespace ApproveCeloErc20 {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

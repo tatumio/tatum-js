@@ -6,11 +6,11 @@ export type EstimateFeeFromUTXO = {
     /**
      * Blockchain to estimate fee for.
      */
-    chain: EstimateFeeFromUTXO.chain;
+    chain: 'BTC' | 'LTC';
     /**
      * Type of transaction
      */
-    type: EstimateFeeFromUTXO.type;
+    type: 'TRANSFER';
     /**
      * Array of transaction hashes, index of UTXO in it and corresponding private keys. Use this option if you want to calculate amount to send manually. Either fromUTXO or fromAddress must be present.
      */
@@ -37,24 +37,4 @@ export type EstimateFeeFromUTXO = {
          */
         value: number;
     }>;
-}
-
-export namespace EstimateFeeFromUTXO {
-
-    /**
-     * Blockchain to estimate fee for.
-     */
-    export enum chain {
-        BTC = 'BTC',
-        LTC = 'LTC',
-    }
-
-    /**
-     * Type of transaction
-     */
-    export enum type {
-        TRANSFER = 'TRANSFER',
-    }
-
-
 }

@@ -14,6 +14,7 @@ import {
   BlockchainFungibleTokenService,
   BlockchainHarmonyOneService,
   BlockchainKcsKcsService,
+  BlockchainKlaytnService,
   BlockchainLitecoinService,
   BlockchainMarketplaceService,
   BlockchainMultiTokenErc1155Service,
@@ -59,6 +60,7 @@ export const TATUM_API_CONSTANTS = {
   HEADER_API_KEY: 'x-api-key',
   API_VERSION: 'v3',
   API_KEY: '',
+  TRON_PRO_API_KEY: '',
 }
 
 export function TatumApi(apiKey: string, url = TATUM_API_CONSTANTS.URL) {
@@ -95,6 +97,7 @@ export const ApiServices = {
     flow: BlockchainFlowService,
     one: BlockchainHarmonyOneService,
     kcs: BlockchainKcsKcsService,
+    klaytn: BlockchainKlaytnService,
     ltc: BlockchainLitecoinService,
     neo: BlockchainNeoService,
     polygon: BlockchainPolygonMaticService,

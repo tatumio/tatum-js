@@ -1,7 +1,7 @@
-import { blockchainHelper, Currency } from '@tatumio/shared-core'
-import { btcBasedUtils } from '@tatumio/shared-blockchain-btc-based'
+import { blockchainHelper } from '@tatumio/shared-core'
+import { Currency, TronWallet } from '@tatumio/api-client'
+import { btcBasedWalletUtils } from '@tatumio/shared-blockchain-btc-based'
 import { evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
-import { TronWallet } from '@tatumio/api-client'
 
 export const walletSdk = {
   /**
@@ -21,7 +21,7 @@ export const walletSdk = {
     const blockchain = blockchainHelper.getBlockchainByCurrency(currency)
 
     if (blockchainHelper.isBtcBased(blockchain))
-      return btcBasedUtils.generateAddressFromXPub(blockchain, xpub, i, options)
+      return btcBasedWalletUtils.generateAddressFromXPub(blockchain, xpub, i, options)
 
     if (blockchainHelper.isEvmBased(blockchain)) return evmBasedUtils.generateAddressFromXPub(xpub, i)
 
@@ -45,7 +45,7 @@ export const walletSdk = {
     const blockchain = blockchainHelper.getBlockchainByCurrency(currency)
 
     if (blockchainHelper.isBtcBased(blockchain))
-      return btcBasedUtils.generatePrivateKeyFromMnemonic(blockchain, mnemonic, i, options)
+      return btcBasedWalletUtils.generatePrivateKeyFromMnemonic(blockchain, mnemonic, i, options)
 
     if (blockchainHelper.isEvmBased(blockchain))
       return evmBasedUtils.generatePrivateKeyFromMnemonic(blockchain, mnemonic, i, options)
@@ -68,7 +68,7 @@ export const walletSdk = {
     const blockchain = blockchainHelper.getBlockchainByCurrency(currency)
 
     if (blockchainHelper.isBtcBased(blockchain))
-      return btcBasedUtils.generateAddressFromPrivateKey(blockchain, privateKey, options)
+      return btcBasedWalletUtils.generateAddressFromPrivateKey(blockchain, privateKey, options)
 
     if (blockchainHelper.isEvmBased(blockchain))
       return evmBasedUtils.generateAddressFromPrivateKey(blockchain, privateKey)
@@ -92,7 +92,7 @@ export const walletSdk = {
     const blockchain = blockchainHelper.getBlockchainByCurrency(currency)
 
     if (blockchainHelper.isBtcBased(blockchain))
-      return btcBasedUtils.generateBlockchainWallet(blockchain, mnemonic, options)
+      return btcBasedWalletUtils.generateBlockchainWallet(blockchain, mnemonic, options)
 
     if (blockchainHelper.isEvmBased(blockchain))
       return evmBasedUtils.generateBlockchainWallet(blockchain, mnemonic, options)

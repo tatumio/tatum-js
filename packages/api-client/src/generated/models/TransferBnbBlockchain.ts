@@ -10,7 +10,7 @@ export type TransferBnbBlockchain = {
     /**
      * Currency to transfer from Binance Blockchain Account.
      */
-    currency: TransferBnbBlockchain.currency;
+    currency: 'BNB';
     /**
      * Amount to be sent in BNB.
      */
@@ -23,16 +23,4 @@ export type TransferBnbBlockchain = {
      * Message to recipient.
      */
     message?: string;
-}
-
-export namespace TransferBnbBlockchain {
-
-    /**
-     * Currency to transfer from Binance Blockchain Account.
-     */
-    export enum currency {
-        BNB = 'BNB',
-    }
-
-
 }

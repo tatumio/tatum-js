@@ -10,7 +10,7 @@ export type TransferNftTron = {
     /**
      * Chain to work with.
      */
-    chain: TransferNftTron.chain;
+    chain: 'TRON';
     /**
      * Blockchain address to send NFT token to
      */
@@ -31,16 +31,4 @@ export type TransferNftTron = {
      * Max limit for fee to be paid, in TRX.
      */
     feeLimit: number;
-}
-
-export namespace TransferNftTron {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        TRON = 'TRON',
-    }
-
-
 }

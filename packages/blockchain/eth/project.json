@@ -10,8 +10,7 @@
         "outputPath": "dist/packages/blockchain/eth",
         "tsConfig": "packages/blockchain/eth/tsconfig.lib.json",
         "packageJson": "packages/blockchain/eth/package.json",
-        "main": "packages/blockchain/eth/src/index.ts",
-        "assets": ["packages/blockchain/eth/*.md"]
+        "main": "packages/blockchain/eth/src/index.ts"
       }
     },
     "lint": {
@@ -30,5 +29,5 @@
       }
     }
   },
-  "tags": ["scope:sdk", "scope:evm-based"]
+  "tags": ["type:sdk", "scope:evm-based"]
 }

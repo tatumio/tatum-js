@@ -6,7 +6,7 @@ export type UpdateFeeKMS = {
     /**
      * Blockchain to work with.
      */
-    chain: UpdateFeeKMS.chain;
+    chain: 'ETH' | 'ONE' | 'BSC' | 'KLAY' | 'MATIC';
     /**
      * Percentage of the selling amount of the NFT asset. 100 - 1%
      */
@@ -36,19 +36,4 @@ export type UpdateFeeKMS = {
          */
         gasPrice: string;
     };
-}
-
-export namespace UpdateFeeKMS {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        ONE = 'ONE',
-        BSC = 'BSC',
-        MATIC = 'MATIC',
-    }
-
-
 }

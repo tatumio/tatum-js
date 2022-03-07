@@ -6,7 +6,7 @@ export type ChainDeployErc20 = {
     /**
      * Chain to work with.
      */
-    chain: ChainDeployErc20.chain;
+    chain: 'ETH' | 'BSC' | 'MATIC' | 'KLAY' | 'XDC' | 'ONE' | 'ALGO';
     /**
      * Symbol of the ERC20 token
      */
@@ -52,21 +52,4 @@ export type ChainDeployErc20 = {
          */
         gasPrice: string;
     };
-}
-
-export namespace ChainDeployErc20 {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        BSC = 'BSC',
-        MATIC = 'MATIC',
-        XDC = 'XDC',
-        ONE = 'ONE',
-        ALGO = 'ALGO',
-    }
-
-
 }

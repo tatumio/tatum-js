@@ -6,7 +6,7 @@ export type ApproveErc20 = {
     /**
      * Chain to work with.
      */
-    chain: ApproveErc20.chain;
+    chain: 'ETH' | 'BSC' | 'MATIC' | 'KLAY' | 'ONE';
     /**
      * Amount to be approved for the spender.
      */
@@ -24,22 +24,20 @@ export type ApproveErc20 = {
      */
     fromPrivateKey: string;
     /**
+     * Custom defined fee. If not present, it will be calculated automatically.
+     */
+    fee?: {
+        /**
+         * Gas limit for transaction in gas price.
+         */
+        gasLimit: string;
+        /**
+         * Gas price in Gwei.
+         */
+        gasPrice: string;
+    };
+    /**
      * Nonce to be set to transaction. If not present, last known nonce will be used.
      */
     nonce?: number;
-}
-
-export namespace ApproveErc20 {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        BSC = 'BSC',
-        MATIC = 'MATIC',
-        ONE = 'ONE',
-    }
-
-
 }

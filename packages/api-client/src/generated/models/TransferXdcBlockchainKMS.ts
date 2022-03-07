@@ -14,7 +14,7 @@ export type TransferXdcBlockchainKMS = {
     /**
      * Currency of the transfer.
      */
-    currency: TransferXdcBlockchainKMS.currency;
+    currency: 'XDC';
     /**
      * Blockchain address to send assets
      */
@@ -44,16 +44,4 @@ export type TransferXdcBlockchainKMS = {
      * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
      */
     signatureId: string;
-}
-
-export namespace TransferXdcBlockchainKMS {
-
-    /**
-     * Currency of the transfer.
-     */
-    export enum currency {
-        XDC = 'XDC',
-    }
-
-
 }

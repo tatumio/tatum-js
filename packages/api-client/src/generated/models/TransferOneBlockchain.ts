@@ -10,7 +10,7 @@ export type TransferOneBlockchain = {
     /**
      * Currency of the transfer.
      */
-    currency: TransferOneBlockchain.currency;
+    currency: 'ONE';
     /**
      * Nonce to be set to ONE transaction. If not present, last known nonce will be used.
      */
@@ -40,16 +40,4 @@ export type TransferOneBlockchain = {
      * Private key of sender address. Private key, or signature Id must be present.
      */
     fromPrivateKey: string;
-}
-
-export namespace TransferOneBlockchain {
-
-    /**
-     * Currency of the transfer.
-     */
-    export enum currency {
-        ONE = 'ONE',
-    }
-
-
 }

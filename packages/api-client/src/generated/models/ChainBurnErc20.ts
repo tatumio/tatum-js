@@ -6,7 +6,7 @@ export type ChainBurnErc20 = {
     /**
      * Chain to work with.
      */
-    chain: ChainBurnErc20.chain;
+    chain: 'ETH' | 'BSC' | 'MATIC' | 'KLAY' | 'XDC' | 'ONE' | 'ALGO';
     /**
      * Amount of tokens to be destroyed.
      */
@@ -20,24 +20,20 @@ export type ChainBurnErc20 = {
      */
     fromPrivateKey: string;
     /**
+     * Custom defined fee. If not present, it will be calculated automatically.
+     */
+    fee?: {
+        /**
+         * Gas limit for transaction in gas price.
+         */
+        gasLimit: string;
+        /**
+         * Gas price in Gwei.
+         */
+        gasPrice: string;
+    };
+    /**
      * Nonce to be set to Celo transaction. If not present, last known nonce will be used.
      */
     nonce?: number;
-}
-
-export namespace ChainBurnErc20 {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        BSC = 'BSC',
-        MATIC = 'MATIC',
-        XDC = 'XDC',
-        ONE = 'ONE',
-        ALGO = 'ALGO',
-    }
-
-
 }

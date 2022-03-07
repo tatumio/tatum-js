@@ -6,7 +6,7 @@ export type BurnNft = {
     /**
      * Chain to work with.
      */
-    chain: BurnNft.chain;
+    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'BSC' | 'ALGO';
     /**
      * ID of token to be destroyed.
      */
@@ -36,21 +36,4 @@ export type BurnNft = {
          */
         gasPrice: string;
     };
-}
-
-export namespace BurnNft {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        MATIC = 'MATIC',
-        KCS = 'KCS',
-        ONE = 'ONE',
-        BSC = 'BSC',
-        ALGO = 'ALGO',
-    }
-
-
 }

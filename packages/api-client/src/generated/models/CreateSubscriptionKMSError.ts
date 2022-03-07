@@ -6,7 +6,7 @@ export type CreateSubscriptionKMSError = {
     /**
      * Type of the subscription.
      */
-    type: CreateSubscriptionKMSError.type;
+    type: 'KMS_FAILED_TX';
     /**
      * Additional attributes based on the subscription type.
      */
@@ -16,16 +16,4 @@ export type CreateSubscriptionKMSError = {
          */
         url: string;
     };
-}
-
-export namespace CreateSubscriptionKMSError {
-
-    /**
-     * Type of the subscription.
-     */
-    export enum type {
-        KMS_FAILED_TX = 'KMS_FAILED_TX',
-    }
-
-
 }

@@ -10,7 +10,7 @@ export type TransferNftKMS = {
     /**
      * Chain to work with.
      */
-    chain: TransferNftKMS.chain;
+    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'BSC';
     /**
      * Blockchain address to send NFT token to
      */
@@ -60,20 +60,4 @@ export type TransferNftKMS = {
          */
         gasPrice: string;
     };
-}
-
-export namespace TransferNftKMS {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        MATIC = 'MATIC',
-        KCS = 'KCS',
-        ONE = 'ONE',
-        BSC = 'BSC',
-    }
-
-
 }

@@ -6,7 +6,7 @@ export type BurnMultiToken = {
     /**
      * Chain to work with.
      */
-    chain: BurnMultiToken.chain;
+    chain: 'ETH' | 'ONE' | 'MATIC' | 'KCS' | 'KLAY' | 'BSC' | 'ALGO';
     /**
      * Address of holder
      */
@@ -48,21 +48,4 @@ export type BurnMultiToken = {
          */
         gasPrice: string;
     };
-}
-
-export namespace BurnMultiToken {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        ONE = 'ONE',
-        MATIC = 'MATIC',
-        KCS = 'KCS',
-        BSC = 'BSC',
-        ALGO = 'ALGO',
-    }
-
-
 }

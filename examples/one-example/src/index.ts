@@ -1,4 +1,3 @@
-import { oneApiExample } from './app/one.api.example'
 import { oneBlockchainExample } from './app/one.blockchain.example'
 import { oneKmsExample } from './app/one.kms.example'
 import { oneLogRecordExample } from './app/one.log.example'
@@ -14,8 +13,13 @@ import {
 } from './app/one.ledger.example'
 import { oneOffchainExample } from './app/one.offchain.example'
 import { oneSubscriptionsExample } from './app/one.subscriptions.example'
+import {
+  oneTxWithPrivateKeyExample,
+  oneTxWithSignatureIdExample,
+  oneTxFeesCovered,
+} from './app/one.tx.example'
+import { oneAuctionExample } from './app/one.auction.example'
 
-console.log(`Running ${oneApiExample()}`)
 console.log(`Running ${oneWalletExample()}`)
 console.log(`Running ${oneBlockchainExample()}`)
 console.log(`Running ${oneKmsExample()}`)
@@ -30,3 +34,7 @@ console.log(`Running ${oneLedgerOrderBookExample()}`)
 console.log(`Running ${oneLedgerTransactionExample()}`)
 console.log(`Running ${oneOffchainExample()}`)
 console.log(`Running ${oneSubscriptionsExample()}`)
+console.log(`Runninf ${oneTxWithPrivateKeyExample()}`)
+console.log(`Runninf ${oneTxWithSignatureIdExample()}`)
+console.log(`Runninf ${oneTxFeesCovered()}`)
+console.log(`Running ${oneAuctionExample()}`)

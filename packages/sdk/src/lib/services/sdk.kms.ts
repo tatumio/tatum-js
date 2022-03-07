@@ -1,5 +1,5 @@
 import { SecurityKeyManagementSystemService } from '@tatumio/api-client'
-import { abstractSdkKms } from '@tatumio/abstract-sdk'
+import { abstractSdkKms } from '@tatumio/shared-abstract-sdk'
 import { SDKS } from '../sdk.common'
 
 export const sdkKms = (args: { sdks: SDKS }) => {

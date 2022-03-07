@@ -8,7 +8,7 @@ import {
   MATIC_BASED_CURRENCIES,
   NativeCurrency,
   TRON_CURRENCIES,
-} from './Currency'
+} from '@tatumio/api-client'
 
 export const BlockchainCurrencyMapping: Record<
   Blockchain,
@@ -16,6 +16,7 @@ export const BlockchainCurrencyMapping: Record<
 > = {
   BTC: Currency.BTC,
   LTC: Currency.LTC,
+  KLAY: Currency.KLAY,
   DOGE: Currency.DOGE,
   BCH: Currency.BCH,
   FABRIC: Currency.FABRIC,
@@ -53,7 +54,7 @@ export const BlockchainCurrencyMapping: Record<
   XLM: Currency.XLM,
   VET: Currency.VET,
   NEO: Currency.NEO,
-  LYRA: Currency.LYRA,
+  SCRYPTA: Currency.LYRA,
   CARDANO: Currency.ADA,
   ALGO: Currency.ALGO,
   KCS: Currency.KCS,

@@ -6,7 +6,7 @@ export type UpdateFeeRecipientKMS = {
     /**
      * Blockchain to work with.
      */
-    chain: UpdateFeeRecipientKMS.chain;
+    chain: 'ETH' | 'ONE' | 'BSC' | 'KLAY' | 'MATIC';
     /**
      * Recipient address of the marketplace fee.
      */
@@ -36,19 +36,4 @@ export type UpdateFeeRecipientKMS = {
          */
         gasPrice: string;
     };
-}
-
-export namespace UpdateFeeRecipientKMS {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        ONE = 'ONE',
-        BSC = 'BSC',
-        MATIC = 'MATIC',
-    }
-
-
 }

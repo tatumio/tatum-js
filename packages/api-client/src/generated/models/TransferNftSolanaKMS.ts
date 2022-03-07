@@ -6,7 +6,7 @@ export type TransferNftSolanaKMS = {
     /**
      * Chain to work with.
      */
-    chain: TransferNftSolanaKMS.chain;
+    chain: 'SOL';
     /**
      * Blockchain address to send NFT token from. From this address, transaction fee will be paid.
      */
@@ -23,16 +23,4 @@ export type TransferNftSolanaKMS = {
      * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
      */
     signatureId: string;
-}
-
-export namespace TransferNftSolanaKMS {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        SOL = 'SOL',
-    }
-
-
 }

@@ -1,6 +1,6 @@
-import { Blockchain, Currency } from '@tatumio/shared-core'
+import { Blockchain } from '@tatumio/shared-core'
+import { ApiServices, Currency, TransferXlm, Withdrawal } from '@tatumio/api-client'
 import { abstractBlockchainOffchain } from '@tatumio/shared-blockchain-abstract'
-import { ApiServices, TransferXlm, Withdrawal } from '@tatumio/api-client'
 import { Account, Asset, Keypair, Memo, Networks, Operation, TransactionBuilder } from 'stellar-sdk'
 
 export const xlmOffchainService = (args: { blockchain: Blockchain }) => {
@@ -27,7 +27,7 @@ export const sendOffchainTransaction = async (testnet: boolean, body: TransferXl
   }
 
   let memPhrase
-  if(withdrawal.attr){
+  if (withdrawal.attr) {
     memPhrase = withdrawal.attr?.length > 28 ? Memo.hash(withdrawal.attr) : Memo.text(withdrawal.attr)
   }
   const memo = memPhrase

@@ -6,7 +6,7 @@ export type MintMultiTokenKMS = {
     /**
      * Chain to work with.
      */
-    chain: MintMultiTokenKMS.chain;
+    chain: 'ETH' | 'ONE' | 'MATIC' | 'KCS' | 'KLAY' | 'BSC';
     /**
      * ID of token to be created.
      */
@@ -52,20 +52,4 @@ export type MintMultiTokenKMS = {
          */
         gasPrice: string;
     };
-}
-
-export namespace MintMultiTokenKMS {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        ONE = 'ONE',
-        MATIC = 'MATIC',
-        KCS = 'KCS',
-        BSC = 'BSC',
-    }
-
-
 }

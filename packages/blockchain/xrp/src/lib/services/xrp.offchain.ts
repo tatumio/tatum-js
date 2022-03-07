@@ -1,8 +1,11 @@
 import { BigNumber } from 'bignumber.js'
-import { ApiServices, TransferXrp, Withdrawal } from '@tatumio/api-client'
-import { Blockchain, Currency } from '@tatumio/shared-core'
+import { ApiServices, TransferXrp, Withdrawal, Currency } from '@tatumio/api-client'
+import { Blockchain } from '@tatumio/shared-core'
 import { RippleAPI } from 'ripple-lib'
 import { abstractBlockchainOffchain } from '@tatumio/shared-blockchain-abstract'
+import { XrpSdkError } from '../xrp.sdk.errors'
+import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
+import { Payment } from 'ripple-lib/dist/npm/transaction/payment'
 
 export const xrpOffchainService = (args: { blockchain: Blockchain }) => {
   return {
@@ -22,31 +25,40 @@ export type TransferXrpOffchain = TransferXrp & Withdrawal
  */
 export const sendOffchainTransaction = async (body: TransferXrpOffchain) => {
   const { account, secret, ...withdrawal } = body
+
   if (!withdrawal.fee) {
-    withdrawal.fee = new BigNumber((await ApiServices.blockchain.xrp.xrpGetFee()).drops.base_fee)
-      .dividedBy(1000000)
-      .toString()
+    try {
+      withdrawal.fee = new BigNumber(
+        (await (await ApiServices.blockchain.xrp.xrpGetFee())?.drops?.base_fee) || 0,
+      )
+        .dividedBy(1000000)
+        .toString()
+    } catch (e) {
+      withdrawal.fee = '0'
+    }
   }
-  const acc = await ApiServices.blockchain.xrp.xrpGetAccountInfo(account)
+
+  if (!withdrawal.fee || Number(withdrawal.fee) <= 0) throw new XrpSdkError(SdkErrorCode.FEE_TOO_SMALL)
+
   const { id } = await ApiServices.offChain.withdrawal.storeWithdrawal(withdrawal)
   const { amount, fee, address } = withdrawal
+  let txData: string
 
-  let txData
   try {
     txData = await prepareSignedOffchainTransaction(
       amount,
       address,
       secret,
-      acc,
+      account,
       fee,
       withdrawal.sourceTag,
       withdrawal.attr,
     )
   } catch (e) {
-    console.error(e)
-    await ApiServices.offChain.withdrawal.cancelInProgressWithdrawal(id)
+    id && (await ApiServices.offChain.withdrawal.cancelInProgressWithdrawal(id))
     throw e
   }
+
   try {
     return {
       ...(await ApiServices.offChain.withdrawal.broadcastBlockchainTransaction({
@@ -57,13 +69,7 @@ export const sendOffchainTransaction = async (body: TransferXrpOffchain) => {
       id,
     }
   } catch (e) {
-    console.error(e)
-    try {
-      await ApiServices.offChain.withdrawal.cancelInProgressWithdrawal(id)
-    } catch (e1) {
-      console.log(e)
-      return { id }
-    }
+    id && (await ApiServices.offChain.withdrawal.cancelInProgressWithdrawal(id))
     throw e
   }
 }
@@ -73,7 +79,7 @@ export const sendOffchainTransaction = async (body: TransferXrpOffchain) => {
  * @param amount amount to send
  * @param address recipient address
  * @param secret secret to sign transaction with
- * @param account Xrp source account
+ * @param fromAccount Xrp source account
  * @param fee fee to pay
  * @param sourceTag source tag to include in transaction
  * @param destinationTag
@@ -83,15 +89,17 @@ export const prepareSignedOffchainTransaction = async (
   amount: string,
   address: string,
   secret: string,
-  account: any,
+  fromAccount: string,
   fee: string,
   sourceTag?: number,
   destinationTag?: string,
 ) => {
-  const currency = 'XRP'
-  const payment: any = {
+  const currency = Currency.XRP
+  const accountInfo = await ApiServices.blockchain.xrp.xrpGetAccountInfo(fromAccount)
+
+  const payment: Payment = {
     source: {
-      address: account.account_data.Account,
+      address: fromAccount,
       maxAmount: {
         currency,
         value: amount,
@@ -106,14 +114,17 @@ export const prepareSignedOffchainTransaction = async (
       },
     },
   }
+
   if (destinationTag) {
     payment.destination.tag = parseInt(destinationTag)
   }
+
   const rippleAPI = new RippleAPI()
-  const prepared = await rippleAPI.preparePayment(account.account_data.Account, payment, {
+  const prepared = await rippleAPI.preparePayment(address, payment, {
     fee: `${fee}`,
-    sequence: account.account_data.Sequence,
-    maxLedgerVersion: account.ledger_current_index + 5,
+    sequence: accountInfo?.account_data ? accountInfo.account_data.Sequence : undefined,
+    maxLedgerVersion: accountInfo?.ledger_current_index ? accountInfo.ledger_current_index + 5 : undefined,
   })
+
   return (await rippleAPI.sign(prepared.txJSON, secret)).signedTransaction
 }

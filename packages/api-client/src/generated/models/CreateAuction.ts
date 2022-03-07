@@ -6,7 +6,7 @@ export type CreateAuction = {
     /**
      * Blockchain to work with.
      */
-    chain: CreateAuction.chain;
+    chain: 'ETH' | 'ONE' | 'BSC' | 'KLAY' | 'MATIC';
     /**
      * Address of the auction smart contract.
      */
@@ -64,19 +64,4 @@ export type CreateAuction = {
          */
         gasPrice: string;
     };
-}
-
-export namespace CreateAuction {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        ONE = 'ONE',
-        BSC = 'BSC',
-        MATIC = 'MATIC',
-    }
-
-
 }

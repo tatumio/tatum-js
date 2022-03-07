@@ -6,7 +6,7 @@ export type AddNftMinterKMS = {
     /**
      * Chain to work with.
      */
-    chain: AddNftMinterKMS.chain;
+    chain: 'ETH' | 'MATIC' | 'KCS' | 'CELO' | 'ONE' | 'KLAY' | 'BSC';
     /**
      * Address of NFT token
      */
@@ -43,31 +43,5 @@ export type AddNftMinterKMS = {
     /**
      * Currency to pay for transaction gas, only valid for CELO chain.
      */
-    feeCurrency?: AddNftMinterKMS.feeCurrency;
-}
-
-export namespace AddNftMinterKMS {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        MATIC = 'MATIC',
-        KCS = 'KCS',
-        CELO = 'CELO',
-        ONE = 'ONE',
-        BSC = 'BSC',
-    }
-
-    /**
-     * Currency to pay for transaction gas, only valid for CELO chain.
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency?: 'CELO' | 'CUSD' | 'CEUR';
 }

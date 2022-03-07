@@ -1,7 +1,6 @@
 import { TatumDogeSDK } from '@tatumio/doge'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
-import { Currency } from '@tatumio/shared-core'
-import { CreateTrade, VirtualCurrency } from '@tatumio/api-client'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
+import { Currency } from '@tatumio/api-client'
 
 const dogeSDK = TatumDogeSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
@@ -82,7 +81,7 @@ export async function dogeLedgerOrderBookExample() {
     pageSize: 10,
   })
   const newTrade = await dogeSDK.ledger.orderBook.newTrade({
-    type: CreateTrade.type.BUY,
+    type: 'BUY',
     price: '8650.4',
     amount: '15000',
     pair: 'DOGE/EUR',
@@ -136,10 +135,10 @@ export async function dogeLedgerVirtualCurrencyExample() {
   const virtualCurrencyAcc = await dogeSDK.ledger.virtualCurrency.create({
     name: 'VC_VIRTUAL',
     supply: '1000000',
-    basePair: VirtualCurrency.basePair.DOGE,
+    basePair: 'DOGE',
     baseRate: 1,
     customer: {
-      accountingCurrency: VirtualCurrency.accountingCurrency.USD,
+      accountingCurrency: 'USD',
       customerCountry: 'US',
       externalId: '123654',
       providerCountry: 'US',
@@ -147,7 +146,7 @@ export async function dogeLedgerVirtualCurrencyExample() {
     description: 'My Virtual Token description.',
     accountCode: 'AC_1011_B',
     accountNumber: '1234567890',
-    accountingCurrency: VirtualCurrency.accountingCurrency.USD,
+    accountingCurrency: 'USD',
   })
   const virtualCurrency = await dogeSDK.ledger.virtualCurrency.getByName('VC_VIRTUAL')
   const mintTx = await dogeSDK.ledger.virtualCurrency.mint({
@@ -161,6 +160,6 @@ export async function dogeLedgerVirtualCurrencyExample() {
   await dogeSDK.ledger.virtualCurrency.update({
     name: 'VC_VIRTUAL',
     baseRate: 1,
-    basePair: VirtualCurrency.basePair.EUR,
+    basePair: 'EUR',
   })
 }

@@ -1,10 +1,11 @@
 import { TatumBtcSDK } from '@tatumio/btc'
 import { walletSdk } from './services/sdk.wallet'
 import { BlockchainRecordService, TatumUrl } from '@tatumio/api-client'
-import { abstractSdk } from '@tatumio/abstract-sdk'
+import { abstractSdk } from '@tatumio/shared-abstract-sdk'
 import { sdkKms } from './services/sdk.kms'
 import { TatumEthSDK } from '@tatumio/eth'
-import { Currency, Web3Request, Web3Response } from '@tatumio/shared-core'
+import { Web3Request, Web3Response } from '@tatumio/shared-core'
+import { Currency } from '@tatumio/api-client'
 import { sdkMultiToken } from './services/sdk.multitoken'
 import { SDKS } from './sdk.common'
 import { httpDriver } from './services/sdk.httpDriver'
@@ -16,6 +17,9 @@ import { TatumPolygonSDK } from '@tatumio/polygon'
 import { TatumKcsSDK } from '@tatumio/kcs'
 import { TatumOneSDK } from '@tatumio/one'
 import { TatumBscSDK } from '@tatumio/bsc'
+import { TatumSolanaSDK } from '@tatumio/solana'
+import { TatumTronSDK } from '@tatumio/tron'
+import { TatumAlgoSDK } from '@tatumio/algo'
 
 export const TatumSDK = (args: { apiKey: string; url?: TatumUrl }) => {
   const blockchainSpecificSDKs: SDKS = {
@@ -29,6 +33,9 @@ export const TatumSDK = (args: { apiKey: string; url?: TatumUrl }) => {
     one: TatumOneSDK(args),
     bsc: TatumBscSDK(args),
     xrp: TatumXrpSDK(args),
+    sol: TatumSolanaSDK(args),
+    tron: TatumTronSDK(args),
+    algo: TatumAlgoSDK(args),
   }
   return {
     ...abstractSdk(args),

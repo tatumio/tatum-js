@@ -10,8 +10,7 @@
         "outputPath": "dist/packages/blockchain/one",
         "main": "packages/blockchain/one/src/index.ts",
         "tsConfig": "packages/blockchain/one/tsconfig.lib.json",
-        "packageJson": "packages/blockchain/one/package.json",
-        "assets": ["packages/blockchain/one/*.md"]
+        "packageJson": "packages/blockchain/one/package.json"
       }
     },
     "lint": {
@@ -30,5 +29,5 @@
       }
     }
   },
-  "tags": ["scope:sdk", "scope:evm-based"]
+  "tags": ["type:sdk", "scope:harmony-based"]
 }

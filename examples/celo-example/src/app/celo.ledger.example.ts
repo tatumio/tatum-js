@@ -1,7 +1,6 @@
-import { CreateTrade, VirtualCurrency } from '@tatumio/api-client'
+import { Currency } from '@tatumio/api-client'
 import { TatumCeloSDK } from '@tatumio/celo'
-import { Currency } from '@tatumio/shared-core'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
 const celoSDK = TatumCeloSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
@@ -64,8 +63,7 @@ export async function celoLedgerOrderBookExample() {
   await celoSDK.ledger.orderBook.cancel('7c21ed165e294db78b95f0f1')
   await celoSDK.ledger.orderBook.cancelByAccount('5e68c66581f2ee32bc354087')
   const newTrade = await celoSDK.ledger.orderBook.newTrade({
-    // TODO openapi bug
-    type: CreateTrade.type.BUY,
+    type: 'BUY',
     price: '8650.4',
     amount: '15000',
     pair: 'CELO/EUR',

@@ -10,7 +10,7 @@ export type TransferXdcBlockchain = {
     /**
      * Currency of the transfer.
      */
-    currency: TransferXdcBlockchain.currency;
+    currency: 'XDC';
     /**
      * Nonce to be set to XDC transaction. If not present, last known nonce will be used.
      */
@@ -40,16 +40,4 @@ export type TransferXdcBlockchain = {
      * Private key of sender address. Private key, or signature Id must be present.
      */
     fromPrivateKey: string;
-}
-
-export namespace TransferXdcBlockchain {
-
-    /**
-     * Currency of the transfer.
-     */
-    export enum currency {
-        XDC = 'XDC',
-    }
-
-
 }

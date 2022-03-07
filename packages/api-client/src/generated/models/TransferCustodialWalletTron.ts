@@ -6,7 +6,7 @@ export type TransferCustodialWalletTron = {
     /**
      * Blockchain to work with.
      */
-    chain: TransferCustodialWalletTron.chain;
+    chain: 'TRON';
     /**
      * Address of custodial wallet to transfer from
      */
@@ -18,7 +18,7 @@ export type TransferCustodialWalletTron = {
     /**
      * Type of the asset to transfer. 0 - ERC20, 1 - ERC721, 3 - native asset
      */
-    contractType: TransferCustodialWalletTron.contractType;
+    contractType: 0 | 1 | 3;
     /**
      * Blockchain address to send assets to
      */
@@ -39,25 +39,4 @@ export type TransferCustodialWalletTron = {
      * Fee in TRX to be paid.
      */
     feeLimit: number;
-}
-
-export namespace TransferCustodialWalletTron {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        TRON = 'TRON',
-    }
-
-    /**
-     * Type of the asset to transfer. 0 - ERC20, 1 - ERC721, 3 - native asset
-     */
-    export enum contractType {
-        '_0' = 0,
-        '_1' = 1,
-        '_3' = 3,
-    }
-
-
 }

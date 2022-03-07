@@ -6,7 +6,7 @@ export type BurnMultiTokenBatch = {
     /**
      * Chain to work with.
      */
-    chain: BurnMultiTokenBatch.chain;
+    chain: 'ETH' | 'ONE' | 'MATIC' | 'KCS' | 'KLAY' | 'BSC';
     /**
      * Address of holder
      */
@@ -48,20 +48,4 @@ export type BurnMultiTokenBatch = {
          */
         gasPrice: string;
     };
-}
-
-export namespace BurnMultiTokenBatch {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        ONE = 'ONE',
-        MATIC = 'MATIC',
-        KCS = 'KCS',
-        BSC = 'BSC',
-    }
-
-
 }

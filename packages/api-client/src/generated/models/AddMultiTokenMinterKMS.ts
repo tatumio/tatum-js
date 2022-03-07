@@ -6,7 +6,7 @@ export type AddMultiTokenMinterKMS = {
     /**
      * Chain to work with.
      */
-    chain: AddMultiTokenMinterKMS.chain;
+    chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'CELO' | 'ONE' | 'BSC';
     /**
      * Address of MultiToken token
      */
@@ -43,31 +43,5 @@ export type AddMultiTokenMinterKMS = {
     /**
      * Currency to pay for transaction gas, only valid for CELO chain.
      */
-    feeCurrency?: AddMultiTokenMinterKMS.feeCurrency;
-}
-
-export namespace AddMultiTokenMinterKMS {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        MATIC = 'MATIC',
-        KCS = 'KCS',
-        CELO = 'CELO',
-        ONE = 'ONE',
-        BSC = 'BSC',
-    }
-
-    /**
-     * Currency to pay for transaction gas, only valid for CELO chain.
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency?: 'CELO' | 'CUSD' | 'CEUR';
 }

@@ -6,7 +6,7 @@ export type GenerateMarketplace = {
     /**
      * Blockchain to work with.
      */
-    chain: GenerateMarketplace.chain;
+    chain: 'ETH' | 'ONE' | 'KLAY' | 'BSC' | 'MATIC';
     /**
      * Address of the recipient of the fee for the trade.
      */
@@ -36,19 +36,4 @@ export type GenerateMarketplace = {
          */
         gasPrice: string;
     };
-}
-
-export namespace GenerateMarketplace {
-
-    /**
-     * Blockchain to work with.
-     */
-    export enum chain {
-        ETH = 'ETH',
-        ONE = 'ONE',
-        BSC = 'BSC',
-        MATIC = 'MATIC',
-    }
-
-
 }

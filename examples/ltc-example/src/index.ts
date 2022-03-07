@@ -1,5 +1,5 @@
 import { ltcWalletExample } from './app/ltc.wallet.example'
-import { ltcApiExample } from './app/ltc.api.example'
+import { ltcBlockchainExample } from './app/ltc.blockchain.example'
 import { ltcKmsExample } from './app/ltc.kms.example'
 import {
   ltcLedgerAccountsExample,
@@ -14,7 +14,7 @@ import { exchangeRateExample } from './app/ltc.root.example'
 import { ltcTransactionsExample } from './app/ltc.tx.example'
 
 console.log(`Running ${ltcWalletExample()}`)
-console.log(`Running ${ltcApiExample()}`)
+console.log(`Running ${ltcBlockchainExample()}`)
 console.log(`Running ${ltcKmsExample()}`)
 console.log(`Running ${ltcLedgerAccountsExample()}`)
 console.log(`Running ${ltcLedgerBlockAmountExample()}`)

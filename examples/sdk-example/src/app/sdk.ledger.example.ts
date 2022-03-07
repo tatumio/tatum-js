@@ -1,7 +1,6 @@
 import { TatumSDK } from '@tatumio/sdk'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing'
-import { Currency } from '@tatumio/shared-core'
-import { CreateTrade, VirtualCurrency } from '@tatumio/api-client'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
+import { Currency } from '@tatumio/api-client'
 
 const tatumSDK = TatumSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
@@ -45,7 +44,7 @@ export async function ledgerCustomerExample() {
 export async function ledgerOrderBookExample() {
   // @TODO create accounts here
   const { id } = await tatumSDK.ledger.orderBook.newTrade({
-    type: CreateTrade.type.BUY,
+    type: 'BUY',
     price: '8650.4',
     amount: '15000',
     pair: 'VC_demoVC/EUR',
@@ -125,10 +124,10 @@ export async function ledgerVirtualCurrencyExample() {
   const account = await tatumSDK.ledger.virtualCurrency.create({
     name: 'VC_demoVC',
     supply: '1000000',
-    basePair: VirtualCurrency.basePair.EUR, // @TODO OPENAPI will be extracted
+    basePair: 'EUR', // @TODO OPENAPI will be extracted
     baseRate: 1,
     customer: {
-      accountingCurrency: VirtualCurrency.accountingCurrency.USD,
+      accountingCurrency: 'USD',
       externalId: '12',
     },
     description: 'My Virtual Token description.',

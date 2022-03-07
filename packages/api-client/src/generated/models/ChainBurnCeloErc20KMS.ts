@@ -6,7 +6,7 @@ export type ChainBurnCeloErc20KMS = {
     /**
      * Chain to work with.
      */
-    chain: ChainBurnCeloErc20KMS.chain;
+    chain: 'CELO';
     /**
      * Amount of tokens to be destroyed.
      */
@@ -20,32 +20,24 @@ export type ChainBurnCeloErc20KMS = {
      */
     signatureId: string;
     /**
+     * Custom defined fee. If not present, it will be calculated automatically.
+     */
+    fee?: {
+        /**
+         * Gas limit for transaction in gas price.
+         */
+        gasLimit: string;
+        /**
+         * Gas price in Gwei.
+         */
+        gasPrice: string;
+    };
+    /**
      * Nonce to be set to Celo transaction. If not present, last known nonce will be used.
      */
     nonce?: number;
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency: ChainBurnCeloErc20KMS.feeCurrency;
-}
-
-export namespace ChainBurnCeloErc20KMS {
-
-    /**
-     * Chain to work with.
-     */
-    export enum chain {
-        CELO = 'CELO',
-    }
-
-    /**
-     * Currency to pay for transaction gas
-     */
-    export enum feeCurrency {
-        CELO = 'CELO',
-        CUSD = 'CUSD',
-        CEUR = 'CEUR',
-    }
-
-
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }
