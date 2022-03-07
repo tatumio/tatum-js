@@ -37,12 +37,14 @@ import type { MintMultipleNftKMSTron } from '../models/MintMultipleNftKMSTron';
 import type { MintMultipleNftTron } from '../models/MintMultipleNftTron';
 import type { MintNft } from '../models/MintNft';
 import type { MintNftCelo } from '../models/MintNftCelo';
+import type { MintNftExpress } from '../models/MintNftExpress';
 import type { MintNftFlowKMS } from '../models/MintNftFlowKMS';
 import type { MintNftFlowMnemonic } from '../models/MintNftFlowMnemonic';
 import type { MintNftFlowPK } from '../models/MintNftFlowPK';
 import type { MintNftKMS } from '../models/MintNftKMS';
 import type { MintNftKMSCelo } from '../models/MintNftKMSCelo';
 import type { MintNftKMSTron } from '../models/MintNftKMSTron';
+import type { MintNftMinter } from '../models/MintNftMinter';
 import type { MintNftSolana } from '../models/MintNftSolana';
 import type { MintNftSolanaKMS } from '../models/MintNftSolanaKMS';
 import type { MintNftTron } from '../models/MintNftTron';
@@ -134,6 +136,7 @@ export class BlockchainNftService {
      * <li><b>Polygon (Matic)</b></li>
      * <li><b>Kcs (KCS)</b></li>
      * <li><b>Celo</b></li>
+     * <li><b>Klaytn</b></li>
      * <li><b>Solana</b></li>
      * <li><b>Harmony.ONE</b></li>
      * <li><b>Tron</b></li>
@@ -143,7 +146,7 @@ export class BlockchainNftService {
      * <br/>
      * For Solana, NFTs are not deployed, only minted right away. Newly created NFT creates new address on the blockchain and owner of the NFT owns with it's private key the account of the NFT.
      * <br/>
-     * This operation works in two modes.
+     * This operation works in three modes.
      *
      * First mode works just like other NFT endpoints. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
      * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
@@ -154,6 +157,9 @@ export class BlockchainNftService {
      * Second mode works without private key or signature id.
      * Mint NFT requests use built-in smart contract, private key and token id which are provided by Tatum.
      * You dont need to provide fromPrivateKey (or signatureId), contractAddress and tokenId fields to perform the mint NFT request.
+     *
+     * Third mode enables you to mint on any custom NFT ERC-721 smart contract, on which specified minter address is approved as a minter. You don't specify private key or signatureId, only minter address, from which the NFT will be minted.
+     * You can use addresses specified in the bellow table to be used as a minter.
      *
      * Performed request without fromPrivateKey or signatureId fields will be populated with following attributes:
      *
@@ -227,13 +233,13 @@ export class BlockchainNftService {
              * <td>0x45871ED5F15203C0ce791eFE5f4B5044833aE10e</td>
              * </tr>
              * <tr>
-             * <td>MATIC</td>
-             * <td>Mainnet</td>
-             * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
-             * <td>0x6709bdda623af7eb152cb2fe2562ab7e031e564f</td>
+             * <td>KLAY</td>
+             * <td>Testnet</td>
+             * <td>0x80d8bac9a6901698b3749fe336bbd1385c1f98f2</td>
+             * <td>0x45871ED5F15203C0ce791eFE5f4B5044833aE10e</td>
              * </tr>
              * <tr>
-             * <td>KCS</td>
+             * <td>MATIC</td>
              * <td>Mainnet</td>
              * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
              * <td>0x6709bdda623af7eb152cb2fe2562ab7e031e564f</td>
@@ -245,16 +251,16 @@ export class BlockchainNftService {
              * <td>0x6709bdda623af7eb152cb2fe2562ab7e031e564f</td>
              * </tr>
              * <tr>
-             * <td>ETH</td>
-             * <td>Mainnet</td>
-             * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
-             * <td>0x789c00ed7ddd72a806dbac40df926df32fde3c2f</td>
-             * </tr>
-             * <tr>
              * <td>ONE</td>
              * <td>Mainnet</td>
              * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
              * <td>0x6709bdda623af7eb152cb2fe2562ab7e031e564f</td>
+             * </tr>
+             * <tr>
+             * <td>ETH</td>
+             * <td>Mainnet</td>
+             * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
+             * <td>0x789c00ed7ddd72a806dbac40df926df32fde3c2f</td>
              * </tr>
              * <tr>
              * <td>CELO</td>
@@ -262,7 +268,12 @@ export class BlockchainNftService {
              * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
              * <td>0x6709bdda623af7eb152cb2fe2562ab7e031e564f</td>
              * </tr>
-             *
+             * <tr>
+             * <td>KLAY</td>
+             * <td>Mainnet</td>
+             * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
+             * <td>0x6709bdda623af7eb152cb2fe2562ab7e031e564f</td>
+             * </tr>
              * </table>
              * To add ETH mainnet smart contract contact sales@tatum.io.
              * If there will be a low amount of coins on any testnet address you are free to send coins to the address. In future we will provide also addresses and smart contracts for the mainnet version.        </p>
@@ -273,7 +284,7 @@ export class BlockchainNftService {
              * @throws ApiError
              */
             public static nftMintErc721(
-                requestBody: (MintNftCelo | MintNftKMSCelo | MintNftTron | MintNftKMSTron | MintNft | MintNftKMS | MintNftSolana | MintNftSolanaKMS | MintNftFlowPK | MintNftFlowMnemonic | MintNftFlowKMS),
+                requestBody: (MintNftExpress | MintNftMinter | MintNftCelo | MintNftKMSCelo | MintNftTron | MintNftKMSTron | MintNft | MintNftKMS | MintNftSolana | MintNftSolanaKMS | MintNftFlowPK | MintNftFlowMnemonic | MintNftFlowKMS),
                 xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
             ): CancelablePromise<(TransactionHashKMS | FlowMintedResult | SolanaMintedResult | SignatureId)> {
                 return __request({
@@ -309,6 +320,7 @@ export class BlockchainNftService {
              * <li><b>Tron</b></li>
              * <li><b>Binance Smart Chain</b></li>
              * <li><b>Algorand</b></li>
+             * <li><b>Klaytn</b></li>
              * <li><b>Solana</b></li>
              * </ul>
              * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
@@ -629,7 +641,7 @@ export class BlockchainNftService {
              * @throws ApiError
              */
             public static nftGetContractAddress(
-                chain: 'ETH' | 'ONE' | 'CELO' | 'TRON' | 'FLOW' | 'MATIC' | 'KCS' | 'BSC',
+                chain: 'ETH' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'MATIC' | 'KCS' | 'BSC',
                 hash: string,
                 xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
             ): CancelablePromise<{
@@ -663,7 +675,7 @@ export class BlockchainNftService {
              * @throws ApiError
              */
             public static nftGetTransactErc721(
-                chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'CELO' | 'TRON' | 'FLOW' | 'BSC',
+                chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'BSC',
                 hash: string,
                 xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
             ): CancelablePromise<(CeloTx | EthTx | FlowTx)> {
@@ -728,6 +740,58 @@ export class BlockchainNftService {
             }
 
             /**
+             * Get NFT tokens in collection
+             * <h4>1 credit per API call + 5 credits for each listed token.</h4><br/><p>Get all minted NFTs in the collection. Returns all NFTs this contract minted.</p>
+             *
+             * @param chain Blockchain to work with
+             * @param pageSize Max number of items per page is 50.
+             * @param address Collection address
+             * @param offset Offset to obtain next page of the data.
+             * @returns any OK
+             * @throws ApiError
+             */
+            public static nftGetTokensByCollectionErc721(
+                chain: 'CELO' | 'MATIC' | 'ETH',
+                pageSize: number,
+                address: string,
+                offset?: number,
+            ): CancelablePromise<Array<{
+                /**
+                 * ID of the token.
+                 */
+                tokenId: string;
+                metadata: Array<{
+                    /**
+                     * TokenID of the NFT token owned by this address.
+                     */
+                    tokenId?: string;
+                    /**
+                     * Metadata URL of the TokenID. This data don't have to be present, safest way (if not present) is to obtain them from the NFT Contract.tokenURI() method call.
+                     */
+                    url?: string;
+                    /**
+                     * Metadata scheme obtained from the url. This data don't have to be present, safest way (if not present) is to obtain them from the NFT Contract.tokenURI() method call.
+                     */
+                    metadata?: any;
+                }>;
+            }>> {
+                return __request({
+                    method: 'GET',
+                    path: `/v3/nft/collection/${chain}/${address}`,
+                    query: {
+                        'pageSize': pageSize,
+                        'offset': offset,
+                    },
+                    errors: {
+                        400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                        401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                        403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                        500: `Internal server error. There was an error on the server during the processing of the request.`,
+                    },
+                });
+            }
+
+            /**
              * Get NFT Account balance
              * <h4>1 credit per API call.</h4><br/><p>Get NFTs on Account. Returns tokenIDs of tokens Account holds. This method is valid only for tokens deplyed using Tatum API - it reads data from the smart contract.</p>
              *
@@ -739,7 +803,7 @@ export class BlockchainNftService {
              * @throws ApiError
              */
             public static nftGetBalanceErc721(
-                chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'CELO' | 'TRON' | 'FLOW' | 'BSC',
+                chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'BSC',
                 address: string,
                 contractAddress: string,
                 xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
@@ -770,7 +834,7 @@ export class BlockchainNftService {
              * @throws ApiError
              */
             public static nftGetProvenanceDataErc721(
-                chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'CELO' | 'BSC',
+                chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'CELO' | 'BSC',
                 tokenId: string,
                 contractAddress: string,
                 xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
@@ -805,7 +869,7 @@ export class BlockchainNftService {
              * @throws ApiError
              */
             public static nftGetMetadataErc721(
-                chain: 'ETH' | 'MATIC' | 'KCS' | 'SOL' | 'ONE' | 'CELO' | 'TRON' | 'FLOW' | 'BSC',
+                chain: 'ETH' | 'MATIC' | 'KCS' | 'SOL' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'BSC',
                 contractAddress: string,
                 token: string,
                 account?: string,
@@ -845,7 +909,7 @@ export class BlockchainNftService {
              * @throws ApiError
              */
             public static nftGetRoyaltyErc721(
-                chain: 'ETH' | 'MATIC' | 'KCS' | 'SOL' | 'ONE' | 'CELO' | 'TRON' | 'BSC',
+                chain: 'ETH' | 'MATIC' | 'KCS' | 'SOL' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'BSC',
                 contractAddress: string,
                 token: string,
                 xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',

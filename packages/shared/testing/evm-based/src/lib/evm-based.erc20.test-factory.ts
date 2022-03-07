@@ -80,6 +80,7 @@ export const erc20TestFactory = {
         }
       })
     },
+
     transferSignedTransaction: (sdk: SdkWithErc20Functions, accounts: GanacheAccount[]) => {
       it('valid from signatureId', async () => {
         const nonce = 3252345722143
@@ -143,6 +144,7 @@ export const erc20TestFactory = {
         }
       })
     },
+
     mintSignedTransaction: (sdk: SdkWithErc20Functions, testData: BlockchainTestData) => {
       it('valid from privateKey', async () => {
         const result = await sdk.prepare.mintSignedTransaction(
@@ -158,6 +160,7 @@ export const erc20TestFactory = {
         expectHexString(result)
       })
     },
+
     burnSignedTransaction: (sdk: SdkWithErc20Functions, testData: BlockchainTestData) => {
       it('valid from privateKey', async () => {
         const nonce = 3252345722143

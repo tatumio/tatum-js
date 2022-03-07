@@ -24,6 +24,19 @@ export type ApproveCeloErc20KMS = {
      */
     signatureId: string;
     /**
+     * Custom defined fee. If not present, it will be calculated automatically.
+     */
+    fee?: {
+        /**
+         * Gas limit for transaction in gas price.
+         */
+        gasLimit: string;
+        /**
+         * Gas price in Gwei.
+         */
+        gasPrice: string;
+    };
+    /**
      * Nonce to be set to Celo transaction. If not present, last known nonce will be used.
      */
     nonce?: number;

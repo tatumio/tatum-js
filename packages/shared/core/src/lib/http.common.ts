@@ -28,10 +28,12 @@ const EndpointsMapping: Record<Blockchain, string> = {
   XDC: 'xdc',
   XLM: 'xlm',
   KCS: 'kcs',
+  KLAY: 'klaytn',
 }
 
 export const httpHelper = {
   get: axios.get,
+  post: axios.post,
   web3Endpoint: (blockchain: EvmBasedBlockchain, url: string, apiKey: string) => {
     return `${url}/${TATUM_API_CONSTANTS.API_VERSION}/${EndpointsMapping[blockchain]}/web3/${apiKey}`
   },

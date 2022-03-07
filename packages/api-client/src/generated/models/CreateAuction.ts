@@ -6,7 +6,7 @@ export type CreateAuction = {
     /**
      * Blockchain to work with.
      */
-    chain: 'ETH' | 'ONE' | 'BSC' | 'MATIC';
+    chain: 'ETH' | 'ONE' | 'BSC' | 'KLAY' | 'MATIC';
     /**
      * Address of the auction smart contract.
      */

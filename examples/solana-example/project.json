@@ -1,0 +1,31 @@
+{
+  "root": "examples/solana-example",
+  "sourceRoot": "examples/solana-example/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/examples/solana-example",
+        "main": "examples/solana-example/src/index.ts",
+        "tsConfig": "examples/solana-example/tsconfig.app.json",
+        "packageJson": "examples/solana-example/package.json"
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:execute",
+      "options": {
+        "buildTarget": "solana-example:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["examples/solana-example/**/*.ts"]
+      }
+    }
+  },
+  "tags": ["type:example"]
+}
