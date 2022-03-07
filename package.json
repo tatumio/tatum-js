@@ -55,7 +55,7 @@
     "reflect-metadata": "^0.1.13",
     "ripple-lib": "^1.7.1",
     "sha3": "^2.1.4",
-    "stellar-sdk": "^8.1.0",
+    "stellar-sdk": "^9.1.0",
     "tronweb": "^4.1.0",
     "tslib": "^2.0.0",
     "url-parse": "^1.5.9",
