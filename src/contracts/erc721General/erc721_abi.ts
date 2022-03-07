@@ -578,6 +578,47 @@ export default [
     'inputs': [
       {
         'internalType': 'address',
+        'name': 'to',
+        'type': 'address',
+      },
+      {
+        'internalType': 'uint256',
+        'name': 'tokenId',
+        'type': 'uint256',
+      },
+    ],
+    'name': 'safeTransfer',
+    'outputs': [],
+    'stateMutability': 'nonpayable',
+    'type': 'function',
+  },
+  {
+    'inputs': [
+      {
+        'internalType': 'address',
+        'name': 'to',
+        'type': 'address',
+      },
+      {
+        'internalType': 'uint256',
+        'name': 'tokenId',
+        'type': 'uint256',
+      },
+      {
+        'internalType': 'bytes',
+        'name': 'data',
+        'type': 'bytes',
+      },
+    ],
+    'name': 'safeTransfer',
+    'outputs': [],
+    'stateMutability': 'nonpayable',
+    'type': 'function',
+  },
+  {
+    'inputs': [
+      {
+        'internalType': 'address',
         'name': 'from',
         'type': 'address',
       },
