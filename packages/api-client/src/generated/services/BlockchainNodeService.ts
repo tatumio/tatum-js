@@ -44,7 +44,8 @@ export class BlockchainNodeService {
     public static nodeJsonPostRpcDriver(
         xApiKey: string,
         chain: 'BTC' | 'ONE' | 'ADA' | 'BSC' | 'XDC' | 'LTC' | 'DOGE' | 'BCH' | 'ETH' | 'CELO' | 'MATIC' | 'VET' | 'EGLD' | 'ALGO' | 'SOL' | 'KLAY' | 'KCS' | 'LUNA',
-        requestBody: ,
+        // TODO: temporary workaround. See https://app.clickup.com/t/24443045/PLT-964
+        requestBody: unknown,
         nodeType?: 'ALGOD' | 'INDEXER',
         testnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
     ): CancelablePromise<any> {
@@ -88,7 +89,8 @@ export class BlockchainNodeService {
     public static nodeJsonRpcPutDriver(
         xApiKey: string,
         chain: 'BTC' | 'ONE' | 'ADA' | 'BSC' | 'XDC' | 'LTC' | 'DOGE' | 'BCH' | 'ETH' | 'CELO' | 'MATIC' | 'VET' | 'EGLD' | 'ALGO' | 'SOL' | 'KLAY' | 'KCS' | 'LUNA',
-        requestBody: ,
+        // TODO: temporary workaround. See https://app.clickup.com/t/24443045/PLT-964
+        requestBody: unknown,
         nodeType?: 'ALGOD' | 'INDEXER',
         testnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
     ): CancelablePromise<any> {

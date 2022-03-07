@@ -3,18 +3,12 @@ import {
   CancelablePromise,
   CreateRecord,
   CreateRecordCelo,
-  CreateRecordFabric,
-  CreateRecordQuorum,
   TransactionHash,
 } from '@tatumio/api-client'
 import { Blockchain, blockchainHelper } from '@tatumio/shared-core'
 
-export type RequestBody = CreateRecord | CreateRecordCelo | CreateRecordQuorum | CreateRecordFabric
-export type RequestBodyWithoutChain =
-  | Omit<CreateRecord, 'chain'>
-  | Omit<CreateRecordCelo, 'chain'>
-  | Omit<CreateRecordQuorum, 'chain'>
-  | Omit<CreateRecordFabric, 'chain'>
+export type RequestBody = CreateRecord | CreateRecordCelo
+export type RequestBodyWithoutChain = Omit<CreateRecord, 'chain'> | Omit<CreateRecordCelo, 'chain'>
 
 export const evmBlockchainRecord = (args: { blockchain: Blockchain }) => {
   return {
