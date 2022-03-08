@@ -17,6 +17,7 @@ export class BlockchainNodeService {
      * <li><b><a href="https://ethereum.org/en/developers/" target="_blank">Kcs (KCS)</a></b></li>
      * <li><b><a href="https://ethereum.org/en/developers/" target="_blank">XDC Network (XinFin)</a></b></li>
      * <li><b><a href="https://ethereum.org/en/developers/" target="_blank">Celo</a></b></li>
+     * <li><b><a href="https://developers.stellar.org/api" target="_blank">Stellar</a></b></li>
      * <li><b><a href="https://developer.bitcoin.org/reference/rpc/index.html" target="_blank">Bitcoin</a></b></li>
      * <li><b><a href="https://developer.bitcoin.org/reference/rpc/index.html" target="_blank">Litecoin</a></b></li>
      * <li><b><a href="https://developer.bitcoin.org/reference/rpc/index.html" target="_blank">Bitcoin Cash</a></b></li>
@@ -43,9 +44,8 @@ export class BlockchainNodeService {
      */
     public static nodeJsonPostRpcDriver(
         xApiKey: string,
-        chain: 'BTC' | 'ONE' | 'ADA' | 'BSC' | 'XDC' | 'LTC' | 'DOGE' | 'BCH' | 'ETH' | 'CELO' | 'MATIC' | 'VET' | 'EGLD' | 'ALGO' | 'SOL' | 'KLAY' | 'KCS' | 'LUNA',
-        // TODO: temporary workaround. See https://app.clickup.com/t/24443045/PLT-964
-        requestBody: unknown,
+        chain: 'BTC' | 'ONE' | 'ADA' | 'BSC' | 'XDC' | 'LTC' | 'DOGE' | 'BCH' | 'ETH' | 'CELO' | 'XLM' | 'MATIC' | 'VET' | 'EGLD' | 'ALGO' | 'SOL' | 'KLAY' | 'KCS' | 'LUNA',
+        requestBody: any,
         nodeType?: 'ALGOD' | 'INDEXER',
         testnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
     ): CancelablePromise<any> {
@@ -73,6 +73,7 @@ export class BlockchainNodeService {
      * Tatum now supports JSON RPC nodes on these blockchains:<br/>
      * <ul>
      * <li><b><a href="https://docs.terra.money/docs/develop/reference/README.html" target="_blank">Terra Luna</a></b></li>
+     * <li><b><a href="https://developers.stellar.org/api" target="_blank">Stellar</a></b></li>
      * <li><b><a href="https://docs.elrond.com/sdk-and-tools/rest-api/nodes/" target="_blank">Elrond</a></b></li>
      * <li><b><a href="https://developer.algorand.org/docs/rest-apis/restendpoints/" target="_blank">Algorand</a></b></li>
      * </ul>
@@ -88,9 +89,8 @@ export class BlockchainNodeService {
      */
     public static nodeJsonRpcPutDriver(
         xApiKey: string,
-        chain: 'BTC' | 'ONE' | 'ADA' | 'BSC' | 'XDC' | 'LTC' | 'DOGE' | 'BCH' | 'ETH' | 'CELO' | 'MATIC' | 'VET' | 'EGLD' | 'ALGO' | 'SOL' | 'KLAY' | 'KCS' | 'LUNA',
-        // TODO: temporary workaround. See https://app.clickup.com/t/24443045/PLT-964
-        requestBody: unknown,
+        chain: 'EGLD' | 'ALGO' | 'LUNA' | 'XLM',
+        requestBody: any,
         nodeType?: 'ALGOD' | 'INDEXER',
         testnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
     ): CancelablePromise<any> {
@@ -117,6 +117,7 @@ export class BlockchainNodeService {
      * <p>Use this endpoint URL as an http-based JSON RPC driver to connect directly to the blockchain node provided by Tatum.<br/>
      * Tatum now supports JSON RPC nodes on these blockchains:<br/>
      * <ul>
+     * <li><b><a href="https://developers.stellar.org/api" target="_blank">Stellar</a></b></li>
      * <li><b><a href="https://docs.terra.money/docs/develop/reference/README.html" target="_blank">Terra Luna</a></b></li>
      * <li><b><a href="https://docs.elrond.com/sdk-and-tools/rest-api/nodes/" target="_blank">Elrond</a></b></li>
      * <li><b><a href="https://developer.algorand.org/docs/rest-apis/restendpoints/" target="_blank">Algorand</a></b></li>
@@ -132,7 +133,7 @@ export class BlockchainNodeService {
      */
     public static nodeJsonRpcGetDriver(
         xApiKey: string,
-        chain: 'BTC' | 'ONE' | 'ADA' | 'BSC' | 'XDC' | 'LTC' | 'DOGE' | 'BCH' | 'ETH' | 'CELO' | 'MATIC' | 'VET' | 'EGLD' | 'ALGO' | 'SOL' | 'KLAY' | 'KCS' | 'LUNA',
+        chain: 'EGLD' | 'ALGO' | 'XLM' | 'LUNA',
         nodeType?: 'ALGOD' | 'INDEXER',
         testnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
     ): CancelablePromise<any> {
