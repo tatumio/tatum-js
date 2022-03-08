@@ -6,7 +6,7 @@ export type GenerateCustodialWalletBatch = {
     /**
      * Blockchain to work with.
      */
-    chain: 'ETH' | 'MATIC' | 'BSC' | 'ONE' | 'XDC';
+    chain: 'ETH' | 'MATIC' | 'BSC' | 'ONE' | 'XDC' | 'KLAY';
     /**
      * Private key of account, from which the transaction will be initiated.
      */

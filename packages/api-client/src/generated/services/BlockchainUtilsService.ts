@@ -6,9 +6,11 @@ import type { ApproveTransferCustodialWalletCelo } from '../models/ApproveTransf
 import type { ApproveTransferCustodialWalletCeloKMS } from '../models/ApproveTransferCustodialWalletCeloKMS';
 import type { ApproveTransferCustodialWalletKMS } from '../models/ApproveTransferCustodialWalletKMS';
 import type { EstimateFee } from '../models/EstimateFee';
-import type { EstimateFeeCustodial } from '../models/EstimateFeeCustodial';
+import type { EstimateFeeBatchMintNft } from '../models/EstimateFeeBatchMintNft';
+import type { EstimateFeeDeployCustodialWallet } from '../models/EstimateFeeDeployCustodialWallet';
 import type { EstimateFeeFromAddress } from '../models/EstimateFeeFromAddress';
 import type { EstimateFeeFromUTXO } from '../models/EstimateFeeFromUTXO';
+import type { EstimateFeeTransferFromCustodial } from '../models/EstimateFeeTransferFromCustodial';
 import type { FeeBtc } from '../models/FeeBtc';
 import type { FeeETH } from '../models/FeeETH';
 import type { GenerateCustodialWallet } from '../models/GenerateCustodialWallet';
@@ -55,6 +57,7 @@ export class BlockchainUtilsService {
      * <li>The XDC Network</li>
      * <li>Ethereum</li>
      * <li>Celo</li>
+     * <li>Klaytn</li>
      * <li>Binance Smart Chain</li>
      * <li>Polygon</li>
      * <li>Elrond</li>
@@ -66,7 +69,7 @@ export class BlockchainUtilsService {
      * @throws ApiError
      */
     public static estimateFeeBlockchain(
-        requestBody: (EstimateFee | EstimateFeeCustodial | EstimateFeeFromAddress | EstimateFeeFromUTXO),
+        requestBody: (EstimateFee | EstimateFeeBatchMintNft | EstimateFeeDeployCustodialWallet | EstimateFeeTransferFromCustodial | EstimateFeeFromAddress | EstimateFeeFromUTXO),
     ): CancelablePromise<(FeeBtc | FeeETH)> {
         return __request({
             method: 'POST',
@@ -186,7 +189,7 @@ export class BlockchainUtilsService {
      * </p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
      * @returns any OK
      * @throws ApiError
      */

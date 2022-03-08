@@ -39,6 +39,8 @@ export class LedgerAccountService {
      * <li><b>ALGO</b> - no xpub, use address field from <a href="#operation/AlgoGenerateWallet">generate wallet</a></li>
      * <li><b>SOL</b> - no xpub, use address field from <a href="#operation/SolanaGenerateWallet">generate wallet</a></li>
      * <li><b>MATIC</b> - xpub can be obtained from <a href="#operation/PolygonGenerateWallet">generate wallet</a></li>
+     * <li><b>KLAY</b> - xpub can be obtained from <a href="#operation/KlaytnGenerateWallet">generate wallet</a></li>
+     * <li><b>XDC</b> - xpub can be obtained from <a href="#operation/XdcGenerateWallet">generate wallet</a></li>
      * <li><b>KCS</b> - xpub can be obtained from <a href="#operation/KcsGenerateWallet">generate wallet</a></li>
      * <li><b>CELO, cEUR, cUSD and ERC20</b> - xpub can be obtained from <a href="#operation/CeloGenerateWallet">generate wallet</a></li>
      * <li><b>TRON and TRC tokens</b> - xpub can be obtained from <a href="#operation/GenerateTronwallet">generate wallet</a></li>

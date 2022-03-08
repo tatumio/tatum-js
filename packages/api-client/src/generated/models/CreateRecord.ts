@@ -10,7 +10,7 @@ export type CreateRecord = {
     /**
      * Blockchain, where to store log data.
      */
-    chain: 'ETH' | 'ONE' | 'XDC' | 'BSC' | 'MATIC';
+    chain: 'ETH' | 'ONE' | 'XDC' | 'KLAY' | 'BSC' | 'MATIC';
     /**
      * Private key of account, from which the transaction will be initiated. If not present, transaction fee will be debited from Tatum internal account and additional credits will be charged.
      */
