@@ -12,11 +12,15 @@ export type DeployNftCelo = {
      */
     name: string;
     /**
-     * True if the contract is provenance type - each transfer of the NFT can track the provenance history of the transaction. Based on this features, percentage royalties could be enabled.
+     * True if the contract is provenance percentage royalty type. False by default. <a href="https://github.com/tatumio/smart-contracts" target="_blank">Details and sources avaiable here.</a>
      */
     provenance?: boolean;
     /**
-     * True if anyone will be able to mint NFTs, false by default for deployer as a default minter.
+     * True if the contract is fixed price royalty type. False by default. <a href="https://github.com/tatumio/smart-contracts" target="_blank">Details and sources avaiable here.</a>
+     */
+    cashback?: boolean;
+    /**
+     * True if the contract is publicMint type. False by default.
      */
     publicMint?: boolean;
     /**

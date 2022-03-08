@@ -34,6 +34,7 @@ import type { MintMultipleNftFlowPK } from '../models/MintMultipleNftFlowPK';
 import type { MintMultipleNftKMS } from '../models/MintMultipleNftKMS';
 import type { MintMultipleNftKMSCelo } from '../models/MintMultipleNftKMSCelo';
 import type { MintMultipleNftKMSTron } from '../models/MintMultipleNftKMSTron';
+import type { MintMultipleNftMinter } from '../models/MintMultipleNftMinter';
 import type { MintMultipleNftTron } from '../models/MintMultipleNftTron';
 import type { MintNft } from '../models/MintNft';
 import type { MintNftCelo } from '../models/MintNftCelo';
@@ -86,10 +87,18 @@ export class BlockchainNftService {
      * <li><b>Kcs (KCS)</b></li>
      * <li><b>Celo</b></li>
      * <li><b>Harmony.ONE</b></li>
+     * <li><b>Klaytn</b></li>
      * <li><b>Flow</b></li>
      * <li><b>Tron</b></li>
      * <li><b>Binance Smart Chain</b></li>
      * </ul>
+     * There are 3 types of ERC721 contracts you can deploy:
+     * <ol>
+     * <li>General ERC-721 Contract compatible with OpenSea royalties - Standard ERC-721 contract with Access roles and Ownable, enhanced with batch minting of the NFTs. NFTs minted on this contract are compatible with OpenSea and their royalty structure. This type is deployed by default.</li>
+     * <li>Cashback ERC-721 Contract - ERC-721 contract which forces on-chain royalties to be paid every time the token is transferred. Royalties are defined as a fixed value and are <b>not</b> OpenSea compatible.</li>
+     * <li>Provenance ERC-721 Contract - ERC-721 contract which forces on-chain royalties to be paid every time the token is transferred. Royalties are defined as a percentage of the price of the token and are <b>not</b> OpenSea compatible.</li>
+     * </ol>
+     * Each of the token can be deployed with public minting enabled - anyone will be able to mint the tokens on top of it - defaults to false.<br/>
      * It is possible to see the code of the deployed contract <a href="https://github.com/tatumio/smart-contracts/tree/master/contracts/tatum" target="_blank">for EVM chains here</a>
      * or here <a href="https://github.com/tatumio/flow-contracts" target="_blank">for Flow</a>.<br/><br/>
      * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
@@ -100,12 +109,12 @@ export class BlockchainNftService {
      * </p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten. Valid only for ETH invocations.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
      * @returns any OK
      * @throws ApiError
      */
     public static nftDeployErc721(
-        requestBody: (DeployNftCelo | DeployNftCeloKMS | DeployNftTron | DeployNftTronKMS | DeployNft | DeployNftKMS | DeployNftFlowPK | DeployNftFlowMnemonic | DeployNftFlowKMS),
+        requestBody: (DeployNft | DeployNftCelo | DeployNftTron | DeployNftKMS | DeployNftCeloKMS | DeployNftTronKMS | DeployNftFlowPK | DeployNftFlowMnemonic | DeployNftFlowKMS),
         xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
     ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
         return __request({
@@ -223,7 +232,7 @@ export class BlockchainNftService {
              * <tr>
              * <td>ETH</td>
              * <td>Testnet</td>
-             * <td>0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F</td>
+             * <td>0x53e8577C4347C365E4e0DA5B57A589cB6f2AB848</td>
              * <td>0xAe7D8842D0295B1f24a8842cBd5eB83Ae2fd0946</td>
              * </tr>
              * <tr>
@@ -242,19 +251,19 @@ export class BlockchainNftService {
              * <td>MATIC</td>
              * <td>Mainnet</td>
              * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
-             * <td>0x6709bdda623af7eb152cb2fe2562ab7e031e564f</td>
+             * <td>0x29768a03a62760EF462c1F0fFEC1C027B981B909</td>
              * </tr>
              * <tr>
              * <td>BSC</td>
              * <td>Mainnet</td>
              * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
-             * <td>0x6709bdda623af7eb152cb2fe2562ab7e031e564f</td>
+             * <td>0x0A46D855221AF8F2336f3810e3d6013F10100577</td>
              * </tr>
              * <tr>
              * <td>ONE</td>
              * <td>Mainnet</td>
              * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
-             * <td>0x6709bdda623af7eb152cb2fe2562ab7e031e564f</td>
+             * <td>0xA0BbB8140e9298E613Da57DDd269586473Bc94Be</td>
              * </tr>
              * <tr>
              * <td>ETH</td>
@@ -266,20 +275,19 @@ export class BlockchainNftService {
              * <td>CELO</td>
              * <td>Mainnet</td>
              * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
-             * <td>0x6709bdda623af7eb152cb2fe2562ab7e031e564f</td>
+             * <td>0xC49c2d52B3B4D0e3E52D1C8E0e10B13c82982E9d</td>
              * </tr>
              * <tr>
              * <td>KLAY</td>
              * <td>Mainnet</td>
              * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
-             * <td>0x6709bdda623af7eb152cb2fe2562ab7e031e564f</td>
+             * <td>0x7c4e274387a9bc81f9de7502921fd0550583d3bb</td>
              * </tr>
              * </table>
-             * To add ETH mainnet smart contract contact sales@tatum.io.
-             * If there will be a low amount of coins on any testnet address you are free to send coins to the address. In future we will provide also addresses and smart contracts for the mainnet version.        </p>
+             * If there are not enough coins on any testnet address, feel free to send coins there.</p>
              *
              * @param requestBody
-             * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten. Valid only for ETH invocations.
+             * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
              * @returns any OK
              * @throws ApiError
              */
@@ -334,7 +342,7 @@ export class BlockchainNftService {
              * </p>
              *
              * @param requestBody
-             * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten. Valid only for ETH invocations.
+             * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
              * @returns any OK
              * @throws ApiError
              */
@@ -360,7 +368,7 @@ export class BlockchainNftService {
             }
 
             /**
-             * Mint NFT Multiple Tokens
+             * Mint Multiple NFT Tokens
              * <h4>100 credits per API call on FLOW, 2 credits on another chains. Tatum covers the fee connected to the transaction costs in subscription credits for FLOW. This operation can be done on mainnet only for paid plans.</h4><br/>
              * <p>Create multiple NFT Tokens and transfer them to destination account. Create and transfer any NFT tokens from smart contract defined in contractAddress.<br/><br/>
              * Tatum now supports NFT these blockchains:<br/>
@@ -372,572 +380,631 @@ export class BlockchainNftService {
              * <li><b>Harmony.ONE</b></li>
              * <li><b>Tron</b></li>
              * <li><b>Flow</b></li>
+             * <li><b>Klaytn</b></li>
              * <li><b>Binance Smart Chain</b></li>
              * </ul>
-             * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+             * This operation works in two modes.
+             *
+             * First mode works just like other NFT endpoints. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
              * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
              * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
              * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
              * Alternatively, using the Tatum client library for supported languages.
-             * </p>
              *
-             * @param requestBody
-             * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten. Valid only for ETH invocations.
-             * @returns any OK
-             * @throws ApiError
-             */
-            public static nftMintMultipleErc721(
-                requestBody: (MintMultipleNftCelo | MintMultipleNftKMSCelo | MintMultipleNftTron | MintMultipleNftKMSTron | MintMultipleNft | MintMultipleNftKMS | MintMultipleNftFlowPK | MintMultipleNftFlowMnemonic | MintMultipleNftFlowKMS),
-                xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
-            ): CancelablePromise<(TransactionHashKMS | FlowMintedMultipleResult | SignatureId)> {
-                return __request({
-                    method: 'POST',
-                    path: `/v3/nft/mint/batch`,
-                    headers: {
-                        'x-testnet-type': xTestnetType,
-                    },
-                    body: requestBody,
-                    mediaType: 'application/json',
-                    errors: {
-                        400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                        401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                        403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                        500: `Internal server error. There was an error on the server during the processing of the request.`,
-                    },
-                });
-            }
-
-            /**
-             * Burn NFT
-             * <h4>100 credits per API call on FLOW, 2 credits on another chains. Tatum covers the fee connected to the transaction costs in subscription credits for FLOW. This operation can be done on mainnet only for paid plans.</h4><br/>
-             * <p>Burn one NFT Token. This method destroys any NFT token from smart contract defined in contractAddress.<br/><br/>
-             * Tatum now supports NFT these blockchains:<br/>
-             * <ul>
-             * <li><b>Ethereum</b></li>
-             * <li><b>Polygon (Matic)</b></li>
-             * <li><b>Kcs (KCS)</b></li>
-             * <li><b>Celo</b></li>
-             * <li><b>Harmony.ONE</b></li>
-             * <li><b>Tron</b></li>
-             * <li><b>Flow</b></li>
-             * <li><b>Binance Smart Chain</b></li>
-             * <li><b>Algorand</b></li>
-             * </ul>
-             * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-             * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
-             * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-             * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
-             * Alternatively, using the Tatum client library for supported languages.
-             * </p>
-             *
-             * @param requestBody
-             * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten. Valid only for ETH invocations.
-             * @returns any OK
-             * @throws ApiError
-             */
-            public static nftBurnErc721(
-                requestBody: (BurnNftCelo | BurnNftKMSCelo | BurnNftTron | BurnNftKMSTron | BurnNft | BurnNftKMS | BurnNftFlowPK | BurnNftFlowMnemonic | BurnNftFlowKMS),
-                xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
-            ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
-                return __request({
-                    method: 'POST',
-                    path: `/v3/nft/burn`,
-                    headers: {
-                        'x-testnet-type': xTestnetType,
-                    },
-                    body: requestBody,
-                    mediaType: 'application/json',
-                    errors: {
-                        400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                        401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                        403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                        500: `Internal server error. There was an error on the server during the processing of the request.`,
-                    },
-                });
-            }
-
-            /**
-             * Add NFT Minter
-             * <h4>2 credits.</h4><br/>
-             * <p>Add new minter of NFT Tokens. This method adds minter permission to new minter address.<br/><br/>
-             * Tatum now supports NFT these blockchains:<br/>
-             * <ul>
-             * <li><b>Ethereum</b></li>
-             * <li><b>Polygon (Matic)</b></li>
-             * <li><b>Kcs (KCS)</b></li>
-             * <li><b>Celo</b></li>
-             * <li><b>Harmony.ONE</b></li>
-             * <li><b>Binance Smart Chain</b></li>
-             * </ul>
-             * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-             * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
-             * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-             * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
-             * Alternatively, using the Tatum client library for supported languages.
-             * </p>
-             *
-             * @param requestBody
-             * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten. Valid only for ETH invocations.
-             * @returns any OK
-             * @throws ApiError
-             */
-            public static nftAddMinter(
-                requestBody: (AddNftMinter | AddNftMinterKMS),
-                xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
-            ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
-                return __request({
-                    method: 'POST',
-                    path: `/v3/nft/mint/add`,
-                    headers: {
-                        'x-testnet-type': xTestnetType,
-                    },
-                    body: requestBody,
-                    mediaType: 'application/json',
-                    errors: {
-                        400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                        401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                        403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                        500: `Internal server error. There was an error on the server during the processing of the request.`,
-                    },
-                });
-            }
-
-            /**
-             * Update Royalty NFT
-             * <h4>2 credits per API call.</h4><br/>
-             * <p>Update royalty cashback value for one NFT Token. This method updates the first royalty value of specific author for 1 token.
-             * If royalty value is set to 0, it will disable the royalty system for the token. Only from author's address of the royalty can change it's royalty value, not the owner of the token.<br/><br/>
-             * Tatum now supports NFT these blockchains:<br/>
-             * <ul>
-             * <li><b>Ethereum</b></li>
-             * <li><b>Polygon (Matic)</b></li>
-             * <li><b>Kcs (KCS)</b></li>
-             * <li><b>Celo</b></li>
-             * <li><b>Harmony.ONE</b></li>
-             * <li><b>Tron</b></li>
-             * <li><b>Binance Smart Chain</b></li>
-             * </ul>
-             * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-             * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
-             * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-             * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
-             * Alternatively, using the Tatum client library for supported languages.
-             * </p>
-             *
-             * @param requestBody
-             * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten. Valid only for ETH invocations.
-             * @returns any OK
-             * @throws ApiError
-             */
-            public static nftUpdateCashbackErc721(
-                requestBody: (UpdateCashbackValueForAuthorNftCelo | UpdateCashbackValueForAuthorNftKMSCelo | UpdateCashbackValueForAuthorNftTron | UpdateCashbackValueForAuthorNftKMSTron | UpdateCashbackValueForAuthorNft | UpdateCashbackValueForAuthorNftKMS),
-                xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
-            ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
-                return __request({
-                    method: 'PUT',
-                    path: `/v3/nft/royalty`,
-                    headers: {
-                        'x-testnet-type': xTestnetType,
-                    },
-                    body: requestBody,
-                    mediaType: 'application/json',
-                    errors: {
-                        400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                        401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                        403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                        500: `Internal server error. There was an error on the server during the processing of the request.`,
-                    },
-                });
-            }
-
-            /**
-             * Get NFT transactions by address
-             * <h4>1 credit per API call.</h4><br/><p>Get NFT transactions by address. This includes incoming and outgoing transactions for the address.</p>
-             * @param chain Blockchain to work with
-             * @param address Account address
-             * @param tokenAddress Token address
-             * @param pageSize Max number of items per page is 50.
-             * @param offset Offset to obtain next page of the data.
-             * @param from Transactions from this block onwords will be included.
-             * @param to Transactions up to this block will be included.
-             * @returns any OK
-             * @throws ApiError
-             */
-            public static nftGetTransactionByAddress(
-                chain: 'CELO' | 'ETH' | 'MATIC',
-                address: string,
-                tokenAddress: string,
-                pageSize: number,
-                offset?: number,
-                from?: number,
-                to?: number,
-            ): CancelablePromise<Array<NftTx>> {
-                return __request({
-                    method: 'GET',
-                    path: `/v3/nft/transaction/${chain}/${address}/${tokenAddress}`,
-                    query: {
-                        'pageSize': pageSize,
-                        'offset': offset,
-                        'from': from,
-                        'to': to,
-                    },
-                    errors: {
-                        400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                        401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                        500: `Internal server error. There was an error on the server during the processing of the request.`,
-                    },
-                });
-            }
-
-            /**
-             * Get NFT transactions by token
-             * <h4>1 credit per API call.</h4><br/><p>Get NFT transactions by token. This includes incoming and outgoing transactions for the token.</p>
-             * @param chain Blockchain to work with
-             * @param tokenId NFT Token ID
-             * @param tokenAddress Token address
-             * @param pageSize Max number of items per page is 50.
-             * @param offset Offset to obtain next page of the data.
-             * @param from Transactions from this block onwords will be included.
-             * @param to Transactions up to this block will be included.
-             * @returns any OK
-             * @throws ApiError
-             */
-            public static nftGetTransactionByToken(
-                chain: 'CELO' | 'ETH' | 'MATIC',
-                tokenId: number,
-                tokenAddress: string,
-                pageSize: number,
-                offset?: number,
-                from?: number,
-                to?: number,
-            ): CancelablePromise<Array<NftTx>> {
-                return __request({
-                    method: 'GET',
-                    path: `/v3/nft/transaction/tokenId/${chain}/${tokenAddress}/${tokenId}`,
-                    query: {
-                        'pageSize': pageSize,
-                        'offset': offset,
-                        'from': from,
-                        'to': to,
-                    },
-                    errors: {
-                        400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                        401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                        500: `Internal server error. There was an error on the server during the processing of the request.`,
-                    },
-                });
-            }
-
-            /**
-             * @deprecated
-             * Get contract address from transaction
-             * <h4>1 credit per API call.</h4><br/>
-             * <p>Get NFT contract address from deploy transaction. This method is deprecated, use <a href="#operation/SCGetContractAddress">Get contract address</a> instead.</p>
-             *
-             * @param chain Blockchain to work with
-             * @param hash Transaction hash
-             * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten. Valid only for ETH invocations.
-             * @returns any OK
-             * @throws ApiError
-             */
-            public static nftGetContractAddress(
-                chain: 'ETH' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'MATIC' | 'KCS' | 'BSC',
-                hash: string,
-                xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
-            ): CancelablePromise<{
-                /**
-                 * Address of the NFT token.
-                 */
-                contractAddress?: string;
-            }> {
-                return __request({
-                    method: 'GET',
-                    path: `/v3/nft/address/${chain}/${hash}`,
-                    headers: {
-                        'x-testnet-type': xTestnetType,
-                    },
-                    errors: {
-                        400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                        401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                        403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                        500: `Internal server error. There was an error on the server during the processing of the request.`,
-                    },
-                });
-            }
-
-            /**
-             * Get Transaction
-             * <h4>1 credit per API call.</h4><br/><p>Get NFT transaction by transaction hash.</p>
-             * @param chain Blockchain to work with
-             * @param hash Transaction hash
-             * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten. Valid only for ETH invocations.
-             * @returns any OK
-             * @throws ApiError
-             */
-            public static nftGetTransactErc721(
-                chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'BSC',
-                hash: string,
-                xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
-            ): CancelablePromise<(CeloTx | EthTx | FlowTx)> {
-                return __request({
-                    method: 'GET',
-                    path: `/v3/nft/transaction/${chain}/${hash}`,
-                    headers: {
-                        'x-testnet-type': xTestnetType,
-                    },
-                    errors: {
-                        400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                        401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                        403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                        500: `Internal server error. There was an error on the server during the processing of the request.`,
-                    },
-                });
-            }
-
-            /**
-             * Get NFT tokens for address
-             * <h4>1 credit per API call + 5 credits for each owned token.</h4><br/><p>Get NFTs on address. Returns all NFTs this address holds.</p>
-             *
-             * @param chain Blockchain to work with
-             * @param address Account address
-             * @returns any OK
-             * @throws ApiError
-             */
-            public static nftGetTokensByAddressErc721(
-                chain: 'ALGO' | 'CELO' | 'MATIC' | 'ETH',
-                address: string,
-            ): CancelablePromise<Array<{
-                /**
-                 * Contract address of the NFT. In Algorand case, it will be asset-id..
-                 */
-                contractAddress: string;
-                balances: Array<string>;
-                metadata?: Array<{
-                    /**
-                     * TokenID of the NFT token owned by this address.
-                     */
-                    tokenId?: string;
-                    /**
-                     * Metadata URL of the TokenID. This data don't have to be present, safest way (if not present) is to obtain them from the NFT Contract.tokenURI() method call.
-                     */
-                    url?: string;
-                    /**
-                     * Metadata scheme obtained from the url. This data don't have to be present, safest way (if not present) is to obtain them from the NFT Contract.tokenURI() method call.
-                     */
-                    metadata?: any;
-                }>;
-            }>> {
-                return __request({
-                    method: 'GET',
-                    path: `/v3/nft/address/balance/${chain}/${address}`,
-                    errors: {
-                        400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                        401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                        403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                        500: `Internal server error. There was an error on the server during the processing of the request.`,
-                    },
-                });
-            }
-
-            /**
-             * Get NFT tokens in collection
-             * <h4>1 credit per API call + 5 credits for each listed token.</h4><br/><p>Get all minted NFTs in the collection. Returns all NFTs this contract minted.</p>
-             *
-             * @param chain Blockchain to work with
-             * @param pageSize Max number of items per page is 50.
-             * @param address Collection address
-             * @param offset Offset to obtain next page of the data.
-             * @returns any OK
-             * @throws ApiError
-             */
-            public static nftGetTokensByCollectionErc721(
-                chain: 'CELO' | 'MATIC' | 'ETH',
-                pageSize: number,
-                address: string,
-                offset?: number,
-            ): CancelablePromise<Array<{
-                /**
-                 * ID of the token.
-                 */
-                tokenId: string;
-                metadata: Array<{
-                    /**
-                     * TokenID of the NFT token owned by this address.
-                     */
-                    tokenId?: string;
-                    /**
-                     * Metadata URL of the TokenID. This data don't have to be present, safest way (if not present) is to obtain them from the NFT Contract.tokenURI() method call.
-                     */
-                    url?: string;
-                    /**
-                     * Metadata scheme obtained from the url. This data don't have to be present, safest way (if not present) is to obtain them from the NFT Contract.tokenURI() method call.
-                     */
-                    metadata?: any;
-                }>;
-            }>> {
-                return __request({
-                    method: 'GET',
-                    path: `/v3/nft/collection/${chain}/${address}`,
-                    query: {
-                        'pageSize': pageSize,
-                        'offset': offset,
-                    },
-                    errors: {
-                        400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                        401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                        403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                        500: `Internal server error. There was an error on the server during the processing of the request.`,
-                    },
-                });
-            }
-
-            /**
-             * Get NFT Account balance
-             * <h4>1 credit per API call.</h4><br/><p>Get NFTs on Account. Returns tokenIDs of tokens Account holds. This method is valid only for tokens deplyed using Tatum API - it reads data from the smart contract.</p>
-             *
-             * @param chain Blockchain to work with
-             * @param address Account address
-             * @param contractAddress NFT contract address
-             * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten. Valid only for ETH invocations.
-             * @returns string OK
-             * @throws ApiError
-             */
-            public static nftGetBalanceErc721(
-                chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'BSC',
-                address: string,
-                contractAddress: string,
-                xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
-            ): CancelablePromise<Array<string>> {
-                return __request({
-                    method: 'GET',
-                    path: `/v3/nft/balance/${chain}/${contractAddress}/${address}`,
-                    headers: {
-                        'x-testnet-type': xTestnetType,
-                    },
-                    errors: {
-                        400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                        401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                        403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                        500: `Internal server error. There was an error on the server during the processing of the request.`,
-                    },
-                });
-            }
-
-            /**
-             * Get NFT Token Provenance Data
-             * <h4>1 credit per API call.</h4><br/><p>Get NFT token provenance data, valid only for provenance contract.</p>
-             * @param chain Blockchain to work with
-             * @param tokenId Token ID
-             * @param contractAddress NFT contract address
-             * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten. Valid only for ETH invocations.
-             * @returns any OK
-             * @throws ApiError
-             */
-            public static nftGetProvenanceDataErc721(
-                chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'CELO' | 'BSC',
-                tokenId: string,
-                contractAddress: string,
-                xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
-            ): CancelablePromise<Array<{
-                provenanceData?: string;
-                tokenPrice?: string;
-            }>> {
-                return __request({
-                    method: 'GET',
-                    path: `/v3/nft/provenance/${chain}/${contractAddress}/${tokenId}`,
-                    headers: {
-                        'x-testnet-type': xTestnetType,
-                    },
-                    errors: {
-                        400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                        401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                        403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                        500: `Internal server error. There was an error on the server during the processing of the request.`,
-                    },
-                });
-            }
-
-            /**
-             * Get NFT Token Metadata
-             * <h4>1 credit per API call.</h4><br/><p>Get NFT token metadata.</p>
-             * @param chain Blockchain to work with
-             * @param contractAddress NFT contract address
-             * @param token Token ID, required for all except SOL
-             * @param account Account holding this token. FLOW only.
-             * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten. Valid only for ETH invocations.
-             * @returns any OK
-             * @throws ApiError
-             */
-            public static nftGetMetadataErc721(
-                chain: 'ETH' | 'MATIC' | 'KCS' | 'SOL' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'BSC',
-                contractAddress: string,
-                token: string,
-                account?: string,
-                xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
-            ): CancelablePromise<{
-                /**
-                 * Metadata associated with token.
-                 */
-                data?: string;
-            }> {
-                return __request({
-                    method: 'GET',
-                    path: `/v3/nft/metadata/${chain}/${contractAddress}/${token}`,
-                    headers: {
-                        'x-testnet-type': xTestnetType,
-                    },
-                    query: {
-                        'account': account,
-                    },
-                    errors: {
-                        400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                        401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                        403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                        500: `Internal server error. There was an error on the server during the processing of the request.`,
-                    },
-                });
-            }
-
-            /**
-             * Get NFT Token Royalty information
-             * <h4>1 credit per API call.</h4><br/><p>Get NFT token royalty.</p>
-             * @param chain Blockchain to work with
-             * @param contractAddress NFT contract address
-             * @param token Token ID, required for all except SOL
-             * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten. Valid only for ETH invocations.
-             * @returns any OK
-             * @throws ApiError
-             */
-            public static nftGetRoyaltyErc721(
-                chain: 'ETH' | 'MATIC' | 'KCS' | 'SOL' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'BSC',
-                contractAddress: string,
-                token: string,
-                xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
-            ): CancelablePromise<{
-                /**
-                 * Addresses of the authors where cashback will be paid.
-                 */
-                addresses?: Array<string>;
-                /**
-                 * Values of the royalties, which will be paid to the authors with every token transfer.
-                 * Amount is in native asset of the blockchain or in percents for SOL NFTs.
+             * Second mode enables you to mint on any custom NFT ERC-721 smart contract, on which specified minter address is approved as a minter. You don't specify private key or signatureId, only minter address, from which the NFT will be minted.<br/>
+             * It means you perform mint multiple NFT request with following body:
+             * <pre>{
+                 * "to": ["0x80d8bac9a6901698b3749fe336bbd1385c1f98f2"],
+                 * "url": ["ipfs://QmXJJ6UF5WkF4WTJvsdhiA1etGwBLfpva7Vr9AudGMe3pj"],
+                 * "tokenId": ["9876541124516"],
+                 * "contractAddress":"0xcd2ada00c48a27faa5cc67f9a1ed55b89ddf7f77",
+                 * "minter": "0x542b9ac4945a3836fd12ad98acbc76a0c8b743f5",
+                 * "chain": "MATIC"
+                 * }</pre>
+                 * The blockchain fee of the performed transaction is paid from the address connected with built-in private key and is debitted in form of credits. The credits are debitted only if NFT mint requests are performed with paid API key plan.
+                 * We transform fee to the credits in accordance to the rates provided by the Tatum.
+                 * If you want to batch mint on ERC-721 contract which is not deployed via Tatum API, your smart contract must contain this method:
+                 * <pre>mintMultiple(address[] to, uint256[] tokenId, string[] uri): boolean</pre>
+                 * You can use addresses specified in the bellow table to be used as a minter.
+                 * <table>
+                 * <tr>
+                 * <th>Chain</th>
+                 * <th>Testnet address</th>
+                 * <th>Mainnet Address</th>
+                 * </tr>
+                 * <tr>
+                 * <td>MATIC</td>
+                 * <td>0x542b9ac4945a3836fd12ad98acbc76a0c8b743f5</td>
+                 * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
+                 * </tr>
+                 * <tr>
+                 * <td>BSC</td>
+                 * <td>0xc16ae5e8c985b906935a0cadf4e24f0400531883</td>
+                 * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
+                 * </tr>
+                 * <tr>
+                 * <td>ONE</td>
+                 * <td>0x8906f62d40293ddca77fdf6714c3f63265deddf0</td>
+                 * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
+                 * </tr>
+                 * <tr>
+                 * <td>ETH</td>0x53e8577c4347c365e4e0da5b57a589cb6f2ab848
+                 * <td>0x53e8577C4347C365E4e0DA5B57A589cB6f2AB848</td>
+                 * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
+                 * </tr>
+                 * <tr>
+                 * <td>CELO</td>
+                 * <td>0xBC2eBA680EE50d685cc4Fe65f102AA70AfB27D3F</td>
+                 * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
+                 * </tr>
+                 * <tr>
+                 * <td>KLAY</td>
+                 * <td>0x80d8bac9a6901698b3749fe336bbd1385c1f98f2</td>
+                 * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
+                 * </tr>
+                 * </table>
+                 * If there are not enough coins on any testnet address, feel free to send coins there.</p>
                  *
+                 * @param requestBody
+                 * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+                 * @returns any OK
+                 * @throws ApiError
                  */
-                values?: Array<string>;
-            }> {
-                return __request({
-                    method: 'GET',
-                    path: `/v3/nft/royalty/${chain}/${contractAddress}/${token}`,
-                    headers: {
-                        'x-testnet-type': xTestnetType,
-                    },
-                    errors: {
-                        400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                        401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                        403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                        500: `Internal server error. There was an error on the server during the processing of the request.`,
-                    },
-                });
-            }
+                public static nftMintMultipleErc721(
+                    requestBody: (MintMultipleNftMinter | MintMultipleNft | MintMultipleNftCelo | MintMultipleNftTron | MintMultipleNftFlowPK | MintMultipleNftFlowMnemonic | MintMultipleNftKMS | MintMultipleNftKMSCelo | MintMultipleNftKMSTron | MintMultipleNftFlowKMS),
+                    xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+                ): CancelablePromise<(TransactionHashKMS | FlowMintedMultipleResult | SignatureId)> {
+                    return __request({
+                        method: 'POST',
+                        path: `/v3/nft/mint/batch`,
+                        headers: {
+                            'x-testnet-type': xTestnetType,
+                        },
+                        body: requestBody,
+                        mediaType: 'application/json',
+                        errors: {
+                            400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                            401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                            403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                            500: `Internal server error. There was an error on the server during the processing of the request.`,
+                        },
+                    });
+                }
 
-        }
+                /**
+                 * Burn NFT
+                 * <h4>100 credits per API call on FLOW, 2 credits on another chains. Tatum covers the fee connected to the transaction costs in subscription credits for FLOW. This operation can be done on mainnet only for paid plans.</h4><br/>
+                 * <p>Burn one NFT Token. This method destroys any NFT token from smart contract defined in contractAddress.<br/><br/>
+                 * Tatum now supports NFT these blockchains:<br/>
+                 * <ul>
+                 * <li><b>Ethereum</b></li>
+                 * <li><b>Polygon (Matic)</b></li>
+                 * <li><b>Kcs (KCS)</b></li>
+                 * <li><b>Celo</b></li>
+                 * <li><b>Harmony.ONE</b></li>
+                 * <li><b>Tron</b></li>
+                 * <li><b>Flow</b></li>
+                 * <li><b>Binance Smart Chain</b></li>
+                 * <li><b>Klaytn</b></li>
+                 * <li><b>Algorand</b></li>
+                 * </ul>
+                 * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+                 * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
+                 * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+                 * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
+                 * Alternatively, using the Tatum client library for supported languages.
+                 * </p>
+                 *
+                 * @param requestBody
+                 * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+                 * @returns any OK
+                 * @throws ApiError
+                 */
+                public static nftBurnErc721(
+                    requestBody: (BurnNftCelo | BurnNftKMSCelo | BurnNftTron | BurnNftKMSTron | BurnNft | BurnNftKMS | BurnNftFlowPK | BurnNftFlowMnemonic | BurnNftFlowKMS),
+                    xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+                ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+                    return __request({
+                        method: 'POST',
+                        path: `/v3/nft/burn`,
+                        headers: {
+                            'x-testnet-type': xTestnetType,
+                        },
+                        body: requestBody,
+                        mediaType: 'application/json',
+                        errors: {
+                            400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                            401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                            403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                            500: `Internal server error. There was an error on the server during the processing of the request.`,
+                        },
+                    });
+                }
+
+                /**
+                 * Add NFT Minter
+                 * <h4>2 credits.</h4><br/>
+                 * <p>Add new minter of NFT Tokens. This method adds minter permission to new minter address.<br/><br/>
+                 * Tatum now supports NFT these blockchains:<br/>
+                 * <ul>
+                 * <li><b>Ethereum</b></li>
+                 * <li><b>Polygon (Matic)</b></li>
+                 * <li><b>Kcs (KCS)</b></li>
+                 * <li><b>Celo</b></li>
+                 * <li><b>Harmony.ONE</b></li>
+                 * <li><b>Klaytn</b></li>
+                 * <li><b>Binance Smart Chain</b></li>
+                 * </ul>
+                 * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+                 * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
+                 * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+                 * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
+                 * Alternatively, using the Tatum client library for supported languages.
+                 * </p>
+                 *
+                 * @param requestBody
+                 * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+                 * @returns any OK
+                 * @throws ApiError
+                 */
+                public static nftAddMinter(
+                    requestBody: (AddNftMinter | AddNftMinterKMS),
+                    xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+                ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+                    return __request({
+                        method: 'POST',
+                        path: `/v3/nft/mint/add`,
+                        headers: {
+                            'x-testnet-type': xTestnetType,
+                        },
+                        body: requestBody,
+                        mediaType: 'application/json',
+                        errors: {
+                            400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                            401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                            403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                            500: `Internal server error. There was an error on the server during the processing of the request.`,
+                        },
+                    });
+                }
+
+                /**
+                 * Update Royalty NFT
+                 * <h4>2 credits per API call.</h4><br/>
+                 * <p>Update royalty cashback value for one NFT Token. This method updates the first royalty value of specific author for 1 token.
+                 * If royalty value is set to 0, it will disable the royalty system for the token. Only from author's address of the royalty can change it's royalty value, not the owner of the token.<br/><br/>
+                 * Tatum now supports NFT these blockchains:<br/>
+                 * <ul>
+                 * <li><b>Ethereum</b></li>
+                 * <li><b>Polygon (Matic)</b></li>
+                 * <li><b>Kcs (KCS)</b></li>
+                 * <li><b>Celo</b></li>
+                 * <li><b>Harmony.ONE</b></li>
+                 * <li><b>Tron</b></li>
+                 * <li><b>Binance Smart Chain</b></li>
+                 * <li><b>Klaytn</b></li>
+                 * </ul>
+                 * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+                 * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
+                 * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+                 * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
+                 * Alternatively, using the Tatum client library for supported languages.
+                 * </p>
+                 *
+                 * @param requestBody
+                 * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+                 * @returns any OK
+                 * @throws ApiError
+                 */
+                public static nftUpdateCashbackErc721(
+                    requestBody: (UpdateCashbackValueForAuthorNftCelo | UpdateCashbackValueForAuthorNftKMSCelo | UpdateCashbackValueForAuthorNftTron | UpdateCashbackValueForAuthorNftKMSTron | UpdateCashbackValueForAuthorNft | UpdateCashbackValueForAuthorNftKMS),
+                    xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+                ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+                    return __request({
+                        method: 'PUT',
+                        path: `/v3/nft/royalty`,
+                        headers: {
+                            'x-testnet-type': xTestnetType,
+                        },
+                        body: requestBody,
+                        mediaType: 'application/json',
+                        errors: {
+                            400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                            401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                            403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                            500: `Internal server error. There was an error on the server during the processing of the request.`,
+                        },
+                    });
+                }
+
+                /**
+                 * Get NFT transactions by address
+                 * <h4>1 credit per API call.</h4><br/><p>Get NFT transactions by address. This includes incoming and outgoing transactions for the address.</p>
+                 * @param chain Blockchain to work with
+                 * @param address Account address
+                 * @param tokenAddress Token address
+                 * @param pageSize Max number of items per page is 50.
+                 * @param offset Offset to obtain next page of the data.
+                 * @param from Transactions from this block onwords will be included.
+                 * @param to Transactions up to this block will be included.
+                 * @returns any OK
+                 * @throws ApiError
+                 */
+                public static nftGetTransactionByAddress(
+                    chain: 'CELO' | 'ETH' | 'MATIC',
+                    address: string,
+                    tokenAddress: string,
+                    pageSize: number,
+                    offset?: number,
+                    from?: number,
+                    to?: number,
+                ): CancelablePromise<Array<NftTx>> {
+                    return __request({
+                        method: 'GET',
+                        path: `/v3/nft/transaction/${chain}/${address}/${tokenAddress}`,
+                        query: {
+                            'pageSize': pageSize,
+                            'offset': offset,
+                            'from': from,
+                            'to': to,
+                        },
+                        errors: {
+                            400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                            401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                            500: `Internal server error. There was an error on the server during the processing of the request.`,
+                        },
+                    });
+                }
+
+                /**
+                 * Get NFT transactions by token
+                 * <h4>1 credit per API call.</h4><br/><p>Get NFT transactions by token. This includes incoming and outgoing transactions for the token.</p>
+                 * @param chain Blockchain to work with
+                 * @param tokenId NFT Token ID
+                 * @param tokenAddress Token address
+                 * @param pageSize Max number of items per page is 50.
+                 * @param offset Offset to obtain next page of the data.
+                 * @param from Transactions from this block onwords will be included.
+                 * @param to Transactions up to this block will be included.
+                 * @returns any OK
+                 * @throws ApiError
+                 */
+                public static nftGetTransactionByToken(
+                    chain: 'CELO' | 'ETH' | 'MATIC',
+                    tokenId: number,
+                    tokenAddress: string,
+                    pageSize: number,
+                    offset?: number,
+                    from?: number,
+                    to?: number,
+                ): CancelablePromise<Array<NftTx>> {
+                    return __request({
+                        method: 'GET',
+                        path: `/v3/nft/transaction/tokenId/${chain}/${tokenAddress}/${tokenId}`,
+                        query: {
+                            'pageSize': pageSize,
+                            'offset': offset,
+                            'from': from,
+                            'to': to,
+                        },
+                        errors: {
+                            400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                            401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                            500: `Internal server error. There was an error on the server during the processing of the request.`,
+                        },
+                    });
+                }
+
+                /**
+                 * @deprecated
+                 * Get contract address from transaction
+                 * <h4>1 credit per API call.</h4><br/>
+                 * <p>Get NFT contract address from deploy transaction. This method is deprecated, use <a href="#operation/SCGetContractAddress">Get contract address</a> instead.</p>
+                 *
+                 * @param chain Blockchain to work with
+                 * @param hash Transaction hash
+                 * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+                 * @returns any OK
+                 * @throws ApiError
+                 */
+                public static nftGetContractAddress(
+                    chain: 'ETH' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'MATIC' | 'KCS' | 'BSC',
+                    hash: string,
+                    xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+                ): CancelablePromise<{
+                    /**
+                     * Address of the NFT token.
+                     */
+                    contractAddress?: string;
+                }> {
+                    return __request({
+                        method: 'GET',
+                        path: `/v3/nft/address/${chain}/${hash}`,
+                        headers: {
+                            'x-testnet-type': xTestnetType,
+                        },
+                        errors: {
+                            400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                            401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                            403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                            500: `Internal server error. There was an error on the server during the processing of the request.`,
+                        },
+                    });
+                }
+
+                /**
+                 * Get Transaction
+                 * <h4>1 credit per API call.</h4><br/><p>Get NFT transaction by transaction hash.</p>
+                 * @param chain Blockchain to work with
+                 * @param hash Transaction hash
+                 * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+                 * @returns any OK
+                 * @throws ApiError
+                 */
+                public static nftGetTransactErc721(
+                    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'BSC',
+                    hash: string,
+                    xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+                ): CancelablePromise<(CeloTx | EthTx | FlowTx)> {
+                    return __request({
+                        method: 'GET',
+                        path: `/v3/nft/transaction/${chain}/${hash}`,
+                        headers: {
+                            'x-testnet-type': xTestnetType,
+                        },
+                        errors: {
+                            400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                            401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                            403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                            500: `Internal server error. There was an error on the server during the processing of the request.`,
+                        },
+                    });
+                }
+
+                /**
+                 * Get NFT tokens for address
+                 * <h4>1 credit per API call + 5 credits for each owned token.</h4><br/><p>Get NFTs on address. Returns all NFTs this address holds.</p>
+                 *
+                 * @param chain Blockchain to work with
+                 * @param address Account address
+                 * @returns any OK
+                 * @throws ApiError
+                 */
+                public static nftGetTokensByAddressErc721(
+                    chain: 'ALGO' | 'CELO' | 'MATIC' | 'ETH',
+                    address: string,
+                ): CancelablePromise<Array<{
+                    /**
+                     * Contract address of the NFT. In Algorand case, it will be asset-id..
+                     */
+                    contractAddress: string;
+                    balances: Array<string>;
+                    metadata?: Array<{
+                        /**
+                         * TokenID of the NFT token owned by this address.
+                         */
+                        tokenId?: string;
+                        /**
+                         * Metadata URL of the TokenID. This data don't have to be present, safest way (if not present) is to obtain them from the NFT Contract.tokenURI() method call.
+                         */
+                        url?: string;
+                        /**
+                         * Metadata scheme obtained from the url. This data don't have to be present, safest way (if not present) is to obtain them from the NFT Contract.tokenURI() method call.
+                         */
+                        metadata?: any;
+                    }>;
+                }>> {
+                    return __request({
+                        method: 'GET',
+                        path: `/v3/nft/address/balance/${chain}/${address}`,
+                        errors: {
+                            400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                            401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                            403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                            500: `Internal server error. There was an error on the server during the processing of the request.`,
+                        },
+                    });
+                }
+
+                /**
+                 * Get NFT tokens in collection
+                 * <h4>1 credit per API call + 5 credits for each listed token.</h4><br/><p>Get all minted NFTs in the collection. Returns all NFTs this contract minted.</p>
+                 *
+                 * @param chain Blockchain to work with
+                 * @param pageSize Max number of items per page is 50.
+                 * @param address Collection address
+                 * @param offset Offset to obtain next page of the data.
+                 * @returns any OK
+                 * @throws ApiError
+                 */
+                public static nftGetTokensByCollectionErc721(
+                    chain: 'CELO' | 'MATIC' | 'ETH',
+                    pageSize: number,
+                    address: string,
+                    offset?: number,
+                ): CancelablePromise<Array<{
+                    /**
+                     * ID of the token.
+                     */
+                    tokenId: string;
+                    metadata: Array<{
+                        /**
+                         * TokenID of the NFT token owned by this address.
+                         */
+                        tokenId?: string;
+                        /**
+                         * Metadata URL of the TokenID. This data don't have to be present, safest way (if not present) is to obtain them from the NFT Contract.tokenURI() method call.
+                         */
+                        url?: string;
+                        /**
+                         * Metadata scheme obtained from the url. This data don't have to be present, safest way (if not present) is to obtain them from the NFT Contract.tokenURI() method call.
+                         */
+                        metadata?: any;
+                    }>;
+                }>> {
+                    return __request({
+                        method: 'GET',
+                        path: `/v3/nft/collection/${chain}/${address}`,
+                        query: {
+                            'pageSize': pageSize,
+                            'offset': offset,
+                        },
+                        errors: {
+                            400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                            401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                            403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                            500: `Internal server error. There was an error on the server during the processing of the request.`,
+                        },
+                    });
+                }
+
+                /**
+                 * Get NFT Account balance
+                 * <h4>1 credit per API call.</h4><br/><p>Get NFTs on Account. Returns tokenIDs of tokens Account holds. This method is valid only for tokens deplyed using Tatum API - it reads data from the smart contract.</p>
+                 *
+                 * @param chain Blockchain to work with
+                 * @param address Account address
+                 * @param contractAddress NFT contract address
+                 * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+                 * @returns string OK
+                 * @throws ApiError
+                 */
+                public static nftGetBalanceErc721(
+                    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'BSC',
+                    address: string,
+                    contractAddress: string,
+                    xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+                ): CancelablePromise<Array<string>> {
+                    return __request({
+                        method: 'GET',
+                        path: `/v3/nft/balance/${chain}/${contractAddress}/${address}`,
+                        headers: {
+                            'x-testnet-type': xTestnetType,
+                        },
+                        errors: {
+                            400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                            401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                            403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                            500: `Internal server error. There was an error on the server during the processing of the request.`,
+                        },
+                    });
+                }
+
+                /**
+                 * Get NFT Token Provenance Data
+                 * <h4>1 credit per API call.</h4><br/><p>Get NFT token provenance data, valid only for provenance contract.</p>
+                 * @param chain Blockchain to work with
+                 * @param tokenId Token ID
+                 * @param contractAddress NFT contract address
+                 * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+                 * @returns any OK
+                 * @throws ApiError
+                 */
+                public static nftGetProvenanceDataErc721(
+                    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'CELO' | 'BSC',
+                    tokenId: string,
+                    contractAddress: string,
+                    xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+                ): CancelablePromise<Array<{
+                    provenanceData?: string;
+                    tokenPrice?: string;
+                }>> {
+                    return __request({
+                        method: 'GET',
+                        path: `/v3/nft/provenance/${chain}/${contractAddress}/${tokenId}`,
+                        headers: {
+                            'x-testnet-type': xTestnetType,
+                        },
+                        errors: {
+                            400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                            401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                            403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                            500: `Internal server error. There was an error on the server during the processing of the request.`,
+                        },
+                    });
+                }
+
+                /**
+                 * Get NFT Token Metadata
+                 * <h4>1 credit per API call.</h4><br/><p>Get NFT token metadata.</p>
+                 * @param chain Blockchain to work with
+                 * @param contractAddress NFT contract address
+                 * @param token Token ID, required for all except SOL
+                 * @param account Account holding this token. FLOW only.
+                 * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+                 * @returns any OK
+                 * @throws ApiError
+                 */
+                public static nftGetMetadataErc721(
+                    chain: 'ETH' | 'MATIC' | 'KCS' | 'SOL' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'BSC',
+                    contractAddress: string,
+                    token: string,
+                    account?: string,
+                    xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+                ): CancelablePromise<{
+                    /**
+                     * Metadata associated with token.
+                     */
+                    data?: string;
+                }> {
+                    return __request({
+                        method: 'GET',
+                        path: `/v3/nft/metadata/${chain}/${contractAddress}/${token}`,
+                        headers: {
+                            'x-testnet-type': xTestnetType,
+                        },
+                        query: {
+                            'account': account,
+                        },
+                        errors: {
+                            400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                            401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                            403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                            500: `Internal server error. There was an error on the server during the processing of the request.`,
+                        },
+                    });
+                }
+
+                /**
+                 * Get NFT Token Royalty information
+                 * <h4>1 credit per API call.</h4><br/><p>Get NFT token royalty.</p>
+                 * @param chain Blockchain to work with
+                 * @param contractAddress NFT contract address
+                 * @param token Token ID, required for all except SOL
+                 * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+                 * @returns any OK
+                 * @throws ApiError
+                 */
+                public static nftGetRoyaltyErc721(
+                    chain: 'ETH' | 'MATIC' | 'KCS' | 'SOL' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'BSC',
+                    contractAddress: string,
+                    token: string,
+                    xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+                ): CancelablePromise<{
+                    /**
+                     * Addresses of the authors where cashback will be paid.
+                     */
+                    addresses?: Array<string>;
+                    /**
+                     * Values of the royalties, which will be paid to the authors with every token transfer.
+                     * Amount is in native asset of the blockchain or in percents for SOL NFTs.
+                     *
+                     */
+                    values?: Array<string>;
+                }> {
+                    return __request({
+                        method: 'GET',
+                        path: `/v3/nft/royalty/${chain}/${contractAddress}/${token}`,
+                        headers: {
+                            'x-testnet-type': xTestnetType,
+                        },
+                        errors: {
+                            400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                            401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                            403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                            500: `Internal server error. There was an error on the server during the processing of the request.`,
+                        },
+                    });
+                }
+
+            }

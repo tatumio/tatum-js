@@ -55,7 +55,7 @@ export class BlockchainFungibleTokenService {
      * </p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten. Valid only for ETH invocations.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
      * @returns any OK
      * @throws ApiError
      */
@@ -93,7 +93,7 @@ export class BlockchainFungibleTokenService {
      * </p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten. Valid only for ETH invocations.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
      * @returns any OK
      * @throws ApiError
      */
@@ -131,7 +131,7 @@ export class BlockchainFungibleTokenService {
      * </p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten. Valid only for ETH invocations.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
      * @returns any OK
      * @throws ApiError
      */
@@ -169,7 +169,7 @@ export class BlockchainFungibleTokenService {
      * </p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten. Valid only for ETH invocations.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
      * @returns any OK
      * @throws ApiError
      */
@@ -210,7 +210,7 @@ export class BlockchainFungibleTokenService {
      * </p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten. Valid only for ETH invocations.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
      * @returns any OK
      * @throws ApiError
      */
@@ -283,7 +283,7 @@ export class BlockchainFungibleTokenService {
      * @param chain Network name
      * @param address Account address
      * @param contractAddress ERC20 contract address
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ropsten. Valid only for ETH invocations.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
      * @returns any OK
      * @throws ApiError
      */

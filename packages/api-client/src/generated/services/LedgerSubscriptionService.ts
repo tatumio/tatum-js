@@ -46,6 +46,13 @@ export class LedgerSubscriptionService {
      * <td>50 credits / day / address</td>
      * </tr>
      * <tr>
+     * <td>Terra Luna</td>
+     * <td>Yes/Yes</td>
+     * <td>LUNA, KRW, USD and all other assets</td>
+     * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
+     * <td>30 credits / day / address</td>
+     * </tr>
+     * <tr>
      * <td>Ethereum</td>
      * <td>Yes/Yes</td>
      * <td>ETH, Internal transfers, ERC20, ERC721, ERC1155</td>
@@ -69,7 +76,7 @@ export class LedgerSubscriptionService {
      * <tr>
      * <td>Klaytn</td>
      * <td>Yes/Yes</td>
-     * <td>Klay, Internal transfers, ERC20, ERC721, ERC1155</td>
+     * <td>Klay, ERC20, ERC721, ERC1155</td>
      * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
      * <td>25 credits / day / address</td>
      * </tr>
@@ -122,7 +129,7 @@ export class LedgerSubscriptionService {
              * "date": 1619176527481,
              * "amount": "0.005",
              * "currency": "BTC",
-             * "id": "6082ab462936b4478117c6a0",
+             * "accountId": "6082ab462936b4478117c6a0",
              * "reference: "c9875708-4ba3-41c9-a4cd-271048b41b9a", // ledger transaction reference
              * "txId": "45af182a0ffab58e5ba32fee57b297b2260c6e23a1de5ddc76c7ee22d72dea99",
              * "blockHash": "45af182a0ffab58e5ba32fee57b297b2260c6e23a1de5ddc76c7ee22d72dea99", // hash of the block, might not be present all the time
@@ -140,7 +147,7 @@ export class LedgerSubscriptionService {
                  * "date": 1619176527481,
                  * "amount": "0.005",
                  * "currency": "BTC",
-                 * "id": "6082ab462936b4478117c6a0",
+                 * "accountId": "6082ab462936b4478117c6a0",
                  * "reference: "c9875708-4ba3-41c9-a4cd-271048b41b9a", // ledger transaction reference
                  * "txId": "45af182a0ffab58e5ba32fee57b297b2260c6e23a1de5ddc76c7ee22d72dea99",
                  * "blockHash": "45af182a0ffab58e5ba32fee57b297b2260c6e23a1de5ddc76c7ee22d72dea99", // hash of the block, might not be present all the time

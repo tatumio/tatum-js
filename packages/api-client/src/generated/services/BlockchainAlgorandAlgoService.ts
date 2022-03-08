@@ -72,7 +72,7 @@ export class BlockchainAlgorandAlgoService {
      * Access Algorand Indexer GET node endpoints
      * <h4>1 credit per API call.</h4><br/>
      * <p>Use this endpoint URL as a http-based url to connect directly to the Algorand node provided by Tatum.
-     * You can check al available APIs here - <a href="https://developer.algorand.org/docs/rest-apis/indexer/" target="_blank">https://developer.algorand.org/docs/rest-apis/indexer/</a>.
+     * You can check all available APIs here - <a href="https://developer.algorand.org/docs/rest-apis/indexer/" target="_blank">https://developer.algorand.org/docs/rest-apis/indexer/</a>.
      * <br/>
      * Example call for Get Tx By ID is described in the response. <a href="https://developer.algorand.org/docs/rest-apis/indexer/#get-v2transactionstxid" target="_blank">https://developer.algorand.org/docs/rest-apis/indexer/#get-v2transactionstxid</a>.
      * <br/>
@@ -80,15 +80,17 @@ export class BlockchainAlgorandAlgoService {
      * </p>
      *
      * @param xApiKey Tatum X-API-Key used for authorization.
+     * @param indexerPath `**` path of indexer.
      * @returns AlgoTx OK
      * @throws ApiError
      */
     public static algoNodeIndexerGetDriver(
         xApiKey: string,
+        indexerPath: string,
     ): CancelablePromise<AlgoTx> {
         return __request({
             method: 'GET',
-            path: `/v3/algorand/node/indexer/${xApiKey}/**`,
+            path: `/v3/algorand/node/indexer/${xApiKey}/${indexerPath}`,
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
@@ -109,15 +111,17 @@ export class BlockchainAlgorandAlgoService {
      * </p>
      *
      * @param xApiKey Tatum X-API-Key used for authorization.
+     * @param algodPath `**` path of algod.
      * @returns AlgoBlock OK
      * @throws ApiError
      */
     public static algoNodeGetDriver(
         xApiKey: string,
+        algodPath: string,
     ): CancelablePromise<AlgoBlock> {
         return __request({
             method: 'GET',
-            path: `/v3/algorand/node/algod/${xApiKey}/**`,
+            path: `/v3/algorand/node/algod/${xApiKey}/${algodPath}`,
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
@@ -138,12 +142,14 @@ export class BlockchainAlgorandAlgoService {
      * </p>
      *
      * @param xApiKey Tatum X-API-Key used for authorization.
+     * @param algodPath `**` path of algod.
      * @param requestBody
      * @returns any OK
      * @throws ApiError
      */
     public static algoNodePostDriver(
         xApiKey: string,
+        algodPath: string,
         requestBody: {
             /**
              * Check here - <a href="https://developer.algorand.org/docs/rest-apis/algod/v2/#post-v2transactions" target="_blank">https://developer.algorand.org/docs/rest-apis/algod/v2/#post-v2transactions</a>
@@ -158,7 +164,7 @@ export class BlockchainAlgorandAlgoService {
     }> {
         return __request({
             method: 'POST',
-            path: `/v3/algorand/node/algod/${xApiKey}/**`,
+            path: `/v3/algorand/node/algod/${xApiKey}/${algodPath}`,
             body: requestBody,
             mediaType: 'application/json',
             errors: {

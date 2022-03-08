@@ -20,9 +20,9 @@ describe('TatumAlgoSDK - node', () => {
   const api = mockedApi.blockchain.algo
 
   const nodeFunctionsMapping: TestCasesApiCallMapping<typeof node> = {
-    indexerGetDriver: [api.algoNodeIndexerGetDriver, 'some-api-key'],
-    getDriver: [api.algoNodeGetDriver, 'some-api-key'],
-    postDriver: [api.algoNodePostDriver, 'some-api-key', { rawtxn: 'hello' }],
+    indexerGetDriver: [api.algoNodeIndexerGetDriver, 'some-api-key', 'v2/accounts'],
+    getDriver: [api.algoNodeGetDriver, 'some-api-key', 'v2/accounts'],
+    postDriver: [api.algoNodePostDriver, 'some-api-key', 'v2/accounts', { rawtxn: 'hello' }],
   }
 
   describe('API methods mapping', () => {

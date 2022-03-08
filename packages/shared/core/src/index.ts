@@ -4,6 +4,7 @@ import { getNetworkConfig } from './lib/btc-based.network.common'
 export * from './lib/models/Blockchain'
 export * from './lib/models/Web3'
 export * from './lib/models/ChainTransactionKMS'
+export * from './lib/models/flow'
 
 export * from './lib/http.common'
 export * from './lib/contract.common'

@@ -2,11 +2,11 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type EstimateFeeCustodial = {
+export type EstimateFeeTransferFromCustodial = {
     /**
      * Blockchain to estimate fee for.
      */
-    chain: 'CELO' | 'ETH' | 'BSC' | 'XDC' | 'ONE' | 'MATIC';
+    chain: 'CELO' | 'ETH' | 'BSC' | 'XDC' | 'KLAY' | 'ONE' | 'MATIC';
     /**
      * Type of transaction
      */

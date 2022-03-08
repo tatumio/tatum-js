@@ -4,13 +4,13 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nrwl/node:package",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/blockchain/solana",
-        "main": "packages/blockchain/solana/src/index.ts",
         "tsConfig": "packages/blockchain/solana/tsconfig.lib.json",
-        "packageJson": "packages/blockchain/solana/package.json"
+        "packageJson": "packages/blockchain/solana/package.json",
+        "main": "packages/blockchain/solana/src/index.ts"
       }
     },
     "lint": {
