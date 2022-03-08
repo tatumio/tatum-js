@@ -184,7 +184,7 @@ export class BlockchainNftService {
      * It means if you perform mint NFT request with following body:
      *
      * <pre>{
-         * "chain": "CELO",
+         * "chain": "ETH",
          * "to": "0xBC2eBA680EE50d685cc4Fe65f102AA70AfB27D3F",
          * "url": "ipfs://QmXJJ6UF5WkF4WTJvsdhiA1etGwBLfpva7Vr9AudGMe3pj"
          * }</pre>
@@ -192,7 +192,7 @@ export class BlockchainNftService {
          * The fields contractAddress, fromPrivateKey and tokenId will be internally filled in following way:
          *
          * <pre>{
-             * "chain": "CELO",
+             * "chain": "ETH",
              * "to": "0xBC2eBA680EE50d685cc4Fe65f102AA70AfB27D3F",
              * "url": "ipfs://QmXJJ6UF5WkF4WTJvsdhiA1etGwBLfpva7Vr9AudGMe3pj",
              * "fromPrivateKey": "{tatumBuiltInPrivateKey}",
@@ -251,19 +251,19 @@ export class BlockchainNftService {
              * <td>MATIC</td>
              * <td>Mainnet</td>
              * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
-             * <td>0x29768a03a62760EF462c1F0fFEC1C027B981B909</td>
+             * <td>0x03582C4C2cc7fC8dEd9377A3f8e94a4C9f72ecCe</td>
              * </tr>
              * <tr>
              * <td>BSC</td>
              * <td>Mainnet</td>
              * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
-             * <td>0x0A46D855221AF8F2336f3810e3d6013F10100577</td>
+             * <td>0x4f83793245abE92cc8B978a16C898005c69e5e27</td>
              * </tr>
              * <tr>
              * <td>ONE</td>
              * <td>Mainnet</td>
              * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
-             * <td>0xA0BbB8140e9298E613Da57DDd269586473Bc94Be</td>
+             * <td>0x559f11123bb892159cd33f652624e40e8b43d4ad</td>
              * </tr>
              * <tr>
              * <td>ETH</td>
@@ -275,13 +275,13 @@ export class BlockchainNftService {
              * <td>CELO</td>
              * <td>Mainnet</td>
              * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
-             * <td>0xC49c2d52B3B4D0e3E52D1C8E0e10B13c82982E9d</td>
+             * <td>0x5F35fd593243B059cBf580D0335B1c21881a248b</td>
              * </tr>
              * <tr>
              * <td>KLAY</td>
              * <td>Mainnet</td>
              * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
-             * <td>0x7c4e274387a9bc81f9de7502921fd0550583d3bb</td>
+             * <td>0x44bf563b999823b22b0b165020f0e090aad88f11</td>
              * </tr>
              * </table>
              * If there are not enough coins on any testnet address, feel free to send coins there.</p>
