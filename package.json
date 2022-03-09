@@ -34,7 +34,7 @@
     "@harmony-js/crypto": "^0.1.56",
     "@tatumio/bitcoincashjs2-lib": "^4.1.2",
     "algosdk": "^1.13.1",
-    "axios": "^0.25.0",
+    "axios": "^0.26.0",
     "base32.js": "^0.1.0",
     "bignumber.js": "^9.0.2",
     "bip32": "^2.0.5",
