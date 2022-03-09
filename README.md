@@ -42,7 +42,7 @@ Currently supported blockchains
 
 ### Full package
 
-There is possibility to install full package with all supported blockchain although due to installation of all dependencies and size usage is not recommended for frontend apps.
+It is possible to install the full package with all supported blockchain modules, although this is not recommended for browser environments due to the size of the dependencies.
 
 ```console
 npm install @tatumio/sdk
