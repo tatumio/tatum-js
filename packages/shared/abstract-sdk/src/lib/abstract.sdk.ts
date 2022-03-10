@@ -8,7 +8,6 @@ import {
 } from '@tatumio/api-client'
 import { abstractSdkOffChain } from './services/offchain.abstract'
 import { abstractSdkKms } from './services/kms.abstract'
-import { abstractSdkLedgerService } from './services/ledger.abstract'
 import { abstractSdkNftService } from './services/nft.abstract'
 
 export interface SDKArguments {
@@ -25,7 +24,6 @@ export const abstractSdk = (args: SDKArguments) => {
       get: StorageIpfsService.getIpfsData,
     },
     subscriptions: LedgerSubscriptionService,
-    ledger: abstractSdkLedgerService(),
     security: {
       checkMaliciousAddress: SecurityAddressService.checkMalicousAddress,
     },
