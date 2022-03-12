@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsNumber, Length } from 'class-validator'
+import {IsNotEmpty, IsNumber, Length} from 'class-validator'
+import { Transform } from 'class-transformer'
 
 export class SolanaNftMetadataCreator {
   @IsNotEmpty()
@@ -6,6 +7,8 @@ export class SolanaNftMetadataCreator {
   public address: string
 
   @IsNumber()
+  // TODO Must be replaced by Boolean in the future
+  @Transform((value) => (typeof value === 'boolean' ? (value ? 1 : 0) : value))
   @IsNotEmpty()
   public verified: number
 
