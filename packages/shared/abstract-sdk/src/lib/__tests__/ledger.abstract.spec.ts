@@ -1,7 +1,6 @@
 import * as apiClient from '@tatumio/api-client'
 import { abstractSdkLedgerService } from '../services/ledger.abstract'
 import { blockchainTestFactory, TestCasesApiCallMapping, testHelper } from '@tatumio/shared-testing-common'
-import { GenerateWalletFn } from '../services/ledger/ledger.account.abstract'
 import { CancelablePromise, Wallet } from '@tatumio/api-client'
 
 jest.mock('@tatumio/api-client')
@@ -251,7 +250,7 @@ describe('SDK - ledger', () => {
     describe('generate', () => {
       // TODO: need to mock api.ledger.account.createAccount
       it.skip('valid', async () => {
-        const generateNewWallet: GenerateWalletFn = (mnemonic?: string): Promise<Wallet> => {
+        const generateNewWallet = (mnemonic?: string): Promise<Wallet> => {
           return new Promise((resolve) => {
             resolve({
               mnemonic,
