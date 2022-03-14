@@ -1,6 +1,6 @@
 import { TestCasesApiCallMapping, testHelper } from '../test.helper'
 
-export const blockchainTestFactory = {
+export const commonTestFactory = {
   apiMethods: <T>(blockchain: T, blockchainFunctionsMapping: TestCasesApiCallMapping<T>) => {
     it.each(testHelper.testCasesFromMapping(blockchainFunctionsMapping))('%p', (async (
       sdkMethod: any,
