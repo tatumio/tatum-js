@@ -42,7 +42,7 @@ import type { FeeBtc } from '../models/FeeBtc';
 import type { OffchainEstimateFee } from '../models/OffchainEstimateFee';
 import type { OffchainTransactionResult } from '../models/OffchainTransactionResult';
 import type { OffchainTransactionSignatureResult } from '../models/OffchainTransactionSignatureResult';
-import type { TransferAda } from '../models/TransferAda';
+import type { TransferAdaKeyPair } from '../models/TransferAdaKeyPair';
 import type { TransferAdaKMS } from '../models/TransferAdaKMS';
 import type { TransferAdaMnemonic } from '../models/TransferAdaMnemonic';
 import type { TransferAlgo } from '../models/TransferAlgo';
@@ -1537,7 +1537,7 @@ export class OffChainBlockchainService {
      * @throws ApiError
      */
     public static adaTransferOffchain(
-        requestBody: (TransferAda | TransferAdaMnemonic | TransferAdaKMS),
+        requestBody: (TransferAdaKeyPair | TransferAdaMnemonic | TransferAdaKMS),
     ): CancelablePromise<(OffchainTransactionResult | OffchainTransactionSignatureResult)> {
         return __request({
             method: 'POST',

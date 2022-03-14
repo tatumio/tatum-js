@@ -31,6 +31,14 @@ export type TransferAdaKMS = {
      */
     signatureId: string;
     /**
+     * Extended public key (xpub) of the wallet associated with the accounts. XPub or attr must be used with signatureId.
+     */
+    xpub?: string;
+    /**
+     * Used to parametrize withdrawal as a change address for left coins from transaction. XPub or attr must be used with signatureId.
+     */
+    attr?: string;
+    /**
      * Derivation index of sender address.
      */
     index?: number;

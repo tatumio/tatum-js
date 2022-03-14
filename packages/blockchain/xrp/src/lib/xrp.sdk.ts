@@ -5,6 +5,7 @@ import { Blockchain } from '@tatumio/shared-core'
 import { xrpOffchainService } from './services/xrp.offchain'
 import { xrpKmsService } from './services/xrp.kms'
 import { xrpTxService } from './services/xrp.tx'
+import { xrpWallet } from './services/xrp.sdk.wallet'
 
 const blockchain = Blockchain.XRP
 
@@ -14,7 +15,7 @@ export const TatumXrpSDK = (args: SDKArguments) => {
     offchain: xrpOffchainService({ blockchain }),
     kms: xrpKmsService({ blockchain }),
     transaction: xrpTxService(),
-    wallet: BlockchainXrpService.xrpWallet,
+    wallet: xrpWallet(),
     blockchain: {
       broadcast: BlockchainXrpService.xrpBroadcast,
       info: BlockchainXrpService.xrpGetLastClosedLedger,

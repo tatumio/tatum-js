@@ -3,9 +3,7 @@ import { Blockchain, EvmBasedBlockchain } from './models/Blockchain'
 import { TATUM_API_CONSTANTS } from '@tatumio/api-client'
 
 const EndpointsMapping: Record<Blockchain, string> = {
-  FABRIC: 'fabric',
   HARMONY: 'one',
-  SCRYPTA: 'scrypta',
   BTC: 'bitcoin',
   DOGE: 'dogecoin',
   EGLD: 'egld',
@@ -14,8 +12,8 @@ const EndpointsMapping: Record<Blockchain, string> = {
   NEO: 'neo',
   POLYGON: 'polygon',
   QTUM: 'qtum',
-  QUORUM: 'quorum',
   SOL: 'solana',
+  TERRA: 'terra',
   TRON: 'tron',
   VET: 'vet',
   XRP: 'xrp',
@@ -23,7 +21,7 @@ const EndpointsMapping: Record<Blockchain, string> = {
   CELO: 'celo',
   BSC: 'bsc',
   ALGO: 'algorand',
-  CARDANO: 'ada',
+  ADA: 'ada',
   BCH: 'bcash',
   XDC: 'xdc',
   XLM: 'xlm',

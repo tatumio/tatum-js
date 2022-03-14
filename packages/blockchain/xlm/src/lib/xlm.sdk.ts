@@ -5,6 +5,7 @@ import { Blockchain } from '@tatumio/shared-core'
 import { xlmOffchainService } from './services/xlm.offchain'
 import { xlmKmsService } from './services/xlm.kms'
 import { xlmTxService } from './services/xlm.tx'
+import { xlmWallet } from './services/xlm.sdk.wallet'
 
 const blockchain = Blockchain.XLM
 
@@ -14,7 +15,7 @@ export const TatumXlmSDK = (args: SDKArguments) => {
     offchain: xlmOffchainService({ blockchain }),
     kms: xlmKmsService({ blockchain }),
     transaction: xlmTxService(),
-    wallet: BlockchainXlmService.xlmWallet,
+    wallet: xlmWallet(),
     blockchain: {
       info: BlockchainXlmService.xlmGetLastClosedLedger,
       getAccountInfo: BlockchainXlmService.xlmGetAccountInfo,

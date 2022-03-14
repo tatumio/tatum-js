@@ -7,6 +7,7 @@ export enum Currency {
   KLAY = 'KLAY',
   CELO = 'CELO',
   SOL = 'SOL',
+  LUNA = 'LUNA',
   ONE = 'ONE',
   CUSD = 'CUSD',
   CEUR = 'CEUR',

@@ -1,0 +1,39 @@
+{
+  "root": "examples/terra-example",
+  "sourceRoot": "examples/terra-example/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:build",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/examples/terra-example",
+        "main": "examples/terra-example/src/index.ts",
+        "tsConfig": "examples/terra-example/tsconfig.app.json",
+        "packageJson": "examples/terra-example/package.json"
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/js:node",
+      "options": {
+        "buildTarget": "terra-example:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "examples/terra-example/**/*.ts"
+        ]
+      }
+    }
+  },
+  "tags": [
+    "type:example"
+  ]
+}

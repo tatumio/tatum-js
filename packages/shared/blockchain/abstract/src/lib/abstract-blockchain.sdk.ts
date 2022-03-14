@@ -1,13 +1,17 @@
 import {
   ApproveErc20,
+  ApproveNftSpending,
+  ApproveTransferCustodialWallet,
+  ApproveTransferCustodialWalletCelo,
   BlockchainMarketplaceService,
   BroadcastKMS,
   BurnMultiToken,
   BurnMultiTokenBatch,
   BurnNft,
+  BuyAssetOnMarketplace,
+  CallCeloSmartContractMethod,
   CallReadSmartContractMethod,
   CallSmartContractMethod,
-  BuyAssetOnMarketplace,
   CancelablePromise,
   CancelSellAssetOnMarketplace,
   ChainBurnErc20 as ApiChainBurnErc20,
@@ -17,19 +21,32 @@ import {
   DeployMultiToken,
   DeployNft,
   ExchangeRate,
-  GenerateCustodialWallet,
   Fiat,
+  GenerateCustodialWallet,
+  GenerateCustodialWalletBatch,
+  GenerateCustodialWalletBatchCelo,
+  GenerateCustodialWalletBatchCeloKMS,
+  GenerateCustodialWalletBatchKMS,
+  GenerateCustodialWalletCelo,
   GenerateMarketplace,
   MintErc721,
   MintMultipleNft,
   MintMultiToken,
   MintMultiTokenBatch,
   MintNft,
+  PendingTransaction,
   SellAssetOnMarketplace,
   SignatureId,
   TatumServiceService,
   TatumUrl,
+  TerraWallet,
   TransactionHashKMS,
+  TransferCustodialWallet,
+  TransferCustodialWalletBatch,
+  TransferCustodialWalletBatchCelo,
+  TransferCustodialWalletCelo,
+  TransferCustodialWalletCeloKMS,
+  TransferCustodialWalletKMS,
   TransferMultiToken,
   TransferMultiTokenBatch,
   TransferNft,
@@ -79,7 +96,7 @@ export const abstractBlockchainSdk = (args: { apiKey: string; url?: TatumUrl; bl
 }
 
 export interface SdkWithXrpLikeWalletFunction {
-  wallet(): CancelablePromise<XrpWallet | XlmWallet>
+  wallet(): XrpWallet | XlmWallet | TerraWallet
 }
 
 export type FromPrivateKeyOrSignatureId<T extends { fromPrivateKey?: string }> = Omit<T, 'fromPrivateKey'> &
@@ -152,11 +169,11 @@ export type ChainCancelSellAssetOnMarketplace = FromPrivateKeyOrSignatureId<Canc
 
 export type ChainTransferCustodialWallet =
   | (FromPrivateKeyOrSignatureId<TransferCustodialWallet> & {
-      index?: number
-    })
+  index?: number
+})
   | (FromPrivateKeyOrSignatureId<TransferCustodialWalletCelo> & {
-      index?: number
-    })
+  index?: number
+})
 
 export type ChainBatchTransferCustodialWallet =
   | (FromPrivateKeyOrSignatureId<TransferCustodialWalletBatch> & { index?: number })
@@ -181,12 +198,12 @@ export type ChainGenerateCustodialWalletBatch =
 
 export type ChainCallSmartContractMethod =
   | (FromPrivateKeyOrSignatureId<CallSmartContractMethod> & {
-      index?: number
-    })
+  index?: number
+})
   | (FromPrivateKeyOrSignatureId<CallCeloSmartContractMethod> & {
-      index?: number
-      chain: 'CELO'
-    })
+  index?: number
+  chain: 'CELO'
+})
 
 export type ChainTransferCustodialWalletCelo = FromPrivateKeyOrSignatureId<TransferCustodialWalletCelo> & {
   index?: number
@@ -277,6 +294,7 @@ export interface SdkWithCustodialFunctions {
     ) => Promise<string>
   }
 }
+
 export interface SdkWithMarketplaceFunctions {
   prepare: {
     approveErc20Spending(body: ApproveErc20, provider?: string): Promise<string>
@@ -300,7 +318,9 @@ export interface SdkWithMarketplaceFunctions {
 
 export interface SdkWithKmsFunctions {
   sign(tx: ChainTransactionKMS, fromPrivateKey: string, provider?: string): Promise<string>
+
   getAllPending(signatures?: string): CancelablePromise<PendingTransaction[]>
+
   get(id: string): CancelablePromise<PendingTransaction>
 }
 
