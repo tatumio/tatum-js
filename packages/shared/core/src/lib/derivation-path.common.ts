@@ -5,24 +5,24 @@ export const getDerivationPath = (blockchain: Blockchain, options?: { testnet: b
 }
 
 export const DERIVATION_PATH: Record<Blockchain, string> = {
-  BTC: 'm/44\'/0\'/0\'/0',
-  LTC: 'm/44\'/2\'/0\'/0',
-  ETH: 'm/44\'/60\'/0\'/0',
-  DOGE: 'm/44\'/3\'/0\'/0',
-  CELO: 'm/44\'/52752\'/0\'/0',
-  POLYGON: 'm/44\'/966\'/0\'/0',
-  KCS: 'm/44\'/60\'/0\'/0',
-  HARMONY: 'm/44\'/1023\'/0\'/0',
-  KLAY: 'm/44\'/8217\'/0\'/0',
-  BSC: 'm/44\'/60\'/0\'/0',
-  BCH: 'm/44\'/145\'/0\'/0',
-  TRON: 'm/44\'/195\'/0\'/0',
-  TERRA: 'm/44\'/330\'/0\'/0',
+  BTC: "m/44'/0'/0'/0",
+  LTC: "m/44'/2'/0'/0",
+  ETH: "m/44'/60'/0'/0",
+  DOGE: "m/44'/3'/0'/0",
+  CELO: "m/44'/52752'/0'/0",
+  POLYGON: "m/44'/966'/0'/0",
+  KCS: "m/44'/60'/0'/0",
+  HARMONY: "m/44'/1023'/0'/0",
+  KLAY: "m/44'/8217'/0'/0",
+  BSC: "m/44'/60'/0'/0",
+  BCH: "m/44'/145'/0'/0",
+  TRON: "m/44'/195'/0'/0",
+  TERRA: "m/44'/330'/0'/0",
   // TBD
   ALGO: '@TODO - TBD',
   ADA: '@TODO - TBD',
   EGLD: '@TODO - TBD',
-  FLOW: 'm/44\'/539\'/0\'/0',
+  FLOW: "m/44'/539'/0'/0",
   NEO: '@TODO - TBD',
   QTUM: '@TODO - TBD',
   SOL: '@TODO - TBD',
@@ -32,7 +32,7 @@ export const DERIVATION_PATH: Record<Blockchain, string> = {
   XRP: '@TODO - TBD',
 }
 
-export const COMMON_TESTNET_DERIVATION_PATH = 'm/44\'/1\'/0\'/0'
+export const COMMON_TESTNET_DERIVATION_PATH = "m/44'/1'/0'/0"
 
 const TESTNET_DERIVATION_PATH_MAPPING = (Object.values(Blockchain) as Blockchain[])
   .map((v: Blockchain) => {

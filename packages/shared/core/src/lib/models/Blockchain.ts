@@ -25,12 +25,7 @@ export enum Blockchain {
   KLAY = 'KLAY',
 }
 
-export const BtcBasedBlockchains = [
-  Blockchain.BTC,
-  Blockchain.LTC,
-  Blockchain.DOGE,
-  Blockchain.BCH,
-]
+export const BtcBasedBlockchains = [Blockchain.BTC, Blockchain.LTC, Blockchain.DOGE, Blockchain.BCH]
 export const EvmBasedBlockchains = [
   Blockchain.ETH,
   Blockchain.CELO,
@@ -41,11 +36,7 @@ export const EvmBasedBlockchains = [
 ]
 
 // @TODO tmp solution
-export type BtcBasedBlockchain =
-  | Blockchain.BTC
-  | Blockchain.LTC
-  | Blockchain.DOGE
-  | Blockchain.BCH
+export type BtcBasedBlockchain = Blockchain.BTC | Blockchain.LTC | Blockchain.DOGE | Blockchain.BCH
 
 export type EvmBasedBlockchain =
   | Blockchain.ETH

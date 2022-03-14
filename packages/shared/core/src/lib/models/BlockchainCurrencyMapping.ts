@@ -10,8 +10,10 @@ import {
   TRON_CURRENCIES,
 } from '@tatumio/api-client'
 
-export const BlockchainCurrencyMapping: Record<Blockchain,
-  NativeCurrency | { nativeCurrency: NativeCurrency; currencies: Currency[] }> = {
+export const BlockchainCurrencyMapping: Record<
+  Blockchain,
+  NativeCurrency | { nativeCurrency: NativeCurrency; currencies: Currency[] }
+> = {
   BTC: Currency.BTC,
   LTC: Currency.LTC,
   KLAY: Currency.KLAY,
