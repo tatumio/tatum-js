@@ -1,12 +1,7 @@
-import { AddNftMinter, AddNftMinterKMS, BlockchainNftService, TransactionHash } from '@tatumio/api-client'
+import { AddNftMinter, AddNftMinterKMS, BlockchainNftService } from '@tatumio/api-client'
 import axios from 'axios'
 
 type ChainAddMinter = AddNftMinter | AddNftMinterKMS
-
-type MintNftWithUriFn<Body> = (
-  body: Body,
-  options?: { provider?: string; testnet?: boolean },
-) => Promise<TransactionHash>
 
 export const abstractSdkNftService = () => {
   return {

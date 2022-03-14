@@ -4,10 +4,9 @@ import bcash from '@tatumio/bitcoincashjs2-lib'
 import cashaddr from 'cashaddrjs'
 import { btcBasedWallet } from '@tatumio/shared-blockchain-btc-based'
 import { bcashAddressHelper } from './utils/bch.address'
-import { SdkWithWalletFunctions } from '@tatumio/shared-blockchain-abstract'
 import { ECPair, payments } from 'bitcoinjs-lib'
 
-export const bchWallet = (args: { blockchain: BtcBasedBlockchain }): SdkWithWalletFunctions => {
+export const bchWallet = (args: { blockchain: BtcBasedBlockchain }) => {
   const btcBased = btcBasedWallet(args)
 
   return {

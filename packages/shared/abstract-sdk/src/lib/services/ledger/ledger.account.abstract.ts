@@ -3,7 +3,6 @@ import {
   Address,
   ApiServices,
   CreateAccount,
-  CreateSubscriptionIncoming,
   LedgerAccountService,
   Wallet,
 } from '@tatumio/api-client'

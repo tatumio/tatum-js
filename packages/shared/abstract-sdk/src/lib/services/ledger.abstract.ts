@@ -1,7 +1,6 @@
 import {
   ApiServices,
   CreateAccount,
-  CreateSubscriptionIncoming,
   LedgerAccountService,
   LedgerCustomerService,
   LedgerOrderBookService,
@@ -9,7 +8,6 @@ import {
   LedgerVirtualCurrencyService,
   TransactionFilter,
   TransactionFilterCustomer,
-  TransactionFilterLedger,
 } from '@tatumio/api-client'
 import { GeneratedAccount, GenerateWalletFn } from './ledger/ledger.account.abstract'
 
@@ -27,7 +25,7 @@ export const abstractSdkLedgerService = () => {
     orderBook: {
       getHistorical: LedgerOrderBookService.getHistoricalTradesBody,
       getActiveBuyTrades: LedgerOrderBookService.getBuyTradesBody,
-      getActiveSellTrades: LedgerOrderBookService.getBuyTradesBody,
+      getActiveSellTrades: LedgerOrderBookService.getSellTradesBody,
       newTrade: LedgerOrderBookService.storeTrade,
       get: LedgerOrderBookService.getTradeById,
       cancel: LedgerOrderBookService.deleteTrade,
@@ -41,10 +39,10 @@ export const abstractSdkLedgerService = () => {
       getAllByCustomer: LedgerTransactionService.getTransactionsByCustomerId,
       getAllByReference: LedgerTransactionService.getTransactionsByReference,
       countByAccount: function (filter: TransactionFilter) {
-        return this.getAllByAccount(filter, 50, 0, true)
+        return LedgerTransactionService.getTransactionsByAccountId(filter, 50, 0, true)
       },
       countByCustomer: function (filter: TransactionFilterCustomer) {
-        return this.getAllByCustomer(filter, 50, 0, true)
+        return LedgerTransactionService.getTransactionsByCustomerId(filter, 50, 0, true)
       },
       // @TODO OPENAPI
       /*countByReference: function (reference: string) {
