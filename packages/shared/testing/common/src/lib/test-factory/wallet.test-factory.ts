@@ -2,7 +2,7 @@ import { TronWallet } from '@tatumio/api-client'
 import 'jest/index'
 import { BlockchainTestData, TEST_DATA } from '../shared-testing'
 
-export interface SdkWithWalletFunctions {
+interface SdkWithWalletFunctions {
   generateAddressFromXPub(xpub: string, i: number, options?: { testnet: boolean }): string
 
   generatePrivateKeyFromMnemonic(mnemonic: string, i: number, options?: { testnet: boolean }): Promise<string>
