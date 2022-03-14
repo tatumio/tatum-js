@@ -13,7 +13,6 @@ export const TatumTerraSDK = (args: SDKArguments) => {
   const api = BlockchainTerraService
   const { ...abstractSdk } = abstractBlockchainSdk({ ...args, blockchain })
 
-
   return {
     ...abstractSdk,
     api,

@@ -24,16 +24,19 @@ describe('TerraSDK - KMS', () => {
 
   describe('sign', () => {
     it('valid', async () => {
-
-      const signed = await kmsService.sign({
-        id: '123',
-        hashes: ['123'],
-        serializedTransaction: JSON.stringify({
-          amount: AMOUNT,
-          to: ACCOUNT,
-          currency: Currency.LUNA,
-        }),
-      }, PRIVATE_KEY, true)
+      const signed = await kmsService.sign(
+        {
+          id: '123',
+          hashes: ['123'],
+          serializedTransaction: JSON.stringify({
+            amount: AMOUNT,
+            to: ACCOUNT,
+            currency: Currency.LUNA,
+          }),
+        },
+        PRIVATE_KEY,
+        true,
+      )
 
       expect(signed.startsWith(VALID_TX_DATA)).toBeTruthy()
     })

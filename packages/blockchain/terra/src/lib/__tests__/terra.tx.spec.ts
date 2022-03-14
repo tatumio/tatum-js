@@ -6,7 +6,10 @@ import { Currency } from '@tatumio/api-client'
 jest.mock('@tatumio/api-client')
 
 describe('TerraSDK - TX', () => {
-  const txService = terraTxService({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY, provider: 'https://bombay-lcd.terra.dev' })
+  const txService = terraTxService({
+    apiKey: REPLACE_ME_WITH_TATUM_API_KEY,
+    provider: 'https://bombay-lcd.terra.dev',
+  })
 
   const PRIVATE_KEY = '42833dd2c36df40d5e4f0ba525d665a25103fc8e01ef86a9d962941855b9902b'
   const PRIVATE_KEY_WRONG = '42833dd2c36df40d5e4f0ba525d665a25103fc8e01ef86a9d962941855b9902d'
@@ -20,7 +23,6 @@ describe('TerraSDK - TX', () => {
 
   describe('prepareSignedTransaction', () => {
     it('valid', async () => {
-
       const signed = await txService.prepare(true, {
         fromPrivateKey: PRIVATE_KEY,
         amount: AMOUNT,
@@ -32,7 +34,6 @@ describe('TerraSDK - TX', () => {
     })
 
     it('secret does not match', async () => {
-
       await expect(
         txService.prepare(true, {
           fromPrivateKey: PRIVATE_KEY_WRONG,
