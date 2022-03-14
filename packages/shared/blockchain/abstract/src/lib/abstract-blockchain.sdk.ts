@@ -47,6 +47,7 @@ import {
   ApproveTransferCustodialWallet,
   ApproveTransferCustodialWalletCelo,
   TransferCustodialWalletKMS,
+  GenerateCustodialWalletBatchPayer,
   GenerateCustodialWalletBatch,
   GenerateCustodialWalletBatchKMS,
   GenerateCustodialWalletCelo,
@@ -105,6 +106,7 @@ export type ChainDeployErc20 = FromPrivateKeyOrSignatureId<DeployErc20>
 
 export type ChainMintErc721 = MintErc721 & {
   fromPrivateKey?: string
+  minter?: string
   chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'KLAY'
 }
 
@@ -181,6 +183,7 @@ export type ChainTransferFromCustodialAddress =
   | TransferCustodialWalletCeloKMS
 
 export type ChainGenerateCustodialWalletBatch =
+  | GenerateCustodialWalletBatchPayer
   | GenerateCustodialWalletBatch
   | GenerateCustodialWalletBatchKMS
   | GenerateCustodialWalletBatchCelo
