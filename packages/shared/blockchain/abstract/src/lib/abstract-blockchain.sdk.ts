@@ -77,16 +77,6 @@ export const abstractBlockchainSdk = (args: { apiKey: string; url?: TatumUrl; bl
   }
 }
 
-export interface SdkWithWalletFunctions {
-  generateAddressFromXPub(xpub: string, i: number, options?: { testnet: boolean }): string
-
-  generatePrivateKeyFromMnemonic(mnemonic: string, i: number, options?: { testnet: boolean }): Promise<string>
-
-  generateAddressFromPrivateKey(privateKey: string, options?: { testnet: boolean }): string
-
-  generateWallet(mnemonic?: string, options?: { testnet: boolean }): Promise<TronWallet>
-}
-
 export interface SdkWithXrpLikeWalletFunction {
   wallet(): CancelablePromise<XrpWallet | XlmWallet>
 }
