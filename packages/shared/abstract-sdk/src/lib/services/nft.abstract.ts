@@ -1,12 +1,7 @@
-import { AddNftMinter, AddNftMinterKMS, BlockchainNftService, TransactionHash } from '@tatumio/api-client'
+import { AddNftMinter, AddNftMinterKMS, BlockchainNftService } from '@tatumio/api-client'
 import axios from 'axios'
 
 type ChainAddMinter = AddNftMinter | AddNftMinterKMS
-
-type MintNftWithUriFn<Body> = (
-  body: Body,
-  options?: { provider?: string; testnet?: boolean },
-) => Promise<TransactionHash>
 
 export const abstractSdkNftService = () => {
   return {
@@ -20,7 +15,7 @@ export const abstractSdkNftService = () => {
     getNFTTransaction: BlockchainNftService.nftGetTransactErc721,
     getNFTTransactionsByToken: BlockchainNftService.nftGetTransactionByToken,
     getNFTTransactionsByAddress: BlockchainNftService.nftGetTransactionByAddress,
-    getNFTsByAddress: BlockchainNftService.nftGetBalanceErc721,
+    getNFTsByAddress: BlockchainNftService.nftGetTokensByAddressErc721,
     getNFTProvenanceData: BlockchainNftService.nftGetProvenanceDataErc721,
     getNFTMetadataURI: BlockchainNftService.nftGetMetadataErc721,
     getNFTRoyalty: BlockchainNftService.nftGetRoyaltyErc721,
@@ -45,7 +40,7 @@ export const abstractSdkNftService = () => {
         publicUrl: `https://gateway.pinata.cloud/ipfs/${imageUrl.replace('ipfs://', '')}`,
       }
     },
-    prepareAddNftMinterAbstraction: async (body: ChainAddMinter) => {
+    prepareAddNftMinterAbstraction: (body: ChainAddMinter) => {
       return ['0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6', body.minter]
     },
   }
