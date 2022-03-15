@@ -44,6 +44,8 @@
     "solana-example": "examples/solana-example",
     "tron": "packages/blockchain/tron",
     "tron-example": "examples/tron-example",
+    "terra": "packages/blockchain/terra",
+    "terra-example": "examples/terra-example",
     "xlm": "packages/blockchain/xlm",
     "xlm-example": "examples/xlm-example",
     "xrp": "packages/blockchain/xrp",
