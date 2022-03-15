@@ -12,7 +12,8 @@ const mockedApi = mockHelper.mockApi(apiClient)
 
 describe('TerraSDK - offchain', () => {
   const offchainService = terraOffchainService({
-    blockchain: Blockchain.TERRA, apiKey: REPLACE_ME_WITH_TATUM_API_KEY,
+    blockchain: Blockchain.TERRA,
+    apiKey: REPLACE_ME_WITH_TATUM_API_KEY,
     provider: 'https://bombay-lcd.terra.dev',
   })
 
@@ -60,7 +61,6 @@ describe('TerraSDK - offchain', () => {
     })
 
     it('!fee', async () => {
-
       await expect(
         offchainService.send(true, {
           senderAccountId: ACCOUNT_ID,
@@ -72,7 +72,6 @@ describe('TerraSDK - offchain', () => {
     })
 
     it('fee = 0', async () => {
-
       await expect(
         offchainService.send(true, {
           senderAccountId: ACCOUNT_ID,
