@@ -39,7 +39,6 @@ export async function polygonNftExample() {
   const nftByAddress = await polygonSDK.nft.getNFTsByAddress(
     Currency.MATIC,
     'NTAESFCB3WOD7SAOL42KSPVARLB3JFA3MNX3AESWHYVT2RMYDVZI6YLG4Y',
-    '0x45871ED5F15203C0ce791eFE5f4B5044833aE10e',
   )
 
   const nftAccountBalance = await polygonSDK.nft.getNFTAccountBalance(
