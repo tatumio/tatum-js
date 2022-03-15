@@ -3,8 +3,10 @@ import { terraTxService } from '../services/terra.tx'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 import { Currency } from '@tatumio/api-client'
 import { Tx } from '@terra-money/terra.js'
+import { terraClient } from '../services/terra.client'
 
 jest.mock('@tatumio/api-client')
+jest.setTimeout(15000)
 
 describe('TerraSDK - TX', () => {
   const txService = terraTxService({
@@ -38,6 +40,12 @@ describe('TerraSDK - TX', () => {
       expect(tx.body.messages[0]['from_address']).toBe(ACCOUNT)
       expect(tx.body.messages[0]['to_address']).toBe(ACCOUNT)
       expect(tx.body.messages[0]['amount']._coins.uluna.denom).toBe('uluna')
+
+      const broadcasted = await terraClient({
+        apiKey: REPLACE_ME_WITH_TATUM_API_KEY,
+        provider: 'https://bombay-lcd.terra.dev',
+      }).getClient(true).tx.broadcast(tx)
+      expect(broadcasted['code']).toBe(0)
     })
 
     it('secret does not match', async () => {
