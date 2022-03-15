@@ -8,6 +8,8 @@ export enum Currency {
   CELO = 'CELO',
   SOL = 'SOL',
   LUNA = 'LUNA',
+  LUNA_KRT = 'LUNA_KRT',
+  LUNA_UST = 'LUNA_UST',
   ONE = 'ONE',
   CUSD = 'CUSD',
   CEUR = 'CEUR',

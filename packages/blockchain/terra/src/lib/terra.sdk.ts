@@ -5,7 +5,8 @@ import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { terraWallet } from './services/terra.sdk.wallet'
 import { terraTxService } from './services/terra.tx'
 import { terraKmsService } from './services/terra.kms'
-import { terraClient } from './services/terra.web3'
+import { terraClient } from './services/terra.client'
+import { terraOffchainService } from './services/terra.offchain'
 
 const blockchain = Blockchain.TERRA
 
@@ -16,7 +17,8 @@ export const TatumTerraSDK = (args: SDKArguments) => {
   return {
     ...abstractSdk,
     api,
-    web3: terraClient(args),
+    offchain: { ...abstractSdk.offchain, ...terraOffchainService({ ...args, blockchain }) },
+    client: terraClient(args),
     kms: terraKmsService({ ...args, blockchain }),
     wallet: terraWallet(),
     transaction: terraTxService(args),

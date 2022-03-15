@@ -2,6 +2,7 @@ import '@tatumio/shared-testing-common'
 import { terraTxService } from '../services/terra.tx'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 import { Currency } from '@tatumio/api-client'
+import { Tx } from '@terra-money/terra.js'
 
 jest.mock('@tatumio/api-client')
 
@@ -15,8 +16,7 @@ describe('TerraSDK - TX', () => {
   const PRIVATE_KEY_WRONG = '42833dd2c36df40d5e4f0ba525d665a25103fc8e01ef86a9d962941855b9902d'
   const ACCOUNT = 'terra14g02c85kvdwqcxtytupsqksnp48txz83q8pzhn'
   const AMOUNT = '0.0001'
-  const VALID_TX_DATA =
-    '0a8d010a8a010a1c2f636f736d6f732e62616e6b2e763162657461312e4d736753656e64126a0a2c746572726131346730326338356b766477716378747974757073716b736e70343874787a38337138707a686e122c746572726131346730326338356b766477716378747974757073716b736e70343874787a38337138707a686e1a0c0a05756c756e61120331303012520a4e0a460a1f2f636f736d6f732e63727970746f2e736563703235'
+  const MEMO = '123'
   afterEach(() => {
     jest.clearAllMocks()
   })
@@ -27,10 +27,17 @@ describe('TerraSDK - TX', () => {
         fromPrivateKey: PRIVATE_KEY,
         amount: AMOUNT,
         to: ACCOUNT,
+        memo: MEMO,
         currency: Currency.LUNA,
       })
 
-      expect(signed.startsWith(VALID_TX_DATA)).toBeTruthy()
+      const tx = Tx.fromBuffer(Buffer.from(signed, 'hex'))
+      expect(tx.auth_info.signer_infos).toHaveLength(1)
+      expect(tx.body.memo).toBe(MEMO)
+      expect(tx.body.messages).toHaveLength(1)
+      expect(tx.body.messages[0]['from_address']).toBe(ACCOUNT)
+      expect(tx.body.messages[0]['to_address']).toBe(ACCOUNT)
+      expect(tx.body.messages[0]['amount']._coins.uluna.denom).toBe('uluna')
     })
 
     it('secret does not match', async () => {

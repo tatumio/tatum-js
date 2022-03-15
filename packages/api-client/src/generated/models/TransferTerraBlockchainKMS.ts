@@ -10,11 +10,15 @@ export type TransferTerraBlockchainKMS = {
     /**
      * Currency to transfer from Binance Blockchain Account.
      */
-    currency: 'LUNA' | 'UST' | 'KRT';
+    currency: 'LUNA' | 'LUNA_UST' | 'LUNA_KRT';
     /**
      * Amount to be sent in currency.
      */
     amount: string;
+    /**
+     * Fee to be charged for the operation.
+     */
+    fee?: string;
     /**
      * Signature hash of the mnemonic, which will be used to sign transactions locally.
      * All signature Ids should be present, which might be used to sign transaction.

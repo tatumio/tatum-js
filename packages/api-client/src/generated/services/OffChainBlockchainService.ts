@@ -82,6 +82,8 @@ import type { TransferLtcKMS } from '../models/TransferLtcKMS';
 import type { TransferLtcMnemonic } from '../models/TransferLtcMnemonic';
 import type { TransferSol } from '../models/TransferSol';
 import type { TransferSolKMS } from '../models/TransferSolKMS';
+import type { TransferTerra } from '../models/TransferTerra';
+import type { TransferTerraKMS } from '../models/TransferTerraKMS';
 import type { TransferTron } from '../models/TransferTron';
 import type { TransferTronKMS } from '../models/TransferTronKMS';
 import type { TransferTronMnemonic } from '../models/TransferTronMnemonic';
@@ -1451,9 +1453,48 @@ export class OffChainBlockchainService {
     }
 
     /**
+     * Send LUNA from Tatum ledger to blockchain
+     * <h4>10 credits per API call.</h4><br/><p>
+     * <p>Send LUNA, KRW or UST from virtual account to blockchain. This will create Tatum internal withdrawal request with ID. When every system works as expected,
+     * withdrawal request is marked as complete and transaction id is assigned to it.
+     * <ul>
+     * <li>If Terra server connection is unavailable, withdrawal request is cancelled.</li>
+     * <li>If blockchain transfer is successful, but is it not possible to reach Tatum, transaction id of blockchain transaction is returned and withdrawal request must be
+     * completed manually, otherwise all other withdrawals will be pending.</li>
+     * </ul>
+     * It is possible to perform ledger to blockchain transaction for ledger accounts without blockchain address assigned to them.<br/>
+     * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+     * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and losing funds. In this method, it is possible to enter privateKey
+     * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
+     * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
+     * Alternatively, using the Tatum client library for supported languages.
+     * </p>
+     *
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static terraTransfer(
+        requestBody: (TransferTerra | TransferTerraKMS),
+    ): CancelablePromise<(OffchainTransactionResult | OffchainTransactionSignatureResult)> {
+        return __request({
+            method: 'POST',
+            path: `/v3/offchain/terra/transfer`,
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                500: `Internal server error. There was an error on the server while processing the request.`,
+            },
+        });
+    }
+
+    /**
      * Send BNB from Tatum ledger to blockchain
      * <h4>10 credits per API call.</h4><br/><p>
-     * <p>Send BNB or BNB Asset from account to account. This will create Tatum internal withdrawal request with ID. When every system works as expected,
+     * <p>Send BNB or BNB Asset from account to blockchain. This will create Tatum internal withdrawal request with ID. When every system works as expected,
      * withdrawal request is marked as complete and transaction id is assigned to it.
      * <ul>
      * <li>If BNB server connection is unavailable, withdrawal request is cancelled.</li>
