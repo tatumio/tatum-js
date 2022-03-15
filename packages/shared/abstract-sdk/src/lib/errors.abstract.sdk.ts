@@ -1,6 +1,4 @@
-import { ApiError } from '@tatumio/api-client'
-
-export type SdkErrorArgs<T extends SdkErrorCode = SdkErrorCode> = {
+export type SdkErrorArgs = {
   originalError?: Error
   originalErrorAsString?: string
   errorSubstringMapping?: { [key: string]: SdkErrorCode }

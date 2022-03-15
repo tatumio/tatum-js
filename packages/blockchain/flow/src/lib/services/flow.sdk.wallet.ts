@@ -3,9 +3,8 @@ import * as elliptic from 'elliptic'
 import { fromBase58, fromSeed } from 'bip32'
 import { generateMnemonic, mnemonicToSeed } from 'bip39'
 import hdkey from 'hdkey'
-import { SdkWithWalletFunctions } from '@tatumio/shared-blockchain-abstract'
 
-export const flowWallet = (): SdkWithWalletFunctions => {
+export const flowWallet = () => {
   return {
     generateAddressFromXPub: (xpub: string, i: number): string => {
       const w = fromBase58(xpub).derivePath(String(i))

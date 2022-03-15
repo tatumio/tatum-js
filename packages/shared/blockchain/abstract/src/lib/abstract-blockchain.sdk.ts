@@ -47,6 +47,7 @@ import {
   ApproveTransferCustodialWallet,
   ApproveTransferCustodialWalletCelo,
   TransferCustodialWalletKMS,
+  GenerateCustodialWalletBatchPayer,
   GenerateCustodialWalletBatch,
   GenerateCustodialWalletBatchKMS,
   GenerateCustodialWalletCelo,
@@ -77,16 +78,6 @@ export const abstractBlockchainSdk = (args: { apiKey: string; url?: TatumUrl; bl
   }
 }
 
-export interface SdkWithWalletFunctions {
-  generateAddressFromXPub(xpub: string, i: number, options?: { testnet: boolean }): string
-
-  generatePrivateKeyFromMnemonic(mnemonic: string, i: number, options?: { testnet: boolean }): Promise<string>
-
-  generateAddressFromPrivateKey(privateKey: string, options?: { testnet: boolean }): string
-
-  generateWallet(mnemonic?: string, options?: { testnet: boolean }): Promise<TronWallet>
-}
-
 export interface SdkWithXrpLikeWalletFunction {
   wallet(): CancelablePromise<XrpWallet | XlmWallet>
 }
@@ -105,6 +96,7 @@ export type ChainDeployErc20 = FromPrivateKeyOrSignatureId<DeployErc20>
 
 export type ChainMintErc721 = MintErc721 & {
   fromPrivateKey?: string
+  minter?: string
   chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'KLAY'
 }
 
@@ -181,6 +173,7 @@ export type ChainTransferFromCustodialAddress =
   | TransferCustodialWalletCeloKMS
 
 export type ChainGenerateCustodialWalletBatch =
+  | GenerateCustodialWalletBatchPayer
   | GenerateCustodialWalletBatch
   | GenerateCustodialWalletBatchKMS
   | GenerateCustodialWalletBatchCelo
