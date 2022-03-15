@@ -68,8 +68,8 @@ const mintCashbackSignedTransaction = async (body: ChainMintNft, web3: EvmBasedW
       to: contractAddress.trim(),
       data: erc20
         ? contract.methods
-          .mintWithCashback(transformedTo, tokenId, url, authorAddresses, cb, erc20)
-          .encodeABI()
+            .mintWithCashback(transformedTo, tokenId, url, authorAddresses, cb, erc20)
+            .encodeABI()
         : contract.methods.mintWithCashback(transformedTo, tokenId, url, authorAddresses, cb).encodeABI(),
       nonce,
     }
@@ -217,7 +217,7 @@ const transferSignedTransaction = async (
     contractAddress,
   )
   const dataBytes = provenance
-    ? Buffer.from(provenanceData + '\'\'\'###\'\'\'' + client.utils.toWei(tokenPrice!, 'ether'), 'utf8')
+    ? Buffer.from(provenanceData + "'''###'''" + client.utils.toWei(tokenPrice!, 'ether'), 'utf8')
     : ''
   const tokenData = provenance
     ? contract.methods.safeTransfer(to.trim(), tokenId, `0x${dataBytes.toString('hex')}`).encodeABI()
@@ -399,16 +399,16 @@ const mintMultipleProvenanceSignedTransaction = async (
     to: contractAddress.trim(),
     data: erc20
       ? contract.methods
-        .mintMultiple(
-          to.map((t) => t.trim()),
-          tokenId,
-          url,
-          authorAddresses ?? [],
-          cb,
-          fv,
-          erc20,
-        )
-        .encodeABI()
+          .mintMultiple(
+            to.map((t) => t.trim()),
+            tokenId,
+            url,
+            authorAddresses ?? [],
+            cb,
+            fv,
+            erc20,
+          )
+          .encodeABI()
       : contract.methods.mintMultiple(to, tokenId, url, authorAddresses ?? [], cb, fv).encodeABI(),
     nonce,
   }

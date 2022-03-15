@@ -491,9 +491,9 @@ const auctionSettleSignedTransaction = async (body: SettleAuction, web3: EvmBase
   )
 }
 
-export type CreateAuction =
-  FromPrivateKeyOrSignatureId<WithoutChain<Omit<GenerateAuction, 'feeRecipient' | 'auctionFee'>>>
-  & {
+export type CreateAuction = FromPrivateKeyOrSignatureId<
+  WithoutChain<Omit<GenerateAuction, 'feeRecipient' | 'auctionFee'>>
+> & {
   contractAddress: string
   id: string
   nftAddress: string

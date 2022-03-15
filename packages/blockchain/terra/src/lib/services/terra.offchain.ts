@@ -7,7 +7,6 @@ import { terraTxService } from './terra.tx'
 type LUNA_ASSETS = 'LUNA' | 'LUNA_UST' | 'LUNA_KRT'
 
 export const terraOffchainService = (args: SDKArguments & { blockchain: Blockchain }) => {
-
   /**
    * Send Terra transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
    * This operation is irreversible.
@@ -18,7 +17,8 @@ export const terraOffchainService = (args: SDKArguments & { blockchain: Blockcha
   const send = async (testnet: boolean, body: TransferTerra) => {
     const { fromPrivateKey, ...withdrawal } = body
 
-    if (!withdrawal.fee || Number(withdrawal.fee) <= 0) throw new SdkError({ code: SdkErrorCode.FEE_TOO_SMALL })
+    if (!withdrawal.fee || Number(withdrawal.fee) <= 0)
+      throw new SdkError({ code: SdkErrorCode.FEE_TOO_SMALL })
 
     const account = await ApiServices.ledger.account.getAccountByAccountId(withdrawal.senderAccountId)
     const { id } = await ApiServices.offChain.withdrawal.storeWithdrawal(withdrawal as Withdrawal)
@@ -77,10 +77,14 @@ export const terraOffchainService = (args: SDKArguments & { blockchain: Blockcha
   ) => {
     const txService = terraTxService(args)
     return txService.prepare(testnet, {
-      fromPrivateKey, amount, to, memo, currency, fee,
+      fromPrivateKey,
+      amount,
+      to,
+      memo,
+      currency,
+      fee,
     })
   }
-
 
   return {
     ...abstractBlockchainOffchain(args),
