@@ -1,6 +1,6 @@
 import { EvmBasedKMSServiceArgs } from '@tatumio/shared-blockchain-evm-based'
 import { ChainTransactionKMS } from '@tatumio/shared-core'
-import { PendingTransaction, ApiServices } from '@tatumio/api-client'
+import { ApiServices, PendingTransaction } from '@tatumio/api-client'
 import { abstractBlockchainKms } from '@tatumio/shared-blockchain-abstract'
 
 export const ethKmsService = (args: EvmBasedKMSServiceArgs) => {

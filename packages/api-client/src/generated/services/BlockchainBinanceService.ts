@@ -153,7 +153,7 @@ export class BlockchainBinanceService {
     /**
      * Broadcast signed BNB transaction
      * <h4>5 credits per API call.</h4><br/>
-     * <p>Broadcast signed transaction to Binance blockchain. This method is used internally from Tatum Middleware or Tatum client libraries.
+     * <p>Broadcast signed transaction to Binance blockchain. This method is used internally or Tatum client libraries.
      * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
      *
      * @param requestBody

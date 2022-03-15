@@ -13,6 +13,7 @@ import { abstractSdkNftService } from './services/nft.abstract'
 export interface SDKArguments {
   apiKey: string
   url?: TatumUrl
+  provider?: string
 }
 
 export const abstractSdk = (args: SDKArguments) => {

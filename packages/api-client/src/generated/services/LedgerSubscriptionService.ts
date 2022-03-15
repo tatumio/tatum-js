@@ -108,6 +108,13 @@ export class LedgerSubscriptionService {
      * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
      * <td>20 credits / day / address</td>
      * </tr>
+     * <tr>
+     * <td>Tron</td>
+     * <td>Yes/Yes</td>
+     * <td>Tron, TRC10/TRC20</td>
+     * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
+     * <td>30 credits / day / address</td>
+     * </tr>
      * </table>
      * Request body of the POST request will be JSON object with attributes:<br/>
      * <pre>{

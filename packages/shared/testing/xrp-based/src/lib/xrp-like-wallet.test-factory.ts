@@ -1,5 +1,5 @@
-import { BlockchainTestData, expectHexString } from '@tatumio/shared-testing-common'
 import { SdkWithXrpLikeWalletFunction } from '@tatumio/shared-blockchain-abstract'
+import { expectHexString } from '@tatumio/shared-testing-common'
 
 export const xrpLikeWalletTestFactory = {
   generateWallet: (
@@ -8,9 +8,14 @@ export const xrpLikeWalletTestFactory = {
   ) => {
     describe('XRP-like Wallet', () => {
       it('Generate wallet', async () => {
-        const { address, secret } = await sdk.wallet()
-        expect(address).toMatch(testData.ADDRESS_REGEX)
-        expect(secret).toMatch(testData.SECRET_REGEX)
+        const wallet = sdk.wallet()
+        console.log(wallet)
+        expect(wallet.address).toMatch(testData.ADDRESS_REGEX)
+        if (wallet['secret']) {
+          expect(wallet['secret'] || wallet['privateKey']).toMatch(testData.SECRET_REGEX)
+        } else {
+          expectHexString(wallet['privateKey'])
+        }
       })
     })
   },

@@ -6,9 +6,9 @@ export type XrpWallet = {
     /**
      * Generated account address.
      */
-    address?: string;
+    address: string;
     /**
      * Generated secret for account.
      */
-    secret?: string;
+    secret: string;
 }

@@ -34,6 +34,7 @@ export class LedgerAccountService {
      * <li><b>XRP</b> - xpub is the address field from <a href="#operation/XrpWallet">generate account</a></li>
      * <li><b>XLM</b> - xpub is the address field from <a href="#operation/XlmWallet">generate account</a></li>
      * <li><b>BNB</b> - xpub is the address field from <a href="#operation/BnbGenerateWallet">generate account</a></li>
+     * <li><b>LUNA</b> - xpub is the address field from <a href="#operation/TerraGenerateWallet">generate account</a></li>
      * <li><b>BSC</b> - xpub can be obtained from <a href="#operation/BscGenerateWallet">generate wallet</a></li>
      * <li><b>EGLD</b> - no xpub, use address field from <a href="#operation/EgldGenerateWallet">generate wallet</a></li>
      * <li><b>ALGO</b> - no xpub, use address field from <a href="#operation/AlgoGenerateWallet">generate wallet</a></li>

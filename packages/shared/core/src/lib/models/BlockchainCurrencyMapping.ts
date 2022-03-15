@@ -19,9 +19,8 @@ export const BlockchainCurrencyMapping: Record<
   KLAY: Currency.KLAY,
   DOGE: Currency.DOGE,
   BCH: Currency.BCH,
-  FABRIC: Currency.FABRIC,
-  QUORUM: Currency.QUORUM,
   SOL: Currency.SOL,
+  TERRA: Currency.LUNA,
   TRON: {
     nativeCurrency: Currency.TRON,
     currencies: TRON_CURRENCIES,
@@ -54,8 +53,7 @@ export const BlockchainCurrencyMapping: Record<
   XLM: Currency.XLM,
   VET: Currency.VET,
   NEO: Currency.NEO,
-  SCRYPTA: Currency.LYRA,
-  CARDANO: Currency.ADA,
+  ADA: Currency.ADA,
   ALGO: Currency.ALGO,
   KCS: Currency.KCS,
 }

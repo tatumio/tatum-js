@@ -4,13 +4,14 @@ import { Blockchain } from '@tatumio/shared-core'
 import { kcsTxService } from '../services/kcs.tx'
 import {
   erc20TestFactory,
-  ganacheHelper,
   erc721TestFactory,
+  ganacheHelper,
   multiTokenTestFactory,
   nativeTestFactory,
   smartContractTestFactory,
 } from '@tatumio/shared-testing-evm-based'
 import { Currency } from '@tatumio/api-client'
+
 const blockchain = Blockchain.KCS
 
 describe('KcsSDK - tx', () => {

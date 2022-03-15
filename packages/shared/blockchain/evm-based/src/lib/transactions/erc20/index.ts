@@ -1,10 +1,10 @@
 import { ApproveErc20 } from '@tatumio/api-client'
 import {
   BroadcastFunction,
-  ChainTransferErc20,
-  ChainMintErc20,
   ChainBurnErc20,
   ChainDeployErc20,
+  ChainMintErc20,
+  ChainTransferErc20,
 } from '@tatumio/shared-blockchain-abstract'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'

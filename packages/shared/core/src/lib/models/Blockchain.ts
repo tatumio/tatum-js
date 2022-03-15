@@ -6,8 +6,6 @@ export enum Blockchain {
   SOL = 'SOL',
   HARMONY = 'HARMONY',
   ETH = 'ETH',
-  FABRIC = 'FABRIC',
-  QUORUM = 'QUORUM',
   XRP = 'XRP',
   XLM = 'XLM',
   DOGE = 'DOGE',
@@ -16,24 +14,18 @@ export enum Blockchain {
   BSC = 'BSC',
   POLYGON = 'POLYGON',
   FLOW = 'FLOW',
+  TERRA = 'TERRA',
   QTUM = 'QTUM',
   TRON = 'TRON',
   EGLD = 'EGLD',
   XDC = 'XDC',
-  SCRYPTA = 'SCRYPTA',
-  CARDANO = 'CARDANO',
+  ADA = 'ADA',
   ALGO = 'ALGO',
   KCS = 'KCS',
   KLAY = 'KLAY',
 }
 
-export const BtcBasedBlockchains = [
-  Blockchain.BTC,
-  Blockchain.LTC,
-  Blockchain.DOGE,
-  Blockchain.BCH,
-  Blockchain.SCRYPTA,
-]
+export const BtcBasedBlockchains = [Blockchain.BTC, Blockchain.LTC, Blockchain.DOGE, Blockchain.BCH]
 export const EvmBasedBlockchains = [
   Blockchain.ETH,
   Blockchain.CELO,
@@ -44,12 +36,7 @@ export const EvmBasedBlockchains = [
 ]
 
 // @TODO tmp solution
-export type BtcBasedBlockchain =
-  | Blockchain.BTC
-  | Blockchain.LTC
-  | Blockchain.DOGE
-  | Blockchain.BCH
-  | Blockchain.SCRYPTA
+export type BtcBasedBlockchain = Blockchain.BTC | Blockchain.LTC | Blockchain.DOGE | Blockchain.BCH
 
 export type EvmBasedBlockchain =
   | Blockchain.ETH
