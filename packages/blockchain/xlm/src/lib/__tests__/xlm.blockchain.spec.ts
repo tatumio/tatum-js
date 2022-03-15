@@ -1,7 +1,7 @@
 import * as apiClient from '@tatumio/api-client'
 import { TransferXlmBlockchain, TrustLineXlmBlockchain } from '@tatumio/api-client'
 import {
-  blockchainTestFactory,
+  commonTestFactory,
   REPLACE_ME_WITH_TATUM_API_KEY,
   TEST_DATA,
   TestCasesApiCallMapping,
@@ -51,6 +51,6 @@ describe('XlmSDK - blockchain', () => {
   }
 
   describe('API methods mapping', () => {
-    blockchainTestFactory.apiMethods(blockchain, blockchainFunctionsMapping)
+    commonTestFactory.apiMethods(blockchain, blockchainFunctionsMapping)
   })
 })
