@@ -1,4 +1,5 @@
 {
-  "name": "@tatumio/terra",
-  "version": "0.0.1"
+  "name": "@tatumio/blockchain-terra",
+  "version": "2.0.1-alpha.239",
+  "license": "MIT"
 }
