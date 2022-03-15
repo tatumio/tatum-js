@@ -1,5 +1,5 @@
 import {
-  blockchainTestFactory,
+  commonTestFactory,
   REPLACE_ME_WITH_TATUM_API_KEY,
   TestCasesApiCallMapping,
 } from '@tatumio/shared-testing-common'
@@ -26,6 +26,6 @@ describe('TatumAlgoSDK - node', () => {
   }
 
   describe('API methods mapping', () => {
-    blockchainTestFactory.apiMethods(node, nodeFunctionsMapping)
+    commonTestFactory.apiMethods(node, nodeFunctionsMapping)
   })
 })
