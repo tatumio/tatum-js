@@ -41,11 +41,13 @@ describe('TerraSDK - TX', () => {
       expect(tx.body.messages[0]['to_address']).toBe(ACCOUNT)
       expect(tx.body.messages[0]['amount']._coins.uluna.denom).toBe('uluna')
 
-      const broadcasted = await terraClient({
-        apiKey: REPLACE_ME_WITH_TATUM_API_KEY,
-        provider: 'https://bombay-lcd.terra.dev',
-      }).getClient(true).tx.broadcast(tx)
-      expect(broadcasted['code']).toBe(0)
+      // const broadcasted = await terraClient({
+      //   apiKey: REPLACE_ME_WITH_TATUM_API_KEY,
+      //   provider: 'https://bombay-lcd.terra.dev',
+      // })
+      //   .getClient(true)
+      //   .tx.broadcast(tx)
+      // expect(broadcasted['code']).toBe(0)
     })
 
     it('secret does not match', async () => {
