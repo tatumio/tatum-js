@@ -15,15 +15,15 @@ export const terraTxService = (args: SDKArguments) => {
     switch (body.currency) {
       case Currency.LUNA_KRT:
         amount.ukrt = new BigNumber(body.amount).multipliedBy(1000000).toNumber()
-        fee.ukrt = new BigNumber(body.fee || 200000).multipliedBy(1000000).toNumber()
+        fee.ukrt = new BigNumber(body.fee || '20').multipliedBy(1000000).toNumber()
         break
       case Currency.LUNA:
         amount.uluna = new BigNumber(body.amount).multipliedBy(1000000).toNumber()
-        fee.uluna = new BigNumber(body.fee || 200000).multipliedBy(1000000).toNumber()
+        fee.uluna = new BigNumber(body.fee || '0.02').multipliedBy(1000000).toNumber()
         break
       case Currency.LUNA_UST:
         amount.uust = new BigNumber(body.amount).multipliedBy(1000000).toNumber()
-        fee.uust = new BigNumber(body.fee || 200000).multipliedBy(1000000).toNumber()
+        fee.uust = new BigNumber(body.fee || '0.02').multipliedBy(1000000).toNumber()
         break
     }
     try {
