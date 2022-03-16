@@ -4,7 +4,7 @@ import { abstractBlockchainOffchain } from '@tatumio/shared-blockchain-abstract'
 import { SDKArguments, SdkError, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { terraTxService } from './terra.tx'
 
-type LUNA_ASSETS = 'LUNA' | 'LUNA_UST' | 'LUNA_KRT'
+type LUNA_ASSETS = 'LUNA' | 'LUNA_USD' | 'LUNA_KRW'
 
 export const terraOffchainService = (args: SDKArguments & { blockchain: Blockchain }) => {
   /**
