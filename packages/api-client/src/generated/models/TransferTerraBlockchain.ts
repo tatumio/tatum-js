@@ -10,7 +10,7 @@ export type TransferTerraBlockchain = {
     /**
      * Currency to transfer from Binance Blockchain Account.
      */
-    currency: 'LUNA' | 'LUNA_UST' | 'LUNA_KRT';
+    currency: 'LUNA' | 'LUNA_USD' | 'LUNA_KRW';
     /**
      * Amount to be sent in currency.
      */
