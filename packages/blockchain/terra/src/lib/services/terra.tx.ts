@@ -29,7 +29,7 @@ export const terraTxService = (args: SDKArguments) => {
     try {
       const tx = await lcd.wallet(key).createAndSignTx({
         memo: body.memo,
-        fee: new Fee(parseInt(body.fee || '200000'), fee),
+        fee: new Fee(200000, fee),
         msgs: [new MsgSend(key.accAddress, body.to, amount)],
       })
       return Buffer.from(tx.toBytes()).toString('hex')
