@@ -59,7 +59,7 @@
     "stellar-sdk": "^9.1.0",
     "tronweb": "^4.1.0",
     "tslib": "^2.0.0",
-    "url-parse": "^1.5.9",
+    "url-parse": "^1.5.10",
     "web3": "^1.7.0",
     "web3-core": "^1.7.0",
     "web3-eth": "^1.7.0",
