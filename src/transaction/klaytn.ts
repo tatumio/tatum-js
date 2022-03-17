@@ -90,7 +90,7 @@ export const sendKlaytnTransaction = async (testnet: boolean, body: TransferErc2
 };
 
 export const prepareKlaytnClient = (testnet: boolean, provider?: string, fromPrivateKey?: string) => {
-  const client = new Caver(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/klay/web3/${process.env.TATUM_API_KEY}`);
+  const client = new Caver(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/blockchain/node/KLAY/${process.env.TATUM_API_KEY}`);
   if (fromPrivateKey) {
     client.klay.accounts.wallet.clear()
     client.klay.accounts.wallet.add(fromPrivateKey)
