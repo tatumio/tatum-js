@@ -119,6 +119,7 @@ export const signKlayKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
   if (!transactionConfig.gasPrice || transactionConfig.gasPrice === '0' || transactionConfig.gasPrice === 0 || transactionConfig.gasPrice === '0x0') {
     transactionConfig.gasPrice = await klayGetGasPriceInWei(client)
   }
+  transactionConfig.from = client.klay.accounts.wallet.getAccount(0).address
   // @ts-ignore
   return (await client.klay.accounts.signTransaction(transactionConfig, fromPrivateKey)).rawTransaction as string
 }
