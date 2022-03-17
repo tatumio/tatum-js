@@ -12,7 +12,7 @@ export type TransferTerraKMS = {
      */
     address: string;
     /**
-     * Amount to be sent, in LUNA, UST or KRT.
+     * Amount to be sent, in LUNA, LUNA_USD or LUNA_KRW.
      */
     amount: string;
     /**
