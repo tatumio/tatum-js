@@ -1,4 +1,4 @@
-import { TATUM_API_CONSTANTS } from '@tatumio/api-client'
+import { Currency, TATUM_API_CONSTANTS } from '@tatumio/api-client'
 import { LCDClient } from '@terra-money/terra.js'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 
@@ -11,7 +11,7 @@ export const terraClient = (args: SDKArguments): TerraClient => {
     getClient(testnet: boolean): LCDClient {
       const url =
         args.provider ||
-        `${process.env['TATUM_API_URL'] || TATUM_API_CONSTANTS.URL}/v3/blockchain/node/terra/${args.apiKey}`
+        `${process.env['TATUM_API_URL'] || TATUM_API_CONSTANTS.URL}/v3/blockchain/node/${Currency.LUNA}/${args.apiKey}`
       return new LCDClient({ URL: url, chainID: testnet ? 'bombay-12' : 'columbus-5' })
     },
   }
