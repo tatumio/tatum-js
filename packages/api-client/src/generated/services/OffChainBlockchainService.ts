@@ -1455,7 +1455,7 @@ export class OffChainBlockchainService {
     /**
      * Send LUNA from Tatum ledger to blockchain
      * <h4>10 credits per API call.</h4><br/><p>
-     * <p>Send LUNA, KRW or UST from virtual account to blockchain. This will create Tatum internal withdrawal request with ID. When every system works as expected,
+     * <p>Send LUNA, KRW or USD from virtual account to blockchain. This will create Tatum internal withdrawal request with ID. When every system works as expected,
      * withdrawal request is marked as complete and transaction id is assigned to it.
      * <ul>
      * <li>If Terra server connection is unavailable, withdrawal request is cancelled.</li>
