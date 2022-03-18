@@ -115,12 +115,38 @@ export async function klaytnTxWithSignatureIdExample(): Promise<void> {
   })
 
   // ERC721(NFT)
+  const preparedDeployGeneralErc721Transaction = await klaytnSDK.nft.prepare.deploySignedTransaction({
+    chain: 'KLAY',
+    name: 'MY_TOKEN',
+    symbol: '1oido3id3',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
+
+  const sentDeployGeneralErc721Transaction = await klaytnSDK.nft.send.deploySignedTransaction({
+    chain: 'KLAY',
+    name: 'MY_TOKEN',
+    symbol: '1oido3id3',
+    signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+    nonce: 46533715.43995557,
+    fee: {
+      gasLimit: '326452',
+      gasPrice: '20',
+    },
+  })
+  
   const preparedDeployErc721Transaction = await klaytnSDK.nft.prepare.deploySignedTransaction({
     chain: 'KLAY',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
     signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
     nonce: 46533715.43995557,
+    provenance: true,
+    publicMint: true,
     fee: {
       gasLimit: '326452',
       gasPrice: '20',
@@ -133,6 +159,8 @@ export async function klaytnTxWithSignatureIdExample(): Promise<void> {
     symbol: '1oido3id3',
     signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
     nonce: 46533715.43995557,
+    provenance: true,
+    publicMint: true,
     fee: {
       gasLimit: '326452',
       gasPrice: '20',

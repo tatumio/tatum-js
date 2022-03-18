@@ -31,6 +31,18 @@ export async function bscNftExample() {
     '0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326',
   )
 
+  const deployHashGeneral = await bscSDK.nft.deployNFTSmartContract({
+    chain: 'BSC',
+    name: 'My ERC721',
+    symbol: 'ERC_SYMBOL',
+    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
+    nonce: 0,
+    fee: {
+      gasLimit: '40000',
+      gasPrice: '20',
+    },
+  })
+
   const deployHash = await bscSDK.nft.deployNFTSmartContract({
     chain: 'BSC',
     name: 'My ERC721',

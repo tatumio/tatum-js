@@ -63,6 +63,15 @@ export async function celoNftExample() {
     feeCurrency: 'CELO',
   })
 
+  const deployHashGeneral = await celoSDK.nft.deployNFTSmartContract({
+    chain: 'CELO',
+    name: 'My ERC721',
+    symbol: 'ERC_SYMBOL',
+    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
+    nonce: 0,
+    feeCurrency: 'CUSD',
+  })
+
   const deployHash = await celoSDK.nft.deployNFTSmartContract({
     chain: 'CELO',
     name: 'My ERC721',

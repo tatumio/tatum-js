@@ -46,6 +46,18 @@ export async function oneNftExample() {
     nonce: 0,
   })
 
+  const deployHashGeneral = await oneSDK.nft.deployNFTSmartContract({
+    chain: 'ONE',
+    name: 'My ERC721',
+    symbol: 'ERC_SYMBOL',
+    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
+    nonce: 0,
+    fee: {
+      gasLimit: '40000',
+      gasPrice: '20',
+    },
+  })
+
   const deployHash = await oneSDK.nft.deployNFTSmartContract({
     chain: 'ONE',
     name: 'My ERC721',

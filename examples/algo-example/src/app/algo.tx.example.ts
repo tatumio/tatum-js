@@ -21,12 +21,30 @@ export async function algoTxWithPrivateKeyExample(): Promise<void> {
     account: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
   })
 
+  const preparedDeployGeneralNFTTransaction = await algoSDK.nft.prepare.createNFTSignedTransaction({
+    fromPrivateKey:
+      '72TCV5BRQPBMSAFPYO3CPWVDBYWNGAYNMTW5QHENOMQF7I6QLNMJWCJZ7A3V5YKD7QD6ZZPEHG2PV2ZVVEDDO6BCRGXWIL3DIUMSUCI',
+    name: 'SomeArt',
+    symbol: 'ERC_SYMBOL',
+    url: 'google.com',
+  })
+
+  const sentDeployGeneralNFTTransaction = await algoSDK.nft.send.createNFTSignedTransaction({
+    fromPrivateKey:
+      '72TCV5BRQPBMSAFPYO3CPWVDBYWNGAYNMTW5QHENOMQF7I6QLNMJWCJZ7A3V5YKD7QD6ZZPEHG2PV2ZVVEDDO6BCRGXWIL3DIUMSUCI',
+    name: 'SomeArt',
+    symbol: 'ERC_SYMBOL',
+    url: 'google.com',
+  })
+
   const preparedDeployNFTTransaction = await algoSDK.nft.prepare.createNFTSignedTransaction({
     fromPrivateKey:
       '72TCV5BRQPBMSAFPYO3CPWVDBYWNGAYNMTW5QHENOMQF7I6QLNMJWCJZ7A3V5YKD7QD6ZZPEHG2PV2ZVVEDDO6BCRGXWIL3DIUMSUCI',
     name: 'SomeArt',
     symbol: 'ERC_SYMBOL',
     url: 'google.com',
+    provenance: true,
+    publicMint: true,
   })
 
   const sentDeployNFTTransaction = await algoSDK.nft.send.createNFTSignedTransaction({
@@ -35,6 +53,8 @@ export async function algoTxWithPrivateKeyExample(): Promise<void> {
     name: 'SomeArt',
     symbol: 'ERC_SYMBOL',
     url: 'google.com',
+    provenance: true,
+    publicMint: true,
   })
 
   const preparedTransferSignedTransaction = await algoSDK.nft.prepare.transferNFTSignedTransaction({
