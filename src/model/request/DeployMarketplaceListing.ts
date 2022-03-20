@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsIn, IsNotEmpty, IsNumber, IsOptional, IsPositive, Length, Max, Min } from 'class-validator';
+import { IsIn, IsNotEmpty, IsNumber, IsOptional, Length, Max, Min } from 'class-validator';
 import { HasDecimalPlaces } from '../validation/HasDecimalPlaces';
 import { Currency } from './Currency';
 import { Fee } from './Fee';
@@ -13,7 +13,7 @@ export class DeployMarketplaceListing extends PrivateKeyOrSignatureId {
 
   @IsNotEmpty()
   @IsNumber()
-  @IsPositive()
+  @Min(0)
   @Max(10000)
   @HasDecimalPlaces(0)
   public marketplaceFee: number;
