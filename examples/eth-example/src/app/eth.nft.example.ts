@@ -44,7 +44,7 @@ export async function ethNftExample() {
   const mintedHash = await ethSDK.nft.mintNFT({
     chain: 'ETH',
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    url: 'https://my_token_data.com'
+    url: 'https://my_token_data.com',
   })
 
   const mintedWithMinterHash = await ethSDK.nft.mintNFT({
@@ -52,7 +52,7 @@ export async function ethNftExample() {
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     url: 'https://my_token_data.com',
     tokenId: '100000',
-    minter: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85'
+    minter: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
   })
 
   const nftAccountBalance = await ethSDK.nft.getNFTAccountBalance(

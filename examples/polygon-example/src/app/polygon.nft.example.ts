@@ -50,7 +50,7 @@ export async function polygonNftExample() {
   const mintedHash = await polygonSDK.nft.mintNFT({
     chain: 'MATIC',
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    url: 'https://my_token_data.com'
+    url: 'https://my_token_data.com',
   })
 
   const mintedWithMinterHash = await polygonSDK.nft.mintNFT({
@@ -58,7 +58,7 @@ export async function polygonNftExample() {
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     url: 'https://my_token_data.com',
     tokenId: '100000',
-    minter: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85'
+    minter: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
   })
 
   const deployHash = await polygonSDK.nft.deployNFTSmartContract({
