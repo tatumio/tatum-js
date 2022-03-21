@@ -78,6 +78,9 @@ export async function bscNftExample() {
 
   const minted = await bscSDK.nft.mintNFT({
     chain: 'BSC',
+    tokenId: '100000',
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     url: 'https://my_token_data.com',
   })
@@ -87,6 +90,8 @@ export async function bscNftExample() {
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     url: 'https://my_token_data.com',
     tokenId: '100000',
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
     minter: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
   })
 
