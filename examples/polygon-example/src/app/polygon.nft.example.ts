@@ -56,6 +56,12 @@ export async function polygonNftExample() {
     url: 'https://my_token_data.com',
   })
 
+  const mintedExpressHash = await polygonSDK.nft.mintNFT({
+    chain: 'MATIC',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    url: 'https://my_token_data.com',
+  })
+
   const mintedWithMinterHash = await polygonSDK.nft.mintNFT({
     chain: 'MATIC',
     tokenId: '100000',

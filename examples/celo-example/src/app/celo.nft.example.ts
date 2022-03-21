@@ -57,6 +57,12 @@ export async function celoNftExample() {
     feeCurrency: 'CELO',
   })
 
+  const mintedExpress = await celoSDK.nft.mintNFT({
+    chain: 'CELO',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    url: 'https://my_token_data.com',
+  })
+
   const mintedWithMinterHash = await celoSDK.nft.mintNFT({
     chain: 'CELO',
     tokenId: '100000',
