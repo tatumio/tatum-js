@@ -40,6 +40,12 @@ export async function oneNftExample() {
     url: 'https://my_token_data.com',
   })
 
+  const mintedExpressHash = await oneSDK.nft.mintNFT({
+    chain: 'ONE',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    url: 'https://my_token_data.com',
+  })
+
   const mintedWithMinterHash = await oneSDK.nft.mintNFT({
     chain: 'ONE',
     tokenId: '100000',
