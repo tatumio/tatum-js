@@ -475,6 +475,13 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
     amount: '1',
   })
 
+  const custodialWalletBatchFeesCovered = await celoSDK.custodial.generateCustodialBatch({
+    chain: 'CELO',
+    batchCount: 100,
+    owner: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
+    feesCovered: true,
+  })
+
   const preparedCustodialWalletBatch = await celoSDK.custodial.prepare.custodialWalletBatch({
     chain: 'CELO',
     feeCurrency: 'CELO',

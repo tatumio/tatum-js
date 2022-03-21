@@ -54,7 +54,6 @@ describe('EthSDK - tx', () => {
         erc20TestFactory.prepare.transferSignedTransaction(ethTxService.erc20, inmemoryBlockchain.accounts)
       })
 
-      // TODO:  Returned error: execution reverted
       xdescribe('mintSignedTransaction', () => {
         erc20TestFactory.prepare.mintSignedTransaction(ethTxService.erc20, TEST_DATA.ETH)
       })
@@ -79,6 +78,10 @@ describe('EthSDK - tx', () => {
 
       describe('mintSignedTransaction', () => {
         erc721TestFactory.prepare.mintSignedTransaction(sdk.nft, TEST_DATA.ETH, Currency.ETH)
+      })
+
+      describe('mintSignedTransactionMinter', () => {
+        erc721TestFactory.prepare.mintSignedTransactionMinter(sdk.nft, TEST_DATA.ETH, Currency.ETH)
       })
 
       describe('burnSignedTransaction', () => {
@@ -237,6 +240,10 @@ describe('EthSDK - tx', () => {
 
       xdescribe('approve from custodial wallet', () => {
         custodialTestFactory.prepare.approveFromCustodialWallet(sdk.custodial, TEST_DATA.ETH, 'ETH')
+      })
+
+      xdescribe('generate batch custodial wallet with feesCovered', () => {
+        custodialTestFactory.prepare.custodialWalletBatchWithFeesCovered(sdk.custodial, TEST_DATA.ETH, 'ETH')
       })
 
       xdescribe('generate batch custodial wallet', () => {

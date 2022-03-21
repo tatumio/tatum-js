@@ -142,6 +142,10 @@ describe('OneSDK - tx', () => {
         erc721TestFactory.prepare.mintSignedTransaction(sdk.nft, TEST_DATA.ONE, Currency.ONE)
       })
 
+      describe('mintSignedTransactionMinter', () => {
+        erc721TestFactory.prepare.mintSignedTransactionMinter(sdk.nft, TEST_DATA.ONE, Currency.ONE)
+      })
+
       describe('burnSignedTransaction', () => {
         erc721TestFactory.prepare.burnSignedTransaction(sdk.nft, TEST_DATA.ONE, Currency.ONE)
       })
@@ -236,6 +240,10 @@ describe('OneSDK - tx', () => {
 
       xdescribe('generate batch custodial wallet', () => {
         custodialTestFactory.prepare.custodialWalletBatch(sdk.custodial, TEST_DATA.ONE, 'ONE')
+      })
+
+      describe('generate batch custodial wallet with feesCovered', () => {
+        custodialTestFactory.prepare.custodialWalletBatchWithFeesCovered(sdk.custodial, TEST_DATA.ONE, 'ONE')
       })
     })
   })

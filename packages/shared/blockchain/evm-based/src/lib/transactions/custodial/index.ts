@@ -84,6 +84,9 @@ const custodialWalletBatch = async (
   testnet?: boolean,
   provider?: string,
 ) => {
+  if ("feesCovered" in body) {
+    throw new Error('Use the sdk.custodial.generateCustodialBatch method with feesCovered.')
+  }
   const { params, methodName, bodyWithContractAddress } =
     await evmBasedCustodial().prepareCustodialWalletBatchAbstract(body, web3, testnet)
   return await evmBasedSmartContract(web3).helperPrepareSCCall(

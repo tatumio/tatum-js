@@ -35,15 +35,17 @@ export async function kcsNftExample() {
     chain: 'KCS',
     tokenId: '100000',
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    erc20: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     url: 'https://my_token_data.com',
-    authorAddresses: ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
-    provenance: true,
-    cashbackValues: ['0.5'],
-    fixedValues: ['0.5'],
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 0,
+  })
+
+  const mintedWithMinterHash = await kcsSDK.nft.mintNFT({
+    chain: 'KCS',
+    to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    url: 'https://my_token_data.com',
+    tokenId: '100000',
+    minter: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
   })
 
   const deployHash = await kcsSDK.nft.deployNFTSmartContract({
