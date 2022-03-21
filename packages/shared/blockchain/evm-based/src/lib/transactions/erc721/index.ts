@@ -14,11 +14,16 @@ import { Erc721_Provenance, Erc721Token } from '../../contracts'
 import { EvmBasedWeb3 } from '../../services/evm-based.web3'
 import { evmBasedUtils } from '../../evm-based.utils'
 import BigNumber from 'bignumber.js'
+import { ApiServices, CancelablePromise } from '@tatumio/api-client'
 
 const mintSignedTransaction = async (body: ChainMintErc721, web3: EvmBasedWeb3, provider?: string) => {
-  const { contractAddress, nonce, signatureId, fee, to, tokenId, url, fromPrivateKey } = body
+  const { contractAddress, nonce, signatureId, fee, to, tokenId, url, fromPrivateKey, minter, chain } = body
   const client = web3.getClient(provider, fromPrivateKey)
   const contract = new client.eth.Contract(Erc721Token.abi as any, contractAddress)
+
+  if (minter) {
+    throw new Error('Use the sdk.nft.mintNFT method with minter.')
+  }
 
   if (contractAddress) {
     const tx: TransactionConfig = {

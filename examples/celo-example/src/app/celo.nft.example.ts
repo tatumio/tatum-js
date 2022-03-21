@@ -49,18 +49,18 @@ export async function celoNftExample() {
 
   const mintedHash = await celoSDK.nft.mintNFT({
     chain: 'CELO',
-    tokenId: '100000',
-    to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    erc20: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     url: 'https://my_token_data.com',
-    authorAddresses: ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
-    provenance: true,
-    cashbackValues: ['0.5'],
-    fixedValues: ['0.5'],
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 0,
     feeCurrency: 'CELO',
+  })
+
+  const mintedWithMinterHash = await celoSDK.nft.mintNFT({
+    chain: 'CELO',
+    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+    url: 'https://my_token_data.com',
+    tokenId: '100000',
+    minter: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    feeCurrency: 'CELO'
   })
 
   const deployHash = await celoSDK.nft.deployNFTSmartContract({

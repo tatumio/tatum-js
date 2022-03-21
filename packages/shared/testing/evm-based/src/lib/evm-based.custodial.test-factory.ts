@@ -201,5 +201,33 @@ export const custodialTestFactory = {
         expectHexString(result)
       })
     },
+
+    custodialWalletBatchWithFeesCovered: (
+      sdk: SdkWithCustodialFunctions,
+      testData: BlockchainTestData,
+      chain: 'ETH' | 'ONE' | 'BSC' | 'MATIC' | 'XDC',
+    ) => {
+      const provider = testData.TESTNET?.PROVIDER
+      const fromPrivateKey = testData.TESTNET?.MULTITOKEN?.PRIVATE_KEY
+
+      it('invalid with feesCovered', async () => {
+        try {
+          await sdk.prepare.custodialWalletBatch(
+            {
+              chain,
+              fromPrivateKey,
+              owner: '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
+              feesCovered: true,
+              batchCount: 10,
+            },
+            true,
+            provider,
+          )
+          fail()
+        } catch (e: any) {
+          expect(e.message).toMatch('Use the sdk.custodial.generateCustodialBatch method with feesCovered.')
+        }
+      })
+    },
   },
 }
