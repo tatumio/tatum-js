@@ -44,6 +44,7 @@ export enum Currency {
   TRON = 'TRON',
   LEO = 'LEO',
   LINK = 'LINK',
+  LISK = 'LISK',
   WBTC = 'WBTC',
   UNI = 'UNI',
   SOL = 'SOL',
