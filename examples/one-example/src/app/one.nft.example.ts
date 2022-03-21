@@ -34,7 +34,7 @@ export async function oneNftExample() {
   const mintedHash = await oneSDK.nft.mintNFT({
     chain: 'ONE',
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    url: 'https://my_token_data.com'
+    url: 'https://my_token_data.com',
   })
 
   const mintedWithMinterHash = await oneSDK.nft.mintNFT({
@@ -42,7 +42,7 @@ export async function oneNftExample() {
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     url: 'https://my_token_data.com',
     tokenId: '100000',
-    minter: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85'
+    minter: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
   })
 
   const deployHash = await oneSDK.nft.deployNFTSmartContract({

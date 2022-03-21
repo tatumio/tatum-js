@@ -84,7 +84,7 @@ const custodialWalletBatch = async (
   testnet?: boolean,
   provider?: string,
 ) => {
-  if ("feesCovered" in body) {
+  if ('feesCovered' in body) {
     throw new Error('Use the sdk.custodial.generateCustodialBatch method with feesCovered.')
   }
   const { params, methodName, bodyWithContractAddress } =

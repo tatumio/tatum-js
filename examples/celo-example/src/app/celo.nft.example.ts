@@ -60,7 +60,7 @@ export async function celoNftExample() {
     url: 'https://my_token_data.com',
     tokenId: '100000',
     minter: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    feeCurrency: 'CELO'
+    feeCurrency: 'CELO',
   })
 
   const deployHash = await celoSDK.nft.deployNFTSmartContract({

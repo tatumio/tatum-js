@@ -272,7 +272,11 @@ describe('PolygonSDK - tx', () => {
       })
 
       describe('generate batch custodial wallet with feesCovered', () => {
-        custodialTestFactory.prepare.custodialWalletBatchWithFeesCovered(sdk.custodial, TEST_DATA.POLYGON, 'MATIC')
+        custodialTestFactory.prepare.custodialWalletBatchWithFeesCovered(
+          sdk.custodial,
+          TEST_DATA.POLYGON,
+          'MATIC',
+        )
       })
     })
   })
