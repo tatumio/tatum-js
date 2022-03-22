@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum",
-  "version": "1.33.7",
+  "version": "1.34.1",
   "description": "Tatum API client allows browsers and Node.js clients to interact with Tatum API.",
   "main": "dist/src/index.js",
   "repository": "https://github.com/tatumio/tatum-js",
@@ -55,7 +55,7 @@
     "bitcoinjs-lib": "^5.2.0",
     "bitcore-lib": "8.25.8",
     "bitcore-lib-doge": "8.25.7",
-    "bitcore-lib-ltc": "8.25.8",
+    "bitcore-lib-ltc": "8.25.27",
     "bn.js": "^5.2.0",
     "borsh": "^0.6.0",
     "cardano-crypto.js": "^6.0.0",
