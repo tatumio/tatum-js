@@ -6,8 +6,7 @@ jest.setTimeout(99999)
 
 describe('SolanaSDK - tx', () => {
   const sdk = TatumSolanaSDK({
-    apiKey: 'REPLACE_ME_WITH_TATUM_API_KEY',
-    provider: 'https://api.devnet.solana.com',
+    apiKey: REPLACE_ME_WITH_TATUM_API_KEY,
   })
 
   afterEach(() => {
