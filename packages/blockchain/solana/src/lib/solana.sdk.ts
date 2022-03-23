@@ -19,6 +19,7 @@ export const TatumSolanaSDK = (args: SDKArguments) => {
 
   return {
     ...abstractSdk,
+    web3,
     wallet: solanaWallet(),
     httpDriver: async (request: Web3Request): Promise<Web3Response> => {
       return api.solanaWeb3Driver(args.apiKey, { ...request, jsonrpc: '2.0' })
