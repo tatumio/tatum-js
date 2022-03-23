@@ -11,7 +11,7 @@ describe('SolanaSDK - tx', () => {
     jest.clearAllMocks()
   })
 
-  it('should send SOL', async () => {
+  it.skip('should send SOL', async () => {
     const tx = await sdk.transaction.send({
       from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
       fromPrivateKey:
@@ -42,7 +42,7 @@ describe('SolanaSDK - tx', () => {
   //   )
   // })
 
-  it('should mint NFT', async () => {
+  it.skip('should mint NFT', async () => {
     console.log(
       await sdk.transaction.mintNft(
         {
@@ -56,7 +56,7 @@ describe('SolanaSDK - tx', () => {
     )
   })
 
-  it('should transfer NFT', async () => {
+  it.skip('should transfer NFT', async () => {
     console.log(
       await sdk.transaction.transferNft(
         {
