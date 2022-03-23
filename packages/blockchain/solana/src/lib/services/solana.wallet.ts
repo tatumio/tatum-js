@@ -8,7 +8,9 @@ export const solanaWallet = (): SdkWithXrpLikeWalletFunction => {
     wallet: (privateKey?: string): XrpWallet | XlmWallet | TerraWallet => {
       let keypair = Keypair.generate()
       if (privateKey) {
-        keypair = Keypair.fromSecretKey(privateKey.length === 128 ? Buffer.from(privateKey, 'hex') : decode(privateKey))
+        keypair = Keypair.fromSecretKey(
+          privateKey.length === 128 ? Buffer.from(privateKey, 'hex') : decode(privateKey),
+        )
       }
       return { address: keypair.publicKey.toBase58(), privateKey: encode(keypair.secretKey) }
     },

@@ -19,7 +19,9 @@ export const solanaWeb3 = (provider?: string) => {
       return new Connection(url, 'confirmed')
     },
     generateKeyPair(privateKey: string): Keypair {
-      return Keypair.fromSecretKey(privateKey.length === 128 ? Buffer.from(privateKey, 'hex') : decode(privateKey))
+      return Keypair.fromSecretKey(
+        privateKey.length === 128 ? Buffer.from(privateKey, 'hex') : decode(privateKey),
+      )
     },
   }
 }
