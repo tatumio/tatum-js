@@ -1,5 +1,6 @@
 import { TatumSolanaSDK } from './solana.sdk'
 import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testing-common'
+import { TerraWallet } from '@tatumio/api-client'
 
 describe('TatumSolanaSDK', () => {
   jest.setTimeout(99999)
@@ -144,7 +145,7 @@ describe('TatumSolanaSDK', () => {
 
   describe('wallet', () => {
     it('should generate SOL wallet', async () => {
-      const wallet = await sdk.wallet()
+      const wallet = (await sdk.wallet.wallet()) as TerraWallet
       expect(wallet.privateKey).toBeDefined()
       expect(wallet.address).toBeDefined()
     })
