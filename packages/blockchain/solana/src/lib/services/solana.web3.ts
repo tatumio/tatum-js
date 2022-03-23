@@ -1,5 +1,6 @@
 import { Connection, Keypair } from '@solana/web3.js'
 import { TATUM_API_CONSTANTS } from '@tatumio/api-client'
+// @ts-ignore
 import { decode } from 'base-58'
 
 export interface SolanaWeb3 {

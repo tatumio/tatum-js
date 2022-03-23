@@ -1,6 +1,7 @@
 import { TerraWallet, XlmWallet, XrpWallet } from '@tatumio/api-client'
 import { SdkWithXrpLikeWalletFunction } from '@tatumio/shared-blockchain-abstract'
 import { Keypair } from '@solana/web3.js'
+// @ts-ignore
 import { decode, encode } from 'base-58'
 
 export const solanaWallet = (): SdkWithXrpLikeWalletFunction => {
