@@ -64,7 +64,7 @@
     "web3": "^1.7.0",
     "web3-core": "^1.7.0",
     "web3-eth": "^1.7.0",
-    "web3-utils": "^1.7.0"
+    "web3-utils": "^1.7.1"
   },
   "devDependencies": {
     "@nrwl/cli": "13.7.2",
