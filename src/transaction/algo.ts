@@ -65,12 +65,12 @@ export const prepareAlgoSignedTransaction = async (testnet: boolean, tx: AlgoTra
     const txn = algosdk.makePaymentTxnWithSuggestedParams(
         tx.from,
         tx.to,
-        Number(tx.amount) * 1000000,
+        new BigNumber(tx.amount).multipliedBy(1000000).toNumber(),
         undefined,
         note,
         {
             ...params,
-            fee: Number(tx.fee) * 1000000,
+            fee: new BigNumber(tx.fee).multipliedBy(1000000).toNumber(),
             flatFee: true
         }
     );
@@ -78,8 +78,7 @@ export const prepareAlgoSignedTransaction = async (testnet: boolean, tx: AlgoTra
         return JSON.stringify(txn);
     }
     const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
-    const signedTxn = txn.signTxn(secretKey);
-    return signedTxn;
+    return txn.signTxn(secretKey);
 }
 
 /**
@@ -107,10 +106,10 @@ export const signAlgoKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
         throw Error('Unsupported chain.')
     }
     const decoder = new base32.Decoder({ type: 'rfc4648' })
-    let txn = JSON.parse(tx.serializedTransaction);
+    const txn = JSON.parse(tx.serializedTransaction);
     txn.from = algosdk.encodeAddress(new Uint8Array(Object.values(txn.from.publicKey)));
     txn.to = algosdk.encodeAddress(new Uint8Array(Object.values(txn.to.publicKey)));
-    txn.note = new Uint8Array(Object.values(txn.note));
+    txn.note = new Uint8Array(Object.values(txn.note || ''));
     txn.lease = undefined;
     if (txn.tag) {
         if (txn.tag.data) {
@@ -141,8 +140,7 @@ export const signAlgoKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
     }
     const _txn = new (algosdk.Transaction)(txn);
     const secretKey = new Uint8Array(decoder.write(fromPrivateKey).buf);
-    const signedTxn = _txn.signTxn(secretKey);
-    return signedTxn;
+    return _txn.signTxn(secretKey);
 }
 
 /**
@@ -174,8 +172,7 @@ export const prepareAlgoCreateNFTSignedTransaction = async (testnet: boolean, tx
         return JSON.stringify(txn);
     }
     const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
-    const signedTxn = txn.signTxn(secretKey);
-    return signedTxn;
+    return txn.signTxn(secretKey);
 }
 
 /**
@@ -205,9 +202,9 @@ export const prepareAlgoTransferNFTSignedTransaction = async (testnet: boolean, 
         tx.to,
         undefined,
         undefined,
-        Number(tx.value),
+        new BigNumber(tx.value as string).toNumber(),
         undefined,
-        Number(tx.contractAddress),
+        new BigNumber(tx.contractAddress).toNumber(),
         params,
         undefined
     )
@@ -215,8 +212,7 @@ export const prepareAlgoTransferNFTSignedTransaction = async (testnet: boolean, 
         return JSON.stringify(txn);
     }
     const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
-    const signedTxn = txn.signTxn(secretKey);
-    return signedTxn;
+    return txn.signTxn(secretKey);
 }
 
 /**
@@ -244,7 +240,7 @@ export const prepareAlgoBurnNFTSignedTransaction = async (testnet: boolean, tx: 
     const txn = algosdk.makeAssetDestroyTxnWithSuggestedParams(
         tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
         undefined,
-        Number(tx.contractAddress),
+        new BigNumber(tx.contractAddress).toNumber(),
         params,
         undefined
     )
@@ -252,8 +248,7 @@ export const prepareAlgoBurnNFTSignedTransaction = async (testnet: boolean, tx: 
         return JSON.stringify(txn);
     }
     const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
-    const signedTxn = txn.signTxn(secretKey);
-    return signedTxn;
+    return txn.signTxn(secretKey);
 }
 
 /**
@@ -278,11 +273,11 @@ export const prepareAlgoCreateFractionalNFTSignedTransaction = async (testnet: b
     const algodClient = getAlgoClient(testnet, provider);
     const params = await algodClient.getTransactionParams().do();
     const decoder = new base32.Decoder({ type: 'rfc4648' })
-    const v = Math.floor(Math.log10(Number(tx.amount)));
+    const v = Math.floor(Math.log10(new BigNumber(tx.amount).toNumber()));
     const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
         tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
         undefined,
-        10 ** v,
+        new BigNumber(10).pow(v).toNumber(),
         v,
         false,
         tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
@@ -299,8 +294,7 @@ export const prepareAlgoCreateFractionalNFTSignedTransaction = async (testnet: b
         return JSON.stringify(txn);
     }
     const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
-    const signedTxn = txn.signTxn(secretKey);
-    return signedTxn;
+    return txn.signTxn(secretKey);
 }
 
 /**
@@ -330,9 +324,9 @@ export const prepareAlgoTransferFractionalNFTSignedTransaction = async (testnet:
         tx.to,
         undefined,
         undefined,
-        Number(tx.amount),
+        new BigNumber(tx.amount).toNumber(),
         undefined,
-        Number(tx.contractAddress),
+        new BigNumber(tx.contractAddress).toNumber(),
         params,
         undefined
     )
@@ -340,8 +334,7 @@ export const prepareAlgoTransferFractionalNFTSignedTransaction = async (testnet:
         return JSON.stringify(txn);
     }
     const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
-    const signedTxn = txn.signTxn(secretKey);
-    return signedTxn;
+    return txn.signTxn(secretKey);
 }
 
 /**
@@ -369,7 +362,7 @@ export const prepareAlgoBurnFractionalNFTSignedTransaction = async (testnet: boo
     const txn = algosdk.makeAssetDestroyTxnWithSuggestedParams(
         tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
         undefined,
-        Number(tx.contractAddress),
+        new BigNumber(tx.contractAddress).toNumber(),
         params,
         undefined
     )
@@ -377,8 +370,7 @@ export const prepareAlgoBurnFractionalNFTSignedTransaction = async (testnet: boo
         return JSON.stringify(txn);
     }
     const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
-    const signedTxn = txn.signTxn(secretKey);
-    return signedTxn;
+    return txn.signTxn(secretKey);
 }
 
 /**
@@ -406,8 +398,8 @@ export const prepareAlgoCreateFTSignedTransaction = async (testnet: boolean, tx:
     const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
         tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
         undefined,
-        new BigNumber(tx.supply).shiftedBy(Number(tx.digits)).toNumber(),
-        Number(tx.digits),
+        new BigNumber(tx.supply).shiftedBy(new BigNumber(tx.digits).toNumber()).toNumber(),
+        new BigNumber(tx.digits).toNumber(),
         false,
         tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
         undefined,
@@ -423,8 +415,7 @@ export const prepareAlgoCreateFTSignedTransaction = async (testnet: boolean, tx:
         return JSON.stringify(txn);
     }
     const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
-    const signedTxn = txn.signTxn(secretKey);
-    return signedTxn;
+    return txn.signTxn(secretKey);
 }
 
 /**
@@ -456,7 +447,7 @@ export const prepareAlgoTransferFTSignedTransaction = async (testnet: boolean, t
         undefined,
         new BigNumber(tx.amount).shiftedBy(tx.digits || 1).toNumber(),
         undefined,
-        Number(tx.contractAddress),
+        new BigNumber(tx.contractAddress as string).toNumber(),
         params,
         undefined
     )
@@ -464,8 +455,7 @@ export const prepareAlgoTransferFTSignedTransaction = async (testnet: boolean, t
         return JSON.stringify(txn);
     }
     const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
-    const signedTxn = txn.signTxn(secretKey);
-    return signedTxn;
+    return txn.signTxn(secretKey);
 }
 
 /**
@@ -493,7 +483,7 @@ export const prepareAlgoBurnFTSignedTransaction = async (testnet: boolean, tx: B
     const txn = algosdk.makeAssetDestroyTxnWithSuggestedParams(
         tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
         undefined,
-        Number(tx.contractAddress),
+        new BigNumber(tx.contractAddress).toNumber(),
         params,
         undefined
     )
@@ -501,8 +491,7 @@ export const prepareAlgoBurnFTSignedTransaction = async (testnet: boolean, tx: B
         return JSON.stringify(txn);
     }
     const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
-    const signedTxn = txn.signTxn(secretKey);
-    return signedTxn;
+    return txn.signTxn(secretKey);
 }
 
 /**
