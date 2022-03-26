@@ -443,7 +443,7 @@ export const erc721 = (args: {
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction data to be broadcast to blockchain.
        */
-      mintSignedTransaction: async (body: Omit<ChainMintErc721, "minter">, provider?: string) =>
+      mintSignedTransaction: async (body: Omit<ChainMintErc721, 'minter'>, provider?: string) =>
         mintSignedTransaction(body, args.web3, provider),
       /**
        * Sign mint ERC 721 transaction with cashback via private keys locally. Nothing is broadcast to the blockchain.
