@@ -81,10 +81,6 @@ describe('PolygonSDK - tx', () => {
         erc721TestFactory.prepare.mintSignedTransaction(sdk.nft, TEST_DATA.POLYGON, Currency.MATIC)
       })
 
-      describe('mintSignedTransactionMinter', () => {
-        erc721TestFactory.prepare.mintSignedTransactionMinter(sdk.nft, TEST_DATA.POLYGON, Currency.MATIC)
-      })
-
       describe('burnSignedTransaction', () => {
         erc721TestFactory.prepare.burnSignedTransaction(sdk.nft, TEST_DATA.POLYGON, Currency.MATIC)
       })
@@ -269,14 +265,6 @@ describe('PolygonSDK - tx', () => {
 
       xdescribe('generate batch custodial wallet', () => {
         custodialTestFactory.prepare.custodialWalletBatch(sdk.custodial, TEST_DATA.POLYGON, 'MATIC')
-      })
-
-      describe('generate batch custodial wallet with feesCovered', () => {
-        custodialTestFactory.prepare.custodialWalletBatchWithFeesCovered(
-          sdk.custodial,
-          TEST_DATA.POLYGON,
-          'MATIC',
-        )
       })
     })
   })

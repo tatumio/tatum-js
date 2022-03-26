@@ -81,10 +81,6 @@ describe('KlaytnSDK - tx', () => {
         erc721TestFactory.prepare.mintSignedTransaction(sdk.nft, TEST_DATA.KLAYTN, Currency.KLAY)
       })
 
-      describe('mintSignedTransactionMinter', () => {
-        erc721TestFactory.prepare.mintSignedTransactionMinter(sdk.nft, TEST_DATA.KLAYTN, Currency.KLAY)
-      })
-
       describe('burnSignedTransaction', () => {
         erc721TestFactory.prepare.burnSignedTransaction(sdk.nft, TEST_DATA.KLAYTN, Currency.KLAY)
       })

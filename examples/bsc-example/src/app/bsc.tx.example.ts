@@ -1230,7 +1230,7 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
 }
 
 export async function bscTxFeesCovered(): Promise<void> {
-  const generateCustodialWalletBatch = await bscSDK.custodial.generateCustodialBatch({
+  const generateCustodialWalletBatch = await bscSDK.custodial.send.custodialWalletBatch({
     chain: 'BSC',
     batchCount: 100,
     owner: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',

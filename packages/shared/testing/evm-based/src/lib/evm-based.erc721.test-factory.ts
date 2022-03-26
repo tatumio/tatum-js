@@ -194,36 +194,6 @@ export const erc721TestFactory = {
       })
     },
 
-    mintSignedTransactionMinter: (
-      sdk: SdkWithErc721Functions,
-      testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'KLAY',
-    ) => {
-      const provider = testData?.PROVIDER
-      const address = testData.TESTNET.ERC_721?.ADDRESS
-        ? testData.TESTNET.ERC_721?.ADDRESS
-        : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
-
-      it('invalid with minter', async () => {
-        try {
-          await sdk.prepare.mintSignedTransaction(
-            {
-              to: address,
-              contractAddress: testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
-              tokenId: new Date().getTime().toString(),
-              url: 'https://my_token_data.com',
-              minter: '0xBC2eBA680EE50d685cc4Fe65f102AA70AfB27D3F',
-              chain,
-            },
-            provider,
-          )
-          fail()
-        } catch (e: any) {
-          expect(e.message).toMatch('Use the sdk.nft.mintNFT method with minter.')
-        }
-      })
-    },
-
     mintMultipleSignedTransaction: (
       sdk: SdkWithErc721Functions,
       testData: BlockchainTestData,
