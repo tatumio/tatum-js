@@ -80,10 +80,6 @@ describe('BscSDK - tx', () => {
         erc721TestFactory.prepare.mintSignedTransaction(sdk.nft, TEST_DATA.BSC, Currency.BSC)
       })
 
-      describe('mintSignedTransactionMinter', () => {
-        erc721TestFactory.prepare.mintSignedTransactionMinter(sdk.nft, TEST_DATA.BSC, Currency.BSC)
-      })
-
       describe('burnSignedTransaction', () => {
         erc721TestFactory.prepare.burnSignedTransaction(sdk.nft, TEST_DATA.BSC, Currency.BSC)
       })
@@ -249,10 +245,6 @@ describe('BscSDK - tx', () => {
 
       describe('generate batch custodial wallet', () => {
         custodialTestFactory.prepare.custodialWalletBatch(sdk.custodial, TEST_DATA.BSC, 'BSC')
-      })
-
-      describe('generate batch custodial wallet with feesCovered', () => {
-        custodialTestFactory.prepare.custodialWalletBatchWithFeesCovered(sdk.custodial, TEST_DATA.BSC, 'BSC')
       })
     })
   })

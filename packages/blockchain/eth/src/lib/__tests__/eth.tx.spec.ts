@@ -80,10 +80,6 @@ describe('EthSDK - tx', () => {
         erc721TestFactory.prepare.mintSignedTransaction(sdk.nft, TEST_DATA.ETH, Currency.ETH)
       })
 
-      describe('mintSignedTransactionMinter', () => {
-        erc721TestFactory.prepare.mintSignedTransactionMinter(sdk.nft, TEST_DATA.ETH, Currency.ETH)
-      })
-
       describe('burnSignedTransaction', () => {
         erc721TestFactory.prepare.burnSignedTransaction(sdk.nft, TEST_DATA.ETH, Currency.ETH)
       })
@@ -240,10 +236,6 @@ describe('EthSDK - tx', () => {
 
       xdescribe('approve from custodial wallet', () => {
         custodialTestFactory.prepare.approveFromCustodialWallet(sdk.custodial, TEST_DATA.ETH, 'ETH')
-      })
-
-      xdescribe('generate batch custodial wallet with feesCovered', () => {
-        custodialTestFactory.prepare.custodialWalletBatchWithFeesCovered(sdk.custodial, TEST_DATA.ETH, 'ETH')
       })
 
       xdescribe('generate batch custodial wallet', () => {

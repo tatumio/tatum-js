@@ -969,7 +969,7 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
 }
 
 export async function celoTxFeesCovered(): Promise<void> {
-  const generateCustodialWalletBatch = await celoSDK.custodial.generateCustodialBatch({
+  const generateCustodialWalletBatch = await celoSDK.custodial.send.custodialWalletBatch({
     chain: 'CELO',
     batchCount: 100,
     owner: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',

@@ -1229,7 +1229,7 @@ export async function oneTxWithPrivateKeyExample(): Promise<void> {
 }
 
 export async function oneTxFeesCovered(): Promise<void> {
-  const generateCustodialWalletBatch = await oneSDK.custodial.generateCustodialBatch({
+  const generateCustodialWalletBatch = await oneSDK.custodial.send.custodialWalletBatch({
     chain: 'ONE',
     batchCount: 100,
     owner: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',

@@ -86,10 +86,6 @@ describe('KcsSDK - tx', () => {
         erc721TestFactory.prepare.mintSignedTransaction(sdk.nft, TEST_DATA.KCS, Currency.KCS)
       })
 
-      describe('mintSignedTransactionMinter', () => {
-        erc721TestFactory.prepare.mintSignedTransactionMinter(sdk.nft, TEST_DATA.KCS, Currency.KCS)
-      })
-
       describe('burnSignedTransaction', () => {
         erc721TestFactory.prepare.burnSignedTransaction(sdk.nft, TEST_DATA.KCS, Currency.KCS)
       })
