@@ -212,10 +212,12 @@ export const custodial = (args: {
         testnet?: boolean,
         provider?: string,
       ) =>
-        "feesCovered" in body ? generateCustodialBatch(body) : args.broadcastFunction({
-          txData: await custodialWalletBatch(body, args.web3, testnet, provider),
-          signatureId: 'signatureId' in body ? body.signatureId : undefined,
-        }),
+        'feesCovered' in body
+          ? generateCustodialBatch(body)
+          : args.broadcastFunction({
+              txData: await custodialWalletBatch(body, args.web3, testnet, provider),
+              signatureId: 'signatureId' in body ? body.signatureId : undefined,
+            }),
     },
   }
 }
