@@ -1,4 +1,4 @@
-import { TatumSolanaSDK } from '@tatumio/solana'
+import { TatumSolanaSDK } from '../solana.sdk'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 import { SolanaNftMetadata } from '../schema'
 
