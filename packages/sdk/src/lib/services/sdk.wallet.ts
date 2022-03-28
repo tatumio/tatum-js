@@ -17,7 +17,7 @@ export const walletSdk = {
     xpub: string,
     i: number,
     options?: { testnet: boolean },
-    addressType?: 'bech32' | 'p2sh'
+    addressType?: 'bech32' | 'p2sh',
   ): string {
     const blockchain = blockchainHelper.getBlockchainByCurrency(currency)
 
