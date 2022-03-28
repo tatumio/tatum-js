@@ -69,7 +69,6 @@ export async function solanaTxWithPrivateKeyExample(): Promise<void> {
 }
 
 export async function solanaTxWithExternalPayerExample(): Promise<string> {
-
   // FROM represents a specific walletId from v3/custodial/wallet
   const from = 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ'
   const to = 'FZAS4mtPvswgVxbpc117SqfNgCDLTCtk5CoeAtt58FWU'
