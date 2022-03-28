@@ -17,11 +17,12 @@ export const walletSdk = {
     xpub: string,
     i: number,
     options?: { testnet: boolean },
+    addressType?: 'bech32' | 'p2sh'
   ): string {
     const blockchain = blockchainHelper.getBlockchainByCurrency(currency)
 
     if (blockchainHelper.isBtcBased(blockchain))
-      return btcBasedWalletUtils.generateAddressFromXPub(blockchain, xpub, i, options)
+      return btcBasedWalletUtils.generateAddressFromXPub(blockchain, xpub, i, options, addressType)
 
     if (blockchainHelper.isEvmBased(blockchain)) return evmBasedUtils.generateAddressFromXPub(xpub, i)
 

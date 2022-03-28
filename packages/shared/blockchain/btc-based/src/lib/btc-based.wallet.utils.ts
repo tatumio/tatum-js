@@ -11,10 +11,15 @@ export const btcBasedWalletUtils = {
     xpub: string,
     i: number,
     options?: { testnet: boolean },
+    addressType: 'bech32'|'p2sh' = 'bech32',
   ): string => {
     const network = blockchainUtils.getNetworkConfig(blockchain, options)
     const w = fromBase58(xpub, network).derivePath(String(i))
-    return payments.p2pkh({ pubkey: w.publicKey, network }).address as string
+    if (addressType==='bech32') {
+      return payments.p2wpkh({ pubkey: w.publicKey, network }).address as string
+    } else {
+      return payments.p2pkh({ pubkey: w.publicKey, network }).address as string
+    }
   },
   generatePrivateKeyFromMnemonic: async (
     blockchain: BtcBasedBlockchain,
