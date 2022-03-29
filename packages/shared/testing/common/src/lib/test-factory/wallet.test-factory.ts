@@ -3,7 +3,12 @@ import 'jest/index'
 import { BlockchainTestData, TEST_DATA } from '../shared-testing'
 
 interface SdkWithWalletFunctions {
-  generateAddressFromXPub(xpub: string, i: number, options?: { testnet: boolean }, addressType?: 'p2sh'|'bech32'): string
+  generateAddressFromXPub(
+    xpub: string,
+    i: number,
+    options?: { testnet: boolean },
+    addressType?: 'p2sh' | 'bech32',
+  ): string
 
   generatePrivateKeyFromMnemonic(mnemonic: string, i: number, options?: { testnet: boolean }): Promise<string>
 
@@ -72,7 +77,7 @@ export const walletTestFactory = {
         [0, testData.MAINNET.ADDRESS_0],
         [100, testData.MAINNET.ADDRESS_100],
       ])('index %s', async (idx: number, expectedAddress: string) => {
-        const address = sdk.generateAddressFromXPub(testData.MAINNET.XPUB, idx, null, "p2sh")
+        const address = sdk.generateAddressFromXPub(testData.MAINNET.XPUB, idx, null, 'p2sh')
         expect(address).toBe(expectedAddress)
       })
 
