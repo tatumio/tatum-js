@@ -10,7 +10,12 @@ export const btcBasedWallet = (args: { blockchain: BtcBasedBlockchain }) => {
      * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
      * @returns blockchain address
      */
-    generateAddressFromXPub(xpub: string, i: number, options?: { testnet: boolean }, addressType?: 'bech32' | 'p2sh'): string {
+    generateAddressFromXPub(
+      xpub: string,
+      i: number,
+      options?: { testnet: boolean },
+      addressType?: 'bech32' | 'p2sh',
+    ): string {
       return btcBasedWalletUtils.generateAddressFromXPub(args.blockchain, xpub, i, options, addressType)
     },
 
