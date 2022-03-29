@@ -3,7 +3,7 @@ import { generateMnemonic, mnemonicToSeed } from 'bip39'
 import { ECPair, payments } from 'bitcoinjs-lib'
 import hdkey from 'hdkey'
 import { TronWallet } from '@tatumio/api-client'
-import { BtcBasedBlockchain, blockchainUtils } from '@tatumio/shared-core'
+import { BtcBasedBlockchain, blockchainUtils, Blockchain } from '@tatumio/shared-core'
 
 export const btcBasedWalletUtils = {
   generateAddressFromXPub: (
@@ -15,7 +15,7 @@ export const btcBasedWalletUtils = {
   ): string => {
     const network = blockchainUtils.getNetworkConfig(blockchain, options)
     const w = fromBase58(xpub, network).derivePath(String(i))
-    if (addressType === 'bech32') {
+    if (addressType === 'bech32' && blockchain === Blockchain.BTC) {
       return payments.p2wpkh({ pubkey: w.publicKey, network }).address as string
     } else {
       return payments.p2pkh({ pubkey: w.publicKey, network }).address as string

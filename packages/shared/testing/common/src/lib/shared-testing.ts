@@ -23,6 +23,8 @@ export type BlockchainNetworkTestData = {
   XPUB_REGEX: RegExp
   ADDRESS_0: string
   ADDRESS_100: string
+  BECH32_ADDRESS_0?: string
+  BECH32_ADDRESS_100?: string
   PRIVATE_KEY_0: string
   PRIVATE_KEY_100: string
   CONTRACT_ADDRESS?: string
