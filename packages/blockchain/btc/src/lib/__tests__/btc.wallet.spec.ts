@@ -19,16 +19,21 @@ describe('TatumBtcSDK - wallet', () => {
           expect(address).toBe(expectedAddress)
         })
       })
-  
+
       describe('mainnet', () => {
         it.each([
           [0, TEST_DATA.BTC.MAINNET.ADDRESS_0],
           [100, TEST_DATA.BTC.MAINNET.ADDRESS_100],
         ])('index %s', async (idx: number, expectedAddress: string) => {
-          const address = sdk.wallet.generateAddressFromXPub(TEST_DATA.BTC.MAINNET.XPUB, idx, undefined, 'p2sh')
+          const address = sdk.wallet.generateAddressFromXPub(
+            TEST_DATA.BTC.MAINNET.XPUB,
+            idx,
+            undefined,
+            'p2sh',
+          )
           expect(address).toBe(expectedAddress)
         })
-  
+
         it.each([
           ['xpub', 'invalid xpub', 1, TEST_DATA.BTC.INVALID_XPUB_ERROR],
           ['child index', TEST_DATA.BTC.MAINNET.XPUB, -1, TEST_DATA.BTC.INVALID_XPUB_CHILD_INDEX_ERROR],
@@ -38,26 +43,33 @@ describe('TatumBtcSDK - wallet', () => {
           }).toThrow(errorMessage)
         })
       })
-  
+
       describe('testnet - bech32 (default)', () => {
         it.each([
           [0, TEST_DATA.BTC.TESTNET.BECH32_ADDRESS_0],
           [100, TEST_DATA.BTC.TESTNET.BECH32_ADDRESS_100],
         ])('index %s', async (idx: number, expectedAddress: string) => {
-          const address = sdk.wallet.generateAddressFromXPub(TEST_DATA.BTC.TESTNET.XPUB, idx, { testnet: true })
+          const address = sdk.wallet.generateAddressFromXPub(TEST_DATA.BTC.TESTNET.XPUB, idx, {
+            testnet: true,
+          })
           expect(address).toBe(expectedAddress)
         })
       })
-  
+
       describe('testnet - p2sh', () => {
         it.each([
           [0, TEST_DATA.BTC.TESTNET.ADDRESS_0],
           [100, TEST_DATA.BTC.TESTNET.ADDRESS_100],
         ])('index %s', async (idx: number, expectedAddress: string) => {
-          const address = sdk.wallet.generateAddressFromXPub(TEST_DATA.BTC.TESTNET.XPUB, idx, { testnet: true }, 'p2sh')
+          const address = sdk.wallet.generateAddressFromXPub(
+            TEST_DATA.BTC.TESTNET.XPUB,
+            idx,
+            { testnet: true },
+            'p2sh',
+          )
           expect(address).toBe(expectedAddress)
         })
-  
+
         it.each([
           ['xpub', 'invalid xpub', 1, TEST_DATA.BTC.INVALID_XPUB_ERROR],
           ['child index', TEST_DATA.BTC.TESTNET.XPUB, -1, TEST_DATA.BTC.INVALID_XPUB_CHILD_INDEX_ERROR],
