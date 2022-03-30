@@ -72,10 +72,14 @@ interface Decoded extends Hash {
  * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
-const generateBtcAddress = (testnet: boolean, xpub: string, i: number) => {
+const generateBtcAddress = (testnet: boolean, xpub: string, i: number, addressType: 'p2sh' | 'bech32' = 'bech32') => {
   const network = testnet ? networks.testnet : networks.bitcoin
   const w = fromBase58(xpub, network).derivePath(String(i))
-  return payments.p2pkh({ pubkey: w.publicKey, network }).address as string
+  if (addressType === 'bech32') {
+    return payments.p2wpkh({ pubkey: w.publicKey, network }).address as string
+  } else {
+    return payments.p2pkh({ pubkey: w.publicKey, network }).address as string
+  }
 }
 
 /**
@@ -664,10 +668,10 @@ export const generateAlgodAddressFromPrivatetKey = (privKey: string) => {
  * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
  * @returns blockchain address
  */
-export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xpub: string, i: number) => {
+export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xpub: string, i: number, addressType?: 'p2sh' | 'bech32') => {
   switch (currency) {
     case Currency.BTC:
-      return generateBtcAddress(testnet, xpub, i)
+      return generateBtcAddress(testnet, xpub, i, addressType)
     case Currency.TRON:
     case Currency.USDT_TRON:
     case Currency.INRT_TRON:
