@@ -56,12 +56,14 @@ export class BlockchainBitcoinService {
      *
      * @param xpub Extended public key of a wallet.
      * @param index Derivation index of the desired address to be generated.
+     * @param addressType Address type to be generated, either P2SH or BECH32.
      * @returns any OK
      * @throws ApiError
      */
     public static btcGenerateAddress(
         xpub: string,
         index: number,
+        addressType?: 'p2sh' | 'bech32',
     ): CancelablePromise<{
         /**
          * Bitcoin address
@@ -71,6 +73,9 @@ export class BlockchainBitcoinService {
         return __request({
             method: 'GET',
             path: `/v3/bitcoin/address/${xpub}/${index}`,
+            query: {
+                'addressType': addressType,
+            },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
