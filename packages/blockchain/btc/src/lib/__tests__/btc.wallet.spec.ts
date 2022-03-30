@@ -10,7 +10,7 @@ describe('TatumBtcSDK - wallet', () => {
     })
 
     describe('Address from XPUB', () => {
-      walletTestFactory.generateAddressFromXpub(sdk.wallet, TEST_DATA.BTC)
+      walletTestFactory.generateAddressFromXpubBtc(sdk.wallet, TEST_DATA.BTC)
     })
 
     describe('Private key from mnemonic', () => {
