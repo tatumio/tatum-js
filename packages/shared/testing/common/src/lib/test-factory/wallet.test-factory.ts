@@ -72,65 +72,6 @@ export const walletTestFactory = {
       })
     })
   },
-  generateAddressFromXpubBtc: (sdk: SdkWithWalletFunctions, testData: BlockchainTestData) => {
-    describe('mainnet - bech32 (default)', () => {
-      it.each([
-        [0, testData.MAINNET.BECH32_ADDRESS_0],
-        [100, testData.MAINNET.BECH32_ADDRESS_100],
-      ])('index %s', async (idx: number, expectedAddress: string) => {
-        const address = sdk.generateAddressFromXPub(testData.MAINNET.XPUB, idx)
-        expect(address).toBe(expectedAddress)
-      })
-    })
-
-    describe('mainnet', () => {
-      it.each([
-        [0, testData.MAINNET.ADDRESS_0],
-        [100, testData.MAINNET.ADDRESS_100],
-      ])('index %s', async (idx: number, expectedAddress: string) => {
-        const address = sdk.generateAddressFromXPub(testData.MAINNET.XPUB, idx, undefined, 'p2sh')
-        expect(address).toBe(expectedAddress)
-      })
-
-      it.each([
-        ['xpub', 'invalid xpub', 1, testData.INVALID_XPUB_ERROR],
-        ['child index', testData.MAINNET.XPUB, -1, testData.INVALID_XPUB_CHILD_INDEX_ERROR],
-      ])('invalid arg %s', (_: string, xpub: string, childIndex: number, errorMessage: string) => {
-        expect(() => {
-          sdk.generateAddressFromXPub(xpub, childIndex, undefined, 'p2sh')
-        }).toThrow(errorMessage)
-      })
-    })
-
-    describe('testnet - bech32 (default)', () => {
-      it.each([
-        [0, testData.TESTNET.BECH32_ADDRESS_0],
-        [100, testData.TESTNET.BECH32_ADDRESS_100],
-      ])('index %s', async (idx: number, expectedAddress: string) => {
-        const address = sdk.generateAddressFromXPub(testData.TESTNET.XPUB, idx, { testnet: true })
-        expect(address).toBe(expectedAddress)
-      })
-    })
-
-    describe('testnet - p2sh', () => {
-      it.each([
-        [0, testData.TESTNET.ADDRESS_0],
-        [100, testData.TESTNET.ADDRESS_100],
-      ])('index %s', async (idx: number, expectedAddress: string) => {
-        const address = sdk.generateAddressFromXPub(testData.TESTNET.XPUB, idx, { testnet: true }, 'p2sh')
-        expect(address).toBe(expectedAddress)
-      })
-
-      it.each([
-        ['xpub', 'invalid xpub', 1, testData.INVALID_XPUB_ERROR],
-        ['child index', testData.TESTNET.XPUB, -1, testData.INVALID_XPUB_CHILD_INDEX_ERROR],
-      ])('invalid arg %s', (_: string, xpub: string, childIndex: number, errorMessage: string) => {
-        expect(() => {
-          sdk.generateAddressFromXPub(xpub, childIndex, { testnet: true }, 'p2sh')
-        }).toThrow(errorMessage)
-      })
-    })
-  },
   generateAddressFromXpub: (sdk: SdkWithWalletFunctions, testData: BlockchainTestData) => {
     describe('mainnet', () => {
       it.each([

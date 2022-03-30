@@ -10,7 +10,63 @@ describe('TatumBtcSDK - wallet', () => {
     })
 
     describe('Address from XPUB', () => {
-      walletTestFactory.generateAddressFromXpubBtc(sdk.wallet, TEST_DATA.BTC)
+      describe('mainnet - bech32 (default)', () => {
+        it.each([
+          [0, TEST_DATA.BTC.MAINNET.BECH32_ADDRESS_0],
+          [100, TEST_DATA.BTC.MAINNET.BECH32_ADDRESS_100],
+        ])('index %s', async (idx: number, expectedAddress: string) => {
+          const address = sdk.wallet.generateAddressFromXPub(TEST_DATA.BTC.MAINNET.XPUB, idx)
+          expect(address).toBe(expectedAddress)
+        })
+      })
+  
+      describe('mainnet', () => {
+        it.each([
+          [0, TEST_DATA.BTC.MAINNET.ADDRESS_0],
+          [100, TEST_DATA.BTC.MAINNET.ADDRESS_100],
+        ])('index %s', async (idx: number, expectedAddress: string) => {
+          const address = sdk.wallet.generateAddressFromXPub(TEST_DATA.BTC.MAINNET.XPUB, idx, undefined, 'p2sh')
+          expect(address).toBe(expectedAddress)
+        })
+  
+        it.each([
+          ['xpub', 'invalid xpub', 1, TEST_DATA.BTC.INVALID_XPUB_ERROR],
+          ['child index', TEST_DATA.BTC.MAINNET.XPUB, -1, TEST_DATA.BTC.INVALID_XPUB_CHILD_INDEX_ERROR],
+        ])('invalid arg %s', (_: string, xpub: string, childIndex: number, errorMessage: string) => {
+          expect(() => {
+            sdk.wallet.generateAddressFromXPub(xpub, childIndex, undefined, 'p2sh')
+          }).toThrow(errorMessage)
+        })
+      })
+  
+      describe('testnet - bech32 (default)', () => {
+        it.each([
+          [0, TEST_DATA.BTC.TESTNET.BECH32_ADDRESS_0],
+          [100, TEST_DATA.BTC.TESTNET.BECH32_ADDRESS_100],
+        ])('index %s', async (idx: number, expectedAddress: string) => {
+          const address = sdk.wallet.generateAddressFromXPub(TEST_DATA.BTC.TESTNET.XPUB, idx, { testnet: true })
+          expect(address).toBe(expectedAddress)
+        })
+      })
+  
+      describe('testnet - p2sh', () => {
+        it.each([
+          [0, TEST_DATA.BTC.TESTNET.ADDRESS_0],
+          [100, TEST_DATA.BTC.TESTNET.ADDRESS_100],
+        ])('index %s', async (idx: number, expectedAddress: string) => {
+          const address = sdk.wallet.generateAddressFromXPub(TEST_DATA.BTC.TESTNET.XPUB, idx, { testnet: true }, 'p2sh')
+          expect(address).toBe(expectedAddress)
+        })
+  
+        it.each([
+          ['xpub', 'invalid xpub', 1, TEST_DATA.BTC.INVALID_XPUB_ERROR],
+          ['child index', TEST_DATA.BTC.TESTNET.XPUB, -1, TEST_DATA.BTC.INVALID_XPUB_CHILD_INDEX_ERROR],
+        ])('invalid arg %s', (_: string, xpub: string, childIndex: number, errorMessage: string) => {
+          expect(() => {
+            sdk.wallet.generateAddressFromXPub(xpub, childIndex, { testnet: true }, 'p2sh')
+          }).toThrow(errorMessage)
+        })
+      })
     })
 
     describe('Private key from mnemonic', () => {
