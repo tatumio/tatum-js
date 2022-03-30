@@ -88,7 +88,7 @@ export const walletTestFactory = {
         [0, testData.MAINNET.ADDRESS_0],
         [100, testData.MAINNET.ADDRESS_100],
       ])('index %s', async (idx: number, expectedAddress: string) => {
-        const address = sdk.generateAddressFromXPub(testData.MAINNET.XPUB, idx, null, 'p2sh')
+        const address = sdk.generateAddressFromXPub(testData.MAINNET.XPUB, idx, undefined, 'p2sh')
         expect(address).toBe(expectedAddress)
       })
 
@@ -97,7 +97,7 @@ export const walletTestFactory = {
         ['child index', testData.MAINNET.XPUB, -1, testData.INVALID_XPUB_CHILD_INDEX_ERROR],
       ])('invalid arg %s', (_: string, xpub: string, childIndex: number, errorMessage: string) => {
         expect(() => {
-          sdk.generateAddressFromXPub(xpub, childIndex, null, 'p2sh')
+          sdk.generateAddressFromXPub(xpub, childIndex, undefined, 'p2sh')
         }).toThrow(errorMessage)
       })
     })
