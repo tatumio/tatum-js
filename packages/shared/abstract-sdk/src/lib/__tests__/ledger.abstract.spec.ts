@@ -1,6 +1,6 @@
 import * as apiClient from '@tatumio/api-client'
 import { abstractSdkLedgerService } from '../services/ledger.abstract'
-import { blockchainTestFactory, TestCasesApiCallMapping, testHelper } from '@tatumio/shared-testing-common'
+import { commonTestFactory, TestCasesApiCallMapping, testHelper } from '@tatumio/shared-testing-common'
 import { CancelablePromise, Wallet } from '@tatumio/api-client'
 
 jest.mock('@tatumio/api-client')
@@ -35,7 +35,7 @@ describe('SDK - ledger', () => {
     }
 
     describe('API methods mapping', () => {
-      blockchainTestFactory.apiMethods(customer, customLedgerFunctionsMapping)
+      commonTestFactory.apiMethods(customer, customLedgerFunctionsMapping)
     })
   })
 
@@ -73,7 +73,7 @@ describe('SDK - ledger', () => {
     }
 
     describe('API methods mapping', () => {
-      blockchainTestFactory.apiMethods(orderBook, orderBookLedgerFunctionsMapping)
+      commonTestFactory.apiMethods(orderBook, orderBookLedgerFunctionsMapping)
     })
   })
 
@@ -114,7 +114,7 @@ describe('SDK - ledger', () => {
     }
 
     describe('API methods mapping', () => {
-      blockchainTestFactory.apiMethods<Omit<typeof transaction, 'countByAccount' | 'countByCustomer'>>(
+      commonTestFactory.apiMethods<Omit<typeof transaction, 'countByAccount' | 'countByCustomer'>>(
         transaction,
         transactionLedgerFunctionsMapping,
       )
@@ -171,7 +171,7 @@ describe('SDK - ledger', () => {
     }
 
     describe('API methods mapping', () => {
-      blockchainTestFactory.apiMethods(virtualCurrency, virtualCurrencyLedgerFunctionsMapping)
+      commonTestFactory.apiMethods(virtualCurrency, virtualCurrencyLedgerFunctionsMapping)
     })
   })
 
@@ -205,7 +205,7 @@ describe('SDK - ledger', () => {
     }
 
     describe('API methods mapping', () => {
-      blockchainTestFactory.apiMethods(blockAmount, blockAmountLedgerFunctionsMapping)
+      commonTestFactory.apiMethods(blockAmount, blockAmountLedgerFunctionsMapping)
     })
   })
 
@@ -241,10 +241,7 @@ describe('SDK - ledger', () => {
     }
 
     describe('API methods mapping', () => {
-      blockchainTestFactory.apiMethods<Omit<typeof account, 'generate'>>(
-        account,
-        accountLedgerFunctionsMapping,
-      )
+      commonTestFactory.apiMethods<Omit<typeof account, 'generate'>>(account, accountLedgerFunctionsMapping)
     })
 
     describe('generate', () => {

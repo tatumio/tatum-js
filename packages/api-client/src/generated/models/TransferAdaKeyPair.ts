@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type TransferAda = {
+export type TransferAdaKeyPair = {
     /**
      * Sender account ID
      */
@@ -29,7 +29,7 @@ export type TransferAda = {
      * Tatum KMS does not support keyPair type of off-chain transaction, only mnemonic based.
      *
      */
-    keyPair?: Array<{
+    keyPair: Array<{
         /**
          * Blockchain address assigned to account withdrawal is made from.
          */
@@ -42,25 +42,7 @@ export type TransferAda = {
     /**
      * Used to parametrize withdrawal as a change address for left coins from transaction. XPub or attr must be used.
      */
-    attr?: string;
-    /**
-     * Mnemonic seed - usually 12-24 words with access to whole wallet.
-     * Either mnemonic, keyPair or signature Id must be present - depends on the type of account and xpub.
-     * Tatum KMS does not support keyPair type of off-chain transaction, only mnemonic based.
-     *
-     */
-    mnemonic?: string;
-    /**
-     * Signature hash of the mnemonic, which will be used to sign transactions locally.
-     * All signature Ids should be present, which might be used to sign transaction.
-     * Tatum KMS does not support keyPair type of off-chain transaction, only mnemonic based.
-     *
-     */
-    signatureId?: string;
-    /**
-     * Extended public key (xpub) of the wallet associated with the accounts. Should be present, when mnemonic is used.
-     */
-    xpub?: string;
+    attr: string;
     /**
      * Identifier of the payment, shown for created Transaction within Tatum sender account.
      */

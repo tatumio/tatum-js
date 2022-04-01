@@ -1,13 +1,17 @@
 import {
   ApproveErc20,
+  ApproveNftSpending,
+  ApproveTransferCustodialWallet,
+  ApproveTransferCustodialWalletCelo,
   BlockchainMarketplaceService,
   BroadcastKMS,
   BurnMultiToken,
   BurnMultiTokenBatch,
   BurnNft,
+  BuyAssetOnMarketplace,
+  CallCeloSmartContractMethod,
   CallReadSmartContractMethod,
   CallSmartContractMethod,
-  BuyAssetOnMarketplace,
   CancelablePromise,
   CancelSellAssetOnMarketplace,
   ChainBurnErc20 as ApiChainBurnErc20,
@@ -17,45 +21,42 @@ import {
   DeployMultiToken,
   DeployNft,
   ExchangeRate,
-  GenerateCustodialWallet,
   Fiat,
+  GenerateCustodialWallet,
+  GenerateCustodialWalletBatch,
+  GenerateCustodialWalletBatchCelo,
+  GenerateCustodialWalletBatchCeloKMS,
+  GenerateCustodialWalletBatchKMS,
+  GenerateCustodialWalletBatchPayer,
+  GenerateCustodialWalletCelo,
   GenerateMarketplace,
   MintErc721,
   MintMultipleNft,
   MintMultiToken,
   MintMultiTokenBatch,
   MintNft,
+  PendingTransaction,
   SellAssetOnMarketplace,
   SignatureId,
   TatumServiceService,
   TatumUrl,
+  TerraWallet,
   TransactionHashKMS,
+  TransferCustodialWallet,
+  TransferCustodialWalletBatch,
+  TransferCustodialWalletBatchCelo,
+  TransferCustodialWalletCelo,
+  TransferCustodialWalletCeloKMS,
+  TransferCustodialWalletKMS,
   TransferMultiToken,
   TransferMultiTokenBatch,
   TransferNft,
   TransferPolygonBlockchain,
-  TronWallet,
   UpdateCashbackValueForAuthorNft,
   UpdateFee,
   UpdateFeeRecipient,
   XlmWallet,
   XrpWallet,
-  TransferCustodialWallet,
-  TransferCustodialWalletCelo,
-  TransferCustodialWalletBatch,
-  TransferCustodialWalletBatchCelo,
-  ApproveTransferCustodialWallet,
-  ApproveTransferCustodialWalletCelo,
-  TransferCustodialWalletKMS,
-  GenerateCustodialWalletBatch,
-  GenerateCustodialWalletBatchKMS,
-  GenerateCustodialWalletCelo,
-  CallCeloSmartContractMethod,
-  TransferCustodialWalletCeloKMS,
-  GenerateCustodialWalletBatchCelo,
-  GenerateCustodialWalletBatchCeloKMS,
-  PendingTransaction,
-  ApproveNftSpending,
 } from '@tatumio/api-client'
 import { Blockchain, blockchainHelper, ChainTransactionKMS } from '@tatumio/shared-core'
 import { abstractSdk, WithoutChain } from '@tatumio/shared-abstract-sdk'
@@ -78,7 +79,7 @@ export const abstractBlockchainSdk = (args: { apiKey: string; url?: TatumUrl; bl
 }
 
 export interface SdkWithXrpLikeWalletFunction {
-  wallet(): CancelablePromise<XrpWallet | XlmWallet>
+  wallet(): XrpWallet | XlmWallet | TerraWallet
 }
 
 export type FromPrivateKeyOrSignatureId<T extends { fromPrivateKey?: string }> = Omit<T, 'fromPrivateKey'> &
@@ -95,6 +96,7 @@ export type ChainDeployErc20 = FromPrivateKeyOrSignatureId<DeployErc20>
 
 export type ChainMintErc721 = MintErc721 & {
   fromPrivateKey?: string
+  minter?: string
   chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'KLAY'
 }
 
@@ -171,6 +173,7 @@ export type ChainTransferFromCustodialAddress =
   | TransferCustodialWalletCeloKMS
 
 export type ChainGenerateCustodialWalletBatch =
+  | GenerateCustodialWalletBatchPayer
   | GenerateCustodialWalletBatch
   | GenerateCustodialWalletBatchKMS
   | GenerateCustodialWalletBatchCelo
@@ -274,6 +277,7 @@ export interface SdkWithCustodialFunctions {
     ) => Promise<string>
   }
 }
+
 export interface SdkWithMarketplaceFunctions {
   prepare: {
     approveErc20Spending(body: ApproveErc20, provider?: string): Promise<string>
@@ -297,7 +301,9 @@ export interface SdkWithMarketplaceFunctions {
 
 export interface SdkWithKmsFunctions {
   sign(tx: ChainTransactionKMS, fromPrivateKey: string, provider?: string): Promise<string>
+
   getAllPending(signatures?: string): CancelablePromise<PendingTransaction[]>
+
   get(id: string): CancelablePromise<PendingTransaction>
 }
 

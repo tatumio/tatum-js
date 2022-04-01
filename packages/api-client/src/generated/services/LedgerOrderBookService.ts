@@ -19,8 +19,11 @@ export class LedgerOrderBookService {
      * Store buy / sell trade
      * <h4>2 credits for API call, 2 credits for each fill of the counter trade. 1 API call + 2 fills  = 6 credits.</h4><br/>
      * <p>Store new buy / sell trade. If there is trade already available to fill, fill as much trades as possible.<br/>
-     * It is possible to charge fees for the trades. Fees are an extra amount on top of the trade amount and are paid in the currency of the 1st pair to the separate fee account,
-     * e.g. for BTC/ETH pair fees will be paid in BTC.</p>
+     * It is possible to charge fees for the trades. Fees are an extra amount on top of the trade amount and are paid in the currency that you going to block
+     * e.g.:
+     * - BUY BTC/USDT - fees will be paid in USDT
+     * - SELL BTC/ETH - fees will be paid in BTC
+     * </p>
      *
      * <p>
      * If you fill type of the trade with FUTURE_BUY or FUTURE_SELL the trade will behave as a trade future. The trade is concluded now but will be fulfilled in future.

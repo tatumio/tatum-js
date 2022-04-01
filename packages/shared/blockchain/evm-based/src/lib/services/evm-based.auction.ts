@@ -1,17 +1,17 @@
 import {
   ApproveNftSpending,
+  BidOnAuction,
   BlockchainMarketplaceService,
+  CancelOrSettleAuction,
   GenerateAuction,
   UpdateFeeRecipient,
-  CancelOrSettleAuction,
-  BidOnAuction,
 } from '@tatumio/api-client'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import { TransactionConfig } from 'web3-core'
 import { BroadcastFunction, FromPrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
 import BigNumber from 'bignumber.js'
 import { EvmBasedWeb3 } from './evm-based.web3'
-import { Erc20Token, Erc1155, Erc721Token, MarketplaceSmartContract } from '../contracts'
+import { Erc1155, Erc20Token, Erc721Token, MarketplaceSmartContract } from '../contracts'
 import { AbiItem, toWei } from 'web3-utils'
 import { evmBasedUtils } from '../evm-based.utils'
 import { erc20 } from '../transactions/erc20'

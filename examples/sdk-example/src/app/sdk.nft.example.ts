@@ -5,5 +5,5 @@ import { Currency } from '@tatumio/api-client'
 const tatumSDK = TatumSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function ledgerNftExample() {
-  const nfts = await tatumSDK.nft.getNFTsByAddress(Currency.ETH, 'TOKEN ADDRESS', 'CONTRACT ADDRESS')
+  const nfts = await tatumSDK.nft.getNFTsByAddress(Currency.ETH, 'TOKEN ADDRESS')
 }

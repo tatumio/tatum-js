@@ -1,0 +1,34 @@
+{
+  "root": "packages/blockchain/terra",
+  "sourceRoot": "packages/blockchain/terra/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/blockchain/terra",
+        "tsConfig": "packages/blockchain/terra/tsconfig.lib.json",
+        "packageJson": "packages/blockchain/terra/package.json",
+        "main": "packages/blockchain/terra/src/index.ts",
+        "assets": ["packages/blockchain/terra/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/blockchain/terra/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/blockchain/terra"],
+      "options": {
+        "jestConfig": "packages/blockchain/terra/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["type:sdk"]
+}

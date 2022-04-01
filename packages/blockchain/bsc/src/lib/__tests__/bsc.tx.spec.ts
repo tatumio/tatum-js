@@ -3,14 +3,14 @@ import { TatumBscSDK } from '../bsc.sdk'
 import { Blockchain } from '@tatumio/shared-core'
 import { bscTxService } from '../services/bsc.tx'
 import {
-  erc20TestFactory,
-  ganacheHelper,
-  erc721TestFactory,
-  multiTokenTestFactory,
-  smartContractTestFactory,
   custodialTestFactory,
+  erc20TestFactory,
+  erc721TestFactory,
+  ganacheHelper,
   marketplaceTestFactory,
+  multiTokenTestFactory,
   nativeTestFactory,
+  smartContractTestFactory,
 } from '@tatumio/shared-testing-evm-based'
 import { Currency } from '@tatumio/api-client'
 

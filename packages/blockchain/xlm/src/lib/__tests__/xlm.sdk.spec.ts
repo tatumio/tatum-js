@@ -6,6 +6,6 @@ describe('XlmSDK - wallet', () => {
   const sdk = TatumXlmSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
   describe('Generate wallet', () => {
-    xrpLikeWalletTestFactory.generateWallet(sdk, TEST_DATA.XLM)
+    xrpLikeWalletTestFactory.generateWallet(sdk.wallet, TEST_DATA.XLM)
   })
 })

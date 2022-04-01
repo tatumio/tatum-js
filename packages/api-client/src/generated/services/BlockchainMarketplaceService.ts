@@ -187,8 +187,9 @@ export class BlockchainMarketplaceService {
     /**
      * Cancel selling of the asset on the NFT Marketplace
      * <h4>2 credits per API call.</h4><br/>
-     * <p>Cancel listing on the marketplace. Only possible for the seller or the operator.
-     * There must be no buyer present for that listing. NFT asset is sent back to the seller.<br/>
+     * <p>Canceling the auction is only possible for the seller or the operator.
+     * The auction cannot be canceled if a buyer already purchased an NFT.
+     * Once the auction is canceled, the NFT asset is reverted to the seller.<br/>
      * Supported blockchains:
      * <ul>
      * <li>Binance Smart Chain</li>

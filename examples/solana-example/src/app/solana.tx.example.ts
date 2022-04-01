@@ -1,5 +1,7 @@
 import { TatumSolanaSDK } from '@tatumio/solana'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
+import { LAMPORTS_PER_SOL, PublicKey, SystemProgram, Transaction } from '@solana/web3.js'
+import BigNumber from 'bignumber.js'
 
 const solanaSDK = TatumSolanaSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
@@ -64,4 +66,28 @@ export async function solanaTxWithPrivateKeyExample(): Promise<void> {
       sellerFeeBasisPoints: 0,
     },
   })
+}
+
+export async function solanaTxWithExternalPayerExample(): Promise<string> {
+  // FROM represents a specific walletId from v3/custodial/wallet
+  const from = 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ'
+  const to = 'FZAS4mtPvswgVxbpc117SqfNgCDLTCtk5CoeAtt58FWU'
+  const amount = '0.000001'
+
+  const devnet_fee_payer = '5zPr5331CtBjgVeLedhmJPEpFaUsorLCnb3aCQPsUc9w'
+  const mainnet_fee_payer = 'DSpHmb7hLnetoybammcJBJiyqMVR3pDhCuW6hqVg9eBF'
+
+  const fromPubkey = new PublicKey(from)
+
+  const transaction = new Transaction({ feePayer: new PublicKey(devnet_fee_payer) })
+  transaction.add(
+    SystemProgram.transfer({
+      fromPubkey: fromPubkey,
+      toPubkey: new PublicKey(to),
+      lamports: new BigNumber(amount).multipliedBy(LAMPORTS_PER_SOL).toNumber(),
+    }),
+  )
+  // ANY RANDOM HASH SHOULD BE HERE - IT WILL BE REPLACED WITH CORRECT ONE
+  transaction.recentBlockhash = '7WyEshBZcZwEbJsvSeGgCkSNMxxxFAym3x7Cuj6UjAUE'
+  return transaction.compileMessage().serialize().toString('hex')
 }

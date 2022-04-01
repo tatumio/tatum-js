@@ -28,6 +28,10 @@ export type TransferAdaMnemonic = {
      */
     mnemonic: string;
     /**
+     * Extended public key (xpub) of the wallet associated with the accounts. Should be present, when mnemonic is used.
+     */
+    xpub: string;
+    /**
      * Identifier of the payment, shown for created Transaction within Tatum sender account.
      */
     paymentId?: string;

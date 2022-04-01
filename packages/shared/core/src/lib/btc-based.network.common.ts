@@ -101,30 +101,6 @@ export const NETWORK_CONFIG: Record<BtcBasedBlockchain, Networks> = {
       wif: 239,
     },
   },
-  SCRYPTA: {
-    mainnet: {
-      messagePrefix: '\x18DarkNet Signed Message:\n',
-      bech32: '',
-      bip32: {
-        public: 0x0488b21e,
-        private: 0x0488ade4,
-      },
-      pubKeyHash: 0x30,
-      scriptHash: 0x0d,
-      wif: 0xae,
-    },
-    testnet: {
-      messagePrefix: '\x18DarkNet Signed Message:\n',
-      bech32: '',
-      bip32: {
-        public: 0x043587cf,
-        private: 0x04358394,
-      },
-      pubKeyHash: 0x7f,
-      scriptHash: 0x13,
-      wif: 0xae,
-    },
-  },
 }
 
 export type Networks = {

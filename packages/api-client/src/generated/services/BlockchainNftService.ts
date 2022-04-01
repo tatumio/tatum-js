@@ -184,7 +184,7 @@ export class BlockchainNftService {
      * It means if you perform mint NFT request with following body:
      *
      * <pre>{
-         * "chain": "ETH",
+         * "chain": "CELO",
          * "to": "0xBC2eBA680EE50d685cc4Fe65f102AA70AfB27D3F",
          * "url": "ipfs://QmXJJ6UF5WkF4WTJvsdhiA1etGwBLfpva7Vr9AudGMe3pj"
          * }</pre>
@@ -192,7 +192,7 @@ export class BlockchainNftService {
          * The fields contractAddress, fromPrivateKey and tokenId will be internally filled in following way:
          *
          * <pre>{
-             * "chain": "ETH",
+             * "chain": "CELO",
              * "to": "0xBC2eBA680EE50d685cc4Fe65f102AA70AfB27D3F",
              * "url": "ipfs://QmXJJ6UF5WkF4WTJvsdhiA1etGwBLfpva7Vr9AudGMe3pj",
              * "fromPrivateKey": "{tatumBuiltInPrivateKey}",

@@ -20,7 +20,7 @@ export type TransferErc20KMS = {
      */
     compliant?: boolean;
     /**
-     * ERC20 symbol. Required only for calls from Tatum Middleware.
+     * ERC20 symbol. Required only for calls.
      */
     currency?: string;
     /**

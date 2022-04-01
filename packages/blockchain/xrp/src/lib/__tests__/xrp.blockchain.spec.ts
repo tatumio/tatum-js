@@ -2,7 +2,7 @@ import * as apiClient from '@tatumio/api-client'
 import { TransferXrpBlockchain } from '@tatumio/api-client'
 import { TatumXrpSDK } from '../xrp.sdk'
 import {
-  blockchainTestFactory,
+  commonTestFactory,
   REPLACE_ME_WITH_TATUM_API_KEY,
   TEST_DATA,
   TestCasesApiCallMapping,
@@ -43,6 +43,6 @@ describe('XrpSDK - blockchain', () => {
   }
 
   describe('API methods mapping', () => {
-    blockchainTestFactory.apiMethods(blockchain, blockchainFunctionsMapping)
+    commonTestFactory.apiMethods(blockchain, blockchainFunctionsMapping)
   })
 })

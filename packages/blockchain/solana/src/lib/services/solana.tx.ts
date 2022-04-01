@@ -1,11 +1,4 @@
-import {
-  Keypair,
-  LAMPORTS_PER_SOL,
-  PublicKey,
-  sendAndConfirmTransaction,
-  SystemProgram,
-  Transaction,
-} from '@solana/web3.js'
+import { Keypair, LAMPORTS_PER_SOL, PublicKey, SystemProgram, Transaction } from '@solana/web3.js'
 import { MintNftSolana, TransferNftSolana, TransferSolanaBlockchain } from '@tatumio/api-client'
 import { FromPrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
 import BigNumber from 'bignumber.js'
@@ -57,7 +50,7 @@ const send = async (
   const signers = web3.generateKeyPair(body.fromPrivateKey)
 
   return {
-    txId: await sendAndConfirmTransaction(connection, transaction, [signers]),
+    txId: await connection.sendTransaction(transaction, [signers]),
   }
 }
 
@@ -94,7 +87,7 @@ const transferNft = async (body: TransferSolanaNft, web3: SolanaWeb3, provider?:
 
   const wallet = web3.generateKeyPair(body.fromPrivateKey)
   return {
-    txId: await sendAndConfirmTransaction(connection, transaction, [wallet]),
+    txId: await connection.sendTransaction(transaction, [wallet]),
   }
 }
 
@@ -208,7 +201,7 @@ const mintNft = async (body: MintSolanaNft, web3: SolanaWeb3, provider?: string)
   const wallet = web3.generateKeyPair(body.fromPrivateKey as string)
   const signers = [mint, wallet]
   return {
-    txId: await sendAndConfirmTransaction(connection, transaction, [wallet, ...signers]),
+    txId: await connection.sendTransaction(transaction, [wallet, ...signers]),
     nftAddress: mint.publicKey.toBase58(),
     nftAccountAddress: userTokenAccountAddress.toBase58(),
   }

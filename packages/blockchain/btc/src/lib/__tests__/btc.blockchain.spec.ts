@@ -1,9 +1,8 @@
 import {
-  blockchainTestFactory,
+  commonTestFactory,
   REPLACE_ME_WITH_TATUM_API_KEY,
   TEST_DATA,
   TestCasesApiCallMapping,
-  testHelper,
 } from '@tatumio/shared-testing-common'
 import { TatumBtcSDK } from '../btc.sdk'
 import * as apiClient from '@tatumio/api-client'
@@ -43,6 +42,6 @@ describe('BtcSDK - blockchain', () => {
   }
 
   describe('API methods mapping', () => {
-    blockchainTestFactory.apiMethods(blockchain, blockchainFunctionsMapping)
+    commonTestFactory.apiMethods(blockchain, blockchainFunctionsMapping)
   })
 })
