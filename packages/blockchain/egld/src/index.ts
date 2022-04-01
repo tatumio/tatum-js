@@ -1,1 +1,1 @@
-export * from './lib/egld'
+export * from './lib/egld.sdk'

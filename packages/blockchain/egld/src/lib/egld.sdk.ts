@@ -3,6 +3,9 @@ import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { abstractBlockchainSdk } from '@tatumio/shared-blockchain-abstract'
 import { BlockchainElrondNetworkEgldService } from '@tatumio/api-client'
 import { egldRecord } from './services/egld.record'
+import { egldWallet } from './services/egld.wallet'
+import { egldTransactionService } from './services/egld.tx'
+import { egldOffchainService } from './services/egld.offchain'
 
 const blockchain = Blockchain.EGLD
 
@@ -10,6 +13,9 @@ export const TatumEgldSDK = (args: SDKArguments) => {
   return {
     ...abstractBlockchainSdk({ ...args, blockchain }),
     record: egldRecord(),
+    wallet: egldWallet(),
+    transaction: egldTransactionService(),
+    offchain: egldOffchainService({ blockchain }),
     blockchain: {
       broadcast: BlockchainElrondNetworkEgldService.egldBroadcast,
       getBlock: BlockchainElrondNetworkEgldService.egldGetBlock,
