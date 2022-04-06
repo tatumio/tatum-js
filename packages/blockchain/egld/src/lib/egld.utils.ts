@@ -18,7 +18,7 @@ import {
 import { FromPrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
 import { EsdtData } from './services/egld.tx'
 
-const ELROND_V3_ENDPOINT = () => `${process.env.TATUM_API_URL || TATUM_API_CONSTANTS.URL}/v3/egld/node`
+const ELROND_V3_ENDPOINT = () => `${process.env['TATUM_API_URL'] || TATUM_API_CONSTANTS.URL}/v3/egld/node`
 
 export type TransferEgld = FromPrivateKeyOrSignatureId<TransferEgldBlockchain> & {
   service?: string
@@ -34,7 +34,7 @@ export const generateAddressFromPrivatekey = (privKey: string) => {
 
 export const signTransaction = async (tx: Transaction, fromPrivateKey: string): Promise<string> => {
   const fromAddrSigner = new UserSigner(UserSecretKey.fromString(fromPrivateKey))
-  fromAddrSigner.sign(tx)
+  await fromAddrSigner.sign(tx)
   return JSON.stringify(tx.toSendable())
 }
 
@@ -68,11 +68,11 @@ export const egldUtils = {
     return client
   },
 
-  getConfig: async (provider?: string) => {
-    const gasStationUrl = await egldUtils.getClient(provider)
+  getConfig: async () => {
+    const gasStationUrl = await egldUtils.getClient()
     try {
-      const { data } = await axios.get(`${gasStationUrl}/${process.env.TATUM_API_KEY}/network/config`)
-      return data
+      const response = await axios.get(`${gasStationUrl}/${process.env['TATUM_API_KEY']}/network/config`)
+      return response?.data
     } catch (e) {
       console.error(e.toString())
     }
@@ -88,7 +88,7 @@ export const egldUtils = {
   },
   getGasLimit: async (tx: EgldTx): Promise<number> => {
     const gasStationUrl = await egldUtils.getClient()
-    const { data } = await axios.post(`${gasStationUrl}/${process.env.TATUM_API_KEY}/transaction/cost`, tx)
+    const { data } = await axios.post(`${gasStationUrl}/${process.env['TATUM_API_KEY']}/transaction/cost`, tx)
     const gas = data?.data?.txGasUnits
     if (gas) {
       return gas
@@ -120,13 +120,12 @@ export const prepareSignedTransactionAbstraction = async (
   transaction: TransactionConfig,
   signatureId?: string | undefined,
   fromPrivateKey?: string | undefined,
-  provider?: string,
 ): Promise<string> => {
   const sender =
     (transaction.from as string) || (await generateAddressFromPrivatekey(fromPrivateKey as string))
 
-  const { data } = await egldUtils.getConfig(provider)
-  const { config } = data
+  const { data } = await egldUtils.getConfig()
+  const config = data?.config
   const gasPrice = (transaction.gasPrice ? transaction.gasPrice : config?.erd_min_gas_price) || 1000000000
   const nonce = await ApiServices.blockchain.elgo.egldGetTransactionCount(sender)
 
@@ -165,5 +164,6 @@ export const prepareSignedTransactionAbstraction = async (
     gasLimit: new GasLimit(egldTx.gasLimit),
     data: transaction.data ? new TransactionPayload(transaction.data) : undefined,
   })
+
   return await signTransaction(erdjsTransaction, fromPrivateKey as string)
 }

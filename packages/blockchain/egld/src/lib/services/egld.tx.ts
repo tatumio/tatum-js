@@ -8,6 +8,7 @@ import {
 } from '../egld.utils'
 import { TransactionConfig } from 'web3-core'
 import { ESDT_SYSTEM_SMART_CONTRACT_ADDRESS } from '../../constants'
+
 export interface EsdtData extends EsdtToken {
   name: string
   symbol: string
@@ -67,7 +68,9 @@ interface EsdtPropertiesNftOrSft {
 }
 
 const prepareEsdtIssuanceData = async (body: TransferEgld): Promise<string> => {
-  const data = egldUtils.parseTransferEgldBlockchainData(body)
+  if (!body.data) return ''
+
+  const data = body.data && egldUtils.parseTransferEgldBlockchainData(body)
 
   const tokenName = Buffer.from(data.name).toString('hex')
   const tokenTicker = Buffer.from(data.symbol).toString('hex')
@@ -86,7 +89,7 @@ const prepareEsdtIssuanceData = async (body: TransferEgld): Promise<string> => {
   return `${data.service}@${tokenName}@${tokenTicker}@${initialSupply}@${decimals}` + properties
 }
 
-const prepareDeploy = async (body: TransferEgld, provider?: string) => {
+const prepareDeploy = async (body: TransferEgld) => {
   const { amount, fee, fromPrivateKey, signatureId, from, ...data } = body
 
   const value = amount ? new BigNumber(amount).toNumber() : 0.05
@@ -105,7 +108,7 @@ const prepareDeploy = async (body: TransferEgld, provider?: string) => {
     }),
   }
 
-  return await prepareSignedTransactionAbstraction(tx, signatureId, fromPrivateKey, provider)
+  return await prepareSignedTransactionAbstraction(tx, signatureId, fromPrivateKey)
 }
 
 const prepareEsdtTransferData = async (data: EsdtTransfer): Promise<string> => {
@@ -126,7 +129,7 @@ const prepareEsdtTransferData = async (data: EsdtTransfer): Promise<string> => {
   return `${data.service}@${tokenId}@${value}` + args
 }
 
-export const prepareSignedTransaction = async (body: TransferEgld, provider?: string) => {
+export const prepareSignedTransaction = async (body: TransferEgld) => {
   const { fromPrivateKey, signatureId, from, to, amount, fee, data } = body
 
   const tx: TransactionConfig = {
@@ -138,13 +141,14 @@ export const prepareSignedTransaction = async (body: TransferEgld, provider?: st
     data,
   }
 
-  return await prepareSignedTransactionAbstraction(tx, signatureId, fromPrivateKey, provider)
+  return await prepareSignedTransactionAbstraction(tx, signatureId, fromPrivateKey)
 }
 
-export const prepareTransferEsdtSignedTransaction = async (body: TransferEgld, provider?: string) => {
-  const { fromPrivateKey, signatureId, from, to, fee, ...data } = body
+export const prepareTransferEsdtSignedTransaction = async (body: TransferEgld) => {
+  const { fromPrivateKey, signatureId, from, to, fee, data } = body
 
   const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
+  const parsedData = JSON.parse(data)
 
   const tx: TransactionConfig = {
     from: sender,
@@ -152,19 +156,20 @@ export const prepareTransferEsdtSignedTransaction = async (body: TransferEgld, p
     gasPrice: fee?.gasPrice,
     gas: fee?.gasLimit,
     data: await prepareEsdtTransferData({
-      ...(data as EsdtTransfer),
-      service: data.service || 'ESDTTransfer',
+      ...(parsedData as EsdtTransfer),
+      service: parsedData.service || 'ESDTTransfer',
     }),
   }
 
-  return await prepareSignedTransactionAbstraction(tx, signatureId, fromPrivateKey, provider)
+  return await prepareSignedTransactionAbstraction(tx, signatureId, fromPrivateKey)
 }
 
-export const prepareTransferNft = async (body: TransferEgld, provider?: string) => {
-  const { fromPrivateKey, signatureId, from, amount, fee, ...data } = body
+export const prepareTransferNft = async (body: TransferEgld) => {
+  const { fromPrivateKey, signatureId, from, amount, fee, data } = body
 
   const value = amount ? new BigNumber(amount).toNumber() : 0
   const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
+  const parsedData = JSON.parse(data)
 
   const tx: TransactionConfig = {
     from: sender,
@@ -173,12 +178,12 @@ export const prepareTransferNft = async (body: TransferEgld, provider?: string) 
     gasPrice: fee?.gasPrice,
     gas: fee?.gasLimit,
     data: await prepareTransferNftData({
-      ...(data as EsdtTransferNft),
-      service: data.service || 'ESDTNFTTransfer',
+      ...(parsedData as EsdtTransferNft),
+      service: parsedData.service || 'ESDTNFTTransfer',
     }),
   }
 
-  return await prepareSignedTransactionAbstraction(tx, signatureId, fromPrivateKey, provider)
+  return await prepareSignedTransactionAbstraction(tx, signatureId, fromPrivateKey)
 }
 
 const prepareTransferNftData = async (data: EsdtTransferNft): Promise<string> => {
@@ -202,11 +207,12 @@ const prepareTransferNftData = async (data: EsdtTransferNft): Promise<string> =>
   return `${data.service}@${tokenId}@${nonce}@${quantity}@${to}` + args
 }
 
-export const prepareDeployNftOrSft = async (body: TransferEgld, provider?: string) => {
-  const { fromPrivateKey, signatureId, from, amount, fee, ...data } = body
+export const prepareDeployNftOrSft = async (body: TransferEgld) => {
+  const { fromPrivateKey, signatureId, from, amount, fee, data } = body
 
   const value = amount ? new BigNumber(amount).toNumber() : 0.05
   const sender = from || (await generateAddressFromPrivatekey(fromPrivateKey as string))
+  const parsedData = JSON.parse(data)
 
   const tx: TransactionConfig = {
     from: sender,
@@ -215,12 +221,12 @@ export const prepareDeployNftOrSft = async (body: TransferEgld, provider?: strin
     gasPrice: fee?.gasPrice,
     gas: fee?.gasLimit,
     data: await prepareIssuanceNftOrSftData({
-      ...(data as EsdtIssueNftOrSft),
-      service: data.service || 'issueNonFungible',
+      ...(parsedData as EsdtIssueNftOrSft),
+      service: parsedData.service || 'issueNonFungible',
     }),
   }
 
-  return await prepareSignedTransactionAbstraction(tx, signatureId, fromPrivateKey, provider)
+  return await prepareSignedTransactionAbstraction(tx, signatureId, fromPrivateKey)
 }
 
 const prepareIssuanceNftOrSftData = async (data: EsdtIssueNftOrSft): Promise<string> => {
@@ -237,75 +243,66 @@ export const egldTransactionService = () => {
       /**
        * Sign ESDT transaction with private keys locally. Nothing is broadcast to the blockchain.
        * @param body content of the transaction to broadcast
-       * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
        * @returns transaction data to be broadcast to blockchain.
        */
-      deploy: async (body: TransferEgld, provider?: string) => prepareDeploy(body, provider),
+      deploy: async (body: TransferEgld) => prepareDeploy(body),
       /**
        * Sign EGLD transaction with private keys locally. Nothing is broadcast to the blockchain.
        * @param body content of the transaction to broadcast
        * @returns transaction data to be broadcast to blockchain.
        */
-      signedTransaction: async (body: TransferEgld, provider?: string) =>
-        prepareSignedTransaction(body, provider),
+      signedTransaction: async (body: TransferEgld) => prepareSignedTransaction(body),
       /**
        * Sign ESDT transaction with private keys locally. Nothing is broadcast to the blockchain.
        * @param body content of the transaction to broadcast
-       * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
        * @returns transaction data to be broadcast to blockchain.
        */
-      smartContractMethodInvocation: (body: TransferEgld, provider?: string) =>
-        prepareTransferEsdtSignedTransaction(body, provider),
+      smartContractMethodInvocation: (body: TransferEgld) => prepareTransferEsdtSignedTransaction(body),
       /**
        * Sign ESDT transfer NFT transaction with private keys locally. Nothing is broadcast to the blockchain.
        * @param body content of the transaction to broadcast
-       * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
        * @returns transaction data to be broadcast to blockchain.
        */
-      transferNft: (body: TransferEgld, provider?: string) => prepareTransferNft(body, provider),
+      transferNft: (body: TransferEgld) => prepareTransferNft(body),
       /**
        * Sign ESDT deploy NFT transaction with private keys locally. Nothing is broadcast to the blockchain.
        * @param body content of the transaction to broadcast
-       * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
        * @returns transaction data to be broadcast to blockchain.
        */
-      deployNft: (body: TransferEgld, provider?: string) => prepareDeployNftOrSft(body, provider),
+      deployNft: (body: TransferEgld) => prepareDeployNftOrSft(body),
     },
     send: {
       /**
        * Send EGLD deploy ESDT transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
        * @param body content of the transaction to broadcast
-       * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      deploy: async (body: TransferEgld, provider?: string) =>
+      deploy: async (body: TransferEgld) =>
         await BlockchainElrondNetworkEgldService.egldBroadcast({
-          txData: await prepareDeploy(body, provider),
+          txData: await prepareDeploy(body),
           signatureId: 'signatureId' in body && body.signatureId,
         }),
       /**
        * Send EGLD or supported ERC20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
        * @param body content of the transaction to broadcast
-       * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      signedTransaction: async (body: TransferEgld, provider?: string) =>
+      signedTransaction: async (body: TransferEgld) =>
         await BlockchainElrondNetworkEgldService.egldBroadcast({
-          txData: await prepareSignedTransaction(body, provider),
+          txData: await prepareSignedTransaction(body),
           signatureId: 'signatureId' in body && body.signatureId,
         }),
       /**
        * Send EGLD invoke smart contract transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
        * @param body content of the transaction to broadcast
-       * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      smartContractMethodInvocation: async (body: TransferEgld, provider?: string) =>
+      smartContractMethodInvocation: async (body: TransferEgld) =>
         await BlockchainElrondNetworkEgldService.egldBroadcast({
-          txData: await prepareTransferEsdtSignedTransaction(body, provider),
+          txData: await prepareTransferEsdtSignedTransaction(body),
           signatureId: 'signatureId' in body && body.signatureId,
         }),
 
@@ -313,24 +310,22 @@ export const egldTransactionService = () => {
        * Send EGLD ERC721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
        * @param body content of the transaction to broadcast
-       * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      transferNft: async (body: TransferEgld, provider?: string) =>
+      transferNft: async (body: TransferEgld) =>
         await BlockchainElrondNetworkEgldService.egldBroadcast({
-          txData: await prepareTransferNft(body, provider),
+          txData: await prepareTransferNft(body),
           signatureId: 'signatureId' in body && body.signatureId,
         }),
       /**
        * Send EGLD NFT deploy to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
        * @param body content of the transaction to broadcast
-       * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      deployNft: async (body: TransferEgld, provider?: string) =>
+      deployNft: async (body: TransferEgld) =>
         await BlockchainElrondNetworkEgldService.egldBroadcast({
-          txData: await prepareDeployNftOrSft(body, provider),
+          txData: await prepareDeployNftOrSft(body),
           signatureId: 'signatureId' in body && body.signatureId,
         }),
     },

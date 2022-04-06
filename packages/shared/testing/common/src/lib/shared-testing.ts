@@ -17,6 +17,7 @@ import { TRON_TEST_DATA } from './test-data/tron.test-data'
 import { KLAYTN_TEST_DATA } from './test-data/klaytn.test-data'
 import { ALGO_TEST_DATA } from './test-data/algo.test-data'
 import { TERRA_TEST_DATA } from './test-data/terra.test-data'
+import { EGLD_TEST_DATA } from './test-data/egld.test-data'
 
 export type BlockchainNetworkTestData = {
   XPUB: string
@@ -91,6 +92,7 @@ export const TEST_DATA = {
   SOLANA: SOLANA_TEST_DATA,
   TRON: TRON_TEST_DATA,
   ALGO: ALGO_TEST_DATA,
+  EGLD: EGLD_TEST_DATA,
 }
 
 export function expectHexString(value: string): void {
