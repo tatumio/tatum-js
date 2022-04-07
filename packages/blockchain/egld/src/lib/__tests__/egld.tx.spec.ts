@@ -22,7 +22,7 @@ describe('EgldSDK - offchain tx', () => {
 
       const parsedTx = JSON.parse(tx)
 
-      expect(parsedTx.data).toBe('Tm8gZGF0YQ==')
+      expect(parsedTx.data).toBe('eyBzZXJ2aWNlOiBpc3N1ZSB9')
       expect(parsedTx.sender).toBe(testData.ADDRESS_0)
       expect(parsedTx.receiver).toBe(ESDT_SYSTEM_SMART_CONTRACT_ADDRESS)
       expect(parsedTx.signature).toBeDefined()

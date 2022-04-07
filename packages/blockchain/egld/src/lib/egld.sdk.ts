@@ -6,6 +6,7 @@ import { egldRecord } from './services/egld.record'
 import { egldWallet } from './services/egld.wallet'
 import { egldTransactionService } from './services/egld.tx'
 import { egldOffchainService } from './services/egld.offchain'
+import { egldKmsService } from './services/egld.kms'
 
 const blockchain = Blockchain.EGLD
 
@@ -16,6 +17,7 @@ export const TatumEgldSDK = (args: SDKArguments) => {
     wallet: egldWallet(),
     transaction: egldTransactionService(),
     offchain: egldOffchainService({ blockchain }),
+    kms: egldKmsService({ blockchain }),
     blockchain: {
       broadcast: BlockchainElrondNetworkEgldService.egldBroadcast,
       getBlock: BlockchainElrondNetworkEgldService.egldGetBlock,

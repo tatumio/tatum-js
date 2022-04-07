@@ -71,10 +71,10 @@ export const egldUtils = {
   getConfig: async () => {
     const gasStationUrl = await egldUtils.getClient()
     try {
-      const response = await axios.get(`${gasStationUrl}/${process.env['TATUM_API_KEY']}/network/config`)
+      const response = await axios.get(`${gasStationUrl}/d341d8f5-5f6a-43ca-a57c-c67839d1a1cb/network/config`)
       return response?.data
     } catch (e) {
-      console.error(e.toString())
+      console.error(e)
     }
     return null
   },
@@ -88,7 +88,10 @@ export const egldUtils = {
   },
   getGasLimit: async (tx: EgldTx): Promise<number> => {
     const gasStationUrl = await egldUtils.getClient()
-    const { data } = await axios.post(`${gasStationUrl}/${process.env['TATUM_API_KEY']}/transaction/cost`, tx)
+    const { data } = await axios.post(
+      `${gasStationUrl}/d341d8f5-5f6a-43ca-a57c-c67839d1a1cb/transaction/cost`,
+      tx,
+    )
     const gas = data?.data?.txGasUnits
     if (gas) {
       return gas
@@ -96,14 +99,14 @@ export const egldUtils = {
     throw Error(data?.data?.returnMessage || 'egld.gasLimit.error')
   },
 
-  isEsdtData: (input?: object): input is EsdtData => {
+  isEsdtData: (input: object): input is EsdtData => {
     return input && 'name' in input && 'symbol' in input && 'supply' in input && 'digits' in input
   },
 
   parseTransferEgldBlockchainData: (body: Pick<TransferEgld, 'data'>): EsdtData => {
     let parsed: object
     try {
-      parsed = JSON.parse(body.data)
+      parsed = body?.data && JSON.parse(body.data)
     } catch {
       throw new Error('Unable to parse Egld data input')
     }
@@ -156,11 +159,11 @@ export const prepareSignedTransactionAbstraction = async (
   }
 
   const erdjsTransaction = new Transaction({
-    nonce: new Nonce(egldTx.nonce),
-    value: Balance.fromString(egldTx.value),
+    nonce: egldTx.nonce ? new Nonce(egldTx.nonce) : undefined,
+    value: egldTx.value ? Balance.fromString(egldTx.value) : undefined,
     receiver: new Address(egldTx.receiver),
     sender: new Address(egldTx.sender),
-    gasPrice: new GasPrice(egldTx.gasPrice),
+    gasPrice: egldTx.gasPrice ? new GasPrice(egldTx.gasPrice) : undefined,
     gasLimit: new GasLimit(egldTx.gasLimit),
     data: transaction.data ? new TransactionPayload(transaction.data) : undefined,
   })

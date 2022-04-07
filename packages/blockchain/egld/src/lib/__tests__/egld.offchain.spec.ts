@@ -9,7 +9,7 @@ describe('Offchain - tx', () => {
   const testData = TEST_DATA.EGLD
   // skiped because account doesn't have balance
   it.skip('should send offchain transaction', async () => {
-    const tx = await sdk.offchain.sendOffchainTransaction({
+    const tx = await sdk.offchain.send({
       address: testData.ADDRESS_0,
       privateKey: testData.PRIVATE_KEY_0,
       amount: '0.001',

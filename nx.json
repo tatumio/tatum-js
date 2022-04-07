@@ -33,5 +33,6 @@
         "projects": "dependencies"
       }
     ]
-  }
+  },
+  "defaultProject": "egld-example"
 }
