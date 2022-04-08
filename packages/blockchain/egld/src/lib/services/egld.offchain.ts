@@ -1,26 +1,38 @@
-import { ApiServices, Currency, TransferEth, TransferEthKMS, TransferEthMnemonic } from '@tatumio/api-client'
+import {
+  ApiServices,
+  Currency,
+  OffchainTransactionResult,
+  OffchainTransactionSignatureResult,
+  TransferEth,
+  TransferEthKMS,
+  TransferEthMnemonic,
+} from '@tatumio/api-client'
 import { abstractBlockchainOffchain } from '@tatumio/shared-blockchain-abstract'
 import { Blockchain } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
-import { from } from 'form-data'
 import { prepareSignedTransaction } from './egld.tx'
 
 export const egldOffchainService = (args: { blockchain: Blockchain }) => {
   return {
     ...abstractBlockchainOffchain(args),
+    /**
+     * Send EGLD transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
+     * This operation is irreversible.
+     * @param body content of the transaction to broadcast
+     * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
+     */
     send,
   }
 }
 
 type EgldOffchain = TransferEth | TransferEthMnemonic | TransferEthKMS
+type SendOffchainResponse =
+  | OffchainTransactionResult
+  | OffchainTransactionSignatureResult
+  | { id?: string }
+  | void
 
-/**
- * Send EGLD transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
- * This operation is irreversible.
- * @param body content of the transaction to broadcast
- * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
- */
-export const send = async (body: EgldOffchain) => {
+export const send = async (body: EgldOffchain): Promise<SendOffchainResponse> => {
   if ('signatureId' in body) {
     return await ApiServices.offChain.blockchain.egldTransfer(body as TransferEthKMS)
   }
@@ -62,11 +74,9 @@ export const send = async (body: EgldOffchain) => {
       id,
     }
   } catch (e) {
-    console.error(e)
     try {
       return await ApiServices.offChain.withdrawal.cancelInProgressWithdrawal(id!)
     } catch (e1) {
-      console.log(e)
       return { id }
     }
   }

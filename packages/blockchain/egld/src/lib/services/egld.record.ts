@@ -17,9 +17,7 @@ export const egldRecord = () => {
        */
       data: string
     }> {
-      // TODO: Open API bug
-      // @ts-ignore
-      return BlockchainRecordService.getLog(Blockchain.EGLD, id)
+      return BlockchainRecordService.getLog(Blockchain.EGLD as any, id)
     },
   }
 }
