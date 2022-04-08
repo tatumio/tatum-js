@@ -1,0 +1,8 @@
+export const EGLD_TEST_DATA = {
+  BLOCK_HASH: '67e4c2ad0c7bf85e569cfea423fa2905895f5f973d07177ff344a00972c2c5f1',
+  TX_HASH: 'e5129bc9146990c1492450c4c6376bc64423ab931ff076d5ef442248d61bc585',
+  ADDRESS_0: 'erd1uajkmmpxf9s355qmf0nwftc65987fzhzx7gahncymsjvcdwy7tgq7k2ye7',
+  ADDRESS_100: 'erd1r27lx5krup4tffvmx933hjprzffw59tt8zaqz3t36yj9fdtrcsvsrqhyrp',
+  PRIVATE_KEY_0: '6ee8378f00ac59c597e06a584c2fda821430747caf49a094de38e8ee2e76da68',
+  PRIVATE_KEY_100: '84cfa388802b751bbd7a17d0b9d496acf1d3df1f580175cc0f13810afdaf821e',
+}

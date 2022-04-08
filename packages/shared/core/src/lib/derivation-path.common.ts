@@ -18,10 +18,10 @@ export const DERIVATION_PATH: Record<Blockchain, string> = {
   BCH: "m/44'/145'/0'/0",
   TRON: "m/44'/195'/0'/0",
   TERRA: "m/44'/330'/0'/0",
+  EGLD: "m/44'/508'/0'/0'",
   // TBD
   ALGO: '@TODO - TBD',
   ADA: '@TODO - TBD',
-  EGLD: '@TODO - TBD',
   FLOW: "m/44'/539'/0'/0",
   NEO: '@TODO - TBD',
   QTUM: '@TODO - TBD',
