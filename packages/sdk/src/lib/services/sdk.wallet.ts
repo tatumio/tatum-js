@@ -10,7 +10,6 @@ export const walletSdk = {
    * @param xpub extended public key to generate address from
    * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
    * @param options optional testnet or mainnet version of address. Default: mainnet
-   * @param addressType optional 'bech32' (default) or 'p2sh' address type parameter for BTC
    * @returns blockchain address
    */
   generateAddressFromXPub(
@@ -18,12 +17,11 @@ export const walletSdk = {
     xpub: string,
     i: number,
     options?: { testnet: boolean },
-    addressType?: 'bech32' | 'p2sh',
   ): string {
     const blockchain = blockchainHelper.getBlockchainByCurrency(currency)
 
     if (blockchainHelper.isBtcBased(blockchain))
-      return btcBasedWalletUtils.generateAddressFromXPub(blockchain, xpub, i, options, addressType)
+      return btcBasedWalletUtils.generateAddressFromXPub(blockchain, xpub, i, options)
 
     if (blockchainHelper.isEvmBased(blockchain)) return evmBasedUtils.generateAddressFromXPub(xpub, i)
 

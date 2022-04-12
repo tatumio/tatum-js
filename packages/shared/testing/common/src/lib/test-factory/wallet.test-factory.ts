@@ -7,8 +7,6 @@ interface SdkWithWalletFunctions {
     xpub: string,
     i: number,
     options?: { testnet: boolean },
-    // BTC AddressType
-    addressType?: 'p2sh' | 'bech32',
   ): string
 
   generatePrivateKeyFromMnemonic(mnemonic: string, i: number, options?: { testnet: boolean }): Promise<string>

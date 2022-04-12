@@ -14,9 +14,8 @@ export const btcBasedWallet = (args: { blockchain: BtcBasedBlockchain }) => {
       xpub: string,
       i: number,
       options?: { testnet: boolean },
-      addressType?: 'bech32' | 'p2sh',
     ): string {
-      return btcBasedWalletUtils.generateAddressFromXPub(args.blockchain, xpub, i, options, addressType)
+      return btcBasedWalletUtils.generateAddressFromXPub(args.blockchain, xpub, i, options)
     },
 
     /**
