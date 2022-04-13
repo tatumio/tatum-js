@@ -26,7 +26,7 @@ export async function klaytnNftExample() {
   )
 
   const mintedHash = await klaytnSDK.nft.mintNFT({
-    chain: 'KCS',
+    chain: Currency.KLAY,
     tokenId: '100000',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
@@ -35,7 +35,7 @@ export async function klaytnNftExample() {
   })
 
   const mintedWithMinterHash = await klaytnSDK.nft.mintNFT({
-    chain: 'KCS',
+    chain: Currency.KLAY,
     tokenId: '100000',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
