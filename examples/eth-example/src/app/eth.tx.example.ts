@@ -1229,7 +1229,7 @@ export async function ethTxWithPrivateKeyExample(): Promise<void> {
 }
 
 export async function ethTxFeesCovered(): Promise<void> {
-  const generateCustodialWalletBatch = await ethSDK.custodial.generateCustodialBatch({
+  const generateCustodialWalletBatch = await ethSDK.custodial.send.custodialWalletBatch({
     chain: 'ETH',
     batchCount: 100,
     owner: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
