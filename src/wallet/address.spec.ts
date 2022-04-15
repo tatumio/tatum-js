@@ -43,12 +43,7 @@ describe('Address tests', () => {
     expect(address).toBe('968c3ce11e871cb2b7161b282655ee5fcb051f3c04894705d771bf11c6fbebfc6556ab8a0c04f45ea56281312336d0668529077c9d66891a6cad3db877acbe90')
   })
 
-  it('should generate P2SH address 1 for BTC testnet', () => {
-    const address = generateAddressFromXPub(Currency.BTC, true, 'tpubDFjLw3ykn4aB7fFt96FaqRjSnvtDsU2wpVr8GQk3Eo612LS9jo9JgMkQRfYVG248J3pTBsxGg3PYUXFd7pReNLTeUzxFcUDL3zCvrp3H34a', 1, 'p2sh')
-    expect(address).toBe('mjJotvHmzEuyXZJGJXXknS6N3PWQnw6jf5')
-  })
-
-  it('should generate BECH32 address 1 for BTC testnet', () => {
+  it('should generate address 1 for BTC testnet', () => {
     const address = generateAddressFromXPub(Currency.BTC, true, 'tpubDFjLw3ykn4aB7fFt96FaqRjSnvtDsU2wpVr8GQk3Eo612LS9jo9JgMkQRfYVG248J3pTBsxGg3PYUXFd7pReNLTeUzxFcUDL3zCvrp3H34a', 1)
     expect(address).toBe('tb1q9x2gqftyxterwt0k6ehzrm2gkzthjly677ucyr')
   })
