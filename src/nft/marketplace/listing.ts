@@ -90,19 +90,19 @@ export interface MarketplaceListing {
 }
 
 /**
- * For more details, see <a href="https://tatum.io/apidoc#operation/GetMarketplaceFee" target="_blank">Tatum API documentation</a>
+ * For more details, see <a href="https://apidoc.tatum.io/#operation/GetMarketplaceFee" target="_blank">Tatum API documentation</a>
  */
 export const getMarketplaceFee = async (chain: Currency, contractAddress: string): Promise<number> =>
   get(`/v3/blockchain/marketplace/listing/${chain}/${contractAddress}/fee`);
 
 /**
- * For more details, see <a href="https://tatum.io/apidoc#operation/GetMarketplaceListing" target="_blank">Tatum API documentation</a>
+ * For more details, see <a href="https://apidoc.tatum.io/#operation/GetMarketplaceListing" target="_blank">Tatum API documentation</a>
  */
 export const getMarketplaceListing = async (chain: Currency, contractAddress: string, listingId: string): Promise<MarketplaceListing> =>
   get(`/v3/blockchain/marketplace/listing/${chain}/${contractAddress}/listing/${listingId}`);
 
 /**
- * For more details, see <a href="https://tatum.io/apidoc#operation/GetMarketplaceFeeRecipient" target="_blank">Tatum API documentation</a>
+ * For more details, see <a href="https://apidoc.tatum.io/#operation/GetMarketplaceFeeRecipient" target="_blank">Tatum API documentation</a>
  */
 export const getMarketplaceFeeRecipient = async (chain: Currency, contractAddress: string): Promise<{ address: string }> =>
   get(`/v3/blockchain/marketplace/listing/${chain}/${contractAddress}/recipient`);

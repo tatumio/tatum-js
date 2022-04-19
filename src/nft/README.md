@@ -10,7 +10,7 @@ First, we must import the required libraries from Tatum JS.
 import { mintNFTWithUri } from '@tatumio/tatum';
 ```
 ## Deploy NFT
-Next, we must [deploy an NFT smart contract](https://tatum.io/apidoc.php#operation/NftDeployErc721) on our blockchain of choice. 
+Next, we must [deploy an NFT smart contract](https://apidoc.tatum.io/.php#operation/NftDeployErc721) on our blockchain of choice.
 
 In this call, we designate the chain we will be deploying our NFT smart contract on (Ethereum), the name of the NFT, and it's symbol. We can optionally enable provenance data, which will also allow for minting NFTs that pay royalties as percentages of each sale. 
 
@@ -22,13 +22,13 @@ const transactionHash = await deployNFT(false, {
 });
 ```
 ## Get NFT contract address
-To perform further operations, we must [get the contract address](https://tatum.io/apidoc.php#operation/SCGetContractAddress)of the smart contract we have deployed from the transaction hash in the response to the deploy operation.
+To perform further operations, we must [get the contract address](https://apidoc.tatum.io/.php#operation/SCGetContractAddress)of the smart contract we have deployed from the transaction hash in the response to the deploy operation.
 
 ```typescript
 const contractAddress = await getNFTContractAddress(Currency.ETH, '0x7060694f5ce1feb5a255d06fdcf6e4f7a3507492');
 ```
 ## Mint NFT
-Now, we can [mint an NFT](https://tatum.io/apidoc.php#operation/NftMintErc721) with metadata we have already uploaded to IPFS. For more info on uploading metadata to IPFS, please consult [this guide](https://docs.tatum.io/guides/blockchain/how-to-store-metadata-to-ipfs-and-include-it-in-an-nft).
+Now, we can [mint an NFT](https://apidoc.tatum.io/.php#operation/NftMintErc721) with metadata we have already uploaded to IPFS. For more info on uploading metadata to IPFS, please consult [this guide](https://docs.tatum.io/guides/blockchain/how-to-store-metadata-to-ipfs-and-include-it-in-an-nft).
 
 It is possible to mint NFTs that pay out royalties to the original authors each time they are transferred, either as a fixed cashback amount or a percentage of the sale price. NFTs that pay cashback as percentages also hold provenance data (i.e. a record of every transfer of the NFT).
 
@@ -48,7 +48,7 @@ const transactionHash = await mintNFTWithUri(false, {
 });
 ```
 ## Transfer NFT
-Use the following API call to [transfer NFTs](https://tatum.io/apidoc.php#operation/NftTransferErc721). For provenance NFTs with percentage royalties, "provenance: true" must again be included.
+Use the following API call to [transfer NFTs](https://apidoc.tatum.io/.php#operation/NftTransferErc721). For provenance NFTs with percentage royalties, "provenance: true" must again be included.
 
 ```typescript
 const transactionHash = await transferNFT(false, {
@@ -70,7 +70,7 @@ const nfts = await getNFTsByAddress(
 ```
 
 ## Get Metadata URI
-To [get the metadata](https://tatum.io/apidoc.php#operation/NftGetMetadataErc721) included in an NFT, use the following endpoint. The required parameters are the chain, the address of the NFT smart contract, and the tokenID of the NFT.
+To [get the metadata](https://apidoc.tatum.io/.php#operation/NftGetMetadataErc721) included in an NFT, use the following endpoint. The required parameters are the chain, the address of the NFT smart contract, and the tokenID of the NFT.
 
 ```typescript
 const metadataURI = await getNFTMetadataURI(
@@ -81,7 +81,7 @@ const metadataURI = await getNFTMetadataURI(
 ```
 
 ## Get NFT royalty
-Use the following endpoint to [get the royalty information](https://tatum.io/apidoc.php#operation/NftGetRoyaltyErc721) about a specific NFT. The required parameters are the chain, the address of the NFT smart contract, and the tokenID of the NFT.
+Use the following endpoint to [get the royalty information](https://apidoc.tatum.io/.php#operation/NftGetRoyaltyErc721) about a specific NFT. The required parameters are the chain, the address of the NFT smart contract, and the tokenID of the NFT.
 
 ```typescript
 const nftRoyalty = await getNFTRoyalty(
@@ -112,7 +112,7 @@ const transactionHash = await mintNFTWithUri(false, {
 ```
 
 ## Burn NFT
-Use the following endpoint to [burn an NFT](https://tatum.io/apidoc.php#operation/NftBurnErc721). The required parameters are the chain, the address of the NFT smart contract, and the tokenID of the NFT.
+Use the following endpoint to [burn an NFT](https://apidoc.tatum.io/.php#operation/NftBurnErc721). The required parameters are the chain, the address of the NFT smart contract, and the tokenID of the NFT.
 
 ```typescript
 const transactionHash = await burnNFT(false, {
@@ -123,7 +123,7 @@ const transactionHash = await burnNFT(false, {
 ```
 
 ## Update cashback for an author NFT
-To [update the cashback value(s) for an author(s) of an NFT](https://tatum.io/apidoc.php#operation/NftGetRoyaltyErc721), use the following API call. Cashback values for fixed value royalties and percentage royalties can be changed, but the fixedValue parameter for percentage royalties cannot.
+To [update the cashback value(s) for an author(s) of an NFT](https://apidoc.tatum.io/.php#operation/NftGetRoyaltyErc721), use the following API call. Cashback values for fixed value royalties and percentage royalties can be changed, but the fixedValue parameter for percentage royalties cannot.
 
 ```typescript
 const transactionHash = await updateCashbackForAuthorNFT(false, {
