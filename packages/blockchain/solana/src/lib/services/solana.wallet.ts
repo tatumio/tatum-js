@@ -14,7 +14,7 @@ const generateAddressFromMnemonic = (mnemonic: string, index: number) => {
 
 export const solanaWallet = () => {
   return {
-    wallet: (privateKey?: string): { mnemonic?: string, privateKey: string, address: string } => {
+    wallet: (privateKey?: string): { mnemonic?: string; privateKey: string; address: string } => {
       const mnemonic = generateMnemonic(256)
       let keypair
       if (privateKey) {

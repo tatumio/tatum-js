@@ -161,7 +161,9 @@ describe('TatumSolanaSDK', () => {
     })
 
     it('should generate SOL wallet from private key', async () => {
-      const wallet = sdk.wallet.wallet('2B7RyZEuZr9PpfRrn7nYhSXhjeuzte65UYeeKJFQJCvsi3ZQJk5AfmWptwDpD2Xtz22nv1aTg5rmKq13ggB7Fkep')
+      const wallet = sdk.wallet.wallet(
+        '2B7RyZEuZr9PpfRrn7nYhSXhjeuzte65UYeeKJFQJCvsi3ZQJk5AfmWptwDpD2Xtz22nv1aTg5rmKq13ggB7Fkep',
+      )
       expect(wallet.mnemonic).not.toBeDefined()
       expect(wallet.privateKey).toBeDefined()
       expect(wallet.address).toBeDefined()
