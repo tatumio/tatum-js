@@ -29,11 +29,13 @@ const send = async (
   body: TransferSolana,
   web3: SolanaWeb3,
   provider?: string,
+  feePayer?: string,
+  feePayerPrivateKey?: string,
 ): Promise<{ txData: string } | { txId: string }> => {
   const fromPubkey = new PublicKey(body.from)
   const connection = web3.getClient(provider)
 
-  const transaction = new Transaction({ feePayer: fromPubkey })
+  const transaction = new Transaction({ feePayer: feePayer ? new PublicKey(feePayer) : fromPubkey })
   transaction.add(
     SystemProgram.transfer({
       fromPubkey: fromPubkey,
@@ -47,17 +49,26 @@ const send = async (
     return { txData: transaction.compileMessage().serialize().toString('hex') }
   }
 
-  const signers = web3.generateKeyPair(body.fromPrivateKey)
+  const signers = [web3.generateKeyPair(body.fromPrivateKey)]
+  if (feePayerPrivateKey) {
+    signers.push(web3.generateKeyPair(feePayerPrivateKey))
+  }
 
   return {
-    txId: await connection.sendTransaction(transaction, [signers]),
+    txId: await connection.sendTransaction(transaction, signers),
   }
 }
 
-const transferNft = async (body: TransferSolanaNft, web3: SolanaWeb3, provider?: string) => {
+const transferNft = async (
+  body: TransferSolanaNft,
+  web3: SolanaWeb3,
+  provider?: string,
+  feePayer?: string,
+  feePayerPrivateKey?: string,
+) => {
   const connection = web3.getClient(provider)
   const from = new PublicKey(body.from as string)
-  const transaction = new Transaction({ feePayer: from })
+  const transaction = new Transaction({ feePayer: feePayer ? new PublicKey(feePayer) : from })
   const walletAddress = new PublicKey(body.to)
 
   const mint = new PublicKey(body.contractAddress)
@@ -85,16 +96,25 @@ const transferNft = async (body: TransferSolanaNft, web3: SolanaWeb3, provider?:
     return { txData: transaction.compileMessage().serialize().toString('hex') }
   }
 
-  const wallet = web3.generateKeyPair(body.fromPrivateKey)
+  const signers = [web3.generateKeyPair(body.fromPrivateKey)]
+  if (feePayerPrivateKey) {
+    signers.push(web3.generateKeyPair(feePayerPrivateKey))
+  }
   return {
-    txId: await connection.sendTransaction(transaction, [wallet]),
+    txId: await connection.sendTransaction(transaction, signers),
   }
 }
 
-const mintNft = async (body: MintSolanaNft, web3: SolanaWeb3, provider?: string) => {
+const mintNft = async (
+  body: MintSolanaNft,
+  web3: SolanaWeb3,
+  provider?: string,
+  feePayer?: string,
+  feePayerPrivateKey?: string,
+) => {
   const connection = web3.getClient(provider)
   const from = new PublicKey(body.from)
-  const transaction = new Transaction({ feePayer: from })
+  const transaction = new Transaction({ feePayer: feePayer ? new PublicKey(feePayer) : from })
   const mintRent = await connection.getMinimumBalanceForRentExemption(MintLayout.span)
   const mint = Keypair.generate()
   const instructions = []
@@ -200,6 +220,9 @@ const mintNft = async (body: MintSolanaNft, web3: SolanaWeb3, provider?: string)
 
   const wallet = web3.generateKeyPair(body.fromPrivateKey as string)
   const signers = [mint, wallet]
+  if (feePayerPrivateKey) {
+    signers.push(web3.generateKeyPair(feePayerPrivateKey))
+  }
   return {
     txId: await connection.sendTransaction(transaction, [wallet, ...signers]),
     nftAddress: mint.publicKey.toBase58(),
@@ -213,19 +236,32 @@ export const solanaTxService = (args: { web3: SolanaWeb3 }) => {
      * Transfer SOL from account to another account.
      * @param body body of the request
      * @param provider optional URL of the Solana cluster
+     * @param feePayer optional address of the account, which will cover fees
+     * @param feePayerPrivateKey optional private key of the account which will cover fees
      */
-    send: async (body: TransferSolana, provider?: string) => send(body, args.web3, provider),
+    send: async (body: TransferSolana, provider?: string, feePayer?: string, feePayerPrivateKey?: string) =>
+      send(body, args.web3, provider, feePayer, feePayerPrivateKey),
     /**
      * Transfer NFT on Solana network.
      * @param body body of the request
      * @param provider optional URL of the Solana cluster
+     * @param feePayer optional address of the account, which will cover fees
+     * @param feePayerPrivateKey optional private key of the account which will cover fees
      */
-    transferNft: async (body: TransferSolanaNft, provider?: string) => transferNft(body, args.web3, provider),
+    transferNft: async (
+      body: TransferSolanaNft,
+      provider?: string,
+      feePayer?: string,
+      feePayerPrivateKey?: string,
+    ) => transferNft(body, args.web3, provider, feePayer, feePayerPrivateKey),
     /**
      * Mint new NFT on Solana. Fee is being paid by the minter.
      * @param body body of the request
      * @param provider optional URL of the Solana cluster
+     * @param feePayer optional address of the account, which will cover fees
+     * @param feePayerPrivateKey optional private key of the account which will cover fees
      */
-    mintNft: async (body: MintSolanaNft, provider?: string) => mintNft(body, args.web3, provider),
+    mintNft: async (body: MintSolanaNft, provider?: string, feePayer?: string, feePayerPrivateKey?: string) =>
+      mintNft(body, args.web3, provider, feePayer, feePayerPrivateKey),
   }
 }
