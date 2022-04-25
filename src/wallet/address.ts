@@ -75,7 +75,7 @@ interface Decoded extends Hash {
 const generateBtcAddress = (testnet: boolean, xpub: string, i: number) => {
   const network = testnet ? networks.testnet : networks.bitcoin
   const w = fromBase58(xpub, network).derivePath(String(i))
-  return payments.p2pkh({ pubkey: w.publicKey, network }).address as string
+  return payments.p2wpkh({ pubkey: w.publicKey, network }).address as string
 }
 
 /**

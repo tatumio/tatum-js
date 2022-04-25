@@ -45,7 +45,7 @@ describe('Address tests', () => {
 
   it('should generate address 1 for BTC testnet', () => {
     const address = generateAddressFromXPub(Currency.BTC, true, 'tpubDFjLw3ykn4aB7fFt96FaqRjSnvtDsU2wpVr8GQk3Eo612LS9jo9JgMkQRfYVG248J3pTBsxGg3PYUXFd7pReNLTeUzxFcUDL3zCvrp3H34a', 1)
-    expect(address).toBe('mjJotvHmzEuyXZJGJXXknS6N3PWQnw6jf5')
+    expect(address).toBe('tb1q9x2gqftyxterwt0k6ehzrm2gkzthjly677ucyr')
   })
 
   it('should generate address 1 for LTC mainnet', () => {
