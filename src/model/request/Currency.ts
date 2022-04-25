@@ -73,6 +73,7 @@ export enum Currency {
   COIIN = 'COIIN',
   COIIN_BSC = 'COIIN_BSC',
   GLMR = 'GLMR',
+  AVALANCHE = 'AVALANCHE',
 }
 
 export const ERC20_CURRENCIES = [
