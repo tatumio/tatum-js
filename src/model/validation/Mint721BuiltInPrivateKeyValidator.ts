@@ -16,7 +16,7 @@ export class Mint721BuiltInPrivateKeyValidator implements ValidatorConstraintInt
 
   public validate(value: any, validationArguments?: ValidationArguments) {
     const data = validationArguments?.object as any;
-    const chains = [Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC, Currency.KLAY]
+    const chains = [Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC, Currency.KLAY, Currency.ALGO]
     const isAllowedChain = chains.includes(data.chain);
 
     if (data.minter) {
@@ -70,7 +70,7 @@ export class Mint721BuiltInPrivateKeyValidator implements ValidatorConstraintInt
       return false
     }
 
-    if (!data.contractAddress) {
+    if (!data.contractAddress && data.chain !== Currency.ALGO) {
       this.message = 'Field contractAddress must be present.';
       return false
     }

@@ -1,4 +1,5 @@
 export * from './CreateRecord';
+export * from './MintAlgoNft';
 export * from './Currency';
 export * from './EstimateGasVet';
 export * from './Fee';
@@ -145,7 +146,7 @@ export * from './CeloDeployMultiToken'
 export * from './CeloUpdateCashbackErc721'
 export * from './UpdateCashbackErc721'
 export * from './PrivateKeyOrSignatureIdBtcBased'
-export {ContractType} from './ContractType'
+export { ContractType } from './ContractType'
 export * from './egld'
 export * from './AlgoTransaction'
 export * from './TransferAdaBlockchain'

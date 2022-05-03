@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum",
-  "version": "1.34.8",
+  "version": "1.34.9",
   "description": "Tatum API client allows browsers and Node.js clients to interact with Tatum API.",
   "main": "dist/src/index.js",
   "repository": "https://github.com/tatumio/tatum-js",
@@ -44,7 +44,7 @@
     "@solana/spl-token": "^0.1.8",
     "@solana/web3.js": "^1.30.2",
     "@tatumio/bitcoincashjs2-lib": "4.1.2",
-    "algosdk": "^1.11.1",
+    "algosdk": "1.16.0",
     "axios": "^0.21.1",
     "axios-retry": "^3.1.9",
     "base32.js": "^0.1.0",

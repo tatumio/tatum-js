@@ -1,23 +1,26 @@
-const algosdk = require('algosdk');
-const base32 = require('base32.js');
+import AlgodClient from 'algosdk/dist/types/src/client/v2/algod/algod'
 import BigNumber from 'bignumber.js';
 import { TextEncoder } from 'util';
 import { algorandBroadcast } from '../blockchain';
 import {
-    AlgoTransaction,
-    DeployErc721,
-    TransferErc721,
-    BurnErc721,
-    DeployErc20,
-    TransferErc20,
-    BurnErc20,
-    Currency,
-    TransactionKMS,
-    MintMultiToken,
-    TransferMultiToken,
-    BurnMultiToken
+  AlgoTransaction,
+  BurnErc20,
+  BurnErc721,
+  BurnMultiToken,
+  Currency,
+  DeployErc20,
+  MintAlgoNft,
+  MintMultiToken,
+  TransactionKMS,
+  TransferErc20,
+  TransferErc721,
+  TransferMultiToken,
 } from '../model';
 import { generateAlgodAddressFromPrivatetKey } from '../wallet'
+
+const algosdk = require('algosdk');
+const base32 = require('base32.js');
+
 const Url = require('url-parse');
 /**
  * Algod V2 Client
@@ -25,13 +28,13 @@ const Url = require('url-parse');
  * @param provider url of the algorand server endpoint
  * @returns algorand Client
  */
-export const getAlgoClient = (testnet: boolean, provider?: string) => {
-    if (provider) {
-        return new algosdk.Algodv2(`${(testnet ? process.env.TATUM_ALGORAND_TESTNET_TOKEN : process.env.TATUM_ALGORAND_MAINNET_TOKEN) || 'DUMMYTOKEN'}`, provider, Url(provider).port);
-    } else {
-        return new algosdk.Algodv2({ 'X-API-Key': testnet ? `${process.env.TATUM_ALGORAND_TESTNET_THIRD_API_KEY}` : `${process.env.TATUM_ALGORAND_MAINNET_THIRD_API_KEY}` },
-            testnet ? `${process.env.TATUM_ALGORAND_TESTNET_THIRD_API_ALGOD_URL}` : `${process.env.TATUM_ALGORAND_MAINNET_THIRD_API_ALGOD_URL}`, '');
-    }
+export const getAlgoClient = (testnet: boolean, provider?: string): AlgodClient => {
+  if (provider) {
+    return new algosdk.Algodv2(`${(testnet ? process.env.TATUM_ALGORAND_TESTNET_TOKEN : process.env.TATUM_ALGORAND_MAINNET_TOKEN) || 'DUMMYTOKEN'}`, provider, Url(provider).port);
+  } else {
+    return new algosdk.Algodv2({ 'X-API-Key': testnet ? `${process.env.TATUM_ALGORAND_TESTNET_THIRD_API_KEY}` : `${process.env.TATUM_ALGORAND_MAINNET_THIRD_API_KEY}` },
+      testnet ? `${process.env.TATUM_ALGORAND_TESTNET_THIRD_API_ALGOD_URL}` : `${process.env.TATUM_ALGORAND_MAINNET_THIRD_API_ALGOD_URL}`, '');
+  }
 }
 
 /**
@@ -41,12 +44,12 @@ export const getAlgoClient = (testnet: boolean, provider?: string) => {
  * @returns algorand Indexer Client
  */
 export const getAlgoIndexerClient = (testnet: boolean, provider?: string) => {
-    if (provider) {
-        return new algosdk.Indexer(`${(testnet ? process.env.TATUM_ALGORAND_TESTNET_TOKEN : process.env.TATUM_ALGORAND_MAINNET_TOKEN) || 'DUMMYTOKEN'}`, provider, Url(provider).port);
-    } else {
-        return new algosdk.Indexer({ 'X-API-Key': testnet ? `${process.env.TATUM_ALGORAND_TESTNET_THIRD_API_KEY}` : `${process.env.TATUM_ALGORAND_MAINNET_THIRD_API_KEY}` },
-            testnet ? `${process.env.TATUM_ALGORAND_TESTNET_THIRD_API_INDEXER_URL}` : `${process.env.TATUM_ALGORAND_MAINNET_THIRD_API_INDEXER_URL}`, '');
-    }
+  if (provider) {
+    return new algosdk.Indexer(`${(testnet ? process.env.TATUM_ALGORAND_TESTNET_TOKEN : process.env.TATUM_ALGORAND_MAINNET_TOKEN) || 'DUMMYTOKEN'}`, provider, Url(provider).port);
+  } else {
+    return new algosdk.Indexer({ 'X-API-Key': testnet ? `${process.env.TATUM_ALGORAND_TESTNET_THIRD_API_KEY}` : `${process.env.TATUM_ALGORAND_MAINNET_THIRD_API_KEY}` },
+      testnet ? `${process.env.TATUM_ALGORAND_TESTNET_THIRD_API_INDEXER_URL}` : `${process.env.TATUM_ALGORAND_MAINNET_THIRD_API_INDEXER_URL}`, '');
+  }
 }
 
 /**
@@ -57,28 +60,28 @@ export const getAlgoIndexerClient = (testnet: boolean, provider?: string) => {
  * @returns transaction data to be broadcast to blockchain
  */
 export const prepareAlgoSignedTransaction = async (testnet: boolean, tx: AlgoTransaction, provider?: string) => {
-    const algodClient = getAlgoClient(testnet, provider);
-    const params = await algodClient.getTransactionParams().do();
-    const decoder = new base32.Decoder({ type: 'rfc4648' });
-    const enc = new TextEncoder();
-    const note = enc.encode(tx.note ? tx.note : '');
-    const txn = algosdk.makePaymentTxnWithSuggestedParams(
-        tx.from,
-        tx.to,
-        new BigNumber(tx.amount).multipliedBy(1000000).toNumber(),
-        undefined,
-        note,
-        {
-            ...params,
-            fee: new BigNumber(tx.fee).multipliedBy(1000000).toNumber(),
-            flatFee: true
-        }
-    );
-    if (tx.signatureId) {
-        return JSON.stringify(txn);
-    }
-    const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
-    return txn.signTxn(secretKey);
+  const algodClient = getAlgoClient(testnet, provider);
+  const params = await algodClient.getTransactionParams().do();
+  const decoder = new base32.Decoder({ type: 'rfc4648' });
+  const enc = new TextEncoder();
+  const note = enc.encode(tx.note ? tx.note : '');
+  const txn = algosdk.makePaymentTxnWithSuggestedParams(
+    tx.from,
+    tx.to,
+    new BigNumber(tx.amount).multipliedBy(1000000).toNumber(),
+    undefined,
+    note,
+    {
+      ...params,
+      fee: new BigNumber(tx.fee).multipliedBy(1000000).toNumber(),
+      flatFee: true,
+    },
+  );
+  if (tx.signatureId) {
+    return JSON.stringify(txn);
+  }
+  const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
+  return Buffer.from(txn.signTxn(secretKey)).toString('hex');
 }
 
 /**
@@ -90,7 +93,7 @@ export const prepareAlgoSignedTransaction = async (testnet: boolean, tx: AlgoTra
  * @returns transaction id of the transaction in the blockchain
  */
 export const sendAlgoSignedTransaction = async (testnet: boolean, tx: AlgoTransaction, provider?: string) => {
-    return (await algorandBroadcast(await prepareAlgoSignedTransaction(testnet, tx, provider)))
+  return (await algorandBroadcast(await prepareAlgoSignedTransaction(testnet, tx, provider)))
 }
 
 /**
@@ -102,45 +105,45 @@ export const sendAlgoSignedTransaction = async (testnet: boolean, tx: AlgoTransa
  * @returns transaction data to be broadcast to blockchain.
  */
 export const signAlgoKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: string, testnet: boolean, provider?: string) => {
-    if (tx.chain !== Currency.ALGO) {
-        throw Error('Unsupported chain.')
+  if (tx.chain !== Currency.ALGO) {
+    throw Error('Unsupported chain.')
+  }
+  const decoder = new base32.Decoder({ type: 'rfc4648' })
+  const txn = JSON.parse(tx.serializedTransaction);
+  txn.from = algosdk.encodeAddress(new Uint8Array(Object.values(txn.from.publicKey)));
+  txn.to = algosdk.encodeAddress(new Uint8Array(Object.values(txn.to.publicKey)));
+  txn.note = new Uint8Array(Object.values(txn.note || ''));
+  txn.lease = undefined;
+  if (txn.tag) {
+    if (txn.tag.data) {
+      txn.tag = Buffer.from(txn.tag.data);
     }
-    const decoder = new base32.Decoder({ type: 'rfc4648' })
-    const txn = JSON.parse(tx.serializedTransaction);
-    txn.from = algosdk.encodeAddress(new Uint8Array(Object.values(txn.from.publicKey)));
-    txn.to = algosdk.encodeAddress(new Uint8Array(Object.values(txn.to.publicKey)));
-    txn.note = new Uint8Array(Object.values(txn.note || ''));
-    txn.lease = undefined;
-    if (txn.tag) {
-        if (txn.tag.data) {
-            txn.tag = Buffer.from(txn.tag.data);
-        }
-    }
-    txn.genesisHash = Buffer.from(txn.genesisHash.data);
-    if (txn.assetManager) {
-        txn.assetManager = algosdk.encodeAddress(new Uint8Array(Object.values(txn.assetManager.publicKey)));
-    }
-    if (txn.assetReserve) {
-        txn.assetReserve = undefined;
-    }
-    if (txn.assetFreeze) {
-        txn.assetFreeze = undefined;
-    }
-    if (txn.assetClawback) {
-        txn.assetClawback = undefined;
-    }
-    if (txn.assetRevocationTarget) {
-        txn.assetRevocationTarget = undefined;
-    }
-    if (txn.reKeyTo) {
-        txn.reKeyTo = undefined;
-    }
-    if (txn.assetMetadataHash) {
-        txn.assetMetadataHash = new Uint8Array(Object.values(txn.assetMetadataHash));
-    }
-    const _txn = new (algosdk.Transaction)(txn);
-    const secretKey = new Uint8Array(decoder.write(fromPrivateKey).buf);
-    return _txn.signTxn(secretKey);
+  }
+  txn.genesisHash = Buffer.from(txn.genesisHash.data);
+  if (txn.assetManager) {
+    txn.assetManager = algosdk.encodeAddress(new Uint8Array(Object.values(txn.assetManager.publicKey)));
+  }
+  if (txn.assetReserve) {
+    txn.assetReserve = undefined;
+  }
+  if (txn.assetFreeze) {
+    txn.assetFreeze = undefined;
+  }
+  if (txn.assetClawback) {
+    txn.assetClawback = undefined;
+  }
+  if (txn.assetRevocationTarget) {
+    txn.assetRevocationTarget = undefined;
+  }
+  if (txn.reKeyTo) {
+    txn.reKeyTo = undefined;
+  }
+  if (txn.assetMetadataHash) {
+    txn.assetMetadataHash = new Uint8Array(Object.values(txn.assetMetadataHash));
+  }
+  const _txn = new (algosdk.Transaction)(txn);
+  const secretKey = new Uint8Array(decoder.write(fromPrivateKey).buf);
+  return Buffer.from(_txn.signTxn(secretKey)).toString('hex');
 }
 
 /**
@@ -150,29 +153,29 @@ export const signAlgoKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
  * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain
  */
-export const prepareAlgoCreateNFTSignedTransaction = async (testnet: boolean, tx: DeployErc721, provider?: string) => {
-    const algodClient = getAlgoClient(testnet, provider);
-    const params = await algodClient.getTransactionParams().do();
-    const decoder = new base32.Decoder({ type: 'rfc4648' })
-    const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
-        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
-        undefined,
-        1, 0, false,
-        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
-        undefined,
-        undefined,
-        undefined,
-        tx.symbol,
-        tx.name,
-        tx.url,
-        undefined,
-        params,
-    )
-    if (tx.signatureId) {
-        return JSON.stringify(txn);
-    }
-    const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
-    return txn.signTxn(secretKey);
+export const prepareAlgoCreateNFTSignedTransaction = async (testnet: boolean, tx: MintAlgoNft, provider?: string) => {
+  const algodClient = getAlgoClient(testnet, provider);
+  const params = await algodClient.getTransactionParams().do();
+  const decoder = new base32.Decoder({ type: 'rfc4648' })
+  const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
+    tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
+    undefined,
+    1, 0, false,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    tx.tokenId,
+    tx.name,
+    tx.url,
+    undefined,
+    params,
+  )
+  if (tx.signatureId) {
+    return JSON.stringify(txn);
+  }
+  const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
+  return Buffer.from(txn.signTxn(secretKey)).toString('hex');
 }
 
 /**
@@ -182,8 +185,8 @@ export const prepareAlgoCreateNFTSignedTransaction = async (testnet: boolean, tx
  * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendAlgoCreateNFTSignedTransaction = async (testnet: boolean, tx: DeployErc721, provider?: string) => {
-    return (await algorandBroadcast(await prepareAlgoCreateNFTSignedTransaction(testnet, tx, provider)))
+export const sendAlgoCreateNFTSignedTransaction = async (testnet: boolean, tx: MintAlgoNft, provider?: string) => {
+  return (await algorandBroadcast(await prepareAlgoCreateNFTSignedTransaction(testnet, tx, provider)))
 }
 
 /**
@@ -194,25 +197,25 @@ export const sendAlgoCreateNFTSignedTransaction = async (testnet: boolean, tx: D
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareAlgoTransferNFTSignedTransaction = async (testnet: boolean, tx: TransferErc721, provider?: string) => {
-    const algodClient = getAlgoClient(testnet, provider);
-    const params = await algodClient.getTransactionParams().do();
-    const decoder = new base32.Decoder({ type: 'rfc4648' })
-    const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
-        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
-        tx.to,
-        undefined,
-        undefined,
-        new BigNumber(tx.value as string).toNumber(),
-        undefined,
-        new BigNumber(tx.contractAddress).toNumber(),
-        params,
-        undefined
-    )
-    if (tx.signatureId) {
-        return JSON.stringify(txn);
-    }
-    const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
-    return txn.signTxn(secretKey);
+  const algodClient = getAlgoClient(testnet, provider);
+  const params = await algodClient.getTransactionParams().do();
+  const decoder = new base32.Decoder({ type: 'rfc4648' })
+  const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
+    tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
+    tx.to,
+    undefined,
+    undefined,
+    new BigNumber(tx.value as string).toNumber(),
+    undefined,
+    new BigNumber(tx.contractAddress).toNumber(),
+    params,
+    undefined,
+  )
+  if (tx.signatureId) {
+    return JSON.stringify(txn);
+  }
+  const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
+  return Buffer.from(txn.signTxn(secretKey)).toString('hex');
 }
 
 /**
@@ -223,7 +226,7 @@ export const prepareAlgoTransferNFTSignedTransaction = async (testnet: boolean, 
  * @returns transaction id of the transaction in the blockchain.
  */
 export const sendAlgoTransferNFTSignedTransaction = async (testnet: boolean, tx: TransferErc721, provider?: string) => {
-    return (await algorandBroadcast(await prepareAlgoTransferNFTSignedTransaction(testnet, tx, provider)))
+  return (await algorandBroadcast(await prepareAlgoTransferNFTSignedTransaction(testnet, tx, provider)))
 }
 
 /**
@@ -234,21 +237,21 @@ export const sendAlgoTransferNFTSignedTransaction = async (testnet: boolean, tx:
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareAlgoBurnNFTSignedTransaction = async (testnet: boolean, tx: BurnErc721, provider?: string) => {
-    const algodClient = getAlgoClient(testnet, provider);
-    const params = await algodClient.getTransactionParams().do();
-    const decoder = new base32.Decoder({ type: 'rfc4648' })
-    const txn = algosdk.makeAssetDestroyTxnWithSuggestedParams(
-        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
-        undefined,
-        new BigNumber(tx.contractAddress).toNumber(),
-        params,
-        undefined
-    )
-    if (tx.signatureId) {
-        return JSON.stringify(txn);
-    }
-    const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
-    return txn.signTxn(secretKey);
+  const algodClient = getAlgoClient(testnet, provider);
+  const params = await algodClient.getTransactionParams().do();
+  const decoder = new base32.Decoder({ type: 'rfc4648' })
+  const txn = algosdk.makeAssetDestroyTxnWithSuggestedParams(
+    tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
+    undefined,
+    new BigNumber(tx.contractAddress).toNumber(),
+    params,
+    undefined,
+  )
+  if (tx.signatureId) {
+    return JSON.stringify(txn);
+  }
+  const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
+  return Buffer.from(txn.signTxn(secretKey)).toString('hex');
 }
 
 /**
@@ -259,7 +262,7 @@ export const prepareAlgoBurnNFTSignedTransaction = async (testnet: boolean, tx: 
  * @returns transaction id of the transaction in the blockchain.
  */
 export const sendAlgoBurnNFTSignedTransaction = async (testnet: boolean, tx: BurnErc721, provider?: string) => {
-    return (await algorandBroadcast(await prepareAlgoBurnNFTSignedTransaction(testnet, tx, provider)))
+  return (await algorandBroadcast(await prepareAlgoBurnNFTSignedTransaction(testnet, tx, provider)))
 }
 
 /**
@@ -270,31 +273,31 @@ export const sendAlgoBurnNFTSignedTransaction = async (testnet: boolean, tx: Bur
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareAlgoCreateFractionalNFTSignedTransaction = async (testnet: boolean, tx: MintMultiToken, provider?: string) => {
-    const algodClient = getAlgoClient(testnet, provider);
-    const params = await algodClient.getTransactionParams().do();
-    const decoder = new base32.Decoder({ type: 'rfc4648' })
-    const v = Math.floor(Math.log10(new BigNumber(tx.amount).toNumber()));
-    const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
-        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
-        undefined,
-        new BigNumber(10).pow(v).toNumber(),
-        v,
-        false,
-        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
-        undefined,
-        undefined,
-        undefined,
-        tx.tokenId,
-        tx.contractAddress,
-        tx.url,
-        undefined,
-        params,
-    )
-    if (tx.signatureId) {
-        return JSON.stringify(txn);
-    }
-    const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
-    return txn.signTxn(secretKey);
+  const algodClient = getAlgoClient(testnet, provider);
+  const params = await algodClient.getTransactionParams().do();
+  const decoder = new base32.Decoder({ type: 'rfc4648' })
+  const v = Math.floor(Math.log10(new BigNumber(tx.amount).toNumber()));
+  const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
+    tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
+    undefined,
+    new BigNumber(10).pow(v).toNumber(),
+    v,
+    false,
+    tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
+    undefined,
+    undefined,
+    undefined,
+    tx.tokenId,
+    tx.contractAddress,
+    tx.url,
+    undefined,
+    params,
+  )
+  if (tx.signatureId) {
+    return JSON.stringify(txn);
+  }
+  const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
+  return Buffer.from(txn.signTxn(secretKey)).toString('hex');
 }
 
 /**
@@ -305,7 +308,7 @@ export const prepareAlgoCreateFractionalNFTSignedTransaction = async (testnet: b
  * @returns transaction id of the transaction in the blockchain.
  */
 export const sendAlgoCreateFractionalNFTSignedTransaction = async (testnet: boolean, tx: MintMultiToken, provider?: string) => {
-    return (await algorandBroadcast(await prepareAlgoCreateFractionalNFTSignedTransaction(testnet, tx, provider)))
+  return (await algorandBroadcast(await prepareAlgoCreateFractionalNFTSignedTransaction(testnet, tx, provider)))
 }
 
 /**
@@ -316,25 +319,25 @@ export const sendAlgoCreateFractionalNFTSignedTransaction = async (testnet: bool
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareAlgoTransferFractionalNFTSignedTransaction = async (testnet: boolean, tx: TransferMultiToken, provider?: string) => {
-    const algodClient = getAlgoClient(testnet, provider);
-    const params = await algodClient.getTransactionParams().do();
-    const decoder = new base32.Decoder({ type: 'rfc4648' })
-    const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
-        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
-        tx.to,
-        undefined,
-        undefined,
-        new BigNumber(tx.amount).toNumber(),
-        undefined,
-        new BigNumber(tx.contractAddress).toNumber(),
-        params,
-        undefined
-    )
-    if (tx.signatureId) {
-        return JSON.stringify(txn);
-    }
-    const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
-    return txn.signTxn(secretKey);
+  const algodClient = getAlgoClient(testnet, provider);
+  const params = await algodClient.getTransactionParams().do();
+  const decoder = new base32.Decoder({ type: 'rfc4648' })
+  const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
+    tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
+    tx.to,
+    undefined,
+    undefined,
+    new BigNumber(tx.amount).toNumber(),
+    undefined,
+    new BigNumber(tx.contractAddress).toNumber(),
+    params,
+    undefined,
+  )
+  if (tx.signatureId) {
+    return JSON.stringify(txn);
+  }
+  const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
+  return Buffer.from(txn.signTxn(secretKey)).toString('hex');
 }
 
 /**
@@ -345,7 +348,7 @@ export const prepareAlgoTransferFractionalNFTSignedTransaction = async (testnet:
  * @returns transaction id of the transaction in the blockchain.
  */
 export const sendAlgoTransferFractionalNFTSignedTransaction = async (testnet: boolean, tx: TransferMultiToken, provider?: string) => {
-    return (await algorandBroadcast(await prepareAlgoTransferFractionalNFTSignedTransaction(testnet, tx, provider)))
+  return (await algorandBroadcast(await prepareAlgoTransferFractionalNFTSignedTransaction(testnet, tx, provider)))
 }
 
 /**
@@ -356,21 +359,21 @@ export const sendAlgoTransferFractionalNFTSignedTransaction = async (testnet: bo
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareAlgoBurnFractionalNFTSignedTransaction = async (testnet: boolean, tx: BurnMultiToken, provider?: string) => {
-    const algodClient = getAlgoClient(testnet, provider);
-    const params = await algodClient.getTransactionParams().do();
-    const decoder = new base32.Decoder({ type: 'rfc4648' })
-    const txn = algosdk.makeAssetDestroyTxnWithSuggestedParams(
-        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
-        undefined,
-        new BigNumber(tx.contractAddress).toNumber(),
-        params,
-        undefined
-    )
-    if (tx.signatureId) {
-        return JSON.stringify(txn);
-    }
-    const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
-    return txn.signTxn(secretKey);
+  const algodClient = getAlgoClient(testnet, provider);
+  const params = await algodClient.getTransactionParams().do();
+  const decoder = new base32.Decoder({ type: 'rfc4648' })
+  const txn = algosdk.makeAssetDestroyTxnWithSuggestedParams(
+    tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
+    undefined,
+    new BigNumber(tx.contractAddress).toNumber(),
+    params,
+    undefined,
+  )
+  if (tx.signatureId) {
+    return JSON.stringify(txn);
+  }
+  const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
+  return Buffer.from(txn.signTxn(secretKey)).toString('hex');
 }
 
 /**
@@ -381,7 +384,7 @@ export const prepareAlgoBurnFractionalNFTSignedTransaction = async (testnet: boo
  * @returns transaction id of the transaction in the blockchain.
  */
 export const sendAlgoBurnFractionalNFTSignedTransaction = async (testnet: boolean, tx: BurnMultiToken, provider?: string) => {
-    return (await algorandBroadcast(await prepareAlgoBurnFractionalNFTSignedTransaction(testnet, tx, provider)))
+  return (await algorandBroadcast(await prepareAlgoBurnFractionalNFTSignedTransaction(testnet, tx, provider)))
 }
 
 /**
@@ -392,30 +395,30 @@ export const sendAlgoBurnFractionalNFTSignedTransaction = async (testnet: boolea
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareAlgoCreateFTSignedTransaction = async (testnet: boolean, tx: DeployErc20, provider?: string) => {
-    const algodClient = getAlgoClient(testnet, provider);
-    const params = await algodClient.getTransactionParams().do();
-    const decoder = new base32.Decoder({ type: 'rfc4648' })
-    const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
-        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
-        undefined,
-        new BigNumber(tx.supply).shiftedBy(new BigNumber(tx.digits).toNumber()).toNumber(),
-        new BigNumber(tx.digits).toNumber(),
-        false,
-        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
-        undefined,
-        undefined,
-        undefined,
-        tx.symbol,
-        tx.name,
-        tx.url,
-        undefined,
-        params,
-    )
-    if (tx.signatureId) {
-        return JSON.stringify(txn);
-    }
-    const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
-    return txn.signTxn(secretKey);
+  const algodClient = getAlgoClient(testnet, provider);
+  const params = await algodClient.getTransactionParams().do();
+  const decoder = new base32.Decoder({ type: 'rfc4648' })
+  const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
+    tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
+    undefined,
+    new BigNumber(tx.supply).shiftedBy(new BigNumber(tx.digits).toNumber()).toNumber(),
+    new BigNumber(tx.digits).toNumber(),
+    false,
+    tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
+    undefined,
+    undefined,
+    undefined,
+    tx.symbol,
+    tx.name,
+    tx.url,
+    undefined,
+    params,
+  )
+  if (tx.signatureId) {
+    return JSON.stringify(txn);
+  }
+  const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
+  return Buffer.from(txn.signTxn(secretKey)).toString('hex');
 }
 
 /**
@@ -426,7 +429,7 @@ export const prepareAlgoCreateFTSignedTransaction = async (testnet: boolean, tx:
  * @returns transaction id of the transaction in the blockchain.
  */
 export const sendAlgoCreateFTSignedTransaction = async (testnet: boolean, tx: DeployErc20, provider?: string) => {
-    return (await algorandBroadcast(await prepareAlgoCreateFTSignedTransaction(testnet, tx, provider)))
+  return (await algorandBroadcast(await prepareAlgoCreateFTSignedTransaction(testnet, tx, provider)))
 }
 
 /**
@@ -437,25 +440,25 @@ export const sendAlgoCreateFTSignedTransaction = async (testnet: boolean, tx: De
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareAlgoTransferFTSignedTransaction = async (testnet: boolean, tx: TransferErc20, provider?: string) => {
-    const algodClient = getAlgoClient(testnet, provider);
-    const params = await algodClient.getTransactionParams().do();
-    const decoder = new base32.Decoder({ type: 'rfc4648' })
-    const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
-        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
-        tx.to,
-        undefined,
-        undefined,
-        new BigNumber(tx.amount).shiftedBy(tx.digits || 1).toNumber(),
-        undefined,
-        new BigNumber(tx.contractAddress as string).toNumber(),
-        params,
-        undefined
-    )
-    if (tx.signatureId) {
-        return JSON.stringify(txn);
-    }
-    const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
-    return txn.signTxn(secretKey);
+  const algodClient = getAlgoClient(testnet, provider);
+  const params = await algodClient.getTransactionParams().do();
+  const decoder = new base32.Decoder({ type: 'rfc4648' })
+  const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
+    tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
+    tx.to,
+    undefined,
+    undefined,
+    new BigNumber(tx.amount).shiftedBy(tx.digits || 1).toNumber(),
+    undefined,
+    new BigNumber(tx.contractAddress as string).toNumber(),
+    params,
+    undefined,
+  )
+  if (tx.signatureId) {
+    return JSON.stringify(txn);
+  }
+  const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
+  return Buffer.from(txn.signTxn(secretKey)).toString('hex');
 }
 
 /**
@@ -466,7 +469,7 @@ export const prepareAlgoTransferFTSignedTransaction = async (testnet: boolean, t
  * @returns transaction id of the transaction in the blockchain.
  */
 export const sendAlgoTransferFTSignedTransaction = async (testnet: boolean, tx: TransferErc20, provider?: string) => {
-    return (await algorandBroadcast(await prepareAlgoTransferFTSignedTransaction(testnet, tx, provider)))
+  return (await algorandBroadcast(await prepareAlgoTransferFTSignedTransaction(testnet, tx, provider)))
 }
 
 /**
@@ -477,21 +480,21 @@ export const sendAlgoTransferFTSignedTransaction = async (testnet: boolean, tx: 
  * @returns transaction data to be broadcast to blockchain.
  */
 export const prepareAlgoBurnFTSignedTransaction = async (testnet: boolean, tx: BurnErc20, provider?: string) => {
-    const algodClient = getAlgoClient(testnet, provider);
-    const params = await algodClient.getTransactionParams().do();
-    const decoder = new base32.Decoder({ type: 'rfc4648' })
-    const txn = algosdk.makeAssetDestroyTxnWithSuggestedParams(
-        tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
-        undefined,
-        new BigNumber(tx.contractAddress).toNumber(),
-        params,
-        undefined
-    )
-    if (tx.signatureId) {
-        return JSON.stringify(txn);
-    }
-    const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
-    return txn.signTxn(secretKey);
+  const algodClient = getAlgoClient(testnet, provider);
+  const params = await algodClient.getTransactionParams().do();
+  const decoder = new base32.Decoder({ type: 'rfc4648' })
+  const txn = algosdk.makeAssetDestroyTxnWithSuggestedParams(
+    tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
+    undefined,
+    new BigNumber(tx.contractAddress).toNumber(),
+    params,
+    undefined,
+  )
+  if (tx.signatureId) {
+    return JSON.stringify(txn);
+  }
+  const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
+  return Buffer.from(txn.signTxn(secretKey)).toString('hex');
 }
 
 /**
@@ -502,5 +505,5 @@ export const prepareAlgoBurnFTSignedTransaction = async (testnet: boolean, tx: B
  * @returns transaction id of the transaction in the blockchain.
  */
 export const sendAlgoBurnFTSignedTransaction = async (testnet: boolean, tx: BurnErc20, provider?: string) => {
-    return (await algorandBroadcast(await prepareAlgoBurnFTSignedTransaction(testnet, tx, provider)))
+  return (await algorandBroadcast(await prepareAlgoBurnFTSignedTransaction(testnet, tx, provider)))
 }

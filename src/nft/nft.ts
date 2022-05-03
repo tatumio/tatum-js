@@ -36,7 +36,6 @@ import {
 import { ipfsUpload } from '../storage';
 import {
   sendAlgoBurnNFTSignedTransaction,
-  sendAlgoCreateNFTSignedTransaction,
   sendAlgoTransferNFTSignedTransaction,
   sendBep721Transaction,
   sendBurnBep721Transaction,
@@ -188,8 +187,6 @@ export const deployNFT = async (testnet: boolean, body: CeloDeployErc721 | EthDe
       return sendDeployBep721Transaction(body as EthDeployErc721, provider);
     case Currency.FLOW:
       return post('/v3/nft/deploy', body, FlowDeployNft);
-    case Currency.ALGO:
-      return sendAlgoCreateNFTSignedTransaction(testnet, body as DeployErc721, provider);
     default:
       throw new Error('Unsupported currency');
   }

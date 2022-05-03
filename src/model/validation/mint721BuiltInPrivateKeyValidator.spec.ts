@@ -1,4 +1,4 @@
-import { CeloMintErc721, Currency, EthMintErc721, MintErc721, TronMintTrc721 } from '../request'
+import { CeloMintErc721, Currency, EthMintErc721, MintAlgoNft, MintErc721, TronMintTrc721 } from '../request'
 import { validateBody } from '../../connector/tatum'
 
 describe('Mint721BuiltInPrivateKeyValidator tests', () => {
@@ -13,6 +13,16 @@ describe('Mint721BuiltInPrivateKeyValidator tests', () => {
         'fromPrivateKey': '89f09a62c9601d660dcdbeab15fbecfc07933971465fab3ba9fe1354035d805d',
         'contractAddress': '0x45871ED5F15203C0ce791eFE5f4B5044833aE10e',
       }, CeloMintErc721)
+    })
+
+    it('should test mint ALGO with private key', async () => {
+      await validateBody({
+        'chain': Currency.ALGO,
+        'tokenId': 'TEST',
+        'url': 'https://www.seznam.cz',
+        'name': Currency.CELO,
+        'fromPrivateKey': '72TCV5BRQPBMSAFPYO3CPWVDBYWNGAYNMTW5QHENOMQF7I6QLNMJWCJZ7A3V5YKD7QD6ZZPEHG2PV2ZVVEDDO6BCRGXWIL3DIUMSUCI',
+      }, MintAlgoNft)
     })
 
     it('should not test mint CELO with private key - wrong tokenId', async () => {
@@ -73,7 +83,7 @@ describe('Mint721BuiltInPrivateKeyValidator tests', () => {
           'url': 'https://www.seznam.cz',
           'feeCurrency': Currency.CELO,
           'tokenId': `1`,
-          'fromPrivateKey': '89f09a62c9601d660dcdbeab15fbecfc07933971465fab3ba9fe1354035d805dasdasd',
+          'fromPrivateKey': '89f09a62c9601d660dcdbeab15fbecfc07933971465fab3ba9fe1354035d805dasdasd89f09a62c9601d660dcdbeab15fbecfc07933971465fab3ba9fe1354035d805dasdasd89f09a62c9601d660dcdbeab15fbecfc07933971465fab3ba9fe1354035d805dasdasd',
           'contractAddress': '0x45871ED5F15203C0ce791eFE5f4B5044833aE10e',
         }, CeloMintErc721)
         fail('Wrong validation')
@@ -180,6 +190,15 @@ describe('Mint721BuiltInPrivateKeyValidator tests', () => {
         'to': '0xBC2eBA680EE50d685cc4Fe65f102AA70AfB27D3F',
         'url': 'https://www.seznam.cz',
       }, EthMintErc721)
+    })
+
+    it('should mint ALGO without private key or signature id', async () => {
+      await validateBody({
+        'chain': Currency.ALGO,
+        'tokenId': 'TEST',
+        'url': 'https://www.seznam.cz',
+        'name': Currency.CELO,
+      }, MintAlgoNft)
     })
 
     it('should not mint TRON without private key or signature id - we dont mint on tron', async () => {
