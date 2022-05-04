@@ -11,6 +11,7 @@ import {
   DeployErc20,
   MintAlgoNft,
   MintMultiToken,
+  ReceiveAlgoNft,
   TransactionKMS,
   TransferErc20,
   TransferErc721,
@@ -219,6 +220,34 @@ export const prepareAlgoTransferNFTSignedTransaction = async (testnet: boolean, 
 }
 
 /**
+ * Sign Algorand receive NFT transaction with private key locally. Nothing is broadcast to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param tx content of the transaction to broadcast
+ * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
+ * @returns transaction data to be broadcast to blockchain.
+ */
+export const prepareAlgoReceiveNFTSignedTransaction = async (testnet: boolean, tx: ReceiveAlgoNft, provider?: string) => {
+  const algodClient = getAlgoClient(testnet, provider);
+  const params = await algodClient.getTransactionParams().do();
+  const decoder = new base32.Decoder({ type: 'rfc4648' })
+  const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
+    tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
+    tx.recipient,
+    undefined,
+    undefined,
+    0,
+    undefined,
+    tx.assetId,
+    params,
+  )
+  if (tx.signatureId) {
+    return JSON.stringify(txn);
+  }
+  const secretKey = new Uint8Array(decoder.write(tx.fromPrivateKey).buf);
+  return Buffer.from(txn.signTxn(secretKey)).toString('hex');
+}
+
+/**
  * Send Algorand Transfer NFT transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * @param testnet mainnet or testnet version
  * @param tx content of the transaction to broadcast
@@ -227,6 +256,17 @@ export const prepareAlgoTransferNFTSignedTransaction = async (testnet: boolean, 
  */
 export const sendAlgoTransferNFTSignedTransaction = async (testnet: boolean, tx: TransferErc721, provider?: string) => {
   return (await algorandBroadcast(await prepareAlgoTransferNFTSignedTransaction(testnet, tx, provider)))
+}
+
+/**
+ * Send Algorand Receive NFT transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+ * @param testnet mainnet or testnet version
+ * @param tx content of the transaction to broadcast
+ * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
+ * @returns transaction id of the transaction in the blockchain.
+ */
+export const sendAlgoReceiveNFTSignedTransaction = async (testnet: boolean, tx: ReceiveAlgoNft, provider?: string) => {
+  return (await algorandBroadcast(await prepareAlgoReceiveNFTSignedTransaction(testnet, tx, provider)))
 }
 
 /**

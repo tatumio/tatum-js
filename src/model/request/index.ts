@@ -1,5 +1,6 @@
 export * from './CreateRecord';
 export * from './MintAlgoNft';
+export * from './ReceiveAlgoNft';
 export * from './Currency';
 export * from './EstimateGasVet';
 export * from './Fee';
