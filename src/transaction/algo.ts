@@ -1,4 +1,4 @@
-import AlgodClient from 'algosdk/dist/types/src/client/v2/algod/algod'
+import { Algodv2 as AlgodClient } from 'algosdk'
 import BigNumber from 'bignumber.js';
 import { TextEncoder } from 'util';
 import { algorandBroadcast } from '../blockchain';
@@ -13,8 +13,8 @@ import {
   MintMultiToken,
   ReceiveAlgoNft,
   TransactionKMS,
+  TransferAlgoNft,
   TransferErc20,
-  TransferErc721,
   TransferMultiToken,
 } from '../model';
 import { generateAlgodAddressFromPrivatetKey } from '../wallet'
@@ -197,7 +197,7 @@ export const sendAlgoCreateNFTSignedTransaction = async (testnet: boolean, tx: M
  * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareAlgoTransferNFTSignedTransaction = async (testnet: boolean, tx: TransferErc721, provider?: string) => {
+export const prepareAlgoTransferNFTSignedTransaction = async (testnet: boolean, tx: TransferAlgoNft, provider?: string) => {
   const algodClient = getAlgoClient(testnet, provider);
   const params = await algodClient.getTransactionParams().do();
   const decoder = new base32.Decoder({ type: 'rfc4648' })
@@ -206,11 +206,10 @@ export const prepareAlgoTransferNFTSignedTransaction = async (testnet: boolean, 
     tx.to,
     undefined,
     undefined,
-    new BigNumber(tx.value as string).toNumber(),
+    1,
     undefined,
     new BigNumber(tx.contractAddress).toNumber(),
     params,
-    undefined,
   )
   if (tx.signatureId) {
     return JSON.stringify(txn);
@@ -254,7 +253,7 @@ export const prepareAlgoReceiveNFTSignedTransaction = async (testnet: boolean, t
  * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
  * @returns transaction id of the transaction in the blockchain.
  */
-export const sendAlgoTransferNFTSignedTransaction = async (testnet: boolean, tx: TransferErc721, provider?: string) => {
+export const sendAlgoTransferNFTSignedTransaction = async (testnet: boolean, tx: TransferAlgoNft, provider?: string) => {
   return (await algorandBroadcast(await prepareAlgoTransferNFTSignedTransaction(testnet, tx, provider)))
 }
 

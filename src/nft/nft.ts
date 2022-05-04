@@ -24,7 +24,7 @@ import {
   FlowTransferNft,
   OneMint721,
   TransactionHash,
-  TransferErc721,
+  TransferAlgoNft,
   TronBurnTrc721,
   TronDeployTrc721,
   TronMintMultipleTrc721,
@@ -457,26 +457,26 @@ export const updateCashbackForAuthorNFT = async (testnet: boolean, body: UpdateC
  * @param body body of the mint request
  * @param provider optional provider do broadcast tx
  */
-export const transferNFT = async (testnet: boolean, body: CeloTransferErc721 | EthTransferErc721 | TronTransferTrc721 | FlowTransferNft, provider?: string) => {
+export const transferNFT = async (testnet: boolean, body: CeloTransferErc721 | EthTransferErc721 | TronTransferTrc721 | FlowTransferNft | TransferAlgoNft, provider?: string) => {
   switch (body.chain) {
     case Currency.CELO:
       return sendCeloTransferErc721Transaction(testnet, body as CeloTransferErc721, provider);
     case Currency.ETH:
-      return sendErc721Transaction(body, provider);
+      return sendErc721Transaction(body as EthTransferErc721, provider);
     case Currency.MATIC:
-      return sendPolygonTransferErc721SignedTransaction(testnet, body, provider);
+      return sendPolygonTransferErc721SignedTransaction(testnet, body as EthTransferErc721, provider);
     case Currency.KLAY:
-      return sendKlaytnTransferErc721SignedTransaction(testnet, body, provider);
+      return sendKlaytnTransferErc721SignedTransaction(testnet, body as EthTransferErc721, provider);
     case Currency.ONE:
-      return sendOneTransfer721SignedTransaction(testnet, body, provider);
+      return sendOneTransfer721SignedTransaction(testnet, body as EthTransferErc721, provider);
     case Currency.TRON:
       return sendTronTransferTrc721SignedTransaction(testnet, body as TronTransferTrc721);
     case Currency.BSC:
-      return sendBep721Transaction(body, provider);
+      return sendBep721Transaction(body as EthTransferErc721, provider);
     case Currency.FLOW:
       return sendFlowNftTransferToken(testnet, body as FlowTransferNft);
     case Currency.ALGO:
-      return sendAlgoTransferNFTSignedTransaction(testnet, body as TransferErc721, provider);
+      return sendAlgoTransferNFTSignedTransaction(testnet, body as TransferAlgoNft, provider);
     default:
       throw new Error('Unsupported blockchain.');
   }
