@@ -7,10 +7,6 @@ export class ReceiveAlgoNft extends PrivateKeyOrSignatureId {
   @Min(1)
   public assetId: number
 
-  @IsNotEmpty()
-  @Length(58, 58)
-  public recipient: string;
-
   @ValidateIf(o => o.signatureId)
   @IsNotEmpty()
   @Length(58, 58)

@@ -229,9 +229,10 @@ export const prepareAlgoReceiveNFTSignedTransaction = async (testnet: boolean, t
   const algodClient = getAlgoClient(testnet, provider);
   const params = await algodClient.getTransactionParams().do();
   const decoder = new base32.Decoder({ type: 'rfc4648' })
+  const from = tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from
   const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
-    tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
-    tx.recipient,
+    from,
+    from,
     undefined,
     undefined,
     0,
