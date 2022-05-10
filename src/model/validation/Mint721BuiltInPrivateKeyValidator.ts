@@ -16,7 +16,7 @@ export class Mint721BuiltInPrivateKeyValidator implements ValidatorConstraintInt
 
   public validate(value: any, validationArguments?: ValidationArguments) {
     const data = validationArguments?.object as any;
-    const chains = [Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC, Currency.KLAY, Currency.ALGO]
+    const chains = [Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC, Currency.KLAY, Currency.ALGO, Currency.SOL]
     const isAllowedChain = chains.includes(data.chain);
 
     if (data.minter) {
@@ -60,6 +60,9 @@ export class Mint721BuiltInPrivateKeyValidator implements ValidatorConstraintInt
   }
 
   private validateRequiredFields(data: any) {
+    if (data.chain === Currency.SOL) {
+      return true
+    }
     if (data.chain === Currency.CELO && (!data.feeCurrency || ![Currency.CELO, Currency.CUSD, Currency.CEUR].includes(data.feeCurrency))) {
       this.message = 'CELO chain must have assigned feeCurrency field.'
       return false
