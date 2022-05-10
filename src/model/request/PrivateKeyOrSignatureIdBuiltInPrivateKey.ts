@@ -4,7 +4,7 @@ import { Mint721BuiltInPrivateKeyValidator } from '../validation/Mint721BuiltInP
 export class PrivateKeyOrSignatureIdBuiltInPrivateKey {
   @Validate(Mint721BuiltInPrivateKeyValidator)
   @IsOptional()
-  @Length(64, 103)
+  @Length(64, 128)
   public fromPrivateKey?: string;
 
   @Validate(Mint721BuiltInPrivateKeyValidator)
