@@ -1,18 +1,18 @@
-import { IsIn, IsNotEmpty, Length, ValidateIf } from 'class-validator';
+import { IsIn, IsNotEmpty, IsOptional, Length, ValidateIf } from 'class-validator';
 import { Currency } from './Currency'
 import { PrivateKeyOrSignatureIdBuiltInPrivateKey } from './PrivateKeyOrSignatureIdBuiltInPrivateKey'
 
 export class MintAlgoNft extends PrivateKeyOrSignatureIdBuiltInPrivateKey {
 
   @IsNotEmpty()
-  @Length(1, 100)
+  @Length(1, 32)
   public name: string;
 
   @IsNotEmpty()
   @IsIn([Currency.ALGO])
   public chain: Currency;
 
-  @IsNotEmpty()
+  @IsOptional()
   @Length(1, 8)
   public tokenId: string;
 
