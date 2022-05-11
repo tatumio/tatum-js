@@ -22,7 +22,10 @@ describe('Algo NFT transaction', () => {
   it('should test NFT create', async () => {
     const tx = new MintAlgoNft();
     tx.from = 'TMETT6BXL3QUH7AH5TS6IONU7LVTLKIGG54CFCNPMQXWGRIZFIESZBYWP4';
-    tx.tokenId = 'USDT'
+    tx.attr = {
+      assetUnit: 'USDT',
+      clawback: 'TMETT6BXL3QUH7AH5TS6IONU7LVTLKIGG54CFCNPMQXWGRIZFIESZBYWP4',
+    }
     tx.name = 'Artwork@arc3';
     tx.url = 'https://tatum.io/images/logo.svg'
     tx.fromPrivateKey = '72TCV5BRQPBMSAFPYO3CPWVDBYWNGAYNMTW5QHENOMQF7I6QLNMJWCJZ7A3V5YKD7QD6ZZPEHG2PV2ZVVEDDO6BCRGXWIL3DIUMSUCI';
