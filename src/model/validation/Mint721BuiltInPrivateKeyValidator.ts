@@ -68,7 +68,7 @@ export class Mint721BuiltInPrivateKeyValidator implements ValidatorConstraintInt
       return false
     }
 
-    if (!data.tokenId) {
+    if (!data.tokenId && data.chain !== Currency.ALGO) {
       this.message = 'Field tokenId must be present.';
       return false
     }
