@@ -13,7 +13,7 @@ export class MintAlgoNft extends PrivateKeyOrSignatureIdBuiltInPrivateKey {
   public chain: Currency;
 
   @IsOptional()
-  @Length(1, 8)
+  @Length(8)
   public tokenId: string;
 
   @IsNotEmpty()
