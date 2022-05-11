@@ -1,6 +1,30 @@
-import { IsIn, IsNotEmpty, IsOptional, Length, ValidateIf } from 'class-validator';
+import { IsIn, IsNotEmpty, IsOptional, Length, ValidateIf, ValidateNested } from 'class-validator';
 import { Currency } from './Currency'
 import { PrivateKeyOrSignatureIdBuiltInPrivateKey } from './PrivateKeyOrSignatureIdBuiltInPrivateKey'
+import { Type } from 'class-transformer'
+
+class MintAttr {
+
+  @IsOptional()
+  @Length(1, 8)
+  public assetUnit?: string;
+
+  @IsOptional()
+  @Length(58, 58)
+  public manager?: string;
+
+  @IsOptional()
+  @Length(58, 58)
+  public reserve?: string;
+
+  @IsOptional()
+  @Length(58, 58)
+  public freeze?: string;
+
+  @IsOptional()
+  @Length(58, 58)
+  public clawback?: string;
+}
 
 export class MintAlgoNft extends PrivateKeyOrSignatureIdBuiltInPrivateKey {
 
@@ -13,8 +37,9 @@ export class MintAlgoNft extends PrivateKeyOrSignatureIdBuiltInPrivateKey {
   public chain: Currency;
 
   @IsOptional()
-  @Length(8)
-  public tokenId: string;
+  @ValidateNested({each: true})
+  @Type(() => MintAttr)
+  public attr?: MintAttr
 
   @IsNotEmpty()
   public url: string;
