@@ -3,7 +3,6 @@ import {
   ApproveNftSpending,
   ApproveTransferCustodialWallet,
   ApproveTransferCustodialWalletCelo,
-  BlockchainMarketplaceService,
   BroadcastKMS,
   BurnMultiToken,
   BurnMultiTokenBatch,
@@ -21,6 +20,7 @@ import {
   DeployMultiToken,
   DeployNft,
   ExchangeRate,
+  ExchangeRateService,
   Fiat,
   GenerateCustodialWallet,
   GenerateCustodialWalletBatch,
@@ -30,6 +30,7 @@ import {
   GenerateCustodialWalletBatchPayer,
   GenerateCustodialWalletCelo,
   GenerateMarketplace,
+  MarketplaceService,
   MintErc721,
   MintMultipleNft,
   MintMultiToken,
@@ -38,7 +39,6 @@ import {
   PendingTransaction,
   SellAssetOnMarketplace,
   SignatureId,
-  TatumServiceService,
   TatumUrl,
   TerraWallet,
   TransactionHashKMS,
@@ -69,7 +69,7 @@ export const abstractBlockchainSdk = (args: { apiKey: string; url?: TatumUrl; bl
     kms: abstractBlockchainKms(args),
     offchain: abstractBlockchainOffchain(args),
     getExchangeRate(basePair?: Fiat): CancelablePromise<ExchangeRate> {
-      return TatumServiceService.getExchangeRate(
+      return ExchangeRateService.getExchangeRate(
         // @ts-ignore @TODO OPENAPI fix
         blockchainHelper.getDefaultCurrencyByBlockchain(blockchain),
         basePair,
@@ -293,10 +293,10 @@ export interface SdkWithMarketplaceFunctions {
     cancelMarketplaceListing(body: ChainCancelSellAssetOnMarketplace, provider?: string): Promise<string>
   }
 
-  getMarketplaceListing: typeof BlockchainMarketplaceService.getMarketplaceListing
-  getMarketplaceListings: typeof BlockchainMarketplaceService.getMarketplaceListings
-  getMarketplaceFee: typeof BlockchainMarketplaceService.getMarketplaceFee
-  getMarketplaceFeeRecipient: typeof BlockchainMarketplaceService.getMarketplaceFeeRecipient
+  getMarketplaceListing: typeof MarketplaceService.getMarketplaceListing
+  getMarketplaceListings: typeof MarketplaceService.getMarketplaceListings
+  getMarketplaceFee: typeof MarketplaceService.getMarketplaceFee
+  getMarketplaceFeeRecipient: typeof MarketplaceService.getMarketplaceFeeRecipient
 }
 
 export interface SdkWithKmsFunctions {

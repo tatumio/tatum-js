@@ -1,10 +1,10 @@
-import { BlockchainElrondNetworkEgldService } from '@tatumio/api-client'
+import { ElrodnService } from '@tatumio/api-client'
 import BigNumber from 'bignumber.js'
 import {
+  egldUtils,
   generateAddressFromPrivatekey,
   prepareSignedTransactionAbstraction,
   TransferEgld,
-  egldUtils,
 } from '../egld.utils'
 import { TransactionConfig } from 'web3-core'
 import { ESDT_SYSTEM_SMART_CONTRACT_ADDRESS } from '../../constants'
@@ -16,6 +16,7 @@ export interface EsdtData extends EsdtToken {
   digits: number
   properties?: EsdtProperties
 }
+
 interface EsdtProperties {
   properties?: {
     canFreeze?: boolean
@@ -28,6 +29,7 @@ interface EsdtProperties {
     canAddSpecialRoles?: boolean
   }
 }
+
 interface EsdtToken {
   service: string
   tokenId: string
@@ -54,6 +56,7 @@ interface EsdtTransferNft extends EsdtToken {
   methodName: string
   arguments?: (number | string)[]
 }
+
 interface EsdtIssueNftOrSft extends EsdtToken {
   name: string
   symbol: string
@@ -288,7 +291,7 @@ export const egldTransactionService = () => {
        * @returns transaction id of the transaction in the blockchain
        */
       deploy: async (body: TransferEgld) =>
-        await BlockchainElrondNetworkEgldService.egldBroadcast({
+        await ElrodnService.egldBroadcast({
           txData: await prepareDeploy(body),
           signatureId: body.signatureId,
         }),
@@ -299,7 +302,7 @@ export const egldTransactionService = () => {
        * @returns transaction id of the transaction in the blockchain
        */
       signedTransaction: async (body: TransferEgld) =>
-        await BlockchainElrondNetworkEgldService.egldBroadcast({
+        await ElrodnService.egldBroadcast({
           txData: await prepareSignedTransaction(body),
           signatureId: body.signatureId,
         }),
@@ -310,7 +313,7 @@ export const egldTransactionService = () => {
        * @returns transaction id of the transaction in the blockchain
        */
       smartContractMethodInvocation: async (body: TransferEgld) =>
-        await BlockchainElrondNetworkEgldService.egldBroadcast({
+        await ElrodnService.egldBroadcast({
           txData: await prepareTransferEsdtSignedTransaction(body),
           signatureId: body.signatureId,
         }),
@@ -322,7 +325,7 @@ export const egldTransactionService = () => {
        * @returns transaction id of the transaction in the blockchain
        */
       transferNft: async (body: TransferEgld) =>
-        await BlockchainElrondNetworkEgldService.egldBroadcast({
+        await ElrodnService.egldBroadcast({
           txData: await prepareTransferNft(body),
           signatureId: body.signatureId,
         }),
@@ -333,7 +336,7 @@ export const egldTransactionService = () => {
        * @returns transaction id of the transaction in the blockchain
        */
       deployNft: async (body: TransferEgld) =>
-        await BlockchainElrondNetworkEgldService.egldBroadcast({
+        await ElrodnService.egldBroadcast({
           txData: await prepareDeployNftOrSft(body),
           signatureId: body.signatureId,
         }),

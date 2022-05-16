@@ -1,7 +1,7 @@
 import {
   ApproveNftSpending,
+  AuctionService,
   BidOnAuction,
-  BlockchainMarketplaceService,
   CancelOrSettleAuction,
   GenerateAuction,
   UpdateFeeRecipient,
@@ -28,7 +28,7 @@ export const evmBasedAuction = (args: {
      * For more details, see <a href="https://tatum.io/apidoc#operation/MPAuction" target="_blank">Tatum API documentation</a>
      */
     getAuction: async (contractAddress: string, auctionId: string) => {
-      return BlockchainMarketplaceService.getAuction(
+      return AuctionService.getAuction(
         blockchain as 'ETH' | 'ONE' | 'CELO' | 'MATIC' | 'BSC',
         contractAddress,
         auctionId,
@@ -38,7 +38,7 @@ export const evmBasedAuction = (args: {
      * For more details, see <a href="https://tatum.io/apidoc#operation/MPAuctionFee" target="_blank">Tatum API documentation</a>
      */
     getAuctionFee: async (contractAddress: string) => {
-      return BlockchainMarketplaceService.getAuctionFee(
+      return AuctionService.getAuctionFee(
         blockchain as 'ETH' | 'ONE' | 'CELO' | 'MATIC' | 'BSC',
         contractAddress,
       )
@@ -47,7 +47,7 @@ export const evmBasedAuction = (args: {
      * For more details, see <a href="https://tatum.io/apidoc#operation/MPAuctionRecipient" target="_blank">Tatum API documentation</a>
      */
     getAuctionFeeRecipient: async (contractAddress: string): Promise<{ address?: string }> => {
-      return BlockchainMarketplaceService.getAuctionFeeRecipient(
+      return AuctionService.getAuctionFeeRecipient(
         blockchain as 'ETH' | 'ONE' | 'CELO' | 'MATIC' | 'BSC',
         contractAddress,
       )

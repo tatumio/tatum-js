@@ -1,11 +1,10 @@
 import { TatumBtcSDK } from '@tatumio/btc'
 import { walletSdk } from './services/sdk.wallet'
-import { BlockchainRecordService, TatumUrl } from '@tatumio/api-client'
+import { BlockchainStorageService, Currency, TatumUrl } from '@tatumio/api-client'
 import { abstractSdk, abstractSdkLedgerService } from '@tatumio/shared-abstract-sdk'
 import { sdkKms } from './services/sdk.kms'
 import { TatumEthSDK } from '@tatumio/eth'
 import { Web3Request, Web3Response } from '@tatumio/shared-core'
-import { Currency } from '@tatumio/api-client'
 import { sdkMultiToken } from './services/sdk.multitoken'
 import { SDKS } from './sdk.common'
 import { httpDriver } from './services/sdk.httpDriver'
@@ -44,7 +43,7 @@ export const TatumSDK = (args: { apiKey: string; url?: TatumUrl }) => {
     blockchain: blockchainSpecificSDKs,
     kms: sdkKms({ sdks: blockchainSpecificSDKs }),
     wallet: walletSdk,
-    record: BlockchainRecordService,
+    record: BlockchainStorageService,
     multiToken: sdkMultiToken(),
     httpDriver: (currency: Currency, request: Web3Request): Promise<Web3Response> =>
       httpDriver(blockchainSpecificSDKs, currency, request),

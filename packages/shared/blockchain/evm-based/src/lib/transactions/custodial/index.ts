@@ -79,7 +79,7 @@ const approveFromCustodialWallet = async (
 }
 
 const generateCustodialBatch = async (body: GenerateCustodialWalletBatchPayer) => {
-  const request = await ApiServices.blockchain.utils.generateCustodialWalletBatch(body)
+  const request = await ApiServices.blockchain.gasPump.generateCustodialWalletBatch(body)
   if (!(request as TransactionHashKMS)?.failed) return (request as TransactionHashKMS)?.txId
   else throw new Error('Unable to generate custodial wallet address.')
 }

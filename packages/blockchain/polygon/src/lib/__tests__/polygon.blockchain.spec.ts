@@ -7,8 +7,8 @@ import {
 import { TatumPolygonSDK } from '../polygon.sdk'
 import * as apiClient from '@tatumio/api-client'
 import {
-  PolygonEstimateGas,
   CallSmartContractMethod,
+  PolygonEstimateGas,
   PrivKeyRequest,
   TransferPolygonBlockchain,
 } from '@tatumio/api-client'
@@ -37,7 +37,7 @@ describe('PolygonSDK - blockchain', () => {
     get: [api.polygonGetTransaction, testData.TX_HASH],
     getAccountTransactions: [api.polygonGetTransactionByAddress, testData.TESTNET.ADDRESS_0, 10],
     estimateGas: [
-      api.polygonEstimateGas,
+      blockchain.estimateGas,
       {
         from: testData.TESTNET.ADDRESS_0,
         to: testData.TESTNET.ADDRESS_100,

@@ -3,6 +3,7 @@ import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 import { SolanaNftMetadata } from '../schema'
 import { LAMPORTS_PER_SOL, PublicKey, SystemProgram, Transaction } from '@solana/web3.js'
 import BigNumber from 'bignumber.js'
+import { Currency } from '@tatumio/api-client'
 
 jest.setTimeout(99999)
 
@@ -14,6 +15,34 @@ describe('SolanaSDK - tx', () => {
 
   afterEach(() => {
     jest.clearAllMocks()
+  })
+
+  it.skip('should send SPL token', async () => {
+    const tx = await sdk.transaction.transferSplToken({
+      from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
+      contractAddress: 'FUfCgCej9dZoWvYDXSHsVBFwHAfKzQhpkgPDsUHLhHKb',
+      digits: 6,
+      chain: Currency.SOL,
+      fromPrivateKey:
+        '3abc79a31093e4cfa4a724e94a44906cbbc3a32e2f75f985a28616676a5dbaf1de8d82a7e1d0561bb0e1b729c7a9b9b1708cf2803ad0ca928a332587ace391ad',
+      to: 'BiqJwFY1sEPmcLP89Sq9qBjifxCKnt1ibqQgvYNkPMQj',
+      amount: '0.00001',
+    })
+    console.log(tx)
+    expect(tx).toBeDefined()
+  })
+
+  it.skip('should create SPL token', async () => {
+    const tx = await sdk.transaction.createSplToken({
+      address: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
+      chain: 'SOL',
+      digits: 6,
+      fromPrivateKey:
+        '3abc79a31093e4cfa4a724e94a44906cbbc3a32e2f75f985a28616676a5dbaf1de8d82a7e1d0561bb0e1b729c7a9b9b1708cf2803ad0ca928a332587ace391ad',
+      supply: '5000',
+    })
+    console.log(tx)
+    expect(tx).toBeDefined()
   })
 
   it.skip('should send SOL', async () => {

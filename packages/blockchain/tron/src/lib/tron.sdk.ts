@@ -1,4 +1,4 @@
-import { BlockchainTronService } from '@tatumio/api-client'
+import { TronService } from '@tatumio/api-client'
 import { Blockchain } from '@tatumio/shared-core'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { abstractBlockchainSdk } from '@tatumio/shared-blockchain-abstract'
@@ -52,13 +52,13 @@ export const TatumTronSDK = (args: SDKArguments) => {
     tronWeb: web,
     record: tronRecord(),
     blockchain: {
-      broadcast: BlockchainTronService.tronBroadcast,
-      getCurrentBlock: BlockchainTronService.tronGetCurrentBlock,
-      getBlock: BlockchainTronService.tronGetBlock,
-      getTrc10Detail: BlockchainTronService.tronTrc10Detail,
-      getAccount: BlockchainTronService.tronGetAccount,
-      getTransaction: BlockchainTronService.tronGetTransaction,
-      sendTransaction: BlockchainTronService.tronTransfer,
+      broadcast: TronService.tronBroadcast,
+      getCurrentBlock: TronService.tronGetCurrentBlock,
+      getBlock: TronService.tronGetBlock,
+      getTrc10Detail: TronService.tronTrc10Detail,
+      getAccount: TronService.tronGetAccount,
+      getTransaction: TronService.tronGetTransaction,
+      sendTransaction: TronService.tronTransfer,
     },
   }
 }

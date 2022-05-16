@@ -3,6 +3,7 @@
 /* eslint-disable */
 
 export type BnbBlock = {
+    timestamp?: number;
     blockHeight?: number;
     tx?: Array<{
         txHash?: string;

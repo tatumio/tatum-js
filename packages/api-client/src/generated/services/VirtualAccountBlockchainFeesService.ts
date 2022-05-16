@@ -1,0 +1,44 @@
+/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+import type { FeeBtc } from '../models/FeeBtc';
+import type { OffchainEstimateFee } from '../models/OffchainEstimateFee';
+import type { CancelablePromise } from '../core/CancelablePromise';
+import { request as __request } from '../core/request';
+
+export class VirtualAccountBlockchainFeesService {
+
+    /**
+     * Estimate ledger to blockchain transaction fee
+     * <h4>2 credits per API call.</h4><br/>
+     * <p>Estimate current transaction fee for ledger to blockchain transaction.<br/>
+     * Supported blockchains:
+     * <ul>
+     * <li>Bitcoin</li>
+     * <li>Litecoin</li>
+     * <li>Dogecoin</li>
+     * </ul>
+     * </p>
+     *
+     * @param requestBody
+     * @returns FeeBtc OK
+     * @throws ApiError
+     */
+    public static offchainEstimateFee(
+        requestBody: OffchainEstimateFee,
+    ): CancelablePromise<FeeBtc> {
+        return __request({
+            method: 'POST',
+            path: `/v3/offchain/blockchain/estimate`,
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                500: `Internal server error. There was an error on the server while processing the request.`,
+            },
+        });
+    }
+
+}

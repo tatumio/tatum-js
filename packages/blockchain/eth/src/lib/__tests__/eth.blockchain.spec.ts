@@ -38,7 +38,7 @@ describe('EthSDK - blockchain', () => {
     getAccountTransactions: [api.ethGetTransactionByAddress, testData.TESTNET.ADDRESS_0, 50],
     getInternalTransaction: [api.ethGetInternalTransactionByAddress, testData.TESTNET.ADDRESS_0, 50],
     estimateGas: [
-      api.ethEstimateGas,
+      blockchain.estimateGas,
       {
         from: testData.TESTNET.ADDRESS_0,
         to: testData.TESTNET.ADDRESS_100,
@@ -47,7 +47,7 @@ describe('EthSDK - blockchain', () => {
       } as EthEstimateGas,
     ],
     estimateGasBatch: [
-      api.ethEstimateGasBatch,
+      blockchain.estimateGasBatch,
       {
         estimations: [
           {

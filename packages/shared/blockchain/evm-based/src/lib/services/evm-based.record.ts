@@ -1,5 +1,5 @@
 import {
-  BlockchainRecordService,
+  BlockchainStorageService,
   CancelablePromise,
   CreateRecord,
   CreateRecordCelo,
@@ -28,7 +28,7 @@ export const evmBlockchainRecord = (args: { blockchain: Blockchain }) => {
       data: string
     }> {
       // @ts-ignore
-      return BlockchainRecordService.getLog(args.blockchain, id)
+      return BlockchainStorageService.getLog(args.blockchain, id)
     },
 
     /**
@@ -44,7 +44,7 @@ export const evmBlockchainRecord = (args: { blockchain: Blockchain }) => {
      * @throws ApiError
      */
     storeLog(requestBody: RequestBodyWithoutChain): CancelablePromise<TransactionHash> {
-      return BlockchainRecordService.storeLog({
+      return BlockchainStorageService.storeLog({
         ...requestBody,
         // @ts-ignore @TODO
         chain: blockchainHelper.getDefaultCurrencyByBlockchain(args.blockchain),

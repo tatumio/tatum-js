@@ -1,4 +1,4 @@
-import { BlockchainTerraService } from '@tatumio/api-client'
+import { TerraService } from '@tatumio/api-client'
 import { abstractBlockchainSdk } from '@tatumio/shared-blockchain-abstract'
 import { Blockchain } from '@tatumio/shared-core'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
@@ -11,7 +11,7 @@ import { terraOffchainService } from './services/terra.offchain'
 const blockchain = Blockchain.TERRA
 
 export const TatumTerraSDK = (args: SDKArguments) => {
-  const api = BlockchainTerraService
+  const api = TerraService
   const { ...abstractSdk } = abstractBlockchainSdk({ ...args, blockchain })
 
   return {
@@ -23,11 +23,11 @@ export const TatumTerraSDK = (args: SDKArguments) => {
     wallet: terraWallet(),
     transaction: terraTxService(args),
     blockchain: {
-      getCurrentBlock: BlockchainTerraService.terraGetCurrentBlock,
-      getBlock: BlockchainTerraService.terraGetBlock,
-      getAccount: BlockchainTerraService.terraGetAccount,
-      getTransaction: BlockchainTerraService.terraGetTransaction,
-      broadcast: BlockchainTerraService.terraBroadcast,
+      getCurrentBlock: TerraService.terraGetCurrentBlock,
+      getBlock: TerraService.terraGetBlock,
+      getAccount: TerraService.terraGetAccount,
+      getTransaction: TerraService.terraGetTransaction,
+      broadcast: TerraService.terraBroadcast,
     },
   }
 }

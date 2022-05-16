@@ -1,4 +1,4 @@
-import { BlockchainXrpService } from '@tatumio/api-client'
+import { XrpService } from '@tatumio/api-client'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { abstractBlockchainSdk } from '@tatumio/shared-blockchain-abstract'
 import { Blockchain } from '@tatumio/shared-core'
@@ -17,15 +17,15 @@ export const TatumXrpSDK = (args: SDKArguments) => {
     transaction: xrpTxService(),
     wallet: xrpWallet(),
     blockchain: {
-      broadcast: BlockchainXrpService.xrpBroadcast,
-      info: BlockchainXrpService.xrpGetLastClosedLedger,
-      getFee: BlockchainXrpService.xrpGetFee,
-      getAccountTx: BlockchainXrpService.xrpGetAccountTx,
-      getLedger: BlockchainXrpService.xrpGetLedger,
-      getTx: BlockchainXrpService.xrpGetTransaction,
-      getAccountInfo: BlockchainXrpService.xrpGetAccountInfo,
-      getAccountBalance: BlockchainXrpService.xrpGetAccountBalance,
-      sendTransaction: BlockchainXrpService.xrpTransferBlockchain,
+      broadcast: XrpService.xrpBroadcast,
+      info: XrpService.xrpGetLastClosedLedger,
+      getFee: XrpService.xrpGetFee,
+      getAccountTx: XrpService.xrpGetAccountTx,
+      getLedger: XrpService.xrpGetLedger,
+      getTx: XrpService.xrpGetTransaction,
+      getAccountInfo: XrpService.xrpGetAccountInfo,
+      getAccountBalance: XrpService.xrpGetAccountBalance,
+      sendTransaction: XrpService.xrpTransferBlockchain,
     },
   }
 }

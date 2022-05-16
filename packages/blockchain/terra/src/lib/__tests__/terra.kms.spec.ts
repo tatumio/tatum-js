@@ -7,7 +7,7 @@ import { Tx } from '@terra-money/terra.js'
 
 jest.mock('@tatumio/api-client')
 
-describe('TerraSDK - KMS', () => {
+describe.skip('TerraSDK - KMS', () => {
   const kmsService = terraKmsService({
     apiKey: REPLACE_ME_WITH_TATUM_API_KEY,
     provider: 'https://bombay-lcd.terra.dev',

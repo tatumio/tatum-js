@@ -1,11 +1,4 @@
-import {
-  Account,
-  Address,
-  ApiServices,
-  CreateAccount,
-  LedgerAccountService,
-  Wallet,
-} from '@tatumio/api-client'
+import { Account, AccountService, Address, ApiServices, CreateAccount, Wallet } from '@tatumio/api-client'
 
 export type GenerateWalletFn = (mnemonic?: string, options?: { testnet?: boolean }) => Promise<Wallet>
 
@@ -16,21 +9,21 @@ export interface GeneratedAccount {
 }
 
 export class AbstractSdkLedgerAccountService {
-  getAccountById = LedgerAccountService.getAccountByAccountId
-  createAccount = LedgerAccountService.createAccount
-  createAccounts = LedgerAccountService.createAccountBatch
-  updateAccount = LedgerAccountService.updateAccountByAccountId
-  getBlockedAmountsByAccountId = LedgerAccountService.getBlockAmountById
-  blockAmount = LedgerAccountService.blockAmount
-  deleteBlockedAmount = LedgerAccountService.deleteBlockAmount
-  deleteBlockedAmountWithTransaction = LedgerAccountService.unblockAmountWithTransaction
-  activateAccount = LedgerAccountService.activateAccount
-  deactivateAccount = LedgerAccountService.deactivateAccount
-  freezeAccount = LedgerAccountService.freezeAccount
-  unfreezeAccount = LedgerAccountService.unfreezeAccount
-  getAccountsByCustomerId = LedgerAccountService.getAccountsByCustomerId
-  getAllAccounts = LedgerAccountService.getAllAccounts
-  getAccountBalance = LedgerAccountService.getAccountBalance
+  getAccountById = AccountService.getAccountByAccountId
+  createAccount = AccountService.createAccount
+  createAccounts = AccountService.createAccountBatch
+  updateAccount = AccountService.updateAccountByAccountId
+  getBlockedAmountsByAccountId = AccountService.getBlockAmountById
+  blockAmount = AccountService.blockAmount
+  deleteBlockedAmount = AccountService.deleteBlockAmount
+  deleteBlockedAmountWithTransaction = AccountService.unblockAmountWithTransaction
+  activateAccount = AccountService.activateAccount
+  deactivateAccount = AccountService.deactivateAccount
+  freezeAccount = AccountService.freezeAccount
+  unfreezeAccount = AccountService.unfreezeAccount
+  getAccountsByCustomerId = AccountService.getAccountsByCustomerId
+  getAllAccounts = AccountService.getAllAccounts
+  getAccountBalance = AccountService.getAccountBalance
 
   /**
    * Abstraction unification endpoint for creating new ledger account, optionally added wallet generation, generating deposit blockchain address
@@ -54,7 +47,7 @@ export class AbstractSdkLedgerAccountService {
       // address not in Wallet
       account.xpub = w.xpub // || w.address
     }
-    const a = await LedgerAccountService.createAccount(account)
+    const a = await AccountService.createAccount(account)
     const address = await ApiServices.offChain.account.generateDepositAddress(a.id)
     if (webhookUrl) {
       await ApiServices.ledger.subscriptions.createSubscription({

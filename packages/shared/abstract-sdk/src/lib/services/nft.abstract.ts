@@ -1,32 +1,32 @@
-import { AddNftMinter, AddNftMinterKMS, BlockchainNftService } from '@tatumio/api-client'
+import { AddNftMinter, AddNftMinterKMS, NftErc721OrCompatibleService } from '@tatumio/api-client'
 import axios from 'axios'
 
 type ChainAddMinter = AddNftMinter | AddNftMinterKMS
 
 export const abstractSdkNftService = () => {
   return {
-    deployNFTSmartContract: BlockchainNftService.nftDeployErc721,
-    addNFTMinter: BlockchainNftService.nftAddMinter,
-    mintNFT: BlockchainNftService.nftMintErc721,
-    mintMultipleNFTs: BlockchainNftService.nftMintMultipleErc721,
-    burnNFT: BlockchainNftService.nftBurnErc721,
-    transferNFT: BlockchainNftService.nftTransferErc721,
-    updateNFTRoyalty: BlockchainNftService.nftUpdateCashbackErc721,
-    getNFTTransaction: BlockchainNftService.nftGetTransactErc721,
-    getNFTTransactionsByToken: BlockchainNftService.nftGetTransactionByToken,
-    getNFTTransactionsByAddress: BlockchainNftService.nftGetTransactionByAddress,
-    getNFTsByAddress: BlockchainNftService.nftGetTokensByAddressErc721,
-    getNFTProvenanceData: BlockchainNftService.nftGetProvenanceDataErc721,
-    getNFTMetadataURI: BlockchainNftService.nftGetMetadataErc721,
-    getNFTRoyalty: BlockchainNftService.nftGetRoyaltyErc721,
-    getNFTAccountBalance: BlockchainNftService.nftGetBalanceErc721,
+    deployNFTSmartContract: NftErc721OrCompatibleService.nftDeployErc721,
+    addNFTMinter: NftErc721OrCompatibleService.nftAddMinter,
+    mintNFT: NftErc721OrCompatibleService.nftMintErc721,
+    mintMultipleNFTs: NftErc721OrCompatibleService.nftMintMultipleErc721,
+    burnNFT: NftErc721OrCompatibleService.nftBurnErc721,
+    transferNFT: NftErc721OrCompatibleService.nftTransferErc721,
+    updateNFTRoyalty: NftErc721OrCompatibleService.nftUpdateCashbackErc721,
+    getNFTTransaction: NftErc721OrCompatibleService.nftGetTransactErc721,
+    getNFTTransactionsByToken: NftErc721OrCompatibleService.nftGetTransactionByToken,
+    getNFTTransactionsByAddress: NftErc721OrCompatibleService.nftGetTransactionByAddress,
+    getNFTsByAddress: NftErc721OrCompatibleService.nftGetTokensByAddressErc721,
+    getNFTProvenanceData: NftErc721OrCompatibleService.nftGetProvenanceDataErc721,
+    getNFTMetadataURI: NftErc721OrCompatibleService.nftGetMetadataErc721,
+    getNFTRoyalty: NftErc721OrCompatibleService.nftGetRoyaltyErc721,
+    getNFTAccountBalance: NftErc721OrCompatibleService.nftGetBalanceErc721,
     getNFTImage: async (
       chain: 'ETH' | 'MATIC' | 'KCS' | 'SOL' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'BSC',
       contractAddress: string,
       tokenId: string,
       account?: string,
     ): Promise<{ originalUrl: string; publicUrl: string }> => {
-      const { data: metadata } = await BlockchainNftService.nftGetMetadataErc721(
+      const { data: metadata } = await NftErc721OrCompatibleService.nftGetMetadataErc721(
         chain,
         contractAddress,
         tokenId,
