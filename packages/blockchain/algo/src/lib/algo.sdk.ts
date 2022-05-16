@@ -1,7 +1,7 @@
 import { Blockchain } from '@tatumio/shared-core'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { abstractBlockchainSdk } from '@tatumio/shared-blockchain-abstract'
-import { BlockchainAlgorandAlgoService, BlockchainFungibleTokenService } from '@tatumio/api-client'
+import { AlgorandService, FungibleTokensErc20OrCompatibleService } from '@tatumio/api-client'
 import { algoWeb } from './services/algo.web'
 import { algoRecord } from './services/algo.record'
 import { algoWallet } from './services/algo.wallet'
@@ -24,8 +24,8 @@ export const TatumAlgoSDK = (args: SDKArguments) => {
     transaction: txService.native,
     erc20: {
       ...txService.erc20,
-      getErc20TransactionByAddress: BlockchainFungibleTokenService.erc20GetTransactionByAddress,
-      getErc20AccountBalance: BlockchainFungibleTokenService.erc20GetBalance,
+      getErc20TransactionByAddress: FungibleTokensErc20OrCompatibleService.erc20GetTransactionByAddress,
+      getErc20AccountBalance: FungibleTokensErc20OrCompatibleService.erc20GetBalance,
     },
     nft: {
       ...txService.erc721,
@@ -33,17 +33,17 @@ export const TatumAlgoSDK = (args: SDKArguments) => {
       burnNFT,
     },
     blockchain: {
-      broadcast: BlockchainAlgorandAlgoService.algoandBroadcast,
-      getBlock: BlockchainAlgorandAlgoService.algorandGetBlock,
-      getCurrentBlock: BlockchainAlgorandAlgoService.algorandGetCurrentBlock,
-      getBlockchainAccountBalance: BlockchainAlgorandAlgoService.algorandGetBalance,
-      getTransaction: BlockchainAlgorandAlgoService.algorandGetTransaction,
-      getPayTransactionByFromTo: BlockchainAlgorandAlgoService.algorandGetPayTransactionsByFromTo,
+      broadcast: AlgorandService.algoandBroadcast,
+      getBlock: AlgorandService.algorandGetBlock,
+      getCurrentBlock: AlgorandService.algorandGetCurrentBlock,
+      getBlockchainAccountBalance: AlgorandService.algorandGetBalance,
+      getTransaction: AlgorandService.algorandGetTransaction,
+      getPayTransactionByFromTo: AlgorandService.algorandGetPayTransactionsByFromTo,
     },
     node: {
-      indexerGetDriver: BlockchainAlgorandAlgoService.algoNodeIndexerGetDriver,
-      getDriver: BlockchainAlgorandAlgoService.algoNodeGetDriver,
-      postDriver: BlockchainAlgorandAlgoService.algoNodePostDriver,
+      indexerGetDriver: AlgorandService.algoNodeIndexerGetDriver,
+      getDriver: AlgorandService.algoNodeGetDriver,
+      postDriver: AlgorandService.algoNodePostDriver,
     },
   }
 }

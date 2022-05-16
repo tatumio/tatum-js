@@ -1,9 +1,9 @@
 import {
-  BlockchainTronService,
   CreateTronTrc20Blockchain,
   CreateTronTrc20BlockchainKMS,
   TransferTronTrc20Blockchain,
   TransferTronTrc20BlockchainKMS,
+  TronService,
 } from '@tatumio/api-client'
 import BigNumber from 'bignumber.js'
 import { ITronWeb } from './tron.web'
@@ -150,7 +150,7 @@ export const tronTrc20 = (args: { tronWeb: ITronWeb }) => {
         body: TransferTronTrc20Blockchain | TransferTronTrc20BlockchainKMS,
         provider?: string,
       ) =>
-        BlockchainTronService.tronBroadcast({
+        TronService.tronBroadcast({
           txData: await prepareSignedTransaction(body, args.tronWeb, provider),
           // TODO: SignatureID is missing in OpenApi
         }),
@@ -164,7 +164,7 @@ export const tronTrc20 = (args: { tronWeb: ITronWeb }) => {
         body: CreateTronTrc20Blockchain | CreateTronTrc20BlockchainKMS,
         provider?: string,
       ) =>
-        BlockchainTronService.tronBroadcast({
+        TronService.tronBroadcast({
           txData: await prepareCreateSignedTransaction(body, args.tronWeb, provider),
           // TODO: SignatureID is missing in OpenApi
         }),

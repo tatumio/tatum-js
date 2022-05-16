@@ -36,7 +36,7 @@ describe('BscSDK - blockchain', () => {
     getBlockchainAccountBalance: [api.bscGetBalance, testData.TESTNET.ADDRESS_0],
     get: [api.bscGetTransaction, testData.TX_HASH],
     estimateGas: [
-      api.bscEstimateGas,
+      blockchain.estimateGas,
       {
         from: testData.TESTNET.ADDRESS_0,
         to: testData.TESTNET.ADDRESS_100,

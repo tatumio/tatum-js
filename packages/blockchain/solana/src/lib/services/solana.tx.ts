@@ -1,9 +1,25 @@
 import { Keypair, LAMPORTS_PER_SOL, PublicKey, SystemProgram, Transaction } from '@solana/web3.js'
-import { MintNftSolana, TransferNftSolana, TransferSolanaBlockchain } from '@tatumio/api-client'
+import {
+  ChainDeploySolana,
+  ChainTransferSolanaSplToken,
+  MintNftSolana,
+  TransferNftSolana,
+  TransferSolanaBlockchain,
+} from '@tatumio/api-client'
 import { FromPrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
 import BigNumber from 'bignumber.js'
 import { SolanaWeb3 } from './solana.web3'
-import { ASSOCIATED_TOKEN_PROGRAM_ID, MintLayout, Token, TOKEN_PROGRAM_ID } from '@solana/spl-token'
+import {
+  createInitializeMintInstruction,
+  createMintToInstruction,
+  createTransferInstruction,
+  getAccount,
+  getAssociatedTokenAddress,
+  getMinimumBalanceForRentExemptMint,
+  MINT_SIZE,
+  MintLayout,
+  TOKEN_PROGRAM_ID,
+} from '@solana/spl-token'
 import {
   createAssociatedTokenAccountInstruction,
   createMasterEditionInstruction,
@@ -23,6 +39,8 @@ import BN from 'bn.js'
 
 export type TransferSolana = FromPrivateKeyOrSignatureId<TransferSolanaBlockchain>
 export type TransferSolanaNft = FromPrivateKeyOrSignatureId<TransferNftSolana>
+export type TransferSolanaSpl = FromPrivateKeyOrSignatureId<ChainTransferSolanaSplToken>
+export type CreateSolanaSpl = FromPrivateKeyOrSignatureId<ChainDeploySolana>
 export type MintSolanaNft = FromPrivateKeyOrSignatureId<MintNftSolana>
 
 const send = async (
@@ -79,16 +97,10 @@ const transferNft = async (
       SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
     )
   )[0]
-  transaction.add(createAssociatedTokenAccountInstruction(toTokenAccountAddress, from, walletAddress, mint))
-
-  const fromTokenAddress = await Token.getAssociatedTokenAddress(
-    ASSOCIATED_TOKEN_PROGRAM_ID,
-    TOKEN_PROGRAM_ID,
-    mint,
-    from,
-  )
+  const fromTokenAddress = await getAssociatedTokenAddress(mint, from)
   transaction.add(
-    Token.createTransferInstruction(TOKEN_PROGRAM_ID, fromTokenAddress, toTokenAccountAddress, from, [], 1),
+    createAssociatedTokenAccountInstruction(toTokenAccountAddress, from, walletAddress, mint),
+    createTransferInstruction(fromTokenAddress, toTokenAccountAddress, from, 1, [], TOKEN_PROGRAM_ID),
   )
 
   if (body.signatureId) {
@@ -102,6 +114,115 @@ const transferNft = async (
   }
   return {
     txId: await connection.sendTransaction(transaction, signers),
+  }
+}
+
+const transferSplToken = async (
+  body: TransferSolanaSpl,
+  web3: SolanaWeb3,
+  provider?: string,
+  feePayer?: string,
+  feePayerPrivateKey?: string,
+) => {
+  const connection = web3.getClient(provider)
+  const from = new PublicKey(body.from as string)
+  const transaction = new Transaction({ feePayer: feePayer ? new PublicKey(feePayer) : from })
+  const mint = new PublicKey(body.contractAddress)
+  const to = new PublicKey(body.to)
+
+  const fromTokenAddress = await getAssociatedTokenAddress(mint, from)
+  const toTokenAccountAddress = await getAssociatedTokenAddress(mint, to)
+  try {
+    await getAccount(connection, toTokenAccountAddress)
+  } catch (e) {
+    transaction.add(createAssociatedTokenAccountInstruction(toTokenAccountAddress, from, to, mint))
+  }
+
+  transaction.add(
+    createTransferInstruction(
+      fromTokenAddress,
+      toTokenAccountAddress,
+      from,
+      new BigNumber(body.amount).multipliedBy(10 ** body.digits).toNumber(),
+      [],
+      TOKEN_PROGRAM_ID,
+    ),
+  )
+
+  if (body.signatureId) {
+    transaction.recentBlockhash = '7WyEshBZcZwEbJsvSeGgCkSNMxxxFAym3x7Cuj6UjAUE'
+    return { txData: transaction.compileMessage().serialize().toString('hex') }
+  }
+
+  const signers = [web3.generateKeyPair(body.fromPrivateKey)]
+  if (feePayerPrivateKey) {
+    signers.push(web3.generateKeyPair(feePayerPrivateKey))
+  }
+  return {
+    txId: await connection.sendTransaction(transaction, signers),
+  }
+}
+
+const createSplToken = async (
+  body: CreateSolanaSpl,
+  web3: SolanaWeb3,
+  provider?: string,
+  feePayer?: string,
+  feePayerPrivateKey?: string,
+) => {
+  const connection = web3.getClient(provider)
+  const payer = web3.generateKeyPair(feePayerPrivateKey || body.fromPrivateKey)
+  const transaction = new Transaction({ feePayer: payer.publicKey })
+  const lamports = await getMinimumBalanceForRentExemptMint(connection)
+
+  const mint = Keypair.generate()
+  transaction.add(
+    SystemProgram.createAccount({
+      fromPubkey: payer.publicKey,
+      newAccountPubkey: mint.publicKey,
+      space: MINT_SIZE,
+      lamports,
+      programId: TOKEN_PROGRAM_ID,
+    }),
+    createInitializeMintInstruction(
+      mint.publicKey,
+      body.digits,
+      payer.publicKey,
+      payer.publicKey,
+      TOKEN_PROGRAM_ID,
+    ),
+  )
+  const userTokenAccountAddress = (
+    await PublicKey.findProgramAddress(
+      [new PublicKey(body.address).toBuffer(), TOKEN_PROGRAM_ID.toBuffer(), mint.publicKey.toBuffer()],
+      SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
+    )
+  )[0]
+  transaction.add(
+    createAssociatedTokenAccountInstruction(
+      userTokenAccountAddress,
+      payer.publicKey,
+      new PublicKey(body.address),
+      mint.publicKey,
+    ),
+    createMintToInstruction(
+      mint.publicKey,
+      userTokenAccountAddress,
+      payer.publicKey,
+      new BigNumber(body.supply).multipliedBy(10 ** body.digits).toNumber(),
+      [],
+      TOKEN_PROGRAM_ID,
+    ),
+  )
+  if (body.signatureId) {
+    transaction.recentBlockhash = '7WyEshBZcZwEbJsvSeGgCkSNMxxxFAym3x7Cuj6UjAUE'
+    return { txData: transaction.compileMessage().serialize().toString('hex') }
+  }
+
+  const signers = [payer, mint]
+  return {
+    txId: await connection.sendTransaction(transaction, signers),
+    contractAddress: mint.publicKey.toBase58(),
   }
 }
 
@@ -126,8 +247,8 @@ const mintNft = async (
       space: MintLayout.span,
       programId: TOKEN_PROGRAM_ID,
     }),
+    createInitializeMintInstruction(mint.publicKey, 0, from, null, TOKEN_PROGRAM_ID),
   )
-  instructions.push(Token.createInitMintInstruction(TOKEN_PROGRAM_ID, mint.publicKey, 0, from, null))
 
   const userTokenAccountAddress = (
     await PublicKey.findProgramAddress(
@@ -174,10 +295,9 @@ const mintNft = async (
     ),
   )
 
-  instructions.push(createMetadataInstruction(metadataAccount, mint.publicKey, from, from, from, txnData))
-
   instructions.push(
-    Token.createMintToInstruction(TOKEN_PROGRAM_ID, mint.publicKey, userTokenAccountAddress, from, [], 1),
+    createMetadataInstruction(metadataAccount, mint.publicKey, from, from, from, txnData),
+    createMintToInstruction(mint.publicKey, userTokenAccountAddress, from, 1, [], TOKEN_PROGRAM_ID),
   )
 
   const editionAccount = (
@@ -241,6 +361,32 @@ export const solanaTxService = (args: { web3: SolanaWeb3 }) => {
      */
     send: async (body: TransferSolana, provider?: string, feePayer?: string, feePayerPrivateKey?: string) =>
       send(body, args.web3, provider, feePayer, feePayerPrivateKey),
+    /**
+     * Transfer SPL token from account to another account.
+     * @param body body of the request
+     * @param provider optional URL of the Solana cluster
+     * @param feePayer optional address of the account, which will cover fees
+     * @param feePayerPrivateKey optional private key of the account which will cover fees
+     */
+    transferSplToken: async (
+      body: TransferSolanaSpl,
+      provider?: string,
+      feePayer?: string,
+      feePayerPrivateKey?: string,
+    ) => transferSplToken(body, args.web3, provider, feePayer, feePayerPrivateKey),
+    /**
+     * Create SPL token.
+     * @param body body of the request
+     * @param provider optional URL of the Solana cluster
+     * @param feePayer optional address of the account, which will cover fees
+     * @param feePayerPrivateKey optional private key of the account which will cover fees
+     */
+    createSplToken: async (
+      body: CreateSolanaSpl,
+      provider?: string,
+      feePayer?: string,
+      feePayerPrivateKey?: string,
+    ) => createSplToken(body, args.web3, provider, feePayer, feePayerPrivateKey),
     /**
      * Transfer NFT on Solana network.
      * @param body body of the request

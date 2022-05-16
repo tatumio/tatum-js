@@ -1,4 +1,4 @@
-import { BlockchainHarmonyOneService } from '@tatumio/api-client'
+import { HarmonyService } from '@tatumio/api-client'
 import { EvmBasedWeb3, marketplace } from '@tatumio/shared-blockchain-evm-based'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import { oneUtils } from '../one.utils'
@@ -9,7 +9,7 @@ export const oneMarketplace = (args: {
 }): ReturnType<typeof marketplace> => {
   const unpatchedMarketplace = marketplace({
     ...args,
-    broadcastFunction: BlockchainHarmonyOneService.oneBroadcast,
+    broadcastFunction: HarmonyService.oneBroadcast,
   })
 
   return {

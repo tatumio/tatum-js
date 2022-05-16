@@ -1,4 +1,4 @@
-import { BlockchainRecordService, CancelablePromise } from '@tatumio/api-client'
+import { BlockchainStorageService, CancelablePromise } from '@tatumio/api-client'
 import { Blockchain } from '@tatumio/shared-core'
 
 export const egldRecord = () => {
@@ -17,7 +17,7 @@ export const egldRecord = () => {
        */
       data: string
     }> {
-      return BlockchainRecordService.getLog(Blockchain.EGLD as any, id)
+      return BlockchainStorageService.getLog(Blockchain.EGLD as any, id)
     },
   }
 }

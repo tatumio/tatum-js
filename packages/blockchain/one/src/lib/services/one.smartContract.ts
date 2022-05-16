@@ -1,4 +1,4 @@
-import { BlockchainHarmonyOneService } from '@tatumio/api-client'
+import { HarmonyService } from '@tatumio/api-client'
 import { EvmBasedWeb3, smartContract } from '@tatumio/shared-blockchain-evm-based'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import { oneUtils } from '../one.utils'
@@ -9,7 +9,7 @@ export const oneSmartContract = (args: {
 }): ReturnType<typeof smartContract> => {
   const unpatchedSmartContract = smartContract({
     ...args,
-    broadcastFunction: BlockchainHarmonyOneService.oneBroadcast,
+    broadcastFunction: HarmonyService.oneBroadcast,
   })
 
   return {

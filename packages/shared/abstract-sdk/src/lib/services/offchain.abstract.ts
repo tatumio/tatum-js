@@ -1,25 +1,25 @@
 import {
-  OffChainAccountService,
-  OffChainBlockchainService,
-  OffChainWithdrawalService,
+  BlockchainAddressesService,
+  BlockchainOperationsService,
+  WithdrawalService,
 } from '@tatumio/api-client'
 
 export const abstractSdkOffChain = () => {
   return {
     depositAddress: {
-      create: OffChainAccountService.generateDepositAddress,
-      createMultiple: OffChainAccountService.generateDepositAddressesBatch,
-      checkExists: OffChainAccountService.addressExists,
-      assign: OffChainAccountService.assignAddress,
-      remove: OffChainAccountService.removeAddress,
-      getByAccount: OffChainAccountService.getAllDepositAddresses,
+      create: BlockchainAddressesService.generateDepositAddress,
+      createMultiple: BlockchainAddressesService.generateDepositAddressesBatch,
+      checkExists: BlockchainAddressesService.addressExists,
+      assign: BlockchainAddressesService.assignAddress,
+      remove: BlockchainAddressesService.removeAddress,
+      getByAccount: BlockchainAddressesService.getAllDepositAddresses,
     },
     withdrawal: {
-      getAll: OffChainWithdrawalService.getWithdrawals,
-      broadcast: OffChainWithdrawalService.broadcastBlockchainTransaction,
-      create: OffChainWithdrawalService.storeWithdrawal,
-      complete: OffChainWithdrawalService.completeWithdrawal,
+      getAll: WithdrawalService.getWithdrawals,
+      broadcast: WithdrawalService.broadcastBlockchainTransaction,
+      create: WithdrawalService.storeWithdrawal,
+      complete: WithdrawalService.completeWithdrawal,
     },
-    storeTokenAddress: OffChainBlockchainService.storeTokenAddress,
+    storeTokenAddress: BlockchainOperationsService.storeTokenAddress,
   }
 }

@@ -1,12 +1,12 @@
-import { BlockchainPolygonMaticService } from '@tatumio/api-client'
+import { PolygonService } from '@tatumio/api-client'
 import {
   custodial,
   erc20,
   erc721,
   EvmBasedWeb3,
   multiToken,
-  smartContract,
   native,
+  smartContract,
 } from '@tatumio/shared-blockchain-evm-based'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 
@@ -15,37 +15,37 @@ export const polygonTxService = (args: { blockchain: EvmBasedBlockchain; web3: E
     native: {
       ...native({
         ...args,
-        broadcastFunction: BlockchainPolygonMaticService.polygonBroadcast,
+        broadcastFunction: PolygonService.polygonBroadcast,
       }),
     },
     erc20: {
       ...erc20({
         ...args,
-        broadcastFunction: BlockchainPolygonMaticService.polygonBroadcast,
+        broadcastFunction: PolygonService.polygonBroadcast,
       }),
     },
     erc721: {
       ...erc721({
         ...args,
-        broadcastFunction: BlockchainPolygonMaticService.polygonBroadcast,
+        broadcastFunction: PolygonService.polygonBroadcast,
       }),
     },
     multiToken: {
       ...multiToken({
         ...args,
-        broadcastFunction: BlockchainPolygonMaticService.polygonBroadcast,
+        broadcastFunction: PolygonService.polygonBroadcast,
       }),
     },
     custodial: {
       ...custodial({
         ...args,
-        broadcastFunction: BlockchainPolygonMaticService.polygonBroadcast,
+        broadcastFunction: PolygonService.polygonBroadcast,
       }),
     },
     smartContract: {
       ...smartContract({
         ...args,
-        broadcastFunction: BlockchainPolygonMaticService.polygonBroadcast,
+        broadcastFunction: PolygonService.polygonBroadcast,
       }),
     },
   }

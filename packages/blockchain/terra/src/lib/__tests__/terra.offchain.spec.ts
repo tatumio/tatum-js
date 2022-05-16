@@ -10,7 +10,7 @@ import { Tx } from '@terra-money/terra.js'
 jest.mock('@tatumio/api-client')
 const mockedApi = mockHelper.mockApi(apiClient)
 
-describe('TerraSDK - offchain', () => {
+describe.skip('TerraSDK - offchain', () => {
   const offchainService = terraOffchainService({
     blockchain: Blockchain.TERRA,
     apiKey: REPLACE_ME_WITH_TATUM_API_KEY,

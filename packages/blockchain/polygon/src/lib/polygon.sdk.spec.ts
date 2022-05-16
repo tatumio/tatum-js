@@ -53,7 +53,7 @@ describe('TatumPolygonSDK', () => {
         const gasPrice = await sdk.getGasPriceInWei()
 
         expect(gasPrice).toBeDefined()
-        expect(parseInt(gasPrice)).toBeGreaterThan(0)
+        expect(parseFloat(gasPrice)).toBeGreaterThan(0)
       })
     })
   })

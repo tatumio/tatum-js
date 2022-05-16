@@ -1,48 +1,48 @@
 import {
+  AccountService,
   ApiServices,
   CreateAccount,
-  LedgerAccountService,
-  LedgerCustomerService,
-  LedgerOrderBookService,
-  LedgerTransactionService,
-  LedgerVirtualCurrencyService,
+  CustomerService,
+  OrderBookService,
   TransactionFilter,
   TransactionFilterCustomer,
+  TransactionService,
+  VirtualCurrencyService,
 } from '@tatumio/api-client'
 import { GeneratedAccount, GenerateWalletFn } from './ledger/ledger.account.abstract'
 
 export const abstractSdkLedgerService = () => {
   return {
     customer: {
-      get: LedgerCustomerService.getCustomerByExternalOrInternalId,
-      getAll: LedgerCustomerService.findAllCustomers,
-      update: LedgerCustomerService.updateCustomer,
-      activate: LedgerCustomerService.activateCustomer,
-      deactivate: LedgerCustomerService.deactivateCustomer,
-      enable: LedgerCustomerService.enableCustomer,
-      disable: LedgerCustomerService.disableCustomer,
+      get: CustomerService.getCustomerByExternalOrInternalId,
+      getAll: CustomerService.findAllCustomers,
+      update: CustomerService.updateCustomer,
+      activate: CustomerService.activateCustomer,
+      deactivate: CustomerService.deactivateCustomer,
+      enable: CustomerService.enableCustomer,
+      disable: CustomerService.disableCustomer,
     },
     orderBook: {
-      getHistorical: LedgerOrderBookService.getHistoricalTradesBody,
-      getActiveBuyTrades: LedgerOrderBookService.getBuyTradesBody,
-      getActiveSellTrades: LedgerOrderBookService.getSellTradesBody,
-      newTrade: LedgerOrderBookService.storeTrade,
-      get: LedgerOrderBookService.getTradeById,
-      cancel: LedgerOrderBookService.deleteTrade,
-      cancelByAccount: LedgerOrderBookService.deleteAccountTrades,
+      getHistorical: OrderBookService.getHistoricalTradesBody,
+      getActiveBuyTrades: OrderBookService.getBuyTradesBody,
+      getActiveSellTrades: OrderBookService.getSellTradesBody,
+      newTrade: OrderBookService.storeTrade,
+      get: OrderBookService.getTradeById,
+      cancel: OrderBookService.deleteTrade,
+      cancelByAccount: OrderBookService.deleteAccountTrades,
     },
     transaction: {
-      send: LedgerTransactionService.sendTransaction,
-      sendMultiple: LedgerTransactionService.sendTransactionBatch,
-      getAll: LedgerTransactionService.getTransactions,
-      getAllByAccount: LedgerTransactionService.getTransactionsByAccountId,
-      getAllByCustomer: LedgerTransactionService.getTransactionsByCustomerId,
-      getAllByReference: LedgerTransactionService.getTransactionsByReference,
+      send: TransactionService.sendTransaction,
+      sendMultiple: TransactionService.sendTransactionBatch,
+      getAll: TransactionService.getTransactions,
+      getAllByAccount: TransactionService.getTransactionsByAccountId,
+      getAllByCustomer: TransactionService.getTransactionsByCustomerId,
+      getAllByReference: TransactionService.getTransactionsByReference,
       countByAccount: function (filter: TransactionFilter) {
-        return LedgerTransactionService.getTransactionsByAccountId(filter, 50, 0, true)
+        return TransactionService.getTransactionsByAccountId(filter, 50, 0, true)
       },
       countByCustomer: function (filter: TransactionFilterCustomer) {
-        return LedgerTransactionService.getTransactionsByCustomerId(filter, 50, 0, true)
+        return TransactionService.getTransactionsByCustomerId(filter, 50, 0, true)
       },
       // @TODO OPENAPI
       /*countByReference: function (reference: string) {
@@ -50,30 +50,30 @@ export const abstractSdkLedgerService = () => {
       },*/
     },
     virtualCurrency: {
-      create: LedgerVirtualCurrencyService.createCurrency,
-      mint: LedgerVirtualCurrencyService.mintCurrency,
-      revoke: LedgerVirtualCurrencyService.revokeCurrency,
-      getByName: LedgerVirtualCurrencyService.getCurrency,
-      update: LedgerVirtualCurrencyService.updateCurrency,
+      create: VirtualCurrencyService.createCurrency,
+      mint: VirtualCurrencyService.mintCurrency,
+      revoke: VirtualCurrencyService.revokeCurrency,
+      getByName: VirtualCurrencyService.getCurrency,
+      update: VirtualCurrencyService.updateCurrency,
     },
     blockAmount: {
-      block: LedgerAccountService.blockAmount,
-      unblock: LedgerAccountService.deleteBlockAmount,
-      unblockWithTransaction: LedgerAccountService.unblockAmountWithTransaction,
+      block: AccountService.blockAmount,
+      unblock: AccountService.deleteBlockAmount,
+      unblockWithTransaction: AccountService.unblockAmountWithTransaction,
     },
     account: {
-      get: LedgerAccountService.getAccountByAccountId,
-      getAll: LedgerAccountService.getAllAccounts,
-      getByCustomerId: LedgerAccountService.getAccountsByCustomerId,
-      getBalance: LedgerAccountService.getAccountBalance,
-      create: LedgerAccountService.createAccount,
-      createMultiple: LedgerAccountService.createAccountBatch,
-      update: LedgerAccountService.updateAccountByAccountId,
-      getBlockedAmountsByAccountId: LedgerAccountService.getBlockAmountById,
-      activate: LedgerAccountService.activateAccount,
-      deactivate: LedgerAccountService.deactivateAccount,
-      freeze: LedgerAccountService.freezeAccount,
-      unfreeze: LedgerAccountService.unfreezeAccount,
+      get: AccountService.getAccountByAccountId,
+      getAll: AccountService.getAllAccounts,
+      getByCustomerId: AccountService.getAccountsByCustomerId,
+      getBalance: AccountService.getAccountBalance,
+      create: AccountService.createAccount,
+      createMultiple: AccountService.createAccountBatch,
+      update: AccountService.updateAccountByAccountId,
+      getBlockedAmountsByAccountId: AccountService.getBlockAmountById,
+      activate: AccountService.activateAccount,
+      deactivate: AccountService.deactivateAccount,
+      freeze: AccountService.freezeAccount,
+      unfreeze: AccountService.unfreezeAccount,
       /**
        * Abstraction unification endpoint for creating new ledger account, optionally added wallet generation, generating deposit blockchain address
        * and register incoming TX webhook notification.
@@ -95,7 +95,7 @@ export const abstractSdkLedgerService = () => {
           w = await generateNewWalletFn(undefined, { testnet })
           account.xpub = w.xpub // || w.address @TODO not in wallet type
         }
-        const a = await LedgerAccountService.createAccount(account)
+        const a = await AccountService.createAccount(account)
         const address = await ApiServices.offChain.account.generateDepositAddress(a.id)
         if (webhookUrl) {
           await ApiServices.ledger.subscriptions.createSubscription({

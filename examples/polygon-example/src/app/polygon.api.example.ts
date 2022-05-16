@@ -47,7 +47,7 @@ export async function polygonApiExample() {
     signatureId: '1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6',
   })
 
-  const gasInfo = await polygonSDK.api.polygonEstimateGas({
+  const gasInfo = await polygonSDK.blockchain.estimateGas({
     from: '0xfb99f8ae9b70a0c8cd96ae665bbaf85a7e01a2ef',
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     amount: '100000',
