@@ -171,7 +171,7 @@ export class StellarService {
     /**
      * Get XLM Account info
      * <h4>5 credits per API call.</h4><br/><p>Get XLM Account detail.</p>
-     * @param account Account address
+     * @param account Account address you want to get balance of
      * @returns XlmAccount OK
      * @throws ApiError
      */

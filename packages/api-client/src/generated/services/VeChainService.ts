@@ -142,7 +142,7 @@ export class VeChainService {
     /**
      * Get VeChain Account balance
      * <h4>5 credits per API call.</h4><br/><p>Get VeChain Account balance in VET.</p>
-     * @param address Account address
+     * @param address Account address you want to get balance of
      * @returns any OK
      * @throws ApiError
      */
@@ -169,7 +169,7 @@ export class VeChainService {
     /**
      * Get VeChain Account energy (VTHO)
      * <h4>5 credits per API call.</h4><br/><p>Get VeChain Account energy in VTHO. VTHO is used for paying for the transaction fee.</p>
-     * @param address Account address
+     * @param address Account address you want to get balance of
      * @returns any OK
      * @throws ApiError
      */

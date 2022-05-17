@@ -186,7 +186,7 @@ export class AlgorandService {
      * <h4>1 credit per API call.</h4><br/>
      * <p>Get Algorand account balance in ALGO.</p>
      *
-     * @param address Account address
+     * @param address Account address you want to get balance of
      * @returns any OK
      * @throws ApiError
      */

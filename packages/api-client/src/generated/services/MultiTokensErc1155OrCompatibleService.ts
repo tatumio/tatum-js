@@ -428,8 +428,8 @@ export class MultiTokensErc1155OrCompatibleService {
      * Get Multi Token transactions by address
      * <h4>1 credit per API call.</h4><br/><p>Get Multi Token (ERC-1155) transactions by address. This includes incoming and outgoing transactions for the address.</p>
      * @param chain Blockchain to work with
-     * @param address Account address
-     * @param tokenAddress Token address
+     * @param address Account address you want to get balance of
+     * @param tokenAddress Address of the token smart contract
      * @param pageSize Max number of items per page is 50.
      * @param offset Offset to obtain next page of the data.
      * @param from Transactions from this block onwords will be included.
@@ -579,7 +579,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <h4>1 credit per API call.</h4><br/><p>Get Multi Tokens on Account. Returns tokenIDs of tokens Account holds.</p>
      *
      * @param chain Blockchain to work with
-     * @param address Account address
+     * @param address Account address you want to get balance of
      * @param contractAddress Multi Token contract address
      * @param tokenId Multi Token tokenID
      * @param xTestnetType Type of testnet. Defaults to ropsten. Valid only for ETH invocations.

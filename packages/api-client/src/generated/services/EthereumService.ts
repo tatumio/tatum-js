@@ -206,7 +206,7 @@ export class EthereumService {
     /**
      * Get Ethereum account balance
      * <h4>1 credit per API call.</h4><br/><p>Gets an Ethereum account balance in ETH. This method does not display the balance of ERC20 or ERC721 tokens in the account.</p>
-     * @param address Account address
+     * @param address Account address you want to get balance of
      * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
      * @returns any OK
      * @throws ApiError
@@ -294,7 +294,7 @@ export class EthereumService {
     /**
      * Get Ethereum transactions by address
      * <h4>1 credit per API call.</h4><br/><p>Get Ethereum transactions by address. This includes incoming and outgoing transactions for the address.</p>
-     * @param address Account address
+     * @param address Account address you want to get balance of
      * @param pageSize Max number of items per page is 50.
      * @param offset Offset to obtain next page of the data.
      * @param from Transactions from this block onwords will be included.
@@ -413,7 +413,7 @@ export class EthereumService {
      * <h4>1 credit per API call.</h4><br/>
      * <p>Get Ethereum internal transactions by address.<br/></p>
      *
-     * @param address Account address
+     * @param address Account address you want to get balance of
      * @param pageSize Max number of items per page is 50.
      * @param offset Offset to obtain next page of the data.
      * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.

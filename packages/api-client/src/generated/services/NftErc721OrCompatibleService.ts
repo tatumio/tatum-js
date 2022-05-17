@@ -633,8 +633,8 @@ export class NftErc721OrCompatibleService {
                  * Get NFT transactions by address
                  * <h4>1 credit per API call.</h4><br/><p>Get NFT transactions by address. This includes incoming and outgoing transactions for the address.</p>
                  * @param chain Blockchain to work with
-                 * @param address Account address
-                 * @param tokenAddress Token address
+                 * @param address Account address you want to get balance of
+                 * @param tokenAddress Address of the token smart contract
                  * @param pageSize Max number of items per page is 50.
                  * @param offset Offset to obtain next page of the data.
                  * @param from Transactions from this block onwords will be included.
@@ -673,7 +673,7 @@ export class NftErc721OrCompatibleService {
                  * <h4>1 credit per API call.</h4><br/><p>Get NFT transactions by token. This includes incoming and outgoing transactions for the token.</p>
                  * @param chain Blockchain to work with
                  * @param tokenId NFT Token ID
-                 * @param tokenAddress Token address
+                 * @param tokenAddress Address of the token smart contract
                  * @param pageSize Max number of items per page is 50.
                  * @param offset Offset to obtain next page of the data.
                  * @param from Transactions from this block onwords will be included.
@@ -778,7 +778,7 @@ export class NftErc721OrCompatibleService {
                  * <h4>1 credit per API call + 5 credits for each owned token.</h4><br/><p>Get NFTs on address. Returns all NFTs this address holds.</p>
                  *
                  * @param chain Blockchain to work with
-                 * @param address Account address
+                 * @param address Account address you want to get balance of
                  * @returns any OK
                  * @throws ApiError
                  */
@@ -875,7 +875,7 @@ export class NftErc721OrCompatibleService {
                  * <h4>1 credit per API call.</h4><br/><p>Get NFTs on Account. Returns tokenIDs of tokens Account holds. This method is valid only for tokens deplyed using Tatum API - it reads data from the smart contract.</p>
                  *
                  * @param chain Blockchain to work with
-                 * @param address Account address
+                 * @param address Account address you want to get balance of
                  * @param contractAddress NFT contract address
                  * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
                  * @returns string OK

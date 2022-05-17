@@ -37,26 +37,25 @@ export class NodeRpcService {
      * </p>
      *
      * @param chain Blockchain to communicate with.
+     * @param rpcPath `**` path of rpc call.
      * @param requestBody
      * @param xApiKey Tatum X-API-Key used for authorization. You can omit this path parameter and either use the X-Api-Key header, or the API key tied to your IP address without any header.
      * @param nodeType Type of the node to access for Algorand.
-     * @param testnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
      * @returns any OK
      * @throws ApiError
      */
     public static nodeJsonPostRpcDriver(
         chain: 'BTC' | 'ONE' | 'ADA' | 'BSC' | 'XDC' | 'LTC' | 'DOGE' | 'BCH' | 'ETH' | 'CELO' | 'XLM' | 'MATIC' | 'VET' | 'EGLD' | 'ALGO' | 'SOL' | 'KLAY' | 'KCS' | 'LUNA' | 'LISK' | 'EOS',
+        rpcPath: string,
         requestBody: any,
         xApiKey?: string,
         nodeType?: 'ALGOD' | 'INDEXER',
-        testnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
     ): CancelablePromise<any> {
         return __request({
             method: 'POST',
-            path: `/v3/blockchain/node/${chain}/${xApiKey}**`,
+            path: `/v3/blockchain/node/${chain}/${xApiKey}/${rpcPath}`,
             query: {
                 'nodeType': nodeType,
-                'testnetType': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -82,26 +81,25 @@ export class NodeRpcService {
      * </p>
      *
      * @param chain Blockchain to communicate with.
+     * @param rpcPath `**` path of rpc call.
      * @param requestBody
      * @param xApiKey Tatum X-API-Key used for authorization. You can omit this path parameter and either use the X-Api-Key header, or the API key tied to your IP address without any header.
      * @param nodeType Type of the node to access for Algorand.
-     * @param testnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
      * @returns any OK
      * @throws ApiError
      */
     public static nodeJsonRpcPutDriver(
         chain: 'EGLD' | 'ALGO' | 'LUNA' | 'XLM',
+        rpcPath: string,
         requestBody: any,
         xApiKey?: string,
         nodeType?: 'ALGOD' | 'INDEXER',
-        testnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
     ): CancelablePromise<any> {
         return __request({
             method: 'PUT',
-            path: `/v3/blockchain/node/${chain}/${xApiKey}**`,
+            path: `/v3/blockchain/node/${chain}/${xApiKey}/${rpcPath}`,
             query: {
                 'nodeType': nodeType,
-                'testnetType': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -128,24 +126,23 @@ export class NodeRpcService {
      * </p>
      *
      * @param chain Blockchain to communicate with.
+     * @param rpcPath `**` path of rpc call.
      * @param xApiKey Tatum X-API-Key used for authorization. You can omit this path parameter and either use the X-Api-Key header, or the API key tied to your IP address without any header.
      * @param nodeType Type of the node to access for Algorand.
-     * @param testnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
      * @returns any OK
      * @throws ApiError
      */
     public static nodeJsonRpcGetDriver(
-        chain: 'EGLD' | 'ALGO' | 'XLM' | 'LUNA' | 'LISK',
+        chain: 'EGLD' | 'ALGO' | 'XLM' | 'LUNA' | 'LISK' | 'VET',
+        rpcPath: string,
         xApiKey?: string,
         nodeType?: 'ALGOD' | 'INDEXER',
-        testnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
     ): CancelablePromise<any> {
         return __request({
             method: 'GET',
-            path: `/v3/blockchain/node/${chain}/${xApiKey}**`,
+            path: `/v3/blockchain/node/${chain}/${xApiKey}/${rpcPath}`,
             query: {
                 'nodeType': nodeType,
-                'testnetType': testnetType,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,

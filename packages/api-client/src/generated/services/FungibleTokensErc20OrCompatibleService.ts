@@ -17,8 +17,8 @@ import type { ChainDeployErc20 } from '../models/ChainDeployErc20';
 import type { ChainDeployErc20KMS } from '../models/ChainDeployErc20KMS';
 import type { ChainDeployKcsErc20 } from '../models/ChainDeployKcsErc20';
 import type { ChainDeployKcsErc20KMS } from '../models/ChainDeployKcsErc20KMS';
-import type { ChainDeploySolana } from '../models/ChainDeploySolana';
-import type { ChainDeploySolanaKMS } from '../models/ChainDeploySolanaKMS';
+import type { ChainDeploySolanaSpl } from '../models/ChainDeploySolanaSpl';
+import type { ChainDeploySolanaSplKMS } from '../models/ChainDeploySolanaSplKMS';
 import type { ChainMintCeloErc20 } from '../models/ChainMintCeloErc20';
 import type { ChainMintCeloErc20KMS } from '../models/ChainMintCeloErc20KMS';
 import type { ChainMintErc20 } from '../models/ChainMintErc20';
@@ -35,8 +35,8 @@ import type { ChainTransferEthErc20 } from '../models/ChainTransferEthErc20';
 import type { ChainTransferEthErc20KMS } from '../models/ChainTransferEthErc20KMS';
 import type { ChainTransferKcsEthErc20 } from '../models/ChainTransferKcsEthErc20';
 import type { ChainTransferKcsEthErc20KMS } from '../models/ChainTransferKcsEthErc20KMS';
-import type { ChainTransferSolanaSplToken } from '../models/ChainTransferSolanaSplToken';
-import type { ChainTransferSolanaSplTokenKMS } from '../models/ChainTransferSolanaSplTokenKMS';
+import type { ChainTransferSolanaSpl } from '../models/ChainTransferSolanaSpl';
+import type { ChainTransferSolanaSplKMS } from '../models/ChainTransferSolanaSplKMS';
 import type { FungibleTx } from '../models/FungibleTx';
 import type { SignatureId } from '../models/SignatureId';
 import type { TransactionHashKMS } from '../models/TransactionHashKMS';
@@ -64,7 +64,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * @throws ApiError
      */
     public static erc20Deploy(
-        requestBody: (ChainDeployErc20 | ChainDeploySolana | ChainDeployCeloErc20 | ChainDeployKcsErc20 | ChainDeployErc20KMS | ChainDeploySolanaKMS | ChainDeployKcsErc20KMS | ChainDeployCeloErc20KMS),
+        requestBody: (ChainDeployErc20 | ChainDeploySolanaSpl | ChainDeployCeloErc20 | ChainDeployKcsErc20 | ChainDeployErc20KMS | ChainDeploySolanaSplKMS | ChainDeployCeloErc20KMS | ChainDeployKcsErc20KMS),
         xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
     ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
         return __request({
@@ -219,7 +219,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * @throws ApiError
      */
     public static erc20Transfer(
-        requestBody: (ChainTransferAlgoErc20 | ChainTransferEthErc20 | ChainTransferCeloErc20Token | ChainTransferBscBep20 | ChainTransferSolanaSplToken | ChainTransferKcsEthErc20 | ChainTransferAlgoErc20KMS | ChainTransferEthErc20KMS | ChainTransferKcsEthErc20KMS | ChainTransferBscBep20KMS | ChainTransferSolanaSplTokenKMS | ChainTransferCeloErc20TokenKMS),
+        requestBody: (ChainTransferEthErc20 | ChainTransferSolanaSpl | ChainTransferBscBep20 | ChainTransferCeloErc20Token | ChainTransferAlgoErc20 | ChainTransferKcsEthErc20 | ChainTransferEthErc20KMS | ChainTransferSolanaSplKMS | ChainTransferBscBep20KMS | ChainTransferCeloErc20TokenKMS | ChainTransferAlgoErc20KMS | ChainTransferKcsEthErc20KMS),
         xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
     ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
         return __request({
@@ -243,8 +243,8 @@ export class FungibleTokensErc20OrCompatibleService {
      * Get ERC20 transactions by address
      * <h4>1 credit per API call.</h4><br/><p>Get ERC20 transactions by address. This includes incoming and outgoing transactions for the address.</p>
      * @param chain Blockchain to work with
-     * @param address Account address
-     * @param tokenAddress Token address
+     * @param address Account address you want to get balance of
+     * @param tokenAddress Address of the token smart contract
      * @param pageSize Max number of items per page is 50.
      * @param offset Offset to obtain next page of the data.
      * @param from Transactions from this block onwords will be included.
@@ -285,7 +285,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * Get ERC20 Account balance
      * <h4>1 credit per API call.</h4><br/><p>Get ERC20 Account balance. Returns number of tokens Account holds.</p>
      * @param chain Network name
-     * @param address Account address
+     * @param address Account address you want to get balance of
      * @param contractAddress ERC20 contract address
      * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
      * @returns any OK
@@ -321,7 +321,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * Get ERC20 tokens by address
      * <h4>1 credit per API call.</h4><br/><p>Get ERC20 Account balance. Returns number of tokens Account holds.</p>
      * @param chain Network name
-     * @param address Account address
+     * @param address Account address you want to get balance of
      * @returns any OK
      * @throws ApiError
      */
