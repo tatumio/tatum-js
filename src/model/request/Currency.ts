@@ -34,6 +34,7 @@ export enum Currency {
   MATIC = 'MATIC',
   USDC_MATIC = 'USDC_MATIC',
   USDC_BSC = 'USDC_BSC',
+  USDC_SOL = 'USDC_SOL',
   USDT = 'USDT',
   GMC = 'GMC',
   GMC_BSC = 'GMC_BSC',
