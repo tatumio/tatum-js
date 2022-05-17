@@ -13,7 +13,8 @@ export const solanaWeb3 = (provider?: string) => {
   return {
     getClient(p?: string): Connection {
       const url =
-        p || provider ||
+        p ||
+        provider ||
         `${process.env['TATUM_API_URL'] || TATUM_API_CONSTANTS.URL}/v3/solana/web3/${
           TATUM_API_CONSTANTS.API_KEY
         }`
