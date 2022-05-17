@@ -4,6 +4,7 @@
 import type { BnbAccount } from '../models/BnbAccount';
 import type { BnbBlock } from '../models/BnbBlock';
 import type { BnbTx } from '../models/BnbTx';
+import type { BnbTxInAccount } from '../models/BnbTxInAccount';
 import type { BnbWallet } from '../models/BnbWallet';
 import type { Broadcast } from '../models/Broadcast';
 import type { TransactionHash } from '../models/TransactionHash';
@@ -77,7 +78,7 @@ export class BnbBeaconChainService {
     /**
      * Get Binance Account
      * <h4>5 credits per API call.</h4><br/><p>Get Binance Account Detail by address.</p>
-     * @param address Account address
+     * @param address Account address you want to get balance of
      * @returns BnbAccount OK
      * @throws ApiError
      */
@@ -109,6 +110,48 @@ export class BnbBeaconChainService {
         return __request({
             method: 'GET',
             path: `/v3/bnb/transaction/${hash}`,
+            errors: {
+                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                500: `Internal server error. There was an error on the server while processing the request.`,
+            },
+        });
+    }
+
+    /**
+     * Get Binance Transactions By Address
+     * <h4>5 credits per API call.</h4><br/><p>Get Binance Transactions by address.</p>
+     * @param address Account address
+     * @param startTime Start time in milliseconds
+     * @param endTime End time in milliseconds
+     * @param limit Items per page.
+     * @param offset Pagination offset
+     * @param asset Asset name
+     * @param addressType Address type
+     * @returns BnbTxInAccount OK
+     * @throws ApiError
+     */
+    public static bnbGetTxByAccount(
+        address: string,
+        startTime: number,
+        endTime: number,
+        limit?: number,
+        offset?: number,
+        asset?: string,
+        addressType?: 'FROM' | 'TO',
+    ): CancelablePromise<BnbTxInAccount> {
+        return __request({
+            method: 'GET',
+            path: `/v3/bnb/account/transaction/${address}`,
+            query: {
+                'startTime': startTime,
+                'endTime': endTime,
+                'limit': limit,
+                'offset': offset,
+                'asset': asset,
+                'addressType': addressType,
+            },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,

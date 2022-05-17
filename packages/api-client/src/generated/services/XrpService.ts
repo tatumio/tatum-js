@@ -161,7 +161,7 @@ export class XrpService {
     /**
      * Get Account info
      * <h4>5 credits per API call.</h4><br/><p>Get XRP Account info.</p>
-     * @param account Account address
+     * @param account Account address you want to get balance of
      * @returns XrpAccount OK
      * @throws ApiError
      */
@@ -183,7 +183,7 @@ export class XrpService {
     /**
      * Get Account Balance
      * <h4>5 credits per API call.</h4><br/><p>Get XRP Account Balance. Obtain balance of the XRP and other assets on the account.</p>
-     * @param account Account address
+     * @param account Account address you want to get balance of
      * @returns XrpAccountBalance OK
      * @throws ApiError
      */

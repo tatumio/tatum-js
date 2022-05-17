@@ -174,7 +174,7 @@ export class KlaytnService {
     /**
      * Get Klaytn Account balance
      * <h4>1 credit per API call.</h4><br/><p>Get Klaytn account balance in KLAY. This method does not prints any balance of the ERC20 or ERC721 tokens on the account.</p>
-     * @param address Account address
+     * @param address Account address you want to get balance of
      * @returns any OK
      * @throws ApiError
      */

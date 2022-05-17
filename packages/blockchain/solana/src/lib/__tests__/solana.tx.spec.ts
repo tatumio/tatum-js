@@ -34,6 +34,7 @@ describe('SolanaSDK - tx', () => {
 
   it.skip('should create SPL token', async () => {
     const tx = await sdk.transaction.createSplToken({
+      from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
       address: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
       chain: 'SOL',
       digits: 6,

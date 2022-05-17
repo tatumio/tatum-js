@@ -1,7 +1,7 @@
 import { Keypair, LAMPORTS_PER_SOL, PublicKey, SystemProgram, Transaction } from '@solana/web3.js'
 import {
-  ChainDeploySolana,
-  ChainTransferSolanaSplToken,
+  ChainDeploySolanaSpl,
+  ChainTransferSolanaSpl,
   MintNftSolana,
   TransferNftSolana,
   TransferSolanaBlockchain,
@@ -39,8 +39,8 @@ import BN from 'bn.js'
 
 export type TransferSolana = FromPrivateKeyOrSignatureId<TransferSolanaBlockchain>
 export type TransferSolanaNft = FromPrivateKeyOrSignatureId<TransferNftSolana>
-export type TransferSolanaSpl = FromPrivateKeyOrSignatureId<ChainTransferSolanaSplToken>
-export type CreateSolanaSpl = FromPrivateKeyOrSignatureId<ChainDeploySolana>
+export type TransferSolanaSpl = FromPrivateKeyOrSignatureId<ChainTransferSolanaSpl>
+export type CreateSolanaSpl = FromPrivateKeyOrSignatureId<ChainDeploySolanaSpl>
 export type MintSolanaNft = FromPrivateKeyOrSignatureId<MintNftSolana>
 
 const send = async (
@@ -171,26 +171,20 @@ const createSplToken = async (
   feePayerPrivateKey?: string,
 ) => {
   const connection = web3.getClient(provider)
-  const payer = web3.generateKeyPair(feePayerPrivateKey || body.fromPrivateKey)
-  const transaction = new Transaction({ feePayer: payer.publicKey })
+  const payer = new PublicKey(feePayer || body.from)
+  const transaction = new Transaction({ feePayer: payer })
   const lamports = await getMinimumBalanceForRentExemptMint(connection)
 
   const mint = Keypair.generate()
   transaction.add(
     SystemProgram.createAccount({
-      fromPubkey: payer.publicKey,
+      fromPubkey: payer,
       newAccountPubkey: mint.publicKey,
       space: MINT_SIZE,
       lamports,
       programId: TOKEN_PROGRAM_ID,
     }),
-    createInitializeMintInstruction(
-      mint.publicKey,
-      body.digits,
-      payer.publicKey,
-      payer.publicKey,
-      TOKEN_PROGRAM_ID,
-    ),
+    createInitializeMintInstruction(mint.publicKey, body.digits, payer, payer, TOKEN_PROGRAM_ID),
   )
   const userTokenAccountAddress = (
     await PublicKey.findProgramAddress(
@@ -201,14 +195,14 @@ const createSplToken = async (
   transaction.add(
     createAssociatedTokenAccountInstruction(
       userTokenAccountAddress,
-      payer.publicKey,
+      payer,
       new PublicKey(body.address),
       mint.publicKey,
     ),
     createMintToInstruction(
       mint.publicKey,
       userTokenAccountAddress,
-      payer.publicKey,
+      payer,
       new BigNumber(body.supply).multipliedBy(10 ** body.digits).toNumber(),
       [],
       TOKEN_PROGRAM_ID,
@@ -219,7 +213,7 @@ const createSplToken = async (
     return { txData: transaction.compileMessage().serialize().toString('hex') }
   }
 
-  const signers = [payer, mint]
+  const signers = [web3.generateKeyPair(feePayerPrivateKey || body.fromPrivateKey), mint]
   return {
     txId: await connection.sendTransaction(transaction, signers),
     contractAddress: mint.publicKey.toBase58(),

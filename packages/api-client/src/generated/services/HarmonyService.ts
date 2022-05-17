@@ -221,7 +221,7 @@ export class HarmonyService {
     /**
      * Get ONE Account balance
      * <h4>1 credit per API call.</h4><br/><p>Get ONE account balance in ONE. This method does not prints any balance of the HRM20 or HRM721 tokens on the account.</p>
-     * @param address Account address
+     * @param address Account address you want to get balance of
      * @param shardId Shard to read data from
      * @returns any OK
      * @throws ApiError

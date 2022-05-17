@@ -172,7 +172,7 @@ export class BnbSmartChainService {
     /**
      * Get BSC Account balance
      * <h4>1 credit per API call.</h4><br/><p>Get BSC account balance in BNB. This method does not prints any balance of the BEP20 or BEP721 tokens on the account.</p>
-     * @param address Account address
+     * @param address Account address you want to get balance of
      * @returns any OK
      * @throws ApiError
      */

@@ -174,7 +174,7 @@ export class PolygonService {
     /**
      * Get Polygon Account balance
      * <h4>1 credit per API call.</h4><br/><p>Get Polygon account balance in MATIC. This method does not prints any balance of the ERC20 or ERC721 tokens on the account.</p>
-     * @param address Account address
+     * @param address Account address you want to get balance of
      * @returns any OK
      * @throws ApiError
      */
@@ -222,7 +222,7 @@ export class PolygonService {
     /**
      * Get Polygon transactions by address
      * <h4>1 credit per API call.</h4><br/><p>Get Polygon transactions by address. This includes incoming and outgoing transactions for the address.</p>
-     * @param address Account address
+     * @param address Account address you want to get balance of
      * @param pageSize Max number of items per page is 50.
      * @param offset Offset to obtain next page of the data.
      * @param from Transactions from this block onwords will be included.
