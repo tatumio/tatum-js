@@ -1,13 +1,20 @@
 import { evmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
 import Web3 from 'web3'
-import { EvmBasedBlockchain, httpHelper, THIRD_PARTY_API } from '@tatumio/shared-core'
+import { httpHelper, THIRD_PARTY_API } from '@tatumio/shared-core'
+import { blockchain } from '../constants'
 
-export const polygonWeb3 = (args: { blockchain: EvmBasedBlockchain }) => {
-  const evmBasedWeb3Result = evmBasedWeb3(args)
+export const polygonWeb3 = (args?: { client?: Web3 }) => {
+  const evmBasedWeb3Result = evmBasedWeb3({
+    blockchain,
+  })
 
   return {
     ...evmBasedWeb3Result,
     getClient(provider?: string, fromPrivateKey?: string): Web3 {
+      if (args?.client) {
+        return args.client
+      }
+
       const web3 = evmBasedWeb3Result.getClient(provider)
 
       if (fromPrivateKey) {
@@ -17,12 +24,12 @@ export const polygonWeb3 = (args: { blockchain: EvmBasedBlockchain }) => {
 
       return web3
     },
-    async getGasPriceInWei(): Promise<string> {
+    async getGasPriceInWei(gasStationApiKey?: string): Promise<string> {
       let gasStationUrl = THIRD_PARTY_API.POLYGON_GAS_STATION
-      // @TODO
-      const gasStationApiKey = process.env['TATUM_GAS_STATION_API_KEY']
-      if (gasStationApiKey) {
-        gasStationUrl = `${gasStationUrl}?apiKey=${gasStationApiKey}`
+
+      const possiblyGasStationApiKey = gasStationApiKey ?? process.env['TATUM_GAS_STATION_API_KEY']
+      if (possiblyGasStationApiKey) {
+        gasStationUrl = `${gasStationUrl}?apiKey=${possiblyGasStationApiKey}`
       }
 
       const data = (await httpHelper.get(gasStationUrl)).data

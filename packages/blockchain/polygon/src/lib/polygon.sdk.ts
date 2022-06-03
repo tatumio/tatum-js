@@ -10,13 +10,12 @@ import { polygonWeb3 } from './services/polygon.web3'
 import { polygonKmsService } from './services/polygon.kms'
 import { polygonTxService } from './services/polygon.tx'
 import { polygonAuctionService } from './services/polygon.auction'
-
-const blockchain = Blockchain.POLYGON
+import { blockchain } from './constants'
 
 export const TatumPolygonSDK = (args: SDKArguments) => {
-  const web3 = polygonWeb3({ blockchain })
+  const web3 = polygonWeb3()
   const api = PolygonService
-  const txService = polygonTxService({ blockchain, web3 })
+  const txService = polygonTxService({ web3 })
   const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
 
   return {
