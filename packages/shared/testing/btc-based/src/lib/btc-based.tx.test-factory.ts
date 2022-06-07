@@ -6,7 +6,7 @@ import { BroadcastKMS, CancelablePromise, TransactionHashKMS } from '@tatumio/ap
 
 export const btcBasedTxTestFactory = {
   fromUTXO: <T, TX>(args: {
-    transactions: BtcBasedTx<T, TX>
+    transactions: BtcBasedTx<T>
     getRequestBodyFromUTXO: (amount: number) => T
     data: {
       utxoAmount: number
@@ -94,7 +94,7 @@ export const btcBasedTxTestFactory = {
     })
   },
   fromAddress: <T, TX>(args: {
-    transactions: BtcBasedTx<T, TX>
+    transactions: BtcBasedTx<T>
     getRequestBodyFromAddress: (amount: number) => T
     data: {
       utxoAmount: number

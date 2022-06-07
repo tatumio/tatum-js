@@ -102,7 +102,7 @@ const getTransactions = async (txHash: string[]): Promise<BchTx[]> => {
   return Promise.all(result)
 }
 
-export const bchTransactions = (): BtcBasedTx<BchTransactionBody, BchTx> => ({
+export const bchTransactions = (): BtcBasedTx<BchTransactionBody> => ({
   sendTransaction,
   prepareSignedTransaction,
 })
