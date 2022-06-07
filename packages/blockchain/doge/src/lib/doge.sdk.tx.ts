@@ -4,6 +4,7 @@ import {
   ApiServices,
   DogeTransactionUTXO,
   DogeTransactionUTXOKMS,
+  DogeTx,
   TransactionHashKMS,
 } from '@tatumio/api-client'
 import { BtcBasedTx } from '@tatumio/shared-blockchain-btc-based'
@@ -54,7 +55,7 @@ const sendTransaction = async (body: DogeTransaction): Promise<TransactionHashKM
   })
 }
 
-export const dogeTransactions = (): BtcBasedTx<DogeTransaction> => ({
+export const dogeTransactions = (): BtcBasedTx<DogeTransaction, DogeTx> => ({
   sendTransaction,
   prepareSignedTransaction,
 })

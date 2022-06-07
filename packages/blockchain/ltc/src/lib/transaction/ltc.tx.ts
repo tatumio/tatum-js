@@ -6,6 +6,7 @@ import {
   LtcTransactionAddressKMS,
   LtcTransactionUTXO,
   LtcTransactionUTXOKMS,
+  LtcTx,
   TransactionHashKMS,
 } from '@tatumio/api-client'
 import { amountUtils, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
@@ -140,7 +141,7 @@ const privateKeysFromUTXO = async (
   return privateKeysToSign
 }
 
-export const ltcTransactions = (): BtcBasedTx<LtcTransaction> => ({
+export const ltcTransactions = (): BtcBasedTx<LtcTransaction, LtcTx> => ({
   sendTransaction,
   prepareSignedTransaction,
 })

@@ -5,8 +5,8 @@ import { testHelper } from '@tatumio/shared-testing-common'
 import { BroadcastKMS, CancelablePromise, TransactionHashKMS } from '@tatumio/api-client'
 
 export const btcBasedTxTestFactory = {
-  fromUTXO: <T>(args: {
-    transactions: BtcBasedTx<T>
+  fromUTXO: <T, TX>(args: {
+    transactions: BtcBasedTx<T, TX>
     getRequestBodyFromUTXO: (amount: number) => T
     data: {
       utxoAmount: number
@@ -93,8 +93,8 @@ export const btcBasedTxTestFactory = {
       }
     })
   },
-  fromAddress: <T>(args: {
-    transactions: BtcBasedTx<T>
+  fromAddress: <T, TX>(args: {
+    transactions: BtcBasedTx<T, TX>
     getRequestBodyFromAddress: (amount: number) => T
     data: {
       utxoAmount: number
