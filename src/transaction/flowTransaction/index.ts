@@ -211,7 +211,6 @@ transaction(amount: UFix64, recipient: Address) {
 export const prepareCreateAccountWithFUSDFromPublicKeyTxTemplate = (testnet: boolean) =>
     dedent`import FungibleToken from ${testnet ? FLOW_TESTNET_ADDRESSES.FungibleToken : FLOW_MAINNET_ADDRESSES.FungibleToken}
   import FUSD from ${testnet ? FLOW_TESTNET_ADDRESSES.FUSD : FLOW_MAINNET_ADDRESSES.FUSD}
-  import TatumMultiNFT from ${testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLOW_MAINNET_ADDRESSES.TatumMultiNFT}
   transaction(publicKey: String) {
     let account: AuthAccount
     prepare(signer: AuthAccount) {
@@ -219,17 +218,6 @@ export const prepareCreateAccountWithFUSDFromPublicKeyTxTemplate = (testnet: boo
     }
     execute {
       self.account.addPublicKey(publicKey.decodeHex())
-      if self.account.borrow<&TatumMultiNFT.Collection>(from: TatumMultiNFT.CollectionStoragePath) == nil {
-
-            // create a new empty collection
-            let collection <- TatumMultiNFT.createEmptyCollection()
-
-            // save it to the account
-            self.account.save(<-collection, to: TatumMultiNFT.CollectionStoragePath)
-
-            // create a public capability for the collection
-            self.account.link<&TatumMultiNFT.Collection>(TatumMultiNFT.CollectionPublicPath, target: TatumMultiNFT.CollectionStoragePath)
-        }
       // Add FUSD vault
       self.account.save(<-FUSD.createEmptyVault(), to: /storage/fusdVault)
       self.account.link<&FUSD.Vault{FungibleToken.Receiver}>(
