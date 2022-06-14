@@ -33,9 +33,9 @@ export const polygonWeb3 = (args?: { client?: Web3 }) => {
       }
 
       const data = (await httpHelper.get(gasStationUrl)).data
-      const gasPrice = data['fast'] ?? 20
+      const gasPrice = Math.max(30, Math.ceil(data['fast'] ?? 20))
 
-      return Web3.utils.toWei((gasPrice / 10).toString(), 'gwei')
+      return Web3.utils.toWei(gasPrice.toString(), 'gwei')
     },
   }
 }
