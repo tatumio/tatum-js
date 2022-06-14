@@ -10,7 +10,7 @@ const blockchain = Blockchain.BCH
 export const TatumBchSDK = (args: SDKArguments) => {
   return {
     ...btcBasedSdk({ ...args, blockchain }),
-    wallet: bchWallet({ ...args, blockchain }),
+    wallet: bchWallet(),
     transaction: bchTransactions(),
     blockchain: {
       info: BitcoinCashService.bchGetBlockChainInfo,
