@@ -1,5 +1,4 @@
 import {
-  BlockchainTronService,
   BurnNftKMSTron as ApiBurnNftKMSTron,
   BurnNftTron,
   DeployNftTron,
@@ -10,8 +9,9 @@ import {
   MintNftTron,
   TransferNftKMSTron as ApiTransferNftKMSTron,
   TransferNftTron,
-  UpdateCashbackValueForAuthorNftTron,
+  TronService,
   UpdateCashbackValueForAuthorNftKMSTron as ApiUpdateCashbackValueForAuthorNftKMSTron,
+  UpdateCashbackValueForAuthorNftTron,
 } from '@tatumio/api-client'
 import { isWithSignatureId } from '@tatumio/shared-abstract-sdk'
 import { Trc721Token } from '@tatumio/shared-blockchain-evm-based'
@@ -483,7 +483,7 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
        * @returns transaction id of the transaction in the blockchain
        */
       deploySignedTransaction: async (body: DeployNftTron | DeployNftTronKMS, provider?: string) =>
-        BlockchainTronService.tronBroadcast({
+        TronService.tronBroadcast({
           txData: await prepareDeploySignedTransaction(body, args.tronWeb, provider),
           // TODO: SignatureID is missing in OpenApi
         }),
@@ -494,7 +494,7 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
        * @returns transaction id of the transaction in the blockchain
        */
       mintCashbackSignedTransaction: async (body: MintNftTron | MintNftKMSTron, provider?: string) =>
-        BlockchainTronService.tronBroadcast({
+        TronService.tronBroadcast({
           txData: await prepareMintCashbackSignedTransaction(body, args.tronWeb, provider),
           // TODO: SignatureID is missing in OpenApi
         }),
@@ -505,7 +505,7 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
        * @returns transaction id of the transaction in the blockchain
        */
       mintSignedTransaction: async (body: MintNftTron | MintNftKMSTron, provider?: string) =>
-        BlockchainTronService.tronBroadcast({
+        TronService.tronBroadcast({
           txData: await prepareMintSignedTransaction(body, args.tronWeb, provider),
           // TODO: SignatureID is missing in OpenApi
         }),
@@ -516,7 +516,7 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
        * @returns transaction id of the transaction in the blockchain
        */
       transferSignedTransaction: async (body: TransferNftTron | TransferNftKMSTron, provider?: string) =>
-        BlockchainTronService.tronBroadcast({
+        TronService.tronBroadcast({
           txData: await transferSignedTransaction(body, args.tronWeb, provider),
         }),
       /**
@@ -526,7 +526,7 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
        * @returns transaction id of the transaction in the blockchain
        */
       burnSignedTransaction: async (body: BurnNftTron | BurnNftKMSTron, provider?: string) =>
-        BlockchainTronService.tronBroadcast({
+        TronService.tronBroadcast({
           txData: await burnSignedTransaction(body, args.tronWeb, provider),
           // TODO: SignatureID is missing in OpenApi
         }),
@@ -540,7 +540,7 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
         body: MintMultipleNftTron | MintMultipleNftKMSTron,
         provider?: string,
       ) =>
-        BlockchainTronService.tronBroadcast({
+        TronService.tronBroadcast({
           txData: await prepareMintMultipleSignedTransaction(body, args.tronWeb, provider),
           // TODO: SignatureID is missing in OpenApi
         }),
@@ -554,7 +554,7 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
         body: UpdateCashbackValueForAuthorNftTron | UpdateCashbackValueForAuthorNftKMSTron,
         provider?: string,
       ) =>
-        BlockchainTronService.tronBroadcast({
+        TronService.tronBroadcast({
           txData: await prepareUpdateCashbackValueForAuthorSignedTransaction(body, args.tronWeb, provider),
           // TODO: SignatureID is missing in OpenApi
         }),

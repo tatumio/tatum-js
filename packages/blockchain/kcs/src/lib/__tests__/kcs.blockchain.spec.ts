@@ -36,7 +36,7 @@ describe('KcsSDK - blockchain', () => {
     getBlockchainAccountBalance: [api.kcsGetBalance, testData.TESTNET.ADDRESS_0],
     get: [api.kcsGetTransaction, testData.TX_HASH],
     estimateGas: [
-      api.kcsEstimateGas,
+      blockchain.estimateGas,
       {
         from: testData.TESTNET.ADDRESS_0,
         to: testData.TESTNET.ADDRESS_100,

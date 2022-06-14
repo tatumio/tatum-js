@@ -1,12 +1,12 @@
-import { BlockchainBscService } from '@tatumio/api-client'
+import { BnbSmartChainService } from '@tatumio/api-client'
 import {
-  erc20,
-  EvmBasedWeb3,
-  erc721,
-  multiToken,
   custodial,
-  smartContract,
+  erc20,
+  erc721,
+  EvmBasedWeb3,
+  multiToken,
   native,
+  smartContract,
 } from '@tatumio/shared-blockchain-evm-based'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 
@@ -15,37 +15,37 @@ export const bscTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBa
     native: {
       ...native({
         ...args,
-        broadcastFunction: BlockchainBscService.bscBroadcast,
+        broadcastFunction: BnbSmartChainService.bscBroadcast,
       }),
     },
     erc20: {
       ...erc20({
         ...args,
-        broadcastFunction: BlockchainBscService.bscBroadcast,
+        broadcastFunction: BnbSmartChainService.bscBroadcast,
       }),
     },
     erc721: {
       ...erc721({
         ...args,
-        broadcastFunction: BlockchainBscService.bscBroadcast,
+        broadcastFunction: BnbSmartChainService.bscBroadcast,
       }),
     },
     multiToken: {
       ...multiToken({
         ...args,
-        broadcastFunction: BlockchainBscService.bscBroadcast,
+        broadcastFunction: BnbSmartChainService.bscBroadcast,
       }),
     },
     custodial: {
       ...custodial({
         ...args,
-        broadcastFunction: BlockchainBscService.bscBroadcast,
+        broadcastFunction: BnbSmartChainService.bscBroadcast,
       }),
     },
     smartContract: {
       ...smartContract({
         ...args,
-        broadcastFunction: BlockchainBscService.bscBroadcast,
+        broadcastFunction: BnbSmartChainService.bscBroadcast,
       }),
     },
   }

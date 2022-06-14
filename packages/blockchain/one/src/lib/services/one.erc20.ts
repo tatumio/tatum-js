@@ -1,4 +1,4 @@
-import { BlockchainHarmonyOneService } from '@tatumio/api-client'
+import { HarmonyService } from '@tatumio/api-client'
 import { erc20, EvmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import { oneUtils } from '../one.utils'
@@ -9,7 +9,7 @@ export const oneErc20 = (args: {
 }): ReturnType<typeof erc20> => {
   const unpatchedErc20 = erc20({
     ...args,
-    broadcastFunction: BlockchainHarmonyOneService.oneBroadcast,
+    broadcastFunction: HarmonyService.oneBroadcast,
   })
 
   return {

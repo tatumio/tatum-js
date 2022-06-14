@@ -18,18 +18,18 @@ export const DERIVATION_PATH: Record<Blockchain, string> = {
   BCH: "m/44'/145'/0'/0",
   TRON: "m/44'/195'/0'/0",
   TERRA: "m/44'/330'/0'/0",
+  EGLD: "m/44'/508'/0'/0'",
   // TBD
   ALGO: '@TODO - TBD',
-  ADA: '@TODO - TBD',
-  EGLD: '@TODO - TBD',
+  ADA: "m/1852'/1815'/0'",
   FLOW: "m/44'/539'/0'/0",
-  NEO: '@TODO - TBD',
-  QTUM: '@TODO - TBD',
-  SOL: '@TODO - TBD',
-  VET: '@TODO - TBD',
-  XDC: '@TODO - TBD',
-  XLM: '@TODO - TBD',
-  XRP: '@TODO - TBD',
+  NEO: "m/44'/888'/0'/0",
+  QTUM: "m/44'/2301'/0'/0/0",
+  SOL: "m/44'/501'/0'/0'",
+  VET: "m/44'/818'/0'/0",
+  XDC: "m/44'/550'/0'/0",
+  XLM: "m/44'/148'/0'",
+  XRP: "m/44'/144'/0'/0",
 }
 
 export const COMMON_TESTNET_DERIVATION_PATH = "m/44'/1'/0'/0"

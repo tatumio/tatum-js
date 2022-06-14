@@ -1,9 +1,10 @@
 import {
-  LedgerSubscriptionService,
-  SecurityAddressService,
-  StorageIpfsService,
+  ExchangeRateService,
+  IpfsService,
+  MaliciousAddressService,
+  NotificationSubscriptionsService,
+  ServiceUtilsService,
   TatumApi,
-  TatumServiceService,
   TatumUrl,
 } from '@tatumio/api-client'
 import { abstractSdkOffChain } from './services/offchain.abstract'
@@ -21,22 +22,22 @@ export const abstractSdk = (args: SDKArguments) => {
 
   return {
     storage: {
-      upload: StorageIpfsService.storeIpfs,
-      get: StorageIpfsService.getIpfsData,
+      upload: IpfsService.storeIpfs,
+      get: IpfsService.getIpfsData,
     },
-    subscriptions: LedgerSubscriptionService,
+    subscriptions: NotificationSubscriptionsService,
     security: {
-      checkMaliciousAddress: SecurityAddressService.checkMalicousAddress,
+      checkMaliciousAddress: MaliciousAddressService.checkMalicousAddress,
     },
     tatum: {
-      getCredits: TatumServiceService.getCredits,
-      getVersion: TatumServiceService.getVersion,
-      freezeApiKey: TatumServiceService.freezeApiKey,
-      unfreezeApiKey: TatumServiceService.unfreezeApiKey,
+      getCredits: ServiceUtilsService.getCredits,
+      getVersion: ServiceUtilsService.getVersion,
+      freezeApiKey: ServiceUtilsService.freezeApiKey,
+      unfreezeApiKey: ServiceUtilsService.unfreezeApiKey,
     },
     offchain: abstractSdkOffChain(),
     nft: abstractSdkNftService(),
     kms: abstractSdkKms(),
-    getExchangeRate: TatumServiceService.getExchangeRate,
+    getExchangeRate: ExchangeRateService.getExchangeRate,
   }
 }

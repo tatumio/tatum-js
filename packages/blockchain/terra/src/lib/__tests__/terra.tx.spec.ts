@@ -3,12 +3,11 @@ import { terraTxService } from '../services/terra.tx'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 import { Currency } from '@tatumio/api-client'
 import { Tx } from '@terra-money/terra.js'
-import { terraClient } from '../services/terra.client'
 
 jest.mock('@tatumio/api-client')
 jest.setTimeout(15000)
 
-describe('TerraSDK - TX', () => {
+describe.skip('TerraSDK - TX', () => {
   const txService = terraTxService({
     apiKey: REPLACE_ME_WITH_TATUM_API_KEY,
     provider: 'https://bombay-lcd.terra.dev',

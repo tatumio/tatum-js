@@ -1,6 +1,10 @@
 import { evmBasedMarketplace, evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
 import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
-import { BlockchainEthereumService, BlockchainFungibleTokenService } from '@tatumio/api-client'
+import {
+  BlockchainFeesService,
+  EthereumService,
+  FungibleTokensErc20OrCompatibleService,
+} from '@tatumio/api-client'
 import { ethWeb3 } from './services/eth.web3'
 import { ethKmsService } from './services/eth.kms'
 import { ethTx } from './services/eth.tx'
@@ -11,7 +15,7 @@ const blockchain = Blockchain.ETH
 
 export const TatumEthSDK = (args: SDKArguments) => {
   const web3 = ethWeb3({ blockchain })
-  const api = BlockchainEthereumService
+  const api = EthereumService
   const txService = ethTx({ blockchain, web3 })
   const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
 
@@ -21,8 +25,8 @@ export const TatumEthSDK = (args: SDKArguments) => {
     transaction: txService.native,
     erc20: {
       ...txService.erc20,
-      getErc20TransactionByAddress: BlockchainFungibleTokenService.erc20GetTransactionByAddress,
-      getErc20AccountBalance: BlockchainFungibleTokenService.erc20GetBalance,
+      getErc20TransactionByAddress: FungibleTokensErc20OrCompatibleService.erc20GetTransactionByAddress,
+      getErc20AccountBalance: FungibleTokensErc20OrCompatibleService.erc20GetBalance,
     },
     nft: {
       ...txService.erc721,
@@ -35,7 +39,7 @@ export const TatumEthSDK = (args: SDKArguments) => {
       ...evmBasedMarketplace({
         blockchain,
         web3,
-        broadcastFunction: BlockchainEthereumService.ethBroadcast,
+        broadcastFunction: EthereumService.ethBroadcast,
       }),
       auction: ethAuctionService({ blockchain, web3 }),
     },
@@ -43,22 +47,22 @@ export const TatumEthSDK = (args: SDKArguments) => {
       return api.ethWeb3Driver(args.apiKey, { ...request, jsonrpc: '2.0' })
     },
     blockchain: {
-      broadcast: BlockchainEthereumService.ethBroadcast,
-      getTransactionsCount: BlockchainEthereumService.ethGetTransactionCount,
-      getCurrentBlock: BlockchainEthereumService.ethGetCurrentBlock,
-      getBlock: BlockchainEthereumService.ethGetBlock,
-      getBlockchainAccountBalance: BlockchainEthereumService.ethGetBalance,
-      get: BlockchainEthereumService.ethGetTransaction,
-      getAccountTransactions: BlockchainEthereumService.ethGetTransactionByAddress,
-      estimateGas: BlockchainEthereumService.ethEstimateGas,
-      estimateGasBatch: BlockchainEthereumService.ethEstimateGasBatch,
-      smartContractInvocation: BlockchainEthereumService.ethBlockchainSmartContractInvocation,
-      blockchainTransfer: BlockchainEthereumService.ethBlockchainTransfer,
-      generateAddress: BlockchainEthereumService.ethGenerateAddress,
-      generateAddressPrivateKey: BlockchainEthereumService.ethGenerateAddressPrivateKey,
-      generateWallet: BlockchainEthereumService.ethGenerateWallet,
-      getInternalTransaction: BlockchainEthereumService.ethGetInternalTransactionByAddress,
-      web3Driver: BlockchainEthereumService.ethWeb3Driver,
+      broadcast: EthereumService.ethBroadcast,
+      getTransactionsCount: EthereumService.ethGetTransactionCount,
+      getCurrentBlock: EthereumService.ethGetCurrentBlock,
+      getBlock: EthereumService.ethGetBlock,
+      getBlockchainAccountBalance: EthereumService.ethGetBalance,
+      get: EthereumService.ethGetTransaction,
+      getAccountTransactions: EthereumService.ethGetTransactionByAddress,
+      estimateGas: BlockchainFeesService.ethEstimateGas,
+      estimateGasBatch: BlockchainFeesService.ethEstimateGasBatch,
+      smartContractInvocation: EthereumService.ethBlockchainSmartContractInvocation,
+      blockchainTransfer: EthereumService.ethBlockchainTransfer,
+      generateAddress: EthereumService.ethGenerateAddress,
+      generateAddressPrivateKey: EthereumService.ethGenerateAddressPrivateKey,
+      generateWallet: EthereumService.ethGenerateWallet,
+      getInternalTransaction: EthereumService.ethGetInternalTransactionByAddress,
+      web3Driver: EthereumService.ethWeb3Driver,
     },
   }
 }

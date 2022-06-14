@@ -53,7 +53,7 @@ export const erc721TestFactory = {
     transferSignedTransaction: (
       sdk: SdkWithErc721Functions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'ALGO' | 'KLAY',
+      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'KLAY',
     ) => {
       const provider = testData?.PROVIDER
       it('valid from signatureId', async () => {

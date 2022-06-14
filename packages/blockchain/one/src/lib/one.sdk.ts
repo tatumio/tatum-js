@@ -1,6 +1,6 @@
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { Blockchain, EvmBasedBlockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
-import { BlockchainFungibleTokenService, BlockchainHarmonyOneService } from '@tatumio/api-client'
+import { FungibleTokensErc20OrCompatibleService, HarmonyService } from '@tatumio/api-client'
 import { oneWeb3 } from './services/one.web3'
 import { evmBasedMarketplace, evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
 import { oneKmsService } from './services/one.kms'
@@ -11,7 +11,7 @@ const blockchain: EvmBasedBlockchain = Blockchain.HARMONY
 
 export const TatumOneSDK = (args: SDKArguments) => {
   const web3 = oneWeb3({ blockchain })
-  const api = BlockchainHarmonyOneService
+  const api = HarmonyService
   const txService = oneTxService({ blockchain, web3 })
   const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
 
@@ -36,8 +36,8 @@ export const TatumOneSDK = (args: SDKArguments) => {
     transaction: txService.native,
     erc20: {
       ...txService.erc20,
-      getErc20TransactionByAddress: BlockchainFungibleTokenService.erc20GetTransactionByAddress,
-      getErc20AccountBalance: BlockchainFungibleTokenService.erc20GetBalance,
+      getErc20TransactionByAddress: FungibleTokensErc20OrCompatibleService.erc20GetTransactionByAddress,
+      getErc20AccountBalance: FungibleTokensErc20OrCompatibleService.erc20GetBalance,
     },
     nft: {
       ...txService.erc721,
@@ -61,7 +61,7 @@ export const TatumOneSDK = (args: SDKArguments) => {
       ...evmBasedMarketplace({
         blockchain,
         web3,
-        broadcastFunction: BlockchainHarmonyOneService.oneBroadcast,
+        broadcastFunction: HarmonyService.oneBroadcast,
       }),
       auction: oneAuctionService({ blockchain, web3 }),
     },
@@ -69,19 +69,19 @@ export const TatumOneSDK = (args: SDKArguments) => {
       return api.oneWeb3Driver(args.apiKey, { ...request, jsonrpc: '2.0' })
     },
     blockchain: {
-      broadcast: BlockchainHarmonyOneService.oneBroadcast,
-      getTransactionsCount: BlockchainHarmonyOneService.oneGetTransactionCount,
-      getCurrentBlock: BlockchainHarmonyOneService.oneGetCurrentBlock,
-      getBlock: BlockchainHarmonyOneService.oneGetBlock,
-      getBlockchainAccountBalance: BlockchainHarmonyOneService.oneGetBalance,
-      get: BlockchainHarmonyOneService.oneGetTransaction,
-      smartContractInvocation: BlockchainHarmonyOneService.oneBlockchainSmartContractInvocation,
-      formatAddress: BlockchainHarmonyOneService.oneFormatAddress,
-      generateAddress: BlockchainHarmonyOneService.oneGenerateAddress,
-      generateAddressPrivateKey: BlockchainHarmonyOneService.oneGenerateAddressPrivateKey,
-      generateWallet: BlockchainHarmonyOneService.oneGenerateWallet,
-      web3Driver: BlockchainHarmonyOneService.oneWeb3Driver,
-      blockchainTransfer: BlockchainHarmonyOneService.oneBlockchainTransfer,
+      broadcast: HarmonyService.oneBroadcast,
+      getTransactionsCount: HarmonyService.oneGetTransactionCount,
+      getCurrentBlock: HarmonyService.oneGetCurrentBlock,
+      getBlock: HarmonyService.oneGetBlock,
+      getBlockchainAccountBalance: HarmonyService.oneGetBalance,
+      get: HarmonyService.oneGetTransaction,
+      smartContractInvocation: HarmonyService.oneBlockchainSmartContractInvocation,
+      formatAddress: HarmonyService.oneFormatAddress,
+      generateAddress: HarmonyService.oneGenerateAddress,
+      generateAddressPrivateKey: HarmonyService.oneGenerateAddressPrivateKey,
+      generateWallet: HarmonyService.oneGenerateWallet,
+      web3Driver: HarmonyService.oneWeb3Driver,
+      blockchainTransfer: HarmonyService.oneBlockchainTransfer,
     },
   }
 }

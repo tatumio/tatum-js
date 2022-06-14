@@ -1,9 +1,9 @@
 import {
-  BlockchainTronService,
   CreateTronTrc10Blockchain,
   CreateTronTrc10BlockchainKMS,
   TransferTronTrc10Blockchain,
   TransferTronTrc10BlockchainKMS,
+  TronService,
 } from '@tatumio/api-client'
 import { isWithSignatureId } from '@tatumio/shared-abstract-sdk'
 import BigNumber from 'bignumber.js'
@@ -20,7 +20,7 @@ const prepareSignedTransaction = async (
   const client = tronWeb.getClient(provider)
 
   const definedPrecision =
-    precision ?? (await BlockchainTronService.tronTrc10Detail(Number.parseInt(tokenId))).precision
+    precision ?? (await TronService.tronTrc10Detail(Number.parseInt(tokenId))).precision
 
   if (!definedPrecision) {
     throw new Error('Unable to obtain precision')
@@ -125,7 +125,7 @@ export const tronTrc10 = (args: { tronWeb: ITronWeb }) => {
         precision?: number,
         provider?: string,
       ) =>
-        BlockchainTronService.tronBroadcast({
+        TronService.tronBroadcast({
           txData: await prepareSignedTransaction(body, args.tronWeb, precision, provider),
           // TODO: SignatureID is missing in OpenApi
         }),
@@ -139,7 +139,7 @@ export const tronTrc10 = (args: { tronWeb: ITronWeb }) => {
         body: CreateTronTrc10Blockchain | CreateTronTrc10BlockchainKMS,
         provider?: string,
       ) =>
-        BlockchainTronService.tronBroadcast({
+        TronService.tronBroadcast({
           txData: await prepareCreateSignedTransaction(body, args.tronWeb, provider),
           // TODO: SignatureID is missing in OpenApi
         }),

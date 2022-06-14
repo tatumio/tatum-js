@@ -1,5 +1,4 @@
 import {
-  BlockchainTronService,
   CallSmartContractMethod,
   CallSmartContractMethodKMS,
   FreezeTron,
@@ -10,6 +9,7 @@ import {
   GenerateMarketplaceTronKMS,
   TransferTronBlockchain,
   TransferTronBlockchainKMS,
+  TronService,
 } from '@tatumio/api-client'
 import { isWithSignatureId } from '@tatumio/shared-abstract-sdk'
 import { ListingSmartContract } from '@tatumio/shared-blockchain-evm-based'
@@ -252,7 +252,7 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
           body: TransferTronBlockchain | TransferTronBlockchainKMS,
           provider?: string,
         ) =>
-          BlockchainTronService.tronBroadcast({
+          TronService.tronBroadcast({
             txData: await prepareSignedTransaction(body, args.tronWeb, provider),
             // TODO: SignatureID is missing in OpenApi
           }),
@@ -263,7 +263,7 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
          * @returns transaction id of the transaction in the blockchain
          */
         freezeTransaction: async (body: FreezeTron | FreezeTronKMS, provider?: string) =>
-          BlockchainTronService.tronBroadcast({
+          TronService.tronBroadcast({
             txData: await prepareFreezeTransaction(body, args.tronWeb, provider),
             // TODO: SignatureID is missing in OpenApi
           }),
@@ -317,7 +317,7 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
           body: GenerateCustodialWalletTron | GenerateCustodialWalletTronKMS,
           provider?: string,
         ) =>
-          BlockchainTronService.tronBroadcast({
+          TronService.tronBroadcast({
             txData: await prepareGenerateCustodialWalletSignedTransaction(body, args.tronWeb, provider),
             // TODO: SignatureID is missing in OpenApi
           }),
@@ -349,7 +349,7 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
           tronWeb: ITronWeb,
           provider?: string,
         ) =>
-          BlockchainTronService.tronBroadcast({
+          TronService.tronBroadcast({
             txData: await prepareDeployMarketplaceListingSignedTransaction(body, args.tronWeb, provider),
             // TODO: SignatureID is missing in OpenApi
           }),

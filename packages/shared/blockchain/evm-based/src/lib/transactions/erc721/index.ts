@@ -14,6 +14,13 @@ import { Erc721_Provenance, Erc721Token } from '../../contracts'
 import { EvmBasedWeb3 } from '../../services/evm-based.web3'
 import { evmBasedUtils } from '../../evm-based.utils'
 import BigNumber from 'bignumber.js'
+import { ApiServices, MintNftMinter, TransactionHashKMS } from '@tatumio/api-client'
+
+const mintSignedTransactionMinter = async (body: MintNftMinter) => {
+  const request = await ApiServices.nft.nftMintErc721(body)
+  if (!(request as TransactionHashKMS)?.failed) return (request as TransactionHashKMS)?.txId
+  else throw new Error('Unable to mint NFT with a minter.')
+}
 
 const mintSignedTransaction = async (body: ChainMintErc721, web3: EvmBasedWeb3, provider?: string) => {
   const { contractAddress, nonce, signatureId, fee, to, tokenId, url, fromPrivateKey } = body
@@ -436,7 +443,7 @@ export const erc721 = (args: {
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction data to be broadcast to blockchain.
        */
-      mintSignedTransaction: async (body: ChainMintErc721, provider?: string) =>
+      mintSignedTransaction: async (body: Omit<ChainMintErc721, 'minter'>, provider?: string) =>
         mintSignedTransaction(body, args.web3, provider),
       /**
        * Sign mint ERC 721 transaction with cashback via private keys locally. Nothing is broadcast to the blockchain.
@@ -522,10 +529,14 @@ export const erc721 = (args: {
        * @returns transaction id of the transaction in the blockchain
        */
       mintSignedTransaction: async (body: ChainMintErc721, provider?: string) => {
-        await args.broadcastFunction({
-          txData: (await mintSignedTransaction(body, args.web3, provider)) as string,
-          signatureId: body.signatureId,
-        })
+        if (body.minter) {
+          await mintSignedTransactionMinter(body as MintNftMinter)
+        } else {
+          await args.broadcastFunction({
+            txData: (await mintSignedTransaction(body, args.web3, provider)) as string,
+            signatureId: body.signatureId,
+          })
+        }
       },
       /**
        * Send BEP721 mint transaction to the blockchain with cashback details. This method broadcasts signed transaction to the blockchain.

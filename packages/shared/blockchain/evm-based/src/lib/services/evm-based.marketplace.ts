@@ -1,10 +1,10 @@
-import { ApproveErc20, BlockchainMarketplaceService } from '@tatumio/api-client'
+import { ApproveErc20, MarketplaceService } from '@tatumio/api-client'
 import {
   BroadcastFunction,
-  ChainSellAssetOnMarketplace,
-  ChainCancelSellAssetOnMarketplace,
   ChainBuyAssetOnMarketplace,
+  ChainCancelSellAssetOnMarketplace,
   ChainGenerateMarketplace,
+  ChainSellAssetOnMarketplace,
   ChainUpdateFee,
   ChainUpdateFeeRecipient,
 } from '@tatumio/shared-blockchain-abstract'
@@ -68,9 +68,9 @@ export const evmBasedMarketplace = (args: {
         marketplace(args).send.buyMarketplaceListing(body, provider),
     },
 
-    getMarketplaceListing: BlockchainMarketplaceService.getMarketplaceListing,
-    getMarketplaceListings: BlockchainMarketplaceService.getMarketplaceListings,
-    getMarketplaceFee: BlockchainMarketplaceService.getMarketplaceFee,
-    getMarketplaceFeeRecipient: BlockchainMarketplaceService.getMarketplaceFeeRecipient,
+    getMarketplaceListing: MarketplaceService.getMarketplaceListing,
+    getMarketplaceListings: MarketplaceService.getMarketplaceListings,
+    getMarketplaceFee: MarketplaceService.getMarketplaceFee,
+    getMarketplaceFeeRecipient: MarketplaceService.getMarketplaceFeeRecipient,
   }
 }

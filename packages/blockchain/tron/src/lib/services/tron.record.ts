@@ -1,4 +1,4 @@
-import { BlockchainRecordService, CancelablePromise } from '@tatumio/api-client'
+import { BlockchainStorageService, CancelablePromise } from '@tatumio/api-client'
 import { Blockchain } from '@tatumio/shared-core'
 
 export const tronRecord = () => {
@@ -19,7 +19,7 @@ export const tronRecord = () => {
     }> {
       // TODO: Open API bug
       // @ts-ignore
-      return BlockchainRecordService.getLog(Blockchain.TRON, id)
+      return BlockchainStorageService.getLog(Blockchain.TRON, id)
     },
   }
 }

@@ -5,47 +5,47 @@ import {
   erc721,
   EvmBasedWeb3,
   multiToken,
-  smartContract,
   native,
+  smartContract,
 } from '@tatumio/shared-blockchain-evm-based'
-import { BlockchainEthereumService } from '@tatumio/api-client'
+import { EthereumService } from '@tatumio/api-client'
 
 export const ethTx = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3 }) => {
   return {
     native: {
       ...native({
         ...args,
-        broadcastFunction: BlockchainEthereumService.ethBroadcast,
+        broadcastFunction: EthereumService.ethBroadcast,
       }),
     },
     erc20: {
       ...erc20({
         ...args,
-        broadcastFunction: BlockchainEthereumService.ethBroadcast,
+        broadcastFunction: EthereumService.ethBroadcast,
       }),
     },
     erc721: {
       ...erc721({
         ...args,
-        broadcastFunction: BlockchainEthereumService.ethBroadcast,
+        broadcastFunction: EthereumService.ethBroadcast,
       }),
     },
     multiToken: {
       ...multiToken({
         ...args,
-        broadcastFunction: BlockchainEthereumService.ethBroadcast,
+        broadcastFunction: EthereumService.ethBroadcast,
       }),
     },
     custodial: {
       ...custodial({
         ...args,
-        broadcastFunction: BlockchainEthereumService.ethBroadcast,
+        broadcastFunction: EthereumService.ethBroadcast,
       }),
     },
     smartContract: {
       ...smartContract({
         ...args,
-        broadcastFunction: BlockchainEthereumService.ethBroadcast,
+        broadcastFunction: EthereumService.ethBroadcast,
       }),
     },
   }

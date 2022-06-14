@@ -1,6 +1,6 @@
 import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
-import { BlockchainCeloService, BlockchainFungibleTokenService } from '@tatumio/api-client'
+import { CeloService, FungibleTokensErc20OrCompatibleService } from '@tatumio/api-client'
 import { celoWeb3 } from './services/celo.web3'
 import { evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
 import { celoKmsService } from './services/celo.kms'
@@ -11,7 +11,7 @@ const blockchain = Blockchain.CELO
 
 export const TatumCeloSDK = (args: SDKArguments) => {
   const web3 = celoWeb3({ blockchain })
-  const api = BlockchainCeloService
+  const api = CeloService
   const txService = celoTxService({ blockchain, web3 })
   const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
 
@@ -21,8 +21,8 @@ export const TatumCeloSDK = (args: SDKArguments) => {
     kms: celoKmsService({ blockchain, web3 }),
     transaction: txService.native,
     erc20: {
-      getErc20TransactionByAddress: BlockchainFungibleTokenService.erc20GetTransactionByAddress,
-      getErc20AccountBalance: BlockchainFungibleTokenService.erc20GetBalance,
+      getErc20TransactionByAddress: FungibleTokensErc20OrCompatibleService.erc20GetTransactionByAddress,
+      getErc20AccountBalance: FungibleTokensErc20OrCompatibleService.erc20GetBalance,
     },
     nft: {
       ...txService.erc721,
@@ -37,13 +37,13 @@ export const TatumCeloSDK = (args: SDKArguments) => {
       return api.celoWeb3Driver(args.apiKey, { ...request, jsonrpc: '2.0' })
     },
     blockchain: {
-      broadcast: BlockchainCeloService.celoBroadcast,
-      getTransactionsCount: BlockchainCeloService.celoGetTransactionCount,
-      getCurrentBlock: BlockchainCeloService.celoGetCurrentBlock,
-      getBlock: BlockchainCeloService.celoGetBlock,
-      getBlockchainAccountBalance: BlockchainCeloService.celoGetBalance,
-      get: BlockchainCeloService.celoGetTransaction,
-      getAccountTransactions: BlockchainCeloService.celoGetTransactionByAddress,
+      broadcast: CeloService.celoBroadcast,
+      getTransactionsCount: CeloService.celoGetTransactionCount,
+      getCurrentBlock: CeloService.celoGetCurrentBlock,
+      getBlock: CeloService.celoGetBlock,
+      getBlockchainAccountBalance: CeloService.celoGetBalance,
+      get: CeloService.celoGetTransaction,
+      getAccountTransactions: CeloService.celoGetTransactionByAddress,
     },
   }
 }

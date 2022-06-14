@@ -1235,7 +1235,7 @@ export async function polygonTxWithPrivateKeyExample(): Promise<void> {
 }
 
 export async function polygonTxFeesCovered(): Promise<void> {
-  const generateCustodialWalletBatch = await polygonSDK.custodial.generateCustodialBatch({
+  const generateCustodialWalletBatch = await polygonSDK.custodial.send.custodialWalletBatch({
     chain: 'MATIC',
     batchCount: 100,
     owner: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',

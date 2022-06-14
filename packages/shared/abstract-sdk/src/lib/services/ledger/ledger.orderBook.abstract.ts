@@ -1,13 +1,13 @@
 // @TODO remove after OPENAPI change
 
-import { LedgerOrderBookService } from '@tatumio/api-client'
+import { OrderBookService } from '@tatumio/api-client'
 
 export class AbstractSdkLedgerOrderBookService {
-  getHistoricalTrades = LedgerOrderBookService.getHistoricalTradesBody
-  getActiveBuyTrades = LedgerOrderBookService.getBuyTradesBody
-  getActiveSellTrades = LedgerOrderBookService.getBuyTradesBody
-  storeTrade = LedgerOrderBookService.storeTrade
-  getTradeById = LedgerOrderBookService.getTradeById
-  deleteTrade = LedgerOrderBookService.deleteTrade
-  deleteAccountTrades = LedgerOrderBookService.deleteAccountTrades
+  getHistoricalTrades = OrderBookService.getHistoricalTradesBody
+  getActiveBuyTrades = OrderBookService.getBuyTradesBody
+  getActiveSellTrades = OrderBookService.getBuyTradesBody
+  storeTrade = OrderBookService.storeTrade
+  getTradeById = OrderBookService.getTradeById
+  deleteTrade = OrderBookService.deleteTrade
+  deleteAccountTrades = OrderBookService.deleteAccountTrades
 }

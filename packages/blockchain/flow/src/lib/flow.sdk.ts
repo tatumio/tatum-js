@@ -1,4 +1,4 @@
-import { BlockchainFlowService } from '@tatumio/api-client'
+import { FlowService } from '@tatumio/api-client'
 import { abstractBlockchainSdk } from '@tatumio/shared-blockchain-abstract'
 import { Blockchain } from '@tatumio/shared-core'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
@@ -9,7 +9,7 @@ import { flowKmsService } from './services/flow.kms'
 const blockchain = Blockchain.FLOW
 
 export const TatumFlowSDK = (args: SDKArguments) => {
-  const api = BlockchainFlowService
+  const api = FlowService
   const { nft, ...abstractSdk } = abstractBlockchainSdk({ ...args, blockchain })
 
   const {
@@ -40,10 +40,10 @@ export const TatumFlowSDK = (args: SDKArguments) => {
       getNFTMetadataURI,
     },
     blockchain: {
-      getCurrentBlock: BlockchainFlowService.flowGetBlockChainInfo,
-      getBlock: BlockchainFlowService.flowGetBlock,
-      getAccount: BlockchainFlowService.flowGetAccount,
-      getTransaction: BlockchainFlowService.flowGetRawTransaction,
+      getCurrentBlock: FlowService.flowGetBlockChainInfo,
+      getBlock: FlowService.flowGetBlock,
+      getAccount: FlowService.flowGetAccount,
+      getTransaction: FlowService.flowGetRawTransaction,
     },
   }
 }

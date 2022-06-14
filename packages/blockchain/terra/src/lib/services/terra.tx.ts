@@ -1,5 +1,5 @@
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
-import { BlockchainTerraService, Currency, TransferTerraBlockchain } from '@tatumio/api-client'
+import { Currency, TerraService, TransferTerraBlockchain } from '@tatumio/api-client'
 import { Fee, MsgSend, RawKey } from '@terra-money/terra.js'
 import { terraClient } from './terra.client'
 import { BigNumber } from 'bignumber.js'
@@ -51,7 +51,7 @@ export const terraTxService = (args: SDKArguments) => {
      * @param body
      */
     send: async (testnet: boolean, body: TransferTerraBlockchain) => {
-      return BlockchainTerraService.terraBroadcast({ txData: await prepare(testnet, body) })
+      return TerraService.terraBroadcast({ txData: await prepare(testnet, body) })
     },
   }
 }

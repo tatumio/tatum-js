@@ -1,6 +1,5 @@
 import { TatumSolanaSDK } from './solana.sdk'
 import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testing-common'
-import { TerraWallet } from '@tatumio/api-client'
 
 describe('TatumSolanaSDK', () => {
   jest.setTimeout(99999)
@@ -145,7 +144,27 @@ describe('TatumSolanaSDK', () => {
 
   describe('wallet', () => {
     it('should generate SOL wallet', async () => {
-      const wallet = (await sdk.wallet.wallet()) as TerraWallet
+      const wallet = sdk.wallet.wallet()
+      expect(wallet.mnemonic).toBeDefined()
+      expect(wallet.privateKey).toBeDefined()
+      expect(wallet.address).toBeDefined()
+    })
+
+    it('should generate address from SOL wallet', async () => {
+      const wallet = sdk.wallet.wallet()
+      expect(wallet.mnemonic).toBeDefined()
+      expect(wallet.privateKey).toBeDefined()
+      expect(wallet.address).toBeDefined()
+      const { address, privateKey } = sdk.wallet.generateAddressFromMnemonic(wallet.mnemonic, 0)
+      expect(address).toBe(wallet.address)
+      expect(privateKey).toBe(wallet.privateKey)
+    })
+
+    it('should generate SOL wallet from private key', async () => {
+      const wallet = sdk.wallet.wallet(
+        '2B7RyZEuZr9PpfRrn7nYhSXhjeuzte65UYeeKJFQJCvsi3ZQJk5AfmWptwDpD2Xtz22nv1aTg5rmKq13ggB7Fkep',
+      )
+      expect(wallet.mnemonic).not.toBeDefined()
       expect(wallet.privateKey).toBeDefined()
       expect(wallet.address).toBeDefined()
     })

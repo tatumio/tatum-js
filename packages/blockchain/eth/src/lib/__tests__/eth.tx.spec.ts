@@ -54,7 +54,6 @@ describe('EthSDK - tx', () => {
         erc20TestFactory.prepare.transferSignedTransaction(ethTxService.erc20, inmemoryBlockchain.accounts)
       })
 
-      // TODO:  Returned error: execution reverted
       xdescribe('mintSignedTransaction', () => {
         erc20TestFactory.prepare.mintSignedTransaction(ethTxService.erc20, TEST_DATA.ETH)
       })

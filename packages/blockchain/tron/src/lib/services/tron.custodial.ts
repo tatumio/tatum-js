@@ -1,5 +1,4 @@
 import {
-  BlockchainTronService,
   CallSmartContractMethod,
   CallSmartContractMethodKMS,
   GenerateCustodialWalletTron,
@@ -8,6 +7,7 @@ import {
   TransferCustodialWalletBatchTronKMS,
   TransferCustodialWalletTron,
   TransferCustodialWalletTronKMS,
+  TronService,
 } from '@tatumio/api-client'
 import { ITronWeb } from './tron.web'
 import { tronTx } from './tron.tx'
@@ -208,7 +208,7 @@ export const tronCustodial = (args: { tronWeb: ITronWeb }) => {
         decimals = 18,
         testnet = false,
       ) =>
-        BlockchainTronService.tronBroadcast({
+        TronService.tronBroadcast({
           txData: await prepareTransferFromCustodialWallet(
             body,
             getContractDecimals,
@@ -236,7 +236,7 @@ export const tronCustodial = (args: { tronWeb: ITronWeb }) => {
         decimals = 6,
         testnet = false,
       ) =>
-        BlockchainTronService.tronBroadcast({
+        TronService.tronBroadcast({
           txData: await prepareBatchTransferFromCustodialWallet(
             body,
             getContractDecimals,

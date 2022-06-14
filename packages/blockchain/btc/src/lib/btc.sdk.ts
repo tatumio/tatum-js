@@ -1,26 +1,28 @@
 import { Blockchain } from '@tatumio/shared-core'
-import { btcBasedSdk } from '@tatumio/shared-blockchain-btc-based'
-import { BlockchainBitcoinService } from '@tatumio/api-client'
+import { BitcoinService } from '@tatumio/api-client'
 import { btcTransactions } from './transaction/btc.tx'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
+import { btcWallet } from './btc.sdk.wallet'
+import { btcBasedSdk } from '@tatumio/shared-blockchain-btc-based'
 
 const blockchain = Blockchain.BTC
 
 export const TatumBtcSDK = (args: SDKArguments) => {
   return {
     ...btcBasedSdk({ ...args, blockchain }),
+    wallet: btcWallet(),
     transaction: btcTransactions(),
     blockchain: {
-      mempool: BlockchainBitcoinService.btcGetMempool,
-      broadcast: BlockchainBitcoinService.btcBroadcast,
-      info: BlockchainBitcoinService.btcGetBlockChainInfo,
-      getBlockHash: BlockchainBitcoinService.btcGetBlockHash,
-      getBlock: BlockchainBitcoinService.btcGetBlock,
-      getUTXO: BlockchainBitcoinService.btcGetUtxo,
-      getBlockchainAccountBalance: BlockchainBitcoinService.btcGetBalanceOfAddress,
-      getTransaction: BlockchainBitcoinService.btcGetRawTransaction,
-      getTransactionsByAddress: BlockchainBitcoinService.btcGetTxByAddress,
-      sendTransaction: BlockchainBitcoinService.btcTransferBlockchain,
+      mempool: BitcoinService.btcGetMempool,
+      broadcast: BitcoinService.btcBroadcast,
+      info: BitcoinService.btcGetBlockChainInfo,
+      getBlockHash: BitcoinService.btcGetBlockHash,
+      getBlock: BitcoinService.btcGetBlock,
+      getUTXO: BitcoinService.btcGetUtxo,
+      getBlockchainAccountBalance: BitcoinService.btcGetBalanceOfAddress,
+      getTransaction: BitcoinService.btcGetRawTransaction,
+      getTransactionsByAddress: BitcoinService.btcGetTxByAddress,
+      sendTransaction: BitcoinService.btcTransferBlockchain,
     },
   }
 }

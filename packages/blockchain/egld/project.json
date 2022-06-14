@@ -1,0 +1,33 @@
+{
+  "root": "packages/blockchain/egld",
+  "sourceRoot": "packages/blockchain/egld/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/blockchain/egld",
+        "main": "packages/blockchain/egld/src/index.ts",
+        "tsConfig": "packages/blockchain/egld/tsconfig.lib.json",
+        "packageJson": "packages/blockchain/egld/package.json"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/blockchain/egld/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/blockchain/egld"],
+      "options": {
+        "jestConfig": "packages/blockchain/egld/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["type:sdk"]
+}

@@ -13,7 +13,7 @@ import BigNumber from 'bignumber.js'
 import { CustodialFullTokenWallet } from '../../contracts'
 import { evmBasedSmartContract } from '../../services/evm-based.smartContract'
 import { evmBasedUtils } from '../../evm-based.utils'
-import { ApiServices } from '@tatumio/api-client'
+import { ApiServices, GenerateCustodialWalletBatchPayer, TransactionHashKMS } from '@tatumio/api-client'
 
 const transferFromCustodialWallet = async (
   body: ChainTransferCustodialWallet,
@@ -78,6 +78,12 @@ const approveFromCustodialWallet = async (
   )
 }
 
+const generateCustodialBatch = async (body: GenerateCustodialWalletBatchPayer) => {
+  const request = await ApiServices.blockchain.gasPump.generateCustodialWalletBatch(body)
+  if (!(request as TransactionHashKMS)?.failed) return (request as TransactionHashKMS)?.txId
+  else throw new Error('Unable to generate custodial wallet address.')
+}
+
 const custodialWalletBatch = async (
   body: ChainGenerateCustodialWalletBatch,
   web3: EvmBasedWeb3,
@@ -101,7 +107,6 @@ export const custodial = (args: {
   broadcastFunction: BroadcastFunction
 }) => {
   return {
-    generateCustodialBatch: ApiServices.blockchain.utils.generateCustodialWalletBatch,
     prepare: {
       /**
        * Prepare signed transaction from the custodial SC wallet.
@@ -207,10 +212,12 @@ export const custodial = (args: {
         testnet?: boolean,
         provider?: string,
       ) =>
-        args.broadcastFunction({
-          txData: await custodialWalletBatch(body, args.web3, testnet, provider),
-          signatureId: 'signatureId' in body ? body.signatureId : undefined,
-        }),
+        'feesCovered' in body
+          ? generateCustodialBatch(body)
+          : args.broadcastFunction({
+              txData: await custodialWalletBatch(body, args.web3, testnet, provider),
+              signatureId: 'signatureId' in body ? body.signatureId : undefined,
+            }),
     },
   }
 }

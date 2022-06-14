@@ -1,6 +1,10 @@
 import { evmBasedMarketplace, evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
 import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
-import { BlockchainFungibleTokenService, BlockchainPolygonMaticService } from '@tatumio/api-client'
+import {
+  BlockchainFeesService,
+  FungibleTokensErc20OrCompatibleService,
+  PolygonService,
+} from '@tatumio/api-client'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { polygonWeb3 } from './services/polygon.web3'
 import { polygonKmsService } from './services/polygon.kms'
@@ -11,7 +15,7 @@ const blockchain = Blockchain.POLYGON
 
 export const TatumPolygonSDK = (args: SDKArguments) => {
   const web3 = polygonWeb3({ blockchain })
-  const api = BlockchainPolygonMaticService
+  const api = PolygonService
   const txService = polygonTxService({ blockchain, web3 })
   const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
 
@@ -22,8 +26,8 @@ export const TatumPolygonSDK = (args: SDKArguments) => {
     transaction: txService.native,
     erc20: {
       ...txService.erc20,
-      getErc20TransactionByAddress: BlockchainFungibleTokenService.erc20GetTransactionByAddress,
-      getErc20AccountBalance: BlockchainFungibleTokenService.erc20GetBalance,
+      getErc20TransactionByAddress: FungibleTokensErc20OrCompatibleService.erc20GetTransactionByAddress,
+      getErc20AccountBalance: FungibleTokensErc20OrCompatibleService.erc20GetBalance,
     },
     nft: {
       ...txService.erc721,
@@ -36,7 +40,7 @@ export const TatumPolygonSDK = (args: SDKArguments) => {
       ...evmBasedMarketplace({
         blockchain,
         web3,
-        broadcastFunction: BlockchainPolygonMaticService.polygonBroadcast,
+        broadcastFunction: PolygonService.polygonBroadcast,
       }),
       auction: polygonAuctionService({ blockchain, web3 }),
     },
@@ -44,20 +48,20 @@ export const TatumPolygonSDK = (args: SDKArguments) => {
       return api.polygonWeb3Driver(args.apiKey, { ...request, jsonrpc: '2.0' })
     },
     blockchain: {
-      broadcast: BlockchainPolygonMaticService.polygonBroadcast,
-      getTransactionsCount: BlockchainPolygonMaticService.polygonGetTransactionCount,
-      getCurrentBlock: BlockchainPolygonMaticService.polygonGetCurrentBlock,
-      getBlock: BlockchainPolygonMaticService.polygonGetBlock,
-      getBlockchainAccountBalance: BlockchainPolygonMaticService.polygonGetBalance,
-      get: BlockchainPolygonMaticService.polygonGetTransaction,
-      getAccountTransactions: BlockchainPolygonMaticService.polygonGetTransactionByAddress,
-      estimateGas: BlockchainPolygonMaticService.polygonEstimateGas,
-      smartContractInvocation: BlockchainPolygonMaticService.polygonBlockchainSmartContractInvocation,
-      blockchainTransfer: BlockchainPolygonMaticService.polygonBlockchainTransfer,
-      generateAddress: BlockchainPolygonMaticService.polygonGenerateAddress,
-      generateAddressPrivateKey: BlockchainPolygonMaticService.polygonGenerateAddressPrivateKey,
-      generateWallet: BlockchainPolygonMaticService.polygonGenerateWallet,
-      web3Driver: BlockchainPolygonMaticService.polygonWeb3Driver,
+      broadcast: PolygonService.polygonBroadcast,
+      getTransactionsCount: PolygonService.polygonGetTransactionCount,
+      getCurrentBlock: PolygonService.polygonGetCurrentBlock,
+      getBlock: PolygonService.polygonGetBlock,
+      getBlockchainAccountBalance: PolygonService.polygonGetBalance,
+      get: PolygonService.polygonGetTransaction,
+      getAccountTransactions: PolygonService.polygonGetTransactionByAddress,
+      estimateGas: BlockchainFeesService.polygonEstimateGas,
+      smartContractInvocation: PolygonService.polygonBlockchainSmartContractInvocation,
+      blockchainTransfer: PolygonService.polygonBlockchainTransfer,
+      generateAddress: PolygonService.polygonGenerateAddress,
+      generateAddressPrivateKey: PolygonService.polygonGenerateAddressPrivateKey,
+      generateWallet: PolygonService.polygonGenerateWallet,
+      web3Driver: PolygonService.polygonWeb3Driver,
     },
   }
 }

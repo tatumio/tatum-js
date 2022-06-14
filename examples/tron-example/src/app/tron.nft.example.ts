@@ -19,4 +19,23 @@ export async function tronNftExample() {
     Currency.ETH,
     '0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7',
   )
+
+  const mintedHash = await tronSDK.nft.mintNFT({
+    chain: 'KCS',
+    tokenId: '100000',
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
+    to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    url: 'https://my_token_data.com',
+  })
+
+  const mintedWithMinterHash = await tronSDK.nft.mintNFT({
+    chain: 'KCS',
+    tokenId: '100000',
+    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
+    to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    url: 'https://my_token_data.com',
+    minter: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+  })
 }

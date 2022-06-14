@@ -1,4 +1,4 @@
-import { BlockchainXlmService } from '@tatumio/api-client'
+import { StellarService } from '@tatumio/api-client'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { abstractBlockchainSdk } from '@tatumio/shared-blockchain-abstract'
 import { Blockchain } from '@tatumio/shared-core'
@@ -17,16 +17,16 @@ export const TatumXlmSDK = (args: SDKArguments) => {
     transaction: xlmTxService(),
     wallet: xlmWallet(),
     blockchain: {
-      info: BlockchainXlmService.xlmGetLastClosedLedger,
-      getAccountInfo: BlockchainXlmService.xlmGetAccountInfo,
-      broadcast: BlockchainXlmService.xlmBroadcast,
-      getFee: BlockchainXlmService.xlmGetFee,
-      trustLine: BlockchainXlmService.xlmTrustLineBlockchain,
-      getLedger: BlockchainXlmService.xlmGetLedger,
-      getLedgerTx: BlockchainXlmService.xlmGetLedgerTx,
-      getTransaction: BlockchainXlmService.xlmGetTransaction,
-      getAccountTransactions: BlockchainXlmService.xlmGetAccountTx,
-      sendTransaction: BlockchainXlmService.xlmTransferBlockchain,
+      info: StellarService.xlmGetLastClosedLedger,
+      getAccountInfo: StellarService.xlmGetAccountInfo,
+      broadcast: StellarService.xlmBroadcast,
+      getFee: StellarService.xlmGetFee,
+      trustLine: StellarService.xlmTrustLineBlockchain,
+      getLedger: StellarService.xlmGetLedger,
+      getLedgerTx: StellarService.xlmGetLedgerTx,
+      getTransaction: StellarService.xlmGetTransaction,
+      getAccountTransactions: StellarService.xlmGetAccountTx,
+      sendTransaction: StellarService.xlmTransferBlockchain,
     },
   }
 }
