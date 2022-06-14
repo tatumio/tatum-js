@@ -1,2 +1,3 @@
 export * from './lib/btc.sdk'
-export { BtcTransactionType, btcTransactions } from './lib/transaction/btc.tx'
+export { BtcTransactionTypes, btcTransactions } from './lib/transaction/btc.tx'
+export * from './lib/btc.sdk.wallet'

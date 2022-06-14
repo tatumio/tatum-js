@@ -12,7 +12,7 @@ import { amountUtils, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { BtcSdkError } from '../btc.sdk.errors'
 import { BtcBasedTx } from '@tatumio/shared-blockchain-btc-based'
 
-export type BtcTransactionType =
+export type BtcTransactionTypes =
   | BtcTransactionFromAddress
   | BtcTransactionFromAddressKMS
   | BtcTransactionFromUTXO
@@ -28,7 +28,7 @@ export const btcTransactions = (
     btcBroadcast: ApiServices.blockchain.bitcoin.btcBroadcast,
     btcGetRawTransaction: ApiServices.blockchain.bitcoin.btcGetRawTransaction,
   },
-): BtcBasedTx<BtcTransactionType> => {
+): BtcBasedTx<BtcTransactionTypes> => {
   const privateKeysFromAddress = async (
     transaction: Transaction,
     body: BtcTransactionFromAddress | BtcTransactionFromAddressKMS,
@@ -101,7 +101,7 @@ export const btcTransactions = (
   }
 
   const prepareSignedTransaction = async function (
-    body: BtcTransactionType,
+    body: BtcTransactionTypes,
     options: { testnet: boolean },
   ): Promise<string> {
     try {
@@ -139,7 +139,7 @@ export const btcTransactions = (
   }
 
   const sendTransaction = async function (
-    body: BtcTransactionType,
+    body: BtcTransactionTypes,
     options: { testnet: boolean },
   ): Promise<TransactionHashKMS> {
     return apiCalls.btcBroadcast({
