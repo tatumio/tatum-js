@@ -1,5 +1,5 @@
 import { evmBasedMarketplace, evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
-import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
+import { Blockchain, EvmBasedBlockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
 import {
   BlockchainFeesService,
   FungibleTokensErc20OrCompatibleService,
@@ -10,12 +10,13 @@ import { polygonWeb3 } from './services/polygon.web3'
 import { polygonKmsService } from './services/polygon.kms'
 import { polygonTxService } from './services/polygon.tx'
 import { polygonAuctionService } from './services/polygon.auction'
-import { blockchain } from './constants'
+
+const blockchain: EvmBasedBlockchain = Blockchain.POLYGON
 
 export const TatumPolygonSDK = (args: SDKArguments) => {
-  const web3 = polygonWeb3()
+  const web3 = polygonWeb3({ blockchain })
   const api = PolygonService
-  const txService = polygonTxService({ web3 })
+  const txService = polygonTxService({ blockchain, web3 })
   const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
 
   return {

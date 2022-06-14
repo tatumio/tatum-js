@@ -10,10 +10,10 @@ import {
   native,
   smartContract,
 } from '@tatumio/shared-blockchain-evm-based'
+import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
 import { TransactionConfig } from 'web3-core'
 import { isHex, stringToHex, toHex, toWei } from 'web3-utils'
-import { blockchain } from '../constants'
 
 export type StoreDataTransactionBody = WithoutChain<CreateRecord> & {
   signatureId?: string
@@ -52,9 +52,8 @@ const storeDataTransaction = async (
   )
 }
 
-export const polygonTxService = (args: { web3: EvmBasedWeb3 }) => {
+export const polygonTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3 }) => {
   const nativeTxs = native({
-    blockchain,
     ...args,
     broadcastFunction: PolygonService.polygonBroadcast,
   })
@@ -76,35 +75,30 @@ export const polygonTxService = (args: { web3: EvmBasedWeb3 }) => {
     },
     erc20: {
       ...erc20({
-        blockchain,
         ...args,
         broadcastFunction: PolygonService.polygonBroadcast,
       }),
     },
     erc721: {
       ...erc721({
-        blockchain,
         ...args,
         broadcastFunction: PolygonService.polygonBroadcast,
       }),
     },
     multiToken: {
       ...multiToken({
-        blockchain,
         ...args,
         broadcastFunction: PolygonService.polygonBroadcast,
       }),
     },
     custodial: {
       ...custodial({
-        blockchain,
         ...args,
         broadcastFunction: PolygonService.polygonBroadcast,
       }),
     },
     smartContract: {
       ...smartContract({
-        blockchain,
         ...args,
         broadcastFunction: PolygonService.polygonBroadcast,
       }),

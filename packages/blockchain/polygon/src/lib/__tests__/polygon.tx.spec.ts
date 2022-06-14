@@ -21,6 +21,7 @@ describe('PolygonSDK - tx', () => {
   const inmemoryBlockchain = ganacheHelper.inmemoryBlockchain(blockchain)
 
   const polygonTx = polygonTxService({
+    blockchain,
     web3: {
       getClient: (provider?: string) => inmemoryBlockchain.web3,
       async getGasPriceInWei(): Promise<string> {
