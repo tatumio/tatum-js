@@ -54,7 +54,7 @@
     "dedent-js": "^1.0.1",
     "ed25519-hd-key": "^1.2.0",
     "ethereumjs-wallet": "^1.0.2",
-    "ethers": "^5.5.4",
+    "ethers": "^5.6.8",
     "form-data": "^4.0.0",
     "hdkey": "^2.0.1",
     "reflect-metadata": "^0.1.13",
