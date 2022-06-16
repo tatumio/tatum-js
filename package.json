@@ -35,7 +35,7 @@
     "@solana/spl-token": "0.2.0",
     "@solana/web3.js": "^1.36.0",
     "@tatumio/bitcoincashjs2-lib": "^4.1.2",
-    "@terra-money/terra.js": "^3.0.8",
+    "@terra-money/terra.js": "^3.1.0",
     "algosdk": "^1.13.1",
     "axios": "^0.26.0",
     "base-58": "^0.0.1",
