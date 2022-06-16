@@ -33,7 +33,7 @@
     "@onflow/fcl": "^0.0.78",
     "@onflow/util-encode-key": "^0.0.2",
     "@solana/spl-token": "0.2.0",
-    "@solana/web3.js": "^1.36.0",
+    "@solana/web3.js": "^1.43.1",
     "@tatumio/bitcoincashjs2-lib": "^4.1.2",
     "@terra-money/terra.js": "^3.0.8",
     "algosdk": "^1.13.1",
