@@ -3,30 +3,38 @@
 /* eslint-disable */
 
 export type BtcTransactionFromAddress = {
+  /**
+   * Array of addresses and corresponding private keys. Tatum will automatically scan last 100 transactions for each address and will use all of the unspent values. We advise to use this option if you have 1 address per 1 transaction only.
+   */
+  fromAddress: Array<{
     /**
-     * Array of addresses and corresponding private keys. Tatum will automatically scan last 100 transactions for each address and will use all of the unspent values. We advise to use this option if you have 1 address per 1 transaction only.
+     * Address to send assets from.
      */
-    fromAddress: Array<{
-        /**
-         * Address to send assets from.
-         */
-        address: string;
-        /**
-         * Private key of the address to send assets from. Private key, or signature Id must be present.
-         */
-        privateKey: string;
-    }>;
+    address: string
     /**
-     * Array of addresses and values to send bitcoins to. Values must be set in BTC. Difference between from and to is transaction fee.
+     * Private key of the address to send assets from. Private key, or signature Id must be present.
      */
-    to: Array<{
-        /**
-         * Destination address.
-         */
-        address: string;
-        /**
-         * Amount to be sent, in BTC.
-         */
-        value: number;
-    }>;
+    privateKey: string
+  }>
+  /**
+   * Array of addresses and values to send bitcoins to. Values must be set in BTC. Difference between from and to is transaction fee.
+   */
+  to: Array<{
+    /**
+     * Destination address.
+     */
+    address: string
+    /**
+     * Amount to be sent, in BTC.
+     */
+    value: number
+  }>
+  /**
+   * Change address
+   */
+  change?: string
+  /**
+   * Fee of transaction
+   */
+  fee?: number
 }
