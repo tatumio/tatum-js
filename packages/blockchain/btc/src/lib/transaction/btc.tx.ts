@@ -5,7 +5,6 @@ import {
   BtcTransactionFromAddressKMS,
   BtcTransactionFromUTXO,
   BtcTransactionFromUTXOKMS,
-  BtcTx,
   TransactionHashKMS,
 } from '@tatumio/api-client'
 import { amountUtils, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
@@ -37,6 +36,7 @@ export const btcTransactions = (
       const privateKeysToSign = []
       for (const item of body.fromAddress) {
         const txs = await apiCalls.btcGetTxByAddress(item.address, 50) // @TODO OPENAPI remove pageSize
+        console.log('txs', item.address, txs)
 
         for (const tx of txs) {
           if (!tx.outputs) throw new BtcSdkError(SdkErrorCode.BTC_UTXO_NOT_FOUND)
@@ -50,7 +50,8 @@ export const btcTransactions = (
               Transaction.UnspentOutput.fromObject({
                 txId: tx.hash,
                 outputIndex: i,
-                script: Script.fromAddress(item.address).toString(),
+                address: o.address,
+                script: Script.fromAddress(o.address).toString(),
                 satoshis: o.value,
               }),
             ])
@@ -108,6 +109,12 @@ export const btcTransactions = (
       const tx = new Transaction()
       let privateKeysToSign: string[] = []
 
+      if (body.change) {
+        tx.change(body.change)
+      }
+      if (body.fee) {
+        tx.fee(amountUtils.toSatoshis(body.fee))
+      }
       body.to.forEach((to) => {
         tx.to(to.address, amountUtils.toSatoshis(to.value))
       })
