@@ -5,6 +5,7 @@ import {
   BtcTransactionFromAddressKMS,
   BtcTransactionFromUTXO,
   BtcTransactionFromUTXOKMS,
+  BtcUTXO,
   TransactionHashKMS,
 } from '@tatumio/api-client'
 import { amountUtils, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
@@ -20,10 +21,12 @@ export type BtcTransactionTypes =
 export const btcTransactions = (
   apiCalls: {
     btcGetTxByAddress: typeof ApiServices.blockchain.bitcoin.btcGetTxByAddress
+    btcGetUtxo: typeof ApiServices.blockchain.bitcoin.btcGetUtxo
     btcBroadcast: typeof ApiServices.blockchain.bitcoin.btcBroadcast
     btcGetRawTransaction: typeof ApiServices.blockchain.bitcoin.btcGetRawTransaction
   } = {
     btcGetTxByAddress: ApiServices.blockchain.bitcoin.btcGetTxByAddress,
+    btcGetUtxo: ApiServices.blockchain.bitcoin.btcGetUtxo,
     btcBroadcast: ApiServices.blockchain.bitcoin.btcBroadcast,
     btcGetRawTransaction: ApiServices.blockchain.bitcoin.btcGetRawTransaction,
   },
@@ -36,7 +39,6 @@ export const btcTransactions = (
       const privateKeysToSign = []
       for (const item of body.fromAddress) {
         const txs = await apiCalls.btcGetTxByAddress(item.address, 50) // @TODO OPENAPI remove pageSize
-        console.log('txs', item.address, txs)
 
         for (const tx of txs) {
           if (!tx.outputs) throw new BtcSdkError(SdkErrorCode.BTC_UTXO_NOT_FOUND)
@@ -46,13 +48,17 @@ export const btcTransactions = (
               continue
             }
 
+            const utxo = await getUtxoSilent(tx.hash, i)
+            if (utxo === null) {
+              continue
+            }
+
             transaction.from([
               Transaction.UnspentOutput.fromObject({
                 txId: tx.hash,
                 outputIndex: i,
-                address: o.address,
                 script: Script.fromAddress(o.address).toString(),
-                satoshis: o.value,
+                satoshis: utxo.value,
               }),
             ])
 
@@ -75,19 +81,15 @@ export const btcTransactions = (
       const privateKeysToSign = []
 
       for (const item of body.fromUTXO) {
-        const tx = await apiCalls.btcGetRawTransaction(item.txHash)
+        const utxo = await apiCalls.btcGetUtxo(item.txHash, item.index)
 
-        const output = (tx.outputs ?? [])[item.index]
-        if (!output || !output.address || !output.value)
-          throw new BtcSdkError(SdkErrorCode.BTC_UTXO_NOT_FOUND)
-
-        const script = Script.fromAddress(output.address).toString()
+        const script = Script.fromAddress(utxo.address).toString()
         transaction.from([
           Transaction.UnspentOutput.fromObject({
             txId: item.txHash,
-            outputIndex: item.index,
+            outputIndex: utxo.index,
             script: script,
-            satoshis: output.value,
+            satoshis: utxo.value,
           }),
         ])
 
@@ -98,6 +100,14 @@ export const btcTransactions = (
       return privateKeysToSign
     } catch (e: any) {
       throw new BtcSdkError(e)
+    }
+  }
+
+  async function getUtxoSilent(hash: string, i: number): Promise<BtcUTXO> {
+    try {
+      return await apiCalls.btcGetUtxo(hash, i)
+    } catch (e) {
+      return null
     }
   }
 
