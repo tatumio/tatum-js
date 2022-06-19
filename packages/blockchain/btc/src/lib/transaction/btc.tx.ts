@@ -43,6 +43,8 @@ export const btcTransactions = (
         for (const tx of txs) {
           if (!tx.outputs) throw new BtcSdkError(SdkErrorCode.BTC_UTXO_NOT_FOUND)
 
+          if (tx.hash === undefined) continue
+
           for (const [i, o] of tx.outputs.entries()) {
             if (o.address !== item.address) {
               continue
@@ -82,6 +84,9 @@ export const btcTransactions = (
 
       for (const item of body.fromUTXO) {
         const utxo = await apiCalls.btcGetUtxo(item.txHash, item.index)
+        if (utxo === null || utxo.address === undefined) {
+          continue
+        }
 
         const script = Script.fromAddress(utxo.address).toString()
         transaction.from([
@@ -103,7 +108,7 @@ export const btcTransactions = (
     }
   }
 
-  async function getUtxoSilent(hash: string, i: number): Promise<BtcUTXO> {
+  async function getUtxoSilent(hash: string, i: number): Promise<BtcUTXO | null> {
     try {
       return await apiCalls.btcGetUtxo(hash, i)
     } catch (e) {
