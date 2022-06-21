@@ -82,8 +82,8 @@ export const btcTransactions = (
     try {
       const privateKeysToSign = []
 
-      for (const item of body.fromUTXO) {
-        const utxo = await apiCalls.btcGetUtxo(item.txHash, item.index)
+      for (const utxoItem of body.fromUTXO) {
+        const utxo = await getUtxoSilent(utxoItem.txHash, utxoItem.index)
         if (utxo === null || utxo.address === undefined) {
           continue
         }
@@ -91,15 +91,15 @@ export const btcTransactions = (
         const script = Script.fromAddress(utxo.address).toString()
         transaction.from([
           Transaction.UnspentOutput.fromObject({
-            txId: item.txHash,
+            txId: utxoItem.txHash,
             outputIndex: utxo.index,
             script: script,
             satoshis: utxo.value,
           }),
         ])
 
-        if ('signatureId' in item) privateKeysToSign.push(item.signatureId)
-        else if ('privateKey' in item) privateKeysToSign.push(item.privateKey)
+        if ('signatureId' in utxoItem) privateKeysToSign.push(utxoItem.signatureId)
+        else if ('privateKey' in utxoItem) privateKeysToSign.push(utxoItem.privateKey)
       }
 
       return privateKeysToSign
@@ -150,7 +150,7 @@ export const btcTransactions = (
         }
       }
 
-      privateKeysToSign.forEach((key) => {
+      new Set(privateKeysToSign).forEach((key) => {
         tx.sign(new PrivateKey(key))
       })
 
