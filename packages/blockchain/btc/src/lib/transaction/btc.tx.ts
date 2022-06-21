@@ -70,7 +70,7 @@ export const btcTransactions = (
         }
       }
       return privateKeysToSign
-    } catch (e) {
+    } catch (e: any) {
       throw new BtcSdkError(e)
     }
   }
@@ -103,7 +103,7 @@ export const btcTransactions = (
       }
 
       return privateKeysToSign
-    } catch (e) {
+    } catch (e: any) {
       throw new BtcSdkError(e)
     }
   }
@@ -155,7 +155,7 @@ export const btcTransactions = (
       })
 
       return tx.serialize()
-    } catch (e) {
+    } catch (e: any) {
       throw new BtcSdkError(e)
     }
   }
