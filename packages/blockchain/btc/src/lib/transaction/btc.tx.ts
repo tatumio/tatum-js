@@ -139,14 +139,14 @@ export const btcTransactions = (
 
         const fromAddress = body.fromAddress
         if (fromAddress && 'signatureId' in fromAddress[0] && fromAddress[0].signatureId) {
-          return JSON.stringify({ txData: JSON.stringify(tx), privateKeysToSign })
+          return JSON.stringify(tx)
         }
       } else if ('fromUTXO' in body) {
         privateKeysToSign = await privateKeysFromUTXO(tx, body)
 
         const fromUTXO = body.fromUTXO
         if (fromUTXO && 'signatureId' in fromUTXO[0] && fromUTXO[0].signatureId) {
-          return JSON.stringify({ txData: JSON.stringify(tx), privateKeysToSign })
+          return JSON.stringify(tx)
         }
       }
 
