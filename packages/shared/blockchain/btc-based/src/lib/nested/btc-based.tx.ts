@@ -5,6 +5,11 @@ import {
   BtcTransactionFromUTXO,
   BtcTransactionFromUTXOKMS,
   BtcUTXO,
+  LtcTransactionAddress,
+  LtcTransactionAddressKMS,
+  LtcTransactionUTXO,
+  LtcTransactionUTXOKMS,
+  LtcUTXO,
   TransactionHashKMS,
 } from '@tatumio/api-client'
 import { PrivateKey, Script, Transaction } from 'bitcore-lib'
@@ -22,28 +27,52 @@ export type BtcTransactionTypes =
   | BtcTransactionFromUTXO
   | BtcTransactionFromUTXOKMS
 
+export type LtcTransactionTypes =
+  | LtcTransactionAddress
+  | LtcTransactionAddressKMS
+  | LtcTransactionUTXO
+  | LtcTransactionUTXOKMS
+
+type BtcBasedTransactionTypes = BtcTransactionTypes | LtcTransactionTypes
+
+type BtcFromAddressTypes = BtcTransactionFromAddress | BtcTransactionFromAddressKMS
+
+type LtcFromAddressTypes = LtcTransactionAddress | LtcTransactionAddressKMS
+
+type BtcFromUtxoTypes = BtcTransactionFromUTXO | BtcTransactionFromUTXOKMS
+type LtcFromUtxoTypes = LtcTransactionUTXO | LtcTransactionUTXOKMS
+
+type GetTxByAddressType =
+  | typeof ApiServices.blockchain.bitcoin.btcGetTxByAddress
+  | typeof ApiServices.blockchain.ltc.ltcGetTxByAddress
+
+type GetUtxoType =
+  | typeof ApiServices.blockchain.bitcoin.btcGetUtxo
+  | typeof ApiServices.blockchain.ltc.ltcGetUtxo
+
+type BroadcastType =
+  | typeof ApiServices.blockchain.bitcoin.btcBroadcast
+  | typeof ApiServices.blockchain.ltc.ltcBroadcast
+
+type GetRawTransactionType =
+  | typeof ApiServices.blockchain.bitcoin.btcGetRawTransaction
+  | typeof ApiServices.blockchain.ltc.ltcGetRawTransaction
+
 //TODO prepare to use between btc based
-export const transactions = (
-  apiCalls: {
-    btcGetTxByAddress: typeof ApiServices.blockchain.bitcoin.btcGetTxByAddress
-    btcGetUtxo: typeof ApiServices.blockchain.bitcoin.btcGetUtxo
-    btcBroadcast: typeof ApiServices.blockchain.bitcoin.btcBroadcast
-    btcGetRawTransaction: typeof ApiServices.blockchain.bitcoin.btcGetRawTransaction
-  } = {
-    btcGetTxByAddress: ApiServices.blockchain.bitcoin.btcGetTxByAddress,
-    btcGetUtxo: ApiServices.blockchain.bitcoin.btcGetUtxo,
-    btcBroadcast: ApiServices.blockchain.bitcoin.btcBroadcast,
-    btcGetRawTransaction: ApiServices.blockchain.bitcoin.btcGetRawTransaction,
-  },
-): BtcBasedTx<BtcTransactionTypes> => {
+export const btcBasedTransactions = (apiCalls: {
+  getTxByAddress: GetTxByAddressType
+  getUtxo: GetUtxoType
+  broadcast: BroadcastType
+  getRawTransaction: GetRawTransactionType
+}): BtcBasedTx<BtcBasedTransactionTypes> => {
   const privateKeysFromAddress = async (
     transaction: Transaction,
-    body: BtcTransactionFromAddress | BtcTransactionFromAddressKMS,
+    body: BtcFromAddressTypes | LtcFromAddressTypes,
   ): Promise<Array<string>> => {
     try {
       const privateKeysToSign = []
       for (const item of body.fromAddress) {
-        const txs = await apiCalls.btcGetTxByAddress(item.address, 50) // @TODO OPENAPI remove pageSize
+        const txs = await apiCalls.getTxByAddress(item.address, 50) // @TODO OPENAPI remove pageSize
 
         for (const tx of txs) {
           if (!tx.outputs) throw new BtcBasedSdkError(SdkErrorCode.BTC_UTXO_NOT_FOUND)
@@ -82,7 +111,7 @@ export const transactions = (
 
   const privateKeysFromUTXO = async (
     transaction: Transaction,
-    body: BtcTransactionFromUTXO | BtcTransactionFromUTXOKMS,
+    body: BtcFromUtxoTypes | LtcFromUtxoTypes,
   ): Promise<Array<string>> => {
     try {
       const privateKeysToSign = []
@@ -113,16 +142,16 @@ export const transactions = (
     }
   }
 
-  async function getUtxoSilent(hash: string, i: number): Promise<BtcUTXO | null> {
+  async function getUtxoSilent(hash: string, i: number): Promise<BtcUTXO | LtcUTXO | null> {
     try {
-      return await apiCalls.btcGetUtxo(hash, i)
+      return await apiCalls.getUtxo(hash, i)
     } catch (e) {
       return null
     }
   }
 
   const prepareSignedTransaction = async function (
-    body: BtcTransactionTypes,
+    body: BtcTransactionTypes | LtcTransactionTypes,
     options: { testnet: boolean },
   ): Promise<string> {
     try {
@@ -169,21 +198,21 @@ export const transactions = (
     body: BtcTransactionTypes,
     options: { testnet: boolean },
   ): Promise<TransactionHashKMS> {
-    return apiCalls.btcBroadcast({
+    return apiCalls.broadcast({
       txData: await prepareSignedTransaction(body, options),
     })
   }
 
   return {
     /**
-     * Send Bitcoin transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+     * Send bitcoin based transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
      * This operation is irreversible.
      * @param body content of the transaction to broadcast
      * @returns transaction id of the transaction in the blockchain
      */
     sendTransaction,
     /**
-     * Prepare a signed Btc transaction with the private key locally. Nothing is broadcasted to the blockchain.
+     * Prepare a signed bitcoin based transaction with the private key locally. Nothing is broadcasted to the blockchain.
      * @returns raw transaction data in hex, to be broadcasted to blockchain.
      */
     prepareSignedTransaction,
