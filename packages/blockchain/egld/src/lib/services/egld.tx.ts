@@ -1,4 +1,4 @@
-import { ElrodnService } from '@tatumio/api-client'
+import { ElrondService } from '@tatumio/api-client'
 import BigNumber from 'bignumber.js'
 import {
   egldUtils,
@@ -291,7 +291,7 @@ export const egldTransactionService = () => {
        * @returns transaction id of the transaction in the blockchain
        */
       deploy: async (body: TransferEgld) =>
-        await ElrodnService.egldBroadcast({
+        await ElrondService.egldBroadcast({
           txData: await prepareDeploy(body),
           signatureId: body.signatureId,
         }),
@@ -302,7 +302,7 @@ export const egldTransactionService = () => {
        * @returns transaction id of the transaction in the blockchain
        */
       signedTransaction: async (body: TransferEgld) =>
-        await ElrodnService.egldBroadcast({
+        await ElrondService.egldBroadcast({
           txData: await prepareSignedTransaction(body),
           signatureId: body.signatureId,
         }),
@@ -313,7 +313,7 @@ export const egldTransactionService = () => {
        * @returns transaction id of the transaction in the blockchain
        */
       smartContractMethodInvocation: async (body: TransferEgld) =>
-        await ElrodnService.egldBroadcast({
+        await ElrondService.egldBroadcast({
           txData: await prepareTransferEsdtSignedTransaction(body),
           signatureId: body.signatureId,
         }),
@@ -325,7 +325,7 @@ export const egldTransactionService = () => {
        * @returns transaction id of the transaction in the blockchain
        */
       transferNft: async (body: TransferEgld) =>
-        await ElrodnService.egldBroadcast({
+        await ElrondService.egldBroadcast({
           txData: await prepareTransferNft(body),
           signatureId: body.signatureId,
         }),
@@ -336,7 +336,7 @@ export const egldTransactionService = () => {
        * @returns transaction id of the transaction in the blockchain
        */
       deployNft: async (body: TransferEgld) =>
-        await ElrodnService.egldBroadcast({
+        await ElrondService.egldBroadcast({
           txData: await prepareDeployNftOrSft(body),
           signatureId: body.signatureId,
         }),

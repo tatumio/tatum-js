@@ -9,6 +9,7 @@ import {
 } from '@tatumio/api-client'
 import { PrivateKey, Script, Transaction } from 'bitcore-lib'
 import { amountUtils, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
+import { BtcBasedSdkError } from '../btc-based.sdk.errors'
 
 export type BtcBasedTx<T> = {
   sendTransaction: (body: T, options: { testnet: boolean }) => Promise<TransactionHashKMS>
@@ -21,7 +22,8 @@ export type BtcTransactionTypes =
   | BtcTransactionFromUTXO
   | BtcTransactionFromUTXOKMS
 
-export const btcTransactions = (
+//TODO prepare to use between btc based
+export const transactions = (
   apiCalls: {
     btcGetTxByAddress: typeof ApiServices.blockchain.bitcoin.btcGetTxByAddress
     btcGetUtxo: typeof ApiServices.blockchain.bitcoin.btcGetUtxo
@@ -44,7 +46,7 @@ export const btcTransactions = (
         const txs = await apiCalls.btcGetTxByAddress(item.address, 50) // @TODO OPENAPI remove pageSize
 
         for (const tx of txs) {
-          if (!tx.outputs) throw new BtcSdkError(SdkErrorCode.BTC_UTXO_NOT_FOUND)
+          if (!tx.outputs) throw new BtcBasedSdkError(SdkErrorCode.BTC_UTXO_NOT_FOUND)
 
           if (tx.hash === undefined) continue
 
@@ -74,7 +76,7 @@ export const btcTransactions = (
       }
       return privateKeysToSign
     } catch (e: any) {
-      throw new BtcSdkError(e)
+      throw new BtcBasedSdkError(e)
     }
   }
 
@@ -107,7 +109,7 @@ export const btcTransactions = (
 
       return privateKeysToSign
     } catch (e: any) {
-      throw new BtcSdkError(e)
+      throw new BtcBasedSdkError(e)
     }
   }
 
@@ -159,7 +161,7 @@ export const btcTransactions = (
 
       return tx.serialize()
     } catch (e: any) {
-      throw new BtcSdkError(e)
+      throw new BtcBasedSdkError(e)
     }
   }
 
