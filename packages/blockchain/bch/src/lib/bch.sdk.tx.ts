@@ -14,10 +14,10 @@ import { ECPair, ECSignature, TransactionBuilder } from '@tatumio/bitcoincashjs2
 import { BtcBasedTx } from '@tatumio/shared-blockchain-btc-based'
 import BigNumber from 'bignumber.js'
 
-type BchTransactionBody = BchTransaction | BchTransactionKMS
+export type BchTransactionTypes = BchTransaction | BchTransactionKMS
 
 const sendTransaction = async (
-  body: BchTransactionBody,
+  body: BchTransactionTypes,
   args: { testnet?: boolean },
 ): Promise<TransactionHashKMS> => {
   return ApiServices.blockchain.bcash.bchBroadcast({
@@ -27,7 +27,7 @@ const sendTransaction = async (
 
 // @TODO add support - by address
 const prepareSignedTransaction = async (
-  body: BchTransactionBody,
+  body: BchTransactionTypes,
   args: { testnet?: boolean },
 ): Promise<string> => {
   try {
@@ -76,7 +76,7 @@ const prepareSignedTransaction = async (
   }
 }
 
-function verifyAmounts(amountToSign: number[], body: BchTransactionBody) {
+function verifyAmounts(amountToSign: number[], body: BchTransactionTypes) {
   const outputsSum = body.to
     .map((to) => amountUtils.toSatoshis(to.value))
     .reduce((e, acc) => e.plus(acc), new BigNumber(0))
@@ -102,7 +102,7 @@ const getTransactions = async (txHash: string[]): Promise<BchTx[]> => {
   return Promise.all(result)
 }
 
-export const bchTransactions = (): BtcBasedTx<BchTransactionBody> => ({
+export const bchTransactions = (): BtcBasedTx<BchTransactionTypes> => ({
   sendTransaction,
   prepareSignedTransaction,
 })

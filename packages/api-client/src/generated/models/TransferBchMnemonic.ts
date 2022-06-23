@@ -24,7 +24,7 @@ export type TransferBchMnemonic = {
      */
     multipleAmounts?: Array<string>;
     /**
-     * Fee to be submitted as a transaction fee to blockchain. If none is set, default value of 0.00005 LTC is used. Minimum fee is 0.00001 LTC.
+     * Fee to be submitted as a transaction fee to blockchain. If none is set, default value of 0.00005 BCH is used.
      */
     fee?: string;
     /**

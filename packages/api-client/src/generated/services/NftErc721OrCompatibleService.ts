@@ -775,7 +775,9 @@ export class NftErc721OrCompatibleService {
 
                 /**
                  * Get NFT tokens for address
-                 * <h4>1 credit per API call + 5 credits for each owned token.</h4><br/><p>Get NFTs on address. Returns all NFTs this address holds.</p>
+                 * <h4>1 credit per API call + 5 credits for each owned token.</h4><br/>
+                 * <p>Get NFTs on address. Returns all NFTs this address holds.<br/>
+                 * For Solana and Algorand, the metadata are fetched only for addresses which hold less then 50 tokens. It's possible to get metadata from the <a href="#operation/NftGetMetadataErc721">Get Metadata</a> operation.</p>
                  *
                  * @param chain Blockchain to work with
                  * @param address Account address you want to get balance of
@@ -783,7 +785,7 @@ export class NftErc721OrCompatibleService {
                  * @throws ApiError
                  */
                 public static nftGetTokensByAddressErc721(
-                    chain: 'ALGO' | 'CELO' | 'MATIC' | 'ETH',
+                    chain: 'ALGO' | 'CELO' | 'ETH' | 'MATIC' | 'SOL',
                     address: string,
                 ): CancelablePromise<Array<{
                     /**
@@ -793,15 +795,15 @@ export class NftErc721OrCompatibleService {
                     balances: Array<string>;
                     metadata?: Array<{
                         /**
-                         * TokenID of the NFT token owned by this address.
+                         * TokenID of the NFT token owned by this address. Valid for EVM chains only.
                          */
                         tokenId?: string;
                         /**
-                         * Metadata URL of the TokenID. This data don't have to be present, safest way (if not present) is to obtain them from the NFT Contract.tokenURI() method call.
+                         * Metadata URL of the NFT. This data don't have to be present, safest way (if not present) is to obtain them from the NFT Contract.tokenURI() method call.
                          */
                         url?: string;
                         /**
-                         * Metadata scheme obtained from the url. This data don't have to be present, safest way (if not present) is to obtain them from the NFT Contract.tokenURI() method call.
+                         * Metadata scheme obtained from the url. This data don't have to be present, safest way (if not present) is to obtain them from the <a href="#operation/NftGetMetadataErc721">Get Metadata</a> call.
                          */
                         metadata?: any;
                     }>;

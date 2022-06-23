@@ -63,7 +63,7 @@ export const abstractSdkLedgerService = () => {
     },
     account: {
       get: AccountService.getAccountByAccountId,
-      getAll: AccountService.getAllAccounts,
+      getAll: AccountService.getAccounts,
       getByCustomerId: AccountService.getAccountsByCustomerId,
       getBalance: AccountService.getAccountBalance,
       create: AccountService.createAccount,

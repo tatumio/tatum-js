@@ -993,7 +993,7 @@ export class BlockchainOperationsService {
     /**
      * Register new token in the ledger
      * <h4>2 credits per API call.</h4><br/>
-     * <p>First step to create new ERC|HRM|BEP-20 token with given supply on chosen blockchain with support of Tatum's private ledger.<br/>
+     * <p>First step to create new ERC|HRM|BEP-20|SPL token with given supply on chosen blockchain with support of Tatum's private ledger.<br/>
      * <br/>
      * <br/>
      * This method only creates Tatum Private ledger virtual currency with predefined parameters. It will not generate any blockchain smart contract.<br/>
@@ -1014,7 +1014,7 @@ export class BlockchainOperationsService {
      * @throws ApiError
      */
     public static registerErc20Token(
-        chain: 'ETH' | 'CELO' | 'MATIC' | 'KCS' | 'BSC' | 'ONE' | 'XDC' | 'KLAY',
+        chain: 'ETH' | 'CELO' | 'MATIC' | 'KCS' | 'BSC' | 'ONE' | 'XDC' | 'KLAY' | 'SOL',
         requestBody: (Erc20 | Erc20Address),
     ): CancelablePromise<Erc20Response> {
         return __request({
@@ -1249,7 +1249,7 @@ export class BlockchainOperationsService {
     /**
      * Send SOL from Tatum ledger to blockchain
      * <h4>10 credits per API call.</h4><br/><p>
-     * <p>Send SOL from virtual account to blockchain address. This will create Tatum internal withdrawal request with ID. When every system works as expected,
+     * <p>Send SOL/USDC_SOL/custom SPL token from virtual account to blockchain address. This will create Tatum internal withdrawal request with ID. When every system works as expected,
      * withdrawal request is marked as complete and transaction id is assigned to it.
      * <ul>
      * <li>If SOL server connection is unavailable, withdrawal request is cancelled.</li>

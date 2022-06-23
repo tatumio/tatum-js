@@ -39,7 +39,7 @@ export class AbstractSdkLedgerCustomerService {
   freezeAccount = AccountService.freezeAccount
   unfreezeAccount = AccountService.unfreezeAccount
   getAccountsByCustomerId = AccountService.getAccountsByCustomerId
-  getAllAccounts = AccountService.getAllAccounts
+  getAllAccounts = AccountService.getAccounts
   getAccountBalance = AccountService.getAccountBalance
 
   /**
