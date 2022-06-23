@@ -6,15 +6,15 @@ import type { CustomerRegistration } from './CustomerRegistration';
 
 export type Erc20Address = {
     /**
-     * ERC20/BEP20 token name. Used as a identifier within Tatum system and also in blockchain as a currency symbol.
+     * ERC20/BEP20/SPL token name. Used as a identifier within Tatum system and also in blockchain as a currency symbol.
      */
     symbol: string;
     /**
-     * Supply of ERC20/BEP20 token.
+     * Supply of ERC20/BEP20/SPL token.
      */
     supply: string;
     /**
-     * Decimals of ERC20/BEP20 token.
+     * Decimals of ERC20/BEP20/SPL token.
      */
     decimals: number;
     /**
@@ -22,9 +22,9 @@ export type Erc20Address = {
      */
     description: string;
     /**
-     * Base pair for ERC20/BEP20 token. Transaction value will be calculated according to this base pair.
+     * Base pair for ERC20/BEP20/SPL token. Transaction value will be calculated according to this base pair.
      */
-    basePair: 'AED' | 'AFN' | 'ALL' | 'AMD' | 'ANG' | 'AOA' | 'ARS' | 'AUD' | 'AWG' | 'AZN' | 'BAM' | 'BAT' | 'BBD' | 'BCH' | 'BDT' | 'BGN' | 'BHD' | 'BIF' | 'BMD' | 'BND' | 'BOB' | 'BRL' | 'BSD' | 'BTC' | 'BTN' | 'BWP' | 'BYN' | 'BYR' | 'BZD' | 'CAD' | 'CDF' | 'CELO' | 'CEUR' | 'CHF' | 'CLF' | 'CLP' | 'CNY' | 'COP' | 'CRC' | 'CUC' | 'CUP' | 'CUSD' | 'CVE' | 'CZK' | 'DJF' | 'DKK' | 'DOP' | 'DOGE' | 'DZD' | 'EGP' | 'ERN' | 'ETB' | 'ETH' | 'EUR' | 'FJD' | 'FKP' | 'FLOW' | 'FUSD' | 'FREE' | 'GMC' | 'GMC_BSC' | 'RMD' | 'GBP' | 'GEL' | 'GGP' | 'GHS' | 'GIP' | 'GMD' | 'GNF' | 'GTQ' | 'GYD' | 'HKD' | 'HNL' | 'HRK' | 'HTG' | 'HUF' | 'IDR' | 'ILS' | 'IMP' | 'INR' | 'IQD' | 'IRR' | 'ISK' | 'JEP' | 'JMD' | 'JOD' | 'JPY' | 'KES' | 'KGS' | 'KHR' | 'KMF' | 'KPW' | 'KRW' | 'KWD' | 'KYD' | 'KZT' | 'LAK' | 'LBP' | 'LEO' | 'LINK' | 'LKR' | 'LRD' | 'LSL' | 'LTC' | 'LTL' | 'LVL' | 'LYD' | 'MAD' | 'MDL' | 'MGA' | 'MKD' | 'MKR' | 'MMK' | 'MMY' | 'MNT' | 'MOP' | 'MRO' | 'MUR' | 'MVR' | 'MWK' | 'MXN' | 'MYR' | 'MZN' | 'NAD' | 'NGN' | 'NIO' | 'NOK' | 'NPR' | 'NZD' | 'OMR' | 'PAB' | 'PAX' | 'PAXG' | 'PEN' | 'PGK' | 'PHP' | 'PKR' | 'PLN' | 'PLTC' | 'PYG' | 'QAR' | 'RON' | 'RSD' | 'RUB' | 'RWF' | 'SAR' | 'SBD' | 'SCR' | 'SDG' | 'SEK' | 'SGD' | 'SHP' | 'SLL' | 'SOS' | 'SRD' | 'STD' | 'SVC' | 'SYP' | 'SZL' | 'THB' | 'TJS' | 'TMT' | 'TND' | 'TOP' | 'TRY' | 'TTD' | 'TRON' | 'TUSD' | 'BUSD' | 'TWD' | 'TZS' | 'UAH' | 'UGX' | 'UNI' | 'USD' | 'USDC' | 'USDT' | 'USDT_TRON' | 'USDT_MATIC' | 'QTUM' | 'UYU' | 'UZS' | 'VEF' | 'VND' | 'VUV' | 'WBTC' | 'WST' | 'XAF' | 'XAG' | 'XAU' | 'XCD' | 'XCON' | 'XDR' | 'XLM' | 'XOF' | 'XPF' | 'XRP' | 'YER' | 'ZAR' | 'ZMK' | 'ZMW' | 'ZWL';
+    basePair: 'AED' | 'AFN' | 'ALL' | 'AMD' | 'ANG' | 'AOA' | 'ARS' | 'AUD' | 'AWG' | 'AZN' | 'BAM' | 'BAT' | 'BBD' | 'BCH' | 'BDT' | 'BGN' | 'BHD' | 'BIF' | 'BMD' | 'BND' | 'BOB' | 'BRL' | 'BSD' | 'BTC' | 'BTN' | 'BWP' | 'BYN' | 'BYR' | 'BZD' | 'CAD' | 'CDF' | 'CELO' | 'CEUR' | 'CHF' | 'CLF' | 'CLP' | 'CNY' | 'COP' | 'CRC' | 'CUC' | 'CUP' | 'CUSD' | 'CVE' | 'CZK' | 'DJF' | 'DKK' | 'DOP' | 'DOGE' | 'DZD' | 'EGP' | 'ERN' | 'ETB' | 'ETH' | 'EUR' | 'FJD' | 'FKP' | 'FLOW' | 'FUSD' | 'FREE' | 'GMC' | 'GMC_BSC' | 'RMD' | 'GBP' | 'GEL' | 'GGP' | 'GHS' | 'GIP' | 'GMD' | 'GNF' | 'GTQ' | 'GYD' | 'HKD' | 'HNL' | 'HRK' | 'HTG' | 'HUF' | 'IDR' | 'ILS' | 'IMP' | 'INR' | 'IQD' | 'IRR' | 'ISK' | 'JEP' | 'JMD' | 'JOD' | 'JPY' | 'KES' | 'KGS' | 'KHR' | 'KMF' | 'KPW' | 'KRW' | 'KWD' | 'KYD' | 'KZT' | 'LAK' | 'LBP' | 'LEO' | 'LINK' | 'LKR' | 'LRD' | 'LSL' | 'LTC' | 'LTL' | 'LVL' | 'LYD' | 'MAD' | 'MDL' | 'MGA' | 'MKD' | 'MKR' | 'MMK' | 'MMY' | 'MNT' | 'MOP' | 'MRO' | 'MUR' | 'MVR' | 'MWK' | 'MXN' | 'MYR' | 'MZN' | 'NAD' | 'NGN' | 'NIO' | 'NOK' | 'NPR' | 'NZD' | 'OMR' | 'PAB' | 'PAX' | 'PAXG' | 'PEN' | 'PGK' | 'PHP' | 'PKR' | 'PLN' | 'PYG' | 'QAR' | 'RON' | 'RSD' | 'RUB' | 'RWF' | 'SAR' | 'SBD' | 'SCR' | 'SDG' | 'SEK' | 'SGD' | 'SHP' | 'SLL' | 'SOS' | 'SRD' | 'STD' | 'SVC' | 'SYP' | 'SZL' | 'THB' | 'TJS' | 'TMT' | 'TND' | 'TOP' | 'TRY' | 'TTD' | 'TRON' | 'TUSD' | 'BUSD' | 'TWD' | 'TZS' | 'UAH' | 'UGX' | 'UNI' | 'USD' | 'USDC' | 'USDT' | 'USDT_TRON' | 'USDT_MATIC' | 'QTUM' | 'UYU' | 'UZS' | 'VEF' | 'VND' | 'VUV' | 'WBTC' | 'WST' | 'XAF' | 'XAG' | 'XAU' | 'XCD' | 'XCON' | 'XDR' | 'XLM' | 'XOF' | 'XPF' | 'XRP' | 'YER' | 'ZAR' | 'ZMK' | 'ZMW' | 'ZWL';
     /**
      * Exchange rate of the base pair. Each unit of the created curency will represent value of baseRate*1 basePair.
      */
@@ -35,7 +35,7 @@ export type Erc20Address = {
      */
     accountingCurrency?: 'AED' | 'AFN' | 'ALL' | 'AMD' | 'ANG' | 'AOA' | 'ARS' | 'AUD' | 'AWG' | 'AZN' | 'BAM' | 'BBD' | 'BDT' | 'BGN' | 'BHD' | 'BIF' | 'BMD' | 'BND' | 'BOB' | 'BRL' | 'BSD' | 'BTN' | 'BWP' | 'BYN' | 'BYR' | 'BZD' | 'CAD' | 'CDF' | 'CHF' | 'CLF' | 'CLP' | 'CNY' | 'COP' | 'CRC' | 'CUC' | 'CUP' | 'CVE' | 'CZK' | 'DJF' | 'DKK' | 'DOP' | 'DOGE' | 'DZD' | 'EGP' | 'ERN' | 'ETB' | 'EUR' | 'FJD' | 'FKP' | 'FLOW' | 'FUSD' | 'GBP' | 'GEL' | 'GGP' | 'GHS' | 'GIP' | 'GMD' | 'GNF' | 'GTQ' | 'GYD' | 'HKD' | 'HNL' | 'HRK' | 'HTG' | 'HUF' | 'IDR' | 'ILS' | 'IMP' | 'INR' | 'IQD' | 'IRR' | 'ISK' | 'JEP' | 'JMD' | 'JOD' | 'JPY' | 'KES' | 'KGS' | 'KHR' | 'KMF' | 'KPW' | 'KRW' | 'KWD' | 'KYD' | 'KZT' | 'LAK' | 'LBP' | 'LKR' | 'LRD' | 'LSL' | 'LTL' | 'LVL' | 'LYD' | 'MAD' | 'MDL' | 'MGA' | 'MKD' | 'MMK' | 'MNT' | 'MOP' | 'MRO' | 'MUR' | 'MVR' | 'MWK' | 'MXN' | 'MYR' | 'MZN' | 'NAD' | 'NGN' | 'NIO' | 'NOK' | 'NPR' | 'NZD' | 'OMR' | 'PAB' | 'PEN' | 'PGK' | 'PHP' | 'PKR' | 'PLN' | 'PYG' | 'QAR' | 'RON' | 'RSD' | 'RUB' | 'RWF' | 'SAR' | 'SBD' | 'SCR' | 'SDG' | 'SEK' | 'SGD' | 'SHP' | 'SLL' | 'SOS' | 'SRD' | 'STD' | 'SVC' | 'SYP' | 'SZL' | 'THB' | 'TJS' | 'TMT' | 'TND' | 'TOP' | 'TRY' | 'TTD' | 'TWD' | 'TZS' | 'UAH' | 'UGX' | 'USD' | 'UYU' | 'UZS' | 'VEF' | 'VND' | 'VUV' | 'WST' | 'XAF' | 'XAG' | 'XAU' | 'XCD' | 'XDR' | 'XOF' | 'XPF' | 'YER' | 'ZAR' | 'ZMK' | 'ZMW' | 'ZWL';
     /**
-     * Address on Ethereum blockchain, where all initial supply will be stored. Either xpub and derivationIndex, or address must be present, not both.
+     * Address on the blockchain, where all initial supply will be stored. Either xpub and derivationIndex, or address must be present, not both. For Solana, only address can be used.
      */
     address: string;
 }

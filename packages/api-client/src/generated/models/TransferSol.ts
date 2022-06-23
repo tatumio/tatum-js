@@ -16,7 +16,7 @@ export type TransferSol = {
      */
     address: string;
     /**
-     * Amount to be sent, in SOL.
+     * Amount to be sent, in SOL / USDC_SOL or custom SPL token based on the senderAccountId currency type.
      */
     amount: string;
     /**

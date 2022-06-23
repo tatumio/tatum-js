@@ -7,6 +7,7 @@ import type { Blockage } from '../models/Blockage';
 import type { BlockAmount } from '../models/BlockAmount';
 import type { CreateAccount } from '../models/CreateAccount';
 import type { CreateAccountBatch } from '../models/CreateAccountBatch';
+import type { EntitiesCount } from '../models/EntitiesCount';
 import type { Id } from '../models/Id';
 import type { TransactionResult } from '../models/TransactionResult';
 import type { UnblockAmount } from '../models/UnblockAmount';
@@ -78,23 +79,101 @@ export class AccountService {
      * List all accounts
      * <h4>1 credit per API call.</h4><br/><p>Lists all accounts. Inactive accounts are also visible.</p>
      * @param pageSize Max number of items per page is 50.
-     * @param offset Offset to obtain the next page of data.
-     * @param accountCode For bookkeeping to distinct account purpose.
+     * @param page Page number
+     * @param sort Direction of sorting. Can be asc or desc
+     * @param sortBy Sort by
+     * @param active Filter only active or non active accounts
+     * @param onlyNonZeroBalance Filter only accounts with non zero balances
+     * @param frozen Filter only frozen or non frozen accounts
+     * @param currency Filter by currency
+     * @param accountCode Filter by account code
+     * @param accountNumber Filter by account number
+     * @param customerId Filter by customer id
      * @returns Account OK
      * @throws ApiError
      */
-    public static getAllAccounts(
-        pageSize: number,
-        offset?: number,
+    public static getAccounts(
+        pageSize?: number,
+        page?: number,
+        sort?: 'asc' | 'desc',
+        sortBy?: '_id' | 'account_code' | 'customer_id' | 'account_balance' | 'available_balance',
+        active?: boolean,
+        onlyNonZeroBalance?: boolean,
+        frozen?: boolean,
+        currency?: string,
         accountCode?: string,
+        accountNumber?: string,
+        customerId?: string,
     ): CancelablePromise<Array<Account>> {
         return __request({
             method: 'GET',
             path: `/v3/ledger/account`,
             query: {
                 'pageSize': pageSize,
-                'offset': offset,
+                'page': page,
+                'sort': sort,
+                'sortBy': sortBy,
+                'active': active,
+                'onlyNonZeroBalance': onlyNonZeroBalance,
+                'frozen': frozen,
+                'currency': currency,
                 'accountCode': accountCode,
+                'accountNumber': accountNumber,
+                'customerId': customerId,
+            },
+            errors: {
+                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                500: `Internal server error. There was an error on the server while processing the request.`,
+            },
+        });
+    }
+
+    /**
+     * Count of found entities for get accounts request
+     * <h4>1 credit per API call.</h4><br/><p>Count of accounts that were found from /v3/ledger/account</p>
+     * @param pageSize Max number of items per page is 50.
+     * @param page Page number
+     * @param sort Direction of sorting. Can be asc or desc
+     * @param sortBy Sort by
+     * @param active Filter only active or non active accounts
+     * @param onlyNonZeroBalance Filter only accounts with non zero balances
+     * @param frozen Filter only frozen or non frozen accounts
+     * @param currency Filter by currency
+     * @param accountCode Filter by account code
+     * @param accountNumber Filter by account number
+     * @param customerId Filter by customer id
+     * @returns EntitiesCount OK
+     * @throws ApiError
+     */
+    public static getAccountsCount(
+        pageSize?: number,
+        page?: number,
+        sort?: 'asc' | 'desc',
+        sortBy?: '_id' | 'account_code' | 'customer_id' | 'account_balance' | 'available_balance',
+        active?: boolean,
+        onlyNonZeroBalance?: boolean,
+        frozen?: boolean,
+        currency?: string,
+        accountCode?: string,
+        accountNumber?: string,
+        customerId?: string,
+    ): CancelablePromise<EntitiesCount> {
+        return __request({
+            method: 'GET',
+            path: `/v3/ledger/account/count`,
+            query: {
+                'pageSize': pageSize,
+                'page': page,
+                'sort': sort,
+                'sortBy': sortBy,
+                'active': active,
+                'onlyNonZeroBalance': onlyNonZeroBalance,
+                'frozen': frozen,
+                'currency': currency,
+                'accountCode': accountCode,
+                'accountNumber': accountNumber,
+                'customerId': customerId,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,

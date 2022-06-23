@@ -12,10 +12,12 @@ import type { CreateSubscriptionOffchain } from '../models/CreateSubscriptionOff
 import type { CreateSubscriptionPending } from '../models/CreateSubscriptionPending';
 import type { CreateSubscriptionTradeMatch } from '../models/CreateSubscriptionTradeMatch';
 import type { CreateSubscriptionTxInTheBlock } from '../models/CreateSubscriptionTxInTheBlock';
+import type { EntitiesCount } from '../models/EntitiesCount';
 import type { HmacWebHook } from '../models/HmacWebHook';
 import type { Id } from '../models/Id';
 import type { Subscription } from '../models/Subscription';
 import type { Transaction } from '../models/Transaction';
+import type { WebHook } from '../models/WebHook';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
 
@@ -291,12 +293,14 @@ export class NotificationSubscriptionsService {
                                      * <h4>1 credit per API call.</h4><br/><p>List all active subscriptions.</p>
                                      * @param pageSize Max number of items per page is 50.
                                      * @param offset Offset to obtain next page of the data.
+                                     * @param address Value for filtering by address
                                      * @returns Subscription OK
                                      * @throws ApiError
                                      */
                                     public static getSubscriptions(
                                         pageSize: number,
                                         offset?: number,
+                                        address?: string,
                                     ): CancelablePromise<Array<Subscription>> {
                                         return __request({
                                             method: 'GET',
@@ -304,6 +308,7 @@ export class NotificationSubscriptionsService {
                                             query: {
                                                 'pageSize': pageSize,
                                                 'offset': offset,
+                                                'address': address,
                                             },
                                             errors: {
                                                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
@@ -363,6 +368,36 @@ export class NotificationSubscriptionsService {
                                     }
 
                                     /**
+                                     * Count of found entities for get webhook request
+                                     * <h4>1 credit per API call.</h4><br/><p>Count of subscriptions that were found from /v3/subscription</p>
+                                     * @param pageSize Max number of items per page is 50.
+                                     * @param offset Offset to obtain next page of the data.
+                                     * @param address Value for filtering by address
+                                     * @returns EntitiesCount OK
+                                     * @throws ApiError
+                                     */
+                                    public static getSubscriptionsCount(
+                                        pageSize: number,
+                                        offset?: number,
+                                        address?: string,
+                                    ): CancelablePromise<EntitiesCount> {
+                                        return __request({
+                                            method: 'GET',
+                                            path: `/v3/subscription/count`,
+                                            query: {
+                                                'pageSize': pageSize,
+                                                'offset': offset,
+                                                'address': address,
+                                            },
+                                            errors: {
+                                                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                                                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                                                500: `Internal server error. There was an error on the server while processing the request.`,
+                                            },
+                                        });
+                                    }
+
+                                    /**
                                      * Cancel existing subscription
                                      * <h4>1 credit for API call</h4><br/><p>Cancel existing subscription.</p>
                                      * @param id Subscription ID
@@ -406,6 +441,72 @@ export class NotificationSubscriptionsService {
                                                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
                                                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                                                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                                                500: `Internal server error. There was an error on the server while processing the request.`,
+                                            },
+                                        });
+                                    }
+
+                                    /**
+                                     * List all executed webhooks
+                                     * <h4>1 credit per API call.</h4><br/><p>List all webhooks.</p>
+                                     * @param pageSize Max number of items per page is 50.
+                                     * @param offset Offset to obtain the next page of data.
+                                     * @param direction Direction of sorting
+                                     * @param failed Flag indicating whether the webhook was successful or not
+                                     * @returns WebHook OK
+                                     * @throws ApiError
+                                     */
+                                    public static getAllWebhooks(
+                                        pageSize: number,
+                                        offset?: number,
+                                        direction?: 'asc' | 'desc',
+                                        failed?: boolean,
+                                    ): CancelablePromise<Array<WebHook>> {
+                                        return __request({
+                                            method: 'GET',
+                                            path: `/v3/subscription/webhook`,
+                                            query: {
+                                                'pageSize': pageSize,
+                                                'offset': offset,
+                                                'direction': direction,
+                                                'failed': failed,
+                                            },
+                                            errors: {
+                                                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                                                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                                                500: `Internal server error. There was an error on the server while processing the request.`,
+                                            },
+                                        });
+                                    }
+
+                                    /**
+                                     * Count of found entities for get webhook request
+                                     * <h4>1 credit per API call.</h4><br/><p>Count of webhooks that were found from /v3/subscription/webhook</p>
+                                     * @param pageSize Max number of items per page is 50.
+                                     * @param offset Offset to obtain the next page of data.
+                                     * @param direction Direction of sorting
+                                     * @param failed Flag indicating whether the webhook was successful or not
+                                     * @returns EntitiesCount OK
+                                     * @throws ApiError
+                                     */
+                                    public static getAllWebhooksCount(
+                                        pageSize: number,
+                                        offset?: number,
+                                        direction?: 'asc' | 'desc',
+                                        failed?: boolean,
+                                    ): CancelablePromise<EntitiesCount> {
+                                        return __request({
+                                            method: 'GET',
+                                            path: `/v3/subscription/webhook/count`,
+                                            query: {
+                                                'pageSize': pageSize,
+                                                'offset': offset,
+                                                'direction': direction,
+                                                'failed': failed,
+                                            },
+                                            errors: {
+                                                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                                                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                                                 500: `Internal server error. There was an error on the server while processing the request.`,
                                             },
                                         });

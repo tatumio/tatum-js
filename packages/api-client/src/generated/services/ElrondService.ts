@@ -13,7 +13,7 @@ import type { TransferEgldBlockchainKMS } from '../models/TransferEgldBlockchain
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
 
-export class ElrodnService {
+export class ElrondService {
 
     /**
      * Generate EGLD wallet

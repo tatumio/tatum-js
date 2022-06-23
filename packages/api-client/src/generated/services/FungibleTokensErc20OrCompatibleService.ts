@@ -318,23 +318,23 @@ export class FungibleTokensErc20OrCompatibleService {
     }
 
     /**
-     * Get ERC20 tokens by address
-     * <h4>1 credit per API call.</h4><br/><p>Get ERC20 Account balance. Returns number of tokens Account holds.</p>
+     * Get ERC20/SPL/ASA tokens by address
+     * <h4>1 credit per API call.</h4><br/><p>Get ERC20/BEP20/SPL account balance. Returns number of tokens that Account holds.</p>
      * @param chain Network name
      * @param address Account address you want to get balance of
      * @returns any OK
      * @throws ApiError
      */
     public static erc20GetBalanceAddress(
-        chain: 'CELO' | 'ETH' | 'MATIC',
+        chain: 'CELO' | 'ETH' | 'MATIC' | 'SOL' | 'ALGO',
         address: string,
     ): CancelablePromise<Array<{
         /**
-         * Contract address of the owned ERC20 token
+         * Contract address of the owned ERC20/SPL/ASA token
          */
         contractAddress?: string;
         /**
-         * Number of ERC20 tokens.
+         * Number of ERC20/SPL/ASA tokens.
          */
         balance?: string;
     }>> {

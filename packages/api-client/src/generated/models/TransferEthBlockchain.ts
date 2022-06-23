@@ -18,7 +18,7 @@ export type TransferEthBlockchain = {
     /**
      * Currency to transfer from Ethereum Blockchain Account.
      */
-    currency: 'USDT' | 'LEO' | 'LINK' | 'UNI' | 'FREE' | 'GMC' | 'GMC_BSC' | 'RMD' | 'MKR' | 'USDC' | 'BAT' | 'TUSD' | 'BUSD' | 'PAX' | 'PAXG' | 'PLTC' | 'MMY' | 'WBTC' | 'XCON' | 'ETH';
+    currency: 'USDT' | 'LEO' | 'LINK' | 'UNI' | 'FREE' | 'GMC' | 'GMC_BSC' | 'RMD' | 'MKR' | 'USDC' | 'BAT' | 'TUSD' | 'BUSD' | 'PAX' | 'PAXG' | 'MMY' | 'WBTC' | 'XCON' | 'ETH';
     /**
      * Custom defined fee. If not present, it will be calculated automatically.
      */
