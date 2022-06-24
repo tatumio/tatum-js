@@ -10,13 +10,7 @@ import {
 } from '@tatumio/api-client'
 import { amountUtils, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { BtcSdkError } from '../btc.sdk.errors'
-import { BtcBasedTx } from '@tatumio/shared-blockchain-btc-based'
-
-export type BtcTransactionTypes =
-  | BtcTransactionFromAddress
-  | BtcTransactionFromAddressKMS
-  | BtcTransactionFromUTXO
-  | BtcTransactionFromUTXOKMS
+import { BtcBasedTx, BtcTransactionTypes } from '@tatumio/shared-blockchain-btc-based'
 
 export const btcTransactions = (
   apiCalls: {
