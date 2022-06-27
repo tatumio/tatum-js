@@ -28,23 +28,20 @@ export type BtcBasedTx<T> = {
 }
 
 export type BtcTransactionTypes =
-  | BtcTransactionFromAddress
-  | BtcTransactionFromAddressKMS
-  | BtcTransactionFromUTXO
-  | BtcTransactionFromUTXOKMS
+  | (BtcTransactionFromAddress & FeeChange)
+  | (BtcTransactionFromAddressKMS & FeeChange)
+  | (BtcTransactionFromUTXO & FeeChange)
+  | (BtcTransactionFromUTXOKMS & FeeChange)
 
-type FeeChange = { fee: number; change: string }
+export type FeeChange = { fee?: number; change?: string }
 
 export type LtcTransactionTypes =
-  | LtcTransactionAddress
-  | LtcTransactionAddressKMS
-  | LtcTransactionUTXO
-  | LtcTransactionUTXOKMS
+  | (LtcTransactionAddress & FeeChange)
+  | (LtcTransactionAddressKMS & FeeChange)
+  | (LtcTransactionUTXO & FeeChange)
+  | (LtcTransactionUTXOKMS & FeeChange)
 
-export type BtcTransactionTypesWithFeeChange = BtcTransactionTypes & FeeChange
-export type LtcTransactionTypesWithFeeChange = LtcTransactionTypes & FeeChange
-
-type BtcBasedTransactionTypes = BtcTransactionTypesWithFeeChange | LtcTransactionTypesWithFeeChange
+type BtcBasedTransactionTypes = BtcTransactionTypes | LtcTransactionTypes
 
 type BtcFromAddressTypes = BtcTransactionFromAddress | BtcTransactionFromAddressKMS
 
