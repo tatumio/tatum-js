@@ -1,5 +1,6 @@
 import { SignatureId } from '@tatumio/api-client'
 import BigNumber from 'bignumber.js'
+import { SdkMessageArgs } from './errors.abstract.sdk'
 
 export const amountUtils = {
   /**
@@ -19,3 +20,14 @@ export function isWithSignatureId<
 }
 
 export type WithoutChain<T extends { chain: unknown }> = Omit<T, 'chain'>
+
+export const placeArgsToString = (message: string, args?: SdkMessageArgs): string => {
+  if (args?.length > 0) {
+    let placedMessage = message
+    args.forEach((value, index) => {
+      placedMessage = placedMessage.replace(`{${index}}`, `${value}`)
+    })
+    return placedMessage
+  }
+  return message
+}

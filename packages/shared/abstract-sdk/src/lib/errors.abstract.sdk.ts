@@ -1,3 +1,5 @@
+import { placeArgsToString } from './utils'
+
 export type SdkErrorArgs = {
   originalError?: Error
   originalErrorAsString?: string
@@ -25,14 +27,14 @@ export class SdkError extends Error {
   readonly errorMessage?: string
   readonly originalError?: Error | string
 
-  constructor(args: SdkErrorArgs | { code: SdkErrorCode }) {
+  constructor(args: SdkErrorArgs | { code: SdkErrorCode; messageArgs?: SdkMessageArgs }) {
     let errorCode
     let originalError
     let errorMessage
 
     if ('code' in args) {
       errorCode = args.code
-      errorMessage = SdkErrorMessage[errorCode]
+      errorMessage = placeArgsToString(SdkErrorMessage[errorCode], args.messageArgs)
     } else {
       if (args.originalError instanceof SdkError) {
         errorCode = args.originalError.errorCode
@@ -72,6 +74,8 @@ export class SdkError extends Error {
   }
 }
 
+export type SdkMessageArgs = (string | number)[]
+
 export enum SdkErrorCode {
   API_ERROR = 'api.error',
   COMMON_ERROR = 'sdk.common.error',
@@ -99,7 +103,7 @@ export const SdkErrorMessage: Record<SdkErrorCode, string> = {
   [SdkErrorCode.VALIDATION_AMOUNT]: `Amount has to be positive number`,
   // BTC
   [SdkErrorCode.BTC_FEE_TOO_SMALL]: `Fee is too small. Please make sure that amount to send < balance`,
-  [SdkErrorCode.BTC_UTXO_NOT_FOUND]: `UTXO not found. Please check that outputs are valid`,
+  [SdkErrorCode.BTC_UTXO_NOT_FOUND]: `UTXO with hash {0} and index {1} not found. Please check that outputs are valid`,
   [SdkErrorCode.BTC_NOT_ENOUGH_BALANCE]: `Not enough coins on address to perform this transaction`,
   [SdkErrorCode.BTC_FEE_IS_TOO_LARGE]: `Fee is to big, make sure it's not a mistake`,
   [SdkErrorCode.TX_NOT_FOUND]: `TX not found`,
