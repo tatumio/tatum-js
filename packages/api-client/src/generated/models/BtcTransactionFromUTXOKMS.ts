@@ -33,12 +33,4 @@ export type BtcTransactionFromUTXOKMS = {
          */
         value: number;
     }>;
-    /**
-     * Change address
-     */
-    change?: string;
-    /**
-     * Fee of transaction
-     */
-    fee?: number;
 }

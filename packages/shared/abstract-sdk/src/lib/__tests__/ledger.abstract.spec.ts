@@ -222,7 +222,7 @@ describe('SDK - ledger', () => {
     }
     const accountLedgerFunctionsMapping: Omit<TestCasesApiCallMapping<typeof account>, 'generate'> = {
       get: [api.getAccountByAccountId, accountId],
-      getAll: [api.getAllAccounts, 10, 10],
+      getAll: [api.getAccounts, 10, 10],
       getByCustomerId: [api.getAccountsByCustomerId, 10, 'customer-id'],
       getBalance: [api.getAccountBalance, accountId],
       create: [api.createAccount, createAccountRequestBody],

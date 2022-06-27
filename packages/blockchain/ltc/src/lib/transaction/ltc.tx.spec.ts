@@ -2,8 +2,9 @@ import '@tatumio/shared-testing-common'
 import { ltcTransactions } from './ltc.tx'
 import { mockHelper } from '@tatumio/shared-testing-common'
 import * as apiClient from '@tatumio/api-client'
-import { BtcTransactionFromAddress, LtcTransactionUTXO, LtcTx } from '@tatumio/api-client'
+import { LtcTransactionAddress, LtcTransactionUTXO, LtcTx, LtcUTXO } from '@tatumio/api-client'
 import { btcBasedTxTestFactory } from '@tatumio/shared-testing-btc-based'
+import { amountUtils } from '@tatumio/shared-abstract-sdk'
 
 jest.mock('@tatumio/api-client')
 const mockedApi = mockHelper.mockApi(apiClient)
@@ -33,7 +34,8 @@ describe('LTC transactions', () => {
       },
       mock: {
         requestGetRawTx: mockRequestGetRawTx,
-        requestGetRawTxNotFound: mockRequestGetRawTxNotFound,
+        requestGetUtxo: mockRequestGetUtxo,
+        requestGetUtxoNotFound: mockRequestGetUtxoNotFound,
         broadcast: mockedApi.blockchain.ltc.ltcBroadcast,
       },
       getRequestBodyFromUTXO,
@@ -50,13 +52,15 @@ describe('LTC transactions', () => {
       },
       mock: {
         requestGetTxByAddress: mockRequestGetTxByAddress,
+        requestGetUtxo: mockRequestGetUtxo,
+        requestGetUtxoNotFound: mockRequestGetUtxoNotFound,
         broadcast: mockedApi.blockchain.ltc.ltcBroadcast,
       },
       getRequestBodyFromAddress,
     })
   })
 
-  function getRequestBodyFromAddress(amount: number): BtcTransactionFromAddress {
+  function getRequestBodyFromAddress(amount: number): LtcTransactionAddress {
     return {
       fromAddress: [
         {
@@ -109,8 +113,19 @@ describe('LTC transactions', () => {
     mockedApi.blockchain.ltc.ltcGetRawTransaction.mockResolvedValue(obj)
   }
 
-  function mockRequestGetRawTxNotFound() {
-    mockedApi.blockchain.ltc.ltcGetRawTransaction.mockRejectedValue(mockHelper.apiError.notFound())
+  function mockRequestGetUtxo(
+    obj: LtcUTXO = {
+      hash: TX_HASH,
+      address: ADDRESS,
+      value: amountUtils.toSatoshis(UTXO_AMOUNT),
+      index: 1,
+    },
+  ) {
+    mockedApi.blockchain.ltc.ltcGetUtxo.mockResolvedValue(obj)
+  }
+
+  function mockRequestGetUtxoNotFound() {
+    mockedApi.blockchain.ltc.ltcGetUtxo.mockRejectedValue(mockHelper.apiError.notFound())
   }
 
   function mockRequestGetTxByAddress(

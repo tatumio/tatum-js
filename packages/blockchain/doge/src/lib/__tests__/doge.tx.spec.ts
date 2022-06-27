@@ -29,7 +29,8 @@ describe('DOGE transactions', () => {
       },
       mock: {
         requestGetRawTx: () => {},
-        requestGetRawTxNotFound: () => {},
+        requestGetUtxo: () => {},
+        requestGetUtxoNotFound: () => {},
         broadcast: mockedApi.blockchain.doge.dogeBroadcast,
       },
       getRequestBodyFromUTXO,

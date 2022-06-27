@@ -1,0 +1,55 @@
+import {
+  ApiServices,
+  BtcTransactionFromAddress,
+  BtcTransactionFromAddressKMS,
+  BtcTransactionFromUTXO,
+  BtcTransactionFromUTXOKMS,
+  BtcUTXO,
+  LtcTransactionAddress,
+  LtcTransactionAddressKMS,
+  LtcTransactionUTXO,
+  LtcTransactionUTXOKMS,
+  LtcUTXO,
+  TransactionHashKMS,
+} from '@tatumio/api-client'
+import { PrivateKey, Script, Transaction } from 'bitcore-lib'
+import { amountUtils, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
+import { BtcBasedSdkError } from '../btc-based.sdk.errors'
+
+export type BtcBasedTx<T> = {
+  sendTransaction: (body: T, options: { testnet: boolean }) => Promise<TransactionHashKMS>
+  prepareSignedTransaction: (body: T, options: { testnet: boolean }) => Promise<string>
+}
+
+export type BtcTransactionTypes =
+  | BtcTransactionFromAddress
+  | BtcTransactionFromAddressKMS
+  | BtcTransactionFromUTXO
+  | BtcTransactionFromUTXOKMS
+
+export type LtcTransactionTypes =
+  | LtcTransactionAddress
+  | LtcTransactionAddressKMS
+  | LtcTransactionUTXO
+  | LtcTransactionUTXOKMS
+
+type BtcBasedTransactionTypes = BtcTransactionTypes | LtcTransactionTypes
+
+type BtcFromAddressTypes = BtcTransactionFromAddress | BtcTransactionFromAddressKMS
+
+type LtcFromAddressTypes = LtcTransactionAddress | LtcTransactionAddressKMS
+
+type BtcFromUtxoTypes = BtcTransactionFromUTXO | BtcTransactionFromUTXOKMS
+type LtcFromUtxoTypes = LtcTransactionUTXO | LtcTransactionUTXOKMS
+
+type GetTxByAddressType =
+  | typeof ApiServices.blockchain.bitcoin.btcGetTxByAddress
+  | typeof ApiServices.blockchain.ltc.ltcGetTxByAddress
+
+type GetUtxoType =
+  | typeof ApiServices.blockchain.bitcoin.btcGetUtxo
+  | typeof ApiServices.blockchain.ltc.ltcGetUtxo
+
+type BroadcastType =
+  | typeof ApiServices.blockchain.bitcoin.btcBroadcast
+  | typeof ApiServices.blockchain.ltc.ltcBroadcast

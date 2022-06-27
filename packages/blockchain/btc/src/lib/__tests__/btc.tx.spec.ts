@@ -1,6 +1,6 @@
 import '@tatumio/shared-testing-common'
 import * as apiClient from '@tatumio/api-client'
-import { BtcTransactionFromAddress, BtcTransactionFromUTXO, BtcTx } from '@tatumio/api-client'
+import { BtcTransactionFromAddress, BtcTransactionFromUTXO, BtcTx, BtcUTXO } from '@tatumio/api-client'
 import { btcTransactions } from '../transaction/btc.tx'
 import { mockHelper } from '@tatumio/shared-testing-common'
 import { amountUtils } from '@tatumio/shared-abstract-sdk'
@@ -34,7 +34,8 @@ describe('BTC transaction', () => {
       },
       mock: {
         requestGetRawTx: mockRequestGetRawTx,
-        requestGetRawTxNotFound: mockRequestGetRawTxNotFound,
+        requestGetUtxoNotFound: mockRequestGetUtxoNotFound,
+        requestGetUtxo: mockRequestGetUtxo,
         broadcast: mockedApi.blockchain.bitcoin.btcBroadcast,
       },
       getRequestBodyFromUTXO,
@@ -51,6 +52,8 @@ describe('BTC transaction', () => {
       },
       mock: {
         requestGetTxByAddress: mockRequestGetTxByAddress,
+        requestGetUtxo: mockRequestGetUtxo,
+        requestGetUtxoNotFound: mockRequestGetUtxoNotFound,
         broadcast: mockedApi.blockchain.bitcoin.btcBroadcast,
       },
       getRequestBodyFromAddress,
@@ -104,8 +107,19 @@ describe('BTC transaction', () => {
     mockedApi.blockchain.bitcoin.btcGetRawTransaction.mockResolvedValue(obj)
   }
 
-  function mockRequestGetRawTxNotFound() {
-    mockedApi.blockchain.bitcoin.btcGetRawTransaction.mockRejectedValue(mockHelper.apiError.notFound())
+  function mockRequestGetUtxo(
+    obj: BtcUTXO = {
+      hash: TX_HASH,
+      address: ADDRESS,
+      value: amountUtils.toSatoshis(UTXO_AMOUNT),
+      index: 0,
+    },
+  ) {
+    mockedApi.blockchain.bitcoin.btcGetUtxo.mockResolvedValue(obj)
+  }
+
+  function mockRequestGetUtxoNotFound() {
+    mockedApi.blockchain.bitcoin.btcGetUtxo.mockRejectedValue(mockHelper.apiError.notFound())
   }
 
   function mockRequestGetTxByAddress(
