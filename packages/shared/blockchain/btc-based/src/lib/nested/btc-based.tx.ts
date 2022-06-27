@@ -19,7 +19,7 @@ import { BtcBasedSdkError } from '../btc-based.sdk.errors'
 import BigNumber from 'bignumber.js'
 
 interface BlockchainTransaction extends Transaction {
-  serialize(unchecked?: boolean)
+  serialize(unchecked?: boolean): string
 }
 
 export type BtcBasedTx<T> = {
@@ -83,7 +83,7 @@ export const btcBasedTransactions = (
         const txs = await apiCalls.getTxByAddress(item.address, 50) // @TODO OPENAPI remove pageSize
 
         for (const tx of txs) {
-          if (!tx.outputs) throw new BtcBasedSdkError(SdkErrorCode.BTC_UTXO_NOT_FOUND, [tx.hash, 0])
+          if (!tx.outputs) throw new BtcBasedSdkError(SdkErrorCode.BTC_UTXO_NOT_FOUND, [tx.hash ?? '', 0])
 
           if (tx.hash === undefined) continue
 
