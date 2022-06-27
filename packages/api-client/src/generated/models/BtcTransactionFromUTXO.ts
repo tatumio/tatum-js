@@ -33,12 +33,4 @@ export type BtcTransactionFromUTXO = {
          */
         value: number;
     }>;
-    /**
-     * Change address
-     */
-    change?: string;
-    /**
-     * Fee of transaction
-     */
-    fee?: number;
 }
