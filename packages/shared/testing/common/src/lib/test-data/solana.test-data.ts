@@ -1,5 +1,5 @@
 export const SOLANA_TEST_DATA = {
-  PROVIDER: 'https://api.testnet.solana.com',
+  PROVIDER: 'https://api.devnet.solana.com',
   MNEMONIC: 'punch scatter wrist pride cargo faint put skin embark width field entire',
   ADDRESS: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
   PRIVATE_KEY:
