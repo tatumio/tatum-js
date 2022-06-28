@@ -31,9 +31,13 @@ describe('BCH transactions', () => {
         utxoAmount: UTXO_AMOUNT,
         validTxData: VALID_TX_DATA,
       },
+      skipTest: {
+        txNotFound: true,
+      },
       mock: {
         requestGetRawTx: mockRequestGetRawTx,
-        requestGetRawTxNotFound: mockRequestGetRawTxNotFound,
+        requestGetUtxo: () => {}, //TODO
+        requestGetUtxoNotFound: () => {}, //TODO
         broadcast: mockedApi.blockchain.bcash.bchBroadcast,
       },
       getRequestBodyFromUTXO,
