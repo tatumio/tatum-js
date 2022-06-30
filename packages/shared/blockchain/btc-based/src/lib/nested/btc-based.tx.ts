@@ -18,7 +18,7 @@ import { amountUtils, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { BtcBasedSdkError } from '../btc-based.sdk.errors'
 import BigNumber from 'bignumber.js'
 
-interface BlockchainTransaction extends Transaction {
+interface BtcBasedTransaction extends Transaction {
   serialize(unchecked?: boolean): string
 }
 
@@ -80,7 +80,8 @@ export const btcBasedTransactions = (
         const txs = await apiCalls.getTxByAddress(item.address, 50) // @TODO OPENAPI remove pageSize
 
         for (const tx of txs) {
-          if (!tx.outputs) throw new BtcBasedSdkError(SdkErrorCode.BTC_UTXO_NOT_FOUND, [tx.hash ?? '', 0])
+          if (!tx.outputs)
+            throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_UTXO_NOT_FOUND, [tx.hash ?? '', 0])
 
           if (tx.hash === undefined) continue
 
@@ -124,7 +125,7 @@ export const btcBasedTransactions = (
       for (const utxoItem of body.fromUTXO) {
         const utxo = await getUtxoSilent(utxoItem.txHash, utxoItem.index)
         if (utxo === null || utxo.address === undefined) {
-          throw new BtcBasedSdkError(SdkErrorCode.BTC_UTXO_NOT_FOUND, [utxoItem.txHash, utxoItem.index])
+          throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_UTXO_NOT_FOUND, [utxoItem.txHash, utxoItem.index])
         }
 
         const script = Script.fromAddress(utxo.address).toString()
@@ -163,7 +164,7 @@ export const btcBasedTransactions = (
     options: { testnet: boolean },
   ): Promise<string> {
     try {
-      const tx: BlockchainTransaction = new Transaction()
+      const tx: BtcBasedTransaction = new Transaction()
       let privateKeysToSign: string[] = []
 
       if (body.change) {
@@ -192,16 +193,16 @@ export const btcBasedTransactions = (
         }
       }
 
-      verifyAmounts(tx, body)
-
       new Set(privateKeysToSign).forEach((key) => {
         tx.sign(new PrivateKey(key))
       })
 
-      const uncheckedSerialization = currency === Currency.LTC //TODO why?
+      const uncheckedSerialization = currency === Currency.LTC //TODO some troubles in signing LTC?
+      if (uncheckedSerialization) {
+        verifyAmounts(tx, body)
+      }
       return tx.serialize(uncheckedSerialization)
     } catch (e: any) {
-      console.log(e)
       throw new BtcBasedSdkError(e)
     }
   }
@@ -216,11 +217,11 @@ export const btcBasedTransactions = (
       .reduce((v: BigNumber, acc: BigNumber) => v.plus(acc), new BigNumber(0))
 
     if (outputsSum.eq(inputsSum)) {
-      throw new BtcBasedSdkError(SdkErrorCode.BTC_FEE_TOO_SMALL)
+      throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_FEE_TOO_SMALL)
     }
 
     if (outputsSum.gt(inputsSum)) {
-      throw new BtcBasedSdkError(SdkErrorCode.BTC_NOT_ENOUGH_BALANCE)
+      throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_NOT_ENOUGH_BALANCE)
     }
   }
 

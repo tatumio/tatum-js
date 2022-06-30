@@ -4,14 +4,14 @@ import { SdkError, SdkErrorCode, SdkMessageArgs } from '@tatumio/shared-abstract
  * https://github.com/bitpay/bitcore/blob/v8.0.0/packages/bitcore-lib/lib/errors/spec.js
  */
 export const BTC_ERRORS_MAPPING = {
-  'bitcore.ErrorTransactionFeeErrorTooSmall': SdkErrorCode.BTC_FEE_TOO_SMALL,
-  'bitcore.ErrorTransactionInvalidOutputAmountSum': SdkErrorCode.BTC_NOT_ENOUGH_BALANCE,
+  'bitcore.ErrorTransactionFeeErrorTooSmall': SdkErrorCode.BTC_BASED_FEE_TOO_SMALL,
+  'bitcore.ErrorTransactionInvalidOutputAmountSum': SdkErrorCode.BTC_BASED_NOT_ENOUGH_BALANCE,
 }
 
 export type BtcBasedSdkErrorCode =
-  | SdkErrorCode.BTC_FEE_TOO_SMALL
-  | SdkErrorCode.BTC_UTXO_NOT_FOUND
-  | SdkErrorCode.BTC_NOT_ENOUGH_BALANCE
+  | SdkErrorCode.BTC_BASED_FEE_TOO_SMALL
+  | SdkErrorCode.BTC_BASED_UTXO_NOT_FOUND
+  | SdkErrorCode.BTC_BASED_NOT_ENOUGH_BALANCE
 
 export class BtcBasedSdkError extends SdkError {
   constructor(error: Error | BtcBasedSdkErrorCode, messageArgs?: SdkMessageArgs) {

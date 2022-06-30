@@ -58,7 +58,7 @@ export const btcBasedTxTestFactory = {
 
         await expect(
           args.transactions.prepareSignedTransaction(args.getRequestBodyFromUTXO(100500), { testnet: true }),
-        ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_NOT_ENOUGH_BALANCE)
+        ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_BASED_NOT_ENOUGH_BALANCE)
       })
 
       it('fee = 0', async () => {
@@ -69,7 +69,7 @@ export const btcBasedTxTestFactory = {
           args.transactions.prepareSignedTransaction(args.getRequestBodyFromUTXO(args.data.utxoAmount), {
             testnet: true,
           }),
-        ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_FEE_TOO_SMALL)
+        ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_BASED_FEE_TOO_SMALL)
       })
 
       if (!args.skipTest?.txNotFound) {
@@ -80,7 +80,7 @@ export const btcBasedTxTestFactory = {
             args.transactions.prepareSignedTransaction(args.getRequestBodyFromUTXO(args.data.validAmount), {
               testnet: true,
             }),
-          ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_UTXO_NOT_FOUND)
+          ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_BASED_UTXO_NOT_FOUND)
         })
       }
     })
@@ -135,7 +135,7 @@ export const btcBasedTxTestFactory = {
           args.transactions.prepareSignedTransaction(args.getRequestBodyFromAddress(100500), {
             testnet: true,
           }),
-        ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_NOT_ENOUGH_BALANCE)
+        ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_BASED_NOT_ENOUGH_BALANCE)
       })
 
       it('fee = 0', async () => {
@@ -145,7 +145,7 @@ export const btcBasedTxTestFactory = {
           args.transactions.prepareSignedTransaction(args.getRequestBodyFromAddress(args.data.utxoAmount), {
             testnet: true,
           }),
-        ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_FEE_TOO_SMALL)
+        ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_BASED_FEE_TOO_SMALL)
       })
     })
   },
