@@ -46,7 +46,7 @@ const prepareSignedTransaction = async (
       else if ('privateKey' in item) privateKeysToSign.push(item.privateKey)
 
       const vout = txs[i].vout[item.index]
-      if (!vout) throw new BchSdkError(SdkErrorCode.BTC_UTXO_NOT_FOUND)
+      if (!vout) throw new BchSdkError(SdkErrorCode.BTC_BASED_UTXO_NOT_FOUND)
 
       amountToSign.push(amountUtils.toSatoshis(vout.value))
 
@@ -86,11 +86,11 @@ function verifyAmounts(amountToSign: number[], body: BchTransactionTypes) {
     .reduce((v, acc) => v.plus(acc), new BigNumber(0))
 
   if (outputsSum.eq(inputsSum)) {
-    throw new BchSdkError(SdkErrorCode.BTC_FEE_TOO_SMALL)
+    throw new BchSdkError(SdkErrorCode.BTC_BASED_FEE_TOO_SMALL)
   }
 
   if (outputsSum.gt(inputsSum)) {
-    throw new BchSdkError(SdkErrorCode.BTC_NOT_ENOUGH_BALANCE)
+    throw new BchSdkError(SdkErrorCode.BTC_BASED_NOT_ENOUGH_BALANCE)
   }
 }
 

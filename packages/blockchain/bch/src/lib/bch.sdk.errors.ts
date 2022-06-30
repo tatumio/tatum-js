@@ -5,9 +5,9 @@ export const BCH_ERRORS_MAPPING = {
 }
 
 export type BchSdkErrorCode =
-  | SdkErrorCode.BTC_FEE_TOO_SMALL
-  | SdkErrorCode.BTC_UTXO_NOT_FOUND
-  | SdkErrorCode.BTC_NOT_ENOUGH_BALANCE
+  | SdkErrorCode.BTC_BASED_FEE_TOO_SMALL
+  | SdkErrorCode.BTC_BASED_UTXO_NOT_FOUND
+  | SdkErrorCode.BTC_BASED_NOT_ENOUGH_BALANCE
 
 export class BchSdkError extends SdkError {
   constructor(error: Error | BchSdkErrorCode) {
