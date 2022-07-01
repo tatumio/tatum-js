@@ -80,8 +80,9 @@ export const btcBasedTransactions = (
         const txs = await apiCalls.getTxByAddress(item.address, 50) // @TODO OPENAPI remove pageSize
 
         for (const tx of txs) {
-          if (!tx.outputs)
+          if (!tx.outputs) {
             throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_UTXO_NOT_FOUND, [tx.hash ?? '', 0])
+          }
 
           if (tx.hash === undefined) continue
 
