@@ -1,4 +1,11 @@
-import { ChainDeployCeloErc20, ChainMintCeloErc20, Currency } from '@tatumio/api-client'
+import {
+  ChainDeployCeloErc20,
+  ChainMintCeloErc20,
+  ChainTransferCeloErc20Token,
+  ChainTransferEthErc20,
+  Currency,
+  TransferErc20,
+} from '@tatumio/api-client'
 import { FromPrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
 import {
   BurnMultiTokenBatchCelo,
@@ -28,7 +35,7 @@ export interface CeloTransactionConfig {
   to?: string
   value?: number | string
   gas?: number | string
-  gasPrice?: BN
+  gasPrice?: BN | string
   gasLimit?: string | number
   data?: string
   nonce?: number
@@ -78,6 +85,9 @@ export type ChainTransferCeloBlockchain = FromPrivateKeyOrSignatureId<
 export type ChainDeployErc20Celo = WithoutChain<FromPrivateKeyOrSignatureId<ChainDeployCeloErc20>>
 
 export type ChainMintErc20Celo = WithoutChain<FromPrivateKeyOrSignatureId<ChainMintCeloErc20>>
+
+export type ChainTransferErc20Celo = WithoutChain<FromPrivateKeyOrSignatureId<ChainTransferCeloErc20Token>> &
+  Pick<ChainTransferEthErc20, 'fee'>
 
 export type ChainGenerateCustodialAddressCelo = GenerateCustodialWalletCelo | GenerateCustodialWalletCeloKMS
 

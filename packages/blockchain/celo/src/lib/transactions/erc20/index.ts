@@ -4,17 +4,20 @@ import { BroadcastFunction } from '@tatumio/shared-blockchain-abstract'
 import { Erc20Token } from '@tatumio/shared-blockchain-evm-based'
 import BigNumber from 'bignumber.js'
 import Web3 from 'web3'
+import { toWei } from 'web3-utils'
 import {
   CeloTransactionConfig,
   celoUtils,
   ChainDeployErc20Celo,
   ChainMintErc20Celo,
+  ChainTransferErc20Celo,
 } from '../../utils/celo.utils'
 
 const initialize = async (
   args: Pick<ChainDeployErc20Celo, 'feeCurrency'>,
   provider?: string,
   testnet?: boolean,
+  contractAddress?: string,
 ) => {
   const celoProvider = celoUtils.getProvider(provider)
 
@@ -22,7 +25,7 @@ const initialize = async (
     celoProvider,
     network: await celoProvider.ready,
     feeCurrencyContractAddress: celoUtils.getFeeCurrency(args.feeCurrency, testnet),
-    contract: new new Web3().eth.Contract(Erc20Token.abi as any), // todo contract address
+    contract: new new Web3().eth.Contract(Erc20Token.abi as any, contractAddress),
   }
 }
 
@@ -90,6 +93,7 @@ const prepareMintSignedTransaction = async (
     body,
     provider,
     testnet,
+    contractAddress.trim(),
   )
 
   const decimals = await contract.methods.decimals().call()
@@ -127,6 +131,56 @@ const prepareMintSignedTransaction = async (
   return await celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
 }
 
+const prepareTransferSignedTransaction = async (
+  body: ChainTransferErc20Celo,
+  provider?: string,
+  testnet?: boolean,
+) => {
+  const { fromPrivateKey, to, amount, contractAddress, feeCurrency, nonce, signatureId, fee } = body
+
+  const { celoProvider, network, feeCurrencyContractAddress, contract } = await initialize(
+    body,
+    provider,
+    testnet,
+    contractAddress.trim(),
+  )
+
+  const decimals = await contract.methods.decimals().call()
+  if (signatureId) {
+    return JSON.stringify({
+      chainId: network.chainId,
+      feeCurrency: feeCurrencyContractAddress,
+      nonce,
+      gasLimit: fee?.gasLimit ? '0x' + new BigNumber(fee.gasLimit).toString(16) : undefined,
+      gasPrice: fee?.gasPrice ? '0x' + new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16) : undefined,
+      to: contractAddress.trim(),
+      data: contract.methods
+        .transfer(to.trim(), '0x' + new BigNumber(amount).multipliedBy(10 ** decimals).toString(16))
+        .encodeABI(),
+    })
+  }
+
+  const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
+  const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
+    wallet,
+    feeCurrencyContractAddress,
+  )
+
+  const tx: CeloTransactionConfig = {
+    chainId: network.chainId,
+    feeCurrency: feeCurrencyContractAddress,
+    nonce: nonce || txCount,
+    gasLimit: fee?.gasLimit ? '0x' + new BigNumber(fee.gasLimit).toString(16) : undefined,
+    to: contractAddress.trim(),
+    gasPrice: fee?.gasPrice ? '0x' + new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16) : gasPrice,
+    data: contract.methods
+      .transfer(to.trim(), '0x' + new BigNumber(amount).multipliedBy(10 ** decimals).toString(16))
+      .encodeABI(),
+    from,
+  }
+  return await celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
+}
+
 export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
   return {
     prepare: {
@@ -142,6 +196,12 @@ export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
        */
       mintSignedTransaction: async (body: ChainMintErc20Celo, provider?: string, testnet?: boolean) =>
         prepareMintSignedTransaction(body, provider, testnet),
+      /**
+       * Prepare a signed Celo transfer erc20 transaction with the private key locally. Nothing is broadcasted to the blockchain.
+       * @returns raw transaction data in hex, to be broadcasted to blockchain.
+       */
+      transferSignedTransaction: async (body: ChainTransferErc20Celo, provider?: string, testnet?: boolean) =>
+        prepareTransferSignedTransaction(body, provider, testnet),
     },
     send: {
       /**
@@ -168,6 +228,19 @@ export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
       mintSignedTransaction: async (body: ChainMintErc20Celo, provider?: string, testnet?: boolean) =>
         await args.broadcastFunction({
           txData: await prepareMintSignedTransaction(body, provider, testnet),
+          signatureId: body.signatureId,
+        }),
+      /**
+       * Send Celo or cUsd transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+       * This operation is irreversible.
+       * @param testnet mainnet or testnet version
+       * @param body content of the transaction to broadcast
+       * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+       * @returns transaction id of the transaction in the blockchain
+       */
+      transferSignedTransaction: async (body: ChainTransferErc20Celo, provider?: string, testnet?: boolean) =>
+        await args.broadcastFunction({
+          txData: await prepareTransferSignedTransaction(body, provider, testnet),
           signatureId: body.signatureId,
         }),
     },
