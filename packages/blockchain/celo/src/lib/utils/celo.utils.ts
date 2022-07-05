@@ -1,4 +1,4 @@
-import { Currency } from '@tatumio/api-client'
+import { ChainDeployCeloErc20, Currency } from '@tatumio/api-client'
 import { FromPrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
 import {
   BurnMultiTokenBatchCelo,
@@ -73,6 +73,8 @@ export type ChainDeployMultiTokenCelo = FromPrivateKeyOrSignatureId<DeployMultiT
 export type ChainTransferCeloBlockchain = FromPrivateKeyOrSignatureId<
   Omit<TransferCeloBlockchain, 'currency'>
 >
+
+export type ChainDeployErc20Celo = FromPrivateKeyOrSignatureId<ChainDeployCeloErc20>
 
 export type ChainGenerateCustodialAddressCelo = GenerateCustodialWalletCelo | GenerateCustodialWalletCeloKMS
 
