@@ -1,4 +1,4 @@
-import { ChainDeployCeloErc20, Currency } from '@tatumio/api-client'
+import { ChainDeployCeloErc20, ChainMintCeloErc20, Currency } from '@tatumio/api-client'
 import { FromPrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
 import {
   BurnMultiTokenBatchCelo,
@@ -21,6 +21,7 @@ import {
 } from '@tatumio/api-client'
 import { BigNumber as BN } from '@ethersproject/bignumber'
 import { CeloProvider, CeloWallet } from '@celo-tools/celo-ethers-wrapper'
+import { WithoutChain } from '@tatumio/shared-abstract-sdk'
 
 export interface CeloTransactionConfig {
   from?: string
@@ -74,7 +75,9 @@ export type ChainTransferCeloBlockchain = FromPrivateKeyOrSignatureId<
   Omit<TransferCeloBlockchain, 'currency'>
 >
 
-export type ChainDeployErc20Celo = FromPrivateKeyOrSignatureId<ChainDeployCeloErc20>
+export type ChainDeployErc20Celo = WithoutChain<FromPrivateKeyOrSignatureId<ChainDeployCeloErc20>>
+
+export type ChainMintErc20Celo = WithoutChain<FromPrivateKeyOrSignatureId<ChainMintCeloErc20>>
 
 export type ChainGenerateCustodialAddressCelo = GenerateCustodialWalletCelo | GenerateCustodialWalletCeloKMS
 
