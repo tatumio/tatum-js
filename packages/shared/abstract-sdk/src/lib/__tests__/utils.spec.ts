@@ -1,4 +1,5 @@
-import { amountUtils, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
+import { amountUtils } from '../utils'
+import { SdkErrorCode } from '../errors.abstract.sdk'
 
 describe('Utils', function () {
   describe('Amount utils', function () {
