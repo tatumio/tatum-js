@@ -1,4 +1,4 @@
-# [Tatum API client](http://tatum.io/) &middot; [![GitHub license](https://img.shields.io/npm/dm/@tatumio/tatum)](https://img.shields.io/npm/dm/@tatumio/tatum) [![GitHub license](https://img.shields.io/npm/v/@tatumio/tatum)](https://img.shields.io/npm/v/@tatumio/tatum) [![CI](https://github.com/tatumio/tatum-js/actions/workflows/main.yml/badge.svg)](https://github.com/tatumio/tatum-js/actions/workflows/main.yml)
+# [Tatum API client v1](http://tatum.io/) &middot; [![GitHub license](https://img.shields.io/npm/dm/@tatumio/tatum)](https://img.shields.io/npm/dm/@tatumio/tatum) [![GitHub license](https://img.shields.io/npm/v/@tatumio/tatum)](https://img.shields.io/npm/v/@tatumio/tatum) [![CI](https://github.com/tatumio/tatum-js/actions/workflows/main.yml/badge.svg)](https://github.com/tatumio/tatum-js/actions/workflows/main.yml)
 
 Tatum API client allows browsers and Node.js clients to interact with Tatum API. It includes the following core components.
 
@@ -14,7 +14,7 @@ You can find API documentation at [Github Pages](https://tatumio.github.io/tatum
 ## Status
 
 [`v1`](https://github.com/tatumio/tatum-js/tree/v1) is LTS version  
-[`v2`](documentation/README_V2.md) is currently under active development and considered alpha version  
+[`v2`](documentation/README_V2.md) is currently under active development and considered alpha version
 
 ## Installation
 
