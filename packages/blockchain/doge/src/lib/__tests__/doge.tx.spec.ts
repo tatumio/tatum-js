@@ -2,7 +2,7 @@ import { dogeTransactions } from '../doge.sdk.tx'
 import { mockHelper } from '@tatumio/shared-testing-common'
 import * as apiClient from '@tatumio/api-client'
 import { DogeTransactionUTXO } from '@tatumio/api-client'
-import { btcBasedTxTestFactory } from '@tatumio/shared-testing-btc-based'
+import { oldBtcBasedTxTestFactory } from '@tatumio/shared-testing-btc-based'
 
 jest.mock('@tatumio/api-client')
 const mockedApi = mockHelper.mockApi(apiClient)
@@ -20,7 +20,7 @@ describe('DOGE transactions', () => {
   const transactions = dogeTransactions()
 
   describe('From UTXO', () => {
-    btcBasedTxTestFactory.fromUTXO({
+    oldBtcBasedTxTestFactory.fromUTXO({
       transactions,
       data: {
         validAmount: VALID_AMOUNT,

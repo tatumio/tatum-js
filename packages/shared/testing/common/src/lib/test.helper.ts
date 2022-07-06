@@ -41,6 +41,9 @@ export const testHelper = {
     expect(mocked.mock.calls.length).toBe(1)
     if (body) expect(mocked.mock.calls).toEqual([body])
   },
+  expectMockNotCalled: (mocked: jest.Mock) => {
+    expect(mocked.mock.calls.length).toBe(0)
+  },
   testCasesFromMapping: <T>(mapping: TestCasesApiCallMapping<T>) => {
     const result = Object.entries(mapping).map(([key, value]) => {
       if (!(value instanceof Array)) return [key, value]

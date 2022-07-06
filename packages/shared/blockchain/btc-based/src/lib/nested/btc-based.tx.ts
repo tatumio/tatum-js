@@ -50,6 +50,11 @@ type LtcFromAddressTypes = LtcTransactionAddress | LtcTransactionAddressKMS
 type BtcFromUtxoTypes = BtcTransactionFromUTXO | BtcTransactionFromUTXOKMS
 type LtcFromUtxoTypes = LtcTransactionUTXO | LtcTransactionUTXOKMS
 
+export type BtcBasedFromWithChange =
+  | (BtcTransactionFromAddress & FeeChange)
+  | (LtcTransactionAddress & FeeChange)
+export type BtcBasedUtxoWithChange = (BtcTransactionFromUTXO & FeeChange) | (LtcTransactionUTXO & FeeChange)
+
 type GetTxByAddressType =
   | typeof ApiServices.blockchain.bitcoin.btcGetTxByAddress
   | typeof ApiServices.blockchain.ltc.ltcGetTxByAddress
@@ -129,12 +134,11 @@ export const btcBasedTransactions = (
           throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_UTXO_NOT_FOUND, [utxoItem.txHash, utxoItem.index])
         }
 
-        const script = Script.fromAddress(utxo.address).toString()
         transaction.from([
           Transaction.UnspentOutput.fromObject({
             txId: utxoItem.txHash,
             outputIndex: utxo.index,
-            script: script,
+            script: Script.fromAddress(utxo.address).toString(),
             satoshis: utxo.value,
           }),
         ])

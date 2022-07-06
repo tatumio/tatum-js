@@ -2,21 +2,43 @@ import '@tatumio/shared-testing-common'
 import { ltcTransactions } from './ltc.tx'
 import { mockHelper } from '@tatumio/shared-testing-common'
 import * as apiClient from '@tatumio/api-client'
-import { LtcTransactionAddress, LtcTransactionUTXO, LtcTx, LtcUTXO } from '@tatumio/api-client'
-import { btcBasedTxTestFactory } from '@tatumio/shared-testing-btc-based'
+import { LtcTx, LtcUTXO } from '@tatumio/api-client'
+import {
+  BtcBasedInvalidTestParams,
+  BtcBasedMocks,
+  BtcBasedTestParams,
+  btcBasedTxTestFactory,
+} from '@tatumio/shared-testing-btc-based'
 import { amountUtils } from '@tatumio/shared-abstract-sdk'
 
 jest.mock('@tatumio/api-client')
 const mockedApi = mockHelper.mockApi(apiClient)
 
 describe('LTC transactions', () => {
-  const UTXO_AMOUNT = 0.3936445
-  const VALID_AMOUNT = 0.2969944
-  const TX_HASH = '6670c707ca96d44531846b9853fb49dd26f43ff9197722ba55e21cb40722b807'
-  const ADDRESS = 'mfh8kjy36ppH7bGXTzUwhWbKGgZziq4CbF'
-  const PRIVATE_KEY = 'cVX7YtgL5muLTPncHFhP95oitV1mqUUA5VeSn8HeCRJbPqipzobf'
+  const MNEMONIC =
+    'avoid girl invest client improve team glare coyote acid pepper skin trim sword exotic submit valve trim mesh sick curtain void pride feature helmet'
+  const XPUB =
+    'ttub4gaFAtLZqn91CFTEK2uo7sb1uS1CRbV4HsgXt8kyj4znapofFNtfgc442UMuSiVNSJyGuD7zmaH1tSMfq3eHh3qmcjfQ2w6rZQ1KWfeNQSp'
+
+  const ADDRESS_0 = 'mzj9PEnd212qJVBkNfcBYWg5fmn5UadTHJ'
+  const PRIVATE_KEY_0 = 'cSCaeFG5DTAMKsu7TGEQ4z9DyTuuzCyhNEg6V488yMevrEsUbitB'
+
+  const PRIVATE_KEY_1 = 'cW8xsxXNaoypuDVEwzkWf95g6BW5xriEi3dwjLZBrWT6SpBYPiQ3'
+  const ADDRESS_1 = 'n3mFijfZdqE5ERrGzRVTrYDXee2M2oUu9H'
+
+  const TX_HASH = 'edcb21782fbb444606e7140865aa761ad6a9ea1816a46fb9238d51a09d3e27f1'
+  const UTXO_SCRIPT = '76a914d2b8a36d6617bf9b9b3a92ffaed0cec09043726488ac'
+
+  const UTXO_AMOUNT = 1
+  const VALID_AMOUNT = 0.29
+  const FEE_AMOUNT = 0.0015
+
   const VALID_TX_DATA =
-    '020000000107b82207b41ce255ba227719f93ff426dd49fb53986b843145d496ca07c770660100000000ffffffff01702dc501000000001976a91401ece42befef00eb643febc32cb0764563fb4e6988ac00000000'
+    '0200000001f1273e9da0518d23b96fa41618eaa9d61a76aa650814e7064644bb2f7821cbed000000006a47304402206fad48' +
+    '00705f468857706376e541a86f3f0a4ba08edb34a4019bfd5cf2cd0a3d02204516d7f9ad03b3226c33b7180e3e566451b74a' +
+    '27f204e3911e2c209748d2ddbb01210389f240a36df7ad7243cc9afdd0a549a359cc8a5d831ae117cec5ab5588a507e6ffff' +
+    'ffff024081ba01000000001976a914f40723076a89c0aaad77def7768e1dbc6c070fd288acd0153904000000001976a914d2' +
+    'b8a36d6617bf9b9b3a92ffaed0cec09043726488ac00000000'
 
   const transactions = ltcTransactions()
 
@@ -24,88 +46,80 @@ describe('LTC transactions', () => {
     jest.clearAllMocks()
   })
 
+  const mock: BtcBasedMocks = {
+    requestGetRawTx: mockRequestGetRawTx,
+    requestGetUtxo: mockRequestGetUtxo,
+    requestGetUtxoNotFound: mockRequestGetUtxoNotFound,
+    requestGetTxByAddress: mockRequestGetTxByAddress,
+    broadcast: mockedApi.blockchain.ltc.ltcBroadcast,
+  }
+
+  const data: BtcBasedTestParams = {
+    fromAmount: UTXO_AMOUNT,
+    fromAddress: ADDRESS_0,
+    fromPrivateKey: PRIVATE_KEY_0,
+    fromTxHash: TX_HASH,
+    fromIndex: 0,
+    toAmount: VALID_AMOUNT,
+    toAddress: ADDRESS_1,
+    feeAmount: FEE_AMOUNT,
+  }
+
+  const invalid = {
+    invalidAmounts: [-1, -1.11111111, 0.0000000001, 9999.999999999],
+    invalidKey: PRIVATE_KEY_1,
+  } as BtcBasedInvalidTestParams
+
   describe('From UTXO', () => {
     btcBasedTxTestFactory.fromUTXO({
       transactions,
-      data: {
-        validAmount: VALID_AMOUNT,
-        validTxData: VALID_TX_DATA,
-        utxoAmount: UTXO_AMOUNT,
+      data,
+      validate: {
+        txData: VALID_TX_DATA,
       },
-      mock: {
-        requestGetRawTx: mockRequestGetRawTx,
-        requestGetUtxo: mockRequestGetUtxo,
-        requestGetUtxoNotFound: mockRequestGetUtxoNotFound,
-        broadcast: mockedApi.blockchain.ltc.ltcBroadcast,
+      mock,
+    })
+    btcBasedTxTestFactory.fromUTXOInvalid({
+      transactions,
+      data,
+      validate: {
+        txData: VALID_TX_DATA,
       },
-      getRequestBodyFromUTXO,
+      invalid,
+      mock,
     })
   })
 
   describe('From Address', () => {
     btcBasedTxTestFactory.fromAddress({
       transactions,
-      data: {
-        validAmount: VALID_AMOUNT,
-        validTxData: VALID_TX_DATA,
-        utxoAmount: UTXO_AMOUNT,
+      data,
+      validate: {
+        txData: VALID_TX_DATA,
       },
-      mock: {
-        requestGetTxByAddress: mockRequestGetTxByAddress,
-        requestGetUtxo: mockRequestGetUtxo,
-        requestGetUtxoNotFound: mockRequestGetUtxoNotFound,
-        broadcast: mockedApi.blockchain.ltc.ltcBroadcast,
-      },
-      getRequestBodyFromAddress,
+      mock,
+    })
+
+    btcBasedTxTestFactory.fromAddressInvalidAmount({
+      transactions,
+      data,
+      invalid,
+      mock,
     })
   })
-
-  function getRequestBodyFromAddress(amount: number): LtcTransactionAddress {
-    return {
-      fromAddress: [
-        {
-          address: ADDRESS,
-          privateKey: PRIVATE_KEY,
-        },
-      ],
-      to: getRequestBodyTo(amount),
-    }
-  }
-
-  function getRequestBodyFromUTXO(amount: number, index = 1): LtcTransactionUTXO {
-    return {
-      fromUTXO: [
-        {
-          txHash: TX_HASH,
-          index,
-          privateKey: PRIVATE_KEY,
-        },
-      ],
-      to: getRequestBodyTo(amount),
-    }
-  }
-
-  function getRequestBodyTo(amount: number): LtcTransactionUTXO['to'] {
-    return [
-      {
-        address: ADDRESS,
-        value: amount,
-      },
-    ]
-  }
 
   function mockRequestGetRawTx(
     obj: LtcTx = {
       outputs: [
         {
-          value: '0.00001',
-          script: '76a914dffec839eba107e556d6c4f25f90765b3d10583288ac',
-          address: 'n1wLCQTNYJZGgLbsehQ76HLYomFfnpxXwp',
+          value: UTXO_AMOUNT.toString(),
+          script: UTXO_SCRIPT,
+          address: ADDRESS_0,
         },
         {
-          value: UTXO_AMOUNT.toString(),
-          script: '76a91401ece42befef00eb643febc32cb0764563fb4e6988ac',
-          address: ADDRESS,
+          value: '11254.98177740',
+          script: 'a914c15acd1ea3f16a6d9dd02b5dc6964dc01294ca9387',
+          address: 'QeEMJJZKbP4XLG8XoM82vsoMBnUbj6cYLb',
         },
       ],
     },
@@ -116,9 +130,10 @@ describe('LTC transactions', () => {
   function mockRequestGetUtxo(
     obj: LtcUTXO = {
       hash: TX_HASH,
-      address: ADDRESS,
+      address: ADDRESS_0,
       value: amountUtils.toSatoshis(UTXO_AMOUNT),
-      index: 1,
+      script: UTXO_SCRIPT,
+      index: 0,
     },
   ) {
     mockedApi.blockchain.ltc.ltcGetUtxo.mockResolvedValue(obj)
@@ -133,14 +148,14 @@ describe('LTC transactions', () => {
       hash: TX_HASH,
       outputs: [
         {
-          value: '0.00001',
-          script: '76a914dffec839eba107e556d6c4f25f90765b3d10583288ac',
-          address: 'n1wLCQTNYJZGgLbsehQ76HLYomFfnpxXwp',
-        },
-        {
           value: UTXO_AMOUNT.toString(),
           script: '76a91401ece42befef00eb643febc32cb0764563fb4e6988ac',
-          address: ADDRESS,
+          address: ADDRESS_0,
+        },
+        {
+          value: '11254.98177740',
+          script: 'a914c15acd1ea3f16a6d9dd02b5dc6964dc01294ca9387',
+          address: 'QeEMJJZKbP4XLG8XoM82vsoMBnUbj6cYLb',
         },
       ],
     },
