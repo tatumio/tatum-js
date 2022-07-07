@@ -122,7 +122,7 @@ const prepareMintSignedTransaction = async (
     feeCurrency: feeCurrencyContractAddress,
     nonce: nonce || txCount,
     gasLimit: '0',
-    to: contractAddress.trim(),
+    to,
     gasPrice,
     data: contract.methods
       .mint(to.trim(), '0x' + new BigNumber(amount).multipliedBy(10 ** decimals).toString(16))

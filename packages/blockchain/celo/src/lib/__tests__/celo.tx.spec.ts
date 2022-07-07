@@ -169,17 +169,14 @@ describe('CeloSDK - tx', () => {
     })
 
     describe('mint', () => {
-      /**
-       * TODO: cannot estimate gas; transaction may fail or may require manual gas limit (error={"reason":"processing response error","code":"SERVER_ERROR","body":"{\"jsonrpc\":\"2.0\",\"id\":47,\"error\":{\"code\":-32000,\"message\":\"execution reverted\"}}\n","error":{"code":-32000},"requestBody":"{\"method\":\"eth_estimateGas\",\"params\":[{\"gas\":\"0x3e8\",\"gasPrice\":\"0x3b9aca00\",\"from\":\"0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea\",\"to\":\"0xb7205685aabeb4092ebba67ed0443af807aac282\",\"data\":\"0x40c10f190000000000000000000000008cb76aed9c5e336ef961265c6079c14e9cd3d2ea0000000000000000000000000000000000000000000000000000000ba43b7400\"}],\"id\":47,\"jsonrpc\":\"2.0\"}","requestMethod":"POST","url":"https://alfajores-forno.celo-testnet.org"}, method="estimateGas", transaction={"from":"0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA","gasLimit":{"type":"BigNumber","hex":"0x03e8"},"gasPrice":{"type":"BigNumber","hex":"0x3b9aca00"},"to":"0xB7205685AABeB4092EBBa67Ed0443Af807AaC282","data":"0x40c10f190000000000000000000000008cb76aed9c5e336ef961265c6079c14e9cd3d2ea0000000000000000000000000000000000000000000000000000000ba43b7400","accessList":null}, code=UNPREDICTABLE_GAS_LIMIT, version=providers/5.5.3)
-       */
-      it.skip('should be valid from privateKey', async () => {
+      it('should be valid from privateKey', async () => {
         const result = await sdk.erc20.prepare.mintSignedTransaction(
           {
             fromPrivateKey: TEST_DATA.CELO.TESTNET.ERC_20!.PRIVATE_KEY,
             feeCurrency: 'CUSD',
-            amount: '5',
+            amount: '100000',
             contractAddress: TEST_DATA.CELO.TESTNET.ERC_20!.CONTRACT_ADDRESS,
-            to: TEST_DATA.CELO.TESTNET.ERC_20!.ADDRESS,
+            to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           },
           provider,
           true,
