@@ -1,7 +1,9 @@
 import '@tatumio/shared-testing-common'
 import {
   BtcBasedFromWithChange,
+  BtcBasedFromWithKmsChange,
   BtcBasedTx,
+  BtcBasedUtxoKMSWithChange,
   BtcBasedUtxoWithChange,
   FeeChange,
 } from '@tatumio/shared-blockchain-btc-based'
@@ -10,10 +12,14 @@ import { testHelper } from '@tatumio/shared-testing-common'
 import {
   BroadcastKMS,
   BtcTransactionFromAddress,
+  BtcTransactionFromAddressKMS,
   BtcTransactionFromUTXO,
+  BtcTransactionFromUTXOKMS,
   CancelablePromise,
   LtcTransactionAddress,
+  LtcTransactionAddressKMS,
   LtcTransactionUTXO,
+  LtcTransactionUTXOKMS,
   TransactionHashKMS,
 } from '@tatumio/api-client'
 
@@ -23,12 +29,16 @@ export type BtcBasedTestParams = {
   fromIndex: number
   fromAddress: string
   fromPrivateKey: string
+  fromSignatureId: string
   toAmount: number
   toAddress: string
   feeAmount: number
 }
-export type BtcBasedInvalidTestParams = {
-  invalidAmounts: number[]
+
+export type BtcBasedValidation = {
+  txData: string
+  txDtoSerialized: string
+  txDtoSerializedWithChange: string
 }
 
 export type BtcBasedMocks = {
@@ -40,6 +50,23 @@ export type BtcBasedMocks = {
 }
 
 const options = { testnet: true }
+
+function prepareTo(data: BtcBasedTestParams, values: { amount?: number }) {
+  return [
+    {
+      address: data.toAddress,
+      value: values?.amount ?? data.toAmount,
+    },
+  ]
+}
+
+function prepareManualChange(data: BtcBasedTestParams) {
+  return {
+    address: data.fromAddress,
+    value: data.fromAmount - data.toAmount - data.feeAmount,
+  }
+}
+
 const definedChangeAddressUTXOBody = (
   data: BtcBasedTestParams,
   values?: { amount?: number; fee?: number; privateKey?: string },
@@ -52,12 +79,25 @@ const definedChangeAddressUTXOBody = (
         privateKey: values?.privateKey ?? data.fromPrivateKey,
       },
     ],
-    to: [
+    to: prepareTo(data, values),
+    change: data.fromAddress,
+    fee: values?.fee ?? data.feeAmount,
+  }
+}
+
+const definedChangeAddressUTXOKmsBody = (
+  data: BtcBasedTestParams,
+  values?: { amount?: number; fee?: number; signatureId?: string },
+): BtcBasedUtxoKMSWithChange => {
+  return {
+    fromUTXO: [
       {
-        address: data.toAddress,
-        value: values?.amount ?? data.toAmount,
+        txHash: data.fromTxHash,
+        index: data.fromIndex,
+        signatureId: values?.signatureId ?? data.fromSignatureId,
       },
     ],
+    to: prepareTo(data, values),
     change: data.fromAddress,
     fee: values?.fee ?? data.feeAmount,
   }
@@ -75,16 +115,23 @@ const manualChangeAddressUTXOBody = (
         privateKey: data.fromPrivateKey,
       },
     ],
-    to: [
+    to: [...prepareTo(data, values), prepareManualChange(data)],
+  }
+}
+
+const manualChangeAddressUTXOKmsBody = (
+  data: BtcBasedTestParams,
+  values?: { amount?: number; fee?: number; signatureId?: string },
+): BtcBasedUtxoKMSWithChange => {
+  return {
+    fromUTXO: [
       {
-        address: data.toAddress,
-        value: data.toAmount,
-      },
-      {
-        address: data.fromAddress,
-        value: data.fromAmount - data.toAmount - data.feeAmount,
+        txHash: data.fromTxHash,
+        index: data.fromIndex,
+        signatureId: data.fromSignatureId,
       },
     ],
+    to: [...prepareTo(data, values), prepareManualChange(data)],
   }
 }
 
@@ -99,18 +146,25 @@ const manualChangeAddressFromBody = (
         privateKey: data.fromPrivateKey,
       },
     ],
-    to: [
-      {
-        address: data.toAddress,
-        value: data.toAmount,
-      },
-      {
-        address: data.fromAddress,
-        value: data.fromAmount - data.toAmount - data.feeAmount,
-      },
-    ],
+    to: [...prepareTo(data, values), prepareManualChange(data)],
   }
 }
+
+const manualChangeAddressFromKmsBody = (
+  data: BtcBasedTestParams,
+  values?: { amount?: number; fee?: number; signatureId?: string },
+): BtcBasedFromWithKmsChange => {
+  return {
+    fromAddress: [
+      {
+        address: data.fromAddress,
+        signatureId: data.fromSignatureId,
+      },
+    ],
+    to: [...prepareTo(data, values), prepareManualChange(data)],
+  }
+}
+
 const definedChangeAddressFromBody = (
   data: BtcBasedTestParams,
   values?: { amount?: number; fee?: number; privateKey?: string },
@@ -122,69 +176,102 @@ const definedChangeAddressFromBody = (
         privateKey: values?.privateKey ?? data.fromPrivateKey,
       },
     ],
-    to: [
-      {
-        address: data.toAddress,
-        value: values?.amount ?? data.toAmount,
-      },
-    ],
+    to: prepareTo(data, values),
     change: data.fromAddress,
     fee: values?.fee ?? data.feeAmount,
   }
 }
+
+const definedChangeAddressFromKmsBody = (
+  data: BtcBasedTestParams,
+  values?: { amount?: number; fee?: number; signatureId?: string },
+): BtcBasedFromWithKmsChange => {
+  return {
+    fromAddress: [
+      {
+        address: data.fromAddress,
+        signatureId: values?.signatureId ?? data.fromSignatureId,
+      },
+    ],
+    to: prepareTo(data, values),
+    change: data.fromAddress,
+    fee: values?.fee ?? data.feeAmount,
+  }
+}
+
+const EXPECTED_TX_ID = '1111111111111111111111111111111'
+const mockRequestsFromAddress = (mock: BtcBasedMocks) => {
+  mock.requestGetTxByAddress()
+  mock.requestGetUtxo()
+  mock.broadcast.mockReturnValue(Promise.resolve({ txId: EXPECTED_TX_ID }))
+}
+
+const mockRequestsUtxo = (mock: BtcBasedMocks) => {
+  mock.requestGetRawTx()
+  mock.requestGetUtxo()
+  mock.broadcast.mockReturnValue(Promise.resolve({ txId: EXPECTED_TX_ID }))
+}
+
+const invalid = {
+  invalidAmounts: [-1, -1.11111111, 0.0000000001, 9999.999999999],
+}
+
 export const btcBasedTxTestFactory = {
   fromUTXO: (args: {
-    transactions: BtcBasedTx<(BtcTransactionFromUTXO & FeeChange) | (LtcTransactionUTXO & FeeChange)>
+    transactions: BtcBasedTx<BtcBasedUtxoWithChange | BtcBasedUtxoKMSWithChange>
     data: BtcBasedTestParams
-    validate: {
-      txData: string
-    }
+    validate: BtcBasedValidation
     mock: BtcBasedMocks
   }) => {
     describe('sendTransaction', () => {
       it('valid defined change address', async () => {
-        args.mock.requestGetRawTx()
-        args.mock.requestGetUtxo()
-
-        args.mock.broadcast.mockReturnValue(Promise.resolve({ txId: '12345' }))
+        mockRequestsUtxo(args.mock)
 
         const result = await args.transactions.sendTransaction(
           definedChangeAddressUTXOBody(args.data),
           options,
         )
-        expect(result.txId).toBe('12345')
+        expect(result.txId).toBe(EXPECTED_TX_ID)
         testHelper.expectMockCalled(args.mock.broadcast, [{ txData: args.validate.txData }])
       })
       it('valid manual change address', async () => {
-        args.mock.requestGetRawTx()
-        args.mock.requestGetUtxo()
-
-        args.mock.broadcast.mockReturnValue(Promise.resolve({ txId: '12345' }))
+        mockRequestsUtxo(args.mock)
 
         const result = await args.transactions.sendTransaction(
           manualChangeAddressUTXOBody(args.data),
           options,
         )
-        expect(result.txId).toBe('12345')
+        expect(result.txId).toBe(EXPECTED_TX_ID)
         testHelper.expectMockCalled(args.mock.broadcast, [{ txData: args.validate.txData }])
       })
     })
 
-    // @TODO Add tests KMS
-  },
-  fromUTXOInvalid: (args: {
-    transactions: BtcBasedTx<(BtcTransactionFromUTXO & FeeChange) | (LtcTransactionUTXO & FeeChange)>
-    data: BtcBasedTestParams
-    invalid: BtcBasedInvalidTestParams
-    validate: {
-      txData: string
-    }
-    mock: BtcBasedMocks
-  }) => {
+    describe('prepareSignedTransaction KMS', () => {
+      it('valid defined change address', async () => {
+        mockRequestsUtxo(args.mock)
+
+        const actualTxDto = await args.transactions.prepareSignedTransaction(
+          definedChangeAddressUTXOKmsBody(args.data),
+          options,
+        )
+        expect(actualTxDto).toBe(args.validate.txDtoSerializedWithChange)
+        testHelper.expectMockNotCalled(args.mock.broadcast)
+      })
+      it('valid manual change address', async () => {
+        mockRequestsUtxo(args.mock)
+
+        const actualTxDto = await args.transactions.prepareSignedTransaction(
+          manualChangeAddressUTXOKmsBody(args.data),
+          options,
+        )
+        expect(actualTxDto).toBe(args.validate.txDtoSerialized)
+        testHelper.expectMockNotCalled(args.mock.broadcast)
+      })
+    })
+
     describe('prepareSignedTransaction', () => {
       it('not enough money on balance', async () => {
-        args.mock.requestGetRawTx()
-        args.mock.requestGetUtxo()
+        mockRequestsUtxo(args.mock)
 
         await expect(
           args.transactions.prepareSignedTransaction(
@@ -195,8 +282,7 @@ export const btcBasedTxTestFactory = {
       })
 
       it('fee = 0', async () => {
-        args.mock.requestGetRawTx()
-        args.mock.requestGetUtxo()
+        mockRequestsUtxo(args.mock)
 
         await expect(
           args.transactions.prepareSignedTransaction(
@@ -215,7 +301,7 @@ export const btcBasedTxTestFactory = {
       })
 
       describe('invalid amount', function () {
-        it.each(args.invalid.invalidAmounts)('%d', async (value) => {
+        it.each(invalid.invalidAmounts)('%d', async (value) => {
           await expect(
             args.transactions.prepareSignedTransaction(
               definedChangeAddressUTXOBody(args.data, { amount: value }),
@@ -229,55 +315,62 @@ export const btcBasedTxTestFactory = {
   },
 
   fromAddress: (args: {
-    transactions: BtcBasedTx<(BtcTransactionFromAddress & FeeChange) | (LtcTransactionAddress & FeeChange)>
+    transactions: BtcBasedTx<BtcBasedFromWithChange | BtcBasedFromWithKmsChange>
     data: BtcBasedTestParams
-    validate: {
-      txData: string
-    }
+    validate: BtcBasedValidation
     mock: BtcBasedMocks
   }) => {
     const options = { testnet: true }
     describe('sendTransaction', () => {
       it(`valid defined change address`, async () => {
-        args.mock.requestGetTxByAddress()
-        args.mock.requestGetUtxo()
-
-        args.mock.broadcast.mockReturnValue(Promise.resolve({ txId: '12345' }))
+        mockRequestsFromAddress(args.mock)
 
         const result = await args.transactions.sendTransaction(
           definedChangeAddressFromBody(args.data),
           options,
         )
-        expect(result.txId).toBe('12345')
+        expect(result.txId).toBe(EXPECTED_TX_ID)
         testHelper.expectMockCalled(args.mock.broadcast, [{ txData: args.validate.txData }])
       })
 
       it(`valid manual change address`, async () => {
-        args.mock.requestGetTxByAddress()
-        args.mock.requestGetUtxo()
-
-        args.mock.broadcast.mockReturnValue(Promise.resolve({ txId: '12345' }))
+        mockRequestsFromAddress(args.mock)
 
         const result = await args.transactions.sendTransaction(
           manualChangeAddressFromBody(args.data),
           options,
         )
-        expect(result.txId).toBe('12345')
+        expect(result.txId).toBe(EXPECTED_TX_ID)
         testHelper.expectMockCalled(args.mock.broadcast, [{ txData: args.validate.txData }])
       })
     })
-  },
-  fromAddressInvalidAmount: (args: {
-    transactions: BtcBasedTx<BtcTransactionFromAddress | LtcTransactionAddress>
-    data: BtcBasedTestParams
-    invalid: BtcBasedInvalidTestParams
-    mock: BtcBasedMocks
-  }) => {
-    const options = { testnet: true }
+    describe('prepareSignedTransaction KMS', () => {
+      it(`valid defined change address`, async () => {
+        mockRequestsFromAddress(args.mock)
+
+        const actualTxDto = await args.transactions.prepareSignedTransaction(
+          definedChangeAddressFromKmsBody(args.data),
+          options,
+        )
+        expect(actualTxDto).toBe(args.validate.txDtoSerializedWithChange)
+        testHelper.expectMockNotCalled(args.mock.broadcast)
+      })
+
+      it(`valid manual change address`, async () => {
+        mockRequestsFromAddress(args.mock)
+
+        const actualTxDto = await args.transactions.prepareSignedTransaction(
+          manualChangeAddressFromKmsBody(args.data),
+          options,
+        )
+        expect(actualTxDto).toBe(args.validate.txDtoSerialized)
+        testHelper.expectMockNotCalled(args.mock.broadcast)
+      })
+    })
     describe('invalid amount', function () {
-      args.mock.requestGetTxByAddress()
-      args.mock.requestGetUtxo()
-      it.each(args.invalid.invalidAmounts)('%d', async (value) => {
+      mockRequestsFromAddress(args.mock)
+
+      it.each(invalid.invalidAmounts)('%d', async (value) => {
         await expect(
           args.transactions.prepareSignedTransaction(
             definedChangeAddressFromBody(args.data, { amount: value }),

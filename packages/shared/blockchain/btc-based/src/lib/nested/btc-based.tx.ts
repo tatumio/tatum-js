@@ -53,7 +53,13 @@ type LtcFromUtxoTypes = LtcTransactionUTXO | LtcTransactionUTXOKMS
 export type BtcBasedFromWithChange =
   | (BtcTransactionFromAddress & FeeChange)
   | (LtcTransactionAddress & FeeChange)
+export type BtcBasedFromWithKmsChange =
+  | (BtcTransactionFromAddressKMS & FeeChange)
+  | (LtcTransactionAddressKMS & FeeChange)
 export type BtcBasedUtxoWithChange = (BtcTransactionFromUTXO & FeeChange) | (LtcTransactionUTXO & FeeChange)
+export type BtcBasedUtxoKMSWithChange =
+  | (BtcTransactionFromUTXOKMS & FeeChange)
+  | (LtcTransactionUTXOKMS & FeeChange)
 
 type GetTxByAddressType =
   | typeof ApiServices.blockchain.bitcoin.btcGetTxByAddress

@@ -4,10 +4,10 @@ import { mockHelper } from '@tatumio/shared-testing-common'
 import * as apiClient from '@tatumio/api-client'
 import { LtcTx, LtcUTXO } from '@tatumio/api-client'
 import {
-  BtcBasedInvalidTestParams,
   BtcBasedMocks,
   BtcBasedTestParams,
   btcBasedTxTestFactory,
+  BtcBasedValidation,
 } from '@tatumio/shared-testing-btc-based'
 import { amountUtils } from '@tatumio/shared-abstract-sdk'
 
@@ -28,6 +28,7 @@ describe('LTC transactions', () => {
 
   const TX_HASH = 'edcb21782fbb444606e7140865aa761ad6a9ea1816a46fb9238d51a09d3e27f1'
   const UTXO_SCRIPT = '76a914d2b8a36d6617bf9b9b3a92ffaed0cec09043726488ac'
+  const SIGNATURE_ID = '11111111-1111-1111-1111-111111111111'
 
   const UTXO_AMOUNT = 1
   const VALID_AMOUNT = 0.29
@@ -40,6 +41,22 @@ describe('LTC transactions', () => {
     'ffff024081ba01000000001976a914f40723076a89c0aaad77def7768e1dbc6c070fd288acd0153904000000001976a914d2' +
     'b8a36d6617bf9b9b3a92ffaed0cec09043726488ac00000000'
 
+  const SERIALIZED_TX_FOR_KMS =
+    '{"hash":"7b74b67fb4a447e32b9da0748be50a107c219eab707317e7dd8d4610d53b32f2","version":2,' +
+    '"inputs":[{"prevTxId":"edcb21782fbb444606e7140865aa761ad6a9ea1816a46fb9238d51a09d3e27f1","outputIndex":0,' +
+    '"sequenceNumber":4294967295,"script":"","scriptString":"","output":{"satoshis":100000000,' +
+    '"script":"76a914d2b8a36d6617bf9b9b3a92ffaed0cec09043726488ac"}}],"outputs":[{"satoshis":29000000,' +
+    '"script":"76a914f40723076a89c0aaad77def7768e1dbc6c070fd288ac"},{"satoshis":70850000,' +
+    '"script":"76a914d2b8a36d6617bf9b9b3a92ffaed0cec09043726488ac"}],"nLockTime":0}'
+  const SERIALIZED_TX_FOR_KMS_WITH_CHANGE =
+    '{"hash":"7b74b67fb4a447e32b9da0748be50a107c219eab707317e7dd8d4610d53b32f2","version":2,' +
+    '"inputs":[{"prevTxId":"edcb21782fbb444606e7140865aa761ad6a9ea1816a46fb9238d51a09d3e27f1","outputIndex":0,' +
+    '"sequenceNumber":4294967295,"script":"","scriptString":"","output":{"satoshis":100000000,' +
+    '"script":"76a914d2b8a36d6617bf9b9b3a92ffaed0cec09043726488ac"}}],"outputs":[{"satoshis":29000000,' +
+    '"script":"76a914f40723076a89c0aaad77def7768e1dbc6c070fd288ac"},{"satoshis":70850000,' +
+    '"script":"76a914d2b8a36d6617bf9b9b3a92ffaed0cec09043726488ac"}],"nLockTime":0,' +
+    '"changeScript":"OP_DUP OP_HASH160 20 0xd2b8a36d6617bf9b9b3a92ffaed0cec090437264 OP_EQUALVERIFY OP_CHECKSIG",' +
+    '"changeIndex":1,"fee":150000}'
   const transactions = ltcTransactions()
 
   afterEach(() => {
@@ -63,29 +80,20 @@ describe('LTC transactions', () => {
     toAmount: VALID_AMOUNT,
     toAddress: ADDRESS_1,
     feeAmount: FEE_AMOUNT,
+    fromSignatureId: SIGNATURE_ID,
   }
 
-  const invalid = {
-    invalidAmounts: [-1, -1.11111111, 0.0000000001, 9999.999999999],
-    invalidKey: PRIVATE_KEY_1,
-  } as BtcBasedInvalidTestParams
+  const validate: BtcBasedValidation = {
+    txData: VALID_TX_DATA,
+    txDtoSerialized: SERIALIZED_TX_FOR_KMS,
+    txDtoSerializedWithChange: SERIALIZED_TX_FOR_KMS_WITH_CHANGE,
+  }
 
   describe('From UTXO', () => {
     btcBasedTxTestFactory.fromUTXO({
       transactions,
       data,
-      validate: {
-        txData: VALID_TX_DATA,
-      },
-      mock,
-    })
-    btcBasedTxTestFactory.fromUTXOInvalid({
-      transactions,
-      data,
-      validate: {
-        txData: VALID_TX_DATA,
-      },
-      invalid,
+      validate,
       mock,
     })
   })
@@ -94,16 +102,7 @@ describe('LTC transactions', () => {
     btcBasedTxTestFactory.fromAddress({
       transactions,
       data,
-      validate: {
-        txData: VALID_TX_DATA,
-      },
-      mock,
-    })
-
-    btcBasedTxTestFactory.fromAddressInvalidAmount({
-      transactions,
-      data,
-      invalid,
+      validate,
       mock,
     })
   })
