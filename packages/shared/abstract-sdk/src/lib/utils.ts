@@ -12,7 +12,7 @@ export const amountUtils = {
     const amountBigNumber = new BigNumber(amount)
     const satoshiValue = amountBigNumber.multipliedBy(10 ** 8)
     const satoshis = satoshiValue.integerValue()
-    if (satoshis.toFixed() !== satoshiValue.toFixed()) {
+    if (satoshis.toFixed() !== satoshiValue.toFixed() || satoshis.lt(0)) {
       throw new SdkError({ code: SdkErrorCode.BTC_BASED_AMOUNT, messageArgs: [amountBigNumber.toString()] })
     }
     return Number(satoshis)
