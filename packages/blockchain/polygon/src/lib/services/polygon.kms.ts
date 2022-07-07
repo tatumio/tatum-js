@@ -9,7 +9,7 @@ export const polygonKmsService = (args: EvmBasedKMSServiceArgs) => {
     async sign(tx: ChainTransactionKMS, fromPrivateKey: string, provider?: string): Promise<string> {
       // @TODO: probably bug in OpenAPI
       ;(tx as PendingTransaction).chain = 'MATIC' as any
-      const client = args.web3.getClient(provider)
+      const client = args.web3.getClient(provider, fromPrivateKey)
       const transactionConfig = JSON.parse(tx.serializedTransaction)
 
       if (!transactionConfig.gas) {

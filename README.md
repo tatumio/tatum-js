@@ -1,151 +1,235 @@
-# [Tatum API client v2](http://tatum.io/) &middot; [![GitHub license](https://img.shields.io/npm/dm/@tatumio/tatum)](https://img.shields.io/npm/dm/@tatumio/tatum) [![Build all packages](https://github.com/tatumio/tatum-js/actions/workflows/build.yaml/badge.svg?branch=master)](https://github.com/tatumio/tatum-js/actions/workflows/build.yaml)
+# [Tatum API client v1](http://tatum.io/) &middot; [![GitHub license](https://img.shields.io/npm/dm/@tatumio/tatum)](https://img.shields.io/npm/dm/@tatumio/tatum) [![GitHub license](https://img.shields.io/npm/v/@tatumio/tatum)](https://img.shields.io/npm/v/@tatumio/tatum) [![CI](https://github.com/tatumio/tatum-js/actions/workflows/main.yml/badge.svg)](https://github.com/tatumio/tatum-js/actions/workflows/main.yml)
 
-Tatum API client allows browsers and Node.js clients to interact with Tatum API. You can find API documentation at [API doc](https://tatum.io/apidoc).
+Tatum API client allows browsers and Node.js clients to interact with Tatum API. It includes the following core components.
 
-> **Are you looking for Tatum API client v1? It has been moved to long living branch [`/tatumio/tatum-js/tree/v1`](https://github.com/tatumio/tatum-js/tree/v1)**.
+- **wallet** - cryptographic functions like generation of wallets, private keys or addresses.
+- **kms** - set of API calls to communicate with <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a>.
+- **blockchain** - set of API calls to communicate with different blockchains via <a href="https://tatum.io" target="_blank">Tatum API</a>.
+- **ledger** - set of API calls to communicate with Tatum Private Ledger via <a href="https://tatum.io" target="_blank">Tatum API</a>.
+- **transaction** - set of functions to generate and sign blockchain transactions locally.
+- **offchain** - set of functions to generate and sign Tatum off-chain transactions locally.
+
+You can find API documentation at [Github Pages](https://tatumio.github.io/tatum-js/) or at [API doc](https://tatum.io/apidoc).
 
 ## Status
 
-V2 is currently under active development and considered alpha version. (you can still use LTS version [`v1`](https://github.com/tatumio/tatum-js/tree/v1))
+[`v1`](https://github.com/tatumio/tatum-js/tree/v1) is LTS version  
+[`v2`](documentation/README_V2.md) is currently under active development and considered alpha version
 
 ## Installation
 
-This repository is a monorepo with multiple packages for each blockchain.
+### Node.js
 
-### Blockchain subpackage
+1. Install module:
 
-You can select one or more blockchain packages that you want to use in your project and install them separately.
-
-```console
-npm install @tatumio/eth
-```
-
-Currently supported blockchains
-| Syntax | Description |
-| ----------- | ----------- |
-| Algo | @tatumio/algo |
-| Bitcoin cash | @tatumio/bch |
-| Bitcoin | @tatumio/btc |
-| Binance smart chain | @tatumio/bsc |
-| Celo | @tatumio/celo |
-| Dogecoin | @tatumio/doge |
-| Ethereum | @tatumio/eth |
-| Flow | @tatumio/flow |
-| KuCoin | @tatumio/kcs |
-| Klaytn | @tatumio/klaytn |
-| Litecoin | @tatumio/ltc |
-| Polygon | @tatumio/polygon |
-| Solana | @tatumio/solana |
-| Tron | @tatumio/tron |
-| Stellar | @tatumio/xlm |
-| XRP | @tatumio/xrp |
-
-### Full package
-
-It is possible to install the full package with all supported blockchain modules, although this is not recommended for browser environments due to the size of the dependencies.
-
-```console
-npm install @tatumio/sdk
-```
+   `npm install @tatumio/tatum`
 
 ### Node.JS & Browser support
 
-Installing package you also need to check if selected package is supported in your environment. Not all packages are supported both in node and browser environments.
-
 Library is written in TypeScript with ES2017 as the target JS version. Library should work in Node.JS current LTS.
+
+## Testing
+
+All new code changes should be covered with unit tests. You can run the tests
+with the following command:
+
+```bash
+$ npm run test
+```
 
 ## Configuration and setup
 
-| Variable                  | Required | Default value    | Description                                                                                                                                                                                                                                   |
-| ------------------------- | -------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| TESTNET_TYPE              |          | ethereum-ropsten | For Ethereum, there are 2 testnet chains supported - Ropsten and Rinkeby. To enable Rinkeby, you need to use ethereum-rinkeby.                                                                                                                |
-| TATUM_GAS_STATION_API_KEY |          |                  | In the library, there are functions for estimating the Ethereum transaction fee. For the estimation of the transaction fee, we are using https://ethgasstation.info. If you have your API key from https://ethgasstation.info you can use it. |
-| YOUR_TRON_PRO_API_KEY     |          |                  | If you want to work with TRON locally, you need to enter API Key for [Trongrid] (https://trongrid.io).                                                                                                                                        |
+### Tatum API URL
+
+Provide URL to the Tatum API to process.env.TATUM_API_URL variable. Default URL is *https://api-eu1.tatum.io* You can
+use dotenv or any other way. There are modules and functions, that do not have to communicate with Tatum API, like
+wallet generation or signing of transactions locally. In those cases, there is no need to provide TATUM_API_URL
+parameter.
+
+`process.env.TATUM_API_URL=${YOUR_API_URL}`
+
+### Tatum API KEY
+
+Provide Tatum API key to process.env.TATUM_API_KEY variable. You can use dotenv or any other way. There are modules and
+functions, that do not have to communicate with Tatum API, like wallet generation or signing of transactions locally. In
+those cases, there is no need to provide TATUM_API_KEY parameter.
+
+`process.env.TATUM_API_KEY=${YOUR_API_KEY}`
+
+### Testnet type
+
+For Ethereum, there are 2 testnet chains supported - Ropsten (default one) and Rinkeby. To enable Rinkeby, you need to
+set up TESTNET_TYPE parameter to rinkeby.
+
+`process.env.TESTNET_TYPE=ethereum-rinkeby`
+
+### Retry Delay
+
+There are some cases when requests fail to complete successfully. For instance, when you exceed request rate
+limitations. To configure behavior when requests fails we provide env variables process.env.TATUM_RETRY_DELAY and
+process.env.TATUM_RETRIES.
+
+Variable process.env.TATUM_RETRY_DELAY specifies the number in milliseconds how long wait before the failed request is
+resent again. Default value is 1000 milliseconds.
+
+`process.env.TATUM_RETRY_DELAY=1000`
+
+Variable process.env.TATUM_RETRIES specifies the maximum number of how many times failed request is resent again.
+Default value is 5.
+
+`process.env.TATUM_RETRIES=5`
+
+In the library, there are functions for estimating the Ethereum transaction fee. For the estimation of the transaction
+fee, we are using https://ethgasstation.info. If you have your API key from https://ethgasstation.info you can use it
+via env variable process.env.TATUM_GAS_STATION_API_KEY.
+
+`process.env.TATUM_GAS_STATION_API_KEY=${YOUR_GAS_STATION_API_KEY}`
+
+If you want to work with TRON locally, you need to enter API Key for [Trongrid](https://trongrid.io).
+`process.env.TRON_PRO_API_KEY=${YOUR_TRON_PRO_API_KEY}`
 
 ## Usage
 
 ```js
-// es6
-// import blockchain subpackage or full sdk package
-import { TatumEthSDK } from '@tatumio/eth'
+// In Node.js
+const Tatum = require('@tatumio/tatum');
+const btcWallet = await Tatum.generateWallet(Tatum.Currency.BTC, true);
 
-// pass API key from Tatum account available for free at https://dashboard.tatum.io/
-const ethSDK = TatumEthSDK({ apiKey: '<Your API Key>' })
-
-// pick Tatum service available from API docs
-const generatedWallet = await ethSDK.api.ethGenerateWallet('<mnemonic phrase>')
-console.log(generatedWallet)
+console.log(btcWallet);
+>
+{
+    mnemonic: ... ,
+    xpub: ...
+}
 ```
 
-Examples
-| Service type | Path example | Description
-| ----------- | ----------- |-----------
-| Api | ethSDK.api.ethGenerateAddress | Blockchain native services
-| Custodial | ethSDK.custodial.prepare.generateCustodialWalletSignedTransaction | Custodial wallet services
-| Fungible tokens | ethSDK.fungible.deployToken | ERC20, TRC20, etc.
-| NFT | ethSDK.nft.deployToken | ERC721, TRC721, etc.
-| NFT Marketplace | ethSDK.auction.bid | NFT Marketplaces services
-| NFT Auctions | ethSDK.marketplace.getMarketplaceListing | NFT Auctions services
-| Multi tokens | ethSDK.multiToken.deployToken | ERC-1155 services
-| httpDriver | ethSDK.httpDriver | Connect directly to Node
-| KMS | ethSDK.kms.getAllPending | Tatum KMS
-| Ledger | ethSDK.ledger.orderBook.newTrade | Tatum private Ledger
-| Offchain | ethSDK.offchain.storeTokenAddress | Tatum Offchain
-| Record | ethSDK.record.storeLog | Blockchain log
-| Security | ethSDK.security.checkMaliciousAddress | Security utilities
-| Subscriptions | ethSDK.subscriptions.createSubscription | Notification services
-| Tatum | ethSDK.tatum.freezeApiKey | Tatum Ledger custody services
-| Transaction | ethSDK.transaction.prepare.transferSignedTransaction | Blockchain native transfer
-| Wallet | ethSDK.wallet.generateWallet | Create blockchain wallet and address
+### Usage with TypeScript
 
-All examples of SDK usage will be found after completion at https://github.com/tatumio/tatum-js/tree/master/examples
+We support types within the repo itself. Please open an issue here if you find any wrong types.
 
-### Usage with React - Webpack 5
+You can use `@tatumio/tatum` as follows:
 
-Webpack v5 introduced breaking changes to Web3 library used in Tatum blockchain services. To enable Tatum SDK in React apps you need to follow workaround as per https://stackoverflow.com/questions/66952972/cannot-add-web3-to-react-project
-
-#### 1. Install additional dependencies
-
-```console
-yarn add -D node-polyfill-webpack-plugin
-yarn add -D react-app-rewired
+```typescript
+import { generateWallet, Currency } from '@tatumio/tatum'
+const btcWallet = await generateWallet(Currency.BTC, true)
 ```
 
-#### 2. Copy [config-overrides.js](https://github.com/npwork/create-react-app-with-webpack5/blob/main/config-overrides.js) to your project (next to package.json)
+More examples are available here:
 
-#### 3. Add browserify dependencies to `package.json`
+- [blockchain](https://github.com/tatumio/tatum-js/tree/master/src/blockchain)
+- [ledger](https://github.com/tatumio/tatum-js/tree/master/src/ledger)
+- [nft](https://github.com/tatumio/tatum-js/tree/master/src/nft)
+- [offchain](https://github.com/tatumio/tatum-js/tree/master/src/offchain)
+- [security](https://github.com/tatumio/tatum-js/tree/master/src/security)
+- [transaction](https://github.com/tatumio/tatum-js/tree/master/src/transaction)
+- [wallet](https://github.com/tatumio/tatum-js/tree/master/src/wallet)
+
+If you are using the types in a `commonjs` module, like in a Node app, you just have to enable `esModuleInterop` and `allowSyntheticDefaultImports` in your `tsconfig` for typesystem compatibility:
 
 ```json
-"assert": "npm:assert",
-"crypto": "npm:crypto-browserify",
-"http": "npm:http-browserify",
-"https": "npm:https-browserify",
-"os": "npm:os-browserify",
-"stream": "npm:stream-browserify",
-"url": "npm:url",
-...
-
+"compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    ....
 ```
 
-#### 4. Replace `scripts` block in your `package.json`
+### Usage with React Native
 
-```json
-"scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
-    "eject": "react-app-rewired eject"
-  },
+Tatum js use core node js modules or browser APIs that are not available in React Native, so in order to be able to run Tatum js in React Native we need to install and use some additional dependencies.
+
+```
+npm i rn-nodeify -g
+npm i react-native-randombytes --save
+npm i @tatumio/tatum --save
+rn-nodeify --install http,https,path,crypto,fs,stream,os --hack
+cd ios && pod install
 ```
 
-#### 5. Start your app as usual
+rn-nodeify will create a `shim.js` file in your project root directory. The first line in `index.js` should be to import it (NOT require it!)
 
-```console
-npm start
+`import "./shim";`
+
+Uncomment the last line from the shim.js file:
+`require('crypto')`
+
+`shim.js` file example:
+
+```
+if (typeof __dirname === 'undefined') global.__dirname = '/'
+if (typeof __filename === 'undefined') global.__filename = ''
+if (typeof process === 'undefined') {
+  global.process = require('process')
+} else {
+  const bProcess = require('process')
+  for (var p in bProcess) {
+    if (!(p in process)) {
+      process[p] = bProcess[p]
+    }
+  }
+}
+
+process.browser = false
+if (typeof Buffer === 'undefined') global.Buffer = require('buffer').Buffer
+
+// global.location = global.location || { port: 80 }
+const isDev = typeof __DEV__ === 'boolean' && __DEV__
+process.env['NODE_ENV'] = isDev ? 'development' : 'production'
+if (typeof localStorage !== 'undefined') {
+  localStorage.debug = isDev ? '*' : ''
+}
+
+// If using the crypto shim, uncomment the following line to ensure
+// crypto is loaded first, so it can populate global.crypto
+require('crypto')
+```
+
+Tatum js will look for the API_KEY using .env variables, for this you can simply write `process.env.TATUM_API_KEY = "YOUR_API_KEY_HERE";` before importing Tatum in you project.
+
+Run your app:
+
+```
+npx react-native run-ios
+npx react-native run-android
+```
+
+## Directory structure
+
+```bash
+└── src
+│   ├── blockchain          // Blockchain API methods without private key
+│   ├── connector           // Wrapper around all HTTP methods
+│   ├── contracts           // Abi and byte code smart contracts
+│   │   ├── custodial
+│   │   ├── erc20
+│   │   ├── erc721
+│   │   ├── erc1155
+│   │   ├── marketplace
+│   │   ├── trc20
+│   │   ├── trc721
+│   ├── ledger              // Ledger API methods
+│   ├── model               // Validation, interfaces and DTO classes
+│   │   ├── request
+│   │   ├── response
+│   │   ├── validation
+│   ├── multiToken          // Multi Token API methods
+│   ├── nft                 // NFT API methods
+│   │   ├── marketplace     // Marketplace API methods
+│   ├── offchain            // Offchain API methods
+│   ├── record              // Logging API methods
+│   ├── security            // Security and KMS methods
+│   ├── tatum               // Service API methods
+│   ├── transaction         // Transaction API methods
+│   ├── wallet              // Wallet, private key and address API methods
+│   └── constants.ts        // Constants
+├── README.md
+├── package.json
+├── tslint.js
+├── tsconfig.json
+└── .gitignore
 ```
 
 ## Contributing
 
 Contributions to the Tatum API client are welcome. Please ensure
-that you have tested your changes with a local client and have added unit test
+that you have tested the changes with a local client and have added unit test
 coverage for your code.

@@ -1,6 +1,6 @@
 import { SignatureId } from '@tatumio/api-client'
 import BigNumber from 'bignumber.js'
-import { SdkMessageArgs } from './errors.abstract.sdk'
+import { SdkError, SdkErrorCode, SdkMessageArgs } from './errors.abstract.sdk'
 
 export const amountUtils = {
   /**
@@ -8,8 +8,15 @@ export const amountUtils = {
    * https://github.com/bitpay/bitcore-lib/pull/238
    * https://github.com/bitpay/bitcore-lib/issues/180
    */
-  toSatoshis: (amount: number | string): number =>
-    Number(new BigNumber(amount).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)),
+  toSatoshis: (amount: number | string): number => {
+    const amountBigNumber = new BigNumber(amount)
+    const satoshiValue = amountBigNumber.multipliedBy(10 ** 8)
+    const satoshis = satoshiValue.integerValue()
+    if (satoshis.toFixed() !== satoshiValue.toFixed()) {
+      throw new SdkError({ code: SdkErrorCode.BTC_BASED_AMOUNT, messageArgs: [amountBigNumber.toString()] })
+    }
+    return Number(satoshis)
+  },
 }
 
 export function isWithSignatureId<

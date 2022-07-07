@@ -10,11 +10,7 @@ export const polygonWeb3 = (args: { blockchain: EvmBasedBlockchain; client?: Web
   return {
     ...evmBasedWeb3Result,
     getClient(provider?: string, fromPrivateKey?: string): Web3 {
-      if (args?.client) {
-        return args.client
-      }
-
-      const web3 = evmBasedWeb3Result.getClient(provider)
+      const web3 = args?.client ?? evmBasedWeb3Result.getClient(provider)
 
       if (fromPrivateKey) {
         web3.eth.accounts.wallet.add(fromPrivateKey)

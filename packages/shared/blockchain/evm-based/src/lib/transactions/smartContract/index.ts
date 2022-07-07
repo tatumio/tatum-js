@@ -13,7 +13,7 @@ export const smartContractWriteMethodInvocation = async (
 ) => {
   const { fromPrivateKey, fee, params, methodName, methodABI, contractAddress, nonce, amount, signatureId } =
     body
-  const client = web3.getClient(provider)
+  const client = web3.getClient(provider, fromPrivateKey)
 
   const contract = new client.eth.Contract([methodABI])
 

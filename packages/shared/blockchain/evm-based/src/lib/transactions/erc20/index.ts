@@ -17,7 +17,7 @@ const mintSignedTransaction = async (body: ChainMintErc20, web3: EvmBasedWeb3, p
   // TODO: validation
   // await validateBody(body, MintErc20)
 
-  const client = web3.getClient(provider)
+  const client = web3.getClient(provider, body.fromPrivateKey)
 
   // TODO: any type
   const contract = new client.eth.Contract(Erc20Token.abi as any, body.contractAddress.trim().trim())
@@ -47,7 +47,7 @@ const burnSignedTransaction = async (body: ChainBurnErc20, web3: EvmBasedWeb3, p
   // TODO: validation
   // await validateBody(body, BurnErc20)
 
-  const client = web3.getClient(provider)
+  const client = web3.getClient(provider, body.fromPrivateKey)
 
   // TODO: any type
   const contract = new client.eth.Contract(Erc20Token.abi as any, body.contractAddress.trim().trim())
@@ -78,7 +78,7 @@ const transferSignedTransaction = async (body: ChainTransferErc20, web3: EvmBase
   // TODO
   // await validateBody(body, TransferErc20)
 
-  const client = web3.getClient(provider)
+  const client = web3.getClient(provider, body.fromPrivateKey)
 
   const decimals = new BigNumber(10).pow(body.digits as number)
   // TODO
@@ -109,7 +109,7 @@ const deploySignedTransaction = async (body: ChainDeployErc20, web3: EvmBasedWeb
   // await validateBody(body, DeployErc20)
   const { name, address, symbol, supply, digits, fromPrivateKey, nonce, signatureId, totalCap } = body
 
-  const client = web3.getClient(provider)
+  const client = web3.getClient(provider, fromPrivateKey)
   // TODO
   const contract = new client.eth.Contract(Erc20Token.abi as any)
   const deploy = contract.deploy({
@@ -154,7 +154,7 @@ const approveSignedTransaction = async (body: ApproveErc20, web3: EvmBasedWeb3, 
 
   const params = [body.spender.trim(), `0x${amount}`]
 
-  const client = web3.getClient(provider)
+  const client = web3.getClient(provider, body.fromPrivateKey)
 
   const smartContractMethodName = 'approve'
 
