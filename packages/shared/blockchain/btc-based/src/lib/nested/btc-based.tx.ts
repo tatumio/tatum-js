@@ -14,7 +14,7 @@ import {
   TransactionHashKMS,
 } from '@tatumio/api-client'
 import { PrivateKey, Script, Transaction } from 'bitcore-lib'
-import { amountUtils, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
+import { amountUtils, SdkError, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { BtcBasedSdkError } from '../btc-based.sdk.errors'
 import BigNumber from 'bignumber.js'
 
@@ -123,6 +123,9 @@ export const btcBasedTransactions = (
       }
       return privateKeysToSign
     } catch (e: any) {
+      if (e instanceof SdkError) {
+        throw e
+      }
       throw new BtcBasedSdkError(e)
     }
   }
@@ -155,7 +158,7 @@ export const btcBasedTransactions = (
 
       return privateKeysToSign
     } catch (e: any) {
-      if (e instanceof BtcBasedSdkError) {
+      if (e instanceof SdkError) {
         throw e
       }
       throw new BtcBasedSdkError(e)
@@ -214,6 +217,9 @@ export const btcBasedTransactions = (
       }
       return tx.serialize(uncheckedSerialization)
     } catch (e: any) {
+      if (e instanceof SdkError) {
+        throw e
+      }
       throw new BtcBasedSdkError(e)
     }
   }
