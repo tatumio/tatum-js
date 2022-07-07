@@ -14,7 +14,7 @@ import {
   TransactionHashKMS,
 } from '@tatumio/api-client'
 import { PrivateKey, Script, Transaction } from 'bitcore-lib'
-import { amountUtils, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
+import { amountUtils, SdkError, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { BtcBasedSdkError } from '../btc-based.sdk.errors'
 import BigNumber from 'bignumber.js'
 
@@ -49,6 +49,17 @@ type LtcFromAddressTypes = LtcTransactionAddress | LtcTransactionAddressKMS
 
 type BtcFromUtxoTypes = BtcTransactionFromUTXO | BtcTransactionFromUTXOKMS
 type LtcFromUtxoTypes = LtcTransactionUTXO | LtcTransactionUTXOKMS
+
+export type BtcBasedFromWithChange =
+  | (BtcTransactionFromAddress & FeeChange)
+  | (LtcTransactionAddress & FeeChange)
+export type BtcBasedFromWithKmsChange =
+  | (BtcTransactionFromAddressKMS & FeeChange)
+  | (LtcTransactionAddressKMS & FeeChange)
+export type BtcBasedUtxoWithChange = (BtcTransactionFromUTXO & FeeChange) | (LtcTransactionUTXO & FeeChange)
+export type BtcBasedUtxoKMSWithChange =
+  | (BtcTransactionFromUTXOKMS & FeeChange)
+  | (LtcTransactionUTXOKMS & FeeChange)
 
 type GetTxByAddressType =
   | typeof ApiServices.blockchain.bitcoin.btcGetTxByAddress
@@ -112,6 +123,9 @@ export const btcBasedTransactions = (
       }
       return privateKeysToSign
     } catch (e: any) {
+      if (e instanceof SdkError) {
+        throw e
+      }
       throw new BtcBasedSdkError(e)
     }
   }
@@ -129,12 +143,11 @@ export const btcBasedTransactions = (
           throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_UTXO_NOT_FOUND, [utxoItem.txHash, utxoItem.index])
         }
 
-        const script = Script.fromAddress(utxo.address).toString()
         transaction.from([
           Transaction.UnspentOutput.fromObject({
             txId: utxoItem.txHash,
             outputIndex: utxo.index,
-            script: script,
+            script: Script.fromAddress(utxo.address).toString(),
             satoshis: utxo.value,
           }),
         ])
@@ -145,7 +158,7 @@ export const btcBasedTransactions = (
 
       return privateKeysToSign
     } catch (e: any) {
-      if (e instanceof BtcBasedSdkError) {
+      if (e instanceof SdkError) {
         throw e
       }
       throw new BtcBasedSdkError(e)
@@ -204,6 +217,9 @@ export const btcBasedTransactions = (
       }
       return tx.serialize(uncheckedSerialization)
     } catch (e: any) {
+      if (e instanceof SdkError) {
+        throw e
+      }
       throw new BtcBasedSdkError(e)
     }
   }

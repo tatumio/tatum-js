@@ -12,9 +12,6 @@ describe('Utils', function () {
         [0.0001, 10000],
         [0.00000001, 1],
         [12345.67891011, 1234567891011],
-        [-1001, -100100000000],
-        [-1, -100000000],
-        [-0.00000001, -1],
       ]
 
       it.each(validCases)('valid amount %d', (amount, expectedSatoshis) => {
