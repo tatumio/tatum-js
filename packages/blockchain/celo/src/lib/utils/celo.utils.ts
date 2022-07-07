@@ -1,4 +1,5 @@
 import {
+  ChainBurnCeloErc20,
   ChainDeployCeloErc20,
   ChainMintCeloErc20,
   ChainTransferCeloErc20Token,
@@ -88,6 +89,8 @@ export type ChainMintErc20Celo = WithoutChain<FromPrivateKeyOrSignatureId<ChainM
 
 export type ChainTransferErc20Celo = WithoutChain<FromPrivateKeyOrSignatureId<ChainTransferCeloErc20Token>> &
   Pick<ChainTransferEthErc20, 'fee'>
+
+export type ChainBurnErc20Celo = WithoutChain<FromPrivateKeyOrSignatureId<ChainBurnCeloErc20>>
 
 export type ChainGenerateCustodialAddressCelo = GenerateCustodialWalletCelo | GenerateCustodialWalletCeloKMS
 
