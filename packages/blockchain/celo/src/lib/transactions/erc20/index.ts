@@ -26,7 +26,7 @@ const initialize = async (
     celoProvider,
     network: await celoProvider.ready,
     feeCurrencyContractAddress: celoUtils.getFeeCurrency(args.feeCurrency, testnet),
-    contract: new new Web3().eth.Contract(Erc20Token.abi as any, contractAddress),
+    contract: new new Web3(provider).eth.Contract(Erc20Token.abi as any, contractAddress),
   }
 }
 

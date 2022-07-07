@@ -1,7 +1,7 @@
 import { CeloService } from '@tatumio/api-client'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
-import { custodial as evmBasedCustodial, erc20, EvmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
-import { erc721, multiToken, native } from '../transactions'
+import { custodial as evmBasedCustodial, EvmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
+import { erc721, multiToken, native, erc20 } from '../transactions'
 
 export const celoTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3 }) => {
   return {

@@ -21,6 +21,7 @@ export const TatumCeloSDK = (args: SDKArguments) => {
     kms: celoKmsService({ blockchain, web3 }),
     transaction: txService.native,
     erc20: {
+      ...txService.erc20,
       getErc20TransactionByAddress: FungibleTokensErc20OrCompatibleService.erc20GetTransactionByAddress,
       getErc20AccountBalance: FungibleTokensErc20OrCompatibleService.erc20GetBalance,
     },

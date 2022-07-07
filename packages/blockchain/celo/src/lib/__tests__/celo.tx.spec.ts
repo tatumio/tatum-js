@@ -11,13 +11,175 @@ describe('CeloSDK - tx', () => {
         ? TEST_DATA.CELO.TESTNET.ERC_20?.ADDRESS
         : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
 
-      it('should be valid from privateKey', async () => {
-        const result = await sdk.transaction.prepare.transferSignedTransaction(
+      describe('transferSignedTransaction', () => {
+        it('should be valid from privateKey', async () => {
+          const result = await sdk.transaction.prepare.transferSignedTransaction(
+            {
+              to: address,
+              fromPrivateKey: TEST_DATA.CELO.TESTNET.ERC_20?.PRIVATE_KEY,
+              feeCurrency: 'CUSD',
+              amount: '1',
+            },
+            provider,
+            true,
+          )
+          expectHexString(result)
+        })
+
+        it('should be valid from signatureId', async () => {
+          const result = await sdk.transaction.prepare.transferSignedTransaction(
+            {
+              to: address,
+              signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+              feeCurrency: 'CUSD',
+              amount: '1',
+            },
+            provider,
+            true,
+          )
+          const json = JSON.parse(result)
+          expectHexString(json.data)
+        })
+
+        it('should throw', async () => {
+          try {
+            await sdk.transaction.prepare.transferSignedTransaction(
+              {
+                to: '',
+                signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+                feeCurrency: 'CUSD',
+                amount: '',
+              },
+              provider,
+              true,
+            )
+            fail()
+          } catch (e: any) {
+            expect(e.message).toMatch(
+              'The target (to) address, currency, feeCurrency or the amount cannot be empty',
+            )
+          }
+        })
+      })
+
+      describe('storeDataTransaction', () => {
+        it('should be valid from privateKey', async () => {
+          const result = await sdk.transaction.prepare.storeDataTransaction(
+            {
+              to: address,
+              fromPrivateKey: TEST_DATA.CELO.TESTNET.ERC_20?.PRIVATE_KEY,
+              feeCurrency: 'CUSD',
+              data: 'some data',
+            },
+            provider,
+            true,
+          )
+          expectHexString(result)
+        })
+
+        it('should be valid from signatureId', async () => {
+          const result = await sdk.transaction.prepare.storeDataTransaction(
+            {
+              to: address,
+              signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+              feeCurrency: 'CUSD',
+              data: 'some data',
+            },
+            provider,
+            true,
+          )
+          const json = JSON.parse(result)
+          expectHexString(json.data)
+        })
+      })
+    })
+  })
+
+  describe('erc20', () => {
+    const provider = TEST_DATA.CELO?.PROVIDER
+
+    describe('prepare', () => {
+      describe('deploy', () => {
+        it('should be valid from privateKey', async () => {
+          const result = await sdk.erc20.prepare.deploySignedTransaction(
+            {
+              name: 'My ERC20',
+              fromPrivateKey: TEST_DATA.CELO.TESTNET.ERC_20!.PRIVATE_KEY,
+              feeCurrency: 'CUSD',
+              symbol: 'ERC_SYMBOL',
+              supply: '100',
+              digits: 10,
+              address: TEST_DATA.CELO.TESTNET.ERC_20!.ADDRESS,
+            },
+            provider,
+            true,
+          )
+          expectHexString(result)
+        })
+
+        it('should be valid from signatureId', async () => {
+          const result = await sdk.erc20.prepare.deploySignedTransaction(
+            {
+              signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+              name: 'My ERC20',
+              feeCurrency: 'CUSD',
+              symbol: 'ERC_SYMBOL',
+              supply: '100',
+              digits: 10,
+              address: TEST_DATA.CELO.TESTNET.ERC_20!.ADDRESS,
+            },
+            provider,
+            true,
+          )
+          const json = JSON.parse(result)
+          expectHexString(json.data)
+        })
+      })
+
+      describe('burn', () => {
+        it('should be valid from privateKey', async () => {
+          const result = await sdk.erc20.prepare.burnSignedTransaction(
+            {
+              fromPrivateKey: TEST_DATA.CELO.TESTNET.ERC_20!.PRIVATE_KEY,
+              feeCurrency: 'CUSD',
+              amount: '5',
+              contractAddress: TEST_DATA.CELO.TESTNET.ERC_20!.CONTRACT_ADDRESS,
+            },
+            provider,
+            true,
+          )
+          expectHexString(result)
+        })
+
+        it('should be valid from signatureId', async () => {
+          const result = await sdk.erc20.prepare.burnSignedTransaction(
+            {
+              signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+              feeCurrency: 'CUSD',
+              amount: '5',
+              contractAddress: TEST_DATA.CELO.TESTNET.ERC_20!.CONTRACT_ADDRESS,
+            },
+            provider,
+            true,
+          )
+          const json = JSON.parse(result)
+          expectHexString(json.data)
+        })
+      })
+    })
+
+    describe('mint', () => {
+      /**
+       * TODO: cannot estimate gas; transaction may fail or may require manual gas limit (error={"reason":"processing response error","code":"SERVER_ERROR","body":"{\"jsonrpc\":\"2.0\",\"id\":47,\"error\":{\"code\":-32000,\"message\":\"execution reverted\"}}\n","error":{"code":-32000},"requestBody":"{\"method\":\"eth_estimateGas\",\"params\":[{\"gas\":\"0x3e8\",\"gasPrice\":\"0x3b9aca00\",\"from\":\"0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea\",\"to\":\"0xb7205685aabeb4092ebba67ed0443af807aac282\",\"data\":\"0x40c10f190000000000000000000000008cb76aed9c5e336ef961265c6079c14e9cd3d2ea0000000000000000000000000000000000000000000000000000000ba43b7400\"}],\"id\":47,\"jsonrpc\":\"2.0\"}","requestMethod":"POST","url":"https://alfajores-forno.celo-testnet.org"}, method="estimateGas", transaction={"from":"0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA","gasLimit":{"type":"BigNumber","hex":"0x03e8"},"gasPrice":{"type":"BigNumber","hex":"0x3b9aca00"},"to":"0xB7205685AABeB4092EBBa67Ed0443Af807AaC282","data":"0x40c10f190000000000000000000000008cb76aed9c5e336ef961265c6079c14e9cd3d2ea0000000000000000000000000000000000000000000000000000000ba43b7400","accessList":null}, code=UNPREDICTABLE_GAS_LIMIT, version=providers/5.5.3)
+       */
+      it.skip('should be valid from privateKey', async () => {
+        const result = await sdk.erc20.prepare.mintSignedTransaction(
           {
-            to: address,
-            fromPrivateKey: TEST_DATA.CELO.TESTNET.ERC_20?.PRIVATE_KEY,
+            fromPrivateKey: TEST_DATA.CELO.TESTNET.ERC_20!.PRIVATE_KEY,
             feeCurrency: 'CUSD',
-            amount: '1',
+            amount: '5',
+            contractAddress: TEST_DATA.CELO.TESTNET.ERC_20!.CONTRACT_ADDRESS,
+            to: TEST_DATA.CELO.TESTNET.ERC_20!.ADDRESS,
           },
           provider,
           true,
@@ -26,12 +188,13 @@ describe('CeloSDK - tx', () => {
       })
 
       it('should be valid from signatureId', async () => {
-        const result = await sdk.transaction.prepare.transferSignedTransaction(
+        const result = await sdk.erc20.prepare.mintSignedTransaction(
           {
-            to: address,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
             feeCurrency: 'CUSD',
-            amount: '1',
+            amount: '5',
+            contractAddress: TEST_DATA.CELO.TESTNET.ERC_20!.CONTRACT_ADDRESS,
+            to: TEST_DATA.CELO.TESTNET.ERC_20!.ADDRESS,
           },
           provider,
           true,
@@ -39,25 +202,40 @@ describe('CeloSDK - tx', () => {
         const json = JSON.parse(result)
         expectHexString(json.data)
       })
+    })
 
-      it('should throw', async () => {
-        try {
-          await sdk.transaction.prepare.transferSignedTransaction(
-            {
-              to: '',
-              signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-              feeCurrency: 'CUSD',
-              amount: '',
-            },
-            provider,
-            true,
-          )
-          fail()
-        } catch (e: any) {
-          expect(e.message).toMatch(
-            'The target (to) address, currency, feeCurrency or the amount cannot be empty',
-          )
-        }
+    describe('transfer', () => {
+      it('should be valid from privateKey', async () => {
+        const result = await sdk.erc20.prepare.transferSignedTransaction(
+          {
+            fromPrivateKey: TEST_DATA.CELO.TESTNET.ERC_20!.PRIVATE_KEY,
+            feeCurrency: 'CUSD',
+            amount: '5',
+            contractAddress: TEST_DATA.CELO.TESTNET.ERC_20!.CONTRACT_ADDRESS,
+            to: TEST_DATA.CELO.TESTNET.ERC_20!.ADDRESS,
+            digits: 10,
+          },
+          provider,
+          true,
+        )
+        expectHexString(result)
+      })
+
+      it('should be valid from signatureId', async () => {
+        const result = await sdk.erc20.prepare.transferSignedTransaction(
+          {
+            signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+            feeCurrency: 'CUSD',
+            amount: '5',
+            contractAddress: TEST_DATA.CELO.TESTNET.ERC_20!.CONTRACT_ADDRESS,
+            to: TEST_DATA.CELO.TESTNET.ERC_20!.ADDRESS,
+            digits: 10,
+          },
+          provider,
+          true,
+        )
+        const json = JSON.parse(result)
+        expectHexString(json.data)
       })
     })
   })
