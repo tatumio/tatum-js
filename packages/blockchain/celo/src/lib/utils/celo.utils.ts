@@ -4,8 +4,8 @@ import {
   ChainMintCeloErc20,
   ChainTransferCeloErc20Token,
   ChainTransferEthErc20,
+  CreateRecordCelo,
   Currency,
-  TransferErc20,
 } from '@tatumio/api-client'
 import { FromPrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
 import {
@@ -91,6 +91,9 @@ export type ChainTransferErc20Celo = WithoutChain<FromPrivateKeyOrSignatureId<Ch
   Pick<ChainTransferEthErc20, 'fee'>
 
 export type ChainBurnErc20Celo = WithoutChain<FromPrivateKeyOrSignatureId<ChainBurnCeloErc20>>
+
+export type ChainStoreDataCelo = WithoutChain<FromPrivateKeyOrSignatureId<CreateRecordCelo>> &
+  Pick<ChainTransferEthErc20, 'fee'>
 
 export type ChainGenerateCustodialAddressCelo = GenerateCustodialWalletCelo | GenerateCustodialWalletCeloKMS
 
