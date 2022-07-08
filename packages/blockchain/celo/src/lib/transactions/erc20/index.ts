@@ -1,5 +1,5 @@
 import { CeloWallet } from '@celo-tools/celo-ethers-wrapper'
-import { Currency } from '@tatumio/api-client'
+import { Currency, TATUM_API_CONSTANTS } from '@tatumio/api-client'
 import { BroadcastFunction } from '@tatumio/shared-blockchain-abstract'
 import { Erc20Token } from '@tatumio/shared-blockchain-evm-based'
 import BigNumber from 'bignumber.js'
@@ -26,7 +26,12 @@ const initialize = async (
     celoProvider,
     network: await celoProvider.ready,
     feeCurrencyContractAddress: celoUtils.getFeeCurrency(args.feeCurrency, testnet),
-    contract: new new Web3(provider).eth.Contract(Erc20Token.abi as any, contractAddress),
+    contract: new new Web3(
+      provider ||
+        `${process.env['TATUM_API_URL'] || TATUM_API_CONSTANTS.URL}/v3/celo/web3/${
+          TATUM_API_CONSTANTS.API_KEY
+        }`,
+    ).eth.Contract(Erc20Token.abi as any, contractAddress),
   }
 }
 
