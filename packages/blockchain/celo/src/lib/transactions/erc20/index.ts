@@ -1,5 +1,5 @@
 import { CeloWallet } from '@celo-tools/celo-ethers-wrapper'
-import { Currency, TATUM_API_CONSTANTS } from '@tatumio/api-client'
+import { TATUM_API_CONSTANTS } from '@tatumio/api-client'
 import { BroadcastFunction } from '@tatumio/shared-blockchain-abstract'
 import { Erc20Token } from '@tatumio/shared-blockchain-evm-based'
 import BigNumber from 'bignumber.js'
