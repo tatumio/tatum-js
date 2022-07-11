@@ -88,7 +88,7 @@ const transferSignedTransaction = async (body: ChainTransferErc20, web3: EvmBase
 
   const tx: TransactionConfig = {
     from: undefined,
-    to: body.to,
+    to: body.contractAddress,
     data,
     nonce: body.nonce,
   }
