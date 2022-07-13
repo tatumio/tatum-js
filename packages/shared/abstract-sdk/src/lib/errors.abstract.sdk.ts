@@ -81,6 +81,7 @@ export enum SdkErrorCode {
   COMMON_ERROR = 'sdk.common.error',
   BTC_BASED_FEE_TOO_SMALL = 'btc-based.fee.too-small',
   BTC_BASED_UTXO_NOT_FOUND = 'btc-based.utxo.not-found',
+  BTC_BASED_NO_INPUTS = 'btc-based.no.inputs',
   BTC_BASED_NOT_ENOUGH_BALANCE = 'btc-based.balance.not-enough',
   BTC_FEE_IS_TOO_LARGE = 'btc-based.fee.too-large',
   XRP_SECRET_DOES_NOT_MATCH = 'xrp.secret.does-not-match',
@@ -106,6 +107,7 @@ export const SdkErrorMessage: Record<SdkErrorCode, string> = {
   // BTC
   [SdkErrorCode.BTC_BASED_FEE_TOO_SMALL]: `Fee is too small. Please make sure that amount to send < balance`,
   [SdkErrorCode.BTC_BASED_UTXO_NOT_FOUND]: `UTXO with hash {0} and index {1} not found. Please check that outputs are valid`,
+  [SdkErrorCode.BTC_BASED_NO_INPUTS]: `Not found spendable inputs for {0}`,
   [SdkErrorCode.BTC_BASED_NOT_ENOUGH_BALANCE]: `Not enough coins on address to perform this transaction`,
   [SdkErrorCode.BTC_FEE_IS_TOO_LARGE]: `Fee is to big, make sure it's not a mistake`,
   [SdkErrorCode.TX_NOT_FOUND]: `TX not found`,
