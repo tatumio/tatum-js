@@ -73,6 +73,7 @@ describe('BTC transactions', () => {
     requestGetRawTx: mockRequestGetRawTx,
     requestGetUtxo: mockRequestGetUtxo,
     requestGetUtxoNotFound: mockRequestGetUtxoNotFound,
+    requestGetTransactionsNotFound: mockRequestGetTransactionsNotFound,
     requestGetTxByAddress: mockRequestGetTxByAddress,
     broadcast: mockedApi.blockchain.bitcoin.btcBroadcast,
   }
@@ -137,6 +138,10 @@ describe('BTC transactions', () => {
 
   function mockRequestGetUtxoNotFound() {
     mockedApi.blockchain.bitcoin.btcGetUtxo.mockRejectedValue(mockHelper.apiError.notFound())
+  }
+
+  function mockRequestGetTransactionsNotFound() {
+    mockedApi.blockchain.bitcoin.btcGetTxByAddress.mockResolvedValue([])
   }
 
   function mockRequestGetTxByAddress(

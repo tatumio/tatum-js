@@ -46,6 +46,7 @@ export type BtcBasedMocks = {
   requestGetUtxo: (obj?: unknown) => void
   requestGetTxByAddress: (obj?: { outputs: [] }) => void
   requestGetUtxoNotFound: () => void
+  requestGetTransactionsNotFound: () => void
   broadcast: ((requestBody: BroadcastKMS) => CancelablePromise<TransactionHashKMS>) & jest.Mock
 }
 
@@ -292,12 +293,13 @@ export const btcBasedTxTestFactory = {
         ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_BASED_FEE_TOO_SMALL)
       })
 
-      it('utxo not found', async () => {
+      it('no inputs', async () => {
+        args.mock.requestGetTransactionsNotFound()
         args.mock.requestGetUtxoNotFound()
 
         await expect(
           args.transactions.prepareSignedTransaction(definedChangeAddressUTXOBody(args.data), options),
-        ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_BASED_UTXO_NOT_FOUND)
+        ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_BASED_NO_INPUTS)
       })
 
       describe('invalid amount', function () {
@@ -379,6 +381,14 @@ export const btcBasedTxTestFactory = {
         ).rejects.toThrow(SdkErrorCode.BTC_BASED_AMOUNT)
         testHelper.expectMockNotCalled(args.mock.broadcast)
       })
+    })
+    it('no inputs', async () => {
+      args.mock.requestGetTransactionsNotFound()
+      args.mock.requestGetUtxoNotFound()
+
+      await expect(
+        args.transactions.prepareSignedTransaction(definedChangeAddressFromBody(args.data), options),
+      ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_BASED_NO_INPUTS)
     })
   },
 }

@@ -11,6 +11,7 @@ export const BTC_ERRORS_MAPPING = {
 export type BtcBasedSdkErrorCode =
   | SdkErrorCode.BTC_BASED_FEE_TOO_SMALL
   | SdkErrorCode.BTC_BASED_UTXO_NOT_FOUND
+  | SdkErrorCode.BTC_BASED_NO_INPUTS
   | SdkErrorCode.BTC_BASED_NOT_ENOUGH_BALANCE
   | SdkErrorCode.BTC_FEE_IS_TOO_LARGE
   | SdkErrorCode.BTC_BASED_AMOUNT

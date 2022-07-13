@@ -91,11 +91,7 @@ export const btcBasedTransactions = (
         const txs = await apiCalls.getTxByAddress(item.address, 50) // @TODO OPENAPI remove pageSize
 
         for (const tx of txs) {
-          if (!tx.outputs) {
-            throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_UTXO_NOT_FOUND, [tx.hash ?? '', 0])
-          }
-
-          if (tx.hash === undefined) continue
+          if (!tx.outputs || !tx.hash) continue
 
           for (const [i, o] of tx.outputs.entries()) {
             if (o.address !== item.address) {
@@ -121,6 +117,12 @@ export const btcBasedTransactions = (
           }
         }
       }
+
+      if (transaction.inputs.length === 0) {
+        const addresses = body.fromAddress.map((value) => value.address).join(', ')
+        throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_NO_INPUTS, [addresses])
+      }
+
       return privateKeysToSign
     } catch (e: any) {
       if (e instanceof SdkError) {
@@ -139,9 +141,7 @@ export const btcBasedTransactions = (
 
       for (const utxoItem of body.fromUTXO) {
         const utxo = await getUtxoSilent(utxoItem.txHash, utxoItem.index)
-        if (utxo === null || utxo.address === undefined) {
-          throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_UTXO_NOT_FOUND, [utxoItem.txHash, utxoItem.index])
-        }
+        if (utxo === null || !utxo.address) continue
 
         transaction.from([
           Transaction.UnspentOutput.fromObject({
@@ -154,6 +154,11 @@ export const btcBasedTransactions = (
 
         if ('signatureId' in utxoItem) privateKeysToSign.push(utxoItem.signatureId)
         else if ('privateKey' in utxoItem) privateKeysToSign.push(utxoItem.privateKey)
+      }
+
+      if (transaction.inputs.length === 0) {
+        const utxos = body.fromUTXO.map((value) => `[${value.txHash} ${value.index}]`).join(', ')
+        throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_NO_INPUTS, [utxos])
       }
 
       return privateKeysToSign
@@ -215,6 +220,7 @@ export const btcBasedTransactions = (
       if (uncheckedSerialization) {
         verifyAmounts(tx, body)
       }
+
       return tx.serialize(uncheckedSerialization)
     } catch (e: any) {
       if (e instanceof SdkError) {
