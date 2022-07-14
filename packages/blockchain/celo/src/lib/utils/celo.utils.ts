@@ -97,6 +97,9 @@ export type ChainTransferErc20Celo = Omit<
 > &
   Pick<ChainTransferEthErc20, 'fee'>
 
+export type ChainTransferCeloOrCUsd = FromPrivateKeyOrSignatureId<TransferCeloBlockchain> &
+  Pick<ChainTransferEthErc20, 'fee'>
+
 export type ChainBurnErc20Celo = WithoutChain<FromPrivateKeyOrSignatureId<ChainBurnCeloErc20>>
 
 export type ChainStoreDataCelo = WithoutChain<FromPrivateKeyOrSignatureId<CreateRecordCelo>> &
