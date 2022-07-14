@@ -166,7 +166,7 @@ const prepareCeloOrCUsdSignedTransaction = async (
     from,
   }
 
-  return await celoUtils.prepareSignedTransactionAbstraction(wallet, transaction)
+  return celoUtils.prepareSignedTransactionAbstraction(wallet, transaction)
 }
 
 export const native = (args: { blockchain: EvmBasedBlockchain; broadcastFunction: BroadcastFunction }) => {

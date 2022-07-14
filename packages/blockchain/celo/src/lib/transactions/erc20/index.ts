@@ -69,7 +69,7 @@ const prepareDeploySignedTransaction = async (
     })
   }
 
-  const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
+  const wallet = new CeloWallet(fromPrivateKey, celoProvider)
   const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
     wallet,
     feeCurrencyContractAddress,
@@ -85,7 +85,7 @@ const prepareDeploySignedTransaction = async (
     from,
   }
 
-  return await celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
+  return celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
 }
 
 const prepareMintSignedTransaction = async (
@@ -116,7 +116,7 @@ const prepareMintSignedTransaction = async (
         .encodeABI(),
     })
   }
-  const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
+  const wallet = new CeloWallet(fromPrivateKey, celoProvider)
   const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
     wallet,
     feeCurrencyContractAddress,
@@ -134,7 +134,7 @@ const prepareMintSignedTransaction = async (
       .encodeABI(),
     from,
   }
-  return await celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
+  return celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
 }
 
 const prepareTransferSignedTransaction = async (
@@ -166,7 +166,7 @@ const prepareTransferSignedTransaction = async (
     })
   }
 
-  const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
+  const wallet = new CeloWallet(fromPrivateKey, celoProvider)
   const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
     wallet,
     feeCurrencyContractAddress,
@@ -184,7 +184,7 @@ const prepareTransferSignedTransaction = async (
       .encodeABI(),
     from,
   }
-  return await celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
+  return celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
 }
 
 const prepareBurnSignedTransaction = async (
@@ -215,7 +215,7 @@ const prepareBurnSignedTransaction = async (
     })
   }
 
-  const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
+  const wallet = new CeloWallet(fromPrivateKey, celoProvider)
   const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
     wallet,
     feeCurrencyContractAddress,
@@ -233,7 +233,7 @@ const prepareBurnSignedTransaction = async (
       .encodeABI(),
     from,
   }
-  return await celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
+  return celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
 }
 
 export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
@@ -274,7 +274,7 @@ export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
        * @returns transaction id of the transaction in the blockchain
        */
       deploySignedTransaction: async (body: ChainDeployErc20Celo, provider?: string, testnet?: boolean) =>
-        await args.broadcastFunction({
+        args.broadcastFunction({
           txData: await prepareDeploySignedTransaction(body, provider, testnet),
           signatureId: body.signatureId,
         }),
@@ -287,7 +287,7 @@ export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
        * @returns transaction id of the transaction in the blockchain
        */
       mintSignedTransaction: async (body: ChainMintErc20Celo, provider?: string, testnet?: boolean) =>
-        await args.broadcastFunction({
+        args.broadcastFunction({
           txData: await prepareMintSignedTransaction(body, provider, testnet),
           signatureId: body.signatureId,
         }),
@@ -300,7 +300,7 @@ export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
        * @returns transaction id of the transaction in the blockchain
        */
       transferSignedTransaction: async (body: ChainTransferErc20Celo, provider?: string, testnet?: boolean) =>
-        await args.broadcastFunction({
+        args.broadcastFunction({
           txData: await prepareTransferSignedTransaction(body, provider, testnet),
           signatureId: body.signatureId,
         }),
@@ -313,7 +313,7 @@ export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
        * @returns transaction id of the transaction in the blockchain
        */
       burnSignedTransaction: async (body: ChainBurnErc20Celo, provider?: string, testnet?: boolean) =>
-        await args.broadcastFunction({
+        args.broadcastFunction({
           txData: await prepareBurnSignedTransaction(body, provider, testnet),
           signatureId: body.signatureId,
         }),
