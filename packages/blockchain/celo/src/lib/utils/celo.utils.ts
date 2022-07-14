@@ -57,27 +57,31 @@ export type ChainMintMultipleNftCelo = FromPrivateKeyOrSignatureId<MintMultipleN
   erc20?: string
 }
 
-export type ChainBurnErc721Celo = FromPrivateKeyOrSignatureId<BurnNftCelo>
+export type ChainBurnErc721Celo = WithoutChain<FromPrivateKeyOrSignatureId<BurnNftCelo>>
 
-export type ChainTransferErc721Celo = FromPrivateKeyOrSignatureId<TransferNftCelo>
+export type ChainTransferErc721Celo = WithoutChain<FromPrivateKeyOrSignatureId<TransferNftCelo>>
 
-export type ChainUpdateCashbackErc721Celo = FromPrivateKeyOrSignatureId<UpdateCashbackValueForAuthorNftCelo>
+export type ChainUpdateCashbackErc721Celo = WithoutChain<
+  FromPrivateKeyOrSignatureId<UpdateCashbackValueForAuthorNftCelo>
+>
 
-export type ChainDeployErc721Celo = FromPrivateKeyOrSignatureId<DeployNftCelo>
+export type ChainDeployErc721Celo = WithoutChain<FromPrivateKeyOrSignatureId<DeployNftCelo>>
 
-export type ChainMintMultiTokenCelo = FromPrivateKeyOrSignatureId<MintMultiTokenCelo>
+export type ChainMintMultiTokenCelo = WithoutChain<FromPrivateKeyOrSignatureId<MintMultiTokenCelo>>
 
-export type ChainMintMultiTokenBatchCelo = FromPrivateKeyOrSignatureId<MintMultiTokenBatchCelo>
+export type ChainMintMultiTokenBatchCelo = WithoutChain<FromPrivateKeyOrSignatureId<MintMultiTokenBatchCelo>>
 
-export type ChainTransferMultiTokenCelo = FromPrivateKeyOrSignatureId<TransferMultiTokenCelo>
+export type ChainTransferMultiTokenCelo = WithoutChain<FromPrivateKeyOrSignatureId<TransferMultiTokenCelo>>
 
-export type ChainTransferMultiTokenBatchCelo = FromPrivateKeyOrSignatureId<TransferMultiTokenBatchCelo>
+export type ChainTransferMultiTokenBatchCelo = WithoutChain<
+  FromPrivateKeyOrSignatureId<TransferMultiTokenBatchCelo>
+>
 
-export type ChainBurnMultiTokenCelo = FromPrivateKeyOrSignatureId<BurnMultiTokenCelo>
+export type ChainBurnMultiTokenCelo = WithoutChain<FromPrivateKeyOrSignatureId<BurnMultiTokenCelo>>
 
-export type ChainBurnMultiTokenBatchCelo = FromPrivateKeyOrSignatureId<BurnMultiTokenBatchCelo>
+export type ChainBurnMultiTokenBatchCelo = WithoutChain<FromPrivateKeyOrSignatureId<BurnMultiTokenBatchCelo>>
 
-export type ChainDeployMultiTokenCelo = FromPrivateKeyOrSignatureId<DeployMultiTokenCelo>
+export type ChainDeployMultiTokenCelo = WithoutChain<FromPrivateKeyOrSignatureId<DeployMultiTokenCelo>>
 
 export type ChainTransferCeloBlockchain = FromPrivateKeyOrSignatureId<
   Omit<TransferCeloBlockchain, 'currency'>
@@ -87,7 +91,10 @@ export type ChainDeployErc20Celo = WithoutChain<FromPrivateKeyOrSignatureId<Chai
 
 export type ChainMintErc20Celo = WithoutChain<FromPrivateKeyOrSignatureId<ChainMintCeloErc20>>
 
-export type ChainTransferErc20Celo = WithoutChain<FromPrivateKeyOrSignatureId<ChainTransferCeloErc20Token>> &
+export type ChainTransferErc20Celo = Omit<
+  WithoutChain<FromPrivateKeyOrSignatureId<ChainTransferCeloErc20Token>>,
+  'digits'
+> &
   Pick<ChainTransferEthErc20, 'fee'>
 
 export type ChainBurnErc20Celo = WithoutChain<FromPrivateKeyOrSignatureId<ChainBurnCeloErc20>>

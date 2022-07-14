@@ -21,7 +21,6 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
   })
 
   const preparedDeployErc721Transaction = await celoSDK.nft.prepare.deploySignedTransaction({
-    chain: 'CELO',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
     signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -30,7 +29,6 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
   })
 
   const sentDeployErc721Transaction = await celoSDK.nft.send.deploySignedTransaction({
-    chain: 'CELO',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
     signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -189,7 +187,6 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
     })
 
   const preparedTransferSignedTransaction = await celoSDK.nft.prepare.transferSignedTransaction({
-    chain: 'CELO',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -199,7 +196,6 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
   })
 
   const sentTransferSignedTransaction = await celoSDK.nft.send.transferSignedTransaction({
-    chain: 'CELO',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -210,7 +206,6 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
 
   const preparedUpdateCashbackForAuthorSignedTransaction =
     await celoSDK.nft.prepare.updateCashbackForAuthorSignedTransaction({
-      chain: 'CELO',
       tokenId: '453453',
       cashbackValue: '0.8',
       contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -221,7 +216,6 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
 
   const sentUpdateCashbackForAuthorSignedTransaction =
     await celoSDK.nft.send.updateCashbackForAuthorSignedTransaction({
-      chain: 'CELO',
       tokenId: '453453',
       cashbackValue: '0.8',
       contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -231,7 +225,6 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
     })
 
   const preparedBurnErc721Transaction = await celoSDK.nft.prepare.burnSignedTransaction({
-    chain: 'CELO',
     tokenId: '45343653',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -240,7 +233,6 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
   })
 
   const sentBurnErc721Transaction = await celoSDK.nft.send.burnSignedTransaction({
-    chain: 'CELO',
     tokenId: '45343653',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -250,14 +242,12 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
 
   // ERC1155(MULTI TOKEN)
   const preparedDeployMultiTokenTransaction = await celoSDK.multiToken.prepare.deployMultiTokenTransaction({
-    chain: 'CELO',
     signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
     uri: 'tatum',
     feeCurrency: 'CUSD',
   })
 
   const sentDeployMultiTokenTransaction = await celoSDK.multiToken.send.deployMultiTokenTransaction({
-    chain: 'CELO',
     signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
     uri: 'tatum',
     feeCurrency: 'CUSD',
@@ -265,7 +255,6 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
 
   const preparedMintMultiTokenTransaction = await celoSDK.multiToken.prepare.mintMultiTokenTransaction({
     to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-    chain: 'CELO',
     tokenId: '123',
     amount: '1000',
     signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -275,7 +264,6 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
 
   const sentMintMultiTokenTransaction = await celoSDK.multiToken.send.mintMultiTokenTransaction({
     to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-    chain: 'CELO',
     tokenId: '123',
     amount: '1000',
     signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -286,7 +274,6 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
   const preparedMintMultiTokenBatchTransaction =
     await celoSDK.multiToken.prepare.mintMultiTokenBatchTransaction({
       to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
-      chain: 'CELO',
       tokenId: [['123'], ['321']],
       amounts: [['1000'], ['100']],
       signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -296,7 +283,6 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
 
   const sentMintMultiTokenBatchTransaction = await celoSDK.multiToken.send.mintMultiTokenBatchTransaction({
     to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
-    chain: 'CELO',
     tokenId: [['123'], ['321']],
     amounts: [['1000'], ['100']],
     signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -307,7 +293,6 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
   const preparedTransferMultiTokenTransaction =
     await celoSDK.multiToken.prepare.transferMultiTokenTransaction({
       to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-      chain: 'CELO',
       tokenId: '123',
       amount: '10',
       signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -317,7 +302,6 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
 
   const sentTransferMultiTokenTransaction = await celoSDK.multiToken.send.transferMultiTokenTransaction({
     to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-    chain: 'CELO',
     tokenId: '123',
     amount: '10',
     signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -328,7 +312,6 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
   const preparedTransferMultiTokenBatchTransaction =
     await celoSDK.multiToken.prepare.transferMultiTokenBatchTransaction({
       to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-      chain: 'CELO',
       tokenId: ['123', '321'],
       amounts: ['1000', '100'],
       signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -339,7 +322,6 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
   const sentTransferMultiTokenBatchTransaction =
     await celoSDK.multiToken.send.transferMultiTokenBatchTransaction({
       to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-      chain: 'CELO',
       tokenId: ['123', '321'],
       amounts: ['1000', '100'],
       signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -348,7 +330,6 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
     })
 
   const preparedBurnMultiTokenTransaction = await celoSDK.multiToken.prepare.burnMultiTokenTransaction({
-    chain: 'CELO',
     tokenId: '123',
     amount: '1',
     signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -358,7 +339,6 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
   })
 
   const sentBurnMultiTokenTransaction = await celoSDK.multiToken.send.burnMultiTokenTransaction({
-    chain: 'CELO',
     tokenId: '123',
     amount: '1',
     signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -369,7 +349,6 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
 
   const preparedBurnMultiTokenBatchTransaction =
     await celoSDK.multiToken.prepare.burnMultiTokenBatchTransaction({
-      chain: 'CELO',
       tokenId: ['123', '321'],
       amounts: ['1000', '100'],
       signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -379,7 +358,6 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
     })
 
   const sentMintBurnTokenBatchTransaction = await celoSDK.multiToken.send.burnMultiTokenBatchTransaction({
-    chain: 'CELO',
     tokenId: ['123', '321'],
     amounts: ['1000', '100'],
     signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -494,7 +472,6 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
 
 export async function celoTxWithPrivateKeyExample(): Promise<void> {
   const preparedDeployErc721Transaction = await celoSDK.nft.prepare.deploySignedTransaction({
-    chain: 'CELO',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
     fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
@@ -503,7 +480,6 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
   })
 
   const sentDeployErc721Transaction = await celoSDK.nft.send.deploySignedTransaction({
-    chain: 'CELO',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
     fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
@@ -662,7 +638,6 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
     })
 
   const preparedTransferSignedTransaction = await celoSDK.nft.prepare.transferSignedTransaction({
-    chain: 'CELO',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
@@ -672,7 +647,6 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
   })
 
   const sentTransferSignedTransaction = await celoSDK.nft.send.transferSignedTransaction({
-    chain: 'CELO',
     tokenId: '453453',
     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
     fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
@@ -683,7 +657,6 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
 
   const preparedUpdateCashbackForAuthorSignedTransaction =
     await celoSDK.nft.prepare.updateCashbackForAuthorSignedTransaction({
-      chain: 'CELO',
       tokenId: '453453',
       cashbackValue: '0.8',
       contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -694,7 +667,6 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
 
   const sentUpdateCashbackForAuthorSignedTransaction =
     await celoSDK.nft.send.updateCashbackForAuthorSignedTransaction({
-      chain: 'CELO',
       tokenId: '453453',
       cashbackValue: '0.8',
       contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -704,7 +676,6 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
     })
 
   const preparedBurnErc721Transaction = await celoSDK.nft.prepare.burnSignedTransaction({
-    chain: 'CELO',
     tokenId: '45343653',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
@@ -713,7 +684,6 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
   })
 
   const sentBurnErc721Transaction = await celoSDK.nft.send.burnSignedTransaction({
-    chain: 'CELO',
     tokenId: '45343653',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
@@ -723,14 +693,12 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
 
   // ERC1155(MULTI TOKEN)
   const preparedDeployMultiTokenTransaction = await celoSDK.multiToken.prepare.deployMultiTokenTransaction({
-    chain: 'CELO',
     fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
     uri: 'tatum',
     feeCurrency: 'CUSD',
   })
 
   const sentDeployMultiTokenTransaction = await celoSDK.multiToken.send.deployMultiTokenTransaction({
-    chain: 'CELO',
     fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
     uri: 'tatum',
     feeCurrency: 'CUSD',
@@ -738,7 +706,6 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
 
   const preparedMintMultiTokenTransaction = await celoSDK.multiToken.prepare.mintMultiTokenTransaction({
     to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-    chain: 'CELO',
     tokenId: '123',
     amount: '1000',
     fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
@@ -748,7 +715,6 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
 
   const sentMintMultiTokenTransaction = await celoSDK.multiToken.send.mintMultiTokenTransaction({
     to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-    chain: 'CELO',
     tokenId: '123',
     amount: '1000',
     fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
@@ -759,7 +725,6 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
   const preparedMintMultiTokenBatchTransaction =
     await celoSDK.multiToken.prepare.mintMultiTokenBatchTransaction({
       to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
-      chain: 'CELO',
       tokenId: [['123'], ['321']],
       amounts: [['1000'], ['100']],
       fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
@@ -769,7 +734,6 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
 
   const sentMintMultiTokenBatchTransaction = await celoSDK.multiToken.send.mintMultiTokenBatchTransaction({
     to: ['0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f', '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f'],
-    chain: 'CELO',
     tokenId: [['123'], ['321']],
     amounts: [['1000'], ['100']],
     fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
@@ -780,7 +744,6 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
   const preparedTransferMultiTokenTransaction =
     await celoSDK.multiToken.prepare.transferMultiTokenTransaction({
       to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-      chain: 'CELO',
       tokenId: '123',
       amount: '10',
       fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
@@ -789,7 +752,6 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
 
   const sentTransferMultiTokenTransaction = await celoSDK.multiToken.send.transferMultiTokenTransaction({
     to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-    chain: 'CELO',
     tokenId: '123',
     amount: '10',
     fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
@@ -799,7 +761,6 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
   const preparedTransferMultiTokenBatchTransaction =
     await celoSDK.multiToken.prepare.transferMultiTokenBatchTransaction({
       to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-      chain: 'CELO',
       tokenId: ['123', '321'],
       amounts: ['1000', '100'],
       fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
@@ -809,7 +770,6 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
   const sentTransferMultiTokenBatchTransaction =
     await celoSDK.multiToken.send.transferMultiTokenBatchTransaction({
       to: '0x4b812a77b109A150C2Fc89eD133EaBC78bC9EC8f',
-      chain: 'CELO',
       tokenId: ['123', '321'],
       amounts: ['1000', '100'],
       fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
@@ -817,7 +777,6 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
     })
 
   const preparedBurnMultiTokenTransaction = await celoSDK.multiToken.prepare.burnMultiTokenTransaction({
-    chain: 'CELO',
     tokenId: '123',
     amount: '1',
     fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
@@ -827,7 +786,6 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
   })
 
   const sentBurnMultiTokenTransaction = await celoSDK.multiToken.send.burnMultiTokenTransaction({
-    chain: 'CELO',
     tokenId: '123',
     amount: '1',
     fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
@@ -838,7 +796,6 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
 
   const preparedBurnMultiTokenBatchTransaction =
     await celoSDK.multiToken.prepare.burnMultiTokenBatchTransaction({
-      chain: 'CELO',
       tokenId: ['123', '321'],
       amounts: ['1000', '100'],
       fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
@@ -848,7 +805,6 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
     })
 
   const sentMintBurnTokenBatchTransaction = await celoSDK.multiToken.send.burnMultiTokenBatchTransaction({
-    chain: 'CELO',
     tokenId: ['123', '321'],
     amounts: ['1000', '100'],
     fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',

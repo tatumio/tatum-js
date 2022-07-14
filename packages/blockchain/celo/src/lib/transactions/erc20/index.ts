@@ -142,7 +142,7 @@ const prepareTransferSignedTransaction = async (
   provider?: string,
   testnet?: boolean,
 ) => {
-  const { fromPrivateKey, to, amount, contractAddress, feeCurrency, nonce, signatureId, fee } = body
+  const { fromPrivateKey, to, amount, contractAddress, nonce, signatureId, fee } = body
 
   const { celoProvider, network, feeCurrencyContractAddress, contract } = await initialize(
     body,
@@ -159,7 +159,7 @@ const prepareTransferSignedTransaction = async (
       nonce,
       gasLimit: fee?.gasLimit ? '0x' + new BigNumber(fee.gasLimit).toString(16) : undefined,
       gasPrice: fee?.gasPrice ? '0x' + new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16) : undefined,
-      to: contractAddress.trim(),
+      to: to.trim(),
       data: contract.methods
         .transfer(to.trim(), '0x' + new BigNumber(amount).multipliedBy(10 ** decimals).toString(16))
         .encodeABI(),
@@ -177,7 +177,7 @@ const prepareTransferSignedTransaction = async (
     feeCurrency: feeCurrencyContractAddress,
     nonce: nonce || txCount,
     gasLimit: fee?.gasLimit ? '0x' + new BigNumber(fee.gasLimit).toString(16) : undefined,
-    to: contractAddress.trim(),
+    to: to.trim(),
     gasPrice: fee?.gasPrice ? '0x' + new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16) : gasPrice,
     data: contract.methods
       .transfer(to.trim(), '0x' + new BigNumber(amount).multipliedBy(10 ** decimals).toString(16))
