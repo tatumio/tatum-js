@@ -67,6 +67,7 @@ describe('LTC transactions', () => {
     requestGetRawTx: mockRequestGetRawTx,
     requestGetUtxo: mockRequestGetUtxo,
     requestGetUtxoNotFound: mockRequestGetUtxoNotFound,
+    requestGetTransactionsNotFound: mockRequestGetTransactionsNotFound,
     requestGetTxByAddress: mockRequestGetTxByAddress,
     broadcast: mockedApi.blockchain.ltc.ltcBroadcast,
   }
@@ -140,6 +141,10 @@ describe('LTC transactions', () => {
 
   function mockRequestGetUtxoNotFound() {
     mockedApi.blockchain.ltc.ltcGetUtxo.mockRejectedValue(mockHelper.apiError.notFound())
+  }
+
+  function mockRequestGetTransactionsNotFound() {
+    mockedApi.blockchain.ltc.ltcGetTxByAddress.mockResolvedValue([])
   }
 
   function mockRequestGetTxByAddress(

@@ -3,7 +3,6 @@ import {
   REPLACE_ME_WITH_TATUM_API_KEY,
   TEST_DATA,
   TestCasesApiCallMapping,
-  testHelper,
 } from '@tatumio/shared-testing-common'
 import * as apiClient from '@tatumio/api-client'
 import { TatumLtcSDK } from '../ltc.sdk'
