@@ -69,7 +69,7 @@ const prepareDeploySignedTransaction = async (
     })
   }
 
-  const wallet = new CeloWallet(fromPrivateKey, celoProvider)
+  const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
   const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
     wallet,
     feeCurrencyContractAddress,
@@ -116,7 +116,7 @@ const prepareMintSignedTransaction = async (
         .encodeABI(),
     })
   }
-  const wallet = new CeloWallet(fromPrivateKey, celoProvider)
+  const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
   const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
     wallet,
     feeCurrencyContractAddress,
@@ -166,7 +166,7 @@ const prepareTransferSignedTransaction = async (
     })
   }
 
-  const wallet = new CeloWallet(fromPrivateKey, celoProvider)
+  const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
   const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
     wallet,
     feeCurrencyContractAddress,
@@ -215,7 +215,7 @@ const prepareBurnSignedTransaction = async (
     })
   }
 
-  const wallet = new CeloWallet(fromPrivateKey, celoProvider)
+  const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
   const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
     wallet,
     feeCurrencyContractAddress,
