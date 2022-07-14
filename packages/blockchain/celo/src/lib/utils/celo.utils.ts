@@ -1,4 +1,6 @@
 import {
+  CallCeloReadSmartContractMethod,
+  CallCeloSmartContractMethod,
   ChainBurnCeloErc20,
   ChainDeployCeloErc20,
   ChainMintCeloErc20,
@@ -104,6 +106,10 @@ export type ChainBurnErc20Celo = WithoutChain<FromPrivateKeyOrSignatureId<ChainB
 
 export type ChainStoreDataCelo = WithoutChain<FromPrivateKeyOrSignatureId<CreateRecordCelo>> &
   Pick<ChainTransferEthErc20, 'fee'>
+
+export type SmartContractWriteMethodInvocationCelo = FromPrivateKeyOrSignatureId<CallCeloSmartContractMethod>
+
+export type SmartContractReadMethodInvocationCelo = FromPrivateKeyOrSignatureId<CallCeloSmartContractMethod>
 
 export type ChainGenerateCustodialAddressCelo = GenerateCustodialWalletCelo | GenerateCustodialWalletCeloKMS
 
