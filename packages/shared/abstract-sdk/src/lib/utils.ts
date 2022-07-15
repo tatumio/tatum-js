@@ -17,6 +17,8 @@ export const amountUtils = {
     }
     return Number(satoshis)
   },
+  multiplyToHexString: (amount: string, decimals: number) =>
+    toHexString(new BigNumber(amount).multipliedBy(10 ** decimals)),
 }
 
 export function isWithSignatureId<

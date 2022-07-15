@@ -35,6 +35,12 @@ describe('Utils', function () {
         expect(() => amountUtils.toSatoshis(amount.toString())).toThrow(SdkErrorCode.BTC_BASED_AMOUNT)
       })
     })
+
+    describe('multiplyToHexString', () => {
+      it('valid', () => {
+        expect(amountUtils.multiplyToHexString('5', 10)).toBe('0xba43b7400')
+      })
+    })
   })
 
   describe('toHexString', () => {

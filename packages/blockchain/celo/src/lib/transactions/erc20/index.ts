@@ -1,11 +1,10 @@
 import { CeloWallet } from '@celo-tools/celo-ethers-wrapper'
 import { TATUM_API_CONSTANTS } from '@tatumio/api-client'
-import { toHexString } from '@tatumio/shared-abstract-sdk'
+import { amountUtils, toHexString } from '@tatumio/shared-abstract-sdk'
 import { BroadcastFunction } from '@tatumio/shared-blockchain-abstract'
-import { Erc20Token } from '@tatumio/shared-blockchain-evm-based'
+import { Erc20Token, evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
 import BigNumber from 'bignumber.js'
 import Web3 from 'web3'
-import { toWei } from 'web3-utils'
 import {
   CeloTransactionConfig,
   celoUtils,
@@ -114,9 +113,7 @@ const prepareMintSignedTransaction = async (
       nonce,
       gasLimit: '0',
       to: contractAddress.trim(),
-      data: contract.methods
-        .mint(to.trim(), toHexString(new BigNumber(amount).multipliedBy(10 ** decimals)))
-        .encodeABI(),
+      data: contract.methods.mint(to.trim(), amountUtils.multiplyToHexString(amount, decimals)).encodeABI(),
     })
   }
   const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
@@ -132,9 +129,7 @@ const prepareMintSignedTransaction = async (
     gasLimit: '0',
     to,
     gasPrice,
-    data: contract.methods
-      .mint(to.trim(), toHexString(new BigNumber(amount).multipliedBy(10 ** decimals)))
-      .encodeABI(),
+    data: contract.methods.mint(to.trim(), amountUtils.multiplyToHexString(amount, decimals)).encodeABI(),
     from,
   }
   return celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
@@ -160,11 +155,11 @@ const prepareTransferSignedTransaction = async (
       chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
       nonce,
-      gasLimit: fee?.gasLimit ? toHexString(new BigNumber(fee.gasLimit)) : undefined,
-      gasPrice: fee?.gasPrice ? toHexString(new BigNumber(toWei(fee.gasPrice, 'gwei'))) : undefined,
+      gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+      gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
       to: to.trim(),
       data: contract.methods
-        .transfer(to.trim(), '0x' + new BigNumber(amount).multipliedBy(10 ** decimals).toString(16))
+        .transfer(to.trim(), amountUtils.multiplyToHexString(amount, decimals))
         .encodeABI(),
     })
   }
@@ -179,12 +174,10 @@ const prepareTransferSignedTransaction = async (
     chainId: network.chainId,
     feeCurrency: feeCurrencyContractAddress,
     nonce: nonce || txCount,
-    gasLimit: fee?.gasLimit ? toHexString(new BigNumber(fee.gasLimit)) : undefined,
+    gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
     to: to.trim(),
-    gasPrice: fee?.gasPrice ? toHexString(new BigNumber(toWei(fee.gasPrice, 'gwei'))) : gasPrice,
-    data: contract.methods
-      .transfer(to.trim(), toHexString(new BigNumber(amount).multipliedBy(10 ** decimals)))
-      .encodeABI(),
+    gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice, gasPrice),
+    data: contract.methods.transfer(to.trim(), amountUtils.multiplyToHexString(amount, decimals)).encodeABI(),
     from,
   }
   return celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
@@ -212,9 +205,7 @@ const prepareBurnSignedTransaction = async (
       nonce,
       gasLimit: '0',
       to: contractAddress.trim(),
-      data: contract.methods
-        .burn(toHexString(new BigNumber(amount).multipliedBy(10 ** decimals)))
-        .encodeABI(),
+      data: contract.methods.burn(amountUtils.multiplyToHexString(amount, decimals)).encodeABI(),
     })
   }
 
@@ -231,7 +222,7 @@ const prepareBurnSignedTransaction = async (
     gasLimit: '0',
     to: contractAddress.trim(),
     gasPrice,
-    data: contract.methods.burn(toHexString(new BigNumber(amount).multipliedBy(10 ** decimals))).encodeABI(),
+    data: contract.methods.burn(amountUtils.multiplyToHexString(amount, decimals)).encodeABI(),
     from,
   }
   return celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
