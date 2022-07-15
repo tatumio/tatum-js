@@ -1,5 +1,6 @@
 import { CeloWallet } from '@celo-tools/celo-ethers-wrapper'
 import { TATUM_API_CONSTANTS } from '@tatumio/api-client'
+import { toHexString } from '@tatumio/shared-abstract-sdk'
 import { BroadcastFunction } from '@tatumio/shared-blockchain-abstract'
 import { Erc20Token } from '@tatumio/shared-blockchain-evm-based'
 import BigNumber from 'bignumber.js'
@@ -22,16 +23,18 @@ const initialize = async (
 ) => {
   const celoProvider = celoUtils.getProvider(provider)
 
+  const web3 = new Web3(
+    provider ||
+      `${process.env['TATUM_API_URL'] || TATUM_API_CONSTANTS.URL}/v3/celo/web3/${
+        TATUM_API_CONSTANTS.API_KEY
+      }`,
+  )
+
   return {
     celoProvider,
     network: await celoProvider.ready,
     feeCurrencyContractAddress: celoUtils.getFeeCurrency(args.feeCurrency, testnet),
-    contract: new new Web3(
-      provider ||
-        `${process.env['TATUM_API_URL'] || TATUM_API_CONSTANTS.URL}/v3/celo/web3/${
-          TATUM_API_CONSTANTS.API_KEY
-        }`,
-    ).eth.Contract(Erc20Token.abi as any, contractAddress),
+    contract: new web3.eth.Contract(Erc20Token.abi as any, contractAddress),
   }
 }
 
@@ -55,8 +58,8 @@ const prepareDeploySignedTransaction = async (
       symbol,
       address,
       digits,
-      `0x${new BigNumber(totalCap || supply).multipliedBy(new BigNumber(10).pow(digits)).toString(16)}`,
-      `0x${new BigNumber(supply).multipliedBy(new BigNumber(10).pow(digits)).toString(16)}`,
+      toHexString(new BigNumber(totalCap || supply).multipliedBy(new BigNumber(10).pow(digits))),
+      toHexString(new BigNumber(supply).multipliedBy(new BigNumber(10).pow(digits))),
     ],
   })
   if (signatureId) {
@@ -112,7 +115,7 @@ const prepareMintSignedTransaction = async (
       gasLimit: '0',
       to: contractAddress.trim(),
       data: contract.methods
-        .mint(to.trim(), '0x' + new BigNumber(amount).multipliedBy(10 ** decimals).toString(16))
+        .mint(to.trim(), toHexString(new BigNumber(amount).multipliedBy(10 ** decimals)))
         .encodeABI(),
     })
   }
@@ -130,7 +133,7 @@ const prepareMintSignedTransaction = async (
     to,
     gasPrice,
     data: contract.methods
-      .mint(to.trim(), '0x' + new BigNumber(amount).multipliedBy(10 ** decimals).toString(16))
+      .mint(to.trim(), toHexString(new BigNumber(amount).multipliedBy(10 ** decimals)))
       .encodeABI(),
     from,
   }
@@ -157,8 +160,8 @@ const prepareTransferSignedTransaction = async (
       chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
       nonce,
-      gasLimit: fee?.gasLimit ? '0x' + new BigNumber(fee.gasLimit).toString(16) : undefined,
-      gasPrice: fee?.gasPrice ? '0x' + new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16) : undefined,
+      gasLimit: fee?.gasLimit ? toHexString(new BigNumber(fee.gasLimit)) : undefined,
+      gasPrice: fee?.gasPrice ? toHexString(new BigNumber(toWei(fee.gasPrice, 'gwei'))) : undefined,
       to: to.trim(),
       data: contract.methods
         .transfer(to.trim(), '0x' + new BigNumber(amount).multipliedBy(10 ** decimals).toString(16))
@@ -176,11 +179,11 @@ const prepareTransferSignedTransaction = async (
     chainId: network.chainId,
     feeCurrency: feeCurrencyContractAddress,
     nonce: nonce || txCount,
-    gasLimit: fee?.gasLimit ? '0x' + new BigNumber(fee.gasLimit).toString(16) : undefined,
+    gasLimit: fee?.gasLimit ? toHexString(new BigNumber(fee.gasLimit)) : undefined,
     to: to.trim(),
-    gasPrice: fee?.gasPrice ? '0x' + new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16) : gasPrice,
+    gasPrice: fee?.gasPrice ? toHexString(new BigNumber(toWei(fee.gasPrice, 'gwei'))) : gasPrice,
     data: contract.methods
-      .transfer(to.trim(), '0x' + new BigNumber(amount).multipliedBy(10 ** decimals).toString(16))
+      .transfer(to.trim(), toHexString(new BigNumber(amount).multipliedBy(10 ** decimals)))
       .encodeABI(),
     from,
   }
@@ -210,7 +213,7 @@ const prepareBurnSignedTransaction = async (
       gasLimit: '0',
       to: contractAddress.trim(),
       data: contract.methods
-        .burn('0x' + new BigNumber(amount).multipliedBy(10 ** decimals).toString(16))
+        .burn(toHexString(new BigNumber(amount).multipliedBy(10 ** decimals)))
         .encodeABI(),
     })
   }
@@ -228,9 +231,7 @@ const prepareBurnSignedTransaction = async (
     gasLimit: '0',
     to: contractAddress.trim(),
     gasPrice,
-    data: contract.methods
-      .burn('0x' + new BigNumber(amount).multipliedBy(10 ** decimals).toString(16))
-      .encodeABI(),
+    data: contract.methods.burn(toHexString(new BigNumber(amount).multipliedBy(10 ** decimals))).encodeABI(),
     from,
   }
   return celoUtils.prepareSignedTransactionAbstraction(wallet, tx)

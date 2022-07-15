@@ -38,3 +38,5 @@ export const placeArgsToString = (message: string, args?: SdkMessageArgs): strin
   }
   return message
 }
+
+export const toHexString = (value: BigNumber) => `0x${value.toString(16)}`
