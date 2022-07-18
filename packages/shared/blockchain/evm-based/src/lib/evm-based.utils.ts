@@ -4,8 +4,12 @@ import { generateMnemonic, mnemonicToSeed } from 'bip39'
 import { TronWallet } from '@tatumio/api-client'
 import Web3 from 'web3'
 import { TransactionConfig } from 'web3-core'
-import { Erc20Token, EvmBasedWeb3 } from '..'
 import { toWei, Unit } from 'web3-utils'
+import { toHexString } from '@tatumio/shared-abstract-sdk'
+import { BigNumber as BN } from '@ethersproject/bignumber'
+import BigNumber from 'bignumber.js'
+import { Erc20Token } from './contracts'
+import { EvmBasedWeb3 } from './services/evm-based.web3'
 
 export const evmBasedUtils = {
   generateAddressFromXPub: (xpub: string, i: number): string => {
@@ -86,4 +90,9 @@ export const evmBasedUtils = {
 
     return new client.eth.Contract(Erc20Token.abi as any, contractAddress).methods.decimals().call()
   },
+  gasLimitToHexWithFallback: (gasLimit?: string, fallback?: string) =>
+    gasLimit ? toHexString(new BigNumber(gasLimit)) : fallback,
+
+  gasPriceWeiToHexWithFallback: (gasPrice?: string, fallback?: BN) =>
+    gasPrice ? toHexString(new BigNumber(toWei(gasPrice, 'gwei'))) : fallback,
 }

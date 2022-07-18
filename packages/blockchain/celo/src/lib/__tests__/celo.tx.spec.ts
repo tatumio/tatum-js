@@ -11,13 +11,172 @@ describe('CeloSDK - tx', () => {
         ? TEST_DATA.CELO.TESTNET.ERC_20?.ADDRESS
         : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
 
+      describe('transferSignedTransaction', () => {
+        it('should be valid from privateKey', async () => {
+          const result = await sdk.transaction.prepare.transferSignedTransaction(
+            {
+              to: address,
+              fromPrivateKey: TEST_DATA.CELO.TESTNET.ERC_20?.PRIVATE_KEY,
+              feeCurrency: 'CUSD',
+              amount: '1',
+            },
+            provider,
+            true,
+          )
+          expectHexString(result)
+        })
+
+        it('should be valid from signatureId', async () => {
+          const result = await sdk.transaction.prepare.transferSignedTransaction(
+            {
+              to: address,
+              signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+              feeCurrency: 'CUSD',
+              amount: '1',
+            },
+            provider,
+            true,
+          )
+          const json = JSON.parse(result)
+          expectHexString(json.data)
+        })
+
+        it('should throw', async () => {
+          try {
+            await sdk.transaction.prepare.transferSignedTransaction(
+              {
+                to: '',
+                signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+                feeCurrency: 'CUSD',
+                amount: '',
+              },
+              provider,
+              true,
+            )
+            fail()
+          } catch (e: any) {
+            expect(e.message).toMatch(
+              'The target (to) address, currency, feeCurrency or the amount cannot be empty',
+            )
+          }
+        })
+      })
+
+      describe('storeDataTransaction', () => {
+        it('should be valid from privateKey', async () => {
+          const result = await sdk.transaction.prepare.storeDataTransaction(
+            {
+              to: address,
+              fromPrivateKey: TEST_DATA.CELO.TESTNET.ERC_20?.PRIVATE_KEY,
+              feeCurrency: 'CUSD',
+              data: 'some data',
+            },
+            provider,
+            true,
+          )
+          expectHexString(result)
+        })
+
+        it('should be valid from signatureId', async () => {
+          const result = await sdk.transaction.prepare.storeDataTransaction(
+            {
+              to: address,
+              signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+              feeCurrency: 'CUSD',
+              data: 'some data',
+            },
+            provider,
+            true,
+          )
+          const json = JSON.parse(result)
+          expectHexString(json.data)
+        })
+      })
+    })
+  })
+
+  describe('erc20', () => {
+    const provider = TEST_DATA.CELO?.PROVIDER
+
+    describe('prepare', () => {
+      describe('deploy', () => {
+        it('should be valid from privateKey', async () => {
+          const result = await sdk.erc20.prepare.deploySignedTransaction(
+            {
+              name: 'My ERC20',
+              fromPrivateKey: TEST_DATA.CELO.TESTNET.ERC_20!.PRIVATE_KEY,
+              feeCurrency: 'CUSD',
+              symbol: 'ERC_SYMBOL',
+              supply: '100',
+              digits: 10,
+              address: TEST_DATA.CELO.TESTNET.ERC_20!.ADDRESS,
+            },
+            provider,
+            true,
+          )
+          expectHexString(result)
+        })
+
+        it('should be valid from signatureId', async () => {
+          const result = await sdk.erc20.prepare.deploySignedTransaction(
+            {
+              signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+              name: 'My ERC20',
+              feeCurrency: 'CUSD',
+              symbol: 'ERC_SYMBOL',
+              supply: '100',
+              digits: 10,
+              address: TEST_DATA.CELO.TESTNET.ERC_20!.ADDRESS,
+            },
+            provider,
+            true,
+          )
+          const json = JSON.parse(result)
+          expectHexString(json.data)
+        })
+      })
+
+      describe('burn', () => {
+        it('should be valid from privateKey', async () => {
+          const result = await sdk.erc20.prepare.burnSignedTransaction(
+            {
+              fromPrivateKey: TEST_DATA.CELO.TESTNET.ERC_20!.PRIVATE_KEY,
+              feeCurrency: 'CUSD',
+              amount: '5',
+              contractAddress: TEST_DATA.CELO.TESTNET.ERC_20!.CONTRACT_ADDRESS,
+            },
+            provider,
+            true,
+          )
+          expectHexString(result)
+        })
+
+        it('should be valid from signatureId', async () => {
+          const result = await sdk.erc20.prepare.burnSignedTransaction(
+            {
+              signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+              feeCurrency: 'CUSD',
+              amount: '5',
+              contractAddress: TEST_DATA.CELO.TESTNET.ERC_20!.CONTRACT_ADDRESS,
+            },
+            provider,
+            true,
+          )
+          const json = JSON.parse(result)
+          expectHexString(json.data)
+        })
+      })
+    })
+
+    describe('mint', () => {
       it('should be valid from privateKey', async () => {
-        const result = await sdk.transaction.prepare.transferSignedTransaction(
+        const result = await sdk.erc20.prepare.mintSignedTransaction(
           {
-            to: address,
-            fromPrivateKey: TEST_DATA.CELO.TESTNET.ERC_20?.PRIVATE_KEY,
+            fromPrivateKey: TEST_DATA.CELO.TESTNET.ERC_20!.PRIVATE_KEY,
             feeCurrency: 'CUSD',
-            amount: '1',
+            amount: '100000',
+            contractAddress: TEST_DATA.CELO.TESTNET.ERC_20!.CONTRACT_ADDRESS,
+            to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           },
           provider,
           true,
@@ -26,12 +185,13 @@ describe('CeloSDK - tx', () => {
       })
 
       it('should be valid from signatureId', async () => {
-        const result = await sdk.transaction.prepare.transferSignedTransaction(
+        const result = await sdk.erc20.prepare.mintSignedTransaction(
           {
-            to: address,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
             feeCurrency: 'CUSD',
-            amount: '1',
+            amount: '5',
+            contractAddress: TEST_DATA.CELO.TESTNET.ERC_20!.CONTRACT_ADDRESS,
+            to: TEST_DATA.CELO.TESTNET.ERC_20!.ADDRESS,
           },
           provider,
           true,
@@ -39,25 +199,38 @@ describe('CeloSDK - tx', () => {
         const json = JSON.parse(result)
         expectHexString(json.data)
       })
+    })
 
-      it('should throw', async () => {
-        try {
-          await sdk.transaction.prepare.transferSignedTransaction(
-            {
-              to: '',
-              signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-              feeCurrency: 'CUSD',
-              amount: '',
-            },
-            provider,
-            true,
-          )
-          fail()
-        } catch (e: any) {
-          expect(e.message).toMatch(
-            'The target (to) address, currency, feeCurrency or the amount cannot be empty',
-          )
-        }
+    describe('transfer', () => {
+      it('should be valid from privateKey', async () => {
+        const result = await sdk.erc20.prepare.transferSignedTransaction(
+          {
+            fromPrivateKey: TEST_DATA.CELO.TESTNET.ERC_20!.PRIVATE_KEY,
+            feeCurrency: 'CUSD',
+            amount: '5',
+            contractAddress: TEST_DATA.CELO.TESTNET.ERC_20!.CONTRACT_ADDRESS,
+            to: TEST_DATA.CELO.TESTNET.ERC_20!.ADDRESS,
+          },
+          provider,
+          true,
+        )
+        expectHexString(result)
+      })
+
+      it('should be valid from signatureId', async () => {
+        const result = await sdk.erc20.prepare.transferSignedTransaction(
+          {
+            signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+            feeCurrency: 'CUSD',
+            amount: '5',
+            contractAddress: TEST_DATA.CELO.TESTNET.ERC_20!.CONTRACT_ADDRESS,
+            to: TEST_DATA.CELO.TESTNET.ERC_20!.ADDRESS,
+          },
+          provider,
+          true,
+        )
+        const json = JSON.parse(result)
+        expectHexString(json.data)
       })
     })
   })
@@ -71,7 +244,6 @@ describe('CeloSDK - tx', () => {
         it('should be valid from privateKey', async () => {
           const result = await sdk.nft.prepare.deploySignedTransaction(
             {
-              chain: 'CELO',
               name: 'My ERC721',
               fromPrivateKey: TEST_DATA.CELO.TESTNET.ERC_721!.PRIVATE_KEY,
               feeCurrency: 'CUSD',
@@ -86,7 +258,6 @@ describe('CeloSDK - tx', () => {
         it('should be valid from signatureId', async () => {
           const result = await sdk.nft.prepare.deploySignedTransaction(
             {
-              chain: 'CELO',
               name: 'My ERC721',
               signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
               feeCurrency: 'CUSD',
@@ -580,7 +751,6 @@ describe('CeloSDK - tx', () => {
             contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
             fromPrivateKey: TEST_DATA.CELO.TESTNET.ERC_721!.PRIVATE_KEY,
             tokenId: new Date().getTime().toString(),
-            chain: 'CELO',
             feeCurrency: 'CUSD',
           },
           provider,
@@ -596,7 +766,6 @@ describe('CeloSDK - tx', () => {
             contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
             tokenId: new Date().getTime().toString(),
-            chain: 'CELO',
             feeCurrency: 'CUSD',
           },
           provider,
@@ -614,7 +783,6 @@ describe('CeloSDK - tx', () => {
               contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
               fromPrivateKey: TEST_DATA.CELO.TESTNET.ERC_721!.PRIVATE_KEY,
               tokenId: new Date().getTime().toString(),
-              chain: 'CELO',
               feeCurrency: 'CUSD',
             },
             provider,
@@ -635,7 +803,6 @@ describe('CeloSDK - tx', () => {
             contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
             fromPrivateKey: TEST_DATA.CELO.TESTNET.ERC_721!.PRIVATE_KEY,
             tokenId: new Date().getTime().toString(),
-            chain: 'CELO',
             feeCurrency: 'CUSD',
             cashbackValue: '0.8',
           },
@@ -651,7 +818,6 @@ describe('CeloSDK - tx', () => {
             contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
             tokenId: new Date().getTime().toString(),
-            chain: 'CELO',
             feeCurrency: 'CUSD',
             cashbackValue: '0.8',
           },
@@ -671,7 +837,6 @@ describe('CeloSDK - tx', () => {
             contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
             fromPrivateKey: TEST_DATA.CELO.TESTNET.ERC_721!.PRIVATE_KEY,
             tokenId: new Date().getTime().toString(),
-            chain: 'CELO',
             feeCurrency: 'CUSD',
           },
           provider,
@@ -686,7 +851,6 @@ describe('CeloSDK - tx', () => {
             contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
             tokenId: new Date().getTime().toString(),
-            chain: 'CELO',
             feeCurrency: 'CUSD',
           },
           provider,
@@ -725,7 +889,6 @@ describe('CeloSDK - tx', () => {
         it('should be valid from signatureId', async () => {
           const result = await sdk.multiToken.prepare.deployMultiTokenTransaction(
             {
-              chain: 'CELO',
               uri: 'example.com',
               signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
               feeCurrency: 'CUSD',
@@ -747,7 +910,6 @@ describe('CeloSDK - tx', () => {
               contractAddress,
               fromPrivateKey: privateKey,
               tokenId: new Date().getTime().toString(),
-              chain: 'CELO',
               feeCurrency: 'CUSD',
               amount: '1',
             },
@@ -764,7 +926,6 @@ describe('CeloSDK - tx', () => {
               contractAddress,
               signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
               tokenId: new Date().getTime().toString(),
-              chain: 'CELO',
               feeCurrency: 'CUSD',
               amount: '1',
             },
@@ -783,7 +944,6 @@ describe('CeloSDK - tx', () => {
                 tokenId: new Date().getTime().toString(),
                 contractAddress,
                 fromPrivateKey: privateKey,
-                chain: 'CELO',
                 feeCurrency: 'CUSD',
                 amount: '1',
               },
@@ -804,7 +964,6 @@ describe('CeloSDK - tx', () => {
                 tokenId: new Date().getTime().toString(),
                 contractAddress: '', // false
                 fromPrivateKey: privateKey,
-                chain: 'CELO',
                 feeCurrency: 'CUSD',
                 amount: '1',
               },
@@ -826,7 +985,6 @@ describe('CeloSDK - tx', () => {
               contractAddress,
               fromPrivateKey: privateKey,
               tokenId: [[new Date().getTime().toString()]],
-              chain: 'CELO',
               feeCurrency: 'CUSD',
               amounts: [['1'], ['1']],
             },
@@ -842,7 +1000,6 @@ describe('CeloSDK - tx', () => {
               to: [account],
               contractAddress,
               signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-              chain: 'CELO',
               feeCurrency: 'CUSD',
               amounts: [['1'], ['1']],
               tokenId: [[new Date().getTime().toString()]],
@@ -862,7 +1019,6 @@ describe('CeloSDK - tx', () => {
                 tokenId: [[new Date().getTime().toString()]],
                 contractAddress,
                 fromPrivateKey: privateKey,
-                chain: 'CELO',
                 feeCurrency: 'CUSD',
                 amounts: [['1'], ['1']],
               },
@@ -884,7 +1040,6 @@ describe('CeloSDK - tx', () => {
               contractAddress,
               fromPrivateKey: privateKey,
               tokenId: new Date().getTime().toString(),
-              chain: 'CELO',
               feeCurrency: 'CUSD',
               amount: '1',
             },
@@ -901,7 +1056,6 @@ describe('CeloSDK - tx', () => {
               contractAddress,
               signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
               tokenId: new Date().getTime().toString(),
-              chain: 'CELO',
               feeCurrency: 'CUSD',
               amount: '1',
             },
@@ -920,7 +1074,6 @@ describe('CeloSDK - tx', () => {
                 contractAddress,
                 fromPrivateKey: privateKey,
                 tokenId: new Date().getTime().toString(),
-                chain: 'CELO',
                 feeCurrency: 'CUSD',
                 amount: '1',
               },
@@ -942,7 +1095,6 @@ describe('CeloSDK - tx', () => {
               contractAddress,
               fromPrivateKey: privateKey,
               tokenId: [new Date().getTime().toString()],
-              chain: 'CELO',
               feeCurrency: 'CUSD',
               amounts: ['1'],
             },
@@ -959,7 +1111,6 @@ describe('CeloSDK - tx', () => {
               contractAddress,
               signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
               tokenId: [new Date().getTime().toString()],
-              chain: 'CELO',
               feeCurrency: 'CUSD',
               amounts: ['1'],
             },
@@ -978,7 +1129,6 @@ describe('CeloSDK - tx', () => {
                 contractAddress,
                 fromPrivateKey: privateKey,
                 tokenId: [new Date().getTime().toString()],
-                chain: 'CELO',
                 feeCurrency: 'CUSD',
                 amounts: ['1'],
               },
@@ -999,7 +1149,6 @@ describe('CeloSDK - tx', () => {
               contractAddress,
               fromPrivateKey: privateKey,
               tokenId: new Date().getTime().toString(),
-              chain: 'CELO',
               feeCurrency: 'CUSD',
               amount: '1',
               account,
@@ -1016,7 +1165,6 @@ describe('CeloSDK - tx', () => {
               contractAddress,
               signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
               tokenId: new Date().getTime().toString(),
-              chain: 'CELO',
               feeCurrency: 'CUSD',
               amount: '1',
               account,
@@ -1036,7 +1184,6 @@ describe('CeloSDK - tx', () => {
               contractAddress,
               fromPrivateKey: privateKey,
               tokenId: [new Date().getTime().toString()],
-              chain: 'CELO',
               feeCurrency: 'CUSD',
               amounts: ['1'],
               account,
@@ -1053,7 +1200,6 @@ describe('CeloSDK - tx', () => {
               contractAddress,
               signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
               tokenId: [new Date().getTime().toString()],
-              chain: 'CELO',
               feeCurrency: 'CUSD',
               amounts: ['1'],
               account,

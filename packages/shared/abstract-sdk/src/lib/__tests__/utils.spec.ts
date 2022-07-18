@@ -1,5 +1,6 @@
-import { amountUtils } from '../utils'
+import { amountUtils, toHexString } from '../utils'
 import { SdkErrorCode } from '../errors.abstract.sdk'
+import BigNumber from 'bignumber.js'
 
 describe('Utils', function () {
   describe('Amount utils', function () {
@@ -33,6 +34,20 @@ describe('Utils', function () {
         expect(() => amountUtils.toSatoshis(amount)).toThrow(SdkErrorCode.BTC_BASED_AMOUNT)
         expect(() => amountUtils.toSatoshis(amount.toString())).toThrow(SdkErrorCode.BTC_BASED_AMOUNT)
       })
+    })
+
+    describe('multiplyToHexString', () => {
+      it('valid', () => {
+        expect(amountUtils.amountToHexString('5', 10)).toBe('0xba43b7400')
+      })
+    })
+  })
+
+  describe('toHexString', () => {
+    it('valid', () => {
+      const bn = new BigNumber(123456)
+
+      expect(toHexString(bn)).toBe('0x1e240')
     })
   })
 })
