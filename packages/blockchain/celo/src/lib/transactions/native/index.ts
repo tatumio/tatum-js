@@ -11,7 +11,7 @@ import {
   CELO_CONSTANTS,
   ChainTransferCeloOrCUsd,
 } from '../../utils/celo.utils'
-import { Erc20Token } from '@tatumio/shared-blockchain-evm-based'
+import { Erc20Token, evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
 import { isHex, stringToHex, toHex, toWei } from 'web3-utils'
 import { Currency } from '@tatumio/api-client'
 
@@ -78,8 +78,8 @@ const prepareStoreDataTransaction = async (
       nonce,
       to: to?.trim(),
       data: data ? (isHex(data) ? stringToHex(data) : toHex(data)) : undefined,
-      gasLimit: fee?.gasLimit ? '0x' + new BigNumber(fee.gasLimit).toString(16) : undefined,
-      gasPrice: fee?.gasPrice ? '0x' + new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16) : undefined,
+      gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+      gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
       value: undefined,
     })
   }
@@ -95,8 +95,8 @@ const prepareStoreDataTransaction = async (
     nonce: nonce || txCount,
     to: to?.trim() || from,
     data: data ? (isHex(data) ? stringToHex(data) : toHex(data)) : undefined,
-    gasLimit: fee?.gasLimit ? '0x' + new BigNumber(fee.gasLimit).toString(16) : undefined,
-    gasPrice: fee?.gasPrice ? '0x' + new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16) : gasPrice,
+    gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+    gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice, gasPrice),
     value: undefined,
     from,
   }
@@ -142,8 +142,8 @@ const prepareCeloOrCUsdSignedTransaction = async (
       nonce,
       to: recipient,
       data: currency === Currency.CELO ? data : contract.methods.transfer(to.trim(), value).encodeABI(),
-      gasLimit: fee?.gasLimit ? '0x' + new BigNumber(fee.gasLimit).toString(16) : undefined,
-      gasPrice: fee?.gasPrice ? '0x' + new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16) : undefined,
+      gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+      gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
       value: currency === Currency.CELO ? value : undefined,
     })
   }
@@ -160,8 +160,8 @@ const prepareCeloOrCUsdSignedTransaction = async (
     nonce: nonce || txCount,
     to: recipient,
     data: currency === Currency.CELO ? data : contract.methods.transfer(to.trim(), value).encodeABI(),
-    gasLimit: fee?.gasLimit ? '0x' + new BigNumber(fee.gasLimit).toString(16) : undefined,
-    gasPrice: fee?.gasPrice ? '0x' + new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16) : gasPrice,
+    gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+    gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice, gasPrice),
     value: currency === Currency.CELO ? value : undefined,
     from,
   }

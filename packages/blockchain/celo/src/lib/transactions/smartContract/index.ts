@@ -1,6 +1,7 @@
 import { CeloWallet } from '@celo-tools/celo-ethers-wrapper'
 import { Currency, TATUM_API_CONSTANTS } from '@tatumio/api-client'
 import { BroadcastFunction } from '@tatumio/shared-blockchain-abstract'
+import { evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
 import BigNumber from 'bignumber.js'
 import Web3 from 'web3'
 import { toWei } from 'web3-utils'
@@ -42,8 +43,8 @@ const prepareSmartContractWriteMethodInvocation = async (
     feeCurrency: feeCurrencyContractAddress,
     nonce,
     value: amount ? `0x${new BigNumber(toWei(amount, 'ether')).toString(16)}` : undefined,
-    gasLimit: fee?.gasLimit ? `0x${new BigNumber(fee.gasLimit).toString(16)}` : undefined,
-    gasPrice: fee?.gasPrice ? `0x${new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16)}` : undefined,
+    gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+    gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
     to: contractAddress.trim(),
     data: contract.methods[methodName as string](...params).encodeABI(),
   }

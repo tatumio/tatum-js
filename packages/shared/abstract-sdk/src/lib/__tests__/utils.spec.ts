@@ -38,7 +38,7 @@ describe('Utils', function () {
 
     describe('multiplyToHexString', () => {
       it('valid', () => {
-        expect(amountUtils.multiplyToHexString('5', 10)).toBe('0xba43b7400')
+        expect(amountUtils.amountToHexString('5', 10)).toBe('0xba43b7400')
       })
     })
   })

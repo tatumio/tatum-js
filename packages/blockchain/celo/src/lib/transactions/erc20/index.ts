@@ -113,7 +113,7 @@ const prepareMintSignedTransaction = async (
       nonce,
       gasLimit: '0',
       to: contractAddress.trim(),
-      data: contract.methods.mint(to.trim(), amountUtils.multiplyToHexString(amount, decimals)).encodeABI(),
+      data: contract.methods.mint(to.trim(), amountUtils.amountToHexString(amount, decimals)).encodeABI(),
     })
   }
   const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
@@ -129,7 +129,7 @@ const prepareMintSignedTransaction = async (
     gasLimit: '0',
     to,
     gasPrice,
-    data: contract.methods.mint(to.trim(), amountUtils.multiplyToHexString(amount, decimals)).encodeABI(),
+    data: contract.methods.mint(to.trim(), amountUtils.amountToHexString(amount, decimals)).encodeABI(),
     from,
   }
   return celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
@@ -158,9 +158,7 @@ const prepareTransferSignedTransaction = async (
       gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
       gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
       to: to.trim(),
-      data: contract.methods
-        .transfer(to.trim(), amountUtils.multiplyToHexString(amount, decimals))
-        .encodeABI(),
+      data: contract.methods.transfer(to.trim(), amountUtils.amountToHexString(amount, decimals)).encodeABI(),
     })
   }
 
@@ -177,7 +175,7 @@ const prepareTransferSignedTransaction = async (
     gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
     to: to.trim(),
     gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice, gasPrice),
-    data: contract.methods.transfer(to.trim(), amountUtils.multiplyToHexString(amount, decimals)).encodeABI(),
+    data: contract.methods.transfer(to.trim(), amountUtils.amountToHexString(amount, decimals)).encodeABI(),
     from,
   }
   return celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
@@ -205,7 +203,7 @@ const prepareBurnSignedTransaction = async (
       nonce,
       gasLimit: '0',
       to: contractAddress.trim(),
-      data: contract.methods.burn(amountUtils.multiplyToHexString(amount, decimals)).encodeABI(),
+      data: contract.methods.burn(amountUtils.amountToHexString(amount, decimals)).encodeABI(),
     })
   }
 
@@ -222,7 +220,7 @@ const prepareBurnSignedTransaction = async (
     gasLimit: '0',
     to: contractAddress.trim(),
     gasPrice,
-    data: contract.methods.burn(amountUtils.multiplyToHexString(amount, decimals)).encodeABI(),
+    data: contract.methods.burn(amountUtils.amountToHexString(amount, decimals)).encodeABI(),
     from,
   }
   return celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
