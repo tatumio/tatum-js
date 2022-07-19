@@ -16,8 +16,8 @@ const abi: Abi[] = [
       {
         internalType: 'bool',
         name: 'publicMint',
-        type: 'bool'
-      }
+        type: 'bool',
+      },
     ],
     stateMutability: 'nonpayable',
     type: 'constructor',
