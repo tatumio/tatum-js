@@ -72,7 +72,7 @@ describe('CeloSDK - tx', () => {
               data: 'some data',
             },
             provider,
-            true,
+            true
           )
           expectHexString(result)
         })
@@ -86,7 +86,7 @@ describe('CeloSDK - tx', () => {
               data: 'some data',
             },
             provider,
-            true,
+            true
           )
           const json = JSON.parse(result)
           expectHexString(json.data)

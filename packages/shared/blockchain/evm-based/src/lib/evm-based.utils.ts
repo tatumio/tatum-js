@@ -1,11 +1,11 @@
 import ethWallet, { hdkey as ethHdKey } from 'ethereumjs-wallet'
 import { ADDRESS_PREFIX, EvmBasedBlockchain, getDerivationPath } from '@tatumio/shared-core'
 import { generateMnemonic, mnemonicToSeed } from 'bip39'
-import { TronWallet } from '@tatumio/api-client'
+import { CreateRecord, TronWallet } from '@tatumio/api-client'
 import Web3 from 'web3'
 import { TransactionConfig } from 'web3-core'
-import { toWei, Unit } from 'web3-utils'
-import { toHexString } from '@tatumio/shared-abstract-sdk'
+import { isHex, stringToHex, toHex, toWei, Unit } from 'web3-utils'
+import { toHexString, WithoutChain } from '@tatumio/shared-abstract-sdk'
 import { BigNumber as BN } from '@ethersproject/bignumber'
 import BigNumber from 'bignumber.js'
 import { Erc20Token } from './contracts'
@@ -95,4 +95,40 @@ export const evmBasedUtils = {
 
   gasPriceWeiToHexWithFallback: (gasPrice?: string, fallback?: BN) =>
     gasPrice ? toHexString(new BigNumber(toWei(gasPrice, 'gwei'))) : fallback,
+  storeDataTransaction: async (
+    body: StoreDataTransactionBody & { signatureId?: string },
+    web3: EvmBasedWeb3,
+    provider?: string,
+  ) => {
+    const client = web3.getClient(provider, body.fromPrivateKey)
+
+    const hexData = isHex(body.data) ? stringToHex(body.data) : toHex(body.data)
+
+    const tx: TransactionConfig = {
+      from: 0,
+      to: body.to || client.eth.accounts.wallet[0].address,
+      data: hexData,
+      gas: body.gasLimit,
+      nonce: body.nonce,
+      gasPrice: body.gasPrice
+        ? `0x${new BigNumber(toWei(body.gasPrice, 'gwei')).toString(16)}`
+        : await web3.getGasPriceInWei(),
+    }
+
+    return evmBasedUtils.prepareSignedTransactionAbstraction(
+      client,
+      tx,
+      web3,
+      body.signatureId,
+      body.fromPrivateKey,
+      body.gasLimit,
+      body.gasPrice,
+    )
+  },
+}
+
+export type StoreDataTransactionBody = WithoutChain<CreateRecord> & {
+  signatureId?: string
+  gasLimit?: string
+  gasPrice?: string
 }
