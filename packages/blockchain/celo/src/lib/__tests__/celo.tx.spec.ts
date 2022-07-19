@@ -1,5 +1,6 @@
 import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA, expectHexString } from '@tatumio/shared-testing-common'
 import { TatumCeloSDK } from '../celo.sdk'
+import { smartContractTestFactory } from '@tatumio/shared-testing-evm-based'
 
 describe('CeloSDK - tx', () => {
   const sdk = TatumCeloSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
@@ -72,7 +73,7 @@ describe('CeloSDK - tx', () => {
               data: 'some data',
             },
             provider,
-            true
+            true,
           )
           expectHexString(result)
         })
@@ -86,7 +87,7 @@ describe('CeloSDK - tx', () => {
               data: 'some data',
             },
             provider,
-            true
+            true,
           )
           const json = JSON.parse(result)
           expectHexString(json.data)
@@ -1399,6 +1400,26 @@ describe('CeloSDK - tx', () => {
 
           expectHexString(result)
         })
+      })
+    })
+  })
+
+  describe('smart contract', () => {
+    describe('prepare', () => {
+      describe('smart contract write method invocation', () => {
+        smartContractTestFactory.prepare.smartContractWriteMethodInvocationTransaction(
+          sdk.smartContract,
+          TEST_DATA.CELO,
+        )
+      })
+    })
+
+    describe('send', () => {
+      describe('smart contract read method invocation', () => {
+        smartContractTestFactory.send.smartContractReadMethodInvocationTransaction(
+          sdk.smartContract,
+          TEST_DATA.CELO,
+        )
       })
     })
   })
