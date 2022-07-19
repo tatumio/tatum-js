@@ -13,6 +13,11 @@ const abi: Abi[] = [
         name: 'symbol_',
         type: 'string',
       },
+      {
+        internalType: 'bool',
+        name: 'publicMint',
+        type: 'bool'
+      }
     ],
     stateMutability: 'nonpayable',
     type: 'constructor',

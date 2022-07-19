@@ -283,7 +283,7 @@ const updateCashbackForAuthorSignedTransaction = async (
 }
 
 const deploySignedTransaction = async (body: ChainDeployErc721, web3: EvmBasedWeb3, provider?: string) => {
-  const { fromPrivateKey, fee, name, symbol, nonce, signatureId, provenance } = body
+  const { fromPrivateKey, fee, name, symbol, nonce, signatureId, provenance, publicMint } = body
 
   const client = await web3.getClient(provider, fromPrivateKey)
 
@@ -291,7 +291,7 @@ const deploySignedTransaction = async (body: ChainDeployErc721, web3: EvmBasedWe
 
   // @ts-ignore
   const deploy = contract.deploy({
-    arguments: [name, symbol],
+    arguments: [name, symbol, publicMint ?? false],
     data: provenance ? Erc721_Provenance.bytecode : Erc721Token.bytecode,
   })
 

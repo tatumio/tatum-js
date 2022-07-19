@@ -18,7 +18,7 @@ import {
 import Web3 from 'web3'
 
 const deploySignedTransaction = async (body: ChainDeployErc721Celo, provider?: string, testnet?: boolean) => {
-  const { fromPrivateKey, name, symbol, feeCurrency, nonce, signatureId, provenance } = body
+  const { fromPrivateKey, name, symbol, feeCurrency, nonce, signatureId, provenance, publicMint } = body
 
   const celoProvider = celoUtils.getProvider(provider)
   const network = await celoProvider.ready
@@ -26,7 +26,7 @@ const deploySignedTransaction = async (body: ChainDeployErc721Celo, provider?: s
   const contract = new new Web3().eth.Contract(provenance ? Erc721_Provenance.abi : (Erc721Token.abi as any))
   const deploy = contract.deploy({
     data: provenance ? Erc721_Provenance.bytecode : Erc721Token.bytecode,
-    arguments: [name, symbol],
+    arguments: [name, symbol, publicMint ?? false],
   })
 
   if (signatureId) {
