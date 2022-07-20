@@ -8,9 +8,10 @@ import {
 import { bcashAddressHelper } from './utils/bch.address'
 import { BchSdkError } from './bch.sdk.errors'
 import { amountUtils, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
-
-import coininfo from 'coininfo'
-import { ECPair, ECSignature, TransactionBuilder } from '@tatumio/bitcoincashjs2-lib'
+// @ts-ignore
+import * as coininfo from 'coininfo'
+// @ts-ignore
+import * as BitcoinCashJS from '@tatumio/bitcoincashjs2-lib'
 import { BtcBasedTx } from '@tatumio/shared-blockchain-btc-based'
 import BigNumber from 'bignumber.js'
 
@@ -35,7 +36,7 @@ const prepareSignedTransaction = async (
       ? coininfo.bitcoincash.test.toBitcoinJS()
       : coininfo.bitcoincash.main.toBitcoinJS()
 
-    const transactionBuilder = new TransactionBuilder(network)
+    const transactionBuilder = new BitcoinCashJS.TransactionBuilder(network)
     const privateKeysToSign = []
     const amountToSign: number[] = []
     const txs = await getTransactions(body.fromUTXO.map((u) => u.txHash))
@@ -45,8 +46,8 @@ const prepareSignedTransaction = async (
       if ('signatureId' in item) privateKeysToSign.push(item.signatureId)
       else if ('privateKey' in item) privateKeysToSign.push(item.privateKey)
 
-      const vout = txs[i].vout[item.index]
-      if (!vout) throw new BchSdkError(SdkErrorCode.BTC_BASED_UTXO_NOT_FOUND)
+      const vout = txs?.[i]?.vout?.[item.index]
+      if (!vout || !vout.value) throw new BchSdkError(SdkErrorCode.BTC_BASED_UTXO_NOT_FOUND)
 
       amountToSign.push(amountUtils.toSatoshis(vout.value))
 
@@ -66,12 +67,12 @@ const prepareSignedTransaction = async (
     verifyAmounts(amountToSign, body)
 
     for (let i = 0; i < privateKeysToSign.length; i++) {
-      const ecPair = ECPair.fromWIF(privateKeysToSign[i], network)
-      transactionBuilder.sign(i, ecPair, undefined, 0x01, amountToSign[i], undefined, ECSignature.SCHNORR)
+      const ecPair = BitcoinCashJS.ECPair.fromWIF(privateKeysToSign[i], network)
+      transactionBuilder.sign(i, ecPair, undefined, 0x01, amountToSign[i], undefined, BitcoinCashJS.ECSignature.SCHNORR)
     }
 
     return transactionBuilder.build().toHex()
-  } catch (e) {
+  } catch (e: any) {
     throw new BchSdkError(e)
   }
 }

@@ -14,7 +14,7 @@ import {
 
 export const blockchainHelper = {
   isBtcBased: (blockchain: Blockchain): blockchain is BtcBasedBlockchain =>
-    BtcBasedBlockchains.includes(blockchain),
+    BtcBasedBlockchains.includes(blockchain as BtcBasedBlockchain),
   isEvmBased: (blockchain: Blockchain): blockchain is EvmBasedBlockchain =>
     EvmBasedBlockchains.includes(blockchain),
   getBlockchainByCurrency: (currency: Currency): Blockchain => {
