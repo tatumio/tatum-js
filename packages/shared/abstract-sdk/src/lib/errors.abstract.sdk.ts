@@ -4,6 +4,7 @@ export type SdkErrorArgs = {
   originalError?: Error
   originalErrorAsString?: string
   errorSubstringMapping?: { [key: string]: SdkErrorCode }
+  errorSubstringDefaultMapper?: (errorString: string) => string
 }
 
 function stringifyError(errorCode?: SdkErrorCode, errorMessage?: string, originalError?: Error | string) {
@@ -88,7 +89,7 @@ export enum SdkErrorCode {
   FEE_TOO_SMALL = 'fee.too-small',
   TX_NOT_FOUND = 'tx.not.found',
   BTC_BASED_AMOUNT = 'btc-based.validation.amount',
-  BTC_BASED_WRONG_PRIVATE_KEY = 'btc-based.validation.wrong.privatekey',
+  BTC_BASED_MISSING_PRIVATE_KEY = 'btc-based.validation.private-key.missing',
 
   VALIDATION_AMOUNT = 'validation.amount',
   SECRET_CHECKSUM = 'validation.secret.checksum',
@@ -112,7 +113,7 @@ export const SdkErrorMessage: Record<SdkErrorCode, string> = {
   [SdkErrorCode.BTC_FEE_IS_TOO_LARGE]: `Fee is to big, make sure it's not a mistake`,
   [SdkErrorCode.TX_NOT_FOUND]: `TX not found`,
   [SdkErrorCode.BTC_BASED_AMOUNT]: `Amount {0} is incorrect btc-based amount. Should be positive integer and have 8 decimal numbers max`,
-  [SdkErrorCode.BTC_BASED_WRONG_PRIVATE_KEY]: `Private key {0} is wrong for address {1}`,
+  [SdkErrorCode.BTC_BASED_MISSING_PRIVATE_KEY]: `Some of private keys is wrong or missing`,
 
   // XRP
   [SdkErrorCode.XRP_SECRET_DOES_NOT_MATCH]: `Secret not valid or doesn't match address`,

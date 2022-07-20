@@ -215,6 +215,7 @@ const mockRequestsUtxo = (mock: BtcBasedMocks) => {
 
 const invalid = {
   invalidAmounts: [-1, -1.11111111, 0.0000000001, 9999.999999999],
+  wrongPrivateKey: 'cNcqPfCD4ppFALww1dqg1GEgpgSfTe8rbHtDc7G5a4M6jK7E3Gjg',
 }
 
 export const btcBasedTxTestFactory = {
@@ -313,6 +314,17 @@ export const btcBasedTxTestFactory = {
           testHelper.expectMockNotCalled(args.mock.broadcast)
         })
       })
+
+      it('invalid private key', async () => {
+        mockRequestsUtxo(args.mock)
+        await expect(
+          args.transactions.prepareSignedTransaction(
+            definedChangeAddressUTXOBody(args.data, { privateKey: invalid.wrongPrivateKey }),
+            options,
+          ),
+        ).rejects.toThrow(SdkErrorCode.BTC_BASED_MISSING_PRIVATE_KEY)
+        testHelper.expectMockNotCalled(args.mock.broadcast)
+      })
     })
   },
 
@@ -381,6 +393,16 @@ export const btcBasedTxTestFactory = {
         ).rejects.toThrow(SdkErrorCode.BTC_BASED_AMOUNT)
         testHelper.expectMockNotCalled(args.mock.broadcast)
       })
+    })
+    it('invalid private key', async () => {
+      mockRequestsFromAddress(args.mock)
+      await expect(
+        args.transactions.prepareSignedTransaction(
+          definedChangeAddressFromBody(args.data, { privateKey: invalid.wrongPrivateKey }),
+          options,
+        ),
+      ).rejects.toThrow(SdkErrorCode.BTC_BASED_MISSING_PRIVATE_KEY)
+      testHelper.expectMockNotCalled(args.mock.broadcast)
     })
     it('no inputs', async () => {
       args.mock.requestGetTransactionsNotFound()

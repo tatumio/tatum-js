@@ -1,8 +1,8 @@
 import { Blockchain } from '@tatumio/shared-core'
 
-import { btcBasedWallet } from '@tatumio/shared-blockchain-btc-based'
+import { btcBasedWallet, btcBasedWalletUtils } from '@tatumio/shared-blockchain-btc-based'
 
 export const dogeWallet = () => {
   const blockchain = Blockchain.DOGE
-  return btcBasedWallet({ blockchain })
+  return btcBasedWallet({ blockchain, utils: btcBasedWalletUtils(blockchain) })
 }

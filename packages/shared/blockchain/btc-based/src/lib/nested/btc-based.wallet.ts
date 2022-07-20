@@ -1,8 +1,8 @@
-import { btcBasedWalletUtils } from '../btc-based.wallet.utils'
+import { BtcBasedWalletUtils } from '../btc-based.wallet.utils'
 import { TronWallet } from '@tatumio/api-client'
 import { BtcBasedBlockchain } from '@tatumio/shared-core'
 
-export const btcBasedWallet = (args: { blockchain: BtcBasedBlockchain }) => {
+export const btcBasedWallet = (args: { blockchain: BtcBasedBlockchain; utils: BtcBasedWalletUtils }) => {
   return {
     /**
      * Generate address
@@ -11,11 +11,11 @@ export const btcBasedWallet = (args: { blockchain: BtcBasedBlockchain }) => {
      * @returns blockchain address
      */
     generateAddressFromXPub(xpub: string, i: number, options?: { testnet: boolean }): string {
-      return btcBasedWalletUtils.generateAddressFromXPub(args.blockchain, xpub, i, options)
+      return args.utils.generateAddressFromXPub(xpub, i, options)
     },
 
     /**
-     * Generate ERC20 private key from mnemonic seed
+     * Generate private key from mnemonic seed
      * @param mnemonic mnemonic to generate private key from
      * @param i derivation index of private key to generate.
      * @param options optional testnet or mainnet version of address. Default: false
@@ -26,7 +26,7 @@ export const btcBasedWallet = (args: { blockchain: BtcBasedBlockchain }) => {
       i: number,
       options?: { testnet: boolean },
     ): Promise<string> {
-      return btcBasedWalletUtils.generatePrivateKeyFromMnemonic(args.blockchain, mnemonic, i, options)
+      return args.utils.generatePrivateKeyFromMnemonic(mnemonic, i, options)
     },
 
     /**
@@ -35,7 +35,7 @@ export const btcBasedWallet = (args: { blockchain: BtcBasedBlockchain }) => {
      * @returns blockchain private key to the address
      */
     generateAddressFromPrivateKey(privateKey: string, options?: { testnet: boolean }): string {
-      return btcBasedWalletUtils.generateAddressFromPrivateKey(args.blockchain, privateKey, options)
+      return args.utils.generateAddressFromPrivateKey(privateKey, options)
     },
 
     // @TODO replace with general wallet (DTO)
@@ -46,7 +46,7 @@ export const btcBasedWallet = (args: { blockchain: BtcBasedBlockchain }) => {
      * @returns wallet or a combination of address and private key
      */
     async generateWallet(mnemonic?: string, options?: { testnet: boolean }): Promise<TronWallet> {
-      return btcBasedWalletUtils.generateBlockchainWallet(args.blockchain, mnemonic, options)
+      return args.utils.generateBlockchainWallet(mnemonic, options)
     },
   }
 }
