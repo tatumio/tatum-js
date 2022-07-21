@@ -18,7 +18,7 @@ export const erc721TestFactory = {
             name: '2123kd',
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
             fee: {
-              gasLimit: '326452',
+              gasLimit: '326580',
               gasPrice: '20',
             },
           },
@@ -39,7 +39,7 @@ export const erc721TestFactory = {
             name: 'bO6AN',
             fromPrivateKey: testData.TESTNET.ERC_721!.PRIVATE_KEY,
             fee: {
-              gasLimit: '326452',
+              gasLimit: '326580',
               gasPrice: '20',
             },
           },
