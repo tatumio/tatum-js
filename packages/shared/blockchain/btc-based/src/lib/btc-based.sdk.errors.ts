@@ -6,6 +6,7 @@ import { SdkError, SdkErrorCode, SdkMessageArgs } from '@tatumio/shared-abstract
 export const BTC_ERRORS_MAPPING = {
   'bitcore.ErrorTransactionFeeErrorTooSmall': SdkErrorCode.BTC_BASED_FEE_TOO_SMALL,
   'bitcore.ErrorTransactionInvalidOutputAmountSum': SdkErrorCode.BTC_BASED_NOT_ENOUGH_BALANCE,
+  'bitcore.ErrorTransactionMissingSignatures': SdkErrorCode.BTC_BASED_MISSING_PRIVATE_KEY,
 }
 
 export type BtcBasedSdkErrorCode =
@@ -15,7 +16,7 @@ export type BtcBasedSdkErrorCode =
   | SdkErrorCode.BTC_BASED_NOT_ENOUGH_BALANCE
   | SdkErrorCode.BTC_FEE_IS_TOO_LARGE
   | SdkErrorCode.BTC_BASED_AMOUNT
-  | SdkErrorCode.BTC_BASED_WRONG_PRIVATE_KEY
+  | SdkErrorCode.BTC_BASED_MISSING_PRIVATE_KEY
 
 export class BtcBasedSdkError extends SdkError {
   constructor(error: Error | BtcBasedSdkErrorCode, messageArgs?: SdkMessageArgs) {

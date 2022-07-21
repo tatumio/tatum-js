@@ -1,33 +1,8 @@
-import { Blockchain, blockchainUtils, BtcBasedBlockchain } from '@tatumio/shared-core'
+import { Blockchain } from '@tatumio/shared-core'
 
-import bcash from '@tatumio/bitcoincashjs2-lib'
-import cashaddr from 'cashaddrjs'
 import { btcBasedWallet } from '@tatumio/shared-blockchain-btc-based'
-import { bcashAddressHelper } from './utils/bch.address'
-import { ECPair, payments } from 'bitcoinjs-lib'
+import { bchWalletUtils } from './bch.wallet.utils'
 
 export const bchWallet = () => {
-  const blockchain = Blockchain.BCH
-  const btcBased = btcBasedWallet({ blockchain })
-
-  return {
-    ...btcBased,
-    generateAddressFromXPub: (xpub: string, i: number, options?: { testnet: boolean }): string => {
-      const network = blockchainUtils.getNetworkConfig(blockchain, options)
-      const hdNode = bcash.HDNode.fromBase58(xpub, network)
-      const legacy = hdNode.derivePath(String(i)).getAddress()
-
-      const decoded = bcashAddressHelper.decode(legacy)
-
-      return cashaddr.encode(decoded.prefix, decoded.type, decoded.hash)
-    },
-    generateAddressFromPrivateKey: (privateKey: string, options?: { testnet: boolean }): string => {
-      const network = blockchainUtils.getNetworkConfig(blockchain, options)
-      const keyPair = ECPair.fromWIF(privateKey, network)
-      const legacy = payments.p2pkh({ pubkey: keyPair.publicKey, network }).address
-      const decoded = bcashAddressHelper.decode(legacy)
-
-      return cashaddr.encode(decoded.prefix, decoded.type, decoded.hash)
-    },
-  }
+  return btcBasedWallet({ blockchain: Blockchain.BCH, utils: bchWalletUtils() })
 }

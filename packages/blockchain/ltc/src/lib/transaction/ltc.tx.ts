@@ -1,5 +1,11 @@
 import { ApiServices, Currency } from '@tatumio/api-client'
-import { btcBasedTransactions, BtcBasedTx, LtcTransactionTypes } from '@tatumio/shared-blockchain-btc-based'
+import {
+  btcBasedTransactions,
+  BtcBasedTx,
+  btcBasedWalletUtils,
+  LtcTransactionTypes,
+} from '@tatumio/shared-blockchain-btc-based'
+import { Blockchain } from '@tatumio/shared-core'
 
 export const ltcTransactions = (
   apiCalls: {
@@ -15,6 +21,6 @@ export const ltcTransactions = (
   },
 ): BtcBasedTx<LtcTransactionTypes> => {
   return {
-    ...btcBasedTransactions(Currency.LTC, apiCalls),
+    ...btcBasedTransactions(Currency.LTC, btcBasedWalletUtils(Blockchain.LTC), apiCalls),
   }
 }

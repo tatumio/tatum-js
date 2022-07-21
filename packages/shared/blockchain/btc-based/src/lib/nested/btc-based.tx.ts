@@ -17,6 +17,7 @@ import { PrivateKey, Script, Transaction } from 'bitcore-lib'
 import { amountUtils, SdkError, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { BtcBasedSdkError } from '../btc-based.sdk.errors'
 import BigNumber from 'bignumber.js'
+import { BtcBasedWalletUtils } from '../btc-based.wallet.utils'
 
 interface BtcBasedTransaction extends Transaction {
   serialize(unchecked?: boolean): string
@@ -75,6 +76,7 @@ type BroadcastType =
 
 export const btcBasedTransactions = (
   currency: Currency,
+  utils: BtcBasedWalletUtils,
   apiCalls: {
     getTxByAddress: GetTxByAddressType
     getUtxo: GetUtxoType
@@ -84,10 +86,15 @@ export const btcBasedTransactions = (
   const privateKeysFromAddress = async (
     transaction: Transaction,
     body: BtcFromAddressTypes | LtcFromAddressTypes,
+    options: { testnet: boolean },
   ): Promise<Array<string>> => {
     try {
       const privateKeysToSign = []
       for (const item of body.fromAddress) {
+        if ('privateKey' in item) {
+          verifyPrivateKey(item.privateKey, item.address, options)
+        }
+
         const txs = await apiCalls.getTxByAddress(item.address, 50) // @TODO OPENAPI remove pageSize
 
         for (const tx of txs) {
@@ -135,6 +142,7 @@ export const btcBasedTransactions = (
   const privateKeysFromUTXO = async (
     transaction: Transaction,
     body: BtcFromUtxoTypes | LtcFromUtxoTypes,
+    options: { testnet: boolean },
   ): Promise<Array<string>> => {
     try {
       const privateKeysToSign = []
@@ -143,11 +151,15 @@ export const btcBasedTransactions = (
         const utxo = await getUtxoSilent(utxoItem.txHash, utxoItem.index)
         if (utxo === null || !utxo.address) continue
 
+        const address = utxo.address
+        if ('privateKey' in utxoItem) {
+          verifyPrivateKey(utxoItem.privateKey, address, options)
+        }
         transaction.from([
           Transaction.UnspentOutput.fromObject({
             txId: utxoItem.txHash,
             outputIndex: utxo.index,
-            script: Script.fromAddress(utxo.address).toString(),
+            script: Script.fromAddress(address).toString(),
             satoshis: utxo.value,
           }),
         ])
@@ -167,6 +179,12 @@ export const btcBasedTransactions = (
         throw e
       }
       throw new BtcBasedSdkError(e)
+    }
+  }
+
+  const verifyPrivateKey = (privateKey: string, address: string, options: { testnet: boolean }): void => {
+    if (utils.generateAddressFromPrivateKey(privateKey, options) !== address) {
+      throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_MISSING_PRIVATE_KEY, [privateKey, address])
     }
   }
 
@@ -197,14 +215,14 @@ export const btcBasedTransactions = (
       })
 
       if ('fromAddress' in body) {
-        privateKeysToSign = await privateKeysFromAddress(tx, body)
+        privateKeysToSign = await privateKeysFromAddress(tx, body, options)
 
         const fromAddress = body.fromAddress
         if (fromAddress && 'signatureId' in fromAddress[0] && fromAddress[0].signatureId) {
           return JSON.stringify(tx)
         }
       } else if ('fromUTXO' in body) {
-        privateKeysToSign = await privateKeysFromUTXO(tx, body)
+        privateKeysToSign = await privateKeysFromUTXO(tx, body, options)
 
         const fromUTXO = body.fromUTXO
         if (fromUTXO && 'signatureId' in fromUTXO[0] && fromUTXO[0].signatureId) {
