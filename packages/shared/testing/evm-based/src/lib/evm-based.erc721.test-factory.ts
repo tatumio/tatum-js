@@ -39,7 +39,7 @@ export const erc721TestFactory = {
             name: 'bO6AN',
             fromPrivateKey: testData.TESTNET.ERC_721!.PRIVATE_KEY,
             fee: {
-              gasLimit: '326452',
+              gasLimit: '326580',
               gasPrice: '20',
             },
           },
