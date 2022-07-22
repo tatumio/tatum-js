@@ -24,8 +24,8 @@ interface BtcBasedTransaction extends Transaction {
 }
 
 export type BtcBasedTx<T> = {
-  sendTransaction: (body: T, options: { testnet: boolean }) => Promise<TransactionHashKMS>
-  prepareSignedTransaction: (body: T, options: { testnet: boolean }) => Promise<string>
+  sendTransaction: (body: T, options: BtcBasedTxOptions) => Promise<TransactionHashKMS>
+  prepareSignedTransaction: (body: T, options: BtcBasedTxOptions) => Promise<string>
 }
 
 export type BtcTransactionTypes =
@@ -74,6 +74,8 @@ type BroadcastType =
   | typeof ApiServices.blockchain.bitcoin.btcBroadcast
   | typeof ApiServices.blockchain.ltc.ltcBroadcast
 
+type BtcBasedTxOptions = { testnet: boolean; skipAllChecks?: boolean }
+
 export const btcBasedTransactions = (
   currency: Currency,
   utils: BtcBasedWalletUtils,
@@ -82,11 +84,27 @@ export const btcBasedTransactions = (
     getUtxo: GetUtxoType
     broadcast: BroadcastType
   },
+  {
+    createTransaction,
+    createPrivateKey,
+    prepareUnspentOutput,
+    scriptFromAddress,
+  }: {
+    createTransaction: typeof Transaction
+    createPrivateKey: typeof PrivateKey
+    prepareUnspentOutput: typeof Transaction.UnspentOutput.fromObject
+    scriptFromAddress: typeof Script.fromAddress
+  } = {
+    createTransaction: Transaction,
+    createPrivateKey: PrivateKey,
+    prepareUnspentOutput: Transaction.UnspentOutput.fromObject,
+    scriptFromAddress: Script.fromAddress,
+  },
 ): BtcBasedTx<BtcBasedTransactionTypes> => {
   const privateKeysFromAddress = async (
-    transaction: Transaction,
+    transaction: BtcBasedTransaction,
     body: BtcFromAddressTypes | LtcFromAddressTypes,
-    options: { testnet: boolean },
+    options: BtcBasedTxOptions,
   ): Promise<Array<string>> => {
     try {
       const privateKeysToSign = []
@@ -111,10 +129,10 @@ export const btcBasedTransactions = (
             }
 
             transaction.from([
-              Transaction.UnspentOutput.fromObject({
+              prepareUnspentOutput({
                 txId: tx.hash,
                 outputIndex: i,
-                script: Script.fromAddress(o.address).toString(),
+                script: scriptFromAddress(o.address).toString(),
                 satoshis: utxo.value,
               }),
             ])
@@ -125,7 +143,7 @@ export const btcBasedTransactions = (
         }
       }
 
-      if (transaction.inputs.length === 0) {
+      if (transaction.inputs.length === 0 && !options.skipAllChecks) {
         const addresses = body.fromAddress.map((value) => value.address).join(', ')
         throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_NO_INPUTS, [addresses])
       }
@@ -142,7 +160,7 @@ export const btcBasedTransactions = (
   const privateKeysFromUTXO = async (
     transaction: Transaction,
     body: BtcFromUtxoTypes | LtcFromUtxoTypes,
-    options: { testnet: boolean },
+    options: BtcBasedTxOptions,
   ): Promise<Array<string>> => {
     try {
       const privateKeysToSign = []
@@ -156,10 +174,10 @@ export const btcBasedTransactions = (
           verifyPrivateKey(utxoItem.privateKey, address, options)
         }
         transaction.from([
-          Transaction.UnspentOutput.fromObject({
+          prepareUnspentOutput({
             txId: utxoItem.txHash,
             outputIndex: utxo.index,
-            script: Script.fromAddress(address).toString(),
+            script: scriptFromAddress(address).toString(),
             satoshis: utxo.value,
           }),
         ])
@@ -168,7 +186,7 @@ export const btcBasedTransactions = (
         else if ('privateKey' in utxoItem) privateKeysToSign.push(utxoItem.privateKey)
       }
 
-      if (transaction.inputs.length === 0) {
+      if (transaction.inputs.length === 0 && !options.skipAllChecks) {
         const utxos = body.fromUTXO.map((value) => `[${value.txHash} ${value.index}]`).join(', ')
         throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_NO_INPUTS, [utxos])
       }
@@ -182,8 +200,8 @@ export const btcBasedTransactions = (
     }
   }
 
-  const verifyPrivateKey = (privateKey: string, address: string, options: { testnet: boolean }): void => {
-    if (utils.generateAddressFromPrivateKey(privateKey, options) !== address) {
+  const verifyPrivateKey = (privateKey: string, address: string, options: BtcBasedTxOptions): void => {
+    if (utils.generateAddressFromPrivateKey(privateKey, options) !== address && !options.skipAllChecks) {
       throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_MISSING_PRIVATE_KEY, [privateKey, address])
     }
   }
@@ -198,10 +216,10 @@ export const btcBasedTransactions = (
 
   const prepareSignedTransaction = async function (
     body: BtcBasedTransactionTypes,
-    options: { testnet: boolean },
+    options: BtcBasedTxOptions,
   ): Promise<string> {
     try {
-      const tx: BtcBasedTransaction = new Transaction()
+      const tx: BtcBasedTransaction = new createTransaction()
       let privateKeysToSign: string[] = []
 
       if (body.change) {
@@ -231,15 +249,15 @@ export const btcBasedTransactions = (
       }
 
       new Set(privateKeysToSign).forEach((key) => {
-        tx.sign(new PrivateKey(key))
+        tx.sign(new createPrivateKey(key))
       })
 
-      const uncheckedSerialization = currency === Currency.LTC //TODO some troubles in signing LTC?
-      if (uncheckedSerialization) {
+      const ltcSerialization = currency === Currency.LTC //TODO some troubles in signing LTC?
+      if (ltcSerialization && !options.skipAllChecks) {
         verifyAmounts(tx, body)
       }
 
-      return tx.serialize(uncheckedSerialization)
+      return tx.serialize(ltcSerialization || options.skipAllChecks)
     } catch (e: any) {
       if (e instanceof SdkError) {
         throw e
@@ -268,7 +286,7 @@ export const btcBasedTransactions = (
 
   const sendTransaction = async function (
     body: BtcBasedTransactionTypes,
-    options: { testnet: boolean },
+    options: BtcBasedTxOptions,
   ): Promise<TransactionHashKMS> {
     return apiCalls.broadcast({
       txData: await prepareSignedTransaction(body, options),
