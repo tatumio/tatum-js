@@ -6,6 +6,8 @@ import {
   LtcTransactionTypes,
 } from '@tatumio/shared-blockchain-btc-based'
 import { Blockchain } from '@tatumio/shared-core'
+// @ts-ignore
+import { Transaction, Script, PrivateKey } from 'bitcore-lib-ltc'
 
 export const ltcTransactions = (
   apiCalls: {
@@ -21,6 +23,11 @@ export const ltcTransactions = (
   },
 ): BtcBasedTx<LtcTransactionTypes> => {
   return {
-    ...btcBasedTransactions(Currency.LTC, btcBasedWalletUtils(Blockchain.LTC), apiCalls),
+    ...btcBasedTransactions(Currency.LTC, btcBasedWalletUtils(Blockchain.LTC), apiCalls, {
+      createTransaction: Transaction,
+      createPrivateKey: PrivateKey,
+      scriptFromAddress: Script.fromAddress,
+      prepareUnspentOutput: Transaction.UnspentOutput.fromObject,
+    }),
   }
 }
