@@ -1,7 +1,11 @@
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
 import { MintNftCelo } from '@tatumio/api-client'
-import { Erc721Token, Erc721_Provenance } from '@tatumio/shared-blockchain-evm-based'
+import {
+  Erc721_Provenance,
+  Erc721Token_Cashback,
+  Erc721Token_General,
+} from '@tatumio/shared-blockchain-evm-based'
 import { BroadcastFunction } from '@tatumio/shared-blockchain-abstract'
 import { CeloWallet } from '@celo-tools/celo-ethers-wrapper'
 import {
@@ -18,14 +22,30 @@ import {
 import Web3 from 'web3'
 
 const deploySignedTransaction = async (body: ChainDeployErc721Celo, provider?: string, testnet?: boolean) => {
-  const { fromPrivateKey, name, symbol, feeCurrency, nonce, signatureId, provenance, publicMint } = body
+  const { fromPrivateKey, name, symbol, feeCurrency, nonce, signatureId, cashback, provenance, publicMint } =
+    body
+
+  if (provenance && cashback) {
+    throw new Error('Only one of provenance or cashback must be present and true.')
+  }
 
   const celoProvider = celoUtils.getProvider(provider)
   const network = await celoProvider.ready
   const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
-  const contract = new new Web3().eth.Contract(provenance ? Erc721_Provenance.abi : (Erc721Token.abi as any))
+
+  let abi = Erc721Token_General.abi
+  let deployData = Erc721Token_General.bytecode
+  if (body.provenance) {
+    abi = Erc721_Provenance.abi
+    deployData = Erc721_Provenance.bytecode
+  } else if (body.cashback) {
+    abi = Erc721Token_Cashback.abi
+    deployData = Erc721Token_Cashback.bytecode
+  }
+
+  const contract = new new Web3().eth.Contract(abi as any)
   const deploy = contract.deploy({
-    data: provenance ? Erc721_Provenance.bytecode : Erc721Token.bytecode,
+    data: deployData,
     arguments: [name, symbol, publicMint ?? false],
   })
 
@@ -66,7 +86,7 @@ const mintSignedTransaction = async (body: ChainMintErc721Celo, provider?: strin
 
   if (contractAddress && feeCurrency) {
     const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
-    const contract = new new Web3().eth.Contract(Erc721Token.abi as any, contractAddress.trim())
+    const contract = new new Web3().eth.Contract(Erc721Token_Cashback.abi as any, contractAddress.trim())
 
     if (signatureId) {
       return JSON.stringify({
@@ -111,7 +131,7 @@ const mintMultipleSignedTransaction = async (
   const celoProvider = celoUtils.getProvider(provider)
   const network = await celoProvider.ready
   const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
-  const contract = new new Web3().eth.Contract(Erc721Token.abi as any, contractAddress.trim())
+  const contract = new new Web3().eth.Contract(Erc721Token_Cashback.abi as any, contractAddress.trim())
 
   if (signatureId) {
     return JSON.stringify({
@@ -180,7 +200,7 @@ const mintCashbackSignedTransaction = async (
 
   if (contractAddress && feeCurrency) {
     const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
-    const contract = new new Web3().eth.Contract(Erc721Token.abi as any, contractAddress.trim())
+    const contract = new new Web3().eth.Contract(Erc721Token_Cashback.abi as any, contractAddress.trim())
     const cb: string[] = []
     for (const c of cashbackValues!) {
       cb.push(`0x${new BigNumber(Web3.utils.toWei(c, 'ether')).toString(16)}`)
@@ -245,7 +265,7 @@ export const mintMultipleCashbackSignedTransaction = async (
   const celoProvider = celoUtils.getProvider(provider)
   const network = await celoProvider.ready
   const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
-  const contract = new new Web3().eth.Contract(Erc721Token.abi as any, contractAddress.trim())
+  const contract = new new Web3().eth.Contract(Erc721Token_Cashback.abi as any, contractAddress.trim())
 
   const cashbacks: string[][] = cashbackValues!
   const cb: string[][] = []
@@ -515,7 +535,7 @@ const transferSignedTransaction = async (
   const network = await celoProvider.ready
   const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
   const contract = new new Web3().eth.Contract(
-    provenance ? Erc721_Provenance.abi : (Erc721Token.abi as any),
+    provenance ? Erc721_Provenance.abi : (Erc721Token_Cashback.abi as any),
     contractAddress.trim(),
   )
   const dataBytes = provenance
@@ -567,7 +587,7 @@ const updateCashbackForAuthorSignedTransaction = async (
   const celoProvider = celoUtils.getProvider(provider)
   const network = await celoProvider.ready
   const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
-  const contract = new new Web3().eth.Contract(Erc721Token.abi as any, contractAddress.trim())
+  const contract = new new Web3().eth.Contract(Erc721Token_Cashback.abi as any, contractAddress.trim())
 
   if (signatureId) {
     return JSON.stringify({
@@ -615,7 +635,7 @@ const burnSignedTransaction = async (body: ChainBurnErc721Celo, provider?: strin
   const celoProvider = celoUtils.getProvider(provider)
   const network = await celoProvider.ready
   const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
-  const contract = new new Web3().eth.Contract(Erc721Token.abi as any, contractAddress.trim())
+  const contract = new new Web3().eth.Contract(Erc721Token_Cashback.abi as any, contractAddress.trim())
 
   if (signatureId) {
     return JSON.stringify({

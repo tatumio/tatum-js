@@ -10,11 +10,13 @@ import {
 } from '@tatumio/shared-blockchain-abstract'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import { TransactionConfig } from 'web3-core'
-import { Erc721_Provenance, Erc721Token } from '../../contracts'
+import { Erc721_Provenance } from '../../contracts'
 import { EvmBasedWeb3 } from '../../services/evm-based.web3'
 import { evmBasedUtils } from '../../evm-based.utils'
 import BigNumber from 'bignumber.js'
 import { ApiServices, MintNftMinter, TransactionHashKMS } from '@tatumio/api-client'
+import { Erc721Token_General } from '../../contracts/erc721General'
+import { Erc721Token_Cashback } from '../../contracts/erc721Cashback'
 
 const mintSignedTransactionMinter = async (body: MintNftMinter) => {
   const request = await ApiServices.nft.nftMintErc721(body)
@@ -25,7 +27,7 @@ const mintSignedTransactionMinter = async (body: MintNftMinter) => {
 const mintSignedTransaction = async (body: ChainMintErc721, web3: EvmBasedWeb3, provider?: string) => {
   const { contractAddress, nonce, signatureId, fee, to, tokenId, url, fromPrivateKey } = body
   const client = web3.getClient(provider, fromPrivateKey)
-  const contract = new client.eth.Contract(Erc721Token.abi as any, contractAddress)
+  const contract = new client.eth.Contract(Erc721Token_Cashback.abi as any, contractAddress)
 
   if (contractAddress) {
     const tx: TransactionConfig = {
@@ -64,7 +66,7 @@ const mintCashbackSignedTransaction = async (body: ChainMintNft, web3: EvmBasedW
   } = body
 
   const client = web3.getClient(provider, fromPrivateKey)
-  const contract = new client.eth.Contract(Erc721Token.abi as any, contractAddress)
+  const contract = new client.eth.Contract(Erc721Token_Cashback.abi as any, contractAddress)
   const cashbacks: string[] = cashbackValues!
   const cb = cashbacks.map((c) => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
   const transformedTo = to.trim()
@@ -115,7 +117,7 @@ export const mintMultipleCashbackSignedTransaction = async (
 
   const client = await web3.getClient(provider, fromPrivateKey)
 
-  const contract = new client.eth.Contract(Erc721Token.abi as any, contractAddress)
+  const contract = new client.eth.Contract(Erc721Token_Cashback.abi as any, contractAddress)
   const cashbacks: string[][] = cashbackValues!
   const cb = cashbacks.map((cashback) =>
     cashback.map((c) => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`),
@@ -149,7 +151,7 @@ const mintMultipleSignedTransaction = async (
 
   const client = await web3.getClient(provider, fromPrivateKey)
 
-  const contract = new client.eth.Contract(Erc721Token.abi as any, contractAddress)
+  const contract = new client.eth.Contract(Erc721Token_Cashback.abi as any, contractAddress)
 
   const tx: TransactionConfig = {
     from: undefined,
@@ -179,7 +181,7 @@ const burnSignedTransaction = async (body: ChainBurnErc721, web3: EvmBasedWeb3, 
 
   const client = web3.getClient(provider, fromPrivateKey)
 
-  const contract = new client.eth.Contract(Erc721Token.abi as any, contractAddress)
+  const contract = new client.eth.Contract(Erc721Token_Cashback.abi as any, contractAddress)
   const tx: TransactionConfig = {
     from: undefined,
     to: contractAddress.trim(),
@@ -220,7 +222,7 @@ const transferSignedTransaction = async (
   const client = await web3.getClient(provider, fromPrivateKey)
 
   const contract = new client.eth.Contract(
-    provenance ? Erc721_Provenance.abi : (Erc721Token.abi as any),
+    provenance ? Erc721_Provenance.abi : (Erc721Token_Cashback.abi as any),
     contractAddress,
   )
   const dataBytes = provenance
@@ -258,7 +260,7 @@ const updateCashbackForAuthorSignedTransaction = async (
 
   const client = await web3.getClient(provider, fromPrivateKey)
 
-  const contract = new client.eth.Contract(Erc721Token.abi as any, contractAddress)
+  const contract = new client.eth.Contract(Erc721Token_Cashback.abi as any, contractAddress)
 
   const tx: TransactionConfig = {
     from: undefined,
@@ -283,16 +285,29 @@ const updateCashbackForAuthorSignedTransaction = async (
 }
 
 const deploySignedTransaction = async (body: ChainDeployErc721, web3: EvmBasedWeb3, provider?: string) => {
-  const { fromPrivateKey, fee, name, symbol, nonce, signatureId, provenance, publicMint } = body
+  const { fromPrivateKey, fee, name, symbol, nonce, signatureId, provenance, cashback, publicMint } = body
+
+  if (provenance && cashback) {
+    throw new Error('Only one of provenance or cashback must be present and true.')
+  }
 
   const client = await web3.getClient(provider, fromPrivateKey)
 
-  const contract = new client.eth.Contract(provenance ? Erc721_Provenance.abi : (Erc721Token.abi as any))
+  let abi = Erc721Token_General.abi
+  let deployData = Erc721Token_General.bytecode
+  if (body.provenance) {
+    abi = Erc721_Provenance.abi
+    deployData = Erc721_Provenance.bytecode
+  } else if (body.cashback) {
+    abi = Erc721Token_Cashback.abi
+    deployData = Erc721Token_Cashback.bytecode
+  }
 
-  // @ts-ignore
+  const contract = new client.eth.Contract(abi as any)
+
   const deploy = contract.deploy({
     arguments: [name, symbol, publicMint ?? false],
-    data: provenance ? Erc721_Provenance.bytecode : Erc721Token.bytecode,
+    data: deployData,
   })
 
   const tx: TransactionConfig = {
