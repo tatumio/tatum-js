@@ -11,7 +11,7 @@ import { TransactionConfig } from 'web3-core'
 import { BroadcastFunction, FromPrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
 import BigNumber from 'bignumber.js'
 import { EvmBasedWeb3 } from './evm-based.web3'
-import { Erc1155, Erc20Token, Erc721Token, MarketplaceSmartContract } from '../contracts'
+import { Erc1155, Erc20Token, Erc721Token_Cashback, MarketplaceSmartContract } from '../contracts'
 import { AbiItem, toWei } from 'web3-utils'
 import { evmBasedUtils } from '../evm-based.utils'
 import { erc20 } from '../transactions/erc20'
@@ -294,7 +294,7 @@ const auctionApproveNftTransferSignedTransaction = async (
   const client = web3.getClient(provider)
 
   const methodName = body.isErc721 ? 'approve' : 'setApprovalForAll'
-  const abi = body.isErc721 ? Erc721Token.abi : Erc1155.abi
+  const abi = body.isErc721 ? Erc721Token_Cashback.abi : Erc1155.abi
   const methodAbi = abi.find((a) => a.name === methodName)
   // TODO any type
   const contract = new client.eth.Contract([methodAbi as any])
