@@ -1,7 +1,11 @@
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
 import { MintNftCelo } from '@tatumio/api-client'
-import { Erc721_Provenance, Erc721Token_Cashback, Erc721Token_General } from '@tatumio/shared-blockchain-evm-based'
+import {
+  Erc721_Provenance,
+  Erc721Token_Cashback,
+  Erc721Token_General,
+} from '@tatumio/shared-blockchain-evm-based'
 import { BroadcastFunction } from '@tatumio/shared-blockchain-abstract'
 import { CeloWallet } from '@celo-tools/celo-ethers-wrapper'
 import {
@@ -18,7 +22,8 @@ import {
 import Web3 from 'web3'
 
 const deploySignedTransaction = async (body: ChainDeployErc721Celo, provider?: string, testnet?: boolean) => {
-  const { fromPrivateKey, name, symbol, feeCurrency, nonce, signatureId, cashback, provenance, publicMint } = body
+  const { fromPrivateKey, name, symbol, feeCurrency, nonce, signatureId, cashback, provenance, publicMint } =
+    body
 
   if (provenance && cashback) {
     throw new Error('Only one of provenance or cashback must be present and true.')
