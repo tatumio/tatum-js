@@ -109,10 +109,6 @@ export const btcBasedTransactions = (
     try {
       const privateKeysToSign = []
       for (const item of body.fromAddress) {
-        if ('privateKey' in item) {
-          verifyPrivateKey(item.privateKey, item.address, options)
-        }
-
         const txs = await apiCalls.getTxByAddress(item.address, 50) // @TODO OPENAPI remove pageSize
 
         for (const tx of txs) {
@@ -170,9 +166,6 @@ export const btcBasedTransactions = (
         if (utxo === null || !utxo.address) continue
 
         const address = utxo.address
-        if ('privateKey' in utxoItem) {
-          verifyPrivateKey(utxoItem.privateKey, address, options)
-        }
         transaction.from([
           prepareUnspentOutput({
             txId: utxoItem.txHash,
@@ -200,9 +193,10 @@ export const btcBasedTransactions = (
     }
   }
 
+  // TODO off for now, different address types break logic, offchain tx conflicts
   const verifyPrivateKey = (privateKey: string, address: string, options: BtcBasedTxOptions): void => {
     if (utils.generateAddressFromPrivateKey(privateKey, options) !== address && !options.skipAllChecks) {
-      throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_MISSING_PRIVATE_KEY, [privateKey, address])
+      throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_MISSING_PRIVATE_KEY)
     }
   }
 
