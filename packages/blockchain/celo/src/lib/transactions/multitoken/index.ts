@@ -30,7 +30,7 @@ const deployMultiTokenTransaction = async (
   const contract = new new Web3().eth.Contract(Erc1155.abi as any)
   const deploy = contract.deploy({
     data: Erc1155.bytecode,
-    arguments: [uri],
+    arguments: [uri, body.publicMint ?? false],
   })
 
   if (signatureId) {

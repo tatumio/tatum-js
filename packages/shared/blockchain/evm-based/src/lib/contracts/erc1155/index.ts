@@ -8,6 +8,11 @@ const abi: Abi[] = [
         name: 'uri',
         type: 'string',
       },
+      {
+        internalType: 'bool',
+        name: 'publicMint',
+        type: 'bool',
+      },
     ],
     stateMutability: 'nonpayable',
     type: 'constructor',

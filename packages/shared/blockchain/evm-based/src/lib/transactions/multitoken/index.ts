@@ -73,7 +73,7 @@ const deployMultiToken = async (body: ChainDeployMultiToken, web3: EvmBasedWeb3,
   const contract = new client.eth.Contract(Erc1155.abi as any)
 
   const deploy = contract.deploy({
-    arguments: [uri],
+    arguments: [uri, body.publicMint ?? false],
     data: Erc1155.bytecode,
   } as any)
 
