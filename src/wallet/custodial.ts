@@ -145,7 +145,7 @@ const getCustodialFactoryContractAddress = (chain: Currency, testnet: boolean) =
     case Currency.XDC:
       return testnet ? 'xdc6709Bdda623aF7EB152cB2fE2562aB7e031e564f' : 'xdc3485fdba44736859267789ac9c248cc4c1443956';
     case Currency.ETH:
-      return testnet ? (process.env.TESTNET_TYPE === 'ethereum-rinkeby' ? '0x4eC40a4A0dA042d46cC4529f918080957003b531' : '0x3485fdba44736859267789ac9c248cc4c1443956') : '0xd8050943c1E2764F750EC868ae1B375C4768d89A';
+      return testnet ? '0x4c6315C5d9b0220a8e171AF18766647EFe675a1F' : '0xd8050943c1E2764F750EC868ae1B375C4768d89A';
     case Currency.MATIC:
       return testnet ? '0x6792a82ffab4890cfbcee6c2c775ae9c898afe71' : '0xfc05d7fed6af03df8095cc93b674acac3f72756c';
     case Currency.KLAY:
