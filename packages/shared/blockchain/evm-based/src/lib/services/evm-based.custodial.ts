@@ -247,9 +247,7 @@ export const evmBasedCustodial = () => {
             : 'xdc3485fdba44736859267789ac9c248cc4c1443956'
         case Currency.ETH:
           return testnet
-            ? process.env['TESTNET_TYPE'] === 'ethereum-rinkeby'
-              ? '0x4eC40a4A0dA042d46cC4529f918080957003b531'
-              : '0x3485fdba44736859267789ac9c248cc4c1443956'
+            ? '0x4c6315C5d9b0220a8e171AF18766647EFe675a1F'
             : '0xd8050943c1E2764F750EC868ae1B375C4768d89A'
         case Currency.MATIC:
           return testnet
