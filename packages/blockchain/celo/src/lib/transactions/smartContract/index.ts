@@ -1,7 +1,11 @@
 import { CeloWallet } from '@celo-tools/celo-ethers-wrapper'
-import { Currency, TATUM_API_CONSTANTS } from '@tatumio/api-client'
+import { Currency } from '@tatumio/api-client'
 import { BroadcastFunction } from '@tatumio/shared-blockchain-abstract'
-import { evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
+import {
+  evmBasedUtils,
+  EvmBasedWeb3,
+  smartContractReadMethodInvocation,
+} from '@tatumio/shared-blockchain-evm-based'
 import BigNumber from 'bignumber.js'
 import Web3 from 'web3'
 import { toWei } from 'web3-utils'
@@ -11,7 +15,7 @@ import {
   SmartContractWriteMethodInvocationCelo,
 } from '../../utils/celo.utils'
 
-const prepareSmartContractWriteMethodInvocation = async (
+const smartContractWriteMethodInvocation = async (
   body: SmartContractWriteMethodInvocationCelo,
   provider?: string,
   testnet?: boolean,
@@ -34,9 +38,10 @@ const prepareSmartContractWriteMethodInvocation = async (
 
   const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
 
-  const url = provider ?? TATUM_API_CONSTANTS.URL
-
-  const contract = new new Web3(url).eth.Contract([methodABI], contractAddress.trim())
+  const contract = new new Web3(celoUtils.getProviderUrl(provider)).eth.Contract(
+    [methodABI],
+    contractAddress.trim(),
+  )
 
   const transaction: CeloTransactionConfig = {
     chainId: network.chainId,
@@ -69,57 +74,31 @@ const prepareSmartContractWriteMethodInvocation = async (
   return wallet.signTransaction(transaction)
 }
 
-const prepareSmartContractReadMethodInvocation = async (
-  body: SmartContractWriteMethodInvocationCelo,
-  provider?: string,
-): Promise<string> => {
-  const { params, methodName, methodABI, contractAddress } = body
-  const url = provider ?? TATUM_API_CONSTANTS.URL
-
-  const contract = new new Web3(url).eth.Contract([methodABI], contractAddress.trim())
-
-  return contract.methods[methodName as string](...params).call()
-}
-
-export const smartContract = (args: { broadcastFunction: BroadcastFunction }) => {
+export const smartContract = (args: { web3: EvmBasedWeb3; broadcastFunction: BroadcastFunction }) => {
   return {
     prepare: {
       /**
        * Prepare a smart contract write method invocation transaction with the private key locally. Nothing is broadcasted to the blockchain.
        * @returns raw transaction data in hex, to be broadcasted to blockchain.
        */
-      smartContractWriteMethodInvocation: async (
+      smartContractWriteMethodInvocationTransaction: async (
         body: SmartContractWriteMethodInvocationCelo,
         provider?: string,
         testnet?: boolean,
-      ) => prepareSmartContractWriteMethodInvocation(body, provider, testnet),
-      /**
-       * Prepare a signed Celo smart contract read method invocation transaction with the private key locally. Nothing is broadcasted to the blockchain.
-       * @returns raw transaction data in hex, to be broadcasted to blockchain.
-       */
-      smartContractReadMethodInvocation: async (
-        body: SmartContractWriteMethodInvocationCelo,
-        provider?: string,
-      ) => prepareSmartContractReadMethodInvocation(body, provider),
+      ) => smartContractWriteMethodInvocation(body, provider, testnet),
     },
     send: {
       /**
-       * Send Celo smart contract method invocation transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
-       * This operation is irreversible.
-       * @param testnet
+       * Send invoke smart contract transaction to the blockchain.
+       * Invoked method only reads from blockchain the data and returns them back.
        * @param body content of the transaction to broadcast
-       * @param provider
-       * @returns transaction id of the transaction in the blockchain
+       * @param provider url of the Server to connect to. If not set, default public server will be used.
        */
-      smartContractWriteMethodInvocation: async (
+      smartContractReadMethodInvocationTransaction: async (
         body: SmartContractWriteMethodInvocationCelo,
         provider?: string,
-        testnet?: boolean,
-      ) =>
-        await args.broadcastFunction({
-          txData: await prepareSmartContractWriteMethodInvocation(body, provider, testnet),
-          signatureId: body.signatureId,
-        }),
+      ) => smartContractReadMethodInvocation(body, args.web3, provider),
+
       /**
        * Send Celo smart contract method invocation transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -128,14 +107,20 @@ export const smartContract = (args: { broadcastFunction: BroadcastFunction }) =>
        * @param provider
        * @returns transaction id of the transaction in the blockchain
        */
-      smartContractReadMethodInvocation: async (
+      smartContractMethodInvocationTransaction: async (
         body: SmartContractWriteMethodInvocationCelo,
         provider?: string,
-      ) =>
-        await args.broadcastFunction({
-          txData: await prepareSmartContractReadMethodInvocation(body, provider),
-          signatureId: body.signatureId,
-        }),
+        testnet?: boolean,
+      ) => {
+        if (body.methodABI.stateMutability === 'view') {
+          return smartContractReadMethodInvocation(body, args.web3, provider)
+        } else {
+          return args.broadcastFunction({
+            txData: await smartContractWriteMethodInvocation(body, provider, testnet),
+            signatureId: body.signatureId,
+          })
+        }
+      },
     },
   }
 }

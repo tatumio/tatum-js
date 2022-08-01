@@ -35,7 +35,7 @@ export const smartContractWriteMethodInvocation = async (
   )
 }
 
-const smartContractReadMethodInvocation = async (
+export const smartContractReadMethodInvocation = async (
   body: CallReadSmartContractMethod,
   web3: EvmBasedWeb3,
   provider?: string,
@@ -70,7 +70,7 @@ export const smartContract = (args: {
        * Send invoke smart contract transaction to the blockchain.
        * Invoked method only reads from blockchain the data and returns them back.
        * @param body content of the transaction to broadcast
-       * @param provider url of the Bsc Server to connect to. If not set, default public server will be used.
+       * @param provider url of the Server to connect to. If not set, default public server will be used.
        */
       smartContractReadMethodInvocationTransaction: async (
         body: CallReadSmartContractMethod,
