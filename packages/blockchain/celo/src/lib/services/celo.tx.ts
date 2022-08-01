@@ -8,7 +8,6 @@ export const celoTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmB
     ...args,
     broadcastFunction: CeloService.celoBroadcast,
   })
-
   return {
     native: {
       ...nativeTxs,
