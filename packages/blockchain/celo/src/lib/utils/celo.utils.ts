@@ -1,5 +1,7 @@
 import {
-  CallCeloReadSmartContractMethod,
+  BurnMultiTokenBatchCelo,
+  BurnMultiTokenCelo,
+  BurnNftCelo,
   CallCeloSmartContractMethod,
   ChainBurnCeloErc20,
   ChainDeployCeloErc20,
@@ -8,16 +10,8 @@ import {
   ChainTransferEthErc20,
   CreateRecordCelo,
   Currency,
-} from '@tatumio/api-client'
-import { FromPrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
-import {
-  BurnMultiTokenBatchCelo,
-  BurnMultiTokenCelo,
-  BurnNftCelo,
   DeployMultiTokenCelo,
   DeployNftCelo,
-  GenerateCustodialWalletCelo,
-  GenerateCustodialWalletCeloKMS,
   MintMultipleNftCelo,
   MintMultiTokenBatchCelo,
   MintMultiTokenCelo,
@@ -29,9 +23,11 @@ import {
   TransferNftCelo,
   UpdateCashbackValueForAuthorNftCelo,
 } from '@tatumio/api-client'
+import { FromPrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
 import { BigNumber as BN } from '@ethersproject/bignumber'
 import { CeloProvider, CeloWallet } from '@celo-tools/celo-ethers-wrapper'
 import { WithoutChain } from '@tatumio/shared-abstract-sdk'
+import { Blockchain, httpHelper } from '@tatumio/shared-core'
 
 export interface CeloTransactionConfig {
   from?: string
@@ -111,22 +107,6 @@ export type SmartContractWriteMethodInvocationCelo = FromPrivateKeyOrSignatureId
 
 export type SmartContractReadMethodInvocationCelo = FromPrivateKeyOrSignatureId<CallCeloSmartContractMethod>
 
-export type ChainGenerateCustodialAddressCelo = GenerateCustodialWalletCelo | GenerateCustodialWalletCeloKMS
-
-// export type ChainTransferCustodialWalletCelo = FromPrivateKeyOrSignatureId<TransferCustodialWalletCelo> & {
-//   index?: number
-// }
-
-// export type ChainBatchTransferCustodialWalletCelo =
-//   FromPrivateKeyOrSignatureId<TransferCustodialWalletBatchCelo> & { index?: number }
-
-// export type ChainApproveCustodialTransferCelo =
-//   FromPrivateKeyOrSignatureId<ApproveTransferCustodialWalletCelo> & { index?: number }
-
-// export type ChainGenerateCustodialWalletCelo = FromPrivateKeyOrSignatureId<GenerateCustodialWalletCelo> & {
-//   index?: number
-// }
-
 export type CeloFeeCurrency = 'CELO' | 'CUSD' | 'CEUR'
 
 export const CELO_CONSTANTS = {
@@ -145,13 +125,18 @@ export const celoUtils = {
     return wallet.signTransaction(transaction)
   },
 
-  getProvider: (provider?: string) =>
-    new CeloProvider(
+  getProvider: (provider?: string) => new CeloProvider(celoUtils.getProviderUrl(provider)),
+
+  getProviderUrl: (provider?: string) => {
+    return (
       provider ||
-        `${process.env['TATUM_API_URL'] || TATUM_API_CONSTANTS.URL}/v3/celo/web3/${
-          TATUM_API_CONSTANTS.API_KEY
-        }`,
-    ),
+      httpHelper.web3Endpoint(
+        Blockchain.CELO,
+        process.env['TATUM_API_URL'] || TATUM_API_CONSTANTS.URL,
+        TATUM_API_CONSTANTS.API_KEY,
+      )
+    )
+  },
 
   obtainWalletInformation: async (wallet: CeloWallet, feeCurrencyContractAddress?: string) => {
     const [txCount, gasPrice, from] = await Promise.all([
