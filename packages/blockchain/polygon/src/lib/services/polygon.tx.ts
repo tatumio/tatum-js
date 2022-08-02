@@ -25,7 +25,7 @@ export const polygonTxService = (args: { blockchain: EvmBasedBlockchain; web3: E
         ...nativeTxs.prepare,
         /**
          * Sign Polygon store data transaction with private keys locally. Nothing is broadcast to the blockchain.
-         * @param body content of the transaction to broadcast
+         * @param body content of the transaction to broadcast.
          * @param provider url of the Polygon Server to connect to. If not set, default public server will be used.
          * @returns transaction data to be broadcast to blockchain.
          */
