@@ -13,7 +13,6 @@ const EndpointsMapping: Record<Blockchain, string> = {
   POLYGON: 'polygon',
   QTUM: 'qtum',
   SOL: 'solana',
-  TERRA: 'terra',
   TRON: 'tron',
   VET: 'vet',
   XRP: 'xrp',

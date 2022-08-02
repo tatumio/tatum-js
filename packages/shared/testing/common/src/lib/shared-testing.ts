@@ -16,7 +16,6 @@ import { SOLANA_TEST_DATA } from './test-data/solana.test-data'
 import { TRON_TEST_DATA } from './test-data/tron.test-data'
 import { KLAYTN_TEST_DATA } from './test-data/klaytn.test-data'
 import { ALGO_TEST_DATA } from './test-data/algo.test-data'
-import { TERRA_TEST_DATA } from './test-data/terra.test-data'
 import { EGLD_TEST_DATA } from './test-data/egld.test-data'
 
 export type BlockchainNetworkTestData = {
@@ -85,7 +84,6 @@ export const TEST_DATA = {
   ONE: ONE_TEST_DATA,
   BSC: BSC_TEST_DATA,
   XRP: XRP_TEST_DATA,
-  TERRA: TERRA_TEST_DATA,
   XLM: XLM_TEST_DATA,
   SCRYPTA: SCRYPTA_TEST_DATA,
   FLOW: FLOW_TEST_DATA,

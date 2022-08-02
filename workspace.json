@@ -43,8 +43,6 @@
     "shared-testing-xrp-based": "packages/shared/testing/xrp-based",
     "solana": "packages/blockchain/solana",
     "solana-example": "examples/solana-example",
-    "terra": "packages/blockchain/terra",
-    "terra-example": "examples/terra-example",
     "tron": "packages/blockchain/tron",
     "tron-example": "examples/tron-example",
     "xlm": "packages/blockchain/xlm",
