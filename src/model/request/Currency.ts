@@ -78,6 +78,16 @@ export enum Currency {
   EOS = 'EOS',
   AVAX = 'AVAX',
   FTM = 'FTM',
+  ARB = 'ARB',
+  OPTIMISM = 'OPTIMISM',
+  NEAR = 'NEAR',
+  CRO = 'CRO',
+  RSK = 'RSK',
+  AURORA = 'AURORA',
+  GNO = 'GNO',
+  DOT = 'DOT',
+  KSM = 'KSM',
+  OASIS = 'OASIS',
 }
 
 export const ERC20_CURRENCIES = [
