@@ -1,5 +1,5 @@
 import { CeloWallet } from '@celo-tools/celo-ethers-wrapper'
-import { Currency } from '@tatumio/api-client'
+import { CallReadSmartContractMethod, Currency } from '@tatumio/api-client'
 import { BroadcastFunction } from '@tatumio/shared-blockchain-abstract'
 import {
   evmBasedUtils,
@@ -95,7 +95,7 @@ export const smartContract = (args: { web3: EvmBasedWeb3; broadcastFunction: Bro
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        */
       smartContractReadMethodInvocationTransaction: async (
-        body: SmartContractWriteMethodInvocationCelo,
+        body: CallReadSmartContractMethod,
         provider?: string,
       ) => smartContractReadMethodInvocation(body, args.web3, provider),
 
