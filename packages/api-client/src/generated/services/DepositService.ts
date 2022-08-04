@@ -14,12 +14,11 @@ export class DepositService {
      * @param pageSize Max number of items per page is 50.
      * @param page Page number
      * @param sort Direction of sorting. Can be asc or desc
-     * @param status Type of the deposit
+     * @param status Status of the deposit
      * @param currency Filter by currency
-     * @param from Filter by from address
+     * @param txId Filter by txId
      * @param to Filter by to address
      * @param accountId Filter by account id
-     * @param reference Filter by reference
      * @returns Deposit OK
      * @throws ApiError
      */
@@ -29,10 +28,9 @@ export class DepositService {
         sort?: 'asc' | 'desc',
         status?: 'Done' | 'InProgress',
         currency?: string,
-        from?: string,
+        txId?: string,
         to?: string,
         accountId?: string,
-        reference?: string,
     ): CancelablePromise<Array<Deposit>> {
         return __request({
             method: 'GET',
@@ -43,10 +41,9 @@ export class DepositService {
                 'sort': sort,
                 'status': status,
                 'currency': currency,
-                'from': from,
+                'txId': txId,
                 'to': to,
                 'accountId': accountId,
-                'reference': reference,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
@@ -64,10 +61,9 @@ export class DepositService {
      * @param sort Direction of sorting. Can be asc or desc
      * @param status Type of the deposit
      * @param currency Filter by currency
-     * @param from Filter by from address
+     * @param txId Filter by txId
      * @param to Filter by to address
      * @param accountId Filter by account id
-     * @param reference Filter by reference
      * @returns EntitiesCount OK
      * @throws ApiError
      */
@@ -77,10 +73,9 @@ export class DepositService {
         sort?: 'asc' | 'desc',
         status?: 'Done' | 'InProgress',
         currency?: string,
-        from?: string,
+        txId?: string,
         to?: string,
         accountId?: string,
-        reference?: string,
     ): CancelablePromise<EntitiesCount> {
         return __request({
             method: 'GET',
@@ -91,10 +86,9 @@ export class DepositService {
                 'sort': sort,
                 'status': status,
                 'currency': currency,
-                'from': from,
+                'txId': txId,
                 'to': to,
                 'accountId': accountId,
-                'reference': reference,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,

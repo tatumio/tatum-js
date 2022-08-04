@@ -6,7 +6,7 @@ import type { CustomerRegistration } from './CustomerRegistration';
 
 export type CreateAccount = {
     /**
-     * Account currency. Supported values are BTC, BNB, LTC, DOGE, BCH, ETH, XLM, LUNA, LUNA_KRW, LUNA_USD, XRP, TRON, BSC, SOL, MATIC, ALGO, KCS, EGLD, CELO, KLAY, XDC, KCS, Tatum Virtual Currencies started with VC_ prefix (this includes FIAT currencies), USDT, WBTC, LEO, LINK, GMC, UNI, FREE, MKR, USDC, BAT, TUSD, BUSD, PAX, PAXG, MMY, XCON, USDT_TRON, BETH, BUSD, BBTC, BADA, WBNB, BDOT, BXRP, BLTC, BBCH, CAKE, BUSD_BSC, ERC20, BEP20 or TRC-10/20 custom tokens registered in the Tatum Platform, XLM or XRP Assets created via Tatum Platform. ERC20 tokens and BEP20 tokens do not have Testnet blockchains, so it is impossible to use them in a non-production environment.
+     * Account currency. Supported values are BTC, BNB, LTC, DOGE, BCH, ETH, XLM, XRP, TRON, BSC, SOL, MATIC, ALGO, KCS, EGLD, CELO, KLAY, XDC, KCS, Tatum Virtual Currencies started with VC_ prefix (this includes FIAT currencies), USDT, WBTC, LEO, LINK, GMC, UNI, FREE, MKR, USDC, BAT, TUSD, BUSD, PAX, PAXG, MMY, XCON, USDT_TRON, BETH, BUSD, BBTC, BADA, WBNB, BDOT, BXRP, BLTC, BBCH, CAKE, BUSD_BSC, ERC20, BEP20 or TRC-10/20 custom tokens registered in the Tatum Platform, XLM or XRP Assets created via Tatum Platform. ERC20 tokens and BEP20 tokens do not have Testnet blockchains, so it is impossible to use them in a non-production environment.
      * You can emulate behaviour by <a href="#operation/createErc20">registering your custom ERC20 token</a> in the platform and receive tokens using <a href="https://erc20faucet.com/" target="_blank">https://erc20faucet.com/</a>.
      *
      */

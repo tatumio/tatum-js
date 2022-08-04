@@ -40,7 +40,6 @@ import {
   SellAssetOnMarketplace,
   SignatureId,
   TatumUrl,
-  TerraWallet,
   TransactionHashKMS,
   TransferCustodialWallet,
   TransferCustodialWalletBatch,
@@ -79,7 +78,7 @@ export const abstractBlockchainSdk = (args: { apiKey: string; url?: TatumUrl; bl
 }
 
 export interface SdkWithXrpLikeWalletFunction {
-  wallet(): XrpWallet | XlmWallet | TerraWallet
+  wallet(): XrpWallet | XlmWallet
 }
 
 export type FromPrivateKeyOrSignatureId<T extends { fromPrivateKey?: string }> = Omit<T, 'fromPrivateKey'> &

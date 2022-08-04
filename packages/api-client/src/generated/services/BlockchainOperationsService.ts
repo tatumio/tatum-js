@@ -80,8 +80,6 @@ import type { TransferLtcKMS } from '../models/TransferLtcKMS';
 import type { TransferLtcMnemonic } from '../models/TransferLtcMnemonic';
 import type { TransferSol } from '../models/TransferSol';
 import type { TransferSolKMS } from '../models/TransferSolKMS';
-import type { TransferTerra } from '../models/TransferTerra';
-import type { TransferTerraKMS } from '../models/TransferTerraKMS';
 import type { TransferTron } from '../models/TransferTron';
 import type { TransferTronKMS } from '../models/TransferTronKMS';
 import type { TransferTronMnemonic } from '../models/TransferTronMnemonic';
@@ -96,9 +94,9 @@ import { request as __request } from '../core/request';
 export class BlockchainOperationsService {
 
     /**
-     * Send Bitcoin from Tatum account to address
+     * Send BTC from a virtual account to the blockchain
      * <h4>2 credits per API call.</h4><br/>
-     * <p>Send Bitcoin from Tatum account to address. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
+     * <p>Send BTC (Bitcoin) from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
      * <ul>
      * <li>If Bitcoin server connection is unavailable, withdrawal request is cancelled.</li>
      * <li>If blockchain transfer is successful, but is it not possible to reach Tatum, transaction id of blockchain transaction is returned and withdrawal request must be completed manually, otherwise all other withdrawals will be pending.</li>
@@ -145,9 +143,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Send Bitcoin Cash from Tatum account to address
+     * Send BCH from a virtual account to the blockchain
      * <h4>10 credits per API call.</h4><br/>
-     * <p>Send Bitcoin Cash from Tatum account to address. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
+     * <p>Send BCH (Bitcoin Cash) from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
      * <ul>
      * <li>If Bitcoin Cash server connection is unavailable, withdrawal request is cancelled.</li>
      * <li>If blockchain transfer is successful, but is it not possible to reach Tatum, transaction id of blockchain transaction is returned and withdrawal request must be completed manually, otherwise all other withdrawals will be pending.</li>
@@ -193,9 +191,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Send Litecoin from Tatum account to address
+     * Send LTC from a virtual account to the blockchain
      * <h4>10 credits per API call.</h4><br/>
-     * <p>Send Litecoin from Tatum account to address. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
+     * <p>Send LTC (Litecoin) from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
      * <ul>
      * <li>If Litecoin server connection is unavailable, withdrawal request is cancelled.</li>
      * <li>If blockchain transfer is successful, but is it not possible to reach Tatum, transaction id of blockchain transaction is returned and withdrawal request must be completed manually, otherwise all other withdrawals will be pending.</li>
@@ -241,9 +239,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Send Flow or FUSD from Tatum account to address
+     * Send FLOW from a virtual account to the blockchain
      * <h4>100 credits per API call. Tatum covers the fee connected to the transaction costs in subscription credits. This operation can be done on mainnet only for paid plans.</h4><br/>
-     * <p>Send Flow or FUSD from Tatum account to address. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
+     * <p>Send FLOW (Flow) or FUSD from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
      * <ul>
      * <li>If Flow server connection is unavailable, withdrawal request is cancelled.</li>
      * <li>If blockchain transfer is successful, but is it not possible to reach Tatum, transaction id of blockchain transaction is returned and withdrawal request must be completed manually, otherwise all other withdrawals will be pending.</li>
@@ -288,9 +286,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Send Dogecoin from Tatum account to address
+     * Send DOGE from a virtual account to the blockchain
      * <h4>4 credits per API call.</h4><br/>
-     * <p>Send Dogecoin from Tatum account to address. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
+     * <p>Send DOGE (Dogecoin) from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
      * <ul>
      * <li>If Dogecoin server connection is unavailable, withdrawal request is cancelled.</li>
      * <li>If blockchain transfer is successful, but is it not possible to reach Tatum, transaction id of blockchain transaction is returned and withdrawal request must be completed manually, otherwise all other withdrawals will be pending.</li>
@@ -336,8 +334,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Send Ethereum from Tatum ledger to blockchain
-     * <h4>4 credits per API call.</h4><br/><p>Send Ethereum from Tatum Ledger to account. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
+     * Send ETH from a virtual account to the blockchain
+     * <h4>4 credits per API call.</h4><br/>
+     * <p>Send ETH (Ethereum) from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
      * <ul>
      * <li>If Ethereum server connection is unavailable, withdrawal request is cancelled.</li>
      * <li>If blockchain transfer is successful, but is it not possible to reach Tatum, transaction id of blockchain transaction is returned and withdrawal request must be completed manually, otherwise all other withdrawals will be pending.</li>
@@ -372,8 +371,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Send MATIC from Tatum ledger to blockchain
-     * <h4>4 credits per API call.</h4><br/><p>Send MATIC or ERC20 on Polygon from Tatum Ledger to account. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
+     * Send MATIC from a virtual account to the blockchain
+     * <h4>4 credits per API call.</h4><br/>
+     * <p>Send MATIC (Polygon) or ERC-20-equivalent Polygon tokens from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
      * <ul>
      * <li>If Polygon server connection is unavailable, withdrawal request is cancelled.</li>
      * <li>If blockchain transfer is successful, but is it not possible to reach Tatum, transaction id of blockchain transaction is returned and withdrawal request must be completed manually, otherwise all other withdrawals will be pending.</li>
@@ -408,8 +408,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Send KCS or Erc20 from Tatum ledger to blockchain
-     * <h4>4 credits per API call.</h4><br/><p>Send KCS or ERC20 on KCS from Tatum Ledger to account. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
+     * Send KCS from a virtual account to the blockchain
+     * <h4>4 credits per API call.</h4><br/>
+     * <p>Send KCS (KuCoin Community Chain (KCC)) or ERC-20-equivalent KCC tokens from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
      * <ul>
      * <li>If KCS server connection is unavailable, withdrawal request is cancelled.</li>
      * <li>If blockchain transfer is successful, but is it not possible to reach Tatum, transaction id of blockchain transaction is returned and withdrawal request must be completed manually, otherwise all other withdrawals will be pending.</li>
@@ -444,9 +445,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Transfer Ethereum ERC20 from Tatum ledger to blockchain
+     * Send Ethereum ERC-20 tokens from a virtual account to the blockchain
      * <h4>4 credits per API call.</h4><br/>
-     * <p>Transfer Ethereum ERC20 Smart Contract Tokens from Tatum account to blockchain address. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
+     * <p>Send Ethereum ERC-20 tokens from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
      * <ul>
      * <li>If Ethereum server connection is unavailable, withdrawal request is cancelled.</li>
      * <li>If blockchain transfer is successful, but is it not possible to reach Tatum, transaction id of blockchain transaction is returned and withdrawal request must be completed manually, otherwise all other withdrawals will be pending.</li>
@@ -482,7 +483,7 @@ export class BlockchainOperationsService {
 
     /**
      * @deprecated
-     * Register new ERC20 token in the ledger
+     * Register a new Ethereum ERC-20 token in the virtual account
      * <h4>2 credits per API call.</h4><br/>
      * <p>This method is deprecated. Use <a href="#operation/registerErc20Token">Register token</a> instead.</p>
      * <p>First step to create new ERC20 token with given supply on Ethereum blockchain with support of Tatum's private ledger.<br/>
@@ -521,9 +522,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Deploy Ethereum ERC20 Smart Contract to Blockchain and Ledger
+     * Deploy an Ethereum ERC-20 smart contract to the blockchain and a virtual account
      * <h4>4 credits per API call.</h4><br/>
-     * <p>Deploy Ethereum ERC20 Smart Contract. This is a helper method, which is combination of
+     * <p>Deploy an Ethereum ERC-20 smart contract. This is a helper method, which is combination of
      * <a href="#operation/createErc20">Register new ERC20 token in the ledger</a> and <a href="#operation/EthDeployErc20Blockchain">Deploy blockchain ERC20</a>.<br/>
      * After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.<br/>
      * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
@@ -555,9 +556,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Send BSC or BEP20 from Tatum ledger to blockchain
+     * Send BSC from a virtual account to the blockchain
      * <h4>4 credits per API call.</h4><br/>
-     * <p>Send BSC or BEP20 from Tatum Ledger to account. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
+     * <p>Send BSC (BNB Smart Chain) or BEP-20 tokens from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
      * <br/>
      * <br/>
      * <ul>
@@ -595,7 +596,7 @@ export class BlockchainOperationsService {
 
     /**
      * @deprecated
-     * Register new BEP20 token in the ledger
+     * Register a new BNB Smart Chain BEP-20 token in the virtual account
      * <h4>2 credits per API call.</h4><br/>
      * <p>This method is deprecated. Use <a href="#operation/registerErc20Token">Register token</a> instead.</p>
      * <p>First step to create new BEP20 token with given supply on BSC blockchain with support of Tatum's private ledger.<br/>
@@ -636,9 +637,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Deploy BSC BEP20 Smart Contract to Blockchain and Ledger
+     * Deploy a BNB Smart Chain BEP-20 smart contract to the blockchain and a virtual account
      * <h4>4 credits per API call.</h4><br/>
-     * <p>Deploy BSC BEP20 Smart Contract. This is a helper method, which is combination of
+     * <p>Deploy a BNB Smart Chain BEP-20 smart contract. This is a helper method, which is combination of
      * <a href="#operation/createBep20">Register new BEP20 token in the ledger</a> and <a href="#operation/BscDeployBep20Blockchain">Deploy blockchain BEP20</a>.<br/>
      * <br/>
      * <br/>
@@ -672,9 +673,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Send KLAY or ERC-20 from Tatum ledger to blockchain
+     * Send KLAY from a virtual account to the blockchain
      * <h4>4 credits per API call.</h4><br/>
-     * <p>Send KLAY or ERC20 from Tatum Ledger to account. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
+     * <p>Send KLAY or ERC-20-equivalent tokens from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
      * <br/>
      * <br/>
      * <ul>
@@ -711,9 +712,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Deploy Klay ERC20 Smart Contract to Blockchain and Ledger
+     * Deploy a Klaytn ERC-20-equivalent smart contract to the blockchain and a virtual account
      * <h4>4 credits per API call.</h4><br/>
-     * <p>Deploy Klay ERC20 Smart Contract. This is a helper method, which is combination of
+     * <p>Deploy a Klaytn ERC-20-equivalent smart contract. This is a helper method, which is combination of
      * <a href="#operation/registerErc20Token">Register new ERC20 token in the ledger</a> and <a href="#operation/Erc20Deploy">Deploy blockchain ERC20</a>.<br/>
      * <br/>
      * <br/>
@@ -747,9 +748,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Send XDC or ERC-20 from Tatum ledger to blockchain
+     * Send XDC from a virtual account to the blockchain
      * <h4>4 credits per API call.</h4><br/>
-     * <p>Send XDC or ERC20 from Tatum Ledger to account. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
+     * <p>Send XDC (XinFin) or ERC-20-equivalent XinFin tokens from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
      * <br/>
      * <br/>
      * <ul>
@@ -787,7 +788,7 @@ export class BlockchainOperationsService {
 
     /**
      * @deprecated
-     * Register new XDC ERC20 token in the ledger
+     * Register a new XinFin ERC-20-equivalent token in the virtual account
      * <h4>2 credits per API call.</h4><br/>
      * <p>This method is deprecated. Use <a href="#operation/registerErc20Token">Register token</a> instead.</p>
      * <p>First step to create new ERC20 token with given supply on XDC blockchain with support of Tatum's private ledger.<br/>
@@ -828,9 +829,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Deploy XDC ERC20 Smart Contract to Blockchain and Ledger
+     * Deploy a XinFin ERC-20-equivalent smart contract to the blockchain and a virtual account
      * <h4>4 credits per API call.</h4><br/>
-     * <p>Deploy XDC ERC20 Smart Contract. This is a helper method, which is combination of
+     * <p>Deploy a XinFin ERC-20-equivalent smart contract. This is a helper method, which is combination of
      * <a href="#operation/createXdc20">Register new ERC20 token in the ledger</a> and <a href="#operation/Erc20Deploy">Deploy blockchain ERC20</a>.<br/>
      * <br/>
      * <br/>
@@ -864,9 +865,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Send ONE or HRM-20 from Tatum ledger to blockchain
+     * Send ONE from a virtual account to the blockchain
      * <h4>4 credits per API call.</h4><br/>
-     * <p>Send ONE or HRM20 from Tatum Ledger to account. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
+     * <p>Send ONE (Harmony) or HRM-20 tokens from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
      * <br/>
      * <br/>
      * <ul>
@@ -909,7 +910,7 @@ export class BlockchainOperationsService {
 
     /**
      * @deprecated
-     * Register new ONE HRM20 token in the ledger
+     * Register a new Harmony HRM-20 token in the virtual account
      * <h4>2 credits per API call.</h4><br/>
      * <p>This method is deprecated. Use <a href="#operation/registerErc20Token">Register token</a> instead.</p>
      * <p>First step to create new HRM20 token with given supply on ONE blockchain with support of Tatum's private ledger.<br/>
@@ -950,9 +951,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Deploy ONE HRM20 Smart Contract to Blockchain and Ledger
+     * Deploy a Harmony HRM-20 smart contract to the blockchain and a virtual account
      * <h4>4 credits per API call.</h4><br/>
-     * <p>Deploy ONE HRM20 Smart Contract. This is a helper method, which is combination of
+     * <p>Deploy a Harmony HRM-20 smart contract. This is a helper method, which is combination of
      * <a href="#operation/createHrm20">Register new HRM20 token in the ledger</a> and <a href="#operation/Erc20Deploy">Deploy blockchain HRM20</a>.<br/>
      * <br/>
      * <br/>
@@ -991,9 +992,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Register new token in the ledger
+     * Register a new ERC-20 or ERC-20-equivalent token in the virtual account
      * <h4>2 credits per API call.</h4><br/>
-     * <p>First step to create new ERC|HRM|BEP-20|SPL token with given supply on chosen blockchain with support of Tatum's private ledger.<br/>
+     * <p>This is the first step to create a new ERC-20 or ERC-20 equivalent token with some supply in a virtual account.<br/>
      * <br/>
      * <br/>
      * This method only creates Tatum Private ledger virtual currency with predefined parameters. It will not generate any blockchain smart contract.<br/>
@@ -1032,14 +1033,13 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Set ERC20/BEP20/HRM20/TRC20/KCS20 token contract address
+     * Set the contact address of an ERC-20 or ERC-20-equivalent token
      * <h4>2 credits per API call.</h4><br/>
-     * <p>Set contract address of ERC20/BEP20/HRM20 token. This must be done in order to communicate with smart contract.
+     * <p>Set the contact address of an ERC-20 or ERC-20-equivalent token (for example, BEP-20, HRM-20, and so on) to be able to communicate with the smart contract.
      * <br/>
      * <br/>
-     * After creating and deploying ERC20 token to blockchain, smart contract address is generated and must be set within Tatum.
-     * In Algorand case the address should be token AssetID, for example: 55351976
-     * Otherwise Tatum platform will not be able to detect incoming deposits of ERC20 and do withdrawals from Tatum accounts to other blockchain addresses.</p>
+     * <p>After creating and deploying an ERC-20 or ERC-20-equivalent token to the blockchain, the smart contract address is generated and must be set within Tatum. If the address is not set, the Tatum platform will not be able to detect incoming deposits of the tokens and transfer the tokens from virtual accounts to blockchain addresses.</p>
+     * <p><b>NOTE:</b>For Algorand, the contact address should be the token asset ID (AssetID), for example, <code>55351976</code>.</p>
      *
      * @param address Contract address
      * @param name Symbol name.
@@ -1063,9 +1063,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Send Celo, cUSD, cEUR or ERC-20 from Tatum ledger to blockchain
+     * Send CELO from a virtual account to the blockchain
      * <h4>4 credits per API call.</h4><br/>
-     * <p>Send Celo or ERC-20 from Tatum Ledger to account. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
+     * <p>Send CELO (Celo), ERC-20-equivalent Celo tokens, cUSD, or cEUR from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
      * <br/>
      * <br/>
      * <ul>
@@ -1103,7 +1103,7 @@ export class BlockchainOperationsService {
 
     /**
      * @deprecated
-     * Register new Celo ERC-20 token in the ledger
+     * Register a new Celo ERC-20-equivalent token in the virtual account
      * <h4>2 credits per API call.</h4><br/>
      * <p>This method is deprecated. Use <a href="#operation/registerErc20Token">Register token</a> instead.</p>
      * <p>First step to create new ERC-20 token with given supply on Celo blockchain with support of Tatum's private ledger.<br/>
@@ -1144,9 +1144,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Deploy Celo ERC-20 Smart Contract to Blockchain and Ledger
+     * Deploy a Celo ERC-20-equivalent smart contract to the blockchain and a virtual account
      * <h4>4 credits per API call.</h4><br/>
-     * <p>Deploy Celo ERC-20 Smart Contract. This is a helper method, which is combination of
+     * <p>Deploy a Celo ERC-20-equivalent smart contract. This is a helper method, which is combination of
      * <a href="#operation/createCeloErc20">Register new Celo ERC-20 token in the ledger</a> and <a href="#operation/CeloDeployErc20">Deploy blockchain ERC-20</a>.<br/>
      * <br/>
      * <br/>
@@ -1180,9 +1180,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Deploy Kcs ERC20 Smart Contract to Blockchain and Ledger
+     * Deploy a KuCoin Community Chain (KCC) ERC-20-equivalent smart contract to the blockchain and a virtual account
      * <h4>4 credits per API call.</h4><br/>
-     * <p>Deploy Kcs ERC20 Smart Contract. This is a helper method, which is combination of
+     * <p>Deploy a KuCoin Community Chain (KCC) ERC-20-equivalent smart contract. This is a helper method, which is combination of
      * <a href="#operation/createErc20">Register new Kcs ERC20 token in the ledger</a> and <a href="#operation/KcsDeployErc20Blockchain">Deploy blockchain ERC-20</a>.<br/>
      * <br/>
      * <br/>
@@ -1216,14 +1216,10 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Set Celo ERC-20 token contract address
+     * @deprecated
+     * Set the contact address of a Celo ERC-20-equivalent token
      * <h4>2 credits per API call.</h4><br/>
-     * <b>This method is deprecated. Please use <a href="#operation/storeTokenAddress">Set Token address</a>.</b><br/>
-     * <p>Set contract address of ERC-20 token. This must be done in order to communicate with ERC-20 smart contract.
-     * <br/>
-     * <br/>
-     * After creating and deploying ERC-20 token to CELO blockchain, smart contract address is generated and must be set within Tatum.
-     * Otherwise Tatum platform will not be able to detect incoming deposits of ERC-20 and do withdrawals from Tatum accounts to other blockchain addresses.</p>
+     * <b>This method is deprecated. Please use <a href="#operation/storeTokenAddress">this method</a> instead.</b>
      *
      * @param address ERC-20 contract address
      * @param name ERC-20 symbol name.
@@ -1247,9 +1243,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Send SOL from Tatum ledger to blockchain
+     * Send SOL from a virtual account to the blockchain
      * <h4>10 credits per API call.</h4><br/><p>
-     * <p>Send SOL/USDC_SOL/custom SPL token from virtual account to blockchain address. This will create Tatum internal withdrawal request with ID. When every system works as expected,
+     * <p>Send SOL (Solana), USDC_SOL, or custom SPL tokens from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. When every system works as expected,
      * withdrawal request is marked as complete and transaction id is assigned to it.
      * <ul>
      * <li>If SOL server connection is unavailable, withdrawal request is cancelled.</li>
@@ -1285,9 +1281,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Send XLM / Asset from Tatum ledger to blockchain
+     * Send XLM from a virtual account to the blockchain
      * <h4>10 credits per API call.</h4><br/><p>
-     * <p>Send XLM or XLM-based Assets from account to account. This will create Tatum internal withdrawal request with ID. When every system works as expected,
+     * <p>Send XLM (Stellar) or XLM-based assets from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. When every system works as expected,
      * withdrawal request is marked as complete and transaction id is assigned to it.
      * <ul>
      * <li>If XLM server connection is unavailable, withdrawal request is cancelled.</li>
@@ -1323,11 +1319,10 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Create XLM based Asset
-     * <h4>2 credits per API call.</h4><br/><p>
-     * <p>Create XLM-based Asset in Tatum Ledger. Asset must be created and configured on XLM blockhain before using <a href="#operation/XlmTrustLineBlockchain">Create trust line</a>.
-     * This API call will create Tatum internal Virtual Currency. It is possible to create Tatum ledger accounts with off-chain support.
-     * </p>
+     * Create an XLM-based asset
+     * <h4>2 credits per API call.</h4><br/>
+     * <p>Create an XLM-based asset in a virtual account. The asset must be created and configured on the Stellar blockchain before <a href="https://apidoc.tatum.io/tag/Stellar#operation/XlmTrustLineBlockchain">creating a trust line</a>.</p>
+     * <p>This API call will create an internal virtual currency. You can create virtual accounts with off-chain support.</p>
      *
      * @param requestBody
      * @returns void
@@ -1351,10 +1346,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Send XRP from Tatum ledger to blockchain
+     * Send XRP from a virtual account to the blockchain
      * <h4>10 credits per API call.</h4><br/><p>
-     * <p>Send XRP from account to account. This will create Tatum internal withdrawal request with ID. When every system works as expected,
-     * withdrawal request is marked as complete and transaction id is assigned to it.
+     * <p>Send XRP (Ripple) from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. When every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
      * <ul>
      * <li>If XRP server connection is unavailable, withdrawal request is cancelled.</li>
      * <li>If blockchain transfer is successful, but is it not possible to reach Tatum, transaction id of blockchain transaction is returned and withdrawal request must be
@@ -1392,9 +1386,8 @@ export class BlockchainOperationsService {
     /**
      * Create XRP based Asset
      * <h4>2 credits per API call.</h4><br/><p>
-     * <p>Create XRP-based Asset in Tatum Ledger. Asset must be created and configured on XRP blockhain before using <a href="#operation/XrpTrustLineBlockchain">Create trust line</a>.
-     * This API call will create Tatum internal Virtual Currency. It is possible to create Tatum ledger accounts with off-chain support.
-     * </p>
+     * <p>Create an XRP-based asset in a virtual account. The asset must be created and configured on the Ripple blockchain before <a href="https://apidoc.tatum.io/tag/XRP#operation/XrpTrustLineBlockchain">creating a trust line</a>.</p>
+     * <p>This API call will create an internal virtual currency. You can create virtual accounts with off-chain support.</p>
      *
      * @param requestBody
      * @returns void
@@ -1418,48 +1411,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Send LUNA from Tatum ledger to blockchain
+     * Send BNB from a virtual account to the blockchain
      * <h4>10 credits per API call.</h4><br/><p>
-     * <p>Send LUNA, KRW or USD from virtual account to blockchain. This will create Tatum internal withdrawal request with ID. When every system works as expected,
-     * withdrawal request is marked as complete and transaction id is assigned to it.
-     * <ul>
-     * <li>If Terra server connection is unavailable, withdrawal request is cancelled.</li>
-     * <li>If blockchain transfer is successful, but is it not possible to reach Tatum, transaction id of blockchain transaction is returned and withdrawal request must be
-     * completed manually, otherwise all other withdrawals will be pending.</li>
-     * </ul>
-     * It is possible to perform ledger to blockchain transaction for ledger accounts without blockchain address assigned to them.<br/>
-     * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-     * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and losing funds. In this method, it is possible to enter privateKey
-     * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-     * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
-     * Alternatively, using the Tatum client library for supported languages.
-     * </p>
-     *
-     * @param requestBody
-     * @returns any OK
-     * @throws ApiError
-     */
-    public static terraTransfer(
-        requestBody: (TransferTerra | TransferTerraKMS),
-    ): CancelablePromise<(OffchainTransactionResult | OffchainTransactionSignatureResult)> {
-        return __request({
-            method: 'POST',
-            path: `/v3/offchain/terra/transfer`,
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
-            },
-        });
-    }
-
-    /**
-     * Send BNB from Tatum ledger to blockchain
-     * <h4>10 credits per API call.</h4><br/><p>
-     * <p>Send BNB or BNB Asset from account to blockchain. This will create Tatum internal withdrawal request with ID. When every system works as expected,
+     * <p>Send BNB (BNB Beacon Chain) or BNB assets from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. When every system works as expected,
      * withdrawal request is marked as complete and transaction id is assigned to it.
      * <ul>
      * <li>If BNB server connection is unavailable, withdrawal request is cancelled.</li>
@@ -1496,11 +1450,10 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Create BNB based Asset
+     * Create a BNB-based asset
      * <h4>2 credits per API call.</h4><br/><p>
-     * <p>Create BNB-based Asset in Tatum Ledger. Asset must be created and configured on Binance blockhain before. Please see <a href="https://docs.binance.org/tokens.html" targer="_blank">Create Asset</a>.
-     * This API call will create Tatum internal Virtual Currency. It is possible to create Tatum ledger accounts with off-chain support.
-     * </p>
+     * <p>Create a BNB-based asset in a virtual account. The asset must first be <a href="https://docs.binance.org/tokens.html" targer="_blank">created and configured on BNB Beacon Chain blockhain</a>.</p>
+     * <p>This API call will create an internal virtual currency. You can create virtual accounts with off-chain support.</p>
      *
      * @param requestBody
      * @returns void
@@ -1524,8 +1477,8 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Send ADA from Tatum ledger to blockchain
-     * <h4>10 credits per API call.</h4><br/><p>Send ADA asset from Tatum Ledger to account. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
+     * Send ADA from a virtual account to the blockchain
+     * <h4>10 credits per API call.</h4><br/><p>Send ADA (Cardano) from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
      * <ul>
      * <li>If ADA server connection is unavailable, withdrawal request is cancelled.</li>
      * <li>If blockchain transfer is successful, but is it not possible to reach Tatum, transaction id of blockchain transaction is returned and withdrawal request must be completed manually, otherwise all other withdrawals will be pending.</li>
@@ -1560,8 +1513,8 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Send Tron or TRC asset from Tatum ledger to blockchain
-     * <h4>10 credits per API call.</h4><br/><p>Send Tron or TRC asset from Tatum Ledger to account. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
+     * Send TRON from a virtual account to the blockchain
+     * <h4>10 credits per API call.</h4><br/><p>Send TRON or TRX assets from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
      * <ul>
      * <li>If Tron server connection is unavailable, withdrawal request is cancelled.</li>
      * <li>If blockchain transfer is successful, but is it not possible to reach Tatum, transaction id of blockchain transaction is returned and withdrawal request must be completed manually, otherwise all other withdrawals will be pending.</li>
@@ -1596,7 +1549,7 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Register new TRC-10/20 token in the ledger
+     * Register a new TRON TRC-10 or TRC-20 token in the virtual account
      * <h4>10 credits per API call.</h4><br/>
      * <p>First step to create new TRC 10/20 token with given supply on the Tron blockchain with support of Tatum's private ledger.<br/>
      * This method only creates Tatum Private ledger virtual currency with predefined parameters. It will not generate any blockchain smart contract.<br/>
@@ -1634,9 +1587,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Deploy Tron TRC-10/20 Smart Contract to Blockchain and Ledger
+     * Deploy a TRON TRC-10 or TRC-20 smart contract to the blockchain and a virtual account
      * <h4>10 credits per API call.</h4><br/>
-     * <p>Deploy Tron TRC-10/20 Smart Contract. This is a helper method, which is combination of
+     * <p>Deploy a TRON TRC-10 or TRC-20 smart contract. This is a helper method, which is combination of
      * <a href="#operation/createTrc">Register new TRC-10/20 token in the ledger</a> and <a href="#operation/TronCreateTrc20">Deploy blockchain TRC20</a> or <a href="#operation/TronCreateTrc10">Deploy blockchain TRC10</a>.<br/>
      * After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.<br/>
      * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
@@ -1668,11 +1621,10 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Set TRC token contract address
+     * @deprecated
+     * Set the contact address of a TRC-10 or TRC-20 token
      * <h4>2 credits per API call.</h4><br/>
-     * <b>This method is deprecated. Please use <a href="#operation/storeTokenAddress">Set Token address</a>.</b><br/>
-     * <p>Set contract address of TRC 10/20 token. This must be done in order to communicate with TRC 10/20 smart contract. After creating and deploying TRC 10/20 token to Tron blockchain, smart contract address is generated and must be set within Tatum.
-     * Otherwise Tatum platform will not be able to detect incoming deposits of TRC 10/20 and do withdrawals from Tatum accounts to other blockchain addresses.</p>
+     * <b>This method is deprecated. Please use <a href="#operation/storeTokenAddress">this method</a> instead.</b>
      *
      * @param address TRC-10 Token ID or TRC-20 contract address
      * @param name TRC 10/20 symbol name.
@@ -1696,9 +1648,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Send EGLD from Tatum ledger to blockchain
+     * Send EGLD from a virtual account to the blockchain
      * <h4>4 credits per API call.</h4><br/>
-     * <p>Send EGLD from Tatum Ledger to account. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
+     * <p>Send EGLD from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
      * <br/>
      * <br/>
      * <ul>
@@ -1735,9 +1687,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Deploy Algo ERC20 to Blockchain and Ledger
+     * Deploy an Algorand ERC-20-equivalent smart contract to the blockchain and a virtual account
      * <h4>4 credits per API call.</h4><br/>
-     * <p>Deploy Algorand ERC20 Smart Contract. This is a helper method, which is combination of
+     * <p>Deploy an Algorand ERC-20-equivalent smart contract. This is a helper method, which is combination of
      * <a href="#operation/createErc20">Register new Algorand ERC20 token in the ledger</a> and <a href="#operation/AlgoDeployErc20Blockchain">Deploy blockchain ERC-20</a>.<br/>
      * <br/>
      * <br/>
@@ -1771,9 +1723,9 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Send ALGO or Erc20 from Tatum ledger to blockchain
+     * Send ALGO from a virtual account to the blockchain
      * <h4>4 credits per API call.</h4><br/>
-     * <p>Send ALGO or Erc20 from Tatum Ledger to account. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
+     * <p>Send ALGO (Algorand) or ERC-20-equivalent Algorand tokens from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
      * <br/>
      * <br/>
      * <ul>

@@ -27,13 +27,13 @@ export class EthereumService {
      * Generates a BIP44 compatible Ethereum wallet.</p>
      *
      * @param mnemonic Mnemonic to use for generating extended public and private keys.
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
      * @returns Wallet OK
      * @throws ApiError
      */
     public static ethGenerateWallet(
         mnemonic?: string,
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<Wallet> {
         return __request({
             method: 'GET',
@@ -60,14 +60,14 @@ export class EthereumService {
      *
      * @param xpub Extended public key of wallet.
      * @param index Derivation index of the address to be generated.
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
      * @returns any OK
      * @throws ApiError
      */
     public static ethGenerateAddress(
         xpub: string,
         index: number,
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<{
         /**
          * Ethereum address
@@ -95,13 +95,13 @@ export class EthereumService {
      * can generate up to 2^32 private keys starting from index 0 until 2^31 - 1.</p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
      * @returns PrivKey OK
      * @throws ApiError
      */
     public static ethGenerateAddressPrivateKey(
         requestBody: PrivKeyRequest,
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<PrivKey> {
         return __request({
             method: 'POST',
@@ -122,21 +122,21 @@ export class EthereumService {
     /**
      * @deprecated
      * Web3 HTTP driver
-     * <h4>2 credits per API call.</h4><br/>
+     * <p><b>2 credits per API call</b></p>
+     * <p><b>This endpoint is deprecated. Use the <a href="https://apidoc.tatum.io/tag/Node-RPC" target="_blank">HTTP-based JSON RPC driver</a> instead.</b></p><br/>
      * <p>Use this endpoint URL as an http-based web3 driver to connect directly to the Ethereum node provided by Tatum.
-     * To learn more about Ethereum Web3, please visit <a href="https://ethereum.org/en/developers/" target="_blank">Ethereum developers' guide.</a></p>
-     * <br/><p><strong>This endpoint is deprecated</strong>, you should use <a href="#operation/NodeJsonPostRpcDriver">Blockchain/Node/RPC HTTP Driver</a></p>
+     * To learn more about Ethereum Web3, visit the <a href="https://ethereum.org/en/developers/" target="_blank">Ethereum developers' guide</a>.</p>
      *
      * @param xApiKey Tatum X-API-Key used for authorization.
      * @param requestBody
-     * @param testnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
+     * @param testnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
      * @returns any OK
      * @throws ApiError
      */
     public static ethWeb3Driver(
         xApiKey: string,
         requestBody: any,
-        testnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        testnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<any> {
         return __request({
             method: 'POST',
@@ -157,12 +157,12 @@ export class EthereumService {
     /**
      * Get current block number
      * <h4>1 credit per API call.</h4><br/><p>Gets the current Ethereum block number. This is the number of the latest block in the blockchain.</p>
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
      * @returns number OK
      * @throws ApiError
      */
     public static ethGetCurrentBlock(
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<number> {
         return __request({
             method: 'GET',
@@ -181,13 +181,13 @@ export class EthereumService {
      * Get Ethereum block by hash
      * <h4>1 credit per API call.</h4><br/><p>Gets an Ethereum block-by-block hash or block number.</p>
      * @param hash Block hash or block number
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
      * @returns EthBlock OK
      * @throws ApiError
      */
     public static ethGetBlock(
         hash: string,
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<EthBlock> {
         return __request({
             method: 'GET',
@@ -207,13 +207,13 @@ export class EthereumService {
      * Get Ethereum account balance
      * <h4>1 credit per API call.</h4><br/><p>Gets an Ethereum account balance in ETH. This method does not display the balance of ERC20 or ERC721 tokens in the account.</p>
      * @param address Account address you want to get balance of
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
      * @returns any OK
      * @throws ApiError
      */
     public static ethGetBalance(
         address: string,
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<{
         /**
          * Balance in ETH
@@ -238,13 +238,13 @@ export class EthereumService {
      * Get Ethereum Transaction
      * <h4>1 credit per API call.</h4><br/><p>Get Ethereum transaction by transaction hash.</p>
      * @param hash Transaction hash
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
      * @returns EthTx OK
      * @throws ApiError
      */
     public static ethGetTransaction(
         hash: string,
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<EthTx> {
         return __request({
             method: 'GET',
@@ -269,13 +269,13 @@ export class EthereumService {
      * the order of the transaction in the list of outgoing transactions.</p>
      *
      * @param address address
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
      * @returns number OK
      * @throws ApiError
      */
     public static ethGetTransactionCount(
         address: string,
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<number> {
         return __request({
             method: 'GET',
@@ -300,7 +300,7 @@ export class EthereumService {
      * @param from Transactions from this block onwords will be included.
      * @param to Transactions up to this block will be included.
      * @param sort Sorting of the data. ASC - oldest first, DESC - newest first.
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
      * @returns EthTx OK
      * @throws ApiError
      */
@@ -311,7 +311,7 @@ export class EthereumService {
         from?: number,
         to?: number,
         sort: 'ASC' | 'DESC' = 'DESC',
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<Array<EthTx>> {
         return __request({
             method: 'GET',
@@ -336,23 +336,21 @@ export class EthereumService {
 
     /**
      * Send Ethereum / ERC20 from account to account
-     * <h4>2 credits per API call.</h4><br/>
+     * <p><b>2 credits per API call</b></p>
      * <p>Send Ethereum or Tatum supported ERC20 token from account to account.<br/><br/>
-     * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-     * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
-     * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-     * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
-     * Alternatively, using the Tatum client library for supported languages.
-     * </p>
+     * <p><b>Signing a transaction</b></p>
+     * <p>When sending ETH, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
      * @returns any OK
      * @throws ApiError
      */
     public static ethBlockchainTransfer(
         requestBody: (TransferEthBlockchain | TransferEthBlockchainKMS),
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
         return __request({
             method: 'POST',
@@ -372,24 +370,27 @@ export class EthereumService {
     }
 
     /**
-     * Invoke Smart Contract method
-     * <h4>2 credits per API call.</h4><br/>
-     * <p>Invoke any method on an existing Smart Contract. It is possibleto call read or write method on the Smsrt Contract defined via contractAddress.
-     * For read operations, data is returned, for write operations, transaction Id of the associated transaction is returned.<br/>
-     * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-     * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
-     * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-     * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
-     * Alternatively, using the Tatum client library for supported languages.</p>
+     * Invoke a method in a smart contract on Ethereum
+     * <p><b>2 credits per API call</b></p>
+     * <p>Invoke a method in an existing smart contract on Ethereum.</p>
+     * <p>You can call a read-only or write method.</p>
+     * <ul>
+     * <li>For <b>read-only</b> methods, the output of the invoked method is returned.</li>
+     * <li>For <b>write</b> methods, the ID of the associated transaction is returned.</li>
+     * </ul>
+     * <p><b>Signing a transaction</b></p>
+     * <p>When invoking a method in a smart contract, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
      * @returns any OK
      * @throws ApiError
      */
     public static ethBlockchainSmartContractInvocation(
         requestBody: (CallSmartContractMethod | CallReadSmartContractMethod | CallSmartContractMethodKMS),
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<(TransactionHashKMS | SignatureId | Data)> {
         return __request({
             method: 'POST',
@@ -416,7 +417,7 @@ export class EthereumService {
      * @param address Account address you want to get balance of
      * @param pageSize Max number of items per page is 50.
      * @param offset Offset to obtain next page of the data.
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
      * @returns EthTxInternal OK
      * @throws ApiError
      */
@@ -424,7 +425,7 @@ export class EthereumService {
         address: string,
         pageSize: number,
         offset?: number,
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<Array<EthTxInternal>> {
         return __request({
             method: 'GET',
@@ -446,18 +447,18 @@ export class EthereumService {
 
     /**
      * Broadcast signed Ethereum transaction
-     * <h4>2 credits per API call.</h4><br/>
+     * <p><b>2 credits per API call</b></p>
      * <p>Broadcast signed transaction to Ethereum blockchain. This method is used internally from Tatum KMS, Tatum Middleware or Tatum client libraries.
      * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
      * @returns TransactionHashKMS OK
      * @throws ApiError
      */
     public static ethBroadcast(
         requestBody: BroadcastKMS,
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<TransactionHashKMS> {
         return __request({
             method: 'POST',

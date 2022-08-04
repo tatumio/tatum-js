@@ -4,7 +4,7 @@
 
 export type CallBscSmartContractMethodKMS = {
     /**
-     * Address of BEP20 token
+     * The address of the smart contract
      */
     contractAddress: string;
     /**

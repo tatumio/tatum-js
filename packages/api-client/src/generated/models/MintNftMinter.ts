@@ -4,27 +4,27 @@
 
 export type MintNftMinter = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
-    chain: 'ETH' | 'MATIC' | 'CELO' | 'ONE' | 'BSC';
+    chain: 'BSC' | 'CELO' | 'ETH' | 'KLAY' | 'MATIC' | 'ONE';
     /**
-     * ID of token to be created.
+     * The token ID of the NFT
      */
     tokenId: string;
     /**
-     * Blockchain address to send NFT token to
+     * The blockchain address to send the NFT to
      */
     to: string;
     /**
-     * Address of NFT token
+     * The blockchain address of the smart contract to build the NFT on
      */
-    contractAddress?: string;
+    contractAddress: string;
     /**
-     * Address of the minter of the token, who will be used for paying the fees. Must be used from one of our listed minter addresses.
+     * The blockchain address of the NFT minter
      */
     minter: string;
     /**
-     * Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
+     * The link to the NFT metadata (see https://eips.ethereum.org/EIPS/eip-721#specification for more details)
      */
     url: string;
 }

@@ -64,13 +64,13 @@ export class MultiTokensErc1155OrCompatibleService {
      * </p>
      *
      * @param requestBody
-     * @param xTestnetType Type of testnet. Defaults to ropsten. Valid only for ETH invocations.
+     * @param xTestnetType Type of testnet. Defaults to Sepolia. Valid only for ETH invocations.
      * @returns any OK
      * @throws ApiError
      */
     public static deployMultiToken(
         requestBody: (DeployMultiToken | DeployMultiTokenKMS | DeployMultiTokenCelo | DeployMultiTokenCeloKMS),
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
         return __request({
             method: 'POST',
@@ -113,13 +113,13 @@ export class MultiTokensErc1155OrCompatibleService {
      * </p>
      *
      * @param requestBody
-     * @param xTestnetType Type of testnet. Defaults to ropsten. Valid only for ETH invocations.
+     * @param xTestnetType Type of testnet. Defaults to Sepolia. Valid only for ETH invocations.
      * @returns any OK
      * @throws ApiError
      */
     public static mintMultiToken(
         requestBody: (MintMultiToken | MintMultiTokenKMS | MintMultiTokenCelo | MintMultiTokenKMSCelo),
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
         return __request({
             method: 'POST',
@@ -160,13 +160,13 @@ export class MultiTokensErc1155OrCompatibleService {
      * </p>
      *
      * @param requestBody
-     * @param xTestnetType Type of testnet. Defaults to ropsten. Valid only for ETH invocations.
+     * @param xTestnetType Type of testnet. Defaults to Sepolia. Valid only for ETH invocations.
      * @returns any OK
      * @throws ApiError
      */
     public static mintMultiTokenBatch(
         requestBody: (MintMultiTokenBatch | MintMultiTokenBatchKMS | MintMultiTokenBatchCelo | MintMultiTokenBatchKMSCelo),
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
         return __request({
             method: 'POST',
@@ -208,13 +208,13 @@ export class MultiTokensErc1155OrCompatibleService {
      * </p>
      *
      * @param requestBody
-     * @param xTestnetType Type of testnet. Defaults to ropsten. Valid only for ETH invocations.
+     * @param xTestnetType Type of testnet. Defaults to Sepolia. Valid only for ETH invocations.
      * @returns any OK
      * @throws ApiError
      */
     public static burnMultiToken(
         requestBody: (BurnMultiToken | BurnMultiTokenKMS | BurnMultiTokenCelo | BurnMultiTokenKMSCelo),
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
         return __request({
             method: 'POST',
@@ -255,13 +255,13 @@ export class MultiTokensErc1155OrCompatibleService {
      * </p>
      *
      * @param requestBody
-     * @param xTestnetType Type of testnet. Defaults to ropsten. Valid only for ETH invocations.
+     * @param xTestnetType Type of testnet. Defaults to Sepolia. Valid only for ETH invocations.
      * @returns any OK
      * @throws ApiError
      */
     public static burnMultiTokenBatch(
         requestBody: (BurnMultiTokenBatch | BurnMultiTokenBatchKMS | BurnMultiTokenBatchCelo | BurnMultiTokenBatchKMSCelo),
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
         return __request({
             method: 'POST',
@@ -304,13 +304,13 @@ export class MultiTokensErc1155OrCompatibleService {
      * </p>
      *
      * @param requestBody
-     * @param xTestnetType Type of testnet. Defaults to ropsten. Valid only for ETH invocations.
+     * @param xTestnetType Type of testnet. Defaults to Sepolia. Valid only for ETH invocations.
      * @returns any OK
      * @throws ApiError
      */
     public static transferMultiToken(
         requestBody: (TransferMultiToken | TransferMultiTokenCelo | TransferMultiTokenKMS | TransferMultiTokenKMSCelo),
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
         return __request({
             method: 'POST',
@@ -352,13 +352,13 @@ export class MultiTokensErc1155OrCompatibleService {
      * </p>
      *
      * @param requestBody
-     * @param xTestnetType Type of testnet. Defaults to ropsten. Valid only for ETH invocations.
+     * @param xTestnetType Type of testnet. Defaults to Sepolia. Valid only for ETH invocations.
      * @returns any OK
      * @throws ApiError
      */
     public static transferMultiTokenBatch(
         requestBody: (TransferMultiTokenBatch | TransferMultiTokenBatchKMS | TransferMultiTokenBatchCelo | TransferMultiTokenBatchKMSCelo),
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
         return __request({
             method: 'POST',
@@ -399,13 +399,13 @@ export class MultiTokensErc1155OrCompatibleService {
      * </p>
      *
      * @param requestBody
-     * @param xTestnetType Type of testnet. Defaults to ropsten. Valid only for ETH invocations.
+     * @param xTestnetType Type of testnet. Defaults to Sepolia. Valid only for ETH invocations.
      * @returns any OK
      * @throws ApiError
      */
     public static addMultiTokenMinter(
         requestBody: (AddMultiTokenMinter | AddMultiTokenMinterKMS),
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
         return __request({
             method: 'POST',
@@ -471,14 +471,14 @@ export class MultiTokensErc1155OrCompatibleService {
      *
      * @param chain Blockchain to work with
      * @param hash Transaction hash
-     * @param xTestnetType Type of testnet. Defaults to ropsten. Valid only for ETH invocations.
+     * @param xTestnetType Type of testnet. Defaults to Sepolia. Valid only for ETH invocations.
      * @returns any OK
      * @throws ApiError
      */
     public static multiTokenGetContractAddress(
         chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC',
         hash: string,
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<{
         /**
          * Address of the Multi Token token.
@@ -505,14 +505,14 @@ export class MultiTokensErc1155OrCompatibleService {
      * <h4>1 credit per API call.</h4><br/><p>Get Multi Token transaction by transaction hash.</p>
      * @param chain Blockchain to work with
      * @param hash Transaction hash
-     * @param xTestnetType Type of testnet. Defaults to ropsten. Valid only for ETH invocations.
+     * @param xTestnetType Type of testnet. Defaults to Sepolia. Valid only for ETH invocations.
      * @returns any OK
      * @throws ApiError
      */
     public static multiTokenGetTransaction(
         chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC',
         hash: string,
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<(CeloTx | EthTx)> {
         return __request({
             method: 'GET',
@@ -535,14 +535,14 @@ export class MultiTokensErc1155OrCompatibleService {
      *
      * @param chain Blockchain to work with
      * @param address Blockchain address
-     * @param xTestnetType Type of testnet. Defaults to ropsten. Valid only for ETH invocations.
+     * @param xTestnetType Type of testnet. Defaults to Sepolia. Valid only for ETH invocations.
      * @returns any OK
      * @throws ApiError
      */
     public static multiTokenGetAddressBalance(
         chain: 'ETH' | 'MATIC' | 'CELO',
         address: string,
-        xTestnetType: 'ethereum-ropsten' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<Array<{
         /**
          * Contract address of the Multi Token
@@ -582,7 +582,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * @param address Account address you want to get balance of
      * @param contractAddress Multi Token contract address
      * @param tokenId Multi Token tokenID
-     * @param xTestnetType Type of testnet. Defaults to ropsten. Valid only for ETH invocations.
+     * @param xTestnetType Type of testnet. Defaults to Sepolia. Valid only for ETH invocations.
      * @returns string OK
      * @throws ApiError
      */
@@ -591,7 +591,7 @@ export class MultiTokensErc1155OrCompatibleService {
         address: string,
         contractAddress: string,
         tokenId: string,
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<Array<string>> {
         return __request({
             method: 'GET',
@@ -616,7 +616,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * @param contractAddress Multi Token contract address
      * @param tokenId Comma separated TokenIds to get balance for
      * @param address Comma separated addresses to get balance for
-     * @param xTestnetType Type of testnet. Defaults to ropsten. Valid only for ETH invocations.
+     * @param xTestnetType Type of testnet. Defaults to Sepolia. Valid only for ETH invocations.
      * @returns string OK
      * @throws ApiError
      */
@@ -625,7 +625,7 @@ export class MultiTokensErc1155OrCompatibleService {
         contractAddress: string,
         tokenId: string,
         address: string,
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<Array<string>> {
         return __request({
             method: 'GET',
@@ -652,7 +652,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * @param chain Blockchain to work with
      * @param token Token ID
      * @param contractAddress Multi Token contract address
-     * @param xTestnetType Type of testnet. Defaults to ropsten. Valid only for ETH invocations.
+     * @param xTestnetType Type of testnet. Defaults to Sepolia. Valid only for ETH invocations.
      * @returns any OK
      * @throws ApiError
      */
@@ -660,7 +660,7 @@ export class MultiTokensErc1155OrCompatibleService {
         chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC',
         token: string,
         contractAddress: string,
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<{
         /**
          * Metadata associated with token.

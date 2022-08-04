@@ -112,13 +112,13 @@ export class GasPumpService {
      * </p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
      * @returns any OK
      * @throws ApiError
      */
     public static generateCustodialWalletBatch(
         requestBody: (GenerateCustodialWalletBatchPayer | GenerateCustodialWalletBatch | GenerateCustodialWalletBatchKMS | GenerateCustodialWalletBatchCelo | GenerateCustodialWalletBatchCeloKMS | GenerateCustodialWalletBatchTron | GenerateCustodialWalletBatchTronKMS),
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
         return __request({
             method: 'POST',
@@ -146,7 +146,7 @@ export class GasPumpService {
      * @throws ApiError
      */
     public static scGetCustodialAddresses(
-        chain: 'CELO' | 'MATIC' | 'KLAY' | 'ETH' | 'ONE' | 'BSC',
+        chain: 'CELO' | 'MATIC' | 'KLAY' | 'ETH' | 'ONE' | 'BSC' | 'TRON',
         hash: string,
     ): CancelablePromise<Array<string>> {
         return __request({

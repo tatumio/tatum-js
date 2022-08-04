@@ -9,6 +9,7 @@ import type { CreateSubscriptionKMSError } from '../models/CreateSubscriptionKMS
 import type { CreateSubscriptionKMSSuccess } from '../models/CreateSubscriptionKMSSuccess';
 import type { CreateSubscriptionNotification } from '../models/CreateSubscriptionNotification';
 import type { CreateSubscriptionOffchain } from '../models/CreateSubscriptionOffchain';
+import type { CreateSubscriptionPartialTradeMatch } from '../models/CreateSubscriptionPartialTradeMatch';
 import type { CreateSubscriptionPending } from '../models/CreateSubscriptionPending';
 import type { CreateSubscriptionTradeMatch } from '../models/CreateSubscriptionTradeMatch';
 import type { CreateSubscriptionTxInTheBlock } from '../models/CreateSubscriptionTxInTheBlock';
@@ -46,20 +47,6 @@ export class NotificationSubscriptionsService {
      * <td>SOL, SPL and NFTs</td>
      * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
      * <td>50 credits / day / address</td>
-     * </tr>
-     * <tr>
-     * <td>Terra Luna</td>
-     * <td>Yes/Yes</td>
-     * <td>LUNA, KRW, USD and all other assets</td>
-     * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
-     * <td>30 credits / day / address</td>
-     * </tr>
-     * <tr>
-     * <td>EOS</td>
-     * <td>Yes/Yes</td>
-     * <td>EOS and all other eosio.token assets</td>
-     * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
-     * <td>40 credits / day / address</td>
      * </tr>
      * <tr>
      * <td>Ethereum</td>
@@ -130,13 +117,6 @@ export class NotificationSubscriptionsService {
      * <td>BSC, BEP20, ERC721, ERC1155</td>
      * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
      * <td>40 credits / day / address</td>
-     * </tr>
-     * <tr>
-     * <td>Lisk</td>
-     * <td>Yes/Yes</td>
-     * <td>LISK</td>
-     * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
-     * <td>25 credits / day / address</td>
      * </tr>
      * </table>
      * Request body of the POST request will be JSON object with attributes:<br/>
@@ -211,6 +191,7 @@ export class NotificationSubscriptionsService {
                      * <pre>{
                          * "created": 1619176527481,
                          * "amount": "0.005",
+                         * "orderAmount": "0.1",
                          * "price": "0.02",
                          * "type": "SELL",
                          * "pair": "VC_CHF/VC_CHF3",
@@ -247,7 +228,7 @@ export class NotificationSubscriptionsService {
                                  * }</pre>
                                  * 10 credits will be debited every day.</li>
                                  * <li><b>KMS_COMPLETED_TX</b> - Enable HTTP POST JSON notifications on successful completion of KMS signature process.
-                                 * This web hook will be invoked, when the Tatum KMS sudessfully completes the signature during processing transactions.
+                                 * This web hook will be invoked, when the Tatum KMS successfully completes the signature during processing transactions.
                                  * Request body of the POST request will be JSON object with attributes:<br/>
                                  * <pre>{
                                      * "signatureId": "6082ab462936b4478117c6a0",
@@ -272,7 +253,7 @@ export class NotificationSubscriptionsService {
                                      * @throws ApiError
                                      */
                                     public static createSubscription(
-                                        requestBody: (CreateSubscriptionNotification | CreateSubscriptionIncoming | CreateSubscriptionPending | CreateSubscriptionTradeMatch | CreateSubscriptionKMSError | CreateSubscriptionKMSSuccess | CreateSubscriptionTxInTheBlock | CreateSubscriptionOffchain | CreateSubscriptionBalance | CreateSubscriptionInterval),
+                                        requestBody: (CreateSubscriptionNotification | CreateSubscriptionIncoming | CreateSubscriptionPending | CreateSubscriptionTradeMatch | CreateSubscriptionPartialTradeMatch | CreateSubscriptionKMSError | CreateSubscriptionKMSSuccess | CreateSubscriptionTxInTheBlock | CreateSubscriptionOffchain | CreateSubscriptionBalance | CreateSubscriptionInterval),
                                     ): CancelablePromise<Id> {
                                         return __request({
                                             method: 'POST',
