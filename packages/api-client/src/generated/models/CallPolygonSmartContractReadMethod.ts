@@ -4,7 +4,7 @@
 
 export type CallPolygonSmartContractReadMethod = {
     /**
-     * Address of ERC20 token
+     * The address of the smart contract
      */
     contractAddress: string;
     /**

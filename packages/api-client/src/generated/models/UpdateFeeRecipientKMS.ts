@@ -8,6 +8,10 @@ export type UpdateFeeRecipientKMS = {
      */
     chain: 'ETH' | 'ONE' | 'BSC' | 'KLAY' | 'MATIC';
     /**
+     * Address of the marketplace smart contract.
+     */
+    contractAddress: string;
+    /**
      * Recipient address of the marketplace fee.
      */
     feeRecipient: string;

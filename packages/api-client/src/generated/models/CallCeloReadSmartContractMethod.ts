@@ -4,7 +4,7 @@
 
 export type CallCeloReadSmartContractMethod = {
     /**
-     * Address of token
+     * The address of the smart contract
      */
     contractAddress: string;
     /**

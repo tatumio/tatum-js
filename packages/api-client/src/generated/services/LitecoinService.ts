@@ -49,10 +49,11 @@ export class LitecoinService {
     }
 
     /**
+     * @deprecated
      * JSON RPC HTTP driver
-     * <h4>2 credits per API call.</h4><br/>
-     * <p>Use this endpoint URL as an http-based JSON RPC driver to connect directly to the node provided by Tatum.
-     * To learn more about JSON RPC, please visit <a href="https://developer.bitcoin.org/reference/rpc/index.html" target="_blank">Bitcoin developers' guide.</a></p>
+     * <p><b>2 credits per API call</b></p>
+     * <p><b>This endpoint is deprecated. Use the <a href="https://apidoc.tatum.io/tag/Node-RPC" target="_blank">HTTP-based JSON RPC driver</a> instead.</b></p><br/>
+     * <p>Use this endpoint URL as an http-based JSON RPC driver to connect directly to the node provided by Tatum.</p>
      *
      * @param requestBody
      * @returns any OK

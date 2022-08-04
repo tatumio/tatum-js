@@ -4,7 +4,7 @@
 
 export type CallCeloSmartContractMethodKMS = {
     /**
-     * Address of token
+     * The address of the smart contract
      */
     contractAddress: string;
     /**

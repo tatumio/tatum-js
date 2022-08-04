@@ -8,6 +8,10 @@ export type UpdateFeeKMS = {
      */
     chain: 'ETH' | 'ONE' | 'BSC' | 'KLAY' | 'MATIC';
     /**
+     * Address of the marketplace smart contract.
+     */
+    contractAddress: string;
+    /**
      * Percentage of the selling amount of the NFT asset. 100 - 1%
      */
     marketplaceFee: number;

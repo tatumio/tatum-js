@@ -4,7 +4,7 @@
 
 export type CallOneReadSmartContractMethod = {
     /**
-     * Address of HRM20 token
+     * The address of the smart contract
      */
     contractAddress: string;
     /**

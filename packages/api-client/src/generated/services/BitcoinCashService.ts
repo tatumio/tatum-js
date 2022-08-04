@@ -44,10 +44,12 @@ export class BitcoinCashService {
     }
 
     /**
+     * @deprecated
      * JSON RPC HTTP driver
-     * <h4>2 credits per API call.</h4><br/>
+     * <p><b>2 credits per API call</b></p>
+     * <p><b>This endpoint is deprecated. Use the <a href="https://apidoc.tatum.io/tag/Node-RPC" target="_blank">HTTP-based JSON RPC driver</a> instead.</b></p><br/>
      * <p>Use this endpoint URL as an http-based JSON RPC driver to connect directly to the node provided by Tatum.
-     * To learn more about JSON RPC, please visit <a href="https://github.com/gcash/bchd/blob/master/docs/json_rpc_api.md#Methods" target="_blank">Bitcoin Cash developers' guide.</a></p>
+     * To learn more about JSON RPC, visit <a href="https://github.com/gcash/bchd/blob/master/docs/json_rpc_api.md#Methods" target="_blank">Bitcoin Cash developers' guide</a>.</p>
      *
      * @param requestBody
      * @returns any OK

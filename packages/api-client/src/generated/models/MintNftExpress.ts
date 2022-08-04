@@ -15,8 +15,4 @@ export type MintNftExpress = {
      * Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
      */
     url: string;
-    /**
-     * Asset name for Asset on Algorand chain. Applicable only for ALGO.
-     */
-    tokenId?: string;
 }

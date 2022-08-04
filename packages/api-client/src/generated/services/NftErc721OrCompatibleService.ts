@@ -84,46 +84,47 @@ import { request as __request } from '../core/request';
 export class NftErc721OrCompatibleService {
 
     /**
-     * Deploy NFT Smart Contract
-     * <h4>100 credits per API call on FLOW, 2 credits on another chains. Tatum covers the fee connected to the transaction costs in subscription credits for FLOW. This operation can be done on mainnet only for paid plans.</h4><br/>
-     * <p>Deploy NFT Smart Contract. This method creates new ERC721 Smart Contract (Non-Fungible Tokens) on the blockchain. Smart contract is standardized and audited.
-     * It is possible to mint, burn and transfer tokens. It is also possible to mint multiple tokens at once.<br/>
-     * Tatum now supports NFT these blockchains:<br/>
+     * Deploy an NFT smart contract
+     * <p><b>100 credits per API call on Flow<br/>
+     * 2 credits per API call on the other blockchains</b></p>
+     * <p>Deploy an NFT smart contract on the blockchain. In a deployed NFT smart contract, you can mint NFTs (one NFT at a time or multiple NFTs at once), burn, and transfer NFTs.<br/>
+     * Smart contracts are standardized and audited.</p>
+     * <p>This API is supported for the following blockchains:</p>
      * <ul>
-     * <li><b>Ethereum</b></li>
-     * <li><b>Polygon (Matic)</b></li>
-     * <li><b>Kcs (KCS)</b></li>
-     * <li><b>Celo</b></li>
-     * <li><b>Harmony.ONE</b></li>
-     * <li><b>Klaytn</b></li>
-     * <li><b>Flow</b></li>
-     * <li><b>Tron</b></li>
-     * <li><b>Binance Smart Chain</b></li>
+     * <li>Algorand</li>
+     * <li>BNB Smart Chain</li>
+     * <li>Celo</li>
+     * <li>Ethereum</li>
+     * <li>Flow</li>
+     * <li>Harmony</li>
+     * <li>Klaytn</li>
+     * <li>KuCoin Community Chain</li>
+     * <li>Polygon</li>
+     * <li>TRON</li>
      * </ul>
-     * There are 3 types of ERC721 contracts you can deploy:
-     * <ol>
-     * <li>General ERC-721 Contract compatible with OpenSea royalties - Standard ERC-721 contract with Access roles and Ownable, enhanced with batch minting of the NFTs. NFTs minted on this contract are compatible with OpenSea and their royalty structure. This type is deployed by default.</li>
-     * <li>Cashback ERC-721 Contract - ERC-721 contract which forces on-chain royalties to be paid every time the token is transferred. Royalties are defined as a fixed value and are <b>not</b> OpenSea compatible.</li>
-     * <li>Provenance ERC-721 Contract - ERC-721 contract which forces on-chain royalties to be paid every time the token is transferred. Royalties are defined as a percentage of the price of the token and are <b>not</b> OpenSea compatible.</li>
-     * </ol>
-     * Each of the token can be deployed with public minting enabled - anyone will be able to mint the tokens on top of it - defaults to false.<br/>
-     * It is possible to see the code of the deployed contract <a href="https://github.com/tatumio/smart-contracts/tree/master/contracts/tatum" target="_blank">for EVM chains here</a>
-     * or here <a href="https://github.com/tatumio/flow-contracts" target="_blank">for Flow</a>.<br/><br/>
-     * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-     * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
-     * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-     * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
-     * Alternatively, using the Tatum client library for supported languages.
-     * </p>
+     * <p>By default, an NFT smart contract is deployed as a <b>general ERC-721 smart contract compatible with OpenSea royalties</b>. This is a standard ERC-721 contract with <code>AccessControl</code> and <code>Ownable</code>, enhanced with NFT batch minting. NFTs minted in this smart contract are compatible with OpenSea and its royalty structure.<p>
+     * <p>In addition to the general ERC-721 contract, you can also deploy the following types of NFT smart contracts for the supported blockchains <b>except for Flow and TRON</b>:<p>
+     * <ul>
+     * <li><b>Cashback ERC-721 smart contract</b> is an ERC-721 smart contract that forces on-chain royalties to be paid every time an NFT is transferred. The royalties are defined as a fixed value and are <b>not</b> OpenSea-compatible.<br />
+     * To deploy an NFT smart contract as a cashback contract, deploy the contract with the <code>cashback</code> parameter set to <code>true</code> in the request body.</li>
+     * <li><b>Provenance ERC-721 smart contract</b> is an ERC-721 smart contract that forces on-chain royalties to be paid every time an NFT is transferred. The royalties are defined as a percentage of the NFT price and are <b>not</b> OpenSea-compatible.<br />
+     * To deploy an NFT smart contract as a provenance contract, deploy the contract with the <code>provenance</code> parameter set to <code>true</code> in the request body.</li>
+     * </ul>
+     * <p>You can enable public minting for cashback and provenance smart contracts. By default, public minting is disabled, which means that only the blockchain address whose private key was used to create the smart contract or the blockchain addresses <a href="https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftAddMinter" target="_blank">added to the smart contract as NFT minters</a> will be able to mint NFTs for the contract. To enable public minting and allow anyone to mint NFTs on top of the smart contract, deploy the contract with the <code>publicMint</code> parameter set to <code>true</code> in the request body.</p>
+     * <p>You can review the code of a deployed NFT smart contract <a href="https://github.com/tatumio/flow-contracts" target="_blank">here</a> (if the contract is deployed on Flow) or <a href="https://github.com/tatumio/smart-contracts/tree/master/contracts/tatum" target="_blank">here</a> (if the contract is deployed on any other supported blockchain).</p>
+     * <p><b>Signing a transaction</b></p>
+     * <p>When deploying an NFT smart contract, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
      * @returns any OK
      * @throws ApiError
      */
     public static nftDeployErc721(
         requestBody: (DeployNft | DeployNftCelo | DeployNftTron | DeployNftKMS | DeployNftCeloKMS | DeployNftTronKMS | DeployNftFlowPK | DeployNftFlowMnemonic | DeployNftFlowKMS),
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
         return __request({
             method: 'POST',
@@ -143,167 +144,187 @@ export class NftErc721OrCompatibleService {
     }
 
     /**
-     * Mint NFT
-     * <h4>100 credits per API call on FLOW, 2 credits on another chains. Tatum covers the fee connected to the transaction costs in subscription credits for FLOW. This operation can be done on mainnet only for paid plans.</h4><br/>
-     * <p>Create one NFT Token and transfer it to destination account. Create and transfer any NFT token from smart contract defined in contractAddress.
-     * It is possible to add URL to the created token with a more detailed information about it.<br/><br/>
-     * Tatum now supports NFT these blockchains:<br/>
+     * Mint an NFT
+     * <p><b>100 credits per API call on Flow<br/>
+     * 2 credits per API call on the other blockchains</b></p>
+     * <p>You can mint NFTs using either of the following methods:</p>
      * <ul>
-     * <li><b>Ethereum</b></li>
-     * <li><b>Polygon (Matic)</b></li>
-     * <li><b>Kcs (KCS)</b></li>
-     * <li><b>Celo</b></li>
-     * <li><b>Klaytn</b></li>
-     * <li><b>Solana</b></li>
-     * <li><b>Harmony.ONE</b></li>
-     * <li><b>Tron</b></li>
-     * <li><b>Flow</b></li>
-     * <li><b>Binance Smart Chain</b></li>
-     * <li><b>Algorand</b></li>
+     * <li><a href="#NftExpress">Using NFT Express</a></li>
+     * <li><a href="#NftNative">Natively on a blockchain</a></li>
      * </ul>
-     * <br/>
-     * For Solana, NFTs are not deployed, only minted right away. Newly created NFT creates new address on the blockchain and owner of the NFT owns with it's private key the account of the NFT.
-     * <br/>
-     * This operation works in three modes.
-     *
-     * First mode works just like other NFT endpoints. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-     * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
-     * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-     * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
-     * Alternatively, using the Tatum client library for supported languages.
-     *
-     * Second mode works without private key or signature id - NFT Express.
-     * Mint NFT requests use built-in smart contract, private key and token id which are provided by Tatum.
-     * You dont need to provide fromPrivateKey (or signatureId), contractAddress and tokenId fields to perform the mint NFT request.
-     * In case of Algorand, you can mint Algorand-based NFTs to our internal address. Due to requirement of previously enabling the recipient address to receive the NFT, you must perform <a href="#operation/AlgorandBlockchainReceiveAsset">receive operation</a> and then <a href="#operation/NftTransferErc721">transfer the NFT</a> to the final recipient.
-     *
-     * Third mode enables you to mint on any custom NFT ERC-721 smart contract, on which specified minter address is approved as a minter. You don't specify private key or signatureId, only minter address, from which the NFT will be minted.
-     * You can use addresses specified in the bellow table to be used as a minter.
-     *
-     * Performed request without fromPrivateKey or signatureId fields will be populated with following attributes:
-     *
+     * <h3 id="NftExpress">Minting NFTs using NFT Express</h3>
+     * <p>NFT Express is Tatum's feature that helps you mint NFTs easier than minting natively on a blockchain.</p>
      * <ul>
-     * <li><b>fromPrivateKey</b> - a built-in private key connected to the address from which will be NFT transaction fees paid.</li>
-     * <li><b>tokenId</b> - a counter which starts from 0 and is increased for each NFT mint request by 1. The tokenId is provided per each chain and mainnet/testnet version of network.</li>
-     * <li><b>contractAddress</b> - represents Tatum built in smart contract address of the minted NFT.</li>
+     * <li><b>You do not need to enter your private key or signature ID.</b><br/>NFT Express uses the private key provided by Tatum.</li>
+     * <li><b>You do not need to hold crypto or keep addresses topped up with crypto to pay for minting transactions.</b>
+     * <ul>
+     * <li>To use NFT Express on the <b>mainnet</b>, you have to have a <a href="https://tatum.io/pricing" target="_blank">paid pricing plan</a>.<br/>Tatum covers your transaction fees for NFT minting and pays for them from its own blockchain address. Then, the fee amount paid by Tatum is converted to the number of credits, and these credits are deducted from the monthly credit allowance of your paid pricing plan.<br/>The transaction fees and the corresponding numbers of credits deducted from your allowance vary depending on what blockchain you mint NFTs on.</li>
+     * <li>On the <b>testnet</b>, no credits are deducted from the monthly credit allowance. You can mint NFTs with NFT Express regardless of your pricing plan.</li>
      * </ul>
-     *
-     * The blockchain fee of the performed transaction is paid from the address connected with built-in private key and is debitted in form of credits. The credits are debitted only if NFT mint requests are performed with paid API key plan.
-     * We transform fee to the credits in accordance to the rates provided by the Tatum.
-     *
-     * It means if you perform mint NFT request with following body:
-     *
-     * <pre>{
+     * </li>
+     * </ul>
+     * <p>With NFT Express, you can choose whether to mint NFTs on the <a href="#NftExpressPrebuilt">pre-built NFT smart contract provided by Tatum</a> or on <a href="#NftExpressOwn">your own smart contract</a>.</p>
+     * <h4 id="NftExpressPrebuilt">Minting NFTs using the pre-built smart contract provided by Tatum</h4>
+     * <p>If you want to mint NFTs using the pre-built smart contract, you do not need to deploy your own NFT smart contract. You do not need to provide the address of the NFT smart contract and the token ID in the request body either. The address of the smart contract and the token ID are provided automatically by Tatum.<br/>The token ID is autogenerated. It starts with 0 and is increased by 1 for each new NFT. The token ID is calculated separately for each supported blockchain and its mainnet and testnet.</p>
+     * <p>You can mint NFTs on the pre-built smart contract provided by Tatum on the following blockchains:</p>
+     * <ul>
+     * <li>Algorand</li>
+     * <li>BNB Smart Chain</li>
+     * <li>Celo</li>
+     * <li>Ethereum</li>
+     * <li>Harmony</li>
+     * <li>Klaytn</li>
+     * <li>Polygon</li>
+     * <li>Solana</li>
+     * </ul>
+     * <p>Depending on what blockchain you use, choose the request body schema to use in the API call.</p>
+     * <ul>
+     * <li>To mint NFTs on <b>BNB Smart Chain</b>, <b>Celo</b>, <b>Ethereum</b>, <b>Harmony</b>, <b>Klaytn</b>, or <b>Polygon</b>, use this API with the <code>MintNftExpress</code> schema of the request body.</li>
+     * <li>To mint NFTs on <b>Algorand</b>, use this API with the <code>MintNftExpressAlgorand</code> schema of the request body.<br/>An NFT minted on Algorand is automatically transferred to your blockchain address. After the NFT is minted, you have to transfer it to the recipient's address. The recipient has to agree in advance to receive your NFT because Algorand charges users for storing NFTs on their addresses, and an Algorand blockchain address by default does not receive NFTs unless explicitly agreed.<br/>This how it works:
+     * <ol>
+     * <li>The recipient <a href="https://apidoc.tatum.io/tag/Algorand#operation/AlgorandBlockchainReceiveAsset" target="_blank">agrees to receive the NFT</a> to their address.</li>
+     * <li>You <a href="#operation/NftTransferErc721">transfer the NFT</a> to the recipient's address (use the <code>transferNftAlgoExpress</code> schema of the request body).<br /><b>NOTE:</b> On the <b>mainnet</b>, Tatum covers your transaction fees for the NFT transfer and pays for them from its own blockchain address. Then, the fee amount paid by Tatum is converted to the number of credits, and these credits are deducted from the monthly credit allowance of your paid pricing plan. On the <b>testnet</b>, no credits are deducted from the monthly credit allowance.</li>
+     * </ol></li>
+     * <li>To mint NFTs on <b>Solana</b>, use this API with the <code>MintNftExpressSolana</code> schema of the request body.<br/>Solana uses the <a href="https://www.metaplex.com/" target="_blank">Metaplex Protocol</a>, a smart contract and metadata standard for creating and working with NFTs. When you mint an NFT on Solana with NFT Express, the pre-built smart contract based on the Metaplex Protocol is used.<br/>When an NFT is minted on Solana, a new blockchain address is created to receive the NFT under the recipient's account address (the one in the <code>to</code> parameter of the request body). This address is returned in the <code>nftAccountAddress</code> parameter in the response body, is owned by the recipient's address, and has the same private key.<br/>The response body also returns the address of the minted NFT itself, which is held in the <code>nftAddress</code> parameter.<br/>After the NFT is minted, you have to <a href="#operation/NftTransferErc721">transfer it</a> to the recipient's address (use the <code>transferNftSolana</code> or <code>transferNftSolanaKMS</code> schema of the request body). In the request body:
+     * <ul>
+     * <li>Set the <code>contractAddress</code> parameter to the address from the <code>nftAddress</code> parameter in the response body of the minting call.</li>
+     * <li>Set both <code>from</code> and <code>to</code> parameters to the recipient's address from the <code>to</code> parameter in the response body of the minting call.</li>
+     * </ul></li></ul>
+     * <h4 id="NftExpressOwn">Minting NFTs with NFT Express using your own smart contract</h4>
+     * <p>If you want to mint NFTs using your own smart contract, you are going to use an <b>NTF minter</b>, a special blockchain address provided by Tatum that will cover the minting fees. The number of credits equivalent to the fees will be then deducted from the monthly credit allowance of your paid pricing plan.<br/>
+     * <p>You can mint NFTs on your own smart contract on the following blockchains:</p>
+     * <ul>
+     * <li>BNB Smart Chain</li>
+     * <li>Celo</li>
+     * <li>Ethereum</li>
+     * <li>Harmony</li>
+     * <li>Klaytn</li>
+     * <li>Polygon</li>
+     * </ul>
+     * <p>To mint NFTs using your own smart contract, do the following:</p>
+     * <ol>
+     * <li>In the table located under this section, find the blockchain address of the Tatum NFT minter for your blockchain and network (mainnet or testnet).</li>
+     * <li><a href="#operation/NftAddMinter">Add the minter address as an NFT minter to your smart contract</a>.</li>
+     * <li>Use this API with the <code>MintNftMinter</code> schema of the request body.<br />In the request body, enter the following information:
+     * <ul>
+     * <li><code>chain</code> is the blockchain that you use.</li>
+     * <li><code>to</code> is the blockchain address where to send the minted NFT to.</li>
+     * <li><code>url</code> is the URL of the NFT metadata.</li>
+     * <li><code>minter</code> is the address of the NFT minter that you found in Step 1.</li>
+     * <li><code>contractAddress</code> is the address of your NFT smart contract.</li>
+     * <li><code>tokenId</code> is the the token ID of the NFT.<br />For example:
+     * <pre>
+     * {
          * "chain": "CELO",
-         * "to": "0xBC2eBA680EE50d685cc4Fe65f102AA70AfB27D3F",
-         * "url": "ipfs://QmXJJ6UF5WkF4WTJvsdhiA1etGwBLfpva7Vr9AudGMe3pj"
-         * }</pre>
-         *
-         * The fields contractAddress, fromPrivateKey and tokenId will be internally filled in following way:
-         *
-         * <pre>{
+         * "to": "0x8ce4e40889a13971681391aad29e88efaf91f784",
+         * "url": "ipfs://QmXJJ6UF5WkF4WTJvsdhiA1etGwBLfpva7Vr9AudGMe3pj",
+         * "contractAddress": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
+         * "tokenId": "0123",
+         * "minter": "0xBC2eBA680EE50d685cc4Fe65f102AA70AfB27D3F"
+         * }
+         * </pre>
+         * When you make an API call with this request body, the private key of the NFT minter will be added to the request body automatically:
+         * <pre>
+         * {
              * "chain": "CELO",
-             * "to": "0xBC2eBA680EE50d685cc4Fe65f102AA70AfB27D3F",
+             * "to": "0x8ce4e40889a13971681391aad29e88efaf91f784",
              * "url": "ipfs://QmXJJ6UF5WkF4WTJvsdhiA1etGwBLfpva7Vr9AudGMe3pj",
-             * "fromPrivateKey": "{tatumBuiltInPrivateKey}",
-             * "tokenId": "{tatumBuiltInTokenId + 1}",
-             * "contractAddress": "0x45871ED5F15203C0ce791eFE5f4B5044833aE10e"
-             * }</pre>
-             *
-             * Keep in mind that your credit amount will be debitted accordingly to the rate of the selected blockchain and cost of transaction fees.
-             *
-             *
-             * We have prepared following smart contracts for minting without private key:
+             * "contractAddress": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
+             * "tokenId": "0123",
+             * "minter": "0xBC2eBA680EE50d685cc4Fe65f102AA70AfB27D3F",
+             * "fromPrivateKey": "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2"
+             * }
+             * </pre>
+             * </li></ul></li>
+             * </ol>
+             * <p>The following table lists the blockchain addresses of the Tatum NFT minters for the testnet and mainnet of the supported blockchains:</p>
              * <table>
              * <tr>
-             * <th>Chain</th>
-             * <th>Testnet/Mainnet</th>
-             * <th>Address</th>
-             * <th>Smart contract address</th>
+             * <th>Blockchain</th>
+             * <th>Minter address - testnet*</th>
+             * <th>Minter address - mainnet</th>
              * </tr>
              * <tr>
-             * <td>MATIC</td>
-             * <td>Testnet</td>
-             * <td>0x542b9ac4945a3836fd12ad98acbc76a0c8b743f5</td>
-             * <td>0xCd2AdA00c48A27FAa5Cc67F9A1ed55B89dDf7F77</td>
-             * </tr>
-             * <tr>
-             * <td>BSC</td>
-             * <td>Testnet</td>
+             * <td>BNB Smart Chain</td>
              * <td>0xc16ae5e8c985b906935a0cadf4e24f0400531883</td>
-             * <td>0xF73075aa67561791352fbEe8278115487Fd90ab6</td>
+             * <td>0x49678AAB11E001eb3cB2cBD9aA96b36DC2461A94</td>
              * </tr>
              * <tr>
-             * <td>ONE</td>
-             * <td>Testnet</td>
-             * <td>0x8906f62d40293ddca77fdf6714c3f63265deddf0</td>
-             * <td>0x427ddbe3ad5e1e77e010c02e61e9bdef82dcaeea</td>
-             * </tr>
-             * <tr>
-             * <td>ETH</td>
-             * <td>Testnet</td>
-             * <td>0x53e8577C4347C365E4e0DA5B57A589cB6f2AB848</td>
-             * <td>0xAe7D8842D0295B1f24a8842cBd5eB83Ae2fd0946</td>
-             * </tr>
-             * <tr>
-             * <td>CELO</td>
-             * <td>Testnet</td>
+             * <td>Celo</td>
              * <td>0xBC2eBA680EE50d685cc4Fe65f102AA70AfB27D3F</td>
-             * <td>0x45871ED5F15203C0ce791eFE5f4B5044833aE10e</td>
+             * <td>0x49678AAB11E001eb3cB2cBD9aA96b36DC2461A94</td>
              * </tr>
              * <tr>
-             * <td>KLAY</td>
-             * <td>Testnet</td>
+             * <td>Ethereum</td>
+             * <td>0x53e8577C4347C365E4e0DA5B57A589cB6f2AB848</td>
+             * <td>0x49678AAB11E001eb3cB2cBD9aA96b36DC2461A94</td>
+             * </tr>
+             * <tr>
+             * <td>Harmony</td>
+             * <td>0x8906f62d40293ddca77fdf6714c3f63265deddf0</td>
+             * <td>0x49678AAB11E001eb3cB2cBD9aA96b36DC2461A94</td>
+             * </tr>
+             * <tr>
+             * <td>Klaytn</td>
              * <td>0x80d8bac9a6901698b3749fe336bbd1385c1f98f2</td>
-             * <td>0x45871ED5F15203C0ce791eFE5f4B5044833aE10e</td>
+             * <td>0x49678AAB11E001eb3cB2cBD9aA96b36DC2461A94</td>
              * </tr>
              * <tr>
-             * <td>MATIC</td>
-             * <td>Mainnet</td>
-             * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
-             * <td>0x329F549Cbf3a2b1b95C622A77F701254eC80352d</td>
-             * </tr>
-             * <tr>
-             * <td>BSC</td>
-             * <td>Mainnet</td>
-             * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
-             * <td>0x4f83793245abE92cc8B978a16C898005c69e5e27</td>
-             * </tr>
-             * <tr>
-             * <td>ONE</td>
-             * <td>Mainnet</td>
-             * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
-             * <td>0x559f11123bb892159cd33f652624e40e8b43d4ad</td>
-             * </tr>
-             * <tr>
-             * <td>ETH</td>
-             * <td>Mainnet</td>
-             * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
-             * <td>0x789c00ed7ddd72a806dbac40df926df32fde3c2f</td>
-             * </tr>
-             * <tr>
-             * <td>CELO</td>
-             * <td>Mainnet</td>
-             * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
-             * <td>0x5F35fd593243B059cBf580D0335B1c21881a248b</td>
-             * </tr>
-             * <tr>
-             * <td>KLAY</td>
-             * <td>Mainnet</td>
-             * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
-             * <td>0x44bf563b999823b22b0b165020f0e090aad88f11</td>
+             * <td>Polygon</td>
+             * <td>0x542b9ac4945a3836fd12ad98acbc76a0c8b743f5</td>
+             * <td>0x49678AAB11E001eb3cB2cBD9aA96b36DC2461A94</td>
              * </tr>
              * </table>
-             * If there are not enough coins on any testnet address, feel free to send coins there.</p>
+             * <p>*If a minter blockchain address on the testnet does not have sufficient funds to cover the transaction fee, add some amount to it using a crypto faucet of the blockchain.</p>
+             * <h3 id="NftNative">Minting NFTs natively on a blockchain</h3>
+             * <p>When minting an NFT natively on a blockchain, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+             * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+             * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
+             * <p>You can mint NFTs natively on the following blockchains:</p>
+             * <ul>
+             * <li>Algorand</li>
+             * <li>BNB Smart Chain</li>
+             * <li>Celo</li>
+             * <li>Ethereum</li>
+             * <li>Flow</li>
+             * <li>Harmony</li>
+             * <li>Klaytn</li>
+             * <li>KuCoin Community Chain</li>
+             * <li>Polygon</li>
+             * <li>Solana</li>
+             * <li>TRON</li>
+             * </ul>
+             * <p>Depending on what blockchain you use, choose the request body schema to use in the API call.</p>
+             * <ul>
+             * <li>To mint NFTs natively on <b>Algorand</b> and:
+             * <ul><li>To sign the transaction with your <b>private key</b>, use this API with the <code>MintNftAlgorand</code> schema of the request body.</li>
+             * <li>To sign the transaction with your <b>signature ID</b>, use this API the <code>MintNftAlgorandKMS</code> schema of the request body.</li></ul></li>
+             * <li>To mint NFTs natively on <b>BNB Smart Chain</b>, <b>Ethereum</b>, <b>Harmony</b>, <b>Klaytn</b>, <b>KuCoin Community Chain</b>, or <b>Polygon</b>, and:
+             * <ul><li>To sign the transaction with your <b>private key</b>, use this API with the <code>MintNft</code> schema of the request body.</li>
+             * <li>To sign the transaction with your <b>signature ID</b>, use this API the <code>MintNftKMS</code> schema of the request body.</li></ul></li>
+             * <li>To mint NFTs natively on <b>Celo</b> and:
+             * <ul><li>To sign the transaction with your <b>private key</b>, use this API with the <code>MintNftCelo</code> schema of the request body.</li>
+             * <li>To sign the transaction with your <b>signature ID</b>, use this API the <code>MintNftKMSCelo</code> schema of the request body.</li></ul></li>
+             * <li>To mint NFTs natively on <b>Flow</b> and:
+             * <ul><li>To sign the transaction with your <b>private key</b>, use this API with the <code>MintNftFlowPK</code> schema of the request body.</li>
+             * <li>To sign the transaction with your <b>signature ID</b>, use this API the <code>MintNftFlowMnemonic</code> schema of the request body.</li>
+             * <li>To sign the transaction with your <b>wallet mnemonic</b>, use this API the <code>MintNftFlowKMS</code> schema of the request body.</li></ul></li>
+             * <li>To mint NFTs natively on <b>Solana</b> and:
+             * <ul><li>To sign the transaction with your <b>private key</b>, use this API with the <code>MintNftSolana</code> schema of the request body.</li>
+             * <li>To sign the transaction with your <b>signature ID</b>, use this API the <code>MintNftSolanaKMS</code> schema of the request body.</li></ul></li>
+             * <li>To mint NFTs natively on <b>TRON</b> and:
+             * <ul><li>To sign the transaction with your <b>private key</b>, use this API with the <code>MintNftTron</code> schema of the request body.</li>
+             * <li>To sign the transaction with your <b>signature ID</b>, use this API the <code>MintNftKMSTron</code> schema of the request body.</li></ul></li>
+             * </ul>
              *
              * @param requestBody
-             * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+             * @param xTestnetType Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
              * @returns any OK
              * @throws ApiError
              */
             public static nftMintErc721(
                 requestBody: (MintNftExpress | MintNftExpressSolana | MintNftExpressAlgorand | MintNftSolana | MintNftMinter | MintNft | MintNftCelo | MintNftAlgorand | MintNftFlowPK | MintNftFlowMnemonic | MintNftTron | MintNftKMS | MintNftSolanaKMS | MintNftKMSCelo | MintNftKMSTron | MintNftAlgorandKMS | MintNftFlowKMS),
-                xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+                xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
             ): CancelablePromise<(TransactionHashKMS | FlowMintedResult | SolanaMintedResult | AlgorandMintedResult | SignatureId)> {
                 return __request({
                     method: 'POST',
@@ -323,44 +344,43 @@ export class NftErc721OrCompatibleService {
             }
 
             /**
-             * Transfer NFT Token
-             * <h4>100 credits per API call on FLOW, 2 credits on another chains. Tatum covers the fee connected to the transaction costs in subscription credits for FLOW. This operation can be done on mainnet only for paid plans.</h4><br/>
+             * Transfer an NFT
+             * <p><b>100 credits per API call on Flow<br/>
+             * 2 credits per API call on the other blockchains</b></p>
              * <p>Transfer NFT Tokens from account to account. Transfer any NFT token from smart contract defined in contractAddress.
              * Only 1 specific token with specified tokenId can be transfered. This method invokes ERC721 method safeTransfer() to transfer the token in case of ETH, Celo and BSC.<br/><br/>
-             * Tatum now supports NFT these blockchains:<br/>
+             * <p>This API is supported for the following blockchains:</p>
              * <ul>
-             * <li><b>Ethereum</b></li>
-             * <li><b>Polygon (Matic)</b></li>
-             * <li><b>Kcs (KCS)</b></li>
-             * <li><b>Flow</b></li>
-             * <li><b>Celo</b></li>
-             * <li><b>Harmony.ONE</b></li>
-             * <li><b>Tron</b></li>
-             * <li><b>Binance Smart Chain</b></li>
-             * <li><b>Algorand</b></li>
-             * <li><b>Klaytn</b></li>
-             * <li><b>Solana</b></li>
+             * <li>Algorand</li>
+             * <li>BNB Smart Chain</li>
+             * <li>Celo</li>
+             * <li>Ethereum</li>
+             * <li>Flow</li>
+             * <li>Harmony</li>
+             * <li>Klaytn</li>
+             * <li>KuCoin Community Chain</li>
+             * <li>Polygon</li>
+             * <li>Solana</li>
+             * <li>TRON</li>
              * </ul>
-             * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-             * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
-             * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-             * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
-             * Alternatively, using the Tatum client library for supported languages.
-             *
              * Algorand is unique a way that the receiving account should be ready before sending the NFT asset.
              * To perform this, the receiving account should transfer the NFT asset with 0 amount to itself.
              * During the process, it's using the same API as the main transaction: the only difference is that the "fromPrivateKey" should be the privateKey of the receiving account.
              * If you were minting NFTs on Algorand with NFT Express, you can skip the fromPrivateKey field in the request body and NFT will be transferred to you automatically from Tatum - this is tied to the API Key used during the mint.
              * </p>
+             * <p><b>Signing a transaction</b></p>
+             * <p>When transferring an NFT, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+             * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+             * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
              *
              * @param requestBody
-             * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+             * @param xTestnetType Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
              * @returns any OK
              * @throws ApiError
              */
             public static nftTransferErc721(
                 requestBody: (TransferNft | TransferNftCelo | TransferNftTron | TransferNftSolana | TransferNftAlgo | TransferNftAlgoExpress | TransferNftFlowPK | TransferNftFlowMnemonic | TransferNftKMS | TransferNftKMSCelo | TransferNftAlgoKMS | TransferNftSolanaKMS | TransferNftFlowKMS | TransferNftKMSTron),
-                xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+                xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
             ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
                 return __request({
                     method: 'POST',
@@ -380,20 +400,21 @@ export class NftErc721OrCompatibleService {
             }
 
             /**
-             * Mint Multiple NFT Tokens
-             * <h4>100 credits per API call on FLOW, 2 credits on another chains. Tatum covers the fee connected to the transaction costs in subscription credits for FLOW. This operation can be done on mainnet only for paid plans.</h4><br/>
+             * Mint multiple NFTs
+             * <p><b>100 credits per API call on Flow<br/>
+             * 2 credits per API call on the other blockchains</b></p>
              * <p>Create multiple NFT Tokens and transfer them to destination account. Create and transfer any NFT tokens from smart contract defined in contractAddress.<br/><br/>
-             * Tatum now supports NFT these blockchains:<br/>
+             * <p>This API is supported for the following blockchains:</p>
              * <ul>
-             * <li><b>Ethereum</b></li>
-             * <li><b>Polygon (Matic)</b></li>
-             * <li><b>Kcs (KCS)</b></li>
-             * <li><b>Celo</b></li>
-             * <li><b>Harmony.ONE</b></li>
-             * <li><b>Tron</b></li>
-             * <li><b>Flow</b></li>
-             * <li><b>Klaytn</b></li>
-             * <li><b>Binance Smart Chain</b></li>
+             * <li>BNB Smart Chain</li>
+             * <li>Celo</li>
+             * <li>Ethereum</li>
+             * <li>Flow</li>
+             * <li>Harmony</li>
+             * <li>Klaytn</li>
+             * <li>KuCoin Community Chain</li>
+             * <li>Polygon</li>
+             * <li>TRON</li>
              * </ul>
              * This operation works in two modes.
              *
@@ -440,7 +461,7 @@ export class NftErc721OrCompatibleService {
                  * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
                  * </tr>
                  * <tr>
-                 * <td>ETH</td>0x53e8577c4347c365e4e0da5b57a589cb6f2ab848
+                 * <td>ETH</td>
                  * <td>0x53e8577C4347C365E4e0DA5B57A589cB6f2AB848</td>
                  * <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>
                  * </tr>
@@ -458,13 +479,13 @@ export class NftErc721OrCompatibleService {
                  * If there are not enough coins on any testnet address, feel free to send coins there.</p>
                  *
                  * @param requestBody
-                 * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+                 * @param xTestnetType Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
                  * @returns any OK
                  * @throws ApiError
                  */
                 public static nftMintMultipleErc721(
                     requestBody: (MintMultipleNftMinter | MintMultipleNft | MintMultipleNftCelo | MintMultipleNftTron | MintMultipleNftFlowPK | MintMultipleNftFlowMnemonic | MintMultipleNftKMS | MintMultipleNftKMSCelo | MintMultipleNftKMSTron | MintMultipleNftFlowKMS),
-                    xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+                    xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
                 ): CancelablePromise<(TransactionHashKMS | FlowMintedMultipleResult | SignatureId)> {
                     return __request({
                         method: 'POST',
@@ -484,37 +505,36 @@ export class NftErc721OrCompatibleService {
                 }
 
                 /**
-                 * Burn NFT
-                 * <h4>100 credits per API call on FLOW, 2 credits on another chains. Tatum covers the fee connected to the transaction costs in subscription credits for FLOW. This operation can be done on mainnet only for paid plans.</h4><br/>
+                 * Burn an NFT
+                 * <p><b>100 credits per API call on Flow<br/>
+                 * 2 credits per API call on the other blockchains</b></p>
                  * <p>Burn one NFT Token. This method destroys any NFT token from smart contract defined in contractAddress.<br/><br/>
-                 * Tatum now supports NFT these blockchains:<br/>
+                 * <p>This API is supported for the following blockchains:</p>
                  * <ul>
-                 * <li><b>Ethereum</b></li>
-                 * <li><b>Polygon (Matic)</b></li>
-                 * <li><b>Kcs (KCS)</b></li>
-                 * <li><b>Celo</b></li>
-                 * <li><b>Harmony.ONE</b></li>
-                 * <li><b>Tron</b></li>
-                 * <li><b>Flow</b></li>
-                 * <li><b>Binance Smart Chain</b></li>
-                 * <li><b>Klaytn</b></li>
-                 * <li><b>Algorand</b></li>
+                 * <li>Algorand</li>
+                 * <li>BNB Smart Chain</li>
+                 * <li>Celo</li>
+                 * <li>Ethereum</li>
+                 * <li>Flow</li>
+                 * <li>Harmony</li>
+                 * <li>Klaytn</li>
+                 * <li>KuCoin Community Chain</li>
+                 * <li>Polygon</li>
+                 * <li>TRON</li>
                  * </ul>
-                 * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-                 * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
-                 * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-                 * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
-                 * Alternatively, using the Tatum client library for supported languages.
-                 * </p>
+                 * <p><b>Signing a transaction</b></p>
+                 * <p>When burning an NFT, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+                 * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+                 * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
                  *
                  * @param requestBody
-                 * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+                 * @param xTestnetType Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
                  * @returns any OK
                  * @throws ApiError
                  */
                 public static nftBurnErc721(
                     requestBody: (BurnNftCelo | BurnNftKMSCelo | BurnNftTron | BurnNftKMSTron | BurnNft | BurnNftKMS | BurnNftFlowPK | BurnNftFlowMnemonic | BurnNftFlowKMS),
-                    xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+                    xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
                 ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
                     return __request({
                         method: 'POST',
@@ -534,34 +554,32 @@ export class NftErc721OrCompatibleService {
                 }
 
                 /**
-                 * Add NFT Minter
-                 * <h4>2 credits.</h4><br/>
+                 * Add an NFT minter
+                 * <p><b>2 credits per API call</b></p>
                  * <p>Add new minter of NFT Tokens. This method adds minter permission to new minter address.<br/><br/>
-                 * Tatum now supports NFT these blockchains:<br/>
+                 * <p>This API is supported for the following blockchains:</p>
                  * <ul>
-                 * <li><b>Ethereum</b></li>
-                 * <li><b>Polygon (Matic)</b></li>
-                 * <li><b>Kcs (KCS)</b></li>
-                 * <li><b>Celo</b></li>
-                 * <li><b>Harmony.ONE</b></li>
-                 * <li><b>Klaytn</b></li>
-                 * <li><b>Binance Smart Chain</b></li>
+                 * <li>BNB Smart Chain</li>
+                 * <li>Celo</li>
+                 * <li>Ethereum</li>
+                 * <li>Harmony</li>
+                 * <li>Klaytn</li>
+                 * <li>KuCoin Community Chain</li>
+                 * <li>Polygon</li>
                  * </ul>
-                 * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-                 * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
-                 * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-                 * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
-                 * Alternatively, using the Tatum client library for supported languages.
-                 * </p>
+                 * <p><b>Signing a transaction</b></p>
+                 * <p>When adding an NFT minter, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+                 * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+                 * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
                  *
                  * @param requestBody
-                 * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+                 * @param xTestnetType Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
                  * @returns any OK
                  * @throws ApiError
                  */
                 public static nftAddMinter(
                     requestBody: (AddNftMinter | AddNftMinterKMS),
-                    xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+                    xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
                 ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
                     return __request({
                         method: 'POST',
@@ -581,36 +599,33 @@ export class NftErc721OrCompatibleService {
                 }
 
                 /**
-                 * Update Royalty NFT
-                 * <h4>2 credits per API call.</h4><br/>
+                 * Update NFT royalty
+                 * <p><b>2 credits per API call</b></p>
                  * <p>Update royalty cashback value for one NFT Token. This method updates the first royalty value of specific author for 1 token.
                  * If royalty value is set to 0, it will disable the royalty system for the token. Only from author's address of the royalty can change it's royalty value, not the owner of the token.<br/><br/>
-                 * Tatum now supports NFT these blockchains:<br/>
+                 * <p>This API is supported for the following blockchains:</p>
                  * <ul>
-                 * <li><b>Ethereum</b></li>
-                 * <li><b>Polygon (Matic)</b></li>
-                 * <li><b>Kcs (KCS)</b></li>
-                 * <li><b>Celo</b></li>
-                 * <li><b>Harmony.ONE</b></li>
-                 * <li><b>Tron</b></li>
-                 * <li><b>Binance Smart Chain</b></li>
-                 * <li><b>Klaytn</b></li>
-                 * </ul>
-                 * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-                 * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
-                 * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-                 * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
-                 * Alternatively, using the Tatum client library for supported languages.
-                 * </p>
+                 * <li>BNB Smart Chain</li>
+                 * <li>Celo</li>
+                 * <li>Ethereum</li>
+                 * <li>Harmony</li>
+                 * <li>Klaytn</li>
+                 * <li>KuCoin Community Chain</li>
+                 * <li>Polygon</li>
+                 * <li>TRON</li>
+                 * <p><b>Signing a transaction</b></p>
+                 * <p>When updating NFT royalty, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+                 * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+                 * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
                  *
                  * @param requestBody
-                 * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+                 * @param xTestnetType Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
                  * @returns any OK
                  * @throws ApiError
                  */
                 public static nftUpdateCashbackErc721(
                     requestBody: (UpdateCashbackValueForAuthorNftCelo | UpdateCashbackValueForAuthorNftKMSCelo | UpdateCashbackValueForAuthorNftTron | UpdateCashbackValueForAuthorNftKMSTron | UpdateCashbackValueForAuthorNft | UpdateCashbackValueForAuthorNftKMS),
-                    xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+                    xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
                 ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
                     return __request({
                         method: 'PUT',
@@ -630,8 +645,16 @@ export class NftErc721OrCompatibleService {
                 }
 
                 /**
-                 * Get NFT transactions by address
-                 * <h4>1 credit per API call.</h4><br/><p>Get NFT transactions by address. This includes incoming and outgoing transactions for the address.</p>
+                 * Get NFT transactions for a blockchain address
+                 * <p><b>1 credit per API call</b></p>
+                 * <p>Get incoming and outgoing NFT transactions for a blockchain address.</p>
+                 * <p>This API is supported for the following blockchains:</p>
+                 * <ul>
+                 * <li>Celo</li>
+                 * <li>Ethereum</li>
+                 * <li>Polygon</li>
+                 * </ul>
+                 *
                  * @param chain Blockchain to work with
                  * @param address Account address you want to get balance of
                  * @param tokenAddress Address of the token smart contract
@@ -669,8 +692,8 @@ export class NftErc721OrCompatibleService {
                 }
 
                 /**
-                 * Get NFT transactions by token
-                 * <h4>1 credit per API call.</h4><br/><p>Get NFT transactions by token. This includes incoming and outgoing transactions for the token.</p>
+                 * Get NFT transactions for an NFT
+                 * <p><b>1 credit per API call</b></p> <p>Get NFT transactions by token. This includes incoming and outgoing transactions for the token.</p> <p>This API is supported for the following blockchains:</p> <ul> <li>Celo</li> <li>Ethereum</li> <li>Polygon</li> </ul>
                  * @param chain Blockchain to work with
                  * @param tokenId NFT Token ID
                  * @param tokenAddress Address of the token smart contract
@@ -709,20 +732,34 @@ export class NftErc721OrCompatibleService {
 
                 /**
                  * @deprecated
-                 * Get contract address from transaction
-                 * <h4>1 credit per API call.</h4><br/>
-                 * <p>Get NFT contract address from deploy transaction. This method is deprecated, use <a href="#operation/SCGetContractAddress">Get contract address</a> instead.</p>
+                 * Get the address of an NFT smart contract by its transaction hash
+                 * <p><p>This endpoint is deprecated. Do not use it.<br/>
+                 * Instead, use <a href="https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress" target="_blank">this API</a>.</b></p><br/>
+                 * <p><b>1 credit per API call</b></p>
+                 * <p>Get NFT contract address from deploy transaction.</p>
+                 * <p>This API is supported for the following blockchains:</p>
+                 * <ul>
+                 * <li>BNB Smart Chain</li>
+                 * <li>Celo</li>
+                 * <li>Ethereum</li>
+                 * <li>Flow</li>
+                 * <li>Harmony</li>
+                 * <li>Klaytn</li>
+                 * <li>KuCoin Community Chain</li>
+                 * <li>Polygon</li>
+                 * <li>TRON</li>
+                 * </ul>
                  *
                  * @param chain Blockchain to work with
                  * @param hash Transaction hash
-                 * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+                 * @param xTestnetType Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
                  * @returns any OK
                  * @throws ApiError
                  */
                 public static nftGetContractAddress(
                     chain: 'ETH' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'MATIC' | 'KCS' | 'BSC',
                     hash: string,
-                    xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+                    xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
                 ): CancelablePromise<{
                     /**
                      * Address of the NFT token.
@@ -745,18 +782,32 @@ export class NftErc721OrCompatibleService {
                 }
 
                 /**
-                 * Get Transaction
-                 * <h4>1 credit per API call.</h4><br/><p>Get NFT transaction by transaction hash.</p>
+                 * Get an NFT transaction by its hash
+                 * <p><b>1 credit per API call</b></p>
+                 * <p>Get NFT transaction by transaction hash.</p>
+                 * <p>This API is supported for the following blockchains:</p>
+                 * <ul>
+                 * <li>BNB Smart Chain</li>
+                 * <li>Celo</li>
+                 * <li>Ethereum</li>
+                 * <li>Flow</li>
+                 * <li>Harmony</li>
+                 * <li>Klaytn</li>
+                 * <li>KuCoin Community Chain</li>
+                 * <li>Polygon</li>
+                 * <li>TRON</li>
+                 * </ul>
+                 *
                  * @param chain Blockchain to work with
                  * @param hash Transaction hash
-                 * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+                 * @param xTestnetType Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
                  * @returns any OK
                  * @throws ApiError
                  */
                 public static nftGetTransactErc721(
                     chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'BSC',
                     hash: string,
-                    xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+                    xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
                 ): CancelablePromise<(CeloTx | EthTx | FlowTx)> {
                     return __request({
                         method: 'GET',
@@ -774,10 +825,18 @@ export class NftErc721OrCompatibleService {
                 }
 
                 /**
-                 * Get NFT tokens for address
-                 * <h4>1 credit per API call + 5 credits for each owned token.</h4><br/>
-                 * <p>Get NFTs on address. Returns all NFTs this address holds.<br/>
-                 * For Solana and Algorand, the metadata are fetched only for addresses which hold less then 50 tokens. It's possible to get metadata from the <a href="#operation/NftGetMetadataErc721">Get Metadata</a> operation.</p>
+                 * Get the NFT smart contracts and the NFTs for a blockchain address
+                 * <p><b>1 credit per API call + 5 credits for each owned NFT</b></p>
+                 * <p>For a blockchain address, get the NFT smart contracts where the address holds NFTs and the NFTs that the address holds in each of those contracts.</p>
+                 * <p>This API is supported for the following blockchains:</p>
+                 * <ul>
+                 * <li>Algorand</li>
+                 * <li>Celo</li>
+                 * <li>Ethereum</li>
+                 * <li>Polygon</li>
+                 * <li>Solana</li>
+                 * </ul>
+                 * <p>On Solana and Algorand, if a blockchain address holds fewer than 50 NFTs, the API also returns each NFT's metadata. If the metadata is not returned, you can obtain it using the <a href="https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)/#operation/NftGetMetadataErc721">API for getting NFT metadata</a>.</p>
                  *
                  * @param chain Blockchain to work with
                  * @param address Account address you want to get balance of
@@ -821,8 +880,15 @@ export class NftErc721OrCompatibleService {
                 }
 
                 /**
-                 * Get NFT tokens in collection
-                 * <h4>1 credit per API call + 5 credits for each listed token.</h4><br/><p>Get all minted NFTs in the collection. Returns all NFTs this contract minted.</p>
+                 * Get NFTs from a collection
+                 * <p><b>1 credit per API call + 5 credits for each listed NFT</b></p>
+                 * <p>Get all minted NFTs in the collection. Returns all NFTs this contract minted.</p>
+                 * <p>This API is supported for the following blockchains:</p>
+                 * <ul>
+                 * <li>Celo</li>
+                 * <li>Ethereum</li>
+                 * <li>Polygon</li>
+                 * </ul>
                  *
                  * @param chain Blockchain to work with
                  * @param pageSize Max number of items per page is 50.
@@ -873,13 +939,28 @@ export class NftErc721OrCompatibleService {
                 }
 
                 /**
-                 * Get NFT Account balance
-                 * <h4>1 credit per API call.</h4><br/><p>Get NFTs on Account. Returns tokenIDs of tokens Account holds. This method is valid only for tokens deplyed using Tatum API - it reads data from the smart contract.</p>
+                 * Get the NFTs a blockchain address holds in a smart contract
+                 * <p><b>1 credit per API call</b></p>
+                 * <p>Get the NFTs that a blockchain address holds in the smart contract (the <code>contractAddress</code> parameter in the request body).</p>
+                 * <p><b>NOTE:</b> This API works only for the NFT smart contracts deployed using the <a href="https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftDeployErc721" target="_blank">smart contract API</a>.</p>
+                 * <p>This API is supported for the following blockchains:</p>
+                 * <ul>
+                 * <li>BNB Smart Chain</li>
+                 * <li>Celo</li>
+                 * <li>Ethereum</li>
+                 * <li>Flow</li>
+                 * <li>Harmony</li>
+                 * <li>Klaytn</li>
+                 * <li>KuCoin Community Chain</li>
+                 * <li>Polygon</li>
+                 * <li>Solana</li>
+                 * <li>TRON</li>
+                 * </ul>
                  *
                  * @param chain Blockchain to work with
                  * @param address Account address you want to get balance of
                  * @param contractAddress NFT contract address
-                 * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+                 * @param xTestnetType Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
                  * @returns string OK
                  * @throws ApiError
                  */
@@ -887,7 +968,7 @@ export class NftErc721OrCompatibleService {
                     chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'BSC' | 'SOL',
                     address: string,
                     contractAddress: string,
-                    xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+                    xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
                 ): CancelablePromise<Array<string>> {
                     return __request({
                         method: 'GET',
@@ -905,12 +986,24 @@ export class NftErc721OrCompatibleService {
                 }
 
                 /**
-                 * Get NFT Token Provenance Data
-                 * <h4>1 credit per API call.</h4><br/><p>Get NFT token provenance data, valid only for provenance contract.</p>
+                 * Get NFT provenance data
+                 * <p><b>1 credit per API call</b></p>
+                 * <p>Get NFT token provenance data, valid only for provenance contract.</p>
+                 * <p>This API is supported for the following blockchains:</p>
+                 * <ul>
+                 * <li>BNB Smart Chain</li>
+                 * <li>Celo</li>
+                 * <li>Ethereum</li>
+                 * <li>Harmony</li>
+                 * <li>Klaytn</li>
+                 * <li>KuCoin Community Chain</li>
+                 * <li>Polygon</li>
+                 * </ul>
+                 *
                  * @param chain Blockchain to work with
                  * @param tokenId Token ID
                  * @param contractAddress NFT contract address
-                 * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+                 * @param xTestnetType Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
                  * @returns any OK
                  * @throws ApiError
                  */
@@ -918,7 +1011,7 @@ export class NftErc721OrCompatibleService {
                     chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'CELO' | 'BSC',
                     tokenId: string,
                     contractAddress: string,
-                    xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+                    xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
                 ): CancelablePromise<Array<{
                     provenanceData?: string;
                     tokenPrice?: string;
@@ -939,13 +1032,27 @@ export class NftErc721OrCompatibleService {
                 }
 
                 /**
-                 * Get NFT Token Metadata
-                 * <h4>1 credit per API call.</h4><br/><p>Get NFT token metadata.</p>
+                 * Get NFT metadata
+                 * <p><b>1 credit per API call</b></p>
+                 * <p>Get NFT token metadata.</p>
+                 * <p>This API is supported for the following blockchains:</p>
+                 * <ul>
+                 * <li>BNB Smart Chain</li>
+                 * <li>Celo</li>
+                 * <li>Ethereum</li>
+                 * <li>Flow</li>
+                 * <li>Harmony</li>
+                 * <li>Klaytn</li>
+                 * <li>KuCoin Community Chain</li>
+                 * <li>Polygon</li>
+                 * <li>TRON</li>
+                 * </ul>
+                 *
                  * @param chain Blockchain to work with
                  * @param contractAddress NFT contract address
                  * @param token Token ID, required for all except SOL
                  * @param account Account holding this token. FLOW only.
-                 * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+                 * @param xTestnetType Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
                  * @returns any OK
                  * @throws ApiError
                  */
@@ -954,7 +1061,7 @@ export class NftErc721OrCompatibleService {
                     contractAddress: string,
                     token: string,
                     account?: string,
-                    xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+                    xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
                 ): CancelablePromise<{
                     /**
                      * Metadata associated with token.
@@ -980,12 +1087,26 @@ export class NftErc721OrCompatibleService {
                 }
 
                 /**
-                 * Get NFT Token Royalty information
-                 * <h4>1 credit per API call.</h4><br/><p>Get NFT token royalty.</p>
+                 * Get NFT royalty information
+                 * <p><b>1 credit per API call</b></p>
+                 * <p>Get NFT token royalty.</p>
+                 * <p>This API is supported for the following blockchains:</p>
+                 * <ul>
+                 * <li>BNB Smart Chain</li>
+                 * <li>Celo</li>
+                 * <li>Ethereum</li>
+                 * <li>Flow</li>
+                 * <li>Harmony</li>
+                 * <li>Klaytn</li>
+                 * <li>KuCoin Community Chain</li>
+                 * <li>Polygon</li>
+                 * <li>TRON</li>
+                 * </ul>
+                 *
                  * @param chain Blockchain to work with
                  * @param contractAddress NFT contract address
                  * @param token Token ID, required for all except SOL
-                 * @param xTestnetType Type of Ethereum testnet. Defaults to Ropsten. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+                 * @param xTestnetType Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
                  * @returns any OK
                  * @throws ApiError
                  */
@@ -993,7 +1114,7 @@ export class NftErc721OrCompatibleService {
                     chain: 'ETH' | 'MATIC' | 'KCS' | 'SOL' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'BSC',
                     contractAddress: string,
                     token: string,
-                    xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+                    xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
                 ): CancelablePromise<{
                     /**
                      * Addresses of the authors where cashback will be paid.

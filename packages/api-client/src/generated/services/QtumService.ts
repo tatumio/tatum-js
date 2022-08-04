@@ -16,8 +16,10 @@ import { request as __request } from '../core/request';
 export class QtumService {
 
     /**
+     * @deprecated
      * Generate QTUM account address from Extended public key
-     * <h4>1 credit per API call.</h4><br/>
+     * <h4>1 credit per API call</h4>
+     * <p><b>This endpoint is deprecated.</b></p><br/>
      * <p>Generate QTUM account deposit address from Extended public key. Deposit address is generated for the specific index - each extended public key can generate
      * up to 2^31 addresses starting from index 0 until 2^31.</p>
      *
@@ -47,8 +49,11 @@ export class QtumService {
     }
 
     /**
+     * @deprecated
      * Generate QTUM wallet
-     * <h4>1 credit per API call.</h4><br/><p>Tatum supports BIP44 HD wallets. Because they can generate 2^31 addresses from 1 mnemonic phrase, they are very convenient and secure. A mnemonic phrase consists of 24 special words in a defined order and can restore access to all generated addresses and private keys.<br/>Each address is identified by 3 main values:<ul><li>Private Key - your secret value, which should never be revealed</li><li>Public Key - public address to be published</li><li>Derivation index - index of generated address</li></ul></p><p>Tatum follows BIP44 specification and generates for QTUM wallet with derivation path m/44'/2301'/0'/0. More about BIP44 HD wallets can be found here - <a target="_blank" href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki">https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki</a>.
+     * <h4>1 credit per API call</h4>
+     * <p><b>This endpoint is deprecated.</b></p><br/>
+     * <p>Tatum supports BIP44 HD wallets. Because they can generate 2^31 addresses from 1 mnemonic phrase, they are very convenient and secure. A mnemonic phrase consists of 24 special words in a defined order and can restore access to all generated addresses and private keys.<br/>Each address is identified by 3 main values:<ul><li>Private Key - your secret value, which should never be revealed</li><li>Public Key - public address to be published</li><li>Derivation index - index of generated address</li></ul></p><p>Tatum follows BIP44 specification and generates for QTUM wallet with derivation path m/44'/2301'/0'/0. More about BIP44 HD wallets can be found here - <a target="_blank" href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki">https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki</a>.
      * <br />Generate BIP44 compatible Qtum wallet.</p>
      *
      * @param mnemonic Mnemonic to use for generation of extended public and private keys.
@@ -73,8 +78,9 @@ export class QtumService {
     }
 
     /**
+     * @deprecated
      * Get current block number
-     * <h4>1 credit per API call.</h4><br/><p>Get QTUM current block number. This is the number of the latest block in the blockchain.</p>
+     * <h4>1 credit per API call</h4><p><b>This endpoint is deprecated.</b></p><br/><p>Get QTUM current block number. This is the number of the latest block in the blockchain.</p>
      * @returns string OK
      * @throws ApiError
      */
@@ -90,8 +96,9 @@ export class QtumService {
     }
 
     /**
+     * @deprecated
      * Get QTUM block by hash
-     * <h4>1 credit per API call.</h4><br/><p>Get BSC block by block hash or block number.</p>
+     * <h4>1 credit per API call</h4><p><b>This endpoint is deprecated.</b></p><br/><p>Get BSC block by block hash or block number.</p>
      * @param hash Block hash or block number
      * @returns QtumBlock OK
      * @throws ApiError
@@ -111,8 +118,9 @@ export class QtumService {
     }
 
     /**
+     * @deprecated
      * Generate QTUM Address
-     * <h4>1 credit per API call.</h4><br/><p>Generate Address by private key</p>
+     * <h4>1 credit per API call</h4><p><b>This endpoint is deprecated.</b></p><br/><p>Generate Address by private key</p>
      * @param key Private key
      * @returns string OK
      * @throws ApiError
@@ -132,8 +140,9 @@ export class QtumService {
     }
 
     /**
+     * @deprecated
      * Generate QTUM Address
-     * <h4>1 credit per API call.</h4><br/><p>Get UTXOS by address</p>
+     * <h4>1 credit per API call</h4><p><b>This endpoint is deprecated.</b></p><br/><p>Get UTXOS by address</p>
      * @param address address
      * @returns QtumIUTXO OK
      * @throws ApiError
@@ -153,8 +162,9 @@ export class QtumService {
     }
 
     /**
+     * @deprecated
      * Get QTUM Account balance
-     * <h4>1 credit per API call.</h4><br/><p>Get QTUM account balance in QTUM tokens on an account.</p>
+     * <h4>1 credit per API call</h4><p><b>This endpoint is deprecated.</b></p><br/><p>Get QTUM account balance in QTUM tokens on an account.</p>
      * @param address Account address you want to get balance of
      * @returns QtumIGetInfo OK
      * @throws ApiError
@@ -174,8 +184,9 @@ export class QtumService {
     }
 
     /**
+     * @deprecated
      * Get QTUM Transaction
-     * <h4>1 credit per API call.</h4><br/><p>Get QTUM transaction by transaction hash.</p>
+     * <h4>1 credit per API call</h4><p><b>This endpoint is deprecated.</b></p><br/><p>Get QTUM transaction by transaction hash.</p>
      * @param hash Transaction hash
      * @returns QtumIRawTransactionInfo OK
      * @throws ApiError
@@ -196,8 +207,9 @@ export class QtumService {
     }
 
     /**
+     * @deprecated
      * Get QTUM Transactions by pagination
-     * <h4>1 credit per API call.</h4><br/><p>Get QTUM paginated transactions by address.</p>
+     * <h4>1 credit per API call</h4><p><b>This endpoint is deprecated.</b></p><br/><p>Get QTUM paginated transactions by address.</p>
      * @param address Address
      * @param pageSize pageSize
      * @param offset offset
@@ -226,8 +238,10 @@ export class QtumService {
     }
 
     /**
+     * @deprecated
      * Broadcast signed QTUM transaction
-     * <h4>2 credits per API call.</h4><br/>
+     * <h4>2 credits per API call</h4>
+     * <p><b>This endpoint is deprecated.</b></p><br/>
      * <p>Broadcast signed transaction to QTUM blockchain. This method is used internally from Tatum KMS, Tatum Middleware or Tatum client libraries.
      * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
      *
@@ -253,8 +267,11 @@ export class QtumService {
     }
 
     /**
+     * @deprecated
      * Generate QTUM wallet
-     * <h4>1 credit per API call.</h4><br/><p>Tatum supports BIP44 HD wallets. It is very convenient and secure, since it can generate 2^31 addresses from 1 mnemonic phrase. Mnemonic phrase consists of 24 special words in defined order and can restore access to all generated addresses and private keys.<br/>Each address is identified by 3 main values:<ul><li>Private Key - your secret value, which should never be revealed</li><li>Public Key - public address to be published</li><li>Derivation index - index of generated address</li></ul></p><p>Tatum follows BIP44 specification and generates for Qtum wallet with derivation path defined by QTUM. More about BIP44 HD wallets can be found here - <a target="_blank" href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki">https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki</a>.
+     * <h4>1 credit per API call</h4>
+     * <p><b>This endpoint is deprecated.</b></p><br/>
+     * <p>Tatum supports BIP44 HD wallets. It is very convenient and secure, since it can generate 2^31 addresses from 1 mnemonic phrase. Mnemonic phrase consists of 24 special words in defined order and can restore access to all generated addresses and private keys.<br/>Each address is identified by 3 main values:<ul><li>Private Key - your secret value, which should never be revealed</li><li>Public Key - public address to be published</li><li>Derivation index - index of generated address</li></ul></p><p>Tatum follows BIP44 specification and generates for Qtum wallet with derivation path defined by QTUM. More about BIP44 HD wallets can be found here - <a target="_blank" href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki">https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki</a>.
      * Generate BIP44 compatible QTUM wallet.</p>
      *
      * @param requestBody

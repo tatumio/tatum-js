@@ -4,7 +4,7 @@
 
 export type CallSmartContractMethodKMS = {
     /**
-     * Address of ERC20 token
+     * The address of the smart contract
      */
     contractAddress: string;
     /**

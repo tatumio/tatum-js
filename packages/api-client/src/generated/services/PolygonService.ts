@@ -22,7 +22,8 @@ export class PolygonService {
 
     /**
      * Generate Polygon wallet
-     * <h4>1 credit per API call.</h4><br/><p>Tatum supports BIP44 HD wallets. It is very convenient and secure, since it can generate 2^31 addresses from 1 mnemonic phrase. Mnemonic phrase consists of 24 special words in defined order and can restore access to all generated addresses and private keys.<br/>Each address is identified by 3 main values:<ul><li>Private Key - your secret value, which should never be revealed</li><li>Public Key - public address to be published</li><li>Derivation index - index of generated address</li></ul></p><p>Tatum follows BIP44 specification and generates for Polygon wallet with derivation path m'/44'/966'/0'/0. More about BIP44 HD wallets can be found here - <a target="_blank" href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki">https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki</a>.
+     * <b><p>1 credit per API call</p></b>
+     * <p>Tatum supports BIP44 HD wallets. It is very convenient and secure, since it can generate 2^31 addresses from 1 mnemonic phrase. Mnemonic phrase consists of 24 special words in defined order and can restore access to all generated addresses and private keys.<br/>Each address is identified by 3 main values:<ul><li>Private Key - your secret value, which should never be revealed</li><li>Public Key - public address to be published</li><li>Derivation index - index of generated address</li></ul></p><p>Tatum follows BIP44 specification and generates for Polygon wallet with derivation path m'/44'/966'/0'/0. More about BIP44 HD wallets can be found here - <a target="_blank" href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki">https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki</a>.
      * Generate BIP44 compatible Polygon wallet.</p>
      *
      * @param mnemonic Mnemonic to use for generation of extended public and private keys.
@@ -48,7 +49,7 @@ export class PolygonService {
 
     /**
      * Generate Polygon account address from Extended public key
-     * <h4>1 credit per API call.</h4><br/>
+     * <b><p>1 credit per API call</p></b>
      * <p>Generate Polygon account deposit address from Extended public key. Deposit address is generated for the specific index - each extended public key can generate
      * up to 2^31 addresses starting from index 0 until 2^31.</p>
      *
@@ -79,7 +80,7 @@ export class PolygonService {
 
     /**
      * Generate Polygon private key
-     * <h4>1 credit per API call.</h4><br/>
+     * <b><p>1 credit per API call</p></b>
      * <p>Generate private key of address from mnemonic for given derivation path index. Private key is generated for the specific index - each mnemonic
      * can generate up to 2^31 private keys starting from index 0 until 2^31.</p>
      *
@@ -106,10 +107,10 @@ export class PolygonService {
     /**
      * @deprecated
      * Web3 HTTP driver
-     * <h4>2 credits per API call.</h4><br/>
+     * <p><b>2 credits per API call</b></p>
+     * <p><b>This endpoint is deprecated. Use the <a href="https://apidoc.tatum.io/tag/Node-RPC" target="_blank">HTTP-based JSON RPC driver</a> instead.</b></p><br/>
      * <p>Use this endpoint URL as a http-based web3 driver to connect directly to the Polygon node provided by Tatum.
-     * To learn more about Polygon Web3, please visit <a href="https://docs.matic.network/" target="_blank">Polygon developer's guide.</a></p>
-     * <br/><p><strong>This endpoint is deprecated</strong>, you should use <a href="#operation/NodeJsonPostRpcDriver">Blockchain/Node/RPC HTTP Driver</a></p>
+     * To learn more about Polygon Web3, visit the <a href="https://docs.matic.network/" target="_blank">Polygon developer's guide</a>.</p>
      *
      * @param xApiKey Tatum X-API-Key used for authorization.
      * @param requestBody
@@ -135,7 +136,9 @@ export class PolygonService {
 
     /**
      * Get current block number
-     * <h4>1 credit per API call.</h4><br/><p>Get Polygon current block number. This is the number of the latest block in the blockchain.</p>
+     * <b><p>1 credit per API call</p></b>
+     * <p>Get Polygon current block number. This is the number of the latest block in the blockchain.</p>
+     *
      * @returns number OK
      * @throws ApiError
      */
@@ -152,7 +155,9 @@ export class PolygonService {
 
     /**
      * Get Polygon block by hash
-     * <h4>1 credit per API call.</h4><br/><p>Get Polygon block by block hash or block number.</p>
+     * <b><p>1 credit per API call</p></b>
+     * <p>Get Polygon block by block hash or block number.</p>
+     *
      * @param hash Block hash or block number
      * @returns EthBlock OK
      * @throws ApiError
@@ -173,7 +178,9 @@ export class PolygonService {
 
     /**
      * Get Polygon Account balance
-     * <h4>1 credit per API call.</h4><br/><p>Get Polygon account balance in MATIC. This method does not prints any balance of the ERC20 or ERC721 tokens on the account.</p>
+     * <b><p>1 credit per API call</p></b>
+     * <p>Get Polygon account balance in MATIC. This method does not prints any balance of the ERC20 or ERC721 tokens on the account.</p>
+     *
      * @param address Account address you want to get balance of
      * @returns any OK
      * @throws ApiError
@@ -199,7 +206,9 @@ export class PolygonService {
 
     /**
      * Get Polygon Transaction
-     * <h4>2 credit per API call.</h4><br/><p>Get Polygon transaction by transaction hash.</p>
+     * <b><p>2 credits per API call</p></b>
+     * <p>Get Polygon transaction by transaction hash.</p>
+     *
      * @param hash Transaction hash
      * @returns PolygonTx OK
      * @throws ApiError
@@ -221,7 +230,9 @@ export class PolygonService {
 
     /**
      * Get Polygon transactions by address
-     * <h4>1 credit per API call.</h4><br/><p>Get Polygon transactions by address. This includes incoming and outgoing transactions for the address.</p>
+     * <b><p>1 credit per API call</p></b>
+     * <p>Get Polygon transactions by address. This includes incoming and outgoing transactions for the address.</p>
+     *
      * @param address Account address you want to get balance of
      * @param pageSize Max number of items per page is 50.
      * @param offset Offset to obtain next page of the data.
@@ -259,7 +270,7 @@ export class PolygonService {
 
     /**
      * Get count of outgoing Polygon transactions
-     * <h4>1 credit per API call.</h4><br/>
+     * <b><p>1 credit per API call</p></b>
      * <p>Get a number of outgoing Polygon transactions for the address. When a transaction is sent, there can be multiple outgoing transactions,
      * which are not yet processed by the blockchain. To distinguish between them, there is a counter called a nonce, which represents
      * the order of the transaction in the list of outgoing transactions.</p>
@@ -284,14 +295,12 @@ export class PolygonService {
 
     /**
      * Send MATIC from account to account
-     * <h4>2 credits per API call.</h4><br/>
+     * <b><p>2 credits per API call</p></b>
      * <p>Send MATIC from account to account.<br/><br/>
-     * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-     * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
-     * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-     * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
-     * Alternatively, using the Tatum client library for supported languages.
-     * </p>
+     * <p><b>Signing a transaction</b></p>
+     * <p>When sending MATIC, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
      * @returns any OK
@@ -315,15 +324,18 @@ export class PolygonService {
     }
 
     /**
-     * Invoke Smart Contract method
-     * <h4>2 credits per API call.</h4><br/>
-     * <p>Invoke any method on an existing Smart Contract. It is possible to call read or write method on the Smart Contract defined via contractAddress.
-     * For read operations, data is returned, for write operations, transaction Id of the associated transaction is returned.<br/>
-     * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-     * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
-     * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-     * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
-     * Alternatively, using the Tatum client library for supported languages.</p>
+     * Invoke a method in a smart contract on Polygon
+     * <b><p>2 credits per API call</p></b>
+     * <p>Invoke a method in an existing smart contract on Polygon.</p>
+     * <p>You can call a read-only or write method.</p>
+     * <ul>
+     * <li>For <b>read-only</b> methods, the output of the invoked method is returned.</li>
+     * <li>For <b>write</b> methods, the ID of the associated transaction is returned.</li>
+     * </ul>
+     * <p><b>Signing a transaction</b></p>
+     * <p>When invoking a method in a smart contract, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
      * @returns any OK
@@ -348,7 +360,7 @@ export class PolygonService {
 
     /**
      * Broadcast signed Polygon transaction
-     * <h4>2 credits per API call.</h4><br/>
+     * <b><p>2 credits per API call</p></b>
      * <p>Broadcast signed transaction to Polygon blockchain. This method is used internally from Tatum KMS or Tatum client libraries.
      * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
      *

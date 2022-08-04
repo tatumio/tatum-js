@@ -46,10 +46,10 @@ export class SolanaService {
     /**
      * @deprecated
      * JSON RPC HTTP driver
-     * <h4>2 credits per API call.</h4><br/>
+     * <p><b>2 credits per API call</b></p>
+     * <p><b>This endpoint is deprecated. Use the <a href="https://apidoc.tatum.io/tag/Node-RPC" target="_blank">HTTP-based JSON RPC driver</a> instead.</b></p><br/>
      * <p>Use this endpoint URL as a http-based JSON RPC driver to connect directly to the Solana node provided by Tatum.
-     * To learn more about Solana JSON RPC, please visit <a href="https://docs.solana.com/developing/clients/jsonrpc-api" target="_blank">Solana developer's guide.</a></p>
-     * <br/><p><strong>This endpoint is deprecated</strong>, you should use <a href="#operation/NodeJsonPostRpcDriver">Blockchain/Node/RPC HTTP Driver</a></p>
+     * To learn more about Solana JSON RPC, visit the <a href="https://docs.solana.com/developing/clients/jsonrpc-api" target="_blank">Solana developer's guide</a>.</p>
      *
      * @param xApiKey Tatum X-API-Key used for authorization.
      * @param requestBody
@@ -148,15 +148,20 @@ export class SolanaService {
      * </p>
      *
      * @param hash Transaction hash
+     * @param commitment Commitment of the transaction. If not defined, all transactions are being scanned.
      * @returns SolanaTx OK
      * @throws ApiError
      */
     public static solanaGetTransaction(
         hash: string,
+        commitment?: 'finalized' | 'confirmed',
     ): CancelablePromise<SolanaTx> {
         return __request({
             method: 'GET',
             path: `/v3/solana/transaction/${hash}`,
+            query: {
+                'commitment': commitment,
+            },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,

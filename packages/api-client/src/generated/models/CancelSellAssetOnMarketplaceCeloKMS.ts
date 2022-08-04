@@ -8,6 +8,10 @@ export type CancelSellAssetOnMarketplaceCeloKMS = {
      */
     chain: 'CELO';
     /**
+     * Address of the marketplace smart contract.
+     */
+    contractAddress: string;
+    /**
      * Currency to pay for transaction gas
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
