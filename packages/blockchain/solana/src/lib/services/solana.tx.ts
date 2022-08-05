@@ -283,11 +283,12 @@ const mintNft = async (
           data: {
             name: body.metadata.name,
             collection: collectionAccount ? { key: collectionAccount, verified: false } : null,
-            creators: body.metadata.creators?.map((c) => ({
-              address: new PublicKey(c.address),
-              verified: c.address === body.from ? true : c.verified,
-              share: c.share,
-            })) || null,
+            creators:
+              body.metadata.creators?.map((c) => ({
+                address: new PublicKey(c.address),
+                verified: c.address === body.from ? true : c.verified,
+                share: c.share,
+              })) || null,
             sellerFeeBasisPoints: body.metadata.sellerFeeBasisPoints,
             symbol: body.metadata.symbol,
             uri: body.metadata.uri,
