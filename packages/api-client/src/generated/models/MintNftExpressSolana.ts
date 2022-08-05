@@ -2,6 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { SolanaNftMetadata } from './SolanaNftMetadata';
+
 export type MintNftExpressSolana = {
     /**
      * Chain to work with.
@@ -11,26 +13,5 @@ export type MintNftExpressSolana = {
      * Blockchain address to send NFT token to
      */
     to: string;
-    metadata: {
-        /**
-         * Name of the NFT token.
-         */
-        name: string;
-        /**
-         * Symbol of the NFT token.
-         */
-        symbol: string;
-        /**
-         * Basis points of the seller fee.
-         */
-        sellerFeeBasisPoints: number;
-        /**
-         * The link to the NFT metadata on Solana. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
-         */
-        uri: string;
-        /**
-         * Royalty receivers for NFT transfers.
-         */
-        creators?: Array<any>;
-    };
+    metadata: SolanaNftMetadata;
 }

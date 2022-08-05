@@ -670,6 +670,8 @@ export type { SignatureId } from './models/SignatureId';
 export type { SolanaBlock } from './models/SolanaBlock';
 export type { SolanaBroadcastConfirm } from './models/SolanaBroadcastConfirm';
 export type { SolanaMintedResult } from './models/SolanaMintedResult';
+export type { SolanaNftMetadata } from './models/SolanaNftMetadata';
+export type { SolanaNftMetadataCreator } from './models/SolanaNftMetadataCreator';
 export type { SolanaTransactionHashWithConfirm } from './models/SolanaTransactionHashWithConfirm';
 export type { SolanaTx } from './models/SolanaTx';
 export type { Subscription } from './models/Subscription';

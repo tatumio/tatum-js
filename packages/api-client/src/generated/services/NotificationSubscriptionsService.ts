@@ -25,14 +25,17 @@ import { request as __request } from '../core/request';
 export class NotificationSubscriptionsService {
 
     /**
-     * Create new subscription
-     * <h4>2 credits for API call. Every type of subscription has different credit pricing.</h4><br/>
-     * <p>Create new subscription as a HTTP Web Hook. Currently Tatum support multiple subscription types:
+     * Create a subscription
+     * <p><b>2 credits per API call + credits spent on subscriptions themselves<br/>
+     * Each subscription type consumes a different number of credits.</b></p>
+     * <p>Create a subscription as an HTTP web hook.</p>
+     * <p>The following subscription types are available:</p>
      * <ul>
-     * <li><b>ADDRESS_TRANSACTION</b> - Enable HTTP POST JSON notifications for any blockchain transactions at the specified address.<br/>
-     * This webhook will be sent when a transaction arrives to or is sent from the blockchain address specified in the call - this applies to both incoming/outgoing transactions in the native currency of the blockchain as well as any incoming/outgoing transactions for any type of token.
-     * Free community plans can monitor up to 10 addresses per plan.<br/><br/>
-     * Please refer to the availability and consumption table below.
+     * <li><b>ADDRESS_TRANSACTION</b> - Enable HTTP POST JSON notifications for any blockchain transaction (both incoming and outgoing) at a specified address. This notification applies to transactions in the native blockchain currency or with any type of blockchain tokens.<br/>
+     * - For <b>EMV-based blockchains</b> (ETH), this web hook is first invoked when a transaction appears in the mempool, and then it is invoked again once the transaction is added to a block.<br/>
+     * - For the <b>other blockchains</b>, this webhook is invoked when a transaction is added to a block.<br/>
+     * Free community plans can monitor up to 10 addresses per plan.<br/>
+     * The following table describes the availability of this notification type on different blockchains and the credit consumption:<br/>
      * <table>
      * <tr>
      * <th>Chain</th>
@@ -119,54 +122,55 @@ export class NotificationSubscriptionsService {
      * <td>40 credits / day / address</td>
      * </tr>
      * </table>
-     * Request body of the POST request will be JSON object with attributes:<br/>
+     * The request body of the POST request is a JSON object with the following structure:<br/>
      * <pre>{
-         * "address": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ", // address on which the transaction occurs. For EVM chains, this is recipient address
-         * "txId": "2rdy3YCZHSwvpWtuDom1d4Jjy5UU9STLxF3ffXau6GToReDkfw8wEgX541fvzvh6btVC5D8iNapcKTXfPsoDBk7A", // transaction id
-         * "blockNumber": 110827114, // block number
-         * "asset": "3gUeeR3BfVhukYJMwtHownRtRkGcf1bvwiV8TbKMZBVz", // Asset of transaction, for token assets it is address of that token, for native name of the native asset like SOL
-         * "amount": "1", // amount of the asset that was credited (+) or debited (-) from the address. In case of EVM chains, amount is always positive when counterAddress is present
-         * "tokenId": "1", // ID of the transferred token, if it is ERC721 / ERC1155
-         * "type": "token", // type of transaction, could be 'native' or 'token'
-         * "counterAddress": undefined // optional counter party address of the transaction. For EVM chains, this is recipient address
+         * "address": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ", // the address on which the transaction occurs; for EVM-based chains, this is the recipient's address
+         * "txId": "2rdy3YCZHSwvpWtuDom1d4Jjy5UU9STLxF3ffXau6GToReDkfw8wEgX541fvzvh6btVC5D8iNapcKTXfPsoDBk7A", // the transaction ID
+         * "blockNumber": 110827114, // the block number; does not appear if the transaction is in the mempool (for EMV-based blockchains)
+         * "asset": "3gUeeR3BfVhukYJMwtHownRtRkGcf1bvwiV8TbKMZBVz", // the asset of the transaction: for token assets, this is the token address; for native blochckain assets, this is the name of the asset (for example, SOL)
+         * "amount": "1", // the amount of the asset that was credited to (+) or debited from (-) the address; for EVM-based chains, when "counterAddress" is present, the amount is always positive
+         * "tokenId": "1", // (ERC-721 / ERC-1155 only) the ID of the transferred token
+         * "type": "token", // the type of the transaction; can be either "native" or "token"
+         * "mempool": true, // (EMV-based blockchains only) if appears and set to "true", the transaction is in the mempool; if set to "false" or does not appear at all, the transaction has been added to a block
+         * "counterAddress": undefined // an optional counter party address of the transaction; for EVM-based blockchains, this is the recipient's address
          * }</pre>
-         * 5 credits will be debited for every fired webhook.<br/></li>
-         * <li><b>ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION</b> - Enable HTTP POST JSON notifications on incoming blockchain transactions on virtual accounts.
-         * This web hook will be invoked, when the transaction is credited to the virtual account. Transaction is credited, when it has sufficient amount of blockchain confirmations.
-         * For BTC, LTC, BCH, DOGE - 2 confirmations, others - 1 confirmation.
-         * Request body of the POST request will be JSON object with attributes:<br/>
+         * 5 credits are debited for each fired web hook.<br/></li>
+         * <li><b>ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION</b> - Enable HTTP POST JSON notifications about incoming blockchain transactions on virtual accounts.
+         * This web hook is invoked when an incoming transaction is reflected on the balance of the virtual account (the balance is credited with the transaction amount). This happens when the transaction has the sufficient number of blockchain confirmations: two confirmations for BTC, LTC, BCH, and DOGE, and one confirmation for the other blockchains.<br/>
+         * The request body of the POST request is a JSON object with the following structure:
          * <pre>{
              * "date": 1619176527481,
              * "amount": "0.005",
              * "currency": "BTC",
              * "accountId": "6082ab462936b4478117c6a0",
-             * "reference: "c9875708-4ba3-41c9-a4cd-271048b41b9a", // ledger transaction reference
+             * "reference: "c9875708-4ba3-41c9-a4cd-271048b41b9a", // the reference of the transaction in the virtual account
              * "txId": "45af182a0ffab58e5ba32fee57b297b2260c6e23a1de5ddc76c7ee22d72dea99",
-             * "blockHash": "45af182a0ffab58e5ba32fee57b297b2260c6e23a1de5ddc76c7ee22d72dea99", // hash of the block, might not be present all the time
+             * "blockHash": "45af182a0ffab58e5ba32fee57b297b2260c6e23a1de5ddc76c7ee22d72dea99", // the hash of the block, might not be present every time
              * "blockHeight": 12345,
-             * "from": "SENDER_ADDRESS", // might not ebe present all the time, for UTXO based blockchains it's not there
-             * "to": "RECIPIENT_ADDRESS_CONNECTED_TO_LEDGER_ACCOUNT", // blockchain address of the recipient
-             * "index": 5 // for UTXO based chains (BTC,LTC,DOGE,BCH,ADA) this is the index of the output in the transaction
+             * "from": "SENDER_ADDRESS", // might not be present every time; not present for UTXO-based blockchains
+             * "to": "RECIPIENT_ADDRESS_CONNECTED_TO_LEDGER_ACCOUNT", // the blockchain address of the recipient
+             * "index": 5 // for UTXO-based blockchains (ADA, BCH, BTC, DOGE, LTC), this is the index of the output in the transaction
              * }</pre>
-             * 1 credit will be debited for every monitored account every day.</li>
-             * <li><b>ACCOUNT_PENDING_BLOCKCHAIN_TRANSACTION</b> - Enable HTTP POST JSON notifications on incoming blockchain transactions on virtual accounts.
-             * This web hook will be invoked, when the transaction appears for the first time in the block - it has 1 confirmation, but is still not credited to the ledger account, because it does not have enough confirmations.
-             * This web hook is invoked only for BTC, LTC, DOGE and BCH accounts.
-             * Request body of the POST request will be JSON object with attributes:<br/>
+             * 1 credit is debited for each monitored account every day.</li>
+             * <li><b>ACCOUNT_PENDING_BLOCKCHAIN_TRANSACTION</b> - Enable HTTP POST JSON notifications about incoming blockchain transactions on virtual accounts.<br />
+             * This web hook is supported only for ADA, BCH, BTC, DOGE, ETH, and LTC accounts.<br />
+             * - For <b>BTC-based blockchains</b> (ADA, BCH, BTC, DOGE, and LTC), this web hook is invoked when an incoming transaction appears in a block for the first time. At that time, the transaction has one confirmation but this is not enough for the transaction to be reflected on the balance of the virtual account yet. Instead, a deposit corresponding to the pending transaction with a status of "in progress" appears on the virtual account. Once the transaction is added to the block, the deposit's status changes to "done", and the account balance gets updated.<br />
+             * - For <b>EMV-based blockchains</b> (ETH), this web hook is invoked when an incoming transaction appears in the mempool. The virtual account balance is not updated until the transaction is added to a block. Instead, a deposit corresponding to the pending transaction with a status of "in progress" appears on the virtual account. Once the transaction is added to the block, the deposit's status changes to "done", and the account balance gets updated.<br />
+             * The request body of the POST request is a JSON object with the following structure:<br/>
              * <pre>{
                  * "date": 1619176527481,
                  * "amount": "0.005",
                  * "currency": "BTC",
                  * "accountId": "6082ab462936b4478117c6a0",
-                 * "reference: "c9875708-4ba3-41c9-a4cd-271048b41b9a", // ledger transaction reference
+                 * "reference: "c9875708-4ba3-41c9-a4cd-271048b41b9a", // the reference of the transaction in the virtual account
                  * "txId": "45af182a0ffab58e5ba32fee57b297b2260c6e23a1de5ddc76c7ee22d72dea99",
-                 * "blockHash": "45af182a0ffab58e5ba32fee57b297b2260c6e23a1de5ddc76c7ee22d72dea99", // hash of the block, might not be present all the time
-                 * "blockHeight": 12345,
-                 * "from": "SENDER_ADDRESS", // might not ebe present all the time, for UTXO based blockchains it's not there
-                 * "to": "RECIPIENT_ADDRESS_CONNECTED_TO_LEDGER_ACCOUNT", // blockchain address of the recipient
-                 * "index": 5 // for UTXO based chains (BTC,LTC,DOGE,BCH,ADA) this is the index of the output in the transaction
+                 * "blockHash": "45af182a0ffab58e5ba32fee57b297b2260c6e23a1de5ddc76c7ee22d72dea99", // the hash of the block, might not be present every time; if set to "null", the transaction is in the mempool (for EMV-based blockchains)
+                 * "blockHeight": 12345, // if set to "null", the transaction is in the mempool (for EMV-based blockchains)
+                 * "from": "SENDER_ADDRESS", // might not be present every time; not present for UTXO-based blockchains (ADA, BCH, BTC, DOGE, LTC)
+                 * "to": "RECIPIENT_ADDRESS_CONNECTED_TO_LEDGER_ACCOUNT", // the blockchain address of the recipient
+                 * "index": 5 // for UTXO-based blockchains (ADA, BCH, BTC, DOGE, LTC), this is the index of the output in the transaction
                  * }</pre>
-                 * 1 credit will be debited for every monitored account every day.</li>
+                 * 1 credit is debited for each monitored account every day.</li>
                  * <li><b>CUSTOMER_TRADE_MATCH</b> - Enable HTTP POST JSON notifications on closed trade, which occurs on any customer account.
                  * This web hook will be invoked, when the open trade is filled and closed. Works also for the Trade Futures. If is triggered by the futures, bool field expiredWithoutMatch is present.
                  * Request body of the POST request will be JSON object with attributes:<br/>
