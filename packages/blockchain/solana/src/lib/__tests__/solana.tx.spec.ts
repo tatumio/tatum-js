@@ -1,6 +1,5 @@
 import { TatumSolanaSDK } from '../solana.sdk'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
-import { SolanaNftMetadata } from '../schema'
 import { LAMPORTS_PER_SOL, PublicKey, SystemProgram, Transaction } from '@solana/web3.js'
 import BigNumber from 'bignumber.js'
 import { Currency } from '@tatumio/api-client'
@@ -109,8 +108,105 @@ describe('SolanaSDK - tx', () => {
         fromPrivateKey:
           '2B7RyZEuZr9PpfRrn7nYhSXhjeuzte65UYeeKJFQJCvsi3ZQJk5AfmWptwDpD2Xtz22nv1aTg5rmKq13ggB7Fkep',
         to: 'FZAS4mtPvswgVxbpc117SqfNgCDLTCtk5CoeAtt58FWU',
-        metadata: new SolanaNftMetadata('Tatum', 'TTM', 'https://tatum.io/images/logo/logo.svg', 0),
+        metadata: {
+          name: 'Tatum',
+          symbol: 'TTM',
+          uri: 'https://tatum.io/images/logo/logo.svg',
+          sellerFeeBasisPoints: 0,
+          mutable: true,
+          creators: [
+            {
+              address: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
+              verified: true,
+              share: 100,
+            },
+          ],
+        },
       }),
+    )
+  })
+
+  it.skip('should mint NFT Collection', async () => {
+    console.log(
+      await sdk.transaction.createCollection({
+        chain: 'SOL',
+        from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
+        fromPrivateKey:
+          '2B7RyZEuZr9PpfRrn7nYhSXhjeuzte65UYeeKJFQJCvsi3ZQJk5AfmWptwDpD2Xtz22nv1aTg5rmKq13ggB7Fkep',
+        to: 'FZAS4mtPvswgVxbpc117SqfNgCDLTCtk5CoeAtt58FWU',
+        metadata: {
+          name: 'Tatum',
+          symbol: 'TTM',
+          uri: 'https://tatum.io/images/logo/logo.svg',
+          sellerFeeBasisPoints: 0,
+          mutable: true,
+          creators: [
+            {
+              address: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
+              verified: true,
+              share: 100,
+            },
+          ],
+        },
+      }),
+    )
+  })
+
+  it.skip('should verify NFT under collection', async () => {
+    console.log(
+      await sdk.transaction.verifyNftInCollection(
+        'E9kA1eXxjKaS39TFtAbR9TzNyAPZCFHwuCiHLGeCLDNK',
+        '2jEzQa8krppfkYmeg6zU8JwHUmgM2djqz1wv6gsMurGM',
+        'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
+        '2B7RyZEuZr9PpfRrn7nYhSXhjeuzte65UYeeKJFQJCvsi3ZQJk5AfmWptwDpD2Xtz22nv1aTg5rmKq13ggB7Fkep',
+        '2B7RyZEuZr9PpfRrn7nYhSXhjeuzte65UYeeKJFQJCvsi3ZQJk5AfmWptwDpD2Xtz22nv1aTg5rmKq13ggB7Fkep',
+      ),
+    )
+  })
+
+  it.skip('should mint NFT under collection - not verified', async () => {
+    console.log(
+      await sdk.transaction.mintNft({
+        chain: 'SOL',
+        from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
+        fromPrivateKey:
+          '2B7RyZEuZr9PpfRrn7nYhSXhjeuzte65UYeeKJFQJCvsi3ZQJk5AfmWptwDpD2Xtz22nv1aTg5rmKq13ggB7Fkep',
+        to: 'FZAS4mtPvswgVxbpc117SqfNgCDLTCtk5CoeAtt58FWU',
+        metadata: {
+          name: 'Tatum',
+          symbol: 'TTM',
+          uri: 'https://tatum.io/images/logo/logo.svg',
+          sellerFeeBasisPoints: 0,
+          mutable: true,
+          collection: '2jEzQa8krppfkYmeg6zU8JwHUmgM2djqz1wv6gsMurGM',
+        },
+      }),
+    )
+  })
+
+  it.skip('should mint NFT under collection - verified', async () => {
+    console.log(
+      await sdk.transaction.mintNft(
+        {
+          chain: 'SOL',
+          from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
+          fromPrivateKey:
+            '2B7RyZEuZr9PpfRrn7nYhSXhjeuzte65UYeeKJFQJCvsi3ZQJk5AfmWptwDpD2Xtz22nv1aTg5rmKq13ggB7Fkep',
+          to: 'FZAS4mtPvswgVxbpc117SqfNgCDLTCtk5CoeAtt58FWU',
+          metadata: {
+            name: 'Tatum',
+            symbol: 'TTM',
+            uri: 'https://tatum.io/images/logo/logo.svg',
+            sellerFeeBasisPoints: 0,
+            mutable: true,
+            collection: '2jEzQa8krppfkYmeg6zU8JwHUmgM2djqz1wv6gsMurGM',
+          },
+        },
+        undefined,
+        undefined,
+        undefined,
+        '2B7RyZEuZr9PpfRrn7nYhSXhjeuzte65UYeeKJFQJCvsi3ZQJk5AfmWptwDpD2Xtz22nv1aTg5rmKq13ggB7Fkep',
+      ),
     )
   })
 
@@ -122,7 +218,13 @@ describe('SolanaSDK - tx', () => {
         signatureId:
           '2B7RyZEuZr9PpfRrn7nYhSXhjeuzte65UYeeKJFQJCvsi3ZQJk5AfmWptwDpD2Xtz22nv1aTg5rmKq13ggB7Fkep',
         to: 'FZAS4mtPvswgVxbpc117SqfNgCDLTCtk5CoeAtt58FWU',
-        metadata: new SolanaNftMetadata('Tatum', 'TTM', 'https://tatum.io/images/logo/logo.svg', 0),
+        metadata: {
+          name: 'Tatum',
+          symbol: 'TTM',
+          uri: 'https://tatum.io/images/logo/logo.svg',
+          sellerFeeBasisPoints: 0,
+          mutable: true,
+        },
       }),
     )
   })

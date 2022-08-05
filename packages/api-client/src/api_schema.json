@@ -45,10 +45,6 @@
       "name": "Malicious address"
     },
     {
-      "description": "<p>Custodial API is a set of operatinos, which allows you to work with managed blockchain addresses without having its private key.\nYou can easily create new managed address and export its details - with private key as well - once required.<br/>\nThis features are currently in <b>Alpha version</b>.</p>\n",
-      "name": "Custodial managed wallets"
-    },
-    {
       "description": "<p>An endpoint to handle operations in Tatum Virtual accounts and on the blockchain, generate blockchain addresses, and link them to accounts.<br/>\nThere are 2 main concepts within Tatum Virtual accounts and blockchains:\n<ul>\n<li>Tatum account with a generated blockchain address - customers can use Tatum's private ledger transactions, send funds to blockchain addresses, and receive funds from blockchain users.</li>\n<li>Tatum account with no blockchain address generated - an account generated on the private ledger with a currency like BTC, but without a blockchain address associated with it. Customers can send and receive funds within Tatum Private Ledger and send assets to the blockchain. However, it is impossible to receive funds from the blockchain.</li>\n</ul></p>\n",
       "name": "Blockchain addresses"
     },
@@ -125,7 +121,7 @@
       "name": "Cardano"
     },
     {
-      "description": "<p>Custodial API is a set of operatinos, which allows you to work with managed blockchain addresses without having its private key.\nYou can easily create new managed address and export its details - with private key as well - once required.<br/>\nThis features are currently in <b>Alpha version</b>.</p>\n",
+      "description": "<p>Custodial API is a set of operations, which allows you to work with managed blockchain addresses without having its private key.\nYou can easily create new managed address and export its details - with private key as well - once required.<br/>\nThis features are currently in <b>Alpha version</b>.</p>\n",
       "name": "Custodial managed wallets"
     },
     {
@@ -9099,7 +9095,7 @@
     },
     "/v3/subscription": {
       "post": {
-        "description": "<h4>2 credits for API call. Every type of subscription has different credit pricing.</h4><br/>\n<p>Create new subscription as a HTTP Web Hook. Currently Tatum support multiple subscription types:\n<ul>\n<li><b>ADDRESS_TRANSACTION</b> - Enable HTTP POST JSON notifications for any blockchain transactions at the specified address.<br/>\nThis webhook will be sent when a transaction arrives to or is sent from the blockchain address specified in the call - this applies to both incoming/outgoing transactions in the native currency of the blockchain as well as any incoming/outgoing transactions for any type of token.\nFree community plans can monitor up to 10 addresses per plan.<br/><br/>\nPlease refer to the availability and consumption table below.\n<table>\n  <tr>\n    <th>Chain</th>\n    <th>Testnet/Mainnet</th>\n    <th>Token assets support</th>\n    <th>Plan limitation</th>\n    <th>Credit consumption / day / address</th>\n  </tr>\n  <tr>\n    <td>Solana</td>\n    <td>Yes/Yes</td>\n    <td>SOL, SPL and NFTs</td>\n    <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>\n    <td>50 credits / day / address</td>\n  </tr>\n  <tr>\n    <td>Ethereum</td>\n    <td>Yes/Yes</td>\n    <td>ETH, Internal transfers, ERC20, ERC721, ERC1155</td>\n    <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>\n    <td>25 credits / day / address</td>\n  </tr>\n  <tr>\n    <td>Polygon</td>\n    <td>Yes/Yes</td>\n    <td>MATIC, ERC20, ERC721, ERC1155</td>\n    <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>\n    <td>40 credits / day / address</td>\n  </tr>\n  <tr>\n    <td>Celo</td>\n    <td>Yes/Yes</td>\n    <td>CELO, Internal transfers, ERC20, ERC721, ERC1155</td>\n    <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>\n    <td>25 credits / day / address</td>\n  </tr>\n  <tr>\n    <td>Klaytn</td>\n    <td>Yes/Yes</td>\n    <td>Klay, ERC20, ERC721, ERC1155</td>\n    <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>\n    <td>25 credits / day / address</td>\n  </tr>\n  <tr>\n    <td>Bitcoin</td>\n    <td>Yes/Yes</td>\n    <td>BTC</td>\n    <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>\n    <td>20 credits / day / address</td>\n  </tr>\n  <tr>\n    <td>Litecoin</td>\n    <td>Yes/Yes</td>\n    <td>LTC</td>\n    <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>\n    <td>20 credits / day / address</td>\n  </tr>\n  <tr>\n    <td>Bitcoin Cash</td>\n    <td>Yes/Yes</td>\n    <td>BCH, only incoming transactions</td>\n    <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>\n    <td>20 credits / day / address</td>\n  </tr>\n  <tr>\n    <td>Dogecoin</td>\n    <td>Yes/Yes</td>\n    <td>DOGE, only incoming transactions</td>\n    <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>\n    <td>20 credits / day / address</td>\n  </tr>\n   <tr>\n    <td>Tron</td>\n    <td>Yes/Yes</td>\n    <td>Tron, TRC10/TRC20</td>\n    <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>\n    <td>30 credits / day / address</td>\n  </tr>\n  <tr>\n    <td>Binance Smart Chain</td>\n    <td>Yes/Yes</td>\n    <td>BSC, BEP20, ERC721, ERC1155</td>\n    <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>\n    <td>40 credits / day / address</td>\n  </tr>\n</table>\nRequest body of the POST request will be JSON object with attributes:<br/>\n<pre>{\n  \"address\": \"FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ\", // address on which the transaction occurs. For EVM chains, this is recipient address\n  \"txId\": \"2rdy3YCZHSwvpWtuDom1d4Jjy5UU9STLxF3ffXau6GToReDkfw8wEgX541fvzvh6btVC5D8iNapcKTXfPsoDBk7A\", // transaction id\n  \"blockNumber\": 110827114, // block number\n  \"asset\": \"3gUeeR3BfVhukYJMwtHownRtRkGcf1bvwiV8TbKMZBVz\", // Asset of transaction, for token assets it is address of that token, for native name of the native asset like SOL\n  \"amount\": \"1\", // amount of the asset that was credited (+) or debited (-) from the address. In case of EVM chains, amount is always positive when counterAddress is present\n  \"tokenId\": \"1\", // ID of the transferred token, if it is ERC721 / ERC1155\n  \"type\": \"token\", // type of transaction, could be 'native' or 'token'\n  \"counterAddress\": undefined // optional counter party address of the transaction. For EVM chains, this is recipient address\n}</pre>\n5 credits will be debited for every fired webhook.<br/></li>\n<li><b>ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION</b> - Enable HTTP POST JSON notifications on incoming blockchain transactions on virtual accounts.\nThis web hook will be invoked, when the transaction is credited to the virtual account. Transaction is credited, when it has sufficient amount of blockchain confirmations.\nFor BTC, LTC, BCH, DOGE - 2 confirmations, others - 1 confirmation.\nRequest body of the POST request will be JSON object with attributes:<br/>\n<pre>{\n  \"date\": 1619176527481,\n  \"amount\": \"0.005\",\n  \"currency\": \"BTC\",\n  \"accountId\": \"6082ab462936b4478117c6a0\",\n  \"reference: \"c9875708-4ba3-41c9-a4cd-271048b41b9a\", // ledger transaction reference\n  \"txId\": \"45af182a0ffab58e5ba32fee57b297b2260c6e23a1de5ddc76c7ee22d72dea99\",\n  \"blockHash\": \"45af182a0ffab58e5ba32fee57b297b2260c6e23a1de5ddc76c7ee22d72dea99\", // hash of the block, might not be present all the time\n  \"blockHeight\": 12345,\n  \"from\": \"SENDER_ADDRESS\", // might not ebe present all the time, for UTXO based blockchains it's not there\n  \"to\": \"RECIPIENT_ADDRESS_CONNECTED_TO_LEDGER_ACCOUNT\", // blockchain address of the recipient\n  \"index\": 5 // for UTXO based chains (BTC,LTC,DOGE,BCH,ADA) this is the index of the output in the transaction\n}</pre>\n1 credit will be debited for every monitored account every day.</li>\n<li><b>ACCOUNT_PENDING_BLOCKCHAIN_TRANSACTION</b> - Enable HTTP POST JSON notifications on incoming blockchain transactions on virtual accounts.\nThis web hook will be invoked, when the transaction appears for the first time in the block - it has 1 confirmation, but is still not credited to the ledger account, because it does not have enough confirmations.\nThis web hook is invoked only for BTC, LTC, DOGE and BCH accounts.\nRequest body of the POST request will be JSON object with attributes:<br/>\n<pre>{\n  \"date\": 1619176527481,\n  \"amount\": \"0.005\",\n  \"currency\": \"BTC\",\n  \"accountId\": \"6082ab462936b4478117c6a0\",\n  \"reference: \"c9875708-4ba3-41c9-a4cd-271048b41b9a\", // ledger transaction reference\n  \"txId\": \"45af182a0ffab58e5ba32fee57b297b2260c6e23a1de5ddc76c7ee22d72dea99\",\n  \"blockHash\": \"45af182a0ffab58e5ba32fee57b297b2260c6e23a1de5ddc76c7ee22d72dea99\", // hash of the block, might not be present all the time\n  \"blockHeight\": 12345,\n  \"from\": \"SENDER_ADDRESS\", // might not ebe present all the time, for UTXO based blockchains it's not there\n  \"to\": \"RECIPIENT_ADDRESS_CONNECTED_TO_LEDGER_ACCOUNT\", // blockchain address of the recipient\n  \"index\": 5 // for UTXO based chains (BTC,LTC,DOGE,BCH,ADA) this is the index of the output in the transaction\n}</pre>\n1 credit will be debited for every monitored account every day.</li>\n<li><b>CUSTOMER_TRADE_MATCH</b> - Enable HTTP POST JSON notifications on closed trade, which occurs on any customer account.\nThis web hook will be invoked, when the open trade is filled and closed. Works also for the Trade Futures. If is triggered by the futures, bool field expiredWithoutMatch is present.\nRequest body of the POST request will be JSON object with attributes:<br/>\n<pre>{\n  \"created\": 1619176527481,\n  \"amount\": \"0.005\",\n  \"price\": \"0.02\",\n  \"type\": \"SELL\",\n  \"pair\": \"VC_CHF/VC_CHF3\",\n  \"id\": \"6082ab462936b4478117c6a0\", // id of the trade\n  \"currency1AccountId\": \"6082ab462936b4478117c6a0\",\n  \"currency2AccountId\": \"6082ab512936b4478117c6a2\",\n  \"fee\": null,\n  \"feeAccountId\": null,\n  \"isMaker\": true,\n  \"expiredWithoutMatch\": false\n}</pre>\n10 credits will be debited for every monitored customer every day.</li>\n<li><b>CUSTOMER_PARTIAL_TRADE_MATCH</b> - Enable HTTP POST JSON notifications on partialy filled trade, which occurs on any customer account.\nThis web hook will be invoked, when the open trade is partialy filled.\nRequest body of the POST request will be JSON object with attributes:<br/>\n<pre>{\n  \"created\": 1619176527481,\n  \"amount\": \"0.005\",\n  \"orderAmount\": \"0.1\",\n  \"price\": \"0.02\",\n  \"type\": \"SELL\",\n  \"pair\": \"VC_CHF/VC_CHF3\",\n  \"id\": \"6082ab462936b4478117c6a0\", // id of the trade\n  \"currency1AccountId\": \"6082ab462936b4478117c6a0\",\n  \"currency2AccountId\": \"6082ab512936b4478117c6a2\",\n  \"fee\": null,\n  \"feeAccountId\": null,\n  \"isMaker\": true,\n  \"expiredWithoutMatch\": false\n}</pre>\n10 credits will be debited for every monitored customer every day.</li>\n<li><b>TRANSACTION_IN_THE_BLOCK</b> - Enable HTTP POST JSON notifications on ledger => blockchain transaction, when transaction is included in the block.\nThis web hook will be invoked, when the outgoing transaction is included in the block.\nRequest body of the POST request will be JSON object with attributes:<br/>\n<pre>\n  {\n    \"txId\": \"0x026f4f05b972c09279111da13dfd20d8df04eff436d7f604cd97b9ffaa690567\",\n    \"reference\": \"90270634-5b07-4fad-b17b-f82899953533\",\n    \"accountId\": \"6086ed0744c45b24d4fbd039\",\n    \"currency\": \"BSC\",\n    \"withdrawalId\": \"608fe5b73a893234ba379ab2\",\n    \"address\": \"0x8ce4e40889a13971681391AAd29E88eFAF91f784\",\n    \"amount\": \"0.1\",\n    \"blockHeight\": 8517664\n  }</pre>\n10 credits will be debited every day, 1 credit for every included transaction notified via web hook.</li>\n<li><b>KMS_FAILED_TX</b> - Enable HTTP POST JSON notifications on error during KMS signature process.\nThis web hook will be invoked, when the Tatum KMS receives error during processing transactions.\nRequest body of the POST request will be JSON object with attributes:<br/>\n<pre>{\n  \"signatureId\": \"6082ab462936b4478117c6a0\",\n  \"error\": \"Error message from the KMS\"\n}</pre>\n10 credits will be debited every day.</li>\n<li><b>KMS_COMPLETED_TX</b> - Enable HTTP POST JSON notifications on successful completion of KMS signature process.\nThis web hook will be invoked, when the Tatum KMS successfully completes the signature during processing transactions.\nRequest body of the POST request will be JSON object with attributes:<br/>\n<pre>{\n  \"signatureId\": \"6082ab462936b4478117c6a0\",\n  \"txId\": \"0x7bb7d3b90567e89f999f2e3d263bc3738a018dbbcfa9f5397678cf17cdf0235f\"\n}</pre>\n10 credits will be debited every day.</li>\n<li><b>OFFCHAIN_WITHDRAWAL</b> - Off-chain scanning of outgoing transactions for BTC, BCH, LTC, DOGE and ETH blockchains - by default addresses in registered for off-chain\nscanning are synchronized only against incoming transactions. By enabling this feature, off-chain accounts with connected blockchain addresses\nwill be scanned also for outgoing transactions. This transaction wil be recorder to the ledger and account balance will be decreased - don't use it if you perform your own transactions\nfrom the account to the blockchain.<br/>\n20 credits will be debited for every address registered for scanning every day.</li>\n<li><b>ACCOUNT_BALANCE_LIMIT</b> - Report with all account balances above desired limit.</li>\n<li><b>TRANSACTION_HISTORY_REPORT</b> - Report with all ledger transactions for last X hours, where X is set by the subscription attribute as interval.\nMaximum number of transactions returned by this report is 20000. Transactions are obtained from the time of the invocation of the GET method to obtain report - X hours.</li>\n</ul>\nIn case of unsuccesful web hook response status - other then 2xx - web hook is repeated 9 more times with exponential backoff.\nParameters are T = 15 * 2.7925^9, where 15 is interval in s, backoff rate is 2.7925 and 9 is current number of retries. Last web hook is fired after 24 hours approximatelly. After last failed attempt, web hook is deleted from our system. The 2xx response must be returned in 10 seconds after web hook is fired.<br/>\nResult of the operation is subscription ID, which can be used to cancel subscription or obtain additional data connected to it like reports.</p>\n",
+        "description": "<p><b>2 credits per API call + credits spent on subscriptions themselves<br/>\nEach subscription type consumes a different number of credits.</b></p>\n<p>Create a subscription as an HTTP web hook.</p>\n<p>The following subscription types are available:</p>\n<ul>\n<li><b>ADDRESS_TRANSACTION</b> - Enable HTTP POST JSON notifications for any blockchain transaction (both incoming and outgoing) at a specified address. This notification applies to transactions in the native blockchain currency or with any type of blockchain tokens.<br/>\n- For <b>EMV-based blockchains</b> (ETH), this web hook is first invoked when a transaction appears in the mempool, and then it is invoked again once the transaction is added to a block.<br/>\n- For the <b>other blockchains</b>, this webhook is invoked when a transaction is added to a block.<br/>\nFree community plans can monitor up to 10 addresses per plan.<br/>\nThe following table describes the availability of this notification type on different blockchains and the credit consumption:<br/>\n<table>\n  <tr>\n    <th>Chain</th>\n    <th>Testnet/Mainnet</th>\n    <th>Token assets support</th>\n    <th>Plan limitation</th>\n    <th>Credit consumption / day / address</th>\n  </tr>\n  <tr>\n    <td>Solana</td>\n    <td>Yes/Yes</td>\n    <td>SOL, SPL and NFTs</td>\n    <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>\n    <td>50 credits / day / address</td>\n  </tr>\n  <tr>\n    <td>Ethereum</td>\n    <td>Yes/Yes</td>\n    <td>ETH, Internal transfers, ERC20, ERC721, ERC1155</td>\n    <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>\n    <td>25 credits / day / address</td>\n  </tr>\n  <tr>\n    <td>Polygon</td>\n    <td>Yes/Yes</td>\n    <td>MATIC, ERC20, ERC721, ERC1155</td>\n    <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>\n    <td>40 credits / day / address</td>\n  </tr>\n  <tr>\n    <td>Celo</td>\n    <td>Yes/Yes</td>\n    <td>CELO, Internal transfers, ERC20, ERC721, ERC1155</td>\n    <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>\n    <td>25 credits / day / address</td>\n  </tr>\n  <tr>\n    <td>Klaytn</td>\n    <td>Yes/Yes</td>\n    <td>Klay, ERC20, ERC721, ERC1155</td>\n    <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>\n    <td>25 credits / day / address</td>\n  </tr>\n  <tr>\n    <td>Bitcoin</td>\n    <td>Yes/Yes</td>\n    <td>BTC</td>\n    <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>\n    <td>20 credits / day / address</td>\n  </tr>\n  <tr>\n    <td>Litecoin</td>\n    <td>Yes/Yes</td>\n    <td>LTC</td>\n    <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>\n    <td>20 credits / day / address</td>\n  </tr>\n  <tr>\n    <td>Bitcoin Cash</td>\n    <td>Yes/Yes</td>\n    <td>BCH, only incoming transactions</td>\n    <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>\n    <td>20 credits / day / address</td>\n  </tr>\n  <tr>\n    <td>Dogecoin</td>\n    <td>Yes/Yes</td>\n    <td>DOGE, only incoming transactions</td>\n    <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>\n    <td>20 credits / day / address</td>\n  </tr>\n   <tr>\n    <td>Tron</td>\n    <td>Yes/Yes</td>\n    <td>Tron, TRC10/TRC20</td>\n    <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>\n    <td>30 credits / day / address</td>\n  </tr>\n  <tr>\n    <td>Binance Smart Chain</td>\n    <td>Yes/Yes</td>\n    <td>BSC, BEP20, ERC721, ERC1155</td>\n    <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>\n    <td>40 credits / day / address</td>\n  </tr>\n</table>\nThe request body of the POST request is a JSON object with the following structure:<br/>\n<pre>{\n  \"address\": \"FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ\", // the address on which the transaction occurs; for EVM-based chains, this is the recipient's address\n  \"txId\": \"2rdy3YCZHSwvpWtuDom1d4Jjy5UU9STLxF3ffXau6GToReDkfw8wEgX541fvzvh6btVC5D8iNapcKTXfPsoDBk7A\", // the transaction ID\n  \"blockNumber\": 110827114, // the block number; does not appear if the transaction is in the mempool (for EMV-based blockchains)\n  \"asset\": \"3gUeeR3BfVhukYJMwtHownRtRkGcf1bvwiV8TbKMZBVz\", // the asset of the transaction: for token assets, this is the token address; for native blochckain assets, this is the name of the asset (for example, SOL)\n  \"amount\": \"1\", // the amount of the asset that was credited to (+) or debited from (-) the address; for EVM-based chains, when \"counterAddress\" is present, the amount is always positive\n  \"tokenId\": \"1\", // (ERC-721 / ERC-1155 only) the ID of the transferred token\n  \"type\": \"token\", // the type of the transaction; can be either \"native\" or \"token\"\n  \"mempool\": true, // (EMV-based blockchains only) if appears and set to \"true\", the transaction is in the mempool; if set to \"false\" or does not appear at all, the transaction has been added to a block\n  \"counterAddress\": undefined // an optional counter party address of the transaction; for EVM-based blockchains, this is the recipient's address\n}</pre>\n5 credits are debited for each fired web hook.<br/></li>\n<li><b>ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION</b> - Enable HTTP POST JSON notifications about incoming blockchain transactions on virtual accounts.\nThis web hook is invoked when an incoming transaction is reflected on the balance of the virtual account (the balance is credited with the transaction amount). This happens when the transaction has the sufficient number of blockchain confirmations: two confirmations for BTC, LTC, BCH, and DOGE, and one confirmation for the other blockchains.<br/>\nThe request body of the POST request is a JSON object with the following structure:\n<pre>{\n  \"date\": 1619176527481,\n  \"amount\": \"0.005\",\n  \"currency\": \"BTC\",\n  \"accountId\": \"6082ab462936b4478117c6a0\",\n  \"reference: \"c9875708-4ba3-41c9-a4cd-271048b41b9a\", // the reference of the transaction in the virtual account\n  \"txId\": \"45af182a0ffab58e5ba32fee57b297b2260c6e23a1de5ddc76c7ee22d72dea99\",\n  \"blockHash\": \"45af182a0ffab58e5ba32fee57b297b2260c6e23a1de5ddc76c7ee22d72dea99\", // the hash of the block, might not be present every time\n  \"blockHeight\": 12345,\n  \"from\": \"SENDER_ADDRESS\", // might not be present every time; not present for UTXO-based blockchains\n  \"to\": \"RECIPIENT_ADDRESS_CONNECTED_TO_LEDGER_ACCOUNT\", // the blockchain address of the recipient\n  \"index\": 5 // for UTXO-based blockchains (ADA, BCH, BTC, DOGE, LTC), this is the index of the output in the transaction\n}</pre>\n1 credit is debited for each monitored account every day.</li>\n<li><b>ACCOUNT_PENDING_BLOCKCHAIN_TRANSACTION</b> - Enable HTTP POST JSON notifications about incoming blockchain transactions on virtual accounts.<br />\nThis web hook is supported only for ADA, BCH, BTC, DOGE, ETH, and LTC accounts.<br />\n- For <b>BTC-based blockchains</b> (ADA, BCH, BTC, DOGE, and LTC), this web hook is invoked when an incoming transaction appears in a block for the first time. At that time, the transaction has one confirmation but this is not enough for the transaction to be reflected on the balance of the virtual account yet. Instead, a deposit corresponding to the pending transaction with a status of \"in progress\" appears on the virtual account. Once the transaction is added to the block, the deposit's status changes to \"done\", and the account balance gets updated.<br />\n- For <b>EMV-based blockchains</b> (ETH), this web hook is invoked when an incoming transaction appears in the mempool. The virtual account balance is not updated until the transaction is added to a block. Instead, a deposit corresponding to the pending transaction with a status of \"in progress\" appears on the virtual account. Once the transaction is added to the block, the deposit's status changes to \"done\", and the account balance gets updated.<br />\nThe request body of the POST request is a JSON object with the following structure:<br/>\n<pre>{\n  \"date\": 1619176527481,\n  \"amount\": \"0.005\",\n  \"currency\": \"BTC\",\n  \"accountId\": \"6082ab462936b4478117c6a0\",\n  \"reference: \"c9875708-4ba3-41c9-a4cd-271048b41b9a\", // the reference of the transaction in the virtual account\n  \"txId\": \"45af182a0ffab58e5ba32fee57b297b2260c6e23a1de5ddc76c7ee22d72dea99\",\n  \"blockHash\": \"45af182a0ffab58e5ba32fee57b297b2260c6e23a1de5ddc76c7ee22d72dea99\", // the hash of the block, might not be present every time; if set to \"null\", the transaction is in the mempool (for EMV-based blockchains)\n  \"blockHeight\": 12345, // if set to \"null\", the transaction is in the mempool (for EMV-based blockchains)\n  \"from\": \"SENDER_ADDRESS\", // might not be present every time; not present for UTXO-based blockchains (ADA, BCH, BTC, DOGE, LTC)\n  \"to\": \"RECIPIENT_ADDRESS_CONNECTED_TO_LEDGER_ACCOUNT\", // the blockchain address of the recipient\n  \"index\": 5 // for UTXO-based blockchains (ADA, BCH, BTC, DOGE, LTC), this is the index of the output in the transaction\n}</pre>\n1 credit is debited for each monitored account every day.</li>\n<li><b>CUSTOMER_TRADE_MATCH</b> - Enable HTTP POST JSON notifications on closed trade, which occurs on any customer account.\nThis web hook will be invoked, when the open trade is filled and closed. Works also for the Trade Futures. If is triggered by the futures, bool field expiredWithoutMatch is present.\nRequest body of the POST request will be JSON object with attributes:<br/>\n<pre>{\n  \"created\": 1619176527481,\n  \"amount\": \"0.005\",\n  \"price\": \"0.02\",\n  \"type\": \"SELL\",\n  \"pair\": \"VC_CHF/VC_CHF3\",\n  \"id\": \"6082ab462936b4478117c6a0\", // id of the trade\n  \"currency1AccountId\": \"6082ab462936b4478117c6a0\",\n  \"currency2AccountId\": \"6082ab512936b4478117c6a2\",\n  \"fee\": null,\n  \"feeAccountId\": null,\n  \"isMaker\": true,\n  \"expiredWithoutMatch\": false\n}</pre>\n10 credits will be debited for every monitored customer every day.</li>\n<li><b>CUSTOMER_PARTIAL_TRADE_MATCH</b> - Enable HTTP POST JSON notifications on partialy filled trade, which occurs on any customer account.\nThis web hook will be invoked, when the open trade is partialy filled.\nRequest body of the POST request will be JSON object with attributes:<br/>\n<pre>{\n  \"created\": 1619176527481,\n  \"amount\": \"0.005\",\n  \"orderAmount\": \"0.1\",\n  \"price\": \"0.02\",\n  \"type\": \"SELL\",\n  \"pair\": \"VC_CHF/VC_CHF3\",\n  \"id\": \"6082ab462936b4478117c6a0\", // id of the trade\n  \"currency1AccountId\": \"6082ab462936b4478117c6a0\",\n  \"currency2AccountId\": \"6082ab512936b4478117c6a2\",\n  \"fee\": null,\n  \"feeAccountId\": null,\n  \"isMaker\": true,\n  \"expiredWithoutMatch\": false\n}</pre>\n10 credits will be debited for every monitored customer every day.</li>\n<li><b>TRANSACTION_IN_THE_BLOCK</b> - Enable HTTP POST JSON notifications on ledger => blockchain transaction, when transaction is included in the block.\nThis web hook will be invoked, when the outgoing transaction is included in the block.\nRequest body of the POST request will be JSON object with attributes:<br/>\n<pre>\n  {\n    \"txId\": \"0x026f4f05b972c09279111da13dfd20d8df04eff436d7f604cd97b9ffaa690567\",\n    \"reference\": \"90270634-5b07-4fad-b17b-f82899953533\",\n    \"accountId\": \"6086ed0744c45b24d4fbd039\",\n    \"currency\": \"BSC\",\n    \"withdrawalId\": \"608fe5b73a893234ba379ab2\",\n    \"address\": \"0x8ce4e40889a13971681391AAd29E88eFAF91f784\",\n    \"amount\": \"0.1\",\n    \"blockHeight\": 8517664\n  }</pre>\n10 credits will be debited every day, 1 credit for every included transaction notified via web hook.</li>\n<li><b>KMS_FAILED_TX</b> - Enable HTTP POST JSON notifications on error during KMS signature process.\nThis web hook will be invoked, when the Tatum KMS receives error during processing transactions.\nRequest body of the POST request will be JSON object with attributes:<br/>\n<pre>{\n  \"signatureId\": \"6082ab462936b4478117c6a0\",\n  \"error\": \"Error message from the KMS\"\n}</pre>\n10 credits will be debited every day.</li>\n<li><b>KMS_COMPLETED_TX</b> - Enable HTTP POST JSON notifications on successful completion of KMS signature process.\nThis web hook will be invoked, when the Tatum KMS successfully completes the signature during processing transactions.\nRequest body of the POST request will be JSON object with attributes:<br/>\n<pre>{\n  \"signatureId\": \"6082ab462936b4478117c6a0\",\n  \"txId\": \"0x7bb7d3b90567e89f999f2e3d263bc3738a018dbbcfa9f5397678cf17cdf0235f\"\n}</pre>\n10 credits will be debited every day.</li>\n<li><b>OFFCHAIN_WITHDRAWAL</b> - Off-chain scanning of outgoing transactions for BTC, BCH, LTC, DOGE and ETH blockchains - by default addresses in registered for off-chain\nscanning are synchronized only against incoming transactions. By enabling this feature, off-chain accounts with connected blockchain addresses\nwill be scanned also for outgoing transactions. This transaction wil be recorder to the ledger and account balance will be decreased - don't use it if you perform your own transactions\nfrom the account to the blockchain.<br/>\n20 credits will be debited for every address registered for scanning every day.</li>\n<li><b>ACCOUNT_BALANCE_LIMIT</b> - Report with all account balances above desired limit.</li>\n<li><b>TRANSACTION_HISTORY_REPORT</b> - Report with all ledger transactions for last X hours, where X is set by the subscription attribute as interval.\nMaximum number of transactions returned by this report is 20000. Transactions are obtained from the time of the invocation of the GET method to obtain report - X hours.</li>\n</ul>\nIn case of unsuccesful web hook response status - other then 2xx - web hook is repeated 9 more times with exponential backoff.\nParameters are T = 15 * 2.7925^9, where 15 is interval in s, backoff rate is 2.7925 and 9 is current number of retries. Last web hook is fired after 24 hours approximatelly. After last failed attempt, web hook is deleted from our system. The 2xx response must be returned in 10 seconds after web hook is fired.<br/>\nResult of the operation is subscription ID, which can be used to cancel subscription or obtain additional data connected to it like reports.</p>\n",
         "operationId": "createSubscription",
         "requestBody": {
           "content": {
@@ -9169,7 +9165,7 @@
         },
         "security": [{ "X-API-Key": [] }],
         "x-codeSamples": [],
-        "summary": "Create new subscription",
+        "summary": "Create a subscription",
         "tags": ["Notification subscriptions"]
       },
       "get": {
@@ -22945,7 +22941,7 @@
             "in": "path",
             "name": "chain",
             "required": true,
-            "schema": { "type": "string", "example": "ETH", "enum": ["CELO", "MATIC", "ETH"] }
+            "schema": { "type": "string", "example": "ETH", "enum": ["CELOz", "MATIC", "ETH"] }
           },
           {
             "description": "Max number of items per page is 50.",
@@ -70051,14 +70047,14 @@
           },
           "to": {
             "maxLength": 44,
-            "minLength": 44,
+            "minLength": 43,
             "description": "Blockchain address to send NFT token to",
             "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
             "type": "string"
           },
           "from": {
             "maxLength": 44,
-            "minLength": 44,
+            "minLength": 43,
             "description": "Blockchain address to mint NFT token from. From this account, transaction fee will be paid.",
             "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
             "type": "string"
@@ -70070,61 +70066,7 @@
             "minLength": 128,
             "description": "Private key of sender address."
           },
-          "metadata": {
-            "type": "object",
-            "required": ["name", "symbol", "uri", "sellerFeeBasisPoints"],
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "Name of the NFT token.",
-                "example": "My NFT.",
-                "maxLength": 255
-              },
-              "symbol": {
-                "type": "string",
-                "description": "Symbol of the NFT token.",
-                "example": "NFT_SYMBOL",
-                "maxLength": 255
-              },
-              "sellerFeeBasisPoints": {
-                "type": "number",
-                "description": "Basis points of the seller fee.",
-                "example": 0
-              },
-              "uri": {
-                "description": "Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.",
-                "example": "https://my_token_data.com",
-                "type": "string",
-                "maxLength": 500
-              },
-              "creators": {
-                "type": "array",
-                "description": "Royalty receivers for NFT transfers.",
-                "items": {
-                  "required": ["address", "verified", "share"],
-                  "properties": {
-                    "address": {
-                      "type": "string",
-                      "description": "Address of the creator.",
-                      "maxLength": 44,
-                      "minLength": 44,
-                      "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ"
-                    },
-                    "verified": {
-                      "type": "number",
-                      "description": "If the creator was verified.",
-                      "example": 1
-                    },
-                    "share": {
-                      "type": "number",
-                      "description": "How much percent should be sent to this creator.",
-                      "example": 10
-                    }
-                  }
-                }
-              }
-            }
-          }
+          "metadata": { "$ref": "#/components/schemas/SolanaNftMetadata" }
         },
         "required": ["to", "chain", "fromPrivateKey", "from", "metadata"]
       },
@@ -70144,61 +70086,7 @@
             "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
             "type": "string"
           },
-          "metadata": {
-            "type": "object",
-            "required": ["name", "symbol", "uri", "sellerFeeBasisPoints"],
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "Name of the NFT token.",
-                "example": "My NFT.",
-                "maxLength": 255
-              },
-              "symbol": {
-                "type": "string",
-                "description": "Symbol of the NFT token.",
-                "example": "NFT_SYMBOL",
-                "maxLength": 255
-              },
-              "sellerFeeBasisPoints": {
-                "type": "number",
-                "description": "Basis points of the seller fee.",
-                "example": 0
-              },
-              "uri": {
-                "description": "The link to the NFT metadata on Solana. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.",
-                "example": "https://my_token_data.com",
-                "type": "string",
-                "maxLength": 500
-              },
-              "creators": {
-                "type": "array",
-                "description": "Royalty receivers for NFT transfers.",
-                "items": {
-                  "required": ["address", "verified", "share"],
-                  "properties": {
-                    "address": {
-                      "type": "string",
-                      "description": "Address of the creator.",
-                      "maxLength": 44,
-                      "minLength": 44,
-                      "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ"
-                    },
-                    "verified": {
-                      "type": "number",
-                      "description": "If the creator was verified.",
-                      "example": 1
-                    },
-                    "share": {
-                      "type": "number",
-                      "description": "How much percent should be sent to this creator.",
-                      "example": 10
-                    }
-                  }
-                }
-              }
-            }
-          }
+          "metadata": { "$ref": "#/components/schemas/SolanaNftMetadata" }
         },
         "required": ["to", "chain", "metadata"]
       },
@@ -70233,63 +70121,78 @@
             "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
             "description": "Identifier of the private key associated in signing application. Private key, or signature Id must be present."
           },
-          "metadata": {
-            "type": "object",
-            "required": ["name", "symbol", "uri", "sellerFeeBasisPoints"],
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "Name of the NFT token.",
-                "example": "My NFT.",
-                "maxLength": 255
-              },
-              "symbol": {
-                "type": "string",
-                "description": "Symbol of the NFT token.",
-                "example": "NFT_SYMBOL",
-                "maxLength": 255
-              },
-              "sellerFeeBasisPoints": {
-                "type": "number",
-                "description": "Basis points of the seller fee.",
-                "example": 0
-              },
-              "uri": {
-                "description": "Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.",
-                "example": "https://my_token_data.com",
-                "type": "string",
-                "maxLength": 500
-              },
-              "creators": {
-                "type": "array",
-                "description": "Royalty receivers for NFT transfers.",
-                "items": {
-                  "required": ["address", "verified", "share"],
-                  "properties": {
-                    "address": {
-                      "type": "string",
-                      "description": "Address of the creator.",
-                      "maxLength": 44,
-                      "minLength": 44,
-                      "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ"
-                    },
-                    "verified": {
-                      "type": "boolean",
-                      "description": "If the creator was verified.",
-                      "example": 1
-                    },
-                    "share": {
-                      "type": "number",
-                      "description": "How much percent should be sent to this creator.",
-                      "example": 10
-                    }
-                  }
-                }
-              }
-            }
-          }
+          "metadata": { "$ref": "#/components/schemas/SolanaNftMetadata" }
         },
         "required": ["to", "chain", "signatureId", "metadata", "from"]
+      },
+      "SolanaNftMetadataCreator": {
+        "type": "object",
+        "required": ["address", "verified", "share"],
+        "properties": {
+          "address": {
+            "type": "string",
+            "description": "Address of the creator.",
+            "maxLength": 44,
+            "minLength": 44,
+            "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ"
+          },
+          "verified": {
+            "type": "boolean",
+            "description": "If the creator was verified. Verified creator can be only that address, which private key was used during the minting of the NFT. If you are minting via NFT Express, your custom creators must be set to false.",
+            "example": 1
+          },
+          "share": {
+            "type": "number",
+            "description": "How much percent should be sent to this creator.",
+            "example": 10
+          }
+        }
+      },
+      "SolanaNftMetadata": {
+        "type": "object",
+        "required": ["name", "symbol", "uri", "sellerFeeBasisPoints"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the NFT token.",
+            "example": "My NFT.",
+            "maxLength": 255
+          },
+          "symbol": {
+            "type": "string",
+            "description": "Symbol of the NFT token.",
+            "example": "NFT_SYMBOL",
+            "maxLength": 255
+          },
+          "sellerFeeBasisPoints": {
+            "type": "number",
+            "description": "Basis points of the seller fee.",
+            "example": 0
+          },
+          "uri": {
+            "description": "Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.",
+            "example": "https://my_token_data.com",
+            "type": "string",
+            "maxLength": 500
+          },
+          "collection": {
+            "maxLength": 44,
+            "minLength": 43,
+            "description": "Blockchain address of the Collection, where NFT will be minted in.",
+            "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
+            "type": "string"
+          },
+          "mutable": {
+            "type": "boolean",
+            "default": true,
+            "description": "If NFT metadata are mutable or not. Defaults to true."
+          },
+          "creators": {
+            "type": "array",
+            "description": "Royalty receivers for NFT transfers.",
+            "items": { "$ref": "#/components/schemas/SolanaNftMetadataCreator" }
+          }
+        }
       },
       "MintMultipleNft": {
         "type": "object",
