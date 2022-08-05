@@ -282,12 +282,12 @@ const mintNft = async (
         createMetadataAccountArgsV3: {
           data: {
             name: body.metadata.name,
-            collection: body.metadata.collection ? { key: collectionAccount, verified: false } : null,
+            collection: collectionAccount ? { key: collectionAccount, verified: false } : null,
             creators: body.metadata.creators?.map((c) => ({
               address: new PublicKey(c.address),
               verified: c.address === body.from ? true : c.verified,
               share: c.share,
-            })),
+            })) || null,
             sellerFeeBasisPoints: body.metadata.sellerFeeBasisPoints,
             symbol: body.metadata.symbol,
             uri: body.metadata.uri,
@@ -319,7 +319,7 @@ const mintNft = async (
     ),
   )
 
-  if (body.metadata.collection && collectionVerifierPrivateKey) {
+  if (collectionAccount && collectionVerifierPrivateKey) {
     const collectionMetadataAccount = await findMetadataProgramAddress(collectionAccount)
     const collectionMasterEditionAccount = await findMetadataProgramAddress(collectionAccount, true)
 
