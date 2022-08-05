@@ -20,8 +20,10 @@ import { request as __request } from '../core/request';
 export class NeoService {
 
     /**
+     * @deprecated
      * Generate NEO account
-     * <h4>5 credits per API call.</h4><br/>
+     * <h4>5 credits per API call</h4>
+     * <p><b>This endpoint is deprecated.</b></p><br/>
      * <p>Generate NEO account. Tatum does not support HD wallet for NEO, only specific address and private key can be generated.</p>
      *
      * @returns NeoWallet OK
@@ -39,8 +41,9 @@ export class NeoService {
     }
 
     /**
+     * @deprecated
      * Get current NEO block
-     * <h4>5 credits per API call.</h4><br/><p>Get current NEO block.</p>
+     * <h4>5 credits per API call</h4><p><b>This endpoint is deprecated.</b></p><br/><p>Get current NEO block.</p>
      * @returns number OK
      * @throws ApiError
      */
@@ -57,8 +60,9 @@ export class NeoService {
     }
 
     /**
+     * @deprecated
      * Get NEO block
-     * <h4>5 credits per API call.</h4><br/><p>Get NEO block by hash or height.</p>
+     * <h4>5 credits per API call</h4><p><b>This endpoint is deprecated.</b></p><br/><p>Get NEO block by hash or height.</p>
      * @param hash Block hash or height.
      * @returns NeoBlock OK
      * @throws ApiError
@@ -79,8 +83,9 @@ export class NeoService {
     }
 
     /**
+     * @deprecated
      * Get NEO Account balance
-     * <h4>5 credits per API call.</h4><br/><p>Get Balance of all assets (NEO, GAS, etc.) and tokens for the Account.</p>
+     * <h4>5 credits per API call</h4><p><b>This endpoint is deprecated.</b></p><br/><p>Get Balance of all assets (NEO, GAS, etc.) and tokens for the Account.</p>
      * @param address Address to get balance
      * @returns NeoAccount OK
      * @throws ApiError
@@ -101,8 +106,9 @@ export class NeoService {
     }
 
     /**
+     * @deprecated
      * Get Neo Asset details
-     * <h4>5 credits per API call.</h4><br/><p>Get information about asset.</p>
+     * <h4>5 credits per API call</h4><p><b>This endpoint is deprecated.</b></p><br/><p>Get information about asset.</p>
      * @param asset Asset ID
      * @returns NeoAsset OK
      * @throws ApiError
@@ -123,8 +129,9 @@ export class NeoService {
     }
 
     /**
+     * @deprecated
      * Get NEO unspent transaction outputs
-     * <h4>5 credits per API call.</h4><br/><p>Get NEO unspent transaction outputs.</p>
+     * <h4>5 credits per API call</h4><p><b>This endpoint is deprecated.</b></p><br/><p>Get NEO unspent transaction outputs.</p>
      * @param txId Transaction ID.
      * @param index Index of output.
      * @returns NeoTxOut OK
@@ -147,8 +154,9 @@ export class NeoService {
     }
 
     /**
+     * @deprecated
      * Get NEO Account transactions
-     * <h4>5 credits per API call.</h4><br/><p>Get NEO Account transactions.</p>
+     * <h4>5 credits per API call</h4><p><b>This endpoint is deprecated.</b></p><br/><p>Get NEO Account transactions.</p>
      * @param address
      * @returns NeoAccountTx OK
      * @throws ApiError
@@ -169,8 +177,9 @@ export class NeoService {
     }
 
     /**
+     * @deprecated
      * Get NEO contract details
-     * <h4>5 credits per API call.</h4><br/><p>Get NEO contract details.</p>
+     * <h4>5 credits per API call</h4><p><b>This endpoint is deprecated.</b></p><br/><p>Get NEO contract details.</p>
      * @param scriptHash Hash of smart contract
      * @returns NeoContract OK
      * @throws ApiError
@@ -191,8 +200,9 @@ export class NeoService {
     }
 
     /**
+     * @deprecated
      * Get NEO transaction by hash
-     * <h4>5 credits per API call.</h4><br/><p>Get NEO transaction by hash.</p>
+     * <h4>5 credits per API call</h4><p><b>This endpoint is deprecated.</b></p><br/><p>Get NEO transaction by hash.</p>
      * @param hash Transaction hash.
      * @returns NeoTx OK
      * @throws ApiError
@@ -213,8 +223,10 @@ export class NeoService {
     }
 
     /**
+     * @deprecated
      * Send NEO assets
-     * <h4>5 credits per API call.</h4><br/>
+     * <h4>5 credits per API call</h4>
+     * <p><b>This endpoint is deprecated.</b></p><br/>
      * <p>Send NEO assets from address to address. It is possible to send NEO and GAS in the same transaction.<br/><br/>
      * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
      * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey.
@@ -244,8 +256,10 @@ export class NeoService {
     }
 
     /**
+     * @deprecated
      * Claim GAS
-     * <h4>5 credits per API call.</h4><br/>
+     * <h4>5 credits per API call</h4><br/>
+     * <p><b>This endpoint is deprecated.</b></p><br/>
      * <p>Claim GAS for NEO account. Every account owner can claim for the GAS, which is produced for owning NEO on the address.<br/><br/>
      * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
      * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey.
@@ -275,8 +289,10 @@ export class NeoService {
     }
 
     /**
+     * @deprecated
      * Send NEO smart contract tokens
-     * <h4>5 credits per API call.</h4><br/>
+     * <h4>5 credits per API call</h4>
+     * <p><b>This endpoint is deprecated.</b></p><br/>
      * <p>Send NEO smart contract tokens. It is possible to transfer custom NEO-based tokens to another account.<br/><br/>
      * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
      * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey.
@@ -306,8 +322,10 @@ export class NeoService {
     }
 
     /**
+     * @deprecated
      * Broadcast NEO transaction
-     * <h4>5 credits per API call.</h4><br/>
+     * <h4>5 credits per API call</h4>
+     * <p><b>This endpoint is deprecated.</b></p><br/>
      * <p>Broadcast NEO transaction. This method is used internally or Tatum client libraries.
      * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
      *

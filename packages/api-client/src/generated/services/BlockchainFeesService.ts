@@ -68,13 +68,13 @@ export class BlockchainFeesService {
      * </p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
      * @returns any OK
      * @throws ApiError
      */
     public static ethEstimateGas(
         requestBody: EthEstimateGas,
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<{
         /**
          * Gas limit for transaction in gas price.
@@ -132,7 +132,7 @@ export class BlockchainFeesService {
      * </p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-ropsten.
+     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
      * @returns any OK
      * @throws ApiError
      */
@@ -140,7 +140,7 @@ export class BlockchainFeesService {
         requestBody: {
             estimations?: Array<EthEstimateGas>;
         },
-        xTestnetType: 'ethereum-ropsten' | 'ethereum-rinkeby' = 'ethereum-ropsten',
+        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<{
         /**
          * If all estimations succeeded.
@@ -414,8 +414,9 @@ export class BlockchainFeesService {
     }
 
     /**
+     * @deprecated
      * Get QTUM estimated gas fees
-     * <h4>1 credit per API call.</h4><br/><p>Get estimated gas fees</p>
+     * <h4>1 credit per API call</h4><p><b>This endpoint is deprecated.</b></p><br/><p>Get estimated gas fees</p>
      * @param nblocks nblocks
      * @returns any OK
      * @throws ApiError
@@ -436,8 +437,9 @@ export class BlockchainFeesService {
     }
 
     /**
+     * @deprecated
      * Get QTUM estimated gas fees per byte
-     * <h4>1 credit per API call.</h4><br/><p>Get estimated gas fees per byte</p>
+     * <h4>1 credit per API call</h4><p><b>This endpoint is deprecated.</b></p><br/><p>Get estimated gas fees per byte</p>
      * @param nblocks nblocks
      * @returns any OK
      * @throws ApiError

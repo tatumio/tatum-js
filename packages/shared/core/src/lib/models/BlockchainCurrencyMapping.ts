@@ -20,7 +20,6 @@ export const BlockchainCurrencyMapping: Record<
   DOGE: Currency.DOGE,
   BCH: Currency.BCH,
   SOL: Currency.SOL,
-  TERRA: Currency.LUNA,
   TRON: {
     nativeCurrency: Currency.TRON,
     currencies: TRON_CURRENCIES,

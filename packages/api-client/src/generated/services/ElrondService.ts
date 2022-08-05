@@ -116,10 +116,10 @@ export class ElrondService {
     /**
      * @deprecated
      * Node HTTP driver
-     * <h4>2 credits per API call.</h4><br/>
+     * <p><b>2 credits per API call</b></p>
+     * <p><b>This endpoint is deprecated. Use the <a href="https://apidoc.tatum.io/tag/Node-RPC" target="_blank">HTTP-based JSON RPC driver</a> instead.</b></p><br/>
      * <p>Use this endpoint URL as a http-based driver to connect directly to the EGLD node provided by Tatum.
-     * To learn more about EGLD, please visit <a href="https://docs.elrond.com/sdk-and-tools/rest-api/nodes/" target="_blank">EGLD developer's guide.</a></p>
-     * <br/><p><strong>This endpoint is deprecated</strong>, you should use <a href="#operation/NodeJsonPostRpcDriver">Blockchain/Node/RPC HTTP Driver</a></p>
+     * To learn more about EGLD, visit the <a href="https://docs.elrond.com/sdk-and-tools/rest-api/nodes/" target="_blank">EGLD developer's guide</a>.</p>
      *
      * @param xApiKey Tatum X-API-Key used for authorization.
      * @param requestBody
@@ -146,10 +146,10 @@ export class ElrondService {
     /**
      * @deprecated
      * Node HTTP driver
-     * <h4>2 credits per API call.</h4><br/>
+     * <p><b>2 credits per API call</b></p>
+     * <p><b>This endpoint is deprecated. Use the <a href="https://apidoc.tatum.io/tag/Node-RPC" target="_blank">HTTP-based JSON RPC driver</a> instead.</b></p><br/>
      * <p>Use this endpoint URL as a http-based driver to connect directly to the EGLD node provided by Tatum.
-     * To learn more about EGLD, please visit <a href="https://docs.elrond.com/sdk-and-tools/rest-api/nodes/" target="_blank">EGLD developer's guide.</a></p>
-     * <br/><p><strong>This endpoint is deprecated</strong>, you should use <a href="#operation/NodeJsonRpcGetDriver">Blockchain/Node/RPC HTTP Driver</a></p>
+     * To learn more about EGLD, visit the <a href="https://docs.elrond.com/sdk-and-tools/rest-api/nodes/" target="_blank">EGLD developer's guide</a>.</p>
      *
      * @param xApiKey Tatum X-API-Key used for authorization.
      * @returns any OK

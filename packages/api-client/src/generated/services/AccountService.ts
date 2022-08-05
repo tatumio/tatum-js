@@ -35,7 +35,6 @@ export class AccountService {
      * <li><b>XRP</b> - xpub is the address field from <a href="#operation/XrpWallet">generate account</a></li>
      * <li><b>XLM</b> - xpub is the address field from <a href="#operation/XlmWallet">generate account</a></li>
      * <li><b>BNB</b> - xpub is the address field from <a href="#operation/BnbGenerateWallet">generate account</a></li>
-     * <li><b>LUNA</b> - xpub is the address field from <a href="#operation/TerraGenerateWallet">generate account</a></li>
      * <li><b>BSC</b> - xpub can be obtained from <a href="#operation/BscGenerateWallet">generate wallet</a></li>
      * <li><b>EGLD</b> - no xpub, use address field from <a href="#operation/EgldGenerateWallet">generate wallet</a></li>
      * <li><b>ALGO</b> - no xpub, use address field from <a href="#operation/AlgoGenerateWallet">generate wallet</a></li>
@@ -86,9 +85,7 @@ export class AccountService {
      * @param onlyNonZeroBalance Filter only accounts with non zero balances
      * @param frozen Filter only frozen or non frozen accounts
      * @param currency Filter by currency
-     * @param accountCode Filter by account code
      * @param accountNumber Filter by account number
-     * @param customerId Filter by customer id
      * @returns Account OK
      * @throws ApiError
      */
@@ -96,14 +93,12 @@ export class AccountService {
         pageSize?: number,
         page?: number,
         sort?: 'asc' | 'desc',
-        sortBy?: '_id' | 'account_code' | 'customer_id' | 'account_balance' | 'available_balance',
+        sortBy?: '_id' | 'account_number' | 'account_balance' | 'available_balance',
         active?: boolean,
         onlyNonZeroBalance?: boolean,
         frozen?: boolean,
         currency?: string,
-        accountCode?: string,
         accountNumber?: string,
-        customerId?: string,
     ): CancelablePromise<Array<Account>> {
         return __request({
             method: 'GET',
@@ -117,9 +112,7 @@ export class AccountService {
                 'onlyNonZeroBalance': onlyNonZeroBalance,
                 'frozen': frozen,
                 'currency': currency,
-                'accountCode': accountCode,
                 'accountNumber': accountNumber,
-                'customerId': customerId,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
@@ -140,9 +133,7 @@ export class AccountService {
      * @param onlyNonZeroBalance Filter only accounts with non zero balances
      * @param frozen Filter only frozen or non frozen accounts
      * @param currency Filter by currency
-     * @param accountCode Filter by account code
      * @param accountNumber Filter by account number
-     * @param customerId Filter by customer id
      * @returns EntitiesCount OK
      * @throws ApiError
      */
@@ -150,14 +141,12 @@ export class AccountService {
         pageSize?: number,
         page?: number,
         sort?: 'asc' | 'desc',
-        sortBy?: '_id' | 'account_code' | 'customer_id' | 'account_balance' | 'available_balance',
+        sortBy?: '_id' | 'account_number' | 'account_balance' | 'available_balance',
         active?: boolean,
         onlyNonZeroBalance?: boolean,
         frozen?: boolean,
         currency?: string,
-        accountCode?: string,
         accountNumber?: string,
-        customerId?: string,
     ): CancelablePromise<EntitiesCount> {
         return __request({
             method: 'GET',
@@ -171,9 +160,7 @@ export class AccountService {
                 'onlyNonZeroBalance': onlyNonZeroBalance,
                 'frozen': frozen,
                 'currency': currency,
-                'accountCode': accountCode,
                 'accountNumber': accountNumber,
-                'customerId': customerId,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,

@@ -12,7 +12,7 @@ export type EstimateFeeDeployCustodialWallet = {
      */
     type: 'DEPLOY_CUSTODIAL_WALLET_BATCH';
     /**
-     * Number of addresses tto create
+     * Number of addresses to create
      */
     batchCount: number;
 }

@@ -4,6 +4,10 @@
 
 export type TransferAlgorandBlockchain = {
     /**
+     * Blockchain sender address
+     */
+    from: string;
+    /**
      * Blockchain address to send algo
      */
     to: string;

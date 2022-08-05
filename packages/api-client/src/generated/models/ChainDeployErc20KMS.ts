@@ -6,7 +6,7 @@ export type ChainDeployErc20KMS = {
     /**
      * Chain to work with.
      */
-    chain: 'ETH' | 'BSC' | 'XDC';
+    chain: 'ETH' | 'BSC' | 'MATIC' | 'KLAY' | 'XDC' | 'ONE' | 'ALGO';
     /**
      * Symbol of the ERC20 token
      */

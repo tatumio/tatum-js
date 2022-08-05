@@ -74,14 +74,14 @@ export class AlgorandService {
     /**
      * @deprecated
      * Access Algorand Indexer GET node endpoints
-     * <h4>1 credit per API call.</h4><br/>
+     * <p><b>1 credit per API call</b></p>
+     * <p><b>This endpoint is deprecated. Use the <a href="https://apidoc.tatum.io/tag/Node-RPC" target="_blank">HTTP-based JSON RPC driver</a> instead.</b></p><br/>
      * <p>Use this endpoint URL as a http-based url to connect directly to the Algorand node provided by Tatum.
      * You can check all available APIs here - <a href="https://developer.algorand.org/docs/rest-apis/indexer/" target="_blank">https://developer.algorand.org/docs/rest-apis/indexer/</a>.
      * <br/>
      * Example call for Get Tx By ID is described in the response. <a href="https://developer.algorand.org/docs/rest-apis/indexer/#get-v2transactionstxid" target="_blank">https://developer.algorand.org/docs/rest-apis/indexer/#get-v2transactionstxid</a>.
      * <br/>
-     * URL used for this call would be <pre>https://api-eu1.tatum.io/v3/algorand/node/indexer/YOUR_API_KEY/v2/transactions/HNIQ76UTJYPOLZP5FWODYABBJPYPGJNEM2QEJSMDMQRWEKHEYJHQ</pre>
-     * </p><br/><p><strong>This endpoint is deprecated</strong>, you should use <a href="#operation/NodeJsonRpcGetDriver">Blockchain/Node/RPC HTTP Driver</a></p>
+     * URL used for this call would be <pre>https://api-eu1.tatum.io/v3/algorand/node/indexer/YOUR_API_KEY/v2/transactions/HNIQ76UTJYPOLZP5FWODYABBJPYPGJNEM2QEJSMDMQRWEKHEYJHQ</pre></p>
      *
      * @param xApiKey Tatum X-API-Key used for authorization.
      * @param indexerPath `**` path of indexer.
@@ -106,14 +106,15 @@ export class AlgorandService {
     /**
      * @deprecated
      * Access Algorand Algod GET node endpoints
-     * <h4>1 credit per API call.</h4><br/>
+     * <p><b>1 credit per API call</b></p>
+     * <p><b>This endpoint is deprecated. Use the <a href="https://apidoc.tatum.io/tag/Node-RPC" target="_blank">HTTP-based JSON RPC driver</a> instead.</b></p><br/>
      * <p>Use this endpoint URL as a http-based url to connect directly to the Algorand node provided by Tatum.
      * You can check al available APIs here - <a href="https://developer.algorand.org/docs/rest-apis/algod/v2/" target="_blank">https://developer.algorand.org/docs/rest-apis/algod/v2/</a>.
      * <br/>
      * Example call for Get Block is described in the response. <a href="https://developer.algorand.org/docs/rest-apis/algod/v2/#get-v2blocksround" target="_blank">https://developer.algorand.org/docs/rest-apis/algod/v2/#get-v2blocksround</a>.
      * <br/>
      * URL used for this call would be <pre>https://api-eu1.tatum.io/v3/algorand/node/algod/YOUR_API_KEY/v2/blocks/16775567</pre>
-     * </p><br/><p><strong>This endpoint is deprecated</strong>, you should use <a href="#operation/NodeJsonRpcGetDriver">Blockchain/Node/RPC HTTP Driver</a></p>
+     * </p>
      *
      * @param xApiKey Tatum X-API-Key used for authorization.
      * @param algodPath `**` path of algod.
@@ -138,14 +139,15 @@ export class AlgorandService {
     /**
      * @deprecated
      * Access Algorand Algod POST node endpoints
-     * <h4>2 credits per API call.</h4><br/>
+     * <p><b>2 credits per API call</b></p>
+     * <p><b>This endpoint is deprecated. Use the <a href="https://apidoc.tatum.io/tag/Node-RPC" target="_blank">HTTP-based JSON RPC driver</a> instead.</b></p><br/>
      * <p>Use this endpoint URL as a http-based url to connect directly to the Algorand node provided by Tatum.
      * You can check al available APIs here - <a href="https://developer.algorand.org/docs/rest-apis/algod/v2/" target="_blank">https://developer.algorand.org/docs/rest-apis/algod/v2/</a>.
      * <br/>
      * Example call for Broadcast a raw transaction is described in the response. <a href="https://developer.algorand.org/docs/rest-apis/algod/v2/#post-v2transactions" target="_blank">https://developer.algorand.org/docs/rest-apis/algod/v2/#post-v2transactions</a>.
      * <br/>
      * URL used for this call would be <pre>https://api-eu1.tatum.io/v3/algorand/node/algod/YOUR_API_KEY/v2/transactions</pre>
-     * </p><br/><p><strong>This endpoint is deprecated</strong>, you should use <a href="#operation/NodeJsonPostRpcDriver">Blockchain/Node/RPC HTTP Driver</a></p>
+     * </p>
      *
      * @param xApiKey Tatum X-API-Key used for authorization.
      * @param algodPath `**` path of algod.

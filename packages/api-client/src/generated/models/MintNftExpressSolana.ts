@@ -25,7 +25,7 @@ export type MintNftExpressSolana = {
          */
         sellerFeeBasisPoints: number;
         /**
-         * Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
+         * The link to the NFT metadata on Solana. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
          */
         uri: string;
         /**

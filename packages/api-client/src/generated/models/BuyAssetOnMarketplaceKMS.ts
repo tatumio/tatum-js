@@ -10,7 +10,7 @@ export type BuyAssetOnMarketplaceKMS = {
     /**
      * Address of the marketplace smart contract.
      */
-    contractAddress?: string;
+    contractAddress: string;
     /**
      * Optional address of the ERC20 token, which will be used as a selling currency of the NFT.
      */

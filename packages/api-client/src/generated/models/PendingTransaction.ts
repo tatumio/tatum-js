@@ -12,7 +12,7 @@ export type PendingTransaction = {
     /**
      * Blockchain of the transaction
      */
-    chain: 'BNB' | 'BTC' | 'ETH' | 'XLM' | 'XRP' | 'BCH' | 'LTC' | 'DOGE' | 'VET' | 'BSC' | 'ADA' | 'MATIC' | 'CELO' | 'FLOW' | 'TRON' | 'ONE' | 'XDC' | 'EGLD' | 'KLAY' | 'LUNA' | 'SOL';
+    chain: 'BNB' | 'BTC' | 'ETH' | 'XLM' | 'XRP' | 'BCH' | 'LTC' | 'DOGE' | 'VET' | 'BSC' | 'ADA' | 'MATIC' | 'CELO' | 'FLOW' | 'TRON' | 'ONE' | 'XDC' | 'EGLD' | 'KLAY' | 'SOL';
     /**
      * List of the signature Ids to be used to sign transaction. Those hashes should be in order of signing for the BTC, LTC or BCH blockchains.
      */

@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { KmsSignatureIds } from '../models/KmsSignatureIds';
 import type { PendingTransaction } from '../models/PendingTransaction';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
@@ -9,14 +10,16 @@ export class KeyManagementSystemService {
 
     /**
      * Get pending transactions to sign
-     * <h4>1 credit per API call.</h4><br/><p>Get list of pending transaction to be signed and broadcast using Tatum KMS.</p>
+     * <p><b>1 credit per API call</b></p>
+     * <p>Get the list of pending transactions to sign and broadcast using <a href="https://github.com/tatumio/tatum-kms" target="_blank">KMS</a>.</p>
+     *
      * @param chain Blockchain to get pending transactions for.
      * @param signatures Signature IDs of the KMS which invokes this endpoint. If multiple, they should be separated by comma.
      * @returns PendingTransaction OK
      * @throws ApiError
      */
     public static getPendingTransactionsToSign(
-        chain: 'BNB' | 'BTC' | 'ETH' | 'XLM' | 'XRP' | 'BCH' | 'LTC' | 'DOGE' | 'VET' | 'BSC' | 'ADA' | 'MATIC' | 'CELO' | 'FLOW' | 'TRON' | 'ONE' | 'XDC' | 'EGLD' | 'KLAY' | 'LUNA' | 'SOL',
+        chain: 'BNB' | 'BTC' | 'ETH' | 'XLM' | 'XRP' | 'BCH' | 'LTC' | 'DOGE' | 'VET' | 'BSC' | 'ADA' | 'MATIC' | 'CELO' | 'FLOW' | 'TRON' | 'ONE' | 'XDC' | 'EGLD' | 'KLAY' | 'SOL',
         signatures?: string,
     ): CancelablePromise<Array<PendingTransaction>> {
         return __request({
@@ -25,6 +28,34 @@ export class KeyManagementSystemService {
             query: {
                 'signatures': signatures,
             },
+            errors: {
+                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                500: `Internal server error. There was an error on the server while processing the request.`,
+            },
+        });
+    }
+
+    /**
+     * Get pending transactions to sign
+     * <p><b>1 credit for every 500 signature IDs per API call</b></p>
+     * <p>Get the list of pending transactions to sign and broadcast using <a href="https://github.com/tatumio/tatum-kms" target="_blank">KMS</a>.</p>
+     * <p><b>NOTE:</b> This API works only in KMS v5.0 or later. If you use KMS older than v5.0, use <a href="#operation/GetPendingTransactionsToSign">this API</a> instead.</p>
+     *
+     * @param chain Blockchain to get pending transactions for.
+     * @param requestBody Signature IDs of the KMS which invokes this endpoint.
+     * @returns PendingTransaction OK
+     * @throws ApiError
+     */
+    public static receivePendingTransactionsToSign(
+        chain: 'BNB' | 'BTC' | 'ETH' | 'XLM' | 'XRP' | 'BCH' | 'LTC' | 'DOGE' | 'VET' | 'BSC' | 'ADA' | 'MATIC' | 'CELO' | 'FLOW' | 'TRON' | 'ONE' | 'XDC' | 'EGLD' | 'KLAY' | 'SOL',
+        requestBody?: KmsSignatureIds,
+    ): CancelablePromise<Array<PendingTransaction>> {
+        return __request({
+            method: 'POST',
+            path: `/v3/kms/pending/${chain}`,
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
