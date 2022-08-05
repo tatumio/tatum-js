@@ -43,12 +43,7 @@ const findMetadataProgramAddress = async (account: PublicKey, isEdition = false)
   if (isEdition) {
     seeds.push(Buffer.from('edition'))
   }
-  return (
-    await PublicKey.findProgramAddress(
-      seeds,
-      TOKEN_METADATA_PROGRAM_ID,
-    )
-  )[0]
+  return (await PublicKey.findProgramAddress(seeds, TOKEN_METADATA_PROGRAM_ID))[0]
 }
 
 const send = async (
@@ -234,7 +229,8 @@ const mintNft = async (
   provider?: string,
   feePayer?: string,
   feePayerPrivateKey?: string,
-  collectionVerifierPrivateKey?: string) => {
+  collectionVerifierPrivateKey?: string,
+) => {
   const connection = web3.getClient(provider)
   const from = new PublicKey(body.from)
   const feePayerAccount = feePayer ? new PublicKey(feePayer) : from
@@ -274,62 +270,69 @@ const mintNft = async (
   const collectionAccount = body.metadata.collection ? new PublicKey(body.metadata.collection) : null
   instructions.push(
     createMintToInstruction(mint.publicKey, userTokenAccountAddress, from, 1, [], TOKEN_PROGRAM_ID),
-    createCreateMetadataAccountV3Instruction({
-      metadata: metadataAccount,
-      mint: mint.publicKey,
-      mintAuthority: from,
-      updateAuthority: from,
-      payer: feePayerAccount,
-    }, {
-      createMetadataAccountArgsV3: {
-        data: {
-          name: body.metadata.name,
-          collection: body.metadata.collection ?
-            { key: collectionAccount, verified: false } : null,
-          creators: body.metadata.creators?.map(c => ({
-            address: new PublicKey(c.address),
-            verified: c.address === body.from ? true : c.verified,
-            share: c.share,
-          })),
-          sellerFeeBasisPoints: body.metadata.sellerFeeBasisPoints,
-          symbol: body.metadata.symbol,
-          uri: body.metadata.uri,
-          uses: null,
-        },
-        isMutable: body.metadata.mutable === undefined ? true : body.metadata.mutable,
-        collectionDetails: {
-          size: 0,
-          __kind: 'V1',
+    createCreateMetadataAccountV3Instruction(
+      {
+        metadata: metadataAccount,
+        mint: mint.publicKey,
+        mintAuthority: from,
+        updateAuthority: from,
+        payer: feePayerAccount,
+      },
+      {
+        createMetadataAccountArgsV3: {
+          data: {
+            name: body.metadata.name,
+            collection: body.metadata.collection ? { key: collectionAccount, verified: false } : null,
+            creators: body.metadata.creators?.map((c) => ({
+              address: new PublicKey(c.address),
+              verified: c.address === body.from ? true : c.verified,
+              share: c.share,
+            })),
+            sellerFeeBasisPoints: body.metadata.sellerFeeBasisPoints,
+            symbol: body.metadata.symbol,
+            uri: body.metadata.uri,
+            uses: null,
+          },
+          isMutable: body.metadata.mutable === undefined ? true : body.metadata.mutable,
+          collectionDetails: {
+            size: 0,
+            __kind: 'V1',
+          },
         },
       },
-    }),
+    ),
   )
 
   const editionAccount = await findMetadataProgramAddress(mint.publicKey, true)
 
   instructions.push(
-    createCreateMasterEditionV3Instruction({
-      metadata: metadataAccount,
-      edition: editionAccount,
-      mint: mint.publicKey,
-      mintAuthority: from,
-      payer: feePayerAccount,
-      updateAuthority: from,
-    }, { createMasterEditionArgs: { maxSupply: 0 } }),
+    createCreateMasterEditionV3Instruction(
+      {
+        metadata: metadataAccount,
+        edition: editionAccount,
+        mint: mint.publicKey,
+        mintAuthority: from,
+        payer: feePayerAccount,
+        updateAuthority: from,
+      },
+      { createMasterEditionArgs: { maxSupply: 0 } },
+    ),
   )
 
   if (body.metadata.collection && collectionVerifierPrivateKey) {
     const collectionMetadataAccount = await findMetadataProgramAddress(collectionAccount)
     const collectionMasterEditionAccount = await findMetadataProgramAddress(collectionAccount, true)
 
-    instructions.push(createVerifySizedCollectionItemInstruction({
-      metadata: metadataAccount,
-      collectionAuthority: web3.generateKeyPair(collectionVerifierPrivateKey).publicKey,
-      payer: feePayerAccount,
-      collectionMint: collectionAccount,
-      collection: collectionMetadataAccount,
-      collectionMasterEditionAccount,
-    }))
+    instructions.push(
+      createVerifySizedCollectionItemInstruction({
+        metadata: metadataAccount,
+        collectionAuthority: web3.generateKeyPair(collectionVerifierPrivateKey).publicKey,
+        payer: feePayerAccount,
+        collectionMint: collectionAccount,
+        collection: collectionMetadataAccount,
+        collectionMasterEditionAccount,
+      }),
+    )
   }
   transaction.add(...instructions)
 
@@ -377,14 +380,16 @@ const verifyNftInCollection = async (
   const collectionMetadataAccount = await findMetadataProgramAddress(collectionAccount)
   const collectionMasterEditionAccount = await findMetadataProgramAddress(collectionAccount, true)
 
-  instructions.push(createVerifySizedCollectionItemInstruction({
-    metadata: metadataAccount,
-    collectionAuthority: web3.generateKeyPair(collectionVerifierPrivateKey).publicKey,
-    payer: feePayerAccount,
-    collectionMint: collectionAccount,
-    collection: collectionMetadataAccount,
-    collectionMasterEditionAccount,
-  }))
+  instructions.push(
+    createVerifySizedCollectionItemInstruction({
+      metadata: metadataAccount,
+      collectionAuthority: web3.generateKeyPair(collectionVerifierPrivateKey).publicKey,
+      payer: feePayerAccount,
+      collectionMint: collectionAccount,
+      collection: collectionMetadataAccount,
+      collectionMasterEditionAccount,
+    }),
+  )
   transaction.add(...instructions)
 
   if (isSignedExternally) {
@@ -394,7 +399,10 @@ const verifyNftInCollection = async (
     }
   }
 
-  const signers = [web3.generateKeyPair(feePayerPrivateKey), web3.generateKeyPair(collectionVerifierPrivateKey)]
+  const signers = [
+    web3.generateKeyPair(feePayerPrivateKey),
+    web3.generateKeyPair(collectionVerifierPrivateKey),
+  ]
   return {
     txId: await connection.sendTransaction(transaction, signers),
   }
@@ -458,8 +466,13 @@ export const solanaTxService = (args: { web3: SolanaWeb3 }) => {
      * @param feePayerPrivateKey optional private key of the account which will cover fees
      * @param collectionVerifierPrivateKey optional private key of the account which can verify NFT minted inside collection - must be Update Authority of the NFT Collection
      */
-    mintNft: async (body: MintSolanaNft, provider?: string, feePayer?: string, feePayerPrivateKey?: string, collectionVerifierPrivateKey?: string) =>
-      mintNft(body, args.web3, provider, feePayer, feePayerPrivateKey, collectionVerifierPrivateKey),
+    mintNft: async (
+      body: MintSolanaNft,
+      provider?: string,
+      feePayer?: string,
+      feePayerPrivateKey?: string,
+      collectionVerifierPrivateKey?: string,
+    ) => mintNft(body, args.web3, provider, feePayer, feePayerPrivateKey, collectionVerifierPrivateKey),
 
     /**
      * Create new NFT Collection on Solana. Fee is being paid by the minter or feePayer, if present
@@ -468,9 +481,12 @@ export const solanaTxService = (args: { web3: SolanaWeb3 }) => {
      * @param feePayer optional address of the account, which will cover fees instead of minter
      * @param feePayerPrivateKey optional private key of the account which will cover fees
      */
-    createCollection: async (body: CreateSolanaNftCollection, provider?: string, feePayer?: string, feePayerPrivateKey?: string) =>
-      mintNft(body, args.web3, provider, feePayer, feePayerPrivateKey),
-
+    createCollection: async (
+      body: CreateSolanaNftCollection,
+      provider?: string,
+      feePayer?: string,
+      feePayerPrivateKey?: string,
+    ) => mintNft(body, args.web3, provider, feePayer, feePayerPrivateKey),
 
     /**
      * Verify NFT inside collection. Fee is being paid by feePayer.
@@ -490,6 +506,16 @@ export const solanaTxService = (args: { web3: SolanaWeb3 }) => {
       collectionVerifierPrivateKey: string,
       isSignedExternally = false,
       provider?: string,
-    ) => verifyNftInCollection(nftMintAddress, collectionAddress, args.web3, feePayer, feePayerPrivateKey, collectionVerifierPrivateKey, isSignedExternally, provider),
+    ) =>
+      verifyNftInCollection(
+        nftMintAddress,
+        collectionAddress,
+        args.web3,
+        feePayer,
+        feePayerPrivateKey,
+        collectionVerifierPrivateKey,
+        isSignedExternally,
+        provider,
+      ),
   }
 }
