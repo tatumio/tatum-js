@@ -38,7 +38,7 @@
     "@solana/spl-token": "0.2.0",
     "@solana/web3.js": "^1.50.1",
     "@tatumio/bitcoincashjs2-lib": "^4.1.2",
-    "algosdk": "^1.13.1",
+    "algosdk": "^1.18.1",
     "axios": "^0.26.0",
     "base-58": "^0.0.1",
     "base32.js": "^0.1.0",
