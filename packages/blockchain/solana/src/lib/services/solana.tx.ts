@@ -384,7 +384,9 @@ const verifyNftInCollection = async (
   instructions.push(
     createVerifySizedCollectionItemInstruction({
       metadata: metadataAccount,
-      collectionAuthority: collectionVerifierPrivateKey ? web3.generateKeyPair(collectionVerifierPrivateKey).publicKey : feePayerAccount,
+      collectionAuthority: collectionVerifierPrivateKey
+        ? web3.generateKeyPair(collectionVerifierPrivateKey).publicKey
+        : feePayerAccount,
       payer: feePayerAccount,
       collectionMint: collectionAccount,
       collection: collectionMetadataAccount,
