@@ -115,7 +115,7 @@ export const sendBlockchainTransaction = async (body: ChainTransferErc20, provid
 }
 
 export const prepareClient = (provider?: string, fromPrivateKey?: string) => {
-  const client = new Web3(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/kcc/web3/${process.env.TATUM_API_KEY}`)
+  const client = new Web3(provider || `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/kcs/web3/${process.env.TATUM_API_KEY}`)
   if (fromPrivateKey) {
     client.eth.accounts.wallet.clear()
     client.eth.accounts.wallet.add(fromPrivateKey)
