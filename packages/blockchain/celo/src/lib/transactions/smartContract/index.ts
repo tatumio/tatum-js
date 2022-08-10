@@ -14,6 +14,7 @@ import {
   celoUtils,
   SmartContractWriteMethodInvocationCelo,
 } from '../../utils/celo.utils'
+import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 const smartContractWriteMethodInvocation = async (
   body: SmartContractWriteMethodInvocationCelo,
@@ -85,7 +86,11 @@ export const smartContract = (args: { web3: EvmBasedWeb3; broadcastFunction: Bro
         body: SmartContractWriteMethodInvocationCelo,
         provider?: string,
         testnet?: boolean,
-      ) => smartContractWriteMethodInvocation(body, provider, testnet),
+      ) =>
+        evmBasedUtils.tryCatch(
+          () => smartContractWriteMethodInvocation(body, provider, testnet),
+          SdkErrorCode.EVM_SMART_CONTRACT_CANNOT_PREPARE_TX,
+        ),
     },
     send: {
       /**

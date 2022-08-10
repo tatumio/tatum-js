@@ -18,7 +18,7 @@ const transferSignedTransaction = async (
     from: undefined,
     to: body.to,
     data: body.data,
-    value: evmBasedUtils.transformAmount(body.amount),
+    value: evmBasedUtils.transformToWei(body.amount),
     nonce: body.nonce,
   }
 
