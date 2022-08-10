@@ -27,8 +27,8 @@ export const custodialTestFactory = {
               amount: '1',
               contractType: 0,
             },
-            true,
             provider,
+            true,
           )
           const json = JSON.parse(result)
           expectHexString(json.data)
@@ -49,8 +49,8 @@ export const custodialTestFactory = {
             amount: '1',
             contractType: 0,
           },
-          true,
           provider,
+          true,
         )
         expectHexString(result)
       })
@@ -84,8 +84,8 @@ export const custodialTestFactory = {
               '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
             ],
           },
-          true,
           provider,
+          true,
         )
         const json = JSON.parse(result)
         expectHexString(json.data)
@@ -111,8 +111,8 @@ export const custodialTestFactory = {
               '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
             ],
           },
-          true,
           provider,
+          true,
         )
         expectHexString(result)
       })
@@ -178,8 +178,8 @@ export const custodialTestFactory = {
             owner: '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
             batchCount: 10,
           },
-          true,
           provider,
+          true,
         )
 
         const json = JSON.parse(result)
@@ -194,8 +194,8 @@ export const custodialTestFactory = {
             owner: '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
             batchCount: 10,
           },
-          true,
           provider,
+          true,
         )
 
         expectHexString(result)

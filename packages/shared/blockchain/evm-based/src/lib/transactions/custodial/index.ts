@@ -14,6 +14,7 @@ import { CustodialFullTokenWallet } from '../../contracts'
 import { evmBasedSmartContract } from '../../services/evm-based.smartContract'
 import { evmBasedUtils } from '../../evm-based.utils'
 import { ApiServices, GenerateCustodialWalletBatchPayer, TransactionHashKMS } from '@tatumio/api-client'
+import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 const transferFromCustodialWallet = async (
   body: ChainTransferCustodialWallet,
@@ -117,9 +118,13 @@ export const custodial = (args: {
        */
       transferFromCustodialWallet: async (
         body: ChainTransferCustodialWallet,
-        testnet?: boolean,
         provider?: string,
-      ) => transferFromCustodialWallet(body, args.web3, testnet, provider),
+        testnet?: boolean,
+      ) =>
+        evmBasedUtils.tryCatch(
+          () => transferFromCustodialWallet(body, args.web3, testnet, provider),
+          SdkErrorCode.EVM_CUSTODIAL_CANNOT_PREPARE_TRANSFER_TX,
+        ),
       /**
        * Prepare signed batch transaction from the custodial SC wallet.
        * @param testnet chain to work with
@@ -129,9 +134,13 @@ export const custodial = (args: {
        */
       batchTransferFromCustodialWallet: async (
         body: ChainBatchTransferCustodialWallet,
-        testnet?: boolean,
         provider?: string,
-      ) => batchTransferFromCustodialWallet(body, args.web3, testnet, provider),
+        testnet?: boolean,
+      ) =>
+        evmBasedUtils.tryCatch(
+          () => batchTransferFromCustodialWallet(body, args.web3, testnet, provider),
+          SdkErrorCode.EVM_CUSTODIAL_CANNOT_PREPARE_TRANSFER_BATCH_TX,
+        ),
       /**
        * Prepare signed approve transaction from the custodial SC wallet.
        * @param body request data
@@ -139,7 +148,10 @@ export const custodial = (args: {
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
       approveFromCustodialWallet: async (body: ChainApproveCustodialTransfer, provider?: string) =>
-        approveFromCustodialWallet(body, args.web3, provider),
+        evmBasedUtils.tryCatch(
+          () => approveFromCustodialWallet(body, args.web3, provider),
+          SdkErrorCode.EVM_CUSTODIAL_CANNOT_PREPARE_APPROVE_TX,
+        ),
       /**
        * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, but transaction costs connected to the withdrawal
        * of assets is covered by the deployer.
@@ -150,9 +162,13 @@ export const custodial = (args: {
        */
       custodialWalletBatch: async (
         body: ChainGenerateCustodialWalletBatch,
-        testnet?: boolean,
         provider?: string,
-      ) => custodialWalletBatch(body, args.web3, testnet, provider),
+        testnet?: boolean,
+      ) =>
+        evmBasedUtils.tryCatch(
+          () => custodialWalletBatch(body, args.web3, testnet, provider),
+          SdkErrorCode.EVM_CUSTODIAL_CANNOT_PREPARE_DEPLOY_TX,
+        ),
     },
     send: {
       /**
@@ -164,8 +180,8 @@ export const custodial = (args: {
        */
       transferFromCustodialWallet: async (
         body: ChainTransferCustodialWallet,
-        testnet?: boolean,
         provider?: string,
+        testnet?: boolean,
       ) =>
         args.broadcastFunction({
           txData: await transferFromCustodialWallet(body, args.web3, testnet, provider),
@@ -181,8 +197,8 @@ export const custodial = (args: {
        */
       batchTransferFromCustodialWallet: async (
         body: ChainBatchTransferCustodialWallet,
-        testnet?: boolean,
         provider?: string,
+        testnet?: boolean,
       ) =>
         args.broadcastFunction({
           txData: await batchTransferFromCustodialWallet(body, args.web3, testnet, provider),
@@ -209,8 +225,8 @@ export const custodial = (args: {
        */
       custodialWalletBatch: async (
         body: ChainGenerateCustodialWalletBatch,
-        testnet?: boolean,
         provider?: string,
+        testnet?: boolean,
       ) =>
         'feesCovered' in body
           ? generateCustodialBatch(body)

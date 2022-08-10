@@ -30,7 +30,10 @@ export function isWithSignatureId<
 
 export type WithoutChain<T extends { chain: unknown }> = Omit<T, 'chain'>
 
-export const placeArgsToString = (message: string, args?: SdkMessageArgs): string => {
+export const placeArgsToString = (message?: string, args?: SdkMessageArgs): string | undefined => {
+  if (!message) {
+    return message
+  }
   if ((args?.length ?? 0) > 0) {
     let placedMessage = message
     args?.forEach((value, index) => {
