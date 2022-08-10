@@ -1,6 +1,6 @@
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
-import { Erc1155 } from '@tatumio/shared-blockchain-evm-based'
+import { Erc1155, EvmBasedSdkError, evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
 import { BroadcastFunction } from '@tatumio/shared-blockchain-abstract'
 import { CeloWallet } from '@celo-tools/celo-ethers-wrapper'
 import Web3 from 'web3'
@@ -15,6 +15,7 @@ import {
   ChainTransferMultiTokenCelo,
   CeloTransactionConfig,
 } from '../../utils/celo.utils'
+import { SdkError, SdkErrorCode, SdkErrorMessage } from '@tatumio/shared-abstract-sdk'
 
 const deployMultiTokenTransaction = async (
   body: ChainDeployMultiTokenCelo,
@@ -110,7 +111,7 @@ const mintMultiTokenTransaction = async (
 
     return await celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
   }
-  throw new Error('Contract address and fee currency should not be empty')
+  throw new EvmBasedSdkError({ code: SdkErrorCode.CELO_MISSING_CONTRACT_ADDRESS })
 }
 
 const mintMultiTokenBatchTransaction = async (
@@ -120,20 +121,44 @@ const mintMultiTokenBatchTransaction = async (
 ) => {
   const { fromPrivateKey, to, tokenId, contractAddress, amounts, data, feeCurrency, nonce, signatureId } =
     body
+  if (contractAddress && feeCurrency) {
+    const celoProvider = celoUtils.getProvider(provider)
+    const network = await celoProvider.ready
+    const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
+    const contract = new new Web3().eth.Contract(Erc1155.abi as any, contractAddress.trim())
+    const amts = amounts.map((amts) => amts.map((amt) => `0x${new BigNumber(amt).toString(16)}`))
 
-  const celoProvider = celoUtils.getProvider(provider)
-  const network = await celoProvider.ready
-  const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
-  const contract = new new Web3().eth.Contract(Erc1155.abi as any, contractAddress.trim())
-  const amts = amounts.map((amts) => amts.map((amt) => `0x${new BigNumber(amt).toString(16)}`))
+    if (signatureId) {
+      return JSON.stringify({
+        chainId: network.chainId,
+        feeCurrency: feeCurrencyContractAddress,
+        nonce,
+        gasLimit: '0',
+        to: contractAddress.trim(),
+        data: contract.methods
+          .mintBatch(
+            to.map((t) => t.trim()),
+            tokenId,
+            amts,
+            data ? data : '0x0',
+          )
+          .encodeABI(),
+      })
+    }
 
-  if (signatureId) {
-    return JSON.stringify({
+    const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
+    const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
+      wallet,
+      feeCurrencyContractAddress,
+    )
+
+    const tx: CeloTransactionConfig = {
       chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
-      nonce,
+      nonce: nonce || txCount,
       gasLimit: '0',
       to: contractAddress.trim(),
+      gasPrice,
       data: contract.methods
         .mintBatch(
           to.map((t) => t.trim()),
@@ -142,34 +167,12 @@ const mintMultiTokenBatchTransaction = async (
           data ? data : '0x0',
         )
         .encodeABI(),
-    })
+      from,
+    }
+
+    return await celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
   }
-
-  const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
-  const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
-    wallet,
-    feeCurrencyContractAddress,
-  )
-
-  const tx: CeloTransactionConfig = {
-    chainId: network.chainId,
-    feeCurrency: feeCurrencyContractAddress,
-    nonce: nonce || txCount,
-    gasLimit: '0',
-    to: contractAddress.trim(),
-    gasPrice,
-    data: contract.methods
-      .mintBatch(
-        to.map((t) => t.trim()),
-        tokenId,
-        amts,
-        data ? data : '0x0',
-      )
-      .encodeABI(),
-    from,
-  }
-
-  return await celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
+  throw new EvmBasedSdkError({ code: SdkErrorCode.CELO_MISSING_CONTRACT_ADDRESS })
 }
 
 const transferMultiTokenTransaction = async (
@@ -178,46 +181,48 @@ const transferMultiTokenTransaction = async (
   testnet?: boolean,
 ) => {
   const { fromPrivateKey, to, tokenId, contractAddress, feeCurrency, nonce, amount, data, signatureId } = body
+  if (contractAddress && feeCurrency) {
+    const celoProvider = celoUtils.getProvider(provider)
+    const network = await celoProvider.ready
+    const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
+    const contract = new new Web3().eth.Contract(Erc1155.abi as any, contractAddress.trim())
 
-  const celoProvider = celoUtils.getProvider(provider)
-  const network = await celoProvider.ready
-  const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
-  const contract = new new Web3().eth.Contract(Erc1155.abi as any, contractAddress.trim())
+    if (signatureId) {
+      return JSON.stringify({
+        chainId: network.chainId,
+        feeCurrency: feeCurrencyContractAddress,
+        gasLimit: '0',
+        nonce,
+        to: contractAddress.trim(),
+        data: contract.methods
+          // TODO: remove ! when type will be fixed
+          .safeTransfer(to.trim(), tokenId, `0x${new BigNumber(amount!).toString(16)}`, data ? data : '0x0')
+          .encodeABI(),
+      })
+    }
 
-  if (signatureId) {
-    return JSON.stringify({
+    const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
+    const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
+      wallet,
+      feeCurrencyContractAddress,
+    )
+
+    const tx: CeloTransactionConfig = {
       chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
+      nonce: nonce || txCount,
       gasLimit: '0',
-      nonce,
       to: contractAddress.trim(),
+      gasPrice,
       data: contract.methods
         // TODO: remove ! when type will be fixed
         .safeTransfer(to.trim(), tokenId, `0x${new BigNumber(amount!).toString(16)}`, data ? data : '0x0')
         .encodeABI(),
-    })
+      from,
+    }
+    return await celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
   }
-
-  const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
-  const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
-    wallet,
-    feeCurrencyContractAddress,
-  )
-
-  const tx: CeloTransactionConfig = {
-    chainId: network.chainId,
-    feeCurrency: feeCurrencyContractAddress,
-    nonce: nonce || txCount,
-    gasLimit: '0',
-    to: contractAddress.trim(),
-    gasPrice,
-    data: contract.methods
-      // TODO: remove ! when type will be fixed
-      .safeTransfer(to.trim(), tokenId, `0x${new BigNumber(amount!).toString(16)}`, data ? data : '0x0')
-      .encodeABI(),
-    from,
-  }
-  return await celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
+  throw new EvmBasedSdkError({ code: SdkErrorCode.CELO_MISSING_CONTRACT_ADDRESS })
 }
 
 const transferMultiTokenBatchTransaction = async (
@@ -228,19 +233,44 @@ const transferMultiTokenBatchTransaction = async (
   const { fromPrivateKey, to, tokenId, contractAddress, feeCurrency, nonce, amounts, data, signatureId } =
     body
 
-  const celoProvider = celoUtils.getProvider(provider)
-  const network = await celoProvider.ready
-  const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
-  const amts = amounts.map((amt) => `0x${new BigNumber(amt).toString(16)}`)
-  const contract = new new Web3().eth.Contract(Erc1155.abi as any, contractAddress.trim())
+  if (contractAddress && feeCurrency) {
+    const celoProvider = celoUtils.getProvider(provider)
+    const network = await celoProvider.ready
+    const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
+    const amts = amounts.map((amt) => `0x${new BigNumber(amt).toString(16)}`)
+    const contract = new new Web3().eth.Contract(Erc1155.abi as any, contractAddress.trim())
 
-  if (signatureId) {
-    return JSON.stringify({
+    if (signatureId) {
+      return JSON.stringify({
+        chainId: network.chainId,
+        feeCurrency: feeCurrencyContractAddress,
+        gasLimit: '0',
+        nonce,
+        to: contractAddress.trim(),
+        data: contract.methods
+          .safeBatchTransfer(
+            to.trim(),
+            tokenId.map((token) => token.trim()),
+            amts,
+            data ? data : '0x0',
+          )
+          .encodeABI(),
+      })
+    }
+
+    const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
+    const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
+      wallet,
+      feeCurrencyContractAddress,
+    )
+
+    const tx: CeloTransactionConfig = {
       chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
+      nonce: nonce || txCount,
       gasLimit: '0',
-      nonce,
       to: contractAddress.trim(),
+      gasPrice,
       data: contract.methods
         .safeBatchTransfer(
           to.trim(),
@@ -249,33 +279,11 @@ const transferMultiTokenBatchTransaction = async (
           data ? data : '0x0',
         )
         .encodeABI(),
-    })
+      from,
+    }
+    return await celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
   }
-
-  const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
-  const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
-    wallet,
-    feeCurrencyContractAddress,
-  )
-
-  const tx: CeloTransactionConfig = {
-    chainId: network.chainId,
-    feeCurrency: feeCurrencyContractAddress,
-    nonce: nonce || txCount,
-    gasLimit: '0',
-    to: contractAddress.trim(),
-    gasPrice,
-    data: contract.methods
-      .safeBatchTransfer(
-        to.trim(),
-        tokenId.map((token) => token.trim()),
-        amts,
-        data ? data : '0x0',
-      )
-      .encodeABI(),
-    from,
-  }
-  return await celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
+  throw new EvmBasedSdkError({ code: SdkErrorCode.CELO_MISSING_CONTRACT_ADDRESS })
 }
 
 const burnMultiTokenTransaction = async (
@@ -284,40 +292,42 @@ const burnMultiTokenTransaction = async (
   testnet?: boolean,
 ) => {
   const { fromPrivateKey, tokenId, account, amount, contractAddress, feeCurrency, nonce, signatureId } = body
+  if (contractAddress && feeCurrency) {
+    const celoProvider = celoUtils.getProvider(provider)
+    const network = await celoProvider.ready
+    const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
+    const contract = new new Web3().eth.Contract(Erc1155.abi as any, contractAddress.trim())
 
-  const celoProvider = celoUtils.getProvider(provider)
-  const network = await celoProvider.ready
-  const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
-  const contract = new new Web3().eth.Contract(Erc1155.abi as any, contractAddress.trim())
+    if (signatureId) {
+      return JSON.stringify({
+        chainId: network.chainId,
+        feeCurrency: feeCurrencyContractAddress,
+        nonce,
+        gasLimit: '0',
+        to: contractAddress.trim(),
+        data: contract.methods.burn(account, tokenId, amount).encodeABI(),
+      })
+    }
 
-  if (signatureId) {
-    return JSON.stringify({
+    const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
+    const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
+      wallet,
+      feeCurrencyContractAddress,
+    )
+
+    const tx: CeloTransactionConfig = {
       chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
-      nonce,
+      nonce: nonce || txCount,
       gasLimit: '0',
       to: contractAddress.trim(),
+      gasPrice,
       data: contract.methods.burn(account, tokenId, amount).encodeABI(),
-    })
+      from,
+    }
+    return await celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
   }
-
-  const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
-  const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
-    wallet,
-    feeCurrencyContractAddress,
-  )
-
-  const tx: CeloTransactionConfig = {
-    chainId: network.chainId,
-    feeCurrency: feeCurrencyContractAddress,
-    nonce: nonce || txCount,
-    gasLimit: '0',
-    to: contractAddress.trim(),
-    gasPrice,
-    data: contract.methods.burn(account, tokenId, amount).encodeABI(),
-    from,
-  }
-  return await celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
+  throw new EvmBasedSdkError({ code: SdkErrorCode.CELO_MISSING_CONTRACT_ADDRESS })
 }
 
 const burnMultiTokenBatchTransaction = async (
@@ -326,40 +336,42 @@ const burnMultiTokenBatchTransaction = async (
   testnet?: boolean,
 ) => {
   const { fromPrivateKey, tokenId, account, amounts, contractAddress, feeCurrency, nonce, signatureId } = body
+  if (contractAddress && feeCurrency) {
+    const celoProvider = celoUtils.getProvider(provider)
+    const network = await celoProvider.ready
+    const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
+    const contract = new new Web3().eth.Contract(Erc1155.abi as any, contractAddress.trim())
 
-  const celoProvider = celoUtils.getProvider(provider)
-  const network = await celoProvider.ready
-  const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
-  const contract = new new Web3().eth.Contract(Erc1155.abi as any, contractAddress.trim())
+    if (signatureId) {
+      return JSON.stringify({
+        chainId: network.chainId,
+        feeCurrency: feeCurrencyContractAddress,
+        nonce,
+        gasLimit: '0',
+        to: contractAddress.trim(),
+        data: contract.methods.burnBatch(account, tokenId, amounts).encodeABI(),
+      })
+    }
 
-  if (signatureId) {
-    return JSON.stringify({
+    const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
+    const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
+      wallet,
+      feeCurrencyContractAddress,
+    )
+
+    const tx: CeloTransactionConfig = {
       chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
-      nonce,
+      nonce: nonce || txCount,
       gasLimit: '0',
       to: contractAddress.trim(),
+      gasPrice,
       data: contract.methods.burnBatch(account, tokenId, amounts).encodeABI(),
-    })
+      from,
+    }
+    return await celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
   }
-
-  const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
-  const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
-    wallet,
-    feeCurrencyContractAddress,
-  )
-
-  const tx: CeloTransactionConfig = {
-    chainId: network.chainId,
-    feeCurrency: feeCurrencyContractAddress,
-    nonce: nonce || txCount,
-    gasLimit: '0',
-    to: contractAddress.trim(),
-    gasPrice,
-    data: contract.methods.burnBatch(account, tokenId, amounts).encodeABI(),
-    from,
-  }
-  return await celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
+  throw new EvmBasedSdkError({ code: SdkErrorCode.CELO_MISSING_CONTRACT_ADDRESS })
 }
 
 export const multiToken = (args: {
@@ -376,7 +388,11 @@ export const multiToken = (args: {
         body: ChainMintMultiTokenCelo,
         provider?: string,
         testnet?: boolean,
-      ) => mintMultiTokenTransaction(body, provider, testnet),
+      ) =>
+        evmBasedUtils.tryCatch(
+          () => mintMultiTokenTransaction(body, provider, testnet),
+          SdkErrorCode.EVM_ERC1155_CANNOT_PREPARE_MINT_TX,
+        ),
       /**
        * Prepare a signed Celo mint multiple tokens batch transaction with the private key locally. Nothing is broadcasted to the blockchain.
        * @returns raw transaction data in hex, to be broadcasted to blockchain.
@@ -385,7 +401,11 @@ export const multiToken = (args: {
         body: ChainMintMultiTokenBatchCelo,
         provider?: string,
         testnet?: boolean,
-      ) => mintMultiTokenBatchTransaction(body, provider, testnet),
+      ) =>
+        evmBasedUtils.tryCatch(
+          () => mintMultiTokenBatchTransaction(body, provider, testnet),
+          SdkErrorCode.EVM_ERC1155_CANNOT_PREPARE_MINT_BATCH_TX,
+        ),
       /**
        * Prepare a signed Celo transfer multiple tokens transaction with the private key locally. Nothing is broadcasted to the blockchain.
        * @returns raw transaction data in hex, to be broadcasted to blockchain.
@@ -394,7 +414,11 @@ export const multiToken = (args: {
         body: ChainTransferMultiTokenCelo,
         provider?: string,
         testnet?: boolean,
-      ) => transferMultiTokenTransaction(body, provider, testnet),
+      ) =>
+        evmBasedUtils.tryCatch(
+          () => transferMultiTokenTransaction(body, provider, testnet),
+          SdkErrorCode.EVM_ERC1155_CANNOT_PREPARE_TRANSFER_TX,
+        ),
       /**
        * Prepare a signed Celo batch transfer multiple tokens transaction with the private key locally. Nothing is broadcasted to the blockchain.
        * @returns raw transaction data in hex, to be broadcasted to blockchain.
@@ -403,7 +427,11 @@ export const multiToken = (args: {
         body: ChainTransferMultiTokenBatchCelo,
         provider?: string,
         testnet?: boolean,
-      ) => transferMultiTokenBatchTransaction(body, provider, testnet),
+      ) =>
+        evmBasedUtils.tryCatch(
+          () => transferMultiTokenBatchTransaction(body, provider, testnet),
+          SdkErrorCode.EVM_ERC1155_CANNOT_PREPARE_TRANSFER_BATCH_TX,
+        ),
       /**
        * Prepare a signed Celo burn multiple tokens transaction with the private key locally. Nothing is broadcasted to the blockchain.
        * @returns raw transaction data in hex, to be broadcasted to blockchain.
@@ -412,7 +440,11 @@ export const multiToken = (args: {
         body: ChainBurnMultiTokenCelo,
         provider?: string,
         testnet?: boolean,
-      ) => burnMultiTokenTransaction(body, provider, testnet),
+      ) =>
+        evmBasedUtils.tryCatch(
+          () => burnMultiTokenTransaction(body, provider, testnet),
+          SdkErrorCode.EVM_ERC1155_CANNOT_PREPARE_BURN_TX,
+        ),
       /**
        * Prepare a signed Celo burn multiple tokens batch transaction with the private key locally. Nothing is broadcasted to the blockchain.
        * @returns raw transaction data in hex, to be broadcasted to blockchain.
@@ -421,7 +453,11 @@ export const multiToken = (args: {
         body: ChainBurnMultiTokenBatchCelo,
         provider?: string,
         testnet?: boolean,
-      ) => burnMultiTokenBatchTransaction(body, provider, testnet),
+      ) =>
+        evmBasedUtils.tryCatch(
+          () => burnMultiTokenBatchTransaction(body, provider, testnet),
+          SdkErrorCode.EVM_ERC1155_CANNOT_PREPARE_BURN_BATCH_TX,
+        ),
       /**
        * Prepare a signed Celo deploy multi token transaction with the private key locally. Nothing is broadcasted to the blockchain.
        * @returns raw transaction data in hex, to be broadcasted to blockchain.
@@ -430,7 +466,11 @@ export const multiToken = (args: {
         body: ChainDeployMultiTokenCelo,
         provider?: string,
         testnet?: boolean,
-      ) => deployMultiTokenTransaction(body, provider, testnet),
+      ) =>
+        evmBasedUtils.tryCatch(
+          () => deployMultiTokenTransaction(body, provider, testnet),
+          SdkErrorCode.EVM_ERC1155_CANNOT_PREPARE_DEPLOY_TX,
+        ),
     },
     send: {
       /**

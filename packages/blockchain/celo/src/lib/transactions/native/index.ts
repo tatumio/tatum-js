@@ -11,9 +11,10 @@ import {
   CELO_CONSTANTS,
   ChainTransferCeloOrCUsd,
 } from '../../utils/celo.utils'
-import { Erc20Token, evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
-import { isHex, stringToHex, toHex, toWei } from 'web3-utils'
+import { Erc20Token, EvmBasedSdkError, evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
+import { isHex, stringToHex, toHex } from 'web3-utils'
 import { Currency } from '@tatumio/api-client'
+import { SdkError, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 const transferSignedTransaction = async (
   body: ChainTransferCeloBlockchain,
@@ -23,21 +24,25 @@ const transferSignedTransaction = async (
   // TODO
   // await validateBody(body, ChainTransferCeloBlockchain)
 
-  const { fromPrivateKey, signatureId, to, feeCurrency, amount, nonce } = body
+  const { fromPrivateKey, signatureId, to, feeCurrency, amount, nonce, data } = body
   const celoProvider = celoUtils.getProvider(provider)
 
   if (to && feeCurrency && amount) {
     const network = await celoProvider.ready
     const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
-    const contract = new new Web3().eth.Contract(Erc20Token.abi as any, to.trim())
+
+    const txBody = {
+      chainId: network.chainId,
+      feeCurrency: feeCurrencyContractAddress,
+      data,
+      to: to.trim(),
+      value: evmBasedUtils.amountToWeiHex(amount),
+    }
 
     if (signatureId) {
       return JSON.stringify({
-        chainId: network.chainId,
-        feeCurrency: feeCurrencyContractAddress,
+        ...txBody,
         nonce,
-        to: to.trim(),
-        data: contract.methods.transfer(to.trim(), `0x${new BigNumber(amount).toString(16)}`).encodeABI(),
       })
     }
 
@@ -45,18 +50,14 @@ const transferSignedTransaction = async (
     const { txCount, from } = await celoUtils.obtainWalletInformation(wallet, feeCurrencyContractAddress)
 
     const tx: CeloTransactionConfig = {
-      chainId: network.chainId,
+      ...txBody,
       from: from,
-      to: to.trim(),
-      data: contract.methods.transfer(to.trim(), `0x${new BigNumber(amount).toString(16)}`).encodeABI(),
-      value: `0x${new BigNumber(amount).toString(16)}`,
       nonce: nonce || txCount,
-      feeCurrency: feeCurrencyContractAddress,
     }
 
     return await celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
   }
-  throw new Error('The target (to) address, currency, feeCurrency or the amount cannot be empty')
+  throw new EvmBasedSdkError({ code: SdkErrorCode.CELO_MISSING_CONTRACT_ADDRESS })
 }
 
 const prepareStoreDataTransaction = async (
@@ -182,7 +183,11 @@ export const native = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         body: ChainTransferCeloBlockchain,
         provider?: string,
         testnet?: boolean,
-      ) => transferSignedTransaction(body, provider, testnet),
+      ) =>
+        evmBasedUtils.tryCatch(
+          () => transferSignedTransaction(body, provider, testnet),
+          SdkErrorCode.EVM_NATIVE_CANNOT_PREPARE_TRANSFER_TX,
+        ),
       /**
        * Sign store data transaction with private keys locally. Nothing is broadcast to the blockchain.
        * @param testnet mainnet or testnet version
@@ -191,7 +196,10 @@ export const native = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
        * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
        */
       storeDataTransaction: async (body: ChainStoreDataCelo, provider?: string, testnet?: boolean) =>
-        prepareStoreDataTransaction(body, provider, testnet),
+        evmBasedUtils.tryCatch(
+          () => prepareStoreDataTransaction(body, provider, testnet),
+          SdkErrorCode.EVM_NATIVE_CANNOT_PREPARE_STORE_DATA_TX,
+        ),
       /**
        * Sign store data transaction with private keys locally. Nothing is broadcast to the blockchain.
        * @param testnet mainnet or testnet version
@@ -203,7 +211,11 @@ export const native = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         body: ChainTransferCeloOrCUsd,
         provider?: string,
         testnet?: boolean,
-      ) => prepareCeloOrCUsdSignedTransaction(body, provider, testnet),
+      ) =>
+        evmBasedUtils.tryCatch(
+          () => prepareCeloOrCUsdSignedTransaction(body, provider, testnet),
+          SdkErrorCode.CELO_NATIVE_CANNOT_PREPARE_TRANSFER_CELO_OR_CUSD_TX,
+        ),
     },
     send: {
       /**

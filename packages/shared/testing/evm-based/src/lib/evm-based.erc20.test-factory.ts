@@ -6,7 +6,6 @@ export const erc20TestFactory = {
   decimals: (sdk: SdkWithErc20Functions, testData: BlockchainTestData) => {
     it('valid', async () => {
       const result = await sdk.decimals(testData.TESTNET.ERC_20!.CONTRACT_ADDRESS, testData.TESTNET.PROVIDER)
-
       expect(result).toBeDefined()
     })
   },
