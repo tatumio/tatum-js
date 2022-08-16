@@ -85,6 +85,8 @@ export enum Currency {
   DOT = 'DOT',
   KSM = 'KSM',
   OASIS = 'OASIS',
+  PALM = 'PALM',
+  TEZOS = 'TEZOS',
 }
 
 export const ERC20_CURRENCIES = [
