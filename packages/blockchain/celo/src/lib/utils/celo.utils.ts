@@ -26,8 +26,11 @@ import {
 import { FromPrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
 import { BigNumber as BN } from '@ethersproject/bignumber'
 import { CeloProvider, CeloWallet } from '@celo-tools/celo-ethers-wrapper'
-import { WithoutChain } from '@tatumio/shared-abstract-sdk'
+import { SdkErrorCode, SdkErrorMessage, WithoutChain } from '@tatumio/shared-abstract-sdk'
 import { Blockchain, httpHelper } from '@tatumio/shared-core'
+import { flatten } from 'lodash'
+import { expectHexString, TEST_DATA } from '@tatumio/shared-testing-common'
+import { EvmBasedSdkError, evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
 
 export interface CeloTransactionConfig {
   from?: string
@@ -118,11 +121,18 @@ export const CELO_CONSTANTS = {
 
 export const celoUtils = {
   prepareSignedTransactionAbstraction: async (wallet: CeloWallet, transaction: CeloTransactionConfig) => {
-    transaction.gasLimit = (await wallet.estimateGas(transaction))
-      .add(transaction.feeCurrency === Currency.CELO ? 0 : 100000)
-      .toHexString()
+    try {
+      transaction.gasLimit = (await wallet.estimateGas(transaction))
+        .add(transaction.feeCurrency === Currency.CELO ? 0 : 100000)
+        .toHexString()
+    } catch (e) {
+      throw new EvmBasedSdkError({ error: e as Error, code: SdkErrorCode.EVM_CANNOT_ESTIMATE_GAS_LIMIT })
+    }
 
-    return wallet.signTransaction(transaction)
+    return evmBasedUtils.tryCatch(
+      () => wallet.signTransaction(transaction),
+      SdkErrorCode.EVM_CANNOT_SIGN_TRANSACTION,
+    )
   },
 
   getProvider: (provider?: string) => new CeloProvider(celoUtils.getProviderUrl(provider)),
@@ -169,4 +179,86 @@ export const celoUtils = {
         return undefined
     }
   },
+  combineArrays: <T, U>(arr1: T[], arr2: U[]): (T | U)[][] =>
+    flatten(arr1.map((item1) => arr2.map((item2) => [item1, item2]))),
+  combineThreeArrays: <T, U, V>(arr1: T[], arr2: U[], arr3: V[]): (T | U | V)[][] =>
+    flatten(flatten(arr1.map((item1) => arr2.map((item2) => arr3.map((item3) => [item1, item2, item3]))))),
+  feeCurrencies: (): CeloFeeCurrency[] => ['CELO', 'CUSD', 'CEUR'],
+  testSign: ({ apiFn, apiArg, signatureIdExpect }: CeloTestMethod) => {
+    celoUtils.testAllCurrencies('fromPrivateKey - %p', async (feeCurrency) => {
+      const args = {
+        ...apiArg,
+        feeCurrency,
+        fromPrivateKey: TEST_DATA.CELO.TESTNET.ERC_20!.PRIVATE_KEY,
+        signatureId: undefined,
+      }
+      const result = await apiFn(args, TEST_DATA.CELO?.PROVIDER, true)
+      expectHexString(result)
+    })
+
+    celoUtils.testAllCurrencies('signatureId - %p', async (feeCurrency) => {
+      const args = {
+        ...apiArg,
+        feeCurrency,
+        signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+        fromPrivateKey: undefined,
+      }
+      const result = await apiFn(args, TEST_DATA.CELO?.PROVIDER, true)
+      const json = JSON.parse(result)
+      if (signatureIdExpect) {
+        signatureIdExpect(json)
+      } else {
+        expectHexString(json.data)
+      }
+    })
+  },
+  testAllCurrencies: (name: string, test: (feeCurrency: CeloFeeCurrency) => void) =>
+    it.each(celoUtils.feeCurrencies())(name, async (feeCurrency) => test(feeCurrency)),
+  testInvalidInputs: ({ apiFn, apiArg, sdkErrorCode }: CeloTestMethod) => {
+    const to = Array.isArray(apiArg.to) ? ['someinvalidaddress'] : 'someinvalidaddress'
+    const invalidAddress = {
+      ...apiArg,
+      to,
+    }
+
+    const invalidAddressMsg = Array.isArray(apiArg.to)
+      ? SdkErrorMessage.get(SdkErrorCode.EVM_INVALID_ADDRESS_ARRAY)
+      : SdkErrorMessage.get(SdkErrorCode.EVM_INVALID_ADDRESS_SINGLE)
+
+    const error = new EvmBasedSdkError({ error: new Error(invalidAddressMsg), code: sdkErrorCode })
+    celoUtils.testAllCurrencies('invalid address - %p', async (feeCurrency) => {
+      await expect(apiFn({ ...invalidAddress, feeCurrency }, TEST_DATA.CELO?.PROVIDER, true)).rejects.toThrow(
+        error,
+      )
+    })
+
+    const missingSCAddress = {
+      ...apiArg,
+      contractAddress: '',
+    }
+
+    celoUtils.testAllCurrencies('empty smart contract address - %p', async (feeCurrency) => {
+      await expect(
+        apiFn({ ...missingSCAddress, feeCurrency }, TEST_DATA.CELO?.PROVIDER, true),
+      ).rejects.toThrow(
+        new EvmBasedSdkError({
+          error: new Error(SdkErrorMessage.get(SdkErrorCode.CELO_MISSING_CONTRACT_ADDRESS)),
+          code: SdkErrorCode.CELO_MISSING_CONTRACT_ADDRESS,
+        }),
+      )
+    })
+  },
+  testMethod: (args: CeloTestMethod) => {
+    celoUtils.testSign(args)
+    celoUtils.testInvalidInputs(args)
+  },
 }
+
+export interface CeloTestMethod {
+  apiFn: ApiFn
+  apiArg: any
+  signatureIdExpect?: (object: string) => void
+  sdkErrorCode?: SdkErrorCode
+}
+
+type ApiFn = (a: object, b: string | undefined, c: boolean) => any

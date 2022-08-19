@@ -41,7 +41,7 @@ describe('EthSDK - tx', () => {
   })
 
   describe('erc20', () => {
-    describe('decimals', () => {
+    xdescribe('decimals', () => {
       erc20TestFactory.decimals(sdk.erc20, TEST_DATA.ETH)
     })
 
@@ -214,7 +214,7 @@ describe('EthSDK - tx', () => {
       })
     })
 
-    describe('send', () => {
+    xdescribe('send', () => {
       describe('smart contract read method invocation', () => {
         smartContractTestFactory.send.smartContractReadMethodInvocationTransaction(
           sdk.smartContract,

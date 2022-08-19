@@ -6,7 +6,7 @@ describe('SdkError', () => {
     const err = new SdkError({ code: SdkErrorCode.API_ERROR })
 
     expect(err.errorCode).toBe(SdkErrorCode.API_ERROR)
-    expect(err.errorMessage).toBe(SdkErrorMessage[SdkErrorCode.API_ERROR])
+    expect(err.errorMessage).toBe(SdkErrorMessage.get(SdkErrorCode.API_ERROR))
   })
 
   describe('With original error', () => {
@@ -22,7 +22,7 @@ describe('SdkError', () => {
       const err2 = new SdkError({ originalError: err1 })
 
       expect(err2.errorCode).toBe(SdkErrorCode.COMMON_ERROR)
-      expect(err2.errorMessage).toBe(SdkErrorMessage[SdkErrorCode.COMMON_ERROR])
+      expect(err2.errorMessage).toBe(SdkErrorMessage.get(SdkErrorCode.COMMON_ERROR))
       expect(err2.originalError).toBe(err1.message)
     })
 
@@ -41,7 +41,7 @@ describe('SdkError', () => {
       const err2 = new SdkError({ originalError: err1 })
 
       expect(err2.errorCode).toBe(SdkErrorCode.API_ERROR)
-      expect(err2.errorMessage).toBe(SdkErrorMessage[SdkErrorCode.API_ERROR])
+      expect(err2.errorMessage).toBe(SdkErrorMessage.get(SdkErrorCode.API_ERROR))
       expect(err2.originalError).toBe(err1)
     })
   })

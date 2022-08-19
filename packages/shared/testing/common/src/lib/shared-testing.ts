@@ -52,6 +52,8 @@ export type BlockchainNetworkTestData = {
     SIGNATURE_ID: string
     CONTRACT_ADDRESS: string
     TOKEN_ADDRESS: string
+    SLAVE_ADDRESS?: string
+    MASTER_ADDRESS?: string
   }
 }
 

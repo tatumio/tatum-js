@@ -1,6 +1,6 @@
 import { CeloWallet } from '@celo-tools/celo-ethers-wrapper'
 import { TATUM_API_CONSTANTS } from '@tatumio/api-client'
-import { amountUtils, toHexString } from '@tatumio/shared-abstract-sdk'
+import { amountUtils, SdkErrorCode, toHexString } from '@tatumio/shared-abstract-sdk'
 import { BroadcastFunction } from '@tatumio/shared-blockchain-abstract'
 import { Erc20Token, evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
 import BigNumber from 'bignumber.js'
@@ -28,7 +28,6 @@ const initialize = async (
         TATUM_API_CONSTANTS.API_KEY
       }`,
   )
-
   return {
     celoProvider,
     network: await celoProvider.ready,
@@ -234,25 +233,37 @@ export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
        * @returns raw transaction data in hex, to be broadcasted to blockchain.
        */
       deploySignedTransaction: async (body: ChainDeployErc20Celo, provider?: string, testnet?: boolean) =>
-        prepareDeploySignedTransaction(body, provider, testnet),
+        evmBasedUtils.tryCatch(
+          () => prepareDeploySignedTransaction(body, provider, testnet),
+          SdkErrorCode.EVM_ERC20_CANNOT_PREPARE_DEPLOY_TX,
+        ),
       /**
        * Prepare a signed Celo mint erc20 transaction with the private key locally. Nothing is broadcasted to the blockchain.
        * @returns raw transaction data in hex, to be broadcasted to blockchain.
        */
       mintSignedTransaction: async (body: ChainMintErc20Celo, provider?: string, testnet?: boolean) =>
-        prepareMintSignedTransaction(body, provider, testnet),
+        evmBasedUtils.tryCatch(
+          () => prepareMintSignedTransaction(body, provider, testnet),
+          SdkErrorCode.EVM_ERC20_CANNOT_PREPARE_MINT_TX,
+        ),
       /**
        * Prepare a signed Celo transfer erc20 transaction with the private key locally. Nothing is broadcasted to the blockchain.
        * @returns raw transaction data in hex, to be broadcasted to blockchain.
        */
       transferSignedTransaction: async (body: ChainTransferErc20Celo, provider?: string, testnet?: boolean) =>
-        prepareTransferSignedTransaction(body, provider, testnet),
+        evmBasedUtils.tryCatch(
+          () => prepareTransferSignedTransaction(body, provider, testnet),
+          SdkErrorCode.EVM_ERC20_CANNOT_PREPARE_TRANSFER_TX,
+        ),
       /**
        * Prepare a signed Celo burn erc20 transaction with the private key locally. Nothing is broadcasted to the blockchain.
        * @returns raw transaction data in hex, to be broadcasted to blockchain.
        */
       burnSignedTransaction: async (body: ChainBurnErc20Celo, provider?: string, testnet?: boolean) =>
-        prepareBurnSignedTransaction(body, provider, testnet),
+        evmBasedUtils.tryCatch(
+          () => prepareBurnSignedTransaction(body, provider, testnet),
+          SdkErrorCode.EVM_ERC20_CANNOT_PREPARE_BURN_TX,
+        ),
     },
     send: {
       /**
