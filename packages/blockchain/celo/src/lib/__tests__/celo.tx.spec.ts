@@ -4,6 +4,7 @@ import { smartContractTestFactory } from '@tatumio/shared-testing-evm-based'
 import { CeloFeeCurrency, celoUtils } from '../utils/celo.utils'
 import { SdkErrorCode, SdkErrorMessage } from '@tatumio/shared-abstract-sdk'
 import { EvmBasedSdkError } from '@tatumio/shared-blockchain-evm-based'
+import { celoTestFactory } from './celo.test-factory'
 
 describe('CeloSDK - tx', () => {
   const sdk = TatumCeloSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
@@ -14,19 +15,22 @@ describe('CeloSDK - tx', () => {
         ? TEST_DATA.CELO.TESTNET.ERC_20?.ADDRESS
         : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
       const amounts = ['1', '0.00189500', '3']
-      const celo = celoUtils.combineThreeArrays<CeloFeeCurrency, CeloFeeCurrency, string>(
-        celoUtils.feeCurrencies(),
+      const celo = celoTestFactory.combineThreeArrays<CeloFeeCurrency, CeloFeeCurrency, string>(
+        celoTestFactory.feeCurrencies(),
         ['CELO'],
         amounts,
       )
-      const erc20 = celoUtils.combineThreeArrays<CeloFeeCurrency, CeloFeeCurrency, string>(
-        celoUtils.feeCurrencies(),
+      const erc20 = celoTestFactory.combineThreeArrays<CeloFeeCurrency, CeloFeeCurrency, string>(
+        celoTestFactory.feeCurrencies(),
         ['CUSD', 'CEUR'],
         amounts,
       )
 
       describe('transferSignedTransaction', () => {
-        const all = celoUtils.combineArrays<CeloFeeCurrency, string>(celoUtils.feeCurrencies(), amounts)
+        const all = celoTestFactory.combineArrays<CeloFeeCurrency, string>(
+          celoTestFactory.feeCurrencies(),
+          amounts,
+        )
         it.each(all)('fromPrivateKey - %p %p', async (feeCurrency: CeloFeeCurrency, amount) => {
           const result = await sdk.transaction.prepare.transferSignedTransaction(
             {
@@ -58,7 +62,7 @@ describe('CeloSDK - tx', () => {
           expect(json.chainId).toBeGreaterThan(0)
         })
 
-        celoUtils.testAllCurrencies('missing input - %p', async (feeCurrency) => {
+        celoTestFactory.testAllCurrencies('missing input - %p', async (feeCurrency) => {
           await expect(
             sdk.transaction.prepare.transferSignedTransaction(
               {
@@ -80,9 +84,9 @@ describe('CeloSDK - tx', () => {
       })
 
       describe('celoOrCUsdSignedTransaction', () => {
-        const all = celoUtils.combineThreeArrays<CeloFeeCurrency, CeloFeeCurrency, string>(
-          celoUtils.feeCurrencies(),
-          celoUtils.feeCurrencies(),
+        const all = celoTestFactory.combineThreeArrays<CeloFeeCurrency, CeloFeeCurrency, string>(
+          celoTestFactory.feeCurrencies(),
+          celoTestFactory.feeCurrencies(),
           amounts,
         )
         it.each(all)(
@@ -147,7 +151,7 @@ describe('CeloSDK - tx', () => {
       })
 
       describe('storeDataTransaction', () => {
-        celoUtils.testSign({
+        celoTestFactory.testSign({
           apiFn: sdk.transaction.prepare.storeDataTransaction,
           apiArg: {
             to: address,
@@ -161,7 +165,7 @@ describe('CeloSDK - tx', () => {
   describe('erc20', () => {
     describe('prepare', () => {
       describe('deploy', () => {
-        celoUtils.testSign({
+        celoTestFactory.testSign({
           apiFn: sdk.erc20.prepare.deploySignedTransaction,
           apiArg: {
             name: 'My ERC20',
@@ -174,7 +178,7 @@ describe('CeloSDK - tx', () => {
       })
 
       describe('burn', () => {
-        celoUtils.testSign({
+        celoTestFactory.testSign({
           apiFn: sdk.erc20.prepare.burnSignedTransaction,
           apiArg: {
             amount: '5',
@@ -185,7 +189,7 @@ describe('CeloSDK - tx', () => {
     })
 
     describe('mint', () => {
-      celoUtils.testSign({
+      celoTestFactory.testSign({
         apiFn: sdk.erc20.prepare.mintSignedTransaction,
         apiArg: {
           amount: '100000',
@@ -196,7 +200,7 @@ describe('CeloSDK - tx', () => {
     })
 
     describe('transfer', () => {
-      celoUtils.testSign({
+      celoTestFactory.testSign({
         apiFn: sdk.erc20.prepare.transferSignedTransaction,
         apiArg: {
           amount: '5',
@@ -211,7 +215,7 @@ describe('CeloSDK - tx', () => {
     describe('prepare', () => {
       jest.setTimeout(99999)
       describe('deploy', () => {
-        celoUtils.testSign({
+        celoTestFactory.testSign({
           apiFn: sdk.nft.prepare.deploySignedTransaction,
           apiArg: {
             name: 'My ERC721',
@@ -225,7 +229,7 @@ describe('CeloSDK - tx', () => {
           ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
           : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
 
-        celoUtils.testMethod({
+        celoTestFactory.testMethod({
           apiFn: sdk.nft.prepare.mintSignedTransaction,
           apiArg: {
             to: address,
@@ -244,7 +248,7 @@ describe('CeloSDK - tx', () => {
           ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
           : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
 
-        celoUtils.testMethod({
+        celoTestFactory.testMethod({
           apiFn: sdk.nft.prepare.mintMultipleSignedTransaction,
           apiArg: {
             to: [address, address],
@@ -262,7 +266,7 @@ describe('CeloSDK - tx', () => {
         const address = TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
           ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
           : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
-        celoUtils.testMethod({
+        celoTestFactory.testMethod({
           apiFn: sdk.nft.prepare.mintCashbackSignedTransaction,
           apiArg: {
             to: address,
@@ -284,7 +288,7 @@ describe('CeloSDK - tx', () => {
         ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
         : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
 
-      celoUtils.testMethod({
+      celoTestFactory.testMethod({
         apiFn: sdk.nft.prepare.mintMultipleCashbackSignedTransaction,
         apiArg: {
           to: [address, address],
@@ -306,7 +310,7 @@ describe('CeloSDK - tx', () => {
         ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
         : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
 
-      celoUtils.testMethod({
+      celoTestFactory.testMethod({
         apiFn: sdk.nft.prepare.mintProvenanceSignedTransaction,
         apiArg: {
           to: address,
@@ -327,7 +331,7 @@ describe('CeloSDK - tx', () => {
       const address = TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
         ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
         : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
-      celoUtils.testMethod({
+      celoTestFactory.testMethod({
         apiFn: sdk.nft.prepare.mintMultipleProvenanceSignedTransaction,
         apiArg: {
           to: [address, address],
@@ -349,7 +353,7 @@ describe('CeloSDK - tx', () => {
       const address = TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
         ? TEST_DATA.CELO.TESTNET.ERC_721?.ADDRESS
         : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
-      celoUtils.testMethod({
+      celoTestFactory.testMethod({
         apiFn: sdk.nft.prepare.transferSignedTransaction,
         apiArg: {
           to: address,
@@ -362,7 +366,7 @@ describe('CeloSDK - tx', () => {
     })
 
     describe('update cashback', () => {
-      celoUtils.testSign({
+      celoTestFactory.testSign({
         apiFn: sdk.nft.prepare.updateCashbackForAuthorSignedTransaction,
         apiArg: {
           contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
@@ -372,7 +376,7 @@ describe('CeloSDK - tx', () => {
         },
       })
 
-      celoUtils.testAllCurrencies('empty smart contract address - %p', async (feeCurrency) => {
+      celoTestFactory.testAllCurrencies('empty smart contract address - %p', async (feeCurrency) => {
         await expect(
           sdk.nft.prepare.updateCashbackForAuthorSignedTransaction(
             {
@@ -390,7 +394,7 @@ describe('CeloSDK - tx', () => {
     })
 
     describe('burn', () => {
-      celoUtils.testSign({
+      celoTestFactory.testSign({
         apiFn: sdk.nft.prepare.burnSignedTransaction,
         apiArg: {
           contractAddress: TEST_DATA.CELO.TESTNET.ERC_721!.CONTRACT_ADDRESS,
@@ -407,7 +411,7 @@ describe('CeloSDK - tx', () => {
       const account = TEST_DATA.CELO.TESTNET?.MULTITOKEN?.ADDRESS
 
       describe('deploy', () => {
-        celoUtils.testSign({
+        celoTestFactory.testSign({
           apiFn: sdk.multiToken.prepare.deployMultiTokenTransaction,
           apiArg: {
             uri: 'example.com',
@@ -417,7 +421,7 @@ describe('CeloSDK - tx', () => {
       })
 
       describe('mint', () => {
-        celoUtils.testMethod({
+        celoTestFactory.testMethod({
           apiFn: sdk.multiToken.prepare.mintMultiTokenTransaction,
           apiArg: {
             to: account,
@@ -431,7 +435,7 @@ describe('CeloSDK - tx', () => {
       })
 
       describe('mint batch', () => {
-        celoUtils.testMethod({
+        celoTestFactory.testMethod({
           apiFn: sdk.multiToken.prepare.mintMultiTokenBatchTransaction,
           apiArg: {
             to: [account, account],
@@ -445,7 +449,7 @@ describe('CeloSDK - tx', () => {
       })
 
       describe('transfer', () => {
-        celoUtils.testMethod({
+        celoTestFactory.testMethod({
           apiFn: sdk.multiToken.prepare.transferMultiTokenTransaction,
           apiArg: {
             to: account,
@@ -459,7 +463,7 @@ describe('CeloSDK - tx', () => {
       })
 
       describe('transfer batch', () => {
-        celoUtils.testMethod({
+        celoTestFactory.testMethod({
           apiFn: sdk.multiToken.prepare.transferMultiTokenBatchTransaction,
           apiArg: {
             to: account,
@@ -473,7 +477,7 @@ describe('CeloSDK - tx', () => {
       })
 
       describe('burn', () => {
-        celoUtils.testSign({
+        celoTestFactory.testSign({
           apiFn: sdk.multiToken.prepare.burnMultiTokenTransaction,
           apiArg: {
             contractAddress,
@@ -487,7 +491,7 @@ describe('CeloSDK - tx', () => {
       })
 
       describe('burn batch', () => {
-        celoUtils.testSign({
+        celoTestFactory.testSign({
           apiFn: sdk.multiToken.prepare.burnMultiTokenBatchTransaction,
           apiArg: {
             contractAddress,
@@ -505,7 +509,7 @@ describe('CeloSDK - tx', () => {
   describe('custodial', () => {
     describe('prepare', () => {
       describe('Transfer from custodial wallet', () => {
-        celoUtils.testSign({
+        celoTestFactory.testSign({
           apiFn: sdk.custodial.prepare.transferFromCustodialWallet,
           apiArg: {
             chain: 'CELO',
@@ -521,7 +525,7 @@ describe('CeloSDK - tx', () => {
 
       // TODO: combination of erc20, erc721 and native
       describe('Batch transfer from custodial wallet - erc20', () => {
-        celoUtils.testSign({
+        celoTestFactory.testSign({
           apiFn: sdk.custodial.prepare.batchTransferFromCustodialWallet,
           apiArg: {
             chain: 'CELO',
@@ -541,7 +545,7 @@ describe('CeloSDK - tx', () => {
       })
 
       describe('Approve from custodial wallet', () => {
-        celoUtils.testSign({
+        celoTestFactory.testSign({
           apiFn: sdk.custodial.prepare.approveFromCustodialWallet,
           apiArg: {
             chain: 'CELO',
@@ -555,7 +559,7 @@ describe('CeloSDK - tx', () => {
       })
 
       describe('Custodial wallet batch', () => {
-        celoUtils.testSign({
+        celoTestFactory.testSign({
           apiFn: sdk.custodial.prepare.custodialWalletBatch,
           apiArg: {
             chain: 'CELO',
@@ -571,7 +575,7 @@ describe('CeloSDK - tx', () => {
     describe('prepare', () => {
       describe('smart contract write method invocation', () => {
         const contractAddress = TEST_DATA.CELO.TESTNET?.MULTITOKEN?.CONTRACT_ADDRESS
-        celoUtils.testSign({
+        celoTestFactory.testSign({
           apiFn: sdk.smartContract.prepare.smartContractWriteMethodInvocationTransaction,
           apiArg: {
             contractAddress,
