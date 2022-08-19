@@ -5,11 +5,12 @@ import { CreateRecord, TronWallet } from '@tatumio/api-client'
 import Web3 from 'web3'
 import { TransactionConfig } from 'web3-core'
 import { isHex, stringToHex, toHex, toWei, Unit } from 'web3-utils'
-import { toHexString, WithoutChain } from '@tatumio/shared-abstract-sdk'
+import { SdkError, SdkErrorCode, toHexString, WithoutChain } from '@tatumio/shared-abstract-sdk'
 import { BigNumber as BN } from '@ethersproject/bignumber'
 import BigNumber from 'bignumber.js'
 import { Erc20Token } from './contracts'
 import { EvmBasedWeb3 } from './services/evm-based.web3'
+import { EvmBasedSdkError } from './evm-based.sdk.errors'
 
 export const evmBasedUtils = {
   generateAddressFromXPub: (xpub: string, i: number): string => {
@@ -80,9 +81,11 @@ export const evmBasedUtils = {
     return signedTransaction.rawTransaction
   },
 
-  transformAmount: (amount: string, unit = 'ether') => {
+  transformToWei: (amount: string, unit = 'ether') => {
     return toWei(amount, unit as Unit)
   },
+
+  amountToWeiHex: (amount: string, unit = 'ether') => toHex(evmBasedUtils.transformToWei(amount, unit)),
 
   decimals: async (contractAddress: string, web3: EvmBasedWeb3, provider?: string) => {
     const client = web3.getClient(provider)
@@ -123,6 +126,16 @@ export const evmBasedUtils = {
       body.gasLimit,
       body.gasPrice,
     )
+  },
+  tryCatch: async (method: () => any, code: SdkErrorCode) => {
+    try {
+      return await method()
+    } catch (e) {
+      if (e instanceof SdkError) {
+        throw e
+      }
+      throw new EvmBasedSdkError({ error: e as Error, code })
+    }
   },
 }
 

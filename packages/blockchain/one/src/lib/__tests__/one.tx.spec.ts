@@ -37,7 +37,7 @@ describe('OneSDK - tx', () => {
   })
 
   describe('erc20', () => {
-    describe('decimals', () => {
+    describe.skip('decimals', () => {
       erc20TestFactory.decimals(sdk.erc20, TEST_DATA.ONE)
     })
 
@@ -210,7 +210,7 @@ describe('OneSDK - tx', () => {
       })
     })
 
-    describe('send', () => {
+    describe.skip('send', () => {
       describe('smart contract read method invocation', () => {
         smartContractTestFactory.send.smartContractReadMethodInvocationTransaction(
           sdk.smartContract,

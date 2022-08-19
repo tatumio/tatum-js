@@ -260,19 +260,19 @@ export interface SdkWithCustodialFunctions {
   prepare: {
     transferFromCustodialWallet(
       body: ChainTransferCustodialWallet,
-      testnet?: boolean,
       provider?: string,
+      testnet?: boolean,
     ): Promise<string>
     batchTransferFromCustodialWallet: (
       body: ChainBatchTransferCustodialWallet,
-      testnet: boolean,
       provider?: string,
+      testnet?: boolean,
     ) => Promise<string>
     approveFromCustodialWallet: (body: ChainApproveCustodialTransfer, provider?: string) => Promise<string>
     custodialWalletBatch: (
       body: ChainGenerateCustodialWalletBatch,
-      testnet: boolean,
       provider?: string,
+      testnet?: boolean,
     ) => Promise<string>
   }
 }
