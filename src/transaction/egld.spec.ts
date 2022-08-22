@@ -1,7 +1,7 @@
-import {Currency, EgldSendTransaction, EgldEsdtTransaction, EsdtToken, EsdtIssue, EsdtIssueNftOrSft} from '../model'
+import {Currency, EgldEsdtTransaction, EsdtToken, EsdtIssue, EsdtIssueNftOrSft} from '../model'
 import {generateAddressFromPrivatekey} from '../wallet/address'
 import {
-    egldGetConfig, egldGetGasPrice, signEgldTransaction, prepareEgldDeployEsdtSignedTransaction,
+    egldGetConfig, egldGetGasPrice, prepareEgldDeployEsdtSignedTransaction,
     prepareEgldDeployNftOrSftSignedTransaction, prepareEgldStopNftCreateSignedTransaction,
 } from './egld'
 
