@@ -13,7 +13,7 @@ import {
     UserSecretKey,
     UserSigner,
 } from '@elrondnetwork/erdjs';
-import { egldBroadcast, egldGetTransactionsCount } from '../blockchain';
+import { egldBroadcast } from '../blockchain';
 import { axios, validateBody } from '../connector/tatum';
 import { ESDT_SYSTEM_SMART_CONTRACT_ADDRESS, TATUM_API_URL } from '../constants';
 import {
@@ -366,7 +366,7 @@ const prepareSignedTransactionAbstraction = async (
     const { data } = await egldGetConfig(client);
     const { config } = data;
     const gasPrice = config?.erd_min_gas_price || 1000000000;
-    const nonce = await egldGetTransactionsCount(sender as string);
+    const nonce = await egldGetTxsCount(sender as string, client);
 
     const egldTx: EgldSendTransaction = {
         nonce,
@@ -407,6 +407,15 @@ const prepareSignedTransactionAbstraction = async (
     });
 
     return await signEgldTransaction(erdjsTransaction, fromPrivateKey as string);
+}
+
+export const egldGetTxsCount = async (address: string, client: string) => {
+    const { nonce } = (
+        await axios.get(`${client}/address/${address}/nonce`, {
+            headers: { 'Content-Type': 'application/json' },
+        })
+    ).data.data
+    return nonce
 }
 
 /**
