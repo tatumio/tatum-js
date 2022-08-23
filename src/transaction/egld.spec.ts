@@ -1,7 +1,7 @@
 import {Currency, EgldEsdtTransaction, EsdtToken, EsdtIssue, EsdtIssueNftOrSft} from '../model'
 import {generateAddressFromPrivatekey} from '../wallet/address'
 import {
-    egldGetConfig, egldGetGasPrice, prepareEgldDeployEsdtSignedTransaction,
+    egldGetConfig, egldGetGasPrice, egldGetTxsCount, prepareEgldDeployEsdtSignedTransaction,
     prepareEgldDeployNftOrSftSignedTransaction, prepareEgldStopNftCreateSignedTransaction,
 } from './egld'
 
@@ -89,5 +89,10 @@ describe('Elrond EGLD tests', () => {
         const result = await prepareEgldStopNftCreateSignedTransaction(body)
         console.log(result)
         expect(result).toBeDefined()
+    })
+
+    it('should test egld get transaction count', async () => {
+        const result = await egldGetTxsCount('erd12ypyg7tkjzvfj476yekx7u4yk67vvx4ljspafxuzyrgxnmgg5w4s8tedmt', 'https://devnet-gateway.elrond.com')
+        expect(result).toBeGreaterThan(0)
     })
 })
