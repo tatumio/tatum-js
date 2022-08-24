@@ -247,6 +247,16 @@ describe('Address tests', () => {
     expect(address).toBe('TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh')
   })
 
+  it('generate tron address from xpub in base58 format', async () => {
+    const address = await generateAddressFromXPub(Currency.TRON, true, 'xpub6FLJqNdqNVAUkcCEEBeQGm4TDdS8HAZHekq26Pvxy5WeXPaJZhS8UTxwnnNQSRqVB1bcGmjkcoFaYbet5McMBE9dA61KN36kivCqYdFmUyf', 1)
+    expect(address).toBe('TUUwBKfaZium3ERwN5qMm34JvnyU3so5pB')
+  })
+
+  it('generate tron address from xpub in hex format', async () => {
+    const address = await generateAddressFromXPub(Currency.TRON, true, '02ce0e7ef7f02e4ac1290025060db4b168a1adc1513d0795b6754b545cc397dd6e8cc1194edcd9d007cdc9abc9e89df7b866db429db34a50ef1a52253b4d266f19', 1)
+    expect(address).toBe('TUUwBKfaZium3ERwN5qMm34JvnyU3so5pB')
+  })
+
   it('should generate an address from a mainnet ETH private key', async () => {
     const address = await generateAddressFromPrivatekey(Currency.ETH, false, '0xac12f9a2d0d1f06c7dc33a3e9c18f60fe1ca65c592d1e9345c994740f9e1971e')
     expect(address).toBe('0xefc395c295a90023d3e9afacb4399da3d332947b')
