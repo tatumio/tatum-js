@@ -1,14 +1,26 @@
-import {BigNumber} from 'bignumber.js';
-import {TransactionConfig} from 'web3-core';
-import {UserSigner, UserSecretKey, Transaction, Nonce, Balance, ChainID, GasLimit, GasPrice, TransactionPayload, TransactionVersion, Address} from '@elrondnetwork/erdjs';
-import {egldBroadcast, egldGetTransactionsCount} from '../blockchain';
-import {axios, validateBody} from '../connector/tatum';
-import {ESDT_SYSTEM_SMART_CONTRACT_ADDRESS, TATUM_API_URL} from '../constants';
+import { BigNumber } from 'bignumber.js';
+import { TransactionConfig } from 'web3-core';
+import {
+    Address,
+    Balance,
+    ChainID,
+    GasLimit,
+    GasPrice,
+    Nonce,
+    Transaction,
+    TransactionPayload,
+    TransactionVersion,
+    UserSecretKey,
+    UserSigner,
+} from '@elrondnetwork/erdjs';
+import { egldBroadcast } from '../blockchain';
+import { axios, validateBody } from '../connector/tatum';
+import { ESDT_SYSTEM_SMART_CONTRACT_ADDRESS, TATUM_API_URL } from '../constants';
 import {
     CreateRecord,
     Currency,
-    EgldEsdtTransaction,
     EgldBasicTransaction,
+    EgldEsdtTransaction,
     EgldSendTransaction,
     EsdtAddOrBurnNftQuantity,
     EsdtControlChanges,
@@ -25,19 +37,19 @@ import {
     EsdtTransferNftCreateRole,
     TransactionKMS,
 } from '../model';
-import {generateAddressFromPrivatekey} from '../wallet/address';
+import { generateAddressFromPrivatekey } from '../wallet/address';
 
-const ELROND_V3_ENDPOINT = () => `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/egld/node`;
+const ELROND_V3_ENDPOINT = () => `${process.env.TATUM_API_URL || TATUM_API_URL}/v3/egld/node/${process.env.TATUM_API_KEY}`;
 
 /**
  * Get Elrond network config
  */
-export const egldGetConfig = async () => {
-    const gasStationUrl = await getEgldClient();
+export const egldGetConfig = async (provider?: string) => {
+    const client = getEgldClient(provider);
     try {
-        const {data} = await axios.get(`${gasStationUrl}/${process.env.TATUM_API_KEY}/network/config`);
+        const {data} = await axios.get(`${client}/network/config`);
         return data
-    } catch (e) {
+    } catch (e: any) {
         console.error(e.toString())
     }
     return null
@@ -46,8 +58,8 @@ export const egldGetConfig = async () => {
 /**
  * Estimate Gas price for the transaction.
  */
-export const egldGetGasPrice = async (): Promise<number> => {
-  const { data } = await egldGetConfig();
+export const egldGetGasPrice = async (provider?: string): Promise<number> => {
+  const { data } = await egldGetConfig(provider);
   const price = data?.config?.erd_min_gas_price;
   if (price) {
     return price;
@@ -58,9 +70,9 @@ export const egldGetGasPrice = async (): Promise<number> => {
 /**
  * Estimate Gas limit for the transaction.
  */
-export const egldGetGasLimit = async (tx: EgldBasicTransaction): Promise<number> => {
-    const gasStationUrl = await getEgldClient();
-    const {data} = await axios.post(`${gasStationUrl}/${process.env.TATUM_API_KEY}/transaction/cost`, tx);
+export const egldGetGasLimit = async (tx: EgldBasicTransaction, provider?: string): Promise<number> => {
+    const client = getEgldClient(provider);
+    const {data} = await axios.post(`${client}/transaction/cost`, tx);
     const gas = data?.data?.txGasUnits;
     if (gas) {
       return gas;
@@ -80,12 +92,8 @@ export const signEgldTransaction = async (tx: Transaction, fromPrivateKey: strin
 /**
  * Returns EGLD server to connect to.
  * @param provider url of the EGLD Server to connect to. If not set, default public server will be used.
- * @param fromPrivateKey optional private key of sender account
  */
-export const getEgldClient = (provider?: string) => {
-    const client = (provider || ELROND_V3_ENDPOINT())
-    return client
-}
+export const getEgldClient = (provider?: string) => (provider || ELROND_V3_ENDPOINT())
 
 /**
  * Sign EGLD pending transaction from Tatum KMS
@@ -355,10 +363,10 @@ const prepareSignedTransactionAbstraction = async (
 ): Promise<string> => {
     const sender = transaction.from as string || await generateAddressFromPrivatekey(Currency.EGLD, false, fromPrivateKey as string);
 
-    const { data } = await egldGetConfig();
+    const { data } = await egldGetConfig(client);
     const { config } = data;
     const gasPrice = config?.erd_min_gas_price || 1000000000;
-    const nonce = await egldGetTransactionsCount(sender as string);
+    const nonce = await egldGetTxsCount(sender as string, client);
 
     const egldTx: EgldSendTransaction = {
         nonce,
@@ -372,7 +380,7 @@ const prepareSignedTransactionAbstraction = async (
         version: config.erd_min_transaction_version,
     };
 
-    const gasLimit = await egldGetGasLimit(egldTx);
+    const gasLimit = await egldGetGasLimit(egldTx, client);
     egldTx.gasLimit = gasLimit;
 
     if (signatureId) {
@@ -397,8 +405,17 @@ const prepareSignedTransactionAbstraction = async (
         chainID: new ChainID(egldTx.chainID),
         version: new TransactionVersion(egldTx.version),
     });
-    
+
     return await signEgldTransaction(erdjsTransaction, fromPrivateKey as string);
+}
+
+export const egldGetTxsCount = async (address: string, client: string) => {
+    const { nonce } = (
+        await axios.get(`${client}/address/${address}/nonce`, {
+            headers: { 'Content-Type': 'application/json' },
+        })
+    ).data.data
+    return nonce
 }
 
 /**
