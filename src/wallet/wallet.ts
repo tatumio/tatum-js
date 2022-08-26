@@ -259,10 +259,11 @@ export const generateDogeWallet = async (testnet: boolean, mnem: string): Promis
  */
 export const generateTronWallet = async (mnem: string) => {
   const w = bip32.fromSeed(await mnemonicToSeed(mnem))
-  const bip32Interface = w.derivePath(TRON_DERIVATION_PATH)
+  const bip32Interface = w.derivePath(TRON_DERIVATION_PATH).neutered()
+
   return {
     mnemonic: mnem,
-    xpub: bip32Interface.publicKey.toString('hex') + bip32Interface.chainCode.toString('hex'),
+    xpub: bip32Interface.toBase58()
   }
 }
 

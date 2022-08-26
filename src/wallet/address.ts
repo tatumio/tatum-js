@@ -39,6 +39,10 @@ import {
 import { Currency } from '../model';
 import cardano from './cardano.crypto';
 import { generateAddress } from './tron.crypto';
+import validator from "validator";
+import isHexadecimal = validator.isHexadecimal;
+import isBase58 = validator.isBase58;
+import {BIP32Interface} from "bip32/types/bip32";
 
 const algosdk = require('algosdk');
 const base32 = require('base32.js');
@@ -98,7 +102,16 @@ const generateDogeAddress = (testnet: boolean, xpub: string, i: number) => {
  * @returns blockchain address
  */
 const generateTronAddress = (xpub: string, i: number) => {
-  const w = fromPublicKey(Buffer.from(xpub.slice(0, 66), 'hex'), Buffer.from(xpub.slice(-64), 'hex'))
+  let w: BIP32Interface
+
+  if (xpub.length == 130 && isHexadecimal(xpub)) {
+    w = fromPublicKey(Buffer.from(xpub.slice(0, 66), 'hex'), Buffer.from(xpub.slice(-64), 'hex'))
+  } else if (xpub.length == 111 && isBase58(xpub)) {
+    w = fromBase58(xpub)
+  } else {
+    throw new Error('Unknown xpub format')
+  }
+
   return TronWeb.address.fromHex(generateAddress(w.derive(i).publicKey))
 }
 
