@@ -8,6 +8,7 @@ import { celoTestFactory } from './celo.test-factory'
 
 describe('CeloSDK - tx', () => {
   const sdk = TatumCeloSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+
   describe('native', () => {
     describe('prepare', () => {
       const provider = TEST_DATA.CELO?.PROVIDER
