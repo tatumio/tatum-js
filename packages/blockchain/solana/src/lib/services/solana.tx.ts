@@ -89,7 +89,8 @@ const transferNft = async (
 ) => {
   const connection = web3.getClient(provider)
   const from = new PublicKey(body.from as string)
-  const transaction = new Transaction({ feePayer: feePayer ? new PublicKey(feePayer) : from })
+  const feePayerKey = feePayer ? new PublicKey(feePayer) : from
+  const transaction = new Transaction({ feePayer: feePayerKey })
   const walletAddress = new PublicKey(body.to)
 
   const mint = new PublicKey(body.contractAddress)
@@ -102,7 +103,7 @@ const transferNft = async (
   )[0]
   const fromTokenAddress = await getAssociatedTokenAddress(mint, from)
   transaction.add(
-    createAssociatedTokenAccountInstruction(toTokenAccountAddress, from, walletAddress, mint),
+    createAssociatedTokenAccountInstruction(toTokenAccountAddress, feePayerKey, walletAddress, mint),
     createTransferInstruction(fromTokenAddress, toTokenAccountAddress, from, 1, [], TOKEN_PROGRAM_ID),
   )
 
@@ -129,7 +130,8 @@ const transferSplToken = async (
 ) => {
   const connection = web3.getClient(provider)
   const from = new PublicKey(body.from as string)
-  const transaction = new Transaction({ feePayer: feePayer ? new PublicKey(feePayer) : from })
+  const feePayerKey = feePayer ? new PublicKey(feePayer) : from
+  const transaction = new Transaction({ feePayer: feePayerKey })
   const mint = new PublicKey(body.contractAddress)
   const to = new PublicKey(body.to)
 
@@ -138,7 +140,7 @@ const transferSplToken = async (
   try {
     await getAccount(connection, toTokenAccountAddress)
   } catch (e) {
-    transaction.add(createAssociatedTokenAccountInstruction(toTokenAccountAddress, from, to, mint))
+    transaction.add(createAssociatedTokenAccountInstruction(toTokenAccountAddress, feePayerKey, to, mint))
   }
 
   transaction.add(
@@ -240,7 +242,7 @@ const mintNft = async (
   const instructions = []
   instructions.push(
     SystemProgram.createAccount({
-      fromPubkey: from,
+      fromPubkey: feePayerAccount,
       newAccountPubkey: mint.publicKey,
       lamports: mintRent,
       space: MintLayout.span,
@@ -259,7 +261,7 @@ const mintNft = async (
   instructions.push(
     createAssociatedTokenAccountInstruction(
       userTokenAccountAddress,
-      from,
+      feePayerAccount,
       new PublicKey(body.to),
       mint.publicKey,
     ),
