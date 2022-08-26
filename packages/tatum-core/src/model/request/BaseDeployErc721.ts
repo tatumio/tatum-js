@@ -18,7 +18,7 @@ export class BaseDeployErc721 extends PrivateKeyOrSignatureId {
     Currency.MATIC,
     Currency.ALGO,
     Currency.KCS,
-    Currency.GLMR,
+    Currency.KLAY,
   ])
   public chain: Currency
 
