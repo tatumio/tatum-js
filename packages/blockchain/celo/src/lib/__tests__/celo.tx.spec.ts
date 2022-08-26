@@ -214,7 +214,7 @@ describe('CeloSDK - tx', () => {
 
   describe('erc721', () => {
     describe('prepare', () => {
-      jest.setTimeout(99999)
+      jest.setTimeout(99998)
       describe('deploy', () => {
         celoTestFactory.testSign({
           apiFn: sdk.nft.prepare.deploySignedTransaction,
