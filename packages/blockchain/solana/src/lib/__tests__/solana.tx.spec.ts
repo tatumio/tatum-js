@@ -126,6 +126,18 @@ describe('SolanaSDK - tx', () => {
     )
   })
 
+  it.skip('should burn NFT', async () => {
+    console.log(
+      await sdk.transaction.burnNft({
+        chain: Currency.SOL,
+        from: 'FZAS4mtPvswgVxbpc117SqfNgCDLTCtk5CoeAtt58FWU',
+        fromPrivateKey:
+          '54uMYxWikks34Vb7ckU5pW13KMDoc5EjJLV7DDzexFZddf1CCR9dfztBvgLbbK7jZj2iaJwfV6X9GZznSBx6Lnct',
+        contractAddress: 'HKNPzWsmsC8RgoTq9bUpcGK3udwj8rahFXmaLUDFgrxC',
+      }),
+    )
+  })
+
   it.skip('should mint NFT Collection', async () => {
     console.log(
       await sdk.transaction.createCollection({
