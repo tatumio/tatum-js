@@ -49,7 +49,7 @@ export type CreateSolanaNftCollection = FromPrivateKeyOrSignatureId<MintNftSolan
 
 export interface BurnSolanaNft {
   collection?: string
-  chain: Currency,
+  chain: Currency
   from: string
   fromPrivateKey: string
   contractAddress: string
@@ -242,7 +242,13 @@ const createSplToken = async (
   }
 }
 
-const burnNft = async (body: BurnSolanaNft, web3: SolanaWeb3, provider?: string, feePayer?: string, feePayerPrivateKey?: string) => {
+const burnNft = async (
+  body: BurnSolanaNft,
+  web3: SolanaWeb3,
+  provider?: string,
+  feePayer?: string,
+  feePayerPrivateKey?: string,
+) => {
   const connection = web3.getClient(provider)
   const from = new PublicKey(body.from)
   const feePayerAccount = feePayer ? new PublicKey(feePayer) : from
@@ -252,7 +258,9 @@ const burnNft = async (body: BurnSolanaNft, web3: SolanaWeb3, provider?: string,
   const mintKey = new PublicKey(body.contractAddress)
   const metadataAccount = await findMetadataProgramAddress(mintKey)
   const masterEditionAccount = await findMetadataProgramAddress(mintKey, true)
-  const collectionMetadataAccount = body.collection ? await findMetadataProgramAddress(new PublicKey(body.collection)) : undefined
+  const collectionMetadataAccount = body.collection
+    ? await findMetadataProgramAddress(new PublicKey(body.collection))
+    : undefined
   const userTokenAccountAddress = (
     await PublicKey.findProgramAddress(
       [from.toBuffer(), TOKEN_PROGRAM_ID.toBuffer(), mintKey.toBuffer()],
@@ -261,15 +269,17 @@ const burnNft = async (body: BurnSolanaNft, web3: SolanaWeb3, provider?: string,
   )[0]
   // instructions.push(createBurnInstruction(userTokenAccountAddress, mintKey, from, 1))
   // instructions.push(createCloseAccountInstruction(userTokenAccountAddress, feePayerAccount, from))
-  instructions.push(createBurnNftInstruction({
-    collectionMetadata: collectionMetadataAccount,
-    masterEditionAccount: masterEditionAccount,
-    metadata: metadataAccount,
-    mint: mintKey,
-    owner: from,
-    splTokenProgram: TOKEN_PROGRAM_ID,
-    tokenAccount: userTokenAccountAddress,
-  }))
+  instructions.push(
+    createBurnNftInstruction({
+      collectionMetadata: collectionMetadataAccount,
+      masterEditionAccount: masterEditionAccount,
+      metadata: metadataAccount,
+      mint: mintKey,
+      owner: from,
+      splTokenProgram: TOKEN_PROGRAM_ID,
+      tokenAccount: userTokenAccountAddress,
+    }),
+  )
   transaction.add(...instructions)
   const signers = [web3.generateKeyPair(body.fromPrivateKey as string)]
   if (feePayerPrivateKey) {
@@ -542,12 +552,8 @@ export const solanaTxService = (args: { web3: SolanaWeb3 }) => {
      * @param feePayer optional address of the account, which will cover fees instead of minter
      * @param feePayerPrivateKey optional private key of the account which will cover fees
      */
-    burnNft: async (
-      body: BurnSolanaNft,
-      provider?: string,
-      feePayer?: string,
-      feePayerPrivateKey?: string,
-    ) => burnNft(body, args.web3, provider, feePayer, feePayerPrivateKey),
+    burnNft: async (body: BurnSolanaNft, provider?: string, feePayer?: string, feePayerPrivateKey?: string) =>
+      burnNft(body, args.web3, provider, feePayer, feePayerPrivateKey),
 
     /**
      * Create new NFT Collection on Solana. Fee is being paid by the minter or feePayer, if present
