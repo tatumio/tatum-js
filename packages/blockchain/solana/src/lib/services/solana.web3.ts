@@ -1,5 +1,5 @@
 import { Connection, Keypair } from '@solana/web3.js'
-import { TATUM_API_CONSTANTS } from '@tatumio/api-client'
+import { OpenAPI, TATUM_API_CONSTANTS } from '@tatumio/api-client'
 // @ts-ignore
 import { decode } from 'base-58'
 
@@ -15,7 +15,7 @@ export const solanaWeb3 = (provider?: string) => {
       const url =
         p ||
         provider ||
-        `${process.env['TATUM_API_URL'] || TATUM_API_CONSTANTS.URL}/v3/solana/web3/${
+        `${OpenAPI.BASE}/v3/blockchain/node/SOL/${
           TATUM_API_CONSTANTS.API_KEY
         }`
       return new Connection(url, 'confirmed')

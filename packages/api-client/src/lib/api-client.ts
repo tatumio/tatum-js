@@ -11,6 +11,7 @@ import {
   BnbSmartChainService,
   CardanoService,
   CeloService,
+  CustodialManagedWalletsService,
   CustomerService,
   DogecoinService,
   ElrondService,
@@ -52,6 +53,7 @@ export type TatumApiType = ReturnType<typeof TatumApi>
 export enum TatumUrl {
   EU = 'https://api-eu1.tatum.io',
   US_WEST = 'https://api-us-west1.tatum.io',
+  LOCALHOST = 'http://localhost:3000',
 }
 
 export const TATUM_API_CONSTANTS = {
@@ -128,4 +130,5 @@ export const ApiServices = {
   kms: KeyManagementSystemService,
   exchangeRate: ExchangeRateService,
   tatum: ServiceUtilsService,
+  custodial: CustodialManagedWalletsService,
 }
