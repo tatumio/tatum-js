@@ -40,6 +40,8 @@ enum ContractType {
   SEMI_FUNGIBLE = 2,
 }
 
+export type CustodialChain = 'CELO' | 'TRON' | 'ONE' | 'XDC' | 'ETH' | 'MATIC' | 'KLAY' | 'BSC';
+
 const MAPPING = {
   [FUNGIBLE]: Custodial_20_TokenWallet,
   [FUNGIBLE | BATCH]: Custodial_20_TokenWalletWithBatch,
@@ -227,7 +229,47 @@ export const evmBasedCustodial = () => {
     },
 
     getCustodialFactoryContractAddress: (
-      chain: 'CELO' | 'TRON' | 'ONE' | 'XDC' | 'ETH' | 'MATIC' | 'KLAY' | 'BSC',
+      chain: CustodialChain,
+      testnet?: boolean,
+    ) => {
+      switch (chain) {
+        case Currency.CELO:
+          return testnet
+            ? '0x481D6f967B120E094D3551DA2C4951242Be582af'
+            : '0xC7f23843d5A51221df4B6D0778910b39b40134b4'
+        case Currency.TRON:
+          return testnet ? 'TRM8P5gpzAr85p2a5BMvqb9UfEdFEwEgA7' : 'TG59uLNQvCR45F6yKHPXipvCu7wg5D88Wr'
+        case Currency.ONE:
+          return testnet
+            ? '0xb1462fE8E9Cf82c0296022Cca7bEfA3Fd4c12B34'
+            : '0x86e27174edd52469f928f6206f3d8e4316525f00'
+        case Currency.XDC:
+          return testnet
+            ? 'xdc6709Bdda623aF7EB152cB2fE2562aB7e031e564f'
+            : 'xdc3485fdba44736859267789ac9c248cc4c1443956'
+        case Currency.ETH:
+          return testnet
+            ? '0x4c6315C5d9b0220a8e171AF18766647EFe675a1F'
+            : '0xd8050943c1E2764F750EC868ae1B375C4768d89A'
+        case Currency.MATIC:
+          return testnet
+            ? '0x6792a82ffab4890cfbcee6c2c775ae9c898afe71'
+            : '0xfc05d7fed6af03df8095cc93b674acac3f72756c'
+        case Currency.KLAY:
+          return testnet
+            ? '0xd68c48173ccb0313442b23aed68b71961c618ade'
+            : '0xb1462fE8E9Cf82c0296022Cca7bEfA3Fd4c12B34'
+        case Currency.BSC:
+          return testnet
+            ? '0xeac818b4CC468Cf6556f772C4BB86e132E6ac0F3'
+            : '0x9067f90c0975679158331fe43ad7a0a105424e0d'
+        default:
+          throw new Error('Unsupported chain.')
+      }
+    },
+
+    getCustodialFactoryV2ContractAddress: (
+      chain: CustodialChain,
       testnet?: boolean,
     ) => {
       switch (chain) {
