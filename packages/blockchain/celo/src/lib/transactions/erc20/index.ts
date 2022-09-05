@@ -126,7 +126,7 @@ const prepareMintSignedTransaction = async (
     feeCurrency: feeCurrencyContractAddress,
     nonce: nonce || txCount,
     gasLimit: '0',
-    to,
+    to: contractAddress.trim(),
     gasPrice,
     data: contract.methods.mint(to.trim(), amountUtils.amountToHexString(amount, decimals)).encodeABI(),
     from,
