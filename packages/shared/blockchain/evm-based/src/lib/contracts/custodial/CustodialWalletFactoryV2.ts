@@ -1,6 +1,5 @@
 import { Abi, ContractAbi } from '../common.contracts'
 
-
 const abi: Abi[] = [
   {
     inputs: [],

@@ -40,7 +40,7 @@ enum ContractType {
   SEMI_FUNGIBLE = 2,
 }
 
-export type CustodialChain = 'CELO' | 'TRON' | 'ONE' | 'XDC' | 'ETH' | 'MATIC' | 'KLAY' | 'BSC';
+export type CustodialChain = 'CELO' | 'TRON' | 'ONE' | 'XDC' | 'ETH' | 'MATIC' | 'KLAY' | 'BSC'
 
 const MAPPING = {
   [FUNGIBLE]: Custodial_20_TokenWallet,
@@ -228,10 +228,7 @@ export const evmBasedCustodial = () => {
       return { params, methodName, methodSig, bodyWithContractAddress }
     },
 
-    getCustodialFactoryContractAddress: (
-      chain: CustodialChain,
-      testnet?: boolean,
-    ) => {
+    getCustodialFactoryContractAddress: (chain: CustodialChain, testnet?: boolean) => {
       switch (chain) {
         case Currency.CELO:
           return testnet
@@ -268,10 +265,7 @@ export const evmBasedCustodial = () => {
       }
     },
 
-    getCustodialFactoryV2ContractAddress: (
-      chain: CustodialChain,
-      testnet?: boolean,
-    ) => {
+    getCustodialFactoryV2ContractAddress: (chain: CustodialChain, testnet?: boolean) => {
       switch (chain) {
         case Currency.CELO:
           return testnet
