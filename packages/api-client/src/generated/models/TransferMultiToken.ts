@@ -18,7 +18,7 @@ export type TransferMultiToken = {
     /**
      * amount of token.
      */
-    amount?: string;
+    amount: string;
     /**
      * Data in bytes
      */

@@ -12,15 +12,15 @@ export type BurnMultiTokenBatchKMSCelo = {
      */
     account: string;
     /**
-     * IDs of token to be destroyed.
+     * The IDs of the Multi Tokens to be destroyed.
      */
     tokenId: Array<string>;
     /**
-     * amounts of token to be destroyed.
+     * The amounts of the Multi Tokens to be destroyed.
      */
-    amounts?: Array<string>;
+    amounts: Array<string>;
     /**
-     * Address of Multi Token token
+     * The address of the Multi Token smart contract
      */
     contractAddress: string;
     /**

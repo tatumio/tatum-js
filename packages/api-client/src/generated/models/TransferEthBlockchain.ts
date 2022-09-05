@@ -35,7 +35,7 @@ export type TransferEthBlockchain = {
     /**
      * Amount to be sent in Ether.
      */
-    amount?: string;
+    amount: string;
     /**
      * Private key of sender address. Private key, or signature Id must be present.
      */

@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type TransferVetBlockchain = {
+export type TransferVetBlockchainKMS = {
     /**
      * Blockchain address to send assets
      */
@@ -12,9 +12,9 @@ export type TransferVetBlockchain = {
      */
     amount: string;
     /**
-     * Private key of sender address. Private key, or signature Id must be present.
+     * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
      */
-    fromPrivateKey: string;
+    signatureId: string;
     /**
      * Additinal data, that can be passed to blockchain transaction as data property.
      */

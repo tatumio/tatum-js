@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type BscEstimateGas = {
+export type CeloEstimateGas = {
     /**
      * Sender address.
      */
@@ -12,11 +12,11 @@ export type BscEstimateGas = {
      */
     to: string;
     /**
-     * Amount to be sent in BSC.
+     * Amount to be sent in Ether.
      */
     amount: string;
     /**
-     * Additional data, that can be passed to blockchain transaction as data property.
+     * Additinal data, that can be passed to blockchain transaction as data property.
      */
     data?: string;
 }

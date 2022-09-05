@@ -8,10 +8,6 @@ export type TronAccount = {
      */
     address: string;
     /**
-     * Free usage of the network
-     */
-    freeNetUsage: number;
-    /**
      * Balance of the TRX, in SUN. SUN is 1/1000000 TRX.
      */
     balance: number;
@@ -38,4 +34,24 @@ export type TronAccount = {
      * Balance of the issued TRC10 token, if any.
      */
     assetIssuedName?: number;
+    /**
+     * Free usage of the network.
+     */
+    freeNetUsage: number;
+    /**
+     * Free usage limit of the network.
+     */
+    freeNetLimit?: number;
+    /**
+     * Extra usage of the network.
+     */
+    netUsage?: number;
+    /**
+     * Extra usage limit of the network.
+     */
+    netLimit?: number;
+    /**
+     * Remaining usage of the network, equal to freeNetLimit - freeNetUsed + netLimit - netUsed.
+     */
+    bandwidth: number;
 }

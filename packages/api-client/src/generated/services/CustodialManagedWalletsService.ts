@@ -125,17 +125,20 @@ export class CustodialManagedWalletsService {
      * In order to do this, Tatum fee address must be used as a feePayer address during transaction creation:
      * <table>
      * <tr><td></td><td><b>Mainnet address</b></td><td><b>Devnet address</b></td></tr>
-     * <tr><td><b>Address</b></td><td>DSpHmb7hLnetoybammcJBJiyqMVR3pDhCuW6hqVg9eBF</td><td>5zPr5331CtBjgVeLedhmJPEpFaUsorLCnb3aCQPsUc9w</td></tr>
+     * <tr><td><b>Address</b></td><td>DSpHmb7hLnetoybammcJBJiyqMVR3pDhCuW6hqVg9eBF</td><td>DSpHmb7hLnetoybammcJBJiyqMVR3pDhCuW6hqVg9eBF</td></tr>
      * </table>
      * Once transaction is constructed using <a href="https://github.com/solana-labs/solana-web3.js/" target="_blank">Solana SDK</a>, it can be serialized to HEX data string, which is then passed to the API and signed.<br/>
      * Transaction could require multiple private keys for signing - fee payer, sender of the SOL assets, minting key during NFT mint operation etc.
      * Some of the keys are used in Tatum - fee payer, or, in case of managed wallet holding SOL assets, the key of that managed wallet - those must be referenced in a list of walletIds to be used.
      * For external keys, which are not managed by Tatum, those could either sign the transaction before it's serialization, or could be passed to the API in it's raw form - this is OK only for keys, which could be exposed and there is no harm of loosing assets on them.<br/>
+     * How to partially sign the transaction could be found <a href="https://solanacookbook.com/references/offline-transactions.html#partial-sign-transaction" target="_blank">here</a>.<br/>
      * <b>Fee payer key is used by default, doesn't have to be mentioned in the list of wallets used for signing.</b><br/><br/>
      * <b>Examples of different transaction payloads.</b><br/><br/>
      * 1. Send SOL from account HrJtQTy2RW9c6y41RvN8x3bEiD6Co74AuhER2MGCpa58 to FZAS4mtPvswgVxbpc117SqfNgCDLTCtk5CoeAtt58FWU
      * <pre>
-     * import { LAMPORTS_PER_SOL, PublicKey, SystemProgram, Transaction } from '@solana/web3.js'
+     * import { LAMPORTS_PER_SOL, PublicKey, SystemProgram, Transaction, Connection } from '@solana/web3.js'
+     *
+     * const connection = new Connection('https://api-eu1.tatum.io/v3/blockchain/node/SOL')
      * const from = 'HrJtQTy2RW9c6y41RvN8x3bEiD6Co74AuhER2MGCpa58'
      * const to = 'FZAS4mtPvswgVxbpc117SqfNgCDLTCtk5CoeAtt58FWU'
      * const amount = '0.000001'
@@ -149,8 +152,11 @@ export class CustodialManagedWalletsService {
              * lamports: new BigNumber(amount).multipliedBy(LAMPORTS_PER_SOL).toNumber(),
              * }),
              * )
-             * transaction.recentBlockhash = '7WyEshBZcZwEbJsvSeGgCkSNMxxxFAym3x7Cuj6UjAUE' // any arbitrary block hash, will be replaced later in the process
-             * return transaction.compileMessage().serialize().toString('hex')
+             * const { blockhash, lastValidBlockHeight } = await connection.getLatestBlockhash('finalized')
+             * transaction.recentBlockhash = blockhash
+             * transaction.lastValidBlockHeight = lastValidBlockHeight
+             * transaction.partialSign(...signers)
+             * return transaction.serialize({ requireAllSignatures: false }).toString('hex')
              * </pre>
              * For the above example, developer have 2 options how to sign transaction - if the sender address HrJtQTy2RW9c6y41RvN8x3bEiD6Co74AuhER2MGCpa58 is managed using a Tatum managed wallet with id 0b1eae3d-2520-4903-8bbf-5dec3ad2a5d4,
              * the final payload to the custodial/transaction endpoint should look like this:

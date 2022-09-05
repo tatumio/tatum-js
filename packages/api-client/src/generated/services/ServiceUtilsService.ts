@@ -8,8 +8,10 @@ import { request as __request } from '../core/request';
 export class ServiceUtilsService {
 
     /**
-     * List credit consumption for last month
-     * <h4>1 credit per API call.</h4><br/><p>List usage information of credits.</p>
+     * Get information about your credit consumption for the last month
+     * <p><b>1 credit per API call</b></p>
+     * <p>Get information about your credit consumption for the last month (used credits per day).</p>
+     *
      * @returns Consumption OK
      * @throws ApiError
      */

@@ -4,7 +4,7 @@
 
 import type { SolanaNftMetadataCreator } from './SolanaNftMetadataCreator';
 
-export type SolanaNftMetadata = {
+export type SolanaNftExpressMetadata = {
     /**
      * Name of the NFT token.
      */
@@ -22,7 +22,7 @@ export type SolanaNftMetadata = {
      */
     uri: string;
     /**
-     * The blockchain address of the NFT collection where the NFT will be minted in. Specify the private key of the collection verifier in the <code>collectionVerifierPrivateKey</code> parameter of the request body to get the NFT verified in the collection after the NFT has been minted. To know more about Solana collections and verification, refer to the <a href="https://docs.metaplex.com/programs/token-metadata/certified-collections" target="_blank">Solana user documentation</a>.
+     * The blockchain address of the NFT collection where the NFT will be minted in. By default, the NFT is minted as not verified (is not considered a part of the collection). To verify the NFT in the collection, use the <a href="https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftVerifyInCollection" target="_blank">NFT verification API</a>. To know more about Solana collections and verification, refer to the <a href="https://docs.metaplex.com/programs/token-metadata/certified-collections" target="_blank">Solana user documentation</a>.
      */
     collection?: string;
     /**

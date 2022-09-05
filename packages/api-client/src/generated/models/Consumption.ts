@@ -4,11 +4,11 @@
 
 export type Consumption = {
     /**
-     * UTC millis timestamp of the day.
+     * The date in the MM/DD/YYYY format
      */
-    day?: number;
+    day?: string;
     /**
-     * Number of credits consumed for the specific day.
+     * The number of credits used on the specified day
      */
     usage?: number;
 }

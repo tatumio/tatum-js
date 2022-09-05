@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { BscEstimateGas } from '../models/BscEstimateGas';
+import type { CeloEstimateGas } from '../models/CeloEstimateGas';
 import type { EstimateFee } from '../models/EstimateFee';
 import type { EstimateFeeBatchMintNft } from '../models/EstimateFeeBatchMintNft';
 import type { EstimateFeeDeployCustodialWallet } from '../models/EstimateFeeDeployCustodialWallet';
@@ -22,7 +23,7 @@ import { request as __request } from '../core/request';
 export class BlockchainFeesService {
 
     /**
-     * Estimate fee for transaction
+     * Estimate the fee for a transaction
      * <h4>10 credits per API call.</h4><br/>
      * <p>Estimate current transaction fee for different operations.<br/>
      * Supported blockchains:
@@ -62,7 +63,7 @@ export class BlockchainFeesService {
     }
 
     /**
-     * Estimate ethereum transaction fees
+     * Estimate Ethereum transaction fees
      * <h4>10 credits per API call.</h4><br/>
      * <p>Estimate gasLimit and gasPrice of the Ethereum transaction. Gas price is obtained from multiple sources + calculated based on the latest N blocks and the current mempool state. The <b>fast</b> one is used by default.
      * </p>
@@ -124,7 +125,7 @@ export class BlockchainFeesService {
     }
 
     /**
-     * Estimate multiple transaction fees
+     * Estimate multiple Ethereum transaction fees
      * <h4>10 credits per API call + 10 credits per each gas estimation.</h4><br/>
      * <p>Estimate gasLimit and gasPrice of the Ethereum transaction. Gas price is obtained from multiple sources + calculated based on the latest N blocks and the current mempool state.
      * The <b>fast</b> one is used by default.<br/>
@@ -138,7 +139,7 @@ export class BlockchainFeesService {
      */
     public static ethEstimateGasBatch(
         requestBody: {
-            estimations?: Array<EthEstimateGas>;
+            estimations: Array<EthEstimateGas>;
         },
         xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<{
@@ -246,7 +247,43 @@ export class BlockchainFeesService {
     }
 
     /**
-     * Estimate BNB Chain transaction fees
+     * Estimate Celo Chain transaction fees
+     * <h4>2 credits per API call.</h4><br/>
+     * <p>Estimate gasLimit and gasPrice of the CELO transaction. Gas price is obtained from <a href="https://explorer.bitquery.io/celo_rc1/gas" target="_blank">https://explorer.bitquery.io/celo_rc1/gas</a>.
+     * </p>
+     *
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static celoEstimateGas(
+        requestBody: CeloEstimateGas,
+    ): CancelablePromise<{
+        /**
+         * Gas limit for transaction in gas price.
+         */
+        gasLimit: number;
+        /**
+         * Gas price in wei.
+         */
+        gasPrice: string;
+    }> {
+        return __request({
+            method: 'POST',
+            path: `/v3/celo/gas`,
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                500: `Internal server error. There was an error on the server while processing the request.`,
+            },
+        });
+    }
+
+    /**
+     * Estimate BNB Smart Chain transaction fees
      * <h4>2 credits per API call.</h4><br/>
      * <p>Estimate gasLimit and gasPrice of the BSC transaction. Gas price is obtained from <a href="https://explorer.bitquery.io/bsc/gas" target="_blank">https://explorer.bitquery.io/bsc/gas</a>.
      * </p>
@@ -284,7 +321,7 @@ export class BlockchainFeesService {
     /**
      * Estimate Klaytn transaction fees
      * <h4>2 credits per API call.</h4><br/>
-     * <p>Estimate gasLimit and gasPrice of the Klaytn transaction. Gas price is obtained from <a href="https://gasstation-mainnet.matic.network/" target="_blank">https://gasstation-mainnet.matic.network/</a>.
+     * <p>Estimate gasLimit and gasPrice of the Klaytn transaction. Gas price is obtained from <a href="https://explorer.bitquery.io/klaytn/gas" target="_blank">https://explorer.bitquery.io/klaytn/gas</a>.
      * </p>
      *
      * @param requestBody
@@ -318,7 +355,7 @@ export class BlockchainFeesService {
     }
 
     /**
-     * Estimate XDC transaction fees
+     * Estimate XinFin transaction fees
      * <h4>2 credits per API call.</h4><br/>
      * <p>Estimate gasLimit and gasPrice of the XDC transaction. Gas price is obtained from <a href="https://rpc.xinfin.network/gasPrice" target="_blank">https://rpc.xinfin.network/gasPrice</a>.
      * </p>
@@ -354,7 +391,7 @@ export class BlockchainFeesService {
     }
 
     /**
-     * Estimate Kcs transaction fees
+     * Estimate KuCoin Community Chain transaction fees
      * <h4>2 credits per API call.</h4><br/>
      * <p>Estimate gasLimit and gasPrice of the Kcs transaction.
      * </p>
@@ -404,52 +441,6 @@ export class BlockchainFeesService {
             path: `/v3/vet/transaction/gas`,
             body: requestBody,
             mediaType: 'application/json',
-            errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
-            },
-        });
-    }
-
-    /**
-     * @deprecated
-     * Get QTUM estimated gas fees
-     * <h4>1 credit per API call</h4><p><b>This endpoint is deprecated.</b></p><br/><p>Get estimated gas fees</p>
-     * @param nblocks nblocks
-     * @returns any OK
-     * @throws ApiError
-     */
-    public static estimateFee(
-        nblocks: number,
-    ): CancelablePromise<any> {
-        return __request({
-            method: 'GET',
-            path: `/v3/qtum/transactions/gas/${nblocks}`,
-            errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
-            },
-        });
-    }
-
-    /**
-     * @deprecated
-     * Get QTUM estimated gas fees per byte
-     * <h4>1 credit per API call</h4><p><b>This endpoint is deprecated.</b></p><br/><p>Get estimated gas fees per byte</p>
-     * @param nblocks nblocks
-     * @returns any OK
-     * @throws ApiError
-     */
-    public static estimateFeePerByte(
-        nblocks: number,
-    ): CancelablePromise<any> {
-        return __request({
-            method: 'GET',
-            path: `/v3/qtum/transactions/gasbytes/${nblocks}`,
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,

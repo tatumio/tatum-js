@@ -121,8 +121,8 @@ export class AuctionService {
     /**
      * Bid for asset on the NFT Auction
      * <h4>2 credits per API call.</h4><br/>
-     * <p>Bid on the auction. Buyer must either send native assets with this operation, or approve ERC20 token spending before using <a href="#operation/Erc20Approve">Approve ERC20</a>
-     * After auction is sold, it's in a pending state to be processed by the auction. Noone receives the assets unless the auction operator processes that.<br/>
+     * <p>Bid on the auction. Buyer must either send native assets with this operation, or <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Approve" target="_blank">approve ERC20 token spending</a> in advance.</p>
+     * <p>After auction is sold, it's in a pending state to be processed by the auction. Noone receives the assets unless the auction operator processes that.</p>
      * Supported blockchains:
      * <ul>
      * <li>Binance Smart Chain</li>
@@ -132,14 +132,9 @@ export class AuctionService {
      * <li>Polygon (Matic)</li>
      * <li>Klaytn</li>
      * </ul>
-     * *Note:
-     * In the new tatum ERC721 smart contract, we have added an option for the author to set royalties on every transfer and in any currency.
-     * To make it backwards compatible with the previous logic we have added a check to see if you are using the new or old version.
-     * If you are using older version of the marketplace/auction, you may notice a warning in the explorer which says:
-     * "Although one or more Error Occurred [execution reverted] Contract Execution Completed"
-     *
-     * You can ignore the above warning, this has no impact on the functionality and is a response of internal transaction
-     * </p>
+     * <p><b>NOTE:</b> When making this API call, you may get the following message:<br/>
+     * <code>Although one or more Error Occurred [execution reverted] Contract Execution Completed</code><br/>
+     * This message is a result of the auction version check and has no impact on completing the API call. You can safely ignore it.</p>
      *
      * @param requestBody
      * @returns any OK
@@ -175,14 +170,9 @@ export class AuctionService {
      * <li>Polygon (Matic)</li>
      * <li>Klaytn</li>
      * </ul>
-     * *Note:
-     * In the new tatum ERC721 smart contract, we have added an option for the author to set royalties on every transfer and in any currency.
-     * To make it backwards compatible with the previous logic we have added a check to see if you are using the new or old version.
-     * If you are using older version of the marketplace/auction, you may notice a warning in the explorer which says:
-     * "Although one or more Error Occurred [execution reverted] Contract Execution Completed"
-     *
-     * You can ignore the above warning, this has no impact on the functionality and is a response of internal transaction
-     * </p>
+     * <p><b>NOTE:</b> When making this API call, you may get the following message:<br/>
+     * <code>Although one or more Error Occurred [execution reverted] Contract Execution Completed</code><br/>
+     * This message is a result of the auction version check and has no impact on completing the API call. You can safely ignore it.</p>
      *
      * @param requestBody
      * @returns any OK
@@ -218,14 +208,9 @@ export class AuctionService {
      * <li>Polygon (Matic)</li>
      * <li>Klaytn</li>
      * </ul>
-     * *Note:
-     * In the new tatum ERC721 smart contract, we have added an option for the author to set royalties on every transfer and in any currency.
-     * To make it backwards compatible with the previous logic we have added a check to see if you are using the new or old version.
-     * If you are using older version of the marketplace/auction, you may notice a warning in the explorer which says:
-     * "Although one or more Error Occurred [execution reverted] Contract Execution Completed"
-     *
-     * You can ignore the above warning, this has no impact on the functionality and is a response of internal transaction
-     * </p>
+     * <p><b>NOTE:</b> When making this API call, you may get the following message:<br/>
+     * <code>Although one or more Error Occurred [execution reverted] Contract Execution Completed</code><br/>
+     * This message is a result of the auction version check and has no impact on completing the API call. You can safely ignore it.</p>
      *
      * @param requestBody
      * @returns any OK

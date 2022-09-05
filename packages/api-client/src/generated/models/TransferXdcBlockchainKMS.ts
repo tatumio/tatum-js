@@ -4,7 +4,7 @@
 
 export type TransferXdcBlockchainKMS = {
     /**
-     * Additinal data, that can be passed to blockchain transaction as data property. Only for ETH transactions.
+     * Additional data, that can be passed to blockchain transaction as data property. Only for XDC transactions.
      */
     data?: string;
     /**
@@ -33,7 +33,7 @@ export type TransferXdcBlockchainKMS = {
         gasPrice: string;
     };
     /**
-     * Amount to be sent in Ether.
+     * Amount to be sent in XDC.
      */
     amount: string;
     /**

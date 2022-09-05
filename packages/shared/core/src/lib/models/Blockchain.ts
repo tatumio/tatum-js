@@ -14,7 +14,6 @@ export enum Blockchain {
   BSC = 'BSC',
   POLYGON = 'POLYGON',
   FLOW = 'FLOW',
-  QTUM = 'QTUM',
   TRON = 'TRON',
   EGLD = 'EGLD',
   XDC = 'XDC',

@@ -18,7 +18,7 @@ export type TransferMultiTokenCelo = {
     /**
      * Amount of token.
      */
-    amount?: string;
+    amount: string;
     /**
      * Data in bytes
      */
@@ -38,5 +38,5 @@ export type TransferMultiTokenCelo = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency?: 'CELO' | 'CUSD' | 'CEUR';
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

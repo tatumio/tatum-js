@@ -28,13 +28,9 @@ export type MintMultiToken = {
      */
     data?: string;
     /**
-     * If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic.
+     * Private key of sender address. Private key, or signature Id must be present.
      */
-    index?: number;
-    /**
-     * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
-     */
-    signatureId?: string;
+    fromPrivateKey: string;
     /**
      * Nonce to be set to transaction. If not present, last known nonce will be used.
      */
