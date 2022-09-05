@@ -156,7 +156,7 @@ const prepareTransferSignedTransaction = async (
       nonce,
       gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
       gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
-      to: to.trim(),
+      to: contractAddress.trim(),
       data: contract.methods.transfer(to.trim(), amountUtils.amountToHexString(amount, decimals)).encodeABI(),
     })
   }
@@ -172,7 +172,7 @@ const prepareTransferSignedTransaction = async (
     feeCurrency: feeCurrencyContractAddress,
     nonce: nonce || txCount,
     gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
-    to: to.trim(),
+    to: contractAddress.trim(),
     gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice, gasPrice),
     data: contract.methods.transfer(to.trim(), amountUtils.amountToHexString(amount, decimals)).encodeABI(),
     from,
