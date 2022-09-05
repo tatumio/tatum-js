@@ -22,9 +22,6 @@ import {
   LTC_TEST_NETWORK,
   MATIC_DERIVATION_PATH,
   ONE_DERIVATION_PATH,
-  QTUM_DERIVATION_PATH,
-  QTUM_NETWORK_MAINNET,
-  QTUM_NETWORK_TESTNET,
   TESTNET_DERIVATION_PATH,
   TRON_DERIVATION_PATH,
   VET_DERIVATION_PATH,
@@ -231,13 +228,6 @@ export const generateBtcWallet = async (testnet: boolean, mnem: string): Promise
     xpub: hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : BTC_DERIVATION_PATH).toJSON().xpub,
   }
 }
-export const generateQtumWallet = async (testnet: boolean, mnem: string): Promise<Wallet> => {
-  const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnem), testnet ? QTUM_NETWORK_TESTNET.bip32 : QTUM_NETWORK_MAINNET.bip32)
-  return {
-    mnemonic: mnem,
-    xpub: hdwallet.derive(testnet ? TESTNET_DERIVATION_PATH : QTUM_DERIVATION_PATH).toJSON().xpub,
-  }
-}
 
 /**
  * Generate Doge wallet
@@ -361,8 +351,6 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
       return generateCeloWallet(testnet, mnem)
     case Currency.ONE:
       return generateOneWallet(testnet, mnem)
-    case Currency.QTUM:
-      return generateQtumWallet(testnet, mnem)
     case Currency.KLAY:
       return generateKlaytnWallet(testnet, mnem)
     case Currency.EGLD:
