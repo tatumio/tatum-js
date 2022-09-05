@@ -1,5 +1,6 @@
 type SolidityDataType =
   | 'bool'
+  | 'bool[]'
   | 'string'
   | 'uint8'
   | 'uint256'
@@ -8,6 +9,7 @@ type SolidityDataType =
   | 'tuple'
   | 'bytes4'
   | 'bytes32'
+  | 'bytes32[]'
   | 'string[]'
   | 'uint256[]'
   | 'address[]'
