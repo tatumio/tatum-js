@@ -2,10 +2,13 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type Wallet = {
+export type GeneratePrivateKey = {
     /**
      * Mnemonic to generate private key for the account, from which the gas will be paid (index will be used).
      */
-    mnemonic?: string;
-    xpub?: string;
+    mnemonic: string;
+    /**
+     * derivation index of address to pay for deployment of ERC20
+     */
+    index: number;
 }

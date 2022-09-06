@@ -121,7 +121,7 @@ export type ChainTransferMultiToken = FromPrivateKeyOrSignatureId<TransferMultiT
 
 export type ChainTransferMultiTokenBatch = FromPrivateKeyOrSignatureId<TransferMultiTokenBatch>
 
-export type ChainMintMultiToken = MintMultiToken & { fromPrivateKey?: string }
+export type ChainMintMultiToken = FromPrivateKeyOrSignatureId<MintMultiToken>
 
 export type ChainMintMultiTokenBatch = FromPrivateKeyOrSignatureId<MintMultiTokenBatch>
 

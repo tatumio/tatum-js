@@ -348,7 +348,6 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>Klaytn</li>
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
-     * <li>Solana</li>
      * <li>XinFin</li>
      * </ul>
      *
@@ -360,7 +359,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * @throws ApiError
      */
     public static erc20GetBalance(
-        chain: 'CELO' | 'ALGO' | 'MATIC' | 'ETH' | 'SOL' | 'BSC' | 'XDC' | 'KLAY' | 'ONE' | 'EGLD' | 'KCS',
+        chain: 'CELO' | 'ALGO' | 'MATIC' | 'ETH' | 'BSC' | 'XDC' | 'KLAY' | 'ONE' | 'EGLD' | 'KCS',
         address: string,
         contractAddress: string,
         xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',

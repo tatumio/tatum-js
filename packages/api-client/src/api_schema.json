@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Tatum API Reference",
-    "version": "3.14.0",
+    "version": "3.15.0",
     "description": "# Welcome to the Tatum API Reference!\n\n## What is Tatum?\n\nTatum offers a flexible framework to build, run, and scale blockchain apps fast. To learn more about the\nTatum blockchain development framework, visit [our website](https://tatum.io/framework).\n\nThe Tatum API features powerful endpoints that simplify a complex blockchain into single API requests. Code for all\nsupported blockchains using unified API calls.\n\n## Need help?\n\nTo chat with other developers, get help from the Support team, and engage with the thriving Tatum community, join \nour [Discord server](https://discord.com/invite/tatum). For more information about how to work with Tatum,\nreview the [online documentation](https://docs.tatum.io/).\n\n## About this API Reference\n\nThe Tatum API Reference is based on OpenAPI Specification v3.1.0 with a few\n[vendor extensions](https://github.com/Redocly/redoc/blob/master/docs/redoc-vendor-extensions.md) applied.\n\n# Authentication\n\nWhen using the Tatum API, you authenticate yourself with an **API key**.\n<SecurityDefinitions />\n",
     "x-logo": { "url": "https://tatum.io/images/Light.svg", "altText": "Tatum" }
   },
@@ -23960,7 +23960,7 @@
     },
     "/v3/blockchain/token/balance/{chain}/{contractAddress}/{address}": {
       "get": {
-        "description": "<p><b>1 credit per API call</b></p>\n<p>Get the number of the fungible tokens minted on a specific smart contract (the <code>contractAddress</code> path parameter in the request endpoint URL) that a blockchain address holds.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>Algorand</li>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Elrond</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>KuCoin Community Chain</li>\n<li>Polygon</li>\n<li>Solana</li>\n<li>XinFin</li>\n</ul>\n",
+        "description": "<p><b>1 credit per API call</b></p>\n<p>Get the number of the fungible tokens minted on a specific smart contract (the <code>contractAddress</code> path parameter in the request endpoint URL) that a blockchain address holds.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>Algorand</li>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Elrond</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>KuCoin Community Chain</li>\n<li>Polygon</li>\n<li>XinFin</li>\n</ul>\n",
         "operationId": "Erc20GetBalance",
         "parameters": [
           {
@@ -23970,7 +23970,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": ["CELO", "ALGO", "MATIC", "ETH", "SOL", "BSC", "XDC", "KLAY", "ONE", "EGLD", "KCS"],
+              "enum": ["CELO", "ALGO", "MATIC", "ETH", "BSC", "XDC", "KLAY", "ONE", "EGLD", "KCS"],
               "example": "CELO"
             }
           },
@@ -65407,14 +65407,15 @@
         "type": "object",
         "properties": {
           "mnemonic": {
-            "description": "Generated mnemonic for wallet.",
+            "maxLength": 500,
+            "minLength": 1,
+            "description": "Mnemonic to generate private key for the account, from which the gas will be paid (index will be used).",
             "example": "urge pulp usage sister evidence arrest palm math please chief egg abuse",
             "type": "string"
           },
           "xpub": {
-            "description": "Generated Extended public key for wallet with derivation path according to BIP44. This key can be used to generate addresses.",
-            "example": "xpub6EsCk1uU6cJzqvP9CdsTiJwT2rF748YkPnhv5Qo8q44DG7nn2vbyt48YRsNSUYS44jFCW9gwvD9kLQu9AuqXpTpM1c5hgg9PsuBLdeNncid",
-            "type": "string"
+            "type": "string",
+            "example": "xpub6EsCk1uU6cJzqvP9CdsTiJwT2rF748YkPnhv5Qo8q44DG7nn2vbyt48YRsNSUYS44jFCW9gwvD9kLQu9AuqXpTpM1c5hgg9PsuBLdeNncid"
           }
         }
       },
@@ -83423,6 +83424,25 @@
           }
         },
         "required": ["to", "amount", "currency", "signatureId"]
+      },
+      "GeneratePrivateKey": {
+        "type": "object",
+        "properties": {
+          "mnemonic": {
+            "maxLength": 500,
+            "minLength": 1,
+            "description": "Mnemonic to generate private key for the account, from which the gas will be paid (index will be used).",
+            "example": "urge pulp usage sister evidence arrest palm math please chief egg abuse",
+            "type": "string"
+          },
+          "index": {
+            "description": "derivation index of address to pay for deployment of ERC20",
+            "example": 0,
+            "type": "integer",
+            "maximum": 2147483647
+          }
+        },
+        "required": ["index", "mnemonic"]
       }
     },
     "securitySchemes": {
