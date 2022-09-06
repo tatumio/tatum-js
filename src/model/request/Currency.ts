@@ -65,6 +65,7 @@ export enum Currency {
   XDC = 'XDC',
   LATOKEN = 'LATOKEN',
   USDT_MATIC = 'USDT_MATIC',
+  QTUM = 'QTUM',
   EGLD = 'EGLD',
   ALGO = 'ALGO',
   KCS = 'KCS',
