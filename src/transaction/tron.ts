@@ -326,7 +326,7 @@ export const getTronTrc20ContractDecimals = async (testnet: boolean, contractAdd
     tronWeb.setAddress(contractAddress)
     const contractInstance = await tronWeb.contract().at(contractAddress)
     const decimalsBigNum = await contractInstance.decimals().call()
-    return decimalsBigNum.toNumber()
+    return new BigNumber(decimalsBigNum).toNumber()
 }
 
 /**
@@ -424,7 +424,7 @@ export const prepareTronTrc20SignedTransaction = async (testnet: boolean, body: 
         },
         [{type: 'address', value: tronWeb.address.toHex(to)}, {
             type: 'uint256',
-            value: `0x${new BigNumber(amount).multipliedBy(new BigNumber(10).pow(decimals.toNumber())).toString(16)}`
+            value: `0x${new BigNumber(amount).multipliedBy(new BigNumber(10).pow(new BigNumber(decimals))).toString(16)}`
         }],
         tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(fromPrivateKey))
     )
@@ -613,7 +613,7 @@ export const prepareTronTrc20SignedKMSTransaction = async (testnet: boolean, bod
         },
         [{type: 'address', value: tronWeb.address.toHex(to)}, {
             type: 'uint256',
-            value: `0x${new BigNumber(amount).multipliedBy(new BigNumber(10).pow(decimals.toNumber())).toString(16)}`
+            value: `0x${new BigNumber(amount).multipliedBy(new BigNumber(10).pow(new BigNumber(decimals))).toString(16)}`
         }],
         from
     )
