@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { SolanaNftMetadata } from './SolanaNftMetadata';
+import type { SolanaNftExpressMetadata } from './SolanaNftExpressMetadata';
 
 export type MintNftExpressSolana = {
     /**
@@ -13,5 +13,5 @@ export type MintNftExpressSolana = {
      * Blockchain address to send NFT token to
      */
     to: string;
-    metadata: SolanaNftMetadata;
+    metadata: SolanaNftExpressMetadata;
 }

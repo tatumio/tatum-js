@@ -6,7 +6,7 @@ export type BurnMultiTokenKMS = {
     /**
      * Chain to work with.
      */
-    chain: 'ETH' | 'ONE' | 'MATIC' | 'KCS' | 'KLAY' | 'BSC';
+    chain: 'ETH' | 'ONE' | 'MATIC' | 'KCS' | 'KLAY' | 'BSC' | 'ALGO';
     /**
      * Address of holder
      */

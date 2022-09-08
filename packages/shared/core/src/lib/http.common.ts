@@ -11,7 +11,6 @@ const EndpointsMapping: Record<Blockchain, string> = {
   LTC: 'litecoin',
   NEO: 'neo',
   POLYGON: 'polygon',
-  QTUM: 'qtum',
   SOL: 'solana',
   TRON: 'tron',
   VET: 'vet',

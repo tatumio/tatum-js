@@ -1,7 +1,6 @@
 import { TatumSolanaSDK } from './solana.sdk'
 import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testing-common'
-import { TransactionHash } from '@tatumio/api-client'
-import { NftAddress } from './services/solana.tx'
+import { SolanaMintedResult, TransactionHash } from '@tatumio/api-client'
 
 describe('TatumSolanaSDK', () => {
   jest.setTimeout(99999)
@@ -31,7 +30,7 @@ describe('TatumSolanaSDK', () => {
             },
           },
           provider,
-        )) as NftAddress
+        )) as SolanaMintedResult
 
         expect(result.txId).toBeDefined()
         expect(result.nftAddress).toBeDefined()

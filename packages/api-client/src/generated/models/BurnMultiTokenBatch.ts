@@ -12,11 +12,11 @@ export type BurnMultiTokenBatch = {
      */
     account: string;
     /**
-     * ID of token to be destroyed.
+     * The IDs of the Multi Tokens to be destroyed.
      */
     tokenId: Array<string>;
     /**
-     * ID of token to be destroyed.
+     * The amounts of the Multi Tokens to be destroyed.
      */
     amounts: Array<string>;
     /**
@@ -24,7 +24,7 @@ export type BurnMultiTokenBatch = {
      */
     data?: string;
     /**
-     * Address of Multi Token token
+     * The address of the Multi Token smart contract
      */
     contractAddress: string;
     /**

@@ -6,20 +6,24 @@ import type { SolanaNftMetadata } from './SolanaNftMetadata';
 
 export type MintNftSolana = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'SOL';
     /**
-     * Blockchain address to send NFT token to
+     * The blockchain address to send the NFT to
      */
     to: string;
     /**
-     * Blockchain address to mint NFT token from. From this account, transaction fee will be paid.
+     * The blockchain address to mint the NFT from. The transaction fee will be paid from this address.
      */
     from: string;
     /**
-     * Private key of sender address.
+     * The private key of the sender's address
      */
     fromPrivateKey: string;
+    /**
+     * The private key of the collection verifier (owner) who will verify the NFT in the NFT collection where the NFT is minted in. The blockchain address of this collection is specified in the <code>collection</code> parameter in the <code>metadata</code> section of the request body. To know more about Solana collections and verification, refer to the <a href="https://docs.metaplex.com/programs/token-metadata/certified-collections" target="_blank">Solana user documentation</a>.
+     */
+    collectionVerifierPrivateKey?: string;
     metadata: SolanaNftMetadata;
 }

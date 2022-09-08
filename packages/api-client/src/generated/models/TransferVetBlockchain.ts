@@ -14,11 +14,7 @@ export type TransferVetBlockchain = {
     /**
      * Private key of sender address. Private key, or signature Id must be present.
      */
-    fromPrivateKey?: string;
-    /**
-     * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
-     */
-    signatureId?: string;
+    fromPrivateKey: string;
     /**
      * Additinal data, that can be passed to blockchain transaction as data property.
      */

@@ -3,7 +3,7 @@ import {
   AccountService,
   Address,
   ApiServices,
-  CreateAccount,
+  CreateAccountXpub,
   CustomerService,
   Wallet,
 } from '@tatumio/api-client'
@@ -52,7 +52,7 @@ export class AbstractSdkLedgerCustomerService {
    * @param webhookUrl optional URL, where webhook will be post for every incoming blockchain transaction to the address
    */
   public static async generateAccount(
-    account: CreateAccount,
+    account: CreateAccountXpub,
     generateNewWalletFn: GenerateWalletFn,
     generateNewWallet = true,
     testnet = true,

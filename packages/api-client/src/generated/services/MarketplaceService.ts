@@ -47,7 +47,7 @@ export class MarketplaceService {
      * <li>The marketplace smart contract deducts the required amount of tokens from the smart contract where the buyer holds the tokens.</li></ol></li></ul></li>
      * <li>The marketplace smart contract transfers the asset to the buyer, transfers the asset price to the seller, and sends the fee to the marketplace fee recepient.</li>
      * </ol>
-     * <p>You can create an NFT marketplace on the following blockchains:</p>
+     * <p>This API is supported for the following blockchains:</p>
      * <ul>
      * <li>BNB Smart Chain</li>
      * <li>Celo</li>
@@ -88,7 +88,7 @@ export class MarketplaceService {
      * <p>Create a new listing for an asset on the NFT marketplace. The listing can be offered for the native blockchain assets (for example, ETH, BSC, and so on) or for any fungible tokens.</p>
      * <p>After the listing is created, <a href="https://apidoc.tatum.io/tag/Auction#operation/ApproveNftAuctionSpending" target="_blank">allow the marketplace smart contract to transfer the asset that you are selling</a>.</p>
      * <p>You can create a listing only for an existing asset that you own (you must be the owner of the asset).</p>
-     * <p>You can sell an asset on the NFT marketplace on the following blockchains:</p>
+     * <p>This API is supported for the following blockchains:</p>
      * <ul>
      * <li>BNB Smart Chain</li>
      * <li>Celo</li>
@@ -135,7 +135,7 @@ export class MarketplaceService {
      * <li>If you want to pay for the asset with the <b>native assets</b>, send the required amount of the assets with the API call.</li>
      * <li>If you want to pay with the <b>fungible tokens</b>, <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Approve" target="_blank">allow the marketplace smart contract to access your tokens</a> before making the purchase. When you make the API call, the marketplace smart contract will deduct the required amount of the tokens from the smart contract where you hold the tokens.</li>
      * </ul>
-     * <p>You can buy an asset listed on the NFT marketplace on the following blockchains:</p>
+     * <p>This API is supported for the following blockchains:</p>
      * <ul>
      * <li>BNB Smart Chain</li>
      * <li>Celo</li>
@@ -179,7 +179,7 @@ export class MarketplaceService {
      * <p>Cancel the selling of an asset on the NFT marketplace.</p>
      * <p>You can cancel the selling only if you are the seller of the asset or the marketplace operator. Once the selling is canceled, the asset is returned to the seller.</p>
      * <p>You cannot cancel the selling if the asset has already been purchased.</p>
-     * <p>You can cancel the selling of an asset on the NFT marketplace on the following blockchains:</p>
+     * <p>This API is supported for the following blockchains:</p>
      * <ul>
      * <li>BNB Smart Chain</li>
      * <li>Celo</li>
@@ -221,7 +221,7 @@ export class MarketplaceService {
      * Get the listings of a certain type from the NFT marketplace
      * <p><b>1 credit per API call</b></p>
      * <p>Get the open, sold, or cancelled listings from the NFT marketplace.</p>
-     * <p>You can get the listings from the NFT marketplace on the following blockchains:</p>
+     * <p>This API is supported for the following blockchains:</p>
      * <ul>
      * <li>Celo</li>
      * <li>Ethereum</li>
@@ -255,7 +255,7 @@ export class MarketplaceService {
      * Get information about a listing on the NFT marketplace
      * <p><b>1 credit per API call</b></p>
      * <p>Get information about a specific listing on the NFT marketplace.</p>
-     * <p>You can get information about a specific listing on the following blockchains:</p>
+     * <p>This API is supported for the following blockchains:</p>
      * <ul>
      * <li>BNB Smart Chain</li>
      * <li>Celo</li>
@@ -329,7 +329,7 @@ export class MarketplaceService {
      * Get the NFT marketplace fee
      * <p><b>1 credit per API call</b></p>
      * <p>Get the NFT marketplace fee.</p>
-     * <p>You can get the marketplace fee on the following blockchains:</p>
+     * <p>This API is supported for the following blockchains:</p>
      * <ul>
      * <li>BNB Smart Chain</li>
      * <li>Celo</li>
@@ -364,7 +364,7 @@ export class MarketplaceService {
      * Get the recepient of the NFT marketplace fee
      * <p><b>1 credit per API call</b></p>
      * <p>Get the recipient of the NFT marketplace fee.</p>
-     * <p>You can get the fee recepient on the following blockchains:</p>
+     * <p>This API is supported for the following blockchains:</p>
      * <ul>
      * <li>BNB Smart Chain</li>
      * <li>Celo</li>
@@ -405,7 +405,7 @@ export class MarketplaceService {
      * <p><b>2 credits per API call</b></p>
      * <p>Update the recepient of the NFT marketplace fee.</p>
      * <p>You can update the fee recepient only if you are the marketplace operator.</p>
-     * <p>You can update the recepient of the NFT marketplace fee on the following blockchains:</p>
+     * <p>This API is supported for the following blockchains:</p>
      * <ul>
      * <li>BNB Smart Chain</li>
      * <li>Celo</li>
@@ -445,7 +445,7 @@ export class MarketplaceService {
      * <p><b>2 credits per API call</b></p>
      * <p>Update the NFT marketplace fee.</p>
      * <p>You can update the marketplace fee only if you are the marketplace operator.</p>
-     * <p>You can update the marketplace fee on the following blockchains:</p>
+     * <p>This API is supported for the following blockchains:</p>
      * <ul>
      * <li>BNB Smart Chain</li>
      * <li>Celo</li>

@@ -33,7 +33,6 @@ export const BlockchainCurrencyMapping: Record<
     currencies: CELO_CURRENCIES,
   },
   HARMONY: Currency.ONE,
-  QTUM: Currency.QTUM,
   EGLD: Currency.EGLD,
   ETH: {
     nativeCurrency: Currency.ETH,

@@ -4,15 +4,15 @@
 
 export type SolanaNftMetadataCreator = {
     /**
-     * Address of the creator.
+     * The blockchain address of the NFT creator
      */
     address: string;
     /**
-     * If the creator was verified. Verified creator can be only that address, which private key was used during the minting of the NFT. If you are minting via NFT Express, your custom creators must be set to false.
+     * If set to <code>true</code>, the NFT creator was verified. Only the address whose private key was used during the minting of the NFT can be a verified creator. If you are minting the NFT using NFT Express, set this parameter to <code>false</code>.
      */
     verified: boolean;
     /**
-     * How much percent should be sent to this creator.
+     * The share to be sent to the NFT creator (in %)
      */
     share: number;
 }

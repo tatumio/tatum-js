@@ -2,13 +2,13 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type Error403QtumBroadcast = {
+export type Error403CeloGasCalculation = {
     /**
-     * qtum.broadcast.failed
+     * celo.transaction.gas
      */
     errorCode: string;
     /**
-     * Unable to broadcast transaction due to ${error}.
+     * Unable to calculate gas limit for transaction. ${error}
      */
     message: string;
     /**

@@ -3,7 +3,6 @@ import { ESDT_SYSTEM_SMART_CONTRACT_ADDRESS } from '../../constants'
 import { TatumEgldSDK } from '../egld.sdk'
 
 describe('EgldSDK - offchain tx', () => {
-
   const sdk = TatumEgldSDK({
     apiKey: REPLACE_ME_WITH_TATUM_API_KEY,
   })
@@ -90,6 +89,7 @@ describe('EgldSDK - offchain tx', () => {
     it('should prepare send nft transaction', async () => {
       const tx = await sdk.transaction.prepare.transferNft({
         from: testData.ADDRESS_0,
+        to: testData.ADDRESS_100,
         fromPrivateKey: testData.PRIVATE_KEY_0,
         amount: '0.001',
         fee: {
