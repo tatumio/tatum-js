@@ -564,7 +564,6 @@ export type { GenerateMarketplaceCeloKMS } from './models/GenerateMarketplaceCel
 export type { GenerateMarketplaceKMS } from './models/GenerateMarketplaceKMS';
 export type { GenerateMarketplaceTron } from './models/GenerateMarketplaceTron';
 export type { GenerateMarketplaceTronKMS } from './models/GenerateMarketplaceTronKMS';
-export type { GeneratePrivateKey } from './models/GeneratePrivateKey';
 export type { HmacWebHook } from './models/HmacWebHook';
 export type { Id } from './models/Id';
 export type { KcsBlock } from './models/KcsBlock';

@@ -65407,15 +65407,14 @@
         "type": "object",
         "properties": {
           "mnemonic": {
-            "maxLength": 500,
-            "minLength": 1,
-            "description": "Mnemonic to generate private key for the account, from which the gas will be paid (index will be used).",
+            "description": "Generated mnemonic for wallet.",
             "example": "urge pulp usage sister evidence arrest palm math please chief egg abuse",
             "type": "string"
           },
           "xpub": {
-            "type": "string",
-            "example": "xpub6EsCk1uU6cJzqvP9CdsTiJwT2rF748YkPnhv5Qo8q44DG7nn2vbyt48YRsNSUYS44jFCW9gwvD9kLQu9AuqXpTpM1c5hgg9PsuBLdeNncid"
+            "description": "Generated Extended public key for wallet with derivation path according to BIP44. This key can be used to generate addresses.",
+            "example": "xpub6EsCk1uU6cJzqvP9CdsTiJwT2rF748YkPnhv5Qo8q44DG7nn2vbyt48YRsNSUYS44jFCW9gwvD9kLQu9AuqXpTpM1c5hgg9PsuBLdeNncid",
+            "type": "string"
           }
         }
       },
@@ -83424,25 +83423,6 @@
           }
         },
         "required": ["to", "amount", "currency", "signatureId"]
-      },
-      "GeneratePrivateKey": {
-        "type": "object",
-        "properties": {
-          "mnemonic": {
-            "maxLength": 500,
-            "minLength": 1,
-            "description": "Mnemonic to generate private key for the account, from which the gas will be paid (index will be used).",
-            "example": "urge pulp usage sister evidence arrest palm math please chief egg abuse",
-            "type": "string"
-          },
-          "index": {
-            "description": "derivation index of address to pay for deployment of ERC20",
-            "example": 0,
-            "type": "integer",
-            "maximum": 2147483647
-          }
-        },
-        "required": ["index", "mnemonic"]
       }
     },
     "securitySchemes": {
