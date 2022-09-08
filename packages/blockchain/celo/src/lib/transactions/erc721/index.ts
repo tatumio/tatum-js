@@ -581,7 +581,7 @@ const transferSignedTransaction = async (
       gasLimit: '0',
       to: contractAddress.trim(),
       gasPrice,
-      data: contract.methods.safeTransfer(to.trim(), tokenId).encodeABI(),
+      data: tokenData,
       from,
       value: value ? `0x${new BigNumber(value).multipliedBy(1e18).toString(16)}` : undefined,
     }
