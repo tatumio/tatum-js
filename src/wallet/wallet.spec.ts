@@ -8,7 +8,6 @@ import {
     generateEthWallet,
     generateFlowWallet,
     generateLtcWallet,
-    generateNeoWallet,
     generateOneWallet,
     generateQtumWallet,
     generateTronWallet,
@@ -172,12 +171,6 @@ describe('Wallet tests', () => {
         const wallet = await generateXlmWallet()
         expect(wallet.address).not.toBe('')
         expect(wallet.secret).not.toBe('')
-    })
-
-    it('should generate wallet for Neo', async () => {
-        const wallet = await generateNeoWallet()
-        expect(wallet.address).not.toBe('')
-        expect(wallet.privateKey).not.toBe('')
     })
 
     it('should generate wallet for XRP', async () => {
