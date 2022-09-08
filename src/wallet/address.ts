@@ -28,9 +28,6 @@ import {
   LYRA_TEST_NETWORK,
   MATIC_DERIVATION_PATH,
   ONE_DERIVATION_PATH,
-  QTUM_DERIVATION_PATH,
-  QTUM_NETWORK_MAINNET,
-  QTUM_NETWORK_TESTNET,
   TESTNET_DERIVATION_PATH,
   TRON_DERIVATION_PATH,
   VET_DERIVATION_PATH,
@@ -219,19 +216,6 @@ const generateCeloAddress = (testnet: boolean, xpub: string, i: number) => {
 }
 
 /**
- * Generate QTUM address
- * @param testnet testnet or mainnet version of address
- * @param xpub extended public key to generate address from
- * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
- * @returns blockchain address
- */
-const generateQtumAddress = (testnet: boolean, xpub: string, i: number) => {
-  const network = testnet ? QTUM_NETWORK_TESTNET : QTUM_NETWORK_MAINNET
-  const w = fromBase58(xpub, network).derivePath(String(i))
-  return payments.p2pkh({ pubkey: w.publicKey, network }).address as string
-}
-
-/**
  * Generate FLOW or FUSD public key
  * @param xpub extended public key to generate address from
  * @param i derivation index of address to generate. Up to 2^31 addresses can be generated.
@@ -304,20 +288,6 @@ const generateTronPrivateKey = async (mnemonic: string, i: number) => {
     .derivePath(TRON_DERIVATION_PATH)
     .derive(i)
     .privateKey?.toString('hex') ?? ''
-}
-
-/**
- * Generate QTUM private key from mnemonic seed
- * @param mnemonic mnemonic to generate private key from
- * @param i derivation index of private key to generate.
- * @returns blockchain private key to the address
- */
-const generateQtumPrivateKey = async (testnet: boolean, mnem: string, i: number) => {
-  const network = testnet ? QTUM_NETWORK_TESTNET : QTUM_NETWORK_MAINNET
-  return fromSeed(await mnemonicToSeed(mnem), network)
-    .derivePath(testnet ? TESTNET_DERIVATION_PATH : QTUM_DERIVATION_PATH)
-    .derive(i)
-    .toWIF()
 }
 
 /**
@@ -586,19 +556,6 @@ const convertBtcPrivateKey = (testnet: boolean, privkey: string) => {
 }
 
 /**
- * Generate QTUM private key from mnemonic seed
- * @param testnet testnet or mainnet version of address
- * @param mnemonic mnemonic to generate private key from
- * @param i derivation index of private key to generate.
- * @returns blockchain private key to the address
- */
-const convertQTUMPrivateKey = (testnet: boolean, privkey: string) => {
-  const network = testnet ? QTUM_NETWORK_TESTNET : QTUM_NETWORK_MAINNET
-  const keyPair = ECPair.fromWIF(privkey, network)
-  return payments.p2pkh({ pubkey: keyPair.publicKey, network }).address as string
-}
-
-/**
  * Convert Scrypta Private Key to Address
  * @param testnet testnet or mainnet version of address
  * @param privkey private key to use
@@ -698,8 +655,6 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
       return generateCeloAddress(testnet, xpub, i)
     case Currency.BCH:
       return generateBchAddress(testnet, xpub, i)
-    case Currency.QTUM:
-      return generateQtumAddress(testnet, xpub, i)
     case Currency.USDT:
     case Currency.WBTC:
     case Currency.LEO:
@@ -783,8 +738,6 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
     case Currency.USDT_TRON:
     case Currency.INRT_TRON:
       return generateTronPrivateKey(mnemonic, i)
-    case Currency.QTUM:
-      return generateQtumPrivateKey(testnet, mnemonic, i)
     case Currency.MATIC:
     case Currency.USDT_MATIC:
     case Currency.USDC_MATIC:
@@ -866,8 +819,6 @@ export const generateAddressFromPrivatekey = (currency: Currency, testnet: boole
   switch (currency) {
     case Currency.BTC:
       return convertBtcPrivateKey(testnet, privateKey)
-    case Currency.QTUM:
-      return convertQTUMPrivateKey(testnet, privateKey)
     case Currency.BNB:
       return getAddressFromPrivateKey(privateKey, testnet ? 'tbnb' : 'bnb')
     case Currency.TRON:
