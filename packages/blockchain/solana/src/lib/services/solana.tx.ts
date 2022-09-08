@@ -49,6 +49,17 @@ export type CreateSolanaSpl = FromPrivateKeyOrSignatureId<ChainDeploySolanaSpl>
 export type MintSolanaNft = FromPrivateKeyOrSignatureId<MintNftSolana>
 export type CreateSolanaNftCollection = FromPrivateKeyOrSignatureId<MintNftSolana>
 
+
+export interface VerifyNftCollection {
+  nftMintAddress: string
+  collectionAddress: string
+  web3: SolanaWeb3
+  feePayer: string
+  feePayerPrivateKey: string
+  collectionVerifierPrivateKey: string
+  isSignedExternally?: boolean
+}
+
 export interface BurnSolanaNft {
   collection?: string
   chain: Currency
@@ -67,9 +78,18 @@ const findMetadataProgramAddress = async (account: PublicKey, isEdition = false)
 
 export const FEE_PAYER = 'DSpHmb7hLnetoybammcJBJiyqMVR3pDhCuW6hqVg9eBF'
 
-const getFeePayer = (externalFeePayer: boolean, from: PublicKey, feePayer?: string) => externalFeePayer ? new PublicKey(FEE_PAYER) : (feePayer ? new PublicKey(feePayer) : from)
+const getFeePayer = (externalFeePayer: boolean, from: PublicKey, feePayer?: string) => {
+  if (externalFeePayer) {
+    return new PublicKey(FEE_PAYER)
+  }
+  return feePayer ? new PublicKey(feePayer) : from
+}
 
-const signAndBroadcastAsExternalFeePayer = async (web3: SolanaWeb3, transaction: Transaction, signers: Signer[]) => {
+const signAndBroadcastAsExternalFeePayer = async (
+  web3: SolanaWeb3,
+  transaction: Transaction,
+  signers: Signer[],
+) => {
   const { blockhash, lastValidBlockHeight } = await web3.getClient().getLatestBlockhash('finalized')
   transaction.recentBlockhash = blockhash
   transaction.lastValidBlockHeight = lastValidBlockHeight
@@ -304,8 +324,7 @@ const burnNft = async (
       SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
     )
   )[0]
-  // instructions.push(createBurnInstruction(userTokenAccountAddress, mintKey, from, 1))
-  // instructions.push(createCloseAccountInstruction(userTokenAccountAddress, feePayerAccount, from))
+
   instructions.push(
     createBurnNftInstruction({
       collectionMetadata: collectionMetadataAccount,
@@ -327,6 +346,14 @@ const burnNft = async (
   return {
     txId: await connection.sendTransaction(transaction, signers),
   }
+}
+
+export interface NftAddress {
+  txId: string
+  nftAddress: string
+  nftAccountAddress: string
+  txData?: string
+  mintPK?: string
 }
 
 const mintNft = async (
@@ -475,13 +502,15 @@ const mintNft = async (
 }
 
 const verifyNftInCollection = async (
-  nftMintAddress: string,
-  collectionAddress: string,
-  web3: SolanaWeb3,
-  feePayer: string,
-  feePayerPrivateKey: string,
-  collectionVerifierPrivateKey: string,
-  isSignedExternally = false,
+  {
+    web3,
+    collectionVerifierPrivateKey,
+    feePayerPrivateKey,
+    feePayer,
+    collectionAddress,
+    nftMintAddress,
+    isSignedExternally,
+  }: VerifyNftCollection,
   provider?: string,
   externalFeePayer = false,
 ) => {
@@ -517,9 +546,7 @@ const verifyNftInCollection = async (
     }
   }
 
-  const signers = [
-    web3.generateKeyPair(collectionVerifierPrivateKey),
-  ]
+  const signers = [web3.generateKeyPair(collectionVerifierPrivateKey)]
   if (externalFeePayer) {
     return signAndBroadcastAsExternalFeePayer(web3, transaction, signers)
   } else if (feePayerPrivateKey) {
@@ -540,8 +567,13 @@ export const solanaTxService = (args: { web3: SolanaWeb3 }) => {
      * @param feePayerPrivateKey optional private key of the account which will cover fees
      * @param externalFeePayer if this is set to true, feePayer and feePayerPrivateKey are ignored and fee is paid externally using <a href="https://apidoc.tatum.io/tag/Custodial-managed-wallets#operation/CustodialTransferManagedAddress">https://apidoc.tatum.io/tag/Custodial-managed-wallets#operation/CustodialTransferManagedAddress</a>
      */
-    send: async (body: TransferSolana, provider?: string, feePayer?: string, feePayerPrivateKey?: string, externalFeePayer = false) =>
-      send(body, args.web3, provider, feePayer, feePayerPrivateKey, externalFeePayer),
+    send: async (
+      body: TransferSolana,
+      provider?: string,
+      feePayer?: string,
+      feePayerPrivateKey?: string,
+      externalFeePayer = false,
+    ) => send(body, args.web3, provider, feePayer, feePayerPrivateKey, externalFeePayer),
     /**
      * Transfer SPL token from account to another account.
      * @param body body of the request
@@ -604,7 +636,16 @@ export const solanaTxService = (args: { web3: SolanaWeb3 }) => {
       feePayerPrivateKey?: string,
       collectionVerifierPrivateKey?: string,
       externalFeePayer = false,
-    ) => mintNft(body, args.web3, provider, feePayer, feePayerPrivateKey, collectionVerifierPrivateKey, externalFeePayer),
+    ) =>
+      mintNft(
+        body,
+        args.web3,
+        provider,
+        feePayer,
+        feePayerPrivateKey,
+        collectionVerifierPrivateKey,
+        externalFeePayer,
+      ),
 
     /**
      * Burn NFT on Solana. Fee is being paid by the minter or feePayer, if present
@@ -614,8 +655,13 @@ export const solanaTxService = (args: { web3: SolanaWeb3 }) => {
      * @param feePayerPrivateKey optional private key of the account which will cover fees
      * @param externalFeePayer if this is set to true, feePayer and feePayerPrivateKey are ignored and fee is paid externally using <a href="https://apidoc.tatum.io/tag/Custodial-managed-wallets#operation/CustodialTransferManagedAddress">https://apidoc.tatum.io/tag/Custodial-managed-wallets#operation/CustodialTransferManagedAddress</a>
      */
-    burnNft: async (body: BurnSolanaNft, provider?: string, feePayer?: string, feePayerPrivateKey?: string, externalFeePayer = false) =>
-      burnNft(body, args.web3, provider, feePayer, feePayerPrivateKey, externalFeePayer),
+    burnNft: async (
+      body: BurnSolanaNft,
+      provider?: string,
+      feePayer?: string,
+      feePayerPrivateKey?: string,
+      externalFeePayer = false,
+    ) => burnNft(body, args.web3, provider, feePayer, feePayerPrivateKey, externalFeePayer),
 
     /**
      * Create new NFT Collection on Solana. Fee is being paid by the minter or feePayer, if present
@@ -633,7 +679,16 @@ export const solanaTxService = (args: { web3: SolanaWeb3 }) => {
       feePayerPrivateKey?: string,
       collectionVerifierPrivateKey?: string,
       externalFeePayer = false,
-    ) => mintNft(body, args.web3, provider, feePayer, feePayerPrivateKey, collectionVerifierPrivateKey, externalFeePayer),
+    ) =>
+      mintNft(
+        body,
+        args.web3,
+        provider,
+        feePayer,
+        feePayerPrivateKey,
+        collectionVerifierPrivateKey,
+        externalFeePayer,
+      ),
 
     /**
      * Verify NFT inside collection. Fee is being paid by feePayer.
@@ -657,13 +712,15 @@ export const solanaTxService = (args: { web3: SolanaWeb3 }) => {
       externalFeePayer = false,
     ) =>
       verifyNftInCollection(
-        nftMintAddress,
-        collectionAddress,
-        args.web3,
-        feePayer,
-        feePayerPrivateKey,
-        collectionVerifierPrivateKey,
-        isSignedExternally,
+        {
+          web3: args.web3,
+          feePayer,
+          feePayerPrivateKey,
+          collectionVerifierPrivateKey,
+          isSignedExternally,
+          nftMintAddress,
+          collectionAddress,
+        },
         provider,
         externalFeePayer,
       ),

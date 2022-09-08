@@ -192,7 +192,7 @@ describe('CeloSDK - tx', () => {
       celoTestFactory.testSign({
         apiFn: sdk.erc20.prepare.mintSignedTransaction,
         apiArg: {
-          amount: '100000',
+          amount: '1',
           contractAddress: TEST_DATA.CELO.TESTNET.ERC_20!.CONTRACT_ADDRESS,
           to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
         },
