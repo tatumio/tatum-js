@@ -1,5 +1,7 @@
 import { TatumSolanaSDK } from './solana.sdk'
 import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testing-common'
+import { TransactionHash } from '@tatumio/api-client'
+import { NftAddress } from './services/solana.tx'
 
 describe('TatumSolanaSDK', () => {
   jest.setTimeout(99999)
@@ -15,7 +17,7 @@ describe('TatumSolanaSDK', () => {
 
     describe('mint', () => {
       it('should be valid from privateKey', async () => {
-        const result = await sdk.transaction.mintNft(
+        const result = (await sdk.transaction.mintNft(
           {
             to,
             fromPrivateKey: privateKey,
@@ -29,7 +31,7 @@ describe('TatumSolanaSDK', () => {
             },
           },
           provider,
-        )
+        )) as NftAddress
 
         expect(result.txId).toBeDefined()
         expect(result.nftAddress).toBeDefined()
@@ -60,7 +62,7 @@ describe('TatumSolanaSDK', () => {
 
     describe('transfer nft', () => {
       xit('should be valid from privateKey', async () => {
-        const result = await sdk.transaction.transferNft(
+        const result = (await sdk.transaction.transferNft(
           {
             to,
             fromPrivateKey: privateKey,
@@ -69,13 +71,13 @@ describe('TatumSolanaSDK', () => {
             chain: 'SOL',
           },
           provider,
-        )
+        )) as TransactionHash
 
         expect(result.txId).toBeDefined()
       })
 
       it('should be valid from signatureId', async () => {
-        const result = await sdk.transaction.transferNft(
+        const result = (await sdk.transaction.transferNft(
           {
             to,
             signatureId,
@@ -84,7 +86,7 @@ describe('TatumSolanaSDK', () => {
             contractAddress: contractAddress,
           },
           provider,
-        )
+        )) as { txData: string }
 
         expect(result.txData).toBeDefined()
       })
