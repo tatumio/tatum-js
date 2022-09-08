@@ -748,7 +748,7 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
       amount: '10',
       fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
       contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-      feeCurrency: 'CELO'
+      feeCurrency: 'CELO',
     })
 
   const sentTransferMultiTokenTransaction = await celoSDK.multiToken.send.transferMultiTokenTransaction({
@@ -757,7 +757,7 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
     amount: '10',
     fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
     contractAddress: '0x2c77a428b01e6403f237b7417a7091a3a5179f14',
-    feeCurrency: 'CELO'
+    feeCurrency: 'CELO',
   })
 
   const preparedTransferMultiTokenBatchTransaction =
