@@ -164,9 +164,6 @@ export const celoUtils = {
       from,
     }
   },
-  isCeloFeeCurrency: (feeCurrency: string): feeCurrency is CeloFeeCurrency => {
-    return [Currency.CELO, Currency.CUSD, Currency.CEUR].map((i) => i.toString()).includes(feeCurrency)
-  },
   getFeeCurrency: (feeCurrency?: CeloFeeCurrency, testnet?: boolean) => {
     switch (feeCurrency) {
       case Currency.CEUR:
