@@ -3,7 +3,6 @@ import { ESDT_SYSTEM_SMART_CONTRACT_ADDRESS } from '../../constants'
 import { TatumEgldSDK } from '../egld.sdk'
 
 describe('EgldSDK - offchain tx', () => {
-
   const sdk = TatumEgldSDK({
     apiKey: REPLACE_ME_WITH_TATUM_API_KEY,
   })
