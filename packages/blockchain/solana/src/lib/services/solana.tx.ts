@@ -48,7 +48,6 @@ export type TransferSolanaSpl = FromPrivateKeyOrSignatureId<ChainTransferSolanaS
 export type CreateSolanaSpl = FromPrivateKeyOrSignatureId<ChainDeploySolanaSpl>
 export type MintSolanaNft = FromPrivateKeyOrSignatureId<MintNftSolana>
 export type CreateSolanaNftCollection = FromPrivateKeyOrSignatureId<MintNftSolana>
-
 export interface VerifyNftCollection {
   nftMintAddress: string
   collectionAddress: string
