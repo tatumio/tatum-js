@@ -57,6 +57,7 @@ export const send = async (body: EgldOffchain): Promise<SendOffchainResponse> =>
     fromPrivateKey: fromPriv,
     fee,
     to: body.address,
+    from: '',
   })
 
   const { id } = await ApiServices.offChain.withdrawal.storeWithdrawal({

@@ -22,7 +22,7 @@ export type SolanaNftMetadata = {
      */
     uri: string;
     /**
-     * Blockchain address of the Collection, where NFT will be minted in.
+     * The blockchain address of the NFT collection where the NFT will be minted in. Specify the private key of the collection verifier in the <code>collectionVerifierPrivateKey</code> parameter of the request body to get the NFT verified in the collection after the NFT has been minted. To know more about Solana collections and verification, refer to the <a href="https://docs.metaplex.com/programs/token-metadata/certified-collections" target="_blank">Solana user documentation</a>.
      */
     collection?: string;
     /**

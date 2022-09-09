@@ -50,9 +50,8 @@ export class FungibleTokensErc20OrCompatibleService {
      * <p><b>2 credits per API call</b></p>
      * <p>Deploy a fungible token smart contract on the blockchain. In a deployed smart contract, you can mint and burn fungible tokens. The whole supply of fungible tokens (the <code>supply</code> parameter in the request body) will be transferred to the specified blockchain address (the <code>address</code> parameter in the request body).<br/>
      * Smart contracts are standardized and audited.</p>
-     * <p>You can deploy a fungible token smart contract on the following blockchains:</p>
+     * <p>This API is supported for the following blockchains:</p>
      * <ul>
-     * <li>Algorand</li>
      * <li>BNB Smart Chain</li>
      * <li>Celo</li>
      * <li>Ethereum</li>
@@ -99,7 +98,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * Mint fungible tokens
      * <p><b>2 credits per API call</b></p>
      * <p>Create new fungible tokens in the smart contract (the <code>contractAddress</code> parameter in the request body) and transfer them to the specified blockchain address (the <code>to</code> parameter in the request body). You can mint new fungible tokens only if the current supply of tokens in the smart contract is lower than the total supply set for this contract.</p>
-     * <p>You can mint fungible tokens on the following blockchains:</p>
+     * <p>This API is supported for the following blockchains:</p>
      * <ul>
      * <li>BNB Smart Chain</li>
      * <li>Celo</li>
@@ -145,7 +144,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * Burn fungible tokens
      * <p><b>2 credits per API call</b></p>
      * <p>Burn fungible tokens. Burning fungible tokens deletes the specified supply of the tokens (the <code>amount</code> parameter in the request body) from the smart contract (the <code>contractAddress</code> parameter in the request body).</p>
-     * <p>You can burn fungible tokens on the following blockchains:</p>
+     * <p>This API is supported for the following blockchains:</p>
      * <ul>
      * <li>Algorand</li>
      * <li>BNB Smart Chain</li>
@@ -192,7 +191,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * Approve spending of fungible tokens
      * <p><b>2 credits per API call</b></p>
      * <p>Allow another blockchain address (the <code>spender</code> parameter in the request body) to spend and burn fungible tokens on behalf of the smart contract owner.</p>
-     * <p>You can approve spending of fungible tokens on the following blockchains:</p>
+     * <p>This API is supported for the following blockchains:</p>
      * <ul>
      * <li>BNB Smart Chain</li>
      * <li>Celo</li>
@@ -237,7 +236,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * <p><b>2 credits per API call</b></p>
      * <p>Transfer a supply of fungible tokens existing in the smart contract (the <code>contractAddress</code> parameter in the request body) to the specified blockchain address (the <code>to</code> parameter in the request body).<br/>
      * Transferring fungible tokens invokes the <code>transfer()</code> method.</p>
-     * <p>You can transfer fungible tokens on the following blockchains:</p>
+     * <p>This API is supported for the following blockchains:</p>
      * <ul>
      * <li>Algorand</li>
      * <li>BNB Smart Chain</li>
@@ -250,8 +249,8 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>Solana</li>
      * <li>XinFin</li>
      * </ul>
-     * <p><b>Transferring on Algorand</b></p>
-     * Before transferring fungible tokens on Algorand, make sure that the blockchain address receiving the tokens is ready. To get ready, the receiving blockchain address should transfer a zero (0) supply of fungible tokens to itself using the same API as you are using to transfer the fungible tokens to this address. The only difference is that the <code>fromPrivateKey</code> parameter in the request body should be set to the private key of the receiving address in this case.</p>
+     * <p><b>Transferring fungible tokens on Algorand</b></p>
+     * <p>On Algorand, the recipient has to agree in advance to receive your fungible tokens because Algorand charges users for storing the tokens on their addresses, and an Algorand blockchain address by default does not receive the tokens unless explicitly agreed. Before transferring the fungible tokens, make sure that the recipient <a href="https://apidoc.tatum.io/tag/Algorand#operation/AlgorandBlockchainReceiveAsset" target="_blank">has agreed to receive the NFT</a> to their address.</p>
      * <p><b>Signing a transaction</b></p>
      * <p>When transferring fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
      * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
@@ -284,10 +283,10 @@ export class FungibleTokensErc20OrCompatibleService {
     }
 
     /**
-     * Get fungible token transactions for a blockchain address
+     * Get fungible token transactions on a blockchain address
      * <p><b>1 credit per API call</b></p>
-     * <p>Get incoming and outgoing transactions related to fungible tokens for a blockchain address.</p>
-     * <p>You can get the transactions for a blockchain address on the following blockchains:</p>
+     * <p>Get incoming and outgoing transactions related to fungible tokens on a blockchain address.</p>
+     * <p>This API is supported for the following blockchains:</p>
      * <ul>
      * <li>Algorand</li>
      * <li>Celo</li>
@@ -335,10 +334,10 @@ export class FungibleTokensErc20OrCompatibleService {
     }
 
     /**
-     * Get the number of fungible tokens a blockchain address holds in a smart contract
+     * Get the number of fungible tokens from a specific smart contract that a blockchain address holds
      * <p><b>1 credit per API call</b></p>
-     * <p>Get the number of fungible tokens that a blockchain address holds in the smart contract (the <code>contractAddress</code> parameter in the request body).</p>
-     * <p>You can get the number of fungible tokens in the smart contract for a blockchain address on the following blockchains:</p>
+     * <p>Get the number of the fungible tokens minted on a specific smart contract (the <code>contractAddress</code> path parameter in the request endpoint URL) that a blockchain address holds.</p>
+     * <p>This API is supported for the following blockchains:</p>
      * <ul>
      * <li>Algorand</li>
      * <li>BNB Smart Chain</li>
@@ -349,26 +348,24 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>Klaytn</li>
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
-     * <li>Solana</li>
-     * <li>TRON</li>
      * <li>XinFin</li>
      * </ul>
      *
      * @param chain Network name
-     * @param address Account address you want to get balance of
-     * @param contractAddress ERC20 contract address
+     * @param address The blockchain address that you want to get the token balance of
+     * @param contractAddress The address of the fungible token smart contract
      * @param xTestnetType Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
      * @returns any OK
      * @throws ApiError
      */
     public static erc20GetBalance(
-        chain: 'CELO' | 'ALGO' | 'MATIC' | 'ETH' | 'SOL' | 'TRON' | 'BSC' | 'XDC' | 'KLAY' | 'ONE' | 'EGLD' | 'KCS',
+        chain: 'CELO' | 'ALGO' | 'MATIC' | 'ETH' | 'BSC' | 'XDC' | 'KLAY' | 'ONE' | 'EGLD' | 'KCS',
         address: string,
         contractAddress: string,
         xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<{
         /**
-         * Number of ERC20 tokens in smallest token unit. E.g. token has 10 decimal places, so data returned are 9*10^10.
+         * The number of fungible tokens in the smallest token unit (for example, if the token has 10 decimal places, the number is returned as 9*10^10)
          */
         balance?: string;
     }> {
@@ -388,10 +385,10 @@ export class FungibleTokensErc20OrCompatibleService {
     }
 
     /**
-     * Get the fungible token smart contracts and the number of tokens for a blockchain address
+     * Get the number of fungible tokens that a blockchain address holds across a blockchain
      * <p><b>1 credit per API call</b></p>
-     * <p>For a blockchain address, get the fungible token smart contracts where the address holds tokens and the number of the tokens that the address holds in each of those contracts.</p>
-     * <p>You can get the fungible token smart contracts and the number of the tokens for a blockchain address on the following blockchains:</p>
+     * <p>Get the number of fungible tokens that a blockchain address holds across a blockchain. The tokens are returned grouped by the smart contracts they were minted on.</p>
+     * <p>This API is supported for the following blockchains:</p>
      * <ul>
      * <li>Algorand</li>
      * <li>Celo</li>
@@ -401,7 +398,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * </ul>
      *
      * @param chain Network name
-     * @param address Account address you want to get balance of
+     * @param address The blockchain address that you want to get the token balance of
      * @returns any OK
      * @throws ApiError
      */
@@ -410,11 +407,11 @@ export class FungibleTokensErc20OrCompatibleService {
         address: string,
     ): CancelablePromise<Array<{
         /**
-         * Contract address of the owned ERC20/SPL/ASA token
+         * The address of the smart contract that the fungible tokens were minted on
          */
         contractAddress?: string;
         /**
-         * Number of ERC20/SPL/ASA tokens.
+         * The number of the fungible tokens
          */
         balance?: string;
     }>> {

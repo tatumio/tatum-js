@@ -12,11 +12,7 @@ export type XdcEstimateGas = {
      */
     to: string;
     /**
-     * Amount to be sent in Ether.
+     * Amount to be sent in XDC.
      */
     amount: string;
-    /**
-     * Additinal data, that can be passed to blockchain transaction as data property. Only for ETH transactions.
-     */
-    data?: string;
 }

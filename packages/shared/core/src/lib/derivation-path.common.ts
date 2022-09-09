@@ -23,7 +23,6 @@ export const DERIVATION_PATH: Record<Blockchain, string> = {
   ADA: "m/1852'/1815'/0'",
   FLOW: "m/44'/539'/0'/0",
   NEO: "m/44'/888'/0'/0",
-  QTUM: "m/44'/2301'/0'/0/0",
   SOL: "m/44'/501'/0'/0'",
   VET: "m/44'/818'/0'/0",
   XDC: "m/44'/550'/0'/0",

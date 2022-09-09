@@ -6,7 +6,7 @@ export type ChainDeployErc20 = {
     /**
      * Chain to work with.
      */
-    chain: 'ETH' | 'BSC' | 'MATIC' | 'KLAY' | 'XDC' | 'ONE' | 'ALGO';
+    chain: 'ETH' | 'BSC' | 'MATIC' | 'KLAY' | 'XDC' | 'ONE';
     /**
      * Symbol of the ERC20 token
      */

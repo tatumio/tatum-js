@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { SolanaNftMetadata } from './SolanaNftMetadata';
+import type { SolanaNftMetadataKMS } from './SolanaNftMetadataKMS';
 
 export type MintNftSolanaKMS = {
     /**
@@ -21,5 +21,5 @@ export type MintNftSolanaKMS = {
      * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
      */
     signatureId: string;
-    metadata: SolanaNftMetadata;
+    metadata: SolanaNftMetadataKMS;
 }

@@ -1477,8 +1477,10 @@ export class BlockchainOperationsService {
     }
 
     /**
+     * @deprecated
      * Send ADA from a virtual account to the blockchain
-     * <h4>10 credits per API call.</h4><br/><p>Send ADA (Cardano) from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
+     * <p><b>Support for Cardano is deprecated.</b></p><br/>
+     * <h4>10 credits per API call.</h4><p>Send ADA (Cardano) from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
      * <ul>
      * <li>If ADA server connection is unavailable, withdrawal request is cancelled.</li>
      * <li>If blockchain transfer is successful, but is it not possible to reach Tatum, transaction id of blockchain transaction is returned and withdrawal request must be completed manually, otherwise all other withdrawals will be pending.</li>

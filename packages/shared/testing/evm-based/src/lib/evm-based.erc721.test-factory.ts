@@ -6,7 +6,7 @@ export const erc721TestFactory = {
     deploySignedTransaction: (
       sdk: SdkWithErc721Functions,
       testData: BlockchainTestData,
-      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'ALGO' | 'KLAY',
+      chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'KLAY',
     ) => {
       jest.setTimeout(99999)
       const provider = testData?.PROVIDER

@@ -10,11 +10,11 @@ export type TransferEgldBlockchainKMS = {
     /**
      * Account address of the receiver or smart contract
      */
-    to?: string;
+    to: string;
     /**
      * Value to be sent.
      */
-    amount?: string;
+    amount: string;
     /**
      * Custom defined fee. If not present, it will be calculated automatically.
      */

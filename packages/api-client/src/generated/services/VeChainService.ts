@@ -6,6 +6,7 @@ import type { PrivKey } from '../models/PrivKey';
 import type { PrivKeyRequest } from '../models/PrivKeyRequest';
 import type { TransactionHashKMS } from '../models/TransactionHashKMS';
 import type { TransferVetBlockchain } from '../models/TransferVetBlockchain';
+import type { TransferVetBlockchainKMS } from '../models/TransferVetBlockchainKMS';
 import type { VetBlock } from '../models/VetBlock';
 import type { VetTx } from '../models/VetTx';
 import type { VetTxReceipt } from '../models/VetTxReceipt';
@@ -256,7 +257,7 @@ export class VeChainService {
      * @throws ApiError
      */
     public static vetBlockchainTransfer(
-        requestBody: TransferVetBlockchain,
+        requestBody: (TransferVetBlockchain | TransferVetBlockchainKMS),
     ): CancelablePromise<TransactionHashKMS> {
         return __request({
             method: 'POST',

@@ -8,11 +8,11 @@ export type MintMultiTokenBatchCelo = {
      */
     chain: 'CELO';
     /**
-     * ID of token to be created.
+     * The IDs of the Multi Tokens to be created.
      */
     tokenId: Array<Array<string>>;
     /**
-     * ID of token to be created.
+     * The amounts of the Multi Tokens to be created.
      */
     amounts: Array<Array<string>>;
     /**
@@ -20,11 +20,11 @@ export type MintMultiTokenBatchCelo = {
      */
     data?: string;
     /**
-     * Blockchain address to send Multi Token token to
+     * The blockchain address to send the Multi Tokens to
      */
     to: Array<string>;
     /**
-     * Address of Multi Token token
+     * The address of the Multi Token smart contract
      */
     contractAddress: string;
     /**

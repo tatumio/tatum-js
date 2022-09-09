@@ -7,6 +7,7 @@ import type { Blockage } from '../models/Blockage';
 import type { BlockAmount } from '../models/BlockAmount';
 import type { CreateAccount } from '../models/CreateAccount';
 import type { CreateAccountBatch } from '../models/CreateAccountBatch';
+import type { CreateAccountXpub } from '../models/CreateAccountXpub';
 import type { EntitiesCount } from '../models/EntitiesCount';
 import type { Id } from '../models/Id';
 import type { TransactionResult } from '../models/TransactionResult';
@@ -18,47 +19,58 @@ import { request as __request } from '../core/request';
 export class AccountService {
 
     /**
-     * Create new account
-     * <h4>2 credits per API call.</h4><br/>
-     * <p>Creates a new account for the customer. This will create an account on Tatum Private Ledger. It is possible to create an account for every supported cryptocurrency, FIAT, any ERC20 token created within a Tatum instance, and Tatum virtual currencies. When the customer field is already present, the account is added to the customer's list of accounts. If the customer field is not present, a new customer is created along with the account.<br/>
-     * Every account has its own balance. Tatum supports 2 types of balances - accountBalance and availableBalance. The account balance represents all assets in the account, both available and blocked. The available balance in the account represents account balance minus the blocked amount in the account. The available balance should be used to determine how much a customer can send or withdraw from the account.<br/>
-     * An account is always created with a specific currency. Once the currency is set, it cannot be changed.<br/>
-     * When an account's currency is blockchain-based, like BTC or ETH, the account is usually created with xpub. Xpub represents an extended public key of the blockchain wallet, which will be connected to this account. Adding xpub to the account does not connect any specific blockchain address to this account. Xpub is just a generator of addresses, not an address itself.
-     * Every blockchain has different types of xpubs:
+     * Create a virtual account
+     * <p><b>2 credits per API call</b></p>
+     * <p>Create a new virtual account for a customer.</p>
      * <ul>
-     * <li><b>BTC</b> - xpub can be obtained from <a href="#operation/BtcGenerateWallet">generate wallet</a></li>
-     * <li><b>LTC</b> - xpub can be obtained from <a href="#operation/LtcGenerateWallet">generate wallet</a></li>
-     * <li><b>DOGE</b> - xpub can be obtained from <a href="#operation/DogeGenerateWallet">generate wallet</a></li>
-     * <li><b>BCH</b> - xpub can be obtained from <a href="#operation/BchGenerateWallet">generate wallet</a></li>
-     * <li><b>ADA</b> - xpub can be obtained from <a href="#operation/AdaGenerateWallet">generate wallet</a></li>
-     * <li><b>ETH and ERC20</b> - xpub can be obtained from <a href="#operation/EthGenerateWallet">generate wallet</a></li>
-     * <li><b>XRP</b> - xpub is the address field from <a href="#operation/XrpWallet">generate account</a></li>
-     * <li><b>XLM</b> - xpub is the address field from <a href="#operation/XlmWallet">generate account</a></li>
-     * <li><b>BNB</b> - xpub is the address field from <a href="#operation/BnbGenerateWallet">generate account</a></li>
-     * <li><b>BSC</b> - xpub can be obtained from <a href="#operation/BscGenerateWallet">generate wallet</a></li>
-     * <li><b>EGLD</b> - no xpub, use address field from <a href="#operation/EgldGenerateWallet">generate wallet</a></li>
-     * <li><b>ALGO</b> - no xpub, use address field from <a href="#operation/AlgoGenerateWallet">generate wallet</a></li>
-     * <li><b>SOL</b> - no xpub, use address field from <a href="#operation/SolanaGenerateWallet">generate wallet</a></li>
-     * <li><b>MATIC</b> - xpub can be obtained from <a href="#operation/PolygonGenerateWallet">generate wallet</a></li>
-     * <li><b>KLAY</b> - xpub can be obtained from <a href="#operation/KlaytnGenerateWallet">generate wallet</a></li>
-     * <li><b>XDC</b> - xpub can be obtained from <a href="#operation/XdcGenerateWallet">generate wallet</a></li>
-     * <li><b>KCS</b> - xpub can be obtained from <a href="#operation/KcsGenerateWallet">generate wallet</a></li>
-     * <li><b>CELO, cEUR, cUSD and ERC20</b> - xpub can be obtained from <a href="#operation/CeloGenerateWallet">generate wallet</a></li>
-     * <li><b>TRON and TRC tokens</b> - xpub can be obtained from <a href="#operation/GenerateTronwallet">generate wallet</a></li>
-     * <li><b>FLOW and FUSD</b> - xpub can be obtained from <a href="#operation/GenerateFlowwallet">generate wallet</a></li>
+     * <li>If the customer that you specified in the request body already exists, the newly created virtual account is added to this customer's list of accounts.</li>
+     * <li>If the customer that you specified in the request body does not exist yet, a new customer is created together with the virtual account, and the virtual account is added to this customer.</li>
      * </ul>
-     * There are 2 options for connecting an account to a blockchain:
+     * <p>You can create a virtual account for any supported cryptocurrency, fiat currency, Tatum virtual currency, or fungible tokens created within Tatum. Once the currency/asset is set for a virtual account, it cannot be changed.</p>
+     * <p><b>Virtual account balance</b></p>
+     * <p>A virtual account has its own balance. The balance can be logically presented by the account balance and available balance:</p>
      * <ul>
-     * <li>If xpub is present in the account, addresses are generated for the account via <a href="#operation/generateDepositAddress">Create new deposit address</a>. This is the preferred mechanism.</li>
-     * <li>If xpub is not present in the account, addresses for this account are assigned manually via <a href="#operation/assignAddress">Assign address</a>. This feature is used when there are already existing addresses to be used in Tatum.</li>
-     * </ul></p>
+     * <li>The <b>account balance</b> (<code>accountBalance</code>) represents all assets on the account, both available and blocked.</li>
+     * <li>The <b>available balance</b> (<code>availableBalance</code>) represents the account balance minus the blocked assets. Use the available balance to determine how much a customer can send or withdraw from their virtual account.</li>
+     * </ul>
+     * <p><b>Cryptocurrency virtual accounts</b></p>
+     * <p>When you create a virtual account based on a cryptocurrency (for example, BTC or ETH), you have to provide the extended public key (<code>xpub</code>) of the blockchain wallet that will be connected to this account.</p>
+     * <p><b>NOTE:</b> Adding <code>xpub</code> to the virtual account does <b>not</b> connect any specific blockchain address to this account. <code>xpub</code> is a generator of addresses, not an address itself.</p>
+     * <p>Not all blockchains provide <code>xpub</code> for wallets, or Tatum may not support wallets on some blockchains. In such cases, use the wallet address or the account address instead.</p>
+     * <ul>
+     * <li><b>ALGO:</b> No <code>xpub</code> provided; use <code>address</code> from the <a href="https://apidoc.tatum.io/tag/Algorand#operation/AlgorandGenerateWallet" target="_blank">generated wallet</a> instead.</li>
+     * <li><b>BCH:</b> Obtain <code>xpub</code> from the <a href="https://apidoc.tatum.io/tag/Bitcoin-Cash#operation/BchGenerateWallet" target="_blank">generated wallet</a>.</li>
+     * <li><b>BNB:</b> No <code>xpub</code> provided; use <code>address</code> from the <a href="https://apidoc.tatum.io/tag/BNB-Beacon-Chain#operation/BnbGenerateWallet" target="_blank">generated wallet</a> instead.</li>
+     * <li><b>BSC:</b> Obtain <code>xpub</code> from the <a href="https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGenerateWallet" target="_blank">generated wallet</a> instead.</li>
+     * <li><b>BTC:</b> Obtain <code>xpub</code> from the <a href="https://apidoc.tatum.io/tag/Bitcoin#operation/BtcGenerateWallet" target="_blank">generated wallet</a> instead.</li>
+     * <li><b>CELO:</b> Obtain <code>xpub</code> from the <a href="https://apidoc.tatum.io/tag/Celo#operation/CeloGenerateWallet" target="_blank">generated wallet</a>.</li>
+     * <li><b>DOGE:</b> Obtain <code>xpub</code> from the <a href="https://apidoc.tatum.io/tag/Dogecoin#operation/DogeGenerateWallet" target="_blank">generated wallet</a>.</li>
+     * <li><b>EGLD:</b> No <code>xpub</code> provided; use <code>address</code> from the <a href="https://apidoc.tatum.io/tag/Elrond#operation/EgldGenerateAddress" target="_blank">generated blockchain address</a> instead.<br />Blockchain addresses on Elrond are generated based on the mnemonic of an Elrond wallet. If you do not have an Elrond wallet, <a href="https://apidoc.tatum.io/tag/Elrond/#operation/EgldGenerateWallet" target="_blank">create one</a>.</li>
+     * <li><b>ETH:</b> Obtain <code>xpub</code> from the <a href="https://apidoc.tatum.io/tag/Ethereum#operation/EthGenerateWallet" target="_blank">generated wallet</a>.</li>
+     * <li><b>FLOW:</b> Obtain <code>xpub</code> from the <a href="https://apidoc.tatum.io/tag/Flow#operation/FlowGenerateWallet" target="_blank">generated wallet</a>.</li>
+     * <li><b>KCS:</b> Obtain <code>xpub</code> from the <a href="https://apidoc.tatum.io/tag/KuCoin#operation/KcsGenerateWallet" target="_blank">generated wallet</a>.</li>
+     * <li><b>KLAY:</b> Obtain <code>xpub</code> from the <a href="https://apidoc.tatum.io/tag/Klaytn#operation/KlaytnGenerateWallet" target="_blank">generated wallet</a>.</li>
+     * <li><b>LTC:</b> Obtain <code>xpub</code> from the <a href="https://apidoc.tatum.io/tag/Litecoin#operation/LtcGenerateWallet" target="_blank">generated wallet</a>.</li>
+     * <li><b>MATIC:</b> Obtain <code>xpub</code> from the <a href="https://apidoc.tatum.io/tag/Polygon#operation/PolygonGenerateWallet" target="_blank">generated wallet</a>.</li>
+     * <li><b>SOL:</b> No <code>xpub</code> provided; use <code>address</code> from the <a href="https://apidoc.tatum.io/tag/Solana#operation/SolanaGenerateWallet" target="_blank">generated wallet</a> instead.</li>
+     * <li><b>TRON:</b> Obtain <code>xpub</code> from the <a href="https://apidoc.tatum.io/tag/Tron#operation/GenerateTronwallet" target="_blank">generated wallet</a>.</li>
+     * <li><b>XDC:</b> Obtain <code>xpub</code> from the <a href="https://apidoc.tatum.io/tag/XinFin#operation/XdcGenerateWallet" target="_blank">generated wallet</a>.</li>
+     * <li><b>XLM:</b> No <code>xpub</code> provided; use <code>address</code> from the <a href="https://apidoc.tatum.io/tag/Stellar#operation/XlmWallet" target="_blank">generated account</a> instead.</li>
+     * <li><b>XRP:</b> No <code>xpub</code> provided; use <code>address</code> from the <a href="https://apidoc.tatum.io/tag/XRP#operation/XrpWallet" target="_blank">generated account</a> instead.</li>
+     * </ul>
+     * <p><b>Connect a virtual account to the blockchain</b></p>
+     * <ul>
+     * <li>If the virtual account was created with the wallet's <code>xpub</code>, <a href="https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddress" target="_blank">generate a new blockchain address</a> for this account.</li>
+     * <li>If the virtual account was created with the wallet's or account's address instead of the wallet's <code>xpub</code>, <a href="https://apidoc.tatum.io/tag/Blockchain-addresses#operation/assignAddress" target="_blank">assign an existing blockchain address</a> to this account.</li>
+     * </ul>
+     * <p>You can connect multiple blockchain addresses to one virtual account.</p>
      *
      * @param requestBody
      * @returns Account OK
      * @throws ApiError
      */
     public static createAccount(
-        requestBody: CreateAccount,
+        requestBody: (CreateAccountXpub | CreateAccount),
     ): CancelablePromise<Account> {
         return __request({
             method: 'POST',

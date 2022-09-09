@@ -4,7 +4,7 @@
 
 export type TransferKcsBlockchain = {
     /**
-     * Additinal data, that can be passed to blockchain transaction as data property. Only for ETH transactions.
+     * Additional data, that can be passed to blockchain transaction as data property. Only for KCS transactions.
      */
     data?: string;
     /**

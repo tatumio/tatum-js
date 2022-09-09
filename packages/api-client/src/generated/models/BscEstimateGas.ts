@@ -12,11 +12,11 @@ export type BscEstimateGas = {
      */
     to: string;
     /**
-     * Amount to be sent in Ether.
+     * Amount to be sent in BSC.
      */
     amount: string;
     /**
-     * Additinal data, that can be passed to blockchain transaction as data property. Only for ETH transactions.
+     * Additional data, that can be passed to blockchain transaction as data property.
      */
     data?: string;
 }

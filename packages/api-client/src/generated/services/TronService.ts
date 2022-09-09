@@ -29,8 +29,9 @@ import { request as __request } from '../core/request';
 export class TronService {
 
     /**
-     * Generate Tron wallet
-     * <h4>1 credit per API call.</h4><br/><p>Tatum supports BIP44 HD wallets. It is very convenient and secure, since it can generate 2^31 addresses from 1 mnemonic phrase. Mnemonic phrase consists of 24 special words in defined order and can restore access to all generated addresses and private keys.<br/>Each address is identified by 3 main values:<ul><li>Private Key - your secret value, which should never be revealed</li><li>Public Key - public address to be published</li><li>Derivation index - index of generated address</li></ul></p><p>Tatum follows BIP44 specification and generates for Bitcoin wallet with derivation path m'/44'/195'/0'/0. More about BIP44 HD wallets can be found here - <a target="_blank" href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki">https://github.com/tron/bips/blob/master/bip-0044.mediawiki</a>.
+     * Generate a TRON wallet
+     * <p><b>1 credit per API call</b></p>
+     * <p>Tatum supports BIP44 HD wallets. It is very convenient and secure, since it can generate 2^31 addresses from 1 mnemonic phrase. Mnemonic phrase consists of 24 special words in defined order and can restore access to all generated addresses and private keys.<br/>Each address is identified by 3 main values:<ul><li>Private Key - your secret value, which should never be revealed</li><li>Public Key - public address to be published</li><li>Derivation index - index of generated address</li></ul></p><p>Tatum follows BIP44 specification and generates for Bitcoin wallet with derivation path m'/44'/195'/0'/0. More about BIP44 HD wallets can be found here - <a target="_blank" href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki">https://github.com/tron/bips/blob/master/bip-0044.mediawiki</a>.
      * Generate BIP44 compatible Tron wallet.</p>
      *
      * @param mnemonic Mnemonic to use for generation of extended public and private keys.
@@ -56,12 +57,11 @@ export class TronService {
     }
 
     /**
-     * Generate Tron deposit address from Extended public key
-     * <h4>5 credit per API call.</h4><br/>
-     * <p>Generate Tron deposit address from Extended public key. Deposit address is generated for the specific index - each extended public key can generate
-     * up to 2^32 addresses starting from index 0 until 2^31.</p>
+     * Generate a TRON address from the wallet's extended public key
+     * <p><b>5 credits per API call</b></p>
+     * <p>Generate a TRON address from the extended public key of the wallet. The address is generated for the specific index - each extended public key can generate up to 2^32 addresses with the index starting from 0 up to 2^31.</p>
      *
-     * @param xpub Extended public key of wallet.
+     * @param xpub The extended public key of the wallet; can be in the base58 format (111 characters) or the hexadecimal format (130 characters)
      * @param index Derivation index of desired address to be generated.
      * @returns any OK
      * @throws ApiError
@@ -88,8 +88,8 @@ export class TronService {
     }
 
     /**
-     * Generate Tron private key
-     * <h4>10 credit per API call.</h4><br/>
+     * Generate the private key for a TRON address
+     * <p><b>10 credits per API call</b></p>
      * <p>Generate private key for address from mnemonic for given derivation path index. Private key is generated for the specific index - each mnemonic
      * can generate up to 2^31 private keys starting from index 0 until 2^31.</p>
      *
@@ -115,8 +115,10 @@ export class TronService {
     }
 
     /**
-     * Get current Tron block
-     * <h4>5 credits per API call.</h4><br/><p>Get current Tron block.</p>
+     * Get the current TRON block
+     * <p><b>5 credits per API call</b></p>
+     * <p>Get current Tron block.</p>
+     *
      * @returns any OK
      * @throws ApiError
      */
@@ -146,8 +148,10 @@ export class TronService {
     }
 
     /**
-     * Get Tron block
-     * <h4>5 credits per API call.</h4><br/><p>Get Tron block by hash or height.</p>
+     * Get a TRON block by its hash or height
+     * <p><b>5 credits per API call</b></p>
+     * <p>Get Tron block by hash or height.</p>
+     *
      * @param hash Block hash or height.
      * @returns TronBlock OK
      * @throws ApiError
@@ -168,80 +172,10 @@ export class TronService {
     }
 
     /**
-     * Get Tron Account transactions
-     * <h4>5 credits per API call.</h4><br/><p>Get Tron Account transactions. Default page size is 200 transactions per request.</p>
-     * @param address Address to get transactions for.
-     * @param next If
-     * @returns any OK
-     * @throws ApiError
-     */
-    public static tronAccountTx(
-        address: string,
-        next?: string,
-    ): CancelablePromise<{
-        /**
-         * If present, there are more transactions for address.
-         */
-        next?: string;
-        /**
-         * List of transactions.
-         */
-        transactions: Array<TronTx>;
-    }> {
-        return __request({
-            method: 'GET',
-            path: `/v3/tron/transaction/account/${address}`,
-            query: {
-                'next': next,
-            },
-            errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server during the processing of the request.`,
-            },
-        });
-    }
-
-    /**
-     * Get Tron Account TRC20 transactions
-     * <h4>5 credits per API call.</h4><br/><p>Get Tron Account TRC20 transactions. Default page size is 200 transactions per request.</p>
-     * @param address Address to get transactions for.
-     * @param next If
-     * @returns any OK
-     * @throws ApiError
-     */
-    public static tronAccountTx20(
-        address: string,
-        next?: string,
-    ): CancelablePromise<{
-        /**
-         * If present, there are more transactions for address.
-         */
-        next?: string;
-        /**
-         * List of transactions.
-         */
-        transactions: Array<TronTx20>;
-    }> {
-        return __request({
-            method: 'GET',
-            path: `/v3/tron/transaction/account/${address}/trc20`,
-            query: {
-                'next': next,
-            },
-            errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server during the processing of the request.`,
-            },
-        });
-    }
-
-    /**
-     * Get Tron Account by address
-     * <h4>5 credits per API call.</h4><br/><p>Get Tron account by address.</p>
+     * Get the TRON account by its address
+     * <p><b>5 credits per API call</b></p>
+     * <p>Get Tron account by address.</p>
+     *
      * @param address Account address.
      * @returns TronAccount OK
      * @throws ApiError
@@ -262,67 +196,13 @@ export class TronService {
     }
 
     /**
-     * Get Tron transaction by hash
-     * <h4>5 credits per API call.</h4><br/><p>Get Tron transaction by hash.</p>
-     * @param hash Transaction hash.
-     * @returns TronTx OK
-     * @throws ApiError
-     */
-    public static tronGetTransaction(
-        hash: string,
-    ): CancelablePromise<TronTx> {
-        return __request({
-            method: 'GET',
-            path: `/v3/tron/transaction/${hash}`,
-            errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server during the processing of the request.`,
-            },
-        });
-    }
-
-    /**
-     * Send Tron transaction
-     * <h4>10 credits per API call.</h4><br/>
-     * <p>Send Tron transaction from address to address.<br/><br/>
-     * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-     * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey.
-     * PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-     * it is possible to use the Tatum client library for supported languages or Tatum Middleware with a custom key management system.
-     * </p>
-     *
-     * @param requestBody
-     * @returns TransactionHash OK
-     * @throws ApiError
-     */
-    public static tronTransfer(
-        requestBody: (TransferTronBlockchain | TransferTronBlockchainKMS),
-    ): CancelablePromise<TransactionHash> {
-        return __request({
-            method: 'POST',
-            path: `/v3/tron/transaction`,
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server during the processing of the request.`,
-            },
-        });
-    }
-
-    /**
-     * Freeze Tron balance
-     * <h4>10 credits per API call.</h4><br/>
-     * <p>Freeze Tron assets on the address. By freezing assets, you can obtain energy or bandwith to perform transactions.<br/><br/>
-     * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-     * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey.
-     * PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-     * it is possible to use the Tatum client library for supported languages or Tatum Middleware with a custom key management system.
-     * </p>
+     * Freeze the balance of a TRON account
+     * <p><b>10 credits per API call</b></p>
+     * <p>Freeze Tron assets on the address. By freezing assets, you can obtain energy or bandwidth to perform transactions.</p>
+     * <p><b>Signing a transaction</b></p>
+     * <p>When freezing the balance, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
      * @returns TransactionHash OK
@@ -346,14 +226,125 @@ export class TronService {
     }
 
     /**
-     * Send Tron TRC10 transaction
-     * <h4>10 credits per API call.</h4><br/>
-     * <p>Send Tron TRC10 transaction from address to address.<br/><br/>
-     * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-     * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey.
-     * PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-     * it is possible to use the Tatum client library for supported languages or Tatum Middleware with a custom key management system.
-     * </p>
+     * Get all transactions for a TRON account
+     * <p><b>5 credits per API call</b></p>
+     * <p>Get all transactions for a TRON account.</p>
+     * <p>This API returns up to 200 transactions in one API call. If there are more than 200 transactions for the TRON account, the response body will contain the <code>next</code> parameter with the ID of the transaction that follows the last (200<sup>th</sup>) transaction in the returned list.</p>
+     * <p>To get the next 200 transactions, make another call using this API, but this time add the <code>next</code> parameter the endpoint URL and set it to the transaction ID from the <code>next</code> parameter in the response, for example:</p>
+     * <p><code>https://{region}.tatum.io/v3/tron/transaction/account/{address}?next=81d0524acf5967f3b361e03fd7d141ab511791cd7aad7ae406c4c8d408290991</code></p>
+     *
+     * @param address The address of the TRON account to get all transactions for
+     * @param next The ID of the transaction that follows the last (200<sup>th</sup>) transaction in the returned list of transactions. Use it to get the next 200 transactions for the specified account (for more information, see the description of this API).
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static tronAccountTx(
+        address: string,
+        next?: string,
+    ): CancelablePromise<{
+        /**
+         * If present, there are more transactions for the TRON account than the 200 transactions returned in the response, and this parameter specifies the ID of the transaction that follows the last (200<sup>th</sup>) transaction in the returned list of transactions. Use it to get the next 200 transactions for the specified account (for more information, see the description of this API).
+         */
+        next?: string;
+        /**
+         * The list of transactions for the specified TRON account
+         */
+        transactions: Array<TronTx>;
+    }> {
+        return __request({
+            method: 'GET',
+            path: `/v3/tron/transaction/account/${address}`,
+            query: {
+                'next': next,
+            },
+            errors: {
+                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
+            },
+        });
+    }
+
+    /**
+     * Get TRC-20 transactions for a TRON account
+     * <p><b>5 credits per API call</b></p>
+     * <p>Get TRC-20 transactions for a TRON account.</p>
+     * <p>This API returns up to 200 transactions in one API call. If there are more than 200 transactions for the TRON account, the response body will contain the <code>next</code> parameter with the ID of the transaction that follows the last (200<sup>th</sup>) transaction in the returned list.</p>
+     * <p>To get the next 200 transactions, make another call using this API, but this time add the <code>next</code> parameter the endpoint URL and set it to the transaction ID from the <code>next</code> parameter in the response, for example:</p>
+     * <p><code>https://{region}.tatum.io/v3/tron/transaction/account/{address}/trc20?next=81d0524acf5967f3b361e03fd7d141ab511791cd7aad7ae406c4c8d408290991</code></p>
+     *
+     * @param address The address of the TRON account to get TRC-20 transactions for
+     * @param next The ID of the transaction that follows the last (200<sup>th</sup>) transaction in the returned list of transactions. Use it to get the next 200 transactions for the specified account (for more information, see the description of this API).
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static tronAccountTx20(
+        address: string,
+        next?: string,
+    ): CancelablePromise<{
+        /**
+         * If present, there are more transactions for the TRON account than the 200 transactions returned in the response, and this parameter specifies the ID of the transaction that follows the last (200<sup>th</sup>) transaction in the returned list of transactions. Use it to get the next 200 transactions for the specified account (for more information, see the description of this API).
+         */
+        next?: string;
+        /**
+         * The list of transactions for the specified TRON account
+         */
+        transactions: Array<TronTx20>;
+    }> {
+        return __request({
+            method: 'GET',
+            path: `/v3/tron/transaction/account/${address}/trc20`,
+            query: {
+                'next': next,
+            },
+            errors: {
+                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
+            },
+        });
+    }
+
+    /**
+     * Send TRX to a TRON account
+     * <p><b>10 credits per API call</b></p>
+     * <p>Send an amount in TRX from address to address.</p>
+     * <p><b>Signing a transaction</b></p>
+     * <p>When sending TRX to a TRON account, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
+     *
+     * @param requestBody
+     * @returns TransactionHash OK
+     * @throws ApiError
+     */
+    public static tronTransfer(
+        requestBody: (TransferTronBlockchain | TransferTronBlockchainKMS),
+    ): CancelablePromise<TransactionHash> {
+        return __request({
+            method: 'POST',
+            path: `/v3/tron/transaction`,
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
+            },
+        });
+    }
+
+    /**
+     * Send TRC-10 tokens to a TRON account
+     * <p><b>10 credits per API call</b></p>
+     * <p>Send TRC-10 tokens from address to address.</p>
+     * <p><b>Signing a transaction</b></p>
+     * <p>When sending TRC-10 tokens to a TRON account, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
      * @returns TransactionHash OK
@@ -377,69 +368,13 @@ export class TronService {
     }
 
     /**
-     * Create Tron TRC10 token
-     * <h4>10 credits per API call.</h4><br/>
-     * <p>Create Tron TRC10 token. 1 account can create only 1 token. All supply of the tokens are transfered to the issuer account 100 seconds after the creation.<br/><br/>
-     * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-     * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey.
-     * PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-     * it is possible to use the Tatum client library for supported languages or Tatum Middleware with a custom key management system.
-     * </p>
-     *
-     * @param requestBody
-     * @returns TransactionHash OK
-     * @throws ApiError
-     */
-    public static tronCreateTrc10(
-        requestBody: (CreateTronTrc10Blockchain | CreateTronTrc10BlockchainKMS),
-    ): CancelablePromise<TransactionHash> {
-        return __request({
-            method: 'POST',
-            path: `/v3/tron/trc10/deploy`,
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server during the processing of the request.`,
-            },
-        });
-    }
-
-    /**
-     * Get Tron TRC10 token detail
-     * <h4>5 credits per API call.</h4><br/>
-     * <p>Get Tron TRC10 token details.</p>
-     *
-     * @param id TRC10 token ID
-     * @returns TronTrc10Detail OK
-     * @throws ApiError
-     */
-    public static tronTrc10Detail(
-        id: number,
-    ): CancelablePromise<TronTrc10Detail> {
-        return __request({
-            method: 'GET',
-            path: `/v3/tron/trc10/detail/${id}`,
-            errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server during the processing of the request.`,
-            },
-        });
-    }
-
-    /**
-     * Send Tron TRC20 transaction
-     * <h4>10 credits per API call.</h4><br/>
-     * <p>Send Tron TRC20 transaction from address to address.<br/><br/>
-     * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-     * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey.
-     * PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-     * it is possible to use the Tatum client library for supported languages or Tatum Middleware with a custom key management system.
-     * </p>
+     * Send TRC-20 tokens to a TRON account
+     * <p><b>10 credits per API call</b></p>
+     * <p>Send TRC-20 tokens from address to address.</p>
+     * <p><b>Signing a transaction</b></p>
+     * <p>When sending TRC-20 tokens to a TRON account, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
      * @returns TransactionHash OK
@@ -463,14 +398,67 @@ export class TronService {
     }
 
     /**
-     * Create Tron TRC20 token
-     * <h4>10 credits per API call.</h4><br/>
-     * <p>Create Tron TRC20 token. 1 account can create only 1 token. All supply of the tokens are transfered to the issuer account 100 seconds after the creation.<br/><br/>
-     * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-     * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey.
-     * PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-     * it is possible to use the Tatum client library for supported languages or Tatum Middleware with a custom key management system.
-     * </p>
+     * Create a TRC-10 token
+     * <p><b>10 credits per API call</b></p>
+     * <p>Create Tron TRC10 token. 1 account can create only 1 token. All supply of the tokens are transferred to the issuer account 100 seconds after the creation.</p>
+     * <p><b>Signing a transaction</b></p>
+     * <p>When creating a TRC-10 token, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
+     *
+     * @param requestBody
+     * @returns TransactionHash OK
+     * @throws ApiError
+     */
+    public static tronCreateTrc10(
+        requestBody: (CreateTronTrc10Blockchain | CreateTronTrc10BlockchainKMS),
+    ): CancelablePromise<TransactionHash> {
+        return __request({
+            method: 'POST',
+            path: `/v3/tron/trc10/deploy`,
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
+            },
+        });
+    }
+
+    /**
+     * Get information about a TRC-10 token
+     * <p><b>5 credits per API call</b></p>
+     * <p>Get Tron TRC10 token details.</p>
+     *
+     * @param id TRC10 token ID
+     * @returns TronTrc10Detail OK
+     * @throws ApiError
+     */
+    public static tronTrc10Detail(
+        id: number,
+    ): CancelablePromise<TronTrc10Detail> {
+        return __request({
+            method: 'GET',
+            path: `/v3/tron/trc10/detail/${id}`,
+            errors: {
+                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
+            },
+        });
+    }
+
+    /**
+     * Create a TRC-20 token
+     * <p><b>10 credits per API call</b></p>
+     * <p>Create Tron TRC20 token. 1 account can create only 1 token. All supply of the tokens are transfered to the issuer account 100 seconds after the creation.</p>
+     * <p><b>Signing a transaction</b></p>
+     * <p>When creating a TRC-20 token, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
      * @returns TransactionHash OK
@@ -494,8 +482,32 @@ export class TronService {
     }
 
     /**
-     * Broadcast Tron transaction
-     * <h4>5 credits per API call.</h4><br/>
+     * Get a TRON transaction by its hash
+     * <p><b>5 credits per API call</b></p>
+     * <p>Get Tron transaction by hash.</p>
+     *
+     * @param hash Transaction hash.
+     * @returns TronTx OK
+     * @throws ApiError
+     */
+    public static tronGetTransaction(
+        hash: string,
+    ): CancelablePromise<TronTx> {
+        return __request({
+            method: 'GET',
+            path: `/v3/tron/transaction/${hash}`,
+            errors: {
+                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
+            },
+        });
+    }
+
+    /**
+     * Broadcast a TRON transaction
+     * <p><b>5 credits per API call</b></p>
      * <p>Broadcast Tron transaction. This method is used internally from Tatum Middleware or Tatum client libraries.
      * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
      *

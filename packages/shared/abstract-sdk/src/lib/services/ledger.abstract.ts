@@ -84,7 +84,7 @@ export const abstractSdkLedgerService = () => {
        * @param webhookUrl optional URL, where webhook will be post for every incoming blockchain transaction to the address
        */
       generate: async (
-        account: CreateAccount,
+        account: CreateAccount & { xpub?: string },
         generateNewWalletFn: GenerateWalletFn,
         generateNewWallet = true,
         testnet = true,

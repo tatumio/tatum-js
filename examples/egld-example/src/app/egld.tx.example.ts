@@ -48,6 +48,7 @@ export async function egldTxExample() {
 
   await egldSDK.transaction.send.transferNft({
     from: 'erd1uajkmmpxf9s355qmf0nwftc65987fzhzx7gahncymsjvcdwy7tgq7k2ye7',
+    to: 'erd1r27lx5krup4tffvmx933hjprzffw59tt8zaqz3t36yj9fdtrcsvsrqhyrp',
     fromPrivateKey: '6ee8378f00ac59c597e06a454c2fda821430747caf49a094de38e8ee2e76da68',
     amount: '1',
     fee: {
