@@ -39,7 +39,6 @@ jobs:
           node-version: '14'
       - run: yarn --ignore-scripts --frozen-lockfile
       - run: npx nx-cloud start-ci-run
-      - run: npx nx affected --target=lint --parallel --max-parallel=3 --skip-nx-cache
       - run: npx nx affected --target=build --parallel --max-parallel=3 --skip-nx-cache
       - run: yarn test:ci
       - run: npx nx-cloud stop-all-agents
@@ -75,8 +74,7 @@ jobs:
           node-version: '14'
       - run: yarn --ignore-scripts --frozen-lockfile
       - run: npx nx-cloud start-ci-run
-      - run: npx nx affected --target=lint --parallel --max-parallel=3
-      - run: npx nx affected --target=build --parallel --max-parallel=3
+      - run: npx nx affected --target=build --parallel --max-parallel=3 --skip-nx-cache
       - run: yarn test:ci
       - run: npx nx-cloud stop-all-agents
       - name: SonarCloud Scan

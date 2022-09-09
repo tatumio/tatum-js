@@ -38,6 +38,7 @@ const mintMultiToken = async (body: ChainMintMultiToken, web3: EvmBasedWeb3, pro
     fromPrivateKey,
     fee?.gasLimit,
     fee?.gasPrice,
+    provider,
   )
 }
 
@@ -63,6 +64,7 @@ const mintMultiTokenBatch = async (body: ChainMintMultiTokenBatch, web3: EvmBase
     fromPrivateKey,
     fee?.gasLimit,
     fee?.gasPrice,
+    provider,
   )
 }
 
@@ -91,6 +93,7 @@ const deployMultiToken = async (body: ChainDeployMultiToken, web3: EvmBasedWeb3,
     fromPrivateKey,
     fee?.gasLimit,
     fee?.gasPrice,
+    provider,
   )
 }
 
@@ -123,6 +126,7 @@ const transferMultiToken = async (body: ChainTransferMultiToken, web3: EvmBasedW
     fromPrivateKey,
     fee?.gasLimit,
     fee?.gasPrice,
+    provider,
   )
 }
 
@@ -159,6 +163,7 @@ const transferMultiTokenBatch = async (
     fromPrivateKey,
     fee?.gasLimit,
     fee?.gasPrice,
+    provider,
   )
 }
 
@@ -183,6 +188,7 @@ const burnMultiToken = async (body: ChainBurnMultiToken, web3: EvmBasedWeb3, pro
     fromPrivateKey,
     fee?.gasLimit,
     fee?.gasPrice,
+    provider,
   )
 }
 
@@ -207,6 +213,7 @@ const burnMultiTokenBatch = async (body: ChainBurnMultiTokenBatch, web3: EvmBase
     fromPrivateKey,
     fee?.gasLimit,
     fee?.gasPrice,
+    provider,
   )
 }
 

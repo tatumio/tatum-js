@@ -30,6 +30,7 @@ const transferSignedTransaction = async (
     body.fromPrivateKey,
     body.fee?.gasLimit,
     body.fee?.gasPrice,
+    provider,
   )
 }
 
