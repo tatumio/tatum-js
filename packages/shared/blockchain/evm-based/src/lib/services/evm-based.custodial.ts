@@ -228,7 +228,10 @@ export const evmBasedCustodial = () => {
       return { params, methodName, methodSig, bodyWithContractAddress }
     },
 
-    getCustodialFactoryContractAddress: (chain: 'CELO' | 'TRON' | 'ONE' | 'XDC' | 'ETH' | 'MATIC' | 'KLAY' | 'BSC', testnet?: boolean) => {
+    getCustodialFactoryContractAddress: (
+      chain: 'CELO' | 'TRON' | 'ONE' | 'XDC' | 'ETH' | 'MATIC' | 'KLAY' | 'BSC',
+      testnet?: boolean,
+    ) => {
       switch (chain) {
         case Currency.CELO:
           return testnet
