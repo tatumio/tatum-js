@@ -1,5 +1,4 @@
 import { generatePrivateKey, getAddressFromPrivateKey } from '@binance-chain/javascript-sdk/lib/crypto';
-import Neon, { wallet } from '@cityofzion/neon-js';
 import { generateMnemonic, mnemonicToSeed } from 'bip39';
 import { bip32, networks } from 'bitcoinjs-lib';
 import { hdkey as ethHdKey } from 'ethereumjs-wallet';
@@ -272,14 +271,6 @@ export const generateLtcWallet = async (testnet: boolean, mnem: string): Promise
 }
 
 /**
- * Generate Neo address and private key.
- */
-export const generateNeoWallet = () => {
-  const privateKey = Neon.create.privateKey()
-  return { privateKey, address: new wallet.Account(privateKey).address }
-}
-
-/**
  * Generate Xrp address and secret.
  */
 export const generateXrpWallet = () => {
@@ -408,8 +399,6 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
       return generateXlmWallet()
     case Currency.VET:
       return generateVetWallet(testnet, mnem)
-    case Currency.NEO:
-      return generateNeoWallet()
     case Currency.BNB:
       return generateBnbWallet(testnet)
     case Currency.ADA:
