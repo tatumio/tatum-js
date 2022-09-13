@@ -1,23 +1,22 @@
-import { ValidationArguments, ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator';
-import { Currency } from '../request';
-import { SignatureIdValidator } from './SignatureIdValidator';
+import { ValidationArguments, ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator'
+import { Currency } from '../request'
+import { SignatureIdValidator } from './SignatureIdValidator'
 
 @ValidatorConstraint({ name: 'builtInPrivateKey', async: false })
 export class Mint721BuiltInPrivateKeyValidator implements ValidatorConstraintInterface {
-
-  private message: string | null = null;
+  private message: string | null = null
 
   public defaultMessage() {
     if (this.message) {
-      return this.message;
+      return this.message
     }
-    return 'If you fill signatureId or privateKey/secret/fromPrivateKey, then tokenId, contractAddress must be present.';
+    return 'If you fill signatureId or privateKey/secret/fromPrivateKey, then tokenId, contractAddress must be present.'
   }
 
   public validate(_: any, validationArguments?: ValidationArguments) {
-    const data = validationArguments?.object as any;
+    const data = validationArguments?.object as any
     const chains = [Currency.BSC, Currency.ETH, Currency.CELO, Currency.ONE, Currency.MATIC, Currency.KLAY]
-    const isAllowedChain = chains.includes(data.chain);
+    const isAllowedChain = chains.includes(data.chain)
 
     if (data.minter) {
       if (data.fromPrivateKey || data.signatureId) {
@@ -51,7 +50,7 @@ export class Mint721BuiltInPrivateKeyValidator implements ValidatorConstraintInt
       return false
     }
     if (!data.fromPrivateKey && !data.signatureId) {
-      this.message = 'Field fromPrivateKey or signatureId must be filled.';
+      this.message = 'Field fromPrivateKey or signatureId must be filled.'
       return false
     }
 
@@ -66,12 +65,12 @@ export class Mint721BuiltInPrivateKeyValidator implements ValidatorConstraintInt
     }
 
     if (!data.tokenId) {
-      this.message = 'Field tokenId must be present.';
+      this.message = 'Field tokenId must be present.'
       return false
     }
 
     if (!data.contractAddress) {
-      this.message = 'Field contractAddress must be present.';
+      this.message = 'Field contractAddress must be present.'
       return false
     }
     return true

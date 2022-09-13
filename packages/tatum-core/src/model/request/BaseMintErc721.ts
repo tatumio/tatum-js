@@ -18,12 +18,23 @@ export class BaseMintErc721 extends PrivateKeyOrSignatureIdBuiltInPrivateKey {
   public tokenId?: string
 
   @IsNotEmpty()
-  @IsIn([Currency.BSC, Currency.ETH, Currency.CELO, Currency.XDC, Currency.TRON, Currency.ONE, Currency.MATIC, Currency.KCS, Currency.GLMR, Currency.KLAY])
+  @IsIn([
+    Currency.BSC,
+    Currency.ETH,
+    Currency.CELO,
+    Currency.XDC,
+    Currency.TRON,
+    Currency.ONE,
+    Currency.MATIC,
+    Currency.KCS,
+    Currency.GLMR,
+    Currency.KLAY,
+  ])
   public chain: Currency
 
   @IsOptional()
   @Length(42, 43)
-  public minter?: string;
+  public minter?: string
 
   @Validate(Mint721BuiltInPrivateKeyValidator)
   @IsOptional()

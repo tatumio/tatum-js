@@ -23,11 +23,6 @@ import {
 } from '@tatumio/tatum-celo'
 import { generateAddressFromXPub as generateBchAddress, generatePrivateKeyFromMnemonic as generateBchPrivateKey } from '@tatumio/tatum-bch'
 import {
-  generateAddressFromPrivatekey as convertQTUMPrivateKey,
-  generateAddressFromXPub as generateQtumAddress,
-  generatePrivateKeyFromMnemonic as generateQtumPrivateKey,
-} from '@tatumio/tatum-qtum'
-import {
   generateAddressFromPrivatekey as convertEthPrivateKey,
   generateAddressFromXPub as generateEthAddress,
   generatePrivateKeyFromMnemonic as generateEthPrivateKey,
@@ -88,8 +83,6 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
       return generateCeloAddress(xpub, i)
     case Currency.BCH:
       return generateBchAddress(testnet, xpub, i)
-    case Currency.QTUM:
-      return generateQtumAddress(testnet, xpub, i)
     case Currency.USDT:
     case Currency.WBTC:
     case Currency.LEO:
@@ -172,8 +165,6 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
     case Currency.USDT_TRON:
     case Currency.INRT_TRON:
       return generateTronPrivateKey(mnemonic, i)
-    case Currency.QTUM:
-      return generateQtumPrivateKey(testnet, mnemonic, i)
     case Currency.MATIC:
     case Currency.USDT_MATIC:
     case Currency.USDC_MATIC:
@@ -253,8 +244,6 @@ export const generateAddressFromPrivatekey = (currency: Currency, testnet: boole
   switch (currency) {
     case Currency.BTC:
       return convertBtcPrivateKey(testnet, privateKey)
-    case Currency.QTUM:
-      return convertQTUMPrivateKey(testnet, privateKey)
     case Currency.BNB:
       return getAddressFromPrivateKey(testnet, privateKey)
     case Currency.TRON:

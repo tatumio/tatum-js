@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer'
-import {IsArray, IsNotEmpty, IsNumber, Max, MaxLength, Min, ValidateIf, ValidateNested} from 'class-validator'
+import { IsArray, IsNotEmpty, IsNumber, Max, MaxLength, Min, ValidateIf, ValidateNested } from 'class-validator'
 import { SolanaNftMetadataCreator } from './SolanaNftMetadataCreator'
 
 export class SolanaNftMetadata {

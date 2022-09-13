@@ -1,15 +1,5 @@
 import { Type } from 'class-transformer'
-import {
-  IsIn,
-  IsNotEmpty,
-  IsOptional,
-  IsUUID,
-  Length,
-  Min,
-  Validate,
-  ValidateIf,
-  ValidateNested,
-} from 'class-validator'
+import { IsIn, IsNotEmpty, IsOptional, IsUUID, Length, Min, Validate, ValidateIf, ValidateNested } from 'class-validator'
 import { SignatureIdValidator } from '../validation'
 import { Currency } from './Currency'
 import { Fee } from './Fee'
