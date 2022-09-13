@@ -13,7 +13,6 @@ import { generateWallet as generateFlowWallet } from '@tatumio/tatum-flow'
 import { generateWallet as generateLtcWallet } from '@tatumio/tatum-ltc'
 import { generateWallet as generateNeoWallet } from '@tatumio/tatum-neo'
 import { generateWallet as generateOneWallet } from '@tatumio/tatum-one'
-import { generateWallet as generateQtumWallet } from '@tatumio/tatum-qtum'
 import { generateWallet as generatePolygonWallet } from '@tatumio/tatum-polygon'
 import { generateWallet as generateTronWallet } from '@tatumio/tatum-tron'
 import { generateWallet as generateVetWallet } from '@tatumio/tatum-vet'
@@ -57,8 +56,6 @@ export const generateWallet = (
       return generateCeloWallet(mnem, { testnet })
     case Currency.ONE:
       return generateOneWallet(mnem, { testnet })
-    case Currency.QTUM:
-      return generateQtumWallet(mnem, { testnet })
     case Currency.EGLD:
       return generateEgldWallet(mnem)
     case Currency.USDT:

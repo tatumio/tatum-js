@@ -84,7 +84,7 @@ const prepareGeneralTx = async (
   nonce?: number,
   data?: string,
   gasLimit?: string,
-  gasPrice?: string,
+  gasPrice?: string
 ) => {
   const tx: TransactionConfig = {
     from: 0,
@@ -186,7 +186,7 @@ export const prepareGenerateCustodialWalletSignedTransaction = async (body: Chai
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice,
+    body.fee?.gasPrice
   )
 }
 
@@ -210,7 +210,7 @@ export const prepareSignedTransaction = async (body: ChainTransferErc20, provide
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice,
+    body.fee?.gasPrice
   )
 }
 
@@ -234,7 +234,7 @@ export const prepareStoreDataTransaction = async (body: ChainCreateRecord, provi
     body.nonce,
     hexData,
     body.ethFee?.gasLimit,
-    body.ethFee?.gasPrice,
+    body.ethFee?.gasPrice
   )
 }
 
@@ -260,7 +260,7 @@ export const prepareMintErc20SignedTransaction = async (body: MintErc20, provide
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice,
+    body.fee?.gasPrice
   )
 }
 
@@ -286,7 +286,7 @@ export const prepareBurnErc20SignedTransaction = async (body: BurnErc20, provide
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice,
+    body.fee?.gasPrice
   )
 }
 
@@ -313,7 +313,7 @@ export const prepareTransferErc20SignedTransaction = async (body: ChainTransferE
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice,
+    body.fee?.gasPrice
   )
 }
 
@@ -350,7 +350,7 @@ export const prepareDeployErc20SignedTransaction = async (body: DeployErc20, pro
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice,
+    body.fee?.gasPrice
   )
 }
 
@@ -378,7 +378,7 @@ export const prepareMintErc721SignedTransaction = async (body: ChainMintErc721, 
       body.nonce,
       data,
       body.fee?.gasLimit,
-      body.fee?.gasPrice,
+      body.fee?.gasPrice
     )
   }
   throw new Error('Contract address should not be empty!')
@@ -410,7 +410,7 @@ export const prepareMintCashbackErc721SignedTransaction = async (body: ChainMint
       body.nonce,
       data,
       body.fee?.gasLimit,
-      body.fee?.gasPrice,
+      body.fee?.gasPrice
     )
   }
   throw new Error('Contract address should not be empty!')
@@ -435,7 +435,7 @@ export const prepareMintMultipleCashbackErc721SignedTransaction = async (body: C
       body.tokenId,
       body.url,
       body.authorAddresses,
-      cb,
+      cb
     )
     .encodeABI()
   return prepareGeneralTx(
@@ -447,7 +447,7 @@ export const prepareMintMultipleCashbackErc721SignedTransaction = async (body: C
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice,
+    body.fee?.gasPrice
   )
 }
 
@@ -466,7 +466,7 @@ export const prepareMintMultipleErc721SignedTransaction = async (body: ChainMint
     .mintMultiple(
       body.to.map((t) => t.trim()),
       body.tokenId,
-      body.url,
+      body.url
     )
     .encodeABI()
   return prepareGeneralTx(
@@ -478,7 +478,7 @@ export const prepareMintMultipleErc721SignedTransaction = async (body: ChainMint
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice,
+    body.fee?.gasPrice
   )
 }
 
@@ -503,7 +503,7 @@ export const prepareBurnErc721SignedTransaction = async (body: ChainBurnErc721, 
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice,
+    body.fee?.gasPrice
   )
 }
 
@@ -530,7 +530,7 @@ export const prepareTransferErc721SignedTransaction = async (body: ChainTransfer
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice,
+    body.fee?.gasPrice
   )
 }
 
@@ -557,7 +557,7 @@ export const prepareUpdateCashbackForAuthorErc721SignedTransaction = async (body
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice,
+    body.fee?.gasPrice
   )
 }
 
@@ -599,7 +599,7 @@ export const prepareDeployErc721SignedTransaction = async (body: ChainDeployErc7
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice,
+    body.fee?.gasPrice
   )
 }
 
@@ -629,7 +629,7 @@ export const prepareDeployMarketplaceListingSignedTransaction = async (body: Cha
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice,
+    body.fee?.gasPrice
   )
 }
 /**
@@ -658,7 +658,7 @@ export const prepareDeployAuctionSignedTransaction = async (body: ChainDeployNft
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice,
+    body.fee?.gasPrice
   )
 }
 
@@ -685,7 +685,7 @@ export const prepareBurnMultiTokenSignedTransaction = async (body: ChainBurnMult
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice,
+    body.fee?.gasPrice
   )
 }
 
@@ -712,7 +712,7 @@ export const prepareBurnMultiTokenBatchSignedTransaction = async (body: ChainBur
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice,
+    body.fee?.gasPrice
   )
 }
 
@@ -739,7 +739,7 @@ export const prepareTransferMultiTokenSignedTransaction = async (body: ChainTran
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice,
+    body.fee?.gasPrice
   )
 }
 
@@ -760,7 +760,7 @@ export const prepareBatchTransferMultiTokenSignedTransaction = async (body: Chai
       body.to.trim(),
       body.tokenId.map((token: string) => token.trim()),
       amts,
-      body.data ? body.data : '0x0',
+      body.data ? body.data : '0x0'
     )
     .encodeABI()
   return prepareGeneralTx(
@@ -772,7 +772,7 @@ export const prepareBatchTransferMultiTokenSignedTransaction = async (body: Chai
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice,
+    body.fee?.gasPrice
   )
 }
 
@@ -799,7 +799,7 @@ export const prepareMintMultiTokenSignedTransaction = async (body: ChainMintMult
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice,
+    body.fee?.gasPrice
   )
 }
 
@@ -827,7 +827,7 @@ export const prepareMintMultiTokenBatchSignedTransaction = async (body: ChainMin
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice,
+    body.fee?.gasPrice
   )
 }
 
@@ -857,7 +857,7 @@ export const prepareDeployMultiTokenSignedTransaction = async (body: ChainDeploy
     body.nonce,
     data,
     body.fee?.gasLimit,
-    body.fee?.gasPrice,
+    body.fee?.gasPrice
   )
 }
 
@@ -1108,7 +1108,7 @@ export const sendGenerateCustodialWalletSignedTransaction = async (body: ChainGe
  */
 export const sendSmartContractMethodInvocationTransaction = async (
   body: SmartContractMethodInvocation | SmartContractReadMethodInvocation,
-  provider?: string,
+  provider?: string
 ) => {
   if (body.methodABI.stateMutability === 'view') {
     return sendSmartContractReadMethodInvocationTransaction(body as SmartContractReadMethodInvocation, provider)

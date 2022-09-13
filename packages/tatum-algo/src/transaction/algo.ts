@@ -318,11 +318,7 @@ export const sendCreateFractionalNFTSignedTransaction = async (testnet: boolean,
  * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareTransferFractionalNFTSignedTransaction = async (
-  testnet: boolean,
-  tx: ChainTransferMultiToken,
-  provider?: string
-) => {
+export const prepareTransferFractionalNFTSignedTransaction = async (testnet: boolean, tx: ChainTransferMultiToken, provider?: string) => {
   ;(tx as TransferMultiToken).chain = Currency.ALGO
   const algodClient = getClient(testnet, provider)
   const params = await algodClient.getTransactionParams().do()

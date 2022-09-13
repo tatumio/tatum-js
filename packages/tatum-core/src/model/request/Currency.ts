@@ -25,7 +25,6 @@ export enum Currency {
   FUSD = 'FUSD',
   BSC = 'BSC',
   XDC = 'XDC',
-  QTUM = 'QTUM',
   DOGE = 'DOGE',
   XRP = 'XRP',
   XLM = 'XLM',
