@@ -40,8 +40,6 @@ enum ContractType {
   SEMI_FUNGIBLE = 2,
 }
 
-export type GasPump = 'CELO' | 'TRON' | 'ONE' | 'XDC' | 'ETH' | 'MATIC' | 'KLAY' | 'BSC'
-
 const MAPPING = {
   [FUNGIBLE]: Custodial_20_TokenWallet,
   [FUNGIBLE | BATCH]: Custodial_20_TokenWalletWithBatch,

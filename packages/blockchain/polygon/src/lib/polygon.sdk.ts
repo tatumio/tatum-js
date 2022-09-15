@@ -36,6 +36,7 @@ export const TatumPolygonSDK = (args: SDKArguments) => {
     multiToken: txService.multiToken,
     smartContract: txService.smartContract,
     custodial: txService.custodial,
+    gasPump: txService.gasPump,
     marketplace: {
       ...evmBasedMarketplace({
         blockchain,

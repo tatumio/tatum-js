@@ -5,6 +5,7 @@ import {
   erc721,
   EvmBasedWeb3,
   multiToken,
+  gasPump,
   native,
   smartContract,
 } from '@tatumio/shared-blockchain-evm-based'
@@ -29,6 +30,12 @@ export const klaytnTxService = (args: { blockchain: EvmBasedBlockchain; web3: Ev
         ...args,
         broadcastFunction: KlaytnService.klaytnBroadcast,
       }),
+    },
+    gasPump: {
+      ...gasPump({
+        ...args,
+        broadcastFunction: KlaytnService.klaytnBroadcast
+      })
     },
     multiToken: {
       ...multiToken({
