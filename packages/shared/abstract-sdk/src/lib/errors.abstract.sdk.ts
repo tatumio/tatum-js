@@ -160,7 +160,6 @@ export enum SdkErrorCode {
   EVM_CUSTODIAL_CANNOT_PREPARE_TRANSFER_BATCH_TX = 'evm-based.custodial.cannot.prepare.transfer-batch-tx',
   EVM_CUSTODIAL_CANNOT_PREPARE_APPROVE_TX = 'evm-based.custodial.cannot.prepare.approve-tx',
 
-
   //Gas Pump
   EVM_GAS_PUMP_CANNOT_PREPARE_DEPLOY_BATCH_TX = 'evm-based.custodial.cannot.prepare.deploy-batch-tx',
 

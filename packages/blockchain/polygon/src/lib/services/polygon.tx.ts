@@ -1,4 +1,4 @@
-import {BnbSmartChainService, PolygonService} from '@tatumio/api-client'
+import { BnbSmartChainService, PolygonService } from '@tatumio/api-client'
 import {
   custodial,
   erc20,
@@ -8,7 +8,8 @@ import {
   native,
   smartContract,
   StoreDataTransactionBody,
-  evmBasedUtils, gasPump,
+  evmBasedUtils,
+  gasPump,
 } from '@tatumio/shared-blockchain-evm-based'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 
