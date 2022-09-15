@@ -1,4 +1,4 @@
-import { PolygonService } from '@tatumio/api-client'
+import {BnbSmartChainService, PolygonService} from '@tatumio/api-client'
 import {
   custodial,
   erc20,
@@ -8,7 +8,7 @@ import {
   native,
   smartContract,
   StoreDataTransactionBody,
-  evmBasedUtils,
+  evmBasedUtils, gasPump,
 } from '@tatumio/shared-blockchain-evm-based'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 
@@ -55,6 +55,12 @@ export const polygonTxService = (args: { blockchain: EvmBasedBlockchain; web3: E
       ...custodial({
         ...args,
         broadcastFunction: PolygonService.polygonBroadcast,
+      }),
+    },
+    gasPump: {
+      ...gasPump({
+        ...args,
+        broadcastFunction: BnbSmartChainService.bscBroadcast,
       }),
     },
     smartContract: {

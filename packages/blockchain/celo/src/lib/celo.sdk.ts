@@ -32,6 +32,7 @@ export const TatumCeloSDK = (args: SDKArguments) => {
     multiToken: txService.multiToken,
     smartContract: txService.smartContract,
     custodial: txService.custodial,
+    gasPump: txService.gasPump,
     marketplace: {
       auction: celoAuctionService({ blockchain, web3 }),
     },

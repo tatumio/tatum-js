@@ -4,12 +4,12 @@ import {
   erc20,
   erc721,
   EvmBasedWeb3,
+  gasPump,
   multiToken,
   native,
   smartContract,
 } from '@tatumio/shared-blockchain-evm-based'
-import { EthereumService } from '@tatumio/api-client'
-
+import {EthereumService} from '@tatumio/api-client'
 export const ethTx = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3 }) => {
   return {
     native: {
@@ -38,6 +38,12 @@ export const ethTx = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3
     },
     custodial: {
       ...custodial({
+        ...args,
+        broadcastFunction: EthereumService.ethBroadcast,
+      }),
+    },
+    gasPump: {
+      ...gasPump({
         ...args,
         broadcastFunction: EthereumService.ethBroadcast,
       }),

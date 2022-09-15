@@ -1,6 +1,7 @@
 import { BnbSmartChainService } from '@tatumio/api-client'
 import {
   custodial,
+  gasPump,
   erc20,
   erc721,
   EvmBasedWeb3,
@@ -38,6 +39,12 @@ export const bscTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBa
     },
     custodial: {
       ...custodial({
+        ...args,
+        broadcastFunction: BnbSmartChainService.bscBroadcast,
+      }),
+    },
+    gasPump: {
+      ...gasPump({
         ...args,
         broadcastFunction: BnbSmartChainService.bscBroadcast,
       }),

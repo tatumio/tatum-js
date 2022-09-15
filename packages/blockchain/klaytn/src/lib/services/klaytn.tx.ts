@@ -1,5 +1,5 @@
 import { KlaytnService } from '@tatumio/api-client'
-import { erc20, erc721, EvmBasedWeb3, multiToken, native } from '@tatumio/shared-blockchain-evm-based'
+import {erc20, erc721, EvmBasedWeb3, gasPump, multiToken, native} from '@tatumio/shared-blockchain-evm-based'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 
 export const klaytnTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3 }) => {
@@ -21,6 +21,12 @@ export const klaytnTxService = (args: { blockchain: EvmBasedBlockchain; web3: Ev
         ...args,
         broadcastFunction: KlaytnService.klaytnBroadcast,
       }),
+    },
+    gasPump: {
+      ...gasPump({
+        ...args,
+        broadcastFunction: KlaytnService.klaytnBroadcast
+      })
     },
     multiToken: {
       ...multiToken({
