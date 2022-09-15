@@ -9,7 +9,7 @@ import { generateAddress } from './tron.utils'
 import TronWeb from 'tronweb'
 import { tronCustodial } from './tron.custodial'
 import { ITronWeb } from './tron.web'
-import {tronGasPump} from "./tron.gasPump";
+import { tronGasPump } from './tron.gasPump'
 
 const generateBlockchainWallet = async (mnem: string): Promise<TronWallet> => {
   const w = fromSeed(await mnemonicToSeed(mnem))
@@ -69,6 +69,6 @@ export const tronWallet = (args: { tronWeb: ITronWeb }) => {
       return TronWeb.address.fromPrivateKey(privateKey)
     },
     custodial: tronCustodial(args),
-    gasPump: tronGasPump(args)
+    gasPump: tronGasPump(args),
   }
 }

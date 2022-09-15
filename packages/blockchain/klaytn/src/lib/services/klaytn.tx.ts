@@ -34,8 +34,8 @@ export const klaytnTxService = (args: { blockchain: EvmBasedBlockchain; web3: Ev
     gasPump: {
       ...gasPump({
         ...args,
-        broadcastFunction: KlaytnService.klaytnBroadcast
-      })
+        broadcastFunction: KlaytnService.klaytnBroadcast,
+      }),
     },
     multiToken: {
       ...multiToken({

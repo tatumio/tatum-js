@@ -1,6 +1,7 @@
 import {
   CallSmartContractMethod,
-  CallSmartContractMethodKMS, Currency,
+  CallSmartContractMethodKMS,
+  Currency,
   FreezeTron,
   FreezeTronKMS,
   GenerateCustodialWalletTron,
@@ -16,13 +17,13 @@ import {
   evmBasedGasPump,
   GasPumpChain,
   indexesFromRange,
-  ListingSmartContract
+  ListingSmartContract,
 } from '@tatumio/shared-blockchain-evm-based'
 import { tronTrc10 } from './tron.trc10'
 import { tronTrc20 } from './tron.trc20'
 import { tronTrc721 } from './tron.trc721'
 import { ITronWeb } from './tron.web'
-import BigNumber from "bignumber.js";
+import BigNumber from 'bignumber.js'
 
 const prepareSignedTransaction = async (
   body: TransferTronBlockchain | TransferTronBlockchainKMS,
@@ -118,12 +119,7 @@ const prepareSmartContractInvocation = async (
   return JSON.stringify(await client.trx.sign(transaction, body.fromPrivateKey))
 }
 
-const prepareGasPumpBatch = async (
-  body: any,
-  tronWeb: ITronWeb,
-  provider?: string,
-  testnet?: boolean,
-) => {
+const prepareGasPumpBatch = async (body: any, tronWeb: ITronWeb, provider?: string, testnet?: boolean) => {
   const indexes = indexesFromRange(body.from, body.to)
   const client = tronWeb.getClient(provider)
   const params = [
@@ -132,9 +128,9 @@ const prepareGasPumpBatch = async (
   ]
   const methodName = 'createBatch(address,uint256[])'
 
-
-  const  contractAddress = client.address.toHex(evmBasedGasPump().getGasPumpFactoryContractAddress("TRON", testnet))
-
+  const contractAddress = client.address.toHex(
+    evmBasedGasPump().getGasPumpFactoryContractAddress('TRON', testnet),
+  )
 
   client.setAddress(contractAddress)
 
@@ -154,7 +150,7 @@ const prepareGasPumpBatch = async (
     sender,
   )
 
-  if(body.signatureId) {
+  if (body.signatureId) {
     return JSON.stringify(transaction)
   }
   return JSON.stringify(await client.trx.sign(transaction, body.fromPrivateKey))
@@ -373,12 +369,9 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
     },
     gasPump: {
       prepare: {
-        prepareGasPumpBatch: async (
-          testnet : boolean,
-          body: any,
-          provider?: string
-        ) => prepareGasPumpBatch(body, args.tronWeb, provider, testnet)
-      }
+        prepareGasPumpBatch: async (testnet: boolean, body: any, provider?: string) =>
+          prepareGasPumpBatch(body, args.tronWeb, provider, testnet),
+      },
     },
     marketplace: {
       prepare: {

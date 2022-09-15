@@ -9,7 +9,7 @@ import {
   native,
   smartContract,
 } from '@tatumio/shared-blockchain-evm-based'
-import {EthereumService} from '@tatumio/api-client'
+import { EthereumService } from '@tatumio/api-client'
 export const ethTx = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3 }) => {
   return {
     native: {
