@@ -81,7 +81,7 @@ const burnSignedTransaction = async (body: ChainBurnErc20, web3: EvmBasedWeb3, p
 }
 
 const transferSignedTransaction = async (body: ChainTransferErc20, web3: EvmBasedWeb3, provider?: string) => {
-  // TODO
+  // TODO fix validation
   // await validateBody(body, TransferErc20)
 
   const client = web3.getClient(provider, body.fromPrivateKey)

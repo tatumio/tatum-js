@@ -92,6 +92,7 @@ describe('TatumSolanaSDK', () => {
     })
 
     describe('KMS', () => {
+      // TODO: returns Error: Transaction not confirmed.
       it.skip('should sign transaction', async () => {
         const txData = await sdk.transaction.send(
           {
