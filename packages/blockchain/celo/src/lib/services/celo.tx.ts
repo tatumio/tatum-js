@@ -1,4 +1,4 @@
-import { BnbSmartChainService, CeloService } from '@tatumio/api-client'
+import { CeloService } from '@tatumio/api-client'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import { custodial as evmBasedCustodial, EvmBasedWeb3, gasPump } from '@tatumio/shared-blockchain-evm-based'
 import { erc721, multiToken, native, erc20, smartContract } from '../transactions'
@@ -36,7 +36,7 @@ export const celoTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmB
     gasPump: {
       ...gasPump({
         ...args,
-        broadcastFunction: BnbSmartChainService.bscBroadcast,
+        broadcastFunction: CeloService.celoBroadcast,
       }),
     },
     erc20: {

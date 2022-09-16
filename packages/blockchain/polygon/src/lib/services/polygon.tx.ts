@@ -1,4 +1,4 @@
-import { BnbSmartChainService, PolygonService } from '@tatumio/api-client'
+import { PolygonService } from '@tatumio/api-client'
 import {
   custodial,
   erc20,
@@ -61,7 +61,7 @@ export const polygonTxService = (args: { blockchain: EvmBasedBlockchain; web3: E
     gasPump: {
       ...gasPump({
         ...args,
-        broadcastFunction: BnbSmartChainService.bscBroadcast,
+        broadcastFunction: PolygonService.polygonBroadcast,
       }),
     },
     smartContract: {
