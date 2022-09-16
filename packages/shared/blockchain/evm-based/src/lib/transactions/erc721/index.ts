@@ -45,6 +45,7 @@ const mintSignedTransaction = async (body: ChainMintErc721, web3: EvmBasedWeb3, 
       fromPrivateKey,
       fee?.gasLimit,
       fee?.gasPrice,
+      provider,
     )
   }
   throw new Error('Contract address should not be empty')
@@ -91,6 +92,7 @@ const mintCashbackSignedTransaction = async (body: ChainMintNft, web3: EvmBasedW
       fromPrivateKey,
       fee?.gasLimit,
       fee?.gasPrice,
+      provider,
     )
   }
   throw new Error('Contract address should not be empty!')
@@ -139,6 +141,7 @@ export const mintMultipleCashbackSignedTransaction = async (
     fromPrivateKey,
     fee?.gasLimit,
     fee?.gasPrice,
+    provider,
   )
 }
 
@@ -173,6 +176,7 @@ const mintMultipleSignedTransaction = async (
     fromPrivateKey,
     fee?.gasLimit,
     fee?.gasPrice,
+    provider,
   )
 }
 
@@ -197,6 +201,7 @@ const burnSignedTransaction = async (body: ChainBurnErc721, web3: EvmBasedWeb3, 
     fromPrivateKey,
     fee?.gasLimit,
     fee?.gasPrice,
+    provider,
   )
 }
 
@@ -248,6 +253,7 @@ const transferSignedTransaction = async (
     fromPrivateKey,
     fee?.gasLimit,
     fee?.gasPrice,
+    provider,
   )
 }
 
@@ -281,6 +287,7 @@ const updateCashbackForAuthorSignedTransaction = async (
     fromPrivateKey,
     fee?.gasLimit,
     fee?.gasPrice,
+    provider,
   )
 }
 
@@ -323,6 +330,7 @@ const deploySignedTransaction = async (body: ChainDeployErc721, web3: EvmBasedWe
     fromPrivateKey,
     fee?.gasLimit,
     fee?.gasPrice,
+    provider,
   )
 }
 
@@ -373,6 +381,7 @@ const mintProvenanceSignedTransaction = async (body: ChainMintNft, web3: EvmBase
       fromPrivateKey,
       fee?.gasLimit,
       fee?.gasPrice,
+      provider,
     )
   }
   throw new Error('Contract address should not be empty!')
@@ -442,6 +451,7 @@ const mintMultipleProvenanceSignedTransaction = async (
     fromPrivateKey,
     fee?.gasLimit,
     fee?.gasPrice,
+    provider,
   )
 }
 

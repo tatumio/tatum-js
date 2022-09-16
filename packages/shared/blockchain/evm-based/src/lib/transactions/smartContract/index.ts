@@ -32,6 +32,7 @@ export const smartContractWriteMethodInvocation = async (
     fromPrivateKey,
     fee?.gasLimit,
     fee?.gasPrice,
+    provider,
   )
 }
 

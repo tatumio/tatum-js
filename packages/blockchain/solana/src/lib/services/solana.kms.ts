@@ -18,7 +18,7 @@ export const solanaKmsService = (args: { web3: SolanaWeb3; blockchain: Blockchai
       }
       signers.push(wallet)
       const txId = await connection.sendTransaction(transaction, signers)
-      await new Promise((r) => setTimeout(r, 5000))
+      await new Promise((r) => setTimeout(r, 10000))
       const confirmedTx = await connection.getConfirmedTransaction(txId, 'confirmed')
       if (confirmedTx && !confirmedTx.meta?.err) {
         return txId
