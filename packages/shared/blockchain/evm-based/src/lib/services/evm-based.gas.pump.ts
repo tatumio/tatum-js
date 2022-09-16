@@ -6,6 +6,29 @@ export type GasPumpChain = 'CELO' | 'TRON' | 'ONE' | 'XDC' | 'ETH' | 'MATIC' | '
 
 const range = (from: number, to: number) => to - from + 1
 
+export const CELO_TESTNET_CUSTODIAL_FACTORY_V2 = '0x5E3D93eF7C1eE50eA4536791E1441e3281f55154'
+export const CELO_MAINNET_CUSTODIAL_FACTORY_V2 = '0x5E3D93eF7C1eE50eA4536791E1441e3281f55154'
+
+export const ETH_TESTNET_CUSTODIAL_FACTORY_V2 = '0x5975906E29214339CC6D292cD6101C68f8de01e4'
+export const ETH_MAINNET_CUSTODIAL_FACTORY_V2 = '0x5975906E29214339CC6D292cD6101C68f8de01e4'
+
+export const KLAY_TESTNET_CUSTODIAL_FACTORY_V2 = '0x86f7FdB16a02b91392468e2b3eCd554Cef01a23c'
+export const KLAY_MAINNET_CUSTODIAL_FACTORY_V2 = '0x86f7FdB16a02b91392468e2b3eCd554Cef01a23c'
+
+export const MATIC_TESTNET_CUSTODIAL_FACTORY_V2 = '0x031caA069FaE7F5D6955CedDa7ceCc9a6AabebdE'
+export const MATIC_MAINNET_CUSTODIAL_FACTORY_V2 = '0x031caA069FaE7F5D6955CedDa7ceCc9a6AabebdE'
+
+
+export const BSC_TESTNET_CUSTODIAL_FACTORY_V2 = '0x0479DD9F4868b9DA64f9Abd525A0e21824FbEE65'
+export const BSC_MAINNET_CUSTODIAL_FACTORY_V2 = '0x0479DD9F4868b9DA64f9Abd525A0e21824FbEE65'
+
+export const TRON_TESTNET_CUSTODIAL_FACTORY_V2 = 'TTNaPeEYoM1TZWPD1bZm14Nu1GpdmD5g9h'
+export const TRON_MAINNET_CUSTODIAL_FACTORY_V2 = 'TTNaPeEYoM1TZWPD1bZm14Nu1GpdmD5g9h'
+
+export const ONE_TESTNET_CUSTODIAL_FACTORY_V2 = '0xb1462fE8E9Cf82c0296022Cca7bEfA3Fd4c12B34'
+export const ONE_MAINNET_CUSTODIAL_FACTORY_V2 = '0xb1462fE8E9Cf82c0296022Cca7bEfA3Fd4c12B34'
+
+
 export const indexesFromRange = (from: number, to: number) =>
   Array.from(Array(range(from, to)).keys()).map((val) => `0x${new BigNumber(val + from).toString(16)}`)
 
@@ -27,30 +50,32 @@ export const evmBasedGasPump = () => {
       switch (chain) {
         case Currency.CELO:
           return testnet
-            ? '0x909ec0d70a4dA19848F6678e8a4478864dB94E0F'
-            : '0x909ec0d70a4dA19848F6678e8a4478864dB94E0F'
+            ? CELO_TESTNET_CUSTODIAL_FACTORY_V2
+            : CELO_MAINNET_CUSTODIAL_FACTORY_V2
         case Currency.TRON:
-          return testnet ? 'TKqZsQCbVeyRuVVR2BNfiqZt9B8vpmoAKe' : 'TKqZsQCbVeyRuVVR2BNfiqZt9B8vpmoAKe'
+          return testnet
+            ? TRON_TESTNET_CUSTODIAL_FACTORY_V2 :
+            TRON_MAINNET_CUSTODIAL_FACTORY_V2
         case Currency.ONE:
           return testnet
-            ? '0xb1462fE8E9Cf82c0296022Cca7bEfA3Fd4c12B34'
-            : '0x86e27174edd52469f928f6206f3d8e4316525f00'
+            ? ONE_TESTNET_CUSTODIAL_FACTORY_V2
+            : ONE_MAINNET_CUSTODIAL_FACTORY_V2
         case Currency.ETH:
           return testnet
-            ? '0x249BE1CbcAF4a14029EB419769EFc86642F0cfF1'
-            : '0x249BE1CbcAF4a14029EB419769EFc86642F0cfF1'
+            ? ETH_TESTNET_CUSTODIAL_FACTORY_V2
+            : ETH_MAINNET_CUSTODIAL_FACTORY_V2
         case Currency.MATIC:
           return testnet
-            ? '0xeD04F0A456717969b8936D2bB8942C0fDf87ad03'
-            : '0xeD04F0A456717969b8936D2bB8942C0fDf87ad03'
+            ? MATIC_TESTNET_CUSTODIAL_FACTORY_V2
+            : MATIC_MAINNET_CUSTODIAL_FACTORY_V2
         case Currency.KLAY:
           return testnet
-            ? '0x6a66c7D301239A51e0e01416205EdFD402C23a62'
-            : '0x6a66c7D301239A51e0e01416205EdFD402C23a62'
+            ? KLAY_TESTNET_CUSTODIAL_FACTORY_V2
+            : KLAY_MAINNET_CUSTODIAL_FACTORY_V2
         case Currency.BSC:
           return testnet
-            ? '0x06052cA0DdCEa6A835A0A4b3FBe1b0E33648318E'
-            : '0x06052cA0DdCEa6A835A0A4b3FBe1b0E33648318E'
+            ? BSC_TESTNET_CUSTODIAL_FACTORY_V2
+            : BSC_MAINNET_CUSTODIAL_FACTORY_V2
         default:
           throw new Error('Unsupported chain.')
       }

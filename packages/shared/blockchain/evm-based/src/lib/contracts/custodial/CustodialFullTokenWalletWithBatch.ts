@@ -3,195 +3,195 @@ import { Abi, ContractAbi } from '../common.contracts'
 const abi: Abi[] = [
   {
     inputs: [],
-    stateMutability: "nonpayable",
-    type: "constructor"
+    stateMutability: 'nonpayable',
+    type: 'constructor',
   },
   {
     anonymous: false,
     inputs: [
       {
         indexed: false,
-        internalType: "address",
-        name: "addr",
-        type: "address"
+        internalType: 'address',
+        name: 'addr',
+        type: 'address',
       },
       {
         indexed: false,
-        internalType: "address",
-        name: "owner",
-        type: "address"
+        internalType: 'address',
+        name: 'owner',
+        type: 'address',
       },
       {
         indexed: false,
-        internalType: "string",
-        name: "reason",
-        type: "string"
-      }
+        internalType: 'string',
+        name: 'reason',
+        type: 'string',
+      },
     ],
-    name: "CreateFailed",
-    type: "event"
+    name: 'CreateFailed',
+    type: 'event',
   },
   {
     anonymous: false,
     inputs: [
       {
         indexed: false,
-        internalType: "address",
-        name: "addr",
-        type: "address"
-      }
+        internalType: 'address',
+        name: 'addr',
+        type: 'address',
+      },
     ],
-    name: "Created",
-    type: "event"
+    name: 'Created',
+    type: 'event',
   },
   {
     anonymous: false,
     inputs: [
       {
         indexed: false,
-        internalType: "address",
-        name: "addr",
-        type: "address"
+        internalType: 'address',
+        name: 'addr',
+        type: 'address',
       },
       {
         indexed: false,
-        internalType: "address",
-        name: "owner",
-        type: "address"
+        internalType: 'address',
+        name: 'owner',
+        type: 'address',
       },
       {
         indexed: false,
-        internalType: "uint256",
-        name: "index",
-        type: "uint256"
-      }
+        internalType: 'uint256',
+        name: 'index',
+        type: 'uint256',
+      },
     ],
-    name: "WalletDetails",
-    type: "event"
+    name: 'WalletDetails',
+    type: 'event',
   },
   {
     inputs: [
       {
-        internalType: "address",
-        name: "owner",
-        type: "address"
+        internalType: 'address',
+        name: 'owner',
+        type: 'address',
       },
       {
-        internalType: "uint256",
-        name: "index",
-        type: "uint256"
-      }
+        internalType: 'uint256',
+        name: 'index',
+        type: 'uint256',
+      },
     ],
-    name: "create",
+    name: 'create',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "address",
-        name: "owner",
-        type: "address"
+        internalType: 'address',
+        name: 'owner',
+        type: 'address',
       },
       {
-        internalType: "uint256[]",
-        name: "index",
-        type: "uint256[]"
-      }
+        internalType: 'uint256[]',
+        name: 'index',
+        type: 'uint256[]',
+      },
     ],
-    name: "createBatch",
+    name: 'createBatch',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function"
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "address",
-        name: "owner",
-        type: "address"
+        internalType: 'address',
+        name: 'owner',
+        type: 'address',
       },
       {
-        internalType: "uint256",
-        name: "index",
-        type: "uint256"
-      }
+        internalType: 'uint256',
+        name: 'index',
+        type: 'uint256',
+      },
     ],
-    name: "getWallet",
+    name: 'getWallet',
     outputs: [
       {
-        internalType: "address",
-        name: "addr",
-        type: "address"
+        internalType: 'address',
+        name: 'addr',
+        type: 'address',
       },
       {
-        internalType: "bool",
-        name: "exists",
-        type: "bool"
+        internalType: 'bool',
+        name: 'exists',
+        type: 'bool',
       },
       {
-        internalType: "bytes32",
-        name: "salt",
-        type: "bytes32"
-      }
+        internalType: 'bytes32',
+        name: 'salt',
+        type: 'bytes32',
+      },
     ],
-    stateMutability: "view",
-    type: "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "address",
-        name: "owner",
-        type: "address"
+        internalType: 'address',
+        name: 'owner',
+        type: 'address',
       },
       {
-        internalType: "uint256[]",
-        name: "index",
-        type: "uint256[]"
-      }
+        internalType: 'uint256[]',
+        name: 'index',
+        type: 'uint256[]',
+      },
     ],
-    name: "getWallets",
+    name: 'getWallets',
     outputs: [
       {
-        internalType: "address[]",
-        name: "",
-        type: "address[]"
+        internalType: 'address[]',
+        name: '',
+        type: 'address[]',
       },
       {
-        internalType: "bool[]",
-        name: "",
-        type: "bool[]"
+        internalType: 'bool[]',
+        name: '',
+        type: 'bool[]',
       },
       {
-        internalType: "bytes32[]",
-        name: "",
-        type: "bytes32[]"
-      }
+        internalType: 'bytes32[]',
+        name: '',
+        type: 'bytes32[]',
+      },
     ],
-    stateMutability: "view",
-    type: "function"
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "bytes32",
-        name: "",
-        type: "bytes32"
-      }
+        internalType: 'bytes32',
+        name: '',
+        type: 'bytes32',
+      },
     ],
-    name: "wallets",
+    name: 'wallets',
     outputs: [
       {
-        internalType: "address",
-        name: "",
-        type: "address"
-      }
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
     ],
-    stateMutability: "view",
-    type: "function"
-  }
+    stateMutability: 'view',
+    type: 'function',
+  },
 ]
 
 const bytecode =
