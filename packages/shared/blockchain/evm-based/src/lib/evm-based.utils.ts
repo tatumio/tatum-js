@@ -55,8 +55,11 @@ export const evmBasedUtils = {
     fromPrivateKey?: string,
     gasLimit?: string,
     gasPrice?: string,
+    provider?: string,
   ) => {
-    const gasPriceDefined = gasPrice ? client.utils.toWei(gasPrice, 'gwei') : await web3.getGasPriceInWei()
+    const gasPriceDefined = gasPrice
+      ? client.utils.toWei(gasPrice, 'gwei')
+      : await web3.getGasPriceInWei(provider)
     const tx = {
       ...transaction,
       gasPrice: gasPriceDefined,

@@ -5,7 +5,7 @@ import { EvmBasedBlockchain, httpHelper } from '@tatumio/shared-core'
 export interface EvmBasedWeb3 {
   getClient(provider?: string, fromPrivateKey?: string): Web3
 
-  getGasPriceInWei(): Promise<string>
+  getGasPriceInWei(provider?: string): Promise<string>
 }
 
 export const evmBasedWeb3 = (args: { blockchain: EvmBasedBlockchain }) => {
