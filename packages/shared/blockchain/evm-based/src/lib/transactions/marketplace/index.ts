@@ -44,6 +44,7 @@ const generateMarketplace = async (body: ChainGenerateMarketplace, web3: EvmBase
     fromPrivateKey,
     fee?.gasLimit,
     fee?.gasPrice,
+    provider,
   )
 }
 
@@ -75,6 +76,7 @@ const updateFee = async (body: ChainUpdateFee, web3: EvmBasedWeb3, provider?: st
       fromPrivateKey,
       fee?.gasLimit,
       fee?.gasPrice,
+      provider,
     )
   }
   throw new Error('Contract address should not be empty!')
@@ -108,6 +110,7 @@ const updateFeeRecipient = async (body: ChainUpdateFeeRecipient, web3: EvmBasedW
       fromPrivateKey,
       fee?.gasLimit,
       fee?.gasPrice,
+      provider,
     )
   }
   throw new Error('Contract address should not be empty!')
@@ -147,6 +150,7 @@ const buyAsset = async (body: ChainBuyAssetOnMarketplace, web3: EvmBasedWeb3, pr
       fromPrivateKey,
       fee?.gasLimit,
       fee?.gasPrice,
+      provider,
     )
   }
   throw new Error('Contract address should not be empty!')
@@ -204,6 +208,7 @@ const sellAsset = async (body: ChainSellAssetOnMarketplace, web3: EvmBasedWeb3, 
       fromPrivateKey,
       fee?.gasLimit,
       fee?.gasPrice,
+      provider,
     )
   }
   throw new Error('Contract address should not be empty!')
@@ -241,6 +246,7 @@ const cancelListing = async (
       fromPrivateKey,
       fee?.gasLimit,
       fee?.gasPrice,
+      provider,
     )
   }
   throw new Error('Contract address should not be empty!')
