@@ -40,6 +40,9 @@ const mintSignedTransaction = async (body: ChainMintErc20, web3: EvmBasedWeb3, p
     web3,
     body.signatureId,
     body.fromPrivateKey,
+    undefined,
+    undefined,
+    provider,
   )
 }
 
@@ -71,6 +74,9 @@ const burnSignedTransaction = async (body: ChainBurnErc20, web3: EvmBasedWeb3, p
     web3,
     body.signatureId,
     body.fromPrivateKey,
+    undefined,
+    undefined,
+    provider,
   )
 }
 
@@ -101,6 +107,7 @@ const transferSignedTransaction = async (body: ChainTransferErc20, web3: EvmBase
     body.fromPrivateKey,
     body.fee?.gasLimit,
     body.fee?.gasPrice,
+    provider,
   )
 }
 
@@ -138,6 +145,7 @@ const deploySignedTransaction = async (body: ChainDeployErc20, web3: EvmBasedWeb
     fromPrivateKey,
     body.fee?.gasLimit,
     body.fee?.gasPrice,
+    provider,
   )
 }
 
@@ -170,7 +178,16 @@ const approveSignedTransaction = async (body: ApproveErc20, web3: EvmBasedWeb3, 
     nonce: body.nonce,
   }
 
-  return evmBasedUtils.prepareSignedTransactionAbstraction(client, tx, web3, undefined, body.fromPrivateKey)
+  return evmBasedUtils.prepareSignedTransactionAbstraction(
+    client,
+    tx,
+    web3,
+    undefined,
+    body.fromPrivateKey,
+    undefined,
+    undefined,
+    provider,
+  )
 }
 
 export const erc20 = (args: {
