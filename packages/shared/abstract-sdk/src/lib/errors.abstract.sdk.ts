@@ -213,10 +213,10 @@ export const SdkErrorMessage: Map<SdkErrorCode, string> = new Map([
   // EVM
   [
     SdkErrorCode.EVM_INVALID_ADDRESS_SINGLE,
-    `invalid address (argument="address", value="someinvalidaddress", code=INVALID_ARGUMENT, version=address/5.6.1) (argument="to", value="someinvalidaddress", code=INVALID_ARGUMENT, version=abi/5.6.4)`,
+    `invalid address (argument="address", value="someinvalidaddress", code=INVALID_ARGUMENT, version=address/5.7.0) (argument="to", value="someinvalidaddress", code=INVALID_ARGUMENT, version=abi/5.7.0)`,
   ],
   [
     SdkErrorCode.EVM_INVALID_ADDRESS_ARRAY,
-    `invalid address (argument="address", value="someinvalidaddress", code=INVALID_ARGUMENT, version=address/5.6.1) (argument=null, value="someinvalidaddress", code=INVALID_ARGUMENT, version=abi/5.6.4)`,
+    `invalid address (argument="address", value="someinvalidaddress", code=INVALID_ARGUMENT, version=address/5.7.0) (argument=null, value="someinvalidaddress", code=INVALID_ARGUMENT, version=abi/5.7.0)`,
   ],
 ])
