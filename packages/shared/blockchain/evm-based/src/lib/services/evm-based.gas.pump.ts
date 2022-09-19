@@ -51,7 +51,7 @@ export const evmBasedGasPump = () => {
         case Currency.TRON:
           return testnet ? TRON_TESTNET_CUSTODIAL_FACTORY_V2 : TRON_MAINNET_CUSTODIAL_FACTORY_V2
         case Currency.ONE:
-          if(testnet) throw new Error('Unsupported chain.')
+          if (testnet) throw new Error('Unsupported chain.')
           return ONE_MAINNET_CUSTODIAL_FACTORY_V2
         case Currency.ETH:
           return testnet ? ETH_TESTNET_CUSTODIAL_FACTORY_V2 : ETH_MAINNET_CUSTODIAL_FACTORY_V2
