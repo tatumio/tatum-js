@@ -1,5 +1,6 @@
 import {Currency} from '../../request'
 import {WithdrawalResponseData} from '../offchain/WithdrawalResponse'
+import { Signatures } from './Signatures';
 
 export class TransactionKMS {
     public id: string;
@@ -17,4 +18,6 @@ export class TransactionKMS {
     public index?: number;
 
     public withdrawalResponses?: WithdrawalResponseData[];
+    
+    public signatures?: Signatures[];
 }

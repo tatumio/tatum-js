@@ -30,6 +30,14 @@ class PrivateKeyOrSignatureIdBtcBased {
     @Length(36, 36)
     @IsUUID('4')
     public signatureId?: string;
+
+    /**
+     * Index of the privatekey or signature to be spent.
+     */
+     @IsNotEmpty()
+     @Min(0)
+     @Max(4294967295)
+     public index?: number;
 }
 
 export class FromAddress extends PrivateKeyOrSignatureIdBtcBased {
