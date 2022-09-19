@@ -7,27 +7,25 @@ export type GasPumpChain = 'CELO' | 'TRON' | 'ONE' | 'XDC' | 'ETH' | 'MATIC' | '
 const range = (from: number, to: number) => to - from + 1
 
 export const CELO_TESTNET_CUSTODIAL_FACTORY_V2 = '0x5E3D93eF7C1eE50eA4536791E1441e3281f55154'
-export const CELO_MAINNET_CUSTODIAL_FACTORY_V2 = '0x5E3D93eF7C1eE50eA4536791E1441e3281f55154'
+export const CELO_MAINNET_CUSTODIAL_FACTORY_V2 = '0xd0b8460559b945aa578b81f0ab3ac998e7360332'
 
-export const ETH_TESTNET_CUSTODIAL_FACTORY_V2 = '0x5975906E29214339CC6D292cD6101C68f8de01e4'
+export const ETH_TESTNET_CUSTODIAL_FACTORY_V2 = '0xA2A1BF5a83F9dAec2Dc364E1c561E937163CB613'
 export const ETH_MAINNET_CUSTODIAL_FACTORY_V2 = '0x5975906E29214339CC6D292cD6101C68f8de01e4'
 
-export const KLAY_TESTNET_CUSTODIAL_FACTORY_V2 = '0x86f7FdB16a02b91392468e2b3eCd554Cef01a23c'
-export const KLAY_MAINNET_CUSTODIAL_FACTORY_V2 = '0x86f7FdB16a02b91392468e2b3eCd554Cef01a23c'
+export const KLAY_TESTNET_CUSTODIAL_FACTORY_V2 = '0x75a4462bf0938cc7558ada32dc554ca5c7ed1adf'
+export const KLAY_MAINNET_CUSTODIAL_FACTORY_V2 = '0x789c00ed7ddd72a806dbac40df926df32fde3c2f'
 
-export const MATIC_TESTNET_CUSTODIAL_FACTORY_V2 = '0x031caA069FaE7F5D6955CedDa7ceCc9a6AabebdE'
-export const MATIC_MAINNET_CUSTODIAL_FACTORY_V2 = '0x031caA069FaE7F5D6955CedDa7ceCc9a6AabebdE'
+export const MATIC_TESTNET_CUSTODIAL_FACTORY_V2 = '0xa2a1bf5a83f9daec2dc364e1c561e937163cb613'
+export const MATIC_MAINNET_CUSTODIAL_FACTORY_V2 = '0xa6e2445a16859d3717aed095396afaab9ff2fbd3'
 
+export const BSC_TESTNET_CUSTODIAL_FACTORY_V2 = '0x3807f9384bc6ff561245a60cb71e2cf65b8d146a'
+export const BSC_MAINNET_CUSTODIAL_FACTORY_V2 = '0x40c762cb7d2f5ad719ed6c9651f5f2370f5a1c88'
 
-export const BSC_TESTNET_CUSTODIAL_FACTORY_V2 = '0x0479DD9F4868b9DA64f9Abd525A0e21824FbEE65'
-export const BSC_MAINNET_CUSTODIAL_FACTORY_V2 = '0x0479DD9F4868b9DA64f9Abd525A0e21824FbEE65'
-
-export const TRON_TESTNET_CUSTODIAL_FACTORY_V2 = 'TTNaPeEYoM1TZWPD1bZm14Nu1GpdmD5g9h'
-export const TRON_MAINNET_CUSTODIAL_FACTORY_V2 = 'TTNaPeEYoM1TZWPD1bZm14Nu1GpdmD5g9h'
+export const TRON_TESTNET_CUSTODIAL_FACTORY_V2 = 'TYGfTkhjii3gmxqBczcHn1FoTrRWFUXvsp'
+export const TRON_MAINNET_CUSTODIAL_FACTORY_V2 = 'TUHmKLeq26QFyMwxQSYd451c4SZQQuKcHb'
 
 export const ONE_TESTNET_CUSTODIAL_FACTORY_V2 = '0xb1462fE8E9Cf82c0296022Cca7bEfA3Fd4c12B34'
 export const ONE_MAINNET_CUSTODIAL_FACTORY_V2 = '0xb1462fE8E9Cf82c0296022Cca7bEfA3Fd4c12B34'
-
 
 export const indexesFromRange = (from: number, to: number) =>
   Array.from(Array(range(from, to)).keys()).map((val) => `0x${new BigNumber(val + from).toString(16)}`)
@@ -49,33 +47,19 @@ export const evmBasedGasPump = () => {
     getGasPumpFactoryContractAddress: (chain: GasPumpChain, testnet?: boolean) => {
       switch (chain) {
         case Currency.CELO:
-          return testnet
-            ? CELO_TESTNET_CUSTODIAL_FACTORY_V2
-            : CELO_MAINNET_CUSTODIAL_FACTORY_V2
+          return testnet ? CELO_TESTNET_CUSTODIAL_FACTORY_V2 : CELO_MAINNET_CUSTODIAL_FACTORY_V2
         case Currency.TRON:
-          return testnet
-            ? TRON_TESTNET_CUSTODIAL_FACTORY_V2 :
-            TRON_MAINNET_CUSTODIAL_FACTORY_V2
+          return testnet ? TRON_TESTNET_CUSTODIAL_FACTORY_V2 : TRON_MAINNET_CUSTODIAL_FACTORY_V2
         case Currency.ONE:
-          return testnet
-            ? ONE_TESTNET_CUSTODIAL_FACTORY_V2
-            : ONE_MAINNET_CUSTODIAL_FACTORY_V2
+          return testnet ? ONE_TESTNET_CUSTODIAL_FACTORY_V2 : ONE_MAINNET_CUSTODIAL_FACTORY_V2
         case Currency.ETH:
-          return testnet
-            ? ETH_TESTNET_CUSTODIAL_FACTORY_V2
-            : ETH_MAINNET_CUSTODIAL_FACTORY_V2
+          return testnet ? ETH_TESTNET_CUSTODIAL_FACTORY_V2 : ETH_MAINNET_CUSTODIAL_FACTORY_V2
         case Currency.MATIC:
-          return testnet
-            ? MATIC_TESTNET_CUSTODIAL_FACTORY_V2
-            : MATIC_MAINNET_CUSTODIAL_FACTORY_V2
+          return testnet ? MATIC_TESTNET_CUSTODIAL_FACTORY_V2 : MATIC_MAINNET_CUSTODIAL_FACTORY_V2
         case Currency.KLAY:
-          return testnet
-            ? KLAY_TESTNET_CUSTODIAL_FACTORY_V2
-            : KLAY_MAINNET_CUSTODIAL_FACTORY_V2
+          return testnet ? KLAY_TESTNET_CUSTODIAL_FACTORY_V2 : KLAY_MAINNET_CUSTODIAL_FACTORY_V2
         case Currency.BSC:
-          return testnet
-            ? BSC_TESTNET_CUSTODIAL_FACTORY_V2
-            : BSC_MAINNET_CUSTODIAL_FACTORY_V2
+          return testnet ? BSC_TESTNET_CUSTODIAL_FACTORY_V2 : BSC_MAINNET_CUSTODIAL_FACTORY_V2
         default:
           throw new Error('Unsupported chain.')
       }
