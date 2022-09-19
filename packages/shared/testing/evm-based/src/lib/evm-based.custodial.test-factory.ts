@@ -96,6 +96,10 @@ export const custodialTestFactory = {
           {
             chain,
             fromPrivateKey,
+            fee: {
+              gasLimit: "25824",
+              gasPrice: "12000"
+            },
             custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
             tokenId: ['0', '1', '0'],
             amount: ['1', '1', '0.00001'],
