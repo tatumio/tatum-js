@@ -1,6 +1,5 @@
 import { evmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
-import { BigNumber } from 'bignumber.js'
 import caver from 'caver-js'
 
 export const klaytnWeb3 = (args: { blockchain: EvmBasedBlockchain }) => {
@@ -18,11 +17,9 @@ export const klaytnWeb3 = (args: { blockchain: EvmBasedBlockchain }) => {
 
       return { ...client, eth: client.klay }
     },
-    async getGasPriceInWei(): Promise<string> {
-      const client = await this.getClient()
-      // TODO:
-      // const gasPrice = await client.eth.getGasPrice()
-      return new BigNumber('25').multipliedBy(10 ^ 9).toString()
+    async getGasPriceInWei(provider?: string): Promise<string> {
+      const client = await this.getClient(provider)
+      return await client.eth.getGasPrice()
     },
   }
 }

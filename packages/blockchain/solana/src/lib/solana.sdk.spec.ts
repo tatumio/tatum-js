@@ -92,7 +92,7 @@ describe('TatumSolanaSDK', () => {
     })
 
     describe('KMS', () => {
-      it('should sign transaction', async () => {
+      it.skip('should sign transaction', async () => {
         const txData = await sdk.transaction.send(
           {
             from: address,
