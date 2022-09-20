@@ -26,7 +26,7 @@ export const custodialTestFactory = {
               tokenAddress,
               amount: '1',
               contractType: 0,
-              fee: { gasLimit: '100000', gasPrice: '3' }
+              fee: { gasLimit: '100000', gasPrice: '3' },
             },
             provider,
             true,
@@ -49,7 +49,7 @@ export const custodialTestFactory = {
             tokenAddress,
             amount: '1',
             contractType: 0,
-            fee: { gasLimit: '100000', gasPrice: '3' }
+            fee: { gasLimit: '100000', gasPrice: '3' },
           },
           provider,
           true,
