@@ -160,6 +160,9 @@ export enum SdkErrorCode {
   EVM_CUSTODIAL_CANNOT_PREPARE_TRANSFER_BATCH_TX = 'evm-based.custodial.cannot.prepare.transfer-batch-tx',
   EVM_CUSTODIAL_CANNOT_PREPARE_APPROVE_TX = 'evm-based.custodial.cannot.prepare.approve-tx',
 
+  //Gas Pump
+  EVM_GAS_PUMP_CANNOT_PREPARE_DEPLOY_BATCH_TX = 'evm-based.custodial.cannot.prepare.deploy-batch-tx',
+
   // Smart Contract
   EVM_SMART_CONTRACT_CANNOT_PREPARE_TX = 'evm-based.smart-contract.cannot.prepare.tx',
 }
@@ -210,10 +213,10 @@ export const SdkErrorMessage: Map<SdkErrorCode, string> = new Map([
   // EVM
   [
     SdkErrorCode.EVM_INVALID_ADDRESS_SINGLE,
-    `invalid address (argument="address", value="someinvalidaddress", code=INVALID_ARGUMENT, version=address/5.6.1) (argument="to", value="someinvalidaddress", code=INVALID_ARGUMENT, version=abi/5.6.4)`,
+    `invalid address (argument="address", value="someinvalidaddress", code=INVALID_ARGUMENT, version=address/5.7.0) (argument="to", value="someinvalidaddress", code=INVALID_ARGUMENT, version=abi/5.7.0)`,
   ],
   [
     SdkErrorCode.EVM_INVALID_ADDRESS_ARRAY,
-    `invalid address (argument="address", value="someinvalidaddress", code=INVALID_ARGUMENT, version=address/5.6.1) (argument=null, value="someinvalidaddress", code=INVALID_ARGUMENT, version=abi/5.6.4)`,
+    `invalid address (argument="address", value="someinvalidaddress", code=INVALID_ARGUMENT, version=address/5.7.0) (argument=null, value="someinvalidaddress", code=INVALID_ARGUMENT, version=abi/5.7.0)`,
   ],
 ])

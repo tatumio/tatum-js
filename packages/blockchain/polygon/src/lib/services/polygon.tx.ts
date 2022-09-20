@@ -9,6 +9,7 @@ import {
   smartContract,
   StoreDataTransactionBody,
   evmBasedUtils,
+  gasPump,
 } from '@tatumio/shared-blockchain-evm-based'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 
@@ -53,6 +54,12 @@ export const polygonTxService = (args: { blockchain: EvmBasedBlockchain; web3: E
     },
     custodial: {
       ...custodial({
+        ...args,
+        broadcastFunction: PolygonService.polygonBroadcast,
+      }),
+    },
+    gasPump: {
+      ...gasPump({
         ...args,
         broadcastFunction: PolygonService.polygonBroadcast,
       }),

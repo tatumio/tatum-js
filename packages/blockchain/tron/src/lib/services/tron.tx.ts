@@ -1,6 +1,7 @@
 import {
   CallSmartContractMethod,
   CallSmartContractMethodKMS,
+  Currency,
   FreezeTron,
   FreezeTronKMS,
   GenerateCustodialWalletTron,
@@ -12,11 +13,17 @@ import {
   TronService,
 } from '@tatumio/api-client'
 import { isWithSignatureId } from '@tatumio/shared-abstract-sdk'
-import { ListingSmartContract } from '@tatumio/shared-blockchain-evm-based'
+import {
+  evmBasedGasPump,
+  GasPumpChain,
+  indexesFromRange,
+  ListingSmartContract,
+} from '@tatumio/shared-blockchain-evm-based'
 import { tronTrc10 } from './tron.trc10'
 import { tronTrc20 } from './tron.trc20'
 import { tronTrc721 } from './tron.trc721'
 import { ITronWeb } from './tron.web'
+import BigNumber from 'bignumber.js'
 
 const prepareSignedTransaction = async (
   body: TransferTronBlockchain | TransferTronBlockchainKMS,
@@ -109,6 +116,43 @@ const prepareSmartContractInvocation = async (
     return JSON.stringify(transaction)
   }
 
+  return JSON.stringify(await client.trx.sign(transaction, body.fromPrivateKey))
+}
+
+const prepareGasPumpBatch = async (body: any, tronWeb: ITronWeb, provider?: string, testnet?: boolean) => {
+  const indexes = indexesFromRange(body.from, body.to)
+  const client = tronWeb.getClient(provider)
+  const params = [
+    { type: 'address', value: client.address.toHex(body.owner.trim()) },
+    { type: 'uint256[]', value: indexes },
+  ]
+  const methodName = 'createBatch(address,uint256[])'
+
+  const contractAddress = client.address.toHex(
+    evmBasedGasPump().getGasPumpFactoryContractAddress('TRON', testnet),
+  )
+
+  client.setAddress(contractAddress)
+
+  const sender = body.signatureId
+    ? body.signatureId
+    : client.address.fromHex(client.address.fromPrivateKey(body.fromPrivateKey))
+
+  const { transaction } = await client.transactionBuilder.triggerSmartContract(
+    contractAddress,
+    methodName,
+    {
+      feeLimit: body.feeLimit ? client.toSun(body.feeLimit) : client.toSun(0),
+      from: sender,
+      callValue: client.toSun(0),
+    },
+    params,
+    sender,
+  )
+
+  if (body.signatureId) {
+    return JSON.stringify(transaction)
+  }
   return JSON.stringify(await client.trx.sign(transaction, body.fromPrivateKey))
 }
 
@@ -321,6 +365,12 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
             txData: await prepareGenerateCustodialWalletSignedTransaction(body, args.tronWeb, provider),
             // TODO: SignatureID is missing in OpenApi
           }),
+      },
+    },
+    gasPump: {
+      prepare: {
+        prepareGasPumpBatch: async (testnet: boolean, body: any, provider?: string) =>
+          prepareGasPumpBatch(body, args.tronWeb, provider, testnet),
       },
     },
     marketplace: {
