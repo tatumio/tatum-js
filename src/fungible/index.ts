@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { validateBody } from '../connector/tatum';
+import { post, validateBody } from '../connector/tatum';
 import token_abi from '../contracts/erc20/token_abi';
 import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../helpers';
 import { ApproveErc20, Currency } from '../model';
@@ -20,8 +20,12 @@ import Caver from 'caver-js'
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendApproveErc20 = async (testnet: boolean, body: ApproveErc20, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareApproveErc20(testnet, body, provider), body.signatureId);
+export const sendApproveErc20 = async (testnet: boolean, body: ApproveErc20, provider?: string) => {
+  if (body.signatureId) {
+    return await post(`v3/blockchain/token/approve`, body);
+  }
+  return helperBroadcastTx(body.chain, await prepareApproveErc20(testnet, body, provider))
+};
 
 /**
  * Prepare approve ERC20 signed transaction.

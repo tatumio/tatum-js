@@ -500,5 +500,9 @@ export const prepareAddNFTMinter = async (testnet: boolean, body: AddMinter, pro
  * @param body body of the add minter request
  * @param provider optional provider do broadcast tx
  */
-export const sendAddNFTMinter = async (testnet: boolean, body: AddMinter, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareAddNFTMinter(testnet, body, provider), body.signatureId);
+export const sendAddNFTMinter = async (testnet: boolean, body: AddMinter, provider?: string) => {
+  if (body.signatureId) {
+    return await post(`v3/nft/mint/add`, body);
+  }
+  return helperBroadcastTx(body.chain, await prepareAddNFTMinter(testnet, body, provider))
+};
