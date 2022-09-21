@@ -23,11 +23,14 @@ export const oneMarketplace = (args: {
       approveErc20Spending: async (
         ...params: Parameters<typeof unpatchedMarketplace.prepare.approveErc20Spending>
       ) =>
-        unpatchedMarketplace.prepare.approveErc20Spending({
-          ...params[0],
-          contractAddress: oneUtils.transformAddress(params[0].contractAddress),
-          spender: oneUtils.transformAddress(params[0].spender),
-        }),
+        unpatchedMarketplace.prepare.approveErc20Spending(
+          {
+            ...params[0],
+            contractAddress: oneUtils.transformAddress(params[0].contractAddress),
+            spender: oneUtils.transformAddress(params[0].spender),
+          },
+          params[1],
+        ),
       /**
        * Prepare signed transaction for deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
        * Operator can set a fee in percentage, which will be paid on top of the price of the asset.
@@ -44,10 +47,13 @@ export const oneMarketplace = (args: {
       generateMarketplace: async (
         ...params: Parameters<typeof unpatchedMarketplace.prepare.generateMarketplace>
       ) =>
-        unpatchedMarketplace.prepare.generateMarketplace({
-          ...params[0],
-          feeRecipient: oneUtils.transformAddress(params[0].feeRecipient),
-        }),
+        unpatchedMarketplace.prepare.generateMarketplace(
+          {
+            ...params[0],
+            feeRecipient: oneUtils.transformAddress(params[0].feeRecipient),
+          },
+          params[1],
+        ),
       /**
        * Update marketplace fee.
        * @param body request data
@@ -55,10 +61,13 @@ export const oneMarketplace = (args: {
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
       updateFee: async (...params: Parameters<typeof unpatchedMarketplace.prepare.updateFee>) =>
-        unpatchedMarketplace.prepare.updateFee({
-          ...params[0],
-          contractAddress: oneUtils.transformAddress(params[0].contractAddress),
-        }),
+        unpatchedMarketplace.prepare.updateFee(
+          {
+            ...params[0],
+            contractAddress: oneUtils.transformAddress(params[0].contractAddress),
+          },
+          params[1],
+        ),
       /**
        * Update marketplace fee recipient.
        * @param body request data
@@ -68,11 +77,14 @@ export const oneMarketplace = (args: {
       updateFeeRecipient: async (
         ...params: Parameters<typeof unpatchedMarketplace.prepare.updateFeeRecipient>
       ) =>
-        unpatchedMarketplace.prepare.updateFeeRecipient({
-          ...params[0],
-          contractAddress: oneUtils.transformAddress(params[0].contractAddress),
-          feeRecipient: oneUtils.transformAddress(params[0].feeRecipient),
-        }),
+        unpatchedMarketplace.prepare.updateFeeRecipient(
+          {
+            ...params[0],
+            contractAddress: oneUtils.transformAddress(params[0].contractAddress),
+            feeRecipient: oneUtils.transformAddress(params[0].feeRecipient),
+          },
+          params[1],
+        ),
       /**
        * Buy listing on the marketplace. Buyer must either send native assets with this operation, or approve ERC20 token spending before.
        * After listing is sold, it's in a pending state to be processed by the marketplace. Noone receives the assets unless the marketplace operator processes that.
@@ -83,11 +95,14 @@ export const oneMarketplace = (args: {
       buyMarketplaceListing: async (
         ...params: Parameters<typeof unpatchedMarketplace.prepare.buyMarketplaceListing>
       ) =>
-        unpatchedMarketplace.prepare.buyMarketplaceListing({
-          ...params[0],
-          contractAddress: oneUtils.transformAddress(params[0].contractAddress),
-          ...(params[0].buyer && { buyer: oneUtils.transformAddress(params[0].buyer) }),
-        }),
+        unpatchedMarketplace.prepare.buyMarketplaceListing(
+          {
+            ...params[0],
+            contractAddress: oneUtils.transformAddress(params[0].contractAddress),
+            ...(params[0].buyer && { buyer: oneUtils.transformAddress(params[0].buyer) }),
+          },
+          params[1],
+        ),
       /**
        * Create new listing on the marketplace. Only marketplace operator can establish those on behalf of the seller of the NFT.
        * After listing is created, seller must approve the asset for spending to the marketplace smart contract.
@@ -99,12 +114,17 @@ export const oneMarketplace = (args: {
       sellMarketplaceListing: async (
         ...params: Parameters<typeof unpatchedMarketplace.prepare.sellMarketplaceListing>
       ) =>
-        unpatchedMarketplace.prepare.sellMarketplaceListing({
-          ...params[0],
-          contractAddress: oneUtils.transformAddress(params[0].contractAddress),
-          nftAddress: oneUtils.transformAddress(params[0].nftAddress),
-          ...(params[0].erc20Address && { erc20Address: oneUtils.transformAddress(params[0].erc20Address) }),
-        }),
+        unpatchedMarketplace.prepare.sellMarketplaceListing(
+          {
+            ...params[0],
+            contractAddress: oneUtils.transformAddress(params[0].contractAddress),
+            nftAddress: oneUtils.transformAddress(params[0].nftAddress),
+            ...(params[0].erc20Address && {
+              erc20Address: oneUtils.transformAddress(params[0].erc20Address),
+            }),
+          },
+          params[1],
+        ),
       /**
        * Cancel listing on the marketplace. Only possible for the seller or the operator. There must be no buyer present for that listing. NFT asset is sent back to the seller.
        * @param body request data
@@ -114,11 +134,16 @@ export const oneMarketplace = (args: {
       cancelMarketplaceListing: async (
         ...params: Parameters<typeof unpatchedMarketplace.prepare.cancelMarketplaceListing>
       ) =>
-        unpatchedMarketplace.prepare.cancelMarketplaceListing({
-          ...params[0],
-          contractAddress: oneUtils.transformAddress(params[0].contractAddress),
-          ...(params[0].erc20Address && { erc20Address: oneUtils.transformAddress(params[0].erc20Address) }),
-        }),
+        unpatchedMarketplace.prepare.cancelMarketplaceListing(
+          {
+            ...params[0],
+            contractAddress: oneUtils.transformAddress(params[0].contractAddress),
+            ...(params[0].erc20Address && {
+              erc20Address: oneUtils.transformAddress(params[0].erc20Address),
+            }),
+          },
+          params[1],
+        ),
       /**
        * Approve NFT transfer for listing.
        * @param body request data
@@ -145,11 +170,14 @@ export const oneMarketplace = (args: {
       approveErc20Spending: async (
         ...params: Parameters<typeof unpatchedMarketplace.send.approveErc20Spending>
       ) =>
-        unpatchedMarketplace.send.approveErc20Spending({
-          ...params[0],
-          contractAddress: oneUtils.transformAddress(params[0].contractAddress),
-          spender: oneUtils.transformAddress(params[0].spender),
-        }),
+        unpatchedMarketplace.send.approveErc20Spending(
+          {
+            ...params[0],
+            contractAddress: oneUtils.transformAddress(params[0].contractAddress),
+            spender: oneUtils.transformAddress(params[0].spender),
+          },
+          params[1],
+        ),
       /**
        * Deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
        * Operator can set a fee in percentage, which will be paid on top of the price of the asset.
@@ -166,10 +194,13 @@ export const oneMarketplace = (args: {
       generateMarketplace: async (
         ...params: Parameters<typeof unpatchedMarketplace.send.generateMarketplace>
       ) =>
-        unpatchedMarketplace.send.generateMarketplace({
-          ...params[0],
-          feeRecipient: oneUtils.transformAddress(params[0].feeRecipient),
-        }),
+        unpatchedMarketplace.send.generateMarketplace(
+          {
+            ...params[0],
+            feeRecipient: oneUtils.transformAddress(params[0].feeRecipient),
+          },
+          params[1],
+        ),
       /**
        * Update marketplace fee.
        * @param body request data
@@ -177,10 +208,13 @@ export const oneMarketplace = (args: {
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
       updateFee: async (...params: Parameters<typeof unpatchedMarketplace.prepare.updateFee>) =>
-        unpatchedMarketplace.send.updateFee({
-          ...params[0],
-          contractAddress: oneUtils.transformAddress(params[0].contractAddress),
-        }),
+        unpatchedMarketplace.send.updateFee(
+          {
+            ...params[0],
+            contractAddress: oneUtils.transformAddress(params[0].contractAddress),
+          },
+          params[1],
+        ),
       /**
        * Update marketplace fee recipient.
        * @param body request data
@@ -190,11 +224,14 @@ export const oneMarketplace = (args: {
       updateFeeRecipient: async (
         ...params: Parameters<typeof unpatchedMarketplace.send.updateFeeRecipient>
       ) =>
-        unpatchedMarketplace.send.updateFeeRecipient({
-          ...params[0],
-          contractAddress: oneUtils.transformAddress(params[0].contractAddress),
-          feeRecipient: oneUtils.transformAddress(params[0].feeRecipient),
-        }),
+        unpatchedMarketplace.send.updateFeeRecipient(
+          {
+            ...params[0],
+            contractAddress: oneUtils.transformAddress(params[0].contractAddress),
+            feeRecipient: oneUtils.transformAddress(params[0].feeRecipient),
+          },
+          params[1],
+        ),
       /**
        * Buy listing on the marketplace. Buyer must either send native assets with this operation, or approve ERC20 token spending before.
        * After listing is sold, it's in a pending state to be processed by the marketplace. Noone receives the assets unless the marketplace operator processes that.
@@ -205,11 +242,14 @@ export const oneMarketplace = (args: {
       buyMarketplaceListing: async (
         ...params: Parameters<typeof unpatchedMarketplace.send.buyMarketplaceListing>
       ) =>
-        unpatchedMarketplace.send.buyMarketplaceListing({
-          ...params[0],
-          contractAddress: oneUtils.transformAddress(params[0].contractAddress),
-          ...(params[0].buyer && { buyer: oneUtils.transformAddress(params[0].buyer) }),
-        }),
+        unpatchedMarketplace.send.buyMarketplaceListing(
+          {
+            ...params[0],
+            contractAddress: oneUtils.transformAddress(params[0].contractAddress),
+            ...(params[0].buyer && { buyer: oneUtils.transformAddress(params[0].buyer) }),
+          },
+          params[1],
+        ),
       /**
        * Create new listing on the marketplace. Only marketplace operator can establish those on behalf of the seller of the NFT.
        * After listing is created, seller must approve the asset for spending to the marketplace smart contract.
@@ -221,12 +261,17 @@ export const oneMarketplace = (args: {
       sellMarketplaceListing: async (
         ...params: Parameters<typeof unpatchedMarketplace.send.sellMarketplaceListing>
       ) =>
-        unpatchedMarketplace.send.sellMarketplaceListing({
-          ...params[0],
-          contractAddress: oneUtils.transformAddress(params[0].contractAddress),
-          nftAddress: oneUtils.transformAddress(params[0].nftAddress),
-          ...(params[0].erc20Address && { erc20Address: oneUtils.transformAddress(params[0].erc20Address) }),
-        }),
+        unpatchedMarketplace.send.sellMarketplaceListing(
+          {
+            ...params[0],
+            contractAddress: oneUtils.transformAddress(params[0].contractAddress),
+            nftAddress: oneUtils.transformAddress(params[0].nftAddress),
+            ...(params[0].erc20Address && {
+              erc20Address: oneUtils.transformAddress(params[0].erc20Address),
+            }),
+          },
+          params[1],
+        ),
       /**
        * Cancel listing on the marketplace. Only possible for the seller or the operator. There must be no buyer present for that listing. NFT asset is sent back to the seller.
        * @param body request data
@@ -236,11 +281,16 @@ export const oneMarketplace = (args: {
       cancelMarketplaceListing: async (
         ...params: Parameters<typeof unpatchedMarketplace.send.cancelMarketplaceListing>
       ) =>
-        unpatchedMarketplace.send.cancelMarketplaceListing({
-          ...params[0],
-          contractAddress: oneUtils.transformAddress(params[0].contractAddress),
-          ...(params[0].erc20Address && { erc20Address: oneUtils.transformAddress(params[0].erc20Address) }),
-        }),
+        unpatchedMarketplace.send.cancelMarketplaceListing(
+          {
+            ...params[0],
+            contractAddress: oneUtils.transformAddress(params[0].contractAddress),
+            ...(params[0].erc20Address && {
+              erc20Address: oneUtils.transformAddress(params[0].erc20Address),
+            }),
+          },
+          params[1],
+        ),
       /**
        * Approve NFT transfer for listing.
        * @param body request data

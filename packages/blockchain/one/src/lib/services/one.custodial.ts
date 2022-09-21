@@ -95,6 +95,7 @@ export const oneCustodial = (args: {
             owner: oneUtils.transformAddress(params[0].owner),
           },
           params[1],
+          params[2],
         ),
     },
     send: {
@@ -179,6 +180,7 @@ export const oneCustodial = (args: {
             owner: oneUtils.transformAddress(params[0].owner),
           },
           params[1],
+          params[2],
         ),
     },
   }
