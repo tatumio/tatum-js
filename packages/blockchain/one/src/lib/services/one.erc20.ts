@@ -25,10 +25,13 @@ export const oneErc20 = (args: {
       deploySignedTransaction: async (
         ...params: Parameters<typeof unpatchedErc20.prepare.deploySignedTransaction>
       ) =>
-        unpatchedErc20.prepare.deploySignedTransaction({
-          ...params[0],
-          address: oneUtils.transformAddress(params[0].address),
-        }),
+        unpatchedErc20.prepare.deploySignedTransaction(
+          {
+            ...params[0],
+            address: oneUtils.transformAddress(params[0].address),
+          },
+          params[1],
+        ),
       /**
        * Sign transfer erc20 transaction with private keys locally. Nothing is broadcast to the blockchain.
        * @param body content of the transaction to broadcast
@@ -38,11 +41,14 @@ export const oneErc20 = (args: {
       transferSignedTransaction: async (
         ...params: Parameters<typeof unpatchedErc20.prepare.transferSignedTransaction>
       ) =>
-        unpatchedErc20.prepare.transferSignedTransaction({
-          ...params[0],
-          contractAddress: oneUtils.transformAddress(params[0].contractAddress),
-          to: oneUtils.transformAddress(params[0].to),
-        }),
+        unpatchedErc20.prepare.transferSignedTransaction(
+          {
+            ...params[0],
+            contractAddress: oneUtils.transformAddress(params[0].contractAddress),
+            to: oneUtils.transformAddress(params[0].to),
+          },
+          params[1],
+        ),
       /**
        * Sign mint erc20 transaction with private keys locally. Nothing is broadcast to the blockchain.
        * @param body content of the transaction to broadcast
@@ -52,11 +58,14 @@ export const oneErc20 = (args: {
       mintSignedTransaction: async (
         ...params: Parameters<typeof unpatchedErc20.prepare.mintSignedTransaction>
       ) =>
-        unpatchedErc20.prepare.mintSignedTransaction({
-          ...params[0],
-          contractAddress: oneUtils.transformAddress(params[0].contractAddress),
-          to: oneUtils.transformAddress(params[0].to),
-        }),
+        unpatchedErc20.prepare.mintSignedTransaction(
+          {
+            ...params[0],
+            contractAddress: oneUtils.transformAddress(params[0].contractAddress),
+            to: oneUtils.transformAddress(params[0].to),
+          },
+          params[1],
+        ),
       /**
        * Sign burn erc20 transaction with private keys locally. Nothing is broadcast to the blockchain.
        * @param body content of the transaction to broadcast
@@ -66,10 +75,13 @@ export const oneErc20 = (args: {
       burnSignedTransaction: async (
         ...params: Parameters<typeof unpatchedErc20.prepare.burnSignedTransaction>
       ) =>
-        unpatchedErc20.prepare.burnSignedTransaction({
-          ...params[0],
-          contractAddress: oneUtils.transformAddress(params[0].contractAddress),
-        }),
+        unpatchedErc20.prepare.burnSignedTransaction(
+          {
+            ...params[0],
+            contractAddress: oneUtils.transformAddress(params[0].contractAddress),
+          },
+          params[1],
+        ),
       /**
        * Prepare approve ERC20 signed transaction.
        * @param body body of the approve operation
@@ -78,11 +90,14 @@ export const oneErc20 = (args: {
       approveSignedTransaction: async (
         ...params: Parameters<typeof unpatchedErc20.prepare.approveSignedTransaction>
       ) =>
-        unpatchedErc20.prepare.approveSignedTransaction({
-          ...params[0],
-          contractAddress: oneUtils.transformAddress(params[0].contractAddress),
-          spender: oneUtils.transformAddress(params[0].spender),
-        }),
+        unpatchedErc20.prepare.approveSignedTransaction(
+          {
+            ...params[0],
+            contractAddress: oneUtils.transformAddress(params[0].contractAddress),
+            spender: oneUtils.transformAddress(params[0].spender),
+          },
+          params[1],
+        ),
     },
     send: {
       /**
@@ -95,10 +110,13 @@ export const oneErc20 = (args: {
       deploySignedTransaction: async (
         ...params: Parameters<typeof unpatchedErc20.send.deploySignedTransaction>
       ) =>
-        unpatchedErc20.send.deploySignedTransaction({
-          ...params[0],
-          address: oneUtils.transformAddress(params[0].address),
-        }),
+        unpatchedErc20.send.deploySignedTransaction(
+          {
+            ...params[0],
+            address: oneUtils.transformAddress(params[0].address),
+          },
+          params[1],
+        ),
       /**
        * Send transfer erc20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -109,11 +127,14 @@ export const oneErc20 = (args: {
       transferSignedTransaction: async (
         ...params: Parameters<typeof unpatchedErc20.send.transferSignedTransaction>
       ) =>
-        unpatchedErc20.send.transferSignedTransaction({
-          ...params[0],
-          contractAddress: oneUtils.transformAddress(params[0].contractAddress),
-          to: oneUtils.transformAddress(params[0].to),
-        }),
+        unpatchedErc20.send.transferSignedTransaction(
+          {
+            ...params[0],
+            contractAddress: oneUtils.transformAddress(params[0].contractAddress),
+            to: oneUtils.transformAddress(params[0].to),
+          },
+          params[1],
+        ),
       /**
        * Send mint erc20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -124,11 +145,14 @@ export const oneErc20 = (args: {
       mintSignedTransaction: async (
         ...params: Parameters<typeof unpatchedErc20.send.mintSignedTransaction>
       ) =>
-        unpatchedErc20.send.mintSignedTransaction({
-          ...params[0],
-          contractAddress: oneUtils.transformAddress(params[0].contractAddress),
-          to: oneUtils.transformAddress(params[0].to),
-        }),
+        unpatchedErc20.send.mintSignedTransaction(
+          {
+            ...params[0],
+            contractAddress: oneUtils.transformAddress(params[0].contractAddress),
+            to: oneUtils.transformAddress(params[0].to),
+          },
+          params[1],
+        ),
       /**
        * Send burn erc20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -139,10 +163,13 @@ export const oneErc20 = (args: {
       burnSignedTransaction: async (
         ...params: Parameters<typeof unpatchedErc20.send.burnSignedTransaction>
       ) =>
-        unpatchedErc20.send.burnSignedTransaction({
-          ...params[0],
-          contractAddress: oneUtils.transformAddress(params[0].contractAddress),
-        }),
+        unpatchedErc20.send.burnSignedTransaction(
+          {
+            ...params[0],
+            contractAddress: oneUtils.transformAddress(params[0].contractAddress),
+          },
+          params[1],
+        ),
     },
   }
 }

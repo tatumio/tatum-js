@@ -18,6 +18,8 @@ export const celoWeb3 = (args: { blockchain: EvmBasedBlockchain; client?: Web3 }
       return web3
     },
     async getGasPriceInWei(): Promise<string> {
+      // TODO: Not used. Celo should be redone to extend EVM methods.
+      // Instead this obtainWalletInformation is used to get gasPrice right now, in future it should be replaced maybe
       let gasStationUrl = THIRD_PARTY_API.ETH_GAS_STATION
       const gasStationApiKey = process.env['TATUM_GAS_STATION_API_KEY'] // @TODO
       if (gasStationApiKey) {
