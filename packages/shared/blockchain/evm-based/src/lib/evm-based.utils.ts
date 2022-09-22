@@ -73,7 +73,6 @@ export const evmBasedUtils = {
       throw new Error('signatureId or fromPrivateKey has to be defined')
     }
 
-    tx.gas = gasLimit ?? (await client.eth.estimateGas(tx))
     tx.from = tx.from || client.eth.defaultAccount || 0
     const signedTransaction = await client.eth.accounts.signTransaction(tx, fromPrivateKey)
 
