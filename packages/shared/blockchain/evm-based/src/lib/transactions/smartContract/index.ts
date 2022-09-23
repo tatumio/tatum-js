@@ -11,7 +11,7 @@ export const smartContractWriteMethodInvocation = async (
   body: ChainSmartContractMethodInvocation,
   web3: EvmBasedWeb3,
   provider?: string,
-  chain?: GasPumpChain
+  chain?: GasPumpChain,
 ) => {
   const { fromPrivateKey, fee, params, methodName, methodABI, contractAddress, nonce, amount, signatureId } =
     body
@@ -24,7 +24,7 @@ export const smartContractWriteMethodInvocation = async (
     to: contractAddress.trim(),
     value: amount ? `0x${new BigNumber(client.utils.toWei(amount, 'ether')).toString(16)}` : undefined,
     data: contract.methods[methodName as string](...params).encodeABI(),
-    gas:  chain == "KLAY"? fee?.gasPrice: undefined,
+    gas: chain == 'KLAY' ? fee?.gasPrice : undefined,
     nonce,
   }
   return await evmBasedUtils.prepareSignedTransactionAbstraction(

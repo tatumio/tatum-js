@@ -6,7 +6,7 @@ import {
 import { ListingSmartContract } from '../contracts'
 import { smartContractWriteMethodInvocation } from '../transactions/smartContract'
 import { EvmBasedWeb3 } from './evm-based.web3'
-import {GasPumpChain} from "./evm-based.gas.pump";
+import { GasPumpChain } from './evm-based.gas.pump'
 
 type CallSCBody =
   | (ChainApproveCustodialTransfer & { contractAddress: string }) // added in abstraction
@@ -41,7 +41,7 @@ export const evmBasedSmartContract = (web3: EvmBasedWeb3) => {
       methodName: string,
       params: any[],
       provider?: string,
-      abi: any[] = ListingSmartContract.abi
+      abi: any[] = ListingSmartContract.abi,
     ) => {
       const r = buildSmartContractMethodInvocation(body, params, methodName, abi)
       return await smartContractWriteMethodInvocation(r, web3, provider, body.chain)
