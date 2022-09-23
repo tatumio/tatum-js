@@ -51,7 +51,7 @@ export const evmBasedGasPump = () => {
         case Currency.TRON:
           return testnet ? TRON_TESTNET_CUSTODIAL_FACTORY_V2 : TRON_MAINNET_CUSTODIAL_FACTORY_V2
         case Currency.ONE:
-          return testnet ? ONE_TESTNET_CUSTODIAL_FACTORY_V2: ONE_MAINNET_CUSTODIAL_FACTORY_V2
+          return testnet ? ONE_TESTNET_CUSTODIAL_FACTORY_V2 : ONE_MAINNET_CUSTODIAL_FACTORY_V2
         case Currency.ETH:
           return testnet ? ETH_TESTNET_CUSTODIAL_FACTORY_V2 : ETH_MAINNET_CUSTODIAL_FACTORY_V2
         case Currency.MATIC:

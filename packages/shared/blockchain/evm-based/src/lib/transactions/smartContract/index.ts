@@ -4,8 +4,8 @@ import BigNumber from 'bignumber.js'
 import { TransactionConfig } from 'web3-core'
 import { EvmBasedWeb3 } from '../../services/evm-based.web3'
 import { evmBasedUtils } from '../../evm-based.utils'
-import {CallReadSmartContractMethod, Currency} from '@tatumio/api-client'
-import {GasPumpChain} from "../../services/evm-based.gas.pump";
+import { CallReadSmartContractMethod, Currency } from '@tatumio/api-client'
+import { GasPumpChain } from '../../services/evm-based.gas.pump'
 
 export const smartContractWriteMethodInvocation = async (
   body: ChainSmartContractMethodInvocation,
@@ -33,7 +33,7 @@ export const smartContractWriteMethodInvocation = async (
     fromPrivateKey,
     fee?.gasLimit,
     fee?.gasPrice,
-    provider
+    provider,
   )
 }
 
