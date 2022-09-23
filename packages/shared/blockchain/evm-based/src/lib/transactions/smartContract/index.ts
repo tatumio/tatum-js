@@ -24,10 +24,8 @@ export const smartContractWriteMethodInvocation = async (
     to: contractAddress.trim(),
     value: amount ? `0x${new BigNumber(client.utils.toWei(amount, 'ether')).toString(16)}` : undefined,
     data: contract.methods[methodName as string](...params).encodeABI(),
+    gas: chain == Currency.KLAY? fee?.gasPrice: undefined,
     nonce,
-  }
-  if (chain == 'KLAY') {
-    tx.gas = fee?.gasPrice
   }
   return await evmBasedUtils.prepareSignedTransactionAbstraction(
     client,
