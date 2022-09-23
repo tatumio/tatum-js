@@ -135,7 +135,7 @@ const prepareGasPumpBatch = async (body: any, tronWeb: ITronWeb, provider?: stri
   client.setAddress(contractAddress)
 
   const sender = body.signatureId
-    ? body.signatureId
+    ? body.fromAddress
     : client.address.fromHex(client.address.fromPrivateKey(body.fromPrivateKey))
 
   const { transaction } = await client.transactionBuilder.triggerSmartContract(
