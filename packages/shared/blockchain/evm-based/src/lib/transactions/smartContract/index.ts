@@ -26,7 +26,7 @@ export const smartContractWriteMethodInvocation = async (
     data: contract.methods[methodName as string](...params).encodeABI(),
     nonce,
   }
-  if(chain == 'KLAY'){
+  if (chain == 'KLAY') {
     tx.gas = fee?.gasPrice
   }
   return await evmBasedUtils.prepareSignedTransactionAbstraction(
