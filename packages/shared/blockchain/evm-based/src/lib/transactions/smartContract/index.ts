@@ -4,12 +4,14 @@ import BigNumber from 'bignumber.js'
 import { TransactionConfig } from 'web3-core'
 import { EvmBasedWeb3 } from '../../services/evm-based.web3'
 import { evmBasedUtils } from '../../evm-based.utils'
-import { CallReadSmartContractMethod } from '@tatumio/api-client'
+import { CallReadSmartContractMethod, Currency } from '@tatumio/api-client'
+import { GasPumpChain } from '../../services/evm-based.gas.pump'
 
 export const smartContractWriteMethodInvocation = async (
   body: ChainSmartContractMethodInvocation,
   web3: EvmBasedWeb3,
   provider?: string,
+  chain?: GasPumpChain,
 ) => {
   const { fromPrivateKey, fee, params, methodName, methodABI, contractAddress, nonce, amount, signatureId } =
     body
@@ -22,6 +24,7 @@ export const smartContractWriteMethodInvocation = async (
     to: contractAddress.trim(),
     value: amount ? `0x${new BigNumber(client.utils.toWei(amount, 'ether')).toString(16)}` : undefined,
     data: contract.methods[methodName as string](...params).encodeABI(),
+    gas: chain == Currency.KLAY? fee?.gasPrice: undefined,
     nonce,
   }
   return await evmBasedUtils.prepareSignedTransactionAbstraction(

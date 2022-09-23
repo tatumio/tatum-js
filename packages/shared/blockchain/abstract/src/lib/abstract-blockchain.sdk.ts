@@ -135,7 +135,9 @@ export type ChainGenerateCustodialAddress =
   | FromPrivateKeyOrSignatureId<GenerateCustodialWallet>
   | FromPrivateKeyOrSignatureId<GenerateCustodialWalletCelo>
 
-export type ChainTransferNative = FromPrivateKeyOrSignatureId<Omit<TransferPolygonBlockchain, 'currency'>>
+export type ChainTransferNative = FromPrivateKeyOrSignatureId<Omit<TransferPolygonBlockchain, 'currency'>> & {
+  gas? : string
+}
 
 export type ChainGenerateMarketplace = FromPrivateKeyOrSignatureId<GenerateMarketplace>
 
