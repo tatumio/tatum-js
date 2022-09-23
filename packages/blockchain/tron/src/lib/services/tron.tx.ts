@@ -23,7 +23,6 @@ import { tronTrc10 } from './tron.trc10'
 import { tronTrc20 } from './tron.trc20'
 import { tronTrc721 } from './tron.trc721'
 import { ITronWeb } from './tron.web'
-import BigNumber from 'bignumber.js'
 
 const prepareSignedTransaction = async (
   body: TransferTronBlockchain | TransferTronBlockchainKMS,
@@ -135,7 +134,7 @@ const prepareGasPumpBatch = async (body: any, tronWeb: ITronWeb, provider?: stri
   client.setAddress(contractAddress)
 
   const sender = body.signatureId
-    ? body.fromAddress
+    ? client.address.fromHex(body.fromAddress)
     : client.address.fromHex(client.address.fromPrivateKey(body.fromPrivateKey))
 
   const { transaction } = await client.transactionBuilder.triggerSmartContract(

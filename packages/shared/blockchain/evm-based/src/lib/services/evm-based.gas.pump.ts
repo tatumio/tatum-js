@@ -24,7 +24,7 @@ export const BSC_MAINNET_CUSTODIAL_FACTORY_V2 = '0x40c762cb7d2f5ad719ed6c9651f5f
 export const TRON_TESTNET_CUSTODIAL_FACTORY_V2 = 'TYGfTkhjii3gmxqBczcHn1FoTrRWFUXvsp'
 export const TRON_MAINNET_CUSTODIAL_FACTORY_V2 = 'TUHmKLeq26QFyMwxQSYd451c4SZQQuKcHb'
 
-export const ONE_TESTNET_CUSTODIAL_FACTORY_V2 = '0xb1462fE8E9Cf82c0296022Cca7bEfA3Fd4c12B34'
+export const ONE_TESTNET_CUSTODIAL_FACTORY_V2 = '0xCd2AdA00c48A27FAa5Cc67F9A1ed55B89dDf7F77'
 export const ONE_MAINNET_CUSTODIAL_FACTORY_V2 = '0xb1462fE8E9Cf82c0296022Cca7bEfA3Fd4c12B34'
 
 export const indexesFromRange = (from: number, to: number) =>
@@ -51,8 +51,7 @@ export const evmBasedGasPump = () => {
         case Currency.TRON:
           return testnet ? TRON_TESTNET_CUSTODIAL_FACTORY_V2 : TRON_MAINNET_CUSTODIAL_FACTORY_V2
         case Currency.ONE:
-          if (testnet) throw new Error('Unsupported chain.')
-          return ONE_MAINNET_CUSTODIAL_FACTORY_V2
+          return testnet ? ONE_TESTNET_CUSTODIAL_FACTORY_V2: ONE_MAINNET_CUSTODIAL_FACTORY_V2
         case Currency.ETH:
           return testnet ? ETH_TESTNET_CUSTODIAL_FACTORY_V2 : ETH_MAINNET_CUSTODIAL_FACTORY_V2
         case Currency.MATIC:
