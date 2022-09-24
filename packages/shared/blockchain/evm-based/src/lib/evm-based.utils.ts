@@ -1,7 +1,7 @@
 import ethWallet, { hdkey as ethHdKey } from 'ethereumjs-wallet'
 import { ADDRESS_PREFIX, EvmBasedBlockchain, getDerivationPath } from '@tatumio/shared-core'
 import { generateMnemonic, mnemonicToSeed } from 'bip39'
-import { CreateRecord, Currency, TronWallet } from '@tatumio/api-client'
+import { CreateRecord, TronWallet } from '@tatumio/api-client'
 import Web3 from 'web3'
 import { TransactionConfig } from 'web3-core'
 import { isHex, stringToHex, toHex, toWei, Unit } from 'web3-utils'
@@ -11,7 +11,6 @@ import BigNumber from 'bignumber.js'
 import { Erc20Token } from './contracts'
 import { EvmBasedWeb3 } from './services/evm-based.web3'
 import { EvmBasedSdkError } from './evm-based.sdk.errors'
-import { GasPumpChain } from './services/evm-based.gas.pump'
 
 export const evmBasedUtils = {
   generateAddressFromXPub: (xpub: string, i: number): string => {
