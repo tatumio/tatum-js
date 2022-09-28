@@ -34,7 +34,6 @@ class PrivateKeyOrSignatureIdBtcBased {
     /**
      * Index of the privatekey or signature to be spent.
      */
-     @IsNotEmpty()
      @Min(0)
      @Max(4294967295)
      public index?: number;
