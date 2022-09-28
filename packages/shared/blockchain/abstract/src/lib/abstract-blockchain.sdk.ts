@@ -91,6 +91,8 @@ export type ChainMintErc20 = FromPrivateKeyOrSignatureId<Omit<ApiChainMintErc20,
 
 export type ChainBurnErc20 = FromPrivateKeyOrSignatureId<Omit<ApiChainBurnErc20, 'chain'>>
 
+export type ChainApproveErc20 = FromPrivateKeyOrSignatureId<ApproveErc20>
+
 export type ChainDeployErc20 = FromPrivateKeyOrSignatureId<DeployErc20>
 
 export type ChainMintErc721 = MintErc721 & {
@@ -136,7 +138,7 @@ export type ChainGenerateCustodialAddress =
   | FromPrivateKeyOrSignatureId<GenerateCustodialWalletCelo>
 
 export type ChainTransferNative = FromPrivateKeyOrSignatureId<Omit<TransferPolygonBlockchain, 'currency'>> & {
-  gas? : string
+  gas?: string
 }
 
 export type ChainGenerateMarketplace = FromPrivateKeyOrSignatureId<GenerateMarketplace>
@@ -153,11 +155,11 @@ export type ChainCancelSellAssetOnMarketplace = FromPrivateKeyOrSignatureId<Canc
 
 export type ChainTransferCustodialWallet =
   | (FromPrivateKeyOrSignatureId<TransferCustodialWallet> & {
-      index?: number
-    })
+  index?: number
+})
   | (FromPrivateKeyOrSignatureId<TransferCustodialWalletCelo> & {
-      index?: number
-    })
+  index?: number
+})
 
 export type ChainBatchTransferCustodialWallet =
   | (FromPrivateKeyOrSignatureId<TransferCustodialWalletBatch> & { index?: number })
@@ -182,12 +184,12 @@ export type ChainGenerateCustodialWalletBatch =
 
 export type ChainCallSmartContractMethod =
   | (FromPrivateKeyOrSignatureId<CallSmartContractMethod> & {
-      index?: number
-    })
+  index?: number
+})
   | (FromPrivateKeyOrSignatureId<CallCeloSmartContractMethod> & {
-      index?: number
-      chain: 'CELO'
-    })
+  index?: number
+  chain: 'CELO'
+})
 
 export type ChainTransferCustodialWalletCelo = FromPrivateKeyOrSignatureId<TransferCustodialWalletCelo> & {
   index?: number

@@ -22,7 +22,7 @@ const mintMultiToken = async (body: ChainMintMultiToken, web3: EvmBasedWeb3, pro
   const contract = new client.eth.Contract(Erc1155.abi as any, contractAddress)
 
   const tx: TransactionConfig = {
-    from: undefined,
+    from: 0,
     to: contractAddress.trim(),
     data: contract.methods
       .mint(to.trim(), tokenId, `0x${new BigNumber(amount).toString(16)}`, data ? data : '0x0')
@@ -50,7 +50,7 @@ const mintMultiTokenBatch = async (body: ChainMintMultiTokenBatch, web3: EvmBase
 
   const amts = amounts.map((amts) => amts.map((amt) => `0x${new BigNumber(amt).toString(16)}`))
   const tx: TransactionConfig = {
-    from: undefined,
+    from: 0,
     to: contractAddress.trim(),
     data: contract.methods.mintBatch(to, tokenId, amts, data ? data : '0x0').encodeABI(),
     nonce,
@@ -80,7 +80,7 @@ const deployMultiToken = async (body: ChainDeployMultiToken, web3: EvmBasedWeb3,
   } as any)
 
   const tx: TransactionConfig = {
-    from: undefined,
+    from: 0,
     data: deploy.encodeABI(),
     nonce,
   }
@@ -104,7 +104,7 @@ const transferMultiToken = async (body: ChainTransferMultiToken, web3: EvmBasedW
   const contract = new client.eth.Contract(Erc1155.abi as any, contractAddress)
 
   const tx: TransactionConfig = {
-    from: undefined,
+    from: 0,
     to: contractAddress.trim(),
     data: contract.methods
       .safeTransfer(
@@ -142,7 +142,7 @@ const transferMultiTokenBatch = async (
   const amts = amounts.map((amt) => `0x${new BigNumber(amt).toString(16)}`)
 
   const tx: TransactionConfig = {
-    from: undefined,
+    from: 0,
     to: contractAddress.trim(),
     data: contract.methods
       .safeBatchTransfer(
@@ -174,7 +174,7 @@ const burnMultiToken = async (body: ChainBurnMultiToken, web3: EvmBasedWeb3, pro
   const contract = new client.eth.Contract(Erc1155.abi as any, contractAddress)
 
   const tx: TransactionConfig = {
-    from: undefined,
+    from: 0,
     to: contractAddress.trim(),
     data: contract.methods.burn(account, tokenId, amount).encodeABI(),
     nonce,
@@ -199,7 +199,7 @@ const burnMultiTokenBatch = async (body: ChainBurnMultiTokenBatch, web3: EvmBase
   const contract = new client.eth.Contract(Erc1155.abi as any, contractAddress)
 
   const tx: TransactionConfig = {
-    from: undefined,
+    from: 0,
     to: contractAddress.trim(),
     data: contract.methods.burnBatch(account, tokenId, amounts).encodeABI(),
     nonce,

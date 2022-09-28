@@ -31,7 +31,7 @@ const generateMarketplace = async (body: ChainGenerateMarketplace, web3: EvmBase
     .encodeABI()
 
   const tx: TransactionConfig = {
-    from: undefined,
+    from: 0,
     data,
     nonce: nonce,
   }
@@ -62,7 +62,7 @@ const updateFee = async (body: ChainUpdateFee, web3: EvmBasedWeb3, provider?: st
 
   if (contractAddress) {
     const tx: TransactionConfig = {
-      from: undefined,
+      from: 0,
       data,
       to: contractAddress,
       nonce: nonce,
@@ -96,7 +96,7 @@ const updateFeeRecipient = async (body: ChainUpdateFeeRecipient, web3: EvmBasedW
 
   if (contractAddress) {
     const tx: TransactionConfig = {
-      from: undefined,
+      from: 0,
       data,
       to: contractAddress,
       nonce: nonce,
@@ -136,7 +136,7 @@ const buyAsset = async (body: ChainBuyAssetOnMarketplace, web3: EvmBasedWeb3, pr
 
   if (contractAddress) {
     const tx: TransactionConfig = {
-      from: undefined,
+      from: 0,
       data,
       to: contractAddress,
       nonce: nonce,
@@ -194,7 +194,7 @@ const sellAsset = async (body: ChainSellAssetOnMarketplace, web3: EvmBasedWeb3, 
 
   if (contractAddress) {
     const tx: TransactionConfig = {
-      from: undefined,
+      from: 0,
       data,
       to: contractAddress.trim(),
       nonce: nonce,
@@ -232,7 +232,7 @@ const cancelListing = async (
 
   if (contractAddress) {
     const tx: TransactionConfig = {
-      from: undefined,
+      from: 0,
       data,
       to: contractAddress,
       nonce: nonce,

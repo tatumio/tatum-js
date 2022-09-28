@@ -1,6 +1,7 @@
 import { ApproveErc20 } from '@tatumio/api-client'
 import {
   BroadcastFunction,
+  ChainApproveErc20,
   ChainBurnErc20,
   ChainDeployErc20,
   ChainMintErc20,
@@ -28,7 +29,7 @@ const mintSignedTransaction = async (body: ChainMintErc20, web3: EvmBasedWeb3, p
     .encodeABI()
 
   const tx: TransactionConfig = {
-    from: undefined,
+    from: 0,
     to: body.contractAddress.trim(),
     data,
     nonce: body.nonce,
@@ -62,7 +63,7 @@ const burnSignedTransaction = async (body: ChainBurnErc20, web3: EvmBasedWeb3, p
     .encodeABI()
 
   const tx: TransactionConfig = {
-    from: undefined,
+    from: 0,
     to: body.contractAddress,
     data,
     nonce: body.nonce,
@@ -74,8 +75,8 @@ const burnSignedTransaction = async (body: ChainBurnErc20, web3: EvmBasedWeb3, p
     web3,
     body.signatureId,
     body.fromPrivateKey,
-    undefined,
-    undefined,
+    body.fee?.gasLimit,
+    body.fee?.gasPrice,
     provider,
   )
 }
@@ -93,7 +94,7 @@ const transferSignedTransaction = async (body: ChainTransferErc20, web3: EvmBase
     .encodeABI()
 
   const tx: TransactionConfig = {
-    from: undefined,
+    from: 0,
     to: body.contractAddress,
     data,
     nonce: body.nonce,
@@ -155,7 +156,7 @@ const decimals = async (contractAddress: string, web3: EvmBasedWeb3, provider?: 
   return new client.eth.Contract(Erc20Token.abi as any, contractAddress).methods.decimals().call()
 }
 
-const approveSignedTransaction = async (body: ApproveErc20, web3: EvmBasedWeb3, provider?: string) => {
+const approveSignedTransaction = async (body: ChainApproveErc20, web3: EvmBasedWeb3, provider?: string) => {
   const amount = new BigNumber(body.amount)
     .multipliedBy(new BigNumber(10).pow(await decimals(body.contractAddress, web3, provider)))
     .toString(16)
@@ -172,7 +173,7 @@ const approveSignedTransaction = async (body: ApproveErc20, web3: EvmBasedWeb3, 
   ).encodeABI()
 
   const tx: TransactionConfig = {
-    from: undefined,
+    from: 0,
     data,
     to: body.contractAddress,
     nonce: body.nonce,
@@ -182,10 +183,10 @@ const approveSignedTransaction = async (body: ApproveErc20, web3: EvmBasedWeb3, 
     client,
     tx,
     web3,
-    undefined,
+    body.signatureId,
     body.fromPrivateKey,
-    undefined,
-    undefined,
+    body.fee?.gasLimit,
+    body.fee?.gasPrice,
     provider,
   )
 }

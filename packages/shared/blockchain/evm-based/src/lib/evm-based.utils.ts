@@ -60,17 +60,19 @@ export const evmBasedUtils = {
     const gasPriceDefined = gasPrice
       ? client.utils.toWei(gasPrice, 'gwei')
       : await web3.getGasPriceInWei(provider)
-    const tx = {
+    const tx: TransactionConfig = {
+      from: 0,
+      gas: gasLimit,
       ...transaction,
       gasPrice: gasPriceDefined,
     }
 
-    tx.gas = gasLimit ?? (await client.eth.estimateGas(tx))
-    tx.from = tx.from || client.eth.defaultAccount || 0
-
     if (signatureId) {
       return JSON.stringify(tx)
     }
+
+    tx.from = tx.from || client.eth.defaultAccount || 0
+    tx.gas = gasLimit ?? (await client.eth.estimateGas(tx))
 
     if (!fromPrivateKey) {
       throw new Error('signatureId or fromPrivateKey has to be defined')

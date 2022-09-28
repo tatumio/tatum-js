@@ -15,10 +15,11 @@ const transferSignedTransaction = async (
   const client = web3.getClient(provider, body.fromPrivateKey)
 
   const tx: TransactionConfig = {
-    from: undefined,
+    from: 0,
     to: body.to,
     data: body.data,
     value: evmBasedUtils.transformToWei(body.amount),
+    gas: (body.data?.length || 0) * 68 + 21000,
     nonce: body.nonce,
   }
 
