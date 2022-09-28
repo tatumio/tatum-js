@@ -155,11 +155,11 @@ export type ChainCancelSellAssetOnMarketplace = FromPrivateKeyOrSignatureId<Canc
 
 export type ChainTransferCustodialWallet =
   | (FromPrivateKeyOrSignatureId<TransferCustodialWallet> & {
-  index?: number
-})
+      index?: number
+    })
   | (FromPrivateKeyOrSignatureId<TransferCustodialWalletCelo> & {
-  index?: number
-})
+      index?: number
+    })
 
 export type ChainBatchTransferCustodialWallet =
   | (FromPrivateKeyOrSignatureId<TransferCustodialWalletBatch> & { index?: number })
@@ -184,12 +184,12 @@ export type ChainGenerateCustodialWalletBatch =
 
 export type ChainCallSmartContractMethod =
   | (FromPrivateKeyOrSignatureId<CallSmartContractMethod> & {
-  index?: number
-})
+      index?: number
+    })
   | (FromPrivateKeyOrSignatureId<CallCeloSmartContractMethod> & {
-  index?: number
-  chain: 'CELO'
-})
+      index?: number
+      chain: 'CELO'
+    })
 
 export type ChainTransferCustodialWalletCelo = FromPrivateKeyOrSignatureId<TransferCustodialWalletCelo> & {
   index?: number
