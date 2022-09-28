@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { get, validateBody } from '../../connector/tatum';
+import { get, post, put, validateBody } from '../../connector/tatum';
 import erc1155_abi from '../../contracts/erc1155/erc1155_abi';
 import erc721_abi from '../../contracts/erc721Cashback/erc721_abi';
 import { auction } from '../../contracts/marketplace';
@@ -106,8 +106,12 @@ export const getAuctionFeeRecipient = async (chain: Currency, contractAddress: s
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const deployAuction = async (testnet: boolean, body: DeployNftAuction, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareDeployAuction(testnet, body, provider), body.signatureId);
+export const deployAuction = async (testnet: boolean, body: DeployNftAuction, provider?: string) => {
+  if (body.signatureId) {
+    return await post(`v3/blockchain/auction`, body);
+  }
+  return helperBroadcastTx(body.chain, await prepareDeployAuction(testnet, body, provider))
+};
 
 /**
  * Prepare signed transaction for NFT auction logic. Smart contract enables auction operator to create new auction for NFT (ERC-721/1155).
@@ -281,8 +285,12 @@ export const prepareAuctionSettle = async (testnet: boolean, body: InvokeAuction
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendAuctionUpdateFee = async (testnet: boolean, body: UpdateAuctionFee, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareAuctionUpdateFee(testnet, body, provider), body.signatureId);
+export const sendAuctionUpdateFee = async (testnet: boolean, body: UpdateAuctionFee, provider?: string) => {
+  if (body.signatureId) {
+    return await put(`v3/blockchain/auction/fee`, body);
+  }
+  return helperBroadcastTx(body.chain, await prepareAuctionUpdateFee(testnet, body, provider))
+}
 /**
  * Update auction fee recipient.
  * @param testnet chain to work with
@@ -290,8 +298,12 @@ export const sendAuctionUpdateFee = async (testnet: boolean, body: UpdateAuction
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendAuctionUpdateFeeRecipient = async (testnet: boolean, body: UpdateMarketplaceFeeRecipient, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareAuctionUpdateFeeRecipient(testnet, body, provider), body.signatureId);
+export const sendAuctionUpdateFeeRecipient = async (testnet: boolean, body: UpdateMarketplaceFeeRecipient, provider?: string) => {
+  if (body.signatureId) {
+    return await put(`v3/blockchain/auction/recipient`, body);
+  }
+  return helperBroadcastTx(body.chain, await prepareAuctionUpdateFeeRecipient(testnet, body, provider))
+}
 /**
  * Approve NFT transfer for auction to perform listing of the asset.
  * @param testnet chain to work with
@@ -299,8 +311,12 @@ export const sendAuctionUpdateFeeRecipient = async (testnet: boolean, body: Upda
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendAuctionApproveNftTransfer = async (testnet: boolean, body: ApproveNftTransfer, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareAuctionApproveNftTransfer(testnet, body, provider), body.signatureId);
+export const sendAuctionApproveNftTransfer = async (testnet: boolean, body: ApproveNftTransfer, provider?: string) => {
+  if (body.signatureId) {
+    return await post(`v3/blockchain/auction/approve`, body);
+  }
+  return helperBroadcastTx(body.chain, await prepareAuctionApproveNftTransfer(testnet, body, provider))
+}
 /**
  * Approve ERC20 transfer for auction to perform bidding on the asset in the auction.
  * @param testnet chain to work with
@@ -308,8 +324,12 @@ export const sendAuctionApproveNftTransfer = async (testnet: boolean, body: Appr
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendAuctionApproveErc20Transfer = async (testnet: boolean, body: ApproveErc20, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareAuctionApproveErc20Transfer(testnet, body, provider), body.signatureId);
+export const sendAuctionApproveErc20Transfer = async (testnet: boolean, body: ApproveErc20, provider?: string) => {
+  if (body.signatureId) {
+    return await post(`v3/blockchain/token/approve`, body);
+  }
+  return helperBroadcastTx(body.chain, await prepareAuctionApproveErc20Transfer(testnet, body, provider))
+}
 /**
  * Create new auction on the auction contract. Before auction, seller must approve spending of the NFT token for the Auction contract.
  * After auction is created, auction contract transfers the asset to the auction smart contract.
@@ -319,8 +339,12 @@ export const sendAuctionApproveErc20Transfer = async (testnet: boolean, body: Ap
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendAuctionCreate = async (testnet: boolean, body: CreateAuction, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareAuctionCreate(testnet, body, provider), body.signatureId);
+export const sendAuctionCreate = async (testnet: boolean, body: CreateAuction, provider?: string) => {
+  if (body.signatureId) {
+    return await post(`v3/blockchain/auction/sell`, body);
+  }
+  return helperBroadcastTx(body.chain, await prepareAuctionCreate(testnet, body, provider))
+};
 /**
  * Bid auction on the auction. Buyer must either send native assets with this operation, or approve ERC20 token spending before.
  * After auction is sold, it's in a pending state to be processed by the auction. Noone receives the assets unless the auction operator processes that.
@@ -329,8 +353,12 @@ export const sendAuctionCreate = async (testnet: boolean, body: CreateAuction, p
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendAuctionBid = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareAuctionBid(testnet, body, provider), body.signatureId);
+export const sendAuctionBid = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
+  if (body.signatureId) {
+    return await post(`v3/blockchain/auction/bid`, body);
+  }
+  return helperBroadcastTx(body.chain, await prepareAuctionBid(testnet, body, provider))
+}
 /**
  * Cancel auction on the auction. Only possible for the seller or the operator. There must be no buyer present for that auction. NFT asset is sent back to the seller.
  * @param testnet chain to work with
@@ -338,8 +366,12 @@ export const sendAuctionBid = async (testnet: boolean, body: InvokeAuctionOperat
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendAuctionCancel = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareAuctionCancel(testnet, body, provider), body.signatureId);
+export const sendAuctionCancel = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
+  if (body.signatureId) {
+    return await post(`v3/blockchain/auction/cancel`, body);
+  }
+  return helperBroadcastTx(body.chain, await prepareAuctionCancel(testnet, body, provider))
+}
 
 /**
  * Settle auction. There must be buyer present for that auction. NFT will be sent to the bidder, assets to the seller and fee to the operator.
@@ -348,6 +380,10 @@ export const sendAuctionCancel = async (testnet: boolean, body: InvokeAuctionOpe
  * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
  * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
  */
-export const sendAuctionSettle = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) =>
-  helperBroadcastTx(body.chain, await prepareAuctionSettle(testnet, body, provider), body.signatureId);
+export const sendAuctionSettle = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
+  if (body.signatureId) {
+    return await post(`v3/blockchain/auction`, body);
+  }
+  return helperBroadcastTx(body.chain, await prepareAuctionSettle(testnet, body, provider))
+}
 
