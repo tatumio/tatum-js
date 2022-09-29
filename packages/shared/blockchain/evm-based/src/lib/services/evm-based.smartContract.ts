@@ -48,7 +48,7 @@ const getFeeCurrency = (feeCurrency?: 'CELO' | 'CUSD' | 'CEUR', testnet?: boolea
     case Currency.CUSD:
       return testnet ? CELO_CONSTANTS.CUSD_ADDRESS_TESTNET : CELO_CONSTANTS.CUSD_ADDRESS_MAINNET
     default:
-      return testnet ? CELO_CONSTANTS.CELO_ADDRESS_TESTNET : CELO_CONSTANTS.CELO_ADDRESS_MAINNET
+      return undefined
   }
 }
 

@@ -132,9 +132,10 @@ export const evmBasedUtils = {
     celoTransaction.nonce = transaction.nonce || walletInfo.txCount
     celoTransaction.from = walletInfo.from
 
-    const gasLimitDefined =  (await wallet.estimateGas(celoTransaction))
-      .add(evmBasedUtils.isCeloAddress(transaction.feeCurrency) ? 0 : 100000)
-    celoTransaction.gasLimit = gasLimitDefined? gasLimitDefined.toHexString(): celoTransaction.gasLimit
+    const gasLimitDefined = (await wallet.estimateGas(celoTransaction)).add(
+      evmBasedUtils.isCeloAddress(transaction.feeCurrency) ? 0 : 100000,
+    )
+    celoTransaction.gasLimit = gasLimitDefined ? gasLimitDefined.toHexString() : celoTransaction.gasLimit
     return wallet.signTransaction(celoTransaction)
   },
 
@@ -207,10 +208,7 @@ export type StoreDataTransactionBody = WithoutChain<CreateRecord> & {
 }
 
 const obtainWalletInformation = async (wallet: CeloWallet, feeCurrencyContractAddress?: string) => {
-  const [txCount, from] = await Promise.all([
-    wallet.getTransactionCount(),
-    wallet.getAddress(),
-  ])
+  const [txCount, from] = await Promise.all([wallet.getTransactionCount(), wallet.getAddress()])
   return {
     txCount,
     from,
