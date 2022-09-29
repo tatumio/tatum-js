@@ -51,7 +51,7 @@ export const evmBasedUtils = {
   },
   prepareSignedTransactionAbstraction: async (
     client: Web3,
-    transaction: TransactionConfigWithFeeCurrency,
+    transaction: TransactionConfig,
     web3: EvmBasedWeb3,
     signatureId?: string,
     fromPrivateKey?: string,
@@ -62,7 +62,7 @@ export const evmBasedUtils = {
     const gasPriceDefined = gasPrice
       ? client.utils.toWei(gasPrice, 'gwei')
       : await web3.getGasPriceInWei(provider)
-    const tx: TransactionConfigWithFeeCurrency = {
+    const tx: TransactionConfig = {
       from: 0,
       gas: gasLimit,
       ...transaction,
@@ -211,11 +211,15 @@ const obtainWalletInformation = async (wallet: CeloWallet, feeCurrencyContractAd
     wallet.getTransactionCount(),
     wallet.getGasPrice(feeCurrencyContractAddress),
     wallet.getAddress(),
-  ]);
+  ])
   return {
     txCount,
-    gasPrice: [CELO_CONSTANTS.CUSD_ADDRESS_MAINNET, CELO_CONSTANTS.CUSD_ADDRESS_TESTNET].includes(feeCurrencyContractAddress || '') && gasPrice.lte(0x1dcd6500)
-      ? BN.from(0x3B9ACA00)
-      : gasPrice, from,
+    gasPrice:
+      [CELO_CONSTANTS.CUSD_ADDRESS_MAINNET, CELO_CONSTANTS.CUSD_ADDRESS_TESTNET].includes(
+        feeCurrencyContractAddress || '',
+      ) && gasPrice.lte(0x1dcd6500)
+        ? BN.from(0x3b9aca00)
+        : gasPrice,
+    from,
   }
 }
