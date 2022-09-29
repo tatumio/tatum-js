@@ -27,7 +27,7 @@ export const smartContractWriteMethodInvocation = async (
     feeCurrency: chain === Currency.CELO ? body.feeCurrency : undefined,
     value: amount ? `0x${new BigNumber(client.utils.toWei(amount, 'ether')).toString(16)}` : undefined,
     data: contract.methods[methodName as string](...params).encodeABI(),
-    gas: chain == Currency.KLAY ? fee?.gasPrice : undefined,
+    gas: chain === Currency.KLAY ? fee?.gasPrice : undefined,
     nonce,
   }
   return chain === Currency.CELO

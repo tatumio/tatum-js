@@ -99,7 +99,6 @@ export const evmBasedUtils = {
   ) => {
     const p = new CeloProvider(provider)
     const network = await p.ready
-    const wallet = new CeloWallet(fromPrivateKey as string, p)
 
     let currentGasPrice
     if (transaction.gasPrice) {
@@ -126,15 +125,16 @@ export const evmBasedUtils = {
     if (!fromPrivateKey) {
       throw new Error('signatureId or fromPrivateKey has to be defined')
     }
+    const wallet = new CeloWallet(fromPrivateKey as string, p)
 
     const walletInfo = await obtainWalletInformation(wallet, transaction.feeCurrency)
 
     celoTransaction.nonce = transaction.nonce || walletInfo.txCount
     celoTransaction.from = walletInfo.from
-    celoTransaction.gasLimit = (await wallet.estimateGas(celoTransaction))
+
+    const gasLimitDefined =  (await wallet.estimateGas(celoTransaction))
       .add(evmBasedUtils.isCeloAddress(transaction.feeCurrency) ? 0 : 100000)
-      .toHexString()
-    celoTransaction.gasPrice = walletInfo.gasPrice
+    celoTransaction.gasLimit = gasLimitDefined? gasLimitDefined.toHexString(): celoTransaction.gasLimit
     return wallet.signTransaction(celoTransaction)
   },
 
@@ -207,19 +207,12 @@ export type StoreDataTransactionBody = WithoutChain<CreateRecord> & {
 }
 
 const obtainWalletInformation = async (wallet: CeloWallet, feeCurrencyContractAddress?: string) => {
-  const [txCount, gasPrice, from] = await Promise.all([
+  const [txCount, from] = await Promise.all([
     wallet.getTransactionCount(),
-    wallet.getGasPrice(feeCurrencyContractAddress),
     wallet.getAddress(),
   ])
   return {
     txCount,
-    gasPrice:
-      [CELO_CONSTANTS.CUSD_ADDRESS_MAINNET, CELO_CONSTANTS.CUSD_ADDRESS_TESTNET].includes(
-        feeCurrencyContractAddress || '',
-      ) && gasPrice.lte(0x1dcd6500)
-        ? BN.from(0x3b9aca00)
-        : gasPrice,
     from,
   }
 }
