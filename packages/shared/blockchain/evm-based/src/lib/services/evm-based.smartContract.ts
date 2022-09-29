@@ -7,7 +7,6 @@ import { ListingSmartContract } from '../contracts'
 import { smartContractWriteMethodInvocation } from '../transactions/smartContract'
 import { CELO_CONSTANTS, EvmBasedWeb3 } from './evm-based.web3'
 import { Currency, GenerateCustodialWalletBatchCelo } from '@tatumio/api-client'
-import { CeloContract } from '@celo/contractkit'
 
 type CallSCBody =
   | (ChainApproveCustodialTransfer & { contractAddress: string }) // added in abstraction
