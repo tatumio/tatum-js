@@ -101,9 +101,6 @@ export const evmBasedUtils = {
     const network = await p.ready
     const wallet = new CeloWallet(fromPrivateKey as string, p)
 
-    const gasPriceDefined = gasPrice
-      ? client.utils.toWei(gasPrice, 'gwei')
-      : await web3.getGasPriceInWei(provider)
     let currentGasPrice
     if (transaction.gasPrice) {
       currentGasPrice =
@@ -121,33 +118,27 @@ export const evmBasedUtils = {
       to: transaction.to,
       data: transaction.data,
     }
-    const tx: TransactionConfigWithFeeCurrency = {
-      from: 0,
-      gas: gasLimit,
-      ...transaction,
-      gasPrice: gasPriceDefined,
-    }
 
     if (signatureId) {
-      return JSON.stringify(tx)
+      return JSON.stringify(celoTransaction)
     }
 
     if (!fromPrivateKey) {
       throw new Error('signatureId or fromPrivateKey has to be defined')
     }
 
-    const { txCount, gasPriceObtained, from } = await obtainWalletInformation(wallet, transaction.feeCurrency)
+    const walletInfo = await obtainWalletInformation(wallet, transaction.feeCurrency)
 
-    celoTransaction.nonce = transaction.nonce || txCount
-    celoTransaction.from = from
+    celoTransaction.nonce = transaction.nonce || walletInfo.txCount
+    celoTransaction.from = walletInfo.from
     celoTransaction.gasLimit = (await wallet.estimateGas(celoTransaction))
       .add(evmBasedUtils.isCeloAddress(transaction.feeCurrency) ? 0 : 100000)
       .toHexString()
-    celoTransaction.gasPrice = gasPriceDefined
+    celoTransaction.gasPrice = walletInfo.gasPrice
     return wallet.signTransaction(celoTransaction)
   },
 
-  isCeloAddress: (address: string) => {
+  isCeloAddress: (address?: string) => {
     return address === CELO_CONSTANTS.CELO_ADDRESS_TESTNET || address === CELO_CONSTANTS.CELO_ADDRESS_MAINNET
   },
 
@@ -213,4 +204,18 @@ export type StoreDataTransactionBody = WithoutChain<CreateRecord> & {
   signatureId?: string
   gasLimit?: string
   gasPrice?: string
+}
+
+const obtainWalletInformation = async (wallet: CeloWallet, feeCurrencyContractAddress?: string) => {
+  const [txCount, gasPrice, from] = await Promise.all([
+    wallet.getTransactionCount(),
+    wallet.getGasPrice(feeCurrencyContractAddress),
+    wallet.getAddress(),
+  ]);
+  return {
+    txCount,
+    gasPrice: [CELO_CONSTANTS.CUSD_ADDRESS_MAINNET, CELO_CONSTANTS.CUSD_ADDRESS_TESTNET].includes(feeCurrencyContractAddress || '') && gasPrice.lte(0x1dcd6500)
+      ? BN.from(0x3B9ACA00)
+      : gasPrice, from,
+  }
 }
