@@ -11,6 +11,7 @@ import BigNumber from 'bignumber.js'
 import { Erc20Token } from './contracts'
 import { EvmBasedWeb3 } from './services/evm-based.web3'
 import { EvmBasedSdkError } from './evm-based.sdk.errors'
+import {TransactionConfigWithFeeCurrency} from "./transactions/smartContract";
 
 export const evmBasedUtils = {
   generateAddressFromXPub: (xpub: string, i: number): string => {
@@ -49,7 +50,7 @@ export const evmBasedUtils = {
   },
   prepareSignedTransactionAbstraction: async (
     client: Web3,
-    transaction: TransactionConfig,
+    transaction: TransactionConfigWithFeeCurrency,
     web3: EvmBasedWeb3,
     signatureId?: string,
     fromPrivateKey?: string,

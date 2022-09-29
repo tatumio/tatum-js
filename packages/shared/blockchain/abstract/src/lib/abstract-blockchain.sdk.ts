@@ -130,7 +130,8 @@ export type ChainMintMultiTokenBatch = FromPrivateKeyOrSignatureId<MintMultiToke
 export type ChainDeployMultiToken = FromPrivateKeyOrSignatureId<DeployMultiToken>
 
 export type ChainSmartContractMethodInvocation = FromPrivateKeyOrSignatureId<CallSmartContractMethod> & {
-  index?: number
+  index?: number,
+  feeCurrency?: string
 }
 
 export type ChainGenerateCustodialAddress =
