@@ -30,27 +30,27 @@ export const smartContractWriteMethodInvocation = async (
     gas: chain == Currency.KLAY ? fee?.gasPrice : undefined,
     nonce,
   }
-  return chain == Currency.CELO ?
-    await evmBasedUtils.prepareSignedTransactionAbstractionCelo(
-      client,
-      tx,
-      web3,
-      signatureId,
-      fromPrivateKey,
-      fee?.gasLimit,
-      fee?.gasPrice,
-      provider,
-    ):
-    await evmBasedUtils.prepareSignedTransactionAbstraction(
-    client,
-    tx,
-    web3,
-    signatureId,
-    fromPrivateKey,
-    fee?.gasLimit,
-    fee?.gasPrice,
-    provider,
-  )
+  return chain === Currency.CELO
+    ? await evmBasedUtils.prepareSignedTransactionAbstractionCelo(
+        client,
+        tx,
+        web3,
+        signatureId,
+        fromPrivateKey,
+        fee?.gasLimit,
+        fee?.gasPrice,
+        provider,
+      )
+    : await evmBasedUtils.prepareSignedTransactionAbstraction(
+        client,
+        tx,
+        web3,
+        signatureId,
+        fromPrivateKey,
+        fee?.gasLimit,
+        fee?.gasPrice,
+        provider,
+      )
 }
 
 export const smartContractReadMethodInvocation = async (
