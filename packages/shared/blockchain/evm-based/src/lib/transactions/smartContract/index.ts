@@ -7,7 +7,7 @@ import { evmBasedUtils } from '../../evm-based.utils'
 import { CallReadSmartContractMethod, Currency } from '@tatumio/api-client'
 import { GasPumpChain } from '../../services/evm-based.gas.pump'
 
-export type TransactionConfigWithFeeCurrency = TransactionConfig & {feeCurrency?: string}
+export type TransactionConfigWithFeeCurrency = TransactionConfig & { feeCurrency?: string }
 
 export const smartContractWriteMethodInvocation = async (
   body: ChainSmartContractMethodInvocation,
@@ -24,7 +24,7 @@ export const smartContractWriteMethodInvocation = async (
   const tx: TransactionConfigWithFeeCurrency = {
     from: 0,
     to: contractAddress.trim(),
-    feeCurrency: chain === Currency.CELO? body.feeCurrency : undefined,
+    feeCurrency: chain === Currency.CELO ? body.feeCurrency : undefined,
     value: amount ? `0x${new BigNumber(client.utils.toWei(amount, 'ether')).toString(16)}` : undefined,
     data: contract.methods[methodName as string](...params).encodeABI(),
     gas: chain == Currency.KLAY ? fee?.gasPrice : undefined,

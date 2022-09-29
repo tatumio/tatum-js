@@ -11,7 +11,7 @@ import BigNumber from 'bignumber.js'
 import { Erc20Token } from './contracts'
 import { EvmBasedWeb3 } from './services/evm-based.web3'
 import { EvmBasedSdkError } from './evm-based.sdk.errors'
-import {TransactionConfigWithFeeCurrency} from "./transactions/smartContract";
+import { TransactionConfigWithFeeCurrency } from './transactions/smartContract'
 
 export const evmBasedUtils = {
   generateAddressFromXPub: (xpub: string, i: number): string => {

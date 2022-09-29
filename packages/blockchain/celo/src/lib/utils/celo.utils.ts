@@ -28,7 +28,7 @@ import { BigNumber as BN } from '@ethersproject/bignumber'
 import { CeloProvider, CeloWallet } from '@celo-tools/celo-ethers-wrapper'
 import { SdkErrorCode, WithoutChain } from '@tatumio/shared-abstract-sdk'
 import { Blockchain, httpHelper } from '@tatumio/shared-core'
-import {CELO_CONSTANTS, EvmBasedSdkError, evmBasedUtils} from '@tatumio/shared-blockchain-evm-based'
+import { CELO_CONSTANTS, EvmBasedSdkError, evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
 
 export interface CeloTransactionConfig {
   from?: string

@@ -10,7 +10,12 @@ import {
   ChainStoreDataCelo,
   ChainTransferCeloOrCUsd,
 } from '../../utils/celo.utils'
-import {CELO_CONSTANTS, Erc20Token, EvmBasedSdkError, evmBasedUtils} from '@tatumio/shared-blockchain-evm-based'
+import {
+  CELO_CONSTANTS,
+  Erc20Token,
+  EvmBasedSdkError,
+  evmBasedUtils,
+} from '@tatumio/shared-blockchain-evm-based'
 import { isHex, stringToHex, toHex } from 'web3-utils'
 import { Currency } from '@tatumio/api-client'
 import { SdkError, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
