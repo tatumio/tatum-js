@@ -61,7 +61,7 @@ export const evmBasedUtils = {
     const gasPriceDefined = gasPrice
       ? client.utils.toWei(gasPrice, 'gwei')
       : await web3.getGasPriceInWei(provider)
-    const tx: TransactionConfig = {
+    const tx: TransactionConfigWithFeeCurrency = {
       from: 0,
       gas: gasLimit,
       ...transaction,
