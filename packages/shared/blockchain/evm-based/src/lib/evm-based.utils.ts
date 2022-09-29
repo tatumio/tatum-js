@@ -104,11 +104,12 @@ export const evmBasedUtils = {
     const gasPriceDefined = gasPrice
       ? client.utils.toWei(gasPrice, 'gwei')
       : await web3.getGasPriceInWei(provider)
-    let currentGasPrice;
+    let currentGasPrice
     if (transaction.gasPrice) {
-      currentGasPrice = transaction.gasPrice instanceof BN ?
-        transaction.gasPrice :
-        `0x${new BigNumber(toWei(transaction.gasPrice as string, 'gwei')).toString(16)}`
+      currentGasPrice =
+        transaction.gasPrice instanceof BN
+          ? transaction.gasPrice
+          : `0x${new BigNumber(toWei(transaction.gasPrice as string, 'gwei')).toString(16)}`
     }
 
     const celoTransaction: any = {
