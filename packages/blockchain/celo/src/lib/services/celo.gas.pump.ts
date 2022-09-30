@@ -3,6 +3,7 @@ import Web3 from 'web3'
 import {
   CustodialWalletFactoryV2,
   evmBasedGasPump,
+  evmBasedUtils,
   evmBasedWeb3,
   indexesFromRange,
 } from '@tatumio/shared-blockchain-evm-based'
@@ -10,7 +11,7 @@ import { CeloProvider, CeloWallet } from '@celo-tools/celo-ethers-wrapper'
 import { BigNumber as BN } from '@ethersproject/bignumber/lib/bignumber'
 import BigNumber from 'bignumber.js'
 import { toWei } from 'web3-utils'
-import { celoUtils } from '@tatumio/celo'
+import { celoUtils } from '../utils/celo.utils'
 
 export const celoGasPump = (args: { blockchain: EvmBasedBlockchain; client?: Web3 }) => {
   const evmBasedWeb3Result = evmBasedWeb3(args)
@@ -41,27 +42,20 @@ export const celoGasPump = (args: { blockchain: EvmBasedBlockchain; client?: Web
           data: contract.methods[methodName as string](...params).encodeABI(),
           feeCurrency: body.feeCurrency ? celoUtils.getFeeCurrency(body.feeCurrency, testnet) : undefined,
           params,
-          gasPrice: fee ? fee.gasPrice : undefined,
+          gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+          gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
           methodABI,
         }
 
         const p = new CeloProvider(provider)
         const network = await p.ready
 
-        let currentGasPrice
-        if (transaction.gasPrice) {
-          currentGasPrice =
-            transaction.gasPrice instanceof BN
-              ? transaction.gasPrice
-              : `0x${new BigNumber(toWei(transaction.gasPrice as string, 'gwei')).toString(16)}`
-        }
-
         const celoTransaction: any = {
           chainId: network.chainId,
           feeCurrency: transaction.feeCurrency,
           nonce: transaction.nonce,
           gasLimit: gasLimit ? `0x${new BigNumber(gasLimit).toString(16)}` : undefined,
-          gasPrice: currentGasPrice,
+          gasPrice: transaction.gasPrice,
           to: transaction.to,
           data: transaction.data,
         }
@@ -75,25 +69,12 @@ export const celoGasPump = (args: { blockchain: EvmBasedBlockchain; client?: Web
         }
         const wallet = new CeloWallet(fromPrivateKey as string, p)
 
-        const walletInfo = await obtainWalletInformation(wallet)
+        const walletInfo = await celoUtils.obtainWalletInformation(wallet, transaction.feeCurrency)
 
         celoTransaction.nonce = transaction.nonce || walletInfo.txCount
         celoTransaction.from = walletInfo.from
-
-        const gasLimitDefined = (await wallet.estimateGas(celoTransaction)).add(
-          celoUtils.isCeloAddress(transaction.feeCurrency) ? 0 : 100000,
-        )
-        celoTransaction.gasLimit = gasLimitDefined ? gasLimitDefined.toHexString() : celoTransaction.gasLimit
-        return wallet.signTransaction(celoTransaction)
+        return celoUtils.prepareSignedTransactionAbstraction(wallet, celoTransaction)
       },
     },
-  }
-}
-
-const obtainWalletInformation = async (wallet: CeloWallet) => {
-  const [txCount, from] = await Promise.all([wallet.getTransactionCount(), wallet.getAddress()])
-  return {
-    txCount,
-    from,
   }
 }
