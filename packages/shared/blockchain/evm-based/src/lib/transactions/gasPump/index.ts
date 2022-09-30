@@ -16,6 +16,7 @@ const gasPumpWalletBatch = async (body: any, web3: EvmBasedWeb3, testnet?: boole
     params,
     provider,
     CustodialWalletFactoryV2.abi,
+    testnet,
   )
 }
 

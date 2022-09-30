@@ -1,7 +1,7 @@
 import { expectHexString, REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testing-common'
 import { TatumCeloSDK } from '../celo.sdk'
 import { smartContractTestFactory } from '@tatumio/shared-testing-evm-based'
-import { CeloFeeCurrency, celoUtils } from '../utils/celo.utils'
+import { CeloFeeCurrency } from '../utils/celo.utils'
 import { SdkErrorCode, SdkErrorMessage } from '@tatumio/shared-abstract-sdk'
 import { EvmBasedSdkError } from '@tatumio/shared-blockchain-evm-based'
 import { celoTestFactory } from './celo.test-factory'
@@ -565,6 +565,25 @@ describe('CeloSDK - tx', () => {
             chain: 'CELO',
             owner: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
             batchCount: 1,
+          },
+        })
+      })
+    })
+  })
+
+  describe('Gas Pump', () => {
+    describe('prepare', () => {
+      describe('create custodial wallet', () => {
+        celoTestFactory.testSign({
+          apiFn: (body: any, provider?: string, testnet?: boolean) =>
+            sdk.gasPump.prepare.gasPumpWalletBatch(testnet, body, provider),
+          apiArg: {
+            chain: 'CELO',
+            from: 0,
+            to: 2,
+            feeCurrency: 'CELO',
+            owner: TEST_DATA.CELO.TESTNET.CUSTODIAL.MASTER_ADDRESS,
+            fromPrivateKey: TEST_DATA.CELO.TESTNET.CUSTODIAL.PRIVATE_KEY,
           },
         })
       })

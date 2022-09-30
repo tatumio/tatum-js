@@ -106,8 +106,6 @@ export type ChainStoreDataCelo = WithoutChain<FromPrivateKeyOrSignatureId<Create
 
 export type SmartContractWriteMethodInvocationCelo = FromPrivateKeyOrSignatureId<CallCeloSmartContractMethod>
 
-export type SmartContractReadMethodInvocationCelo = FromPrivateKeyOrSignatureId<CallCeloSmartContractMethod>
-
 export type CeloFeeCurrency = 'CELO' | 'CUSD' | 'CEUR'
 
 export const CELO_CONSTANTS = {
@@ -165,6 +163,9 @@ export const celoUtils = {
           : gasPrice,
       from,
     }
+  },
+  isCeloAddress: (address?: string) => {
+    return address === CELO_CONSTANTS.CELO_ADDRESS_TESTNET || address === CELO_CONSTANTS.CELO_ADDRESS_MAINNET
   },
   isCeloFeeCurrency: (feeCurrency: string): feeCurrency is CeloFeeCurrency => {
     return [Currency.CELO, Currency.CUSD, Currency.CEUR].map((i) => i.toString()).includes(feeCurrency)

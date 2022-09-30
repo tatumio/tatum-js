@@ -8,8 +8,8 @@ import {
   CeloTransactionConfig,
   ChainTransferCeloBlockchain,
   ChainStoreDataCelo,
-  CELO_CONSTANTS,
   ChainTransferCeloOrCUsd,
+  CELO_CONSTANTS,
 } from '../../utils/celo.utils'
 import { Erc20Token, EvmBasedSdkError, evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
 import { isHex, stringToHex, toHex } from 'web3-utils'
