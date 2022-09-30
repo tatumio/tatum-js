@@ -131,7 +131,6 @@ export type ChainDeployMultiToken = FromPrivateKeyOrSignatureId<DeployMultiToken
 
 export type ChainSmartContractMethodInvocation = FromPrivateKeyOrSignatureId<CallSmartContractMethod> & {
   index?: number
-  feeCurrency?: string
 }
 
 export type ChainGenerateCustodialAddress =

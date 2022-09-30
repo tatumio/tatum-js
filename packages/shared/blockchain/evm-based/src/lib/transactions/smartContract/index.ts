@@ -21,27 +21,15 @@ export const smartContractWriteMethodInvocation = async (
 
   const contract = new client.eth.Contract([methodABI])
 
-  const tx: TransactionConfigWithFeeCurrency = {
+  const tx: TransactionConfig = {
     from: 0,
     to: contractAddress.trim(),
-    feeCurrency: chain === Currency.CELO ? body.feeCurrency : undefined,
     value: amount ? `0x${new BigNumber(client.utils.toWei(amount, 'ether')).toString(16)}` : undefined,
     data: contract.methods[methodName as string](...params).encodeABI(),
     gas: chain === Currency.KLAY ? fee?.gasPrice : undefined,
     nonce,
   }
-  return chain === Currency.CELO
-    ? await evmBasedUtils.prepareSignedTransactionAbstractionCelo(
-        client,
-        tx,
-        web3,
-        signatureId,
-        fromPrivateKey,
-        fee?.gasLimit,
-        fee?.gasPrice,
-        provider,
-      )
-    : await evmBasedUtils.prepareSignedTransactionAbstraction(
+  return  await evmBasedUtils.prepareSignedTransactionAbstraction(
         client,
         tx,
         web3,

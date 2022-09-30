@@ -8,10 +8,9 @@ import {
   CeloTransactionConfig,
   ChainTransferCeloBlockchain,
   ChainStoreDataCelo,
-  ChainTransferCeloOrCUsd,
+  ChainTransferCeloOrCUsd, CELO_CONSTANTS,
 } from '../../utils/celo.utils'
 import {
-  CELO_CONSTANTS,
   Erc20Token,
   EvmBasedSdkError,
   evmBasedUtils,

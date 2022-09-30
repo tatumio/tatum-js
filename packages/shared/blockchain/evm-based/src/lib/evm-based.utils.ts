@@ -9,10 +9,8 @@ import { SdkError, SdkErrorCode, toHexString, WithoutChain } from '@tatumio/shar
 import { BigNumber as BN } from '@ethersproject/bignumber'
 import BigNumber from 'bignumber.js'
 import { Erc20Token } from './contracts'
-import { CELO_CONSTANTS, EvmBasedWeb3 } from './services/evm-based.web3'
+import { EvmBasedWeb3 } from './services/evm-based.web3'
 import { EvmBasedSdkError } from './evm-based.sdk.errors'
-import { TransactionConfigWithFeeCurrency } from './transactions/smartContract'
-import { CeloProvider, CeloWallet } from '@celo-tools/celo-ethers-wrapper'
 
 export const evmBasedUtils = {
   generateAddressFromXPub: (xpub: string, i: number): string => {
@@ -87,61 +85,6 @@ export const evmBasedUtils = {
 
     return signedTransaction.rawTransaction
   },
-  prepareSignedTransactionAbstractionCelo: async (
-    client: Web3,
-    transaction: TransactionConfigWithFeeCurrency,
-    web3: EvmBasedWeb3,
-    signatureId?: string,
-    fromPrivateKey?: string,
-    gasLimit?: string,
-    gasPrice?: string,
-    provider?: string,
-  ) => {
-    const p = new CeloProvider(provider)
-    const network = await p.ready
-
-    let currentGasPrice
-    if (transaction.gasPrice) {
-      currentGasPrice =
-        transaction.gasPrice instanceof BN
-          ? transaction.gasPrice
-          : `0x${new BigNumber(toWei(transaction.gasPrice as string, 'gwei')).toString(16)}`
-    }
-
-    const celoTransaction: any = {
-      chainId: network.chainId,
-      feeCurrency: transaction.feeCurrency,
-      nonce: transaction.nonce,
-      gasLimit: gasLimit ? `0x${new BigNumber(gasLimit).toString(16)}` : undefined,
-      gasPrice: currentGasPrice,
-      to: transaction.to,
-      data: transaction.data,
-    }
-
-    if (signatureId) {
-      return JSON.stringify(celoTransaction)
-    }
-
-    if (!fromPrivateKey) {
-      throw new Error('signatureId or fromPrivateKey has to be defined')
-    }
-    const wallet = new CeloWallet(fromPrivateKey as string, p)
-
-    const walletInfo = await obtainWalletInformation(wallet, transaction.feeCurrency)
-
-    celoTransaction.nonce = transaction.nonce || walletInfo.txCount
-    celoTransaction.from = walletInfo.from
-
-    const gasLimitDefined = (await wallet.estimateGas(celoTransaction)).add(
-      evmBasedUtils.isCeloAddress(transaction.feeCurrency) ? 0 : 100000,
-    )
-    celoTransaction.gasLimit = gasLimitDefined ? gasLimitDefined.toHexString() : celoTransaction.gasLimit
-    return wallet.signTransaction(celoTransaction)
-  },
-
-  isCeloAddress: (address?: string) => {
-    return address === CELO_CONSTANTS.CELO_ADDRESS_TESTNET || address === CELO_CONSTANTS.CELO_ADDRESS_MAINNET
-  },
 
   transformToWei: (amount: string, unit = 'ether') => {
     return toWei(amount, unit as Unit)
@@ -205,12 +148,4 @@ export type StoreDataTransactionBody = WithoutChain<CreateRecord> & {
   signatureId?: string
   gasLimit?: string
   gasPrice?: string
-}
-
-const obtainWalletInformation = async (wallet: CeloWallet, feeCurrencyContractAddress?: string) => {
-  const [txCount, from] = await Promise.all([wallet.getTransactionCount(), wallet.getAddress()])
-  return {
-    txCount,
-    from,
-  }
 }
