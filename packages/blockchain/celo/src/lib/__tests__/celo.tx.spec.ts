@@ -571,7 +571,6 @@ describe('CeloSDK - tx', () => {
     })
   })
 
-
   describe('Gas Pump', () => {
     describe('prepare', () => {
       describe('create custodial wallet', () => {
@@ -581,8 +580,8 @@ describe('CeloSDK - tx', () => {
             chain: 'CELO',
             from: 0,
             to: 2,
-            feeCurrency: "CELO",
-            owner: "0x19aa0f538aeae8a0e31bc2f665055ae129e77de5",
+            feeCurrency: 'CELO',
+            owner: '0x19aa0f538aeae8a0e31bc2f665055ae129e77de5',
             fromPrivateKey: TEST_DATA.CELO.TESTNET.CUSTODIAL.PRIVATE_KEY,
           },
         })

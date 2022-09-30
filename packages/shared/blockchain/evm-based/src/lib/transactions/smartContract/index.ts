@@ -29,16 +29,16 @@ export const smartContractWriteMethodInvocation = async (
     gas: chain === Currency.KLAY ? fee?.gasPrice : undefined,
     nonce,
   }
-  return  await evmBasedUtils.prepareSignedTransactionAbstraction(
-        client,
-        tx,
-        web3,
-        signatureId,
-        fromPrivateKey,
-        fee?.gasLimit,
-        fee?.gasPrice,
-        provider,
-      )
+  return await evmBasedUtils.prepareSignedTransactionAbstraction(
+    client,
+    tx,
+    web3,
+    signatureId,
+    fromPrivateKey,
+    fee?.gasLimit,
+    fee?.gasPrice,
+    provider,
+  )
 }
 
 export const smartContractReadMethodInvocation = async (

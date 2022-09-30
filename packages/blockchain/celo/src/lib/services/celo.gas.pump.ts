@@ -1,15 +1,16 @@
-import {EvmBasedBlockchain} from "@tatumio/shared-core";
-import Web3 from "web3";
+import { EvmBasedBlockchain } from '@tatumio/shared-core'
+import Web3 from 'web3'
 import {
   CustodialWalletFactoryV2,
   evmBasedGasPump,
-  evmBasedWeb3, indexesFromRange,
-} from "@tatumio/shared-blockchain-evm-based";
-import {CeloProvider, CeloWallet} from "@celo-tools/celo-ethers-wrapper";
-import {BigNumber as BN} from "@ethersproject/bignumber/lib/bignumber";
-import BigNumber from "bignumber.js";
-import {toWei} from "web3-utils";
-import {celoUtils} from "@tatumio/celo";
+  evmBasedWeb3,
+  indexesFromRange,
+} from '@tatumio/shared-blockchain-evm-based'
+import { CeloProvider, CeloWallet } from '@celo-tools/celo-ethers-wrapper'
+import { BigNumber as BN } from '@ethersproject/bignumber/lib/bignumber'
+import BigNumber from 'bignumber.js'
+import { toWei } from 'web3-utils'
+import { celoUtils } from '@tatumio/celo'
 
 export const celoGasPump = (args: { blockchain: EvmBasedBlockchain; client?: Web3 }) => {
   const evmBasedWeb3Result = evmBasedWeb3(args)
@@ -21,8 +22,7 @@ export const celoGasPump = (args: { blockchain: EvmBasedBlockchain; client?: Web
         const methodName = 'createBatch'
         const contractAddress = evmBasedGasPump().getGasPumpFactoryContractAddress(body.chain, testnet)
         const methodABI: any = CustodialWalletFactoryV2.abi.find((a) => a.name === methodName)
-        const { fromPrivateKey, fee,  signatureId, gasLimit } =
-          body
+        const { fromPrivateKey, fee, signatureId, gasLimit } = body
         const client = args.client ?? evmBasedWeb3Result.getClient(provider, body.fromPrivateKey)
 
         const contract = new client.eth.Contract([methodABI])
@@ -41,7 +41,7 @@ export const celoGasPump = (args: { blockchain: EvmBasedBlockchain; client?: Web
           data: contract.methods[methodName as string](...params).encodeABI(),
           feeCurrency: body.feeCurrency ? celoUtils.getFeeCurrency(body.feeCurrency, testnet) : undefined,
           params,
-          gasPrice: fee? fee.gasPrice: undefined,
+          gasPrice: fee ? fee.gasPrice : undefined,
           methodABI,
         }
 
@@ -85,7 +85,7 @@ export const celoGasPump = (args: { blockchain: EvmBasedBlockchain; client?: Web
         )
         celoTransaction.gasLimit = gasLimitDefined ? gasLimitDefined.toHexString() : celoTransaction.gasLimit
         return wallet.signTransaction(celoTransaction)
-      }
+      },
     },
   }
 }

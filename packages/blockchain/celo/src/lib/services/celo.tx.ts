@@ -4,11 +4,11 @@ import {
   custodial as evmBasedCustodial,
   evmBasedUtils,
   EvmBasedWeb3,
-  gasPump
+  gasPump,
 } from '@tatumio/shared-blockchain-evm-based'
 import { erc721, multiToken, native, erc20, smartContract } from '../transactions'
-import {SdkErrorCode} from "@tatumio/shared-abstract-sdk";
-import {celoGasPump} from "./celo.gas.pump";
+import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
+import { celoGasPump } from './celo.gas.pump'
 
 export const celoTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3 }) => {
   const nativeTxs = native({
