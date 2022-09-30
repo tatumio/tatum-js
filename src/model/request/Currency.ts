@@ -42,6 +42,9 @@ export enum Currency {
   TRON = 'TRON',
   LEO = 'LEO',
   LINK = 'LINK',
+  INTENT = 'INTENT',
+  EURTENT = 'EURTENT',
+  GOLDAX = 'GOLDAX',
   LISK = 'LISK',
   WBTC = 'WBTC',
   UNI = 'UNI',
@@ -135,6 +138,9 @@ export const BEP20_CURRENCIES = [
 export const MATIC20_CURRENCIES = [
   Currency.USDC_MATIC.toString(),
   Currency.GAMEE.toString(),
+  Currency.INTENT.toString(),
+  Currency.EURTENT.toString(),
+  Currency.GOLDAX.toString(),
   Currency.USDT_MATIC.toString(),
 ]
 

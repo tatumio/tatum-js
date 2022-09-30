@@ -252,7 +252,7 @@ export const generateTronWallet = async (mnem: string) => {
 
   return {
     mnemonic: mnem,
-    xpub: bip32Interface.toBase58()
+    xpub: bip32Interface.toBase58(),
   }
 }
 
@@ -374,6 +374,9 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
     case Currency.BSC:
     case Currency.BETH:
     case Currency.GAMEE:
+    case Currency.INTENT:
+    case Currency.EURTENT:
+    case Currency.GOLDAX:
     case Currency.CAKE:
     case Currency.MATIC_ETH:
     case Currency.HAG:

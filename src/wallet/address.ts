@@ -36,10 +36,10 @@ import {
 import { Currency } from '../model';
 import cardano from './cardano.crypto';
 import { generateAddress } from './tron.crypto';
-import validator from "validator";
-import isHexadecimal = validator.isHexadecimal;
-import isBase58 = validator.isBase58;
-import {BIP32Interface} from "bip32/types/bip32";
+import validator from 'validator';
+import { BIP32Interface } from 'bip32/types/bip32';
+import isHexadecimal = validator.isHexadecimal
+import isBase58 = validator.isBase58
 
 const algosdk = require('algosdk');
 const base32 = require('base32.js');
@@ -681,6 +681,9 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
     case Currency.COIIN:
     case Currency.BETH:
     case Currency.GAMEE:
+    case Currency.INTENT:
+    case Currency.EURTENT:
+    case Currency.GOLDAX:
     case Currency.BUSD:
     case Currency.KLAY:
     case Currency.USDC_BSC:
@@ -773,6 +776,9 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
     case Currency.BSC:
     case Currency.BETH:
     case Currency.GAMEE:
+    case Currency.INTENT:
+    case Currency.EURTENT:
+    case Currency.GOLDAX:
     case Currency.BBTC:
     case Currency.BADA:
     case Currency.WBNB:
