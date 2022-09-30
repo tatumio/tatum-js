@@ -8,9 +8,7 @@ import {
   indexesFromRange,
 } from '@tatumio/shared-blockchain-evm-based'
 import { CeloProvider, CeloWallet } from '@celo-tools/celo-ethers-wrapper'
-import { BigNumber as BN } from '@ethersproject/bignumber/lib/bignumber'
 import BigNumber from 'bignumber.js'
-import { toWei } from 'web3-utils'
 import { celoUtils } from '../utils/celo.utils'
 
 export const celoGasPump = (args: { blockchain: EvmBasedBlockchain; client?: Web3 }) => {
@@ -27,37 +25,21 @@ export const celoGasPump = (args: { blockchain: EvmBasedBlockchain; client?: Web
         const client = args.client ?? evmBasedWeb3Result.getClient(provider, body.fromPrivateKey)
 
         const contract = new client.eth.Contract([methodABI])
-
-        const transaction = {
-          fee: body.fee,
-          nonce: body.nonce,
-          fromPrivateKey: body.fromPrivateKey,
-          signatureId: body.signatureId,
-          index: body.index,
-          amount: body.amount,
-          from: 0,
-          to: contractAddress.trim(),
-          contractAddress: body.contractAddress,
-          methodName: methodName,
-          data: contract.methods[methodName as string](...params).encodeABI(),
-          feeCurrency: body.feeCurrency ? celoUtils.getFeeCurrency(body.feeCurrency, testnet) : undefined,
-          params,
-          gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
-          gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
-          methodABI,
-        }
+        const feeCurrencyAddress = body.feeCurrency
+          ? celoUtils.getFeeCurrency(body.feeCurrency, testnet)
+          : undefined
 
         const p = new CeloProvider(provider)
         const network = await p.ready
 
         const celoTransaction: any = {
           chainId: network.chainId,
-          feeCurrency: transaction.feeCurrency,
-          nonce: transaction.nonce,
+          feeCurrency: feeCurrencyAddress,
+          nonce: body.nonce,
           gasLimit: gasLimit ? `0x${new BigNumber(gasLimit).toString(16)}` : undefined,
-          gasPrice: transaction.gasPrice,
-          to: transaction.to,
-          data: transaction.data,
+          gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
+          to: contractAddress.trim(),
+          data: contract.methods[methodName as string](...params).encodeABI(),
         }
 
         if (signatureId) {
@@ -69,9 +51,9 @@ export const celoGasPump = (args: { blockchain: EvmBasedBlockchain; client?: Web
         }
         const wallet = new CeloWallet(fromPrivateKey as string, p)
 
-        const walletInfo = await celoUtils.obtainWalletInformation(wallet, transaction.feeCurrency)
+        const walletInfo = await celoUtils.obtainWalletInformation(wallet, feeCurrencyAddress)
 
-        celoTransaction.nonce = transaction.nonce || walletInfo.txCount
+        celoTransaction.nonce = celoTransaction.nonce || walletInfo.txCount
         celoTransaction.from = walletInfo.from
         return celoUtils.prepareSignedTransactionAbstraction(wallet, celoTransaction)
       },
