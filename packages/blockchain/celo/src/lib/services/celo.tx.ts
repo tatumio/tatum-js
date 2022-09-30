@@ -42,7 +42,7 @@ export const celoTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmB
     },
     gasPump: {
       prepare: {
-        gasPumpWalletBatch: async (body: any, provider?: string, testnet?: boolean) =>
+        gasPumpWalletBatch: async (testnet: boolean, body: any, provider?: string) =>
           evmBasedUtils.tryCatch(
             () => celoGasPump(args).prepare.gasPumpBatch(body, provider, testnet),
             SdkErrorCode.EVM_GAS_PUMP_CANNOT_PREPARE_DEPLOY_BATCH_TX,

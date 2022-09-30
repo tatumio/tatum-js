@@ -575,7 +575,8 @@ describe('CeloSDK - tx', () => {
     describe('prepare', () => {
       describe('create custodial wallet', () => {
         celoTestFactory.testSign({
-          apiFn: sdk.gasPump.prepare.gasPumpWalletBatch,
+          apiFn: (body: any, provider?: string, testnet?: boolean) =>
+            sdk.gasPump.prepare.gasPumpWalletBatch(testnet, body, provider),
           apiArg: {
             chain: 'CELO',
             from: 0,
