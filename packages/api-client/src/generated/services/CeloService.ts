@@ -11,7 +11,7 @@ import type { Data } from '../models/Data';
 import type { PrivKey } from '../models/PrivKey';
 import type { PrivKeyRequest } from '../models/PrivKeyRequest';
 import type { SignatureId } from '../models/SignatureId';
-import type { TransactionHashKMS } from '../models/TransactionHashKMS';
+import type { TransactionHash } from '../models/TransactionHash';
 import type { TransferCeloBlockchain } from '../models/TransferCeloBlockchain';
 import type { TransferCeloBlockchainKMS } from '../models/TransferCeloBlockchainKMS';
 import type { Wallet } from '../models/Wallet';
@@ -317,7 +317,7 @@ export class CeloService {
      */
     public static celoBlockchainTransfer(
         requestBody: (TransferCeloBlockchain | TransferCeloBlockchainKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/celo/transaction`,
@@ -352,7 +352,7 @@ export class CeloService {
      */
     public static celoBlockchainSmartContractInvocation(
         requestBody: (CallCeloReadSmartContractMethod | CallCeloSmartContractMethod | CallCeloSmartContractMethodKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId | Data)> {
+    ): CancelablePromise<(TransactionHash | SignatureId | Data)> {
         return __request({
             method: 'POST',
             path: `/v3/celo/smartcontract`,
@@ -374,12 +374,12 @@ export class CeloService {
      * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
      *
      * @param requestBody
-     * @returns TransactionHashKMS OK
+     * @returns TransactionHash OK
      * @throws ApiError
      */
     public static celoBroadcast(
         requestBody: BroadcastKMS,
-    ): CancelablePromise<TransactionHashKMS> {
+    ): CancelablePromise<TransactionHash> {
         return __request({
             method: 'POST',
             path: `/v3/celo/broadcast`,

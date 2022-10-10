@@ -1,3 +1,4 @@
+import { BtcTransactionFromUTXO } from '@tatumio/api-client';
 import { TatumBtcSDK } from '@tatumio/btc'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
@@ -19,17 +20,18 @@ export async function btcTransactionsExample() {
           value: 0.00015,
         },
       ],
-    },
+      fee: '0.00001',
+      change: 'tb1q9x2gqftyxterwt0k6ehzrm2gkzthjly677ucyr',
+    } as BtcTransactionFromUTXO,
     { testnet: true },
   )
 
-  // @TODO add change param
-  const { txId, failed } = await btcSDK.transaction.sendTransaction(
+  const { txId } = await btcSDK.transaction.sendTransaction(
     {
       fromAddress: [
         {
           address: 'tb1q9x2gqftyxterwt0k6ehzrm2gkzthjly677ucyr',
-          privateKey: 'cQ1YZMep3CiAnMTA9y62ha6BjGaaTFsTvtDuGmucGvpAVmS89khV',
+          privateKey: '26d3883e-4e17-48b3-a0ee-09a3e484ac83',
         },
       ],
       to: [
@@ -38,6 +40,8 @@ export async function btcTransactionsExample() {
           value: 0.00015,
         },
       ],
+      fee: '0.00001',
+      changeAddress: 'tb1q9x2gqftyxterwt0k6ehzrm2gkzthjly677ucyr',
     },
     { testnet: true },
   )

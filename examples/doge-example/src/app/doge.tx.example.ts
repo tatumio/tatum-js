@@ -22,11 +22,13 @@ export async function dogeTransactionsExample() {
           value: 0.00015,
         },
       ],
+      fee: '0.00001',
+      changeAddress: 'n36h3pAH7sC3z8KMB47BjbqvW2aJd2oTi7',
     } as DogeTransactionUTXO,
     { testnet: true },
   )
 
-  const { txId, failed } = await dogeSDK.transaction.sendTransaction(
+  const { txId } = await dogeSDK.transaction.sendTransaction(
     {
       fromUTXO: [
         {
@@ -43,6 +45,8 @@ export async function dogeTransactionsExample() {
           value: 0.00015,
         },
       ],
+      fee: '0.00001',
+      changeAddress: 'n36h3pAH7sC3z8KMB47BjbqvW2aJd2oTi7',
     } as DogeTransactionUTXO,
     { testnet: true },
   )

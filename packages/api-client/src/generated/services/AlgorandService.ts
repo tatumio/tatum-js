@@ -10,7 +10,7 @@ import type { BroadcastKMS } from '../models/BroadcastKMS';
 import type { ReceiveAlgorandAsset } from '../models/ReceiveAlgorandAsset';
 import type { ReceiveAlgorandAssetKMS } from '../models/ReceiveAlgorandAssetKMS';
 import type { SignatureId } from '../models/SignatureId';
-import type { TransactionHashKMS } from '../models/TransactionHashKMS';
+import type { TransactionHash } from '../models/TransactionHash';
 import type { TransferAlgorandBlockchain } from '../models/TransferAlgorandBlockchain';
 import type { TransferAlgorandBlockchainKMS } from '../models/TransferAlgorandBlockchainKMS';
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -260,15 +260,13 @@ export class AlgorandService {
     }
 
     /**
-     * Send ALGO from account to account
-     * <h4>2 credits per API call.</h4><br/>
-     * <p>Send ALGO from account to account.<br/><br/>
-     * This operation needs the private key of the blockchain address.
-     * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey
-     * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-     * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
-     * Alternatively, using the Tatum client library for supported languages.
-     * </p>
+     * Send Algos to an Algorand account
+     * <p><b>2 credits per API call</b></p>
+     * <p>Send Algos from one Algorand address to the other one.</p>
+     * <p><b>Signing a transaction</b></p>
+     * <p>When sending Algos, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
      * @returns any OK
@@ -276,7 +274,7 @@ export class AlgorandService {
      */
     public static algorandBlockchainTransfer(
         requestBody: (TransferAlgorandBlockchain | TransferAlgorandBlockchainKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/algorand/transaction`,
@@ -307,7 +305,7 @@ export class AlgorandService {
      */
     public static algorandBlockchainReceiveAsset(
         requestBody: (ReceiveAlgorandAsset | ReceiveAlgorandAssetKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/algorand/asset/receive`,

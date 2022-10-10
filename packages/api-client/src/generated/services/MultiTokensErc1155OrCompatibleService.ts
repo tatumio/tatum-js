@@ -27,7 +27,7 @@ import type { MintMultiTokenKMS } from '../models/MintMultiTokenKMS';
 import type { MintMultiTokenKMSCelo } from '../models/MintMultiTokenKMSCelo';
 import type { MultiTx } from '../models/MultiTx';
 import type { SignatureId } from '../models/SignatureId';
-import type { TransactionHashKMS } from '../models/TransactionHashKMS';
+import type { TransactionHash } from '../models/TransactionHash';
 import type { TransferMultiToken } from '../models/TransferMultiToken';
 import type { TransferMultiTokenBatch } from '../models/TransferMultiTokenBatch';
 import type { TransferMultiTokenBatchCelo } from '../models/TransferMultiTokenBatchCelo';
@@ -69,7 +69,7 @@ export class MultiTokensErc1155OrCompatibleService {
     public static deployMultiToken(
         requestBody: (DeployMultiToken | DeployMultiTokenKMS | DeployMultiTokenCelo | DeployMultiTokenCeloKMS),
         xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/multitoken/deploy`,
@@ -115,7 +115,7 @@ export class MultiTokensErc1155OrCompatibleService {
     public static mintMultiToken(
         requestBody: (MintMultiToken | MintMultiTokenKMS | MintMultiTokenCelo | MintMultiTokenKMSCelo),
         xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/multitoken/mint`,
@@ -160,7 +160,7 @@ export class MultiTokensErc1155OrCompatibleService {
     public static mintMultiTokenBatch(
         requestBody: (MintMultiTokenBatch | MintMultiTokenBatchKMS | MintMultiTokenBatchCelo | MintMultiTokenBatchKMSCelo),
         xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/multitoken/mint/batch`,
@@ -206,7 +206,7 @@ export class MultiTokensErc1155OrCompatibleService {
     public static burnMultiToken(
         requestBody: (BurnMultiToken | BurnMultiTokenKMS | BurnMultiTokenCelo | BurnMultiTokenKMSCelo),
         xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/multitoken/burn`,
@@ -251,7 +251,7 @@ export class MultiTokensErc1155OrCompatibleService {
     public static burnMultiTokenBatch(
         requestBody: (BurnMultiTokenBatch | BurnMultiTokenBatchKMS | BurnMultiTokenBatchCelo | BurnMultiTokenBatchKMSCelo),
         xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/multitoken/burn/batch`,
@@ -298,7 +298,7 @@ export class MultiTokensErc1155OrCompatibleService {
     public static transferMultiToken(
         requestBody: (TransferMultiToken | TransferMultiTokenCelo | TransferMultiTokenKMS | TransferMultiTokenKMSCelo),
         xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/multitoken/transaction`,
@@ -344,7 +344,7 @@ export class MultiTokensErc1155OrCompatibleService {
     public static transferMultiTokenBatch(
         requestBody: (TransferMultiTokenBatch | TransferMultiTokenBatchKMS | TransferMultiTokenBatchCelo | TransferMultiTokenBatchKMSCelo),
         xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/multitoken/transaction/batch`,
@@ -389,7 +389,7 @@ export class MultiTokensErc1155OrCompatibleService {
     public static addMultiTokenMinter(
         requestBody: (AddMultiTokenMinter | AddMultiTokenMinterKMS),
         xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/multitoken/mint/add`,

@@ -3,7 +3,7 @@
 /* eslint-disable */
 import type { BroadcastKMS } from '../models/BroadcastKMS';
 import type { SignatureId } from '../models/SignatureId';
-import type { TransactionHashKMS } from '../models/TransactionHashKMS';
+import type { TransactionHash } from '../models/TransactionHash';
 import type { TransferXlmBlockchain } from '../models/TransferXlmBlockchain';
 import type { TransferXlmBlockchainAsset } from '../models/TransferXlmBlockchainAsset';
 import type { TransferXlmBlockchainKMS } from '../models/TransferXlmBlockchainKMS';
@@ -207,7 +207,7 @@ export class StellarService {
      */
     public static xlmTransferBlockchain(
         requestBody: (TransferXlmBlockchain | TransferXlmBlockchainAsset | TransferXlmBlockchainKMS | TransferXlmBlockchainKMSAsset),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/xlm/transaction`,
@@ -240,7 +240,7 @@ export class StellarService {
      */
     public static xlmTrustLineBlockchain(
         requestBody: (TrustLineXlmBlockchain | TrustLineXlmBlockchainKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/xlm/trust`,
@@ -259,15 +259,15 @@ export class StellarService {
      * Broadcast signed XLM transaction
      * <h4>5 credits per API call.</h4><br/>
      * <p>Broadcast signed transaction to XLM blockchain. This method is used internally from Tatum KMS, Tatum Middleware or Tatum client libraries.
-     * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
+     * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchain.</p>
      *
      * @param requestBody
-     * @returns TransactionHashKMS OK
+     * @returns TransactionHash OK
      * @throws ApiError
      */
     public static xlmBroadcast(
         requestBody: BroadcastKMS,
-    ): CancelablePromise<TransactionHashKMS> {
+    ): CancelablePromise<TransactionHash> {
         return __request({
             method: 'POST',
             path: `/v3/xlm/broadcast`,

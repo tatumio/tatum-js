@@ -4,23 +4,23 @@
 
 export type TransferAlgorandBlockchain = {
     /**
-     * Blockchain sender address
+     * The blockchain address of the sender
      */
     from: string;
     /**
-     * Blockchain address to send algo
+     * The blockchain address of the recipient
      */
     to: string;
     /**
-     * Transaction fee in Algos.
+     * The transaction fee in Algos
      */
-    fee?: string;
+    fee: string;
     /**
-     * Amount to be sent in Algos.
+     * The amount to send in Algos
      */
     amount: string;
     /**
-     * Helloworld
+     * The note for the recipient; must not contain spaces
      */
     note?: string;
     /**

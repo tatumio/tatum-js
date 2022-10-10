@@ -4,20 +4,18 @@ import {
   BtcTransactionFromAddressKMS,
   BtcTransactionFromUTXO,
   BtcTransactionFromUTXOKMS,
-  BtcUTXO,
   LtcTransactionAddress,
   LtcTransactionAddressKMS,
   LtcTransactionUTXO,
   LtcTransactionUTXOKMS,
-  LtcUTXO,
-  TransactionHashKMS,
+  TransactionHash,
 } from '@tatumio/api-client'
 import { PrivateKey, Script, Transaction } from 'bitcore-lib'
 import { amountUtils, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { BtcBasedSdkError } from '../btc-based.sdk.errors'
 
 export type BtcBasedTx<T> = {
-  sendTransaction: (body: T, options: { testnet: boolean }) => Promise<TransactionHashKMS>
+  sendTransaction: (body: T, options: { testnet: boolean }) => Promise<TransactionHash>
   prepareSignedTransaction: (body: T, options: { testnet: boolean }) => Promise<string>
 }
 

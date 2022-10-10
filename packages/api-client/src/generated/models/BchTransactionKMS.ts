@@ -33,4 +33,12 @@ export type BchTransactionKMS = {
          */
         value: number;
     }>;
+    /**
+     * Fee to be paid in BCH.
+     */
+    fee?: string;
+    /**
+     * Address, where unspent funds will be transferred.
+     */
+    changeAddress?: string;
 }

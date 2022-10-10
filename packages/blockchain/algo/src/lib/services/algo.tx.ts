@@ -27,9 +27,8 @@ function isTransferAlgoKMS(input: TransferAlgo | TransferAlgoKMS): input is Tran
 }
 
 // TODO: Probably missing in OpenAPI spec
-export type TransferAlgo = Omit<ApiTransferAlgo, 'senderAccountId'> & Pick<TransferErc721, 'fee'>
-export type TransferAlgoKMS = Omit<ApiTransferAlgoKMS, 'senderAccountId'> &
-  Pick<TransferErc721, 'fee'> & { from: string }
+export type TransferAlgo = Omit<ApiTransferAlgo, 'senderAccountId'>
+export type TransferAlgoKMS = Omit<ApiTransferAlgoKMS, 'senderAccountId'> & { from: string, fee: string }
 
 const prepareSignedTransaction = async (
   body: TransferAlgo | TransferAlgoKMS,

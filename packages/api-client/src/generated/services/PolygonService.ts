@@ -12,7 +12,7 @@ import type { PolygonTx } from '../models/PolygonTx';
 import type { PrivKey } from '../models/PrivKey';
 import type { PrivKeyRequest } from '../models/PrivKeyRequest';
 import type { SignatureId } from '../models/SignatureId';
-import type { TransactionHashKMS } from '../models/TransactionHashKMS';
+import type { TransactionHash } from '../models/TransactionHash';
 import type { TransferPolygonBlockchain } from '../models/TransferPolygonBlockchain';
 import type { TransferPolygonBlockchainKMS } from '../models/TransferPolygonBlockchainKMS';
 import type { Wallet } from '../models/Wallet';
@@ -309,7 +309,7 @@ export class PolygonService {
      */
     public static polygonBlockchainTransfer(
         requestBody: (TransferPolygonBlockchain | TransferPolygonBlockchainKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/polygon/transaction`,
@@ -345,7 +345,7 @@ export class PolygonService {
      */
     public static polygonBlockchainSmartContractInvocation(
         requestBody: (CallPolygonSmartContractReadMethod | CallPolygonSmartContractMethod | CallPolygonSmartContractMethodCaller | CallPolygonSmartContractMethodKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId | Data)> {
+    ): CancelablePromise<(TransactionHash | SignatureId | Data)> {
         return __request({
             method: 'POST',
             path: `/v3/polygon/smartcontract`,
@@ -367,12 +367,12 @@ export class PolygonService {
      * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
      *
      * @param requestBody
-     * @returns TransactionHashKMS OK
+     * @returns TransactionHash OK
      * @throws ApiError
      */
     public static polygonBroadcast(
         requestBody: BroadcastKMS,
-    ): CancelablePromise<TransactionHashKMS> {
+    ): CancelablePromise<TransactionHash> {
         return __request({
             method: 'POST',
             path: `/v3/polygon/broadcast`,

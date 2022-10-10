@@ -33,4 +33,12 @@ export type BtcTransactionFromUTXO = {
          */
         value: number;
     }>;
+    /**
+     * Fee to be paid in BTC.
+     */
+    fee?: string;
+    /**
+     * Address, where unspent funds will be transferred.
+     */
+    changeAddress?: string;
 }

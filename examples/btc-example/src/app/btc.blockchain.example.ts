@@ -40,5 +40,7 @@ export async function btcBlockchainExample() {
         value: 0.02969944,
       },
     ],
+    fee: '0.001',
+    changeA: '2N9bBiH2qrTDrPCzrNhaFGdkNKS86PJAAAS',
   } as BtcTransactionFromAddress)
 }

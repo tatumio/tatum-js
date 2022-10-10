@@ -11,7 +11,7 @@ import type { KlaytnTx } from '../models/KlaytnTx';
 import type { PrivKey } from '../models/PrivKey';
 import type { PrivKeyRequest } from '../models/PrivKeyRequest';
 import type { SignatureId } from '../models/SignatureId';
-import type { TransactionHashKMS } from '../models/TransactionHashKMS';
+import type { TransactionHash } from '../models/TransactionHash';
 import type { TransferKlaytnBlockchain } from '../models/TransferKlaytnBlockchain';
 import type { TransferKlaytnBlockchainKMS } from '../models/TransferKlaytnBlockchainKMS';
 import type { Wallet } from '../models/Wallet';
@@ -266,7 +266,7 @@ export class KlaytnService {
      */
     public static klaytnBlockchainTransfer(
         requestBody: (TransferKlaytnBlockchain | TransferKlaytnBlockchainKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/klaytn/transaction`,
@@ -301,7 +301,7 @@ export class KlaytnService {
      */
     public static klaytnBlockchainSmartContractInvocation(
         requestBody: (CallKlaytnSmartContractReadMethod | CallKlaytnSmartContractMethod | CallKlaytnSmartContractMethodKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId | Data)> {
+    ): CancelablePromise<(TransactionHash | SignatureId | Data)> {
         return __request({
             method: 'POST',
             path: `/v3/klaytn/smartcontract`,
@@ -323,12 +323,12 @@ export class KlaytnService {
      * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
      *
      * @param requestBody
-     * @returns TransactionHashKMS OK
+     * @returns TransactionHash OK
      * @throws ApiError
      */
     public static klaytnBroadcast(
         requestBody: BroadcastKMS,
-    ): CancelablePromise<TransactionHashKMS> {
+    ): CancelablePromise<TransactionHash> {
         return __request({
             method: 'POST',
             path: `/v3/klaytn/broadcast`,

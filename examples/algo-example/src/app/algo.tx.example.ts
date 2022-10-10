@@ -1,24 +1,25 @@
 import { TatumAlgoSDK } from '@tatumio/algo'
-import { DeployNftKMS } from '@tatumio/api-client'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
 const algoSDK = TatumAlgoSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function algoTxWithPrivateKeyExample(): Promise<void> {
-  const preparedDeployTrc10Transaction = await algoSDK.transaction.prepare.signedTransaction({
+  const preparedAlgoTransaction = await algoSDK.transaction.prepare.signedTransaction({
     amount: '10',
     privateKey:
       '72TCV5BRQPBMSAFPYO3CPWVDBYWNGAYNMTW5QHENOMQF7I6QLNMJWCJZ7A3V5YKD7QD6ZZPEHG2PV2ZVVEDDO6BCRGXWIL3DIUMSUCI',
     address: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
     account: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
+    fee: '0.001'
   })
 
-  const sentDeployTrc10Transaction = await algoSDK.transaction.send.signedTransaction({
+  const sentAlgoTransaction = await algoSDK.transaction.send.signedTransaction({
     amount: '10',
     privateKey:
       '72TCV5BRQPBMSAFPYO3CPWVDBYWNGAYNMTW5QHENOMQF7I6QLNMJWCJZ7A3V5YKD7QD6ZZPEHG2PV2ZVVEDDO6BCRGXWIL3DIUMSUCI',
     address: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
     account: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
+    fee: '0.001',
   })
 
   const preparedDeployNFTTransaction = await algoSDK.nft.prepare.createNFTSignedTransaction({
@@ -75,6 +76,7 @@ export async function algoTxWithSignatureIdExample(): Promise<void> {
     account: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
     signatureId: '26d3883e-4e17-48b3-a0ee-09a3e484ac83',
     from: '687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    fee: '0.001'
   })
 
   const sentDeployTrc10Transaction = await algoSDK.transaction.send.signedTransaction({
@@ -83,6 +85,7 @@ export async function algoTxWithSignatureIdExample(): Promise<void> {
     address: 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh',
     account: 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ',
     from: '687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    fee: '0.001'
   })
 
   const preparedDeployNFTTransaction = await algoSDK.nft.prepare.createNFTSignedTransaction({

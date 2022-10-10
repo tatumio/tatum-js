@@ -22,7 +22,7 @@ import type { GenerateAuctionCelo } from '../models/GenerateAuctionCelo';
 import type { GenerateAuctionCeloKMS } from '../models/GenerateAuctionCeloKMS';
 import type { GenerateAuctionKMS } from '../models/GenerateAuctionKMS';
 import type { SignatureId } from '../models/SignatureId';
-import type { TransactionHashKMS } from '../models/TransactionHashKMS';
+import type { TransactionHash } from '../models/TransactionHash';
 import type { UpdateFee } from '../models/UpdateFee';
 import type { UpdateFeeCelo } from '../models/UpdateFeeCelo';
 import type { UpdateFeeCeloKMS } from '../models/UpdateFeeCeloKMS';
@@ -65,7 +65,7 @@ export class AuctionService {
      */
     public static generateAuction(
         requestBody: (GenerateAuction | GenerateAuctionKMS | GenerateAuctionCelo | GenerateAuctionCeloKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/blockchain/auction`,
@@ -103,7 +103,7 @@ export class AuctionService {
      */
     public static createAuction(
         requestBody: (CreateAuction | CreateAuctionKMS | CreateAuctionCelo | CreateAuctionCeloKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/blockchain/auction/sell`,
@@ -142,7 +142,7 @@ export class AuctionService {
      */
     public static bidOnAuction(
         requestBody: (BidOnAuction | BidOnAuctionKMS | BidOnAuctionCelo | BidOnAuctionCeloKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/blockchain/auction/bid`,
@@ -180,7 +180,7 @@ export class AuctionService {
      */
     public static cancelAuction(
         requestBody: (CancelOrSettleAuction | CancelOrSettleAuctionKMS | CancelOrSettleAuctionCelo | CancelOrSettleAuctionCeloKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/blockchain/auction/cancel`,
@@ -218,7 +218,7 @@ export class AuctionService {
      */
     public static settleAuction(
         requestBody: (CancelOrSettleAuction | CancelOrSettleAuctionKMS | CancelOrSettleAuctionCelo | CancelOrSettleAuctionCeloKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/blockchain/auction/settle`,
@@ -254,7 +254,7 @@ export class AuctionService {
      */
     public static approveNftAuctionSpending(
         requestBody: (ApproveNftSpending | ApproveNftSpendingKMS | ApproveNftSpendingCelo | ApproveNftSpendingCeloKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/blockchain/auction/approve`,
@@ -410,7 +410,7 @@ export class AuctionService {
      */
     public static updateAuctionFeeRecipient(
         requestBody: (UpdateFeeRecipient | UpdateFeeRecipientKMS | UpdateFeeRecipientCelo | UpdateFeeRecipientCeloKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'PUT',
             path: `/v3/blockchain/auction/recipient`,
@@ -446,7 +446,7 @@ export class AuctionService {
      */
     public static updateAuctionFee(
         requestBody: (UpdateFee | UpdateFeeKMS | UpdateFeeCelo | UpdateFeeCeloKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'PUT',
             path: `/v3/blockchain/auction/fee`,

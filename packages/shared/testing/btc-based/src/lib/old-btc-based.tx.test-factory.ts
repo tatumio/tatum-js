@@ -2,7 +2,7 @@ import '@tatumio/shared-testing-common'
 import { BtcBasedTx } from '@tatumio/shared-blockchain-btc-based'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { testHelper } from '@tatumio/shared-testing-common'
-import { BroadcastKMS, CancelablePromise, TransactionHashKMS } from '@tatumio/api-client'
+import { BroadcastKMS, CancelablePromise, TransactionHash } from '@tatumio/api-client'
 
 //deprecated - should be removed after
 export const oldBtcBasedTxTestFactory = {
@@ -18,7 +18,7 @@ export const oldBtcBasedTxTestFactory = {
       requestGetRawTx: (obj?: unknown) => void
       requestGetUtxo: (obj?: unknown) => void
       requestGetUtxoNotFound: () => void
-      broadcast: ((requestBody: BroadcastKMS) => CancelablePromise<TransactionHashKMS>) & jest.Mock
+      broadcast: ((requestBody: BroadcastKMS) => CancelablePromise<TransactionHash>) & jest.Mock
     }
     skipTest?: {
       noOutputs?: boolean
@@ -100,7 +100,7 @@ export const oldBtcBasedTxTestFactory = {
       requestGetTxByAddress: (obj?: { outputs: [] }) => void
       requestGetUtxo: (obj?: unknown) => void
       requestGetUtxoNotFound: () => void
-      broadcast: ((requestBody: BroadcastKMS) => CancelablePromise<TransactionHashKMS>) & jest.Mock
+      broadcast: ((requestBody: BroadcastKMS) => CancelablePromise<TransactionHash>) & jest.Mock
     }
   }) => {
     const options = { testnet: true }

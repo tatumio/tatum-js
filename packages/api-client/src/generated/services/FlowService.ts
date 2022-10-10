@@ -18,7 +18,6 @@ import type { PrivKey } from '../models/PrivKey';
 import type { PrivKeyRequest } from '../models/PrivKeyRequest';
 import type { SignatureId } from '../models/SignatureId';
 import type { TransactionHash } from '../models/TransactionHash';
-import type { TransactionHashKMS } from '../models/TransactionHashKMS';
 import type { Wallet } from '../models/Wallet';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
@@ -282,7 +281,7 @@ export class FlowService {
      */
     public static flowTransferBlockchain(
         requestBody: (FlowTransactionMnemonic | FlowTransactionPK | FlowTransactionKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/flow/transaction`,
@@ -319,7 +318,7 @@ export class FlowService {
      */
     public static flowTransferCustomBlockchain(
         requestBody: (FlowCustomTransactionMnemonic | FlowCustomTransactionPK | FlowCustomTransactionKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/flow/transaction/custom`,

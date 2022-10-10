@@ -13,7 +13,7 @@ import BigNumber from 'bignumber.js'
 import { CustodialFullTokenWallet } from '../../contracts'
 import { evmBasedSmartContract } from '../../services/evm-based.smartContract'
 import { evmBasedUtils } from '../../evm-based.utils'
-import { ApiServices, GenerateCustodialWalletBatchPayer, TransactionHashKMS } from '@tatumio/api-client'
+import { ApiServices, GenerateCustodialWalletBatchPayer, TransactionHash } from '@tatumio/api-client'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 const transferFromCustodialWallet = async (
@@ -81,7 +81,7 @@ const approveFromCustodialWallet = async (
 
 const generateCustodialBatch = async (body: GenerateCustodialWalletBatchPayer) => {
   const request = await ApiServices.blockchain.gasPump.generateCustodialWalletBatch(body)
-  if (!(request as TransactionHashKMS)?.failed) return (request as TransactionHashKMS)?.txId
+  if (request) return (request as TransactionHash).txId
   else throw new Error('Unable to generate custodial wallet address.')
 }
 

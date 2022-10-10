@@ -14,13 +14,13 @@ import { Erc721_Provenance } from '../../contracts'
 import { EvmBasedWeb3 } from '../../services/evm-based.web3'
 import { evmBasedUtils } from '../../evm-based.utils'
 import BigNumber from 'bignumber.js'
-import { ApiServices, MintNftMinter, TransactionHashKMS } from '@tatumio/api-client'
+import { ApiServices, MintNftMinter, TransactionHash } from '@tatumio/api-client'
 import { Erc721Token_General } from '../../contracts/erc721General'
 import { Erc721Token_Cashback } from '../../contracts/erc721Cashback'
 
 const mintSignedTransactionMinter = async (body: MintNftMinter) => {
   const request = await ApiServices.nft.nftMintErc721(body)
-  if (!(request as TransactionHashKMS)?.failed) return (request as TransactionHashKMS)?.txId
+  if (request) return (request as TransactionHash).txId
   else throw new Error('Unable to mint NFT with a minter.')
 }
 

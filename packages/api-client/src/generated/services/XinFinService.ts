@@ -9,7 +9,7 @@ import type { Data } from '../models/Data';
 import type { PrivKey } from '../models/PrivKey';
 import type { PrivKeyRequest } from '../models/PrivKeyRequest';
 import type { SignatureId } from '../models/SignatureId';
-import type { TransactionHashKMS } from '../models/TransactionHashKMS';
+import type { TransactionHash } from '../models/TransactionHash';
 import type { TransferXdcBlockchain } from '../models/TransferXdcBlockchain';
 import type { TransferXdcBlockchainKMS } from '../models/TransferXdcBlockchainKMS';
 import type { Wallet } from '../models/Wallet';
@@ -278,7 +278,7 @@ export class XinFinService {
      */
     public static xdcBlockchainTransfer(
         requestBody: (TransferXdcBlockchain | TransferXdcBlockchainKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/xdc/transaction`,
@@ -313,7 +313,7 @@ export class XinFinService {
      */
     public static xdcBlockchainSmartContractInvocation(
         requestBody: (CallXdcReadSmartContractMethod | CallXdcSmartContractMethod | CallXdcSmartContractMethodKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId | Data)> {
+    ): CancelablePromise<(TransactionHash | SignatureId | Data)> {
         return __request({
             method: 'POST',
             path: `/v3/xdc/smartcontract`,
@@ -335,12 +335,12 @@ export class XinFinService {
      * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
      *
      * @param requestBody
-     * @returns TransactionHashKMS OK
+     * @returns TransactionHash OK
      * @throws ApiError
      */
     public static xdcBroadcast(
         requestBody: BroadcastKMS,
-    ): CancelablePromise<TransactionHashKMS> {
+    ): CancelablePromise<TransactionHash> {
         return __request({
             method: 'POST',
             path: `/v3/xdc/broadcast`,

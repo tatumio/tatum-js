@@ -40,7 +40,7 @@ import {
   SellAssetOnMarketplace,
   SignatureId,
   TatumUrl,
-  TransactionHashKMS,
+  TransactionHash,
   TransferCustodialWallet,
   TransferCustodialWalletBatch,
   TransferCustodialWalletBatchCelo,
@@ -310,4 +310,4 @@ export interface SdkWithKmsFunctions {
   get(id: string): CancelablePromise<PendingTransaction>
 }
 
-export type BroadcastFunction = (requestBody: BroadcastKMS) => CancelablePromise<TransactionHashKMS>
+export type BroadcastFunction = (requestBody: BroadcastKMS) => CancelablePromise<TransactionHash>

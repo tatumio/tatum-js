@@ -10,11 +10,15 @@ import type { EstimateFeeFromAddress } from '../models/EstimateFeeFromAddress';
 import type { EstimateFeeFromUTXO } from '../models/EstimateFeeFromUTXO';
 import type { EstimateFeeTransferFromCustodial } from '../models/EstimateFeeTransferFromCustodial';
 import type { EthEstimateGas } from '../models/EthEstimateGas';
+import type { EthEstimateGasArray } from '../models/EthEstimateGasArray';
+import type { EthGasEstimation } from '../models/EthGasEstimation';
+import type { EthGasEstimationBatch } from '../models/EthGasEstimationBatch';
 import type { FeeBtc } from '../models/FeeBtc';
 import type { FeeETH } from '../models/FeeETH';
 import type { KcsEstimateGas } from '../models/KcsEstimateGas';
 import type { KlaytnEstimateGas } from '../models/KlaytnEstimateGas';
 import type { PolygonEstimateGas } from '../models/PolygonEstimateGas';
+import type { TransactionFeeEgldBlockchain } from '../models/TransactionFeeEgldBlockchain';
 import type { VetEstimateGas } from '../models/VetEstimateGas';
 import type { XdcEstimateGas } from '../models/XdcEstimateGas';
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -37,7 +41,6 @@ export class BlockchainFeesService {
      * <li>Klaytn</li>
      * <li>Binance Smart Chain</li>
      * <li>Polygon</li>
-     * <li>Elrond</li>
      * </ul>
      * </p>
      *
@@ -70,43 +73,13 @@ export class BlockchainFeesService {
      *
      * @param requestBody
      * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
-     * @returns any OK
+     * @returns EthGasEstimation OK
      * @throws ApiError
      */
     public static ethEstimateGas(
         requestBody: EthEstimateGas,
         xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-    ): CancelablePromise<{
-        /**
-         * Gas limit for transaction in gas price.
-         */
-        gasLimit: string;
-        /**
-         * Gas price in wei.
-         */
-        gasPrice: string;
-        /**
-         * Detailed estimations for safe (under 30 minutes), standard (under 5 minutes) and fast (under 2 minutes) transaction times.
-         */
-        estimations: {
-            /**
-             * Safe gas price in wei.
-             */
-            safe: string;
-            /**
-             * Standard gas price in wei.
-             */
-            standard: string;
-            /**
-             * Fast gas price in wei.
-             */
-            fast: string;
-            /**
-             * Base fee for EIP-1559 transactions in wei.
-             */
-            baseFee: string;
-        };
-    }> {
+    ): CancelablePromise<EthGasEstimation> {
         return __request({
             method: 'POST',
             path: `/v3/ethereum/gas`,
@@ -134,65 +107,13 @@ export class BlockchainFeesService {
      *
      * @param requestBody
      * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
-     * @returns any OK
+     * @returns EthGasEstimationBatch OK
      * @throws ApiError
      */
     public static ethEstimateGasBatch(
-        requestBody: {
-            estimations: Array<EthEstimateGas>;
-        },
+        requestBody: EthEstimateGasArray,
         xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-    ): CancelablePromise<{
-        /**
-         * If all estimations succeeded.
-         */
-        error: boolean;
-        result: Array<{
-            /**
-             * If estimation succeeded.
-             */
-            error: boolean;
-            /**
-             * Contract address of ERC20 token, if transaction is ERC20 token
-             */
-            contractAddress?: string;
-            data?: {
-                /**
-                 * Gas limit for transaction in gas price.
-                 */
-                gasLimit: string;
-                /**
-                 * Gas price in wei.
-                 */
-                gasPrice: string;
-                /**
-                 * Detailed estimations for safe (under 30 minutes), standard (under 5 minutes) and fast (under 2 minutes) transaction times.
-                 */
-                estimations: {
-                    /**
-                     * Safe gas price in wei.
-                     */
-                    safe: string;
-                    /**
-                     * Standard gas price in wei.
-                     */
-                    standard: string;
-                    /**
-                     * Fast gas price in wei.
-                     */
-                    fast: string;
-                    /**
-                     * Base fee for EIP-1559 transactions in wei.
-                     */
-                    baseFee: string;
-                };
-            };
-            /**
-             * Error message. Present only if error - true.
-             */
-            msg?: string;
-        }>;
-    }> {
+    ): CancelablePromise<EthGasEstimationBatch> {
         return __request({
             method: 'POST',
             path: `/v3/ethereum/gas/batch`,
@@ -439,6 +360,43 @@ export class BlockchainFeesService {
         return __request({
             method: 'POST',
             path: `/v3/vet/transaction/gas`,
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                500: `Internal server error. There was an error on the server while processing the request.`,
+            },
+        });
+    }
+
+    /**
+     * Estimate EGLD transaction fees
+     * <h4>2 credits per API call.</h4><br/>
+     * <p>Estimate gasLimit and gasPrice of the EGLD transaction. Gas limit is obtained from <a href="https://gateway.elrond.com/transaction/cost" target="_blank">https://gateway.elrond.com/transaction/cost</a>.
+     * Gas price is obtained from <a href="https://gateway.elrond.com/network/config" target="_blank">https://gateway.elrond.com/network/config</a>.
+     * </p>
+     *
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static egldEstimateGas(
+        requestBody: TransactionFeeEgldBlockchain,
+    ): CancelablePromise<{
+        /**
+         * Gas limit for transaction in gas price.
+         */
+        gasLimit: number;
+        /**
+         * Gas price.
+         */
+        gasPrice: number;
+    }> {
+        return __request({
+            method: 'POST',
+            path: `/v3/egld/gas`,
             body: requestBody,
             mediaType: 'application/json',
             errors: {

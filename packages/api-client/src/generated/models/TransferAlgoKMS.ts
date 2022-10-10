@@ -4,23 +4,27 @@
 
 export type TransferAlgoKMS = {
     /**
-     * Sender account ID
+     * The ID of the virtual account to send Algos from
      */
     senderAccountId: string;
     /**
-     * Blockchain account to send from
+     * The blockchain address of the Algorand wallet (account) associated with the virtual account
      */
     account: string;
     /**
-     * Blockchain address to send assets
+     * The blockchain address to send Algos to
      */
     address: string;
     /**
-     * Amount to be sent, in Algo.
+     * The amount to send in Algos
      */
     amount: string;
     /**
-     * Identifier of the secret associated in signing application. Secret, or signature Id must be present.
+     * The transaction fee in Algos
+     */
+    fee: string;
+    /**
+     * The identifier of the secret of the Algorand wallet (account) in the signing application. Secret, or signature Id must be present.
      */
     signatureId: string;
     /**
@@ -28,15 +32,15 @@ export type TransferAlgoKMS = {
      */
     index?: number;
     /**
-     * Compliance check, if withdrawal is not compliant, it will not be processed.
+     * Compliance check; if the withdrawal is not compliant, it will not be processed
      */
     compliant?: boolean;
     /**
-     * Identifier of the payment, shown for created Transaction within Tatum sender account.
+     * The identifier of the Algo transfer that is shown on the virtual account for the created transaction
      */
     paymentId?: string;
     /**
-     * Note without any spaces.
+     * The note for the recipient; must not contain spaces
      */
     senderNote?: string;
 }

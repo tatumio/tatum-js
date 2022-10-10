@@ -1,10 +1,4 @@
-import {
-  ApiServices,
-  BchTransaction,
-  BchTransactionKMS,
-  BchTx,
-  TransactionHashKMS,
-} from '@tatumio/api-client'
+import { ApiServices, BchTransaction, BchTransactionKMS, BchTx, TransactionHash } from '@tatumio/api-client'
 import { bcashAddressHelper } from './utils/bch.address'
 import { BchSdkError } from './bch.sdk.errors'
 import { amountUtils, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
@@ -14,13 +8,14 @@ import * as coininfo from 'coininfo'
 import * as BitcoinCashJS from '@tatumio/bitcoincashjs2-lib'
 import { BtcBasedTx } from '@tatumio/shared-blockchain-btc-based'
 import BigNumber from 'bignumber.js'
+import _ from 'lodash'
 
 export type BchTransactionTypes = BchTransaction | BchTransactionKMS
 
 const sendTransaction = async (
   body: BchTransactionTypes,
   args: { testnet?: boolean },
-): Promise<TransactionHashKMS> => {
+): Promise<TransactionHash> => {
   return ApiServices.blockchain.bcash.bchBroadcast({
     txData: await prepareSignedTransaction(body, args),
   })
@@ -39,6 +34,8 @@ const prepareSignedTransaction = async (
     const transactionBuilder = new BitcoinCashJS.TransactionBuilder(network)
     const privateKeysToSign = []
     const amountToSign: number[] = []
+    const outputs: number[] = []
+
     const txs = await getTransactions(body.fromUTXO.map((u) => u.txHash))
 
     for (const [i, item] of body.fromUTXO.entries()) {
@@ -58,17 +55,34 @@ const prepareSignedTransaction = async (
     }
 
     body.to.forEach((item) => {
-      transactionBuilder.addOutput(
-        bcashAddressHelper.getAddress(item.address),
-        amountUtils.toSatoshis(item.value),
-      )
+      const value = amountUtils.toSatoshis(item.value)
+      transactionBuilder.addOutput(bcashAddressHelper.getAddress(item.address), value)
+      outputs.push(value)
     })
+
+    // send the change to change address
+    if (body.changeAddress) {
+      const sumOfInputs = _.sum(amountToSign)
+      const sumOfOutputs = _.sum(outputs)
+      const defaultFee = 0.00001
+      const txFee = amountUtils.toSatoshis(body.fee ?? defaultFee)
+      const change = Number(new BigNumber(sumOfInputs).minus(sumOfOutputs).minus(txFee))
+      transactionBuilder.addOutput(body.changeAddress, change)
+    }
 
     verifyAmounts(amountToSign, body)
 
     for (let i = 0; i < privateKeysToSign.length; i++) {
       const ecPair = BitcoinCashJS.ECPair.fromWIF(privateKeysToSign[i], network)
-      transactionBuilder.sign(i, ecPair, undefined, 0x01, amountToSign[i], undefined, BitcoinCashJS.ECSignature.SCHNORR)
+      transactionBuilder.sign(
+        i,
+        ecPair,
+        undefined,
+        0x01,
+        amountToSign[i],
+        undefined,
+        BitcoinCashJS.ECSignature.SCHNORR,
+      )
     }
 
     return transactionBuilder.build().toHex()

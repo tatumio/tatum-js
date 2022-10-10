@@ -14,7 +14,7 @@ import type { BtcUTXO } from '../models/BtcUTXO';
 import type { PrivKey } from '../models/PrivKey';
 import type { PrivKeyRequest } from '../models/PrivKeyRequest';
 import type { SignatureId } from '../models/SignatureId';
-import type { TransactionHashKMS } from '../models/TransactionHashKMS';
+import type { TransactionHash } from '../models/TransactionHash';
 import type { Wallet } from '../models/Wallet';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
@@ -257,7 +257,7 @@ export class BitcoinService {
      */
     public static btcTransferBlockchain(
         requestBody: (BtcTransactionFromAddress | BtcTransactionFromAddressKMS | BtcTransactionFromUTXO | BtcTransactionFromUTXOKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/bitcoin/transaction`,
@@ -355,12 +355,12 @@ export class BitcoinService {
      * It is possible to create a custom signing mechanism and only use this method for broadcasting data to the blockchain.</p>
      *
      * @param requestBody
-     * @returns TransactionHashKMS OK
+     * @returns TransactionHash OK
      * @throws ApiError
      */
     public static btcBroadcast(
         requestBody: BroadcastKMS,
-    ): CancelablePromise<TransactionHashKMS> {
+    ): CancelablePromise<TransactionHash> {
         return __request({
             method: 'POST',
             path: `/v3/bitcoin/broadcast`,
