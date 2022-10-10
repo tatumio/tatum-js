@@ -11,7 +11,7 @@ export const solanaKmsService = (args: { web3: SolanaWeb3; blockchain: Blockchai
       const { txData, mintPK } = JSON.parse(tx.serializedTransaction)
       const transaction = Transaction.populate(Message.from(Buffer.from(txData, 'hex')))
       transaction.recentBlockhash = undefined
-      const signers = privateKeys.map(pk => args.web3.generateKeyPair(pk))
+      const signers = privateKeys.map((pk) => args.web3.generateKeyPair(pk))
       if (mintPK) {
         signers.push(args.web3.generateKeyPair(mintPK))
       }
